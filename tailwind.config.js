@@ -48,17 +48,17 @@ module.exports = {
         'jva-blue': {
           light: '#5B71B9',
           primary: '#070191',
-          hover: '#070191'
+          hover: '#0A04A7'
         },
         'jva-green': {
           light: '#C9F2EA',
           primary: '#09AC8C',
-          hover: '#09AC8C'
+          hover: '#0BBF9C'
         },
         'jva-red': {
           light: '#FFF0EF',
           primary: '#FC7069',
-          hover: '#FC7069'
+          hover: '#EA6861'
         },
         'jva-black': {
           primary: '#111111',

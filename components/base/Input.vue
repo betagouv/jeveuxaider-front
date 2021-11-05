@@ -1,12 +1,15 @@
 <template>
-  <div class="space-y-1 relative">
-    <label v-if="label" class="block text-sm font-medium text-gray-700">
+  <div class="relative">
+    <label v-if="label" class="block text-xs uppercase font-bold text-jva-gray-text-dark">
       {{ label }}
-      <span v-if="labelSuffix" class="text-xs text-gray-400">{{
+      <span v-if="required" class="text-[#E2011C]">
+        *
+      </span>
+      <span v-if="labelSuffix" class="text-jva-blue-light">{{
         labelSuffix
       }}</span>
     </label>
-    <div class="mt-1 sm:mt-0 sm:col-span-2">
+    <div class="mt-2">
       <div class="flex items-center relative w-full">
         <input
           :id="name"
@@ -15,21 +18,19 @@
           :type="type"
           :placeholder="placeholder"
           class="
-            px-1
-            py-2
+            px-6
+            py-3
+            text-sm
             appearance-none
-            rounded-md
+            rounded-xl
             block
             w-full
-
-            placeholder-gray-400
-               focus:outline-none
-            border border-gray-300
-            shadow-sm
-            focus:ring-indigo-500 focus:border-indigo-500
-            text-sm
+            placeholder-jva-gray-text-lightest
+            focus:outline-none
+            border border-jva-gray-border
+            focus:ring-jva-blue-primary focus:border-jva-blue-primary
           "
-          :class=" [{ 'border-red-500': error, 'pr-8': suffix }]"
+          :class=" [{ 'border-jva-red-primary': error, 'pr-8': suffix }]"
           autocomplete="off"
         >
         <!-- <div v-if="togglePassword && value" class="absolute right-3">
@@ -68,10 +69,10 @@ export default {
     label: { type: String, default: null },
     labelSuffix: { type: String, default: null },
     name: { type: String, required: true },
-
     error: { type: String, default: null },
     description: { type: String, default: null },
     clearable: { type: Boolean, default: false },
+    required: { type: Boolean, default: false },
     type: {
       type: String,
       default: 'text',
@@ -90,11 +91,6 @@ export default {
       set (newValue) {
         this.$emit('input', newValue)
       }
-    }
-  },
-  methods: {
-    handleChange (e) {
-      console.log('handleChange', e)
     }
   }
 }

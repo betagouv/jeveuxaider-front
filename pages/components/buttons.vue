@@ -66,6 +66,29 @@
         </BaseButton>
       </div>
     </div>
+
+    <div class="flex flex-col space-y-4">
+      <div class="text-lg leading-6 font-medium text-gray-900">
+        Red buttons
+      </div>
+      <div class="flex flex-wrap -m-2 items-end">
+        <BaseButton variant="red" size="xs" class="m-2">
+          Primary
+        </BaseButton>
+        <BaseButton variant="red" size="sm" class="m-2">
+          Primary
+        </BaseButton>
+        <BaseButton variant="red" size="md" class="m-2">
+          Primary
+        </BaseButton>
+        <BaseButton variant="red" size="lg" class="m-2">
+          Primary
+        </BaseButton>
+        <BaseButton variant="red" size="xl" class="m-2">
+          Primary
+        </BaseButton>
+      </div>
+    </div>
     <div class="flex flex-col space-y-4">
       <div class="text-lg leading-6 font-medium text-gray-900">
         White buttons
@@ -85,6 +108,25 @@
         </BaseButton>
         <BaseButton variant="white" size="xl" class="m-2">
           Primary
+        </BaseButton>
+      </div>
+    </div>
+    <div class="flex flex-col space-y-4">
+      <div class="text-lg leading-6 font-medium text-gray-900">
+        Rounded buttons
+      </div>
+      <div class="flex flex-wrap -m-2 items-end">
+        <BaseButton variant="primary" class="m-2" rounded>
+          Button text
+        </BaseButton>
+        <BaseButton variant="primary-green" class="m-2" rounded>
+          Button text
+        </BaseButton>
+        <BaseButton variant="secondary" class="m-2" rounded>
+          Button text
+        </BaseButton>
+        <BaseButton variant="white" class="m-2" rounded>
+          Button text
         </BaseButton>
       </div>
     </div>
