@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-4">
+  <div class="space-y-12">
     <div class="flex flex-col space-y-4">
       <div class="text-lg leading-6 font-medium text-gray-900">
         Primary buttons
@@ -46,6 +46,28 @@
     </div>
     <div class="flex flex-col space-y-4">
       <div class="text-lg leading-6 font-medium text-gray-900">
+        Gray buttons
+      </div>
+      <div class="flex flex-wrap -m-2 items-end">
+        <BaseButton variant="gray" size="xs" class="m-2">
+          Primary
+        </BaseButton>
+        <BaseButton variant="gray" size="sm" class="m-2">
+          Primary
+        </BaseButton>
+        <BaseButton variant="gray" size="md" class="m-2">
+          Primary
+        </BaseButton>
+        <BaseButton variant="gray" size="lg" class="m-2">
+          Primary
+        </BaseButton>
+        <BaseButton variant="gray" size="xl" class="m-2">
+          Primary
+        </BaseButton>
+      </div>
+    </div>
+    <div class="flex flex-col space-y-4">
+      <div class="text-lg leading-6 font-medium text-gray-900">
         White buttons
       </div>
       <div class="flex flex-wrap -m-2 items-end">
@@ -62,28 +84,6 @@
           Primary
         </BaseButton>
         <BaseButton variant="white" size="xl" class="m-2">
-          Primary
-        </BaseButton>
-      </div>
-    </div>
-    <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
-        Danger buttons
-      </div>
-      <div class="flex flex-wrap -m-2 items-end">
-        <BaseButton variant="danger" size="xs" class="m-2">
-          Primary
-        </BaseButton>
-        <BaseButton variant="danger" size="sm" class="m-2">
-          Primary
-        </BaseButton>
-        <BaseButton variant="danger" size="md" class="m-2">
-          Primary
-        </BaseButton>
-        <BaseButton variant="danger" size="lg" class="m-2">
-          Primary
-        </BaseButton>
-        <BaseButton variant="danger" size="xl" class="m-2">
           Primary
         </BaseButton>
       </div>

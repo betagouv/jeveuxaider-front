@@ -10,7 +10,7 @@
             Components
           </h1>
           <p class="mt-2 text-lg text-gray-500">
-            Integrated with Tailwind CSS
+            Refonte design
           </p>
         </div>
         <div class="mt-12">

@@ -9,14 +9,13 @@
       focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
     "
     :class="{
-      'w-full justify-center': full,
-      'text-white bg-indigo-600 hover:bg-indigo-700 border-transparent':
+      'text-white bg-jva-blue hover:bg-jva-blue-hover border-transparent':
         variant == 'primary',
-      'text-white bg-red-600 hover:bg-red-700 border-transparent':
-        variant == 'danger',
-      'text-primary bg-indigo-200 hover:bg-indigo-300 border-transparent':
+      'text-white bg-jva-green hover:bg-jva-green-hover border-transparent':
         variant == 'secondary',
-      'text-gray-700 bg-white hover:bg-gray-50 border border-gray-300':
+      'text-jva-blue bg-gray-100 hover:bg-gray-50 border-transparent':
+        variant == 'gray',
+      'text-gray-500 bg-white hover:bg-gray-50 border border-gray-300':
         variant == 'white',
       'px-2.5 py-1.5 shadow-sm text-xs font-medium': size == 'xs',
       'px-3 py-2 shadow-sm text-sm leading-4 font-medium': size == 'sm',
@@ -35,7 +34,7 @@ export default {
     variant: {
       type: String,
       default: 'primary',
-      validator: s => ['primary', 'secondary', 'white', 'danger'].includes(s)
+      validator: s => ['primary', 'secondary', 'white', 'gray'].includes(s)
     },
     size: {
       type: String,
