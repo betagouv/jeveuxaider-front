@@ -130,6 +130,25 @@
         </BaseButton>
       </div>
     </div>
+    <div class="flex flex-col space-y-4">
+      <div class="text-lg leading-6 font-medium text-gray-900">
+        Badges
+      </div>
+      <div class="flex flex-wrap -m-2 items-end">
+        <BaseBadge color="gray" class="m-2">
+          Brouillon
+        </BaseBadge>
+        <BaseBadge color="orange" class="m-2">
+          En attente de validation
+        </BaseBadge>
+        <BaseBadge color="green" class="m-2">
+          Validée
+        </BaseBadge>
+        <BaseBadge color="red" class="m-2">
+          Signalée
+        </BaseBadge>
+      </div>
+    </div>
   </div>
 </template>
 
