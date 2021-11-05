@@ -8,6 +8,7 @@
 
 <script>
 export default {
+  layout: 'components',
   data () {
     return {
       form: {}
