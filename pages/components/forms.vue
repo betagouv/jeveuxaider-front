@@ -10,6 +10,13 @@
           required
           description="Le titre de la mission doit être une phrase qui précise l'action du bénévole."
         />
+        <BaseSelect
+          v-model="form.state"
+          name="state"
+          label="Statut"
+          placeholder="Statut de la mission"
+          required
+        />
         <div class="flex space-x-8">
           <BaseInput
             v-model="form.firstname"

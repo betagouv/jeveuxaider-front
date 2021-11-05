@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <label v-if="label" class="block text-xs uppercase font-bold text-jva-gray-text-dark">
+    <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-jva-gray-text-dark">
       {{ label }}
       <span v-if="required" class="text-[#E2011C]">
         *

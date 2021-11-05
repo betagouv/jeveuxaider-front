@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div>
     <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-jva-gray-text-dark">
       {{ label }}
       <span v-if="required" class="text-[#E2011C]">
@@ -9,18 +9,11 @@
         labelSuffix
       }}</span>
     </label>
-    <div v-if="description" class="text-xs text-jva-gray-text-light mt-2">
-      {{ description }}
-    </div>
-    <div class="mt-2">
-      <div class="flex items-center relative w-full">
-        <textarea
-          :id="name"
-          v-model="inputValue"
-          :name="name"
-          :placeholder="placeholder"
-          :rows="rows"
-          class="
+    <select
+      :id="name"
+      :name="name"
+      class="
+            mt-2
             px-6
             py-3
             text-sm
@@ -33,14 +26,14 @@
             border border-jva-gray-border
             focus:ring-jva-blue-primary focus:border-jva-blue-primary
           "
-          :class=" [{ 'border-jva-red-primary': error }]"
-          autocomplete="off"
-        />
-      </div>
-    </div>
-    <div v-if="error" class="text-xs text-red-500 absolute">
-      {{ error }}
-    </div>
+      :class=" [{ 'border-jva-red-primary': error}]"
+    >
+      <option>United States</option>
+      <option selected="">
+        Canada
+      </option>
+      <option>Mexico</option>
+    </select>
   </div>
 </template>
 
@@ -53,24 +46,13 @@ export default {
     labelSuffix: { type: String, default: null },
     name: { type: String, required: true },
     error: { type: String, default: null },
-    required: { type: Boolean, default: false },
-    rows: { type: Number, default: 5 },
-    description: { type: String, default: null }
-  },
-  data () {
-    return {}
-  },
-  computed: {
-    inputValue: {
-      get () {
-        return this.value
-      },
-      set (newValue) {
-        this.$emit('input', newValue)
-      }
-    }
+    description: { type: String, default: null },
+    clearable: { type: Boolean, default: false },
+    required: { type: Boolean, default: false }
   }
 }
 </script>
 
-<style></style>
+<style>
+
+</style>
