@@ -6,19 +6,41 @@
       </div>
       <div class="flex flex-wrap -m-2 items-end">
         <BaseButton size="xs" class="m-2">
-          Primary
+          Button text
         </BaseButton>
         <BaseButton size="sm" class="m-2">
-          Primary
+          Button text
         </BaseButton>
         <BaseButton size="md" class="m-2">
-          Primary
+          Button text
         </BaseButton>
         <BaseButton size="lg" class="m-2">
-          Primary
+          Button text
         </BaseButton>
         <BaseButton size="xl" class="m-2">
-          Primary
+          Button text
+        </BaseButton>
+      </div>
+    </div>
+    <div class="flex flex-col space-y-4">
+      <div class="text-lg leading-6 font-medium text-gray-900">
+        Primary green buttons
+      </div>
+      <div class="flex flex-wrap -m-2 items-end">
+        <BaseButton variant="primary-green" size="xs" class="m-2">
+          Button text
+        </BaseButton>
+        <BaseButton variant="primary-green" size="sm" class="m-2">
+          Button text
+        </BaseButton>
+        <BaseButton variant="primary-green" size="md" class="m-2">
+          Button text
+        </BaseButton>
+        <BaseButton variant="primary-green" size="lg" class="m-2">
+          Button text
+        </BaseButton>
+        <BaseButton variant="primary-green" size="xl" class="m-2">
+          Button text
         </BaseButton>
       </div>
     </div>
@@ -40,28 +62,6 @@
           Primary
         </BaseButton>
         <BaseButton variant="secondary" size="xl" class="m-2">
-          Primary
-        </BaseButton>
-      </div>
-    </div>
-    <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
-        Gray buttons
-      </div>
-      <div class="flex flex-wrap -m-2 items-end">
-        <BaseButton variant="gray" size="xs" class="m-2">
-          Primary
-        </BaseButton>
-        <BaseButton variant="gray" size="sm" class="m-2">
-          Primary
-        </BaseButton>
-        <BaseButton variant="gray" size="md" class="m-2">
-          Primary
-        </BaseButton>
-        <BaseButton variant="gray" size="lg" class="m-2">
-          Primary
-        </BaseButton>
-        <BaseButton variant="gray" size="xl" class="m-2">
           Primary
         </BaseButton>
       </div>
