@@ -41,7 +41,7 @@ export default {
     },
     size: {
       type: String,
-      default: 'md',
+      default: 'lg',
       validator: s => ['xs', 'sm', 'md', 'lg', 'xl'].includes(s)
     },
     type: {
