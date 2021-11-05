@@ -20,10 +20,30 @@
             required
           />
           <BaseInput
-            v-model="form.name"
-            name="name"
+            v-model="form.lastname"
+            name="lastname"
             label="Nom"
             placeholder="Votre nom"
+            class="w-1/2"
+            required
+          />
+        </div>
+        <div class="flex space-x-8">
+          <BaseInput
+            v-model="form.password"
+            name="password"
+            label="Mot de passe"
+            placeholder="Votre mot de passe"
+            type="password"
+            class="w-1/2"
+            required
+          />
+          <BaseInput
+            v-model="form.password_confirm"
+            name="password_confirm"
+            label="Confirmation du mot de passe"
+            placeholder="Votre mot de passe"
+            type="password"
             class="w-1/2"
             required
           />
@@ -48,7 +68,9 @@ export default {
   layout: 'components',
   data () {
     return {
-      form: {}
+      form: {
+        firstname: 'Nicolas'
+      }
     }
   },
   methods: {

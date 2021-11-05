@@ -18,7 +18,7 @@
           :id="name"
           v-model="inputValue"
           :name="name"
-          :type="type"
+          :type="typeValue"
           :placeholder="placeholder"
           class="
             px-6
@@ -34,22 +34,22 @@
             focus:ring-jva-blue-primary focus:border-jva-blue-primary
           "
           :class=" [{ 'border-jva-red-primary': error, 'pr-8': suffix }]"
-          autocomplete="off"
+          autocomplete="new-password"
         >
-        <!-- <div v-if="togglePassword && value" class="absolute right-3">
+        <div v-if="type == 'password' && inputValue" class="absolute right-3">
           <EyeIcon
-            v-if="state.type == 'password'"
-            class="h-5 text-gray-400 cursor-pointer"
-            @click="state.type = 'text'"
+            v-if="typeValue == 'password'"
+            class="h-5 text-jva-gray-text-lighter hover:text-jva-gray-text-light cursor-pointer"
+            @click="typeValue = 'text'"
           />
           <EyeOffIcon
-            v-if="state.type == 'text'"
-            class="h-5 text-gray-400 cursor-pointer"
-            @click="state.type = 'password'"
+            v-if="typeValue == 'text'"
+            class="h-5 text-jva-gray-text-lighter hover:text-jva-gray-text-light cursor-pointer"
+            @click="typeValue = 'password'"
           />
-        </div> -->
+        </div>
         <div v-if="suffix" class="absolute right-3">
-          <div class="text-gray-400 text-sm">
+          <div class="text-jva-gray-text-lighter text-sm">
             {{ suffix }}
           </div>
         </div>
@@ -63,8 +63,15 @@
 </template>
 
 <script>
+import { EyeIcon, EyeOffIcon } from '@vue-hero-icons/outline'
+
 export default {
+  components: {
+    EyeIcon,
+    EyeOffIcon
+  },
   props: {
+    value: { type: String, default: null },
     placeholder: { type: String, default: null },
     suffix: { type: String, default: null },
     label: { type: String, default: null },
@@ -82,7 +89,9 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+      typeValue: this.type
+    }
   },
   computed: {
     inputValue: {

@@ -47,13 +47,15 @@
 <script>
 export default {
   props: {
+    value: { type: String, default: null },
     placeholder: { type: String, default: null },
     label: { type: String, default: null },
     labelSuffix: { type: String, default: null },
     name: { type: String, required: true },
     error: { type: String, default: null },
     required: { type: Boolean, default: false },
-    rows: { type: Number, default: 5 }
+    rows: { type: Number, default: 5 },
+    description: { type: String, default: null }
   },
   data () {
     return {}
