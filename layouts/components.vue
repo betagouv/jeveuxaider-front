@@ -6,10 +6,10 @@
           <div class="flex space-x-8">
             <div class="w-1/4 space-y-12">
               <div class="">
-                <p class="text-sm font-semibold text-jva-blue-primary uppercase tracking-wide">
+                <p class="text-xs font-semibold text-jva-blue-primary uppercase tracking-wide">
                   JeVeuxAider.gouv.fr
                 </p>
-                <h1 class="mt-2 text-xl font-extrabold text-gray-900 tracking-tight">
+                <h1 class="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight">
                   Design System
                 </h1>
                 <p class="mt-2 text-xs text-gray-500">

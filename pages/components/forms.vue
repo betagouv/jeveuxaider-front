@@ -1,7 +1,7 @@
 <template>
   <div>
     <CustomBox title="Description de la mission">
-      <form class="space-y-8" @submit="onSubmit">
+      <form id="form" class="space-y-8" @submit="onSubmit">
         <BaseInput v-model="form.name" name="name" label="Titre de la mission" placeholder="Titre de la mission" required />
         <div class="flex space-x-8">
           <BaseInput
@@ -28,7 +28,7 @@
       <BaseButton variant="white">
         Save as draft
       </BaseButton>
-      <BaseButton type="submit" variant="primary-green">
+      <BaseButton type="submit" variant="primary-green" form="form">
         Submit
       </BaseButton>
     </div>
