@@ -12,6 +12,7 @@
     <select
       :id="name"
       :name="name"
+      :value="value"
       class="
             mt-2
             px-6
@@ -27,12 +28,11 @@
             focus:ring-jva-blue-primary focus:border-jva-blue-primary
           "
       :class=" [{ 'border-jva-red-primary': error}]"
+      @change="onChange"
     >
-      <option>United States</option>
-      <option selected="">
-        Canada
+      <option v-for="option in options" :key="option.key" :value="option.key">
+        {{ option.label }}
       </option>
-      <option>Mexico</option>
     </select>
   </div>
 </template>
@@ -41,6 +41,7 @@
 export default {
   props: {
     value: { type: String, default: null },
+    options: { type: Array, required: true },
     placeholder: { type: String, default: null },
     label: { type: String, default: null },
     labelSuffix: { type: String, default: null },
@@ -49,6 +50,11 @@ export default {
     description: { type: String, default: null },
     clearable: { type: Boolean, default: false },
     required: { type: Boolean, default: false }
+  },
+  methods: {
+    onChange (evt) {
+      this.$emit('input', evt.target.value)
+    }
   }
 }
 </script>

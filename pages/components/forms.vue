@@ -15,6 +15,11 @@
           name="state"
           label="Statut"
           placeholder="Statut de la mission"
+          :options="[
+            {key: 'draft', label:'Brouillon'},
+            {key: 'waiting', label:'En attente de validation'},
+            {key: 'validated', label:'Validée'}
+          ]"
           required
         />
         <div class="flex space-x-8">
@@ -76,7 +81,8 @@ export default {
   data () {
     return {
       form: {
-        firstname: 'Nicolas'
+        firstname: 'Nicolas',
+        state: 'validated'
       }
     }
   },
