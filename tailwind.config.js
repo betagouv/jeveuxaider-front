@@ -72,7 +72,7 @@ module.exports = {
           'text-darkest': '#11142D',
           'text-darker': '#23262F',
           'text-dark': '#383838',
-          'text-light': '#808080',
+          'text-light': '#818181',
           'text-lighter': '#9C9C9C',
           'text-lightest': '#B3B3B3',
           border: '#E8E8E8'

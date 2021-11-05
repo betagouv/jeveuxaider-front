@@ -8,10 +8,10 @@
         Heading 1
       </BaseHeading>
       <BaseHeading as="h2" :level="2">
-        Heading 1
+        Heading 2
       </BaseHeading>
       <BaseHeading as="h3" :level="3">
-        Heading 1
+        Heading 3
       </BaseHeading>
     </div>
     <div class="flex flex-col space-y-4">

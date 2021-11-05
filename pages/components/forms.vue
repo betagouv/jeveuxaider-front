@@ -2,7 +2,14 @@
   <div>
     <CustomBox title="Description de la mission">
       <form id="form" class="space-y-8" @submit="onSubmit">
-        <BaseInput v-model="form.name" name="name" label="Titre de la mission" placeholder="Titre de la mission" required />
+        <BaseInput
+          v-model="form.name"
+          name="name"
+          label="Titre de la mission"
+          placeholder="Titre de la mission"
+          required
+          description="Le titre de la mission doit être une phrase qui précise l'action du bénévole."
+        />
         <div class="flex space-x-8">
           <BaseInput
             v-model="form.firstname"
@@ -22,6 +29,7 @@
           />
         </div>
         <BaseInput v-model="form.phone" name="phone" label="Téléphone" label-suffix="(facultatif)" placeholder="Votre téléphone" />
+        <BaseTextarea v-model="form.description" name="description" label="Présentation de la mission" placeholder="Décrivez votre mission en quelques mots..." required />
       </form>
     </CustomBox>
     <div class="flex mt-12 space-x-6 justify-end">
