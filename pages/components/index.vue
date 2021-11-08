@@ -4,15 +4,15 @@
       <div class="text-lg leading-6 font-medium text-gray-900">
         Headings
       </div>
-      <BaseHeading as="h1" :level="1">
+      <Heading as="h1" :level="1">
         Heading 1
-      </BaseHeading>
-      <BaseHeading as="h2" :level="2">
+      </Heading>
+      <Heading as="h2" :level="2">
         Heading 2
-      </BaseHeading>
-      <BaseHeading as="h3" :level="3">
+      </Heading>
+      <Heading as="h3" :level="3">
         Heading 3
-      </BaseHeading>
+      </Heading>
     </div>
     <div class="flex flex-col space-y-4">
       <div class="text-lg leading-6 font-medium text-gray-900">

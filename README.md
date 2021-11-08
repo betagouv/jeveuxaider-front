@@ -1,4 +1,4 @@
-# jeveuxaider-nuxtjs2
+# jeveuxaider-front
 
 ## Build Setup
 

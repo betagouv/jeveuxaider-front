@@ -1,8 +1,8 @@
 <template>
   <div>
-    <CustomBox title="Description de la mission">
+    <Box title="Description de la mission">
       <form id="form" class="space-y-8" @submit="onSubmit">
-        <BaseInput
+        <Input
           v-model="form.name"
           name="name"
           label="Titre de la mission"
@@ -10,7 +10,7 @@
           required
           description="Le titre de la mission doit être une phrase qui précise l'action du bénévole."
         />
-        <BaseSelect
+        <Select
           v-model="form.state"
           name="state"
           label="Statut"
@@ -23,7 +23,7 @@
           required
         />
         <div class="flex space-x-8">
-          <BaseInput
+          <Input
             v-model="form.firstname"
             name="firstname"
             label="Prénom"
@@ -31,7 +31,7 @@
             class="w-1/2"
             required
           />
-          <BaseInput
+          <Input
             v-model="form.lastname"
             name="lastname"
             label="Nom"
@@ -41,7 +41,7 @@
           />
         </div>
         <div class="flex space-x-8">
-          <BaseInput
+          <Input
             v-model="form.password"
             name="password"
             label="Mot de passe"
@@ -50,7 +50,7 @@
             class="w-1/2"
             required
           />
-          <BaseInput
+          <Input
             v-model="form.password_confirm"
             name="password_confirm"
             label="Confirmation du mot de passe"
@@ -60,24 +60,29 @@
             required
           />
         </div>
-        <BaseInput v-model="form.phone" name="phone" label="Téléphone" label-suffix="(facultatif)" placeholder="Votre téléphone" />
-        <BaseTextarea v-model="form.description" name="description" label="Présentation de la mission" placeholder="Décrivez votre mission en quelques mots..." required />
+        <Input v-model="form.phone" name="phone" label="Téléphone" label-suffix="(facultatif)" placeholder="Votre téléphone" />
+        <Textarea v-model="form.description" name="description" label="Présentation de la mission" placeholder="Décrivez votre mission en quelques mots..." required />
       </form>
-    </CustomBox>
+    </Box>
     <div class="flex mt-12 space-x-6 justify-end">
-      <BaseButton variant="white">
+      <Button variant="white">
         Save as draft
-      </BaseButton>
-      <BaseButton type="submit" variant="primary-green" form="form">
+      </Button>
+      <Button type="submit" variant="primary-green" form="form">
         Submit
-      </BaseButton>
+      </Button>
     </div>
   </div>
 </template>
 
 <script>
+import Box from '~/components/custom/Box.vue'
+
 export default {
   layout: 'components',
+  components: {
+    Box
+  },
   data () {
     return {
       form: {
