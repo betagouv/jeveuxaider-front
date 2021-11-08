@@ -1,7 +1,5 @@
 const colors = require('tailwindcss/colors')
 
-console.log('env ?', process.env.NODE_ENV)
-
 module.exports = {
   mode: 'jit',
   purge: {
