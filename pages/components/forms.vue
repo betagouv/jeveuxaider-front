@@ -76,13 +76,13 @@
 </template>
 
 <script>
-import Box from '~/components/custom/Box.vue'
+import Box from '@/components/custom/Box.vue'
 
 export default {
-  layout: 'components',
   components: {
     Box
   },
+  layout: 'components',
   data () {
     return {
       form: {

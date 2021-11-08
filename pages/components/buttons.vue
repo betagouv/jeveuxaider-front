@@ -24,6 +24,28 @@
     </div>
     <div class="flex flex-col space-y-4">
       <div class="text-lg leading-6 font-medium text-gray-900">
+        Icons buttons
+      </div>
+      <div class="flex flex-wrap -m-2 items-end">
+        <Button size="xs" class="m-2" loading>
+          Button text
+        </Button>
+        <Button size="sm" class="m-2" loading>
+          Button text
+        </Button>
+        <Button size="md" class="m-2" icon="SearchIcon">
+          Button text tuteu
+        </Button>
+        <Button size="lg" class="m-2" loading>
+          Button text
+        </Button>
+        <Button size="xl" class="m-2" loading>
+          Button text
+        </Button>
+      </div>
+    </div>
+    <div class="flex flex-col space-y-4">
+      <div class="text-lg leading-6 font-medium text-gray-900">
         Primary green buttons
       </div>
       <div class="flex flex-wrap -m-2 items-end">

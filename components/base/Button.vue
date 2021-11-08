@@ -27,12 +27,40 @@
              rounded ? 'rounded-full' : 'rounded-md'
     ]"
   >
+    <SpinIcon
+      v-if="loading"
+      class="animate-spin"
+      :class="{
+        'mr-2 h-3 w-3': size == 'xs',
+        'mr-3 h-3 w-3': size == 'sm',
+        'mr-3 h-4 w-4': size == 'md',
+        'mr-4 h-5 w-5': size == 'lg',
+        'mr-4 h-6 w-6': size == 'xl',
+      }"
+    />
+
+    <component
+      :is="icon"
+      v-if="icon && !loading"
+      :class="{
+        'mr-2 h-3 w-3': size == 'xs',
+        'mr-3 h-3 w-3': size == 'sm',
+        'mr-3 h-4 w-4': size == 'md',
+        'mr-4 h-5 w-5': size == 'lg',
+        'mr-4 h-6 w-6': size == 'xl',
+      }"
+    />
     <slot />
   </button>
 </template>
 
 <script>
+import SpinIcon from '@/components/icons/SpinIcon'
+
 export default {
+  components: {
+    SpinIcon
+  },
   props: {
     variant: {
       type: String,
@@ -50,6 +78,14 @@ export default {
       validator: s => ['button', 'submit'].includes(s)
     },
     rounded: {
+      type: Boolean,
+      default: false
+    },
+    icon: {
+      type: String,
+      default: null
+    },
+    loading: {
       type: Boolean,
       default: false
     }

@@ -63,13 +63,8 @@
 </template>
 
 <script>
-import { EyeIcon, EyeOffIcon } from '@vue-hero-icons/outline'
 
 export default {
-  components: {
-    EyeIcon,
-    EyeOffIcon
-  },
   props: {
     value: { type: String, default: null },
     placeholder: { type: String, default: null },
