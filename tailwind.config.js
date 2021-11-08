@@ -1,16 +1,21 @@
 const colors = require('tailwindcss/colors')
 
+console.log('env ?', process.env.NODE_ENV)
+
 module.exports = {
   mode: 'jit',
   purge: {
-    content: [
-      './components/**/*.{vue,js,ts}',
-      './mixins/**/*.{vue,js,ts}',
-      './layouts/**/*.vue',
-      './pages/**/*.vue',
-      './plugins/**/*.{js,ts}',
-      './nuxt.config.{js,ts}'
-    ]
+    content:
+      process.env.NODE_ENV === 'development'
+        ? []
+        : [
+            './components/**/*.{vue,js,ts}',
+            './mixins/**/*.{vue,js,ts}',
+            './layouts/**/*.vue',
+            './pages/**/*.vue',
+            './plugins/**/*.{js,ts}',
+            './nuxt.config.{js,ts}'
+          ]
   },
   darkMode: false, // or 'media' or 'class'
   theme: {

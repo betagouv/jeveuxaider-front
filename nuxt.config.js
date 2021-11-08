@@ -3,7 +3,7 @@ export default {
   head: {
     title: 'jeveuxaider-nuxtjs2',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'fr'
     },
     meta: [
       { charset: 'utf-8' },
