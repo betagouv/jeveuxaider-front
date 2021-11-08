@@ -34,12 +34,12 @@
           Button text
         </Button>
         <Button size="md" class="m-2" icon="SearchIcon">
-          Button text tuteu
-        </Button>
-        <Button size="lg" class="m-2" loading>
           Button text
         </Button>
-        <Button size="xl" class="m-2" loading>
+        <Button size="lg" class="m-2" icon="SearchIcon">
+          Button text
+        </Button>
+        <Button size="xl" class="m-2" icon="SearchIcon">
           Button text
         </Button>
       </div>
