@@ -1,5 +1,9 @@
 <template>
-  <div class="">
-    <Nuxt />
-  </div>
+  <Nuxt />
 </template>
+
+<style>
+  body, #__nuxt,  #__layout {
+    @apply h-full
+  }
+</style>

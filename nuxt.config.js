@@ -23,6 +23,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/api.js',
     '~/plugins/heroicons.js'
   ],
 
@@ -45,9 +46,17 @@ export default {
     '@nuxtjs/axios'
   ],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: `${process.env.API_URL}/api`
+    }
+  },
 
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: `${process.env.API_URL}/api`
+    }
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
