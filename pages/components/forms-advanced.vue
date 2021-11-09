@@ -41,12 +41,8 @@
 </template>
 
 <script>
-import Box from '@/components/custom/Box.vue'
 
 export default {
-  components: {
-    Box
-  },
   layout: 'components',
   data () {
     return {
