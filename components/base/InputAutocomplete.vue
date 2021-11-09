@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div v-click-outside="clickedOutside" class="relative">
     <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-gray-700">
       {{ label }}
       <span v-if="required" class="text-[#E2011C]">
@@ -22,9 +22,10 @@
         </div>
         <input
           :id="name"
-          v-model="inputValue"
+          ref="input"
+          :value="searchTerm"
           :name="name"
-          :type="typeValue"
+          type="text"
           :placeholder="placeholder"
           class="
             px-6
@@ -39,27 +40,39 @@
             border border-gray-200
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
-          :class=" [{ 'border-jva-red-primary': error, 'pr-8': suffix , 'pl-10': icon}]"
+          :class=" [{ 'border-jva-red-primary': error, 'pl-10': icon}]"
           autocomplete="new-password"
+          @input="handleInput"
         >
-        <div v-if="type == 'password' && inputValue" class="absolute right-3">
-          <EyeIcon
-            v-if="typeValue == 'password'"
-            class="h-5 text-gray-400 hover:gray-text-500 cursor-pointer"
-            @click="typeValue = 'text'"
+        <div v-if="searchTerm" class="absolute right-3">
+          <XIcon
+            class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+            @click="searchTerm = null"
           />
-          <EyeOffIcon
-            v-if="typeValue == 'text'"
-            class="h-5 text-gray-400 hover:gray-text-500 cursor-pointer"
-            @click="typeValue = 'password'"
-          />
-        </div>
-        <div v-if="suffix" class="absolute right-3" :class="type =='number' ? 'right-14' : 'right-3'">
-          <div class="text-gray-400 text-sm">
-            {{ suffix }}
-          </div>
         </div>
       </div>
+    </div>
+
+    <div
+      v-show="searchTerm && showOptions"
+      tabindex="0"
+      class="absolute w-full z-50 bg-white border border-gray-300 mt-1 mh-48 overflow-hidden overflow-y-scroll rounded-md shadow-md"
+      @click.self="handleSelf()"
+      @focusout="showOptions = false"
+    >
+      <ul class="py-1">
+        <li
+          v-for="(item, index) in options"
+          :key="index"
+          class="px-3 py-2 cursor-pointer hover:bg-gray-200"
+          @click="handleClick(item)"
+        >
+          {{ item.name }}
+        </li>
+        <li v-if="!options.length" class="px-3 py-2 text-center">
+          {{ labelEmpty }}
+        </li>
+      </ul>
     </div>
 
     <div v-if="error" class="text-xs text-red-500 absolute">
@@ -74,35 +87,38 @@ export default {
   props: {
     value: { type: String, default: null },
     placeholder: { type: String, default: null },
-    suffix: { type: String, default: null },
     label: { type: String, default: null },
     labelSuffix: { type: String, default: null },
+    labelEmpty: { type: String, default: 'Aucun résultat' },
     name: { type: String, required: true },
     error: { type: String, default: null },
     description: { type: String, default: null },
-    clearable: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
     icon: { type: String, default: null },
-    type: {
-      type: String,
-      default: 'text',
-      validator: s =>
-        ['text', 'email', 'password', 'date', 'number'].includes(s)
-    }
+    options: { type: Array, default: () => [] }
   },
   data () {
     return {
-      typeValue: this.type
+      showOptions: false,
+      chosenOption: '',
+      searchTerm: ''
     }
   },
-  computed: {
-    inputValue: {
-      get () {
-        return this.value
-      },
-      set (newValue) {
-        this.$emit('input', newValue)
-      }
+  methods: {
+    handleInput (evt) {
+      this.searchTerm = evt.target.value
+      this.$emit('search', this.searchTerm)
+      this.showOptions = true
+    },
+    handleClick (item) {
+      this.searchTerm = item.name
+      this.$emit('chosen', item)
+      this.chosenOption = item.name
+      this.showOptions = false
+      this.$refs.input.focus()
+    },
+    clickedOutside () {
+      this.showOptions = false
     }
   }
 }

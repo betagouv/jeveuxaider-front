@@ -29,6 +29,9 @@
                 <nuxt-link to="/components/forms" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
                   Forms
                 </nuxt-link>
+                <nuxt-link to="/components/forms-advanced" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
+                  Forms advanced
+                </nuxt-link>
               </div>
             </div>
             <main class="sm:col-span-3">
