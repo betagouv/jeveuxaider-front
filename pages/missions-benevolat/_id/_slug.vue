@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="absolute w-full" style="height: 360px">
-      <nuxt-img
+      <img
         src="/images/bg_header_mission.jpg"
         alt="Mission bénévolat"
         class="object-cover w-full h-full"
