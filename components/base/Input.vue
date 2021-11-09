@@ -40,7 +40,7 @@
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
           :class=" [{ 'border-jva-red-primary': error, 'pr-8': suffix , 'pl-10': icon}]"
-          autocomplete="new-password"
+          autocomplete="off"
         >
         <div v-if="type == 'password' && inputValue" class="absolute right-3">
           <EyeIcon
@@ -54,8 +54,8 @@
             @click="typeValue = 'password'"
           />
         </div>
-        <div v-if="suffix" class="absolute right-3">
-          <div class="gray-400 text-sm">
+        <div v-if="suffix" class="absolute right-3" :class="type =='number' ? 'right-14' : 'right-3'">
+          <div class="text-gray-400 text-sm">
             {{ suffix }}
           </div>
         </div>

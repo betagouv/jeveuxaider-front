@@ -38,7 +38,6 @@
             name="lastname"
             label="Nom"
             placeholder="Votre nom"
-            class="w-1/2"
             required
           />
         </div>
@@ -62,6 +61,15 @@
         </div>
         <Input v-model="form.phone" name="phone" label="Téléphone" label-suffix="(facultatif)" placeholder="Votre téléphone" />
         <Textarea v-model="form.description" name="description" label="Présentation de la mission" placeholder="Décrivez votre mission en quelques mots..." required />
+        <Input
+          v-model="form.places"
+          name="places"
+          label="Places disponibles"
+          placeholder="Votre nom"
+          suffix="personnes"
+          type="number"
+          required
+        />
         <Heading as="h2" :level="3" class="mb-8 text-jva-gray-900">
           Notifications
         </Heading>

@@ -20,6 +20,9 @@
                 <nuxt-link v-for="link in links" :key="link.name" :to="link.href" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
                   {{ link.name }}
                 </nuxt-link>
+                <nuxt-link to="/components/forms-advanced" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
+                  Forms advanced
+                </nuxt-link>
               </div>
             </div>
             <main class="sm:col-span-3">
