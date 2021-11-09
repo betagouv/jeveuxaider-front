@@ -14,6 +14,12 @@
     </div>
     <div class="mt-2">
       <div class="flex items-center relative w-full">
+        <div v-if="icon" class="absolute left-4">
+          <component
+            :is="icon"
+            class="h-4 w-4 text-jva-gray-400"
+          />
+        </div>
         <input
           :id="name"
           v-model="inputValue"
@@ -28,28 +34,28 @@
             rounded-xl
             block
             w-full
-            placeholder-jva-gray-text-400
+            placeholder-jva-gray-400
             focus:outline-none
             border border-jva-gray-200
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
-          :class=" [{ 'border-jva-red-primary': error, 'pr-8': suffix }]"
+          :class=" [{ 'border-jva-red-primary': error, 'pr-8': suffix , 'pl-10': icon}]"
           autocomplete="new-password"
         >
         <div v-if="type == 'password' && inputValue" class="absolute right-3">
           <EyeIcon
             v-if="typeValue == 'password'"
-            class="h-5 text-jva-gray-400 hover:jva-gray-text-500 cursor-pointer"
+            class="h-5 text-jva-gray-400 hover:jva-gray-500 cursor-pointer"
             @click="typeValue = 'text'"
           />
           <EyeOffIcon
             v-if="typeValue == 'text'"
-            class="h-5 text-jva-gray-400 hover:jva-gray-text-500 cursor-pointer"
+            class="h-5 text-jva-gray-400 hover:jva-gray-500 cursor-pointer"
             @click="typeValue = 'password'"
           />
         </div>
         <div v-if="suffix" class="absolute right-3">
-          <div class="jva-gray-400 text-sm">
+          <div class="text-jva-gray-400 text-sm">
             {{ suffix }}
           </div>
         </div>
@@ -76,6 +82,7 @@ export default {
     description: { type: String, default: null },
     clearable: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
+    icon: { type: String, default: null },
     type: {
       type: String,
       default: 'text',

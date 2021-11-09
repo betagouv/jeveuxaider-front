@@ -2,10 +2,10 @@
   <div class="">
     <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-6xl mx-auto py-16 sm:py-24">
-        <div class="mt-12">
-          <div class="flex space-x-8">
-            <div class="w-1/4 space-y-12">
-              <div class="">
+        <div class="sm:mt-8">
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-12">
+            <div class="">
+              <div class="mb-12">
                 <p class="text-xs font-semibold text-jva-blue-500 uppercase tracking-wide">
                   JeVeuxAider.gouv.fr
                 </p>
@@ -16,22 +16,22 @@
                   Nuxjs 2 + Vue2 + TailwindCSS
                 </p>
               </div>
-              <div class="flex flex-col space-y-2 text-sm font-medium">
-                <nuxt-link to="/components" class="hover:text-jva-blue-600">
+              <div class="flex flex-col space-y-4 text-sm font-medium">
+                <nuxt-link to="/components" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
                   Texts
                 </nuxt-link>
-                <nuxt-link to="/components/colors" class="hover:text-jva-blue-600">
+                <nuxt-link to="/components/colors" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
                   Colors
                 </nuxt-link>
-                <nuxt-link to="/components/buttons" class="hover:text-jva-blue-600">
+                <nuxt-link to="/components/buttons" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
                   Buttons
                 </nuxt-link>
-                <nuxt-link to="/components/forms" class="hover:text-jva-blue-600">
+                <nuxt-link to="/components/forms" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
                   Forms
                 </nuxt-link>
               </div>
             </div>
-            <main class="w-3/4">
+            <main class="sm:col-span-3">
               <Nuxt />
             </main>
           </div>

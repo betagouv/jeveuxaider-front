@@ -22,7 +22,7 @@
             rounded-xl
             block
             w-full
-            placeholder-jva-gray-text-400
+            placeholder-jva-gray-400
             focus:outline-none
             border border-jva-gray-200
             focus:ring-jva-blue-500 focus:border-jva-blue-500
