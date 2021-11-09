@@ -17,17 +17,8 @@
                 </p>
               </div>
               <div class="flex flex-col space-y-4 text-sm font-medium">
-                <nuxt-link to="/components" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
-                  Texts
-                </nuxt-link>
-                <nuxt-link to="/components/colors" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
-                  Colors
-                </nuxt-link>
-                <nuxt-link to="/components/buttons" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
-                  Buttons
-                </nuxt-link>
-                <nuxt-link to="/components/forms" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
-                  Forms
+                <nuxt-link v-for="link in links" :key="link.name" :to="link.href" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
+                  {{ link.name }}
                 </nuxt-link>
                 <nuxt-link to="/components/forms-advanced" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
                   Forms advanced
@@ -43,6 +34,22 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      links: [
+        { name: 'Texts', href: '/components' },
+        { name: 'Colors', href: '/components/colors' },
+        { name: 'Buttons', href: '/components/buttons' },
+        { name: 'Forms', href: '/components/forms' },
+        { name: 'Boxs', href: '/components/boxs' }
+      ]
+    }
+  }
+}
+</script>
 
 <style lang="postcss" scoped>
 .nuxt-link-exact-active {

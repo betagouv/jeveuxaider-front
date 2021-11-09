@@ -18,6 +18,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontSize: {
+      xxs: ['0.60rem', { lineHeight: '1rem', letterSpacing: '-0.025em' }],
       xs: ['0.75rem', { lineHeight: '1rem', letterSpacing: '-0.00em' }],
       sm: ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '-0.025em' }],
       base: ['1rem', { lineHeight: '1.5rem', letterSpacing: '-0.00em' }],
@@ -91,6 +92,9 @@ module.exports = {
           memoire: '#175AB6',
           cooperation: '#5B8397'
         }
+      },
+      borderRadius: {
+        xl: '10px'
       }
     }
   },

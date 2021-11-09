@@ -1,14 +1,50 @@
 <template>
   <div>
-    Page mission
+    <div class="absolute w-full" style="height: 360px">
+      <nuxt-img
+        src="/images/bg_header_mission.jpg"
+        alt="Mission bénévolat"
+        class="object-cover w-full h-full"
+      />
+    </div>
+    <div class="px-4">
+      <Breadcrumb
+        theme="transparent"
+        class="relative z-10"
+        :items="[
+          { label: 'Missions de bénévolat', link: '/missions-benevolat' },
+          {
+            label: domainName,
+            link: `/missions-benevolat?refinementList[domaines][0]=${domainName}`,
+          },
+          {
+            label:
+              mission.type == 'Mission en présentiel'
+                ? `Bénévolat ${mission.structure.name} à ${mission.city}`
+                : `Bénévolat ${mission.structure.name} à distance`,
+            h1: true,
+          },
+        ]"
+      />
+      <Box class="relative z-10" :title="mission.name">
+        Publié par....
+      </Box>
+    </div>
   </div>
 </template>
 
 <script>
+import Breadcrumb from '~/components/layout/Breadcrumb.vue'
+import Box from '~/components/custom/Box.vue'
+
 export default {
+  components: {
+    Breadcrumb,
+    Box
+  },
   async asyncData ({ $api, params, error, store }) {
-    const { data: mission } = await $api.getMission(params.id).catch(() => {
-      return error({ statusCode: 404 })
+    const { data: mission } = await $api.getMission(params.id).catch((err) => {
+      return error({ statusCode: err.response.status, message: err.response.statusText })
     })
     console.log('mission', mission)
 
@@ -58,6 +94,15 @@ export default {
 
     return {
       mission
+    }
+  },
+  computed: {
+    domainName () {
+      return (
+        this.mission?.domaine?.name.fr ??
+        this.mission?.template?.domaine?.name.fr ??
+        null
+      )
     }
   }
 }
