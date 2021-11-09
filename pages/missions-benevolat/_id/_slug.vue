@@ -26,8 +26,10 @@
           },
         ]"
       />
-      <Box class="relative z-10" :title="mission.name">
-        Publié par....
+      <Box class="relative z-10">
+        <Heading as="h1" :level="1">
+          {{ mission.name }}
+        </Heading>
       </Box>
     </div>
   </div>
@@ -35,12 +37,10 @@
 
 <script>
 import Breadcrumb from '~/components/layout/Breadcrumb.vue'
-import Box from '~/components/custom/Box.vue'
 
 export default {
   components: {
-    Breadcrumb,
-    Box
+    Breadcrumb
   },
   async asyncData ({ $api, params, error, store }) {
     const { data: mission } = await $api.getMission(params.id).catch((err) => {
