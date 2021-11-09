@@ -43,7 +43,7 @@
           </template>
         </button>
       </div>
-      <div class="hidden lg:flex divide-x divide-gray-200">
+      <nav class="hidden lg:flex divide-x divide-gray-200">
         <a
           v-for="link in navigation"
           :key="link.name"
@@ -53,7 +53,7 @@
           <component :is="link.icon" class="flex-shrink-0 mr-3 h-4 w-4" aria-hidden="true" />
           {{ link.name }}
         </a>
-      </div>
+      </nav>
     </div>
     <div class="hidden lg:flex p-4 justify-between border-t text-sm text-gray-800">
       <div class="flex space-x-8">

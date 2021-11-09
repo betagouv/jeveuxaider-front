@@ -1,8 +1,14 @@
 <template>
-  <div class="bg-white shadow-xl px-16 pt-10 pb-16 rounded-2xl">
-    <Heading v-if="title" as="h2" :level="3" class="mb-8 text-gray-900">
-      {{ title }}
-    </Heading>
+  <div
+    class="bg-white rounded-xl"
+    :class="[{
+      'shadow-lg': variant == 'shadow',
+      'border': variant == 'flat',
+      'px-6 py-8 xl:py-12 xl:px-16': padding == 'lg',
+      'px-6 py-4': padding == 'sm',
+      'overflow-hidden': padding === false
+    }]"
+  >
     <slot />
   </div>
 </template>
@@ -10,14 +16,14 @@
 <script>
 export default {
   props: {
-    title: {
+    variant: {
+      type: [String],
+      default: 'shadow' // shadow / flat
+    },
+    padding: {
       type: [String, Boolean],
-      default: false
+      default: 'lg' // lg , sm, false
     }
   }
 }
 </script>
-
-<style>
-
-</style>
