@@ -21,15 +21,15 @@ export default {
     colorClass () {
       switch (this.color) {
         case 'gray':
-          return 'bg-jva-gray-text-lighter'
+          return 'bg-jva-gray-400'
         case 'orange':
-          return 'bg-jva-orange-primary'
+          return 'bg-jva-orange-500'
         case 'green':
-          return 'bg-jva-green-primary'
+          return 'bg-jva-green-500'
         case 'red':
-          return 'bg-jva-red-primary'
+          return 'bg-jva-red-500'
         default:
-          return 'bg-jva-gray-text-lighter'
+          return 'bg-jva-gray-400'
       }
     }
   }

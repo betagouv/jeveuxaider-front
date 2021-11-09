@@ -8,15 +8,15 @@
       focus:outline-none focus:ring-2 focus:ring-offset-2
     "
     :class="[{
-               'text-white bg-jva-blue-primary hover:bg-jva-blue-hover border-transparent focus:ring-jva-blue-primary':
+               'text-white bg-jva-blue-500 hover:bg-jva-blue-600 border-transparent focus:ring-jva-blue-500':
                  variant == 'primary',
-               'text-white bg-jva-green-primary hover:bg-jva-green-hover border-transparent focus:ring-jva-green-primary':
-                 variant == 'primary-green',
-               'text-jva-blue-primary bg-true-gray-100 hover:bg-true-gray-50 border-transparent focus:ring-jva-blue-primary':
+               'text-white bg-jva-green-500 hover:bg-jva-green-600 border-transparent focus:ring-jva-green-500':
+                 variant == 'green',
+               'jva-blue bg-true-gray-100 hover:bg-true-gray-50 border-jva-gray-200 focus:ring-jva-blue-500':
                  variant == 'secondary',
-               'text-cool-gray-700 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-jva-blue-primary':
+               'text-cool-gray-700 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-jva-blue-500':
                  variant == 'white',
-               'text-white bg-jva-red-primary hover:bg-jva-red-hover border-transparent focus:ring-jva-red-primary':
+               'text-white bg-jva-red-500 hover:bg-jva-red-600 border-transparent focus:ring-jva-red-500':
                  variant == 'red',
                'px-2.5 py-1.5 shadow-sm text-xs font-bold': size == 'xs',
                'px-3 py-2 shadow-sm text-sm leading-4 font-bold': size == 'sm',
@@ -65,11 +65,11 @@ export default {
     variant: {
       type: String,
       default: 'primary',
-      validator: s => ['primary', 'primary-green', 'secondary', 'white', 'red'].includes(s)
+      validator: s => ['primary', 'green', 'secondary', 'white', 'red'].includes(s)
     },
     size: {
       type: String,
-      default: 'lg',
+      default: 'md',
       validator: s => ['xs', 'sm', 'md', 'lg', 'xl'].includes(s)
     },
     type: {
