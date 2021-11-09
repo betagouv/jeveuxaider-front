@@ -12,7 +12,7 @@
                  variant == 'primary',
                'text-white bg-jva-green-500 hover:bg-jva-green-600 border-transparent focus:ring-jva-green-500':
                  variant == 'green',
-               'jva-blue bg-true-gray-100 hover:bg-true-gray-50 border-jva-gray-200 focus:ring-jva-blue-500':
+               'jva-blue bg-cool-gray-100 hover:bg-cool-gray-50 border-jva-gray-200 focus:ring-jva-blue-500':
                  variant == 'secondary',
                'text-cool-gray-700 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-jva-blue-500':
                  variant == 'white',

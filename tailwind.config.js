@@ -70,13 +70,15 @@ module.exports = {
           900: '#11142D',
           800: '#23262F',
           700: '#383838',
+          600: '#525252',
           500: '#818181',
           400: '#B3B3B3',
+          300: '#D4D4D4',
           200: '#E8E8E8',
-          100: '#F8F8F8'
+          100: '#F8F8F8',
+          50: '#FAFAFA'
         },
         'cool-gray': colors.coolGray,
-        'true-gray': colors.trueGray,
         domaine: {
           solidarite: '#F46D66',
           nature: '#0B9B6B',
