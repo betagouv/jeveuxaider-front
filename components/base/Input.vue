@@ -40,7 +40,7 @@
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
           :class=" [{ 'border-jva-red-primary': error, 'pr-8': suffix , 'pl-10': icon}]"
-          autocomplete="new-password"
+          autocomplete="off"
         >
         <div v-if="type == 'password' && inputValue" class="absolute right-3">
           <EyeIcon

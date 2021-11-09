@@ -41,8 +41,9 @@
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
           :class=" [{ 'border-jva-red-primary': error, 'pl-10': icon}]"
-          autocomplete="new-password"
+          autocomplete="off"
           @input="handleInput"
+          @keydown="onKeydown"
         >
         <div v-if="searchTerm" class="absolute right-3">
           <XIcon
@@ -52,24 +53,27 @@
         </div>
       </div>
     </div>
-
     <div
       v-show="searchTerm && showOptions"
-      tabindex="0"
-      class="absolute w-full z-50 bg-white border border-gray-300 mt-1 mh-48 overflow-hidden overflow-y-scroll rounded-md shadow-md"
-      @click.self="handleSelf()"
+      class="absolute w-full z-50 bg-white border border-gray-200 mt-2 overflow-hidden rounded-xl shadow-md"
       @focusout="showOptions = false"
     >
-      <ul class="py-1">
+      <ul
+        ref="nico"
+        class="py-2"
+      >
         <li
           v-for="(item, index) in options"
           :key="index"
-          class="px-3 py-2 cursor-pointer hover:bg-gray-200"
+          class="text-sm px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
+          :class="[
+            {'bg-gray-50 text-jva-blue-500': highlightIndex == index}
+          ]"
           @click="handleClick(item)"
         >
           {{ item.name }}
         </li>
-        <li v-if="!options.length" class="px-3 py-2 text-center">
+        <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
           {{ labelEmpty }}
         </li>
       </ul>
@@ -100,11 +104,18 @@ export default {
   data () {
     return {
       showOptions: false,
-      chosenOption: '',
-      searchTerm: ''
+      highlightIndex: null,
+      chosenOption: null,
+      searchTerm: null
     }
   },
   methods: {
+    reset () {
+      this.highlightIndex = null
+      this.searchTerm = null
+      this.chosenOption = null
+      this.showOptions = false
+    },
     handleInput (evt) {
       this.searchTerm = evt.target.value
       this.$emit('search', this.searchTerm)
@@ -116,10 +127,32 @@ export default {
       this.chosenOption = item.name
       this.showOptions = false
       this.$refs.input.focus()
+      this.highlightIndex = null
     },
     clickedOutside () {
       this.showOptions = false
+    },
+    onKeydown (e) {
+      const keyValue = e.which // enter key
+      if (keyValue === 13) {
+        if (this.highlightIndex !== null) {
+          this.handleClick(this.options[this.highlightIndex])
+        }
+      }
+      if (keyValue === 40 || keyValue === 38) {
+        if (this.highlightIndex === null) {
+          this.highlightIndex = 0
+          return
+        }
+        if (keyValue === 40) {
+          this.highlightIndex += 1
+        }
+        if (keyValue === 38) {
+          this.highlightIndex -= 1
+        }
+      }
     }
+
   }
 }
 </script>
