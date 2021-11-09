@@ -62,6 +62,16 @@
         </div>
         <Input v-model="form.phone" name="phone" label="Téléphone" label-suffix="(facultatif)" placeholder="Votre téléphone" />
         <Textarea v-model="form.description" name="description" label="Présentation de la mission" placeholder="Décrivez votre mission en quelques mots..." required />
+        <CheckboxGroup
+          v-model="form.notifications"
+          label="Notifications"
+          name="notifications"
+          :options="[
+            {key: 'comments', label:'Comments', description :'Get notified when someones posts a comment on a posting.'},
+            {key: 'candidates', label:'Candidates', description:'Get notified when a candidate applies for a job.'},
+            {key: 'offers', label:'Offers', description: 'Get notified when a candidate accepts or rejects an offer.'},
+          ]"
+        />
       </form>
     </Box>
     <div class="flex mt-12 space-x-6 justify-end">
@@ -87,7 +97,8 @@ export default {
     return {
       form: {
         firstname: 'Nicolas',
-        state: 'validated'
+        state: 'validated',
+        notifications: ['comments']
       }
     }
   },
