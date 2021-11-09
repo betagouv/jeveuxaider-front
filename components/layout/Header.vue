@@ -56,7 +56,7 @@
       </div>
     </div>
     <div class="hidden lg:flex p-4 justify-between border-t text-sm text-gray-800">
-      <div class="flex space-x-6">
+      <div class="flex space-x-8">
         <a
           v-for="link in secondNavigation"
           :key="link.name"
