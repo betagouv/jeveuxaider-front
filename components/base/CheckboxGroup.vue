@@ -18,7 +18,7 @@
         :key="option.key"
         :option="option"
         class="relative flex items-start"
-        :is-checked="localValue.includes(option.key)"
+        :is-checked="modelValue.includes(option.key)"
         @change="onChange"
       />
     </div>
@@ -37,28 +37,26 @@ export default {
     description: { type: String, default: null },
     required: { type: Boolean, default: false }
   },
-  data () {
-    return {
-      localValue: this.value
+  computed: {
+    modelValue: {
+      get () {
+        return this.value
+      },
+      set (newValue) {
+        this.$emit('input', newValue)
+      }
     }
   },
-  watch: {
-    localValue (localValue) {
-      this.$emit('input', localValue)
-    },
-    value (value) {
-      this.localValue = value
-    }
-  },
+
   methods: {
     onChange (toggleItemKey) {
-      if (this.localValue.includes(toggleItemKey)) {
-        const index = this.localValue.indexOf(toggleItemKey)
+      if (this.modelValue.includes(toggleItemKey)) {
+        const index = this.modelValue.indexOf(toggleItemKey)
         if (index > -1) {
-          this.localValue.splice(index, 1)
+          this.modelValue.splice(index, 1)
         }
       } else {
-        this.localValue.push(toggleItemKey)
+        this.modelValue.push(toggleItemKey)
       }
     }
   }
