@@ -20,41 +20,50 @@
             class="h-4 w-4 text-gray-400"
           />
         </div>
-        <input
+        <div
           :id="name"
-          ref="input"
-          :value="searchTerm"
           :name="name"
-          type="text"
-          :placeholder="placeholder"
+          tabindex="0"
           class="
+            cursor-pointer
             px-6
             py-3
             text-sm
-            appearance-none
             rounded-xl
             block
             w-full
-            placeholder-gray-text-400
             focus:outline-none
             border border-gray-200
+            focus:ring-1
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
           :class=" [{ 'border-jva-red-primary': error, 'pl-10': icon}]"
           autocomplete="off"
-          @input="handleInput"
           @keydown="onKeydown"
+          @click="showOptions = !showOptions"
         >
-        <div v-if="searchTerm" class="absolute right-3">
+          <template v-if="selectedOption">
+            {{ selectedOption[attributeLabel] }}
+          </template>
+          <template v-else>
+            <span class="text-gray-500">{{ placeholder }}</span>
+          </template>
+        </div>
+        <div class="absolute right-3">
           <XIcon
+            v-if="selectedOption && clearable"
             class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
-            @click="searchTerm = null"
+            @click="selectedOption = null"
+          />
+          <SelectorIcon
+            v-else
+            class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
           />
         </div>
       </div>
     </div>
     <div
-      v-show="searchTerm && showOptions"
+      v-show="showOptions"
       class="absolute w-full z-50 bg-white border border-gray-200 mt-2 overflow-hidden rounded-xl shadow-md"
       @focusout="showOptions = false"
     >
@@ -64,13 +73,17 @@
         <li
           v-for="(item, index) in options"
           :key="index"
-          class="text-sm px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
+          class="flex justify-between items-center text-sm px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
           :class="[
-            {'bg-gray-50 text-jva-blue-500': highlightIndex == index}
+            {'bg-gray-50 text-jva-blue-500': highlightIndex == index},
+            {'bg-gray-50 text-jva-blue-500': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
           ]"
           @click="handleClick(item)"
         >
-          {{ item.name }}
+          <span class="">
+            {{ item[attributeLabel] }}
+          </span>
+          <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="" />
         </li>
         <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
           {{ labelEmpty }}
@@ -92,44 +105,38 @@ export default {
     placeholder: { type: String, default: null },
     label: { type: String, default: null },
     labelSuffix: { type: String, default: null },
-    labelEmpty: { type: String, default: 'Aucun résultat' },
+    labelEmpty: { type: String, default: 'Aucune option' },
     name: { type: String, required: true },
     error: { type: String, default: null },
     description: { type: String, default: null },
     required: { type: Boolean, default: false },
     icon: { type: String, default: null },
-    options: { type: Array, default: () => [] }
+    options: { type: Array, default: () => [] },
+    attributeKey: { type: String, default: 'key' },
+    attributeLabel: { type: String, default: 'label' },
+    clearable: { type: Boolean, default: false }
   },
   data () {
     return {
       showOptions: false,
       highlightIndex: null,
-      selectedOption: null,
-      searchTerm: null
+      selectedOption: null
     }
   },
   methods: {
     reset () {
       this.highlightIndex = null
-      this.searchTerm = null
       this.selectedOption = null
       this.showOptions = false
     },
-    handleInput (evt) {
-      this.searchTerm = evt.target.value
-      this.$emit('fetch-suggestions', this.searchTerm)
-      this.showOptions = true
+    clickedOutside () {
+      this.showOptions = false
     },
     handleClick (item) {
-      this.searchTerm = item.name
       this.$emit('selected', item)
       this.selectedOption = item
       this.showOptions = false
-      this.$refs.input.focus()
       this.highlightIndex = null
-    },
-    clickedOutside () {
-      this.showOptions = false
     },
     onKeydown (e) {
       const keyValue = e.which // enter key

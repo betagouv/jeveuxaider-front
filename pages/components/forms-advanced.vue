@@ -6,14 +6,26 @@
           Forms advanced
         </Heading>
         <InputAutocomplete
-          name="territoire_id"
-          label="Territoire"
+          name="autocomplete"
+          label="Autocomplete"
           description="Sélectionnez un territoire depuis notre base de données"
           placeholder="Choisissez un territoire"
           required
           :options="autocompleteOptions"
-          @chosen="handleChosen"
-          @search="onSearch"
+          @selected="handleSelected"
+          @fetch-suggestions="onFetchSuggestions"
+        />
+        <SelectAdvanced
+          name="state"
+          label="Statut"
+          placeholder="Choisissez une option"
+          required
+          :options="[
+            {key: 'draft', label:'Brouillon'},
+            {key: 'waiting', label:'En attente de validation'},
+            {key: 'validated', label:'Validée'}
+          ]"
+          clearable
         />
       </form>
     </Box>
@@ -48,15 +60,15 @@ export default {
     }
   },
   methods: {
-    async onSearch (value) {
+    async onFetchSuggestions (value) {
       const res = await this.$api.fetchTerritoires({
         'filter[search]': value,
         pagination: 6
       })
       this.autocompleteOptions = res.data.data
     },
-    handleChosen (item) {
-      console.log('handleChosen', item)
+    handleSelected (item) {
+      console.log('handleSelected', item)
     },
     onSubmit (e) {
       e.preventDefault()
