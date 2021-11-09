@@ -5,7 +5,7 @@
       <span v-if="required" class="text-[#E2011C]">
         *
       </span>
-      <span v-if="labelSuffix" class="jva-blue-400">{{
+      <span v-if="labelSuffix" class="text-jva-blue-400">{{
         labelSuffix
       }}</span>
     </label>
@@ -14,6 +14,12 @@
     </div>
     <div class="mt-2">
       <div class="flex items-center relative w-full">
+        <div v-if="icon" class="absolute left-4">
+          <component
+            :is="icon"
+            class="h-4 w-4 text-gray-400"
+          />
+        </div>
         <input
           :id="name"
           v-model="inputValue"
@@ -33,7 +39,7 @@
             border border-gray-200
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
-          :class=" [{ 'border-jva-red-primary': error, 'pr-8': suffix }]"
+          :class=" [{ 'border-jva-red-primary': error, 'pr-8': suffix , 'pl-10': icon}]"
           autocomplete="new-password"
         >
         <div v-if="type == 'password' && inputValue" class="absolute right-3">
@@ -76,6 +82,7 @@ export default {
     description: { type: String, default: null },
     clearable: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
+    icon: { type: String, default: null },
     type: {
       type: String,
       default: 'text',

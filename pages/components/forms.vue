@@ -1,7 +1,10 @@
 <template>
   <div>
-    <Box title="Description de la mission">
+    <Box>
       <form id="form" class="space-y-8" @submit="onSubmit">
+        <Heading as="h2" :level="3" class="mb-8 text-jva-gray-900">
+          Informations générales
+        </Heading>
         <Input
           v-model="form.name"
           name="name"
@@ -22,13 +25,12 @@
           ]"
           required
         />
-        <div class="flex space-x-8">
+        <div class="grid sm:grid-cols-2 gap-8">
           <Input
             v-model="form.firstname"
             name="firstname"
             label="Prénom"
             placeholder="Votre prénom"
-            class="w-1/2"
             required
           />
           <Input
@@ -40,14 +42,13 @@
             required
           />
         </div>
-        <div class="flex space-x-8">
+        <div class="grid sm:grid-cols-2 gap-8">
           <Input
             v-model="form.password"
             name="password"
             label="Mot de passe"
             placeholder="Votre mot de passe"
             type="password"
-            class="w-1/2"
             required
           />
           <Input
@@ -56,12 +57,14 @@
             label="Confirmation du mot de passe"
             placeholder="Votre mot de passe"
             type="password"
-            class="w-1/2"
             required
           />
         </div>
         <Input v-model="form.phone" name="phone" label="Téléphone" label-suffix="(facultatif)" placeholder="Votre téléphone" />
         <Textarea v-model="form.description" name="description" label="Présentation de la mission" placeholder="Décrivez votre mission en quelques mots..." required />
+        <Heading as="h2" :level="3" class="mb-8 text-jva-gray-900">
+          Notifications
+        </Heading>
         <CheckboxGroup
           v-model="form.notifications"
           label="Notifications"
@@ -88,7 +91,34 @@
             {key: 8, label:'Santé pour tous'},
             {key: 9, label:'Arte & Culture pour tous'},
           ]"
+          required
         />
+        <Heading as="h2" :level="3" class="mb-8 text-jva-gray-900">
+          Socials
+        </Heading>
+        <div class="grid sm:grid-cols-2 gap-8">
+          <Input
+            v-model="form.website"
+            name="website"
+            label="Le site de l'organisation"
+            placeholder="https://wwww.website.com"
+            icon="LinkIcon"
+          />
+          <Input
+            v-model="form.twitter"
+            name="twitter"
+            label="Page twitter"
+            placeholder="https://twitter.com/votrepage"
+            icon="LinkIcon"
+          />
+          <Input
+            v-model="form.facebook"
+            name="facebook"
+            label="Page facebook"
+            placeholder="https://facebook.com/votrepage"
+            icon="LinkIcon"
+          />
+        </div>
       </form>
     </Box>
     <div class="flex mt-12 space-x-6 justify-end">
