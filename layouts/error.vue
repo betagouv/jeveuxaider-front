@@ -5,7 +5,7 @@
         Oups, cette page est introuvable
       </Heading>
 
-      <p class="my-8 text-jva-gray-900">
+      <p class="my-8 text-gray-900">
         À priori cette page n'existe plus. <br class="hidden sm:block">
         Ou pire, elle peut ne jamais avoir existée…
       </p>
@@ -16,7 +16,7 @@
         Oups, ce contenu ne vous est pas destiné…
       </Heading>
 
-      <p class="my-8 text-jva-gray-900">
+      <p class="my-8 text-gray-900">
         À priori vous n'êtes pas autorisé à accéder à cette page.
       </p>
     </template>
@@ -26,7 +26,7 @@
         Erreur {{ error.statusCode }}
       </Heading>
 
-      <p class="my-8 text-jva-gray-900">
+      <p class="my-8 text-gray-900">
         {{ error.message }}
       </p>
     </template>

@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-jva-gray-700">
+    <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-gray-700">
       {{ label }}
       <span v-if="required" class="text-[#E2011C]">
         *
@@ -9,7 +9,7 @@
         labelSuffix
       }}</span>
     </label>
-    <div v-if="description" class="text-xs text-jva-gray-500 mt-2">
+    <div v-if="description" class="text-xs text-gray-500 mt-2">
       {{ description }}
     </div>
     <div class="mt-2">
@@ -28,9 +28,9 @@
             rounded-xl
             block
             w-full
-            placeholder-jva-gray-400
+            placeholder-gray-text-400
             focus:outline-none
-            border border-jva-gray-200
+            border border-gray-200
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
           :class=" [{ 'border-jva-red-primary': error }]"

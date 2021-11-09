@@ -34,7 +34,7 @@
         <label
           :for="option.key"
           class="text-sm p-3 pointer-events-auto border rounded-xl inline-flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500"
-          :class="checked ? 'text-jva-blue-500 border-jva-blue-500 font-bold' : 'text-jva-gray-400 border-jva-gray-400'"
+          :class="checked ? 'text-jva-blue-500 border-jva-blue-500 font-bold' : 'text-gray-400 border-gray-400'"
           tabindex="0"
           @keypress.space.prevent="toggleChecked()"
         >{{ option.label }}</label>
