@@ -6,7 +6,7 @@
           <div class="flex space-x-8">
             <div class="w-1/4 space-y-12">
               <div class="">
-                <p class="text-xs font-semibold text-jva-blue-primary uppercase tracking-wide">
+                <p class="text-xs font-semibold text-jva-blue-500 uppercase tracking-wide">
                   JeVeuxAider.gouv.fr
                 </p>
                 <h1 class="mt-2 text-3xl font-extrabold text-gray-900 tracking-tight">
@@ -17,16 +17,16 @@
                 </p>
               </div>
               <div class="flex flex-col space-y-2 text-sm font-medium">
-                <nuxt-link to="/components" class="hover:text-jva-blue-hover">
+                <nuxt-link to="/components" class="hover:text-jva-blue-600">
                   Texts
                 </nuxt-link>
-                <nuxt-link to="/components/colors" class="hover:text-jva-blue-hover">
+                <nuxt-link to="/components/colors" class="hover:text-jva-blue-600">
                   Colors
                 </nuxt-link>
-                <nuxt-link to="/components/buttons" class="hover:text-jva-blue-hover">
+                <nuxt-link to="/components/buttons" class="hover:text-jva-blue-600">
                   Buttons
                 </nuxt-link>
-                <nuxt-link to="/components/forms" class="hover:text-jva-blue-hover">
+                <nuxt-link to="/components/forms" class="hover:text-jva-blue-600">
                   Forms
                 </nuxt-link>
               </div>
@@ -43,6 +43,6 @@
 
 <style lang="postcss" scoped>
 .nuxt-link-exact-active {
-  @apply text-jva-blue-primary;
+  @apply text-jva-blue-500;
 }
 </style>

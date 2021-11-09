@@ -1,11 +1,11 @@
 <template>
   <div>
-    <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-jva-gray-text-dark">
+    <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-jva-gray-text-700">
       {{ label }}
       <span v-if="required" class="text-[#E2011C]">
         *
       </span>
-      <span v-if="labelSuffix" class="text-jva-blue-light">{{
+      <span v-if="labelSuffix" class="jva-blue-400">{{
         labelSuffix
       }}</span>
     </label>
@@ -22,10 +22,10 @@
             rounded-xl
             block
             w-full
-            placeholder-jva-gray-text-lightest
+            placeholder-jva-gray-text-400
             focus:outline-none
-            border border-jva-gray-border
-            focus:ring-jva-blue-primary focus:border-jva-blue-primary
+            border border-jva-gray-200
+            focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
       :class=" [{ 'border-jva-red-primary': error}]"
       @change="onChange"

@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white shadow-xl px-16 pt-10 pb-16 rounded-2xl">
-    <Heading v-if="title" as="h2" :level="3" class="mb-8 text-jva-black-primary">
+    <Heading v-if="title" as="h2" :level="3" class="mb-8 text-jva-gray-900">
       {{ title }}
     </Heading>
     <slot />

@@ -49,36 +49,31 @@ module.exports = {
       },
       colors: {
         'jva-blue': {
-          light: '#5B71B9',
-          primary: '#070191',
-          hover: '#0A04A7'
+          400: '#5B71B9',
+          500: '#070191',
+          600: '#0A04A7'
         },
         'jva-green': {
-          light: '#C9F2EA',
-          primary: '#09AC8C',
-          hover: '#0BBF9C'
+          400: '#C9F2EA',
+          500: '#09AC8C',
+          600: '#0BBF9C'
         },
         'jva-red': {
-          light: '#FFF0EF',
-          primary: '#FC7069',
-          hover: '#EA6861'
-        },
-        'jva-black': {
-          primary: '#111111',
-          hover: '#111111'
+          400: '#FFF0EF',
+          500: '#FC7069',
+          600: '#EA6861'
         },
         'jva-orange': {
-          primary: '#DA7600',
-          hover: '#DA7600'
+          500: '#DA7600'
         },
         'jva-gray': {
-          'text-darkest': '#11142D',
-          'text-darker': '#23262F',
-          'text-dark': '#383838',
-          'text-light': '#818181',
-          'text-lighter': '#9C9C9C',
-          'text-lightest': '#B3B3B3',
-          border: '#E8E8E8'
+          900: '#11142D',
+          800: '#23262F',
+          700: '#383838',
+          500: '#818181',
+          400: '#B3B3B3',
+          200: '#E8E8E8',
+          100: '#F8F8F8'
         },
         'cool-gray': colors.coolGray,
         'true-gray': colors.trueGray,
