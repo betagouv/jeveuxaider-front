@@ -45,7 +45,7 @@
         </button>
       </div>
     </div>
-    <!-- Mobile menu, show/hide based on mobile menu state. -->
+    <!-- Mobile menu -->
     <div>
       <transition
         enter-active-class="duration-150 ease-out"
