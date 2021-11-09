@@ -1,35 +1,34 @@
 <template>
   <header class="bg-white shadow-lg">
-    <div class="flex justify-between items-center">
-      <img
-        src="@/assets/images/republique-francaise-logo.svg"
-        alt="République Française"
-        class="h-16"
-        width="166"
-        height="150"
-        data-not-lazy
-      >
-      <nuxt-link to="/">
+    <div class="flex justify-between items-center relative lg:p-2">
+      <div class="lg:flex lg:space-x-6 lg:items-center">
         <img
-          src="@/assets/images/jeveuxaider-logo.svg"
-          alt="Bénévolat je veux aider"
-          title="Bénévolat association"
-          class="h-8"
-          width="251"
-          height="41"
+          src="@/assets/images/republique-francaise-logo.svg"
+          alt="République Française"
+          class="w-20 lg:w-24"
+          width="166"
+          height="150"
           data-not-lazy
         >
-      </nuxt-link>
-      <div class="flex space-x-2 pr-4">
-        <button
-          class="text-jva-blue-500"
-        >
-          <SearchIcon class="text-jva-blue-500" />
+        <nuxt-link to="/">
+          <img
+            src="@/assets/images/jeveuxaider-logo.svg"
+            alt="Bénévolat je veux aider"
+            title="Bénévolat association"
+            class="h-8 lg:h-9 absolute inset-x-0 mx-auto top-5 lg:relative lg:w-auto lg:top-auto"
+            width="251"
+            height="41"
+            data-not-lazy
+          >
+        </nuxt-link>
+      </div>
+      <div class="flex lg:hidden space-x-2 pr-4 text-jva-blue-500">
+        <button>
+          <SearchIcon />
         </button>
-
         <button
           type="button"
-          class="text-jva-blue-500"
+
           aria-haspopup="true"
           @click="showMobileMenu = !showMobileMenu"
         >
@@ -43,6 +42,31 @@
             <XIcon />
           </template>
         </button>
+      </div>
+      <div class="hidden lg:flex divide-x divide-gray-200">
+        <a
+          v-for="link in navigation"
+          :key="link.name"
+          class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1"
+          :href="link.href"
+        >
+          <component :is="link.icon" class="flex-shrink-0 mr-3 h-4 w-4" aria-hidden="true" />
+          {{ link.name }}
+        </a>
+      </div>
+    </div>
+    <div class="hidden lg:flex p-4 justify-between border-t text-sm text-gray-800">
+      <div class="flex space-x-6">
+        <a
+          v-for="link in secondNavigation"
+          :key="link.name"
+          :href="link.href"
+          class="hover:underline"
+        >{{ link.name }}</a>
+      </div>
+      <div class="flex space-x-6">
+        <a class="hover:underline">Inscription</a>
+        <a class="hover:underline">Connexion</a>
       </div>
     </div>
     <!-- Mobile menu -->
@@ -88,13 +112,14 @@
                   </button>
                 </div>
               </div>
-              <div class="mt-3 px-2 space-y-1">
-                <a
-                  v-for="link in navigation"
-                  :key="link.name"
-                  class="block rounded-md px-3 py-2 text-base text-jva-900 font-medium hover:bg-gray-100 hover:text-gray-800"
-                  :href="link.href"
-                >{{ link.name }}</a>
+              <div class="flex flex-col mt-3 px-2 space-y-1">
+                <div v-for="link in navigation" :key="link.name" class="flex items-center px-3 py-2 hover:bg-gray-100 hover:text-gray-800 text-jva-900 rounded-md">
+                  <component :is="link.icon" class="flex-shrink-0 h-4 w-4" aria-hidden="true" />
+                  <a
+                    class="text-base font-medium ml-2"
+                    :href="link.href"
+                  >{{ link.name }}</a>
+                </div>
               </div>
             </div>
             <div class="mt-3 p-2">
@@ -113,10 +138,12 @@
 </template>
 
 <script>
+import { CalendarIcon, SearchIcon, UserIcon } from '@vue-hero-icons/outline'
+
 const navigation = [
-  { name: 'Trouver une mission', href: '#', current: false },
-  { name: 'Inscription', href: '#', current: false },
-  { name: 'Connexion', href: '#', current: false }
+  { name: 'Trouver une mission', href: '#', icon: SearchIcon, current: false },
+  { name: 'Publier une mission', href: '#', icon: CalendarIcon, current: false },
+  { name: 'Devenir bénévole', href: '#', icon: UserIcon, current: false }
 ]
 
 const secondNavigation = [
