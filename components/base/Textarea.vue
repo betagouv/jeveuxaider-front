@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-gray-text-700">
+    <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-gray-700">
       {{ label }}
       <span v-if="required" class="text-[#E2011C]">
         *
@@ -9,7 +9,7 @@
         labelSuffix
       }}</span>
     </label>
-    <div v-if="description" class="text-xs text-gray-text-500 mt-2">
+    <div v-if="description" class="text-xs text-gray-500 mt-2">
       {{ description }}
     </div>
     <div class="mt-2">

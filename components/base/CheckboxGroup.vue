@@ -1,24 +1,31 @@
 <template>
   <div>
-    <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-gray-text-dark">
+    <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-gray-700">
       {{ label }}
       <span v-if="required" class="text-[#E2011C]">
         *
       </span>
-      <span v-if="labelSuffix" class="text-jva-blue-light">{{
+      <span v-if="labelSuffix" class="jva-blue-400">{{
         labelSuffix
       }}</span>
     </label>
-    <div v-if="description" class="text-xs text-gray-text-light mt-2">
+    <div v-if="description" class="text-xs text-gray-500 mt-2">
       {{ description }}
     </div>
-    <div class="mt-2 flex flex-col space-y-2">
+    <div
+      class="mt-2 flex"
+      :class="[
+        {'flex-col space-y-2': variant == 'checkbox'},
+        {'flex-wrap -m-1': variant == 'button'},
+      ]"
+    >
       <Checkbox
         v-for="option in options"
         :key="option.key"
         :option="option"
-        class="relative flex items-start"
-        :is-checked="localValue.includes(option.key)"
+        class="relative flex items-start m-1"
+        :is-checked="modelValue.includes(option.key)"
+        :variant="variant"
         @change="onChange"
       />
     </div>
@@ -35,30 +42,34 @@ export default {
     name: { type: String, required: true },
     error: { type: String, default: null },
     description: { type: String, default: null },
-    required: { type: Boolean, default: false }
-  },
-  data () {
-    return {
-      localValue: this.value
+    required: { type: Boolean, default: false },
+    variant: {
+      type: String,
+      default: 'checkbox',
+      validator: s =>
+        ['checkbox', 'button'].includes(s)
     }
   },
-  watch: {
-    localValue (localValue) {
-      this.$emit('input', localValue)
-    },
-    value (value) {
-      this.localValue = value
+  computed: {
+    modelValue: {
+      get () {
+        return this.value
+      },
+      set (newValue) {
+        this.$emit('input', newValue)
+      }
     }
   },
+
   methods: {
     onChange (toggleItemKey) {
-      if (this.localValue.includes(toggleItemKey)) {
-        const index = this.localValue.indexOf(toggleItemKey)
+      if (this.modelValue.includes(toggleItemKey)) {
+        const index = this.modelValue.indexOf(toggleItemKey)
         if (index > -1) {
-          this.localValue.splice(index, 1)
+          this.modelValue.splice(index, 1)
         }
       } else {
-        this.localValue.push(toggleItemKey)
+        this.modelValue.push(toggleItemKey)
       }
     }
   }
