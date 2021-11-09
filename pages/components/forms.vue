@@ -78,7 +78,7 @@
       <Button variant="white">
         Save as draft
       </Button>
-      <Button type="submit" variant="primary-green" form="form">
+      <Button type="submit" variant="green" form="form">
         Submit
       </Button>
     </div>

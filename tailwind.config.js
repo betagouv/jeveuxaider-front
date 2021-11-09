@@ -66,7 +66,7 @@ module.exports = {
         'jva-orange': {
           500: '#DA7600'
         },
-        'jva-gray': {
+        gray: {
           900: '#11142D',
           800: '#23262F',
           700: '#383838',
