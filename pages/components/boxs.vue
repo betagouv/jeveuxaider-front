@@ -23,7 +23,7 @@
         {{ lorem }}
       </Box>
       <Box :padding="false" variant="flat">
-        <nuxt-img
+        <img
           src="/images/bg_header_mission.jpg"
           alt="Mission bénévolat"
         />

@@ -34,6 +34,7 @@ export default {
         case 'education':
           return 'bg-domaine-education'
         case 'sante':
+        case 'sante-pour-tous':
           return 'bg-domaine-sante'
         case 'covid':
           return 'bg-domaine-covid'

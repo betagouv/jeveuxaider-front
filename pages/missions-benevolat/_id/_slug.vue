@@ -5,7 +5,7 @@
         src="/images/bg_header_mission.jpg"
         alt="Mission bénévolat"
         class="object-cover w-full h-full"
-      />
+      >
     </div>
     <div class="px-4">
       <Breadcrumb
@@ -27,7 +27,7 @@
         ]"
       />
       <Box class="relative z-10">
-        <div class="flex justify-between mb-4">
+        <div class="flex justify-between mb-6">
           <div class="flex flex-wrap gap-2">
             <Badge
               v-if="mission.domaine"
@@ -48,8 +48,8 @@
         <Heading as="h1" :level="1">
           {{ mission.name }}
         </Heading>
-        <div class="mt-2 mb-5 text-base text-[#777E90] font-medium">
-          <span>Publié par ? </span>
+        <div class="my-6 text-cool-gray-500 font-medium">
+          <span>Publié par </span>
           <img
             v-if="mission.responsable.image"
             :src="
@@ -60,25 +60,39 @@
             :alt="`Portrait de ${mission.responsable.full_name}`"
             class="inline-flex w-7 h-7 rounded-full border-2 border-gray-200"
           >
-          <span class="text-[#171725]">
-            {{ mission.responsable.full_name }}
-          </span>
-          <span>de structureType todo</span>
+          <span class="text-gray-900">{{ mission.responsable.full_name }} </span>
+          <span>de {{ structureType }}</span>
           <component
-            :is="
-              mission.structure.statut_juridique == 'Association' &&
-                mission.structure.state == 'Validée'
-                ? 'nuxt-link'
-                : 'span'
+            :is="mission.structure.statut_juridique == 'Association' && mission.structure.state == 'Validée'
+              ? 'nuxt-link'
+              : 'span'
             "
             :to="`/organisations/${mission.structure.slug}`"
             target="_blank"
-            class="font-bold uppercase text-[#070191]"
+            class="font-bold uppercase text-jva-blue-500"
           >
             <h2 class="inline">
               {{ mission.structure.name }}
             </h2>
           </component>
+        </div>
+        <div class="flex items-center gap-4 mb-4">
+          <div
+            class="flex-none font-bold text-xs uppercase text-gray-500"
+          >
+            PUBLICS AIDÉS
+          </div>
+          <hr class="text-gray-200 w-full">
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <Badge
+            v-for="(
+              publicBeneficiaire, key
+            ) in mission.publics_beneficiaires"
+            :key="key"
+          >
+            {{ publicBeneficiaire }}
+          </Badge>
         </div>
       </Box>
     </div>
@@ -147,6 +161,13 @@ export default {
     }
   },
   computed: {
+    structureType () {
+      let status = this.mission.structure.statut_juridique.toLowerCase()
+      if (status === 'autre') {
+        status = 'organisation'
+      }
+      return status.match('^[aieouAIEOU].*') ? `l'${status}` : `la ${status}`
+    }
   }
 }
 </script>
