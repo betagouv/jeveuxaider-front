@@ -2,9 +2,9 @@
   <component
     :is="as"
     :class="{
-      'text-4xl font-extrabold tracking-tight': level == 1,
-      'text-3xl font-bold tracking-tight': level == 2,
-      'text-xl font-bold tracking-tight': level == 3,
+      'text-2xl sm:text-4xl font-extrabold': level == 1,
+      'text-3xl font-bold': level == 2,
+      'text-xl font-bold': level == 3,
     }"
   >
     <slot />

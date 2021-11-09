@@ -4,20 +4,20 @@
       <div class="text-lg leading-6 font-medium text-gray-900">
         Primary buttons
       </div>
-      <div class="flex flex-wrap -m-2 items-end">
-        <Button size="xs" class="m-2">
+      <div class="flex flex-wrap gap-2 items-end">
+        <Button size="xs">
           Button text
         </Button>
-        <Button size="sm" class="m-2">
+        <Button size="sm">
           Button text
         </Button>
-        <Button size="md" class="m-2">
+        <Button size="md">
           Button text
         </Button>
-        <Button size="lg" class="m-2">
+        <Button size="lg">
           Button text
         </Button>
-        <Button size="xl" class="m-2">
+        <Button size="xl">
           Button text
         </Button>
       </div>
@@ -26,20 +26,20 @@
       <div class="text-lg leading-6 font-medium text-gray-900">
         Icons buttons
       </div>
-      <div class="flex flex-wrap -m-2 items-end">
-        <Button size="xs" class="m-2" loading>
+      <div class="flex flex-wrap gap-2 items-end">
+        <Button size="xs" loading>
           Button text
         </Button>
-        <Button size="sm" class="m-2" loading>
+        <Button size="sm" loading>
           Button text
         </Button>
-        <Button size="md" class="m-2" icon="SearchIcon">
+        <Button size="md" icon="SearchIcon">
           Button text
         </Button>
-        <Button size="lg" class="m-2" icon="SearchIcon">
+        <Button size="lg" icon="SearchIcon">
           Button text
         </Button>
-        <Button size="xl" class="m-2" icon="SearchIcon">
+        <Button size="xl" icon="SearchIcon">
           Button text
         </Button>
       </div>
@@ -48,20 +48,20 @@
       <div class="text-lg leading-6 font-medium text-gray-900">
         Green buttons
       </div>
-      <div class="flex flex-wrap -m-2 items-end">
-        <Button variant="green" size="xs" class="m-2">
+      <div class="flex flex-wrap gap-2 items-end">
+        <Button variant="green" size="xs">
           Button text
         </Button>
-        <Button variant="green" size="sm" class="m-2">
+        <Button variant="green" size="sm">
           Button text
         </Button>
-        <Button variant="green" size="md" class="m-2">
+        <Button variant="green" size="md">
           Button text
         </Button>
-        <Button variant="green" size="lg" class="m-2">
+        <Button variant="green" size="lg">
           Button text
         </Button>
-        <Button variant="green" size="xl" class="m-2">
+        <Button variant="green" size="xl">
           Button text
         </Button>
       </div>
@@ -70,20 +70,20 @@
       <div class="text-lg leading-6 font-medium text-gray-900">
         Secondary buttons
       </div>
-      <div class="flex flex-wrap -m-2 items-end">
-        <Button variant="secondary" size="xs" class="m-2">
+      <div class="flex flex-wrap gap-2 items-end">
+        <Button variant="secondary" size="xs">
           Button text
         </Button>
-        <Button variant="secondary" size="sm" class="m-2">
+        <Button variant="secondary" size="sm">
           Button text
         </Button>
-        <Button variant="secondary" size="md" class="m-2">
+        <Button variant="secondary" size="md">
           Button text
         </Button>
-        <Button variant="secondary" size="lg" class="m-2">
+        <Button variant="secondary" size="lg">
           Button text
         </Button>
-        <Button variant="secondary" size="xl" class="m-2">
+        <Button variant="secondary" size="xl">
           Button text
         </Button>
       </div>
@@ -93,20 +93,20 @@
       <div class="text-lg leading-6 font-medium text-gray-900">
         Red buttons
       </div>
-      <div class="flex flex-wrap -m-2 items-end">
-        <Button variant="red" size="xs" class="m-2">
+      <div class="flex flex-wrap gap-2 items-end">
+        <Button variant="red" size="xs">
           Button text
         </Button>
-        <Button variant="red" size="sm" class="m-2">
+        <Button variant="red" size="sm">
           Button text
         </Button>
-        <Button variant="red" size="md" class="m-2">
+        <Button variant="red" size="md">
           Button text
         </Button>
-        <Button variant="red" size="lg" class="m-2">
+        <Button variant="red" size="lg">
           Button text
         </Button>
-        <Button variant="red" size="xl" class="m-2">
+        <Button variant="red" size="xl">
           Button text
         </Button>
       </div>
@@ -115,20 +115,20 @@
       <div class="text-lg leading-6 font-medium text-gray-900">
         White buttons
       </div>
-      <div class="flex flex-wrap -m-2 items-end">
-        <Button variant="white" size="xs" class="m-2">
+      <div class="flex flex-wrap gap-2 items-end">
+        <Button variant="white" size="xs">
           Button text
         </Button>
-        <Button variant="white" size="sm" class="m-2">
+        <Button variant="white" size="sm">
           Button text
         </Button>
-        <Button variant="white" size="md" class="m-2">
+        <Button variant="white" size="md">
           Button text
         </Button>
-        <Button variant="white" size="lg" class="m-2">
+        <Button variant="white" size="lg">
           Button text
         </Button>
-        <Button variant="white" size="xl" class="m-2">
+        <Button variant="white" size="xl">
           Button text
         </Button>
       </div>
@@ -137,17 +137,17 @@
       <div class="text-lg leading-6 font-medium text-gray-900">
         Rounded buttons
       </div>
-      <div class="flex flex-wrap -m-2 items-end">
-        <Button variant="primary" class="m-2" rounded>
+      <div class="flex flex-wrap gap-2 items-end">
+        <Button variant="primary" rounded>
           Button text
         </Button>
-        <Button variant="green" class="m-2" rounded>
+        <Button variant="green" rounded>
           Button text
         </Button>
-        <Button variant="secondary" class="m-2" rounded>
+        <Button variant="secondary" rounded>
           Button text
         </Button>
-        <Button variant="white" class="m-2" rounded>
+        <Button variant="white" rounded>
           Button text
         </Button>
       </div>
@@ -156,18 +156,53 @@
       <div class="text-lg leading-6 font-medium text-gray-900">
         Badges
       </div>
-      <div class="flex flex-wrap -m-2 items-end">
-        <Badge color="gray" class="m-2">
+      <div class="flex flex-wrap gap-2 items-end">
+        <Badge color="gray">
           Brouillon
         </Badge>
-        <Badge color="orange" class="m-2">
+        <Badge color="orange">
           En attente de validation
         </Badge>
-        <Badge color="green" class="m-2">
+        <Badge color="green">
           Validée
         </Badge>
-        <Badge color="red" class="m-2">
+        <Badge color="red">
           Signalée
+        </Badge>
+      </div>
+      <div class="text-lg leading-6 font-medium text-gray-900">
+        Par domaine d'action
+      </div>
+      <div class="flex flex-wrap gap-2 items-end">
+        <Badge color="covid">
+          Covid
+        </Badge>
+        <Badge color="education">
+          Éducation
+        </Badge>
+        <Badge color="sante">
+          Santé
+        </Badge>
+        <Badge color="nature">
+          Nature
+        </Badge>
+        <Badge color="solidarite">
+          Solidarité
+        </Badge>
+        <Badge color="sport">
+          Sport
+        </Badge>
+        <Badge color="prevention">
+          Prévention
+        </Badge>
+        <Badge color="memoire">
+          Mémoire
+        </Badge>
+        <Badge color="cooperation">
+          Coopération
+        </Badge>
+        <Badge color="culture">
+          Culture
         </Badge>
       </div>
     </div>

@@ -12,9 +12,7 @@ export default {
   props: {
     color: {
       type: String,
-      default: 'gray',
-      validator: s =>
-        ['gray', 'orange', 'green', 'red'].includes(s)
+      default: 'gray'
     }
   },
   computed: {
@@ -28,6 +26,27 @@ export default {
           return 'bg-jva-green-500'
         case 'red':
           return 'bg-jva-red-500'
+        case 'solidarite':
+        case 'solidarite-et-insertion':
+          return 'bg-domaine-solidarite'
+        case 'nature':
+          return 'bg-domaine-nature'
+        case 'education':
+          return 'bg-domaine-education'
+        case 'sante':
+          return 'bg-domaine-sante'
+        case 'covid':
+          return 'bg-domaine-covid'
+        case 'prevention':
+          return 'bg-domaine-prevention'
+        case 'sport':
+          return 'bg-domaine-sport'
+        case 'memoire':
+          return 'bg-domaine-memoire'
+        case 'cooperation':
+          return 'bg-domaine-cooperation'
+        case 'culture':
+          return 'bg-domaine-culture'
         default:
           return 'bg-gray-400'
       }

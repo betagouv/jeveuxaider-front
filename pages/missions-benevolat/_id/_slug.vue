@@ -14,8 +14,8 @@
         :items="[
           { label: 'Missions de bénévolat', link: '/missions-benevolat' },
           {
-            label: domainName,
-            link: `/missions-benevolat?refinementList[domaines][0]=${domainName}`,
+            label: mission.domaine.name.fr,
+            link: `/missions-benevolat?refinementList[domaines][0]=${mission.domaine.name.fr}`,
           },
           {
             label:
@@ -27,9 +27,59 @@
         ]"
       />
       <Box class="relative z-10">
+        <div class="flex justify-between mb-4">
+          <div class="flex flex-wrap gap-2">
+            <Badge
+              v-if="mission.domaine"
+              class="uppercase"
+              :color="mission.domaine.slug.fr"
+            >
+              {{ mission.domaine.name.fr }}
+            </Badge>
+            <Badge
+              v-if="mission.domaine_secondaire"
+              class="uppercase"
+            >
+              {{ mission.domaine_secondaire.name.fr }}
+            </Badge>
+          </div>
+          <div>Share todo</div>
+        </div>
         <Heading as="h1" :level="1">
           {{ mission.name }}
         </Heading>
+        <div class="mt-2 mb-5 text-base text-[#777E90] font-medium">
+          <span>Publié par </span>
+          <img
+            v-if="mission.responsable.image"
+            :src="
+              mission.responsable.image.thumb
+                ? mission.responsable.image.thumb
+                : mission.responsable.image.original
+            "
+            :alt="`Portrait de ${mission.responsable.full_name}`"
+            class="inline-flex w-7 h-7 rounded-full border-2 border-gray-200"
+          >
+          <span class="text-[#171725]">
+            {{ mission.responsable.full_name }}
+          </span>
+          <span>de structureType todo</span>
+          <component
+            :is="
+              mission.structure.statut_juridique == 'Association' &&
+                mission.structure.state == 'Validée'
+                ? 'nuxt-link'
+                : 'span'
+            "
+            :to="`/organisations/${mission.structure.slug}`"
+            target="_blank"
+            class="font-bold uppercase text-[#070191]"
+          >
+            <h2 class="inline">
+              {{ mission.structure.name }}
+            </h2>
+          </component>
+        </div>
       </Box>
     </div>
   </div>
@@ -97,13 +147,6 @@ export default {
     }
   },
   computed: {
-    domainName () {
-      return (
-        this.mission?.domaine?.name.fr ??
-        this.mission?.template?.domaine?.name.fr ??
-        null
-      )
-    }
   }
 }
 </script>
