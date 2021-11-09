@@ -72,13 +72,30 @@
             {key: 'offers', label:'Offers', description: 'Get notified when a candidate accepts or rejects an offer.'},
           ]"
         />
+        <CheckboxGroup
+          v-model="form.domaines"
+          label="Domaines"
+          name="domaines"
+          variant="button"
+          :options="[
+            {key: 1, label:'Solidarité et insertion'},
+            {key: 2, label:'Protection de la nature'},
+            {key: 3, label:'Education pour tous'},
+            {key: 4, label:'Prévention et protection'},
+            {key: 5, label:'Sport pour tous'},
+            {key: 6, label:'Mémoire et citoyenneté'},
+            {key: 7, label:'Coopération internationale'},
+            {key: 8, label:'Santé pour tous'},
+            {key: 9, label:'Arte & Culture pour tous'},
+          ]"
+        />
       </form>
     </Box>
     <div class="flex mt-12 space-x-6 justify-end">
       <Button variant="white">
         Save as draft
       </Button>
-      <Button type="submit" variant="primary-green" form="form">
+      <Button type="submit" variant="green" form="form">
         Submit
       </Button>
     </div>
@@ -98,7 +115,8 @@ export default {
       form: {
         firstname: 'Nicolas',
         state: 'validated',
-        notifications: ['comments']
+        notifications: ['comments'],
+        domaines: [1, 5]
       }
     }
   },
