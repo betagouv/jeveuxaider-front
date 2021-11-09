@@ -49,7 +49,7 @@
           {{ mission.name }}
         </Heading>
         <div class="mt-2 mb-5 text-base text-[#777E90] font-medium">
-          <span>Publié par </span>
+          <span>Publié par ? </span>
           <img
             v-if="mission.responsable.image"
             :src="
