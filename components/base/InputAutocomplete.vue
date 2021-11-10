@@ -48,7 +48,7 @@
         <div v-if="searchTerm" class="absolute right-3">
           <XIcon
             class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
-            @click="searchTerm = null"
+            @click="reset()"
           />
         </div>
       </div>
@@ -64,13 +64,17 @@
         <li
           v-for="(item, index) in options"
           :key="index"
-          class="text-sm px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
+          class="flex justify-between items-center text-sm px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
           :class="[
-            {'bg-gray-50 text-jva-blue-500': highlightIndex == index}
+            {'bg-gray-50 text-jva-blue-500': highlightIndex == index},
+            {'bg-gray-50 text-jva-blue-500': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
           ]"
           @click="handleClick(item)"
         >
-          {{ item.name }}
+          <span class="">
+            {{ item[attributeLabel] }}
+          </span>
+          <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="" />
         </li>
         <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
           {{ labelEmpty }}
@@ -98,7 +102,9 @@ export default {
     description: { type: String, default: null },
     required: { type: Boolean, default: false },
     icon: { type: String, default: null },
-    options: { type: Array, default: () => [] }
+    options: { type: Array, default: () => [] },
+    attributeKey: { type: String, default: 'id' },
+    attributeLabel: { type: String, default: 'name' }
   },
   data () {
     return {
@@ -114,6 +120,7 @@ export default {
       this.searchTerm = null
       this.selectedOption = null
       this.showOptions = false
+      this.$emit('selected', null)
     },
     handleInput (evt) {
       this.searchTerm = evt.target.value
@@ -121,7 +128,7 @@ export default {
       this.showOptions = true
     },
     handleClick (item) {
-      this.searchTerm = item.name
+      this.searchTerm = item[this.attributeLabel]
       this.$emit('selected', item)
       this.selectedOption = item
       this.showOptions = false
@@ -133,21 +140,35 @@ export default {
     },
     onKeydown (e) {
       const keyValue = e.which // enter key
+      if (keyValue === 9) {
+        this.showOptions = false
+        this.highlightIndex = null
+      }
       if (keyValue === 13) {
         if (this.highlightIndex !== null) {
           this.handleClick(this.options[this.highlightIndex])
+          return
         }
       }
       if (keyValue === 40 || keyValue === 38) {
         if (this.highlightIndex === null) {
           this.highlightIndex = 0
+          this.showOptions = true
           return
         }
         if (keyValue === 40) {
-          this.highlightIndex += 1
+          if (this.highlightIndex + 1 === this.options.length) {
+            this.highlightIndex = 0
+          } else {
+            this.highlightIndex += 1
+          }
         }
         if (keyValue === 38) {
-          this.highlightIndex -= 1
+          if (this.highlightIndex === 0) {
+            this.highlightIndex = this.options.length - 1
+          } else {
+            this.highlightIndex -= 1
+          }
         }
       }
     }
