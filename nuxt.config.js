@@ -57,6 +57,9 @@ export default {
   publicRuntimeConfig: {
     axios: {
       browserBaseURL: `${process.env.API_URL}/api`
+    },
+    google: {
+      places: process.env.GOOGLE_PLACE_API_KEY
     }
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build

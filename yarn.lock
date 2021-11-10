@@ -9376,6 +9376,11 @@ terser@^5.3.4:
     source-map "~0.7.2"
     source-map-support "~0.5.20"
 
+text-clipper@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/text-clipper/-/text-clipper-2.1.0.tgz#18c615738d21a7bba9facd1069674b9088c66c4c"
+  integrity sha512-A6thWpysC0pgX+jFnW8sj0K7qgwi84SuJwMvWrAFqusnTJ1NAivm8XDU2I+BG6V2IJXT7fcQQAzebrxx+lkF2w==
+
 text-table@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"

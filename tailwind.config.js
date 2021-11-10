@@ -79,7 +79,7 @@ module.exports = {
           100: '#F8F8F8',
           50: '#FAFAFA'
         },
-        'cool-gray': colors.coolGray,
+        'cool-gray': { ...colors.coolGray, 500: '#777E90' },
         domaine: {
           solidarite: '#F46D66',
           nature: '#0B9B6B',

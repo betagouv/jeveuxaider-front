@@ -43,6 +43,7 @@ export default {
         case 'prevention':
           return 'bg-domaine-prevention'
         case 'sport':
+        case 'sport-pour-tous':
           return 'bg-domaine-sport'
         case 'memoire':
           return 'bg-domaine-memoire'
