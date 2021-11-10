@@ -1,0 +1,17 @@
+{
+    "structure_legal_status": [
+        {"key": "Association", "label": "Association"},
+        {"key": "Collectivité", "label": "Collectivité"},
+        {"key": "Structure publique", "label": "Organisation publique"},
+        {"key": "Structure privée", "label": "Organisation privée"},
+        {"key": "Autre", "label": "Autre"}
+    ],
+    "mission_publics_beneficiaires": [
+        {"key": "seniors", "label": "Personnes âgées"},
+        {"key": "persons_with_disabilities", "label": "Personnes en situation de handicap"},
+        {"key": "people_in_difficulty", "label": "Personnes en difficulté"},
+        {"key": "parents", "label": "Parents"},
+        {"key": "children", "label": "Jeunes / enfants"},
+        {"key": "any_public", "label": "Tous publics"}
+    ]
+}

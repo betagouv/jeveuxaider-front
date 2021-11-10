@@ -1,6 +1,6 @@
 <template>
   <span
-    class="inline-flex items-center rounded-full font-medium px-3 py-1 text-xs text-white"
+    class="inline-flex items-center rounded-full font-semibold px-3 py-1 text-xs text-white"
     :class="colorClass"
   >
     <slot />
@@ -19,7 +19,9 @@ export default {
     colorClass () {
       switch (this.color) {
         case 'gray':
-          return 'bg-gray-400'
+          return 'bg-gray-600'
+        case 'gray-light':
+          return 'bg-gray-200 text-gray-900'
         case 'orange':
           return 'bg-jva-orange-500'
         case 'green':
@@ -49,7 +51,7 @@ export default {
         case 'culture':
           return 'bg-domaine-culture'
         default:
-          return 'bg-gray-400'
+          return 'bg-gray-600'
       }
     }
   }

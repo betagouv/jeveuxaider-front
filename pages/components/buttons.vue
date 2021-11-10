@@ -158,7 +158,10 @@
       </div>
       <div class="flex flex-wrap gap-2 items-end">
         <Badge color="gray">
-          Brouillon
+          Default
+        </Badge>
+        <Badge color="gray-light">
+          Default light
         </Badge>
         <Badge color="orange">
           En attente de validation

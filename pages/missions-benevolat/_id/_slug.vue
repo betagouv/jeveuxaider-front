@@ -39,6 +39,7 @@
             <Badge
               v-if="mission.domaine_secondaire"
               class="uppercase"
+              color="gray-light"
             >
               {{ mission.domaine_secondaire.name.fr }}
             </Badge>
@@ -61,7 +62,7 @@
             class="inline-flex w-7 h-7 rounded-full border-2 border-gray-200"
           >
           <span class="text-gray-900">{{ mission.responsable.full_name }} </span>
-          <span>de {{ structureType }}</span>
+          <span class="lowercase">de {{ mission.structure.statut_juridique|label('structure_legal_status')|prefix }}</span>
           <component
             :is="mission.structure.statut_juridique == 'Association' && mission.structure.state == 'Validée'
               ? 'nuxt-link'
@@ -80,7 +81,7 @@
           <div
             class="flex-none font-bold text-xs uppercase text-gray-500"
           >
-            PUBLICS AIDÉS
+            Publics aidés
           </div>
           <hr class="text-gray-200 w-full">
         </div>
@@ -90,10 +91,25 @@
               publicBeneficiaire, key
             ) in mission.publics_beneficiaires"
             :key="key"
+            class="uppercase"
           >
-            {{ publicBeneficiaire }}
+            {{ publicBeneficiaire|label('mission_publics_beneficiaires') }}
           </Badge>
         </div>
+        <template v-if="mission.skills && mission.skills.length">
+          <div class="flex items-center gap-4 mt-8 mb-4">
+            <div
+              class="flex-none font-bold text-xs uppercase text-gray-500"
+            >
+              Compétences recherchées
+            </div>
+            <hr class="text-gray-200 w-full">
+          </div>
+          <div
+            class="text-cool-gray-500"
+            v-html="mission.skills.map((skill) => skill.name.fr).join(`<span class='mx-2'>•</span>`)"
+          />
+        </template>
       </Box>
     </div>
   </div>
@@ -110,7 +126,6 @@ export default {
     const { data: mission } = await $api.getMission(params.id).catch((err) => {
       return error({ statusCode: err.response.status, message: err.response.statusText })
     })
-    console.log('mission', mission)
 
     // if (['Brouillon', 'En attente de validation'].includes(mission.state)) {
     //   // Si on est pas modérateur
@@ -161,13 +176,6 @@ export default {
     }
   },
   computed: {
-    structureType () {
-      let status = this.mission.structure.statut_juridique.toLowerCase()
-      if (status === 'autre') {
-        status = 'organisation'
-      }
-      return status.match('^[aieouAIEOU].*') ? `l'${status}` : `la ${status}`
-    }
   }
 }
 </script>
