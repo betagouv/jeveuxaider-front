@@ -45,8 +45,18 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/dayjs'
   ],
+
+  dayjs: {
+    locales: ['fr'],
+    defaultLocale: 'fr',
+    plugins: [
+      'relativeTime', // import 'dayjs/plugin/utc'
+      'customParseFormat'
+    ]
+  },
 
   privateRuntimeConfig: {
     axios: {

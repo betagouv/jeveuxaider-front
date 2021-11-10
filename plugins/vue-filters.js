@@ -15,3 +15,12 @@ Vue.filter('label', function (key, vocabulary) {
 Vue.filter('prefix', function (word) {
   return word.match('^[aieouAIEOU].*') ? `l'${word}` : `la ${word}`
 })
+
+Vue.filter('pluralize', function (count, singular, plural, showCount = true) {
+  let output = singular
+  if (count > 1) {
+    output = plural || `${singular}s`
+  }
+
+  return showCount ? `${count} ${output}` : output
+})
