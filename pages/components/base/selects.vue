@@ -5,15 +5,17 @@
         <Heading as="h2" :level="3" class="mb-8 text-jva-gray-900">
           Selects
         </Heading>
-        <InputAutocomplete
-          name="autocomplete"
-          label="Autocomplete"
-          description="Sélectionnez un territoire depuis notre base de données"
-          placeholder="Choisissez un territoire"
+        <Select
+          v-model="form.state"
+          name="state"
+          label="Select native"
+          placeholder="Statut de la mission"
+          :options="[
+            {key: 'draft', label:'Brouillon'},
+            {key: 'waiting', label:'En attente de validation'},
+            {key: 'validated', label:'Validée'}
+          ]"
           required
-          :options="autocompleteOptions"
-          @selected="handleSelected"
-          @fetch-suggestions="onFetchSuggestions"
         />
         <SelectAdvanced
           v-model="form.select_advanced"
@@ -45,6 +47,19 @@
           attribute-key="id"
           attribute-label="name"
           clearable
+        />
+        <Heading as="h2" :level="3" class="mb-8 text-jva-gray-900">
+          Autocomplete
+        </Heading>
+        <InputAutocomplete
+          name="autocomplete"
+          label="Autocomplete"
+          description="Sélectionnez un territoire depuis notre base de données"
+          placeholder="Choisissez un territoire"
+          required
+          :options="autocompleteOptions"
+          @selected="handleSelected"
+          @fetch-suggestions="onFetchSuggestions"
         />
       </form>
     </Box>
