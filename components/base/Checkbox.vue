@@ -7,7 +7,7 @@
           :aria-describedby="`${option.key}-description`"
           :name="option.key"
           type="checkbox"
-          class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-600 border border-gray-300 rounded"
+          class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-700 border border-gray-300 rounded"
           :checked="checked"
           @change="toggleChecked()"
         >
@@ -26,7 +26,7 @@
           :aria-describedby="`${option.key}-description`"
           :name="option.key"
           type="checkbox"
-          class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-600 border border-gray-300 rounded sr-only"
+          class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-700 border border-gray-300 rounded sr-only"
           :checked="checked"
           tabindex="-1"
           @click="toggleChecked()"

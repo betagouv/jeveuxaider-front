@@ -20,7 +20,7 @@
                 <div class="text-lg font-bold text-gray-700">
                   Base components
                 </div>
-                <nuxt-link v-for="link in baseLinks" :key="link.name" :to="link.href" class="hover:text-jva-blue-600 text-gray-500 focus:outline-none focus:underline">
+                <nuxt-link v-for="link in baseLinks" :key="link.name" :to="link.href" class="hover:text-jva-blue-700 text-gray-500 focus:outline-none focus:underline">
                   {{ link.name }}
                 </nuxt-link>
               </div>
@@ -28,7 +28,7 @@
                 <div class="text-lg font-bold text-gray-700">
                   Advanced
                 </div>
-                <nuxt-link v-for="link in advancedLinks" :key="link.name" :to="link.href" class="hover:text-jva-blue-600 text-gray-500 focus:outline-none focus:underline">
+                <nuxt-link v-for="link in advancedLinks" :key="link.name" :to="link.href" class="hover:text-jva-blue-700 text-gray-500 focus:outline-none focus:underline">
                   {{ link.name }}
                 </nuxt-link>
               </div>
@@ -53,6 +53,7 @@ export default {
         { name: 'Buttons', href: '/components/base/buttons' },
         { name: 'Colors', href: '/components/base/colors' },
         { name: 'Selects', href: '/components/base/selects' },
+        { name: 'Tabs', href: '/components/base/tabs' },
         { name: 'Others', href: '/components/base/others' }
       ],
       advancedLinks: [

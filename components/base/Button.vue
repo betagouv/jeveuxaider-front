@@ -8,7 +8,7 @@
       focus:outline-none focus:ring-2 focus:ring-offset-2
     "
     :class="[{
-               'text-white bg-jva-blue-500 hover:bg-jva-blue-600 border-transparent focus:ring-jva-blue-500':
+               'text-white bg-jva-blue-500 hover:bg-jva-blue-700 border-transparent focus:ring-jva-blue-500':
                  variant == 'primary',
                'text-white bg-jva-green-500 hover:bg-jva-green-600 border-transparent focus:ring-jva-green-500':
                  variant == 'green',
