@@ -25,7 +25,8 @@ export default {
   plugins: [
     '~/plugins/api.js',
     '~/plugins/heroicons.js',
-    { src: '@/plugins/v-click-outside', ssr: false }
+    { src: '@/plugins/v-click-outside', ssr: false },
+    '~/plugins/vue-filters.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -44,7 +45,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    '@nuxtjs/axios'
   ],
 
   privateRuntimeConfig: {
