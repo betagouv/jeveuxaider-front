@@ -3,7 +3,7 @@
     class="py-4 flex"
     aria-label="Breadcrumb"
     :class="[
-      { 'bg-primary border-jva-blue-500 border-b': theme == 'dark' },
+      { 'bg-jva-blue-500 border-jva-blue-500 border-b': theme == 'dark' },
       { 'bg-white border-gray-200 border-b': theme == 'light' },
     ]"
   >

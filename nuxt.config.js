@@ -12,7 +12,7 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
     ]
   },
 
@@ -25,8 +25,8 @@ export default {
   plugins: [
     '~/plugins/api.js',
     '~/plugins/heroicons.js',
-    { src: '@/plugins/v-click-outside', ssr: false },
-    '~/plugins/vue-filters.js'
+    '~/plugins/vue-filters.js',
+    '~/plugins/libraries.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -39,13 +39,15 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/svg'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/dayjs'
   ],
 
   privateRuntimeConfig: {
@@ -57,9 +59,33 @@ export default {
   publicRuntimeConfig: {
     axios: {
       browserBaseURL: `${process.env.API_URL}/api`
+    },
+    blog: {
+      restApiUrl: process.env.BLOG_REST_API_URL,
+      url: process.env.BLOG_URL
     }
   },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    transpile: [
+      'vue-clamp',
+      'resize-detector'
+    ],
+    postcss: {
+      plugins: {
+        'tailwindcss/nesting': {}
+      }
+    }
+  },
+
+  // Plugins config
+  dayjs: {
+    locales: ['fr'],
+    defaultLocale: 'fr',
+    plugins: [
+      'relativeTime',
+      'customParseFormat'
+    ]
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>@TODO page d'accueil</div>
+  <div>@TODO page d'accueilss</div>
 </template>
 
 <script>

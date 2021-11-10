@@ -16,6 +16,9 @@ module.exports = {
   ],
   // add your custom rules here
   rules: {
-    'no-console': 'off'
+    'no-console': 'off',
+    'no-irregular-whitespace': 'off',
+    'vue/no-v-html': 'off',
+    'import/no-named-as-default': 'off'
   }
 }

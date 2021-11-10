@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import SpinIcon from '@/components/icons/SpinIcon'
+import SpinIcon from '@/components/icon/SpinIcon'
 
 export default {
   components: {
