@@ -65,7 +65,7 @@
           v-model="form.places"
           name="places"
           label="Places disponibles"
-          placeholder="Votre nom"
+          placeholder="Saisissez le nombre de personnes"
           suffix="personnes"
           type="number"
           required

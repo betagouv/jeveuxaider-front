@@ -4,8 +4,8 @@
       <div class="max-w-6xl mx-auto py-16 sm:py-24">
         <div class="sm:mt-8">
           <div class="grid grid-cols-1 sm:grid-cols-4 gap-12">
-            <div class="">
-              <div class="mb-12">
+            <div class="space-y-12">
+              <div class="">
                 <p class="text-xs font-semibold text-jva-blue-500 uppercase tracking-wide">
                   JeVeuxAider.gouv.fr
                 </p>
@@ -17,7 +17,18 @@
                 </p>
               </div>
               <div class="flex flex-col space-y-4 text-sm font-medium">
-                <nuxt-link v-for="link in links" :key="link.name" :to="link.href" class="hover:text-jva-blue-600 focus:outline-none focus:underline">
+                <div class="text-lg font-bold text-gray-700">
+                  Base components
+                </div>
+                <nuxt-link v-for="link in baseLinks" :key="link.name" :to="link.href" class="hover:text-jva-blue-700 text-gray-500 focus:outline-none focus:underline">
+                  {{ link.name }}
+                </nuxt-link>
+              </div>
+              <div class="flex flex-col space-y-4 text-sm font-medium">
+                <div class="text-lg font-bold text-gray-700">
+                  Advanced
+                </div>
+                <nuxt-link v-for="link in advancedLinks" :key="link.name" :to="link.href" class="hover:text-jva-blue-700 text-gray-500 focus:outline-none focus:underline">
                   {{ link.name }}
                 </nuxt-link>
               </div>
@@ -36,14 +47,18 @@
 export default {
   data () {
     return {
-      links: [
-        { name: 'Texts', href: '/components' },
-        { name: 'Colors', href: '/components/colors' },
-        { name: 'Buttons', href: '/components/buttons' },
-        { name: 'Badges', href: '/components/badges' },
-        { name: 'Forms', href: '/components/forms' },
-        { name: 'Boxs', href: '/components/boxs' },
-        { name: 'Advanced', href: '/components/advanced' }
+      baseLinks: [
+        { name: 'Texts', href: '/components/base/texts' },
+        { name: 'Boxs', href: '/components/base/boxs' },
+        { name: 'Buttons', href: '/components/base/buttons' },
+        { name: 'Colors', href: '/components/base/colors' },
+        { name: 'Selects', href: '/components/base/selects' },
+        { name: 'Tabs', href: '/components/base/tabs' },
+        { name: 'Others', href: '/components/base/others' }
+      ],
+      advancedLinks: [
+        { name: 'Forms', href: '/components/advanced/forms' },
+        { name: 'Cards', href: '/components/advanced/cards' }
       ]
     }
   }

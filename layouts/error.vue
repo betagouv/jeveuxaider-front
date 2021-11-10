@@ -36,10 +36,9 @@
         <Button>Revenir en lieu sûr</Button>
       </nuxt-link>
 
-      <a
-        class="mt-4 text-jva-blue-400 cursor-pointer underline hover:jva-blue"
-        @click.prevent="back()"
-      >Page précédente</a>
+      <Link class="mt-4" @click.native="back()">
+        Page précédente ›
+      </Link>
     </div>
   </div>
 </template>

@@ -3,24 +3,26 @@
     <Box>
       <form id="form" class="space-y-8" @submit="onSubmit">
         <Heading as="h2" :level="3" class="mb-8 text-jva-gray-900">
-          Forms advanced
+          Selects
         </Heading>
-        <InputAutocomplete
-          name="autocomplete"
-          label="Autocomplete"
-          description="Sélectionnez un territoire depuis notre base de données"
-          placeholder="Choisissez un territoire"
+        <Select
+          v-model="form.state"
+          name="state"
+          label="Select native"
+          placeholder="Statut de la mission"
+          :options="[
+            {key: 'draft', label:'Brouillon'},
+            {key: 'waiting', label:'En attente de validation'},
+            {key: 'validated', label:'Validée'}
+          ]"
           required
-          :options="autocompleteOptions"
-          @selected="handleSelected"
-          @fetch-suggestions="onFetchSuggestions"
         />
         <SelectAdvanced
           v-model="form.select_advanced"
           name="state"
           label="Select with themed options"
           placeholder="Choisissez une option"
-          description="Options avec des keys et des labels"
+          description="Options avec key => label"
           required
           :options="[
             {key: 'draft', label:'Brouillon'},
@@ -33,7 +35,7 @@
           v-model="form.select_advanced_id"
           name="responsable"
           label="Select with themed options based on model"
-          description="Options avec des ids et des name (props attribute-key & attribute-label)"
+          description="Options avec id => name (props attribute-key & attribute-label)"
           placeholder="Choisissez une option"
           required
           :options="[
@@ -45,6 +47,19 @@
           attribute-key="id"
           attribute-label="name"
           clearable
+        />
+        <Heading as="h2" :level="3" class="mb-8 text-jva-gray-900">
+          Autocomplete
+        </Heading>
+        <InputAutocomplete
+          name="autocomplete"
+          label="Autocomplete"
+          description="Sélectionnez un territoire depuis notre base de données"
+          placeholder="Choisissez un territoire"
+          required
+          :options="autocompleteOptions"
+          @selected="handleSelected"
+          @fetch-suggestions="onFetchSuggestions"
         />
       </form>
     </Box>
