@@ -52,4 +52,12 @@ export default {
 ::v-deep p {
   @apply mb-4
 }
+::v-deep ol {
+    list-style: decimal;
+    @apply mb-4 pl-4
+}
+::v-deep ul {
+    list-style: disc;
+    @apply mb-4 pl-4 space-y-4
+}
 </style>
