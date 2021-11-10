@@ -53,7 +53,7 @@
           <XIcon
             v-if="selectedOption && clearable"
             class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
-            @click="selectedOption = null"
+            @click="reset()"
           />
           <SelectorIcon
             v-else
@@ -101,7 +101,7 @@
 
 export default {
   props: {
-    value: { type: String, default: null },
+    value: { type: [String, Number], default: null },
     placeholder: { type: String, default: null },
     label: { type: String, default: null },
     labelSuffix: { type: String, default: null },
@@ -120,7 +120,7 @@ export default {
     return {
       showOptions: false,
       highlightIndex: null,
-      selectedOption: null
+      selectedOption: this.value ? this.options.find(item => item[this.attributeKey] === this.value) : null
     }
   },
   methods: {
@@ -128,33 +128,51 @@ export default {
       this.highlightIndex = null
       this.selectedOption = null
       this.showOptions = false
+      this.$emit('input', null)
     },
     clickedOutside () {
       this.showOptions = false
     },
     handleClick (item) {
-      this.$emit('selected', item)
-      this.selectedOption = item
+      if (item) {
+        this.$emit('input', item[this.attributeKey])
+        this.selectedOption = item
+      }
       this.showOptions = false
       this.highlightIndex = null
     },
     onKeydown (e) {
       const keyValue = e.which // enter key
-      if (keyValue === 13) {
+      if (keyValue === 9) {
+        this.showOptions = false
+        this.highlightIndex = null
+      }
+
+      if (keyValue === 13 || keyValue === 32) {
         if (this.highlightIndex !== null) {
           this.handleClick(this.options[this.highlightIndex])
+          return
         }
       }
-      if (keyValue === 40 || keyValue === 38) {
+      if (keyValue === 40 || keyValue === 38 || keyValue === 32) {
         if (this.highlightIndex === null) {
+          this.showOptions = true
           this.highlightIndex = 0
           return
         }
         if (keyValue === 40) {
-          this.highlightIndex += 1
+          if (this.highlightIndex + 1 === this.options.length) {
+            this.highlightIndex = 0
+          } else {
+            this.highlightIndex += 1
+          }
         }
         if (keyValue === 38) {
-          this.highlightIndex -= 1
+          if (this.highlightIndex === 0) {
+            this.highlightIndex = this.options.length - 1
+          } else {
+            this.highlightIndex -= 1
+          }
         }
       }
     }

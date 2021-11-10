@@ -16,15 +16,34 @@
           @fetch-suggestions="onFetchSuggestions"
         />
         <SelectAdvanced
+          v-model="form.select_advanced"
           name="state"
-          label="Statut"
+          label="Select with themed options"
           placeholder="Choisissez une option"
+          description="Options avec des keys et des labels"
           required
           :options="[
             {key: 'draft', label:'Brouillon'},
             {key: 'waiting', label:'En attente de validation'},
             {key: 'validated', label:'Validée'}
           ]"
+          clearable
+        />
+        <SelectAdvanced
+          v-model="form.select_advanced_id"
+          name="responsable"
+          label="Select with themed options based on model"
+          description="Options avec des ids et des name (props attribute-key & attribute-label)"
+          placeholder="Choisissez une option"
+          required
+          :options="[
+            {id: 1, name: 'Jérémy Pinto'},
+            {id: 2, name: 'Nicolas Vaissaud'},
+            {id: 3, name: 'Kevin Vaissaud'},
+            {id: 4, name: 'John Doe'},
+          ]"
+          attribute-key="id"
+          attribute-label="name"
           clearable
         />
       </form>
@@ -50,7 +69,9 @@ export default {
         firstname: 'Nicolas',
         state: 'validated',
         notifications: ['comments'],
-        domaines: [1, 5]
+        domaines: [1, 5],
+        select_advanced: 'waiting',
+        select_advanced_id: 4
       },
       autocompleteOptions: []
     }
