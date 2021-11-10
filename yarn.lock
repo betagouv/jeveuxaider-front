@@ -1450,6 +1450,11 @@
   dependencies:
     mini-svg-data-uri "^1.2.3"
 
+"@tailwindcss/line-clamp@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@tailwindcss/line-clamp/-/line-clamp-0.2.2.tgz#05843c004bf069353a0c43f9df8cc3a6016252b8"
+  integrity sha512-NgA4Ds+/eCiO+6O3SooRsfJ8m7M2+QvNvHwOjBQq7FIYoWwAV4I4Wu4fjHeuO9Yi6p47ceHUKEGGEBh0ozQodg==
+
 "@types/eslint@^7.2.6":
   version "7.28.2"
   resolved "https://registry.yarnpkg.com/@types/eslint/-/eslint-7.28.2.tgz#0ff2947cdd305897c52d5372294e8c76f351db68"
@@ -9652,6 +9657,11 @@ terser@^5.3.4:
     commander "^2.20.0"
     source-map "~0.7.2"
     source-map-support "~0.5.20"
+
+text-clipper@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/text-clipper/-/text-clipper-2.1.0.tgz#18c615738d21a7bba9facd1069674b9088c66c4c"
+  integrity sha512-A6thWpysC0pgX+jFnW8sj0K7qgwi84SuJwMvWrAFqusnTJ1NAivm8XDU2I+BG6V2IJXT7fcQQAzebrxx+lkF2w==
 
 text-table@^0.2.0:
   version "0.2.0"

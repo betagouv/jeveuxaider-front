@@ -50,6 +50,15 @@ export default {
     '@nuxtjs/dayjs'
   ],
 
+  dayjs: {
+    locales: ['fr'],
+    defaultLocale: 'fr',
+    plugins: [
+      'relativeTime', // import 'dayjs/plugin/utc'
+      'customParseFormat'
+    ]
+  },
+
   privateRuntimeConfig: {
     axios: {
       baseURL: `${process.env.API_URL}/api`
@@ -63,6 +72,9 @@ export default {
     blog: {
       restApiUrl: process.env.BLOG_REST_API_URL,
       url: process.env.BLOG_URL
+    },
+    google: {
+      places: process.env.GOOGLE_PLACE_API_KEY
     }
   },
 

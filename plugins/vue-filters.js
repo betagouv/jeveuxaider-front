@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import labels from '@/utils/labels.json'
 
-export default function ({ $dayjs }) {
+export default function ({ store, $dayjs }) {
   Vue.filter('label', function (key, vocabulary) {
     if (vocabulary && labels[vocabulary]) {
       const element = labels[vocabulary].find(item => item.key === key)
@@ -48,5 +48,14 @@ export default function ({ $dayjs }) {
 
   Vue.filter('formatCustom', function (date, custom) {
     return $dayjs(date).format(custom)
+  })
+
+  Vue.filter('pluralize', function (count, singular, plural, showCount = true) {
+    let output = singular
+    if (count > 1) {
+      output = plural || `${singular}s`
+    }
+
+    return showCount ? `${count} ${output}` : output
   })
 }

@@ -52,8 +52,7 @@ module.exports = {
         'jva-blue': {
           400: '#5B71B9',
           500: '#070191',
-          600: '#090391',
-          700: '#0A04A7'
+          600: '#0A04A7'
         },
         'jva-green': {
           400: '#C9F2EA',
@@ -80,7 +79,7 @@ module.exports = {
           100: '#F8F8F8',
           50: '#FAFAFA'
         },
-        'cool-gray': colors.coolGray,
+        'cool-gray': { ...colors.coolGray, 500: '#777E90' },
         domaine: {
           solidarite: '#F46D66',
           nature: '#0B9B6B',
@@ -105,6 +104,7 @@ module.exports = {
     }
   },
   plugins: [
-    require('@tailwindcss/forms')
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/line-clamp')
   ]
 }
