@@ -59,6 +59,22 @@
         </Badge>
       </div>
     </div>
+    <div class="flex flex-col space-y-4">
+      <div class="text-lg leading-6 font-medium text-gray-900">
+        Links
+      </div>
+      <div class="flex flex-col gap-2">
+        <Link to="/components">
+          Link to components ›
+        </Link>
+        <Link to="/components" icon="ArrowRightIcon">
+          Link with icon
+        </Link>
+        <Link @click.native="onClick">
+          Link with click
+        </Link>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -68,6 +84,11 @@ export default {
   data () {
     return {
       form: {}
+    }
+  },
+  methods: {
+    onClick () {
+      alert('CLICK')
     }
   }
 }
