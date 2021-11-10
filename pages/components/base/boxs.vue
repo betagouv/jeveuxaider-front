@@ -26,7 +26,7 @@
         <img
           src="/images/bg_header_mission.jpg"
           alt="Mission bénévolat"
-        />
+        >
         <Heading as="h3" :level="3" class="mb-8">
           No Padding
         </Heading>

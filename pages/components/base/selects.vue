@@ -3,7 +3,7 @@
     <Box>
       <form id="form" class="space-y-8" @submit="onSubmit">
         <Heading as="h2" :level="3" class="mb-8 text-jva-gray-900">
-          Forms advanced
+          Selects
         </Heading>
         <InputAutocomplete
           name="autocomplete"
@@ -20,7 +20,7 @@
           name="state"
           label="Select with themed options"
           placeholder="Choisissez une option"
-          description="Options avec des keys et des labels"
+          description="Options avec key => label"
           required
           :options="[
             {key: 'draft', label:'Brouillon'},
@@ -33,7 +33,7 @@
           v-model="form.select_advanced_id"
           name="responsable"
           label="Select with themed options based on model"
-          description="Options avec des ids et des name (props attribute-key & attribute-label)"
+          description="Options avec id => name (props attribute-key & attribute-label)"
           placeholder="Choisissez une option"
           required
           :options="[
