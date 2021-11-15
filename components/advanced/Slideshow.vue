@@ -10,7 +10,7 @@
             class="rounded-full !bg-white transition will-change-transform flex justify-center items-center !p-6 relative z-10"
           >
             <img
-              src="/images/slideshow_chevron_left.svg"
+              src="/images/icons/slideshow_chevron_left.svg"
               alt="Précédent"
               class="absolute inset-0 m-auto"
               data-not-lazy
@@ -28,7 +28,7 @@
             class="rounded-full !bg-white transition will-change-transform flex justify-center items-center !p-6 relative z-10"
           >
             <img
-              src="/images/slideshow_chevron_right.svg"
+              src="/images/icons/slideshow_chevron_right.svg"
               alt="Suivant"
               class="absolute inset-0 m-auto"
               data-not-lazy

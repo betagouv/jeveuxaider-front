@@ -30,7 +30,7 @@
 
             <img
               v-else
-              src="/images/more.svg"
+              src="/images/icons/more.svg"
               alt="Voir plus de villes"
               width="13"
               height="13"
@@ -66,7 +66,7 @@
           </div>
 
           <img
-            src="/images/telebenevolat.svg"
+            src="/images/homepage/telebenevolat.svg"
             alt="Télébénévolat"
             class="-mt-16 md:mt-0 md:mr-[-97px]"
             width="379"
@@ -77,7 +77,7 @@
       </div>
 
       <img
-        src="/images/map_france_2.svg"
+        src="/images/homepage/map_france_2.svg"
         alt="Carte de la France"
         class="hidden lg:block absolute top-0 right-0 mr-[-180px] xl:-mr-0 pr-4 h-full"
         width="607"

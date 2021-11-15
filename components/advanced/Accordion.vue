@@ -21,7 +21,7 @@
         </h3>
 
         <img
-          src="/images/accordeon_chevron_gris.svg"
+          src="/images/icons/accordeon_chevron_gris.svg"
           alt="Chevron"
           class="transform transition ml-auto"
           :class="[{ 'rotate-90': item.isOpen }]"

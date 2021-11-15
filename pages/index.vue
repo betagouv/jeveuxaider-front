@@ -15,8 +15,8 @@
     <section>
       <div class="container mx-auto px-4 xl:max-w-[1412px]">
         <div class="grid gap-5 md:grid-cols-2">
-          <CardNewsletter />
-          <CardFacebook />
+          <BlockNewsletter />
+          <BlockFacebook />
         </div>
       </div>
     </section>
@@ -31,8 +31,8 @@
         </h2>
 
         <div class="grid gap-5 md:grid-cols-2">
-          <CardFacilitezRecrutement />
-          <CardEncouragezEngagementLocal />
+          <BlockFacilitezRecrutement />
+          <BlockEncouragezEngagementLocal />
         </div>
       </div>
     </section>
@@ -50,10 +50,10 @@ import EngagezVous from '@/components/section/homepage/EngagezVous'
 import Blog from '@/components/section/homepage/Blog'
 import Temoignages from '@/components/section/homepage/Temoignages'
 import Faq from '@/components/section/homepage/Faq'
-import CardNewsletter from '@/components/card/static/Newsletter'
-import CardFacebook from '@/components/card/static/Facebook'
-import CardFacilitezRecrutement from '@/components/card/static/FacilitezRecrutement'
-import CardEncouragezEngagementLocal from '@/components/card/static/EncouragezEngagementLocal'
+import BlockNewsletter from '@/components/block/Newsletter'
+import BlockFacebook from '@/components/block/Facebook'
+import BlockFacilitezRecrutement from '@/components/block/FacilitezRecrutement'
+import BlockEncouragezEngagementLocal from '@/components/block/EncouragezEngagementLocal'
 
 export default {
   components: {
@@ -65,10 +65,10 @@ export default {
     Blog,
     Temoignages,
     Faq,
-    CardNewsletter,
-    CardFacebook,
-    CardFacilitezRecrutement,
-    CardEncouragezEngagementLocal
+    BlockNewsletter,
+    BlockFacebook,
+    BlockFacilitezRecrutement,
+    BlockEncouragezEngagementLocal
   },
   head () {
     return {
@@ -83,7 +83,7 @@ export default {
           rel: 'preload',
           as: 'image',
           href: '/images/banner_mobile.jpg',
-          imagesrcset: '/images/banner_mobile.webp, /images/banner_mobile.jpg, /images/banner_mobile@2x.webp 2x, /images/banner_mobile@2x.jpg  2x'
+          imagesrcset: '/images/homepage/banner_mobile.webp, /images/homepage/banner_mobile.jpg, /images/homepage/banner_mobile@2x.webp 2x, /images/homepage/banner_mobile@2x.jpg  2x'
         }
       ],
       meta: [

@@ -1,14 +1,14 @@
 <template>
   <section class="py-16 bg-jva-grayLight overflow-hidden relative">
     <img
-      src="/images/deco_2.svg"
+      src="/images/homepage/deco_2.svg"
       alt="Décorations"
       class="deco--2 absolute hidden lg:block pointer-events-none"
       data-not-lazy
     >
 
     <img
-      src="/images/deco_3.svg"
+      src="/images/homepage/deco_3.svg"
       alt="Décorations"
       class="deco--3 absolute hidden lg:block pointer-events-none"
       data-not-lazy

@@ -16,60 +16,27 @@
     </div>
 
     <div class="m-8 flex-1 flex flex-col items-start space-y-6">
-      <client-only>
-        <v-clamp
-          tag="h3"
-          :max-lines="3"
-          autoresize
-          class="text-[#111111] text-2xl leading-[28px] font-bold relative mb-auto"
-        >
-          {{ article.title.rendered | decodeHTMLEntities }}
+      <h3
+        v-tooltip="{
+          content: $options.filters.decodeHTMLEntities(
+            article.title.rendered
+          ),
+          hideOnTargetClick: true,
+        }"
+        class="text-[#111111] text-2xl leading-[28px] font-bold relative mb-auto line-clamp-3"
+      >
+        {{ article.title.rendered | decodeHTMLEntities }}
+      </h3>
 
-          <template slot="after" slot-scope="{ clamped }">
-            <!-- Tooltip if clamped -->
-            <span
-              v-if="clamped"
-              v-tooltip="{
-                delay: { show: 700, hide: 100 },
-                content: $options.filters.decodeHTMLEntities(
-                  article.title.rendered
-                ),
-                hideOnTargetClick: true,
-                placement: 'top',
-              }"
-              class="absolute w-full h-full top-0 left-0"
-            />
-          </template>
-        </v-clamp>
-
-        <h3
-          slot="placeholder"
-          class="text-[#111111] text-2xl leading-[28px] font-bold relative mb-auto"
-        >
-          {{ article.title.rendered }}
-        </h3>
-      </client-only>
-
-      <client-only>
-        <v-clamp :max-lines="2" autoresize class="text-[#696974]">
-          {{ article.excerpt.rendered | stripHTML | decodeHTMLEntities }}
-        </v-clamp>
-
-        <div slot="placeholder" class="text-[#696974]">
-          {{ article.excerpt.rendered | stripHTML | decodeHTMLEntities }}
-        </div>
-      </client-only>
+      <div class="text-[#696974] line-clamp-2">
+        {{ article.excerpt.rendered | stripHTML | decodeHTMLEntities }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import VClamp from 'vue-clamp'
-
 export default {
-  components: {
-    VClamp
-  },
   props: {
     article: {
       type: Object,

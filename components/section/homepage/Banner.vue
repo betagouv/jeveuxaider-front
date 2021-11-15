@@ -3,20 +3,20 @@
     <picture class="lg:hidden">
       <source
         srcset="
-          /images/banner.webp,
-          /images/banner@2x.webp 2x,
-          /images/banner.jpg,
-          /images/banner@2x.jpg  2x
+          /images/homepage/banner.webp,
+          /images/homepage/banner@2x.webp 2x,
+          /images/homepage/banner.jpg,
+          /images/homepage/banner@2x.jpg  2x
         "
         media="(min-width: 440px)"
       >
 
       <img
         srcset="
-          /images/banner_mobile.webp,
-          /images/banner_mobile@2x.webp 2x,
-          /images/banner_mobile.jpg,
-          /images/banner_mobile@2x.jpg  2x
+          /images/homepage/banner_mobile.webp,
+          /images/homepage/banner_mobile@2x.webp 2x,
+          /images/homepage/banner_mobile.jpg,
+          /images/homepage/banner_mobile@2x.jpg  2x
         "
         alt="Récolte de nourriture et de vêtement"
         class="object-cover absolute w-full h-full"
@@ -75,7 +75,7 @@
 
 <script>
 import inViewport from 'vue-in-viewport-mixin'
-import SearchSvg from '@/static/images/search.svg?inline'
+import SearchSvg from '@/static/images/icons/search.svg?inline'
 
 export default {
   components: {

@@ -4,14 +4,12 @@
   >
     <div class="thumbnail--wrapper relative">
       <img
-        v-if="thumbnail.default"
-        :src="thumbnail.default"
-        :srcset="`${thumbnail.x2} 2x`"
+        v-if="thumbnail"
+        :srcset="thumbnail"
         :alt="mission.domaine_name"
         class="w-full h-full object-cover"
         width="300"
         height="143"
-        @error="defaultThumbnail($event)"
       >
 
       <div class="custom-gradient absolute inset-0" />
@@ -61,35 +59,15 @@
         {{ mission.domaine_name }}
       </div>
 
-      <client-only>
-        <v-clamp
-          tag="h3"
-          :max-lines="3"
-          autoresize
-          class="name font-black text-black text-lg relative mb-auto"
-        >
-          {{ mission.name }}
-
-          <template slot="after" slot-scope="{ clamped }">
-            <span
-              v-if="clamped"
-              v-tooltip="{
-                delay: { show: 700, hide: 100 },
-                content: mission.name,
-                hideOnTargetClick: true,
-                placement: 'top',
-              }"
-              class="absolute w-full h-full top-0 left-0"
-            />
-          </template>
-        </v-clamp>
-
-        <template slot="placeholder">
-          <h3 class="name font-black text-black text-lg mb-auto">
-            {{ mission.name }}
-          </h3>
-        </template>
-      </client-only>
+      <h3
+        v-tooltip="{
+          content: mission.name,
+          hideOnTargetClick: true,
+        }"
+        class="name font-black text-black text-lg relative mb-auto line-clamp-3"
+      >
+        {{ mission.name }}
+      </h3>
 
       <div
         class="structure mt-2 truncate max-w-full"
@@ -141,14 +119,12 @@
 
 <script>
 // A REFACTORISER
-import VClamp from 'vue-clamp'
 import MixinColorsDomaines from '@/mixins/colors-domaines'
 import MixinMission from '@/mixins/mission'
-import ExternalSvg from '@/static/images/external.svg?inline'
+import ExternalSvg from '@/static/images/icons/external.svg?inline'
 
 export default {
   components: {
-    VClamp,
     ExternalSvg
   },
   mixins: [MixinMission, MixinColorsDomaines],
@@ -180,12 +156,11 @@ export default {
         return 'Plusieurs bénévoles recherchés'
       } else if (this.mission.has_places_left && this.mission.places_left > 0) {
         return (
-          this.mission.places_left +
-          ' ' +
-          this.$options.filters.pluralize(this.mission.places_left, [
+          this.$options.filters.pluralize(
+            this.mission.places_left,
             'bénévole recherché',
             'bénévoles recherchés'
-          ])
+          )
         )
       } else {
         return this.mission.has_places_left === false

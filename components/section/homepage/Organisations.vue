@@ -1,7 +1,7 @@
 <template>
   <section class="relative overflow-hidden md:h-[500px] md:flex items-center">
     <img
-      src="/images/deco_1.svg"
+      src="/images/homepage/deco_1.svg"
       alt="Décorations"
       class="deco--1 absolute hidden xl:block pointer-events-none"
       data-not-lazy
@@ -11,8 +11,8 @@
       <div class="mx-auto max-w-[1170px]">
         <img
           srcset="
-              /images/mosaique_orgas@2x.webp 2x,
-              /images/mosaique_orgas@2x.png  2x
+              /images/homepage/mosaique_orgas@2x.webp 2x,
+              /images/homepage/mosaique_orgas@2x.png  2x
             "
           alt="Mosaïque organisations"
           class="sm:hidden object-cover object-left-bottom w-full h-[370px] translate-y-[-25px] mosaic"
@@ -22,10 +22,10 @@
 
         <img
           srcset="
-              /images/mosaique_orgas_desktop.webp,
-              /images/mosaique_orgas_desktop@2x.webp 2x,
-              /images/mosaique_orgas_desktop.png,
-              /images/mosaique_orgas_desktop@2x.png  2x
+              /images/homepage/mosaique_orgas_desktop.webp,
+              /images/homepage/mosaique_orgas_desktop@2x.webp 2x,
+              /images/homepage/mosaique_orgas_desktop.png,
+              /images/homepage/mosaique_orgas_desktop@2x.png  2x
             "
           alt="Mosaïque organisations"
           class="hidden sm:block object-cover object-left-bottom w-full h-[370px] md:h-[650px] md:translate-y-[-138px] md:absolute md:right-0 md:top-0 mosaic"

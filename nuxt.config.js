@@ -26,7 +26,7 @@ export default {
     '~/plugins/api.js',
     '~/plugins/heroicons.js',
     '~/plugins/vue-filters.js',
-    '~/plugins/libraries.js'
+    { src: '~/plugins/vue-libraries.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -50,15 +50,6 @@ export default {
     '@nuxtjs/dayjs'
   ],
 
-  dayjs: {
-    locales: ['fr'],
-    defaultLocale: 'fr',
-    plugins: [
-      'relativeTime', // import 'dayjs/plugin/utc'
-      'customParseFormat'
-    ]
-  },
-
   privateRuntimeConfig: {
     axios: {
       baseURL: `${process.env.API_URL}/api`
@@ -80,10 +71,6 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: [
-      'vue-clamp',
-      'resize-detector'
-    ],
     postcss: {
       plugins: {
         'tailwindcss/nesting': {}
