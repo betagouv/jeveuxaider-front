@@ -27,7 +27,7 @@
           class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight text-center text-[#AFAFAE] mb-16"
         >
           Acteurs de l'engagement,
-          <strong class="font-extrabold">rejoignez le mouvement&nbsp;!</strong>
+          <strong class="font-extrabold">rejoignez le mouvement !</strong>
         </h2>
 
         <div class="grid gap-5 md:grid-cols-2">
