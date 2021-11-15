@@ -11,7 +11,7 @@
         @click="item.isOpen = !item.isOpen"
       >
         <div
-          class="w-12 h-12 flex items-center justify-center bg-jva-grayLight rounded-lg mr-4"
+          class="w-12 h-12 flex items-center justify-center bg-gray-50 rounded-lg mr-4"
         >
           {{ item.icon }}
         </div>

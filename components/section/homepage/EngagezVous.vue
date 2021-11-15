@@ -1,5 +1,5 @@
 <template>
-  <section class="py-16 bg-jva-grayLight overflow-hidden">
+  <section class="py-16 bg-gray-50 overflow-hidden">
     <div class="container mx-auto px-4 relative xl:max-w-[1412px]">
       <div class="mx-auto max-w-[1170px]">
         <h2

@@ -1,5 +1,5 @@
 <template>
-  <section class="py-16 bg-jva-grayLight overflow-hidden relative">
+  <section class="py-16 bg-gray-50 overflow-hidden relative">
     <img
       src="/images/homepage/deco_2.svg"
       alt="Décorations"
