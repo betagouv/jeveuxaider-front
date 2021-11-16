@@ -1,7 +1,7 @@
 <template>
   <section class="py-16 bg-gray-50 overflow-hidden">
     <div class="container mx-auto px-4 relative xl:max-w-[1412px]">
-      <div class="mx-auto max-w-[1170px]">
+      <div class="mx-auto max-w-6xl">
         <h2
           class="text-4xl lg:text-[50px] lg:leading-[42px] tracking-tight text-center lg:text-left"
         >

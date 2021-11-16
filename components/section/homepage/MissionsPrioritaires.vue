@@ -4,7 +4,7 @@
     class="overflow-hidden xl:mt-6 pb-16"
   >
     <div class="container mx-auto px-8 sm:px-4 xl:max-w-[1412px]">
-      <div class="mx-auto max-w-[1170px]">
+      <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-6">
           <h2
             class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight text-center md:text-left"

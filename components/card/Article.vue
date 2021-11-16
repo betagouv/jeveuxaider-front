@@ -18,7 +18,7 @@
 
     <div class="mx-8 my-6 flex-1 flex flex-col items-start">
       <div v-if="article.categories.length" class="mb-4 flex flex-wrap gap-2">
-        <Badge v-for="categoryId in article.categories" :key="categoryId" color="blue">
+        <Badge v-for="categoryId in article.categories" :key="categoryId" color="gray" class="uppercase">
           {{ category(categoryId) }}
         </Badge>
       </div>

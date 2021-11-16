@@ -2,7 +2,7 @@
   <footer>
     <div class="bg-gray-50 py-8">
       <div class="container px-4 mx-auto">
-        <div class="mx-auto max-w-[1170px]">
+        <div class="mx-auto max-w-6xl">
           <div class="grid lg:grid-cols-2 text-xs gap-8">
             <div>
               <div class="font-bold mb-8">
@@ -13,7 +13,7 @@
                   v-for="city in cities"
                   :key="city.name"
                   :to="city.url"
-                  class="hover:underline text-[#666666]"
+                  class="hover:underline text-gray-600"
                 >
                   {{ city.name }}
                 </nuxt-link>
@@ -29,7 +29,7 @@
                   v-for="organization in organizations"
                   :key="organization.name"
                   :to="organization.url"
-                  class="hover:underline text-[#666666] truncate"
+                  class="hover:underline text-gray-600 truncate"
                 >
                   {{ organization.name }}
                 </nuxt-link>
@@ -42,7 +42,7 @@
 
     <div class="bg-white py-8">
       <div class="container mx-auto px-4">
-        <div class="mx-auto max-w-[1170px]">
+        <div class="mx-auto max-w-6xl">
           <div class="lg:flex">
             <nuxt-link
               to="/"
@@ -97,7 +97,7 @@
 
     <div class="bg-white py-4">
       <div class="container mx-auto px-4">
-        <div class="mx-auto max-w-[1170px] text-[#666666] text-xs">
+        <div class="mx-auto max-w-6xl text-gray-600 text-xs">
           <div class="divide-x">
             <component
               :is="
@@ -112,7 +112,7 @@
               :to="link.url"
               :href="link.url"
               :target="link.external ? '_blank' : null"
-              class="cursor-pointer hover:underline px-4 my-1 inline-block"
+              class="cursor-pointer hover:underline px-3 my-1 inline-block"
               :class="[{ 'pl-0': index === 0 }]"
             >
               {{ link.name }}
