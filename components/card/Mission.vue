@@ -93,7 +93,7 @@
     </div>
 
     <div
-      class="footer border-t p-4 text-center flex items-center justify-center space-x-2"
+      class="border-t p-4 text-center flex items-center justify-center space-x-2"
       :class="[domainColor(domaine.id)]"
     >
       <span class="text-sm font-bold">
@@ -198,10 +198,6 @@ export default {
   img {
     transition: all 0.4s ease-in-out;
   }
-}
-
-.footer {
-  border-color: #d9d9d9;
 }
 
 .pill {
