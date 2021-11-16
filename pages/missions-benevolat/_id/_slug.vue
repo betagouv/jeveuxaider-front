@@ -7,25 +7,25 @@
         class="object-cover w-full h-full"
       >
     </div>
+    <Breadcrumb
+      theme="transparent"
+      class="relative z-10"
+      :items="[
+        { label: 'Missions de bénévolat', link: '/missions-benevolat' },
+        {
+          label: domainName,
+          link: `/missions-benevolat?refinementList[domaines][0]=${domainName}`,
+        },
+        {
+          label:
+            mission.type == 'Mission en présentiel'
+              ? `Bénévolat ${mission.structure.name} à ${mission.city}`
+              : `Bénévolat ${mission.structure.name} à distance`,
+          h1: true,
+        },
+      ]"
+    />
     <div class="px-4 max-w-3xl mx-auto lg:max-w-7xl">
-      <Breadcrumb
-        theme="transparent"
-        class="relative z-10"
-        :items="[
-          { label: 'Missions de bénévolat', link: '/missions-benevolat' },
-          {
-            label: domainName,
-            link: `/missions-benevolat?refinementList[domaines][0]=${domainName}`,
-          },
-          {
-            label:
-              mission.type == 'Mission en présentiel'
-                ? `Bénévolat ${mission.structure.name} à ${mission.city}`
-                : `Bénévolat ${mission.structure.name} à distance`,
-            h1: true,
-          },
-        ]"
-      />
       <div class="lg:flex lg:items-start lg:gap-6">
         <div class="space-y-6">
           <Box class="relative z-10">
@@ -510,6 +510,31 @@ export default {
   async fetch () {
     const { data: missions } = await this.$api.similarMission(this.mission.id)
     this.similarMissions = missions
+  },
+  head () {
+    return {
+      title: this.mission.name.substring(0, 80),
+      link: [
+        {
+          rel: 'canonical',
+          href: `https://www.jeveuxaider.gouv.fr/missions-benevolat/${this.mission.id}/${this.mission.slug}`
+        }
+      ],
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.mission.description
+            .replace(/<\/?[^>]+>/gi, ' ')
+            .substring(0, 300)
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: this.illustration.x2 ?? this.illustration.default
+        }
+      ]
+    }
   },
   computed: {
     dates () {

@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-white shadow-lg">
+  <header class="relative bg-white shadow-lg">
     <div class="flex justify-between items-center relative lg:p-2">
       <div class="lg:flex lg:space-x-6 lg:items-center">
         <img
@@ -123,12 +123,14 @@
               </div>
             </div>
             <div class="mt-3 p-2">
-              <a
+              <nuxt-link
                 v-for="link in secondNavigation"
                 :key="link.name"
-                :href="link.href"
+                :to="link.href"
                 class="block rounded-md px-3 py-2 text-base text-cool-gray-600 font-medium hover:bg-gray-100 hover:text-gray-800"
-              >{{ link.name }}</a>
+              >
+                {{ link.name }}
+              </nuxt-link>
             </div>
           </div>
         </div>
@@ -148,7 +150,7 @@ const navigation = [
 
 const secondNavigation = [
   { name: 'Associations', href: '#', current: false },
-  { name: 'Territoires', href: '#', current: false },
+  { name: 'Territoires', href: '/territoires', current: false },
   { name: 'Écoles et universités', href: '#', current: false },
   { name: 'Actualités', href: '#', current: false },
   { name: 'Centre d\'aide', href: '#', current: false }

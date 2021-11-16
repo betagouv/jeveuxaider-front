@@ -8,7 +8,7 @@
     ]"
   >
     <ol
-      class="h-6 w-full max-w-full mx-auto overflow-x-auto whitespace-nowrap flex"
+      class="h-6 w-full max-w-full overflow-x-auto whitespace-nowrap px-4 flex"
     >
       <li v-for="(item, index) in withHome" :key="index" class="flex">
         <div
