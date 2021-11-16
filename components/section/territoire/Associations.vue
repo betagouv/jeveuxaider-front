@@ -8,7 +8,7 @@
         >
           <div>
             <h2>
-              <p class="uppercase text-[#f56565] font-extrabold text-sm mb-4">
+              <p class="uppercase text-jva-red-500 font-extrabold text-sm mb-4">
                 Associations {{ territoire.suffix_title }}
               </p>
 

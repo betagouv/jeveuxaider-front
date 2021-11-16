@@ -5,7 +5,7 @@
     <section class="section-associations bg-[#fafaff]">
       <div class="container mx-auto px-4 py-12">
         <h2 class="max-w-2xl mb-16">
-          <p class="uppercase text-[#f56565] font-extrabold text-sm mb-4">
+          <p class="uppercase text-jva-red-500 font-extrabold text-sm mb-4">
             Bénévolat {{ territoire.suffix_title }}
           </p>
 

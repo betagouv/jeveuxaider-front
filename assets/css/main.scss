@@ -42,6 +42,10 @@ html {
   @apply antialiased bg-gray-50 h-full;
 }
 
+.container {
+  @apply px-4 max-w-3xl mx-auto lg:max-w-7xl
+}
+
 .tooltip {
   display: block !important;
   z-index: 10000;

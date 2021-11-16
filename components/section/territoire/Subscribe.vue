@@ -6,7 +6,7 @@
       <div class="relative z-10 container mx-auto px-4 lg:px-12">
         <div class="pt-16 pb-8 lg:py-28">
           <h2 class="max-w-2xl mb-12">
-            <p class="uppercase text-[#f56565] font-extrabold text-sm mb-4">
+            <p class="uppercase text-jva-red-500 font-extrabold text-sm mb-4">
               Chacun pour tous
             </p>
 

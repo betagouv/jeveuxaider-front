@@ -2,7 +2,7 @@
   <div>
     <Banner :territoire="territoire" />
 
-    <!-- <div v-if="territoire.type == 'city' && logo" class="bg-white pt-12">
+    <div v-if="territoire.type == 'city' && logo" class="bg-white pt-12">
       <img
         :src="logo"
         :alt="territoire.name"
@@ -11,7 +11,8 @@
       >
     </div>
 
-    <Search :territoire="territoire" />
+    <!--<Search :territoire="territoire" /> -->
+
     <Promote :territoire="territoire" />
 
     <Cities
@@ -21,12 +22,10 @@
     />
 
     <Associations
-      v-if="
-        territoire.promoted_organisations &&
-          territoire.promoted_organisations.length
-      "
+      v-if="territoire.promoted_organisations &&territoire.promoted_organisations.length"
       :territoire="territoire"
     />
+    <!--
     <Engagement :territoire="territoire" />
     <Subscribe :territoire="territoire" /> -->
   </div>
@@ -35,16 +34,16 @@
 <script>
 import Banner from '@/components/section/territoire/Banner'
 // import Search from '@/components/section/territoire/Search'
-// import Promote from '@/components/section/territoire/Promote'
-// import Cities from '@/components/section/territoire/Cities'
-// import Associations from '@/components/section/territoire/Associations'
+import Promote from '@/components/section/territoire/Promote'
+import Cities from '@/components/section/territoire/Cities'
+import Associations from '@/components/section/territoire/Associations'
 // import Engagement from '@/components/section/territoire/Engagement'
 // import Subscribe from '@/components/section/territoire/Subscribe'
 
 export default {
   components: {
-    Banner
-    // , Search, Promote, Cities, Associations, Engagement, Subscribe
+    Banner, Promote, Cities, Associations
+    // Search, Engagement, Subscribe
   },
   props: {
     territoire: {
