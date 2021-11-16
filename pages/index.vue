@@ -5,7 +5,7 @@
 
     <hr class="mt-12 pt-12 md:hidden border-[#CDCDCD]">
 
-    <!-- <MissionsPrioritaires /> -->
+    <MissionsPrioritaires />
 
     <Domaines />
     <EngagezVous />
@@ -44,7 +44,7 @@
 <script>
 import Banner from '@/components/section/homepage/Banner'
 import Organisations from '@/components/section/homepage/Organisations'
-// // import MissionsPrioritaires from '@/components/section/homepage/MissionsPrioritaires'
+import MissionsPrioritaires from '@/components/section/homepage/MissionsPrioritaires'
 import Domaines from '@/components/section/homepage/Domaines'
 import EngagezVous from '@/components/section/homepage/EngagezVous'
 import Blog from '@/components/section/homepage/Blog'
@@ -59,7 +59,7 @@ export default {
   components: {
     Banner,
     Organisations,
-    // MissionsPrioritaires,
+    MissionsPrioritaires,
     Domaines,
     EngagezVous,
     Blog,
