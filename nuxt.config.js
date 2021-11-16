@@ -23,7 +23,6 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '~/plugins/api.js',
     '~/plugins/heroicons.js',
     '~/plugins/vue-filters.js',
     { src: '~/plugins/vue-libraries.js', mode: 'client' }

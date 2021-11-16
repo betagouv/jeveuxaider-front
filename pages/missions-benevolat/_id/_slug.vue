@@ -449,8 +449,8 @@ export default {
     Slideshow,
     CardMission
   },
-  async asyncData ({ $api, params, error, store }) {
-    const { data: mission } = await $api.getMission(params.id).catch((err) => {
+  async asyncData ({ $axios, params, error, store }) {
+    const { data: mission } = await $axios.get(`/mission/${params.id}`).catch((err) => {
       return error({ statusCode: err.response.status, message: err.response.statusText })
     })
 
@@ -508,7 +508,7 @@ export default {
     }
   },
   async fetch () {
-    const { data: missions } = await this.$api.similarMission(this.mission.id)
+    const { data: missions } = await this.$axios.get(`/mission/${this.mission.id}/similar`)
     this.similarMissions = missions
   },
   head () {

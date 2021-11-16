@@ -130,21 +130,25 @@ export default {
   components: {
     Breadcrumb
   },
-  async asyncData ({ $api }) {
-    const { data: cities } = await $api.fetchTerritoires({
-      'filter[state]': 'validated',
-      'filter[is_published]': true,
-      'filter[type]': 'city',
-      append: 'full_url',
-      pagination: 9999
+  async asyncData ({ $axios }) {
+    const { data: cities } = await $axios.get('/territoires', {
+      params: {
+        'filter[state]': 'validated',
+        'filter[is_published]': true,
+        'filter[type]': 'city',
+        append: 'full_url',
+        pagination: 9999
+      }
     })
 
-    const { data: departments } = await $api.fetchTerritoires({
-      'filter[state]': 'validated',
-      'filter[is_published]': true,
-      'filter[type]': 'department',
-      append: ' full_url',
-      pagination: 999
+    const { data: departments } = await $axios.get('/territoires', {
+      params: {
+        'filter[state]': 'validated',
+        'filter[is_published]': true,
+        'filter[type]': 'department',
+        append: 'full_url',
+        pagination: 9999
+      }
     })
 
     return {

@@ -93,9 +93,11 @@ export default {
   },
   methods: {
     async onFetchSuggestions (value) {
-      const res = await this.$api.fetchTerritoires({
-        'filter[search]': value,
-        pagination: 6
+      const res = await this.$axios.get('/territoires', {
+        params: {
+          'filter[search]': value,
+          pagination: 6
+        }
       })
       this.autocompleteOptions = res.data.data
     },

@@ -35,6 +35,7 @@
             focus:outline-none
             border border-gray-200
             focus:ring-1
+             bg-white
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
           :class=" [{ 'border-jva-red-primary': error, 'pl-10': icon}]"

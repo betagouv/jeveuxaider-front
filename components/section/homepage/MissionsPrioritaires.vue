@@ -15,7 +15,7 @@
           <span
             class="hidden lg:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0] font-light"
           >
-            #{{ Date.now() | formatCustom('MMMM') }}
+            #{{ $dayjs(Date.now()).format('MMMM') }}
           </span>
         </div>
 
@@ -56,8 +56,7 @@ export default {
     }
   },
   async fetch () {
-    const { data } = await this.$api.fetchPromotedToFrontPageMissions()
-    console.log(data)
+    const { data } = await this.$axios.get('/missions/promoted')
     this.missions = data
   }
 }
