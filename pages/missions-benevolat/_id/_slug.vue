@@ -2,7 +2,7 @@
   <div>
     <div class="absolute w-full" style="height: 360px">
       <img
-        src="/images/bg_header_mission.jpg"
+        src="/images/missions/bg_header_mission.jpg"
         alt="Mission bénévolat"
         class="object-cover w-full h-full"
       >
@@ -131,8 +131,8 @@
 
           <Box v-else class="relative" :padding="false">
             <img
-              src="/images/mission_a_distance.jpg"
-              srcset="/images/mission_a_distance@2x.jpg 2x"
+              src="/images/missions/mission_a_distance.jpg"
+              srcset="/images/missions/mission_a_distance@2x.jpg 2x"
               alt="Personne assise devant un ordinateur portable"
               class="absolute inset-0 w-full h-full object-cover"
             >
@@ -164,7 +164,7 @@
             >
               <img
                 class="absolute right-0 bottom-0 p-6"
-                src="/images/quote.svg"
+                src="/images/icons/quote.svg"
                 alt="Guillemets"
               >
 
@@ -356,12 +356,7 @@
                     class="flex items-center flex-col sm:flex-row gap-2"
                     :class="[{ 'justify-center': dates.length == 1 }]"
                   >
-                    <img
-                      src="/images/calendar.svg"
-                      alt="Icône calendrier"
-                      class="hidden sm:block"
-                      style="margin-bottom: 4px"
-                    >
+                    <CalendarIcon class="hidden sm:block  text-cool-gray-400" />
 
                     <div
                       class="font-bold text-center sm:text-left flex gap-2 items-baseline sm:block"
@@ -561,8 +556,8 @@ export default {
         }
       }
       return {
-        default: '/images/mission-default.jpg',
-        x2: '/images/mission-default@2x.jpg'
+        default: '/images/missions/mission-default.jpg',
+        x2: '/images/missions/mission-default@2x.jpg'
       }
     }
   }
