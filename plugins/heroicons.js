@@ -10,6 +10,7 @@ import {
   SelectorIcon,
   ArrowRightIcon,
   ClockIcon,
+  CalendarIcon,
   PencilIcon
 } from '@vue-hero-icons/outline'
 import { InformationCircleIcon, UsersIcon } from '@vue-hero-icons/solid'
@@ -27,6 +28,7 @@ const components = {
   InformationCircleIcon,
   UsersIcon,
   ClockIcon,
+  CalendarIcon,
   PencilIcon
 }
 
