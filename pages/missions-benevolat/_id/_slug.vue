@@ -399,15 +399,55 @@
         </Box>
       </div>
     </div>
+    <div
+      v-if="similarMissions.length > 0"
+      class="bg-[#282562] border-t-8 border-jva-red-500 overflow-hidden"
+    >
+      <div class="container mx-auto px-8 sm:px-4">
+        <div class="pt-16 pb-24">
+          <div class="text-white font-bold text-4xl text-center mb-8">
+            Vous pourriez aussi aimer&nbsp;…
+          </div>
+
+          <Slideshow
+            class="mb-6"
+            :slides-are-links="true"
+            :slides-count="similarMissions.length"
+          >
+            <nuxt-link
+              v-for="mission in similarMissions"
+              :key="mission.id"
+              class="card--mission--wrapper"
+              :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
+            >
+              <CardMission :mission="mission" class="!h-full" />
+            </nuxt-link>
+          </Slideshow>
+
+          <div class="text-center">
+            <nuxt-link
+              :to="`/missions-benevolat?refinementList[domaines][0]=${mission.domaine_name}`"
+              class="inline-block border-2 border-gray-500 rounded-full text-white hover:border-white !outline-none focus:ring transition font-bold text-sm px-4 py-2 mt-6"
+            >
+              Plus de missions
+            </nuxt-link>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import Breadcrumb from '~/components/layout/Breadcrumb.vue'
+import Slideshow from '~/components/advanced/Slideshow'
+import CardMission from '~/components/card/Mission'
 
 export default {
   components: {
-    Breadcrumb
+    Breadcrumb,
+    Slideshow,
+    CardMission
   },
   async asyncData ({ $api, params, error, store }) {
     const { data: mission } = await $api.getMission(params.id).catch((err) => {
@@ -461,6 +501,15 @@ export default {
     return {
       mission
     }
+  },
+  data () {
+    return {
+      similarMissions: []
+    }
+  },
+  async fetch () {
+    const { data: missions } = await this.$api.similarMission(this.mission.id)
+    this.similarMissions = missions
   },
   computed: {
     dates () {
@@ -584,4 +633,21 @@ export default {
       content: '\00A0”';
     }
   }
+
+  .card--mission--wrapper {
+    @apply !flex flex-col h-full max-w-[323px] rounded-[10px] transition;
+    width: calc(100vw - 64px) !important;
+    @apply w-full;
+  }
+
+  ::v-deep .slick-slider {
+    .slick-arrow {
+      &.slick-prev {
+        @apply translate-x-[-104px];
+      }
+      &.slick-next {
+        @apply translate-x-[104px];
+      }
+    }
+}
 </style>

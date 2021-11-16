@@ -1,10 +1,11 @@
 {
-    "structure_legal_status": [
-        {"key": "Association", "label": "Association"},
-        {"key": "Collectivité", "label": "Collectivité"},
-        {"key": "Structure publique", "label": "Organisation publique"},
-        {"key": "Structure privée", "label": "Organisation privée"},
-        {"key": "Autre", "label": "Autre"}
+    "duration": [
+        {"key": "1_hour", "label": "1 heure"},
+        {"key": "2_hours", "label": "2 heures"},
+        {"key": "half_day", "label": "Une demi-journée"},
+        {"key": "day", "label": "1 jour"},
+        {"key": "3_days", "label": "3 jours"},
+        {"key": "5_days", "label": "5 jours"}
     ],
     "mission_publics_beneficiaires": [
         {"key": "seniors", "label": "Personnes âgées"},
@@ -13,5 +14,17 @@
         {"key": "parents", "label": "Parents"},
         {"key": "children", "label": "Jeunes / enfants"},
         {"key": "any_public", "label": "Tous publics"}
+    ],
+    "structure_legal_status": [
+        {"key": "Association", "label": "Association"},
+        {"key": "Collectivité", "label": "Collectivité"},
+        {"key": "Structure publique", "label": "Organisation publique"},
+        {"key": "Structure privée", "label": "Organisation privée"},
+        {"key": "Autre", "label": "Autre"}
+    ],
+    "time_period": [
+        {"key": "week", "label": "semaine"},
+        {"key": "month", "label": "mois"},
+        {"key": "year", "label": "an"}
     ]
 }
