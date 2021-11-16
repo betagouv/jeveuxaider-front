@@ -57,6 +57,7 @@ export default {
   },
   async fetch () {
     const { data } = await this.$api.fetchPromotedToFrontPageMissions()
+    console.log(data)
     this.missions = data
   }
 }

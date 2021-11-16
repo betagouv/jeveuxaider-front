@@ -47,7 +47,8 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/dayjs'
+    '@nuxtjs/dayjs',
+    'nuxt-lazy-load'
   ],
 
   privateRuntimeConfig: {

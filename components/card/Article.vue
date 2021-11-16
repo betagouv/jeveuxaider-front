@@ -5,6 +5,7 @@
     <div class="thumbnail--wrapper relative">
       <img
         v-if="article.media"
+        v-lazy-load
         :src="article.media.media_details.sizes.medium_large.source_url"
         :alt="article.title.rendered"
         class="w-full h-full object-cover"
