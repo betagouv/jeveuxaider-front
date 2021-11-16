@@ -28,9 +28,9 @@
             { 'top-0': !domaine.bottom },
           ]"
         >
-          <div class="pill-2" :class="[domainBgColor(domaine.id)]">
+          <Badge :color="domaine.id" class="uppercase mb-4">
             {{ domaine.name }}
-          </div>
+          </Badge>
 
           <h3
             class="text-white font-extrabold text-2xl leading-[28px] text-shadow"

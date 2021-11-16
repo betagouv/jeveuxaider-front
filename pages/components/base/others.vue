@@ -28,34 +28,34 @@
       </div>
       <div class="flex flex-wrap gap-2 items-end">
         <Badge color="covid">
-          Covid
+          COVID
         </Badge>
         <Badge color="education">
-          Éducation
+          ÉDUCATION
         </Badge>
         <Badge color="sante">
-          Santé
+          SANTÉ POUR TOUS
         </Badge>
         <Badge color="nature">
-          Nature
+          PROTECTION DE LA NATURE
         </Badge>
         <Badge color="solidarite">
-          Solidarité
+          SOLIDARITÉ & INSERTION
         </Badge>
         <Badge color="sport">
-          Sport
+          SPORT POUR TOUS
         </Badge>
         <Badge color="prevention">
-          Prévention
+          PRÉVENTION ET PROTECTION
         </Badge>
         <Badge color="memoire">
-          Mémoire
+          MÉMOIRE & CITOYENNETÉ
         </Badge>
         <Badge color="cooperation">
-          Coopération
+          COOPÉRATION INTERNALE
         </Badge>
         <Badge color="culture">
-          Culture
+          ART & CULTURE POUR TOUS
         </Badge>
       </div>
     </div>

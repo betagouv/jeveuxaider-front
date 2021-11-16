@@ -55,9 +55,9 @@
     </div>
 
     <div class="mx-8 my-6 flex-1 flex flex-col items-start">
-      <div class="pill-2" :class="[domainBgColor(domaine.id)]">
+      <Badge :color="domaine.id" class="uppercase mb-4">
         {{ domaine.name.fr }}
-      </div>
+      </Badge>
 
       <h3
         :title="mission.name"
@@ -106,7 +106,6 @@
 </template>
 
 <script>
-// A REFACTORISER
 import MixinColorsDomaines from '@/mixins/colors-domaines'
 import MixinMission from '@/mixins/mission'
 import ExternalSvg from '@/static/images/icons/external.svg?inline'
@@ -143,19 +142,6 @@ export default {
           ? 'Complet'
           : 'Plusieurs bénévoles recherchés'
       }
-    },
-    participationStateTheme () {
-      if (this.participation) {
-        switch (this.participation.state) {
-          case 'En attente de validation':
-            return 'text-[#f6ad55]'
-          case 'Validée':
-            return 'text-jva-green'
-          default:
-            return ''
-        }
-      }
-      return ''
     },
     formattedDate () {
       const startDate = this.mission.start_date
@@ -227,14 +213,6 @@ export default {
   color: #171725;
   height: 23.5px;
   @apply px-3 inline-flex items-center truncate;
-}
-
-.pill-2 {
-  border-radius: 35px;
-  font-size: 11px;
-  letter-spacing: 0.01em;
-  color: white;
-  @apply font-bold uppercase py-1 px-3 mb-4 inline-flex;
 }
 
 .custom-gradient {

@@ -15,24 +15,21 @@
       <div class="custom-gradient absolute inset-0" />
     </div>
 
-    <div class="mx-8 my-6 flex-1 flex flex-col items-start space-y-6">
-      <Badge>
-        {{ article.categories[0] }}
-      </Badge>
+    <div class="mx-8 my-6 flex-1 flex flex-col items-start">
+      <div v-if="article.categories.length" class="mb-4 flex flex-wrap gap-2">
+        <Badge v-for="categoryId in article.categories" :key="categoryId" color="blue">
+          {{ category(categoryId) }}
+        </Badge>
+      </div>
 
       <h3
-        v-tooltip="{
-          content: $options.filters.decodeHTMLEntities(
-            article.title.rendered
-          ),
-          hideOnTargetClick: true,
-        }"
         class="font-black text-black text-lg relative mb-auto line-clamp-3"
+        :title="article.title.rendered"
       >
         {{ article.title.rendered | decodeHTMLEntities }}
       </h3>
 
-      <div class="text-gray-500 text-sm mt-2 line-clamp-2">
+      <div class="text-gray-500 text-sm mt-4 line-clamp-2">
         {{ article.excerpt.rendered | stripHTML | decodeHTMLEntities }}
       </div>
     </div>
@@ -47,7 +44,24 @@ export default {
       default: null
     }
   },
-  computed: {}
+  methods: {
+    category (id) {
+      switch (id) {
+        case 2:
+          return 'Actualité'
+        case 3:
+          return 'Édito'
+        case 4:
+          return 'Focus'
+        case 5:
+          return 'Info'
+        case 6:
+          return 'Témoignage'
+        default:
+          return id
+      }
+    }
+  }
 }
 </script>
 

@@ -11,13 +11,15 @@
 export default {
   props: {
     color: {
-      type: String,
+      type: [String, Number],
       default: 'gray'
     }
   },
   computed: {
     colorClass () {
       switch (this.color) {
+        case 'blue':
+          return 'bg-jva-blue-500'
         case 'gray':
           return 'bg-gray-600'
         case 'gray-light':
@@ -28,27 +30,37 @@ export default {
           return 'bg-jva-green-500'
         case 'red':
           return 'bg-jva-red-500'
+        case 6:
         case 'solidarite':
         case 'solidarite-et-insertion':
           return 'bg-domaine-solidarite'
+        case 4:
         case 'nature':
           return 'bg-domaine-nature'
+        case 2:
         case 'education':
           return 'bg-domaine-education'
+        case 3:
         case 'sante':
         case 'sante-pour-tous':
           return 'bg-domaine-sante'
+        case 1:
         case 'covid':
           return 'bg-domaine-covid'
+        case 8:
         case 'prevention':
           return 'bg-domaine-prevention'
+        case 7:
         case 'sport':
         case 'sport-pour-tous':
           return 'bg-domaine-sport'
+        case 9:
         case 'memoire':
           return 'bg-domaine-memoire'
+        case 10:
         case 'cooperation':
           return 'bg-domaine-cooperation'
+        case 11:
         case 'culture':
           return 'bg-domaine-culture'
         default:
