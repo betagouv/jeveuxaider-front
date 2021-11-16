@@ -44,10 +44,10 @@
 </template>
 
 <script>
-import ColorsDomaines from '@/mixins/colors-domaines'
+import MixinColorsDomaines from '@/mixins/colors-domaines'
 
 export default {
-  mixins: [ColorsDomaines],
+  mixins: [MixinColorsDomaines],
   props: {
     domaine: {
       type: Object,

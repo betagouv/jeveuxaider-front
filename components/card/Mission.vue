@@ -6,7 +6,7 @@
       <img
         v-if="thumbnail"
         :srcset="thumbnail"
-        :alt="mission.domaine_name"
+        :alt="domaine.name.fr"
         class="w-full h-full object-cover"
         width="300"
         height="143"
@@ -55,24 +55,21 @@
     </div>
 
     <div class="mx-8 my-6 flex-1 flex flex-col items-start">
-      <div class="pill-2" :class="[domainBgColor(domainId)]">
-        {{ mission.domaine_name }}
+      <div class="pill-2" :class="[domainBgColor(domaine.id)]">
+        {{ domaine.name.fr }}
       </div>
 
       <h3
-        v-tooltip="{
-          content: mission.name,
-          hideOnTargetClick: true,
-        }"
+        :title="mission.name"
         class="font-black text-black text-lg relative mb-auto line-clamp-3"
       >
         {{ mission.name }}
       </h3>
 
-      <!-- <div
+      <div
         class="text-gray-500 text-sm mt-2 truncate max-w-full"
         v-text="mission.structure.name"
-      /> -->
+      />
 
       <div
         v-if="mission.provider == 'api_engagement'"
@@ -96,17 +93,8 @@
     </div>
 
     <div
-      v-if="showState && participation"
-      class="footer border-t p-4 text-center relative"
-    >
-      <span class="text-sm font-bold" :class="participationStateTheme">{{
-        participation.state
-      }}</span>
-    </div>
-    <div
-      v-else
       class="footer border-t p-4 text-center flex items-center justify-center space-x-2"
-      :class="[domainColor(domainId)]"
+      :class="[domainColor(domaine.id)]"
     >
       <span class="text-sm font-bold">
         {{ placesLeftText }}
@@ -132,18 +120,6 @@ export default {
     mission: {
       type: Object,
       default: null
-    },
-    participation: {
-      type: Object,
-      default: null
-    },
-    showState: {
-      type: Boolean,
-      default: false
-    },
-    isLoading: {
-      type: Boolean,
-      default: false
     }
   },
   computed: {

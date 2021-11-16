@@ -1,94 +1,58 @@
+// Pas de classe dynamique pour éviter problèmes de purge.
+
 export default {
   methods: {
-    // Pas de classe dynamique pour éviter problèmes de purge.
     domainColor (domainId) {
-      let colorClass
       switch (domainId) {
         case 1:
-          colorClass = 'text-domaine-covid'
-          break
+          return 'text-domaine-covid'
         case 2:
-          colorClass = 'text-domaine-education'
-          break
+          return 'text-domaine-education'
         case 3:
-          colorClass = 'text-domaine-sante'
-          break
+          return 'text-domaine-sante'
         case 4:
-          colorClass = 'text-domaine-nature'
-          break
+          return 'text-domaine-nature'
         case 6:
-          colorClass = 'text-domaine-solidarite'
-          break
+          return 'text-domaine-solidarite'
         case 7:
-          colorClass = 'text-domaine-sport'
-          break
+          return 'text-domaine-sport'
         case 8:
-          colorClass = 'text-domaine-prevention'
-          break
+          return 'text-domaine-prevention'
         case 9:
-          colorClass = 'text-domaine-memoire'
-          break
+          return 'text-domaine-memoire'
         case 10:
-          colorClass = 'text-domaine-cooperation'
-          break
+          return 'text-domaine-cooperation'
         case 11:
-          colorClass = 'text-domaine-culture'
-          break
+          return 'text-domaine-culture'
         default:
-          colorClass = 'text-jva-blue-500'
-          break
+          return 'text-jva-blue-500'
       }
-
-      return colorClass
     },
     domainBgColor (domainId) {
-      let colorClass
       switch (domainId) {
         case 1:
-          colorClass = 'bg-domaine-covid'
-          break
+          return 'bg-domaine-covid'
         case 2:
-          colorClass = 'bg-domaine-education'
-          break
+          return 'bg-domaine-education'
         case 3:
-          colorClass = 'bg-domaine-sante'
-          break
+          return 'bg-domaine-sante'
         case 4:
-          colorClass = 'bg-domaine-nature'
-          break
+          return 'bg-domaine-nature'
         case 6:
-          colorClass = 'bg-domaine-solidarite'
-          break
+          return 'bg-domaine-solidarite'
         case 7:
-          colorClass = 'bg-domaine-sport'
-          break
+          return 'bg-domaine-sport'
         case 8:
-          colorClass = 'bg-domaine-prevention'
-          break
+          return 'bg-domaine-prevention'
         case 9:
-          colorClass = 'bg-domaine-memoire'
-          break
+          return 'bg-domaine-memoire'
         case 10:
-          colorClass = 'bg-domaine-cooperation'
-          break
+          return 'bg-domaine-cooperation'
         case 11:
-          colorClass = 'bg-domaine-culture'
-          break
+          return 'bg-domaine-culture'
         default:
-          colorClass = 'bg-jva-blue-500'
-          break
+          return 'bg-jva-blue-500'
       }
-
-      return colorClass
-    }
-  },
-  computed: {
-    domainId () {
-      return (
-        this.thematique?.domaine_id ??
-        this.mission?.domaine_id ??
-        this.mission?.template?.domaine_id
-      )
     }
   }
 }
