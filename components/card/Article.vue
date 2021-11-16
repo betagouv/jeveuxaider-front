@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card--article h-auto flex flex-col flex-1 bg-white rounded-[10px] overflow-hidden safari-fix-scale"
+    class="card--article h-auto flex flex-col flex-1 bg-white rounded-xl overflow-hidden safari-fix-scale"
   >
     <div class="thumbnail--wrapper relative">
       <img
@@ -15,7 +15,11 @@
       <div class="custom-gradient absolute inset-0" />
     </div>
 
-    <div class="m-8 flex-1 flex flex-col items-start space-y-6">
+    <div class="mx-8 my-6 flex-1 flex flex-col items-start space-y-6">
+      <Badge>
+        {{ article.categories[0] }}
+      </Badge>
+
       <h3
         v-tooltip="{
           content: $options.filters.decodeHTMLEntities(
@@ -23,12 +27,12 @@
           ),
           hideOnTargetClick: true,
         }"
-        class="text-[#111111] text-2xl leading-[28px] font-bold relative mb-auto line-clamp-3"
+        class="font-black text-black text-lg relative mb-auto line-clamp-3"
       >
         {{ article.title.rendered | decodeHTMLEntities }}
       </h3>
 
-      <div class="text-[#696974] line-clamp-2">
+      <div class="text-gray-500 text-sm mt-2 line-clamp-2">
         {{ article.excerpt.rendered | stripHTML | decodeHTMLEntities }}
       </div>
     </div>

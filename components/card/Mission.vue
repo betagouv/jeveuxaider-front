@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card--mission h-auto flex flex-col flex-1 bg-white rounded-[10px] overflow-hidden safari-fix-scale"
+    class="card--mission h-auto flex flex-col flex-1 bg-white rounded-xl overflow-hidden safari-fix-scale"
   >
     <div class="thumbnail--wrapper relative">
       <img
@@ -54,7 +54,7 @@
       </div>
     </div>
 
-    <div class="mx-[30px] my-6 flex-1 flex flex-col items-start">
+    <div class="mx-8 my-6 flex-1 flex flex-col items-start">
       <div class="pill-2" :class="[domainBgColor(domainId)]">
         {{ mission.domaine_name }}
       </div>
@@ -64,19 +64,19 @@
           content: mission.name,
           hideOnTargetClick: true,
         }"
-        class="name font-black text-black text-lg relative mb-auto line-clamp-3"
+        class="font-black text-black text-lg relative mb-auto line-clamp-3"
       >
         {{ mission.name }}
       </h3>
 
       <div
-        class="structure mt-2 truncate max-w-full"
+        class="text-gray-500 text-sm mt-2 truncate max-w-full"
         v-text="mission.structure.name"
       />
 
       <div
         v-if="mission.provider == 'api_engagement'"
-        class="api-engagement self-stretch"
+        class="text-gray-500 text-sm self-stretch"
       >
         <div class="flex items-center justify-between space-x-8">
           <div>
@@ -236,16 +236,6 @@ export default {
   img {
     transition: all 0.4s ease-in-out;
   }
-}
-
-.structure,
-.api-engagement {
-  font-size: 13px;
-  color: #696974;
-}
-
-.name {
-  line-height: 22px;
 }
 
 .footer {
