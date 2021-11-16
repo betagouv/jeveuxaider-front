@@ -69,10 +69,10 @@
         {{ mission.name }}
       </h3>
 
-      <div
+      <!-- <div
         class="text-gray-500 text-sm mt-2 truncate max-w-full"
         v-text="mission.structure.name"
-      />
+      /> -->
 
       <div
         v-if="mission.provider == 'api_engagement'"
