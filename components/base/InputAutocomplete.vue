@@ -60,7 +60,12 @@
           <span class="">
             {{ item[attributeLabel] }}
           </span>
-          <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="" />
+          <div class="space-x-4 flex">
+            <span v-if="attributeRightLabel" class="text-cool-gray-400 text-sm font-semibold">
+              {{ item[attributeRightLabel] }}
+            </span>
+            <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="" />
+          </div>
         </li>
         <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
           {{ labelEmpty }}
@@ -82,7 +87,8 @@ export default {
     icon: { type: String, default: null },
     options: { type: Array, default: () => [] },
     attributeKey: { type: String, default: 'id' },
-    attributeLabel: { type: String, default: 'name' }
+    attributeLabel: { type: String, default: 'name' },
+    attributeRightLabel: { type: String, default: '' }
   },
   data () {
     return {

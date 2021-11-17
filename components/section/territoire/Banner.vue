@@ -165,9 +165,7 @@ export default {
       let link = null
       switch (type) {
         case 'department':
-          link = `refinementList[department_name][0]=${this.$options.filters.fullDepartmentFromValue(
-            this.territoire.department
-          )}`
+          link = `refinementList[department_name][0]=${this.$options.filters.label(this.territoire.department, 'departments')}`
           break
         case 'city':
           link = `refinementList[type][0]=Mission en présentiel&aroundLatLng=${this.territoire.latitude},${this.territoire.longitude}&place=${this.territoire.zips[0]}&aroundRadius=35000`

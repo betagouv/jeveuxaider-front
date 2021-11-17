@@ -82,15 +82,22 @@
           </FormLabel>
           <FormHelperText>Commencez par taper votre adresse</FormHelperText>
           <InputAutocomplete
+            icon="LocationMarkerIcon"
             name="autocomplete"
             label="Autocomplete"
             placeholder="Ex: 14 rue rivoli, Paris"
             :options="autocompleteOptions"
             attribute-key="id"
             attribute-label="label"
-            @selected="handleSelected"
+            attribute-right-label="typeLabel"
+            @selected="handleSelectedGeo"
             @fetch-suggestions="onFetchGeoSuggestions"
           />
+          <div v-if="geoSelected" class="bg-gray-100 p-4 rounded-lg text-sm text-gray-900 mt-2">
+            <code>
+              <pre>{{ geoSelected }}</pre>
+            </code>
+          </div>
         </div>
       </form>
     </Box>
@@ -119,6 +126,7 @@ export default {
         select_advanced: 'waiting',
         select_advanced_id: 4
       },
+      geoSelected: null,
       autocompleteOptions: []
     }
   },
@@ -141,9 +149,17 @@ export default {
         }
       })
 
-      const formatOptions = data.features.map((option) => { return { ...option.properties, coordinates: option.geometry.coordinates } })
-      console.log(formatOptions)
+      const formatOptions = data.features.map((option) => {
+        return {
+          ...option.properties,
+          coordinates: option.geometry.coordinates,
+          typeLabel: this.$options.filters.label(option.properties.type, 'geoType')
+        }
+      })
       this.autocompleteOptions = formatOptions
+    },
+    handleSelectedGeo (item) {
+      this.geoSelected = item
     },
     handleSelected (item) {
       console.log('handleSelected', item)
