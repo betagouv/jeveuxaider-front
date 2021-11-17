@@ -27,8 +27,8 @@ module.exports = {
       '2xl': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.025em' }],
       '3xl': ['1.875rem', { lineHeight: '2.25rem', letterSpacing: '-0.025em' }],
       '4xl': ['2.25rem', { lineHeight: '2.5rem', letterSpacing: '-0.025em' }],
-      '5xl': ['3rem', { lineHeight: '1', letterSpacing: '-0.00em' }],
-      '6xl': ['3.75rem', { lineHeight: '1', letterSpacing: '-0.00em' }]
+      '5xl': ['3rem', { lineHeight: '1', letterSpacing: '-0.025em' }],
+      '6xl': ['3.75rem', { lineHeight: '1', letterSpacing: '-0.025em' }]
     },
     extend: {
       fontFamily: {

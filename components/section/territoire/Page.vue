@@ -25,9 +25,9 @@
       v-if="territoire.promoted_organisations &&territoire.promoted_organisations.length"
       :territoire="territoire"
     />
-    <!--
+
     <Engagement :territoire="territoire" />
-    <Subscribe :territoire="territoire" /> -->
+    <Subscribe :territoire="territoire" />
   </div>
 </template>
 
@@ -37,13 +37,13 @@ import Banner from '@/components/section/territoire/Banner'
 import Promote from '@/components/section/territoire/Promote'
 import Cities from '@/components/section/territoire/Cities'
 import Associations from '@/components/section/territoire/Associations'
-// import Engagement from '@/components/section/territoire/Engagement'
-// import Subscribe from '@/components/section/territoire/Subscribe'
+import Engagement from '@/components/section/territoire/Engagement'
+import Subscribe from '@/components/section/territoire/Subscribe'
 
 export default {
   components: {
-    Banner, Promote, Cities, Associations
-    // Search, Engagement, Subscribe
+    Banner, Promote, Cities, Associations, Engagement, Subscribe
+    // Search ,
   },
   props: {
     territoire: {

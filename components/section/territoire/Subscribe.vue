@@ -11,7 +11,7 @@
             </p>
 
             <p
-              class="text-4xl xl:text-5xl leading-none font-extrabold tracking-[-1px] lg:tracking-[-2px] text-primary"
+              class="text-4xl xl:text-5xl leading-none font-extrabold tracking-[-1px] lg:tracking-[-2px] text-jva-blue-500"
             >
               Suivez toute l'actualité du bénévolat
               {{ territoire.suffix_title }}
@@ -28,33 +28,39 @@
             :class="[{ 'inline-block': submitted }]"
             style="max-width: 746px"
           >
-            <el-form
+            <form
               v-if="!submitted"
               ref="subscribeForm"
-              :model="form"
-              :rules="rules"
               class="flex flex-wrap sm:flex-nowrap gap-4 sm:gap-8"
+              @submit="onSubmit"
             >
-              <div class="input-wrapper relative">
-                <el-form-item prop="email">
-                  <el-input
-                    v-model="form.email"
-                    type="email"
-                    placeholder="Renseignez votre e-mail"
-                    class="w-full"
-                  />
-                </el-form-item>
+              <div class="w-full relative">
+                <label for="email" class="text-gray-900 font-bold text-xs">E-MAIL</label>
+                <input
+                  id="email"
+                  v-model="form.email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="Renseignez votre e-mail"
+                  class="w-full p-0 border-none !outline-none placeholder-gray-400 focus:ring-0"
+                >
+                <div v-if="errors" class="text-sm text-jva-red-500">
+                  <div v-for="(error, key) in errors" :key="key">
+                    {{ error }}
+                  </div>
+                </div>
               </div>
 
               <button
                 :disabled="loading"
-                class="w-full sm:w-auto sm:flex-none flex items-center justify-center border border-transparent rounded-2xl text-white !outline-none focus:ring transition duration-150 hover:scale-105 transform will-change-transform ease-in-out font-bold text-xl px-5 py-4 sm:px-8 sm:py-4 sm:pb-5 leading-none"
-                style="background-color: #09c19d"
+                type="submit"
+                class="bg-jva-green-600 w-full sm:w-auto sm:flex-none flex items-center justify-center border border-transparent rounded-2xl text-white !outline-none focus:ring transition duration-150 hover:scale-105 transform will-change-transform ease-in-out font-bold text-xl px-5 py-4 sm:px-8 sm:py-4 sm:pb-5 leading-none"
                 @click.prevent="onSubmit"
               >
                 Je m'engage
               </button>
-            </el-form>
+            </form>
 
             <div v-else class="flex flex-wrap items-center">
               <div class="font-bold tracking-[-1px] w-full sm:w-auto">
@@ -62,7 +68,7 @@
               </div>
               <button
                 ref="buttonBack"
-                class="mt-4 sm:ml-4 sm:mt-0 px-4 py-2 text-sm cursor-pointer rounded-lg bg-green-100 text-[#03543f] font-extrabold !outline-none focus:ring transition duration-150 hover:scale-105 transform will-change-transform ease-in-out"
+                class="mt-4 sm:ml-4 sm:mt-0 px-4 py-2 text-sm cursor-pointer rounded-lg bg-green-100 text-jva-green-500 font-extrabold !outline-none focus:ring transition duration-150 hover:scale-105 transform will-change-transform ease-in-out"
                 @click="onBack"
               >
                 Retour
@@ -109,6 +115,8 @@
 </template>
 
 <script>
+import * as yup from 'yup'
+
 export default {
   props: {
     territoire: {
@@ -121,81 +129,36 @@ export default {
       form: {},
       loading: false,
       submitted: false,
-      error: null,
-      rules: {
-        email: [
-          {
-            required: true,
-            message: 'Veuillez renseigner un email',
-            trigger: 'change'
-          },
-          {
-            type: 'email',
-            message: "Le format de l'email n'est pas correct",
-            trigger: 'blur'
-          }
-        ]
-      }
+      errors: false
     }
   },
   methods: {
     onSubmit () {
+      const schema = yup.object().shape({
+        email: yup.string().required("Merci d'indiquer votre email").email("Le format de l'email n'est pas valide")
+      })
+
       this.loading = true
-      this.$refs.subscribeForm.validate(async (valid, fields) => {
-        if (valid) {
+      schema
+        .validate(this.form)
+        .then(async (valid) => {
           await this.$axios.post('/sendinblue/contact', {
             email: this.form.email,
             zipcode: this.territoire.zips ? this.territoire.zips[0] : null,
             department: this.territoire.department
           })
           this.submitted = true
-        }
-        this.loading = false
-      })
+          this.loading = false
+        }).catch((err) => {
+          this.errors = err.errors
+          this.loading = false
+        })
     },
     onBack () {
       this.form.email = ''
       this.submitted = false
+      this.errors = false
     }
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-.input-wrapper {
-  @apply w-full;
-
-  &::after {
-    content: 'E-MAIL';
-    position: absolute;
-    pointer-events: none;
-    left: 0;
-    top: 12px;
-    font-size: 12px;
-    color: black;
-    letter-spacing: -0.1px;
-    line-height: 18px;
-    font-weight: bold;
-  }
-
-  .el-form-item {
-    @apply mb-0;
-  }
-
-  .el-input {
-    position: relative;
-    top: 22px;
-    margin-bottom: 25px;
-    left: -15px;
-    box-shadow: none !important;
-    ::v-deep input {
-      border: none !important;
-    }
-  }
-
-  ::v-deep .el-form-item__error {
-    top: auto;
-    bottom: -3px;
-  }
-}
-</style>
