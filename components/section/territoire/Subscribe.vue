@@ -99,12 +99,12 @@
         class="max-w-md ml-auto xl:max-w-full h-full relative sm:absolute right-0 bottom-0 sm:pt-36 lg:pt-8 z-0"
       >
         <img
-          src="/images/subscribe-pattern.svg"
+          src="/images/territoires/subscribe-pattern.svg"
           class="ml-auto w-full h-full object-contain object-right-bottom absolute"
         >
         <img
-          src="/images/subscribe-illustration.png"
-          srcset="/images/subscribe-illustration@2x.png 2x"
+          src="/images/territoires/subscribe-illustration.png"
+          srcset="/images/territoires/subscribe-illustration@2x.png 2x"
           :alt="`Suivez toute l'actualité du bénévolat
               ${territoire.suffix_title}`"
           class="ml-auto w-full h-full object-contain object-right-bottom relative"
