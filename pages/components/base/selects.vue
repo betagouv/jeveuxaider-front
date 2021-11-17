@@ -86,8 +86,10 @@
             label="Autocomplete"
             placeholder="Ex: 14 rue rivoli, Paris"
             :options="autocompleteOptions"
+            attribute-key="id"
+            attribute-label="label"
             @selected="handleSelected"
-            @fetch-suggestions="onFetchSuggestions"
+            @fetch-suggestions="onFetchGeoSuggestions"
           />
         </div>
       </form>
@@ -129,6 +131,19 @@ export default {
         }
       })
       this.autocompleteOptions = res.data.data
+    },
+    async onFetchGeoSuggestions (value) {
+      if (!value) { return [] }
+      const { data } = await this.$axios.get('https://api-adresse.data.gouv.fr/search', {
+        params: {
+          q: value,
+          limit: 15
+        }
+      })
+
+      const formatOptions = data.features.map((option) => { return { ...option.properties, coordinates: option.geometry.coordinates } })
+      console.log(formatOptions)
+      this.autocompleteOptions = formatOptions
     },
     handleSelected (item) {
       console.log('handleSelected', item)
