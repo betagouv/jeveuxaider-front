@@ -150,10 +150,10 @@
     </div>
     <!-- Search Overlay -->
     <client-only>
-      <portal v-if="$store.state.showSearchOverlay" to="body-end">
-        <p>
-          Search Overlay coming !
-        </p>
+      <portal to="body-end">
+        <transition name="fade">
+          <LazySearchOverlay v-if="$store.state.showSearchOverlay" />
+        </transition>
       </portal>
     </client-only>
   </header>
@@ -161,8 +161,12 @@
 
 <script>
 import { CalendarIcon, SearchIcon, UserIcon } from '@vue-hero-icons/outline'
+import LazySearchOverlay from '~/components/section/SearchOverlay.vue'
 
 export default {
+  components: {
+    LazySearchOverlay
+  },
   data () {
     return {
       showMobileMenu: false,

@@ -46,6 +46,23 @@ html {
   @apply px-4 max-w-3xl mx-auto lg:max-w-7xl
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-in-enter-active {
+  transition: opacity 0.5s;
+}
+.fade-in-enter,
+.fade-in-leave-to {
+  opacity: 0;
+}
+
 .tooltip {
   display: block !important;
   z-index: 10000;
