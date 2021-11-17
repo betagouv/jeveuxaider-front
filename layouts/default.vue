@@ -1,8 +1,11 @@
 <template>
-  <div class="">
+  <div>
     <Header />
     <Nuxt />
     <Footer />
+    <client-only>
+      <portal-target name="body-end" />
+    </client-only>
   </div>
 </template>
 

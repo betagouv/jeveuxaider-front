@@ -44,25 +44,31 @@
         </button>
       </div>
       <nav class="hidden lg:flex divide-x divide-gray-200">
-        <a
+        <NavItem
           v-for="link in navigation"
           :key="link.name"
-          class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1"
           :href="link.href"
+          :to="link.to"
+          :click="link.click"
+          class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1"
         >
           <component :is="link.icon" class="flex-shrink-0 mr-3 h-4 w-4" aria-hidden="true" />
           {{ link.name }}
-        </a>
+        </NavItem>
       </nav>
     </div>
     <div class="hidden lg:flex p-4 justify-between border-t text-sm text-gray-800">
       <div class="flex space-x-8">
-        <a
+        <NavItem
           v-for="link in secondNavigation"
           :key="link.name"
           :href="link.href"
+          :to="link.to"
+          :click="link.click"
           class="hover:underline"
-        >{{ link.name }}</a>
+        >
+          {{ link.name }}
+        </NavItem>
       </div>
       <div class="flex space-x-6">
         <a class="hover:underline">Inscription</a>
@@ -113,55 +119,65 @@
                 </div>
               </div>
               <div class="flex flex-col mt-3 px-2 space-y-1">
-                <div v-for="link in navigation" :key="link.name" class="flex items-center px-3 py-2 hover:bg-gray-100 hover:text-gray-800 text-jva-900 rounded-md">
+                <NavItem
+                  v-for="link in navigation"
+                  :key="link.name"
+                  :href="link.href"
+                  :to="link.to"
+                  :click="link.click"
+                  class="flex items-center px-3 py-2 hover:bg-gray-100 hover:text-gray-800 text-jva-900 rounded-md"
+                >
                   <component :is="link.icon" class="flex-shrink-0 h-4 w-4" aria-hidden="true" />
-                  <a
-                    class="text-base font-medium ml-2"
-                    :href="link.href"
-                  >{{ link.name }}</a>
-                </div>
+                  <span class="text-base font-medium ml-2">{{ link.name }}</span>
+                </NavItem>
               </div>
             </div>
             <div class="mt-3 p-2">
-              <nuxt-link
+              <NavItem
                 v-for="link in secondNavigation"
                 :key="link.name"
-                :to="link.href"
+                :href="link.href"
+                :to="link.to"
+                :click="link.click"
                 class="block rounded-md px-3 py-2 text-base text-cool-gray-600 font-medium hover:bg-gray-100 hover:text-gray-800"
               >
                 {{ link.name }}
-              </nuxt-link>
+              </NavItem>
             </div>
           </div>
         </div>
       </transition>
     </div>
+    <!-- Search Overlay -->
+    <client-only>
+      <portal v-if="$store.state.showSearchOverlay" to="body-end">
+        <p>
+          Search Overlay coming !
+        </p>
+      </portal>
+    </client-only>
   </header>
 </template>
 
 <script>
 import { CalendarIcon, SearchIcon, UserIcon } from '@vue-hero-icons/outline'
 
-const navigation = [
-  { name: 'Trouver une mission', href: '#', icon: SearchIcon, current: false },
-  { name: 'Publier une mission', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Devenir bénévole', href: '#', icon: UserIcon, current: false }
-]
-
-const secondNavigation = [
-  { name: 'Associations', href: '#', current: false },
-  { name: 'Territoires', href: '/territoires', current: false },
-  { name: 'Écoles et universités', href: '#', current: false },
-  { name: 'Actualités', href: '#', current: false },
-  { name: 'Centre d\'aide', href: '#', current: false }
-]
-
 export default {
   data () {
     return {
       showMobileMenu: false,
-      navigation,
-      secondNavigation
+      navigation: [
+        { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
+        { name: 'Publier une mission', href: '#', icon: CalendarIcon },
+        { name: 'Devenir bénévole', href: '#', icon: UserIcon }
+      ],
+      secondNavigation: [
+        { name: 'Associations', href: '#' },
+        { name: 'Territoires', to: '/territoires' },
+        { name: 'Écoles et universités', href: '#' },
+        { name: 'Actualités', href: '#' },
+        { name: 'Centre d\'aide', href: '#' }
+      ]
     }
   }
 }

@@ -21,6 +21,7 @@
     "core-js": "^3.15.1",
     "nuxt": "^2.15.7",
     "nuxt-lazy-load": "^1.2.9",
+    "portal-vue": "^2.1.7",
     "slugify": "^1.6.2",
     "text-clipper": "^2.1.0",
     "v-click-outside": "^3.1.2",
