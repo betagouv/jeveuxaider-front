@@ -1,33 +1,20 @@
 <template>
   <div v-click-outside="clickedOutside" class="relative">
-    <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-gray-700">
-      {{ label }}
-      <span v-if="required" class="text-[#E2011C]">
-        *
-      </span>
-      <span v-if="labelSuffix" class="text-jva-blue-400">{{
-        labelSuffix
-      }}</span>
-    </label>
-    <div v-if="description" class="text-xs text-gray-500 mt-2">
-      {{ description }}
-    </div>
-    <div class="mt-2">
-      <div class="flex items-center relative w-full">
-        <div v-if="icon" class="absolute left-4">
-          <component
-            :is="icon"
-            class="h-4 w-4 text-gray-400"
-          />
-        </div>
-        <input
-          :id="name"
-          ref="input"
-          :value="searchTerm"
-          :name="name"
-          type="text"
-          :placeholder="placeholder"
-          class="
+    <div class="flex items-center relative w-full">
+      <div v-if="icon" class="absolute left-4">
+        <component
+          :is="icon"
+          class="h-4 w-4 text-gray-400"
+        />
+      </div>
+      <input
+        :id="name"
+        ref="input"
+        :value="searchTerm"
+        :name="name"
+        type="text"
+        :placeholder="placeholder"
+        class="
             px-6
             py-3
             text-sm
@@ -40,17 +27,16 @@
             border border-gray-200
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
-          :class=" [{ 'border-jva-red-primary': error, 'pl-10': icon}]"
-          autocomplete="off"
-          @input="handleInput"
-          @keydown="onKeydown"
-        >
-        <div v-if="searchTerm" class="absolute right-3">
-          <XIcon
-            class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
-            @click="reset()"
-          />
-        </div>
+        :class=" [{ 'border-jva-red-primary': error, 'pl-10': icon}]"
+        autocomplete="off"
+        @input="handleInput"
+        @keydown="onKeydown"
+      >
+      <div v-if="searchTerm" class="absolute right-3">
+        <XIcon
+          class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+          @click="reset()"
+        />
       </div>
     </div>
     <div
@@ -81,10 +67,6 @@
         </li>
       </ul>
     </div>
-
-    <div v-if="error" class="text-xs text-red-500 absolute">
-      {{ error }}
-    </div>
   </div>
 </template>
 
@@ -94,13 +76,9 @@ export default {
   props: {
     value: { type: String, default: null },
     placeholder: { type: String, default: null },
-    label: { type: String, default: null },
-    labelSuffix: { type: String, default: null },
     labelEmpty: { type: String, default: 'Aucun résultat' },
     name: { type: String, required: true },
     error: { type: String, default: null },
-    description: { type: String, default: null },
-    required: { type: Boolean, default: false },
     icon: { type: String, default: null },
     options: { type: Array, default: () => [] },
     attributeKey: { type: String, default: 'id' },

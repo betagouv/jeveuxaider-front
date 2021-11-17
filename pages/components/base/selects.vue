@@ -5,62 +5,91 @@
         <Heading as="h2" :level="3" class="mb-8 text-jva-gray-900">
           Selects
         </Heading>
-        <Select
-          v-model="form.state"
-          name="state"
-          label="Select native"
-          placeholder="Statut de la mission"
-          :options="[
-            {key: 'draft', label:'Brouillon'},
-            {key: 'waiting', label:'En attente de validation'},
-            {key: 'validated', label:'Validée'}
-          ]"
-          required
-        />
-        <SelectAdvanced
-          v-model="form.select_advanced"
-          name="state"
-          label="Select with themed options"
-          placeholder="Choisissez une option"
-          description="Options avec key => label"
-          required
-          :options="[
-            {key: 'draft', label:'Brouillon'},
-            {key: 'waiting', label:'En attente de validation'},
-            {key: 'validated', label:'Validée'}
-          ]"
-          clearable
-        />
-        <SelectAdvanced
-          v-model="form.select_advanced_id"
-          name="responsable"
-          label="Select with themed options based on model"
-          description="Options avec id => name (props attribute-key & attribute-label)"
-          placeholder="Choisissez une option"
-          required
-          :options="[
-            {id: 1, name: 'Jérémy Pinto'},
-            {id: 2, name: 'Nicolas Vaissaud'},
-            {id: 3, name: 'Kevin Vaissaud'},
-            {id: 4, name: 'John Doe'},
-          ]"
-          attribute-key="id"
-          attribute-label="name"
-          clearable
-        />
+        <div>
+          <FormLabel html-for="state">
+            Select native
+          </FormLabel>
+          <Select
+            v-model="form.state"
+            name="state"
+            placeholder="Statut de la mission"
+            :options="[
+              {key: 'draft', label:'Brouillon'},
+              {key: 'waiting', label:'En attente de validation'},
+              {key: 'validated', label:'Validée'}
+            ]"
+          />
+        </div>
+        <div>
+          <FormLabel html-for="state2">
+            Select with themed options
+          </FormLabel>
+          <FormHelperText>Options avec key => label</FormHelperText>
+          <SelectAdvanced
+            v-model="form.select_advanced"
+            name="state2"
+            placeholder="Choisissez une option"
+            :options="[
+              {key: 'draft', label:'Brouillon'},
+              {key: 'waiting', label:'En attente de validation'},
+              {key: 'validated', label:'Validée'}
+            ]"
+            clearable
+          />
+        </div>
+        <div>
+          <FormLabel html-for="responsable">
+            Select with themed options based on model
+          </FormLabel>
+          <FormHelperText>Options avec id => name (props attribute-key & attribute-label)</FormHelperText>
+          <SelectAdvanced
+            v-model="form.select_advanced_id"
+            icon="UserIcon"
+            name="responsable"
+            placeholder="Choisissez une option"
+            :options="[
+              {id: 1, name: 'Jérémy Pinto'},
+              {id: 2, name: 'Nicolas Vaissaud'},
+              {id: 3, name: 'Kevin Vaissaud'},
+              {id: 4, name: 'John Doe'},
+            ]"
+            attribute-key="id"
+            attribute-label="name"
+            clearable
+          />
+        </div>
+
         <Heading as="h2" :level="3" class="mb-8 text-jva-gray-900">
           Autocomplete
         </Heading>
-        <InputAutocomplete
-          name="autocomplete"
-          label="Autocomplete"
-          description="Sélectionnez un territoire depuis notre base de données"
-          placeholder="Choisissez un territoire"
-          required
-          :options="autocompleteOptions"
-          @selected="handleSelected"
-          @fetch-suggestions="onFetchSuggestions"
-        />
+        <div>
+          <FormLabel html-for="responsable">
+            Autocomplete
+          </FormLabel>
+          <FormHelperText>Sélectionnez un territoire depuis notre base de données</FormHelperText>
+          <InputAutocomplete
+            name="autocomplete"
+            label="Autocomplete"
+            placeholder="Choisissez un territoire"
+            :options="autocompleteOptions"
+            @selected="handleSelected"
+            @fetch-suggestions="onFetchSuggestions"
+          />
+        </div>
+        <div>
+          <FormLabel html-for="responsable">
+            Geo Autocomplete
+          </FormLabel>
+          <FormHelperText>Commencez par taper votre adresse</FormHelperText>
+          <InputAutocomplete
+            name="autocomplete"
+            label="Autocomplete"
+            placeholder="Ex: 14 rue rivoli, Paris"
+            :options="autocompleteOptions"
+            @selected="handleSelected"
+            @fetch-suggestions="onFetchSuggestions"
+          />
+        </div>
       </form>
     </Box>
     <div class="flex mt-12 space-x-6 justify-end">

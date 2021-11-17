@@ -1,20 +1,9 @@
 <template>
-  <div>
-    <label v-if="label" :for="name" class="block text-xs uppercase font-bold text-gray-700">
-      {{ label }}
-      <span v-if="required" class="text-[#E2011C]">
-        *
-      </span>
-      <span v-if="labelSuffix" class="jva-blue-400">{{
-        labelSuffix
-      }}</span>
-    </label>
-    <select
-      :id="name"
-      :name="name"
-      :value="value"
-      class="
-            mt-2
+  <select
+    :id="name"
+    :name="name"
+    :value="value"
+    class="
             px-6
             py-3
             text-sm
@@ -27,14 +16,13 @@
             border border-gray-200
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
-      :class=" [{ 'border-jva-red-primary': error}]"
-      @change="onChange"
-    >
-      <option v-for="option in options" :key="option.key" :value="option.key">
-        {{ option.label }}
-      </option>
-    </select>
-  </div>
+    :class=" [{ 'border-jva-red-primary': error}]"
+    @change="onChange"
+  >
+    <option v-for="option in options" :key="option.key" :value="option.key">
+      {{ option.label }}
+    </option>
+  </select>
 </template>
 
 <script>
@@ -43,13 +31,8 @@ export default {
     value: { type: String, default: null },
     options: { type: Array, required: true },
     placeholder: { type: String, default: null },
-    label: { type: String, default: null },
-    labelSuffix: { type: String, default: null },
     name: { type: String, required: true },
-    error: { type: String, default: null },
-    description: { type: String, default: null },
-    clearable: { type: Boolean, default: false },
-    required: { type: Boolean, default: false }
+    error: { type: String, default: null }
   },
   methods: {
     onChange (evt) {

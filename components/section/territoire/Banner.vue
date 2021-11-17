@@ -100,7 +100,6 @@
               >
                 Je veux aider
               </button>
-              </selectadvanced>
             </div>
           </div>
         </div>
