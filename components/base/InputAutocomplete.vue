@@ -42,6 +42,7 @@
     <div
       v-show="searchTerm && showOptions"
       class="absolute w-full z-50 bg-white border border-gray-200 mt-2 overflow-hidden rounded-xl shadow-md"
+      :class="classOptions"
       @focusout="showOptions = false"
     >
       <ul
@@ -88,7 +89,8 @@ export default {
     options: { type: Array, default: () => [] },
     attributeKey: { type: String, default: 'id' },
     attributeLabel: { type: String, default: 'name' },
-    attributeRightLabel: { type: String, default: '' }
+    attributeRightLabel: { type: String, default: '' },
+    classOptions: { type: String, default: '' }
   },
   data () {
     return {
@@ -97,6 +99,9 @@ export default {
       selectedOption: null,
       searchTerm: null
     }
+  },
+  mounted () {
+    this.$emit('mounted')
   },
   methods: {
     reset () {
