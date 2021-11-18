@@ -71,6 +71,305 @@
           </div>
         </div>
       </div>
+
+      <!-- Content -->
+      <div class="container mx-auto">
+        <div ref="contentWrapper" class="px-4 pt-8">
+          <div class="flex">
+            <!-- Filtres -->
+            <transition name="fade">
+              <div
+                v-if="!noFilters"
+                v-show="showFilters"
+                class="facets--wrapper flex-none mb-8 w-full lg:w-64 lg:mr-8"
+              >
+                <div class="border-b lg:hidden">
+                  <div class="p-2 flex items-center justify-between">
+                    <div class="p-2">
+                      <AisStateResults>
+                        <template slot-scope="{ nbHits }">
+                          <span class="font-bold">
+                            {{ nbHits | formatNumber }}
+                          </span>
+                          <span class="font-light">
+                            {{
+                              nbHits
+                                | pluralize([
+                                  'mission disponible',
+                                  'missions disponibles',
+                                ])
+                            }}
+                          </span>
+                        </template>
+                      </AisStateResults>
+                    </div>
+
+                    <div class="p-2 right-0 top-0" @click="showFilters = false">
+                      <div
+                        class="text-center px-4 py-2 rounded-full text-white shadow-md cursor-pointer bg-primary"
+                      >
+                        Afficher
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  v-scroll-lock="showFilters && isMobile"
+                  class="px-4 pt-8 pb-32 lg:p-0 overflow-y-auto lg:overflow-visible flex flex-col flex-1"
+                >
+                  <client-only>
+                    <AisClearRefinements :excluded-attributes="clearExcludes">
+                      <div slot-scope="{ canRefine, refine }">
+                        <div
+                          v-if="canRefine"
+                          class="clear-refinements"
+                          @click.prevent="onClearRefinements(refine)"
+                        >
+                          <span class="mr-auto">
+                            Effacer tous les filtres
+                          </span>
+                          <div
+                            class="ml-3 rounded-full bg-gray-100 w-6 h-6 relative flex items-center justify-center"
+                          >
+                            <img
+                              class="clear-refinement--icon"
+                              src="/images/close.svg"
+                              width="8px"
+                              height="8px"
+                              alt="Effacer tous les filtres"
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </AisClearRefinements>
+                  </client-only>
+
+                  <div class="font-black text-[#171725] mb-2 lg:hidden">
+                    Mots clés
+                  </div>
+
+                  <AisSearchBox ref="searchbox" class="mb-8">
+                    <div slot-scope="{ refine }">
+                      <input
+                        ref="searchbox_input"
+                        v-model="routeState.query"
+                        label="Recherche"
+                        placeholder="Recherche par mots-clés"
+                        clearable
+                        class="search-input"
+                        autocomplete="new-password"
+                        @input="onQueryInput(refine, $event)"
+                        @clear="onQueryClear"
+                        @change="onChange()"
+                      >
+                    </div>
+                  </AisSearchBox>
+                  <!--
+                  <AlgoliaToggleRefinement
+                    v-if="facets.includes('is_priority')"
+                    attribute="is_priority"
+                    label="Missions prioritaires"
+                    class="mb-6"
+                    @toggle-facet="onToggleRefinement($event)"
+                  />
+                   -->
+
+                  <AlgoliaFacet
+                    v-if="facets.includes('domaines')"
+                    name="domaines"
+                    label="Domaines d'action"
+                    class="mb-6"
+                    @toggle-facet="onToggleFacet($event)"
+                  />
+                  <!--
+                  <AlgoliaFacet
+                    v-if="facets.includes('template_subtitle')"
+                    name="template_subtitle"
+                    label="Type de mission"
+                    is-searchable
+                    class="mb-6"
+                    @toggle-facet="onToggleFacet($event)"
+                  />
+
+                  <AlgoliaFacet
+                    v-if="facets.includes('department_name')"
+                    name="department_name"
+                    label="Département"
+                    is-searchable
+                    class="mb-6"
+                    :sort-by="['isRefined', 'name:asc']"
+                    @toggle-facet="onToggleFacet($event)"
+                  />
+
+                  <AlgoliaFacet
+                    v-if="facets.includes('structure.name')"
+                    name="structure.name"
+                    label="Organisations"
+                    is-searchable
+                    class="mb-6"
+                    @toggle-facet="onToggleFacet($event)"
+                  /> -->
+                </div>
+              </div>
+            </transition>
+
+            <!-- Résultats -->
+            <AisStateResults class="w-full mb-16">
+              <template slot-scope="{ nbHits }">
+                <div v-show="nbHits > 0">
+                  <AisHits
+                    :class-names="{
+                      'ais-Hits-list': 'flex flex-wrap',
+                    }"
+                    :transform-items="addRemoteMissionsBanner"
+                  >
+                    <div
+                      slot="item"
+                      slot-scope="{ item }"
+                      class="flex flex-col flex-1 h-full"
+                    >
+                      <nuxt-link
+                        v-if="item.isBannerRemoteMissions"
+                        to="/missions-benevolat?refinementList[type][0]=Mission à distance"
+                        class="banner-remote relative h-auto flex flex-col flex-1 bg-white rounded-lg overflow-hidden cursor-pointer group"
+                      >
+                        <img
+                          src="/images/banner_a_distance.jpg"
+                          srcset="/images/banner_a_distance@2x.jpg 2x"
+                          alt="Engagez-vous à distance"
+                          class="background absolute object-cover w-full h-full transition duration-300 ease-in-out"
+                        >
+
+                        <div
+                          class="foreground text-white relative flex flex-col h-full items-center text-center px-4 py-8"
+                        >
+                          <img
+                            src="/images/computer.svg"
+                            alt="Télébénévolat"
+                            class="my-4"
+                          >
+                          <div
+                            class="text-3xl font-extrabold leading-none mb-4"
+                          >
+                            Engagez-vous<br>à distance
+                          </div>
+                          <div class="text-xl font-bold mt-auto">
+                            Près de 1000 missions de télébénévolat disponibles
+                          </div>
+
+                          <div
+                            class="text-center px-4 py-2 rounded-full text-white shadow-md cursor-pointer bg-jva-green group-hover:bg-[#0e9f6e] transition mt-6 font-extrabold inline-flex justify-center items-center"
+                            style="width: 212px; height: 45px"
+                          >
+                            Missions à distance
+                          </div>
+                        </div>
+                      </nuxt-link>
+
+                      <template v-else>
+                        <nuxt-link
+                          class="flex flex-col flex-1 hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px]"
+                          :to="
+                            item.provider == 'api_engagement'
+                              ? `/missions-benevolat/${item.id}`
+                              : `/missions-benevolat/${item.id}/${item.slug}`
+                          "
+                          @click.native="handleClickCard"
+                        >
+                          <!-- <CardMission :mission="item" /> -->
+                          {{ item.name }}
+                        </nuxt-link>
+                      </template>
+                    </div>
+                  </AisHits>
+
+                  <AisPagination
+                    v-if="!noPagination"
+                    class="mt-6"
+                    @page-change="scrollToTop"
+                  >
+                    <ul
+                      slot-scope="{
+                        currentRefinement,
+                        pages,
+                        isFirstPage,
+                        isLastPage,
+                        refine,
+                      }"
+                      class="flex lg:ml-3"
+                    >
+                      <li
+                        tabindex="0"
+                        class="mr-auto"
+                        :class="[
+                          { 'cursor-not-allowed': isFirstPage },
+                          { 'cursor-pointer': !isFirstPage },
+                        ]"
+                        @keyup.enter="
+                          !isFirstPage ? refine(currentRefinement - 1) : null
+                        "
+                        @click.prevent="
+                          !isFirstPage ? refine(currentRefinement - 1) : null
+                        "
+                      >
+                        <span>Précédent</span>
+                      </li>
+
+                      <li
+                        v-for="pageItem in pages"
+                        :key="pageItem"
+                        tabindex="0"
+                        class="page-number cursor-pointer"
+                        :class="[
+                          {
+                            active: currentRefinement === pageItem,
+                          },
+                        ]"
+                        @keyup.enter="
+                          currentRefinement !== pageItem
+                            ? refine(pageItem)
+                            : null
+                        "
+                        @click.prevent="
+                          currentRefinement !== pageItem
+                            ? refine(pageItem)
+                            : null
+                        "
+                      >
+                        {{ pageItem + 1 }}
+                      </li>
+                      <li
+                        tabindex="0"
+                        class="ml-auto"
+                        :class="[
+                          { 'cursor-not-allowed': isLastPage },
+                          { 'cursor-pointer': !isLastPage },
+                        ]"
+                        @keyup.enter="
+                          !isLastPage ? refine(currentRefinement + 1) : null
+                        "
+                        @click.prevent="
+                          !isLastPage ? refine(currentRefinement + 1) : null
+                        "
+                      >
+                        <span>Suivant</span>
+                      </li>
+                    </ul>
+                  </AisPagination>
+                </div>
+
+                <div
+                  v-show="!nbHits"
+                  class="w-full mb-16 bg-white rounded-lg shadow px-4 py-8 sm:p-8 lg:p-12 xl:p-16"
+                >
+                  Pas de résultats.
+                </div>
+              </template>
+            </AisStateResults>
+          </div>
+        </div>
+      </div>
     </AisInstantSearchSsr>
   </div>
 </template>
@@ -80,10 +379,10 @@ import {
   AisInstantSearchSsr,
   AisStateResults,
   AisConfigure,
-  // AisHits,
-  // AisPagination,
-  // AisClearRefinements,
-  // AisSearchBox,
+  AisHits,
+  AisPagination,
+  AisClearRefinements,
+  AisSearchBox,
   createServerRootMixin
 } from 'vue-instantsearch'
 
@@ -91,6 +390,7 @@ import algoliasearch from 'algoliasearch/lite'
 import { debounce } from 'lodash'
 import qs from 'qs'
 import MixinColorsDomaines from '@/mixins/colors-domaines'
+import AlgoliaFacet from '@/components/section/search/AlgoliaFacet.vue'
 
 const searchClient = algoliasearch(
   process.env.algolia.appId,
@@ -154,11 +454,12 @@ export default {
   components: {
     AisInstantSearchSsr,
     AisConfigure,
-    // AisHits,
-    AisStateResults
-    // AisPagination,
-    // AisClearRefinements,
-    // AisSearchBox
+    AisHits,
+    AisStateResults,
+    AisPagination,
+    AisClearRefinements,
+    AisSearchBox,
+    AlgoliaFacet
   },
   mixins: [MixinColorsDomaines],
   provide () {
@@ -306,7 +607,7 @@ export default {
     return this.instantsearch.findResultsState(this).then((algoliaState) => {
       // @Bug -> Si décommenté impossible de faire marcher les props dans AisConfigure sans un hot reload...
       // ... et si commenté, warnings The client-side rendered virtual DOM tree is not matching server-rendered content
-      // this.$ssrContext.nuxt.algoliaState = algoliaState
+      this.$ssrContext.nuxt.algoliaState = algoliaState
     })
   },
   created () {
@@ -362,7 +663,7 @@ export default {
         this.timeout.cancel()
       }
       this.timeout = debounce(() => {
-        refine($event)
+        refine(this.routeState.query)
         this.writeUrl()
       }, 400)
       this.timeout()
