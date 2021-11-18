@@ -23,7 +23,7 @@
         </nuxt-link>
       </div>
       <div class="flex lg:hidden space-x-2 pr-4 text-jva-blue-500">
-        <button>
+        <button @click="$store.commit('toggleSearchOverlay')">
           <SearchIcon />
         </button>
         <button
