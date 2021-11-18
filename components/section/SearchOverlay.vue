@@ -220,11 +220,6 @@ export default {
   }
 }
 
-.chevron {
-  left: -12px;
-  @apply absolute top-0 bottom-0 m-auto;
-}
-
 ::v-deep #autocomplete-place {
   border: none;
   @apply border-none py-0 px-0 ring-0 outline-none h-8 font-bold text-base;

@@ -25,7 +25,8 @@ export default {
   plugins: [
     '~/plugins/heroicons.js',
     '~/plugins/vue-filters.js',
-    { src: '~/plugins/vue-libraries.js', mode: 'client' }
+    { src: '~/plugins/vue-libraries.js', mode: 'client' },
+    '@/plugins/numeral.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -69,13 +70,22 @@ export default {
     }
   },
 
+  env: {
+    algolia: {
+      appId: process.env.ALGOLIA_APP_ID,
+      searchKey: process.env.ALGOLIA_SEARCH_KEY,
+      missionsIndex: process.env.ALGOLIA_MISSIONS_INDEX
+    }
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     postcss: {
       plugins: {
         'tailwindcss/nesting': {}
       }
-    }
+    },
+    transpile: ['vue-instantsearch', 'instantsearch.js/es', 'numeral']
   },
 
   // Plugins config

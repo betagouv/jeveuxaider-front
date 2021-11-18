@@ -54,5 +54,14 @@ export default {
           return 'bg-jva-blue-500'
       }
     }
+  },
+  computed: {
+    domainId () {
+      return (
+        this.thematique?.domaine_id ??
+        this.mission?.domaine_id ??
+        this.mission?.template?.domaine_id
+      )
+    }
   }
 }
