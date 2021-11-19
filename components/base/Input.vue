@@ -28,6 +28,13 @@
         @click="typeValue = 'password'"
       />
     </div>
+    <div v-if="clearable" class="absolute right-3">
+      <XIcon
+        v-if="clearable && inputValue"
+        class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+        @click="reset()"
+      />
+    </div>
     <div v-if="suffix" class="absolute right-3" :class="type =='number' ? 'right-14' : 'right-3'">
       <div class="text-gray-400 text-sm">
         {{ suffix }}
@@ -46,6 +53,7 @@ export default {
     name: { type: String, required: true },
     error: { type: String, default: null },
     icon: { type: String, default: null },
+    clearable: { type: Boolean, default: false },
     type: {
       type: String,
       default: 'text',
@@ -67,8 +75,12 @@ export default {
         this.$emit('input', newValue)
       }
     }
+  },
+  methods: {
+    reset () {
+      this.inputValue = ''
+      this.$emit('input', null)
+    }
   }
 }
 </script>
-
-<style></style>

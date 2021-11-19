@@ -52,6 +52,7 @@ export default {
         { name: 'Boxs', href: '/components/base/boxs' },
         { name: 'Buttons', href: '/components/base/buttons' },
         { name: 'Colors', href: '/components/base/colors' },
+        { name: 'Inputs', href: '/components/base/inputs' },
         { name: 'Selects', href: '/components/base/selects' },
         { name: 'Tabs', href: '/components/base/tabs' },
         { name: 'Others', href: '/components/base/others' }
