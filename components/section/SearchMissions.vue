@@ -132,13 +132,7 @@
                           <div
                             class="ml-3 rounded-full bg-gray-100 w-6 h-6 relative flex items-center justify-center"
                           >
-                            <img
-                              class="clear-refinement--icon"
-                              src="/images/close.svg"
-                              width="8px"
-                              height="8px"
-                              alt="Effacer tous les filtres"
-                            >
+                            <XIcon class="clear-refinement--icon h-3 w-3" />
                           </div>
                         </div>
                       </div>
@@ -151,21 +145,17 @@
 
                   <AisSearchBox ref="searchbox" class="mb-8">
                     <div slot-scope="{ refine }">
-                      <input
-                        ref="searchbox_input"
+                      <Input
                         v-model="routeState.query"
-                        label="Recherche"
+                        name="search-query"
                         placeholder="Recherche par mots-clés"
                         clearable
-                        class="search-input"
                         autocomplete="new-password"
                         @input="onQueryInput(refine, $event)"
-                        @clear="onQueryClear"
-                        @change="onChange()"
-                      >
+                      />
                     </div>
                   </AisSearchBox>
-                  <!--
+
                   <AlgoliaToggleRefinement
                     v-if="facets.includes('is_priority')"
                     attribute="is_priority"
@@ -173,7 +163,6 @@
                     class="mb-6"
                     @toggle-facet="onToggleRefinement($event)"
                   />
-                   -->
 
                   <AlgoliaFacet
                     v-if="facets.includes('domaines')"
@@ -389,6 +378,7 @@ import { debounce } from 'lodash'
 import MixinColorsDomaines from '@/mixins/colors-domaines'
 import MixinSearchRouter from '@/mixins/search-router'
 import AlgoliaFacet from '@/components/section/search/AlgoliaFacet.vue'
+import AlgoliaToggleRefinement from '@/components/section/search/AlgoliaToggleRefinement.vue'
 
 export default {
   components: {
@@ -399,7 +389,8 @@ export default {
     AisPagination,
     AisClearRefinements,
     AisSearchBox,
-    AlgoliaFacet
+    AlgoliaFacet,
+    AlgoliaToggleRefinement
   },
   mixins: [MixinColorsDomaines, MixinSearchRouter],
   props: {
@@ -565,15 +556,15 @@ export default {
       if (this.timeout) {
         this.timeout.cancel()
       }
+      if (this.routeState.query === '') {
+        this.$delete(this.routeState, 'query')
+        this.writeUrl()
+      }
       this.timeout = debounce(() => {
         refine(this.routeState.query)
         this.writeUrl()
-      }, 400)
+      }, 100)
       this.timeout()
-    },
-    onQueryClear () {
-      this.$delete(this.routeState, 'query')
-      this.writeUrl()
     },
     onPlaceSelect ($event) {
       this.$set(
@@ -692,28 +683,12 @@ export default {
         window.plausible('Click Card Missions - Liste résultat', {
           props: { isLogged: this.$store.getters.isLogged }
         })
-    },
-    onChange () {
-      this.$refs.searchbox_input.blur()
     }
   }
 }
 </script>
 
 <style lang="postcss" scoped>
-.search-input {
-  ::v-deep input {
-    border-radius: 8px;
-    border-color: #ede8e9;
-    height: 46px;
-    color: #171725;
-    @apply text-base;
-    @screen md {
-      font-size: 14px;
-    }
-  }
-}
-
 ::v-deep .ais-Hits-list {
   height: max-content;
   @screen sm {
