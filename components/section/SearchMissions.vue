@@ -607,7 +607,7 @@ export default {
     return this.instantsearch.findResultsState(this).then((algoliaState) => {
       // @Bug -> Si décommenté impossible de faire marcher les props dans AisConfigure sans un hot reload...
       // ... et si commenté, warnings The client-side rendered virtual DOM tree is not matching server-rendered content
-      this.$ssrContext.nuxt.algoliaState = algoliaState
+      // this.$ssrContext.nuxt.algoliaState = algoliaState
     })
   },
   created () {
