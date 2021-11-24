@@ -76,7 +76,7 @@ module.exports = {
           400: '#B3B3B3',
           300: '#D4D4D4',
           200: '#E8E8E8',
-          100: '#F8F8F8',
+          100: '#F5F5F5',
           50: '#FAFAFA'
         },
         domaine: {

@@ -1,5 +1,5 @@
 <template>
-  <div class="component--search-missions bg-gray-100">
+  <div class="component--search-missions bg-cool-gray-100">
     <AisInstantSearchSsr ref="AisInstantSearchSsr">
       <AisConfigure
         ref="aisConfigure"
@@ -164,15 +164,15 @@
                     @toggle-facet="onToggleRefinement($event)"
                   />
 
-                  <AlgoliaFacet
+                  <AlgoliaRefinementList
                     v-if="facets.includes('domaines')"
                     name="domaines"
                     label="Domaines d'action"
                     class="mb-6"
                     @toggle-facet="onToggleFacet($event)"
                   />
-                  <!--
-                  <AlgoliaFacet
+
+                  <AlgoliaRefinementList
                     v-if="facets.includes('template_subtitle')"
                     name="template_subtitle"
                     label="Type de mission"
@@ -181,7 +181,7 @@
                     @toggle-facet="onToggleFacet($event)"
                   />
 
-                  <AlgoliaFacet
+                  <AlgoliaRefinementList
                     v-if="facets.includes('department_name')"
                     name="department_name"
                     label="Département"
@@ -191,14 +191,14 @@
                     @toggle-facet="onToggleFacet($event)"
                   />
 
-                  <AlgoliaFacet
+                  <AlgoliaRefinementList
                     v-if="facets.includes('structure.name')"
                     name="structure.name"
                     label="Organisations"
                     is-searchable
                     class="mb-6"
                     @toggle-facet="onToggleFacet($event)"
-                  /> -->
+                  />
                 </div>
               </div>
             </transition>
@@ -377,7 +377,7 @@ import {
 import { debounce } from 'lodash'
 import MixinColorsDomaines from '@/mixins/colors-domaines'
 import MixinSearchRouter from '@/mixins/search-router'
-import AlgoliaFacet from '@/components/section/search/AlgoliaFacet.vue'
+import AlgoliaRefinementList from '~/components/section/search/AlgoliaRefinementList.vue'
 import AlgoliaToggleRefinement from '@/components/section/search/AlgoliaToggleRefinement.vue'
 
 export default {
@@ -389,7 +389,7 @@ export default {
     AisPagination,
     AisClearRefinements,
     AisSearchBox,
-    AlgoliaFacet,
+    AlgoliaRefinementList,
     AlgoliaToggleRefinement
   },
   mixins: [MixinColorsDomaines, MixinSearchRouter],
