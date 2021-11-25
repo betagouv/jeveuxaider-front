@@ -3,14 +3,14 @@
     class="card--mission h-auto flex flex-col flex-1 bg-white rounded-xl overflow-hidden safari-fix-scale"
   >
     <div class="thumbnail--wrapper relative">
-      <img
+      <!-- <img
         v-if="thumbnail"
         :srcset="thumbnail"
         :alt="domaine.name.fr"
         class="w-full h-full object-cover"
         width="300"
         height="143"
-      >
+      > -->
 
       <div class="custom-gradient absolute inset-0" />
 
@@ -55,9 +55,9 @@
     </div>
 
     <div class="mx-8 my-6 flex-1 flex flex-col items-start">
-      <Badge :color="domaine.id" class="uppercase mb-4">
+      <!-- <Badge :color="domaine.id" class="uppercase mb-4">
         {{ domaine.name.fr }}
-      </Badge>
+      </Badge> -->
 
       <h3
         :title="mission.name"
@@ -92,7 +92,7 @@
       </div>
     </div>
 
-    <div
+    <!-- <div
       class="border-t p-4 text-center flex items-center justify-center space-x-2"
       :class="[domainColor(domaine.id)]"
     >
@@ -101,19 +101,19 @@
       </span>
 
       <ExternalSvg class="flex-none" width="15" height="16" />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import MixinColorsDomaines from '@/mixins/colors-domaines'
 import MixinMission from '@/mixins/mission'
-import ExternalSvg from '@/static/images/icons/external.svg?inline'
+// import ExternalSvg from '@/static/images/icons/external.svg?inline'
 
 export default {
-  components: {
-    ExternalSvg
-  },
+  // components: {
+  //   ExternalSvg
+  // },
   mixins: [MixinMission, MixinColorsDomaines],
   props: {
     mission: {
