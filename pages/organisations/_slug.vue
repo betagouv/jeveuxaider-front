@@ -106,7 +106,7 @@ import Details from '@/components/section/organisation/Details'
 import Contact from '@/components/section/organisation/Contact'
 import Donation from '@/components/section/organisation/Donation'
 import OrganisationMixin from '@/mixins/organisation'
-import CardMission from '~/components/card/Mission'
+import CardMission from '@/components/card/CardMission'
 
 export default {
   components: {
