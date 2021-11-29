@@ -42,7 +42,7 @@
 
 <script>
 import Slideshow from '@/components/advanced/Slideshow'
-import CardArticle from '@/components/card/Article'
+import CardArticle from '@/components/card/CardArticle'
 
 export default {
   components: {

@@ -4,12 +4,14 @@
   >
     <div class="thumbnail--wrapper relative">
       <img
-        v-if="thumbnail"
-        :srcset="thumbnail"
-        :alt="domaine.name.fr"
+        v-if="thumbnail.default"
+        :src="thumbnail.default"
+        :srcset="`${thumbnail.x2} 2x`"
+        :alt="mission.domaine_name"
         class="w-full h-full object-cover"
         width="300"
         height="143"
+        @error="defaultThumbnail($event)"
       >
 
       <div class="custom-gradient absolute inset-0" />
@@ -55,8 +57,8 @@
     </div>
 
     <div class="mx-8 my-6 flex-1 flex flex-col items-start">
-      <Badge :color="domaine.id" class="uppercase mb-4">
-        {{ domaine.name.fr }}
+      <Badge :color="domainId" class="uppercase mb-4">
+        {{ mission.domaine_name }}
       </Badge>
 
       <h3
@@ -94,13 +96,13 @@
 
     <div
       class="border-t p-4 text-center flex items-center justify-center space-x-2"
-      :class="[domainColor(domaine.id)]"
+      :class="[domainColor(domainId)]"
     >
       <span class="text-sm font-bold">
         {{ placesLeftText }}
       </span>
 
-      <ExternalSvg v-if="mission.provider == 'api_engagement'" class="flex-none" width="15" height="16" />
+      <ExternalLinkIcon v-if="mission.provider == 'api_engagement'" class="flex-none" />
     </div>
   </div>
 </template>
@@ -108,12 +110,8 @@
 <script>
 import MixinColorsDomaines from '@/mixins/colors-domaines'
 import MixinMission from '@/mixins/mission'
-import ExternalSvg from '@/static/images/icons/external.svg?inline'
 
 export default {
-  components: {
-    ExternalSvg
-  },
   mixins: [MixinMission, MixinColorsDomaines],
   props: {
     mission: {
@@ -217,5 +215,9 @@ export default {
     rgba(0, 0, 0, 0) 66.74%,
     rgba(0, 0, 0, 0.7) 102.8%
   );
+}
+
+.fake-purge {
+  @apply text-domaine-nature text-domaine-education text-domaine-sante text-domaine-covid text-domaine-prevention text-domaine-culture text-domaine-cooperation text-domaine-memoire
 }
 </style>

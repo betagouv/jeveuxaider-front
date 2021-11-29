@@ -43,7 +43,7 @@
 
 <script>
 import Slideshow from '@/components/advanced/Slideshow'
-import CardMission from '@/components/card/Mission'
+import CardMission from '@/components/card/CardMission'
 
 export default {
   components: {

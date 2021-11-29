@@ -33,7 +33,7 @@
 
 <script>
 import Slideshow from '@/components/advanced/Slideshow'
-import CardDomaine from '@/components/card/Domaine'
+import CardDomaine from '@/components/card/CardDomaine'
 
 export default {
   components: {

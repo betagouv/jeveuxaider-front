@@ -24,47 +24,45 @@
           { 'custom-color': $options.propsData.thematique },
         ]"
       >
-        <div class="container mx-auto">
-          <div class="px-4">
-            <div class="flex flex-wrap justify-between items-center -m-2">
-              <div class="m-2">
-                <h1
-                  v-if="titleTag == 'h1'"
-                  class="text-xl sm:text-2xl lg:text-3xl font-black"
-                >
-                  Trouver une mission de bénévolat
-                </h1>
-                <h2
-                  v-else-if="titleTag == 'h2'"
-                  class="text-xl sm:text-2xl lg:text-3xl font-black"
-                >
-                  Trouver une mission de bénévolat
-                </h2>
-                <AisStateResults>
-                  <template slot-scope="{ nbHits }">
-                    <div>
-                      {{ nbHits | formatNumber }}
-                      {{ nbHits | pluralize('mission de bénévolat disponible','missions de bénévolat disponibles',false) }}
-                    </div>
-                  </template>
-                </AisStateResults>
-              </div>
-
-              <div class="w-full lg:w-auto m-2">
-                <div class="flex flex-col lg:flex-row items-center">
-                  <div
-                    class="toggle-filters w-full p-2 pr-3 lg:hidden border border-white rounded-lg flex items-center justify-center"
-                    @click="showFilters = !showFilters"
-                  >
-                    <img
-                      class="flex-none mr-4"
-                      src="/images/filter.svg"
-                      alt="Filtrer"
-                      width="18px"
-                      height="23px"
-                    >
-                    <span>Précisez votre recherche</span>
+        <div class="px-4 max-w-3xl mx-auto lg:max-w-7xl">
+          <div class="flex flex-wrap justify-between items-center -m-2">
+            <div class="m-2">
+              <h1
+                v-if="titleTag == 'h1'"
+                class="text-xl sm:text-2xl lg:text-3xl font-black"
+              >
+                Trouver une mission de bénévolat
+              </h1>
+              <h2
+                v-else-if="titleTag == 'h2'"
+                class="text-xl sm:text-2xl lg:text-3xl font-black"
+              >
+                Trouver une mission de bénévolat
+              </h2>
+              <AisStateResults>
+                <template slot-scope="{ nbHits }">
+                  <div>
+                    {{ nbHits | formatNumber }}
+                    {{ nbHits | pluralize('mission de bénévolat disponible', 'missions de bénévolat disponibles', false) }}
                   </div>
+                </template>
+              </AisStateResults>
+            </div>
+
+            <div class="w-full lg:w-auto m-2">
+              <div class="flex flex-col lg:flex-row items-center">
+                <div
+                  class="toggle-filters w-full p-2 pr-3 lg:hidden border border-white rounded-lg flex items-center justify-center"
+                  @click="showFilters = !showFilters"
+                >
+                  <img
+                    class="flex-none mr-4"
+                    src="/images/filter.svg"
+                    alt="Filtrer"
+                    width="18px"
+                    height="23px"
+                  >
+                  <span>Précisez votre recherche</span>
                 </div>
               </div>
             </div>
@@ -73,8 +71,8 @@
       </div>
 
       <!-- Content -->
-      <div class="container mx-auto">
-        <div ref="contentWrapper" class="px-4 pt-8">
+      <div class="px-4 max-w-3xl mx-auto lg:ma max-w-7xl">
+        <div ref="contentWrapper" class="pt-8">
           <div class="flex">
             <!-- Filtres -->
             <transition name="fade">
@@ -92,13 +90,7 @@
                             {{ nbHits | formatNumber }}
                           </span>
                           <span class="font-light">
-                            {{
-                              nbHits
-                                | pluralize([
-                                  'mission disponible',
-                                  'missions disponibles',
-                                ])
-                            }}
+                            {{ nbHits | pluralize('mission disponible','missions disponibles') }}
                           </span>
                         </template>
                       </AisStateResults>
@@ -224,8 +216,8 @@
                         class="banner-remote relative h-auto flex flex-col flex-1 bg-white rounded-lg overflow-hidden cursor-pointer group"
                       >
                         <img
-                          src="/images/banner_a_distance.jpg"
-                          srcset="/images/banner_a_distance@2x.jpg 2x"
+                          src="/images/missions/banner_a_distance.jpg"
+                          srcset="/images/missions/banner_a_distance@2x.jpg 2x"
                           alt="Engagez-vous à distance"
                           class="background absolute object-cover w-full h-full transition duration-300 ease-in-out"
                         >
@@ -234,7 +226,7 @@
                           class="foreground text-white relative flex flex-col h-full items-center text-center px-4 py-8"
                         >
                           <img
-                            src="/images/computer.svg"
+                            src="/images/icons/computer.svg"
                             alt="Télébénévolat"
                             class="my-4"
                           >
@@ -266,8 +258,7 @@
                           "
                           @click.native="handleClickCard"
                         >
-                          <!-- <CardMission :mission="item" /> -->
-                          {{ item.name }}
+                          <CardMission :mission="item" />
                         </nuxt-link>
                       </template>
                     </div>
@@ -295,12 +286,8 @@
                           { 'cursor-not-allowed': isFirstPage },
                           { 'cursor-pointer': !isFirstPage },
                         ]"
-                        @keyup.enter="
-                          !isFirstPage ? refine(currentRefinement - 1) : null
-                        "
-                        @click.prevent="
-                          !isFirstPage ? refine(currentRefinement - 1) : null
-                        "
+                        @keyup.enter="!isFirstPage ? refine(currentRefinement - 1) : null"
+                        @click.prevent="!isFirstPage ? refine(currentRefinement - 1) : null"
                       >
                         <span>Précédent</span>
                       </li>
@@ -310,21 +297,9 @@
                         :key="pageItem"
                         tabindex="0"
                         class="page-number cursor-pointer"
-                        :class="[
-                          {
-                            active: currentRefinement === pageItem,
-                          },
-                        ]"
-                        @keyup.enter="
-                          currentRefinement !== pageItem
-                            ? refine(pageItem)
-                            : null
-                        "
-                        @click.prevent="
-                          currentRefinement !== pageItem
-                            ? refine(pageItem)
-                            : null
-                        "
+                        :class="[{active: currentRefinement === pageItem}]"
+                        @keyup.enter="currentRefinement !== pageItem ? refine(pageItem) : null"
+                        @click.prevent="currentRefinement !== pageItem ? refine(pageItem) : null"
                       >
                         {{ pageItem + 1 }}
                       </li>
@@ -335,12 +310,8 @@
                           { 'cursor-not-allowed': isLastPage },
                           { 'cursor-pointer': !isLastPage },
                         ]"
-                        @keyup.enter="
-                          !isLastPage ? refine(currentRefinement + 1) : null
-                        "
-                        @click.prevent="
-                          !isLastPage ? refine(currentRefinement + 1) : null
-                        "
+                        @keyup.enter="!isLastPage ? refine(currentRefinement + 1) : null"
+                        @click.prevent="!isLastPage ? refine(currentRefinement + 1) : null"
                       >
                         <span>Suivant</span>
                       </li>
@@ -377,8 +348,9 @@ import {
 import { debounce } from 'lodash'
 import MixinColorsDomaines from '@/mixins/colors-domaines'
 import MixinSearchRouter from '@/mixins/search-router'
-import AlgoliaRefinementList from '~/components/section/search/AlgoliaRefinementList.vue'
+import AlgoliaRefinementList from '@/components/section/search/AlgoliaRefinementList.vue'
 import AlgoliaToggleRefinement from '@/components/section/search/AlgoliaToggleRefinement.vue'
+import CardMission from '@/components/card/CardMission.vue'
 
 export default {
   components: {
@@ -390,7 +362,8 @@ export default {
     AisClearRefinements,
     AisSearchBox,
     AlgoliaRefinementList,
-    AlgoliaToggleRefinement
+    AlgoliaToggleRefinement,
+    CardMission
   },
   mixins: [MixinColorsDomaines, MixinSearchRouter],
   props: {
