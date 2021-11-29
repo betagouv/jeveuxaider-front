@@ -51,6 +51,19 @@
 
             <div class="w-full lg:w-auto m-2">
               <div class="flex flex-col lg:flex-row items-center">
+                <LieuSwitcher
+                  class="w-full my-4 lg:my-0"
+                  :initial-type="type"
+                  :initial-place="placeLabel"
+                  :around-radius="aroundRadius"
+                  :color="$options.propsData.color ? color : null"
+                  @selected="onPlaceSelect($event)"
+                  @clear="onPlaceClear()"
+                  @typeChanged="onTypeChanged($event)"
+                  @typeRemoved="onTypeRemoved()"
+                  @change-radius="onChangeRadius($event)"
+                />
+
                 <div
                   class="toggle-filters w-full p-2 pr-3 lg:hidden border border-white rounded-lg flex items-center justify-center"
                   @click="showFilters = !showFilters"
@@ -350,6 +363,7 @@ import MixinColorsDomaines from '@/mixins/colors-domaines'
 import MixinSearchRouter from '@/mixins/search-router'
 import AlgoliaRefinementList from '@/components/section/search/AlgoliaRefinementList.vue'
 import AlgoliaToggleRefinement from '@/components/section/search/AlgoliaToggleRefinement.vue'
+import LieuSwitcher from '@/components/section/search/LieuSwitcher.vue'
 import CardMission from '@/components/card/CardMission.vue'
 
 export default {
@@ -363,7 +377,8 @@ export default {
     AisSearchBox,
     AlgoliaRefinementList,
     AlgoliaToggleRefinement,
-    CardMission
+    CardMission,
+    LieuSwitcher
   },
   mixins: [MixinColorsDomaines, MixinSearchRouter],
   props: {

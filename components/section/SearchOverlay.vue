@@ -58,7 +58,7 @@
                     <InputAutocomplete
                       name="autocomplete-place"
                       label="Autocomplete"
-                      placeholder="Ex: Toulouse"
+                      placeholder="Ex: Paris"
                       :options="autocompleteOptions"
                       attribute-key="id"
                       attribute-label="label"
@@ -169,7 +169,7 @@ export default {
       this.$set(
         this.routeState,
         'aroundLatLng',
-        `${place.coordinates[0]},${place.coordinates[1]}`
+        `${place.coordinates[1]},${place.coordinates[0]}`
       )
       this.$set(this.routeState, 'place', place.label)
       this.$set(this.routeState, 'aroundRadius', 25000)

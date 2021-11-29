@@ -217,6 +217,6 @@ export default {
   );
 }
 .fake-purge {
-  @apply text-domaine-nature text-domaine-education text-domaine-sante text-domaine-covid text-domaine-prevention text-domaine-culture text-domaine-cooperation text-domaine-memoire
+  @apply text-domaine-nature text-domaine-education text-domaine-sante text-domaine-covid text-domaine-prevention text-domaine-culture text-domaine-cooperation text-domaine-memoire text-domaine-solidarite
 }
 </style>
