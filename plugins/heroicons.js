@@ -13,7 +13,8 @@ import {
   CalendarIcon,
   PencilIcon,
   UserIcon,
-  LocationMarkerIcon
+  LocationMarkerIcon,
+  ExternalLinkIcon
 } from '@vue-hero-icons/outline'
 import { InformationCircleIcon, UsersIcon } from '@vue-hero-icons/solid'
 
@@ -33,7 +34,8 @@ const components = {
   CalendarIcon,
   PencilIcon,
   UserIcon,
-  LocationMarkerIcon
+  LocationMarkerIcon,
+  ExternalLinkIcon
 }
 
 Object.entries(components).forEach(([name, component]) => {
