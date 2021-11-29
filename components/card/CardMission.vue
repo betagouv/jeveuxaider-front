@@ -102,7 +102,7 @@
         {{ placesLeftText }}
       </span>
 
-      <ExternalLinkIcon class="flex-none" />
+      <ExternalLinkIcon v-if="mission.provider == 'api_engagement'" class="flex-none" />
     </div>
   </div>
 </template>
@@ -127,7 +127,7 @@ export default {
         this.mission.places_left > 99
       ) {
         return 'Plusieurs bénévoles recherchés'
-      } else if (this.mission.has_places_left && this.mission.places_left > 0) {
+      } else if (this.mission.places_left && this.mission.places_left > 0) {
         return (
           this.$options.filters.pluralize(
             this.mission.places_left,
@@ -216,6 +216,7 @@ export default {
     rgba(0, 0, 0, 0.7) 102.8%
   );
 }
+
 .fake-purge {
   @apply text-domaine-nature text-domaine-education text-domaine-sante text-domaine-covid text-domaine-prevention text-domaine-culture text-domaine-cooperation text-domaine-memoire text-domaine-solidarite
 }
