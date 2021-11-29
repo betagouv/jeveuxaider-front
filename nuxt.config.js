@@ -1,15 +1,18 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'jeveuxaider-front',
+    title: 'Devenez bénévole dans une association en quelques clics | JeVeuxAider.gouv.fr',
     htmlAttrs: {
       lang: 'fr'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { hid: 'description', name: 'description', content: "Trouvez une mission de bénévolat dans une association, organisation publique ou une commune, partout en France, sur le terrain ou à distance. 50 000 places disponibles dans 10 domaines d'action : solidarité, insertion, éducation, environnement, santé, sport, culture ..." },
+      { name: 'format-detection', content: 'telephone=no' },
+      process.env.API_URL !== 'https://www.jeveuxaider.gouv.fr'
+        ? { name: 'robots', content: 'noindex' }
+        : {}
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
