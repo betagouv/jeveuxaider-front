@@ -100,7 +100,7 @@
         {{ placesLeftText }}
       </span>
 
-      <ExternalSvg class="flex-none" width="15" height="16" />
+      <ExternalSvg v-if="mission.provider == 'api_engagement'" class="flex-none" width="15" height="16" />
     </div>
   </div>
 </template>
@@ -129,7 +129,7 @@ export default {
         this.mission.places_left > 99
       ) {
         return 'Plusieurs bénévoles recherchés'
-      } else if (this.mission.has_places_left && this.mission.places_left > 0) {
+      } else if (this.mission.places_left && this.mission.places_left > 0) {
         return (
           this.$options.filters.pluralize(
             this.mission.places_left,

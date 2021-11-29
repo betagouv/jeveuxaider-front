@@ -51,7 +51,8 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     '@nuxtjs/dayjs',
-    'nuxt-lazy-load'
+    'nuxt-lazy-load',
+    'vue-scrollto/nuxt'
   ],
 
   privateRuntimeConfig: {
