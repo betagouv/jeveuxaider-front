@@ -39,7 +39,7 @@
         @click.stop="onClickGeoInput()"
       >
         <div class="border-r border-dashed w-full">
-          <label for="code_postal" class="text-gray-800 font-semibold text-xs">Votre code postal</label>
+          <label for="code_postal" class="text-gray-800 font-semibold text-xs">Votre ville</label>
           <InputAutocomplete
             id="code_postal"
             name="autocomplete-place"
