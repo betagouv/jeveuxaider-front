@@ -20,7 +20,7 @@
         ref="header"
         class="header pt-4 lg:pt-7 pb-8 text-white"
         :class="[
-          $options.filters.label(domainId, 'domaines', 'bg'),
+          domainId ? $options.filters.label(domainId, 'domaines', 'bg') : 'bg-jva-blue-500',
           { 'custom-color': $options.propsData.thematique },
         ]"
       >

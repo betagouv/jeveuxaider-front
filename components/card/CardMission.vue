@@ -4,10 +4,9 @@
   >
     <div class="thumbnail--wrapper relative">
       <img
-        v-if="thumbnail.default"
-        :src="thumbnail.default"
-        :srcset="`${thumbnail.x2} 2x`"
-        :alt="mission.domaine_name"
+        v-if="thumbnail"
+        :srcset="thumbnail"
+        :alt="domaine.name.fr"
         class="w-full h-full object-cover"
         width="300"
         height="143"
@@ -58,7 +57,7 @@
 
     <div class="mx-8 my-6 flex-1 flex flex-col items-start">
       <Badge :color="domainId" class="uppercase mb-4">
-        {{ mission.domaine_name }}
+        {{ $options.filters.label(domainId, 'domaines') }}
       </Badge>
 
       <h3
