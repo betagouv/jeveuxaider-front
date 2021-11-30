@@ -40,13 +40,13 @@
           <h1
             class="mt-2 text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter text-gray-900"
           >
-            <div>Découvrez {{ legalStatus }}</div>
+            <div>Découvrez {{ organisation.statut_juridique|label('structure_legal_status', 'label2') }}</div>
             <span class="font-extrabold">{{ organisation.name }}</span>
           </h1>
 
           <div
             class="h-[2.5px] w-16 my-10"
-            :style="`background-color: ${color}`"
+            :style="`background-color: ${organisation.color ? organisation.color : '#B91C1C'}`"
           />
 
           <TextFormatted :max-lines="2" :text="organisation.description" class="text-cool-gray-500 text-lg" />
@@ -67,14 +67,12 @@
 </template>
 
 <script>
-import OrganisationMixin from '@/mixins/organisation'
 import Breadcrumb from '@/components/layout/Breadcrumb.vue'
 
 export default {
   components: {
     Breadcrumb
   },
-  mixins: [OrganisationMixin],
   props: {
     organisation: {
       type: Object,

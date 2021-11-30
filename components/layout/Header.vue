@@ -71,8 +71,12 @@
         </NavItem>
       </div>
       <div class="flex space-x-6">
-        <a class="hover:underline">Inscription</a>
-        <a class="hover:underline">Connexion</a>
+        <router-link to="/register" class="hover:underline">
+          Inscription
+        </router-link>
+        <router-link to="/login" class="hover:underline">
+          Connexion
+        </router-link>
       </div>
     </div>
     <!-- Mobile menu -->

@@ -62,7 +62,7 @@
         <h2
           class="text-center mb-12 text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter text-gray-900"
         >
-          <span>Trouvez une mission dans {{ legalStatus }}</span>
+          <span>Trouvez une mission dans {{ organisation.statut_juridique|label('structure_legal_status', 'label2') }}</span>
           <br class="hidden xl:block">
           <span class="font-extrabold">{{ organisation.name }}</span>
         </h2>
@@ -105,7 +105,6 @@ import Presentation from '@/components/section/organisation/Presentation'
 import Details from '@/components/section/organisation/Details'
 import Contact from '@/components/section/organisation/Contact'
 import Donation from '@/components/section/organisation/Donation'
-import OrganisationMixin from '@/mixins/organisation'
 import CardMission from '@/components/card/CardMission'
 
 export default {
@@ -116,7 +115,6 @@ export default {
     Donation,
     CardMission
   },
-  mixins: [OrganisationMixin],
   layout: 'default-without-header',
   async asyncData ({ $axios, params, error, redirect }) {
     const { data: organisation } = await $axios.get(`/association/${params.slug}`).catch((err) => {
@@ -150,7 +148,7 @@ export default {
         : ''
 
     return {
-      title: `${status} ${this.organisation.name} - Devenez bénévole dans ${this.legalStatus} ${this.organisation.name} - JeVeuxAider.gouv.fr`,
+      title: `${status} ${this.organisation.name} - Devenez bénévole dans ${this.$options.filters.label(this.organisation.statut_juridique, 'structure_legal_status', 'label2')} ${this.organisation.name} - JeVeuxAider.gouv.fr`,
       link: [
         {
           rel: 'canonical',

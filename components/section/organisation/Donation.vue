@@ -13,7 +13,7 @@
 
           <div
             class="absolute inset-0 w-full h-full opacity-90"
-            :style="`background: ${color}`"
+            :style="`background: ${organisation.color ? organisation.color : '#B91C1C'}`"
           />
 
           <div class="relative text-white p-8 py-16 text-center">
@@ -122,10 +122,8 @@
 </template>
 
 <script>
-import OrganisationMixin from '@/mixins/organisation'
 
 export default {
-  mixins: [OrganisationMixin],
   props: {
     organisation: {
       type: Object,

@@ -6,6 +6,7 @@
       items-center
       border
       focus:outline-none focus:ring-2 focus:ring-offset-2
+      hover:shadow-lg hover:scale-105 transform transition
     "
     :class="[{
                'text-white bg-jva-blue-500 hover:bg-jva-blue-700 border-transparent focus:ring-jva-blue-500':
@@ -22,9 +23,11 @@
                'px-3 py-2 shadow-sm text-sm leading-4 font-bold': size == 'sm',
                'px-4 py-2 shadow-sm text-sm font-bold': size == 'md',
                'px-4 py-2 shadow-sm text-base font-bold': size == 'lg',
-               'px-6 py-3 shadow-sm text-base font-bold': size == 'xl',
+               'px-6 py-3 shadow-sm text-lg font-bold': size == 'xl',
+               'w-full justify-center' : full
              },
              rounded ? 'rounded-full' : 'rounded-md'
+
     ]"
   >
     <SpinIcon
@@ -86,6 +89,10 @@ export default {
       default: null
     },
     loading: {
+      type: Boolean,
+      default: false
+    },
+    full: {
       type: Boolean,
       default: false
     }

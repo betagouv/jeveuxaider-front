@@ -2,7 +2,7 @@
   <div class="card--domaine relative">
     <div
       class="h-[200px] w-full rounded-[10px] absolute my-4"
-      :class="[domainBgColor(domaine.id), { 'bottom-0': domaine.bottom }]"
+      :class="[$options.filters.label(domaine.id, 'domaines', 'bg'), { 'bottom-0': domaine.bottom }]"
     />
 
     <div class="px-4">
@@ -44,10 +44,8 @@
 </template>
 
 <script>
-import MixinColorsDomaines from '@/mixins/colors-domaines'
 
 export default {
-  mixins: [MixinColorsDomaines],
   props: {
     domaine: {
       type: Object,

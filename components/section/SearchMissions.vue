@@ -20,7 +20,7 @@
         ref="header"
         class="header pt-4 lg:pt-7 pb-8 text-white"
         :class="[
-          domainBgColor(domainId),
+          $options.filters.label(domainId, 'domaines', 'bg'),
           { 'custom-color': $options.propsData.thematique },
         ]"
       >
@@ -359,7 +359,7 @@ import {
 } from 'vue-instantsearch'
 
 import { debounce } from 'lodash'
-import MixinColorsDomaines from '@/mixins/colors-domaines'
+import MixinMission from '@/mixins/mission'
 import MixinSearchRouter from '@/mixins/search-router'
 import AlgoliaRefinementList from '@/components/section/search/AlgoliaRefinementList.vue'
 import AlgoliaToggleRefinement from '@/components/section/search/AlgoliaToggleRefinement.vue'
@@ -380,7 +380,7 @@ export default {
     CardMission,
     LieuSwitcher
   },
-  mixins: [MixinColorsDomaines, MixinSearchRouter],
+  mixins: [MixinMission, MixinSearchRouter],
   props: {
     thematique: {
       type: Object,

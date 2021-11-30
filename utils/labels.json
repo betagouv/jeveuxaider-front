@@ -126,15 +126,27 @@
         {"key": "any_public", "label": "Tous publics"}
     ],
     "structure_legal_status": [
-        {"key": "Association", "label": "Association"},
-        {"key": "Collectivité", "label": "Collectivité"},
-        {"key": "Structure publique", "label": "Organisation publique"},
-        {"key": "Structure privée", "label": "Organisation privée"},
-        {"key": "Autre", "label": "Autre"}
+        {"key": "Association", "label": "Association", "label2": "l'association"},
+        {"key": "Collectivité", "label": "Collectivité", "label2": "la collectivité"},
+        {"key": "Structure publique", "label": "Organisation publique", "label2": "l'organisation publique"},
+        {"key": "Structure privée", "label": "Organisation privée", "label2": "l'organisation privée"},
+        {"key": "Autre", "label": "Autre", "label2": "l'organisation"}
     ],
     "time_period": [
         {"key": "week", "label": "semaine"},
         {"key": "month", "label": "mois"},
         {"key": "year", "label": "an"}
+    ],
+    "domaines": [
+        {"key": 1, "label": "Mobilisation Covid19", "icon": "/images/icons/domaine-covid.svg", "color": "text-domaine-covid", "bg": "bg-domaine-covid" },
+        {"key": 2, "label": "Éducation pour tous", "icon": "/images/icons/domaine-education-pour-tous.svg", "color": "text-domaine-education", "bg": "bg-domaine-education" },
+        {"key": 3, "label": "Santé pour tous", "icon": "/images/icons/domaine-sante-pour-tous.svg", "color": "text-domaine-sante", "bg": "bg-domaine-sante" },
+        {"key": 4, "label": "Protection de la nature", "icon": "/images/icons/domaine-protection-nature.svg", "color": "text-domaine-nature", "bg": "bg-domaine-nature" },
+        {"key": 6, "label": "Solidarité & Insertion", "icon": "/images/icons/domaine-solidarite-insertion.svg", "color": "text-domaine-solidarite", "bg": "bg-domaine-solidarite" },
+        {"key": 7, "label": "Sport pour tous", "icon": "/images/icons/domaine-sport-pour-tous.svg", "color": "text-domaine-sport", "bg": "bg-domaine-sport" },
+        {"key": 8, "label": "Prévention et protection", "icon": "/images/icons/domaine-prevention-protection.svg", "color": "text-domaine-prevention", "bg": "bg-domaine-prevention" },
+        {"key": 9, "label": "Mémoire et citoyenneté", "icon": "/images/icons/domaine-memoire-citoyennete.svg", "color": "text-domaine-memoire", "bg": "bg-domaine-memoire" },
+        {"key": 10, "label": "Coopération internationale", "icon": "/images/icons/domaine-cooperation-internationale.svg", "color": "text-domaine-cooperation", "bg": "bg-domaine-cooperation" },
+        {"key": 11, "label": "Art & Culture pour tous", "icon": "/images/icons/domaine-art-culture-pour-tous.svg", "color": "text-domaine-culture", "bg": "bg-domaine-culture" }
     ]
 }

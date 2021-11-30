@@ -60,12 +60,11 @@
 </template>
 
 <script>
-import MixinColorsDomaines from '@/mixins/colors-domaines'
-import InputGeo from '@/mixins/input-geo'
+import MixinInputGeo from '@/mixins/input-geo'
 
 export default {
   name: 'AlgoliaLieuSwitcher',
-  mixins: [MixinColorsDomaines, InputGeo],
+  mixins: [MixinInputGeo],
   props: {
     initialType: {
       type: [String, Boolean],

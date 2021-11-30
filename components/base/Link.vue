@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nuxt-link v-if="to" :to="to" class="flex items-center space-x-2 cursor-pointer text-jva-blue-500 hover:underline">
+    <nuxt-link v-if="to" :to="to" class="flex items-center space-x-2 cursor-pointer text-jva-blue-500 hover:text-jva-blue-600 hover:underline focus:underline transition focus:outline-none">
       <slot />
       <component
         :is="icon"
@@ -8,7 +8,7 @@
         class="h-3"
       />
     </nuxt-link>
-    <div v-else class="flex items-center space-x-2 cursor-pointer text-jva-blue-500 hover:underline">
+    <div v-else class="flex items-center space-x-2 cursor-pointer text-jva-blue-500 hover:text-jva-blue-600 hover:underline focus:underline transition focus:outline-none">
       <slot />
       <component
         :is="icon"

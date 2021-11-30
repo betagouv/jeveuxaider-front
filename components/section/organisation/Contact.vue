@@ -10,7 +10,7 @@
           <h2
             class="mb-6 text-3xl leading-8 font-bold tracking-tight text-gray-900 sm:text-4xl sm:leading-10"
           >
-            <span>Contactez {{ legalStatus }}</span>
+            <span>Contactez {{ organisation.statut_juridique|label('structure_legal_status', 'label2') }}</span>
             <br class="hidden xl:block">
             <span class="font-extrabold">{{ organisation.name }}</span>
           </h2>
@@ -60,10 +60,8 @@
 </template>
 
 <script>
-import OrganisationMixin from '@/mixins/organisation'
 
 export default {
-  mixins: [OrganisationMixin],
   props: {
     organisation: {
       type: Object,

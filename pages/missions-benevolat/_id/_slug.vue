@@ -25,7 +25,7 @@
         },
       ]"
     />
-    <div class="px-4 max-w-3xl mx-auto lg:max-w-7xl">
+    <div class="px-4 pb-12 max-w-3xl mx-auto lg:max-w-7xl">
       <div class="lg:flex lg:items-start lg:gap-6">
         <div class="space-y-6">
           <Box class="relative z-10">

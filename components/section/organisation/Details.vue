@@ -11,7 +11,7 @@
     <!-- RIGHT -->
     <div
       class="order-1 lg:order-2 col-span-2 lg:col-span-1"
-      :style="`background-color: ${color}`"
+      :style="`background-color: ${organisation.color ? organisation.color : '#B91C1C'}`"
     >
       <div class="max-w-3xl mr-auto">
         <div class="text-white px-4 py-8 md:p-8 xl:p-16">
@@ -38,7 +38,7 @@
               >
                 <div class="flex-none w-6 h-6 mr-3">
                   <img
-                    :src="domaine.image"
+                    :src="$options.filters.label(domaine.id, 'domaines', 'icon')"
                     :alt="domaine.name.fr"
                     width="24"
                     height="24"
@@ -161,10 +161,8 @@
 </template>
 
 <script>
-import OrganisationMixin from '@/mixins/organisation'
 
 export default {
-  mixins: [OrganisationMixin],
   props: {
     organisation: {
       type: Object,

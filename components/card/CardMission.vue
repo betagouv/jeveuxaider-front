@@ -96,7 +96,7 @@
 
     <div
       class="border-t p-4 text-center flex items-center justify-center space-x-2"
-      :class="[domainColor(domainId)]"
+      :class="[$options.filters.label(domainId, 'domaines', 'color')]"
     >
       <span class="text-sm font-bold">
         {{ placesLeftText }}
@@ -108,11 +108,10 @@
 </template>
 
 <script>
-import MixinColorsDomaines from '@/mixins/colors-domaines'
 import MixinMission from '@/mixins/mission'
 
 export default {
-  mixins: [MixinMission, MixinColorsDomaines],
+  mixins: [MixinMission],
   props: {
     mission: {
       type: Object,
