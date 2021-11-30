@@ -54,7 +54,12 @@
 </template>
 
 <script>
+import SearchMissions from '~/components/section/SearchMissions.vue'
+
 export default {
+  components: {
+    SearchMissions
+  },
   props: {
     territoire: {
       type: Object,
