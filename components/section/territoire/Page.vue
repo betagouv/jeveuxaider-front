@@ -11,7 +11,7 @@
       >
     </div>
 
-    <!--<Search :territoire="territoire" /> -->
+    <Search :territoire="territoire" />
 
     <Promote :territoire="territoire" />
 
@@ -33,7 +33,7 @@
 
 <script>
 import Banner from '@/components/section/territoire/Banner'
-// import Search from '@/components/section/territoire/Search'
+import Search from '@/components/section/territoire/Search'
 import Promote from '@/components/section/territoire/Promote'
 import Cities from '@/components/section/territoire/Cities'
 import Associations from '@/components/section/territoire/Associations'
@@ -42,8 +42,7 @@ import Subscribe from '@/components/section/territoire/Subscribe'
 
 export default {
   components: {
-    Banner, Promote, Cities, Associations, Engagement, Subscribe
-    // Search ,
+    Banner, Promote, Cities, Associations, Engagement, Subscribe, Search
   },
   props: {
     territoire: {
