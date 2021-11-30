@@ -14,19 +14,7 @@
         :name="name"
         type="text"
         :placeholder="placeholder"
-        class="
-            px-6
-            py-3
-            text-sm
-            appearance-none
-            rounded-xl
-            block
-            w-full
-            placeholder-gray-text-400
-            focus:outline-none
-            border border-gray-200
-            focus:ring-jva-blue-500 focus:border-jva-blue-500
-          "
+        class=" px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500"
         :class=" [{ 'border-jva-red-primary': error, 'pl-10': icon}]"
         autocomplete="off"
         @input="handleInput"
@@ -97,7 +85,7 @@ export default {
       showOptions: false,
       highlightIndex: null,
       selectedOption: null,
-      searchTerm: null
+      searchTerm: this.value
     }
   },
   mounted () {
