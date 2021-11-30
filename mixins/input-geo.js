@@ -1,5 +1,3 @@
-// Pas de classe dynamique pour éviter problèmes de purge.
-
 export default {
   data () {
     return {
