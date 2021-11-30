@@ -218,7 +218,7 @@ html {
   h2 {
     @apply text-3xl font-bold mt-12 mb-6 text-gray-900
   }
-  div > h2:first-child {
+  div > h2:first-of-type {
     @apply mt-0
   }
   h3 {

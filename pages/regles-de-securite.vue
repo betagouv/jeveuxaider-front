@@ -134,7 +134,7 @@ export default {
       link: [
         {
           rel: 'canonical',
-          href: 'https://www.jeveuxaider.gouv.fr/mentions-legales'
+          href: 'https://www.jeveuxaider.gouv.fr/regles-de-securite'
         }
       ],
       meta: [
