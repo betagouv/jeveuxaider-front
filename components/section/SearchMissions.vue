@@ -55,7 +55,7 @@
                   class="w-full my-4 lg:my-0"
                   :initial-type="type"
                   :initial-place="placeLabel"
-                  :around-radius="aroundRadius"
+                  :initial-around-radius="aroundRadius"
                   :color="$options.propsData.color ? color : null"
                   @selected="onPlaceSelect($event)"
                   @clear="onPlaceClear()"
@@ -103,19 +103,15 @@
                             {{ nbHits | formatNumber }}
                           </span>
                           <span class="font-light">
-                            {{ nbHits | pluralize('mission disponible','missions disponibles') }}
+                            {{ nbHits | pluralize('mission disponible','missions disponibles', false) }}
                           </span>
                         </template>
                       </AisStateResults>
                     </div>
 
-                    <div class="p-2 right-0 top-0" @click="showFilters = false">
-                      <div
-                        class="text-center px-4 py-2 rounded-full text-white shadow-md cursor-pointer bg-primary"
-                      >
-                        Afficher
-                      </div>
-                    </div>
+                    <Button class="p-2 right-0 top-0" @click.native="showFilters = false">
+                      Afficher les résultats
+                    </Button>
                   </div>
                 </div>
 
@@ -554,13 +550,16 @@ export default {
       }, 100)
       this.timeout()
     },
-    onPlaceSelect ($event) {
+    onPlaceSelect (place) {
+      if (!place) {
+        return
+      }
       this.$set(
         this.routeState,
         'aroundLatLng',
-        `${$event.latlng.lat},${$event.latlng.lng}`
+        `${place.coordinates[1]},${place.coordinates[0]}`
       )
-      this.$set(this.routeState, 'place', $event.value)
+      this.$set(this.routeState, 'place', place.city)
       this.writeUrl()
     },
     onPlaceClear () {
