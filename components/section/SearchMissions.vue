@@ -57,6 +57,7 @@
                   :initial-place="placeLabel"
                   :initial-around-radius="aroundRadius"
                   :color="$options.propsData.color ? color : null"
+                  :thematique="thematique"
                   @selected="onPlaceSelect($event)"
                   @clear="onPlaceClear()"
                   @typeChanged="onTypeChanged($event)"
