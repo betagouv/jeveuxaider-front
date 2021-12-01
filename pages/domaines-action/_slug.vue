@@ -174,7 +174,7 @@
         </div>
       </div>
 
-      <!-- <div v-if="!$store.getters.loading" :class="domainBgColor(thematique.domaine_id)">
+      <div :class="$options.filters.label(thematique.domaine_id, 'domaines', 'bg')">
         <div
           class="container mx-auto py-12 pt-16 px-4 sm:py-16 sm:px-6 lg:px-8"
         >
@@ -219,9 +219,9 @@
             </dl>
           </div>
         </div>
-      </div> -->
+      </div>
 
-      <!-- <SearchMissions
+      <SearchMissions
         v-if="thematique.domaine"
         id="search-wrapper"
         :facets="[
@@ -233,9 +233,9 @@
         :filters="`domaines:&quot;${thematique.domaine.name.fr}&quot;`"
         :thematique="thematique"
         :title-tag="'h2'"
-      /> -->
+      />
 
-      <!-- <div class="bg-gray-50 border-b border-gray-200">
+      <div class="bg-gray-50 border-b border-gray-200">
         <div
           class="container mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between"
         >
@@ -243,7 +243,7 @@
             class="text-3xl leading-9 font-bold tracking-tight text-gray-900 sm:text-4xl sm:leading-10"
           >
             Votre organisation a besoin de
-            <span :class="domainColor(thematique.domaine_id)">bénévoles</span> ?
+            <span :class="$options.filters.label(thematique.domaine_id, 'domaines', 'color')">bénévoles</span> ?
           </p>
           <div class="mt-8 flex lg:flex-shrink-0 lg:mt-0">
             <div class="inline-flex rounded-full shadow">
@@ -254,17 +254,17 @@
                     ? `/dashboard/structure/${$store.getters.contextStructure.id}/missions/add`
                     : '/inscription/organisation'
                 "
-                :class="domainBgColor(thematique.domaine_id)"
-                class="inline-flex items-center justify-center px-7 py-3 border border-transparent text-base mb-4 font-medium rounded-full text-white !outline-none focus:ring transition"
+                :class="$options.filters.label(thematique.domaine_id, 'domaines', 'bg')"
+                class="inline-flex items-center justify-center px-7 py-3 border border-transparent text-base font-medium rounded-full text-white !outline-none focus:ring transition"
               >
                 Rejoignez JeVeuxAider.gouv.fr
               </nuxt-link>
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
-      <!-- <div class="bg-white border-gray-200 border-b">
+      <div class="bg-white border-gray-200 border-b">
         <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
           <div
             class="text-center pb-12 text-base mb-4 font-semibold uppercase text-gray-400 tracking-wider"
@@ -276,54 +276,54 @@
               <img
                 alt="logo-partenaire-thematique"
                 class="h-14 object-contain"
-                :src="`/images/thematiques/${thematique.slug}-active-1.jpg`"
+                :src="`/images/thematiques/organisations-actives/orga-${thematique.slug}-1.jpg`"
               >
             </div>
             <div class="col-span-1 flex justify-center lg:col-span-1">
               <img
                 alt="logo-partenaire-thematique"
                 class="h-14 object-contain"
-                :src="`/images/thematiques/${thematique.slug}-active-2.jpg`"
+                :src="`/images/thematiques/organisations-actives/orga-${thematique.slug}-2.jpg`"
               >
             </div>
             <div class="col-span-1 flex justify-center lg:col-span-1">
               <img
                 alt="logo-partenaire-thematique"
                 class="h-14 object-contain"
-                :src="`/images/thematiques/${thematique.slug}-active-3.jpg`"
+                :src="`/images/thematiques/organisations-actives/orga-${thematique.slug}-3.jpg`"
               >
             </div>
             <div class="col-span-1 flex justify-center lg:col-span-1">
               <img
                 alt="logo-partenaire-thematique"
                 class="h-14 object-contain"
-                :src="`/images/thematiques/${thematique.slug}-active-4.jpg`"
+                :src="`/images/thematiques/organisations-actives/orga-${thematique.slug}-4.jpg`"
               >
             </div>
             <div class="col-span-1 flex justify-center lg:col-span-1">
               <img
                 alt="logo-partenaire-thematique"
                 class="h-14 object-contain"
-                :src="`/images/thematiques/${thematique.slug}-active-5.jpg`"
+                :src="`/images/thematiques/organisations-actives/${thematique.slug}-5.jpg`"
               >
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Breadcrumb from '~/components/layout/Breadcrumb.vue'
-// import domaineColors from '@/mixins/domainesDynamicColor'
+import SearchMissions from '~/components/section/SearchMissions.vue'
 
 export default {
   components: {
-    Breadcrumb
+    Breadcrumb,
+    SearchMissions
   },
-  //   mixins: [domaineColors],
-  async asyncData ({ $api, params, error, $axios }) {
+  async asyncData ({ params, error, $axios }) {
     const { data: thematique } = await $axios.get(`/thematique/${params.slug}`)
     if (!thematique) {
       return error({ statusCode: 404 })

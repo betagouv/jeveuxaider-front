@@ -3,14 +3,16 @@
     <div
       v-for="(item, index) in radios"
       :key="item.value"
-      class="flex w-full lg:w-auto border px-6 py-5 border-jva-blue-400 cursor-pointer items-center space-x-3"
+      class="flex w-full lg:w-auto border px-6 py-5  cursor-pointer items-center space-x-3"
       :class="[
-        {'text-jva-blue-500 font-semibold bg-white': item.value == radio},
+        {'!text-jva-blue-500 font-semibold bg-white': item.value == radio},
         {'!py-2': item.value == radio && index == 0},
-        {'text-jva-blue-400 ': item.value != radio},
+        {'text-jva-blue-400 ': (item.value != radio) && !thematique},
+        {'text-white ': (item.value != radio) && thematique},
         {'rounded-t-lg border-b-0 lg:border-b lg:rounded-tr-none lg:rounded-l-lg lg:border-r-0': index == 0},
-        {'rounded-b-lg lg:rounded-bl-none lg:rounded-r-lg': index == (radios.length - 1)}]
-      "
+        {'rounded-b-lg lg:rounded-bl-none lg:rounded-r-lg': index == (radios.length - 1)},
+        thematique ? 'border-white' : 'border-jva-blue-400'
+      ]"
       @click.prevent="onClickRadio(item.value)"
     >
       <input
@@ -23,7 +25,11 @@
       >
       <span
         class="h-5 w-5 flex items-center justify-center rounded-full"
-        :class="[{'bg-gray-200': item.value == radio}, {'bg-jva-blue-400': item.value != radio}]"
+        :class="[
+          {'bg-gray-200': item.value == radio},
+          {'bg-jva-blue-400': (item.value != radio) && !thematique},
+          {'bg-gray-200': (item.value != radio) && thematique}
+        ]"
       >
         <img src="/images/icons/check-primary.svg">
       </span>
@@ -78,11 +84,11 @@
 </template>
 
 <script>
-import MixinInputGeo from '@/mixins/input-geo'
+import inputGeo from '@/mixins/input-geo'
 
 export default {
   name: 'AlgoliaLieuSwitcher',
-  mixins: [MixinInputGeo],
+  mixins: [inputGeo],
   props: {
     initialType: {
       type: [String, Boolean],
@@ -96,8 +102,8 @@ export default {
       type: [Number, String],
       default: 'all'
     },
-    color: {
-      type: [String, Boolean],
+    thematique: {
+      type: Object,
       default: null
     }
   },
