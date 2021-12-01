@@ -1,6 +1,7 @@
 export const state = () => ({
   access_token: null,
-  user: null
+  user: null,
+  context_roles: null
 })
 
 export const mutations = {
@@ -9,11 +10,14 @@ export const mutations = {
   },
   setAccessToken (state, accessToken) {
     state.access_token = accessToken
+  },
+  setContextRoles (state, contextRoles) {
+    state.context_roles = contextRoles
   }
 }
 
 export const actions = {
-  async fetchUser ({ commit, dispatch }) {
+  async fetchUser ({ commit }) {
     const res = await this.$axios
       .get('/user')
       .catch(() => {
@@ -21,6 +25,12 @@ export const actions = {
       })
     if (res.data) {
       commit('setUser', res.data)
+    }
+  },
+  async fetchContextRoles ({ commit }) {
+    const res = await this.$axios.get('/user/context-roles')
+    if (res.data) {
+      commit('setContextRoles', res.data)
     }
   },
   async login ({ commit, dispatch }, credentials) {
@@ -42,6 +52,7 @@ export const actions = {
         })
         // await this.$gtm.push({ event: 'user-login' })
         await dispatch('fetchUser')
+        await dispatch('fetchContextRoles')
         this.$router.push(
           this.$router.history.current.query.redirect || '/missions-benevolat'
         )
