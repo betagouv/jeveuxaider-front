@@ -2,7 +2,7 @@
 
 export default function ({ $axios, redirect, app, store, error, $message }) {
   $axios.interceptors.request.use(function (config) {
-    const ACCESS_TOKEN = app.$cookies.get('access_token')
+    const ACCESS_TOKEN = app.$cookies.get('access-token')
     const ACCESS_TOKEN_IMPERSONATE = app.$cookies.get(
       'access_token_impersonate'
     )

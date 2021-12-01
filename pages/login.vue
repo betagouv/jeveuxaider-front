@@ -160,7 +160,6 @@
 
 <script>
 import { string, object } from 'yup'
-import axios from 'axios'
 import MixinForm from '@/mixins/form'
 import FranceConnect from '@/components/custom/FranceConnect'
 
@@ -217,30 +216,9 @@ export default {
     onSubmit () {
       this.formSchema
         .validate(this.form, { abortEarly: false })
-        .then(async () => {
+        .then(() => {
           this.loading = true
-          const response = await axios
-            .post(`${this.$config.apiUrl}/oauth/token`, {
-              grant_type: 'password',
-              client_id: this.$config.oauth.clientId,
-              client_secret: this.$config.oauth.clientSecret,
-              username: this.form.email.toLowerCase(),
-              password: this.form.password,
-              scope: '*'
-            })
-
-          if (response.data) {
-            if (response.data.access_token) {
-              this.$cookies.set('access_token', response.data.access_token, {
-                path: '/',
-                secure: true,
-                maxAge: response.data.expires_in / (24 * 60) // in days
-              })
-              this.$store.commit('auth/setAccessToken', response.data.access_token)
-              this.$store.dispatch('auth/fetchUser')
-              this.$router.push('/')
-            }
-          }
+          this.$store.dispatch('auth/login', this.form)
         })
         .catch((errors) => {
           this.setErrors(errors)
