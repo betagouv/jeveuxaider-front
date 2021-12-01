@@ -42,7 +42,7 @@
       </div>
       <div class="py-1" role="none">
         <div
-          class="cursor-pointer text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
+          class="cursor-pointer text-[#E2011C] block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
           @click="logout()"
         >
           Se déconnecter
