@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-12">
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Primary buttons
       </div>
       <div class="flex flex-wrap gap-2 items-end">
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Icons buttons
       </div>
       <div class="flex flex-wrap gap-2 items-end">
@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Green buttons
       </div>
       <div class="flex flex-wrap gap-2 items-end">
@@ -67,7 +67,7 @@
       </div>
     </div>
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Secondary buttons
       </div>
       <div class="flex flex-wrap gap-2 items-end">
@@ -90,7 +90,7 @@
     </div>
 
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Red buttons
       </div>
       <div class="flex flex-wrap gap-2 items-end">
@@ -112,7 +112,7 @@
       </div>
     </div>
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         White buttons
       </div>
       <div class="flex flex-wrap gap-2 items-end">
@@ -134,7 +134,7 @@
       </div>
     </div>
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Rounded buttons
       </div>
       <div class="flex flex-wrap gap-2 items-end">

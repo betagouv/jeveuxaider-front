@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-12">
     <div v-for="colorGroup,key in tailwindConfig.theme.extend.colors" :key="key" class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         {{ key }}
       </div>
       <div class="flex flex-wrap -m-2 items-end">

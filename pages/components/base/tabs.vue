@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-12">
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Tabs with underline
       </div>
       <div class="flex flex-wrap gap-2 items-end">
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Tabs with underline and icons
       </div>
       <div class="flex flex-wrap gap-2 items-end">

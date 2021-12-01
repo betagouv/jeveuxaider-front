@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-12">
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Headings
       </div>
       <Heading as="h1" :level="1">
@@ -15,7 +15,7 @@
       </Heading>
     </div>
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Text - XS
       </div>
       <div class="text-xs">
@@ -23,7 +23,7 @@
       </div>
     </div>
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Text - SM
       </div>
       <div class="text-sm">
@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Text - BASE
       </div>
       <div class="text-base">
@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Text - LG
       </div>
       <div class="text-lg">
@@ -47,7 +47,7 @@
       </div>
     </div>
     <div class="flex flex-col space-y-4">
-      <div class="text-lg leading-6 font-medium text-gray-900">
+      <div class="text-lg font-medium text-gray-900">
         Text - XL
       </div>
       <div class="text-xl">
