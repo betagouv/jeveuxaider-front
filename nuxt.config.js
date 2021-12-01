@@ -26,6 +26,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/axios.js',
     '~/plugins/heroicons.js',
     '~/plugins/yup.js',
     '~/plugins/vue-filters.js',
@@ -53,7 +54,8 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/dayjs',
     'nuxt-lazy-load',
-    'vue-scrollto/nuxt'
+    'vue-scrollto/nuxt',
+    'cookie-universal-nuxt'
   ],
 
   privateRuntimeConfig: {
@@ -63,6 +65,8 @@ export default {
   },
 
   publicRuntimeConfig: {
+    apiUrl: process.env.API_URL,
+    appUrl: process.env.APP_URL,
     axios: {
       browserBaseURL: `${process.env.API_URL}/api`
     },

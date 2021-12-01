@@ -1,5 +1,5 @@
 export const state = () => ({
-  token: null,
+  access_token: null,
   user: null
 })
 
@@ -7,8 +7,8 @@ export const mutations = {
   setUser (state, user) {
     state.user = user
   },
-  setToken (state, token) {
-    state.token = token
+  setAccessToken (state, accessToken) {
+    state.access_token = accessToken
   }
 }
 
@@ -16,10 +16,12 @@ export const actions = {
   async fetchUser ({ commit, dispatch }) {
     const res = await this.$axios
       .get('/user')
-      .catch(() => this.$cookies.remove('access-token'))
-
+      .catch(() => {
+        console.log('fetchUser catch')
+        this.$cookies.remove('access_token')
+      })
     if (res.data) {
-      commit('setUser', res ? res.data : null)
+      commit('setUser', res.data)
     }
   }
 

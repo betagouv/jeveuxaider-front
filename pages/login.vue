@@ -160,7 +160,8 @@
 
 <script>
 import { string, object } from 'yup'
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
+import axios from 'axios'
 import MixinForm from '@/mixins/form'
 import FranceConnect from '@/components/custom/FranceConnect'
 
@@ -219,13 +220,8 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           this.loading = true
-          console.log('onSubmit', this.form)
-          await this.$store.dispatch('auth/login', {
-            email: this.form.email,
-            password: this.form.password
-          })
-          const response = await this.$axios
-            .post('/oauth/token', {
+          const response = await axios
+            .post(`${this.$config.apiUrl}/oauth/token`, {
               grant_type: 'password',
               client_id: this.$config.oauth.clientId,
               client_secret: this.$config.oauth.clientSecret,
@@ -235,29 +231,17 @@ export default {
             })
 
           if (response.data) {
-            console.log('response.data', response.data)
             if (response.data.access_token) {
-              Cookies.set('access_token', response.data.access_token, {
+              this.$cookies.set('access_token', response.data.access_token, {
+                path: '/',
                 secure: true,
-                expires: response.data.expires_in / (24 * 60) // in days
+                maxAge: response.data.expires_in / (24 * 60) // in days
               })
-              // store.commit('auth/setToken', response.data.access_token)
-              // store.dispatch('auth/fetchUser')
-              // router.push('/')
+              this.$store.commit('auth/setAccessToken', response.data.access_token)
+              this.$store.dispatch('auth/fetchUser')
+              this.$router.push('/')
             }
           }
-          // const response = await client.post('/auth/login', state.form)
-          // if (response?.data) {
-          //   if (response.data.access_token) {
-          //     Cookies.set('access_token', response.data.access_token, {
-          //       secure: true,
-          //       expires: response.data.expires_in / (24 * 60), // in days
-          //     })
-          //     store.commit('auth/setToken', response.data.access_token)
-          //     store.dispatch('auth/fetchUser')
-          //     router.push('/')
-          //   }
-          // }
         })
         .catch((errors) => {
           this.setErrors(errors)
