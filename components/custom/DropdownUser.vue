@@ -17,7 +17,7 @@
             {{ $store.state.auth.user.profile.first_name }}
           </div>
           <div class="text-gray-500 text-sm truncate leading-tight font-normal">
-            Lorem
+            {{ $options.filters.label($store.state.auth.user.context_role, 'role') }}
           </div>
         </div>
       </div>

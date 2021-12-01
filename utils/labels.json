@@ -148,5 +148,14 @@
         {"key": 9, "label": "Mémoire et citoyenneté", "icon": "/images/icons/domaine-memoire-citoyennete.svg", "color": "text-domaine-memoire", "bg": "bg-domaine-memoire" },
         {"key": 10, "label": "Coopération internationale", "icon": "/images/icons/domaine-cooperation-internationale.svg", "color": "text-domaine-cooperation", "bg": "bg-domaine-cooperation" },
         {"key": 11, "label": "Art & Culture pour tous", "icon": "/images/icons/domaine-art-culture-pour-tous.svg", "color": "text-domaine-culture", "bg": "bg-domaine-culture" }
+    ],
+    "role": [
+        { "key": "admin", "label": "Modérateur" },
+        { "key": "referent", "label": "Référent" },
+        { "key": "referent_regional", "label": "Régional" },
+        { "key": "tete_de_reseau", "label": "Tête de réseau" },
+        { "key": "responsable", "label": "Responsable" },
+        { "key": "volontaire", "label": "Bénévole" },
+        { "key": "analyste", "label": "Analyste" }
     ]
 }
