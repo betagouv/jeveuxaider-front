@@ -4,7 +4,7 @@
   >
     <div class="thumbnail--wrapper relative">
       <img
-        v-if="thumbnail"
+        v-if="thumbnail && domaine"
         :srcset="thumbnail"
         :alt="domaine.name.fr"
         class="w-full h-full object-cover"
