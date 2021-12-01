@@ -23,6 +23,12 @@ export const actions = {
     if (res.data) {
       commit('setUser', res.data)
     }
+  },
+  async logout ({ commit }) {
+    console.log('logout')
+    await this.$axios.post('/logout')
+    commit('setAccessToken', null)
+    commit('setUser', null)
+    this.$cookies.remove('access_token')
   }
-
 }

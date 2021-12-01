@@ -160,7 +160,6 @@
 
 <script>
 import { string, object } from 'yup'
-// import Cookies from 'js-cookie'
 import axios from 'axios'
 import MixinForm from '@/mixins/form'
 import FranceConnect from '@/components/custom/FranceConnect'

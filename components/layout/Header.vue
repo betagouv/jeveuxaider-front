@@ -43,18 +43,21 @@
           </template>
         </button>
       </div>
-      <nav class="hidden lg:flex divide-x divide-gray-200">
-        <NavItem
-          v-for="link in navigation"
-          :key="link.name"
-          :href="link.href"
-          :to="link.to"
-          :click="link.click"
-          class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1"
-        >
-          <component :is="link.icon" class="flex-shrink-0 mr-3 h-4 w-4" aria-hidden="true" />
-          {{ link.name }}
-        </NavItem>
+      <nav class="hidden lg:flex lg:gap-8">
+        <div class="flex divide-x divide-gray-200">
+          <NavItem
+            v-for="link in navigation"
+            :key="link.name"
+            :href="link.href"
+            :to="link.to"
+            :click="link.click"
+            class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1"
+          >
+            <component :is="link.icon" class="flex-shrink-0 mr-3 h-4 w-4" aria-hidden="true" />
+            {{ link.name }}
+          </NavItem>
+        </div>
+        <DropdownUser v-if="$store.getters.isLogged" class="" />
       </nav>
     </div>
     <div class="hidden lg:flex p-4 justify-between border-t text-sm text-gray-800">
@@ -70,7 +73,7 @@
           {{ link.name }}
         </NavItem>
       </div>
-      <div class="flex space-x-6">
+      <div v-if="!$store.getters.isLogged" class="flex space-x-6">
         <router-link to="/register" class="hover:underline">
           Inscription
         </router-link>
@@ -165,11 +168,13 @@
 
 <script>
 import { CalendarIcon, SearchIcon, UserIcon } from '@vue-hero-icons/outline'
-import LazySearchOverlay from '~/components/section/SearchOverlay.vue'
+import LazySearchOverlay from '@/components/section/SearchOverlay'
+import DropdownUser from '@/components/custom/DropdownUser'
 
 export default {
   components: {
-    LazySearchOverlay
+    LazySearchOverlay,
+    DropdownUser
   },
   data () {
     return {
