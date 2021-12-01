@@ -1,44 +1,49 @@
 <template>
-  <div class="flex items-center relative w-full">
-    <div v-if="icon" class="absolute left-4">
-      <component
-        :is="icon"
-        class="h-4 w-4 text-gray-400"
-      />
-    </div>
-    <input
-      :id="name"
-      v-model="inputValue"
-      :name="name"
-      :type="typeValue"
-      :placeholder="placeholder"
-      class="px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500"
-      :class=" [{ 'border-jva-red-primary': error, 'pr-8': suffix , 'pl-10': icon}]"
-      autocomplete="off"
-    >
-    <div v-if="type == 'password' && inputValue" class="absolute right-3">
-      <EyeIcon
-        v-if="typeValue == 'password'"
-        class="h-5 text-gray-400 hover:gray-text-500 cursor-pointer"
-        @click="typeValue = 'text'"
-      />
-      <EyeOffIcon
-        v-if="typeValue == 'text'"
-        class="h-5 text-gray-400 hover:gray-text-500 cursor-pointer"
-        @click="typeValue = 'password'"
-      />
-    </div>
-    <div v-if="clearable" class="absolute right-3">
-      <XIcon
-        v-if="clearable && inputValue"
-        class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
-        @click="reset()"
-      />
-    </div>
-    <div v-if="suffix" class="absolute right-3" :class="type =='number' ? 'right-14' : 'right-3'">
-      <div class="text-gray-400 text-sm">
-        {{ suffix }}
+  <div>
+    <div class="flex items-center relative w-full">
+      <div v-if="icon" class="absolute left-4">
+        <component
+          :is="icon"
+          class="h-4 w-4 text-gray-400"
+        />
       </div>
+      <input
+        :id="name"
+        v-model="inputValue"
+        :name="name"
+        :type="typeValue"
+        :placeholder="placeholder"
+        class="px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500"
+        :class=" [{ '': error, 'pr-8': suffix , 'pl-10': icon}]"
+        autocomplete="off"
+      >
+      <div v-if="type == 'password' && inputValue" class="absolute right-3">
+        <EyeIcon
+          v-if="typeValue == 'password'"
+          class="h-5 text-gray-400 hover:gray-text-500 cursor-pointer"
+          @click="typeValue = 'text'"
+        />
+        <EyeOffIcon
+          v-if="typeValue == 'text'"
+          class="h-5 text-gray-400 hover:gray-text-500 cursor-pointer"
+          @click="typeValue = 'password'"
+        />
+      </div>
+      <div v-if="clearable" class="absolute right-3">
+        <XIcon
+          v-if="clearable && inputValue"
+          class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+          @click="reset()"
+        />
+      </div>
+      <div v-if="suffix" class="absolute right-3" :class="type =='number' ? 'right-14' : 'right-3'">
+        <div class="text-gray-400 text-sm">
+          {{ suffix }}
+        </div>
+      </div>
+    </div>
+    <div v-if="error" class="text-xs text-red-500 mt-1">
+      {{ error }}
     </div>
   </div>
 </template>

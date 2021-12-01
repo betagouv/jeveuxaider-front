@@ -27,6 +27,7 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     '~/plugins/heroicons.js',
+    '~/plugins/yup.js',
     '~/plugins/vue-filters.js',
     { src: '~/plugins/vue-libraries.js', mode: 'client' },
     '@/plugins/numeral.js'
@@ -64,6 +65,10 @@ export default {
   publicRuntimeConfig: {
     axios: {
       browserBaseURL: `${process.env.API_URL}/api`
+    },
+    oauth: {
+      clientId: process.env.OAUTH_CLIENT_ID,
+      clientSecret: process.env.OAUTH_CLIENT_SECRET
     },
     blog: {
       restApiUrl: process.env.BLOG_REST_API_URL,

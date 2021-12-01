@@ -61,44 +61,17 @@
                 </span>
               </div>
             </div>
-            <!-- <el-form
-              ref="loginForm"
-              class="mt-4"
-              :model="form"
-              label-position="top"
-              :rules="rules"
-              :hide-required-asterisk="true"
-            >
-              <el-form-item label="E-mail" prop="email">
-                <el-input v-model.trim="form.email" placeholder="Email" />
-              </el-form-item>
-              <el-form-item label="Mot de passe" prop="password" class="!mb-0">
-                <el-input
-                  v-model="form.password"
-                  placeholder="Entrez votre mot de passe"
-                  show-password
-                  @keyup.native.enter="onSubmit"
-                />
-              </el-form-item>
-              <div class="pt-4 text-sm leading-5">
-                <nuxt-link
-                  to="/password-reset"
-                  class="font-medium text-[#070191] hover:text-[#1f0391] focus:underline transition"
-                >
-                  Mot de passe perdu ?
-                </nuxt-link>
-              </div>
-            </el-form> -->
 
-            <form id="form" class="space-y-8 my-8" @submit="onSubmit">
+            <form id="form" class="space-y-8 my-8" @submit.prevent="onSubmit">
               <div>
                 <FormLabel html-for="email" required>
-                  Prénom
+                  Email
                 </FormLabel>
                 <Input
                   v-model="form.email"
                   name="email"
                   placeholder="Entrez votre email"
+                  :error="errors.email"
                 />
               </div>
               <div>
@@ -110,6 +83,7 @@
                   name="password"
                   placeholder="Entrez votre mot de passe"
                   type="password"
+                  :error="errors.password"
                 />
                 <div class="pt-4 text-sm leading-5">
                   <Link
@@ -185,6 +159,8 @@
 </template>
 
 <script>
+import { string, object } from 'yup'
+import Cookies from 'js-cookie'
 import MixinForm from '@/mixins/form'
 import FranceConnect from '@/components/custom/FranceConnect'
 
@@ -202,32 +178,10 @@ export default {
         email: this.$route.query.email ? this.$route.query.email : '',
         password: ''
       },
-      rules: {
-        email: [
-          {
-            type: 'email',
-            message: "Le format de l'email n'est pas correct",
-            trigger: 'blur'
-          },
-          {
-            required: true,
-            message: 'Veuillez renseigner votre email',
-            trigger: 'blur'
-          }
-        ],
-        password: [
-          {
-            required: true,
-            message: 'Veuillez renseigner votre mot de passe',
-            trigger: 'change'
-          },
-          {
-            min: 8,
-            message: 'Votre mot de passe doit contenir au moins 8 charactères',
-            trigger: 'blur'
-          }
-        ]
-      }
+      formSchema: object({
+        email: string().required().email(),
+        password: string().required()
+      })
     }
   },
   head () {
@@ -260,20 +214,57 @@ export default {
     }
   },
   methods: {
-    onSubmit (e) {
-      this.loading = true
-      e.preventDefault()
-      console.log('onSubmit', this.form)
-    //   this.$refs.loginForm.validate(async (valid, fields) => {
-    //     if (valid) {
-    //       await this.$store.dispatch('auth/login', {
-    //         email: this.form.email,
-    //         password: this.form.password
-    //       })
-    //     } else {
-    //       this.showErrors(fields)
-    //     }
-    //   })
+    onSubmit () {
+      this.formSchema
+        .validate(this.form, { abortEarly: false })
+        .then(async () => {
+          this.loading = true
+          console.log('onSubmit', this.form)
+          await this.$store.dispatch('auth/login', {
+            email: this.form.email,
+            password: this.form.password
+          })
+          const response = await this.$axios
+            .post('/oauth/token', {
+              grant_type: 'password',
+              client_id: this.$config.oauth.clientId,
+              client_secret: this.$config.oauth.clientSecret,
+              username: this.form.email.toLowerCase(),
+              password: this.form.password,
+              scope: '*'
+            })
+
+          if (response.data) {
+            console.log('response.data', response.data)
+            if (response.data.access_token) {
+              Cookies.set('access_token', response.data.access_token, {
+                secure: true,
+                expires: response.data.expires_in / (24 * 60) // in days
+              })
+              // store.commit('auth/setToken', response.data.access_token)
+              // store.dispatch('auth/fetchUser')
+              // router.push('/')
+            }
+          }
+          // const response = await client.post('/auth/login', state.form)
+          // if (response?.data) {
+          //   if (response.data.access_token) {
+          //     Cookies.set('access_token', response.data.access_token, {
+          //       secure: true,
+          //       expires: response.data.expires_in / (24 * 60), // in days
+          //     })
+          //     store.commit('auth/setToken', response.data.access_token)
+          //     store.dispatch('auth/fetchUser')
+          //     router.push('/')
+          //   }
+          // }
+        })
+        .catch((errors) => {
+          this.setErrors(errors)
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   }
 }
