@@ -72,7 +72,7 @@ export default {
     variant: {
       type: String,
       default: 'primary',
-      validator: s => ['primary', 'green', 'secondary', 'white', 'red'].includes(s)
+      validator: s => ['primary', 'green', 'secondary', 'white', 'white-green', 'white-blue', 'red'].includes(s)
     },
     size: {
       type: String,

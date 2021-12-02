@@ -73,13 +73,20 @@
           {{ link.name }}
         </NavItem>
       </div>
-      <div v-if="!$store.getters.isLogged" class="flex space-x-6">
-        <router-link to="/register" class="hover:underline">
-          Inscription
-        </router-link>
-        <router-link to="/login" class="hover:underline">
-          Connexion
-        </router-link>
+      <div class="flex space-x-6">
+        <template v-if="$store.getters.isLogged">
+          <router-link to="/dashboard" class="hover:underline">
+            Tableau de bord
+          </router-link>
+        </template>
+        <template v-else>
+          <router-link to="/register" class="hover:underline">
+            Inscription
+          </router-link>
+          <router-link to="/login" class="hover:underline">
+            Connexion
+          </router-link>
+        </template>
       </div>
     </div>
     <!-- Mobile menu -->
