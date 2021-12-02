@@ -67,12 +67,7 @@
 </template>
 
 <script>
-import Breadcrumb from '@/components/layout/Breadcrumb.vue'
-
 export default {
-  components: {
-    Breadcrumb
-  },
   props: {
     organisation: {
       type: Object,

@@ -9,7 +9,7 @@
     </div>
     <Breadcrumb
       theme="transparent"
-      class="relative z-10"
+      class="relative z-10 px-4"
       :items="[
         { label: 'Missions de bénévolat', link: '/missions-benevolat' },
         {
@@ -439,13 +439,11 @@
 </template>
 
 <script>
-import Breadcrumb from '~/components/layout/Breadcrumb.vue'
 import Slideshow from '~/components/advanced/Slideshow'
 import CardMission from '~/components/card/CardMission'
 
 export default {
   components: {
-    Breadcrumb,
     Slideshow,
     CardMission
   },

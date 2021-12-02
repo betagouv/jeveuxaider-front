@@ -9,7 +9,7 @@
     <div class="banner-gradient absolute inset-0" style="" />
 
     <div class="relative">
-      <Breadcrumb theme="transparent" :items="breadcrumb" />
+      <Breadcrumb theme="transparent" :items="breadcrumb" class="px-4" />
 
       <hr class="opacity-25">
 
@@ -110,12 +110,8 @@
 
 <script>
 import slugify from 'slugify'
-import Breadcrumb from '@/components/layout/Breadcrumb.vue'
 
 export default {
-  components: {
-    Breadcrumb
-  },
   props: {
     territoire: {
       type: Object,

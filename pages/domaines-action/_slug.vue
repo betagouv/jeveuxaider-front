@@ -1,9 +1,6 @@
 <template>
   <div>
     <div>
-      <Breadcrumb
-        :items="[{ label: 'Domaines d\'action' }, { label: thematique.name }]"
-      />
       <div class="relative">
         <img
           v-if="thematique.image && thematique.image.large"
@@ -19,6 +16,12 @@
             'inset-0',
             { 'opacity-75': thematique.image },
           ]"
+        />
+
+        <Breadcrumb
+          theme="transparent"
+          class="relative z-10 px-4"
+          :items="[{ label: 'Domaines d\'action' }, { label: thematique.name }]"
         />
 
         <div class="relative pt-1 pb-12 lg:py-12">
@@ -315,12 +318,10 @@
 </template>
 
 <script>
-import Breadcrumb from '~/components/layout/Breadcrumb.vue'
 import SearchMissions from '~/components/section/SearchMissions.vue'
 
 export default {
   components: {
-    Breadcrumb,
     SearchMissions
   },
   async asyncData ({ params, error, $axios }) {

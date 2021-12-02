@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Slideshow from '@/components/advanced/Slideshow'
 import CardArticle from '@/components/card/CardArticle'
 
@@ -55,20 +56,15 @@ export default {
     }
   },
   async fetch () {
-    const { data: articles } = await this.$axios.get(
-      `${this.$config.blog.restApiUrl}/posts/?per_page=6`,
-      {
-        excludeContextRole: true
-      }
+    const { data: articles } = await axios.get(
+      `${this.$config.blog.restApiUrl}/posts/?per_page=6`
     )
     const articlesWithMedia = []
     for (const article of articles) {
       const url = article._links['wp:featuredmedia']
         ? article._links['wp:featuredmedia'][0].href
         : article._links['wp:attachment'][0].href
-      const { data: media } = await this.$axios.get(url, {
-        excludeContextRole: true
-      })
+      const { data: media } = await axios.get(url)
       if (!Array.isArray(media)) {
         articlesWithMedia.push({ ...article, media })
       } else {

@@ -16,9 +16,10 @@ import {
   LocationMarkerIcon,
   ExternalLinkIcon,
   ChevronDownIcon,
+  ChevronRightIcon,
   SwitchHorizontalIcon
 } from '@vue-hero-icons/outline'
-import { InformationCircleIcon, UsersIcon } from '@vue-hero-icons/solid'
+import { InformationCircleIcon, UsersIcon, HomeIcon } from '@vue-hero-icons/solid'
 
 const components = {
   EyeIcon,
@@ -39,7 +40,9 @@ const components = {
   LocationMarkerIcon,
   ExternalLinkIcon,
   ChevronDownIcon,
-  SwitchHorizontalIcon
+  ChevronRightIcon,
+  SwitchHorizontalIcon,
+  HomeIcon
 }
 
 Object.entries(components).forEach(([name, component]) => {

@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <div class="border-b">
-      @TODO Breadcrumb
-    </div>
+    <Breadcrumb
+      :items="[{ label: 'Tableau de bord' }]"
+    />
     <div class="py-12">
       <Header>
         <div class="text-xl text-gray-600">
@@ -13,7 +13,7 @@
         </Heading>
         <template #action>
           <div class="p-4 bg-white rounded-xl shadow-lg">
-            {{ $options.filters.label($store.getters.contextRole, 'role', 'espace') }}
+            <span class="text-gray-400 text-sm">@TODO</span> {{ $options.filters.label($store.getters.contextRole, 'role', 'espace') }}
           </div>
         </template>
       </Header>

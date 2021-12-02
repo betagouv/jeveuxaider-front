@@ -3,18 +3,17 @@
     <Breadcrumb
       theme="dark"
       :items="[{ label: 'Missions de bénévolat', link: '/missions-benevolat' }]"
+      class="px-4"
     />
     <SearchMissions />
   </div>
 </template>
 
 <script>
-import Breadcrumb from '~/components/layout/Breadcrumb.vue'
 import SearchMissions from '~/components/section/SearchMissions.vue'
 
 export default {
   components: {
-    Breadcrumb,
     SearchMissions
   },
   head () {

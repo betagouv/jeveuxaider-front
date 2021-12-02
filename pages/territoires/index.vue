@@ -1,8 +1,10 @@
 <template>
   <div>
-    <Breadcrumb
-      :items="[{ label: 'Territoires engagés', link: '/territoires' }]"
-    />
+    <div class="container">
+      <Breadcrumb
+        :items="[{ label: 'Territoires engagés', link: '/territoires' }]"
+      />
+    </div>
     <div class="bg-cool-gray-50 px-4 max-w-3xl mx-auto lg:max-w-7xl">
       <div class="pt-8 md:pt-12 lg:pt-20 relative">
         <img
@@ -124,12 +126,7 @@
 </template>
 
 <script>
-import Breadcrumb from '~/components/layout/Breadcrumb.vue'
-
 export default {
-  components: {
-    Breadcrumb
-  },
   async asyncData ({ $axios }) {
     const { data: cities } = await $axios.get('/territoires', {
       params: {
