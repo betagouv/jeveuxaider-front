@@ -17,7 +17,7 @@
     <div class="grid grid-cols-12 gap-12">
       <div class="col-span-7 space-y-12">
         <Box>Actions en attente</Box>
-        <Box>Mots de Giulietta</Box>
+        <LePetitMot />
         <Box>Mes missions</Box>
       </div>
       <div class="col-span-5 space-y-12">
@@ -33,11 +33,13 @@
 <script>
 import Header from '@/components/dashboard/Header'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
+import LePetitMot from '@/components/section/dashboard/LePetitMot'
 
 export default {
   components: {
     Header,
-    HelpCenter
+    HelpCenter,
+    LePetitMot
   }
 }
 </script>

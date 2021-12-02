@@ -17,7 +17,7 @@
     <div class="grid grid-cols-5 gap-12">
       <div class="col-span-3 space-y-12">
         <Box>Actions en attente</Box>
-        <Box>Mots de Giulietta</Box>
+        <LePetitMot />
         <Box>Retour d'expérience des bénévoles</Box>
       </div>
       <div class="col-span-2 space-y-12">
@@ -34,12 +34,14 @@
 import Header from '@/components/dashboard/Header'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
+import LePetitMot from '@/components/section/dashboard/LePetitMot'
 
 export default {
   components: {
     Header,
     HelpCenter,
-    MoreNumbers
+    MoreNumbers,
+    LePetitMot
   }
 }
 </script>
