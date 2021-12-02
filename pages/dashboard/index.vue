@@ -1,32 +1,23 @@
 <template>
-  <div class="container">
+  <div class="max-w-[1313px] mx-auto">
     <Breadcrumb
       :items="[{ label: 'Tableau de bord' }]"
     />
     <div class="py-12">
-      <Header>
-        <div class="text-xl text-gray-600">
-          Bonjour {{ $store.state.auth.user.profile.first_name }},
-        </div>
-        <Heading as="h1" :level="1">
-          Ravi de vous retrouver 👋
-        </Heading>
-        <template #action>
-          <div class="p-4 bg-white rounded-xl shadow-lg">
-            <span class="text-gray-400 text-sm">@TODO</span> {{ $options.filters.label($store.getters.contextRole, 'role', 'espace') }}
-          </div>
-        </template>
-      </Header>
+      <DashboardBenevole v-if="$store.getters.contextRole == 'volontaire'" />
+      <DashboardAdmin v-if="$store.getters.contextRole == 'admin'" />
     </div>
   </div>
 </template>
 
 <script>
-import Header from '@/components/dashboard/Header'
+import DashboardBenevole from '@/components/dashboard/Benevole'
+import DashboardAdmin from '@/components/dashboard/Admin'
 
 export default {
   components: {
-    Header
+    DashboardBenevole,
+    DashboardAdmin
   },
   middleware: 'authenticated'
 }
