@@ -1,0 +1,28 @@
+<template>
+  <div class="group flex justify-between items-center cursor-pointer p-4 hover:bg-gray-50" role="menuitem" tabindex="-1">
+    <div>
+      <div v-if="label" class="text-gray-500 uppercase text-xs">
+        {{ label }}
+      </div>
+      <div class="text-gray-900 text-sm">
+        <slot />
+      </div>
+    </div>
+    <slot name="icon" />
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    label: {
+      type: String,
+      default: null
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>

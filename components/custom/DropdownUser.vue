@@ -26,26 +26,32 @@
 
     <div
       v-if="showOptions"
-      class="origin-top-right absolute right-0 mt-4 w-56 rounded-md border border-gray-100 shadow-xl bg-white divide-y divide-gray-100 focus:outline-none"
+      class="origin-top-right absolute right-0 mt-4 w-[297px] rounded-md border border-gray-100 shadow-xl bg-white divide-y divide-gray-100 focus:outline-none"
       role="menu"
       aria-orientation="vertical"
       aria-labelledby="menu-button"
       tabindex="-1"
     >
-      <nuxt-link to="/account" class="text-gray-700 block p-4 text-sm hover:bg-gray-100 hover:text-gray-900" role="menuitem" tabindex="-1">
-        Mon compte
-      </nuxt-link>
-      <template v-if="$store.getters.contextRoles">
-        <div v-for="contextRole,index in $store.getters.contextRoles" :key="index" class="cursor-pointer text-gray-700 block p-4 text-sm hover:bg-gray-100 hover:text-gray-900" role="menuitem" tabindex="-1">
-          {{ $options.filters.label(contextRole.role, 'role') }}
-        </div>
+      <template v-if="$store.getters.roles">
+        <DropdownOptionsItem
+          v-for="role,index in $store.getters.roles"
+          :key="index"
+          :label="$options.filters.label(role.key, 'role', 'espace')"
+          @click.native="switchRole(role)"
+        >
+          {{ role.label }}
+          <template #icon>
+            <CheckIcon v-if="role.key == $store.getters.contextRole" class="h-5 text-jva-green-500 " />
+            <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
+          </template>
+        </DropdownOptionsItem>
       </template>
-      <div
-        class="cursor-pointer text-[#E2011C] block p-4 text-sm hover:bg-gray-100 hover:text-red-600"
-        @click="logout()"
-      >
-        Se déconnecter
-      </div>
+      <DropdownOptionsItem @click.native="$router.push('/account')">
+        Mon compte
+      </DropdownOptionsItem>
+      <DropdownOptionsItem @click.native="logout()">
+        <span class="text-[#E2011C]">Se déconnecter</span>
+      </DropdownOptionsItem>
     </div>
   </div>
 </template>
@@ -62,8 +68,20 @@ export default {
     clickedOutside () {
       this.showOptions = false
     },
+    async switchRole (role) {
+      console.log('switchRole to', role)
+      await this.$store.dispatch('auth/updateUser', {
+        context_role: role.key,
+        contextable_type: role.contextable_type ?? null,
+        contextable_id: role.contextable_id ?? null
+      })
+
+      this.$router.push('/dashboard')
+      if (this.$router.history.current.path === '/dashboard') {
+        this.$router.app.refresh()
+      }
+    },
     logout () {
-      console.log('dfdfdfs')
       this.$store.dispatch('auth/logout')
     }
   }

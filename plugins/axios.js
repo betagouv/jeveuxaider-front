@@ -14,9 +14,9 @@ export default function ({ $axios, redirect, app, store, error, $message }) {
       }
     }
 
-    // if (store.getters.contextRole && !config.excludeContextRole) {
-    //   config.headers['Context-Role'] = store.getters.contextRole
-    // }
+    if (store.getters.contextRole) {
+      config.headers['Context-Role'] = store.getters.contextRole
+    }
 
     return config
   })

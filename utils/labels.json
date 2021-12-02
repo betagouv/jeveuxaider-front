@@ -150,12 +150,13 @@
         {"key": 11, "label": "Art & Culture pour tous", "icon": "/images/icons/domaine-art-culture-pour-tous.svg", "color": "text-domaine-culture", "bg": "bg-domaine-culture" }
     ],
     "role": [
-        { "key": "admin", "label": "Modérateur" },
-        { "key": "referent", "label": "Référent" },
-        { "key": "referent_regional", "label": "Régional" },
-        { "key": "tete_de_reseau", "label": "Tête de réseau" },
-        { "key": "responsable", "label": "Responsable" },
-        { "key": "volontaire", "label": "Bénévole" },
-        { "key": "analyste", "label": "Analyste" }
+        { "key": "admin", "label": "Modérateur", "espace": "Mon espace modérateur" },
+        { "key": "referent", "label": "Référent", "espace": "Mon espace référent" },
+        { "key": "referent_regional", "label": "Régional", "espace": "Mon espace régional" },
+        { "key": "tete_de_reseau", "label": "Tête de réseau", "espace": "Mon espace réseau" },
+        { "key": "responsable", "label": "Responsable", "espace": "Mon espace organisation" },
+        { "key": "responsable_territoire", "label": "Responsable de territoire", "espace": "Mon espace territoire" },
+        { "key": "volontaire", "label": "Bénévole", "espace": "Mon espace volontaire" },
+        { "key": "analyste", "label": "Analyste", "espace": "Mon espace analyste" }
     ]
 }

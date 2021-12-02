@@ -1,7 +1,7 @@
 export const state = () => ({
   access_token: null,
   user: null,
-  context_roles: null
+  roles: null
 })
 
 export const mutations = {
@@ -11,8 +11,8 @@ export const mutations = {
   setAccessToken (state, accessToken) {
     state.access_token = accessToken
   },
-  setContextRoles (state, contextRoles) {
-    state.context_roles = contextRoles
+  setRoles (state, roles) {
+    state.roles = roles
   }
 }
 
@@ -27,10 +27,10 @@ export const actions = {
       commit('setUser', res.data)
     }
   },
-  async fetchContextRoles ({ commit }) {
-    const res = await this.$axios.get('/user/context-roles')
+  async fetchRoles ({ commit }) {
+    const res = await this.$axios.get('/user/roles')
     if (res.data) {
-      commit('setContextRoles', res.data)
+      commit('setRoles', res.data)
     }
   },
   async login ({ commit, dispatch }, credentials) {
@@ -52,7 +52,7 @@ export const actions = {
         })
         // await this.$gtm.push({ event: 'user-login' })
         await dispatch('fetchUser')
-        await dispatch('fetchContextRoles')
+        await dispatch('fetchRoles')
         this.$router.push(
           this.$router.history.current.query.redirect || '/missions-benevolat'
         )
@@ -62,6 +62,13 @@ export const actions = {
         this.$cookies.remove('access-token')
         return Promise.reject(new Error(error))
       })
+  },
+  async updateUser ({ state, commit }, attributes) {
+    const res = await this.$axios.post('/user', {
+      ...state.user,
+      ...attributes
+    })
+    commit('setUser', res ? res.data : null)
   },
   async logout ({ commit }) {
     console.log('logout')
