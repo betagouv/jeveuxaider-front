@@ -7,7 +7,7 @@
       <div class="text-xl text-white font-bold max-w-[260px]">
         Trouvez toutes les réponses à vos questions
       </div>
-      <Button variant="white" @click.native="onClick()">
+      <Button variant="white-blue" @click.native="onClick()">
         Foire aux questions
       </Button>
     </div>

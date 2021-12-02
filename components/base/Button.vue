@@ -15,8 +15,12 @@
                  variant == 'green',
                'jva-blue bg-cool-gray-100 hover:bg-cool-gray-50 border-gray-200 focus:ring-jva-blue-500':
                  variant == 'secondary',
-               'text-cool-gray-700 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-jva-blue-500':
+               'text-cool-gray-700 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-cool-gray-500':
                  variant == 'white',
+               'text-jva-blue-400 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-blue-400':
+                 variant == 'white-blue',
+               'text-jva-green-500 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-green-500':
+                 variant == 'white-green',
                'text-white bg-jva-red-500 hover:bg-jva-red-600 border-transparent focus:ring-jva-red-500':
                  variant == 'red',
                'px-2.5 py-1.5 shadow-sm text-xs font-bold': size == 'xs',
