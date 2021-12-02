@@ -37,7 +37,7 @@
           v-for="role,index in $store.getters.roles"
           :key="index"
           :label="$options.filters.label(role.key, 'role', 'espace')"
-          @click.native="switchRole(role)"
+          @click.native="onClickOptionItem('switch_role', role)"
         >
           {{ role.label }}
           <template #icon>
@@ -46,10 +46,10 @@
           </template>
         </DropdownOptionsItem>
       </template>
-      <DropdownOptionsItem @click.native="$router.push('/account')">
+      <DropdownOptionsItem @click.native="onClickOptionItem('push', '/account')">
         Mon compte
       </DropdownOptionsItem>
-      <DropdownOptionsItem @click.native="logout()">
+      <DropdownOptionsItem @click.native="onClickOptionItem('logout')">
         <span class="text-[#E2011C]">Se déconnecter</span>
       </DropdownOptionsItem>
     </div>
@@ -61,12 +61,25 @@
 export default {
   data () {
     return {
-      showOptions: false
+      showOptions: false,
+      loading: false
     }
   },
   methods: {
     clickedOutside () {
       this.showOptions = false
+    },
+    onClickOptionItem (action, payload = null) {
+      this.showOptions = false
+      if (action === 'switch_role') {
+        this.switchRole(payload)
+      }
+      if (action === 'push') {
+        this.$router.push(payload)
+      }
+      if (action === 'logout') {
+        this.$store.dispatch('auth/logout')
+      }
     },
     async switchRole (role) {
       console.log('switchRole to', role)
@@ -80,10 +93,8 @@ export default {
       if (this.$router.history.current.path === '/dashboard') {
         this.$router.app.refresh()
       }
-    },
-    logout () {
-      this.$store.dispatch('auth/logout')
     }
+
   }
 }
 </script>

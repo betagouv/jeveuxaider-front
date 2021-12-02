@@ -150,6 +150,7 @@
         {"key": 11, "label": "Art & Culture pour tous", "icon": "/images/icons/domaine-art-culture-pour-tous.svg", "color": "text-domaine-culture", "bg": "bg-domaine-culture" }
     ],
     "role": [
+        { "key": "volontaire", "label": "Bénévole", "espace": "Mon espace bénévole" },
         { "key": "admin", "label": "Modérateur", "espace": "Mon espace modérateur" },
         { "key": "referent", "label": "Référent", "espace": "Mon espace référent" },
         { "key": "referent_regional", "label": "Régional", "espace": "Mon espace régional" },

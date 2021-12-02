@@ -71,7 +71,7 @@ export const actions = {
     commit('setUser', res ? res.data : null)
   },
   async logout ({ commit }) {
-    console.log('logout')
+    this.$router.push('/')
     await this.$axios.post('/logout')
     commit('setAccessToken', null)
     commit('setUser', null)
