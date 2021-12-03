@@ -3,8 +3,18 @@
     <div
       class="text-3xl border rounded-2xl  h-[56px] w-[56px] flex items-center justify-center transition group-hover:scale-105"
       :class="[
-        { 'bg-[#FFE5D2] border border-[#EAD7A1]' : ['organisations_waiting_validation', 'missions_waiting_validation' , 'organisations_incomplete'].includes(type) },
-        { 'bg-[#FA9D96] border border-[#E88D96]' : ['missions_outdated'].includes(type) },
+        { 'bg-[#FFE5D2] border border-[#EAD7A1]' : [
+          'organisations_incomplete',
+          'participations_waiting_validation',
+          'participations_in_progress'
+        ].includes(type)
+        },
+        { 'bg-[#FA9D96] border border-[#E88D96]' : [
+          'missions_outdated',
+          'participations_waiting_validation',
+          'organisations_waiting_validation',
+          'missions_waiting_validation'
+        ].includes(type) },
         { 'bg-[#E1E8EE] border border-[#B6E1EE]' : ['messages_unread'].includes(type) }
       ]"
     >

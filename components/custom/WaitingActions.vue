@@ -1,7 +1,7 @@
 <template>
-  <Box v-if="actions">
+  <Box v-if="actions.length">
     <Heading as="h2" :level="3" class="mb-8">
-      Vous avez {{ todosList.length }} actions en attente
+      Vous avez {{ todosList.length }} action(s) en attente
     </Heading>
     <ul class="">
       <li v-for="(action, index) in todosList" :key="index" class="">
@@ -29,6 +29,30 @@
           subtitle="Des missions souhaitent être publiées sur la plateforme"
           @click.native="$router.push('/dashboard/missions?filter[state]=En attente de validation')"
         />
+        <WaitingActionItem
+          v-if="action.type == 'missions_outdated'"
+          :type="action.type"
+          icon="️⏰️"
+          :title="`<b>${action.value} missions(s)</b> dont la date de fin est passée`"
+          subtitle="Pensez à mettre à jour les missions"
+          @click.native="$router.push('/dashboard/missions')"
+        />
+        <WaitingActionItem
+          v-if="action.type == 'participations_waiting_validation'"
+          :type="action.type"
+          icon="️✊"
+          :title="`<b>${action.value} participations(s)</b> en attente de validation`"
+          subtitle="Pensez à mettre à jour les missions"
+          @click.native="$router.push('/dashboard/participations')"
+        />
+        <WaitingActionItem
+          v-if="action.type == 'participations_in_progress'"
+          :type="action.type"
+          icon="️✊"
+          :title="`<b>${action.value} participations(s)</b> en cours de traitement`"
+          subtitle="Pensez à traiter ses candidatures"
+          @click.native="$router.push('/dashboard/participations')"
+        />
       </li>
     </ul>
   </Box>
@@ -43,7 +67,7 @@ export default {
   },
   data () {
     return {
-      actions: null
+      actions: []
     }
   },
   computed: {
