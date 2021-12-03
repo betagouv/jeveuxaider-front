@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import WaitingActionItem from '@/components/custom/WaitingActionItem'
+import WaitingActionItem from '@/components/dashboard/WaitingActionItem'
 
 export default {
   components: {

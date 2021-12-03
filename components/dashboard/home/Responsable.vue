@@ -7,40 +7,20 @@
       <Heading as="h1" :level="1">
         Ravi de vous retrouver 👋
       </Heading>
-      <template #action>
-        <div class="px-6 py-4 bg-white rounded-xl shadow-lg">
-          <template v-if="$store.getters.contextRole == 'referent'">
-            <div class="text-gray-400 uppercase text-xs">
-              Département
-            </div>
-            <div class="text-gray-900 font-bold">
-              {{ $options.filters.label($store.getters.currentRole.label, 'departments',) }}
-            </div>
-          </template>
-          <template v-if="$store.getters.contextRole == 'referent_regional'">
-            <div class="text-gray-400 uppercase text-xs">
-              Région
-            </div>
-            <div class="text-gray-900 font-bold">
-              {{ $store.getters.currentRole.label }}
-            </div>
-          </template>
-        </div>
-      </template>
     </Header>
 
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
       <div class="lg:col-span-3 space-y-12">
         <WaitingActions />
         <LePetitMot />
-        <Box>Autre blocs ?</Box>
+        <Box>Retour d'expérience des bénévoles</Box>
       </div>
       <div class="lg:col-span-2 space-y-12">
         <Box v-if="statistics" padding="sm">
           <Heading as="h2" :level="3" class="mb-8">
             Votre activité en chiffres
           </Heading>
-          <div class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+          <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
             <CardStatistic :value="statistics.places_left" title="Bénévoles recherchés" />
             <CardStatistic :value="`${statistics.places_occupation_rate}%`" title="Taux d'occupation" :gauge-percentage="statistics.places_occupation_rate" />
             <CardStatistic
@@ -57,26 +37,12 @@
               link="/dashboard/participations"
               link-label="Participations"
             />
-            <CardStatistic
-              :value="statistics.organisations_actives"
-              title="Organisations actives"
-              :subtitle="`sur ${statistics.organisations} organisations`"
-              link="/dashboard/organisations"
-              link-label="Organisations"
-            />
-            <!-- <CardStatistic
-              :value="statistics.users_benevoles"
-              title="Bénévoles"
-              :subtitle="`sur ${statistics.users} utilisateurs`"
-              link="/dashboard/users"
-              link-label="Utilisateurs"
-            /> -->
           </div>
         </Box>
         <MoreNumbers />
         <Box>
           <Heading as="h2" :level="2" class="mb-8 font-extrabold">
-            Liens utiles
+            Suivez le guide
           </Heading>
           <div class="divide-y border-t">
             <LinkItem v-for="link,index in links" :key="index" :icon="link.icon" :to="link.to">
@@ -97,7 +63,7 @@ import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import CardStatistic from '@/components/card/CardStatistic'
 import LinkItem from '@/components/advanced/LinkItem'
-import WaitingActions from '@/components/custom/WaitingActions'
+import WaitingActions from '@/components/dashboard/WaitingActions'
 
 export default {
   components: {
@@ -113,9 +79,9 @@ export default {
     return {
       statistics: null,
       links: [
-        { icon: '🔎', title: 'Lien 1', to: '#' },
-        { icon: '📇', title: 'Lien 2', to: '#' },
-        { icon: '📇', title: 'Lien 3', to: '#' }
+        { icon: '🏅', title: 'Comment améliorer la qualité des candidatures de vos missions', to: '#' },
+        { icon: '🔎', title: 'Comment augmenter la visibilité de mes missions sur la plateforme ?', to: '#' },
+        { icon: '📇', title: 'Pourquoi compléter la page de mon organisation ?', to: '#' }
       ]
     }
   },
