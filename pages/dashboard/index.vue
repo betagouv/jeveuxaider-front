@@ -7,6 +7,7 @@
       <DashboardBenevole v-if="$store.getters.contextRole == 'volontaire'" />
       <DashboardAdmin v-if="$store.getters.contextRole == 'admin'" />
       <DashboardResponsable v-if="$store.getters.contextRole == 'responsable'" />
+      <DashboardReferent v-if="['referent','referent_regional'].includes($store.getters.contextRole)" />
     </div>
   </div>
 </template>
@@ -15,12 +16,14 @@
 import DashboardBenevole from '@/components/dashboard/Benevole'
 import DashboardAdmin from '@/components/dashboard/Admin'
 import DashboardResponsable from '@/components/dashboard/Responsable'
+import DashboardReferent from '@/components/dashboard/Referent'
 
 export default {
   components: {
     DashboardBenevole,
     DashboardAdmin,
-    DashboardResponsable
+    DashboardResponsable,
+    DashboardReferent
   },
   middleware: 'authenticated'
 }

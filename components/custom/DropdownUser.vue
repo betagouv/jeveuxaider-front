@@ -39,7 +39,12 @@
           :label="$options.filters.label(role.key, 'role', 'espace')"
           @click.native="onClickOptionItem('switch_role', role)"
         >
-          {{ role.label }}
+          <template v-if="role.key == 'referent'">
+            {{ $options.filters.label(role.label, 'departments',) }}
+          </template>
+          <template v-else>
+            {{ role.label }}
+          </template>
           <template #icon>
             <CheckIcon v-if="role.key == $store.getters.contextRole" class="h-5 text-jva-green-500 " />
             <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
