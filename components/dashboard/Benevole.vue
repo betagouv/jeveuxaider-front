@@ -7,11 +7,6 @@
       <Heading as="h1" :level="1">
         Ravi de vous retrouver 👋
       </Heading>
-      <template #action>
-        <div class="p-4 bg-white rounded-xl shadow-lg">
-          <span class="text-gray-400 text-sm">@TODO</span> {{ $options.filters.label($store.getters.contextRole, 'role', 'espace') }}
-        </div>
-      </template>
     </Header>
 
     <div class="grid grid-cols-12 gap-12">

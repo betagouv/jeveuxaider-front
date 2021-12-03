@@ -11,8 +11,9 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
       <div class="lg:col-span-3 space-y-12">
-        <Box>Actions en attente</Box>
+        <WaitingActions />
         <LePetitMot />
+        <Box>Bloc "Déploiement" avec lien vers Réseaux / Territoires</Box>
         <Box>Retour d'expérience des bénévoles</Box>
       </div>
       <div class="lg:col-span-2 space-y-12">
@@ -77,6 +78,7 @@ import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import CardStatistic from '@/components/card/CardStatistic'
 import LinkItem from '@/components/advanced/LinkItem'
+import WaitingActions from '@/components/custom/WaitingActions'
 
 export default {
   components: {
@@ -85,7 +87,8 @@ export default {
     MoreNumbers,
     LePetitMot,
     CardStatistic,
-    LinkItem
+    LinkItem,
+    WaitingActions
   },
   data () {
     return {

@@ -1,12 +1,12 @@
 <template>
   <nuxt-link :to="to" class="group py-6 flex items-center space-x-6 cursor-pointer">
-    <div v-if="icon" class="text-xl">
+    <div v-if="icon" class="text-3xl">
       {{ icon }}
     </div>
     <div class="flex-1 group-hover:underline font-bold">
       <slot />
     </div>
-    <ChevronRightIcon class="h-4 text-gray-700 group-hover:scale-125" />
+    <ChevronRightIcon class="h-4 group-hover:scale-125" />
   </nuxt-link>
 </template>
 
