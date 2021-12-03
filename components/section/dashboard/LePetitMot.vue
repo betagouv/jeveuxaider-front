@@ -1,6 +1,6 @@
 <template>
   <div id="petit-mot" class="bg-[#FEF8F4] p-12 rounded-xl shadow-lg border-l-4 border-[#EADBD1] text-gray-800">
-    <div class="flex gap-6 items-start">
+    <div class="flex justify-center flex-col lg:flex-row lg:items-start gap-6 items-start">
       <img
         srcset="/images/dashboard/giulietta.png, /images/dashboard/giulietta@2x.png 2x"
         alt="Gulietta"

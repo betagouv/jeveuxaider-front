@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[1313px] mx-auto">
+  <div class="px-6 xl:px-0 max-w-[1313px] mx-auto">
     <Breadcrumb
       :items="[{ label: 'Tableau de bord' }]"
     />
