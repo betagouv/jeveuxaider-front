@@ -54,7 +54,16 @@
           </div>
         </Box>
         <MoreNumbers />
-        <Box>Liens utiles</Box>
+        <Box>
+          <Heading as="h2" :level="2" class="mb-8 font-extrabold">
+            Liens utiles
+          </Heading>
+          <div class="divide-y border-t">
+            <LinkItem v-for="link,index in links" :key="index" :icon="link.icon" :to="link.to">
+              {{ link.title }}
+            </LinkItem>
+          </div>
+        </Box>
         <HelpCenter />
       </div>
     </div>
@@ -67,17 +76,25 @@ import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import CardStatistic from '@/components/card/CardStatistic'
+import LinkItem from '@/components/advanced/LinkItem'
+
 export default {
   components: {
     Header,
     HelpCenter,
     MoreNumbers,
     LePetitMot,
-    CardStatistic
+    CardStatistic,
+    LinkItem
   },
   data () {
     return {
-      statistics: null
+      statistics: null,
+      links: [
+        { icon: '🔎', title: 'Gérer les contenus', to: '#' },
+        { icon: '📇', title: 'Détecter les organisations en double', to: '#' },
+        { icon: '📇', title: 'Gérer le RNA des organisations', to: '#' }
+      ]
     }
   },
   async created () {
