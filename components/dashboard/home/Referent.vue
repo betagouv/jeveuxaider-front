@@ -36,31 +36,24 @@
             <CardStatistic
               :value="statistics.missions_actives"
               title="Missions actives"
-              :subtitle="`sur ${statistics.missions} missions`"
+              :subtitle="`sur ${$options.filters.formatNumber(statistics.missions)} missions`"
               link="/dashboard/missions"
               link-label="Missions"
             />
             <CardStatistic
               :value="statistics.participations_validated"
               title="Participations validées"
-              :subtitle="`sur ${statistics.participations} candidatures`"
+              :subtitle="`sur ${$options.filters.formatNumber(statistics.participations)} candidatures`"
               link="/dashboard/participations"
               link-label="Participations"
             />
             <CardStatistic
               :value="statistics.organisations_actives"
               title="Organisations actives"
-              :subtitle="`sur ${statistics.organisations} organisations`"
+              :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations)} organisations`"
               link="/dashboard/organisations"
               link-label="Organisations"
             />
-            <!-- <CardStatistic
-              :value="statistics.users_benevoles"
-              title="Bénévoles"
-              :subtitle="`sur ${statistics.users} utilisateurs`"
-              link="/dashboard/users"
-              link-label="Utilisateurs"
-            /> -->
           </div>
         </Box>
         <MoreNumbers />

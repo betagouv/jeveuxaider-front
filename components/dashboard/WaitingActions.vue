@@ -9,7 +9,7 @@
           v-if="action.type == 'organisations_waiting_validation'"
           :type="action.type"
           icon="✊"
-          :title="`<b>${action.value} organisation(s)</b> en attente de validation`"
+          :title="`<b>${$options.filters.formatNumber(action.value)} organisation(s)</b> en attente de validation`"
           subtitle="Des organisations souhaitent publier des missions"
           @click.native="$router.push('/dashboard/organisations?filter[state]=En attente de validation')"
         />
@@ -17,7 +17,7 @@
           v-if="action.type == 'organisations_incomplete'"
           :type="action.type"
           icon="✍"
-          :title="`<b>${action.value} organisation(s)</b> sont incomplètes`"
+          :title="`<b>${$options.filters.formatNumber(action.value)} organisation(s)</b> sont incomplètes`"
           subtitle="Des fiches duêment complétées augmentent la qualité de la plateforme"
           @click.native="$router.push('/dashboard/organisations')"
         />
@@ -25,7 +25,7 @@
           v-if="action.type == 'missions_waiting_validation'"
           :type="action.type"
           icon="✊"
-          :title="`<b>${action.value} missions(s)</b> en attente de validation`"
+          :title="`<b>${$options.filters.formatNumber(action.value)} missions(s)</b> en attente de validation`"
           subtitle="Des missions souhaitent être publiées sur la plateforme"
           @click.native="$router.push('/dashboard/missions?filter[state]=En attente de validation')"
         />
@@ -33,7 +33,7 @@
           v-if="action.type == 'missions_outdated'"
           :type="action.type"
           icon="️⏰️"
-          :title="`<b>${action.value} missions(s)</b> dont la date de fin est passée`"
+          :title="`<b>${$options.filters.formatNumber(action.value)} missions(s)</b> dont la date de fin est passée`"
           subtitle="Pensez à mettre à jour les missions"
           @click.native="$router.push('/dashboard/missions')"
         />
@@ -41,7 +41,7 @@
           v-if="action.type == 'participations_waiting_validation'"
           :type="action.type"
           icon="️✊"
-          :title="`<b>${action.value} participations(s)</b> en attente de validation`"
+          :title="`<b>${$options.filters.formatNumber(action.value)} participations(s)</b> en attente de validation`"
           subtitle="Pensez à mettre à jour les missions"
           @click.native="$router.push('/dashboard/participations')"
         />
@@ -49,7 +49,7 @@
           v-if="action.type == 'participations_in_progress'"
           :type="action.type"
           icon="️✊"
-          :title="`<b>${action.value} participations(s)</b> en cours de traitement`"
+          :title="`<b>${$options.filters.formatNumber(action.value)} participations(s)</b> en cours de traitement`"
           subtitle="Pensez à traiter ses candidatures"
           @click.native="$router.push('/dashboard/participations')"
         />

@@ -1,7 +1,12 @@
 <template>
   <div class="px-4 py-6 flex flex-col items-center bg-white space-y-2">
-    <div class="text-[40px] font-bold leading-10">
-      {{ value }}
+    <div class="text-[36px] font-bold leading-10">
+      <template v-if="!isNaN(value)">
+        {{ value | formatNumber }}
+      </template>
+      <template v-else>
+        {{ value }}
+      </template>
     </div>
     <div class="text-center">
       <div class="font-bold">

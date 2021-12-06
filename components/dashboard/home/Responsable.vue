@@ -36,14 +36,14 @@
             <CardStatistic
               :value="statistics.missions_actives"
               title="Missions actives"
-              :subtitle="`sur ${statistics.missions} missions`"
+              :subtitle="`sur ${$options.filters.formatNumber(statistics.missions)} missions`"
               link="/dashboard/missions"
               link-label="Missions"
             />
             <CardStatistic
               :value="statistics.participations_validated"
               title="Participations validées"
-              :subtitle="`sur ${statistics.participations} candidatures`"
+              :subtitle="`sur ${$options.filters.formatNumber(statistics.participations)} candidatures`"
               link="/dashboard/participations"
               link-label="Participations"
             />
