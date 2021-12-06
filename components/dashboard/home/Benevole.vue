@@ -23,7 +23,8 @@
       <div class="col-span-5 space-y-12">
         <Box>Mes infos ?</Box>
         <Box>MarketPlace UserCard teaser ?</Box>
-        <Box>Guide (X questions principales)</Box>
+        <BoxLinks :links="links" />
+
         <HelpCenter />
       </div>
     </div>
@@ -43,6 +44,7 @@
 import Header from '@/components/dashboard/Header'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
+import BoxLinks from '@/components/advanced/BoxLinks'
 import LazySearchOverlay from '@/components/section/SearchOverlay'
 
 export default {
@@ -50,7 +52,17 @@ export default {
     Header,
     HelpCenter,
     LePetitMot,
+    BoxLinks,
     LazySearchOverlay
+  },
+  data () {
+    return {
+      links: [
+        { icon: '🔎', title: 'Lorem ipsum', to: '#' },
+        { icon: '📇', title: 'Lorem ipsum', to: '#' },
+        { icon: '📇', title: 'Lorem ipsum', to: '#' }
+      ]
+    }
   }
 }
 </script>

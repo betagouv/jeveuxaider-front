@@ -28,16 +28,7 @@
       <div class="lg:col-span-2 space-y-12">
         <ActivityFigures />
         <MoreNumbers />
-        <Box>
-          <Heading as="h2" :level="2" class="mb-8 font-extrabold">
-            Suivez le guide
-          </Heading>
-          <div class="divide-y border-t">
-            <LinkItem v-for="link,index in links" :key="index" :icon="link.icon" :to="link.to">
-              {{ link.title }}
-            </LinkItem>
-          </div>
-        </Box>
+        <BoxLinks :links="links" />
         <HelpCenter />
       </div>
     </div>
@@ -49,7 +40,7 @@ import Header from '@/components/dashboard/Header'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
-import LinkItem from '@/components/advanced/LinkItem'
+import BoxLinks from '@/components/advanced/BoxLinks'
 import WaitingActions from '@/components/advanced/WaitingActions'
 import ActivityFigures from '@/components/advanced/ActivityFigures'
 
@@ -59,7 +50,7 @@ export default {
     HelpCenter,
     MoreNumbers,
     LePetitMot,
-    LinkItem,
+    BoxLinks,
     WaitingActions,
     ActivityFigures
   },
