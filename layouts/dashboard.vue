@@ -4,10 +4,10 @@
     <Nuxt />
     <Footer />
     <client-only>
-      <!-- Search Overlay -->
       <transition name="fade">
-        <portal-target name="body-end" />
-        <LazySearchOverlay v-if="$store.state.showSearchOverlay" />
+        <portal-target name="body-end">
+          <LazySearchOverlay v-if="$store.state.showSearchOverlay" />
+        </portal-target>
       </transition>
     </client-only>
   </div>

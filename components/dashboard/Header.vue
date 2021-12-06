@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between items-center">
+  <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-12">
     <div>
       <div v-if="secondaryTitle" class="text-xl text-gray-600">
         {{ secondaryTitle }}

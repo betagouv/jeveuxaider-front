@@ -28,6 +28,7 @@ export default {
     DashboardReferent,
     DashboardReferentRegional
   },
+  layout: 'dashboard',
   middleware: 'authenticated'
 }
 </script>
