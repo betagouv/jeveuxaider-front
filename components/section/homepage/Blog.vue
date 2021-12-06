@@ -42,12 +42,10 @@
 
 <script>
 import axios from 'axios'
-import Slideshow from '@/components/advanced/Slideshow'
 import CardArticle from '@/components/card/CardArticle'
 
 export default {
   components: {
-    Slideshow,
     CardArticle
   },
   data () {

@@ -37,6 +37,7 @@
             :key="i"
             :icon="action.icon"
             :link="action.link"
+            :icon-variant="action.iconVariant"
           >
             <div class="text-gray-900 font-semibold" v-html="action.title" />
             <div v-if="action.subtitle" class="text-gray-500 text-sm" v-html="action.subtitle" />

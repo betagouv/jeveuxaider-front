@@ -46,12 +46,8 @@
 </template>
 
 <script>
-import Accordion from '@/components/advanced/Accordion'
 
 export default {
-  components: {
-    Accordion
-  },
   data () {
     return {
       faq: {

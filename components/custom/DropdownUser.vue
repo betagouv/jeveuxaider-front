@@ -51,7 +51,7 @@
           </template>
         </DropdownOptionsItem>
       </template>
-      <DropdownOptionsItem @click.native="onClickOptionItem('push', '/account')">
+      <DropdownOptionsItem @click.native="onClickOptionItem('push', '/profile')">
         Mon compte
       </DropdownOptionsItem>
       <DropdownOptionsItem @click.native="onClickOptionItem('logout')">

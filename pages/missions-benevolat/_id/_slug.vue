@@ -439,12 +439,10 @@
 </template>
 
 <script>
-import Slideshow from '~/components/advanced/Slideshow'
 import CardMission from '~/components/card/CardMission'
 
 export default {
   components: {
-    Slideshow,
     CardMission
   },
   async asyncData ({ $axios, params, error, store }) {

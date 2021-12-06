@@ -32,12 +32,10 @@
 </template>
 
 <script>
-import Slideshow from '@/components/advanced/Slideshow'
 import CardDomaine from '@/components/card/CardDomaine'
 
 export default {
   components: {
-    Slideshow,
     CardDomaine
   },
   data () {

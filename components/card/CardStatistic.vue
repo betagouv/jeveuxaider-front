@@ -24,12 +24,8 @@
 </template>
 
 <script>
-import Gauge from '@/components/advanced/Gauge'
 
 export default {
-  components: {
-    Gauge
-  },
   props: {
     value: {
       type: [String, Number],
