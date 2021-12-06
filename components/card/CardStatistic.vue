@@ -1,6 +1,6 @@
 <template>
   <div class="px-4 py-6 flex flex-col items-center bg-white space-y-2">
-    <div class="text-[36px] font-bold leading-10">
+    <div v-if="value" class="text-[36px] font-bold leading-10">
       <template v-if="!isNaN(value)">
         {{ value | formatNumber }}
       </template>
@@ -9,7 +9,7 @@
       </template>
     </div>
     <div class="text-center">
-      <div class="font-bold">
+      <div v-if="title" class="font-bold">
         {{ title }}
       </div>
       <div v-if="subtitle" class="text-gray-700 text-sm">
@@ -33,11 +33,11 @@ export default {
   props: {
     value: {
       type: [String, Number],
-      required: true
+      default: null
     },
     title: {
       type: String,
-      required: true
+      default: null
     },
     subtitle: {
       type: String,

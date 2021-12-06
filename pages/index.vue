@@ -15,8 +15,8 @@
     <section>
       <div class="container mx-auto px-4 xl:max-w-[1412px]">
         <div class="grid gap-5 md:grid-cols-2">
-          <BlockNewsletter />
-          <BlockFacebook />
+          <Newsletter />
+          <Facebook />
         </div>
       </div>
     </section>
@@ -31,8 +31,8 @@
         </h2>
 
         <div class="grid gap-5 md:grid-cols-2">
-          <BlockFacilitezRecrutement />
-          <BlockEncouragezEngagementLocal />
+          <FacilitezRecrutement />
+          <EncouragezEngagementLocal />
         </div>
       </div>
     </section>
@@ -50,10 +50,10 @@ import EngagezVous from '@/components/section/homepage/EngagezVous'
 import Blog from '@/components/section/homepage/Blog'
 import Temoignages from '@/components/section/homepage/Temoignages'
 import Faq from '@/components/section/homepage/Faq'
-import BlockNewsletter from '@/components/block/Newsletter'
-import BlockFacebook from '@/components/block/Facebook'
-import BlockFacilitezRecrutement from '@/components/block/FacilitezRecrutement'
-import BlockEncouragezEngagementLocal from '@/components/block/EncouragezEngagementLocal'
+import Newsletter from '@/components/section/homepage/Newsletter'
+import Facebook from '@/components/section/homepage/Facebook'
+import FacilitezRecrutement from '@/components/section/homepage/FacilitezRecrutement'
+import EncouragezEngagementLocal from '@/components/section/homepage/EncouragezEngagementLocal'
 
 export default {
   components: {
@@ -65,10 +65,10 @@ export default {
     Blog,
     Temoignages,
     Faq,
-    BlockNewsletter,
-    BlockFacebook,
-    BlockFacilitezRecrutement,
-    BlockEncouragezEngagementLocal
+    Newsletter,
+    Facebook,
+    FacilitezRecrutement,
+    EncouragezEngagementLocal
   },
   head () {
     return {

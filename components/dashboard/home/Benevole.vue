@@ -1,13 +1,13 @@
 <template>
   <TwoCols>
     <template #header>
-      <Header title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
+      <SectionHeading title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
         <template #action>
           <Button size="xl" icon="SearchIcon" @click.native="$store.commit('toggleSearchOverlay')">
             Trouver une mission
           </Button>
         </template>
-      </Header>
+      </SectionHeading>
     </template>
     <template #left>
       <Box>Actions en attente</Box>
@@ -25,7 +25,6 @@
 
 <script>
 import TwoCols from '@/components/dashboard/layouts/TwoCols'
-import Header from '@/components/dashboard/Header'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import BoxLinks from '@/components/advanced/BoxLinks'
@@ -33,7 +32,6 @@ import BoxLinks from '@/components/advanced/BoxLinks'
 export default {
   components: {
     TwoCols,
-    Header,
     HelpCenter,
     LePetitMot,
     BoxLinks

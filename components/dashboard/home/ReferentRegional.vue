@@ -1,7 +1,7 @@
 <template>
   <TwoCols>
     <template #header>
-      <Header title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
+      <SectionHeading title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
         <template #action>
           <Box padding="xs">
             <div class="text-gray-400 uppercase text-xs">
@@ -12,10 +12,9 @@
             </div>
           </Box>
         </template>
-      </Header>
+      </SectionHeading>
     </template>
     <template #left>
-      <WaitingActions />
       <LePetitMot />
       <Box>Autre blocs ?</Box>
     </template>
@@ -30,23 +29,19 @@
 
 <script>
 import TwoCols from '@/components/dashboard/layouts/TwoCols'
-import Header from '@/components/dashboard/Header'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import BoxLinks from '@/components/advanced/BoxLinks'
-import WaitingActions from '@/components/advanced/WaitingActions'
 import ActivityFigures from '@/components/advanced/ActivityFigures'
 
 export default {
   components: {
     TwoCols,
-    Header,
     HelpCenter,
     MoreNumbers,
     LePetitMot,
     BoxLinks,
-    WaitingActions,
     ActivityFigures
   },
   data () {
