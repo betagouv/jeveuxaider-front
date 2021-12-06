@@ -1,59 +1,42 @@
 <template>
-  <div class="">
-    <Header class="mb-12">
-      <div class="text-xl text-gray-600">
-        Bonjour {{ $store.state.auth.user.profile.first_name }},
-      </div>
-      <Heading as="h1" :level="1">
-        Ravi de vous retrouver 👋
-      </Heading>
-      <template #action>
-        <Button size="xl" icon="SearchIcon" @click.native="$store.commit('toggleSearchOverlay')">
-          Trouver une mission
-        </Button>
-      </template>
-    </Header>
-
-    <div class="grid grid-cols-12 gap-12">
-      <div class="col-span-7 space-y-12">
-        <Box>Actions en attente</Box>
-        <LePetitMot />
-        <Box>Mes missions</Box>
-      </div>
-      <div class="col-span-5 space-y-12">
-        <Box>Mes infos ?</Box>
-        <Box>MarketPlace UserCard teaser ?</Box>
-        <BoxLinks :links="links" />
-
-        <HelpCenter />
-      </div>
-    </div>
-
-    <!-- Search Overlay -->
-    <client-only>
-      <portal to="body-end">
-        <transition name="fade">
-          <LazySearchOverlay v-if="$store.state.showSearchOverlay" />
-        </transition>
-      </portal>
-    </client-only>
-  </div>
+  <TwoCols>
+    <template #header>
+      <Header title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
+        <template #action>
+          <Button size="xl" icon="SearchIcon" @click.native="$store.commit('toggleSearchOverlay')">
+            Trouver une mission
+          </Button>
+        </template>
+      </Header>
+    </template>
+    <template #left>
+      <Box>Actions en attente</Box>
+      <LePetitMot />
+      <Box>Mes missions</Box>
+    </template>
+    <template #right>
+      <Box>Mes infos ?</Box>
+      <Box>MarketPlace UserCard teaser ?</Box>
+      <BoxLinks :links="links" />
+      <HelpCenter />
+    </template>
+  </TwoCols>
 </template>
 
 <script>
+import TwoCols from '@/components/dashboard/layouts/TwoCols'
 import Header from '@/components/dashboard/Header'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import BoxLinks from '@/components/advanced/BoxLinks'
-import LazySearchOverlay from '@/components/section/SearchOverlay'
 
 export default {
   components: {
+    TwoCols,
     Header,
     HelpCenter,
     LePetitMot,
-    BoxLinks,
-    LazySearchOverlay
+    BoxLinks
   },
   data () {
     return {

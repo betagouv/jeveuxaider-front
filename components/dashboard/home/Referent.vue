@@ -1,41 +1,35 @@
 <template>
-  <div class="">
-    <Header class="mb-12">
-      <div class="text-xl text-gray-600">
-        Bonjour {{ $store.state.auth.user.profile.first_name }},
-      </div>
-      <Heading as="h1" :level="1">
-        Ravi de vous retrouver 👋
-      </Heading>
-      <template #action>
-        <Box padding="xs">
-          <div class="text-gray-400 uppercase text-xs">
-            Département
-          </div>
-          <div class="text-gray-900 font-bold">
-            {{ $options.filters.label($store.getters.currentRole.label, 'departments',) }}
-          </div>
-        </Box>
-      </template>
-    </Header>
-
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
-      <div class="lg:col-span-3 space-y-12">
-        <WaitingActions />
-        <LePetitMot />
-        <Box>Autre blocs ?</Box>
-      </div>
-      <div class="lg:col-span-2 space-y-12">
-        <ActivityFigures />
-        <MoreNumbers />
-        <BoxLinks :links="links" />
-        <HelpCenter />
-      </div>
-    </div>
-  </div>
+  <TwoCols>
+    <template #header>
+      <Header title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
+        <template #action>
+          <Box padding="xs">
+            <div class="text-gray-400 uppercase text-xs">
+              Département
+            </div>
+            <div class="text-gray-900 font-bold">
+              {{ $options.filters.label($store.getters.currentRole.label, 'departments',) }}
+            </div>
+          </Box>
+        </template>
+      </Header>
+    </template>
+    <template #left>
+      <WaitingActions />
+      <LePetitMot />
+      <Box>Autre blocs ?</Box>
+    </template>
+    <template #right>
+      <ActivityFigures />
+      <MoreNumbers />
+      <BoxLinks :links="links" />
+      <HelpCenter />
+    </template>
+  </TwoCols>
 </template>
 
 <script>
+import TwoCols from '@/components/dashboard/layouts/TwoCols'
 import Header from '@/components/dashboard/Header'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
@@ -46,6 +40,7 @@ import BoxLinks from '@/components/advanced/BoxLinks'
 
 export default {
   components: {
+    TwoCols,
     Header,
     HelpCenter,
     MoreNumbers,
