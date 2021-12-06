@@ -54,7 +54,7 @@ export const actions = {
         await dispatch('fetchUser')
         await dispatch('fetchRoles')
         this.$router.push(
-          this.$router.history.current.query.redirect || '/missions-benevolat'
+          this.$router.history.current.query.redirect || '/dashboard'
         )
       })
       .catch((error) => {
