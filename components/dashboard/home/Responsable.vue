@@ -7,6 +7,16 @@
       <Heading as="h1" :level="1">
         Ravi de vous retrouver 👋
       </Heading>
+      <template #action>
+        <Box padding="xs" class="cursor-pointer" @click.native="$router.push(`/dashboard/organisations/${$store.getters.currentRole.contextable_id}`)">
+          <div class="text-gray-400 uppercase text-xs">
+            Responsable
+          </div>
+          <div class="text-gray-900 font-bold">
+            {{ $store.getters.currentRole.label }}
+          </div>
+        </Box>
+      </template>
     </Header>
 
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">

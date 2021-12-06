@@ -6,6 +6,7 @@
       'border': variant == 'flat',
       'px-6 py-8 xl:py-12 xl:px-16': padding == 'lg',
       'px-6 py-8 xl:py-10 xl:px-8': padding == 'sm',
+      'px-4 py-4 xl:py-4 xl:px-6': padding == 'xs',
     }]"
   >
     <slot />
@@ -23,7 +24,7 @@ export default {
     padding: {
       type: [String, Boolean],
       default: 'lg',
-      validator: s => ['sm', 'lg', false].includes(s)
+      validator: s => ['xs', 'sm', 'lg', false].includes(s)
     }
   }
 }

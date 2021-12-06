@@ -8,24 +8,14 @@
         Ravi de vous retrouver 👋
       </Heading>
       <template #action>
-        <div class="px-6 py-4 bg-white rounded-xl shadow-lg">
-          <template v-if="$store.getters.contextRole == 'referent'">
-            <div class="text-gray-400 uppercase text-xs">
-              Département
-            </div>
-            <div class="text-gray-900 font-bold">
-              {{ $options.filters.label($store.getters.currentRole.label, 'departments',) }}
-            </div>
-          </template>
-          <template v-if="$store.getters.contextRole == 'referent_regional'">
-            <div class="text-gray-400 uppercase text-xs">
-              Région
-            </div>
-            <div class="text-gray-900 font-bold">
-              {{ $store.getters.currentRole.label }}
-            </div>
-          </template>
-        </div>
+        <Box padding="xs">
+          <div class="text-gray-400 uppercase text-xs">
+            Région
+          </div>
+          <div class="text-gray-900 font-bold">
+            {{ $store.getters.currentRole.label }}
+          </div>
+        </Box>
       </template>
     </Header>
 
