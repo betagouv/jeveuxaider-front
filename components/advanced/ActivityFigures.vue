@@ -7,7 +7,7 @@
       <CardStatistic :value="statistics.places_left" title="Bénévoles recherchés" />
       <CardStatistic :value="`${statistics.places_occupation_rate}%`" title="Taux d'occupation" :gauge-percentage="statistics.places_occupation_rate" />
       <CardStatistic
-        v-if="['referent','referent_regional'].includes($store.getters.contextRole)"
+        v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
         :value="statistics.organisations_actives"
         title="Organisations actives"
         :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations)} organisations`"
@@ -15,7 +15,7 @@
         link-label="Organisations"
       />
       <CardStatistic
-        v-if="['responsable', 'referent','referent_regional'].includes($store.getters.contextRole)"
+        v-if="['admin', 'responsable', 'referent','referent_regional'].includes($store.getters.contextRole)"
         :value="statistics.missions_actives"
         title="Missions actives"
         :subtitle="`sur ${$options.filters.formatNumber(statistics.missions)} missions`"
@@ -23,7 +23,7 @@
         link-label="Missions"
       />
       <CardStatistic
-        v-if="['responsable', 'referent','referent_regional'].includes($store.getters.contextRole)"
+        v-if="['admin' , 'responsable', 'referent','referent_regional'].includes($store.getters.contextRole)"
         :value="statistics.participations_validated"
         title="Participations validées"
         :subtitle="`sur ${$options.filters.formatNumber(statistics.participations)} candidatures`"
