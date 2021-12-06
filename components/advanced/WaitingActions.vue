@@ -1,5 +1,5 @@
 <template>
-  <Box v-if="actions.length">
+  <Box :loading="$fetchState.pending" loading-text="Récupération des actions en attente ...">
     <Heading as="h2" :level="3" class="mb-8">
       Vous avez {{ todosList.length }} action(s) en attente
     </Heading>
@@ -50,7 +50,7 @@
           :type="action.type"
           icon="️✊"
           :title="`<b>${$options.filters.formatNumber(action.value)} participations(s)</b> en cours de traitement`"
-          subtitle="Pensez à traiter ses candidatures"
+          subtitle="Pensez à traiter ces candidatures"
           @click.native="$router.push('/dashboard/participations')"
         />
       </li>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import WaitingActionItem from '@/components/dashboard/WaitingActionItem'
+import WaitingActionItem from '@/components/advanced/WaitingActionItem'
 
 export default {
   components: {
@@ -70,15 +70,15 @@ export default {
       actions: []
     }
   },
-  computed: {
-    todosList () {
-      return this.actions.filter(item => item.value)
-    }
-  },
-  async created () {
+  async fetch () {
     const response = await this.$axios.get('/user/actions')
     if (response.data) {
       this.actions = response.data
+    }
+  },
+  computed: {
+    todosList () {
+      return this.actions.filter(item => item.value)
     }
   }
 }

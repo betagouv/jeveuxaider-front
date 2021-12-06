@@ -9,13 +9,25 @@
       'px-4 py-4 xl:py-4 xl:px-6': padding == 'xs',
     }]"
   >
-    <slot />
+    <template v-if="loading">
+      <LoadingIndicator> {{ loadingText }}</LoadingIndicator>
+    </template>
+    <template v-else>
+      <slot />
+    </template>
   </div>
 </template>
 
 <script>
+import LoadingIndicator from '@/components/custom/LoadingIndicator'
+
 export default {
+  components: {
+    LoadingIndicator
+  },
   props: {
+    loading: { type: Boolean, default: false },
+    loadingText: { type: String, default: 'Récupération des informations ...' },
     variant: {
       type: [String],
       default: 'shadow',
