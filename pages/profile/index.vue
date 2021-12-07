@@ -57,6 +57,26 @@
           </div>
           <div class="">
             <div class="text-sm font-medium text-gray-500 mb-4">
+              Disponibilités
+            </div>
+            <template v-if="$store.state.auth.user.profile.disponibilities.length">
+              <div class="flex flex-wrap gap-4">
+                <Badge v-for="item,i in $store.state.auth.user.profile.disponibilities" :key="i" color="white" size="sm">
+                  {{ $options.filters.label(
+                    item,
+                    'disponibilities'
+                  ) }}
+                </Badge>
+              </div>
+            </template>
+            <template v-else>
+              <div class="text-gray-400 font-semibold">
+                Vous n'avez pas renseigné vos disponibilités
+              </div>
+            </template>
+          </div>
+          <div class="">
+            <div class="text-sm font-medium text-gray-500 mb-4">
               Compétences
             </div>
             <template v-if="$store.state.auth.user.profile.skills.length">
@@ -72,6 +92,9 @@
               </div>
             </template>
           </div>
+          <Button variant="white" icon="PencilIcon" full size="lg" @click.native="$router.push('/profile/edit')">
+            Modifier mes informations
+          </Button>
         </div>
       </Box>
       <Box>MarketPlace UserCard teaser ?</Box>
