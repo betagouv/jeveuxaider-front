@@ -27,7 +27,7 @@
       </Sectionheading>
     </template>
     <template #left>
-      <Box :loading="$fetchState.pending" loading-text="Récupération des actions en attente ...">
+      <Box :loading="loadingActions" loading-text="Récupération des actions en attente ...">
         <Heading as="h2" :level="3" class="mb-8">
           Vous avez {{ formattedActions.length }} action(s) en attente
         </Heading>
@@ -49,7 +49,7 @@
       <Box>Retour d'expérience des bénévoles</Box>
     </template>
     <template #right>
-      <Box padding="sm" :loading="$fetchState.pending" loading-text="Récupération de votre activité ...">
+      <Box padding="sm" :loading="loadingStatistics" loading-text="Récupération de votre activité ...">
         <Heading as="h2" :level="3" class="mb-8">
           Votre activité en chiffres
         </Heading>
@@ -133,6 +133,8 @@ export default {
   data () {
     return {
       statistics: null,
+      loadingActions: true,
+      loadingStatistics: true,
       links: [
         { icon: '🔎', title: 'Gérer les contenus', link: '#' },
         { icon: '📇', title: 'Détecter les organisations en double', link: '#' },
@@ -140,15 +142,15 @@ export default {
       ]
     }
   },
-  async fetch () {
-    const response = await this.$axios.get('/user/actions')
-    if (response.data) {
+  created () {
+    this.$axios.get('/user/actions').then((response) => {
+      this.loadingActions = false
       this.actions = response.data
-    }
-    const response2 = await this.$axios.get('/statistics')
-    if (response2.data) {
-      this.statistics = response2.data
-    }
+    })
+    this.$axios.get('/statistics').then((response) => {
+      this.loadingStatistics = false
+      this.statistics = response.data
+    })
   }
 }
 </script>
