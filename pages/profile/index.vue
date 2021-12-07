@@ -61,12 +61,22 @@
             </div>
             <template v-if="$store.state.auth.user.profile.disponibilities.length">
               <div class="flex flex-wrap gap-4">
-                <Badge v-for="item,i in $store.state.auth.user.profile.disponibilities" :key="i" color="white" size="sm">
+                <Badge v-for="item,i in $store.state.auth.user.profile.disponibilities" :key="i" color="gray-light" size="sm">
                   {{ $options.filters.label(
                     item,
                     'disponibilities'
                   ) }}
                 </Badge>
+                <template v-if="$store.state.auth.user.profile.commitment__duration">
+                  <Badge color="gray-light" size="sm">
+                    {{ $store.state.auth.user.profile.commitment__duration | label('disponibilities_duration') }}
+                    <template v-if="$store.state.auth.user.profile.commitment__time_period">
+                      par {{
+                        $store.state.auth.user.profile.commitment__time_period | label('disponibilities_time_period')
+                      }}
+                    </template>
+                  </Badge>
+                </template>
               </div>
             </template>
             <template v-else>
@@ -81,7 +91,7 @@
             </div>
             <template v-if="$store.state.auth.user.profile.skills.length">
               <div class="flex flex-wrap gap-4">
-                <Badge v-for="skill in $store.state.auth.user.profile.skills" :key="skill.id" color="white" size="sm">
+                <Badge v-for="skill in $store.state.auth.user.profile.skills" :key="skill.id" color="gray-light" size="sm">
                   {{ skill.name.fr }}
                 </Badge>
               </div>
