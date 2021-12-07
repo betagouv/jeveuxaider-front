@@ -75,8 +75,8 @@
       </div>
       <div class="flex space-x-6">
         <template v-if="$store.getters.isLogged">
-          <router-link to="/dashboard" class="hover:underline">
-            Tableau de bord
+          <router-link to="/profile" class="hover:underline">
+            Mon profil
           </router-link>
         </template>
         <template v-else>

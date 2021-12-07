@@ -17,6 +17,22 @@ export default {
   methods: {
     formatAction (action) {
       switch (action.type) {
+        case 'messages_unread':
+          return {
+            icon: '💬',
+            iconVariant: 'warning',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} message(s)</b> non lu(s)`,
+            subtitle: 'Vous avez de nouveaux messages en attente',
+            link: '/messagerie'
+          }
+        case 'profile_incomplete':
+          return {
+            icon: '✍',
+            iconVariant: 'warning',
+            title: 'Votre profil est <b>incomplet</b>',
+            subtitle: 'Pensez à mettre à jour votre profil pour attirer les organisations',
+            link: '/profile/edit'
+          }
         case 'organisations_waiting_validation':
           return {
             icon: '✊',

@@ -52,7 +52,7 @@
         </DropdownOptionsItem>
       </template>
       <DropdownOptionsItem @click.native="onClickOptionItem('push', '/profile')">
-        Mon compte
+        Mon profil
       </DropdownOptionsItem>
       <DropdownOptionsItem @click.native="onClickOptionItem('logout')">
         <span class="text-[#E2011C]">Se déconnecter</span>
@@ -94,7 +94,9 @@ export default {
         contextable_id: role.contextable_id ?? null
       })
 
-      if (this.$router.history.current.path === '/dashboard') {
+      if (role.key === 'volontaire') {
+        this.$router.push('/profile')
+      } else if (this.$router.history.current.path === '/dashboard') {
         window.location.reload(true)
       } else {
         this.$router.push('/dashboard')

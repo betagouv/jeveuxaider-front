@@ -15,7 +15,7 @@
       </Sectionheading>
     </template>
     <template #left>
-      <Box :loading="$fetchState.pending" loading-text="Récupération des actions en attente ...">
+      <Box :loading="loadingActions" loading-text="Récupération des actions en attente ...">
         <Heading as="h2" :level="3" class="mb-8">
           Vous avez {{ formattedActions.length }} action(s) en attente
         </Heading>
@@ -25,6 +25,7 @@
             :key="i"
             :icon="action.icon"
             :link="action.link"
+            :icon-variant="action.iconVariant"
           >
             <div class="text-gray-900 font-semibold" v-html="action.title" />
             <div v-if="action.subtitle" class="text-gray-500 text-sm" v-html="action.subtitle" />
@@ -35,7 +36,44 @@
       <Box>Mes missions</Box>
     </template>
     <template #right>
-      <Box>Mes infos ?</Box>
+      <Box v-if="$store.state.auth.user" padding="sm">
+        <div class="space-y-8">
+          <div class="">
+            <div class="text-sm font-medium text-gray-500 mb-4">
+              Domaines
+            </div>
+            <template v-if="$store.state.auth.user.profile.domaines.length">
+              <div class="flex flex-wrap gap-4">
+                <Badge v-for="domaine in $store.state.auth.user.profile.domaines" :key="domaine.id" :color="domaine.id" size="sm">
+                  {{ domaine.name.fr }}
+                </Badge>
+              </div>
+            </template>
+            <template v-else>
+              <div class="text-gray-400 font-semibold">
+                Vous n'avez pas renseigné de domaine
+              </div>
+            </template>
+          </div>
+          <div class="">
+            <div class="text-sm font-medium text-gray-500 mb-4">
+              Compétences
+            </div>
+            <template v-if="$store.state.auth.user.profile.skills.length">
+              <div class="flex flex-wrap gap-4">
+                <Badge v-for="skill in $store.state.auth.user.profile.skills" :key="skill.id" color="white" size="sm">
+                  {{ skill.name.fr }}
+                </Badge>
+              </div>
+            </template>
+            <template v-else>
+              <div class="text-gray-400 font-semibold">
+                Vous n'avez pas renseigné de compétence
+              </div>
+            </template>
+          </div>
+        </div>
+      </Box>
       <Box>MarketPlace UserCard teaser ?</Box>
       <Box>
         <Heading as="h2" :level="2" class="mb-8 font-extrabold">
@@ -74,6 +112,7 @@ export default {
   middleware: 'authenticated',
   data () {
     return {
+      loadingActions: true,
       links: [
         { icon: '🔎', title: 'Question 1', link: '#' },
         { icon: '📇', title: 'Question 2', link: '#' },
@@ -81,11 +120,11 @@ export default {
       ]
     }
   },
-  async fetch () {
-    const response = await this.$axios.get('/user/actions')
-    if (response.data) {
+  created () {
+    this.$axios.get('/user/actions').then((response) => {
+      this.loadingActions = false
       this.actions = response.data
-    }
+    })
   }
 }
 </script>
