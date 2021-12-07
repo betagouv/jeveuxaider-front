@@ -169,17 +169,13 @@
         { "key": "jours_feries", "label": "Pendant les jours fériés" },
         { "key": "vacances", "label": "Pendant les vacances" }
     ],
-    "disponibilities_duration": [
-        { "key": "1_hour", "label": "1 heure" },
-        { "key": "2_hours", "label": "2 heures" },
-        { "key": "half_day", "label": "Une demi-journée" },
-        { "key": "day", "label": "1 jour" },
-        { "key": "3_days", "label": "3 jours" },
-        { "key": "5_days", "label": "5 jours" }
-    ],
-    "disponibilities_time_period": [
-        { "key": "week", "label": "semaine" },
-        { "key": "month", "label": "mois" },
-        { "key": "year", "label": "an" }
+    "profile_type": [
+        { "key": "etudiant", "label": "Étudiant" },
+        { "key": "salarie", "label": "Salarié" },
+        { "key": "travailleur_independant", "label": "Travailleur Indépendant" },
+        { "key": "agent_fonction_publique", "label": "Agent de la Fonction Publique" },
+        { "key": "retraite", "label": "Retraité" },
+        { "key": "chomeur", "label": "Sans activité professionnelle" },
+        { "key": "autre", "label": "Autre" }
     ]
 }

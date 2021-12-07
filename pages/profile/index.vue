@@ -69,10 +69,10 @@
                 </Badge>
                 <template v-if="$store.state.auth.user.profile.commitment__duration">
                   <Badge color="gray-light" size="sm">
-                    {{ $store.state.auth.user.profile.commitment__duration | label('disponibilities_duration') }}
+                    {{ $store.state.auth.user.profile.commitment__duration | label('duration') }}
                     <template v-if="$store.state.auth.user.profile.commitment__time_period">
                       par {{
-                        $store.state.auth.user.profile.commitment__time_period | label('disponibilities_time_period')
+                        $store.state.auth.user.profile.commitment__time_period | label('time_period')
                       }}
                     </template>
                   </Badge>
@@ -107,7 +107,12 @@
           </Button>
         </div>
       </Box>
-      <Box>MarketPlace UserCard teaser ?</Box>
+      <Box v-if="$store.state.auth.user">
+        <CardProfile :profile="$store.state.auth.user.profile" class="mb-8" />
+        <Button variant="white" icon="PencilIcon" full size="lg" @click.native="$router.push('/profile/edit')">
+          Modifier mes préférences de visibilité
+        </Button>
+      </Box>
       <Box>
         <Heading as="h2" :level="2" class="mb-8 font-extrabold">
           Suivez le guide
@@ -134,11 +139,13 @@
 import MixinAction from '@/mixins/action'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
+import CardProfile from '@/components/card/CardProfile'
 
 export default {
   components: {
     HelpCenter,
-    LePetitMot
+    LePetitMot,
+    CardProfile
   },
   mixins: [MixinAction],
   layout: 'dashboard',
