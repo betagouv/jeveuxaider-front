@@ -94,9 +94,10 @@ export default {
         contextable_id: role.contextable_id ?? null
       })
 
-      this.$router.push('/dashboard')
       if (this.$router.history.current.path === '/dashboard') {
-        this.$router.app.refresh()
+        window.location.reload(true)
+      } else {
+        this.$router.push('/dashboard')
       }
     }
 

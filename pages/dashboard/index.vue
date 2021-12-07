@@ -129,7 +129,6 @@ export default {
   },
   mixins: [MixinAction],
   layout: 'dashboard',
-  middleware: 'authenticated',
   data () {
     return {
       statistics: null,

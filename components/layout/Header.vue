@@ -162,16 +162,25 @@
         </div>
       </transition>
     </div>
+    <client-only>
+      <portal to="body-end">
+        <transition name="fade">
+          <LazySearchOverlay v-if="$store.state.showSearchOverlay" />
+        </transition>
+      </portal>
+    </client-only>
   </header>
 </template>
 
 <script>
 import { CalendarIcon, SearchIcon, UserIcon } from '@vue-hero-icons/outline'
 import DropdownUser from '@/components/custom/DropdownUser'
+import LazySearchOverlay from '@/components/section/SearchOverlay'
 
 export default {
   components: {
-    DropdownUser
+    DropdownUser,
+    LazySearchOverlay
   },
   data () {
     return {
