@@ -36,6 +36,8 @@
       <Box>Mes missions</Box>
     </template>
     <template #right>
+      <CardProfile v-if="$store.state.auth.user" :profile="$store.state.auth.user.profile" />
+
       <Box v-if="$store.state.auth.user" padding="sm">
         <div class="space-y-8">
           <div class="">
@@ -107,12 +109,7 @@
           </Button>
         </div>
       </Box>
-      <Box v-if="$store.state.auth.user">
-        <CardProfile :profile="$store.state.auth.user.profile" class="mb-8" />
-        <Button variant="white" icon="PencilIcon" full size="lg" @click.native="$router.push('/profile/edit')">
-          Modifier mes préférences de visibilité
-        </Button>
-      </Box>
+
       <Box>
         <Heading as="h2" :level="2" class="mb-8 font-extrabold">
           Suivez le guide
