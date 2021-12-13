@@ -2,7 +2,7 @@
   <ul
     class=""
     :class="[
-      { 'divide-y border-t': divided }
+      { 'divide-y': divided }
     ]"
   >
     <slot />
@@ -19,7 +19,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

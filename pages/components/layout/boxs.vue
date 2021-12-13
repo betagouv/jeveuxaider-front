@@ -18,11 +18,17 @@
       </Box>
       <Box padding="sm">
         <Heading as="h3" :level="3" class="mb-8">
-          Padding Small
+          Small Padding
         </Heading>
         {{ lorem }}
       </Box>
-      <Box :padding="false" variant="flat">
+      <Box padding="xs">
+        <Heading as="h3" :level="3" class="mb-8">
+          Extra Small Padding
+        </Heading>
+        {{ lorem }}
+      </Box>
+      <Box :padding="false">
         <img
           src="/images/bg_header_mission.jpg"
           alt="Mission bénévolat"
@@ -31,6 +37,7 @@
           No Padding
         </Heading>
       </Box>
+      <Box loading />
     </div>
   </div>
 </template>

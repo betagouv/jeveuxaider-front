@@ -27,7 +27,7 @@ export default {
   },
   props: {
     loading: { type: Boolean, default: false },
-    loadingText: { type: String, default: 'Récupération des informations ...' },
+    loadingText: { type: String, default: 'Chargement en cours' },
     variant: {
       type: [String],
       default: 'shadow',

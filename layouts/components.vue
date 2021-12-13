@@ -16,19 +16,11 @@
                   Nuxjs 2 + Vue2 + TailwindCSS
                 </p>
               </div>
-              <div class="flex flex-col space-y-4 text-sm font-medium">
+              <div v-for="(menuCategory, key) in menu" :key="key" class="flex flex-col space-y-4 text-sm font-medium">
                 <div class="text-lg font-bold text-gray-700">
-                  Base components
+                  {{ menuCategory.category }}
                 </div>
-                <nuxt-link v-for="link in baseLinks" :key="link.name" :to="link.href" class="hover:text-jva-blue-700 text-gray-500 focus:outline-none focus:underline">
-                  {{ link.name }}
-                </nuxt-link>
-              </div>
-              <div class="flex flex-col space-y-4 text-sm font-medium">
-                <div class="text-lg font-bold text-gray-700">
-                  Advanced
-                </div>
-                <nuxt-link v-for="link in advancedLinks" :key="link.name" :to="link.href" class="hover:text-jva-blue-700 text-gray-500 focus:outline-none focus:underline">
+                <nuxt-link v-for="link in menuCategory.components" :key="link.name" :to="link.href" class="hover:text-jva-blue-700 text-gray-500 focus:outline-none focus:underline">
                   {{ link.name }}
                 </nuxt-link>
               </div>
@@ -47,19 +39,57 @@
 export default {
   data () {
     return {
-      baseLinks: [
-        { name: 'Texts', href: '/components/base/texts' },
-        { name: 'Boxs', href: '/components/base/boxs' },
-        { name: 'Buttons', href: '/components/base/buttons' },
-        { name: 'Colors', href: '/components/base/colors' },
-        { name: 'Inputs', href: '/components/base/inputs' },
-        { name: 'Selects', href: '/components/base/selects' },
-        { name: 'Tabs', href: '/components/base/tabs' },
-        { name: 'Others', href: '/components/base/others' }
-      ],
-      advancedLinks: [
-        { name: 'Forms', href: '/components/advanced/forms' },
-        { name: 'Cards', href: '/components/advanced/cards' }
+      menu: [
+        {
+          category: 'Theme',
+          components: [
+            { name: 'Texts', href: '/components/theme/texts' },
+            { name: 'Links', href: '/components/theme/links' },
+            { name: 'Colors', href: '/components/theme/colors' }
+          ]
+        },
+        {
+          category: 'Layouts',
+          components: [
+            { name: 'Boxs', href: '/components/layout/boxs' },
+            { name: 'Containers', href: '/components/layout/containers' }
+          ]
+        },
+        {
+          category: 'Forms',
+          components: [
+            { name: 'Buttons', href: '/components/forms/buttons' },
+            { name: 'Inputs', href: '/components/forms/inputs' },
+            { name: 'Selects', href: '/components/forms/selects' },
+            { name: 'Forms', href: '/components/forms/forms' }
+          ]
+        },
+        {
+          category: 'Data display',
+          components: [
+            { name: 'Badge', href: '/components/data-display/badge' },
+            { name: 'Card', href: '/components/data-display/card' },
+            { name: 'List', href: '/components/data-display/list' }
+          ]
+        },
+        {
+          category: 'Disclosure',
+          components: [
+            { name: 'Tabs', href: '/components/disclosure/tabs' }
+          ]
+        },
+        // {
+        //   category: 'Overlay',
+        //   components: [
+        //     { name: 'Cards', href: '/components/advanced/cards' }
+        //   ]
+        // },
+        {
+          category: 'Other',
+          components: [
+            { name: 'Others', href: '/components/base/others' }
+          ]
+        }
       ]
     }
   }
