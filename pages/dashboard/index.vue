@@ -95,7 +95,7 @@
         <Heading as="h2" :level="2" class="mb-8 font-extrabold">
           Suivez le guide
         </Heading>
-        <StackedList>
+        <StackedList class="border-t">
           <StackedListItem
             v-for="link,i in links"
             :key="i"
@@ -153,7 +153,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
