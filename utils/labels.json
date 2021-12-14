@@ -132,6 +132,13 @@
         {"key": "Structure privée", "label": "Organisation privée", "label2": "l'organisation privée"},
         {"key": "Autre", "label": "Autre", "label2": "l'organisation"}
     ],
+    "structure_workflow_states": [
+        {"key": "En attente de validation", "label": "En attente de validation"},
+        {"key": "En cours de traitement", "label": "En cours de traitement"},
+        {"key": "Validée", "label": "Validée"},
+        {"key": "Signalée", "label": "Signalée"},
+        {"key": "Désinscrite", "label": "Désinscrite"}
+    ],
     "time_period": [
         {"key": "week", "label": "semaine"},
         {"key": "month", "label": "mois"},

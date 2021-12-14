@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <div class="bg-gray-50 py-8">
+    <div v-if="!$store.getters.isLogged" class="bg-gray-50 py-8">
       <div class="container px-4 mx-auto">
         <div class="mx-auto max-w-6xl">
           <div class="grid lg:grid-cols-2 text-xs gap-8">

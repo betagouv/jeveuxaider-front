@@ -189,13 +189,26 @@ export default {
         { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
         { name: 'Publier une mission', href: '#', icon: CalendarIcon },
         { name: 'Devenir bénévole', href: '#', icon: UserIcon }
-      ],
-      secondNavigation: [
-        { name: 'Associations', href: '#' },
-        { name: 'Territoires', to: '/territoires' },
-        { name: 'Écoles et universités', href: '#' },
-        { name: 'Actualités', href: '#' },
-        { name: 'Centre d\'aide', href: '#' }
+      ]
+    }
+  },
+  computed: {
+    secondNavigation () {
+      if (!this.$store.getters.isLogged) {
+        return [
+          { name: 'Associations', href: '#' },
+          { name: 'Territoires', to: '/territoires' },
+          { name: 'Écoles et universités', href: '#' },
+          { name: 'Actualités', href: '#' },
+          { name: 'Centre d\'aide', href: '#' }
+        ]
+      }
+      return [
+        { name: 'Tableau de bord', to: '/dashboard' },
+        { name: 'Organisations', to: '/admin/organisations' },
+        { name: 'Missions', href: '#' },
+        { name: 'Utilisateurs', href: '#' },
+        { name: 'Liens utiles', href: '#' }
       ]
     }
   }

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="h-full">
     <Header />
-    <Nuxt />
+    <Nuxt :key="$route.fullPath" />
     <Footer />
     <client-only>
       <portal-target name="body-end" />

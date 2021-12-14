@@ -73,9 +73,11 @@ export default {
           ]
         },
         {
-          category: 'Disclosure',
+          category: 'Navigation',
           components: [
-            { name: 'Tabs', href: '/components/disclosure/tabs' }
+            { name: 'Breadcrumb', href: '/components/navigation/breadcrumb' },
+            { name: 'Pagination', href: '/components/navigation/pagination' },
+            { name: 'Tabs', href: '/components/navigation/tabs' }
           ]
         },
         // {

@@ -17,7 +17,9 @@ import {
   ExternalLinkIcon,
   ChevronDownIcon,
   ChevronRightIcon,
-  SwitchHorizontalIcon
+  SwitchHorizontalIcon,
+  ArrowNarrowLeftIcon,
+  ArrowNarrowRightIcon
 } from '@vue-hero-icons/outline'
 import { InformationCircleIcon, UsersIcon, HomeIcon } from '@vue-hero-icons/solid'
 
@@ -42,6 +44,8 @@ const components = {
   ChevronDownIcon,
   ChevronRightIcon,
   SwitchHorizontalIcon,
+  ArrowNarrowLeftIcon,
+  ArrowNarrowRightIcon,
   HomeIcon
 }
 
