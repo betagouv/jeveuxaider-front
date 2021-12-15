@@ -11,7 +11,6 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit ({ commit }, { store, req }) {
-    console.log('nuxtServerInit')
     if (this.$cookies.get('access-token')) {
       commit('auth/setAccessToken', this.$cookies.get('access-token'))
       await store.dispatch('auth/fetchUser')

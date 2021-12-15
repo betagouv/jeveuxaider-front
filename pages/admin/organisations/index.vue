@@ -79,7 +79,7 @@
 
       <div class="my-6">
         <div v-for="structure in queryResult.data" :key="structure.id">
-          <div class="flex justify-between font-gray-800 h-60">
+          <div class="flex justify-between font-gray-800">
             <div>{{ structure.id }} : {{ structure.name }}</div><div>{{ structure.rna }} {{ structure.city }}</div>
           </div>
         </div>

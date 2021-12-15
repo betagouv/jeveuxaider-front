@@ -90,10 +90,6 @@ export default {
       selectedOption: this.value ? this.options.find(item => item[this.attributeKey] === this.value) : null
     }
   },
-  mounted () {
-    console.log(this.$route.query['filter[statut_juridique]'])
-    console.log('mounted value', this.value)
-  },
   methods: {
     reset () {
       this.highlightIndex = null
