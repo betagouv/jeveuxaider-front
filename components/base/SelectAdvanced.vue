@@ -12,7 +12,7 @@
         :name="name"
         tabindex="0"
         class="cursor-pointer px-6 py-3 text-sm rounded-xl block w-full focus:outline-none border border-gray-200 focus:ring-1  bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500"
-        :class=" [{ 'border-jva-red-primary': error, 'pl-10': icon}]"
+        :class=" [{ 'border-jva-red-primary': error, 'pl-10': icon, 'bg-transparent': variant == 'transparent'}]"
         autocomplete="off"
         @keydown="onKeydown"
         @click="showOptions = !showOptions"
@@ -38,7 +38,7 @@
     </div>
     <div
       v-show="showOptions"
-      class="absolute w-full z-50 bg-white border border-gray-200 overflow-hidden rounded-xl shadow-md"
+      class="absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-1"
       @focusout="showOptions = false"
     >
       <ul
@@ -80,6 +80,7 @@ export default {
     options: { type: Array, default: () => [] },
     attributeKey: { type: String, default: 'key' },
     attributeLabel: { type: String, default: 'label' },
+    variant: { type: String, default: null }, // transparent
     clearable: { type: Boolean, default: false }
   },
   data () {
@@ -88,6 +89,10 @@ export default {
       highlightIndex: null,
       selectedOption: this.value ? this.options.find(item => item[this.attributeKey] === this.value) : null
     }
+  },
+  mounted () {
+    console.log(this.$route.query['filter[statut_juridique]'])
+    console.log('mounted value', this.value)
   },
   methods: {
     reset () {
@@ -100,7 +105,10 @@ export default {
       this.showOptions = false
     },
     handleClick (item) {
-      if (item) {
+      if (item && this.selectedOption && this.selectedOption[this.attributeKey] === item[this.attributeKey]) {
+        this.$emit('input', null)
+        this.selectedOption = null
+      } else if (item) {
         this.$emit('input', item[this.attributeKey])
         this.selectedOption = item
       }

@@ -6,17 +6,38 @@
       />
     </template>
     <template #sidebar>
-      <div>
+      <div class="flex flex-col gap-y-4">
         <div>
           <Input
-            name="lastname"
+            name="search"
             placeholder="Nom de l'organisation"
             icon="SearchIcon"
+            variant="transparent"
             :value="$route.query['filter[search]']"
             @input="changeFilter('filter[search]', $event)"
           />
+          <div class="text-xs text-gray-500 mt-1 px-2">
+            Rechercher aussi avec le <span class="font-semibold">Code postal, la Ville, l'Id, ou le Rna</span>
+          </div>
         </div>
-        <div>Statut juridique</div>
+        <SelectAdvanced
+          name="statut_juridique"
+          placeholder="Statut juridique"
+          :options="structure_legal_status"
+          :value="$route.query['filter[statut_juridique]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[statut_juridique]', $event)"
+        />
+        <SelectAdvanced
+          name="department"
+          placeholder="Département"
+          :options="departments"
+          :value="$route.query['filter[department]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[department]', $event)"
+        />
       </div>
     </template>
     <div>
@@ -75,6 +96,8 @@ export default {
   data () {
     return {
       structure_states: labels.structure_workflow_states,
+      structure_legal_status: labels.structure_legal_status,
+      departments: labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } }),
       queryResult: {}
     }
   },
@@ -91,7 +114,7 @@ export default {
     changeFilter (filterName, filterValue) {
       if (this.$route.query[filterName] && this.$route.query[filterName] === filterValue) {
         this.deleteFilter(filterName)
-      } else if (filterValue === '') {
+      } else if (filterValue === '' || filterValue === null) {
         this.deleteFilter(filterName)
       } else {
         this.$router.push({
