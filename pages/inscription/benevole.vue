@@ -7,14 +7,277 @@
         srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
         data-not-lazy
       >
-      <div class="pb-12 mt-12 px-4 relative w-full lg:inset-y-0 text-center z-10">
-        TODO
+      <div class="max-w-[1280px] mx-auto pb-12 mt-12 px-4 relative w-full lg:inset-y-0 z-10">
+        <div class="px-4 lg:px-8 lg:grid lg:grid-cols-12 lg:gap-8 pb-10">
+          <div class="lg:col-span-6">
+            <h1
+              class="mt-10 lg:mt-24 text-4xl tracking-tight leading-10 font-bold text-white sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl"
+            >
+              Devenez bénévole avec JeVeuxAider.gouv.fr
+            </h1>
+            <ul class="pt-6 lg:pt-14">
+              <li class="flex items-start">
+                <div class="flex-shrink-0">
+                  <svg
+                    class="h-6 w-6 text-jva-green-500"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <p class="ml-3 text-xl lg:text-2xl leading-6 text-white">
+                  Trouvez des missions en quelques clics
+                </p>
+              </li>
+              <li class="mt-6 flex items-start">
+                <div class="flex-shrink-0">
+                  <svg
+                    class="h-6 w-6 text-jva-green-500"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <p class="ml-3 text-xl lg:text-2xl leading-6 text-white">
+                  Devenez bénévole près de chez vous ou à distance
+                </p>
+              </li>
+              <li class="mt-6 flex items-start">
+                <div class="flex-shrink-0">
+                  <svg
+                    class="h-6 w-6 text-jva-green-500"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <p class="ml-3 text-xl lg:text-2xl leading-6 text-white">
+                  Faites vivre l'engagement de chacun pour tous&nbsp;!
+                </p>
+              </li>
+            </ul>
+
+            <p
+              class="pt-10 pb-16 lg:pb-0 leading-10 text-4xl font-medium text-white sm:mt-5 tracking-tight"
+            >
+              Plus de <b class="font-bold">300 000 bénévoles</b> <br>sont
+              déjà inscrits.
+            </p>
+          </div>
+          <div class="lg:col-span-6">
+            <div
+              class="max-w-2xl mx-auto lg:col-span-6 lg:px-0 lg:w-full"
+            >
+              <div class="rounded-lg shadow-xl">
+                <div
+                  class="bg-white px-6"
+                  :class="
+                    isLoadingFranceConnect ? 'rounded-lg' : 'rounded-t-lg'
+                  "
+                >
+                  <template v-if="isFranceConnectActive">
+                    <div class="pt-8">
+                      <h2
+                        class="mt-2 text-center text-3xl font-bold text-gray-900 leading-8 px-4"
+                      >
+                        Utilisez FranceConnect pour créer votre espace bénévole
+                      </h2>
+
+                      <div
+                        v-show="isLoadingFranceConnect"
+                        class="font-medium text-center p-4"
+                      >
+                        Inscription en cours avec FranceConnect...
+                      </div>
+
+                      <div v-show="!isLoadingFranceConnect">
+                        <div
+                          class="mt-4 sm:mx-auto sm:w-full sm:max-w-md text-left"
+                        >
+                          <div class="py-4 px-4 sm:px-10 text-center">
+                            <div class="relative text-gray-500">
+                              <FranceConnect
+                                is-dark
+                                @loading="isLoadingFranceConnect = $event"
+                              />
+                              <span class="block mt-4">OU</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <div class="py-6">
+                      <h2
+                        class="text-center text-3xl font-bold text-gray-900 leading-8 px-4"
+                      >
+                        Création de votre compte
+                      </h2>
+                    </div>
+                  </template>
+                </div>
+                <div
+                  v-show="!isLoadingFranceConnect"
+                  class="border-t-2 border-gray-100 rounded-b-lg pt-10 pb-2 px-4 sm:px-12 bg-gray-50"
+                >
+                  <template v-if="modeLight">
+                    <div class="pt-6 pb-16 text-center">
+                      <p>Quel élan de solidarité&nbsp;!</p>
+                      <p>
+                        Vous êtes actuellement très nombreux·ses à vouloir vous
+                        engager et notre plateforme rencontre des difficultés.
+                      </p>
+                      <p>
+                        Revenez dans quelques minutes pour vous inscrire. Nous
+                        avons plus que jamais besoin de vous&nbsp;!
+                      </p>
+                    </div>
+                  </template>
+                  <template v-else>
+                    <form id="inscription" class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2" @submit.prevent="onSubmit">
+                      <FormControl label="Prénom" html-for="first_name" required>
+                        <Input
+                          v-model="form.first_name"
+                          name="first_name"
+                          placeholder="Jean"
+                          :error="errors.first_name"
+                        />
+                      </FormControl>
+                      <FormControl label="Nom" html-for="last_name" required>
+                        <Input
+                          v-model="form.last_name"
+                          name="last_name"
+                          placeholder="Dupont"
+                          :error="errors.last_name"
+                        />
+                      </FormControl>
+                      <FormControl label="Email" html-for="email" required>
+                        <Input
+                          v-model="form.email"
+                          name="email"
+                          placeholder="jean.dupont@gmail.com"
+                          :error="errors.email"
+                        />
+                      </FormControl>
+                      <FormControl label="Code postal" html-for="zip" required>
+                        <Input
+                          v-model="form.zip"
+                          name="zip"
+                          placeholder="56000"
+                          :error="errors.zip"
+                        />
+                      </FormControl>
+                      <FormControl label="Téléphone mobile" html-for="mobile" required>
+                        <Input
+                          v-model="form.mobile"
+                          name="mobile"
+                          placeholder="0612345678"
+                          :error="errors.mobile"
+                        />
+                      </FormControl>
+                      <FormControl label="Date de naissance" html-for="birthday" required>
+                        <Input
+                          v-model="form.birthday"
+                          name="birthday"
+                          placeholder="14/07/1987"
+                          :error="errors.birthday"
+                        />
+                      </FormControl>
+                      <FormControl label="Mot de passe" html-for="password" required>
+                        <Input
+                          v-model="form.password"
+                          name="password"
+                          placeholder="Votre mot de passe"
+                          type="password"
+                          :error="errors.password"
+                        />
+                      </FormControl>
+                      <FormControl label="Confirmation" html-for="password_confirmation" required>
+                        <Input
+                          v-model="form.password_confirmation"
+                          name="password_confirmation"
+                          placeholder="Votre mot de passe"
+                          type="password"
+                          :error="errors.password_confirmation"
+                        />
+                      </FormControl>
+                    </form>
+
+                    <Button
+                      type="submit"
+                      size="xl"
+                      form="inscription"
+                      full
+                      :loading="loading"
+                      @click="onSubmit"
+                    >
+                      Je m'inscrit en tant que bénévole
+                    </Button>
+
+                    <div class="mt-6 mb-3 bg-gray-50">
+                      <p class="text-xs leading-5 text-gray-500 text-center">
+                        <span>En m'inscrivant j'accepte la</span>
+                        <nuxt-link
+                          to="/politique-de-confidentialite"
+                          target="_blank"
+                          class="font-medium text-gray-900 hover:underline"
+                        >
+                          politique de confidentialité
+                        </nuxt-link>
+                        <br>
+                        <span>et la</span>
+                        <nuxt-link
+                          to="/charte-reserve-civique"
+                          target="_blank"
+                          class="font-medium text-gray-900 hover:underline"
+                        >
+                          charte de JeVeuxAider.gouv.fr
+                        </nuxt-link>
+                        <br>
+                        <span>Déjà inscrit ? </span>
+                        <nuxt-link to="/login">
+                          <span
+                            class="text-xs leading-5 text-center font-medium text-gray-900 hover:underline"
+                          >
+                            Je me connecte
+                          </span>
+                        </nuxt-link>
+                      </p>
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="bg-gray-100">
       <div class="max-w-[1280px] mx-auto pt-14 pb-20 px-4 sm:px-6 lg:px-8">
         <h3
-          class="text-center leading-8 pb-8 text-gray-900 text-sm font-medium text-3xl tracking-tight px-4"
+          class="text-center leading-8 pb-8 text-gray-900 font-medium text-3xl tracking-tight px-4"
         >
           Plus de <b class="font-bold">7000 organisations</b> ont déjà rejoint
           JeVeuxAider.gouv.fr
@@ -180,11 +443,11 @@
 <script>
 import { string, object } from 'yup'
 import MixinForm from '@/mixins/form'
-// import FranceConnect from '@/components/custom/FranceConnect'
+import FranceConnect from '@/components/custom/FranceConnect'
 
 export default {
   components: {
-    // FranceConnect
+    FranceConnect
   },
   mixins: [MixinForm],
   middleware: 'guest',
@@ -227,6 +490,11 @@ export default {
     }
   },
   computed: {
+    modeLight () {
+      return this.$config.app.modeLight
+        ? JSON.parse(this.$config.app.modeLight)
+        : false
+    },
     isFranceConnectActive () {
       return !!this.$config.franceConnect
     }
@@ -237,7 +505,7 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(() => {
           this.loading = true
-          this.$store.dispatch('auth/login', this.form)
+          console.log('this.form', this.form)
         })
         .catch((errors) => {
           this.setErrors(errors)
