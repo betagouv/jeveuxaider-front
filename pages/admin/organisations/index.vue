@@ -67,7 +67,6 @@
       </div>
 
       <Pagination
-        class="pr-6"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
