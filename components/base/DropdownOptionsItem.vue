@@ -1,10 +1,10 @@
 <template>
   <div class="group flex justify-between items-center cursor-pointer p-4 hover:bg-gray-50" role="menuitem" tabindex="-1">
-    <div>
+    <div class="truncate mr-2">
       <div v-if="label" class="text-gray-500 uppercase text-xs">
         {{ label }}
       </div>
-      <div class="text-gray-900 text-sm">
+      <div class="text-gray-900 text-sm truncate">
         <slot />
       </div>
     </div>

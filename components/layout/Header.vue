@@ -60,20 +60,53 @@
         <DropdownUser v-if="$store.getters.isLogged" class="" />
       </nav>
     </div>
-    <div class="hidden lg:flex p-4 justify-between border-t text-sm text-gray-800">
+    <div class="hidden lg:flex px-4 justify-between border-t text-sm text-gray-800">
       <div class="flex space-x-8">
+        <Dropdown v-if="$store.getters.roles.length > 2" position="left">
+          <template #button>
+            <div class="flex items-center border-r pr-4 py-4 w-52 truncate">
+              <div class="truncate mr-auto">
+                {{ $store.getters.currentRole.label }}
+              </div>
+              <ChevronDownIcon class="h-3" />
+            </div>
+          </template>
+          <template #items>
+            <template v-if="$store.getters.roles" class="w-80">
+              <div class="w-80">
+                <DropdownOptionsItem
+                  v-for="role,index in $store.getters.roles"
+                  :key="index"
+                  :label="$options.filters.label(role.key, 'role', 'espace')"
+                  @click.native="switchRole(role)"
+                >
+                  <template v-if="role.key == 'referent'">
+                    {{ $options.filters.label(role.label, 'departments') }}
+                  </template>
+                  <template v-else>
+                    {{ role.label }}
+                  </template>
+                  <template #icon>
+                    <CheckIcon v-if="role.key == $store.getters.contextRole" class="h-5 text-jva-green-500 " />
+                    <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
+                  </template>
+                </DropdownOptionsItem>
+              </div>
+            </template>
+          </template>
+        </Dropdown>
         <NavItem
           v-for="link in secondNavigation"
           :key="link.name"
           :href="link.href"
           :to="link.to"
           :click="link.click"
-          class="hover:underline"
+          class="hover:underline py-4"
         >
           {{ link.name }}
         </NavItem>
       </div>
-      <div class="flex space-x-6">
+      <div class="flex space-x-6 py-4">
         <template v-if="$store.getters.isLogged">
           <router-link to="/profile" class="hover:underline">
             Mon profil
@@ -184,15 +217,23 @@ export default {
   },
   data () {
     return {
-      showMobileMenu: false,
-      navigation: [
-        { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-        { name: 'Publier une mission', href: '#', icon: CalendarIcon },
-        { name: 'Devenir bénévole', href: '#', icon: UserIcon }
-      ]
+      showMobileMenu: false
     }
   },
   computed: {
+    navigation () {
+      if (!this.$store.getters.isLogged) {
+        return [
+          { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
+          { name: 'Publier une mission', href: '#', icon: CalendarIcon },
+          { name: 'Devenir bénévole', href: '#', icon: UserIcon }
+        ]
+      }
+      return [
+        { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
+        { name: 'Publier une mission', href: '#', icon: CalendarIcon }
+      ]
+    },
     secondNavigation () {
       if (!this.$store.getters.isLogged) {
         return [
@@ -202,14 +243,41 @@ export default {
           { name: 'Actualités', href: '#' },
           { name: 'Centre d\'aide', href: '#' }
         ]
+      } else if (this.$store.getters.currentRole.key === 'admin') {
+        return [
+          { name: 'Tableau de bord', to: '/dashboard' },
+          { name: 'Organisations', to: '/admin/organisations' },
+          { name: 'Missions', href: '#' },
+          { name: 'Utilisateurs', href: '#' },
+          { name: 'Liens utiles', href: '#' }
+        ]
+      } else if (this.$store.getters.currentRole.key === 'responsable') {
+        return [
+          { name: 'Tableau de bord', to: '/dashboard' },
+          { name: 'Missions', href: '#' },
+          { name: 'Participations', href: '#' },
+          { name: 'Liens utiles', href: '#' }
+        ]
       }
       return [
-        { name: 'Tableau de bord', to: '/dashboard' },
-        { name: 'Organisations', to: '/admin/organisations' },
-        { name: 'Missions', href: '#' },
-        { name: 'Utilisateurs', href: '#' },
-        { name: 'Liens utiles', href: '#' }
       ]
+    }
+  },
+  methods: {
+    async switchRole (role) {
+      await this.$store.dispatch('auth/updateUser', {
+        context_role: role.key,
+        contextable_type: role.contextable_type ?? null,
+        contextable_id: role.contextable_id ?? null
+      })
+
+      if (role.key === 'volontaire') {
+        this.$router.push('/profile')
+      } else if (this.$router.history.current.path === '/dashboard') {
+        window.location.reload(true)
+      } else {
+        this.$router.push('/dashboard')
+      }
     }
   }
 }
