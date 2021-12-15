@@ -111,7 +111,7 @@
               </div>
 
               <div class="mt-6">
-                <Button size="xl" variant="white" full @click="$router.push('/register/volontaire')">
+                <Button size="xl" variant="white" full @click.native="$router.push('/register/benevole')">
                   Créez votre espace bénévole
                 </Button>
               </div>
