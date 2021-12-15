@@ -62,7 +62,7 @@
     </div>
     <div class="hidden lg:flex px-4 justify-between border-t text-sm text-gray-800">
       <div class="flex space-x-8">
-        <Dropdown v-if="$store.getters.roles.length > 2" position="left">
+        <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 2" position="left">
           <template #button>
             <div class="flex items-center border-r pr-4 py-4 w-52 truncate">
               <div class="truncate mr-auto">
