@@ -6,7 +6,7 @@
       />
     </template>
     <template #sidebar>
-      <div class="flex flex-col gap-y-4">
+      <div class="flex flex-col gap-y-4 sticky top-8">
         <div>
           <Input
             name="search"
@@ -44,7 +44,7 @@
       <Heading as="h1" :level="1">
         {{ queryResult.total }} organisations
       </Heading>
-      <div class="flex gap-x-4 mt-6 text-sm">
+      <div class="hidden lg:flex gap-x-4 mt-6 text-sm">
         <button :class="['px-4 py-1', !$route.query['filter[state]'] ? 'shadow bg-white rounded-full text-gray-900 font-semibold' : 'text-gray-500 font-medium']" @click="deleteFilter('filter[state]')">
           Toutes
         </button>
@@ -60,7 +60,7 @@
 
       <div class="my-6">
         <div v-for="structure in queryResult.data" :key="structure.id">
-          <div class="flex justify-between font-gray-800">
+          <div class="flex justify-between font-gray-800 h-60">
             <div>{{ structure.id }} : {{ structure.name }}</div><div>{{ structure.rna }} {{ structure.city }}</div>
           </div>
         </div>
@@ -80,8 +80,6 @@
 import labels from '@/utils/labels.json'
 
 export default {
-  components: {
-  },
   layout: 'dashboard',
   asyncData ({ store, error }) {
     if (
@@ -105,6 +103,7 @@ export default {
       params: this.$route.query
     })
     this.queryResult = data
+    window.scrollTo(0, 0)
   },
   watch: {
     $route: '$fetch'
