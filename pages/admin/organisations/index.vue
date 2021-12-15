@@ -97,8 +97,10 @@
 
 <script>
 import labels from '@/utils/labels.json'
+import QueryBuilder from '@/mixins/query-builder'
 
 export default {
+  mixins: [QueryBuilder],
   layout: 'dashboard',
   asyncData ({ store, error }) {
     if (
@@ -111,46 +113,10 @@ export default {
   },
   data () {
     return {
+      endpoint: '/structures',
       structure_states: labels.structure_workflow_states,
       structure_legal_status: labels.structure_legal_status,
-      departments: labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } }),
-      queryResult: {}
-    }
-  },
-  async fetch () {
-    const { data } = await this.$axios.get('/structures', {
-      params: this.$route.query
-    })
-    this.queryResult = data
-    window.scrollTo(0, 0)
-  },
-  watch: {
-    $route: '$fetch'
-  },
-  methods: {
-    changeFilter (filterName, filterValue) {
-      if (this.$route.query[filterName] && this.$route.query[filterName] === filterValue) {
-        this.deleteFilter(filterName)
-      } else if (filterValue === '' || filterValue === null) {
-        this.deleteFilter(filterName)
-      } else {
-        this.$router.push({
-          path: this.$route.path,
-          query: { ...this.$route.query, [filterName]: filterValue, page: undefined }
-        })
-      }
-    },
-    deleteFilter (filterName) {
-      this.$router.push({
-        path: this.$route.path,
-        query: { ...this.$route.query, [filterName]: undefined, page: undefined }
-      })
-    },
-    changePage (page) {
-      this.$router.push({
-        path: this.$route.path,
-        query: { ...this.$route.query, page }
-      })
+      departments: labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })
     }
   }
 }
