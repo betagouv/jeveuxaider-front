@@ -17,7 +17,7 @@
             @input="changeFilter('filter[search]', $event)"
           />
           <div class="text-xs text-gray-500 mt-1 px-2">
-            Rechercher aussi avec le <span class="font-semibold">Code postal, la Ville, l'Id, ou le Rna</span>
+            Rechercher avec le <span class="font-semibold">Code postal, la Ville, l'Id, ou le Rna</span>
           </div>
         </div>
         <SelectAdvanced

@@ -9,7 +9,7 @@
               <slot />
             </div>
           </main>
-          <aside class="hidden relative xl:flex xl:flex-col flex-shrink-0 w-96 border-l border-gray-200 overflow-y-auto py-16 px-4">
+          <aside class="hidden relative xl:flex xl:flex-col flex-shrink-0 w-96 border-l border-gray-200 overflow-y-auto py-16 px-8">
             <slot name="sidebar" />
           </aside>
         </div>
