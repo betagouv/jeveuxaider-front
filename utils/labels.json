@@ -184,5 +184,14 @@
         { "key": "retraite", "label": "Retraité" },
         { "key": "chomeur", "label": "Sans activité professionnelle" },
         { "key": "autre", "label": "Autre" }
+    ],
+    "mission_workflow_states": [
+        { "key": "Brouillon", "label": "Brouillon" },
+        { "key": "En attente de validation", "label": "En attente de validation" },
+        { "key": "En cours de traitement", "label": "En cours de traitement" },
+        { "key": "Validée", "label": "Validée" },
+        { "key": "Terminée", "label": "Terminée" },
+        { "key": "Signalée", "label": "Signalée" },
+        { "key": "Annulée", "label": "Annulée" }
     ]
 }

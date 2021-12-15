@@ -11,6 +11,7 @@ export default {
     this.queryResult = data
     window.scrollTo(0, 0)
   },
+  fetchOnServer: false,
   watch: {
     $route: '$fetch'
   },

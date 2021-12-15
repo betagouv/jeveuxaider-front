@@ -247,14 +247,14 @@ export default {
         return [
           { name: 'Tableau de bord', to: '/dashboard' },
           { name: 'Organisations', to: '/admin/organisations' },
-          { name: 'Missions', href: '/admin/missions' },
+          { name: 'Missions', to: '/admin/missions' },
           { name: 'Utilisateurs', href: '#' },
           { name: 'Liens utiles', href: '#' }
         ]
       } else if (this.$store.getters.currentRole.key === 'responsable') {
         return [
           { name: 'Tableau de bord', to: '/dashboard' },
-          { name: 'Missions', href: '/admin/missions' },
+          { name: 'Missions', to: '/admin/missions' },
           { name: 'Participations', href: '#' },
           { name: 'Liens utiles', href: '#' }
         ]
