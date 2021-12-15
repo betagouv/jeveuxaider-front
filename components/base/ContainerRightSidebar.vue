@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="relative flex">
-      <main>
+      <main class="w-full">
         <slot name="breadcrumb" />
         <div class="py-6 xl:pr-6">
           <slot />

@@ -57,6 +57,25 @@
           {{ option.label }}
         </button>
       </div>
+      <div class="lg:hidden mt-4 gap-y-4 flex flex-col">
+        <Input
+          name="search"
+          placeholder="Nom de l'organisation"
+          icon="SearchIcon"
+          variant="transparent"
+          :value="$route.query['filter[search]']"
+          @input="changeFilter('filter[search]', $event)"
+        />
+        <SelectAdvanced
+          name="state"
+          placeholder="Statut de l'organisation"
+          :options="structure_states"
+          :value="$route.query['filter[state]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[state]', $event)"
+        />
+      </div>
 
       <div class="my-6">
         <div v-for="structure in queryResult.data" :key="structure.id">
