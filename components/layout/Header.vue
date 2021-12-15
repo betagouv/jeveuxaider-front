@@ -80,7 +80,7 @@
           </router-link>
         </template>
         <template v-else>
-          <router-link to="/register" class="hover:underline">
+          <router-link to="/inscription" class="hover:underline">
             Inscription
           </router-link>
           <router-link to="/login" class="hover:underline">
