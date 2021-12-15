@@ -18,7 +18,6 @@
 export default {
   methods: {
     onClick () {
-      console.log('onClick')
       window.open('https://reserve-civique.crisp.help/fr/', '_blank')
     }
   }
