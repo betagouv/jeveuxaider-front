@@ -53,12 +53,17 @@
           {{ option.label }}
         </button>
       </div>
-      <div class="my-6">
-        <div v-for="mission in queryResult.data" :key="mission.id">
+      <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <CardMission
+          v-for="mission in queryResult.data"
+          :key="mission.id"
+          :mission="mission"
+        />
+        <!-- <div v-for="mission in queryResult.data" :key="mission.id">
           <div class="flex justify-between font-gray-800">
             <div>{{ mission.id }} : {{ mission.name }}</div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <Pagination
@@ -74,8 +79,12 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import labels from '@/utils/labels.json'
+import CardMission from '@/components/card/CardMission.vue'
 
 export default {
+  components: {
+    CardMission
+  },
   mixins: [QueryBuilder],
   layout: 'dashboard',
   asyncData ({ store, error }) {
