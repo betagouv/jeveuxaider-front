@@ -26,11 +26,21 @@
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
         <div class="mb-8 text-md text-gray-500">
-          Renseignez ces éléments pour informer les organisations de vos disponibilités. Cela ne vous engage en rien. [@TODO message rassurant]
+          Un profil visible vous offre plus de chances de trouver une mission qui répond à votre envie d'engagement, en permettant à une organisation publique ou associative de vous contacter en fonction des domaines d'action que vous avez sélectionnés.
         </div>
 
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
-          <FormControl label="Disponibilités" html-for="disponibilities" required>
+          <FormControl label="Souhaitez-vous être visible des organisations ? @TODO toggle component" html-for="is_visible">
+            <SelectAdvanced
+              v-model="form.is_visible"
+              name="is_visible"
+              :options="[
+                { key: true, label: 'Oui, je souhaite être visibile'},
+                { key: false, label: 'Non, je ne souhaite pas être visible'},
+              ]"
+            />
+          </FormControl>
+          <FormControl label="Sélectionnez vos disponibilités" html-for="disponibilities" required>
             <CheckboxGroup
               v-model="form.disponibilities"
               name="disponibilities"
@@ -41,7 +51,7 @@
           </FormControl>
           <div>
             <FormLabel html-for="frequence" required>
-              Fréquence
+              À quelle fréquence souhaitez-vous vous engager ?
             </FormLabel>
             <div class="flex flex-col lg:flex-row gap-2 lg:gap-8 lg:items-center lg:justify-center">
               <SelectAdvanced
@@ -84,27 +94,13 @@
 
 <script>
 import { string, object, array } from 'yup'
+import _ from 'lodash'
 import MixinForm from '@/mixins/form'
 import labels from '@/utils/labels.json'
 
 export default {
   mixins: [MixinForm],
   layout: 'register-steps',
-  asyncData ({ store }) {
-    return {
-      disponibilities_options: labels.disponibilities,
-      time_period_options: labels.time_period,
-      duration_options: labels.duration,
-      form: {
-        ...store.getters.profile,
-        disponibilities: store.getters.profile.disponibilities
-          ? store.getters.profile.disponibilities
-          : ['flexible', 'jours_feries', 'weekend', 'vacances'],
-        commitment__duration: store.getters.profile && store.getters.profile.commitment__duration ? store.getters.profile.commitment__duration : '2_hours',
-        commitment__time_period: store.getters.profile && store.getters.profile.commitment__time_period ? store.getters.profile.commitment__time_period : 'year'
-      }
-    }
-  },
   data () {
     return {
       loading: false,
@@ -130,6 +126,10 @@ export default {
           status: 'upcoming'
         }
       ],
+      disponibilities_options: labels.disponibilities,
+      time_period_options: labels.time_period,
+      duration_options: labels.duration,
+      form: _.cloneDeep(this.$store.getters.profile),
       formSchema: object({
         type: string().nullable().required(),
         mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
@@ -138,21 +138,30 @@ export default {
       })
     }
   },
+  created () {
+    if (!this.$store.getters.profile.disponibilities) {
+      this.form.disponibilities = ['flexible', 'jours_feries', 'weekend', 'vacances']
+    }
+    if (!this.$store.getters.profile.commitment__duration) {
+      this.form.commitment__duration = '2_hours'
+    }
+    if (!this.$store.getters.profile.commitment__time_period) {
+      this.form.commitment__time_period = 'year'
+    }
+  },
   methods: {
     onSubmit () {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           this.loading = true
-          console.log('this.form', this.form)
-
           await this.$store.dispatch('auth/updateProfile', {
             id: this.$store.getters.profile.id,
             ...this.form
           })
           window.plausible &&
-            window.plausible('Inscription bénévole - Étape 2 - Profil')
-          this.$router.push('/inscription/benevoles/step/preferences')
+            window.plausible('Inscription bénévole - Étape 3 - Préférences')
+          this.$router.push('/inscription/benevoles/step/competences')
         })
         .catch((errors) => {
           this.setErrors(errors)

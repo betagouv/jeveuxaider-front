@@ -91,6 +91,7 @@
 
 <script>
 import { string, object, array } from 'yup'
+import _ from 'lodash'
 import MixinForm from '@/mixins/form'
 import labels from '@/utils/labels.json'
 
@@ -121,12 +122,12 @@ export default {
       ],
       profile_type_options: labels.profile_type,
       domaines_options: labels.domaines,
-      form: { ...this.$store.state.auth.user.profile },
+      form: _.cloneDeep(this.$store.state.auth.user.profile),
       formSchema: object({
         type: string().nullable().required(),
         mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
         phone: string().nullable().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').transform(v => v === '' ? null : v),
-        domainess: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action')
+        domaines: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action')
       })
     }
   },
