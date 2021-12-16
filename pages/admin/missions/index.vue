@@ -1,5 +1,13 @@
 <template>
   <ContainerRightSidebar>
+    <Drawer :is-open="Boolean(drawerMissionId)" @close="drawerMissionId = null">
+      <template #title>
+        <h2 id="slide-over-title" class="text-lg font-medium text-gray-900">
+          Panel title
+        </h2>
+      </template>
+      <DrawerMission :mission-id="drawerMissionId" />
+    </Drawer>
     <template #breadcrumb>
       <Breadcrumb
         :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Missions' }]"
@@ -57,7 +65,9 @@
         <CardMission
           v-for="mission in queryResult.data"
           :key="mission.id"
+          class="cursor-pointer"
           :mission="mission"
+          @click.native="drawerMissionId = mission.id"
         />
         <!-- <div v-for="mission in queryResult.data" :key="mission.id">
           <div class="flex justify-between font-gray-800">
@@ -80,10 +90,12 @@
 import QueryBuilder from '@/mixins/query-builder'
 import labels from '@/utils/labels.json'
 import CardMission from '@/components/card/CardMission.vue'
+import DrawerMission from '@/components/drawer/DrawerMission.vue'
 
 export default {
   components: {
-    CardMission
+    CardMission,
+    DrawerMission
   },
   mixins: [QueryBuilder],
   layout: 'dashboard',
@@ -99,7 +111,8 @@ export default {
   data () {
     return {
       endpoint: '/missions',
-      mission_states: labels.mission_workflow_states
+      mission_states: labels.mission_workflow_states,
+      drawerMissionId: null
     }
   }
 
