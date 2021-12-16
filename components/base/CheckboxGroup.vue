@@ -46,7 +46,6 @@ export default {
       }
     }
   },
-
   methods: {
     onChange (toggleItemKey) {
       if (this.modelValue.includes(toggleItemKey)) {

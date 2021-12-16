@@ -97,19 +97,9 @@ import labels from '@/utils/labels.json'
 export default {
   mixins: [MixinForm],
   layout: 'register-steps',
-  asyncData ({ store }) {
-    const form = { ...store.state.auth.user.profile }
-    return {
-      profile_type_options: labels.profile_type,
-      domaines_options: labels.domaines,
-      form
-    }
-  },
   data () {
     return {
       loading: false,
-      model: 'profile',
-      avatar: null,
       steps: [
         {
           name: 'Rejoignez le mouvement',
@@ -129,7 +119,9 @@ export default {
           status: 'upcoming'
         }
       ],
-      // form: { ...this.$store.state.auth.user.profile },
+      profile_type_options: labels.profile_type,
+      domaines_options: labels.domaines,
+      form: { ...this.$store.state.auth.user.profile },
       formSchema: object({
         type: string().nullable().required(),
         mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
