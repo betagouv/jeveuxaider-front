@@ -91,7 +91,7 @@ export default {
       this.$emit('input', null)
     },
     handleBlur () {
-      if (this.inputValue) {
+      if (this.inputValue !== null) {
         this.$emit('blur')
       }
     }

@@ -15,64 +15,57 @@
 
     <div class="mb-6 lg:mb-12 text-center text-white">
       <h1 class="text-4xl lg:text-5xl font-medium leading-12 mb-4">
-        Bienvenue
-        <span class="font-bold">{{ $store.getters.profile.first_name }}</span> !
+        <span class="font-bold">{{ $store.getters.profile.first_name }}</span>, faisons connaissance
       </h1>
-      <div class="text-lg font-medium">
-        Nous sommes ravis de vous compter parmi nos bénévoles.
-      </div>
     </div>
     <div class="max-w-xl mx-auto">
       <div
-        class="px-8 pt-6 pb-20 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
+        class="px-8 pt-6 pb-6 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
       >
-        Complétez votre profil
+        Sélectionnez vos disponibilités
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
+        <div class="mb-8 text-md text-gray-500">
+          Renseignez ces éléments pour informer les organisations de vos disponibilités. Cela ne vous engage en rien. [@TODO message rassurant]
+        </div>
+
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
-          <div class="bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: avatar upload
-          </div>
-          <FormControl label="Profession" html-for="type" required>
-            <SelectAdvanced
-              v-model="form.type"
-              name="type"
-              placeholder="Sélectionnez votre profession"
-              :options="profile_type_options"
-              :error="errors.type"
-              @blur="validate('type')"
-            />
-          </FormControl>
-          <FormControl label="Téléphone mobile" html-for="mobile" required>
-            <Input
-              v-model="form.mobile"
-              name="mobile"
-              placeholder="0612345678"
-              :error="errors.mobile"
-              @blur="validate('mobile')"
-            />
-          </FormControl>
-          <FormControl label="Téléphone fixe" html-for="phone">
-            <Input
-              v-model="form.phone"
-              name="phone"
-              placeholder="0123456789"
-              :error="errors.phone"
-              @blur="validate('phone')"
-            />
-          </FormControl>
-          <FormControl label="Choisissez vos domaines de prédilection" html-for="domaines" required>
+          <FormControl label="Disponibilités" html-for="disponibilities" required>
             <CheckboxGroup
-              v-model="form.domaines"
-              name="domaines"
+              v-model="form.disponibilities"
+              name="disponibilities"
               variant="button"
-              :options="domaines_options"
-              :error="errors.domaines"
+              :options="disponibilities_options"
+              :error="errors.disponibilities"
             />
           </FormControl>
-          <FormControl label="Décrivez vos motivations" html-for="description">
-            <Textarea v-model="form.description" name="description" placeholder="Vos motivations en quelques mots..." />
-          </FormControl>
+          <div>
+            <FormLabel html-for="frequence" required>
+              Fréquence
+            </FormLabel>
+            <div class="flex flex-col lg:flex-row gap-2 lg:gap-8 lg:items-center lg:justify-center">
+              <SelectAdvanced
+                v-model="form.commitment__duration"
+                class="lg:w-1/2"
+                name="commitment__duration"
+                placeholder="Sélectionnez une durée"
+                :options="duration_options"
+                :error="errors.commitment__duration"
+              />
+              <div class="flex-none text-sm">
+                par
+              </div>
+              <SelectAdvanced
+                v-model="form.commitment__time_period"
+                class="lg:w-1/2"
+                name="commitment__time_period"
+                placeholder="Sélectionnez une durée"
+                :options="time_period_options"
+                :error="errors.commitment__time_period"
+              />
+            </div>
+          </div>
+
           <Button
             type="submit"
             size="xl"
@@ -98,11 +91,18 @@ export default {
   mixins: [MixinForm],
   layout: 'register-steps',
   asyncData ({ store }) {
-    const form = { ...store.state.auth.user.profile }
     return {
-      profile_type_options: labels.profile_type,
-      domaines_options: labels.domaines,
-      form
+      disponibilities_options: labels.disponibilities,
+      time_period_options: labels.time_period,
+      duration_options: labels.duration,
+      form: {
+        ...store.getters.profile,
+        disponibilities: store.getters.profile.disponibilities
+          ? store.getters.profile.disponibilities
+          : ['flexible', 'jours_feries', 'weekend', 'vacances'],
+        commitment__duration: store.getters.profile && store.getters.profile.commitment__duration ? store.getters.profile.commitment__duration : '2_hours',
+        commitment__time_period: store.getters.profile && store.getters.profile.commitment__time_period ? store.getters.profile.commitment__time_period : 'year'
+      }
     }
   },
   data () {
@@ -118,23 +118,23 @@ export default {
         },
         {
           name: 'Votre profil',
-          status: 'current'
+          status: 'complete',
+          href: '/inscription/benevole/step/profile'
         },
         {
           name: 'Vos disponibilités',
-          status: 'upcoming'
+          status: 'current'
         },
         {
           name: 'Vos compétences',
           status: 'upcoming'
         }
       ],
-      // form: { ...this.$store.state.auth.user.profile },
       formSchema: object({
         type: string().nullable().required(),
         mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
         phone: string().nullable().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').transform(v => v === '' ? null : v),
-        domainess: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action')
+        disponibilities: array().min(1, 'Merci de sélectionner au moins 1 disponibilité')
       })
     }
   },
@@ -145,13 +145,14 @@ export default {
         .then(async () => {
           this.loading = true
           console.log('this.form', this.form)
+
           await this.$store.dispatch('auth/updateProfile', {
             id: this.$store.getters.profile.id,
             ...this.form
           })
           window.plausible &&
             window.plausible('Inscription bénévole - Étape 2 - Profil')
-          this.$router.push('/inscription/benevole/step/disponibilites')
+          this.$router.push('/inscription/benevoles/step/preferences')
         })
         .catch((errors) => {
           this.setErrors(errors)

@@ -516,7 +516,6 @@ export default {
   methods: {
     onSubmit () {
       console.log('this.form', this.form)
-
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {

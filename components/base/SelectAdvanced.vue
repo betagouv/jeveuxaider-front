@@ -111,6 +111,7 @@ export default {
         this.$emit('input', item[this.attributeKey])
         this.selectedOption = item
       }
+      this.$emit('blur')
       this.showOptions = false
       this.highlightIndex = null
     },
