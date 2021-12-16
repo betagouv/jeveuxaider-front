@@ -77,7 +77,8 @@ export default {
           components: [
             { name: 'Breadcrumb', href: '/components/navigation/breadcrumb' },
             { name: 'Pagination', href: '/components/navigation/pagination' },
-            { name: 'Tabs', href: '/components/navigation/tabs' }
+            { name: 'Tabs', href: '/components/navigation/tabs' },
+            { name: 'Steps', href: '/components/navigation/steps' }
           ]
         },
         // {

@@ -12,7 +12,7 @@
         :name="name"
         tabindex="0"
         class="cursor-pointer px-6 py-3 text-sm rounded-xl block w-full focus:outline-none border border-gray-200 focus:ring-1  bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500"
-        :class=" [{ 'border-jva-red-primary': error, 'pl-10': icon, 'bg-transparent': variant == 'transparent'}]"
+        :class=" [{ 'pl-10': icon, 'bg-transparent': variant == 'transparent'}]"
         autocomplete="off"
         @keydown="onKeydown"
         @click="showOptions = !showOptions"
@@ -63,6 +63,9 @@
           {{ labelEmpty }}
         </li>
       </ul>
+    </div>
+    <div v-if="error" class="text-xs text-red-500 mt-1">
+      {{ error }}
     </div>
   </div>
 </template>

@@ -48,7 +48,7 @@
                   </p>
                   <nuxt-link
                     v-if="!$store.getters.isLogged"
-                    to="/register/volontaire"
+                    to="/inscription"
                     :class="$options.filters.label(thematique.domaine_id, 'domaines', 'color')"
                     class="shadow-lg w-full flex items-center justify-center px-10 py-3 text-base mb-4 font-medium rounded-full bg-white hover:bg-white !outline-none focus:ring transition md:py-4 md:text-lg md:px-15"
                   >
