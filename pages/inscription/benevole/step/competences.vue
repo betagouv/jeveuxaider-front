@@ -27,9 +27,49 @@
         Renseignez vos compétences
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
+        <div class="mb-8 text-md text-gray-500">
+          Enrichissez votre profil avec les compétences que vous souhaitez mettre au service des organisations publiques ou associatives.
+        </div>
+
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
-          @TODO
+          <FormControl label="Renseignez vos compétences" html-for="algolia-search">
+            <AlgoliaSkillsInput
+              :items="form.skills"
+              @add-item="handleSelectItems"
+            />
+          </FormControl>
         </form>
+
+        <div v-if="form.skills.length" class="mt-6">
+          <div class="flex flex-wrap gap-2">
+            <div
+              v-for="item in form.skills"
+              :key="item.id"
+              class="flex items-center space-x-4 px-4 py-3 rounded-lg border border-jva-blue-500 bg-white"
+            >
+              <div class="flex-none text-sm text-jva-blue-500 font-bold">
+                {{ item.name.fr }}
+              </div>
+              <XIcon
+                class="flex-none cursor-pointer w-4 h-4 text-jva-blue-500 hover:text-jva-blue-400"
+                @click="handleRemoveSkill(item.id)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <Button
+          class="mt-8"
+          type="submit"
+          size="xl"
+          form="inscription"
+          variant="green"
+          full
+          :loading="loading"
+          @click="onSubmit"
+        >
+          Terminer
+        </Button>
       </div>
     </div>
   </div>
@@ -38,8 +78,12 @@
 <script>
 import _ from 'lodash'
 import MixinForm from '@/mixins/form'
+import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 
 export default {
+  components: {
+    AlgoliaSkillsInput
+  },
   mixins: [MixinForm],
   layout: 'register-steps',
   data () {
@@ -70,6 +114,12 @@ export default {
     }
   },
   methods: {
+    handleSelectItems (item) {
+      this.$set(this.form, 'skills', [...this.form.skills, item])
+    },
+    handleRemoveSkill (id) {
+      this.form.skills = this.form.skills.filter(item => item.id !== id)
+    },
     async onSubmit () {
       this.loading = true
       await this.$store.dispatch('user/updateProfile', {
