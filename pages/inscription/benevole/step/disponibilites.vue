@@ -161,7 +161,7 @@ export default {
           })
           window.plausible &&
             window.plausible('Inscription bénévole - Étape 3 - Préférences')
-          this.$router.push('/inscription/benevoles/step/competences')
+          this.$router.push('/inscription/benevole/step/competences')
         })
         .catch((errors) => {
           this.setErrors(errors)
