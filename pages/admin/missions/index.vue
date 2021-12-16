@@ -8,10 +8,13 @@
     <template #sidebar>
       <div class="flex flex-col gap-y-4 sticky top-8">
         <div>
-          Types de mission<br>
-          domaines d'action<br>
-          Proposé aux, il faudrait le laisser pour les référents (ça servira lorsque le lien avec le SNU sera effectif<br>
+          Département<br>
+          Domaine d’action<br>
+          Type de mission<br>
+          Statut<br>
           Places restantes<br>
+          Proposé aux<br>
+          Missions prioritaires (facultatif)<br>
         </div>
         <!-- <SelectAdvanced
           name="statut_juridique"
@@ -37,7 +40,7 @@
       <Heading as="h1" :level="1">
         {{ queryResult.total }} missions
       </Heading>
-      <div class="hidden lg:flex gap-x-4 mt-6 text-sm overflow-y-auto pb-3">
+      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-6 text-sm flex-wrap">
         <button :class="['px-4 py-1 flex-shrink-0', !$route.query['filter[state]'] ? 'shadow bg-white rounded-full text-gray-900 font-semibold' : 'text-gray-500 font-medium']" @click="deleteFilter('filter[state]')">
           Toutes
         </button>
