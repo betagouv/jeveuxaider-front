@@ -1,5 +1,5 @@
 <template>
-  <div class="px-6 xl:px-0 max-w-7xl mx-auto">
+  <div class="container">
     <slot name="breadcrumb" />
     <div class="flex flex-col gap-12 py-12">
       <slot name="header" />
