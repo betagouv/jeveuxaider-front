@@ -2,7 +2,7 @@
   <ContainerRightSidebar>
     <template #breadcrumb>
       <Breadcrumb
-        :items="[{ label: 'Missions' }]"
+        :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Missions' }]"
       />
     </template>
     <template #sidebar>

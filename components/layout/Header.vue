@@ -101,7 +101,7 @@
           :href="link.href"
           :to="link.to"
           :click="link.click"
-          class="hover:underline py-4"
+          :class="['hover:underline py-4', {'font-semibold text-jva-blue-500 underline': link.isActive}]"
         >
           {{ link.name }}
         </NavItem>
@@ -238,23 +238,23 @@ export default {
       if (!this.$store.getters.isLogged) {
         return [
           { name: 'Associations', href: '#' },
-          { name: 'Territoires', to: '/territoires' },
+          { name: 'Territoires', to: '/territoires', isActive: this.isActiveLink('/territoires') },
           { name: 'Écoles et universités', href: '#' },
           { name: 'Actualités', href: '#' },
           { name: 'Centre d\'aide', href: '#' }
         ]
       } else if (this.$store.getters.currentRole.key === 'admin') {
         return [
-          { name: 'Tableau de bord', to: '/dashboard' },
-          { name: 'Organisations', to: '/admin/organisations' },
-          { name: 'Missions', to: '/admin/missions' },
-          { name: 'Utilisateurs', href: '#' },
-          { name: 'Liens utiles', href: '#' }
+          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
+          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations') },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
+          { name: 'Utilisateurs', href: '#', isActive: this.isActiveLink('/') },
+          { name: 'Liens utiles', href: '#', isActive: this.isActiveLink('/') }
         ]
       } else if (this.$store.getters.currentRole.key === 'responsable') {
         return [
-          { name: 'Tableau de bord', to: '/dashboard' },
-          { name: 'Missions', to: '/admin/missions' },
+          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
           { name: 'Participations', href: '#' },
           { name: 'Liens utiles', href: '#' }
         ]
@@ -278,6 +278,9 @@ export default {
       } else {
         this.$router.push('/dashboard')
       }
+    },
+    isActiveLink (url) {
+      return this.$route.path === url
     }
   }
 }
