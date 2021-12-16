@@ -111,7 +111,7 @@
               </div>
 
               <div class="mt-6">
-                <Button size="xl" variant="white" full @click.native="$router.push('/register/benevole')">
+                <Button size="xl" variant="white" full @click.native="$router.push('/inscription/benevole')">
                   Créez votre espace bénévole
                 </Button>
               </div>
@@ -216,9 +216,12 @@ export default {
     onSubmit () {
       this.formSchema
         .validate(this.form, { abortEarly: false })
-        .then(() => {
+        .then(async () => {
           this.loading = true
-          this.$store.dispatch('auth/login', this.form)
+          await this.$store.dispatch('auth/login', this.form)
+          this.$router.push(
+            this.$router.history.current.query.redirect || '/profile'
+          )
         })
         .catch((errors) => {
           this.setErrors(errors)

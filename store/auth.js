@@ -33,14 +33,14 @@ export const actions = {
       commit('setRoles', res.data)
     }
   },
-  async login ({ commit, dispatch }, credentials) {
+  async login ({ commit, dispatch }, form) {
     return await this.$axios
       .post(`${this.$config.apiUrl}/oauth/token`, {
         grant_type: 'password',
         client_id: this.$config.oauth.clientId,
         client_secret: this.$config.oauth.clientSecret,
-        username: credentials.email.toLowerCase(),
-        password: credentials.password,
+        username: form.email.toLowerCase(),
+        password: form.password,
         scope: '*'
       })
       .then(async (response) => {
@@ -53,9 +53,6 @@ export const actions = {
         // await this.$gtm.push({ event: 'user-login' })
         await dispatch('fetchUser')
         await dispatch('fetchRoles')
-        this.$router.push(
-          this.$router.history.current.query.redirect || '/profile'
-        )
       })
       .catch((error) => {
         commit('setAccessToken', null)
@@ -76,5 +73,30 @@ export const actions = {
     commit('setAccessToken', null)
     commit('setUser', null)
     this.$cookies.remove('access-token')
+  },
+  async updateProfile ({ dispatch }, payload) {
+    await this.$axios.post(`/profile/${payload.id}`, payload)
+    await dispatch('fetchUser')
+  },
+  async registerVolontaire ({ dispatch }, form) {
+    return await this.$axios
+      .post('/register/volontaire', form)
+      .then(async (response) => {
+        console.log('response', response)
+        await dispatch('login', form)
+      })
+      .catch((error) => {
+        console.log('error', error.response.data.errors.email)
+        if (error.response.data.errors && error.response.data.errors.email) {
+          if (
+            error.response.data.errors.email[0] ===
+          'Cet email est déjà pris. Merci de vous connecter avec vos identifiants.'
+          ) {
+            console.log('/login?email=' + form.email)
+            this.$router.push('/login?email=' + form.email)
+          }
+        }
+        return Promise.reject(new Error(error))
+      })
   }
 }

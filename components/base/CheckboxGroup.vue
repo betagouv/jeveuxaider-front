@@ -1,20 +1,25 @@
 <template>
-  <div
-    class="flex"
-    :class="[
-      {'flex-col space-y-2': variant == 'checkbox'},
-      {'flex-wrap -m-1': variant == 'button'},
-    ]"
-  >
-    <Checkbox
-      v-for="option in options"
-      :key="option.key"
-      :option="option"
-      class="relative flex items-start m-1"
-      :is-checked="modelValue.includes(option.key)"
-      :variant="variant"
-      @change="onChange"
-    />
+  <div>
+    <div
+      class="flex"
+      :class="[
+        {'flex-col space-y-2': variant == 'checkbox'},
+        {'flex-wrap -m-1': variant == 'button'},
+      ]"
+    >
+      <Checkbox
+        v-for="option in options"
+        :key="option.key"
+        :option="option"
+        class="relative flex items-start m-1"
+        :is-checked="modelValue.includes(option.key)"
+        :variant="variant"
+        @change="onChange"
+      />
+    </div>
+    <div v-if="error" class="text-xs text-red-500 mt-1">
+      {{ error }}
+    </div>
   </div>
 </template>
 
@@ -23,6 +28,7 @@ export default {
   props: {
     value: { type: Array, default: () => [] },
     options: { type: Array, required: true },
+    error: { type: String, default: null },
     variant: {
       type: String,
       default: 'checkbox',
@@ -40,7 +46,6 @@ export default {
       }
     }
   },
-
   methods: {
     onChange (toggleItemKey) {
       if (this.modelValue.includes(toggleItemKey)) {

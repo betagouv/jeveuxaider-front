@@ -6,20 +6,25 @@ export default {
   },
   methods: {
     setErrors (errors) {
+      this.resetErrors()
       errors?.inner?.forEach((error) => {
         this.$set(this.errors, error.path, error.message)
       })
+    },
+    resetErrors () {
+      this.errors = {}
+    },
+    validate (field) {
+      console.log('validating', field)
+      this.formSchema
+        .validateAt(field, this.form)
+        .then(() => {
+          this.$delete(this.errors, field)
+        })
+        .catch((error) => {
+          this.$set(this.errors, field, error.message)
+        })
     }
-    // validate (field) {
-    //   this.formSchema
-    //     .validateAt(field, this.form)
-    //     .then(() => {
-    //       this.errors[field] = ''
-    //     })
-    //     .catch((err) => {
-    //       this.errors[field] = err.message
-    //     })
-    // }
     // showErrors (fields) {
     //   const errors = []
     //   const nbErrors = Object.entries(fields).length

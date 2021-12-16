@@ -20,7 +20,7 @@
       </div>
     </template>
     <template v-if="variant == 'button'">
-      <div class="">
+      <div class="bg-white hover:scale-105 transition">
         <input
           :id="option.key"
           :aria-describedby="`${option.key}-description`"

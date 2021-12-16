@@ -163,6 +163,7 @@
                           name="first_name"
                           placeholder="Jean"
                           :error="errors.first_name"
+                          @blur="validate('first_name')"
                         />
                       </FormControl>
                       <FormControl label="Nom" html-for="last_name" required>
@@ -171,6 +172,7 @@
                           name="last_name"
                           placeholder="Dupont"
                           :error="errors.last_name"
+                          @blur="validate('last_name')"
                         />
                       </FormControl>
                       <FormControl label="Email" html-for="email" required>
@@ -179,6 +181,7 @@
                           name="email"
                           placeholder="jean.dupont@gmail.com"
                           :error="errors.email"
+                          @blur="validate('email')"
                         />
                       </FormControl>
                       <FormControl label="Code postal" html-for="zip" required>
@@ -187,6 +190,7 @@
                           name="zip"
                           placeholder="56000"
                           :error="errors.zip"
+                          @blur="validate('zip')"
                         />
                       </FormControl>
                       <FormControl label="Téléphone mobile" html-for="mobile" required>
@@ -195,6 +199,7 @@
                           name="mobile"
                           placeholder="0612345678"
                           :error="errors.mobile"
+                          @blur="validate('mobile')"
                         />
                       </FormControl>
                       <FormControl label="Date de naissance" html-for="birthday" required>
@@ -203,6 +208,7 @@
                           name="birthday"
                           placeholder="14/07/1987"
                           :error="errors.birthday"
+                          @blur="validate('birthday')"
                         />
                       </FormControl>
                       <FormControl label="Mot de passe" html-for="password" required>
@@ -212,6 +218,7 @@
                           placeholder="Votre mot de passe"
                           type="password"
                           :error="errors.password"
+                          @blur="validate('password')"
                         />
                       </FormControl>
                       <FormControl label="Confirmation" html-for="password_confirmation" required>
@@ -221,6 +228,7 @@
                           placeholder="Votre mot de passe"
                           type="password"
                           :error="errors.password_confirmation"
+                          @blur="validate('password_confirmation')"
                         />
                       </FormControl>
                     </form>
@@ -441,7 +449,7 @@
 </template>
 
 <script>
-import { string, object } from 'yup'
+import { string, object, ref } from 'yup'
 import MixinForm from '@/mixins/form'
 import FranceConnect from '@/components/custom/FranceConnect'
 
@@ -460,8 +468,14 @@ export default {
         password: ''
       },
       formSchema: object({
+        first_name: string().required(),
+        last_name: string().required(),
+        mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
+        zip: string().min(5).required(),
+        birthday: string().required(),
         email: string().required().email(),
-        password: string().required()
+        password: string().min(8).required(),
+        password_confirmation: string().required().oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
       })
     }
   },
@@ -471,7 +485,7 @@ export default {
       link: [
         {
           rel: 'canonical',
-          href: 'https://www.jeveuxaider.gouv.fr/register/volontaire'
+          href: 'https://www.jeveuxaider.gouv.fr/inscription/benevole'
         }
       ],
       meta: [
@@ -501,11 +515,19 @@ export default {
   },
   methods: {
     onSubmit () {
+      console.log('this.form', this.form)
       this.formSchema
         .validate(this.form, { abortEarly: false })
-        .then(() => {
+        .then(async () => {
           this.loading = true
-          console.log('this.form', this.form)
+
+          this.form.birthday = this.$dayjs(
+            this.form.birthday,
+            'DD/MM/YYYY'
+          ).format('YYYY-MM-DD')
+
+          await this.$store.dispatch('auth/registerVolontaire', this.form)
+          this.$router.push('/inscription/benevole/step/profile')
         })
         .catch((errors) => {
           this.setErrors(errors)

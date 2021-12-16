@@ -18,6 +18,7 @@
           { '': error, 'pr-8': suffix , 'pl-10': icon, 'bg-transparent': variant == 'transparent'}
         ]"
         autocomplete="off"
+        @blur="handleBlur"
       >
       <div v-if="type == 'password' && inputValue" class="absolute right-3">
         <EyeIcon
@@ -88,6 +89,11 @@ export default {
     reset () {
       this.inputValue = ''
       this.$emit('input', null)
+    },
+    handleBlur () {
+      if (this.inputValue !== null) {
+        this.$emit('blur')
+      }
     }
   }
 }

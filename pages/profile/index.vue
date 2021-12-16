@@ -46,8 +46,8 @@
             </div>
             <template v-if="$store.state.auth.user.profile.domaines.length">
               <div class="flex flex-wrap gap-4">
-                <Badge v-for="domaine in $store.state.auth.user.profile.domaines" :key="domaine.id" :color="domaine.id" size="sm">
-                  {{ domaine.name.fr }}
+                <Badge v-for="domaine in $store.state.auth.user.profile.domaines" :key="domaine" :color="domaine" size="sm">
+                  {{ domaine | label('domaines') }}
                 </Badge>
               </div>
             </template>
