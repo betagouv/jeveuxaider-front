@@ -28,7 +28,7 @@ export default {
     this.mission = data
   },
   watch: {
-    $route: '$fetch'
+    missionId: '$fetch'
   }
 }
 </script>
