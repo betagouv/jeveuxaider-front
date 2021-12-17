@@ -157,77 +157,109 @@
                   </template>
                   <template v-else>
                     <form id="inscription" class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2" @submit.prevent="onSubmit">
-                      <FormControl label="Prénom" html-for="first_name" required>
+                      <FormControl
+                        label="Prénom"
+                        html-for="first_name"
+                        required
+                        :error="errors.first_name"
+                      >
                         <Input
                           v-model="form.first_name"
                           name="first_name"
                           placeholder="Jean"
-                          :error="errors.first_name"
                           @blur="validate('first_name')"
                         />
                       </FormControl>
-                      <FormControl label="Nom" html-for="last_name" required>
+                      <FormControl
+                        label="Nom"
+                        html-for="last_name"
+                        required
+                        :error="errors.last_name"
+                      >
                         <Input
                           v-model="form.last_name"
                           name="last_name"
                           placeholder="Dupont"
-                          :error="errors.last_name"
                           @blur="validate('last_name')"
                         />
                       </FormControl>
-                      <FormControl label="Email" html-for="email" required>
+                      <FormControl
+                        label="Email"
+                        html-for="email"
+                        required
+                        :error="errors.email"
+                      >
                         <Input
                           v-model="form.email"
                           name="email"
                           placeholder="jean.dupont@gmail.com"
-                          :error="errors.email"
                           @blur="validate('email')"
                         />
                       </FormControl>
-                      <FormControl label="Code postal" html-for="zip" required>
+                      <FormControl
+                        label="Code postal"
+                        html-for="zip"
+                        required
+                        :error="errors.zip"
+                      >
                         <Input
                           v-model="form.zip"
                           name="zip"
                           placeholder="56000"
-                          :error="errors.zip"
                           @blur="validate('zip')"
                         />
                       </FormControl>
-                      <FormControl label="Téléphone mobile" html-for="mobile" required>
+                      <FormControl
+                        label="Téléphone mobile"
+                        html-for="mobile"
+                        required
+                        :error="errors.mobile"
+                      >
                         <Input
                           v-model="form.mobile"
                           name="mobile"
                           placeholder="0612345678"
-                          :error="errors.mobile"
                           @blur="validate('mobile')"
                         />
                       </FormControl>
-                      <FormControl label="Date de naissance" html-for="birthday" required>
+                      <FormControl
+                        label="Date de naissance"
+                        html-for="birthday"
+                        required
+                        :error="errors.birthday"
+                      >
                         <Input
                           v-model="form.birthday"
                           name="birthday"
                           placeholder="14/07/1987"
-                          :error="errors.birthday"
                           @blur="validate('birthday')"
                         />
                       </FormControl>
-                      <FormControl label="Mot de passe" html-for="password" required>
+                      <FormControl
+                        label="Mot de passe"
+                        html-for="password"
+                        required
+                        :error="errors.password"
+                      >
                         <Input
                           v-model="form.password"
                           name="password"
                           placeholder="Votre mot de passe"
                           type="password"
-                          :error="errors.password"
                           @blur="validate('password')"
                         />
                       </FormControl>
-                      <FormControl label="Confirmation" html-for="password_confirmation" required>
+                      <FormControl
+                        label="Confirmation"
+                        html-for="password_confirmation"
+                        required
+                        :error="errors.password_confirmation"
+                      >
                         <Input
                           v-model="form.password_confirmation"
                           name="password_confirmation"
                           placeholder="Votre mot de passe"
                           type="password"
-                          :error="errors.password_confirmation"
                           @blur="validate('password_confirmation')"
                         />
                       </FormControl>
@@ -237,6 +269,7 @@
                       type="submit"
                       size="xl"
                       form="inscription"
+                      variant="green"
                       full
                       :loading="loading"
                       @click="onSubmit"

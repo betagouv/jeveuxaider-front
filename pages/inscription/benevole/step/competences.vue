@@ -122,7 +122,7 @@ export default {
     },
     async onSubmit () {
       this.loading = true
-      await this.$store.dispatch('user/updateProfile', {
+      await this.$store.dispatch('auth/updateProfile', {
         id: this.$store.getters.profile.id,
         ...this.form
       })

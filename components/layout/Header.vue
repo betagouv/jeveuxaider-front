@@ -225,13 +225,13 @@ export default {
       if (!this.$store.getters.isLogged) {
         return [
           { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-          { name: 'Publier une mission', href: '#', icon: CalendarIcon },
+          { name: 'Publier une mission', href: '/inscription/organisation', icon: CalendarIcon },
           { name: 'Devenir bénévole', href: '#', icon: UserIcon }
         ]
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-        { name: 'Publier une mission', href: '#', icon: CalendarIcon }
+        { name: 'Publier une mission', href: '/inscription/organisation', icon: CalendarIcon }
       ]
     },
     secondNavigation () {
@@ -243,7 +243,7 @@ export default {
           { name: 'Actualités', href: '#' },
           { name: 'Centre d\'aide', href: '#' }
         ]
-      } else if (this.$store.getters.currentRole.key === 'admin') {
+      } else if (this.$store.getters.currentRole?.key === 'admin') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
           { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations') },
@@ -251,7 +251,7 @@ export default {
           { name: 'Utilisateurs', href: '#', isActive: this.isActiveLink('/') },
           { name: 'Liens utiles', href: '#', isActive: this.isActiveLink('/') }
         ]
-      } else if (this.$store.getters.currentRole.key === 'responsable') {
+      } else if (this.$store.getters.currentRole?.key === 'responsable') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },

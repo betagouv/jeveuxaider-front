@@ -15,7 +15,7 @@
         :placeholder="placeholder"
         :class="[
           'px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500',
-          { '': error, 'pr-8': suffix , 'pl-10': icon, 'bg-transparent': variant == 'transparent'}
+          {'pr-8': suffix , 'pl-10': icon, 'bg-transparent': variant == 'transparent'}
         ]"
         autocomplete="off"
         @blur="handleBlur"
@@ -45,9 +45,6 @@
         </div>
       </div>
     </div>
-    <div v-if="error" class="text-xs text-red-500 mt-1">
-      {{ error }}
-    </div>
   </div>
 </template>
 
@@ -59,7 +56,6 @@ export default {
     placeholder: { type: String, default: null },
     suffix: { type: String, default: null },
     name: { type: String, required: true },
-    error: { type: String, default: null },
     icon: { type: String, default: null },
     variant: { type: String, default: null }, // transparent
     clearable: { type: Boolean, default: false },

@@ -63,38 +63,39 @@
             </div>
 
             <form id="form" class="space-y-8 my-8" @submit.prevent="onSubmit">
-              <div>
-                <FormLabel html-for="email" required>
-                  Email
-                </FormLabel>
+              <FormControl label="Email" html-for="email" required :error="errors.email">
                 <Input
                   v-model="form.email"
                   name="email"
                   placeholder="Entrez votre email"
-                  :error="errors.email"
+                  @blur="validate('email')"
                 />
-              </div>
-              <div>
-                <FormLabel html-for="password" required>
-                  Mot de passe
-                </FormLabel>
+              </FormControl>
+              <FormControl label="Mot de passe" html-for="password" required :error="errors.password">
                 <Input
                   v-model="form.password"
                   name="password"
                   placeholder="Entrez votre mot de passe"
                   type="password"
-                  :error="errors.password"
+                  @blur="validate('password')"
                 />
-                <div class="pt-4 text-sm leading-5">
+                <template #description>
                   <Link
                     to="/password-reset"
-                    class="font-medium"
+                    class="text-sm font-medium mt-2"
                   >
                     Mot de passe perdu ?
                   </Link>
-                </div>
-              </div>
-              <Button type="submit" size="xl" full :loading="loading" @click="onSubmit">
+                </template>
+              </FormControl>
+              <Button
+                type="submit"
+                size="xl"
+                variant="green"
+                full
+                :loading="loading"
+                @click="onSubmit"
+              >
                 Connexion
               </Button>
             </form>
