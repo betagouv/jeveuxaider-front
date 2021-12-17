@@ -54,29 +54,32 @@
           Votre activité en chiffres
         </Heading>
         <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
-          <CardStatistic :value="statistics.places_left" title="Bénévoles recherchés" />
+          <CardStatistic
+            :value="statistics.places_left"
+            :title="`${$options.filters.pluralize(statistics.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
+          />
           <CardStatistic :value="`${statistics.places_occupation_rate}%`" title="Taux d'occupation" :gauge-percentage="statistics.places_occupation_rate" />
           <CardStatistic
             v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
             :value="statistics.organisations_actives"
-            title="Organisations actives"
-            :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations)} organisations`"
+            :title="`${$options.filters.pluralize(statistics.organisations_actives, 'Organisation active', 'Organisations actives', false)}`"
+            :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations)} ${$options.filters.pluralize(statistics.organisations, 'organisations', 'organisations', false)}`"
             link="/dashboard/organisations"
             link-label="Organisations"
           />
           <CardStatistic
             v-if="['admin', 'responsable', 'referent','referent_regional'].includes($store.getters.contextRole)"
             :value="statistics.missions_actives"
-            title="Missions actives"
-            :subtitle="`sur ${$options.filters.formatNumber(statistics.missions)} missions`"
+            :title="`${$options.filters.pluralize(statistics.missions_actives, 'Mission active', 'Missions actives', false)}`"
+            :subtitle="`sur ${$options.filters.formatNumber(statistics.missions)} ${$options.filters.pluralize(statistics.missions, 'mission', 'missions', false)}`"
             link="/dashboard/missions"
             link-label="Missions"
           />
           <CardStatistic
             v-if="['admin', 'responsable', 'referent','referent_regional'].includes($store.getters.contextRole)"
             :value="statistics.participations_validated"
-            title="Participations validées"
-            :subtitle="`sur ${$options.filters.formatNumber(statistics.participations)} candidatures`"
+            :title="`${$options.filters.pluralize(statistics.participations_validated, 'Participation validée', 'Participations validées', false)}`"
+            :subtitle="`sur ${$options.filters.formatNumber(statistics.participations)} ${$options.filters.pluralize(statistics.participations, 'candidature', 'candidatures', false)}`"
             link="/dashboard/participations"
             link-label="Participations"
           />
