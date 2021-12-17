@@ -158,7 +158,7 @@ export default {
     }
   },
   created () {
-    this.$axios.get('/user/actions').then((response) => {
+    this.$axios.get('/user/actions/benevole').then((response) => {
       this.loadingActions = false
       this.actions = response.data
     })

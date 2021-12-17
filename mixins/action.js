@@ -29,7 +29,7 @@ export default {
           return {
             icon: '✍',
             iconVariant: 'warning',
-            title: 'Votre profil est <b>incomplet</b>',
+            title: 'Votre profil est <b>incomplet</b> (@TODO)',
             subtitle: 'Pensez à mettre à jour votre profil pour attirer les organisations',
             link: '/profile/edit'
           }

@@ -64,9 +64,6 @@
         </li>
       </ul>
     </div>
-    <div v-if="error" class="text-xs text-red-500 mt-1">
-      {{ error }}
-    </div>
   </div>
 </template>
 
@@ -78,7 +75,6 @@ export default {
     placeholder: { type: String, default: null },
     labelEmpty: { type: String, default: 'Aucune option' },
     name: { type: String, required: true },
-    error: { type: String, default: null },
     icon: { type: String, default: null },
     options: { type: Array, default: () => [] },
     attributeKey: { type: String, default: 'key' },

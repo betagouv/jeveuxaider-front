@@ -33,41 +33,38 @@
           <div class="bg-yellow-100 p-4 text-sm rounded-lg">
             @TODO: avatar upload
           </div>
-          <FormControl label="Profession" html-for="type" required>
+          <FormControl label="Profession" html-for="type" required :error="errors.type">
             <SelectAdvanced
               v-model="form.type"
               name="type"
               placeholder="Sélectionnez votre profession"
               :options="profile_type_options"
-              :error="errors.type"
+
               @blur="validate('type')"
             />
           </FormControl>
-          <FormControl label="Téléphone mobile" html-for="mobile" required>
+          <FormControl label="Téléphone mobile" html-for="mobile" required :error="errors.mobile">
             <Input
               v-model="form.mobile"
               name="mobile"
               placeholder="0612345678"
-              :error="errors.mobile"
               @blur="validate('mobile')"
             />
           </FormControl>
-          <FormControl label="Téléphone fixe" html-for="phone">
+          <FormControl label="Téléphone fixe" html-for="phone" :error="errors.phone">
             <Input
               v-model="form.phone"
               name="phone"
               placeholder="0123456789"
-              :error="errors.phone"
               @blur="validate('phone')"
             />
           </FormControl>
-          <FormControl label="Choisissez vos domaines de prédilection" html-for="domaines" required>
+          <FormControl label="Choisissez vos domaines de prédilection" html-for="domaines" required :error="errors.domaines">
             <CheckboxGroup
               v-model="form.domaines"
               name="domaines"
               variant="button"
               :options="domaines_options"
-              :error="errors.domaines"
             />
           </FormControl>
           <FormControl label="Décrivez vos motivations" html-for="description">

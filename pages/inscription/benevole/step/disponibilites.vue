@@ -30,23 +30,22 @@
         </div>
 
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
-          <FormControl label="Souhaitez-vous être visible des organisations ? @TODO toggle component" html-for="is_visible">
-            <SelectAdvanced
-              v-model="form.is_visible"
-              name="is_visible"
-              :options="[
-                { key: true, label: 'Oui, je souhaite être visibile'},
-                { key: false, label: 'Non, je ne souhaite pas être visible'},
-              ]"
-            />
+          <FormControl label="Souhaitez-vous être visible des organisations ?" html-for="is_visible">
+            <div class="bg-yellow-100 p-4 text-sm rounded-lg">
+              @TODO toggle component
+            </div>
           </FormControl>
-          <FormControl label="Sélectionnez vos disponibilités" html-for="disponibilities" required>
+          <FormControl
+            label="Sélectionnez vos disponibilités"
+            html-for="disponibilities"
+            required
+            :error="errors.disponibilities"
+          >
             <CheckboxGroup
               v-model="form.disponibilities"
               name="disponibilities"
               variant="button"
               :options="disponibilities_options"
-              :error="errors.disponibilities"
             />
           </FormControl>
           <div>
@@ -54,25 +53,32 @@
               À quelle fréquence souhaitez-vous vous engager ?
             </FormLabel>
             <div class="flex flex-col lg:flex-row gap-2 lg:gap-8 lg:items-center lg:justify-center">
-              <SelectAdvanced
-                v-model="form.commitment__duration"
-                class="lg:w-1/2"
-                name="commitment__duration"
-                placeholder="Sélectionnez une durée"
-                :options="duration_options"
-                :error="errors.commitment__duration"
-              />
+              <div class="lg:w-1/2">
+                <SelectAdvanced
+                  v-model="form.commitment__duration"
+                  name="commitment__duration"
+                  placeholder="Sélectionnez une durée"
+                  :options="duration_options"
+                />
+                <FormError v-if="errors.commitment__duration">
+                  {{ errors.commitment__time_period }}
+                </FormError>
+              </div>
               <div class="flex-none text-sm">
                 par
               </div>
-              <SelectAdvanced
-                v-model="form.commitment__time_period"
-                class="lg:w-1/2"
-                name="commitment__time_period"
-                placeholder="Sélectionnez une durée"
-                :options="time_period_options"
-                :error="errors.commitment__time_period"
-              />
+              <div class="lg:w-1/2">
+                <SelectAdvanced
+                  v-model="form.commitment__time_period"
+                  class="lg:w-1/2"
+                  name="commitment__time_period"
+                  placeholder="Sélectionnez une durée"
+                  :options="time_period_options"
+                />
+                <FormError v-if="errors.commitment__time_period">
+                  {{ errors.commitment__time_period }}
+                </FormError>
+              </div>
             </div>
           </div>
 

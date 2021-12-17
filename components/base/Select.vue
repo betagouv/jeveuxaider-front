@@ -31,8 +31,7 @@ export default {
     value: { type: String, default: null },
     options: { type: Array, required: true },
     placeholder: { type: String, default: null },
-    name: { type: String, required: true },
-    error: { type: String, default: null }
+    name: { type: String, required: true }
   },
   methods: {
     onChange (evt) {
