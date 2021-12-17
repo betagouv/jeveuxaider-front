@@ -16,24 +16,45 @@ export default {
     $route: '$fetch'
   },
   methods: {
-    changeFilter (filterName, filterValue) {
-      if (this.$route.query[filterName] && this.$route.query[filterName] === filterValue) {
-        this.deleteFilter(filterName)
+    changeFilter (filterName, filterValue, multiple = false) {
+      const filterQueryValues = this.$route.query[filterName] ? this.$route.query[filterName].split(',') : []
+
+      if (filterQueryValues.includes(filterValue)) { // L'option est déjà filtrée, on la retire
+        this.deleteFilter(filterName, filterValue, multiple)
       } else if (filterValue === '' || filterValue === null) {
-        this.deleteFilter(filterName)
+        this.deleteFilter(filterName, filterValue, multiple)
       } else {
-        this.$router.push({
-          path: this.$route.path,
-          query: { ...this.$route.query, [filterName]: filterValue, page: undefined }
-        })
+        this.addFilter(filterName, filterValue, multiple)
       }
     },
-    deleteFilter (filterName) {
+    addFilter (filterName, filterValue, multiple) {
+      let filterQueryValues = this.$route.query[filterName] ? this.$route.query[filterName].split(',') : []
+
+      if (multiple) {
+        filterQueryValues.push(filterValue)
+      } else {
+        filterQueryValues = [filterValue]
+      }
       this.$router.push({
         path: this.$route.path,
-        query: { ...this.$route.query, [filterName]: undefined, page: undefined }
+        query: { ...this.$route.query, [filterName]: filterQueryValues.join(','), page: undefined }
       })
     },
+    deleteFilter (filterName, filterValue, multiple) {
+      let filterQueryValues = this.$route.query[filterName] ? this.$route.query[filterName].split(',') : []
+
+      if (multiple) {
+        filterQueryValues = filterQueryValues.filter(value => value !== filterValue)
+        if (filterQueryValues.length === 0) { filterQueryValues = undefined }
+      } else {
+        filterQueryValues = undefined
+      }
+      this.$router.push({
+        path: this.$route.path,
+        query: { ...this.$route.query, [filterName]: filterQueryValues ? filterQueryValues.join(',') : undefined, page: undefined }
+      })
+    },
+
     changePage (page) {
       this.$router.push({
         path: this.$route.path,

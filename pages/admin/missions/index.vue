@@ -2,11 +2,11 @@
   <ContainerRightSidebar>
     <Drawer :is-open="Boolean(drawerMissionId)" @close="drawerMissionId = null">
       <template #title>
-        <h2 id="slide-over-title" class="text-lg font-medium text-gray-900">
-          Panel title
-        </h2>
+        <Heading v-if="drawerMission" :level="3" class="text-jva-blue-500">
+          {{ drawerMission.name }}
+        </Heading>
       </template>
-      <DrawerMission :mission-id="drawerMissionId" />
+      <DrawerMission :mission-id="drawerMissionId" @loaded="drawerMission = $event" />
     </Drawer>
     <template #breadcrumb>
       <Breadcrumb
@@ -15,24 +15,6 @@
     </template>
     <template #sidebar>
       <div class="flex flex-col gap-y-4 sticky top-8">
-        <div>
-          Département<br>
-          Domaine d’action<br>
-          Type de mission<br>
-          Statut<br>
-          Places restantes<br>
-          Proposé aux<br>
-          Missions prioritaires (facultatif)<br>
-        </div>
-        <!-- <SelectAdvanced
-          name="statut_juridique"
-          placeholder="Statut juridique"
-          :options="structure_legal_status"
-          :value="$route.query['filter[statut_juridique]']"
-          variant="transparent"
-          clearable
-          @input="changeFilter('filter[statut_juridique]', $event)"
-        />
         <SelectAdvanced
           name="department"
           placeholder="Département"
@@ -41,7 +23,55 @@
           variant="transparent"
           clearable
           @input="changeFilter('filter[department]', $event)"
-        /> -->
+        />
+        <SelectAdvanced
+          name="domaine"
+          placeholder="Domaine d'action"
+          :options="domaines"
+          :value="$route.query['filter[domaine]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[domaine]', $event)"
+        />
+        <div class="flex space-x-6 mb-2">
+          <Checkbox
+            :option="{key:'presentiel', label: 'Présentiel'}"
+            :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'].includes('Mission en présentiel')"
+            @change="changeFilter('filter[type]', 'Mission en présentiel', true)"
+          />
+          <Checkbox
+            :option="{key:'distance', label: 'À distance'}"
+            :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'].includes('Mission à distance')"
+            @change="changeFilter('filter[type]', 'Mission à distance', true)"
+          />
+        </div>
+        <SelectAdvanced
+          name="state"
+          placeholder="Statut"
+          :options="mission_states"
+          :value="$route.query['filter[state]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[state]', $event)"
+        />
+        <SelectAdvanced
+          name="place"
+          placeholder="Place restante"
+          :options="[{key: true, label: 'Oui'}, {key: false, label: 'Non'}]"
+          :value="$route.query['filter[place]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[place]', $event)"
+        />
+        <SelectAdvanced
+          name="publics_volontaires"
+          placeholder="Proposé aux"
+          :options="[{key: 'Mineurs', label: 'Mineurs'}, {key: 'Jeunes volontaires du Service National Universel', label: 'Jeunes du SNU'}]"
+          :value="$route.query['filter[publics_volontaires]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[publics_volontaires]', $event)"
+        />
       </div>
     </template>
     <div>
@@ -87,8 +117,8 @@
 </template>
 
 <script>
-import QueryBuilder from '@/mixins/query-builder'
 import labels from '@/utils/labels.json'
+import QueryBuilder from '@/mixins/query-builder'
 import CardMission from '@/components/card/CardMission.vue'
 import DrawerMission from '@/components/drawer/DrawerMission.vue'
 
@@ -112,7 +142,10 @@ export default {
     return {
       endpoint: '/missions',
       mission_states: labels.mission_workflow_states,
-      drawerMissionId: null
+      drawerMissionId: null,
+      drawerMission: null,
+      domaines: labels.domaines,
+      departments: labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })
     }
   }
 
