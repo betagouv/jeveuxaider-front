@@ -226,7 +226,7 @@ export default {
         return [
           { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
           { name: 'Publier une mission', href: '/inscription/organisation', icon: CalendarIcon },
-          { name: 'Devenir bénévole', href: '#', icon: UserIcon }
+          { name: 'Devenir bénévole', href: '/inscription/benevole', icon: UserIcon }
         ]
       }
       return [

@@ -17,7 +17,7 @@
           <nuxt-link
             v-for="city in cities"
             :key="city.zipcode"
-            class="leading-none truncate px-8 py-4 rounded-full text-sm shadow-md font-extrabold tracking-wide uppercase bg-white text-[#242526] transform transition will-change-transform hover:scale-105"
+            class="leading-none truncate px-8 py-4 rounded-full text-sm shadow-md font-extrabold tracking-wide uppercase bg-white text-gray-800 transform transition will-change-transform hover:scale-105"
             :to="`/missions-benevolat?refinementList[type][0]=Mission en présentiel&aroundLatLng=${city.coordonates}&place=${city.zipcode} ${city.name}&aroundRadius=35000`"
           >
             {{ city.name }}

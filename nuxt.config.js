@@ -84,7 +84,11 @@ export default {
     google: {
       places: process.env.GOOGLE_PLACE_API_KEY
     },
-    franceConnect: process.env.FRANCE_CONNECT
+    franceConnect: process.env.FRANCE_CONNECT,
+    apiEngagement: {
+      key: process.env.APIENG_KEY,
+      tracking_key: process.env.APIENG_TRACKING_KEY
+    }
   },
 
   env: {

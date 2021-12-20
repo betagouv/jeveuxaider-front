@@ -444,7 +444,7 @@ export default {
           })
           return (
             `<div class="text-black font-bold">${suggestion.highlight.name}</div>` +
-            '<div class="text-[#242526] text-xs font-light">' +
+            '<div class="text-gray-800 text-xs font-light">' +
             `<span>${suggestion.postcode}</span>${detailsOutput}` +
             '</div>'
           )

@@ -131,7 +131,7 @@
               </dt>
               <nuxt-link
                 to="/inscription/organisation"
-                class="mt-4 w-full flex justify-center py-3 px-4 rounded-lg text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-[#242526] hover:border-transparent hover:bg-white hover:scale-105 transform transition"
+                class="mt-4 w-full flex justify-center py-3 px-4 rounded-lg text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white hover:scale-105 transform transition"
               >
                 Publiez vos missions
               </nuxt-link>
@@ -147,7 +147,7 @@
               </dt>
               <nuxt-link
                 to="/inscription/organisation?orga_type=Collectivité"
-                class="mt-4 w-full flex justify-center py-3 px-4 rounded-lg text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-[#242526] hover:border-transparent hover:bg-white hover:scale-105 transform transition"
+                class="mt-4 w-full flex justify-center py-3 px-4 rounded-lg text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white hover:scale-105 transform transition"
               >
                 Créez votre page
               </nuxt-link>

@@ -149,7 +149,7 @@ html {
     .tooltip-inner {
       border-radius: 4px;
       padding: 6px;
-      @apply bg-[#242526];
+      @apply bg-gray-800;
     }
   }
   &.popover {
