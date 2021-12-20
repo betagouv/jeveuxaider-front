@@ -61,7 +61,7 @@
       </nav>
     </div>
     <div class="hidden lg:flex px-4 justify-between border-t text-sm text-gray-800">
-      <div class="flex space-x-8">
+      <div class="flex">
         <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 2" position="left">
           <template #button>
             <div class="flex items-center border-r pr-4 py-4 w-52 truncate">
@@ -101,7 +101,7 @@
           :href="link.href"
           :to="link.to"
           :click="link.click"
-          :class="['hover:underline py-4', {'font-semibold text-jva-blue-500 underline': link.isActive}]"
+          :class="['hover:border-b-2 border-jva-blue-500 border-b-0 p-4', {'text-jva-blue-500 !border-b-2': link.isActive}]"
         >
           {{ link.name }}
         </NavItem>
