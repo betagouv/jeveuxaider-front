@@ -9,7 +9,7 @@
   >
     <div v-if="isOpen" class="fixed z-30 inset-y-0 right-0 pl-10 flex" role="dialog" aria-modal="true">
       <div aria-hidden="true" class="w-screen max-w-md">
-        <div class="h-full pt-44 flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
+        <div :style="{ paddingTop: paddingTop + 'px' }" class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
           <div class="px-4 sm:px-6">
             <div class="flex items-start justify-between">
               <slot name="title" />
@@ -25,9 +25,11 @@
               </div>
             </div>
           </div>
-          <div class="mt-6 relative flex-1 px-4 sm:px-6">
+          <div class="relative flex-1 px-4 sm:px-6">
             <div class="absolute inset-0 px-4 sm:px-6">
               <slot />
+              <!-- Hack pour avoir un padding bottom quand on scroll en bas -->
+              <div class="h-8" />
             </div>
           </div>
         </div>
@@ -46,6 +48,23 @@ export default {
     setOpen: {
       type: Function,
       default: () => null
+    }
+  },
+  data () {
+    return {
+      headerheight: 180,
+      paddingTop: 180
+    }
+  },
+  mounted () {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    handleScroll (event) {
+      this.paddingTop = this.headerheight - window.scrollY < 24 ? 24 : this.headerheight - window.scrollY
     }
   }
 }

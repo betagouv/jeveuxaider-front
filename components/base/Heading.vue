@@ -16,7 +16,7 @@ export default {
   props: {
     as: {
       type: String,
-      required: true
+      default: 'div'
     },
     level: {
       type: Number,
