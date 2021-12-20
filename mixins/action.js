@@ -37,7 +37,7 @@ export default {
           return {
             icon: '✊',
             iconVariant: 'warning',
-            title: `<b>${this.$options.filters.formatNumber(action.value)} organisation(s)</b> en attente de validation`,
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'organisation', 'organisations', false)}</b> en attente de validation`,
             subtitle: 'Des organisations souhaitent publier des missions',
             link: '/dashboard/organisations?filter[state]=En attente de validation'
           }
@@ -45,7 +45,7 @@ export default {
           return {
             icon: '✍',
             iconVariant: 'warning',
-            title: `<b>${this.$options.filters.formatNumber(action.value)} organisation(s)</b> sont incomplètes`,
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'organisation', 'organisations', false)}</b> sont incomplètes`,
             subtitle: 'Des fiches duêment complétées augmentent la qualité de la plateforme',
             link: '/dashboard/organisations'
           }
@@ -53,7 +53,7 @@ export default {
           return {
             icon: '✊',
             iconVariant: 'warning',
-            title: `<b>${this.$options.filters.formatNumber(action.value)} missions(s)</b> en attente de validation`,
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'mission', 'missions', false)}</b> en attente de validation`,
             subtitle: 'Des missions souhaitent être publiées sur la plateforme',
             link: '/dashboard/missions?filter[state]=En attente de validation'
           }
@@ -61,7 +61,7 @@ export default {
           return {
             icon: '⏰️',
             iconVariant: 'danger',
-            title: `<b>${this.$options.filters.formatNumber(action.value)} missions(s)</b> dont la date de fin est passée`,
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'mission', 'missions', false)}</b> dont la date de fin est passée`,
             subtitle: 'Pensez à mettre à jour les missions',
             link: '/dashboard/missions'
           }
@@ -69,7 +69,7 @@ export default {
           return {
             icon: '✊',
             iconVariant: 'warning',
-            title: `<b>${this.$options.filters.formatNumber(action.value)} participations(s)</b> en attente de validation`,
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'participation', 'participations', false)}</b> en attente de validation`,
             subtitle: 'Pensez à mettre à jour les missions',
             link: '/dashboard/participations'
           }
@@ -77,7 +77,7 @@ export default {
           return {
             icon: '✊',
             iconVariant: 'warning',
-            title: `<b>${this.$options.filters.formatNumber(action.value)} participations(s)</b> en cours de traitement`,
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'participation', 'participations', false)}</b> en cours de traitement`,
             subtitle: 'Pensez à traiter ces candidatures',
             link: '/dashboard/participations'
           }

@@ -38,6 +38,6 @@
 
 <script>
 export default {
-  layout: 'components'
+  layout: 'design-system'
 }
 </script>

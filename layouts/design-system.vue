@@ -37,60 +37,61 @@
 
 <script>
 export default {
+  layout: 'design-system',
   data () {
     return {
       menu: [
         {
           category: 'Theme',
           components: [
-            { name: 'Texts', href: '/components/theme/texts' },
-            { name: 'Links', href: '/components/theme/links' },
-            { name: 'Colors', href: '/components/theme/colors' }
+            { name: 'Texts', href: '/design-system/theme/texts' },
+            { name: 'Links', href: '/design-system/theme/links' },
+            { name: 'Colors', href: '/design-system/theme/colors' }
           ]
         },
         {
           category: 'Layouts',
           components: [
-            { name: 'Boxs', href: '/components/layout/boxs' },
-            { name: 'Containers', href: '/components/layout/containers' }
+            { name: 'Boxs', href: '/design-system/layout/boxs' },
+            { name: 'Containers', href: '/design-system/layout/containers' }
           ]
         },
         {
           category: 'Forms',
           components: [
-            { name: 'Buttons', href: '/components/forms/buttons' },
-            { name: 'Inputs', href: '/components/forms/inputs' },
-            { name: 'Selects', href: '/components/forms/selects' },
-            { name: 'Forms', href: '/components/forms/forms' }
+            { name: 'Buttons', href: '/design-system/forms/buttons' },
+            { name: 'Inputs', href: '/design-system/forms/inputs' },
+            { name: 'Selects', href: '/design-system/forms/selects' },
+            { name: 'Forms', href: '/design-system/forms/forms' }
           ]
         },
         {
           category: 'Data display',
           components: [
-            { name: 'Badge', href: '/components/data-display/badge' },
-            { name: 'Card', href: '/components/data-display/card' },
-            { name: 'List', href: '/components/data-display/list' }
+            { name: 'Badge', href: '/design-system/data-display/badge' },
+            { name: 'Card', href: '/design-system/data-display/card' },
+            { name: 'List', href: '/design-system/data-display/list' }
           ]
         },
         {
           category: 'Navigation',
           components: [
-            { name: 'Breadcrumb', href: '/components/navigation/breadcrumb' },
-            { name: 'Pagination', href: '/components/navigation/pagination' },
-            { name: 'Tabs', href: '/components/navigation/tabs' },
-            { name: 'Steps', href: '/components/navigation/steps' }
+            { name: 'Breadcrumb', href: '/design-system/navigation/breadcrumb' },
+            { name: 'Pagination', href: '/design-system/navigation/pagination' },
+            { name: 'Tabs', href: '/design-system/navigation/tabs' },
+            { name: 'Steps', href: '/design-system/navigation/steps' }
           ]
         },
         // {
         //   category: 'Overlay',
         //   components: [
-        //     { name: 'Cards', href: '/components/advanced/cards' }
+        //     { name: 'Cards', href: '/design-system/advanced/cards' }
         //   ]
         // },
         {
           category: 'Other',
           components: [
-            { name: 'Others', href: '/components/base/others' }
+            { name: 'Others', href: '/design-system/base/others' }
           ]
         }
       ]

@@ -66,7 +66,7 @@
 <script>
 
 export default {
-  layout: 'components',
+  layout: 'design-system',
   data () {
     return {
       form: {

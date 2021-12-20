@@ -22,7 +22,7 @@
 import tailwindConfig from '@/tailwind.config'
 
 export default {
-  layout: 'components',
+  layout: 'design-system',
   data () {
     return {
       tailwindConfig

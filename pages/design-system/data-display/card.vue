@@ -19,10 +19,11 @@
 import CardStatistic from '@/components/card/CardStatistic'
 
 export default {
+
   components: {
     CardStatistic
   },
-  layout: 'components',
+  layout: 'design-system',
   data () {
     return {
       form: {}

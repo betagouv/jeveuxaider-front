@@ -1,15 +1,17 @@
 <template>
   <div class="space-y-12">
     <Heading as="h2" :level="3" class="mb-8">
-      Pagination
+      Breadcrumb
     </Heading>
-    <Pagination current-page="6" total-rows="100" />
+    <Breadcrumb
+      :items="[{ label: 'Tableau de bord' }, { label: 'Organisations' }, { label: 'Pro Bono Lab' }]"
+    />
   </div>
 </template>
 
 <script>
 export default {
-  layout: 'components',
+  layout: 'design-system',
   data () {
     return {
 
@@ -17,3 +19,7 @@ export default {
   }
 }
 </script>
+
+<style>
+
+</style>

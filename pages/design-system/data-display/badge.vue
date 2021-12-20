@@ -2,29 +2,57 @@
   <div class="space-y-12">
     <div class="flex flex-col space-y-4">
       <div class="text-lg font-medium text-gray-900">
-        Badges
+        Default
       </div>
       <div class="flex flex-wrap gap-2 items-end">
         <Badge color="gray">
-          Default
+          Gray (default)
         </Badge>
         <Badge color="gray-light">
-          Default light
+          Gray light
+        </Badge>
+        <Badge color="blue">
+          Blue
         </Badge>
         <Badge color="orange">
-          En attente de validation
+          Orange
         </Badge>
         <Badge color="green">
-          Validée
+          Green
         </Badge>
         <Badge color="red">
-          Signalée
+          Red
         </Badge>
       </div>
     </div>
     <div class="flex flex-col space-y-4">
       <div class="text-lg font-medium text-gray-900">
-        Par domaine d'action
+        Plain
+      </div>
+      <div class="flex flex-wrap gap-2 items-end">
+        <Badge color="gray" plain>
+          Gray (default)
+        </Badge>
+        <Badge color="gray-light" plain>
+          Gray light
+        </Badge>
+        <Badge color="blue" plain>
+          Blue
+        </Badge>
+        <Badge color="orange" plain>
+          Orange
+        </Badge>
+        <Badge color="green" plain>
+          Green
+        </Badge>
+        <Badge color="red" plain>
+          Red
+        </Badge>
+      </div>
+    </div>
+    <div class="flex flex-col space-y-4">
+      <div class="text-lg font-medium text-gray-900">
+        Domaines d'action
       </div>
       <div class="flex flex-wrap gap-2 items-end">
         <Badge color="covid">
@@ -64,6 +92,7 @@
 
 <script>
 export default {
-  layout: 'components'
+  layout: 'design-system'
+
 }
 </script>
