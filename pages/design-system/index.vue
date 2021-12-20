@@ -4,7 +4,10 @@
 
 <script>
 export default {
-  layout: 'components',
+  layout: 'design-system',
+  asyncData ({ redirect }) {
+    redirect('/design-system/theme/texts')
+  },
   data () {
     return {
       form: {}

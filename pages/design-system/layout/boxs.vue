@@ -44,7 +44,7 @@
 
 <script>
 export default {
-  layout: 'components',
+  layout: 'design-system',
   data () {
     return {
       lorem: 'Postremo ad id indignitatis est ventum, ut cum peregrini arum liberalium inpendio paucis sine respiratione ulla extrusis, tenerentur minimarum adseclae veri, quique id simularunt ad tempus, et tria milia saltatricum ne interpellata quidem cum choris totidemque remanerent magistris.'
