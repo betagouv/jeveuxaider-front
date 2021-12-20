@@ -87,12 +87,29 @@
         </Badge>
       </div>
     </div>
+    <div class="flex flex-col space-y-4">
+      <div class="text-lg font-medium text-gray-900">
+        Statut
+      </div>
+      <div class="flex flex-wrap gap-2 items-end">
+        <Badge v-for="statut in labels.mission_workflow_states" :key="statut.key" :color="statut.key" plain>
+          {{ statut.label }}
+        </Badge>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import labels from '@/utils/labels.json'
+
 export default {
-  layout: 'design-system'
+  layout: 'design-system',
+  data () {
+    return {
+      labels
+    }
+  }
 
 }
 </script>

@@ -71,6 +71,11 @@
         class="text-gray-500 text-sm mt-2 truncate max-w-full"
         v-text="mission.structure.name"
       />
+      <div class="mt-4">
+        <Badge :color="mission.state" plain>
+          {{ mission.state }}
+        </Badge>
+      </div>
 
       <div
         v-if="mission.provider == 'api_engagement'"
