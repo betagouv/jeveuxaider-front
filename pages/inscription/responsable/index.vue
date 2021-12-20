@@ -323,8 +323,8 @@ export default {
       loading: false,
       autocompleteOptions: [],
       formSchema: object({
-        first_name: string().required(),
-        last_name: string().required(),
+        first_name: string().min(3).required(),
+        last_name: string().min(2).required(),
         mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
         zip: string().min(5).required(),
         birthday: string().required(),
@@ -406,7 +406,7 @@ export default {
       if (orgaType === 'Crisp') {
         window.open('https://go.crisp.chat/chat/embed/?website_id=4b843a95-8a0b-4274-bfd5-e81cbdc188ac', '_blank')
       } else {
-        this.$router.push(`/inscription/organisation?orga_type=${orgaType}`)
+        this.$router.push(`/inscription/responsable?orga_type=${orgaType}`)
       }
     },
     async onStructureApiSelected (structure) {
@@ -444,55 +444,54 @@ export default {
     },
     onSubmitRegisterResponsableForm () {
       this.loading = true
-      //  this.$refs.registerResponsableForm.validate((valid, fields) => {
-      //   if (valid) {
-      //     this.$store
-      //       .dispatch('auth/registerResponsable', {
-      //         email: this.form.email,
-      //         password: this.form.password,
-      //         first_name: this.form.first_name,
-      //         last_name: this.form.last_name,
-      //         structure_name: this.form.structure.name,
-      //         structure_statut_juridique: this.$route.query.orga_type,
-      //         structure_api: this.form.structure.rna
-      //           ? this.form.structure
-      //           : null
-      //       })
-      //       .then(() => {
-      //         this.loading = false
-      //         window.plausible &&
-      //           window.plausible(
-      //             'Inscription responsable - Étape 1 - Création de compte'
-      //           )
-      //         this.$router.push('/inscription/responsable/step/profile')
-      //       })
-      //       .catch(() => {
-      //         this.loading = false
-      //       })
-      //   } else {
-      //     this.showErrors(fields)
-      //     this.loading = false
-      //   }
-      // })
+      this.formSchema
+        .validate(this.form, { abortEarly: false })
+        .then(async () => {
+          this.loading = true
+          this.form.birthday = this.$dayjs(
+            this.form.birthday,
+            'DD/MM/YYYY'
+          ).format('YYYY-MM-DD')
+          await this.$store.dispatch('auth/registerResponsable', {
+            ...this.form,
+            structure_name: this.form.structure.name,
+            structure_statut_juridique: this.$route.query.orga_type,
+            structure_api: this.form.structure.rna
+              ? this.form.structure
+              : null
+          })
+          window.plausible &&
+                window.plausible(
+                  'Inscription responsable - Étape 1 - Création de compte'
+                )
+          this.$router.push('/inscription/responsable/step/profile')
+        })
+        .catch((errors) => {
+          this.setErrors(errors)
+        })
+        .finally(() => {
+          this.loading = false
+        })
     },
     registerStructure () {
       this.loading = true
       this.form.structure.statut_juridique = this.$route.query.orga_type
 
-      this.$api
-        .addStructure({
-          name: this.form.structure.name,
-          statut_juridique: this.$route.query.orga_type,
-          structure_api: this.form.structure.rna ? this.form.structure : null
-        })
-        .then(async () => {
-          this.loading = false
-          await this.$store.dispatch('auth/fetchUser')
-          this.$router.push('/register/responsable/step/structure')
-        })
-        .catch(() => {
-          this.loading = false
-        })
+      console.log('TODO ADD STRUCTURE')
+      // this.$api
+      //   .addStructure({
+      //     name: this.form.structure.name,
+      //     statut_juridique: this.$route.query.orga_type,
+      //     structure_api: this.form.structure.rna ? this.form.structure : null
+      //   })
+      //   .then(async () => {
+      //     this.loading = false
+      //     await this.$store.dispatch('auth/fetchUser')
+      //     this.$router.push('/register/responsable/step/structure')
+      //   })
+      //   .catch(() => {
+      //     this.loading = false
+      //   })
     }
   }
 }

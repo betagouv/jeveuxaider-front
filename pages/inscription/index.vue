@@ -31,7 +31,7 @@
         <div class="text-white text-lg">
           ou
         </div>
-        <nuxt-link to="/inscription/organisation">
+        <nuxt-link to="/inscription/responsable">
           <BoxItem
             icon="📢"
             title="Je veux publier<br><strong>des missions</strong>"

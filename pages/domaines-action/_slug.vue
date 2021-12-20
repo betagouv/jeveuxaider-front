@@ -254,8 +254,8 @@
                 :to="
                   $store.getters.isLogged &&
                     $store.getters.contextRole == 'responsable'
-                    ? `/dashboard/structure/${$store.getters.contextStructure.id}/missions/add`
-                    : '/inscription/organisation'
+                    ? `/admin/organisations/${$store.getters.contextStructure.id}/missions/add`
+                    : '/inscription/responsable'
                 "
                 :class="$options.filters.label(thematique.domaine_id, 'domaines', 'bg')"
                 class="inline-flex items-center justify-center px-7 py-3 border border-transparent text-base font-medium rounded-full text-white !outline-none focus:ring transition"

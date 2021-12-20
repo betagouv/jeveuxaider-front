@@ -225,13 +225,13 @@ export default {
       if (!this.$store.getters.isLogged) {
         return [
           { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-          { name: 'Publier une mission', href: '/inscription/organisation', icon: CalendarIcon },
+          { name: 'Publier une mission', href: '/inscription/responsable', icon: CalendarIcon },
           { name: 'Devenir bénévole', href: '/inscription/benevole', icon: UserIcon }
         ]
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-        { name: 'Publier une mission', href: '/inscription/organisation', icon: CalendarIcon }
+        { name: 'Publier une mission', href: '/inscription/responsable', icon: CalendarIcon }
       ]
     },
     secondNavigation () {

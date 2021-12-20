@@ -130,7 +130,7 @@
                 Vous êtes une organisation ?
               </dt>
               <nuxt-link
-                to="/inscription/organisation"
+                to="/inscription/responsable"
                 class="mt-4 w-full flex justify-center py-3 px-4 rounded-lg text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white hover:scale-105 transform transition"
               >
                 Publiez vos missions
@@ -146,7 +146,7 @@
                 Vous êtes une collectivité ?
               </dt>
               <nuxt-link
-                to="/inscription/organisation?orga_type=Collectivité"
+                to="/inscription/responsable?orga_type=Collectivité"
                 class="mt-4 w-full flex justify-center py-3 px-4 rounded-lg text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white hover:scale-105 transform transition"
               >
                 Créez votre page
