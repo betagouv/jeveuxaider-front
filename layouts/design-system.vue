@@ -82,16 +82,10 @@ export default {
             { name: 'Steps', href: '/design-system/navigation/steps' }
           ]
         },
-        // {
-        //   category: 'Overlay',
-        //   components: [
-        //     { name: 'Cards', href: '/design-system/advanced/cards' }
-        //   ]
-        // },
         {
-          category: 'Other',
+          category: 'Others',
           components: [
-            { name: 'Others', href: '/design-system/base/others' }
+            { name: 'Blocks', href: '/design-system/others/blocks' }
           ]
         }
       ]

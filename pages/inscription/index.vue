@@ -1,5 +1,5 @@
 <template>
-  <div class="relative bg-jva-blue-500 overflow-hidden text-center">
+  <div class="relative bg-jva-blue-500 overflow-hidden">
     <img
       class="z-1 object-cover absolute h-screen lg:h-auto"
       alt="JeVeuxAider"
@@ -7,14 +7,16 @@
       data-not-lazy
     >
     <div class="relative z-10 py-12 lg:py-24">
-      <h2
-        class="text-3xl md:text-5xl text-white font-light !leading-tight tracking-tight"
-      >
-        Un petit clic pour vous, <br>
-        <span class="font-bold">un grand geste pour la solidarité.</span>
-      </h2>
-      <div class="text-xl md:text-3xl text-white mt-2 tracking-tight">
-        Que peut-on faire pour vous ?
+      <div class=" text-center">
+        <h2
+          class="text-3xl md:text-5xl text-white font-light !leading-tight tracking-tight"
+        >
+          Un petit clic pour vous, <br>
+          <span class="font-bold">un grand geste pour la solidarité.</span>
+        </h2>
+        <div class="text-xl md:text-3xl text-white mt-2 tracking-tight">
+          Que peut-on faire pour vous ?
+        </div>
       </div>
       <div
         class="flex flex-col space-y-4 items-center justify-center mt-12 mb-12 md:flex-row md:space-x-6 md:space-y-0"
@@ -29,7 +31,7 @@
         <div class="text-white text-lg">
           ou
         </div>
-        <nuxt-link to="/inscription/organisation">
+        <nuxt-link to="/inscription/responsable">
           <BoxItem
             icon="📢"
             title="Je veux publier<br><strong>des missions</strong>"

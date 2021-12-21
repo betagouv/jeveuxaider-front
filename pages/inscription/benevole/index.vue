@@ -501,8 +501,8 @@ export default {
         password: ''
       },
       formSchema: object({
-        first_name: string().required(),
-        last_name: string().required(),
+        first_name: string().min(3).required(),
+        last_name: string().min(2).required(),
         mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
         zip: string().min(5).required(),
         birthday: string().required(),

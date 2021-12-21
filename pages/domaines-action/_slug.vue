@@ -90,7 +90,7 @@
           <div class="grid grid-cols-2 gap-8 lg:grid-cols-4">
             <div class="col-span-1 flex justify-center lg:col-span-1">
               <p
-                class="text-center text-base mb-4 mt-2 font-semibold uppercase text-[#242526] tracking-wider"
+                class="text-center text-base mb-4 mt-2 font-semibold uppercase text-gray-800 tracking-wider"
               >
                 En partenariat avec
               </p>
@@ -254,8 +254,8 @@
                 :to="
                   $store.getters.isLogged &&
                     $store.getters.contextRole == 'responsable'
-                    ? `/dashboard/structure/${$store.getters.contextStructure.id}/missions/add`
-                    : '/inscription/organisation'
+                    ? `/admin/organisations/${$store.getters.contextStructure.id}/missions/add`
+                    : '/inscription/responsable'
                 "
                 :class="$options.filters.label(thematique.domaine_id, 'domaines', 'bg')"
                 class="inline-flex items-center justify-center px-7 py-3 border border-transparent text-base font-medium rounded-full text-white !outline-none focus:ring transition"
