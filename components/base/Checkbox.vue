@@ -20,7 +20,7 @@
       </div>
     </template>
     <template v-if="variant == 'button'">
-      <div class="bg-white hover:scale-105 transition">
+      <div :class="['bg-white hover:scale-105 transition', {'bg-transparent': transparent}, {'!bg-white': checked} ]">
         <input
           :id="option.key"
           :aria-describedby="`${option.key}-description`"
@@ -33,8 +33,14 @@
         >
         <label
           :for="option.key"
-          class="cursor-pointer text-sm p-3 border rounded-xl inline-flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500"
-          :class="checked ? 'text-jva-blue-500 border-jva-blue-500 font-bold' : 'text-gray-400 border-gray-400'"
+          class="cursor-pointer text-sm border rounded-xl inline-flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500"
+          :class="[checked ? 'text-jva-blue-500 border-jva-blue-500 font-bold' : 'text-gray-400 border-gray-400',
+                   {
+                     'px-2.5 py-1.5': size == 'xs',
+                     'p-3': size == 'md',
+                   }
+          ]"
+
           tabindex="0"
           @keypress.space.prevent="toggleChecked()"
         >{{ option.label }}</label>
@@ -48,11 +54,17 @@ export default {
   props: {
     option: { type: Object, required: true },
     isChecked: { type: Boolean, default: false },
+    transparent: { type: Boolean, default: false },
+    size: {
+      type: String,
+      default: 'md',
+      validator: s => ['xs', 'md'].includes(s)
+    },
     variant: {
       type: String,
       default: 'checkbox',
       validator: s =>
-        ['checkbox', 'button'].includes(s)
+        ['checkbox', 'button', 'button'].includes(s)
     }
   },
   data () {

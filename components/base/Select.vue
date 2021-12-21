@@ -16,7 +16,6 @@
             border border-gray-200
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
-    :class=" [{ 'border-jva-red-primary': error}]"
     @change="onChange"
   >
     <option v-for="option in options" :key="option.key" :value="option.key">

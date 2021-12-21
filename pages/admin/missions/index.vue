@@ -79,6 +79,35 @@
         {{ queryResult.total | formatNumber }} missions
       </Heading>
       <div class="hidden lg:flex gap-x-4 gap-y-4 mt-6 text-sm flex-wrap">
+        <Checkbox
+          key="key"
+          :option="{key: 1, label:'Solidarité et insertion'}"
+          :is-checked="false"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[state]', 'Brouillon')"
+        />
+        <Checkbox
+          key="key"
+          :option="{key: 1, label:'Solidarité et insertion'}"
+          :is-checked="true"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[state]', 'Brouillon')"
+        />
+        <Checkbox
+          key="key"
+          :option="{key: 1, label:'Solidarité et insertion'}"
+          :is-checked="false"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[state]', 'Brouillon')"
+        />
+      </div>
+      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-6 text-sm flex-wrap">
         <button :class="['px-4 py-1 flex-shrink-0', !$route.query['filter[state]'] ? 'shadow bg-white rounded-full text-gray-900 font-semibold' : 'text-gray-500 font-medium']" @click="deleteFilter('filter[state]')">
           Toutes
         </button>
@@ -99,11 +128,6 @@
           :mission="mission"
           @click.native="drawerMissionId = mission.id"
         />
-        <!-- <div v-for="mission in queryResult.data" :key="mission.id">
-          <div class="flex justify-between font-gray-800">
-            <div>{{ mission.id }} : {{ mission.name }}</div>
-          </div>
-        </div> -->
       </div>
 
       <Pagination
