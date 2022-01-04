@@ -44,7 +44,7 @@
             <div class="text-sm font-medium text-gray-500 mb-4">
               Domaines
             </div>
-            <template v-if="$store.state.auth.user.profile.domaines.length">
+            <template v-if="$store.state.auth.user.profile.domaines">
               <div class="flex flex-wrap gap-4">
                 <Badge v-for="domaine in $store.state.auth.user.profile.domaines" :key="domaine" :color="domaine" size="sm">
                   {{ domaine | label('domaines') }}
@@ -61,7 +61,7 @@
             <div class="text-sm font-medium text-gray-500 mb-4">
               Disponibilités
             </div>
-            <template v-if="$store.state.auth.user.profile.disponibilities.length">
+            <template v-if="$store.state.auth.user.profile.disponibilities">
               <div class="flex flex-wrap gap-4">
                 <Badge v-for="item,i in $store.state.auth.user.profile.disponibilities" :key="i" color="gray-light" size="sm">
                   {{ $options.filters.label(

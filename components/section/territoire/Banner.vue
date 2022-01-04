@@ -125,6 +125,7 @@ export default {
     }
   },
   async fetch () {
+    // @TODO: Fetch from labels.json
     const domaines = await this.$axios.get('/tags', { params: { 'filter[type]': 'domaine' } })
     this.domaines = domaines.data.data
   },

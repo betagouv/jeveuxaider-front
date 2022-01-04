@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <template v-if="profile.disponibilities.length || profile.commitment__duration">
+        <template v-if="profile.disponibilities || profile.commitment__duration">
           <div class="flex flex-wrap gap-4 mt-2">
             <template v-if="profile.commitment__duration">
               <Badge color="green" size="xs">
