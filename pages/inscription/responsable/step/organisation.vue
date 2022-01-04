@@ -123,6 +123,21 @@
             </FormControl>
           </div>
 
+          <FormControl
+            label="Faites-vous partie d'un réseau national ?"
+            html-for="tete_de_reseau_id"
+            required
+          >
+            <InputAutocomplete
+              name="autocomplete"
+              label="Autocomplete"
+              placeholder="Choisissez un territoire"
+              :options="autocompleteReseauxOptions"
+              @selected="handleSelectedReseau"
+              @fetch-suggestions="onFetchReseauxSuggestions"
+            />
+          </FormControl>
+
           <Button
             type="submit"
             size="xl"
@@ -193,12 +208,26 @@ export default {
         name: string().required(),
         domaines: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action'),
         publics_beneficiaires: array().min(1, 'Merci de sélectionner au moins 1 public bénéficiaire')
-      })
+      }),
+      autocompleteReseauxOptions: []
+
     }
   },
   methods: {
     handleSelectedGeo (item) {
-      console.log('item', item)
+      console.log('handleSelectedGeo', item)
+    },
+    async onFetchReseauxSuggestions (value) {
+      const res = await this.$axios.get('/reseaux', {
+        params: {
+          'filter[search]': value,
+          pagination: 6
+        }
+      })
+      this.autocompleteReseauxOptions = res.data.data
+    },
+    handleSelectedReseau (reseau) {
+      this.form.tete_de_reseau_id = reseau ? reseau.id : null
     },
     onSubmit () {
       this.formSchema
@@ -211,13 +240,7 @@ export default {
                   window.plausible(
                     'Inscription responsable - Étape 3 - Informations sur l’organisation'
                   )
-
-        //   this.$router.push('/inscription/responsable/step/infos')
-        //   if (this.form.statut_juridique === 'Collectivité') {
-        //     this.$router.push('/inscription/responsable/step/images')
-        //   } else {
-        //     this.$router.push('/inscription/responsable/step/infos')
-        //   }
+          this.$router.push('/inscription/responsable/step/infos')
         })
         .catch((errors) => {
           this.setErrors(errors)
