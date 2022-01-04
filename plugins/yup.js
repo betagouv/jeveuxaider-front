@@ -10,11 +10,12 @@ setLocale({
   },
   string: {
     email: "Ce mail n'est pas valide",
-    min: 'Ce champ doit contenir au moins ${min} caractères',
-    max: 'Ce champ doit contenir au plus ${min} caractères'
+    url: "Cette URL n'est pas valide",
+    min: props => `Ce champ doit contenir au moins ${props.min} caractères`,
+    max: props => `Ce champ doit contenir au plus ${props.max} caractères`
   },
   number: {
-    min: 'La valeur doit être inférieure à ${min}',
-    max: 'La valeur doit être supéreure à ${max}'
+    min: props => `La valeur doit être inférieure à ${props.min}`,
+    max: props => `La valeur doit être supéreure à ${props.max}`
   }
 })

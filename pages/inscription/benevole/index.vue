@@ -553,12 +553,10 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           this.loading = true
-
           this.form.birthday = this.$dayjs(
             this.form.birthday,
             'DD/MM/YYYY'
           ).format('YYYY-MM-DD')
-
           await this.$store.dispatch('auth/registerVolontaire', this.form)
           this.$router.push('/inscription/benevole/step/profile')
         })
