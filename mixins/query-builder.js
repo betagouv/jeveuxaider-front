@@ -19,7 +19,7 @@ export default {
     changeFilter (filterName, filterValue, multiple = false) {
       const filterQueryValues = this.$route.query[filterName] ? this.$route.query[filterName].split(',') : []
 
-      if (filterQueryValues.includes(filterValue)) { // L'option est déjà filtrée, on la retire
+      if (filterQueryValues.includes(filterValue) || filterQueryValues == filterValue) { // L'option est déjà filtrée, on la retire
         this.deleteFilter(filterName, filterValue, multiple)
       } else if (filterValue === '' || filterValue === null) {
         this.deleteFilter(filterName, filterValue, multiple)
@@ -54,12 +54,22 @@ export default {
         query: { ...this.$route.query, [filterName]: filterQueryValues ? filterQueryValues.join(',') : undefined, page: undefined }
       })
     },
+    deleteAllFilters () {
+      this.$router.push({
+        path: this.$route.path,
+        query: {}
+      })
+    },
 
     changePage (page) {
       this.$router.push({
         path: this.$route.path,
         query: { ...this.$route.query, page }
       })
+    },
+    hasActiveFilters () {
+      Object.keys(this.$route.query).forEach(key => this.$route.query[key] === undefined ? delete this.$route.query[key] : {})
+      return Object.keys(this.$route.query).length === 0
     }
   }
 }
