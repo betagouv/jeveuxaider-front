@@ -16,6 +16,7 @@
     <template #sidebar>
       <div class="flex flex-col gap-y-4 sticky top-8">
         <SelectAdvanced
+          :key="`department-${$route.fullPath}`"
           name="department"
           placeholder="Département"
           :options="departments"
@@ -25,6 +26,7 @@
           @input="changeFilter('filter[department]', $event)"
         />
         <SelectAdvanced
+          :key="`domaine-${$route.fullPath}`"
           name="domaine"
           placeholder="Domaine d'action"
           :options="domaines"
@@ -35,17 +37,20 @@
         />
         <div class="flex space-x-6 mb-2">
           <Checkbox
+            :key="`type-1-${$route.fullPath}`"
             :option="{key:'presentiel', label: 'Présentiel'}"
             :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'].includes('Mission en présentiel')"
             @change="changeFilter('filter[type]', 'Mission en présentiel', true)"
           />
           <Checkbox
+            :key="`type-2-${$route.fullPath}`"
             :option="{key:'distance', label: 'À distance'}"
             :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'].includes('Mission à distance')"
             @change="changeFilter('filter[type]', 'Mission à distance', true)"
           />
         </div>
         <SelectAdvanced
+          :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Statut"
           :options="mission_states"
@@ -55,6 +60,7 @@
           @input="changeFilter('filter[state]', $event)"
         />
         <SelectAdvanced
+          :key="`place-${$route.fullPath}`"
           name="place"
           placeholder="Place restante"
           :options="[{key: true, label: 'Oui'}, {key: false, label: 'Non'}]"
@@ -64,6 +70,7 @@
           @input="changeFilter('filter[place]', $event)"
         />
         <SelectAdvanced
+          :key="`publics_volontaires-${$route.fullPath}`"
           name="publics_volontaires"
           placeholder="Proposé aux"
           :options="[{key: 'Mineurs', label: 'Mineurs'}, {key: 'Jeunes volontaires du Service National Universel', label: 'Jeunes du SNU'}]"
@@ -78,47 +85,94 @@
       <Heading as="h1" :level="1">
         {{ queryResult.total | formatNumber }} missions
       </Heading>
-      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-6 text-sm flex-wrap">
+      <Input
+        class="mt-8"
+        name="search"
+        placeholder="Nom de la mission"
+        icon="SearchIcon"
+        variant="transparent"
+        :value="$route.query['filter[search]']"
+        @input="changeFilter('filter[search]', $event)"
+      />
+      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
         <Checkbox
-          key="key"
-          :option="{key: 1, label:'Solidarité et insertion'}"
+          :key="`toutes-${$route.fullPath}`"
+          :option="{key: 'toutes', label:'Toutes'}"
+          :is-checked="hasActiveFilters()"
+          variant="button"
+          size="xs"
+          transparent
+          @change="deleteAllFilters()"
+        />
+        <Checkbox
+          v-if="['responsable'].includes($store.getters.contextRole)"
+          :key="`responsable-id-${$route.fullPath}`"
+          :option="{key: 'mes-missions', label:'Mes missions'}"
+          :is-checked="$route.query['filter[responsable.id]'] && $route.query['filter[responsable.id]'] == $store.getters.profile.id"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[responsable.id]', $store.getters.profile.id)"
+        />
+        <Checkbox
+          :key="`state-en-attente-validation-${$route.fullPath}`"
+          :option="{key: 'en-attente-validation', label:'En attente de validation'}"
+          :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En attente de validation'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[state]', 'En attente de validation')"
+        />
+        <Checkbox
+          :key="`state-en-cours-traitement-${$route.fullPath}`"
+          :option="{key: 'en-cours-traitement', label:'En cours de traitement'}"
+          :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En cours de traitement'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[state]', 'En cours de traitement')"
+        />
+        <Checkbox
+          :key="`available-${$route.fullPath}`"
+          :option="{key: 'available', label:'En ligne'}"
+          :is-checked="$route.query['filter[available]'] && $route.query['filter[available]'] == 'available'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[available]', 'available')"
+        />
+        <Checkbox
+          v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
+          :key="`snu-mig-${$route.fullPath}`"
+          :option="{key: 'snu-mig', label:'SNU/MIG'}"
+          :is-checked="$route.query['filter[publics_volontaires]'] && $route.query['filter[publics_volontaires]'] == 'Jeunes volontaires du Service National Universel'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[publics_volontaires]', 'Jeunes volontaires du Service National Universel')"
+        />
+        <Checkbox
+          v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
+          :key="`mineurs-${$route.fullPath}`"
+          :option="{key: 'mineurs', label:'Ouverte aux mineurs'}"
+          :is-checked="$route.query['filter[publics_volontaires]'] && $route.query['filter[publics_volontaires]'] == 'Mineurs'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[publics_volontaires]', 'Mineurs')"
+        />
+        <!--
+4/ SNU/MIG
+5/ Ouverte aux mineurs (sympa pour les référents) -->
+        <!-- <!- <Checkbox
+          key="en-ligne"
+          :option="{key: 1, label:'En ligne'}"
           :is-checked="false"
           variant="button"
           size="xs"
           transparent
-          @change="changeFilter('filter[state]', 'Brouillon')"
-        />
-        <Checkbox
-          key="key"
-          :option="{key: 1, label:'Solidarité et insertion'}"
-          :is-checked="true"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'Brouillon')"
-        />
-        <Checkbox
-          key="key"
-          :option="{key: 1, label:'Solidarité et insertion'}"
-          :is-checked="false"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'Brouillon')"
-        />
-      </div>
-      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-6 text-sm flex-wrap">
-        <button :class="['px-4 py-1 flex-shrink-0', !$route.query['filter[state]'] ? 'shadow bg-white rounded-full text-gray-900 font-semibold' : 'text-gray-500 font-medium']" @click="deleteFilter('filter[state]')">
-          Toutes
-        </button>
-        <button
-          v-for="option in mission_states"
-          :key="option.key"
-          :class="['px-4 py-1 flex-shrink-0', $route.query['filter[state]'] && $route.query['filter[state]'] == option.key ? 'shadow bg-white rounded-full text-gray-900 font-semibold' : 'text-gray-500 font-medium']"
-          @click="changeFilter('filter[state]', option.key)"
-        >
-          {{ option.label }}
-        </button>
+          @change="changeFilter('filter[state]', 'Brddouillon')"
+        /> -> -->
       </div>
       <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <CardMission
@@ -163,6 +217,7 @@ export default {
     }
   },
   data () {
+    console.log(this.$route.query)
     return {
       endpoint: '/missions',
       mission_states: labels.mission_workflow_states,

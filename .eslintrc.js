@@ -19,6 +19,7 @@ module.exports = {
     'no-console': 'off',
     'no-irregular-whitespace': 'off',
     'vue/no-v-html': 'off',
-    'import/no-named-as-default': 'off'
+    'import/no-named-as-default': 'off',
+    eqeqeq: 'off'
   }
 }
