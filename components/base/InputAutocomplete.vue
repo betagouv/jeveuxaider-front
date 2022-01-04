@@ -14,8 +14,10 @@
         :name="name"
         type="text"
         :placeholder="placeholder"
-        class=" px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500"
-        :class=" [{ 'border-jva-red-primary': error, 'pl-10': icon}]"
+        :class="[
+          'px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500',
+          {'pl-10': icon, 'bg-transparent': variant == 'transparent'}
+        ]"
         autocomplete="off"
         @input="handleInput"
         @keydown="onKeydown"
@@ -78,7 +80,8 @@ export default {
     attributeKey: { type: String, default: 'id' },
     attributeLabel: { type: String, default: 'name' },
     attributeRightLabel: { type: String, default: '' },
-    classOptions: { type: String, default: '' }
+    classOptions: { type: String, default: '' },
+    variant: { type: String, default: null } // transparent
   },
   data () {
     return {

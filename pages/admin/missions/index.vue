@@ -15,6 +15,16 @@
     </template>
     <template #sidebar>
       <div class="flex flex-col gap-y-4 sticky top-8">
+        <InputAutocomplete
+          v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
+          :value="$route.query['filter[structure.name]']"
+          name="autocomplete"
+          placeholder="Organisation"
+          :options="autocompleteOptionsOrga"
+          variant="transparent"
+          @fetch-suggestions="onFetchSuggestionsOrga"
+          @selected="changeFilter('filter[structure.name]', $event ? $event.name : undefined)"
+        />
         <SelectAdvanced
           :key="`department-${$route.fullPath}`"
           name="department"
@@ -161,18 +171,6 @@
           transparent
           @change="changeFilter('filter[publics_volontaires]', 'Mineurs')"
         />
-        <!--
-4/ SNU/MIG
-5/ Ouverte aux mineurs (sympa pour les référents) -->
-        <!-- <!- <Checkbox
-          key="en-ligne"
-          :option="{key: 1, label:'En ligne'}"
-          :is-checked="false"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'Brddouillon')"
-        /> -> -->
       </div>
       <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <CardMission
@@ -217,14 +215,28 @@ export default {
     }
   },
   data () {
-    console.log(this.$route.query)
     return {
       endpoint: '/missions',
       mission_states: labels.mission_workflow_states,
       drawerMissionId: null,
       drawerMission: null,
       domaines: labels.domaines,
-      departments: labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })
+      departments: labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } }),
+      autocompleteOptionsOrga: []
+    }
+  },
+  methods: {
+    async onFetchSuggestionsOrga (value) {
+      const res = await this.$axios.get('/structures', {
+        params: {
+          'filter[search]': value,
+          pagination: 20
+        }
+      })
+      this.autocompleteOptionsOrga = res.data.data
+    },
+    handleSelected (event) {
+      console.log('handle', event)
     }
   }
 
