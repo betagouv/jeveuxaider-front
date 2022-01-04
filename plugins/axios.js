@@ -2,11 +2,17 @@
 
 export default function ({ $axios, redirect, app, store, error, $message }) {
   $axios.interceptors.request.use(function (config) {
-    const ACCESS_TOKEN = app.$cookies.get('access-token')
-    const ACCESS_TOKEN_IMPERSONATE = app.$cookies.get(
-      'access_token_impersonate'
-    )
+    console.log('config', config)
+    const isExternalCall = config.url.includes('http')
+    console.log('isExternalCall', isExternalCall)
+    if (isExternalCall) {
+      return config
+    }
     if (!config.headers.Authorization) {
+      const ACCESS_TOKEN = app.$cookies.get('access-token')
+      const ACCESS_TOKEN_IMPERSONATE = app.$cookies.get(
+        'access_token_impersonate'
+      )
       if (ACCESS_TOKEN_IMPERSONATE) {
         config.headers.Authorization = `Bearer ${ACCESS_TOKEN_IMPERSONATE}`
       } else if (ACCESS_TOKEN) {
