@@ -15,7 +15,6 @@ export default {
       this.errors = {}
     },
     validate (field) {
-      console.log('validating', field)
       this.formSchema
         .validateAt(field, this.form)
         .then(() => {
