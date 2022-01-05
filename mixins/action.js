@@ -39,7 +39,7 @@ export default {
             iconVariant: 'warning',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'organisation', 'organisations', false)}</b> en attente de validation`,
             subtitle: 'Des organisations souhaitent publier des missions',
-            link: '/dashboard/organisations?filter[state]=En attente de validation'
+            link: '/admin/organisations?filter[state]=En attente de validation'
           }
         case 'organisations_incomplete':
           return {
@@ -47,7 +47,7 @@ export default {
             iconVariant: 'warning',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'organisation', 'organisations', false)}</b> sont incomplètes`,
             subtitle: 'Des fiches duêment complétées augmentent la qualité de la plateforme',
-            link: '/dashboard/organisations'
+            link: '/admin/organisations'
           }
         case 'missions_waiting_validation':
           return {
@@ -55,7 +55,7 @@ export default {
             iconVariant: 'warning',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'mission', 'missions', false)}</b> en attente de validation`,
             subtitle: 'Des missions souhaitent être publiées sur la plateforme',
-            link: '/dashboard/missions?filter[state]=En attente de validation'
+            link: '/admin/missions?filter[state]=En attente de validation'
           }
         case 'missions_outdated':
           return {
@@ -63,7 +63,15 @@ export default {
             iconVariant: 'danger',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'mission', 'missions', false)}</b> dont la date de fin est passée`,
             subtitle: 'Pensez à mettre à jour les missions',
-            link: '/dashboard/missions'
+            link: '/admin/missions'
+          }
+        case 'mission_new':
+          return {
+            icon: '✊',
+            iconVariant: 'warning',
+            title: 'Créez votre première mission sur la plateforme',
+            subtitle: 'Aidez-vous de nos modèles de missions',
+            link: `/admin/organisations/${this.$store.getters.currentRole.contextable_id}/missions/add`
           }
         case 'participations_waiting_validation':
           return {
@@ -71,7 +79,7 @@ export default {
             iconVariant: 'warning',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'participation', 'participations', false)}</b> en attente de validation`,
             subtitle: 'Pensez à mettre à jour les missions',
-            link: '/dashboard/participations'
+            link: '/admin/participations'
           }
         case 'participations_in_progress':
           return {
@@ -79,7 +87,7 @@ export default {
             iconVariant: 'warning',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'participation', 'participations', false)}</b> en cours de traitement`,
             subtitle: 'Pensez à traiter ces candidatures',
-            link: '/dashboard/participations'
+            link: '/admin/participations'
           }
       }
     }

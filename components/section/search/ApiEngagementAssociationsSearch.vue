@@ -51,7 +51,7 @@
           style="right: 7px; top: 7px"
           size="sm"
           class="!absolute !z-10 !justify-center !uppercase !px-4 !py-2 !border !border-transparent !rounded-lg !shadow !font-bold !text-white hover:!shadow-lg hover:!scale-105 !transform !transition"
-          @click.native="$emit('added', query)"
+          @click="$emit('added', query)"
           @keyup.enter="$emit('added', query)"
         >
           Ajouter

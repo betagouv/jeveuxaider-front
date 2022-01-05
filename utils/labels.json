@@ -128,9 +128,39 @@
     "structure_legal_status": [
         {"key": "Association", "label": "Association", "label2": "l'association"},
         {"key": "Collectivité", "label": "Collectivité", "label2": "la collectivité"},
-        {"key": "Structure publique", "label": "Organisation publique", "label2": "l'organisation publique"},
-        {"key": "Structure privée", "label": "Organisation privée", "label2": "l'organisation privée"},
+        {"key": "Organisation publique", "label": "Organisation publique", "label2": "l'organisation publique"},
+        {"key": "Organisation privée", "label": "Organisation privée", "label2": "l'organisation privée"},
         {"key": "Autre", "label": "Autre", "label2": "l'organisation"}
+    ],
+    "association_types": [
+        {"key": "Agrément jeunesse et éducation populaire", "label": "Agrément jeunesse et éducation populaire"},
+        {"key": "Agrément service civique", "label": "Agrément service civique"},
+        {"key": "Association complémentaire de l'enseignement public", "label": "Association complémentaire de l'enseignement public"},
+        {"key": "Association complémentaire de l'enseignement public", "label": "Association complémentaire de l'enseignement public"},
+        {"key": "Associations d'usagers du système de santé", "label": "Associations d'usagers du système de santé"},
+        {"key": "Association sportive affiliée à une fédération sportive agréée par l'État", "label": "Association sportive affiliée à une fédération sportive agréée par l'État"},
+        {"key": "Agrément des associations de protection de l'environnement", "label": "Agrément des associations de protection de l'environnement"},
+        {"key": "Association agréée de sécurité civile", "label": "Association agréée de sécurité civile"},
+        {"key": "Autre agrément", "label": "Autre agrément"}
+    ],
+    "structure_publique_types": [
+        {"key": "Etablissement scolaire", "label": "Etablissement scolaire"},
+        {"key": "Etablissement public de santé", "label": "Etablissement public de santé"},
+        {"key": "Etablissement public", "label": "Etablissement public"},
+        {"key": "Service de l'Etat", "label": "Service de l'Etat"}
+    ],
+    "structure_publique_etat_types": [
+        {"key": "SDIS (Service départemental d'Incendie et de Secours)", "label": "SDIS (Service départemental d'Incendie et de Secours)"},
+        {"key": "Gendarmerie", "label": "Gendarmerie"},
+        {"key": "Police", "label": "Police"},
+        {"key": "Armées", "label": "Armées"},
+        {"key": "Autre service de l'état", "label": "Autre service de l'état"},
+        {"key": "Autre établissement public", "label": "Autre établissement public"}
+    ],
+    "structure_privee_types": [
+        {"key": "Établissement de santé privé d'intérêt collectif", "label": "Établissement de santé privé d'intérêt collectif"},
+        {"key": "Entreprise agréée ESUS", "label": "Entreprise agréée ESUS"},
+        {"key": "Autre", "label": "Autre"}
     ],
     "structure_workflow_states": [
         {"key": "En attente de validation", "label": "En attente de validation"},

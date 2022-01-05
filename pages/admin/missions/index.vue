@@ -98,7 +98,7 @@
       <Input
         class="mt-8"
         name="search"
-        placeholder="Nom de la mission"
+        placeholder="Recherche par mots clés..."
         icon="SearchIcon"
         variant="transparent"
         :value="$route.query['filter[search]']"
