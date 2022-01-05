@@ -22,7 +22,7 @@ import {
   ArrowNarrowRightIcon,
   DuplicateIcon
 } from '@vue-hero-icons/outline'
-import { InformationCircleIcon, UsersIcon, HomeIcon } from '@vue-hero-icons/solid'
+import { InformationCircleIcon, UsersIcon, HomeIcon, ChevronDownIcon as ChevronDownSolidIcon, CheckIcon as CheckSolidIcon } from '@vue-hero-icons/solid'
 
 const components = {
   EyeIcon,
@@ -44,6 +44,8 @@ const components = {
   ExternalLinkIcon,
   ChevronDownIcon,
   ChevronRightIcon,
+  ChevronDownSolidIcon,
+  CheckSolidIcon,
   SwitchHorizontalIcon,
   ArrowNarrowLeftIcon,
   ArrowNarrowRightIcon,

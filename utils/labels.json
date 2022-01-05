@@ -186,12 +186,12 @@
         { "key": "autre", "label": "Autre" }
     ],
     "mission_workflow_states": [
-        { "key": "Brouillon", "label": "Brouillon" },
-        { "key": "En attente de validation", "label": "En attente de validation" },
-        { "key": "En cours de traitement", "label": "En cours de traitement" },
-        { "key": "Validée", "label": "Validée" },
-        { "key": "Terminée", "label": "Terminée" },
-        { "key": "Signalée", "label": "Signalée" },
-        { "key": "Annulée", "label": "Annulée" }
+        { "key": "Brouillon", "label": "Brouillon", "description": "La mission est en cours d'édition. Elle n'apparait pas dans la recherche." },
+        { "key": "En attente de validation", "label": "En attente de validation", "description": "La mission est en attente de validation par le référérent départemental." },
+        { "key": "En cours de traitement", "label": "En cours de traitement", "description": "La mission est en cours de traitement par le référent départemental." },
+        { "key": "Validée", "label": "Validée", "description": "La mission est en ligne. Les bénévoles peuvent y participer." },
+        { "key": "Terminée", "label": "Terminée", "description": "La mission est terminée. Les participations en attente seront annulées. La mission est hors-ligne." },
+        { "key": "Signalée", "label": "Signalée", "description": "La mission ne respecte pas la charte de JeVeuxAider.gouv.fr. Les partiicpations en attente seront annulées. La mission est hors-ligne." },
+        { "key": "Annulée", "label": "Annulée", "description": "La mission est annulée. Les partiicpations en attente seront annulées. La mission est hors-ligne." }
     ]
 }
