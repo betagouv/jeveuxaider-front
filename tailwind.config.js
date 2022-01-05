@@ -91,7 +91,11 @@ module.exports = {
           memoire: '#175AB6',
           cooperation: '#5B8397'
         },
-        'cool-gray': { ...colors.coolGray, 500: '#777E90' }
+        'cool-gray': { ...colors.coolGray, 500: '#777E90' },
+        blue: colors.blue,
+        orange: colors.amber,
+        red: colors.red,
+        green: colors.green
       },
       borderRadius: {
         xl: '10px'

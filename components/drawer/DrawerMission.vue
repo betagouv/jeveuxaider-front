@@ -17,6 +17,7 @@
         Dupliquer
       </Button>
     </div>
+    <SelectWithDescription :options="mission_workflow_states" :value="mission.state" class="mt-4" @selected="handleChangeState($event)" />
     <div class="border-t -mx-6 my-6" />
     <div class="mb-8">
       <div class="text-sm flex justify-between px-2 mb-2 items-center">
@@ -89,6 +90,7 @@
 </template>
 
 <script>
+import labels from '@/utils/labels.json'
 
 export default {
   props: {
@@ -99,7 +101,8 @@ export default {
   },
   data () {
     return {
-      mission: null
+      mission: null,
+      mission_workflow_states: labels.mission_workflow_states
     }
   },
   async fetch () {
@@ -117,6 +120,11 @@ export default {
   },
   watch: {
     missionId: '$fetch'
+  },
+  methods: {
+    handleChangeState (option) {
+      this.mission.state = option.key
+    }
   }
 }
 </script>

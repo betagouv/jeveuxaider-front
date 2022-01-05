@@ -66,7 +66,7 @@
           <template #button>
             <div class="flex items-center border-r pr-4 py-4 w-52 truncate">
               <div class="truncate mr-auto">
-                {{ $store.getters.currentRole.label }}
+                {{ $store.getters.currentRole.key == 'referent' ? $options.filters.label($store.getters.currentRole.label, 'departments') : $store.getters.currentRole.label }}
               </div>
               <ChevronDownIcon class="h-3" />
             </div>
@@ -248,8 +248,8 @@ export default {
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
           { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
-          { name: 'Utilisateurs', href: '#', isActive: this.isActiveLink('/') },
-          { name: 'Liens utiles', href: '#', isActive: this.isActiveLink('/') }
+          { name: 'Utilisateurs', href: '#', isActive: false },
+          { name: 'Liens utiles', href: '#', isActive: false }
         ]
       } else if (this.$store.getters.currentRole?.key === 'responsable') {
         return [
@@ -257,6 +257,14 @@ export default {
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
           { name: 'Participations', href: '#' },
           { name: 'Liens utiles', href: '#' }
+        ]
+      } else if (this.$store.getters.currentRole?.key === 'referent') {
+        return [
+          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
+          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations') },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
+          { name: 'Utilisateurs', href: '#', isActive: false },
+          { name: 'Liens utiles', href: '#', isActive: false }
         ]
       }
       return [
