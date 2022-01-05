@@ -216,6 +216,11 @@ export default {
   methods: {
     handleSelectedGeo (item) {
       console.log('handleSelectedGeo', item)
+      this.form.address = item.name
+      this.form.zip = item.postcode
+      this.form.city = item.city
+      this.form.longitude = item.coordinates[0]
+      this.form.latitude = item.coordinates[1]
     },
     async onFetchReseauxSuggestions (value) {
       const res = await this.$axios.get('/reseaux', {

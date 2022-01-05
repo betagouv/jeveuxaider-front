@@ -63,7 +63,7 @@
 
       <div v-else-if="currentStep.key == 'choix_orga_nom'" class="mt-4">
         <form
-          v-if="!userHasOrganisation"
+          v-if="!userHasRoleResponsable"
           id="organisation"
           class="max-w-2xl mx-auto bg-gray-100 p-6 sm:p-12 rounded-2xl"
           @submit.prevent="onSubmitChooseName"
@@ -93,10 +93,12 @@
 
           <template v-if="!orgaExist && $route.query.orga_type !== 'Association'">
             <Button
+              class="mt-4"
               variant="green"
-              form="organisation"
+              form="inscription"
+              full
+              size="xl"
               @click="onSubmitChooseName"
-              @keyup.enter="onSubmitChooseName"
             >
               Continuer
             </Button>
@@ -125,11 +127,12 @@
         <div v-else class="max-w-2xl mx-auto bg-gray-100 p-6 sm:p-12 rounded-2xl">
           <div class="mb-6">
             Vous êtes déjà responsable de l'organisation
-            <span class="font-bold">{{ userHasOrganisation.name }}</span>
+            <span class="font-bold">{{ userHasRoleResponsable.label }}</span>
           </div>
           <nuxt-link to="/inscription/responsable/step/profile">
             <Button
-              type="primary"
+              size="xl"
+              full
               variant="green"
             >
               Continuer
@@ -392,13 +395,12 @@ export default {
     currentStep () {
       return this.steps.find(step => step.key === this.currentStepKey)
     },
-    userHasOrganisation () {
-      if (!this.$store.getters.profile) {
+    userHasRoleResponsable () {
+      if (!this.$store.getters.isLogged) {
         return false
       }
-      return this.$store.getters.profile.structures.length
-        ? this.$store.getters.profile.structures[0]
-        : null
+      const organisations = this.$store.getters.roles.filter(role => role.key === 'responsable')
+      return organisations.length ? organisations[0] : false
     }
   },
   methods: {
@@ -424,9 +426,7 @@ export default {
     },
     async onSubmitChooseName () {
       if (!this.form.structure.name || this.form.structure.name.trim() === '') {
-        this.$message.error({
-          message: 'Merci de saisir un nom'
-        })
+        this.$toast.error("Merci de saisir un nom d'organisation")
         return
       }
       if (this.$route.query.orga_type === 'Collectivité') {

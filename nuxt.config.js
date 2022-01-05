@@ -55,7 +55,8 @@ export default {
     '@nuxtjs/dayjs',
     'nuxt-lazy-load',
     'vue-scrollto/nuxt',
-    'cookie-universal-nuxt'
+    'cookie-universal-nuxt',
+    'vue-toastification/nuxt'
   ],
 
   privateRuntimeConfig: {
@@ -118,5 +119,9 @@ export default {
       'relativeTime',
       'customParseFormat'
     ]
+  },
+  toast: {
+    timeout: 3000,
+    draggable: true
   }
 }
