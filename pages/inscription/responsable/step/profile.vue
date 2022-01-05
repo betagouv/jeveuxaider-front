@@ -104,7 +104,7 @@ export default {
         {
           name: 'Rejoignez le mouvement',
           status: 'complete',
-          href: '/inscription/benevole/step/profile'
+          href: '/inscription/responsable/step/profile'
         },
         {
           name: 'Votre profil',

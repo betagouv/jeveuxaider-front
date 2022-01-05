@@ -9,7 +9,7 @@
         placeholder,
         autocomplete: 'new-password',
       }"
-      class="relative w-full leading-none"
+      class="relative w-full leading-none focus:border-jva-blue-500"
       :limit="5"
       :loading="renderSuggestions"
       @input="onInputChange"

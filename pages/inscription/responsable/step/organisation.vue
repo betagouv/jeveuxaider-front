@@ -181,12 +181,12 @@ export default {
         {
           name: 'Rejoignez le mouvement',
           status: 'complete',
-          href: '/inscription/benevole/step/profile'
+          href: '/inscription/responsable/step/profile'
         },
         {
           name: 'Votre profil',
           status: 'complete',
-          href: '/inscription/benevole/step/profile'
+          href: '/inscription/responsable/step/profile'
         },
         {
           name: 'Informations sur l\'organisation',
@@ -240,7 +240,7 @@ export default {
                   window.plausible(
                     'Inscription responsable - Étape 3 - Informations sur l’organisation'
                   )
-          this.$router.push('/inscription/responsable/step/infos')
+          this.$router.push('/inscription/responsable/step/organisation-details')
         })
         .catch((errors) => {
           this.setErrors(errors)

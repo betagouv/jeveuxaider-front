@@ -8,20 +8,12 @@
     <template #header>
       <SectionHeading title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
         <template #action>
-          <template v-if="['referent','referent_regional','responsable'].includes($store.getters.contextRole)">
-            <Box padding="xs">
-              <div class="text-gray-400 uppercase text-xs">
-                {{ $options.filters.label($store.getters.contextRole, 'role') }}
-              </div>
-              <div class="text-gray-900 font-bold">
-                <template v-if="$store.getters.contextRole == 'referent'">
-                  {{ $options.filters.label($store.getters.currentRole.label, 'departments') }}
-                </template>
-                <template v-else>
-                  {{ $store.getters.currentRole.label }}
-                </template>
-              </div>
-            </Box>
+          <template v-if="['responsable'].includes($store.getters.contextRole)">
+            <router-link :to="`/structures/${$store.getters.currentRole.contextable_id}/missions/add`">
+              <Button icon="PlusIcon" size="xl">
+                Nouvelle mission
+              </Button>
+            </router-link>
           </template>
         </template>
       </Sectionheading>
