@@ -17,6 +17,10 @@
         Dupliquer
       </Button>
     </div>
+    <div class="border-t -mx-6 my-6" />
+    <div class="text-sm  uppercase font-semibold text-gray-600">
+      Statut de la mission
+    </div>
     <SelectWithDescription :options="mission_workflow_states" :value="mission.state" class="mt-4" @selected="handleChangeState($event)" />
     <div class="border-t -mx-6 my-6" />
     <div class="mb-8">

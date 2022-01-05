@@ -1,8 +1,8 @@
 <template>
-  <div class="relative-gray">
-    <div class="inline-flex shadow-sm rounded-md divide-x divide-gray-200">
-      <div class="relative z-0 inline-flex shadow-sm rounded-md divide-x divide-gray-200">
-        <div class="relative inline-flex items-center bg-gray-50 py-2 pl-3 pr-4 border border-transparent rounded-l-md shadow-sm text-white">
+  <div class="relative">
+    <div class="inline-flex border rounded-md divide-x divide-gray-100">
+      <div class="relative z-0 inline-flex rounded-md divide-x divide-gray-100">
+        <div class="relative inline-flex items-center bg-white py-2 pl-3 pr-4 border border-transparent rounded-l-md text-white">
           <CheckSolidIcon class="h-5 w-5 text-gray-800" />
           <p class="ml-2.5 text-sm font-medium text-gray-800">
             {{ selected.label }}
@@ -10,7 +10,7 @@
         </div>
         <button
           type="button"
-          class="relative inline-flex items-center bg-gray-50 p-2 rounded-l-none rounded-r-md text-sm font-medium text-white hover:bg-gray-200 focus:outline-none focus:z-10 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500"
+          class="relative inline-flex items-center bg-white p-2 rounded-l-none rounded-r-md text-sm font-medium text-white hover:bg-gray-100 focus:outline-none focus:z-10 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500"
           aria-haspopup="listbox"
           aria-expanded="true"
           aria-labelledby="listbox-label"
@@ -32,7 +32,7 @@
       <ul
         v-if="show"
         v-click-outside="() => show = false"
-        class="origin-top-right absolute z-10 right-0 mt-2 w-72 rounded-md shadow-lg overflow-hidden bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none"
+        class="origin-top-left absolute z-10 left-0 mt-2 w-72 rounded-md shadow-lg overflow-hidden bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none"
         tabindex="-1"
         role="listbox"
         aria-labelledby="listbox-label"
@@ -44,7 +44,7 @@
           :key="option.key"
           class="text-gray-900 select-none relative p-4 text-sm group hover:bg-gray-50 cursor-pointer"
           role="option"
-          @click="option.key != value ? $emit('selected', option) : null"
+          @click="option.key != value ? handleSelected(option) : null"
         >
           <div class="flex flex-col">
             <div class="flex justify-between">
@@ -87,13 +87,12 @@ export default {
     selected () {
       return this.options.find(option => option.key == this.value)
     }
+  },
+  methods: {
+    handleSelected (option) {
+      this.$emit('selected', option)
+      this.show = false
+    }
   }
-
 }
 </script>
-
-<style scoped>
--gray {
-
-}
-</style>
