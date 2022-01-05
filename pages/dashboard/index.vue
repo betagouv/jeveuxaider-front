@@ -21,7 +21,7 @@
     <template #left>
       <Box :loading="loadingActions" loading-text="Récupération des actions en attente ...">
         <Heading as="h2" :level="3" class="mb-8">
-          Vous avez {{ formattedActions.length }} action(s) en attente
+          Vous avez {{ formattedActions.length | pluralize('action') }} en attente
         </Heading>
         <StackedList :divided="false">
           <StackedListItem
