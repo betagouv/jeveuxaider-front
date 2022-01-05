@@ -131,6 +131,7 @@ export default {
       loadingStatistics: true,
       links: [
         { icon: '🔎', title: 'Gérer les contenus', link: '#' },
+        { icon: '🔎', title: 'Gérer les modèles de missions', link: '#' },
         { icon: '📇', title: 'Détecter les organisations en double', link: '#' },
         { icon: '📇', title: 'Gérer le RNA des organisations', link: '#' }
       ]

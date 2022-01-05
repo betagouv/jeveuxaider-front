@@ -101,24 +101,33 @@
           :href="link.href"
           :to="link.to"
           :click="link.click"
-          :class="['hover:border-b-2 border-jva-blue-500 border-b-0 p-4', {'text-jva-blue-500 !border-b-2': link.isActive}]"
+          :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': link.isActive}]"
         >
           {{ link.name }}
         </NavItem>
       </div>
-      <div class="flex space-x-6 py-4">
+      <div class="flex">
         <template v-if="$store.getters.isLogged">
-          <router-link to="/profile" class="hover:underline">
+          <NavItem
+            href="/profile"
+            :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/profile')}]"
+          >
             Mon profil
-          </router-link>
+          </NavItem>
         </template>
         <template v-else>
-          <router-link to="/inscription" class="hover:underline">
+          <NavItem
+            href="/inscription"
+            :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/inscription')}]"
+          >
             Inscription
-          </router-link>
-          <router-link to="/login" class="hover:underline">
+          </NavItem>
+          <NavItem
+            href="/login"
+            :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/login')}]"
+          >
             Connexion
-          </router-link>
+          </NavItem>
         </template>
       </div>
     </div>
