@@ -290,7 +290,7 @@
       </div>
 
       <div v-else-if="currentStep.key == 'form_reseau'" class="mt-4">
-      <!-- <FormLeadReseau /> -->
+        <FormLeadReseau />
       </div>
     </div>
   </div>
@@ -301,11 +301,13 @@ import { string, object, ref } from 'yup'
 import BoxItem from '@/components/section/inscription/BoxItem'
 import ApiEngagementAssociationsSearch from '@/components/section/search/ApiEngagementAssociationsSearch'
 import MixinForm from '@/mixins/form'
+import FormLeadReseau from '@/components/form/FormLeadReseau'
 
 export default {
   components: {
     BoxItem,
-    ApiEngagementAssociationsSearch
+    ApiEngagementAssociationsSearch,
+    FormLeadReseau
   },
   mixins: [MixinForm],
   data () {

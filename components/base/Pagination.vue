@@ -1,5 +1,5 @@
 <template>
-  <nav class="border-t border-gray-200 px-2 flex items-center justify-between">
+  <nav v-if="totalRows" class="border-t border-gray-200 px-2 flex items-center justify-between">
     <div class="-mt-px w-0 flex-1 flex">
       <button
         v-if="currentPage > 1"
