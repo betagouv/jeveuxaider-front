@@ -1,6 +1,6 @@
 <template>
   <span
-    class="inline-flex items-center rounded-full font-semibold"
+    class="inline-flex items-center rounded-full font-semibold max-w-full"
     :class="[
       {'px-3 py-1 text-xs': size == 'xs'},
       {'px-4 py-2 text-sm': size == 'sm'},
@@ -70,7 +70,9 @@
       { 'border text-domaine-culture border-domaine-culture': [11,'culture'].includes(color) && plain}
     ]"
   >
-    <slot />
+    <span class="truncate">
+      <slot />
+    </span>
   </span>
 </template>
 

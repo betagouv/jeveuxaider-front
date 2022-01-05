@@ -34,7 +34,7 @@
         <label
           :for="option.key"
           class="cursor-pointer text-sm border rounded-xl inline-flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500"
-          :class="[checked ? 'text-jva-blue-500 border-jva-blue-500 font-bold' : 'text-gray-400 border-gray-400',
+          :class="[checked ? 'text-jva-blue-500 border-jva-blue-500 font-bold' : 'text-gray-400 border-gray-300',
                    {
                      'px-2.5 py-1.5': size == 'xs',
                      'p-3': size == 'md',

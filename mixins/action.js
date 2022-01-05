@@ -65,7 +65,7 @@ export default {
             subtitle: 'Pensez à mettre à jour les missions',
             link: '/admin/missions'
           }
-        case 'missions_empty':
+        case 'mission_new':
           return {
             icon: '✊',
             iconVariant: 'warning',
