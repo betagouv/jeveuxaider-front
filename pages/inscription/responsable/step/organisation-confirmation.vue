@@ -1,5 +1,11 @@
 <template>
   <div class="relative bg-jva-blue-500">
+    <img
+      class="z-1 object-cover absolute h-screen lg:h-auto"
+      alt="JeVeuxAider"
+      srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
+      data-not-lazy
+    >
     <div class="relative p-6 lg:p-12">
       <div class="mb-6 lg:mb-12 text-center text-white">
         <h1 class="text-4xl lg:text-5xl font-medium leading-12 mb-4">

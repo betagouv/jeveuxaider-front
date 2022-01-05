@@ -98,7 +98,7 @@
               form="inscription"
               full
               size="xl"
-              @click="onSubmitChooseName"
+              @click.native="onSubmitChooseName"
             >
               Continuer
             </Button>

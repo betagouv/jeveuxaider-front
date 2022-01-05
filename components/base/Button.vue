@@ -33,7 +33,6 @@
              rounded ? 'rounded-full' : 'rounded-md'
 
     ]"
-    @click="$emit('click')"
   >
     <SpinIcon
       v-if="loading"

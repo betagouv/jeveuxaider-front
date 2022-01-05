@@ -40,12 +40,77 @@
               @blur="validate('name')"
             />
           </FormControl>
+          <FormControl label="Statut juridique" html-for="statut_juridique" required :error="errors.statut_juridique">
+            <SelectAdvanced
+              v-model="form.statut_juridique"
+              name="statut_juridique"
+              placeholder="Sélectionnez votre statut juridique"
+              :options="options.structure_legal_status"
+              @blur="validate('statut_juridique')"
+            />
+          </FormControl>
+          <FormControl
+            v-if="form.statut_juridique == 'Association'"
+            label="Disposez vous d'agréments ?"
+            html-for="association_types"
+          >
+            <SelectAdvanced
+              v-model="form.association_types"
+              name="association_types"
+              placeholder="Sélectionnez votre agrément"
+              :options="options.association_types"
+              clearable
+            />
+          </FormControl>
+          <FormControl
+            v-if="form.statut_juridique == 'Organisation publique'"
+            label="Type de votre organisation publique"
+            html-for="structure_publique_type"
+          >
+            <SelectAdvanced
+              v-model="form.structure_publique_type"
+              name="structure_publique_type"
+              placeholder="Sélectionnez le type de votre organisation publique"
+              :options="options.structure_publique_types"
+              clearable
+            />
+          </FormControl>
+          <FormControl
+            v-if="
+              form.statut_juridique == 'Organisation publique' &&
+                (form.structure_publique_type == 'Service de l\'Etat' ||
+                  form.structure_publique_type == 'Etablissement public')
+            "
+            :label="form.structure_publique_type"
+            html-for="structure_publique_etat_type"
+          >
+            <SelectAdvanced
+              v-model="form.structure_publique_etat_type"
+              name="structure_publique_etat_type"
+              placeholder="Choisissez une option"
+              :options="options.structure_publique_etat_types"
+              clearable
+            />
+          </FormControl>
+          <FormControl
+            v-if="form.statut_juridique == 'Organisation privée'"
+            label="Type de votre organisation privée"
+            html-for="structure_privee_type"
+          >
+            <SelectAdvanced
+              v-model="form.structure_privee_type"
+              name="structure_privee_type"
+              placeholder="Sélectionnez le type de votre organisation publique"
+              :options="options.structure_privee_types"
+              clearable
+            />
+          </FormControl>
           <FormControl label="Choisissez les domaines que couvrent votre organisation" html-for="domaines" required :error="errors.domaines">
             <CheckboxGroup
               v-model="form.domaines"
               name="domaines"
               variant="button"
-              :options="domaines_options"
+              :options="options.domaines"
             />
           </FormControl>
           <FormControl label="Choisissez les publics bénéficiaires de vos missions" html-for="publics_beneficiaires" required :error="errors.publics_beneficiaires">
@@ -53,7 +118,7 @@
               v-model="form.publics_beneficiaires"
               name="publics_beneficiaires"
               variant="button"
-              :options="publics_benificiaires_options"
+              :options="options.mission_publics_beneficiaires"
             />
           </FormControl>
           <FormControl label="Département de votre organisation" html-for="department" required :error="errors.department">
@@ -61,7 +126,7 @@
               v-model="form.department"
               name="department"
               placeholder="Sélectionnez votre département"
-              :options="departments_options.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
+              :options="options.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
             />
           </FormControl>
           <FormControl label="Saisissez l'adresse de votre organisation" html-for="autocomplete" required :error="errors.department">
@@ -177,6 +242,7 @@ export default {
   data () {
     return {
       loading: false,
+      options: labels,
       steps: [
         {
           name: 'Rejoignez le mouvement',
@@ -201,11 +267,9 @@ export default {
           status: 'upcoming'
         }
       ],
-      domaines_options: labels.domaines,
-      publics_benificiaires_options: labels.mission_publics_beneficiaires,
-      departments_options: labels.departments,
       formSchema: object({
         name: string().required(),
+        statut_juridique: string().required(),
         domaines: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action'),
         publics_beneficiaires: array().min(1, 'Merci de sélectionner au moins 1 public bénéficiaire')
       }),
