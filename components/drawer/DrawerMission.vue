@@ -21,7 +21,10 @@
     <div class="text-sm  uppercase font-semibold text-gray-600">
       Statut de la mission
     </div>
-    <SelectWithDescription :options="mission_workflow_states" :value="mission.state" class="mt-4" @selected="handleChangeState($event)" />
+    <SelectMissionState v-if="canEditStatut" :value="mission.state" class="mt-4" @selected="handleChangeState($event)" />
+    <div v-else class="mt-4 font-medium text-gray-800">
+      {{ mission.state }}
+    </div>
     <div class="border-t -mx-6 my-6" />
     <div class="mb-8">
       <div class="text-sm flex justify-between px-2 mb-2 items-center">
@@ -94,9 +97,14 @@
 </template>
 
 <script>
-import labels from '@/utils/labels.json'
+import SelectMissionState from '@/components/custom/SelectMissionState'
+import MixinMission from '@/mixins/mission'
 
 export default {
+  components: {
+    SelectMissionState
+  },
+  mixins: [MixinMission],
   props: {
     missionId: {
       type: Number,
@@ -105,8 +113,7 @@ export default {
   },
   data () {
     return {
-      mission: null,
-      mission_workflow_states: labels.mission_workflow_states
+      mission: null
     }
   },
   async fetch () {
@@ -117,17 +124,14 @@ export default {
     this.mission = data
     this.$emit('loaded', data)
   },
-  computed: {
-    hasPageOnline () {
-      return this.mission.structure.state === 'Validée' && ['Validée', 'Terminée'].includes(this.mission.state)
-    }
-  },
   watch: {
     missionId: '$fetch'
   },
   methods: {
-    handleChangeState (option) {
+    async handleChangeState (option) {
       this.mission.state = option.key
+      await this.$axios.put(`/mission/${this.mission.id}`, this.mission)
+      this.$fetch()
     }
   }
 }

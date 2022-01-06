@@ -45,17 +45,21 @@
           clearable
           @input="changeFilter('filter[domaine]', $event)"
         />
-        <div class="flex space-x-6 mb-2">
+        <div class="flex space-x-4 mb-2">
           <Checkbox
             :key="`type-1-${$route.fullPath}`"
             :option="{key:'presentiel', label: 'Présentiel'}"
             :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'].includes('Mission en présentiel')"
+            transparent
+            variant="button"
             @change="changeFilter('filter[type]', 'Mission en présentiel', true)"
           />
           <Checkbox
             :key="`type-2-${$route.fullPath}`"
             :option="{key:'distance', label: 'À distance'}"
             :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'].includes('Mission à distance')"
+            transparent
+            variant="button"
             @change="changeFilter('filter[type]', 'Mission à distance', true)"
           />
         </div>

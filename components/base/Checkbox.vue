@@ -64,7 +64,7 @@ export default {
       type: String,
       default: 'checkbox',
       validator: s =>
-        ['checkbox', 'button', 'button'].includes(s)
+        ['checkbox', 'button'].includes(s)
     }
   },
   data () {

@@ -25,6 +25,24 @@ export default {
         thumbnail = `/images/domaines/${this.mission.domaine_id}_1.webp, /images/domaines/${this.mission.domaine_id}_1.jpg, /images/domaines/${this.mission.domaine_id}_1@2x.webp 2x, /images/domaines/${this.mission.domaine_id}_1@2x.jpg 2x, `
       }
       return thumbnail
+    },
+    hasPageOnline () {
+      return this.mission.structure.state === 'Validée' && ['Validée', 'Terminée'].includes(this.mission.state)
+    },
+    canEditStatut () {
+      if (this.$store.getters.contextRole == 'admin') {
+        return true
+      }
+      if (this.mission.state == 'Validée') {
+        return true
+      }
+      if (
+        this.$store.getters.contextRole == 'referent' ||
+        this.$store.getters.contextRole == 'referent_regional'
+      ) {
+        return !['Signalée'].includes(this.mission.state)
+      }
+      return false
     }
   },
   methods: {
