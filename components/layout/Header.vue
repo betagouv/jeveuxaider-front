@@ -245,7 +245,7 @@ export default {
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-        { name: 'Publier une mission', href: '/inscription/responsable', icon: CalendarIcon }
+        { name: 'Publier une mission', href: this.$store.getters.currentRole.key === 'responsable' ? `/admin/structures/${this.$store.getters.currentRole.contextable_id}/missions/add` : '/inscription/responsable', icon: CalendarIcon }
       ]
     },
     secondNavigation () {

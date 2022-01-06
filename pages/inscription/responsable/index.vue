@@ -74,6 +74,7 @@
               v-model="form.structure.name"
               placeholder="Retrouvez votre association depuis notre base RNA"
               :show-add-button="!orgaExist"
+              :loading-add-button="loading"
               @selected="onStructureApiSelected"
               @change="orgaExist = null"
               @added="onSubmitChooseName"
@@ -476,8 +477,6 @@ export default {
 
       const res = await this.$axios.post('/structure', this.form.structure)
 
-      this.loading = false
-
       if (res.data) {
         await this.$store.dispatch('auth/updateUser', {
           context_role: 'responsable',
@@ -486,6 +485,7 @@ export default {
         })
         this.$router.push('/inscription/responsable/step/organisation')
       }
+      this.loading = false
     }
   }
 }
