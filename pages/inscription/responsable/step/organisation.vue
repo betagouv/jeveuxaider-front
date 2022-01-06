@@ -23,7 +23,7 @@
       <div
         class="px-8 py-6 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
       >
-        Validez ou complétez les informations suivantes
+        Complétez les informations suivantes liés à votre organisation
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
@@ -46,6 +46,7 @@
               name="statut_juridique"
               placeholder="Sélectionnez votre statut juridique"
               :options="options.structure_legal_status"
+              disabled
               @blur="validate('statut_juridique')"
             />
           </FormControl>
@@ -105,7 +106,7 @@
               clearable
             />
           </FormControl>
-          <FormControl label="Choisissez les domaines que couvrent votre organisation" html-for="domaines" required :error="errors.domaines">
+          <FormControl label="Choisissez les domaines que couvre votre organisation" html-for="domaines" required :error="errors.domaines">
             <CheckboxGroup
               v-model="form.domaines"
               name="domaines"
@@ -189,6 +190,7 @@
           </div>
 
           <FormControl
+            v-if="form.statut_juridique !== 'Collectivité'"
             label="Faites-vous partie d'un réseau national ?"
             html-for="tete_de_reseau_id"
             required
@@ -243,7 +245,18 @@ export default {
     return {
       loading: false,
       options: labels,
-      steps: [
+      formSchema: object({
+        name: string().required(),
+        statut_juridique: string().required(),
+        domaines: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action'),
+        publics_beneficiaires: array().min(1, 'Merci de sélectionner au moins 1 public bénéficiaire')
+      }),
+      autocompleteReseauxOptions: []
+    }
+  },
+  computed: {
+    steps () {
+      return [
         {
           name: 'Rejoignez le mouvement',
           status: 'complete',
@@ -262,19 +275,16 @@ export default {
           name: 'Quelques mots sur l\'organisation',
           status: 'upcoming'
         },
-        {
-          name: 'Votre organisation en images',
-          status: 'upcoming'
-        }
-      ],
-      formSchema: object({
-        name: string().required(),
-        statut_juridique: string().required(),
-        domaines: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action'),
-        publics_beneficiaires: array().min(1, 'Merci de sélectionner au moins 1 public bénéficiaire')
-      }),
-      autocompleteReseauxOptions: []
-
+        this.form.statut_juridique === 'Collectivité'
+          ? {
+              name: 'Informations sur la collectivité',
+              status: 'upcoming'
+            }
+          : {
+              name: 'Votre organisation en images',
+              status: 'upcoming'
+            }
+      ]
     }
   },
   methods: {

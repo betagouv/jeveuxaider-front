@@ -12,10 +12,10 @@
         :name="name"
         tabindex="0"
         class="cursor-pointer px-6 py-3 text-sm rounded-xl block w-full focus:outline-none border border-gray-200 focus:ring-1  bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500"
-        :class=" [{ 'pl-10': icon, 'bg-transparent': variant == 'transparent'}]"
+        :class=" [{ 'pl-10': icon, 'bg-transparent': variant == 'transparent', 'cursor-not-allowed bg-gray-100': disabled}]"
         autocomplete="off"
         @keydown="onKeydown"
-        @click="showOptions = !showOptions"
+        @click="handleClick"
       >
         <template v-if="selectedOption">
           {{ selectedOption[attributeLabel] }}
@@ -52,7 +52,7 @@
             {'bg-gray-50 text-jva-blue-500': highlightIndex == index},
             {'bg-gray-50 text-jva-blue-500': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
           ]"
-          @click="handleClick(item)"
+          @click="handleSelectOption(item)"
         >
           <span class="">
             {{ item[attributeLabel] }}
@@ -80,7 +80,8 @@ export default {
     attributeKey: { type: String, default: 'key' },
     attributeLabel: { type: String, default: 'label' },
     variant: { type: String, default: null }, // transparent
-    clearable: { type: Boolean, default: false }
+    clearable: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false }
   },
   data () {
     return {
@@ -99,7 +100,12 @@ export default {
     clickedOutside () {
       this.showOptions = false
     },
-    handleClick (item) {
+    handleClick () {
+      if (!this.disabled) {
+        this.showOptions = !this.showOptions
+      }
+    },
+    handleSelectOption (item) {
       if (item && this.selectedOption && this.selectedOption[this.attributeKey] === item[this.attributeKey]) {
         this.$emit('input', null)
         this.selectedOption = null
@@ -112,6 +118,9 @@ export default {
       this.highlightIndex = null
     },
     onKeydown (e) {
+      if (this.disabled) {
+        return
+      }
       const keyValue = e.which // enter key
       if (keyValue === 9) {
         this.showOptions = false
@@ -120,7 +129,7 @@ export default {
 
       if (keyValue === 13 || keyValue === 32) {
         if (this.highlightIndex !== null) {
-          this.handleClick(this.options[this.highlightIndex])
+          this.handleSelectOption(this.options[this.highlightIndex])
           return
         }
       }

@@ -38,8 +38,7 @@
               v-model="form.type"
               name="type"
               placeholder="Sélectionnez votre profession"
-              :options="profile_type_options"
-
+              :options="options.profile_type"
               @blur="validate('type')"
             />
           </FormControl>
@@ -100,7 +99,19 @@ export default {
   data () {
     return {
       loading: false,
-      steps: [
+      options: labels,
+      form: _.cloneDeep(this.$store.state.auth.user.profile),
+      formSchema: object({
+        type: string().nullable().required(),
+        mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
+        phone: string().nullable().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').transform(v => v === '' ? null : v),
+        zip: string().min(5).required()
+      })
+    }
+  },
+  computed: {
+    steps () {
+      return [
         {
           name: 'Rejoignez le mouvement',
           status: 'complete',
@@ -122,15 +133,7 @@ export default {
           name: 'Votre organisation en images',
           status: 'upcoming'
         }
-      ],
-      profile_type_options: labels.profile_type,
-      form: _.cloneDeep(this.$store.state.auth.user.profile),
-      formSchema: object({
-        type: string().nullable().required(),
-        mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
-        phone: string().nullable().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').transform(v => v === '' ? null : v),
-        zip: string().min(5).required()
-      })
+      ]
     }
   },
   methods: {

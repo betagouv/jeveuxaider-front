@@ -164,7 +164,20 @@ export default {
   data () {
     return {
       loading: false,
-      steps: [
+      formSchema: object({
+        description: string().min(200).required(),
+        email: string().nullable().email(),
+        website: string().nullable().url(),
+        facebook: string().nullable().url(),
+        twitter: string().nullable().url(),
+        instagram: string().nullable().url(),
+        donation: string().nullable().url()
+      })
+    }
+  },
+  computed: {
+    steps () {
+      return [
         {
           name: 'Rejoignez le mouvement',
           status: 'complete',
@@ -184,20 +197,16 @@ export default {
           name: 'Quelques mots sur l\'organisation',
           status: 'current'
         },
-        {
-          name: 'Votre organisation en images',
-          status: 'upcoming'
-        }
-      ],
-      formSchema: object({
-        description: string().min(200).required(),
-        email: string().nullable().email(),
-        website: string().nullable().url(),
-        facebook: string().nullable().url(),
-        twitter: string().nullable().url(),
-        instagram: string().nullable().url(),
-        donation: string().nullable().url()
-      })
+        this.form.statut_juridique === 'Collectivité'
+          ? {
+              name: 'Informations sur la collectivité',
+              status: 'upcoming'
+            }
+          : {
+              name: 'Votre organisation en images',
+              status: 'upcoming'
+            }
+      ]
     }
   },
   methods: {
@@ -212,7 +221,11 @@ export default {
                   window.plausible(
                     'Inscription responsable - Étape 4 - Quelques mots sur l’organisation'
                   )
-          this.$router.push('/inscription/responsable/step/organisation-images')
+          if (this.form.statut_juridique === 'Collectivité') {
+            this.$router.push('/inscription/responsable/step/collectivite')
+          } else {
+            this.$router.push('/inscription/responsable/step/organisation-images')
+          }
         })
         .catch((errors) => {
           this.setErrors(errors)

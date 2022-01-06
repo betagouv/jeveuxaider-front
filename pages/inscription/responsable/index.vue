@@ -1,5 +1,5 @@
 <template>
-  <div class="relative bg-jva-blue-500 overflow-hidden">
+  <div class="relative bg-[#081992] overflow-hidden">
     <img
       class="z-1 object-cover absolute h-screen lg:h-auto"
       alt="JeVeuxAider"
@@ -106,7 +106,7 @@
           <div v-if="orgaExist" class="text-center mt-4">
             <p class="mb-0 font-bold">
               L'organisation
-              <span class="text-primary">{{ orgaExist.structure_name }}</span>
+              <span class="text-jva-blue-500">{{ orgaExist.structure_name }}</span>
               est déjà inscrite sur la plateforme.
             </p>
             <p class="text-gray-500 text-sm">

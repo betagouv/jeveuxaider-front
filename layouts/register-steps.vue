@@ -21,7 +21,7 @@
     </div>
     <div
       id="step-container"
-      class="lg:w-2/3 relative bg-jva-blue-500 lg:overflow-auto lg:h-full"
+      class="lg:w-2/3 relative bg-[#081992] lg:overflow-auto lg:h-full"
     >
       <img
         class="z-1 object-cover absolute h-screen lg:h-auto"
