@@ -74,7 +74,6 @@
               v-model="form.structure.name"
               placeholder="Retrouvez votre association depuis notre base RNA"
               :show-add-button="!orgaExist"
-              :loading-add-button="loading"
               @selected="onStructureApiSelected"
               @change="orgaExist = null"
               @added="onSubmitChooseName"
@@ -429,6 +428,7 @@ export default {
       }
     },
     async onSubmitChooseName () {
+      console.log('onSubmitChooseName', this.form)
       if (!this.form.structure.name || this.form.structure.name.trim() === '') {
         this.$toast.error("Merci de saisir un nom d'organisation")
         return
@@ -470,25 +470,22 @@ export default {
           this.loading = false
         })
     },
-    registerStructure () {
+    async registerStructure () {
       this.loading = true
       this.form.structure.statut_juridique = this.$route.query.orga_type
 
-      console.log('TODO ADD STRUCTURE')
-      // this.$api
-      //   .addStructure({
-      //     name: this.form.structure.name,
-      //     statut_juridique: this.$route.query.orga_type,
-      //     structure_api: this.form.structure.rna ? this.form.structure : null
-      //   })
-      //   .then(async () => {
-      //     this.loading = false
-      //     await this.$store.dispatch('auth/fetchUser')
-      //     this.$router.push('/register/responsable/step/structure')
-      //   })
-      //   .catch(() => {
-      //     this.loading = false
-      //   })
+      const res = await this.$axios.post('/structure', this.form.structure)
+
+      this.loading = false
+
+      if (res.data) {
+        await this.$store.dispatch('auth/updateUser', {
+          context_role: 'responsable',
+          contextable_type: 'structure',
+          contextable_id: res.data.id
+        })
+        this.$router.push('/inscription/responsable/step/organisation')
+      }
     }
   }
 }

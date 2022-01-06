@@ -40,18 +40,13 @@
         </div>
       </template>
       <slot slot="after-input">
-        <SpinIcon
-          v-if="loading"
-          class="absolute z-10 w-5 h-5 text-[#d2d6dc] animate-spin"
-          style="right: 15px; top: 13px"
-        />
         <Button
-          v-else-if="showAddButton && query && query.length > 0"
+          v-if="showAddButton && query && query.length > 0"
           :loading="loadingAddButton"
           style="right: 7px; top: 7px"
           size="sm"
-          class="!absolute !z-10 !justify-center !uppercase !px-4 !py-2 !border !border-transparent !rounded-lg !shadow !font-bold !text-white hover:!shadow-lg hover:!scale-105 !transform !transition"
-          @click="$emit('added', query)"
+          class="absolute z-10"
+          @click.native="$emit('added', query)"
           @keyup.enter="$emit('added', query)"
         >
           Ajouter
@@ -69,12 +64,10 @@
 
 <script>
 import { VueAutosuggest } from 'vue-autosuggest'
-import SpinIcon from '@/components/icon/SpinIcon'
 
 export default {
   components: {
-    VueAutosuggest,
-    SpinIcon
+    VueAutosuggest
   },
   props: {
     placeholder: {

@@ -277,6 +277,8 @@ export default {
         ]
       }
       return [
+        { name: 'Mes participations', href: '#', isActive: false },
+        { name: 'Liens utiles', href: '#', isActive: false }
       ]
     }
   },
