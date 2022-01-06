@@ -37,7 +37,6 @@
               v-model="form.name"
               name="name"
               placeholder="Nom de votre organisation"
-              @blur="validate('name')"
             />
           </FormControl>
           <FormControl label="Statut juridique" html-for="statut_juridique" required :error="errors.statut_juridique">
@@ -241,7 +240,7 @@ export default {
       loading: false,
       options: labels,
       formSchema: object({
-        name: string().required(),
+        // name: string().required(),
         statut_juridique: string().required(),
         department: string().nullable().required(),
         address: string().nullable().required('Merci de saisir une adresse'),

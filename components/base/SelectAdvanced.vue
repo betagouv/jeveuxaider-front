@@ -71,7 +71,15 @@
 
 export default {
   props: {
-    value: { type: [String, Number], default: null },
+    value: {
+      type: [String, Number, Array],
+      default: (props) => {
+        if (Array.isArray(props.value)) {
+          return props.value.length ? props.value[0] : null
+        }
+        return null
+      }
+    },
     placeholder: { type: String, default: null },
     labelEmpty: { type: String, default: 'Aucune option' },
     name: { type: String, required: true },
