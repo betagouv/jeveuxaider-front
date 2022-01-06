@@ -18,8 +18,9 @@
             border border-gray-200
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
-    :class=" [{ 'border-jva-red-primary': error }]"
+    :class=" [{ 'border-jva-red-primary': error, 'cursor-not-allowed bg-gray-100': disabled }]"
     autocomplete="off"
+    :disabled="disabled"
   />
 </template>
 
@@ -30,7 +31,8 @@ export default {
     placeholder: { type: String, default: null },
     name: { type: String, required: true },
     error: { type: String, default: null },
-    rows: { type: Number, default: 5 }
+    rows: { type: Number, default: 5 },
+    disabled: { type: Boolean, default: false }
   },
   data () {
     return {}

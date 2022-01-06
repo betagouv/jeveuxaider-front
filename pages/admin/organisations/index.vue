@@ -101,7 +101,7 @@ import QueryBuilder from '@/mixins/query-builder'
 
 export default {
   mixins: [QueryBuilder],
-  layout: 'dashboard',
+  layout: 'admin',
   asyncData ({ store, error }) {
     if (
       !['admin', 'referent', 'referent_regional'].includes(

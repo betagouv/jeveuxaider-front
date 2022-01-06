@@ -10,12 +10,15 @@
       <div
         :id="name"
         :name="name"
-        tabindex="0"
+        :tabindex="!disabled && '0'"
         class="cursor-pointer px-6 py-3 text-sm rounded-xl block w-full focus:outline-none border border-gray-200 focus:ring-1  bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500"
-        :class=" [{ 'pl-10': icon, 'bg-transparent': variant == 'transparent', 'cursor-not-allowed bg-gray-100': disabled}]"
+        :class=" [
+          { 'pl-10': icon, 'bg-transparent': variant == 'transparent'},
+          {'!cursor-not-allowed !bg-gray-100': disabled}
+        ]"
         autocomplete="off"
-        @keydown="onKeydown"
-        @click="handleClick"
+        @keydown="!disabled && onKeydown"
+        @click="!disabled ? showOptions = !showOptions : null"
       >
         <template v-if="selectedOption">
           {{ selectedOption[attributeLabel] }}
@@ -103,11 +106,6 @@ export default {
     clickedOutside () {
       this.showOptions = false
     },
-    handleClick () {
-      if (!this.disabled) {
-        this.showOptions = !this.showOptions
-      }
-    },
     handleSelectOption (item) {
       if (item && this.selectedOption && this.selectedOption[this.attributeKey] === item[this.attributeKey]) {
         this.$emit('input', null)
@@ -162,5 +160,3 @@ export default {
   }
 }
 </script>
-
-<style></style>

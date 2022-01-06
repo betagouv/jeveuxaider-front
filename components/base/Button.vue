@@ -41,7 +41,7 @@
         'mr-2 h-3 w-3': size == 'xs',
         'mr-3 h-3 w-3': size == 'sm',
         'mr-3 h-4 w-4': size == 'md',
-        'mr-4 h-5 w-5': size == 'lg',
+        'mr-3 h-5 w-5': size == 'lg',
         'mr-4 h-6 w-6': size == 'xl',
       }"
     />
@@ -52,9 +52,9 @@
       :class="{
         'mr-2 h-3 w-3': size == 'xs',
         'mr-3 h-3 w-3': size == 'sm',
-        'mr-3 h-4 w-4': size == 'md',
-        'mr-4 h-5 w-5': size == 'lg',
-        'mr-4 h-6 w-6': size == 'xl',
+        'mr-3 h-5 w-5': size == 'md',
+        'mr-2 h-5 w-5': size == 'lg',
+        'mr-3 h-6 w-6': size == 'xl',
       }"
     />
     <slot />

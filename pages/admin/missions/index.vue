@@ -96,9 +96,18 @@
       </div>
     </template>
     <div>
-      <Heading as="h1" :level="1">
-        {{ queryResult.total | formatNumber }} missions
-      </Heading>
+      <SectionHeading :title="`${queryResult.total | formatNumber} missions`">
+        <template #action>
+          <nuxt-link
+            v-if="$store.getters.contextRole === 'responsable'"
+            :to="`/admin/organisations/${$store.getters.contextableId}/missions/add`"
+          >
+            <Button icon="PlusIcon" size="lg">
+              Publier une mission
+            </Button>
+          </nuxt-link>
+        </template>
+      </Sectionheading>
       <Input
         class="mt-8"
         name="search"
@@ -208,7 +217,7 @@ export default {
     DrawerMission
   },
   mixins: [QueryBuilder],
-  layout: 'dashboard',
+  layout: 'admin',
   asyncData ({ store, error }) {
     if (
       !['admin', 'referent', 'referent_regional', 'responsable'].includes(

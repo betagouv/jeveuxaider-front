@@ -58,7 +58,12 @@
             clearable
           />
         </div>
-
+        <div>
+          <FormLabel html-for="state2">
+            Select with descriptions
+          </FormLabel>
+          <SelectWithDescription :options="mission_workflow_states" value="Validée" />
+        </div>
         <Heading as="h2" :level="3" class="mb-8 text-jva-gray-900">
           Autocomplete
         </Heading>
@@ -113,6 +118,7 @@
 </template>
 
 <script>
+import labels from '@/utils/labels.json'
 
 export default {
   layout: 'design-system',
@@ -127,7 +133,8 @@ export default {
         select_advanced_id: 4
       },
       geoSelected: null,
-      autocompleteOptions: []
+      autocompleteOptions: [],
+      mission_workflow_states: labels.mission_workflow_states.filter(option => ['Validée', 'Brouillon', 'Annulée', 'Terminée'].includes(option.key))
     }
   },
   methods: {
