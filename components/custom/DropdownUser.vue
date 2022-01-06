@@ -17,7 +17,7 @@
             {{ $store.state.auth.user.profile.first_name }}
           </div>
           <div class="text-gray-500 text-sm truncate leading-tight font-normal">
-            {{ $options.filters.label($store.state.auth.user.context_role, 'role') }}
+            {{ $store.state.auth.user.context_role ? $options.filters.label($store.state.auth.user.context_role, 'role') : 'Bénévole' }}
           </div>
         </div>
         <ChevronDownIcon class="h-4 ml-auto" />

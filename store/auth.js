@@ -1,7 +1,6 @@
 export const state = () => ({
   access_token: null,
-  user: null,
-  roles: null
+  user: null
 })
 
 export const mutations = {
@@ -10,9 +9,6 @@ export const mutations = {
   },
   setAccessToken (state, accessToken) {
     state.access_token = accessToken
-  },
-  setRoles (state, roles) {
-    state.roles = roles
   }
 }
 
@@ -25,12 +21,6 @@ export const actions = {
       })
     if (res.data) {
       commit('setUser', res.data)
-    }
-  },
-  async fetchRoles ({ commit }) {
-    const res = await this.$axios.get('/user/roles')
-    if (res.data) {
-      commit('setRoles', res.data)
     }
   },
   async login ({ commit, dispatch }, form) {
@@ -52,7 +42,6 @@ export const actions = {
         })
         // await this.$gtm.push({ event: 'user-login' })
         await dispatch('fetchUser')
-        await dispatch('fetchRoles')
       })
       .catch((error) => {
         commit('setAccessToken', null)
