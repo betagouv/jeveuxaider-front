@@ -23,7 +23,7 @@
       <div
         class="px-8 py-6 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
       >
-        Validez ou complétez les informations suivantes
+        Complétez les informations suivantes liés à votre organisation
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
@@ -46,6 +46,7 @@
               name="statut_juridique"
               placeholder="Sélectionnez votre statut juridique"
               :options="options.structure_legal_status"
+              disabled
               @blur="validate('statut_juridique')"
             />
           </FormControl>
@@ -105,7 +106,7 @@
               clearable
             />
           </FormControl>
-          <FormControl label="Choisissez les domaines que couvrent votre organisation" html-for="domaines" required :error="errors.domaines">
+          <FormControl label="Choisissez les domaines que couvre votre organisation" html-for="domaines" required :error="errors.domaines">
             <CheckboxGroup
               v-model="form.domaines"
               name="domaines"
@@ -127,9 +128,10 @@
               name="department"
               placeholder="Sélectionnez votre département"
               :options="options.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
+              @blur="validate('department')"
             />
           </FormControl>
-          <FormControl label="Saisissez l'adresse de votre organisation" html-for="autocomplete" required :error="errors.department">
+          <FormControl label="Saisissez l'adresse de votre organisation" html-for="autocomplete" required :error="errors.address">
             <InputAutocomplete
               icon="LocationMarkerIcon"
               name="autocomplete"
@@ -147,14 +149,12 @@
             label="Addresse"
             html-for="address"
             required
-            :error="errors.address"
           >
             <Input
               v-model="form.address"
               name="address"
               disabled
               placeholder="Ex: 14 rue de Rivoli"
-              @blur="validate('address')"
             />
           </FormControl>
           <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
@@ -162,33 +162,30 @@
               label="Code postal"
               html-for="zip"
               required
-              :error="errors.zip"
             >
               <Input
                 v-model="form.zip"
                 name="zip"
                 placeholder="Ex: 75001"
                 disabled
-                @blur="validate('zip')"
               />
             </FormControl>
             <FormControl
               label="Ville"
               html-for="city"
               required
-              :error="errors.city"
             >
               <Input
                 v-model="form.city"
                 name="city"
                 disabled
                 placeholder="Ex: Paris"
-                @blur="validate('city')"
               />
             </FormControl>
           </div>
 
           <FormControl
+            v-if="form.statut_juridique !== 'Collectivité'"
             label="Faites-vous partie d'un réseau national ?"
             html-for="tete_de_reseau_id"
             required
@@ -243,7 +240,20 @@ export default {
     return {
       loading: false,
       options: labels,
-      steps: [
+      formSchema: object({
+        name: string().required('Un nom est requis'),
+        statut_juridique: string().required('Un statut juridique est requis'),
+        department: string().nullable().required('Un département est requis'),
+        address: string().nullable().required('Une adresse est requise'),
+        domaines: array().min(1, 'Au moins 1 domaine d\'action'),
+        publics_beneficiaires: array().min(1, 'Au moins 1 public bénéficiaire')
+      }),
+      autocompleteReseauxOptions: []
+    }
+  },
+  computed: {
+    steps () {
+      return [
         {
           name: 'Rejoignez le mouvement',
           status: 'complete',
@@ -262,29 +272,26 @@ export default {
           name: 'Quelques mots sur l\'organisation',
           status: 'upcoming'
         },
-        {
-          name: 'Votre organisation en images',
-          status: 'upcoming'
-        }
-      ],
-      formSchema: object({
-        name: string().required(),
-        statut_juridique: string().required(),
-        domaines: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action'),
-        publics_beneficiaires: array().min(1, 'Merci de sélectionner au moins 1 public bénéficiaire')
-      }),
-      autocompleteReseauxOptions: []
-
+        this.form.statut_juridique === 'Collectivité'
+          ? {
+              name: 'Informations sur la collectivité',
+              status: 'upcoming'
+            }
+          : {
+              name: 'Votre organisation en images',
+              status: 'upcoming'
+            }
+      ]
     }
   },
   methods: {
     handleSelectedGeo (item) {
-      console.log('handleSelectedGeo', item)
       this.form.address = item.name
       this.form.zip = item.postcode
       this.form.city = item.city
       this.form.longitude = item.coordinates[0]
       this.form.latitude = item.coordinates[1]
+      this.validate('address')
     },
     async onFetchReseauxSuggestions (value) {
       const res = await this.$axios.get('/reseaux', {
@@ -303,7 +310,6 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           this.loading = true
-          console.log('this.form', this.form)
           await this.$axios.post(`/structure/${this.form.id}`, this.form)
           window.plausible &&
                   window.plausible(

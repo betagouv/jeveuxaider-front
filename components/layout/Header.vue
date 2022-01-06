@@ -62,11 +62,16 @@
     </div>
     <div class="hidden lg:flex px-4 justify-between border-t text-sm text-gray-800">
       <div class="flex">
-        <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 2" position="left">
+        <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 1" position="left" class="h-full">
           <template #button>
-            <div class="flex items-center border-r pr-4 py-4 w-52 truncate">
-              <div class="truncate mr-auto">
-                {{ $store.getters.currentRole.key == 'referent' ? $options.filters.label($store.getters.currentRole.label, 'departments') : $store.getters.currentRole.label }}
+            <div class="flex items-center justify-between gap-4 border-r py-4 pr-2 w-52 truncate">
+              <div>
+                <!-- <div class="text-gray-500 uppercase text-xs">
+                  {{ $options.filters.label($store.getters.currentRole.key, 'role', 'espace') }}
+                </div> -->
+                <div class="truncate mr-auto font-semibold">
+                  {{ $store.getters.currentRole.key == 'referent' ? $options.filters.label($store.getters.currentRole.label, 'departments') : $store.getters.currentRole.label }}
+                </div>
               </div>
               <ChevronDownIcon class="h-3" />
             </div>
@@ -240,7 +245,7 @@ export default {
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-        { name: 'Publier une mission', href: '/inscription/responsable', icon: CalendarIcon }
+        { name: 'Publier une mission', href: this.$store.getters.currentRole.key === 'responsable' ? `/admin/structures/${this.$store.getters.currentRole.contextable_id}/missions/add` : '/inscription/responsable', icon: CalendarIcon }
       ]
     },
     secondNavigation () {
@@ -275,8 +280,21 @@ export default {
           { name: 'Utilisateurs', href: '#', isActive: false },
           { name: 'Liens utiles', href: '#', isActive: false }
         ]
+      } else if (this.$store.getters.currentRole?.key === 'referent_regional') {
+        return [
+          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
+          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations') },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
+          { name: 'Liens utiles', href: '#', isActive: false }
+        ]
+      } else if (this.$store.getters.currentRole?.key === 'analyste') {
+        return [
+          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') }
+        ]
       }
       return [
+        { name: 'Liens bénévoles ? (@TODO)', href: '#', isActive: false },
+        { name: 'Liens utiles', href: '#', isActive: false }
       ]
     }
   },

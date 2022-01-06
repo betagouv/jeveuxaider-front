@@ -55,7 +55,7 @@
             {'bg-gray-50 text-jva-blue-500': highlightIndex == index},
             {'bg-gray-50 text-jva-blue-500': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
           ]"
-          @click="handleClick(item)"
+          @click="handleSelectOption(item)"
         >
           <span class="">
             {{ item[attributeLabel] }}
@@ -74,7 +74,15 @@
 
 export default {
   props: {
-    value: { type: [String, Number], default: null },
+    value: {
+      type: [String, Number, Array],
+      default: (props) => {
+        if (Array.isArray(props.value)) {
+          return props.value.length ? props.value[0] : null
+        }
+        return null
+      }
+    },
     placeholder: { type: String, default: null },
     labelEmpty: { type: String, default: 'Aucune option' },
     name: { type: String, required: true },
@@ -103,7 +111,7 @@ export default {
     clickedOutside () {
       this.showOptions = false
     },
-    handleClick (item) {
+    handleSelectOption (item) {
       if (item && this.selectedOption && this.selectedOption[this.attributeKey] === item[this.attributeKey]) {
         this.$emit('input', null)
         this.selectedOption = null
@@ -116,6 +124,9 @@ export default {
       this.highlightIndex = null
     },
     onKeydown (e) {
+      if (this.disabled) {
+        return
+      }
       const keyValue = e.which // enter key
       if (keyValue === 9) {
         this.showOptions = false
@@ -124,7 +135,7 @@ export default {
 
       if (keyValue === 13 || keyValue === 32) {
         if (this.highlightIndex !== null) {
-          this.handleClick(this.options[this.highlightIndex])
+          this.handleSelectOption(this.options[this.highlightIndex])
           return
         }
       }
@@ -154,5 +165,3 @@ export default {
   }
 }
 </script>
-
-<style></style>

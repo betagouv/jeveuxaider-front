@@ -10,8 +10,12 @@
       <div class="mb-6 lg:mb-12 text-center text-white">
         <h1 class="text-4xl lg:text-5xl font-medium leading-12 mb-4">
           Féliciations <span class="font-bold">{{ $store.getters.profile.first_name }}</span> !<br>
-          Votre organisation est prête pour la suite
+          Votre collectivité est en cours de validation
         </h1>
+        <div class="text-lg">
+          Vous recevrez un email de confirmation lorsque votre compte aura été
+          validé par l'équipe de JeVeuxAider.gouv.fr
+        </div>
       </div>
       <div
         class="max-w-5xl mx-auto relative grid grid-cols-1 lg:grid-cols-2 gap-8"
@@ -26,7 +30,7 @@
           </div>
           <a
             target="_blank"
-            href="https://app.livestorm.co/jeveuxaider/session-daccueil-associations"
+            href="https://app.livestorm.co/jeveuxaider/session-decouverte-collectivites-territoriales"
           >
             <Button size="xl" full>
               <span

@@ -1,8 +1,11 @@
 // import { Message } from 'element-ui'
+import Toast from '@/components/base/Toast'
 
-export default function ({ $axios, redirect, app, store, error, $message }) {
+export default function ({ $axios, redirect, app, store, error, $message, $toast }) {
   $axios.interceptors.request.use(function (config) {
+    // console.log('config', config)
     const isExternalCall = config.url.includes('http')
+    // console.log('isExternalCall', isExternalCall)
     if (isExternalCall) {
       return config
     }
@@ -25,51 +28,31 @@ export default function ({ $axios, redirect, app, store, error, $message }) {
     return config
   })
 
-  //   $axios.onError((err) => {
-  //     console.log(err)
-  //     console.log(err.response.status)
-  //     console.log(err.response.data)
+  $axios.onError((err) => {
+    // console.log(err)
+    // console.log(err.response.status)
+    // console.log(err.response.data)
 
-  //     if (err.response.status === 404) {
-  //       return error({
-  //         statusCode: 404,
-  //         message: err.message || err.response.data
-  //       })
-  //     }
-  //     if (err.response.status === 403) {
-  //       return error({
-  //         statusCode: 403,
-  //         message: err.message || err.response.data
-  //       })
-  //     }
-
-//     if (err.response && err.response.data) {
-//       if (err.response.data.errors) {
-//         $message({
-//           message: formatErrors(err.response.data.errors),
-//           dangerouslyUseHTMLString: true,
-//           type: 'error'
-//         })
-//       } else if (err.response.data.message) {
-//         $message({
-//           message: err.response.data.message,
-//           type: 'error'
-//         })
-//       } else if (err.response.data.error) {
-//         $message({
-//           message: err.response.data.error,
-//           dangerouslyUseHTMLString: true,
-//           type: 'error'
-//         })
-//       }
-//     }
-//   })
+    switch (err.response.status) {
+      case 403:
+        return error({
+          statusCode: 403,
+          message: err.message || err.response.data
+        })
+      case 404:
+        return error({
+          statusCode: 404,
+          message: err.message || err.response.data
+        })
+      case 422:
+        app.$toast.error({
+          component: Toast,
+          props: {
+            message: 'Merci de corriger les éléments suivants',
+            errors: err.response.data.errors
+          }
+        })
+        break
+    }
+  })
 }
-
-// function formatErrors (errors) {
-//   let string = ''
-//   for (const errorField in errors) {
-//     string += errors[errorField][0] + '<br />'
-//   }
-//   return string
-// }

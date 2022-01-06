@@ -121,7 +121,7 @@ export default {
     ]
   },
   toast: {
-    timeout: 3000,
+    timeout: 5000,
     draggable: true
   }
 }

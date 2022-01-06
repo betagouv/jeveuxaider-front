@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="relative bg-jva-blue-500 overflow-hidden">
+    <div class="relative bg-[#081992] overflow-hidden">
       <img
         class="z-1 object-cover absolute h-screen lg:h-auto"
         alt="JeVeuxAider"
@@ -231,7 +231,9 @@
                         <Input
                           v-model="form.birthday"
                           name="birthday"
-                          placeholder="14/07/1987"
+                          placeholder="jj/mm/aaaa"
+                          type="date"
+                          hide-picker
                           @blur="validate('birthday')"
                         />
                       </FormControl>
@@ -482,7 +484,7 @@
 </template>
 
 <script>
-import { string, object, ref } from 'yup'
+import { string, object, ref, date } from 'yup'
 import MixinForm from '@/mixins/form'
 import FranceConnect from '@/components/custom/FranceConnect'
 
@@ -501,14 +503,14 @@ export default {
         password: ''
       },
       formSchema: object({
-        first_name: string().min(3).required(),
-        last_name: string().min(2).required(),
-        mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
-        zip: string().min(5).required(),
-        birthday: string().required(),
-        email: string().required().email(),
-        password: string().min(8).required(),
-        password_confirmation: string().required().oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
+        first_name: string().min(3).required('Un prénom est requis'),
+        last_name: string().min(2).required('Un nom est requis'),
+        mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un téléphone mobile est requis'),
+        zip: string().min(5).required('Un code postal est requis'),
+        birthday: date().required("Une date d'anniversaire est requise").nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
+        email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
+        password: string().min(8).required('Un mot de passe est requis'),
+        password_confirmation: string().required('Une confirmation de mot de passe est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
       })
     }
   },
@@ -548,15 +550,10 @@ export default {
   },
   methods: {
     onSubmit () {
-      console.log('this.form', this.form)
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           this.loading = true
-          this.form.birthday = this.$dayjs(
-            this.form.birthday,
-            'DD/MM/YYYY'
-          ).format('YYYY-MM-DD')
           await this.$store.dispatch('auth/registerVolontaire', this.form)
           this.$router.push('/inscription/benevole/step/profile')
         })

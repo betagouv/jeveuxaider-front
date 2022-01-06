@@ -1,3 +1,5 @@
+import Toast from '@/components/base/Toast'
+
 export default {
   data () {
     return {
@@ -5,11 +7,20 @@ export default {
     }
   },
   methods: {
-    setErrors (errors) {
+    setErrors (errors, showToast = true) {
       this.resetErrors()
       errors?.inner?.forEach((error) => {
         this.$set(this.errors, error.path, error.message)
       })
+      if (showToast) {
+        this.$toast.error({
+          component: Toast,
+          props: {
+            message: 'Merci de corriger les éléments suivants',
+            errors: errors.errors
+          }
+        })
+      }
     },
     resetErrors () {
       this.errors = {}
@@ -24,21 +35,5 @@ export default {
           this.$set(this.errors, field, error.message)
         })
     }
-    // showErrors (fields) {
-    //   const errors = []
-    //   const nbErrors = Object.entries(fields).length
-
-    //   if (nbErrors > 4) {
-    //     errors.push(`${nbErrors} champs ne sont pas valides.`)
-    //   } else {
-    //     for (const property in fields) {
-    //       errors.push(fields[property][0].message)
-    //     }
-    //   }
-
-    //   this.$message.error({
-    //     message: errors.join('\r\n')
-    //   })
-    // }
   }
 }
