@@ -99,7 +99,7 @@
 </template>
 
 <script>
-import { string, object, array } from 'yup'
+import { object, array } from 'yup'
 import _ from 'lodash'
 import MixinForm from '@/mixins/form'
 import labels from '@/utils/labels.json'
@@ -137,9 +137,6 @@ export default {
       duration_options: labels.duration,
       form: _.cloneDeep(this.$store.getters.profile),
       formSchema: object({
-        type: string().nullable().required(),
-        mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
-        phone: string().nullable().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').transform(v => v === '' ? null : v),
         disponibilities: array().min(1, 'Merci de sélectionner au moins 1 disponibilité')
       })
     }

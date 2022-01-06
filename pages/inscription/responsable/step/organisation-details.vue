@@ -166,7 +166,7 @@ export default {
       loading: false,
       formSchema: object({
         description: string().nullable().min(200, 'La description doit contenir au moins 200 caractères').required('Une description est requise'),
-        email: string().nullable().email(),
+        email: string().nullable().email("Le format de l'email public est incorrect"),
         website: string().nullable().url(),
         facebook: string().nullable().url(),
         twitter: string().nullable().url(),

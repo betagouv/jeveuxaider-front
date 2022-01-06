@@ -102,10 +102,10 @@ export default {
       options: labels,
       form: _.cloneDeep(this.$store.state.auth.user.profile),
       formSchema: object({
-        type: string().nullable().required(),
-        mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
-        phone: string().nullable().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').transform(v => v === '' ? null : v),
-        zip: string().min(5).required()
+        type: string().nullable().required('Une profession est requise'),
+        mobile: string().min(10, 'Le mobile doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un mobile est requis'),
+        phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v),
+        zip: string().min(5, 'Le format du code postal est incorrect').required('Un code postal est requis')
       })
     }
   },
