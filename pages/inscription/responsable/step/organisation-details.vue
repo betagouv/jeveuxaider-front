@@ -165,7 +165,7 @@ export default {
     return {
       loading: false,
       formSchema: object({
-        description: string().min(200).required(),
+        description: string().nullable().min(200).required(),
         email: string().nullable().email(),
         website: string().nullable().url(),
         facebook: string().nullable().url(),

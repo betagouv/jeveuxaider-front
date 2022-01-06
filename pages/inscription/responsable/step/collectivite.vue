@@ -119,15 +119,12 @@ export default {
     }
     const { data: organisation } = await $axios.get(`/structure/${store.getters.currentRole.contextable_id}`)
 
-    console.log('territoire', organisation.territoire)
-    // const { data: territoire } = await $axios.get(`/territoire/${store.getters.currentRole.contextable_id}`)
-
-    if (!organisation.territoire.department) {
-      organisation.territoire.department = organisation.department
-    }
     return {
-      form: organisation.territoire
-      // territoire
+      form: {
+        ...organisation.territoire,
+        zips: organisation.territoire.zips ? organisation.territoire.zips : [],
+        department: !organisation.territoire.department ? organisation.department : organisation.territoire.department
+      }
     }
   },
   data () {
@@ -177,7 +174,7 @@ export default {
       this.form.zips = this.form.zips.filter(item => item !== value)
     },
     handleSelectedGeo (item) {
-      if (item && !item.includes(this.form.zips)) {
+      if (item && !this.form.zips.includes(item)) {
         this.form.zips.push(item.postcode)
       }
     },
@@ -186,7 +183,6 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           this.loading = true
-          console.log('this.form', this.form)
           await this.$axios.post(`/territoire/${this.form.id}`, this.form)
           this.$router.push('/inscription/responsable/step/collectivite-confirmation')
         })
