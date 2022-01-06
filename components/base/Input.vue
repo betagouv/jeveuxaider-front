@@ -16,7 +16,8 @@
         :disabled="disabled"
         :class="[
           'px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500',
-          {'pr-8': suffix , 'pl-10': icon, 'bg-transparent': variant == 'transparent', 'bg-gray-100 cursor-not-allowed': disabled}
+          {'pr-8': suffix , 'pl-10': icon, 'bg-transparent': variant == 'transparent', 'bg-gray-100 cursor-not-allowed': disabled},
+          {'hide-picker': hidePicker}
         ]"
         autocomplete="off"
         @blur="handleBlur"
@@ -40,7 +41,7 @@
           @click="reset()"
         />
       </div>
-      <div v-if="suffix" class="absolute right-3" :class="type =='number' ? 'right-14' : 'right-3'">
+      <div v-if="suffix" class="absolute" :class="type =='number' ? 'right-14' : 'right-3'">
         <div class="text-gray-400 text-sm">
           {{ suffix }}
         </div>
@@ -61,6 +62,7 @@ export default {
     variant: { type: String, default: null }, // transparent
     clearable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
+    hidePicker: { type: Boolean, default: false },
     type: {
       type: String,
       default: 'text',
@@ -96,3 +98,19 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+::placeholder {
+  font-weight: 300;
+  color: #8b8b8b !important;
+}
+
+input.hide-picker[type="date"] {
+  &::-webkit-calendar-picker-indicator{
+    display: none;
+  }
+  &::-webkit-input-placeholder{
+    visibility: hidden !important;
+  }
+}
+</style>
