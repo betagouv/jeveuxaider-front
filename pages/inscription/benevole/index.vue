@@ -559,7 +559,6 @@ export default {
         })
         .catch((errors) => {
           this.setErrors(errors)
-          this.showErrorsInToast(errors)
         })
         .finally(() => {
           this.loading = false

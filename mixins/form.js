@@ -7,11 +7,20 @@ export default {
     }
   },
   methods: {
-    setErrors (errors) {
+    setErrors (errors, showToast = true) {
       this.resetErrors()
       errors?.inner?.forEach((error) => {
         this.$set(this.errors, error.path, error.message)
       })
+      if (showToast) {
+        this.$toast.error({
+          component: Toast,
+          props: {
+            message: 'Merci de corriger les éléments suivants',
+            errors: errors.errors
+          }
+        })
+      }
     },
     resetErrors () {
       this.errors = {}
@@ -25,15 +34,6 @@ export default {
         .catch((error) => {
           this.$set(this.errors, field, error.message)
         })
-    },
-    showErrorsInToast (fields) {
-      this.$toast.error({
-        component: Toast,
-        props: {
-          message: 'Merci de corriger les éléments suivants',
-          errors: fields.errors
-        }
-      })
     }
   }
 }

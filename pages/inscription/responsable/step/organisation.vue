@@ -37,6 +37,7 @@
               v-model="form.name"
               name="name"
               placeholder="Nom de votre organisation"
+              @blur="validate('name')"
             />
           </FormControl>
           <FormControl label="Statut juridique" html-for="statut_juridique" required :error="errors.statut_juridique">
@@ -240,12 +241,12 @@ export default {
       loading: false,
       options: labels,
       formSchema: object({
-        // name: string().required(),
-        statut_juridique: string().required(),
-        department: string().nullable().required(),
-        address: string().nullable().required('Merci de saisir une adresse'),
-        domaines: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action'),
-        publics_beneficiaires: array().min(1, 'Merci de sélectionner au moins 1 public bénéficiaire')
+        name: string().required('Un nom est requis'),
+        statut_juridique: string().required('Un statut juridique est requis'),
+        department: string().nullable().required('Un département est requis'),
+        address: string().nullable().required('Une adresse est requise'),
+        domaines: array().min(1, 'Au moins 1 domaine d\'action'),
+        publics_beneficiaires: array().min(1, 'Au moins 1 public bénéficiaire')
       }),
       autocompleteReseauxOptions: []
     }
