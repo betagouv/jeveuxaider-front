@@ -17,21 +17,15 @@
         @keydown="onKeydown"
         @click="handleClick"
       >
-        <template v-if="selectedOption">
-          {{ selectedOption[attributeLabel] }}
+        <template v-if="selectedOptions">
+          {{ selectedOptions[attributeLabel].join(',') }}
         </template>
         <template v-else>
           <span class="text-gray-500">{{ placeholder }}</span>
         </template>
       </div>
       <div class="absolute right-3">
-        <XIcon
-          v-if="selectedOption && clearable"
-          class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
-          @click="reset()"
-        />
         <SelectorIcon
-          v-else
           class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
         />
       </div>
@@ -50,14 +44,14 @@
           class="flex justify-between items-center text-sm px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
           :class="[
             {'bg-gray-50 text-jva-blue-500': highlightIndex == index},
-            {'bg-gray-50 text-jva-blue-500': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
+            {'bg-gray-50 text-jva-blue-500 already selected': false}
           ]"
           @click="handleSelectOption(item)"
         >
           <span class="">
             {{ item[attributeLabel] }}
           </span>
-          <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="" />
+          <!-- <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="" /> -->
         </li>
         <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
           {{ labelEmpty }}
@@ -71,10 +65,7 @@
 
 export default {
   props: {
-    value: {
-      type: [String, Number, Array],
-      default: null
-    },
+    value: { type: [String, Number, Array], default: () => [] },
     placeholder: { type: String, default: null },
     labelEmpty: { type: String, default: 'Aucune option' },
     name: { type: String, required: true },
@@ -83,23 +74,17 @@ export default {
     attributeKey: { type: String, default: 'key' },
     attributeLabel: { type: String, default: 'label' },
     variant: { type: String, default: null }, // transparent
-    clearable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false }
   },
   data () {
     return {
       showOptions: false,
       highlightIndex: null,
-      selectedOption: this.value ? this.options.find(item => item[this.attributeKey] === this.value) : null
+      // selectedOption: this.value ? this.options.find(item => item[this.attributeKey] === this.value) : null
+      selectedOptions: this.value
     }
   },
   methods: {
-    reset () {
-      this.highlightIndex = null
-      this.selectedOption = null
-      this.showOptions = false
-      this.$emit('input', null)
-    },
     clickedOutside () {
       this.showOptions = false
     },
@@ -109,12 +94,15 @@ export default {
       }
     },
     handleSelectOption (item) {
-      if (item && this.selectedOption && this.selectedOption[this.attributeKey] === item[this.attributeKey]) {
-        this.$emit('input', null)
-        this.selectedOption = null
-      } else if (item) {
-        this.$emit('input', item[this.attributeKey])
-        this.selectedOption = item
+      // if (item && this.selectedOption && this.selectedOption[this.attributeKey] === item[this.attributeKey]) {
+      //   this.$emit('input', null)
+      //   this.selectedOption = null
+      // } else if (item) {
+      //   this.$emit('input', item[this.attributeKey])
+      //   this.selectedOption = item
+      // }
+      if (item && !this.selectedOptions.includes(item[this.attributeKey])) {
+        this.selectedOptions.push(item[this.attributeKey])
       }
       this.$emit('blur')
       this.showOptions = false
