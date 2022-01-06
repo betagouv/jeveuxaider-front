@@ -42,19 +42,14 @@
 
         <div v-if="form.skills.length" class="mt-6">
           <div class="flex flex-wrap gap-2">
-            <div
+            <TagFormItem
               v-for="item in form.skills"
               :key="item.id"
-              class="flex items-center space-x-4 px-4 py-3 rounded-lg border border-jva-blue-500 bg-white"
+              :tag="item"
+              @removed="onRemovedTagItem"
             >
-              <div class="flex-none text-sm text-jva-blue-500 font-bold">
-                {{ item.name.fr }}
-              </div>
-              <XIcon
-                class="flex-none cursor-pointer w-4 h-4 text-jva-blue-500 hover:text-jva-blue-400"
-                @click="handleRemoveSkill(item.id)"
-              />
-            </div>
+              {{ item.name.fr }}
+            </TagFormItem>
           </div>
         </div>
 
@@ -117,8 +112,8 @@ export default {
     handleSelectItems (item) {
       this.$set(this.form, 'skills', [...this.form.skills, item])
     },
-    handleRemoveSkill (id) {
-      this.form.skills = this.form.skills.filter(item => item.id !== id)
+    onRemovedTagItem (item) {
+      this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
     },
     async onSubmit () {
       this.loading = true
