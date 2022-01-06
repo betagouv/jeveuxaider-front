@@ -96,7 +96,7 @@
       </div>
     </template>
     <div>
-      <SectionHeading :title="`${queryResult.total | formatNumber} missions`">
+      <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} missions`">
         <template #action>
           <nuxt-link
             v-if="$store.getters.contextRole === 'responsable'"
