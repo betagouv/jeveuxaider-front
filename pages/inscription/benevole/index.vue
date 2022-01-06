@@ -231,7 +231,9 @@
                         <Input
                           v-model="form.birthday"
                           name="birthday"
-                          placeholder="14/07/1987"
+                          placeholder="jj/mm/aaaa"
+                          type="date"
+                          hide-picker
                           @blur="validate('birthday')"
                         />
                       </FormControl>
@@ -482,7 +484,7 @@
 </template>
 
 <script>
-import { string, object, ref } from 'yup'
+import { string, object, ref, date } from 'yup'
 import MixinForm from '@/mixins/form'
 import FranceConnect from '@/components/custom/FranceConnect'
 
@@ -505,7 +507,7 @@ export default {
         last_name: string().min(2).required(),
         mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
         zip: string().min(5).required(),
-        birthday: string().required(),
+        birthday: date().required('Ce format est incorrect').nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
         email: string().required().email(),
         password: string().min(8).required(),
         password_confirmation: string().required().oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
@@ -553,10 +555,6 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           this.loading = true
-          this.form.birthday = this.$dayjs(
-            this.form.birthday,
-            'DD/MM/YYYY'
-          ).format('YYYY-MM-DD')
           await this.$store.dispatch('auth/registerVolontaire', this.form)
           this.$router.push('/inscription/benevole/step/profile')
         })
