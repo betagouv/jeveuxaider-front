@@ -503,14 +503,14 @@ export default {
         password: ''
       },
       formSchema: object({
-        first_name: string().min(3).required(),
-        last_name: string().min(2).required(),
-        mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
-        zip: string().min(5).required(),
-        birthday: date().required('Ce format est incorrect').nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
-        email: string().required().email(),
-        password: string().min(8).required(),
-        password_confirmation: string().required().oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
+        first_name: string().min(3).required('Un prénom est requis'),
+        last_name: string().min(2).required('Un nom est requis'),
+        mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un téléphone mobile est requis'),
+        zip: string().min(5).required('Un code postal est requis'),
+        birthday: date().required("Une date d'anniversaire est requise").nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
+        email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
+        password: string().min(8).required('Un mot de passe est requis'),
+        password_confirmation: string().required('Une confirmation de mot de passe est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
       })
     }
   },
@@ -550,7 +550,6 @@ export default {
   },
   methods: {
     onSubmit () {
-      console.log('this.form', this.form)
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
@@ -560,6 +559,7 @@ export default {
         })
         .catch((errors) => {
           this.setErrors(errors)
+          this.showErrorsInToast(errors)
         })
         .finally(() => {
           this.loading = false
