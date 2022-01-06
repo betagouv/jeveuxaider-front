@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white rounded-xl overflow-hidden"
+    class="bg-white rounded-xl"
     :class="[{
       'shadow-lg': variant == 'shadow',
       'border': variant == 'flat',

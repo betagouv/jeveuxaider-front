@@ -8,13 +8,14 @@
     <template #header>
       <SectionHeading title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
         <template #action>
-          <template v-if="['responsable'].includes($store.getters.contextRole)">
-            <router-link :to="`/structures/${$store.getters.currentRole.contextable_id}/missions/add`">
-              <Button icon="PlusIcon" size="xl">
-                Nouvelle mission
-              </Button>
-            </router-link>
-          </template>
+          <nuxt-link
+            v-if="$store.getters.contextRole === 'responsable'"
+            :to="`/admin/organisations/${$store.getters.contextableId}/missions/add`"
+          >
+            <Button icon="PlusIcon" size="xl">
+              Publier une mission
+            </Button>
+          </nuxt-link>
         </template>
       </Sectionheading>
     </template>
@@ -56,7 +57,7 @@
             :value="statistics.organisations_actives"
             :title="`${$options.filters.pluralize(statistics.organisations_actives, 'Organisation active', 'Organisations actives', false)}`"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations)} ${$options.filters.pluralize(statistics.organisations, 'organisations', 'organisations', false)}`"
-            link="/dashboard/organisations"
+            link="/admin/organisations"
             link-label="Organisations"
           />
           <CardStatistic
@@ -64,7 +65,7 @@
             :value="statistics.missions_actives"
             :title="`${$options.filters.pluralize(statistics.missions_actives, 'Mission active', 'Missions actives', false)}`"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.missions)} ${$options.filters.pluralize(statistics.missions, 'mission', 'missions', false)}`"
-            link="/dashboard/missions"
+            link="/admin/missions"
             link-label="Missions"
           />
           <CardStatistic
@@ -72,7 +73,7 @@
             :value="statistics.participations_validated"
             :title="`${$options.filters.pluralize(statistics.participations_validated, 'Participation validée', 'Participations validées', false)}`"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.participations)} ${$options.filters.pluralize(statistics.participations, 'candidature', 'candidatures', false)}`"
-            link="/dashboard/participations"
+            link="/admin/participations"
             link-label="Participations"
           />
           <CardStatistic
@@ -80,7 +81,7 @@
             :value="statistics.users_benevoles"
             title="Bénévoles"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.users)} utilisateurs`"
-            link="/dashboard/users"
+            link="/admin/users"
             link-label="Utilisateurs"
           />
         </div>
@@ -123,7 +124,7 @@ export default {
     MoreNumbers
   },
   mixins: [MixinAction],
-  layout: 'dashboard',
+  layout: 'admin',
   data () {
     return {
       statistics: null,

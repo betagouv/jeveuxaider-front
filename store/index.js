@@ -22,6 +22,7 @@ export const actions = {
 export const getters = {
   isLogged: state => !!(state.auth.access_token && state.auth.user),
   contextRole: state => state.auth.user ? state.auth.user.context_role : null,
+  contextableId: state => state.auth.user ? state.auth.user.contextable_id : null,
   roles: state => state.auth.user ? state.auth.roles : null,
   currentRole: (state, getters) => getters.roles ? getters.roles.filter(role => role.key === state.auth.user.context_role).shift() : null,
   profile: state => state.auth.user ? state.auth.user.profile : null

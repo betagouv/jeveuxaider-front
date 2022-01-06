@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-12">
+  <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 lg:gap-12">
     <div>
       <div v-if="secondaryTitle" class="text-xl text-gray-600">
         {{ secondaryTitle }}
@@ -7,6 +7,9 @@
       <Heading as="h1" :level="1">
         {{ title }}
       </Heading>
+      <div v-if="secondaryTitleBottom" class="text-gray-600 mt-2">
+        {{ secondaryTitleBottom }}
+      </div>
     </div>
     <slot name="action" />
   </div>
@@ -22,11 +25,11 @@ export default {
     secondaryTitle: {
       type: String,
       default: null
+    },
+    secondaryTitleBottom: {
+      type: String,
+      default: null
     }
   }
 }
 </script>
-
-<style>
-
-</style>

@@ -145,7 +145,7 @@ export default {
     CardProfile
   },
   mixins: [MixinAction],
-  layout: 'dashboard',
+  layout: 'admin',
   middleware: 'authenticated',
   data () {
     return {
