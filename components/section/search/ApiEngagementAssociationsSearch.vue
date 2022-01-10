@@ -7,9 +7,10 @@
       :get-suggestion-value="getSuggestionValue"
       :input-props="{
         placeholder,
-        autocomplete: 'new-password',
+        autocomplete: 'off',
+        class: `focus:!border-jva-blue-500 focus:!ring-jva-blue-500`,
       }"
-      class="relative w-full leading-none focus:border-jva-blue-500"
+      class="relative w-full leading-none"
       :limit="5"
       :loading="renderSuggestions"
       @input="onInputChange"

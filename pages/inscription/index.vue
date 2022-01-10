@@ -1,5 +1,5 @@
 <template>
-  <div class="relative bg-[#081992] overflow-hidden">
+  <div class="relative bg-[#081992]">
     <img
       class="z-1 object-cover absolute h-screen lg:h-auto w-full"
       alt="JeVeuxAider"
