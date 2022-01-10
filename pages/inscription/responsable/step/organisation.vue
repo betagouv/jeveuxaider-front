@@ -55,10 +55,10 @@
             label="Disposez vous d'agréments ?"
             html-for="association_types"
           >
-            <SelectAdvanced
+            <SelectAdvancedMultiple
               v-model="form.association_types"
               name="association_types"
-              placeholder="Sélectionnez votre agrément"
+              placeholder="Sélectionnez vos agréments"
               :options="options.association_types"
               clearable
             />
