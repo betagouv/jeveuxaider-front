@@ -42,6 +42,7 @@
           </FormControl>
           <FormControl label="Statut juridique" html-for="statut_juridique" required :error="errors.statut_juridique">
             <SelectAdvanced
+              key="statut_juridique"
               v-model="form.statut_juridique"
               name="statut_juridique"
               placeholder="Sélectionnez votre statut juridique"
@@ -69,6 +70,7 @@
             html-for="structure_publique_type"
           >
             <SelectAdvanced
+              key="structure_publique_type"
               v-model="form.structure_publique_type"
               name="structure_publique_type"
               placeholder="Sélectionnez le type de votre organisation publique"
@@ -76,6 +78,7 @@
               clearable
             />
           </FormControl>
+
           <FormControl
             v-if="
               form.statut_juridique == 'Organisation publique' &&
@@ -86,6 +89,7 @@
             html-for="structure_publique_etat_type"
           >
             <SelectAdvanced
+              key="structure_publique_etat_type"
               v-model="form.structure_publique_etat_type"
               name="structure_publique_etat_type"
               placeholder="Choisissez une option"
@@ -93,15 +97,17 @@
               clearable
             />
           </FormControl>
+
           <FormControl
             v-if="form.statut_juridique == 'Organisation privée'"
             label="Type de votre organisation privée"
             html-for="structure_privee_type"
           >
             <SelectAdvanced
+              key="structure_privee_type"
               v-model="form.structure_privee_type"
               name="structure_privee_type"
-              placeholder="Sélectionnez le type de votre organisation publique"
+              placeholder="Sélectionnez le type de votre organisation privée"
               :options="$labels.structure_privee_types"
               clearable
             />
@@ -124,6 +130,7 @@
           </FormControl>
           <FormControl label="Département de votre organisation" html-for="department" required :error="errors.department">
             <SelectAdvanced
+              key="department"
               v-model="form.department"
               name="department"
               placeholder="Sélectionnez votre département"
