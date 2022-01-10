@@ -1,6 +1,6 @@
 <template>
   <div class="w-full lg:h-full flex flex-col lg:flex-row">
-    <div class="bg-white lg:w-1/3 lg:h-full">
+    <div class="bg-white lg:w-1/3">
       <div class="p-6 lg:p-12 border-b border-cool-gray-100">
         <nuxt-link to="/">
           <img
@@ -21,7 +21,7 @@
     </div>
     <div
       id="step-container"
-      class="lg:w-2/3 relative bg-[#081992] lg:overflow-auto lg:h-full"
+      class="lg:w-2/3 relative bg-[#081992]"
     >
       <img
         class="z-1 object-cover absolute h-screen lg:h-auto"

@@ -2,7 +2,7 @@
   <Nuxt />
 </template>
 
-<style>
+<style scoped>
   body, #__nuxt,  #__layout {
     @apply h-full
   }

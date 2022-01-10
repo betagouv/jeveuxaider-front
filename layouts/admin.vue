@@ -23,7 +23,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   body, #__nuxt,  #__layout {
     @apply h-full
   }
