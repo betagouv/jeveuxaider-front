@@ -30,7 +30,7 @@
           class="border border-cool-gray-300 rounded-sm px-2 py-1 text-sm w-full"
           label="Recherche"
           clearable
-          autocomplete="new-password"
+          autocomplete="off"
           @input="searchForItems(search)"
         >
 

@@ -12,7 +12,7 @@ export default {
       errors?.inner?.forEach((error) => {
         this.$set(this.errors, error.path, error.message)
       })
-      if (showToast) {
+      if (showToast && errors.errors) {
         this.$toast.error({
           component: Toast,
           props: {

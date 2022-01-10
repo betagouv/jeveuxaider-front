@@ -23,7 +23,7 @@
 
       <div v-if="step == 1" class="flex flex-wrap grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-8">
         <div
-          v-for="domaine in domaines"
+          v-for="domaine in $labels.domaines"
           :key="domaine.key"
           class="shadow-lg rounded-lg py-6 px-14 text-center flex flex-col items-center justify-center cursor-pointer"
           :class="[
@@ -81,7 +81,6 @@
 </template>
 
 <script>
-import labels from '@/utils/labels'
 import CardMissionTemplate from '@/components/card/CardMissionTemplate.vue'
 import FormMission from '@/components/form/FormMission.vue'
 
@@ -108,7 +107,6 @@ export default {
       template_id: parseInt(this.$route.query.template) || null,
       domaine_id: parseInt(this.$route.query.domaine) || null,
       templates: [],
-      domaines: labels.domaines,
       mission: {}
     }
   },

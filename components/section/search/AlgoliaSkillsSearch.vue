@@ -11,7 +11,10 @@
             :input-props="{
               placeholder: limitReached ? placeholderLimitReached : placeholder,
               disabled: limitReached,
-              class: [{ 'cursor-not-allowed': limitReached }],
+              class: [
+                `focus:!border-jva-blue-500 focus:!ring-jva-blue-500`,
+                { 'cursor-not-allowed': limitReached }
+              ],
             }"
             class="relative w-full leading-none"
             @input="onInput(refine, $event)"

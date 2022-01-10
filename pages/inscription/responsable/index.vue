@@ -1,12 +1,12 @@
 <template>
-  <div class="relative bg-[#081992] overflow-hidden">
+  <div class="relative bg-[#081992]">
     <img
-      class="z-1 object-cover absolute h-screen lg:h-auto w-full"
+      class="z-1 object-cover absolute h-screen lg:h-auto w-full max-h-full object-top"
       alt="JeVeuxAider"
       srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
       data-not-lazy
     >
-    <div class="relative z-10 py-12 lg:py-24">
+    <div class="relative z-10 py-12 lg:py-24 px-6">
       <div class="text-center mb-12">
         <h2
           class="text-3xl md:text-5xl text-white !leading-tight tracking-tight font-bold"
