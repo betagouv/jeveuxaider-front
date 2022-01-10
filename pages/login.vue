@@ -1,12 +1,12 @@
 <template>
   <div class="relative bg-[#081992]">
     <img
-      class="z-1 object-cover absolute h-screen lg:h-auto w-full"
+      class="z-1 object-cover absolute h-screen lg:h-auto w-full max-h-full object-top"
       alt="JeVeuxAider"
       srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
       data-not-lazy
     >
-    <div class="pb-12 mt-12 px-4 relative w-full lg:inset-y-0 text-center z-10">
+    <div class="py-12 px-4 relative w-full lg:inset-y-0 text-center z-10">
       <template v-if="isFranceConnectActive">
         <div class="">
           <h2

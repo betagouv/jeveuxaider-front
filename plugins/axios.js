@@ -34,6 +34,14 @@ export default function ({ $axios, redirect, app, store, error, $message, $toast
     // console.log(err.response.data)
 
     switch (err.response.status) {
+      case 401:
+        app.$toast.error({
+          component: Toast,
+          props: {
+            message: err.response.data.message
+          }
+        })
+        break
       case 403:
         return error({
           statusCode: 403,
