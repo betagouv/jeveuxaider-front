@@ -10,9 +10,13 @@
     <div class="py-6">
       <SectionHeading title="Création d'une nouvelle mission" secondary-title-bottom="Choisissez le domaine d'action de cette mission">
         <template #action>
-          <div class="text-gray-500 text-sm lg:text-right">
-            Votre mission doit respecter<br>
-            <a class="underline text-gray-700" href="/charte-reserve-civique" target="_blank">la charte</a> de Jeveuxaider.gouv.fr
+          <div class="space-x-2">
+            <Button variant="white" @click.native="handleSubmitBrouillon()">
+              Enregistrer en brouillon
+            </Button>
+            <Button variant="green" @click.native="handleSubmitPublish()">
+              Enregistrer et publier
+            </Button>
           </div>
         </template>
       </Sectionheading>
@@ -64,10 +68,6 @@
             :image-url="missionTemplate.photo && missionTemplate.photo.large"
             @click.native="onSelectTemplate(missionTemplate)"
           />
-
-          <!--
-            :structure-id="parseInt($route.params.id)"
-             -->
         </div>
       </div>
 
@@ -130,9 +130,6 @@ export default {
       this.templates = templates.data.data
     }
     if (this.template_id) {
-      console.log('has template', this.template_id)
-      console.log('mission', this.mission)
-      console.log('templates', this.templates)
       this.mission.template = this.templates.find(template => template.id == this.template_id)
     }
   },
@@ -164,6 +161,10 @@ export default {
           query: { ...this.$route.query, domaine: this.domaine_id, step: 2 }
         })
       }
+    },
+    async handleSubmitBrouillon () {
+      console.log('handleSubmitBrouillon')
+      await this.$axios.post(`/structure/${this.structure.id}/missions`, this.mission)
     }
   }
 }

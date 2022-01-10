@@ -1,11 +1,8 @@
-// import { Message } from 'element-ui'
 import Toast from '@/components/base/Toast'
 
 export default function ({ $axios, redirect, app, store, error, $message, $toast }) {
   $axios.interceptors.request.use(function (config) {
-    // console.log('config', config)
     const isExternalCall = config.url.includes('http')
-    // console.log('isExternalCall', isExternalCall)
     if (isExternalCall) {
       return config
     }
