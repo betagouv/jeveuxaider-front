@@ -1,16 +1,15 @@
 import Vue from 'vue'
-import labels from '@/utils/labels.json'
 
-export default function () {
+export default function ({ app }) {
   Vue.filter('label', function (key, vocabulary, labelKey = 'label') {
-    if (vocabulary && labels[vocabulary]) {
-      const element = labels[vocabulary].find(item => item.key === key)
+    if (vocabulary && app.$labels[vocabulary]) {
+      const element = app.$labels[vocabulary].find(item => item.key === key)
       if (element) {
         return element[labelKey]
       }
     }
 
-    return labels[key] || key
+    return app.$labels[key] || key
   })
 
   Vue.filter('prefix', function (word) {

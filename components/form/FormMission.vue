@@ -33,7 +33,7 @@
                 v-model="form.domaine_id"
                 name="domaine"
                 placeholder="Sélectionner un domaine"
-                :options="domaines"
+                :options="$labels.domaines"
                 :disabled="Boolean(mission.template)"
               />
             </FormControl>
@@ -45,7 +45,7 @@
                 v-model="form.domaine_secondaire"
                 name="domaine"
                 placeholder="Sélectionner un domaine"
-                :options="domaines.filter(
+                :options="$labels.domaines.filter(
                   (domaine) => domaine.key != form.domaine_id
                 )"
                 :disabled="Boolean(mission.template)"
@@ -61,7 +61,7 @@
               v-model="form.publics_beneficiaires"
               name="publics_beneficiaires"
               variant="button"
-              :options="mission_publics_beneficiaires"
+              :options="$labels.mission_publics_beneficiaires"
             />
           </FormControl>
           <FormControl
@@ -105,7 +105,7 @@
               v-model="form.publics_volontaires"
               name="publics_volontaires"
               variant="button"
-              :options="mission_publics_volontaires"
+              :options="$labels.mission_publics_volontaires"
             />
           </FormControl>
         </div>
@@ -150,7 +150,7 @@
                 v-model="form.commitment__duration"
                 name="commitment__duration"
                 placeholder="Durée"
-                :options="duration"
+                :options="$labels.duration"
               />
             </FormControl>
             <FormControl
@@ -161,7 +161,7 @@
                 v-model="form.commitment_frequency"
                 name="commitment_frequency"
                 placeholder="Fréquence"
-                :options="time_period"
+                :options="$labels.time_period"
               />
             </FormControl>
           </div>
@@ -195,7 +195,7 @@
               v-model="form.department"
               name="department"
               placeholder="Département"
-              :options="departments"
+              :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
             />
           </FormControl>
           <FormControl
@@ -280,7 +280,6 @@
 </template>
 
 <script>
-import labels from '@/utils/labels.json'
 import inputGeo from '@/mixins/input-geo'
 
 export default {
@@ -293,12 +292,6 @@ export default {
   },
   data () {
     return {
-      domaines: labels.domaines,
-      mission_publics_beneficiaires: labels.mission_publics_beneficiaires,
-      mission_publics_volontaires: labels.mission_publics_volontaires,
-      duration: labels.duration,
-      time_period: labels.time_period,
-      departments: labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } }),
       form: {
         name: this.mission.template?.title,
         participations_max: '1',

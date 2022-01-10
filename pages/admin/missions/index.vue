@@ -29,7 +29,7 @@
           :key="`department-${$route.fullPath}`"
           name="department"
           placeholder="Département"
-          :options="departments"
+          :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
           :value="$route.query['filter[department]']"
           variant="transparent"
           clearable
@@ -39,7 +39,7 @@
           :key="`domaine-${$route.fullPath}`"
           name="domaine"
           placeholder="Domaine d'action"
-          :options="domaines"
+          :options="$labels.domaines"
           :value="$route.query['filter[domaine]']"
           variant="transparent"
           clearable
@@ -67,7 +67,7 @@
           :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Statut"
-          :options="mission_states"
+          :options="$labels.mission_workflow_states"
           :value="$route.query['filter[state]']"
           variant="transparent"
           clearable
@@ -206,7 +206,6 @@
 </template>
 
 <script>
-import labels from '@/utils/labels.json'
 import QueryBuilder from '@/mixins/query-builder'
 import CardMission from '@/components/card/CardMission.vue'
 import DrawerMission from '@/components/drawer/DrawerMission.vue'
@@ -230,11 +229,8 @@ export default {
   data () {
     return {
       endpoint: '/missions',
-      mission_states: labels.mission_workflow_states,
       drawerMissionId: null,
       drawerMission: null,
-      domaines: labels.domaines,
-      departments: labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } }),
       autocompleteOptionsOrga: []
     }
   },

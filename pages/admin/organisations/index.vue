@@ -23,7 +23,7 @@
         <SelectAdvanced
           name="statut_juridique"
           placeholder="Statut juridique"
-          :options="structure_legal_status"
+          :options="$labels.structure_legal_status"
           :value="$route.query['filter[statut_juridique]']"
           variant="transparent"
           clearable
@@ -32,7 +32,7 @@
         <SelectAdvanced
           name="department"
           placeholder="Département"
-          :options="departments"
+          :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
           :value="$route.query['filter[department]']"
           variant="transparent"
           clearable
@@ -49,7 +49,7 @@
           Toutes
         </button>
         <button
-          v-for="option in structure_states"
+          v-for="option in $labels.structure_workflow_states"
           :key="option.key"
           :class="['px-4 py-1', $route.query['filter[state]'] && $route.query['filter[state]'] == option.key ? 'shadow bg-white rounded-full text-gray-900 font-semibold' : 'text-gray-500 font-medium']"
           @click="changeFilter('filter[state]', option.key)"
@@ -69,7 +69,7 @@
         <SelectAdvanced
           name="state"
           placeholder="Statut de l'organisation"
-          :options="structure_states"
+          :options="$labels.structure_workflow_states"
           :value="$route.query['filter[state]']"
           variant="transparent"
           clearable
@@ -96,7 +96,6 @@
 </template>
 
 <script>
-import labels from '@/utils/labels.json'
 import QueryBuilder from '@/mixins/query-builder'
 
 export default {
@@ -113,10 +112,7 @@ export default {
   },
   data () {
     return {
-      endpoint: '/structures',
-      structure_states: labels.structure_workflow_states,
-      structure_legal_status: labels.structure_legal_status,
-      departments: labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })
+      endpoint: '/structures'
     }
   }
 }
