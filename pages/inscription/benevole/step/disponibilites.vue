@@ -4,7 +4,7 @@
       <portal
         to="sidebar"
       >
-        <div class="text-xl lg:text-2xl font-bold mb-6 lg:mb-12">
+        <div class="text-center lg:text-left text-xl lg:text-2xl font-bold mb-6 lg:mb-12">
           Ça ne devrait pas prendre plus de 3 minutes 😉
         </div>
         <Steps

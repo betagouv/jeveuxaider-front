@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-center bg-blue-50 h-full px-4 py-8 text-center">
+  <div class="flex flex-col items-center justify-center bg-blue-50 px-4 py-8 text-center min-h-screen">
     <template v-if="error.statusCode == 404">
       <Heading as="h1" :level="1" class="jva-blue">
         Oups, cette page est introuvable

@@ -60,7 +60,7 @@
         <DropdownUser v-if="$store.getters.isLogged" class="" />
       </nav>
     </div>
-    <div class="hidden lg:flex px-4 justify-between border-t text-sm text-gray-800">
+    <div class="hidden lg:flex justify-between border-t text-sm text-gray-800">
       <div class="flex">
         <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 1" position="left" class="h-full">
           <template #button>
@@ -114,7 +114,7 @@
       <div class="flex">
         <template v-if="$store.getters.isLogged">
           <NavItem
-            href="/profile"
+            to="/profile"
             :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/profile')}]"
           >
             Mon profil
@@ -122,13 +122,13 @@
         </template>
         <template v-else>
           <NavItem
-            href="/inscription"
+            to="/inscription"
             :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/inscription')}]"
           >
             Inscription
           </NavItem>
           <NavItem
-            href="/login"
+            to="/login"
             :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/login')}]"
           >
             Connexion
@@ -245,7 +245,7 @@ export default {
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-        { name: 'Publier une mission', href: this.$store.getters.currentRole.key === 'responsable' ? `/admin/structures/${this.$store.getters.currentRole.contextable_id}/missions/add` : '/inscription/responsable', icon: CalendarIcon }
+        { name: 'Publier une mission', href: this.$store.getters.currentRole?.key === 'responsable' ? `/admin/structures/${this.$store.getters.currentRole.contextable_id}/missions/add` : '/inscription/responsable', icon: CalendarIcon }
       ]
     },
     secondNavigation () {
