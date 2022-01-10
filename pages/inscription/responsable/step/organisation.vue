@@ -45,7 +45,7 @@
               v-model="form.statut_juridique"
               name="statut_juridique"
               placeholder="Sélectionnez votre statut juridique"
-              :options="options.structure_legal_status"
+              :options="$labels.structure_legal_status"
               disabled
               @blur="validate('statut_juridique')"
             />
@@ -59,7 +59,7 @@
               v-model="form.association_types"
               name="association_types"
               placeholder="Sélectionnez vos agréments"
-              :options="options.association_types"
+              :options="$labels.association_types"
               clearable
             />
           </FormControl>
@@ -72,7 +72,7 @@
               v-model="form.structure_publique_type"
               name="structure_publique_type"
               placeholder="Sélectionnez le type de votre organisation publique"
-              :options="options.structure_publique_types"
+              :options="$labels.structure_publique_types"
               clearable
             />
           </FormControl>
@@ -89,7 +89,7 @@
               v-model="form.structure_publique_etat_type"
               name="structure_publique_etat_type"
               placeholder="Choisissez une option"
-              :options="options.structure_publique_etat_types"
+              :options="$labels.structure_publique_etat_types"
               clearable
             />
           </FormControl>
@@ -102,7 +102,7 @@
               v-model="form.structure_privee_type"
               name="structure_privee_type"
               placeholder="Sélectionnez le type de votre organisation publique"
-              :options="options.structure_privee_types"
+              :options="$labels.structure_privee_types"
               clearable
             />
           </FormControl>
@@ -111,7 +111,7 @@
               v-model="form.domaines"
               name="domaines"
               variant="button"
-              :options="options.domaines"
+              :options="$labels.domaines"
             />
           </FormControl>
           <FormControl label="Choisissez les publics bénéficiaires de vos missions" html-for="publics_beneficiaires" required :error="errors.publics_beneficiaires">
@@ -119,7 +119,7 @@
               v-model="form.publics_beneficiaires"
               name="publics_beneficiaires"
               variant="button"
-              :options="options.mission_publics_beneficiaires"
+              :options="$labels.mission_publics_beneficiaires"
             />
           </FormControl>
           <FormControl label="Département de votre organisation" html-for="department" required :error="errors.department">
@@ -127,7 +127,7 @@
               v-model="form.department"
               name="department"
               placeholder="Sélectionnez votre département"
-              :options="options.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
+              :options="$labels.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
               @blur="validate('department')"
             />
           </FormControl>
@@ -219,7 +219,6 @@
 <script>
 import { string, object, array } from 'yup'
 import MixinForm from '@/mixins/form'
-import labels from '@/utils/labels.json'
 import MixinInputGeo from '@/mixins/input-geo'
 
 export default {
@@ -239,7 +238,6 @@ export default {
   data () {
     return {
       loading: false,
-      options: labels,
       formSchema: object({
         name: string().required('Un nom est requis'),
         statut_juridique: string().required('Un statut juridique est requis'),

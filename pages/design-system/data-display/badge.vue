@@ -92,7 +92,7 @@
         Statut
       </div>
       <div class="flex flex-wrap gap-2 items-end">
-        <Badge v-for="statut in labels.mission_workflow_states" :key="statut.key" :color="statut.key" plain>
+        <Badge v-for="statut in $labels.mission_workflow_states" :key="statut.key" :color="statut.key" plain>
           {{ statut.label }}
         </Badge>
       </div>
@@ -101,13 +101,11 @@
 </template>
 
 <script>
-import labels from '@/utils/labels.json'
 
 export default {
   layout: 'design-system',
   data () {
     return {
-      labels
     }
   }
 

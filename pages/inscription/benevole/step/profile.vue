@@ -38,7 +38,7 @@
               v-model="form.type"
               name="type"
               placeholder="Sélectionnez votre profession"
-              :options="profile_type_options"
+              :options="$labels.profile_type"
 
               @blur="validate('type')"
             />
@@ -64,7 +64,7 @@
               v-model="form.domaines"
               name="domaines"
               variant="button"
-              :options="domaines_options"
+              :options="$labels.domaines"
             />
           </FormControl>
           <FormControl label="Décrivez vos motivations" html-for="description">
@@ -90,7 +90,6 @@
 import { string, object, array } from 'yup'
 import _ from 'lodash'
 import MixinForm from '@/mixins/form'
-import labels from '@/utils/labels.json'
 
 export default {
   mixins: [MixinForm],
@@ -117,8 +116,6 @@ export default {
           status: 'upcoming'
         }
       ],
-      profile_type_options: labels.profile_type,
-      domaines_options: labels.domaines,
       form: _.cloneDeep(this.$store.state.auth.user.profile),
       formSchema: object({
         type: string().nullable().required('Une profession est requise'),

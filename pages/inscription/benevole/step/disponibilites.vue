@@ -45,7 +45,7 @@
               v-model="form.disponibilities"
               name="disponibilities"
               variant="button"
-              :options="disponibilities_options"
+              :options="$labels.disponibilities"
             />
           </FormControl>
           <div>
@@ -58,7 +58,7 @@
                   v-model="form.commitment__duration"
                   name="commitment__duration"
                   placeholder="Sélectionnez une durée"
-                  :options="duration_options"
+                  :options="$labels.duration"
                 />
                 <FormError v-if="errors.commitment__duration">
                   {{ errors.commitment__time_period }}
@@ -73,7 +73,7 @@
                   class="lg:w-1/2"
                   name="commitment__time_period"
                   placeholder="Sélectionnez une durée"
-                  :options="time_period_options"
+                  :options="$labels.time_period"
                 />
                 <FormError v-if="errors.commitment__time_period">
                   {{ errors.commitment__time_period }}
@@ -102,7 +102,6 @@
 import { object, array } from 'yup'
 import _ from 'lodash'
 import MixinForm from '@/mixins/form'
-import labels from '@/utils/labels.json'
 
 export default {
   mixins: [MixinForm],
@@ -132,9 +131,6 @@ export default {
           status: 'upcoming'
         }
       ],
-      disponibilities_options: labels.disponibilities,
-      time_period_options: labels.time_period,
-      duration_options: labels.duration,
       form: _.cloneDeep(this.$store.getters.profile),
       formSchema: object({
         disponibilities: array().min(1, 'Merci de sélectionner au moins 1 disponibilité')

@@ -45,7 +45,7 @@
               v-model="form.department"
               name="department"
               placeholder="Sélectionnez votre département"
-              :options="options.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
+              :options="$labels.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
             />
           </FormControl>
           <FormControl label="Ajouter les codes postaux" html-for="autocomplete" required :error="errors.zips">
@@ -105,7 +105,6 @@
 <script>
 import { string, object, array } from 'yup'
 import MixinForm from '@/mixins/form'
-import labels from '@/utils/labels.json'
 import MixinInputGeo from '@/mixins/input-geo'
 
 export default {
@@ -130,7 +129,6 @@ export default {
   data () {
     return {
       loading: false,
-      options: labels,
       formSchema: object({
         name: string().required(),
         department: string().required(),
