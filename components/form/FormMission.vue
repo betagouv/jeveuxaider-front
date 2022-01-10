@@ -184,14 +184,20 @@
           Lieu de la mission
         </Heading>
         <div class="space-y-8">
-          Présentiel / à distance
-          <br>
+          <div>
+            <RadioGroup v-model="form.type" :options="$labels.mission_types" />
+            <FormHelperText v-if="isPresentiel" class="mt-4">
+              Recruter au plus près du lieu de mission et des bénéficiaires permet de faciliter l'engagement des bénévoles. Vous avez la possibilité de dupliquer cette mission sur plusieurs lieux.
+            </FormHelperText>
+          </div>
           <FormControl
+            v-if="isPresentiel"
             label="Département"
             html-for="department"
             required
           >
             <SelectAdvanced
+              v-if="isPresentiel"
               v-model="form.department"
               name="department"
               placeholder="Département"
@@ -199,6 +205,7 @@
             />
           </FormControl>
           <FormControl
+            v-if="isPresentiel"
             label="Rechercher l'adresse du lieu de la mission"
             html-for="autocomplete-place"
             required
@@ -216,7 +223,7 @@
               @fetch-suggestions="onFetchGeoSuggestions"
             />
           </FormControl>
-          <div class="grid grid-cols-12 gap-2">
+          <div v-if="isPresentiel" class="grid grid-cols-12 gap-2">
             <FormControl
               class="col-span-5"
               label="Adresse"
@@ -266,11 +273,11 @@
             <InputAutocomplete
               name="autocomplete-skills"
               placeholder="Ex: Communication, Action sociale, accompagnement..."
-              :options="autocompleteOptions"
+              :options="autocompleteSkills"
               attribute-key="id"
               attribute-label="label"
-              @selected="handleSelectedAdress"
-              @fetch-suggestions="onFetchGeoSuggestions"
+              @selected="handleSelectedSkill"
+              @fetch-suggestions="onFetchSkillsSuggestions"
             />
           </FormControl>
         </div>
@@ -298,16 +305,24 @@ export default {
         skills: [],
         state: 'Brouillon',
         type: 'Mission en présentiel',
+        template_id: this.mission.template?.id,
         domaine_id: this.mission.template?.domaine_id,
         objectif: this.mission.template?.objectif,
         description: this.mission.template?.description,
         ...this.mission
-      }
+      },
+      autocompleteSkills: []
     }
   },
   computed: {
+    structureId () {
+      return this.$route.params.id
+    },
     mode () {
       return this.mission.id ? 'edit' : 'add'
+    },
+    isPresentiel () {
+      return this.form.type == 'Mission en présentiel'
     }
   },
   methods: {
@@ -328,6 +343,20 @@ export default {
       this.form.city = ''
       this.form.latitude = ''
       this.form.longitude = ''
+      this.form.department = ''
+    },
+    async handleSubmitBrouillon () {
+      await this.$axios.post(`/structure/${this.structureId}/missions`, this.form)
+    },
+    async handleSubmitPublish () {
+      this.form.state = 'En attente de validation'
+      await this.$axios.post(`/structure/${this.structureId}/missions`, this.form)
+    },
+    onFetchSkillsSuggestions (value) {
+      return []
+    },
+    handleSelectedSkill () {
+      console.log('handleSelectedSkill')
     }
   }
 }

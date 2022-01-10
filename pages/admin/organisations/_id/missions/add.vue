@@ -10,7 +10,7 @@
     <div class="py-6">
       <SectionHeading title="Création d'une nouvelle mission" secondary-title-bottom="Choisissez le domaine d'action de cette mission">
         <template #action>
-          <div class="space-x-2">
+          <div v-if="step == 2" class="space-x-2">
             <Button variant="white" @click.native="handleSubmitBrouillon()">
               Enregistrer en brouillon
             </Button>
@@ -73,6 +73,7 @@
 
       <FormMission
         v-if="step == 2"
+        ref="formMission"
         :mission="mission"
         class="mt-8"
       />
@@ -128,7 +129,8 @@ export default {
       this.templates = templates.data.data
     }
     if (this.template_id) {
-      this.mission.template = this.templates.find(template => template.id == this.template_id)
+      const { data: template } = await this.$axios.get(`/mission-templates/${this.template_id}`)
+      this.$set(this.mission, 'template', template)
     }
   },
   computed: {
@@ -147,8 +149,10 @@ export default {
         hash: '#templates'
       })
     },
-    onSelectTemplate (missionTemplate) {
+    async onSelectTemplate (missionTemplate) {
       if (missionTemplate) {
+        const { data: template } = await this.$axios.get(`/mission-templates/${missionTemplate.id}`)
+        this.$set(this.mission, 'template', template)
         this.$router.push({
           path: this.$route.path,
           query: { ...this.$route.query, template: missionTemplate.id, step: 2 }
@@ -160,9 +164,11 @@ export default {
         })
       }
     },
-    async handleSubmitBrouillon () {
-      console.log('handleSubmitBrouillon')
-      await this.$axios.post(`/structure/${this.structure.id}/missions`, this.mission)
+    handleSubmitBrouillon () {
+      this.$refs.formMission.handleSubmitBrouillon()
+    },
+    handleSubmitPublish () {
+      this.$refs.formMission.handleSubmitPublish()
     }
   }
 }

@@ -68,6 +68,7 @@
           <DescriptionListItem term="Type" :description="mission.type" />
           <DescriptionListItem term="Domaine" :description="mission.domaine && mission.domaine.name.fr" />
           <DescriptionListItem
+            v-if="mission.publics_beneficiaires"
             term="Publics bénéf."
             :description="mission.publics_beneficiaires.map((item) => $options.filters.label(item, 'mission_publics_beneficiaires')).join(', ')"
           />
