@@ -24,6 +24,6 @@ numeral.register('locale', 'fr', {
 // // switch between locales
 numeral.locale('fr')
 
-Vue.filter('formatNumber', function (number) {
-  return numeral(number).format()
+Vue.filter('formatNumber', function (number, format = null) {
+  return numeral(number).format(format)
 })
