@@ -1,8 +1,14 @@
 <template>
   <div>
     <div
-      class="max-w-lg w-full flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-jva-blue-500 cursor-pointer group transition"
-      @dragover.prevent
+      ref="dropZone"
+      class="max-w-lg w-full flex justify-center px-6 pt-5 pb-6 border-2  border-dashed rounded-lg hover:border-jva-blue-500 focus:border-jva-blue-500 cursor-pointer group transition"
+      :class="[
+        { 'border-jva-blue-500': dragging },
+        { 'border-gray-300': !dragging }
+      ]"
+      @dragover.prevent="dragging = true"
+      @dragleave="dragging = false"
       @drop="onDrop"
       @click="onClick"
     >
@@ -78,7 +84,8 @@ export default {
   },
   data () {
     return {
-      files: []
+      files: [],
+      dragging: false
     }
   },
   methods: {
@@ -86,7 +93,7 @@ export default {
       const files = this.$refs.inputFile.files
       if (this.validateFiles(files)) {
         this.files = files
-        this.$emit('files-updated', files)
+        this.$emit('change', files)
       }
     },
     onDrop (event) {
@@ -95,8 +102,9 @@ export default {
       if (this.validateFiles(files)) {
         this.$refs.inputFile.files = files
         this.files = files
-        this.$emit('files-updated', files)
+        this.$emit('change', files)
       }
+      this.dragging = false
     },
     validateFiles (files) {
       const errors = []
@@ -123,7 +131,7 @@ export default {
     onRemove (i) {
       this.files = Array.prototype.slice.call(this.files)
       this.files.splice(i, 1)
-      this.$emit('files-updated', this.files)
+      this.$emit('change', this.files)
     },
     onClick () {
       this.$refs.inputFile.click()
