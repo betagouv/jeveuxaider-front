@@ -21,7 +21,8 @@ import {
   ArrowNarrowLeftIcon,
   ArrowNarrowRightIcon,
   DuplicateIcon,
-  PlusIcon
+  PlusIcon,
+  ExclamationIcon
 } from '@vue-hero-icons/outline'
 import { InformationCircleIcon, UsersIcon, HomeIcon, ChevronDownIcon as ChevronDownSolidIcon, CheckIcon as CheckSolidIcon } from '@vue-hero-icons/solid'
 
@@ -52,7 +53,8 @@ const components = {
   ArrowNarrowRightIcon,
   HomeIcon,
   DuplicateIcon,
-  PlusIcon
+  PlusIcon,
+  ExclamationIcon
 }
 
 Object.entries(components).forEach(([name, component]) => {

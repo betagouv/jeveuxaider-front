@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full lg:h-full flex flex-col lg:flex-row">
+  <div class="w-full lg:min-h-screen flex flex-col lg:flex-row">
     <div class="bg-white lg:w-1/3">
       <div class="p-6 lg:p-12 border-b border-cool-gray-100">
         <nuxt-link to="/">
