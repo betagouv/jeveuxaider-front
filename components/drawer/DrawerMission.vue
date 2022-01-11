@@ -10,6 +10,11 @@
       <ExternalLinkIcon class="h-4 w-4" />
     </nuxt-link>
     <div class="mt-4 space-x-2">
+      <nuxt-link :to="`/admin/missions/${mission.id}`">
+        <Button variant="white" size="sm" icon="EyeIcon">
+          Détails
+        </Button>
+      </nuxt-link>
       <nuxt-link :to="`/admin/missions/${mission.id}/edit`">
         <Button variant="white" size="sm" icon="PencilIcon">
           Modifier
@@ -92,8 +97,8 @@
       </Box>
     </div>
     <div class="flex justify-center mb-10">
-      <Link class="uppercase font-semibold text-sm opacity-25">
-        Consulter l'historique
+      <Link :to="`/admin/missions/${mission.id}`" class="uppercase font-semibold text-sm hover:underline">
+        Détails de la mission
       </Link>
     </div>
   </div>

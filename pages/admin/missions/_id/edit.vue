@@ -11,7 +11,7 @@
     <div class="py-6">
       <SectionHeading :title="mission.name">
         <template #action>
-          <div class="hidden lg:block space-x-2">
+          <div class="hidden lg:block space-x-2 flex-shrink-0">
             <Button variant="white" @click.native="handleSubmitBrouillon()">
               Enregistrer en brouillon
             </Button>

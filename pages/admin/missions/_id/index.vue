@@ -7,15 +7,30 @@
         { label: mission.name },
       ]"
     />
-    <div class="py-6">
-      <SectionHeading :title="mission.name" />
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
+      <div class="lg:col-span-3 space-y-6">
+        <Presentation :mission="mission" />
+        <PresentielOrDistance :mission="mission" />
+        <Details :mission="mission" />
+      </div>
+      <div class="lg:col-span-2 space-y-8">
+        Col droite
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import PresentielOrDistance from '@/components/section/mission/PresentielOrDistance.vue'
+import Presentation from '@/components/section/mission/Presentation.vue'
+import Details from '@/components/section/mission/Details.vue'
 
 export default {
+  components: {
+    PresentielOrDistance,
+    Presentation,
+    Details
+  },
   layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (

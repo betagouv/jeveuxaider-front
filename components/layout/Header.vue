@@ -268,7 +268,7 @@ export default {
       } else if (this.$store.getters.currentRole?.key === 'responsable') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink({ regex: 'missions/*' }) },
           { name: 'Participations', href: '#' },
           { name: 'Liens utiles', href: '#' }
         ]
@@ -314,8 +314,14 @@ export default {
         this.$router.push('/dashboard')
       }
     },
-    isActiveLink (url) {
-      return this.$route.path === url
+    isActiveLink (value) {
+      if (typeof value == 'string') {
+        return this.$route.path === value
+      } else if (typeof value == 'object') {
+        if (value.regex) {
+          return RegExp(value.regex).test(this.$route.path)
+        }
+      }
     }
   }
 }

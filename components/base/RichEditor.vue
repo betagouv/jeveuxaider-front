@@ -137,6 +137,7 @@ export default {
     }
     &.ck-read-only {
         background-color: #f5f5f5 !important;
+        @apply cursor-not-allowed;
     }
     }
 }
