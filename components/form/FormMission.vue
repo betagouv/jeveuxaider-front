@@ -6,11 +6,13 @@
           Description de la mission
         </Heading>
         <div class="space-y-10">
-          <div>
-            <div class="text-sm mb-4">
-              <div class="text-xs uppercase mb-1 font-semibold text-gray-700">
-                ℹ️  Information
-              </div>
+          <FormControl
+            html-for="name"
+            :label="Boolean(mission.template) ? 'ℹ️  Information' : 'Titre de la mission'"
+            :required="!Boolean(mission.template)"
+            :error="errors.name"
+          >
+            <div v-if="Boolean(mission.template)" class="text-sm mb-4">
               <div class="text-gray-500">
                 Ce modèle de mission vient pré-remplir certaines informations.
                 Ils ne sont donc pas éditables. Si vous souhaitez les éditer, préférez une <span class="underline">mission libre ›</span>
@@ -22,11 +24,12 @@
               placeholder="Décrivez l'action du bénévole en une phrase"
               :disabled="Boolean(mission.template)"
             />
-          </div>
+          </FormControl>
           <div class="grid grid-cols-2 gap-4">
             <FormControl
               label="Domaine d'action principal"
               html-for="domaine_id"
+              :error="errors.domaine_id"
               required
             >
               <SelectAdvanced
@@ -67,6 +70,7 @@
           <FormControl
             label="Présentation de la mission"
             html-for="objectif"
+            :error="errors.objectif"
             required
           >
             <RichEditor
@@ -78,6 +82,7 @@
           <FormControl
             label="Précisions"
             html-for="description"
+            :error="errors.description"
           >
             <RichEditor
               v-model="form.description"
@@ -119,6 +124,7 @@
               label="Début de la mission"
               html-for="start_date"
               required
+              :error="errors.start_date"
             >
               <Input
                 v-model="form.start_date"
@@ -129,6 +135,7 @@
             <FormControl
               label="Début de fin"
               html-for="end_date"
+              :error="errors.end_date"
             >
               <Input
                 v-model="form.end_date"
@@ -142,6 +149,7 @@
               label="Durée d'engagement min."
               html-for="commitment__duration"
               required
+              :error="errors.commitment__duration"
             >
               <SelectAdvanced
                 v-model="form.commitment__duration"
@@ -166,6 +174,7 @@
             label="Nombre de bénévoles recherchés"
             html-for="participations_max"
             required
+            :error="errors.participations_max"
           >
             <Input
               v-model="form.participations_max"
@@ -192,6 +201,7 @@
             label="Département"
             html-for="department"
             required
+            :error="errors.department"
           >
             <SelectAdvanced
               v-if="isPresentiel"
@@ -225,6 +235,7 @@
               class="col-span-5"
               label="Adresse"
               html-for="address"
+              :error="errors.address"
             >
               <Input
                 v-model="form.address"
@@ -236,6 +247,7 @@
               class="col-span-3"
               label="Code postal"
               html-for="zip"
+              :error="errors.zip"
             >
               <Input
                 v-model="form.zip"
@@ -247,6 +259,7 @@
               class="col-span-4"
               label="Ville"
               html-for="city"
+              :error="errors.city"
             >
               <Input
                 v-model="form.city"
@@ -305,6 +318,7 @@
             class="lg:mt-10"
             html-for="contact_principal"
             required
+            :error="errors.responsable_id"
           >
             <SelectAdvanced
               v-model="form.responsable_id"
@@ -330,14 +344,16 @@
 </template>
 
 <script>
+import { string, object, number, date } from 'yup'
 import inputGeo from '@/mixins/input-geo'
+import MixinForm from '@/mixins/form'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 
 export default {
   components: {
     AlgoliaSkillsInput
   },
-  mixins: [inputGeo],
+  mixins: [inputGeo, MixinForm],
   props: {
     mission: {
       type: Object,
@@ -361,7 +377,24 @@ export default {
         objectif: this.mission.template?.objectif,
         description: this.mission.template?.description,
         ...this.mission
-      }
+      },
+      formSchema: object({
+        name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
+        domaine_id: number().nullable().required('Le domaine principal est requis'),
+        objectif: string().required("L'objectif est requis"),
+        description: string().required('La description est requise'),
+        start_date: date().nullable().required('La date de début est requise').transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
+        end_date: date().nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)).when(
+          'start_date',
+          (startDate, schema) => startDate && schema.min(startDate, 'La date de fin doit être supérieur à la date de début')),
+        commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
+        participations_max: number().min(1, 'Le nombre de bénévole recherché doit être supérieur à 1').required('Le nombre de bénévole recherché est requis'),
+        department: string().nullable().required('Le département est requis'),
+        address: string().nullable().required("L'adresse est requise"),
+        zip: string().nullable().required('Le code postal est requis'),
+        city: string().nullable().required('La ville est requise'),
+        responsable_id: number().nullable().required('Le contact de la mission doit être renseigné')
+      })
     }
   },
   computed: {
@@ -408,12 +441,25 @@ export default {
       this.form.state = 'En attente de validation'
       this.addOrEditMission()
     },
-    async addOrEditMission () {
-      if (this.isAdding) {
-        await this.$axios.post(`/structure/${this.structureId}/missions`, this.form)
-      } else {
-        await this.$axios.put(`/mission/${this.mission.id}`, this.form)
-      }
+    addOrEditMission () {
+      this.formSchema
+        .validate(this.form, { abortEarly: false })
+        .then(async () => {
+          this.loading = true
+          if (this.isAdding) {
+            const { data: mission } = await this.$axios.post(`/structure/${this.structureId}/missions`, this.form)
+            this.$router.push(`/admin/missions/${mission.id}`)
+          } else {
+            const { data: mission } = await this.$axios.put(`/mission/${this.mission.id}`, this.form)
+            this.$router.push(`/admin/missions/${mission.id}`)
+          }
+        })
+        .catch((errors) => {
+          this.setErrors(errors)
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   }
 }

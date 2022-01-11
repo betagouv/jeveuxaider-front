@@ -10,11 +10,11 @@
       <label
         v-for="(option, index) in options"
         :key="option.key"
-        class="border py-3 px-3 flex items-center justify-center text-sm font-medium text-center sm:flex-1 cursor-pointer focus:outline-none"
+        class="border border-r-0 py-3 px-3 flex items-center justify-center text-sm font-medium text-center sm:flex-1 cursor-pointer focus:outline-none"
         :class="[
           option.key == selected ? 'bg-jva-blue-600 border-transparent text-white hover:bg-jva-blue-500' : 'bg-white border-gray-200 text-gray-900 hover:bg-gray-50',
           {'!border-r-0 rounded-l-xl': index == 0 },
-          {'rounded-r-xl': index == options.length-1 },
+          {'rounded-r-xl !border-r !border-l': index == options.length-1 },
           {'!border-l-0': index == options.length-1 && options.length > 2 }
         ]"
       >
