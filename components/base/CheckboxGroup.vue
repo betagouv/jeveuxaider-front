@@ -39,10 +39,10 @@ export default {
   computed: {
     modelValue: {
       get () {
-        return this.value
+        return this.value || []
       },
       set (newValue) {
-        this.$emit('input', newValue)
+        // this.$emit('input', newValue) ( ne marche pas dans un edit )
       }
     }
   },
@@ -52,15 +52,13 @@ export default {
         const index = this.modelValue.indexOf(toggleItemKey)
         if (index > -1) {
           this.modelValue.splice(index, 1)
+          this.$emit('input', this.modelValue)
         }
       } else {
         this.modelValue.push(toggleItemKey)
+        this.$emit('input', this.modelValue)
       }
     }
   }
 }
 </script>
-
-<style>
-
-</style>

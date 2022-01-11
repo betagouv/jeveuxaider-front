@@ -67,34 +67,31 @@
           <FormControl
             label="Présentation de la mission"
             html-for="objectif"
-            placeholder="Décrivez la mission en quelques mots..."
             required
           >
-            <Textarea
+            <RichEditor
               v-model="form.objectif"
-              name="objectif"
+              placeholder="Décrivez la mission en quelques mots..."
               :disabled="Boolean(mission.template)"
             />
           </FormControl>
           <FormControl
             label="Précisions"
             html-for="description"
-            placeholder="Précisez les détails et spécificités de la mission"
           >
-            <Textarea
+            <RichEditor
               v-model="form.description"
-              name="description"
+              placeholder="Précisez les détails et spécificités de la mission"
               :disabled="Boolean(mission.template)"
             />
           </FormControl>
           <FormControl
             label="Quelques mots pour motiver les bénévoles à participer"
             html-for="information"
-            placeholder="Incitez les bénévoles à candidater ..."
           >
-            <Textarea
+            <RichEditor
               v-model="form.information"
-              name="information"
+              placeholder="Incitez les bénévoles à candidater ..."
             />
           </FormControl>
           <FormControl
@@ -265,36 +262,90 @@
           Compétences recherchées
         </Heading>
         <div class="space-y-8">
-          <FormControl
-            label="compétences recherchées pour cette mission"
-            html-for="autocomplete-skills"
-          >
+          <FormControl label="compétences recherchées pour cette mission" html-for="algolia-search">
             <FormHelperText>Sélectionnez jusqu’à 3 compétences</FormHelperText>
-            <InputAutocomplete
-              name="autocomplete-skills"
-              placeholder="Ex: Communication, Action sociale, accompagnement..."
-              :options="autocompleteSkills"
-              attribute-key="id"
-              attribute-label="label"
-              @selected="handleSelectedSkill"
-              @fetch-suggestions="onFetchSkillsSuggestions"
+            <AlgoliaSkillsInput
+              :items="form.skills"
+              @add-item="handleSelectedSkill"
             />
+            <div v-if="form.skills.length" class="mt-6">
+              <div class="flex flex-wrap gap-2">
+                <TagFormItem
+                  v-for="item in form.skills"
+                  :key="item.id"
+                  :tag="item"
+                  @removed="onRemovedSkill"
+                >
+                  {{ item.name.fr }}
+                </TagFormItem>
+              </div>
+            </div>
           </FormControl>
         </div>
       </Box>
+    </div>
+    <Box class="lg:col-span-5">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        <div class="lg:col-span-3 lg:mr-8">
+          <Heading :level="3" class="mb-6">
+            Contact principal de la mission
+          </Heading>
+          <div class="font-bold mb-3 text-sm">
+            Les notifications lors de la prise de contact d'un bénévole concernant cette mission seront envoyées à cette personne.
+          </div>
+          <div class="text-sm">
+            Vous pouvez également <a class="underline opacity-25" href="/todo">
+              ajouter un nouveau membre
+            </a> à votre équipe.
+          </div>
+        </div>
+        <div class="lg:col-span-2 space-y-12">
+          <FormControl
+            label="Contact principal"
+            class="lg:mt-10"
+            html-for="contact_principal"
+            required
+          >
+            <SelectAdvanced
+              v-model="form.responsable_id"
+              name="contact_principal"
+              placeholder="Sélectionnez un responsable"
+              :options="structure.members.map((member) => {return {key: member.id, label: member.full_name}})"
+            />
+          </FormControl>
+        </div>
+      </div>
+    </Box>
+    <div class="lg:col-span-5 flex">
+      <div class="space-x-2 ml-auto">
+        <Button variant="white" @click.native="handleSubmitBrouillon()">
+          Enregistrer en brouillon
+        </Button>
+        <Button variant="green" @click.native="handleSubmitPublish()">
+          Enregistrer et publier
+        </Button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import inputGeo from '@/mixins/input-geo'
+import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 
 export default {
+  components: {
+    AlgoliaSkillsInput
+  },
   mixins: [inputGeo],
   props: {
     mission: {
       type: Object,
       required: true
+    },
+    structure: {
+      type: Object,
+      default: () => {}
     }
   },
   data () {
@@ -310,16 +361,15 @@ export default {
         objectif: this.mission.template?.objectif,
         description: this.mission.template?.description,
         ...this.mission
-      },
-      autocompleteSkills: []
+      }
     }
   },
   computed: {
     structureId () {
       return this.$route.params.id
     },
-    mode () {
-      return this.mission.id ? 'edit' : 'add'
+    isAdding () {
+      return !this.mission.id
     },
     isPresentiel () {
       return this.form.type == 'Mission en présentiel'
@@ -345,18 +395,25 @@ export default {
       this.form.longitude = ''
       this.form.department = ''
     },
-    async handleSubmitBrouillon () {
-      await this.$axios.post(`/structure/${this.structureId}/missions`, this.form)
+    handleSelectedSkill (item) {
+      this.$set(this.form, 'skills', [...this.form.skills, item])
     },
-    async handleSubmitPublish () {
+    onRemovedSkill (item) {
+      this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
+    },
+    handleSubmitBrouillon () {
+      this.addOrEditMission()
+    },
+    handleSubmitPublish () {
       this.form.state = 'En attente de validation'
-      await this.$axios.post(`/structure/${this.structureId}/missions`, this.form)
+      this.addOrEditMission()
     },
-    onFetchSkillsSuggestions (value) {
-      return []
-    },
-    handleSelectedSkill () {
-      console.log('handleSelectedSkill')
+    async addOrEditMission () {
+      if (this.isAdding) {
+        await this.$axios.post(`/structure/${this.structureId}/missions`, this.form)
+      } else {
+        await this.$axios.put(`/mission/${this.mission.id}`, this.form)
+      }
     }
   }
 }

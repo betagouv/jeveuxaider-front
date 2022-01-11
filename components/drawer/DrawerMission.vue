@@ -9,11 +9,13 @@
       </div>
       <ExternalLinkIcon class="h-4 w-4" />
     </nuxt-link>
-    <div class="mt-4 space-x-2 opacity-25">
-      <Button variant="white" size="sm" icon="PencilIcon">
-        Modifier
-      </Button>
-      <Button variant="white" size="sm" icon="DuplicateIcon">
+    <div class="mt-4 space-x-2">
+      <nuxt-link :to="`/admin/missions/${mission.id}/edit`">
+        <Button variant="white" size="sm" icon="PencilIcon">
+          Modifier
+        </Button>
+      </nuxt-link>
+      <Button class="opacity-25" variant="white" size="sm" icon="DuplicateIcon">
         Dupliquer
       </Button>
     </div>

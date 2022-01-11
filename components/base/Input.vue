@@ -56,7 +56,7 @@
 
 export default {
   props: {
-    value: { type: String, default: null },
+    value: { type: [String, Number], default: null },
     placeholder: { type: String, default: null },
     suffix: { type: String, default: null },
     name: { type: String, required: true },

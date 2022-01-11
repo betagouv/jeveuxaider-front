@@ -225,3 +225,14 @@ html {
     @apply text-xl font-extrabold mt-12 mb-6 text-gray-900
   }
 }
+
+// CkEditor 5
+body {
+  --ck-border-radius: 10px;
+  --ck-color-base-border: rgb(232, 232, 232);
+  --ck-color-toolbar-border: rgb(232, 232, 232);
+  --ck-inner-shadow: none;
+  --ck-color-base-active-focus: #070191;
+  --ck-color-focus-border: #070191;
+  --ck-focus-ring: 2px solid #070191;
+}

@@ -11,6 +11,8 @@
     "lint": "yarn lint:js"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^31.1.0",
+    "@ckeditor/ckeditor5-vue2": "^1.0.5",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/dayjs": "^1.4.1",
     "@nuxtjs/svg": "^0.3.0",

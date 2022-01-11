@@ -62,6 +62,8 @@ export default {
             { name: 'Buttons', href: '/design-system/forms/buttons' },
             { name: 'Inputs', href: '/design-system/forms/inputs' },
             { name: 'Selects', href: '/design-system/forms/selects' },
+            { name: 'Radio', href: '/design-system/forms/radio' },
+            { name: 'Textarea', href: '/design-system/forms/textarea' },
             { name: 'Forms', href: '/design-system/forms/forms' }
           ]
         },

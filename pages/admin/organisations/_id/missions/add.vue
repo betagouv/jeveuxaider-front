@@ -10,7 +10,11 @@
     <div class="py-6">
       <SectionHeading title="Création d'une nouvelle mission" secondary-title-bottom="Choisissez le domaine d'action de cette mission">
         <template #action>
-          <div v-if="step == 2" class="space-x-2">
+          <div v-if="step == 1" class="text-gray-500 text-sm lg:text-right">
+            Votre mission doit respecter<br>
+            <a class="underline text-gray-700" href="/charte-reserve-civique" target="_blank">la charte</a> de Jeveuxaider.gouv.fr
+          </div>
+          <div v-if="step == 2" class="hidden lg:block space-x-2">
             <Button variant="white" @click.native="handleSubmitBrouillon()">
               Enregistrer en brouillon
             </Button>
@@ -75,6 +79,7 @@
         v-if="step == 2"
         ref="formMission"
         :mission="mission"
+        :structure="structure"
         class="mt-8"
       />
     </div>
