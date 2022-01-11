@@ -6,11 +6,13 @@
           Description de la mission
         </Heading>
         <div class="space-y-10">
-          <div>
-            <div class="text-sm mb-4">
-              <div class="text-xs uppercase mb-1 font-semibold text-gray-700">
-                ℹ️  Information
-              </div>
+          <FormControl
+            html-for="name"
+            :label="Boolean(mission.template) ? 'ℹ️  Information' : 'Titre de la mission'"
+            :required="!Boolean(mission.template)"
+            :error="errors.name"
+          >
+            <div v-if="Boolean(mission.template)" class="text-sm mb-4">
               <div class="text-gray-500">
                 Ce modèle de mission vient pré-remplir certaines informations.
                 Ils ne sont donc pas éditables. Si vous souhaitez les éditer, préférez une <span class="underline">mission libre ›</span>
@@ -22,11 +24,12 @@
               placeholder="Décrivez l'action du bénévole en une phrase"
               :disabled="Boolean(mission.template)"
             />
-          </div>
+          </FormControl>
           <div class="grid grid-cols-2 gap-4">
             <FormControl
               label="Domaine d'action principal"
               html-for="domaine_id"
+              :error="errors.domaine_id"
               required
             >
               <SelectAdvanced
@@ -67,34 +70,33 @@
           <FormControl
             label="Présentation de la mission"
             html-for="objectif"
-            placeholder="Décrivez la mission en quelques mots..."
+            :error="errors.objectif"
             required
           >
-            <Textarea
+            <RichEditor
               v-model="form.objectif"
-              name="objectif"
+              placeholder="Décrivez la mission en quelques mots..."
               :disabled="Boolean(mission.template)"
             />
           </FormControl>
           <FormControl
             label="Précisions"
             html-for="description"
-            placeholder="Précisez les détails et spécificités de la mission"
+            :error="errors.description"
           >
-            <Textarea
+            <RichEditor
               v-model="form.description"
-              name="description"
+              placeholder="Précisez les détails et spécificités de la mission"
               :disabled="Boolean(mission.template)"
             />
           </FormControl>
           <FormControl
             label="Quelques mots pour motiver les bénévoles à participer"
             html-for="information"
-            placeholder="Incitez les bénévoles à candidater ..."
           >
-            <Textarea
+            <RichEditor
               v-model="form.information"
-              name="information"
+              placeholder="Incitez les bénévoles à candidater ..."
             />
           </FormControl>
           <FormControl
@@ -122,6 +124,7 @@
               label="Début de la mission"
               html-for="start_date"
               required
+              :error="errors.start_date"
             >
               <Input
                 v-model="form.start_date"
@@ -132,6 +135,7 @@
             <FormControl
               label="Début de fin"
               html-for="end_date"
+              :error="errors.end_date"
             >
               <Input
                 v-model="form.end_date"
@@ -145,6 +149,7 @@
               label="Durée d'engagement min."
               html-for="commitment__duration"
               required
+              :error="errors.commitment__duration"
             >
               <SelectAdvanced
                 v-model="form.commitment__duration"
@@ -169,6 +174,7 @@
             label="Nombre de bénévoles recherchés"
             html-for="participations_max"
             required
+            :error="errors.participations_max"
           >
             <Input
               v-model="form.participations_max"
@@ -184,14 +190,21 @@
           Lieu de la mission
         </Heading>
         <div class="space-y-8">
-          Présentiel / à distance
-          <br>
+          <div>
+            <RadioGroup v-model="form.type" :options="$labels.mission_types" />
+            <FormHelperText v-if="isPresentiel" class="mt-4">
+              Recruter au plus près du lieu de mission et des bénéficiaires permet de faciliter l'engagement des bénévoles. Vous avez la possibilité de dupliquer cette mission sur plusieurs lieux.
+            </FormHelperText>
+          </div>
           <FormControl
+            v-if="isPresentiel"
             label="Département"
             html-for="department"
             required
+            :error="errors.department"
           >
             <SelectAdvanced
+              v-if="isPresentiel"
               v-model="form.department"
               name="department"
               placeholder="Département"
@@ -199,6 +212,7 @@
             />
           </FormControl>
           <FormControl
+            v-if="isPresentiel"
             label="Rechercher l'adresse du lieu de la mission"
             html-for="autocomplete-place"
             required
@@ -216,11 +230,12 @@
               @fetch-suggestions="onFetchGeoSuggestions"
             />
           </FormControl>
-          <div class="grid grid-cols-12 gap-2">
+          <div v-if="isPresentiel" class="grid grid-cols-12 gap-2">
             <FormControl
               class="col-span-5"
               label="Adresse"
               html-for="address"
+              :error="errors.address"
             >
               <Input
                 v-model="form.address"
@@ -232,6 +247,7 @@
               class="col-span-3"
               label="Code postal"
               html-for="zip"
+              :error="errors.zip"
             >
               <Input
                 v-model="form.zip"
@@ -243,6 +259,7 @@
               class="col-span-4"
               label="Ville"
               html-for="city"
+              :error="errors.city"
             >
               <Input
                 v-model="form.city"
@@ -258,36 +275,93 @@
           Compétences recherchées
         </Heading>
         <div class="space-y-8">
-          <FormControl
-            label="compétences recherchées pour cette mission"
-            html-for="autocomplete-skills"
-          >
+          <FormControl label="compétences recherchées pour cette mission" html-for="algolia-search">
             <FormHelperText>Sélectionnez jusqu’à 3 compétences</FormHelperText>
-            <InputAutocomplete
-              name="autocomplete-skills"
-              placeholder="Ex: Communication, Action sociale, accompagnement..."
-              :options="autocompleteOptions"
-              attribute-key="id"
-              attribute-label="label"
-              @selected="handleSelectedAdress"
-              @fetch-suggestions="onFetchGeoSuggestions"
+            <AlgoliaSkillsInput
+              :items="form.skills"
+              @add-item="handleSelectedSkill"
             />
+            <div v-if="form.skills.length" class="mt-6">
+              <div class="flex flex-wrap gap-2">
+                <TagFormItem
+                  v-for="item in form.skills"
+                  :key="item.id"
+                  :tag="item"
+                  @removed="onRemovedSkill"
+                >
+                  {{ item.name.fr }}
+                </TagFormItem>
+              </div>
+            </div>
           </FormControl>
         </div>
       </Box>
+    </div>
+    <Box class="lg:col-span-5">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        <div class="lg:col-span-3 lg:mr-8">
+          <Heading :level="3" class="mb-6">
+            Contact principal de la mission
+          </Heading>
+          <div class="font-bold mb-3 text-sm">
+            Les notifications lors de la prise de contact d'un bénévole concernant cette mission seront envoyées à cette personne.
+          </div>
+          <div class="text-sm">
+            Vous pouvez également <a class="underline opacity-25" href="/todo">
+              ajouter un nouveau membre
+            </a> à votre équipe.
+          </div>
+        </div>
+        <div class="lg:col-span-2 space-y-12">
+          <FormControl
+            label="Contact principal"
+            class="lg:mt-10"
+            html-for="contact_principal"
+            required
+            :error="errors.responsable_id"
+          >
+            <SelectAdvanced
+              v-model="form.responsable_id"
+              name="contact_principal"
+              placeholder="Sélectionnez un responsable"
+              :options="structure.members.map((member) => {return {key: member.id, label: member.full_name}})"
+            />
+          </FormControl>
+        </div>
+      </div>
+    </Box>
+    <div class="lg:col-span-5 flex">
+      <div class="space-x-2 ml-auto">
+        <Button variant="white" @click.native="handleSubmitBrouillon()">
+          Enregistrer en brouillon
+        </Button>
+        <Button variant="green" @click.native="handleSubmitPublish()">
+          Enregistrer et publier
+        </Button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { string, object, number, date } from 'yup'
 import inputGeo from '@/mixins/input-geo'
+import MixinForm from '@/mixins/form'
+import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 
 export default {
-  mixins: [inputGeo],
+  components: {
+    AlgoliaSkillsInput
+  },
+  mixins: [inputGeo, MixinForm],
   props: {
     mission: {
       type: Object,
       required: true
+    },
+    structure: {
+      type: Object,
+      default: () => {}
     }
   },
   data () {
@@ -298,16 +372,40 @@ export default {
         skills: [],
         state: 'Brouillon',
         type: 'Mission en présentiel',
+        template_id: this.mission.template?.id,
         domaine_id: this.mission.template?.domaine_id,
         objectif: this.mission.template?.objectif,
         description: this.mission.template?.description,
         ...this.mission
-      }
+      },
+      formSchema: object({
+        name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
+        domaine_id: number().nullable().required('Le domaine principal est requis'),
+        objectif: string().required("L'objectif est requis"),
+        description: string().required('La description est requise'),
+        start_date: date().nullable().required('La date de début est requise').transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
+        end_date: date().nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)).when(
+          'start_date',
+          (startDate, schema) => startDate && schema.min(startDate, 'La date de fin doit être supérieur à la date de début')),
+        commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
+        participations_max: number().min(1, 'Le nombre de bénévole recherché doit être supérieur à 1').required('Le nombre de bénévole recherché est requis'),
+        department: string().nullable().required('Le département est requis'),
+        address: string().nullable().required("L'adresse est requise"),
+        zip: string().nullable().required('Le code postal est requis'),
+        city: string().nullable().required('La ville est requise'),
+        responsable_id: number().nullable().required('Le contact de la mission doit être renseigné')
+      })
     }
   },
   computed: {
-    mode () {
-      return this.mission.id ? 'edit' : 'add'
+    structureId () {
+      return this.$route.params.id
+    },
+    isAdding () {
+      return !this.mission.id
+    },
+    isPresentiel () {
+      return this.form.type == 'Mission en présentiel'
     }
   },
   methods: {
@@ -328,6 +426,40 @@ export default {
       this.form.city = ''
       this.form.latitude = ''
       this.form.longitude = ''
+      this.form.department = ''
+    },
+    handleSelectedSkill (item) {
+      this.$set(this.form, 'skills', [...this.form.skills, item])
+    },
+    onRemovedSkill (item) {
+      this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
+    },
+    handleSubmitBrouillon () {
+      this.addOrEditMission()
+    },
+    handleSubmitPublish () {
+      this.form.state = 'En attente de validation'
+      this.addOrEditMission()
+    },
+    addOrEditMission () {
+      this.formSchema
+        .validate(this.form, { abortEarly: false })
+        .then(async () => {
+          this.loading = true
+          if (this.isAdding) {
+            const { data: mission } = await this.$axios.post(`/structure/${this.structureId}/missions`, this.form)
+            this.$router.push(`/admin/missions/${mission.id}`)
+          } else {
+            const { data: mission } = await this.$axios.put(`/mission/${this.mission.id}`, this.form)
+            this.$router.push(`/admin/missions/${mission.id}`)
+          }
+        })
+        .catch((errors) => {
+          this.setErrors(errors)
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   }
 }

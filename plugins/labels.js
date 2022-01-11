@@ -223,6 +223,10 @@ const labels = {
     { key: 'chomeur', label: 'Sans activité professionnelle' },
     { key: 'autre', label: 'Autre' }
   ],
+  mission_types: [
+    { key: 'Mission en présentiel', label: 'Mission en présentiel' },
+    { key: 'Mission à distance', label: 'Mission à distance' }
+  ],
   mission_workflow_states: [
     { key: 'Brouillon', label: 'Brouillon', showIf: ['En attente de validation'], description: "La mission est en cours d'édition. Elle n'apparait pas dans la recherche." },
     { key: 'En attente de validation', showIf: ['Brouillon'], label: 'En attente de validation', description: 'La mission est en attente de validation par le référérent départemental.' },

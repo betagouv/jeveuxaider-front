@@ -10,9 +10,17 @@
     <div class="py-6">
       <SectionHeading title="Création d'une nouvelle mission" secondary-title-bottom="Choisissez le domaine d'action de cette mission">
         <template #action>
-          <div class="text-gray-500 text-sm lg:text-right">
+          <div v-if="step == 1" class="text-gray-500 text-sm lg:text-right">
             Votre mission doit respecter<br>
             <a class="underline text-gray-700" href="/charte-reserve-civique" target="_blank">la charte</a> de Jeveuxaider.gouv.fr
+          </div>
+          <div v-if="step == 2" class="hidden lg:block space-x-2">
+            <Button variant="white" @click.native="handleSubmitBrouillon()">
+              Enregistrer en brouillon
+            </Button>
+            <Button variant="green" @click.native="handleSubmitPublish()">
+              Enregistrer et publier
+            </Button>
           </div>
         </template>
       </Sectionheading>
@@ -64,16 +72,14 @@
             :image-url="missionTemplate.photo && missionTemplate.photo.large"
             @click.native="onSelectTemplate(missionTemplate)"
           />
-
-          <!--
-            :structure-id="parseInt($route.params.id)"
-             -->
         </div>
       </div>
 
       <FormMission
         v-if="step == 2"
+        ref="formMission"
         :mission="mission"
+        :structure="structure"
         class="mt-8"
       />
     </div>
@@ -128,10 +134,8 @@ export default {
       this.templates = templates.data.data
     }
     if (this.template_id) {
-      console.log('has template', this.template_id)
-      console.log('mission', this.mission)
-      console.log('templates', this.templates)
-      this.mission.template = this.templates.find(template => template.id == this.template_id)
+      const { data: template } = await this.$axios.get(`/mission-templates/${this.template_id}`)
+      this.$set(this.mission, 'template', template)
     }
   },
   computed: {
@@ -150,8 +154,10 @@ export default {
         hash: '#templates'
       })
     },
-    onSelectTemplate (missionTemplate) {
+    async onSelectTemplate (missionTemplate) {
       if (missionTemplate) {
+        const { data: template } = await this.$axios.get(`/mission-templates/${missionTemplate.id}`)
+        this.$set(this.mission, 'template', template)
         this.$router.push({
           path: this.$route.path,
           query: { ...this.$route.query, template: missionTemplate.id, step: 2 }
@@ -162,6 +168,12 @@ export default {
           query: { ...this.$route.query, domaine: this.domaine_id, step: 2 }
         })
       }
+    },
+    handleSubmitBrouillon () {
+      this.$refs.formMission.handleSubmitBrouillon()
+    },
+    handleSubmitPublish () {
+      this.$refs.formMission.handleSubmitPublish()
     }
   }
 }

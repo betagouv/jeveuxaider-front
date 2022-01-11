@@ -9,11 +9,18 @@
       </div>
       <ExternalLinkIcon class="h-4 w-4" />
     </nuxt-link>
-    <div class="mt-4 space-x-2 opacity-25">
-      <Button variant="white" size="sm" icon="PencilIcon">
-        Modifier
-      </Button>
-      <Button variant="white" size="sm" icon="DuplicateIcon">
+    <div class="mt-4 space-x-2">
+      <nuxt-link :to="`/admin/missions/${mission.id}`">
+        <Button variant="white" size="sm" icon="EyeIcon">
+          Détails
+        </Button>
+      </nuxt-link>
+      <nuxt-link :to="`/admin/missions/${mission.id}/edit`">
+        <Button variant="white" size="sm" icon="PencilIcon">
+          Modifier
+        </Button>
+      </nuxt-link>
+      <Button class="opacity-25" variant="white" size="sm" icon="DuplicateIcon">
         Dupliquer
       </Button>
     </div>
@@ -68,6 +75,7 @@
           <DescriptionListItem term="Type" :description="mission.type" />
           <DescriptionListItem term="Domaine" :description="mission.domaine && mission.domaine.name.fr" />
           <DescriptionListItem
+            v-if="mission.publics_beneficiaires"
             term="Publics bénéf."
             :description="mission.publics_beneficiaires.map((item) => $options.filters.label(item, 'mission_publics_beneficiaires')).join(', ')"
           />
@@ -89,8 +97,8 @@
       </Box>
     </div>
     <div class="flex justify-center mb-10">
-      <Link class="uppercase font-semibold text-sm opacity-25">
-        Consulter l'historique
+      <Link :to="`/admin/missions/${mission.id}`" class="uppercase font-semibold text-sm hover:underline">
+        Détails de la mission
       </Link>
     </div>
   </div>
