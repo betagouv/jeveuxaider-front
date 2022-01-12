@@ -131,7 +131,20 @@ export default {
     onRemove (i) {
       this.files = Array.prototype.slice.call(this.files)
       this.files.splice(i, 1)
+      this.removeFileFromFileList(i)
       this.$emit('change', this.files)
+    },
+    removeFileFromFileList (index) {
+      const dt = new DataTransfer()
+      const input = this.$refs.inputFile
+      const { files } = input
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        if (index !== i) {
+          dt.items.add(file)
+        }
+      }
+      input.files = dt.files // Assign the updates list
     },
     onClick () {
       this.$refs.inputFile.click()
