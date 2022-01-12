@@ -1,6 +1,7 @@
 <template>
   <div>
     <div
+      v-show="multiple || !files.length"
       ref="dropZone"
       class="max-w-lg w-full flex justify-center px-6 pt-5 pb-6 border-2  border-dashed rounded-lg hover:border-jva-blue-500 focus:border-jva-blue-500 cursor-pointer group transition"
       :class="[
@@ -9,7 +10,7 @@
       ]"
       @dragover.prevent="dragging = true"
       @dragleave="dragging = false"
-      @drop="onDrop"
+      @drop.prevent="onDrop"
       @click="onClick"
     >
       <div class="space-y-1 text-center">
@@ -48,7 +49,7 @@
       </div>
     </div>
 
-    <ul v-if="files.length" role="list" class="divide-y divide-gray-200">
+    <ul v-if="files" role="list" class="divide-y divide-gray-200">
       <li
         v-for="(file, i) in files"
         :key="i"
@@ -58,7 +59,7 @@
           {{ file.name }}
         </p>
 
-        <Button icon="TrashIcon" class="ml-2" @click.native.prevent.stop="onRemove(i)">
+        <Button icon="TrashIcon" class="ml-2" @click.native.prevent.stop="removeFile(i)">
           Retirer
         </Button>
       </li>
@@ -67,6 +68,8 @@
 </template>
 
 <script>
+const mime = require('mime-types')
+
 export default {
   props: {
     multiple: {
@@ -85,66 +88,84 @@ export default {
   data () {
     return {
       files: [],
+      errors: [],
       dragging: false
+    }
+  },
+  computed: {
+    mimeTypes () {
+      const mimes = []
+      const extensions = this.extensions.split(',')
+      extensions.forEach(extension => mimes.push(mime.lookup(extension)))
+      return mimes
     }
   },
   methods: {
     onChange () {
-      const files = this.$refs.inputFile.files
-      if (this.validateFiles(files)) {
-        this.files = files
-        this.$emit('change', files)
-      }
+      this.addFiles(this.$refs.inputFile.files)
     },
-    onDrop (event) {
-      event.preventDefault()
-      const files = event.dataTransfer.files
-      if (this.validateFiles(files)) {
-        this.$refs.inputFile.files = files
-        this.files = files
-        this.$emit('change', files)
-      }
+    onDrop ($event) {
+      this.addFiles($event.dataTransfer.files)
       this.dragging = false
     },
-    validateFiles (files) {
-      const errors = []
-
-      Array.from(files).forEach((file) => {
-        if (this.maxSize && file.size > this.maxSize) {
-          errors.push(
-            `La taille ne doit pas dépasser ${this.$options.filters.formatNumber(
-              this.maxSize,
-              '0 b'
-            )}`
-          )
+    addFiles (files) {
+      if (this.validateFiles(files)) {
+        const dt = new DataTransfer()
+        files.forEach(file => dt.items.add(file))
+        if (this.multiple) {
+          this.files.forEach(file => dt.items.add(file))
         }
-      })
-
-      if (errors.length) {
-        this.$refs.inputFile.value = null
-        this.$toast.error(errors.join('\n'))
-        return false
+        this.$refs.inputFile.files = dt.files
+        this.files = dt.files
+        this.$emit('change', this.files)
       }
-
-      return true
     },
-    onRemove (i) {
-      this.files = Array.prototype.slice.call(this.files)
-      this.files.splice(i, 1)
-      this.removeFileFromFileList(i)
-      this.$emit('change', this.files)
-    },
-    removeFileFromFileList (index) {
+    removeFile (index) {
       const dt = new DataTransfer()
       const input = this.$refs.inputFile
       const { files } = input
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i]
+      files.forEach((file, i) => {
         if (index !== i) {
           dt.items.add(file)
         }
+      })
+      input.files = dt.files
+      this.files = dt.files
+      this.$emit('change', this.files)
+    },
+    validateFiles (files) {
+      this.errors = []
+      this.validateNbFiles(files)
+      Array.from(files).forEach((file) => {
+        this.validateSize(file)
+        this.validateExtension(file)
+      })
+
+      if (this.errors.length) {
+        this.$refs.inputFile.value = null
+        this.$toast.error(this.errors.join('\n'))
+        return false
       }
-      input.files = dt.files // Assign the updates list
+      return true
+    },
+    validateNbFiles (files) {
+      if (!this.multiple && files.length > 1) {
+        this.errors.push('Un seul fichier autorisé.')
+      }
+    },
+    validateSize (file) {
+      if (this.maxSize && file.size > this.maxSize) {
+        this.errors.push(
+          `La taille ne doit pas dépasser ${this.$options.filters.formatNumber(this.maxSize, '0 b')}.`
+        )
+      }
+    },
+    validateExtension (file) {
+      if (!this.mimeTypes.includes(file.type)) {
+        this.errors.push(
+          `Seuls les fichiers ayant les extensions suivantes sont autorisés : ${this.extensions}.`
+        )
+      }
     },
     onClick () {
       this.$refs.inputFile.click()
