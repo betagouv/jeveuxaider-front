@@ -41,6 +41,7 @@
         <template v-else>
           <StackedListItem
             icon="🎊"
+            icon-variant="warning"
           >
             <div class="text-gray-900 font-semibold">
               Félicitations !

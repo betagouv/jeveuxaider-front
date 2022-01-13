@@ -33,7 +33,7 @@ export default {
     },
     iconVariant: {
       type: String,
-      default: 'info'
+      default: null
     },
     link: {
       type: String,
