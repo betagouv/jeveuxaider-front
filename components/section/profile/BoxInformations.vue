@@ -1,0 +1,35 @@
+<template>
+  <div>
+    <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
+      Informations
+    </div>
+    <Box variant="flat" padding="xs">
+      <DescriptionList>
+        <DescriptionListItem term="Crée le" :description="$dayjs(profile.created_at).format('D MMMM YYYY à HH:mm')" />
+        <DescriptionListItem term="Modifié le" :description="$dayjs(profile.updated_at).format('D MMMM YYYY à HH:mm')" />
+        <DescriptionListItem term="Nom" :description="profile.full_name" />
+        <DescriptionListItem term="Code postal" :description="profile.zip" />
+        <DescriptionListItem term="Profession" :description="profile.type" />
+        <DescriptionListItem term="Mobile" :description="profile.mobile" />
+        <DescriptionListItem term="Téléphone" :description="profile.phone" />
+        <DescriptionListItem term="Date de naissance" :description="profile.birthday" />
+        <!-- <DescriptionListItem
+          v-if="profile.domaines"
+          term="Domaines"
+          :description="mission.domaines.map((item) => $options.filters.label(item, 'domaines')).join(', ')"
+        /> -->
+      </DescriptionList>
+    </Box>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    profile: {
+      type: Object,
+      required: true
+    }
+  }
+}
+</script>
