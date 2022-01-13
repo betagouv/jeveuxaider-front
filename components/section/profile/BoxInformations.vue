@@ -6,18 +6,23 @@
     <Box variant="flat" padding="xs">
       <DescriptionList>
         <DescriptionListItem term="Crée le" :description="$dayjs(profile.created_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Modifié le" :description="$dayjs(profile.updated_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Nom" :description="profile.full_name" />
+        <DescriptionListItem term="Email" :description="profile.email" />
         <DescriptionListItem term="Code postal" :description="profile.zip" />
         <DescriptionListItem term="Profession" :description="profile.type" />
         <DescriptionListItem term="Mobile" :description="profile.mobile" />
         <DescriptionListItem term="Téléphone" :description="profile.phone" />
         <DescriptionListItem term="Date de naissance" :description="profile.birthday" />
-        <!-- <DescriptionListItem
+        <DescriptionListItem
           v-if="profile.domaines"
           term="Domaines"
-          :description="mission.domaines.map((item) => $options.filters.label(item, 'domaines')).join(', ')"
-        /> -->
+          :description="profile.domaines.map((item) => $options.filters.label(item, 'domaines')).join(', ')"
+        />
+        <DescriptionListItem
+          v-if="profile.skills"
+          term="Compétences"
+          :description="profile.skills.map((item) => item.name.fr).join(', ')"
+        />
       </DescriptionList>
     </Box>
   </div>
