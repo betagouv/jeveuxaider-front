@@ -1,7 +1,12 @@
 <template>
   <div>
-    <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
-      Informations
+    <div class="text-sm flex justify-between px-2 mb-2 items-center">
+      <div class="uppercase font-semibold text-gray-600">
+        Informations
+      </div>
+      <Link to="/profile/edit" icon="ChevronRightIcon">
+        Modifier
+      </Link>
     </div>
     <Box variant="flat" padding="xs">
       <DescriptionList>
@@ -9,7 +14,7 @@
         <DescriptionListItem term="Nom" :description="profile.full_name" />
         <DescriptionListItem term="Email" :description="profile.email" />
         <DescriptionListItem term="Code postal" :description="profile.zip" />
-        <DescriptionListItem term="Profession" :description="profile.type" />
+        <DescriptionListItem term="Profession" :description="$options.filters.label(profile.type,'profile_type')" />
         <DescriptionListItem term="Mobile" :description="profile.mobile" />
         <DescriptionListItem term="Téléphone" :description="profile.phone" />
         <DescriptionListItem term="Date de naissance" :description="profile.birthday" />
