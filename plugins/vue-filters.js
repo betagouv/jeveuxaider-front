@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-export default function ({ app }) {
+export default function ({ app, ...props }) {
   Vue.filter('label', function (key, vocabulary, labelKey = 'label') {
     if (vocabulary && app.$labels[vocabulary]) {
       const element = app.$labels[vocabulary].find(item => item.key === key)
@@ -46,7 +46,6 @@ export default function ({ app }) {
     if (count > 1) {
       output = plural || `${singular}s`
     }
-
     return showCount ? `${count} ${output}` : output
   })
 }

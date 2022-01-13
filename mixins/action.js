@@ -58,10 +58,11 @@ export default {
             link: `/admin/organisations/${this.$store.getters.currentRole.contextable_id}/edit`
           }
         case 'missions_waiting_validation':
+          console.log('action', action)
           return {
             icon: '✊',
             iconVariant: 'warning',
-            title: `<b>${this.$options.filters.pluralize(action.value, 'mission', 'missions', false)}</b> en attente de validation`,
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'mission', 'missions', false)}</b> en attente de validation`,
             subtitle: 'Des missions souhaitent être publiées sur la plateforme',
             link: '/admin/missions?filter[state]=En attente de validation'
           }
