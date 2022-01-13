@@ -8,9 +8,16 @@
     <template #header>
       <SectionHeading title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
         <template #action>
-          <Button size="xl" icon="SearchIcon" @click.native="$store.commit('toggleSearchOverlay')">
-            Trouver une mission
-          </Button>
+          <div>
+            <nuxt-link to="profile/edit">
+              <Button size="xl" variant="white" icon="PencilIcon">
+                Modifier
+              </Button>
+            </nuxt-link>
+            <Button size="xl" icon="SearchIcon" @click.native="$store.commit('toggleSearchOverlay')">
+              Trouver une mission
+            </Button>
+          </div>
         </template>
       </Sectionheading>
     </template>
@@ -40,6 +47,11 @@
 
       <Box v-if="$store.state.auth.user" padding="sm">
         <div class="space-y-8">
+          <nuxt-link to="profile/edit">
+            <Button variant="white" icon="PencilIcon" full size="lg">
+              Modifier mes informations
+            </Button>
+          </nuxt-link>
           <div class="">
             <div class="text-sm font-medium text-gray-500 mb-4">
               Domaines
@@ -104,9 +116,6 @@
               </div>
             </template>
           </div>
-          <Button variant="white" icon="PencilIcon" full size="lg" @click.native="$router.push('/profile/edit')">
-            Modifier mes informations
-          </Button>
         </div>
       </Box>
 

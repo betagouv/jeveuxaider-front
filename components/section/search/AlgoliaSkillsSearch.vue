@@ -89,7 +89,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: 'Communication, action sociale, accompagnement...'
+      default: 'Rechercher...'
     },
     placeholderLimitReached: {
       type: String,
