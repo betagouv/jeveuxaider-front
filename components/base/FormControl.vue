@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="space-y-1">
     <FormLabel v-if="label" :html-for="htmlFor" :required="required">
       {{ label }}
     </FormLabel>
