@@ -485,14 +485,14 @@
 
 <script>
 import { string, object, ref, date } from 'yup'
-import MixinForm from '@/mixins/form'
+import FormErrors from '@/mixins/form/errors'
 import FranceConnect from '@/components/custom/FranceConnect'
 
 export default {
   components: {
     FranceConnect
   },
-  mixins: [MixinForm],
+  mixins: [FormErrors],
   middleware: 'guest',
   data () {
     return {

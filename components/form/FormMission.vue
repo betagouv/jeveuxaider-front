@@ -346,14 +346,14 @@
 <script>
 import { string, object, number, date } from 'yup'
 import inputGeo from '@/mixins/input-geo'
-import MixinForm from '@/mixins/form'
+import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 
 export default {
   components: {
     AlgoliaSkillsInput
   },
-  mixins: [inputGeo, MixinForm],
+  mixins: [inputGeo, FormErrors],
   props: {
     mission: {
       type: Object,

@@ -136,7 +136,7 @@ export default {
     validateFiles (files) {
       this.errors = []
       this.validateNbFiles(files)
-      Array.from(files).forEach((file) => {
+      files.forEach((file) => {
         this.validateSize(file)
         this.validateExtension(file)
       })
