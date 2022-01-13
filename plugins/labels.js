@@ -234,6 +234,28 @@ const labels = {
     { key: 'Validée', label: 'Validée', showIf: ['En cours de traitement', 'En attente de validation', 'Signalée'], description: 'La mission est en ligne. Les bénévoles peuvent y participer.' },
     { key: 'Terminée', label: 'Terminée', showIf: ['Validée'], description: 'La mission est terminée. Les participations en attente seront annulées.' },
     { key: 'Signalée', label: 'Signalée', showIf: ['En cours de traitement', 'En attente de validation', 'Validée'], description: 'La mission ne respecte pas la charte de JeVeuxAider.gouv.fr. Les partiicpations en attente seront annulées. La mission est hors-ligne.' },
-    { key: 'Annulée', label: 'Annulée', showIf: ['Validée'], description: 'La mission est annulée. Les partiicpations en attente seront annulées. La mission est hors-ligne.' }
+    { key: 'Annulée', label: 'Annulée', showIf: ['Validée'], description: 'La mission est annulée. Les participations en attente seront annulées. La mission est hors-ligne.' }
+  ],
+  profile_fields: [
+    { key: 'mobile', label: 'Téléphone mobile' },
+    { key: 'zip', label: 'Code postal' },
+    { key: 'type', label: 'Profession' },
+    { key: 'disponibilities', label: 'Disponibilités' },
+    { key: 'commitment__time_period', label: 'Fréquence d\'engagement' },
+    { key: 'commitment__duration', label: 'Durée d\'engagement' },
+    { key: 'description', label: 'Motivation' },
+    { key: 'birthday', label: 'Date de naissance' },
+    { key: 'skills', label: 'Compétences' },
+    { key: 'domaines', label: 'Domaines' }
+  ],
+  structure_fields: [
+    { key: 'description', label: 'Description' },
+    { key: 'publics_beneficiaires', label: 'Publics bénéficiaires' },
+    { key: 'department', label: 'Département' },
+    { key: 'logo', label: 'Logo' },
+    { key: 'email', label: 'Email public' },
+    { key: 'phone', label: 'Téléphone public' },
+    { key: 'website', label: 'Site internet' },
+    { key: 'domaines', label: 'Domaines' }
   ]
 }
