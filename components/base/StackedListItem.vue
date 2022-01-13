@@ -1,5 +1,11 @@
 <template>
-  <div class="group cursor-pointer flex py-4 space-x-8 items-center" @click="handleClick">
+  <div
+    class="group  flex py-4 space-x-8 items-center"
+    :class="[
+      { 'cursor-pointer': link }
+    ]"
+    @click="handleClick"
+  >
     <div
       v-if="icon"
       class="text-3xl rounded-2xl h-[56px] w-[56px] flex items-center justify-center transition group-hover:scale-105"
@@ -14,7 +20,7 @@
     <div class="flex-1">
       <slot />
     </div>
-    <ChevronRightIcon class="h-5 transition group-hover:scale-125" />
+    <ChevronRightIcon v-if="link" class="h-5 transition group-hover:scale-125" />
   </div>
 </template>
 
@@ -27,7 +33,7 @@ export default {
     },
     iconVariant: {
       type: String,
-      default: null
+      default: 'info'
     },
     link: {
       type: String,
