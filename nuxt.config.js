@@ -90,6 +90,10 @@ export default {
     apiEngagement: {
       key: process.env.APIENG_KEY,
       tracking_key: process.env.APIENG_TRACKING_KEY
+    },
+    plausible: {
+      site_id: process.env.PLAUSIBLE_SITE_ID,
+      token: process.env.PLAUSIBLE_TOKEN
     }
   },
 
