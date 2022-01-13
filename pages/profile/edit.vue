@@ -6,7 +6,7 @@
         { label: 'Modification' },
       ]"
     />
-    <div class="py-6">
+    <div class="flex flex-col py-12 gap-12">
       <SectionHeading :title="$store.state.auth.user.profile.full_name">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
@@ -17,7 +17,7 @@
         </template>
       </Sectionheading>
 
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 mt-8">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
         <div class="lg:col-span-3 space-y-12">
           <Box>
             <Heading :level="3" class="mb-8">
@@ -140,7 +140,7 @@
             </div>
           </Box>
         </div>
-        <div class="lg:col-span-2 space-y-8">
+        <div class="lg:col-span-2 space-y-12">
           <Box>
             <Heading :level="3" class="mb-8">
               Disponibilités
@@ -258,7 +258,6 @@ export default {
         zip: string().min(5, 'Le format du code postal est incorrect').required('Un code postal est requis'),
         domaines: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action'),
         disponibilities: array().min(1, 'Merci de sélectionner au moins 1 disponibilité')
-
       })
     }
   },
@@ -280,6 +279,7 @@ export default {
             ...this.form
           })
           this.$toast.success('Modifications enregistrées')
+          this.$router.push('/profile')
         })
         .catch((errors) => {
           this.setErrors(errors)
