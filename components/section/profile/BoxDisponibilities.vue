@@ -12,7 +12,7 @@
       <DescriptionList>
         <DescriptionListItem term="Visibilité" :description="profile.is_visible ? 'Visible des organisations' : 'Invisible des organisations'" />
         <DescriptionListItem term="Fréquence" :description="commitmentLabel" />
-        <DescriptionListItem term="Périodes" :description="profile.disponibilities.map((item) => $options.filters.label(item,'disponibilities')).join(', ')" />
+        <DescriptionListItem v-if="profile.disponibilities" term="Périodes" :description="profile.disponibilities.map((item) => $options.filters.label(item,'disponibilities')).join(', ')" />
       </DescriptionList>
     </Box>
   </div>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2 mt-6">
-      En chiffre
+      Visites
     </div>
     <Box variant="flat" padding="xs" :loading="!plausibleStats">
       <div v-if="plausibleStats" class="flex items-center">
@@ -13,11 +13,11 @@
             {{ plausibleStats.results.pageviews.value | pluralize('consultation de la mission', 'consultations de la mission', false) }}
           </div>
           <div class="text-gray-500 text-sm">
-            ces 30 derniers jours
+            depuis sa mise en ligne
           </div>
         </div>
       </div>
-      <div class="text-sm text-gray-500 mt-4">
+      <div v-if="apiEngagementStats && apiEngagementStats.clicks.length > 0" class="text-sm text-gray-500 mt-4">
         <span class="text-gray-900 font-medium">Grâce à <a href="https://api-engagement.beta.gouv.fr/" target="_blank" class="underline">l’API Engagement</a></span>, les missions sont diffusées sur nos plateformes partenaires pour vous amener plus de visibilité.
       </div>
       <div v-if="apiEngagementStats" class="mt-4 grid grid-cols-2 gap-4">
@@ -59,7 +59,7 @@ export default {
   },
   async fetch () {
     const { data: plausibleStats } = await this.$axios.get(
-      `https://plausible.io/api/v1/stats/aggregate?site_id=${this.$config.plausible.site_id}&period=30d&metrics=pageviews&filters=event:page==${this.mission.full_url}`,
+      `https://plausible.io/api/v1/stats/aggregate?site_id=${this.$config.plausible.site_id}&metrics=pageviews&filters=event:page==${this.mission.full_url}`,
       {
         excludeContextRole: true,
         headers: {
@@ -71,7 +71,6 @@ export default {
 
     const { data: apiEngagementStats } = await this.$axios.get(`/apiengagement/mymission/${this.mission.id}`)
     this.apiEngagementStats = apiEngagementStats.stats
-    console.log(this.apiEngagementStats.stats)
   }
 
 }

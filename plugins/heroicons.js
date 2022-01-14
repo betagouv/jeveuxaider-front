@@ -27,7 +27,7 @@ import {
   DownloadIcon,
   TrashIcon
 } from '@vue-hero-icons/outline'
-import { InformationCircleIcon, UsersIcon, HomeIcon, ChevronDownIcon as ChevronDownSolidIcon, CheckIcon as CheckSolidIcon } from '@vue-hero-icons/solid'
+import { InformationCircleIcon, UsersIcon, HomeIcon, ChevronDownIcon as ChevronDownSolidIcon, CheckIcon as CheckSolidIcon, PlusCircleIcon, MinusCircleIcon } from '@vue-hero-icons/solid'
 
 const components = {
   EyeIcon,
@@ -57,6 +57,8 @@ const components = {
   HomeIcon,
   DuplicateIcon,
   PlusIcon,
+  PlusCircleIcon,
+  MinusCircleIcon,
   ExclamationIcon,
   PhotographIcon,
   DownloadIcon,

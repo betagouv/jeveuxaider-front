@@ -72,14 +72,14 @@
 
 <script>
 import _ from 'lodash'
-import MixinForm from '@/mixins/form'
+import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 
 export default {
   components: {
     AlgoliaSkillsInput
   },
-  mixins: [MixinForm],
+  mixins: [FormErrors],
   layout: 'register-steps',
   data () {
     return {

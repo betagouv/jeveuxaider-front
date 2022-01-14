@@ -160,10 +160,10 @@
 </template>
 <script>
 import { string, object, number } from 'yup'
-import MixinForm from '@/mixins/form'
+import FormErrors from '@/mixins/form/errors'
 
 export default {
-  mixins: [MixinForm],
+  mixins: [FormErrors],
   data () {
     return {
       loading: false,

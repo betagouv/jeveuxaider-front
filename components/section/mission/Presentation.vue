@@ -22,7 +22,7 @@
     <Heading as="h1" :level="1">
       {{ mission.name }}
     </Heading>
-    <div class="my-6 text-cool-gray-500 font-medium">
+    <div v-if="mission.responsable" class="my-6 text-cool-gray-500 font-medium">
       <span>Publié par </span>
       <img
         v-if="mission.responsable.image"

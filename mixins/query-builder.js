@@ -6,7 +6,7 @@ export default {
   },
   async fetch () {
     const { data } = await this.$axios.get(this.endpoint, {
-      params: this.$route.query
+      params: { ...this.queryParams, ...this.$route.query }
     })
     this.queryResult = data
     window.scrollTo(0, 0)

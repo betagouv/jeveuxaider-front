@@ -302,7 +302,7 @@
 import { string, object, ref, date } from 'yup'
 import BoxItem from '@/components/section/inscription/BoxItem'
 import ApiEngagementAssociationsSearch from '@/components/section/search/ApiEngagementAssociationsSearch'
-import MixinForm from '@/mixins/form'
+import FormErrors from '@/mixins/form/errors'
 import FormLeadReseau from '@/components/form/FormLeadReseau'
 
 export default {
@@ -311,7 +311,7 @@ export default {
     ApiEngagementAssociationsSearch,
     FormLeadReseau
   },
-  mixins: [MixinForm],
+  mixins: [FormErrors],
   data () {
     return {
       currentStepKey:
