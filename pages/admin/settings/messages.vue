@@ -74,13 +74,13 @@
 <script>
 import { string, object } from 'yup'
 import MenuAdmin from '@/components/section/admin/MenuAdmin'
-import MixinForm from '@/mixins/form'
+import FormErrors from '@/mixins/form/errors'
 
 export default {
   components: {
     MenuAdmin
   },
-  mixins: [MixinForm],
+  mixins: [FormErrors],
   async asyncData ({ $axios }) {
     const { data: settings } = await $axios.get('/settings/messages')
     return {

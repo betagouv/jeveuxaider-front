@@ -28,13 +28,13 @@
 
 <script>
 import MenuAdmin from '@/components/section/admin/MenuAdmin'
-import MixinForm from '@/mixins/form'
+import FormErrors from '@/mixins/form/errors'
 
 export default {
   components: {
     MenuAdmin
   },
-  mixins: [MixinForm],
+  mixins: [FormErrors],
   async asyncData ({ $axios }) {
 
   },
