@@ -24,18 +24,33 @@
         <Heading as="h2" :level="3" class="mb-8">
           Vous avez {{ formattedActions.length | pluralize('action') }} en attente
         </Heading>
-        <StackedList :divided="false">
+        <template v-if="formattedActions.length">
+          <StackedList :divided="false">
+            <StackedListItem
+              v-for="action, i in formattedActions"
+              :key="i"
+              :icon="action.icon"
+              :link="action.link"
+              :icon-variant="action.iconVariant"
+            >
+              <div class="text-gray-900 font-semibold" v-html="action.title" />
+              <div v-if="action.subtitle" class="text-gray-500 text-sm" v-html="action.subtitle" />
+            </StackedListItem>
+          </StackedList>
+        </template>
+        <template v-else>
           <StackedListItem
-            v-for="action, i in formattedActions"
-            :key="i"
-            :icon="action.icon"
-            :link="action.link"
-            :icon-variant="action.iconVariant"
+            icon="🎊"
+            icon-variant="warning"
           >
-            <div class="text-gray-900 font-semibold" v-html="action.title" />
-            <div v-if="action.subtitle" class="text-gray-500 text-sm" v-html="action.subtitle" />
+            <div class="text-gray-900 font-semibold">
+              Félicitations !
+            </div>
+            <div class="text-gray-500 text-sm">
+              Vous n'avez plus aucune action en attente !
+            </div>
           </StackedListItem>
-        </StackedList>
+        </template>
       </Box>
       <LePetitMot />
       <Box>Bloc "Déploiement" avec lien vers Réseaux / Territoires</Box>
@@ -131,10 +146,9 @@ export default {
       loadingActions: true,
       loadingStatistics: true,
       links: [
-        { icon: '🔎', title: 'Gérer les contenus', link: '#' },
-        { icon: '🔎', title: 'Gérer les modèles de missions', link: '#' },
-        { icon: '📇', title: 'Détecter les organisations en double', link: '#' },
-        { icon: '📇', title: 'Gérer le RNA des organisations', link: '#' }
+        { icon: '📋', title: 'Gérer les contenus', link: '#' },
+        { icon: '📝', title: 'Gérer les modèles de missions', link: '#' },
+        { icon: '🛠', title: 'Fonctionnalités avancées', link: '#' }
       ]
     }
   },

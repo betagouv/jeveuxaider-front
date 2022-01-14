@@ -8,9 +8,11 @@
     <template #header>
       <SectionHeading title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
         <template #action>
-          <Button size="xl" icon="SearchIcon" @click.native="$store.commit('toggleSearchOverlay')">
-            Trouver une mission
-          </Button>
+          <div>
+            <Button size="xl" icon="SearchIcon" @click.native="$store.commit('toggleSearchOverlay')">
+              Trouver une mission
+            </Button>
+          </div>
         </template>
       </Sectionheading>
     </template>
@@ -33,13 +35,21 @@
         </StackedList>
       </Box>
       <LePetitMot />
-      <Box>Mes missions</Box>
     </template>
     <template #right>
-      <CardProfile v-if="$store.state.auth.user" :profile="$store.state.auth.user.profile" />
+      <BoxDisponibilities :profile="$store.state.auth.user.profile" />
 
-      <Box v-if="$store.state.auth.user" padding="sm">
+      <BoxInformations :profile="$store.state.auth.user.profile" />
+
+      <!-- <CardProfile v-if="$store.state.auth.user" :profile="$store.state.auth.user.profile" /> -->
+
+      <!-- <Box v-if="$store.state.auth.user" padding="sm">
         <div class="space-y-8">
+          <nuxt-link to="profile/edit">
+            <Button variant="white" icon="PencilIcon" full size="lg">
+              Modifier mes informations
+            </Button>
+          </nuxt-link>
           <div class="">
             <div class="text-sm font-medium text-gray-500 mb-4">
               Domaines
@@ -104,13 +114,10 @@
               </div>
             </template>
           </div>
-          <Button variant="white" icon="PencilIcon" full size="lg" @click.native="$router.push('/profile/edit')">
-            Modifier mes informations
-          </Button>
         </div>
-      </Box>
+      </Box> -->
 
-      <Box>
+      <!-- <Box>
         <Heading as="h2" :level="2" class="mb-8 font-extrabold">
           Suivez le guide
         </Heading>
@@ -126,7 +133,7 @@
             </div>
           </StackedListItem>
         </StackedList>
-      </Box>
+      </Box> -->
       <HelpCenter />
     </template>
   </Container2Cols>
@@ -136,13 +143,16 @@
 import MixinAction from '@/mixins/action'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
-import CardProfile from '@/components/card/CardProfile'
+// import CardProfile from '@/components/card/CardProfile'
+import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
+import BoxInformations from '@/components/section/profile/BoxInformations'
 
 export default {
   components: {
     HelpCenter,
     LePetitMot,
-    CardProfile
+    BoxDisponibilities,
+    BoxInformations
   },
   mixins: [MixinAction],
   layout: 'admin',
