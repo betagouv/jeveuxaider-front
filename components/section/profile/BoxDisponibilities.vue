@@ -1,10 +1,19 @@
 <template>
   <div>
-    <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
-      Disponibilités
+    <div class="text-sm flex justify-between px-2 mb-2 items-center">
+      <div class="uppercase font-semibold text-gray-600">
+        Engagement
+      </div>
+      <Link to="/profile/edit" icon="ChevronRightIcon">
+        Modifier
+      </Link>
     </div>
     <Box variant="flat" padding="xs">
-      @TODO
+      <DescriptionList>
+        <DescriptionListItem term="Visibilité" :description="profile.is_visible ? 'Visible des organisations' : 'Invisible des organisations'" />
+        <DescriptionListItem term="Fréquence" :description="commitmentLabel" />
+        <DescriptionListItem term="Périodes" :description="profile.disponibilities.map((item) => $options.filters.label(item,'disponibilities')).join(', ')" />
+      </DescriptionList>
     </Box>
   </div>
 </template>
@@ -18,7 +27,12 @@ export default {
     }
   },
   computed: {
-
+    commitmentLabel () {
+      if (this.profile.commitment__time_period) {
+        return `${this.$options.filters.label(this.profile.commitment__duration, 'duration')} par ${this.$options.filters.label(this.profile.commitment__time_period, 'time_period')}`
+      }
+      return this.$options.filters.label(this.profile.commitment__duration, 'duration')
+    }
   }
 }
 </script>
