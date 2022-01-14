@@ -225,11 +225,11 @@
 
 <script>
 import { string, object, array } from 'yup'
-import MixinForm from '@/mixins/form'
+import FormErrors from '@/mixins/form/errors'
 import MixinInputGeo from '@/mixins/input-geo'
 
 export default {
-  mixins: [MixinForm, MixinInputGeo],
+  mixins: [FormErrors, MixinInputGeo],
   layout: 'register-steps',
   async asyncData ({ $axios, store, error }) {
     if (

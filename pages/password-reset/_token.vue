@@ -101,10 +101,10 @@
 
 <script>
 import { string, ref, object } from 'yup'
-import MixinForm from '@/mixins/form'
+import FormErrors from '@/mixins/form/errors'
 
 export default {
-  mixins: [MixinForm],
+  mixins: [FormErrors],
   middleware: 'guest',
   data () {
     return {

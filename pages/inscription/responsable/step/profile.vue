@@ -30,21 +30,12 @@
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
-          <div class="bg-yellow-100 p-4 text-sm rounded-lg">
-            <button @click.prevent="showModal = true">
-              Show modal
-            </button>
+          <ImageCrop
+            :value="form.avatar"
+            @add="addFiles({ files: $event, field: 'avatar'})"
+            @delete="deleteFile($event)"
+          />
 
-            <Modal
-              v-if="showModal"
-              title="Mon titre Mon titre Mon titre Mon titre Mon titre Mon titre"
-              @close="showModal = false"
-            >
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur feugiat fringilla porta. Phasellus ligula mauris, facilisis pulvinar egestas sit amet, egestas et velit. Vivamus accumsan, risus vel interdum finibus, libero justo hendrerit sem, quis viverra nisi magna eu neque. Donec faucibus sapien auctor lobortis ultrices. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi. Nullam tempus, odio vel finibus condimentum, tellus neque egestas leo, in ultrices elit metus non nibh. Sed at imperdiet velit. Nullam eget dapibus turpis, ac aliquam massa. Morbi fermentum nisi quis orci euismod posuere. Aenean eget malesuada neque. Aenean vehicula libero posuere mi ultrices semper. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed sit amet mauris neque.
-              </p>
-            </Modal>
-          </div>
           <FormControl label="Profession" html-for="type" required :error="errors.type">
             <SelectAdvanced
               v-model="form.type"
@@ -102,10 +93,11 @@
 <script>
 import { string, object } from 'yup'
 import _ from 'lodash'
-import MixinForm from '@/mixins/form'
+import FormErrors from '@/mixins/form/errors'
+import FormUploads from '@/mixins/form/uploads'
 
 export default {
-  mixins: [MixinForm],
+  mixins: [FormErrors, FormUploads],
   layout: 'register-steps',
   data () {
     return {
@@ -116,8 +108,7 @@ export default {
         mobile: string().min(10, 'Le mobile doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un mobile est requis'),
         phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v),
         zip: string().min(5, 'Le format du code postal est incorrect').required('Un code postal est requis')
-      }),
-      showModal: false
+      })
     }
   },
   computed: {
@@ -153,7 +144,9 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           this.loading = true
-          console.log('this.form', this.form)
+
+          this.uploadFiles('profile', this.form.id, 'profiles')
+
           await this.$store.dispatch('auth/updateProfile', {
             id: this.$store.getters.profile.id,
             ...this.form

@@ -89,10 +89,10 @@
 <script>
 import { string, object, array } from 'yup'
 import _ from 'lodash'
-import MixinForm from '@/mixins/form'
+import FormErrors from '@/mixins/form/errors'
 
 export default {
-  mixins: [MixinForm],
+  mixins: [FormErrors],
   layout: 'register-steps',
   data () {
     return {

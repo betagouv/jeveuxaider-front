@@ -59,7 +59,7 @@
           {{ file.name }}
         </p>
 
-        <Button icon="TrashIcon" class="ml-2" @click.native.prevent.stop="removeFile(i)">
+        <Button icon="TrashIcon" class="ml-2" @click.native.prevent.stop="deleteFile(i)">
           Retirer
         </Button>
       </li>
@@ -83,11 +83,16 @@ export default {
     maxSize: {
       type: Number,
       default: 2000000 // 2 Mo
+    },
+    defaultValue: {
+      type: Array,
+      default: null
     }
   },
   data () {
     return {
-      files: [],
+      newFiles: [],
+      existingFiles: this.defaultValue ?? [],
       errors: [],
       dragging: false
     }
@@ -98,6 +103,9 @@ export default {
       const extensions = this.extensions.split(',')
       extensions.forEach(extension => mimes.push(mime.lookup(extension)))
       return mimes
+    },
+    files () {
+      return [...this.newFiles, ...this.existingFiles].filter(Boolean)
     }
   },
   methods: {
@@ -108,35 +116,46 @@ export default {
       this.addFiles($event.dataTransfer.files)
       this.dragging = false
     },
+    // The input need to have the correct files, hence the use of new dataTransfert instead of just an array.
+    // Use case : add a file, then delete, then add the same file again.
     addFiles (files) {
       if (this.validateFiles(files)) {
+        this.$emit('add', files)
+
         const dt = new DataTransfer()
         files.forEach(file => dt.items.add(file))
         if (this.multiple) {
-          this.files.forEach(file => dt.items.add(file))
+          this.newFiles.forEach(file => dt.items.add(file))
         }
         this.$refs.inputFile.files = dt.files
-        this.files = dt.files
-        this.$emit('change', this.files)
+        this.newFiles = dt.files
       }
     },
-    removeFile (index) {
-      const dt = new DataTransfer()
-      const input = this.$refs.inputFile
-      const { files } = input
-      files.forEach((file, i) => {
-        if (index !== i) {
-          dt.items.add(file)
-        }
-      })
-      input.files = dt.files
-      this.files = dt.files
-      this.$emit('change', this.files)
+    deleteFile (index) {
+      this.$emit('delete', this.files[index])
+
+      if (this.files[index].id) {
+        const existingFilesIndex = this.existingFiles.findIndex(
+          file => file.id === this.files[index].id
+        )
+        this.existingFiles.splice(existingFilesIndex, 1)
+      } else {
+        const dt = new DataTransfer()
+        const input = this.$refs.inputFile
+        const { files } = input
+        files.forEach((file, i) => {
+          if (index !== i) {
+            dt.items.add(file)
+          }
+        })
+        input.files = dt.files
+        this.newFiles = dt.files
+      }
     },
     validateFiles (files) {
       this.errors = []
       this.validateNbFiles(files)
-      Array.from(files).forEach((file) => {
+      files.forEach((file) => {
         this.validateSize(file)
         this.validateExtension(file)
       })
