@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Upload extensions=".jpg, .png, .webp" @change="onUploadChange" />
+    <Upload :default-value="value" extensions=".jpg, .png, .webp" @add="onAdd" @delete="onDelete" />
 
     <div class="bg-yellow-100 p-4 text-sm rounded-lg">
       <button @click.prevent="showModal = true">
@@ -22,18 +22,20 @@
 
 <script>
 export default {
+  props: {
+    value: { type: Array, default: () => [] }
+  },
   data () {
     return {
       showModal: false
     }
   },
   methods: {
-    onUploadChange (files) {
-      if (files[0]) {
-        this.$emit('change', files[0])
-      } else {
-        this.$emit('delete')
-      }
+    onAdd (files) {
+      this.$emit('add', files)
+    },
+    onDelete (file) {
+      this.$emit('delete', file)
     }
   }
 }

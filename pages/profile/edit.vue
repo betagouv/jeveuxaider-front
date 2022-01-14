@@ -235,14 +235,14 @@
 
 import { string, object, array, date } from 'yup'
 import _ from 'lodash'
-import MixinForm from '@/mixins/form'
+import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 
 export default {
   components: {
     AlgoliaSkillsInput
   },
-  mixins: [MixinForm],
+  mixins: [FormErrors],
   data () {
     return {
       loading: false,

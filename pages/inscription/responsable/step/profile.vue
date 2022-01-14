@@ -31,8 +31,9 @@
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
           <ImageCrop
-            @change="addUpload({ file: $event, fieldName: 'avatar'})"
-            @delete="deleteUpload('avatar')"
+            :value="form.avatar"
+            @add="addFiles({ files: $event, field: 'avatar'})"
+            @delete="deleteFile($event)"
           />
 
           <FormControl label="Profession" html-for="type" required :error="errors.type">
@@ -143,7 +144,6 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           this.loading = true
-          console.log('this.form', this.form)
 
           this.uploadFiles('profile', this.form.id, 'profiles')
 

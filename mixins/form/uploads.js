@@ -1,41 +1,58 @@
 export default {
   data () {
     return {
-      uploads: []
+      uploads: {
+        add: [], /* New files to upload */
+        delete: [] /* Files to delete */
+      }
     }
   },
   methods: {
-    addUpload (file) {
-      const existingIndex = this.uploads.findIndex(
-        upload => upload.fieldName === file.fieldName
-      )
-      if (existingIndex != -1) {
-        this.uploads.splice(existingIndex, 1, file)
-      } else {
-        this.uploads.push(file)
-      }
+    addFiles (payload) {
+      payload.files.forEach((file) => {
+        const existingIndex = this.uploads.add.findIndex(
+          upload => (upload.name === file.name && upload.lastModified === file.lastModified)
+        )
+        if (existingIndex != -1) {
+          this.uploads.add.splice(existingIndex, 1, { file, field: payload.field })
+        } else {
+          this.uploads.add.push({ file, field: payload.field })
+        }
+      })
     },
-    deleteUpload (fieldName) {
-      this.uploads.splice(
-        this.uploads.findIndex(upload => upload.fieldName === fieldName), 1
-      )
+    deleteFile (file) {
+      if (file.id) {
+        this.uploads.delete.push(file)
+      } else {
+        const index = this.uploads.add.findIndex(
+          upload => upload.field === file.field
+        )
+        this.uploads.add.splice(index, 1)
+      }
     },
     uploadFiles (modelType, modelId, collection) {
       if (this.form.id) {
         const promises = []
-        this.uploads.forEach((upload) => {
-          const form = new FormData()
 
+        // Files to delete
+        this.uploads.delete.forEach((upload) => {
+          promises.push(
+            this.$axios.delete(`/medias/${upload.id}`)
+          )
+        })
+
+        // New files to be added.
+        this.uploads.add.forEach((upload) => {
           console.log(upload)
-
+          const form = new FormData()
           form.append('file', upload.file)
           // form.append('cropSettings', JSON.stringify(upload.coordinates))
 
           promises.push(
             this.$axios.post(
-              `/medias/${modelType}/${modelId}/${collection}/${upload.fieldName}`,
+              `/medias/${modelType}/${modelId}/${collection}/${upload.field}`,
               form,
-              { 'Content-Type': 'multipart/form-data', test: 'TOTO' }
+              { 'Content-Type': 'multipart/form-data' }
             )
           )
         })
