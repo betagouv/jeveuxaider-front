@@ -106,6 +106,7 @@ import Details from '@/components/section/organisation/Details'
 import Contact from '@/components/section/organisation/Contact'
 import Donation from '@/components/section/organisation/Donation'
 import CardMission from '@/components/card/CardMission'
+import MixinOrganisation from '@/mixins/organisation'
 
 export default {
   components: {
@@ -115,6 +116,7 @@ export default {
     Donation,
     CardMission
   },
+  mixins: [MixinOrganisation],
   layout: 'default-without-header',
   async asyncData ({ $axios, params, error, redirect }) {
     const { data: organisation } = await $axios.get(`/association/${params.slug}`).catch((err) => {
@@ -171,28 +173,6 @@ export default {
           content: '/images/share-image.jpg'
         }
       ]
-    }
-  },
-  computed: {
-    image1 () {
-      return (
-        this.organisation?.override_image_1?.xxl ??
-        (this.organisation?.image_1
-          ? `/images/organisations/domaines/${this.organisation.image_1}.jpg, /images/organisations/domaines/${this.organisation.image_1}@2x.jpg`
-          : this.organisation.domaines.length > 0
-            ? `/images/organisations/domaines/${this.organisation.domaines[0].id}_1.jpg, /images/organisations/domaines/${this.organisation.domaines[0].id}_1@2x.jpg`
-            : '/images/organisations/domaines/1_1.jpg, /images/organisations/domaines/1_1@2x.jpg')
-      )
-    },
-    image2 () {
-      return (
-        this.organisation?.override_image_2?.xxl ??
-        (this.organisation?.image_2
-          ? `/images/organisations/domaines/${this.organisation.image_2}.jpg, /images/organisations/domaines/${this.organisation.image_2}@2x.jpg`
-          : this.organisation.domaines.length > 0
-            ? `/images/organisations/domaines/${this.organisation.domaines[0].id}_1.jpg, /images/organisations/domaines/${this.organisation.domaines[0].id}_1@2x.jpg`
-            : '/images/organisations/domaines/2_1.jpg, /images/organisations/domaines/2_1@2x.jpg')
-      )
     }
   },
   methods: {

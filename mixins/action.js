@@ -58,7 +58,6 @@ export default {
             link: `/admin/organisations/${this.$store.getters.currentRole.contextable_id}/edit`
           }
         case 'missions_waiting_validation':
-          console.log('action', action)
           return {
             icon: '✊',
             iconVariant: 'warning',

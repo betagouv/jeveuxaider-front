@@ -53,8 +53,6 @@
         </template>
       </Box>
       <LePetitMot />
-      <Box>Bloc "Déploiement" avec lien vers Réseaux / Territoires</Box>
-      <Box>Retour d'expérience des bénévoles</Box>
     </template>
     <template #right>
       <Box padding="sm" :loading="loadingStatistics" loading-text="Récupération de votre activité ...">
@@ -104,7 +102,7 @@
       <MoreNumbers />
       <Box>
         <Heading as="h2" :level="2" class="mb-8 font-extrabold">
-          Suivez le guide
+          {{ $store.getters.contextRole === 'admin' ? 'Liens utiles' : 'Suivez le guide' }}
         </Heading>
         <StackedList class="border-t">
           <StackedListItem
@@ -144,11 +142,21 @@ export default {
     return {
       statistics: null,
       loadingActions: true,
-      loadingStatistics: true,
-      links: [
-        { icon: '📋', title: 'Gérer les contenus', link: '#' },
-        { icon: '📝', title: 'Gérer les modèles de missions', link: '#' },
-        { icon: '🛠', title: 'Fonctionnalités avancées', link: '#' }
+      loadingStatistics: true
+    }
+  },
+  computed: {
+    links () {
+      if (this.$store.getters.contextRole === 'admin') {
+        return [
+          { icon: '🔏', title: 'Administrations', link: '/admin/contenus/domaines-action' },
+          { icon: '🪧', title: 'Gérer les messages', link: '/admin/settings/messages' },
+          { icon: '🗂', title: 'Gérer les modèles de missions', link: '/admin/contenus/modeles-de-mission' }
+        ]
+      }
+      return [
+        { icon: '🪧', title: 'Lien 1', link: '#' },
+        { icon: '🗂', title: 'Lien 2', link: '#' }
       ]
     }
   },
