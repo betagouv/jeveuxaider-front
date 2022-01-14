@@ -31,7 +31,8 @@
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
           <ImageCrop
-            :value="form.avatar"
+            :default-value="form.avatar"
+            :preview-width="100"
             @add="addFiles({ files: $event, field: 'avatar'})"
             @delete="deleteFile($event)"
           />
