@@ -54,7 +54,7 @@ export default {
     }
   },
   async fetch () {
-    const { data } = await this.$axios.get('/missions/promoted')
+    const { data } = await this.$axios.get('/missions/prioritaires')
     this.missions = data
   }
 }

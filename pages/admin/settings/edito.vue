@@ -28,16 +28,26 @@
 
           <Box>
             <Heading :level="3" class="mb-8">
-              Les missions prioritaires
+              Gérer les missions prioritaires
             </Heading>
-            <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-              @TODO: Listing des Releases
-            </div>
+            <FormControl label="Ajouter une mission en prioritaire" html-for="autocomplete" :error="errors.missions_prioritaires">
+              <InputAutocomplete
+                name="autocomplete"
+                placeholder="Recherche par mots clés ou IDs"
+                :options="autocompleteOptionsMissions"
+                @fetch-suggestions="onFetchSuggestionsMissions"
+                @selected="handleSelected"
+              />
+            </FormControl>
           </Box>
-          <div class="text-right">
-            <Button type="submit" variant="green" size="xl" :loading="loading" @click.native="onSubmit">
-              Enregistrer
-            </Button>
+
+          <div class="flex flex-wrap gap-12">
+            <CardMission
+              v-for="mission in missions"
+              :key="mission.id"
+              :mission="mission"
+              class="!h-full"
+            />
           </div>
         </div>
       </div>
@@ -46,45 +56,56 @@
 </template>
 
 <script>
-import { string, object } from 'yup'
+import { object, array } from 'yup'
 import MenuAdmin from '@/components/section/admin/MenuAdmin'
 import FormErrors from '@/mixins/form/errors'
+import CardMission from '@/components/card/CardMission'
 
 export default {
   components: {
-    MenuAdmin
+    MenuAdmin,
+    CardMission
   },
   mixins: [FormErrors],
   async asyncData ({ $axios }) {
     const { data: settings } = await $axios.get('/settings/edito')
+    const { data: missions } = await $axios.get('/missions/prioritaires')
+
     return {
-      form: settings
+      form: settings,
+      missions
     }
   },
   data () {
     return {
       loading: false,
+      autocompleteOptionsMissions: [],
       formSchema: object({
-        title: string().required(),
-        benevole: string().required(),
-        responsable_organisation: string().required(),
-        responsable_reseau: string().required(),
-        responsable_territoire: string().required(),
-        referent_departemental: string().required(),
-        referent_regional: string().required(),
-        analyste: string().required(),
-        admin: string().required()
+        missions_prioritaires: array().min(1)
       })
     }
   },
   methods: {
+    async onFetchSuggestionsMissions (value) {
+      const res = await this.$axios.get('/missions', {
+        params: {
+          'filter[search]': value,
+          pagination: 20
+        }
+      })
+      this.autocompleteOptionsMissions = res.data.data
+    },
+    handleSelected (event) {
+      console.log('handle', event)
+      this.form.missions_prioritaires.push(event.id)
+    },
     onSubmit () {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           this.loading = true
           console.log('this.form', this.form)
-          await this.$axios.post('/settings/messages', this.form)
+          await this.$axios.post('/settings/edito', this.form)
           this.$toast.success('Modifications enregistrées')
         })
         .catch((errors) => {
