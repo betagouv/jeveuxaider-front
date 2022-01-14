@@ -202,7 +202,6 @@ const labels = {
     { key: 'tete_de_reseau', label: 'Tête de réseau', espace: 'Mon espace réseau' },
     { key: 'responsable', label: 'Responsable', espace: 'Mon espace organisation' },
     { key: 'responsable_territoire', label: 'Responsable de territoire', espace: 'Mon espace territoire' },
-    { key: 'volontaire', label: 'Bénévole', espace: 'Mon espace volontaire' },
     { key: 'analyste', label: 'Analyste', espace: 'Mon espace analyste' }
   ],
   disponibilities: [
