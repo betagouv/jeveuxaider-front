@@ -151,7 +151,7 @@ export default {
         return [
           { icon: '🔏', title: 'Administrations', link: '/admin/contenus/domaines-action' },
           { icon: '🪧', title: 'Gérer les messages', link: '/admin/settings/messages' },
-          { icon: '🗂', title: 'Gérer les modèles de missions', link: '/admin/contenus/modeles-de-mission' }
+          { icon: '🗂', title: 'Gérer les modèles de missions', link: '/admin/contenus/modeles-missions' }
         ]
       }
       return [

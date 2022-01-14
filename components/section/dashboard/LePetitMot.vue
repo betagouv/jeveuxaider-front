@@ -38,19 +38,19 @@ export default {
   },
   computed: {
     petitMotByRole () {
-      if (this.$store.getters.currentRole.key === 'responsable') {
+      if (this.$store.getters.currentRole?.key === 'responsable') {
         return this.messages.responsable_organisation
-      } else if (this.$store.getters.currentRole.key === 'responsable_territoire') {
+      } else if (this.$store.getters.currentRole?.key === 'responsable_territoire') {
         return this.messages.responsable_territoire
-      } else if (this.$store.getters.currentRole.key === 'tete_de_reseau') {
+      } else if (this.$store.getters.currentRole?.key === 'tete_de_reseau') {
         return this.messages.responsable_reseau
-      } else if (this.$store.getters.currentRole.key === 'referent') {
+      } else if (this.$store.getters.currentRole?.key === 'referent') {
         return this.messages.referent_departemental
-      } else if (this.$store.getters.currentRole.key === 'referent_regional') {
+      } else if (this.$store.getters.currentRole?.key === 'referent_regional') {
         return this.messages.referent_regional
-      } else if (this.$store.getters.currentRole.key === 'analyste') {
+      } else if (this.$store.getters.currentRole?.key === 'analyste') {
         return this.messages.analyste
-      } else if (this.$store.getters.currentRole.key === 'admin') {
+      } else if (this.$store.getters.currentRole?.key === 'admin') {
         return this.messages.admin
       } else {
         return this.messages.benevole

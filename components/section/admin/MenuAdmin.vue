@@ -25,8 +25,8 @@ export default {
         name: 'contenus',
         label: 'Contenus',
         links: [
-          { name: "Domaines d'actions", href: '/admin/contenus/domaines-actions' },
-          { name: 'Modèles de mission', href: '/admin/contenus/modeles-mission' },
+          { name: "Domaines d'actions", href: '/admin/contenus/domaines-action' },
+          { name: 'Modèles de mission', href: '/admin/contenus/modeles-missions' },
           { name: 'Départements', href: '/admin/contenus/departements' },
           { name: 'Compétences', href: '/admin/contenus/competences' },
           { name: 'Pages', href: '/admin/contenus/pages' },
