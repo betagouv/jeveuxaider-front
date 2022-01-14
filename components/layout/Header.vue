@@ -112,15 +112,7 @@
         </NavItem>
       </div>
       <div class="flex">
-        <template v-if="$store.getters.isLogged">
-          <NavItem
-            to="/profile"
-            :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/profile')}]"
-          >
-            Mon profil
-          </NavItem>
-        </template>
-        <template v-else>
+        <template v-if="!$store.getters.isLogged">
           <NavItem
             to="/inscription"
             :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/inscription')}]"
@@ -220,7 +212,7 @@
 </template>
 
 <script>
-import { CalendarIcon, SearchIcon, UserIcon } from '@vue-hero-icons/outline'
+import { CalendarIcon, SearchIcon, UserIcon, ChatAltIcon } from '@vue-hero-icons/outline'
 import DropdownUser from '@/components/custom/DropdownUser'
 import LazySearchOverlay from '@/components/section/SearchOverlay'
 
@@ -239,13 +231,13 @@ export default {
       if (!this.$store.getters.isLogged) {
         return [
           { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-          { name: 'Publier une mission', href: '/inscription/responsable', icon: CalendarIcon },
-          { name: 'Devenir bénévole', href: '/inscription/benevole', icon: UserIcon }
+          { name: 'Publier une mission', to: '/inscription/responsable', icon: CalendarIcon },
+          { name: 'Devenir bénévole', to: '/inscription/benevole', icon: UserIcon }
         ]
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-        { name: 'Publier une mission', href: this.$store.getters.currentRole?.key === 'responsable' ? `/admin/structures/${this.$store.getters.currentRole.contextable_id}/missions/add` : '/inscription/responsable', icon: CalendarIcon }
+        { name: 'Messagerie', to: '/messagerie', icon: ChatAltIcon }
       ]
     },
     secondNavigation () {
@@ -293,8 +285,9 @@ export default {
         ]
       }
       return [
-        { name: 'Liens bénévoles ? (@TODO)', href: '#', isActive: false },
-        { name: 'Liens utiles', href: '#', isActive: false }
+        { name: 'Mon Profil', to: '/profile', isActive: this.isActiveLink({ regex: 'profile/*' }) },
+        { name: 'Mes Missions', href: '#', isActive: false },
+        { name: 'Aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', isActive: false }
       ]
     }
   },
