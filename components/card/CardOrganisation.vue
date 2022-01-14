@@ -12,9 +12,18 @@
       >
 
       <div class="custom-gradient absolute inset-0" />
+      <div
+        class="absolute top-0 flex justify-center inset-x-0"
+      >
+        <div class="pill !rounded-t-none">
+          {{
+            organisation.statut_juridique | label('structure_legal_status')
+          }}
+        </div>
+      </div>
 
       <div
-        class="absolute px-[30px] mb-2 bottom-0 left-0 text-white text-[15px] w-full"
+        class="absolute px-8 mb-2 bottom-0 left-0 text-white w-full"
       >
         <div v-if="organisationCity" class="truncate">
           <span>📍</span>
@@ -113,5 +122,16 @@ export default {
     rgba(0, 0, 0, 0) 66.74%,
     rgba(0, 0, 0, 0.7) 102.8%
   );
+}
+
+.pill {
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 11px;
+  font-weight: bold;
+  color: #171725;
+  height: 23.5px;
+  @apply px-3 inline-flex items-center truncate;
 }
 </style>

@@ -7,19 +7,6 @@
     </template>
     <template #sidebar>
       <div class="flex flex-col gap-y-4 sticky top-8">
-        <div>
-          <Input
-            name="search"
-            placeholder="Nom de l'organisation"
-            icon="SearchIcon"
-            variant="transparent"
-            :value="$route.query['filter[search]']"
-            @input="changeFilter('filter[search]', $event)"
-          />
-          <div class="text-xs text-gray-500 mt-1 px-2">
-            Rechercher avec le <span class="font-semibold">Code postal, la Ville, l'Id, ou le Rna</span>
-          </div>
-        </div>
         <SelectAdvanced
           name="statut_juridique"
           placeholder="Statut juridique"
@@ -38,24 +25,49 @@
           clearable
           @input="changeFilter('filter[department]', $event)"
         />
+        <SelectAdvanced
+          :key="`state-${$route.fullPath}`"
+          name="state"
+          placeholder="Statut"
+          :options="$labels.structure_workflow_states"
+          :value="$route.query['filter[state]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[state]', $event)"
+        />
       </div>
     </template>
     <div>
-      <Heading as="h1" :level="1">
-        {{ queryResult.total | formatNumber }} organisations
-      </Heading>
-      <div class="hidden lg:flex gap-x-4 mt-6 text-sm">
-        <button :class="['px-4 py-1', !$route.query['filter[state]'] ? 'shadow bg-white rounded-full text-gray-900 font-semibold' : 'text-gray-500 font-medium']" @click="deleteFilter('filter[state]')">
-          Toutes
-        </button>
-        <button
+      <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} organisations`" />
+      <Input
+        class="mt-8"
+        name="search"
+        placeholder="Rechercher une organisation (code postal, ville, id, ou rna)"
+        icon="SearchIcon"
+        variant="transparent"
+        :value="$route.query['filter[search]']"
+        @input="changeFilter('filter[search]', $event)"
+      />
+      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
+        <Checkbox
+          :key="`toutes-${$route.fullPath}`"
+          :option="{key: 'toutes', label:'Toutes'}"
+          :is-checked="hasActiveFilters()"
+          variant="button"
+          size="xs"
+          transparent
+          @change="deleteAllFilters()"
+        />
+        <Checkbox
           v-for="option in $labels.structure_workflow_states"
-          :key="option.key"
-          :class="['px-4 py-1', $route.query['filter[state]'] && $route.query['filter[state]'] == option.key ? 'shadow bg-white rounded-full text-gray-900 font-semibold' : 'text-gray-500 font-medium']"
-          @click="changeFilter('filter[state]', option.key)"
-        >
-          {{ option.label }}
-        </button>
+          :key="`${option.key}-${$route.fullPath}`"
+          :option="{key: option.key, label:option.label}"
+          :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == option.key"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[state]', option.key)"
+        />
       </div>
       <div class="lg:hidden mt-4 gap-y-4 flex flex-col">
         <Input
