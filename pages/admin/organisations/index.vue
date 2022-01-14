@@ -77,12 +77,14 @@
         />
       </div>
 
-      <div class="my-6">
-        <div v-for="structure in queryResult.data" :key="structure.id">
-          <div class="flex justify-between font-gray-800">
-            <div>{{ structure.id }} : {{ structure.name }}</div><div>{{ structure.rna }} {{ structure.city }}</div>
-          </div>
-        </div>
+      <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <CardOrganisation
+          v-for="structure in queryResult.data"
+          :key="structure.id"
+          class="cursor-pointer"
+          :organisation="structure"
+          @click.native="drawerOrganisationId = structure.id"
+        />
       </div>
 
       <Pagination
@@ -97,8 +99,12 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
+import CardOrganisation from '@/components/card/CardOrganisation.vue'
 
 export default {
+  components: {
+    CardOrganisation
+  },
   mixins: [QueryBuilder],
   layout: 'admin',
   asyncData ({ store, error }) {
@@ -112,7 +118,12 @@ export default {
   },
   data () {
     return {
-      endpoint: '/structures'
+      endpoint: '/structures',
+      queryParams: {
+        append: 'domaines,places_left',
+        include: 'tags'
+      },
+      drawerOrganisationId: null
     }
   }
 }
