@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
-      Information
+      Informations
     </div>
     <Box variant="flat" padding="xs">
       <DescriptionList>

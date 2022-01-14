@@ -35,7 +35,7 @@ export default function ({ $axios, redirect, app, store, error, $message, $toast
         app.$toast.error({
           component: Toast,
           props: {
-            message: err.response.data.message
+            message: err.response.data.error || err.response.data.message
           }
         })
         break
