@@ -3,8 +3,8 @@
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Paramètres' },
-        { label: 'Édito' },
+        { label: 'Contenus' },
+        { label: 'Mission prioritaires' },
       ]"
     />
 
@@ -16,17 +16,27 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-12">
-          <SectionHeading title="Édito">
+          <SectionHeading title="Mission prioritaires">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
                 <Button type="submit" variant="green" size="xl" :loading="loading" @click.native="onSubmit">
-                  Enregistrer
+                  Ajouter
                 </Button>
               </div>
             </template>
           </Sectionheading>
 
-          <Box>
+          <Input
+            class="mt-8"
+            name="search"
+            placeholder="Recherche par mots clés..."
+            icon="SearchIcon"
+            variant="transparent"
+            :value="$route.query['filter[search]']"
+            @input="changeFilter('filter[search]', $event)"
+          />
+
+          <!-- <Box>
             <Heading :level="3" class="mb-8">
               Gérer les missions prioritaires
             </Heading>
@@ -39,14 +49,15 @@
                 @selected="handleSelected"
               />
             </FormControl>
-          </Box>
+          </Box> -->
 
-          <div class="flex flex-wrap gap-12">
+          <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <CardMission
-              v-for="mission in missions"
+              v-for="mission in queryResult.data"
               :key="mission.id"
+              class="cursor-pointer"
               :mission="mission"
-              class="!h-full"
+              @click.native="drawerMissionId = mission.id"
             />
           </div>
         </div>
@@ -56,33 +67,31 @@
 </template>
 
 <script>
-import { object, array } from 'yup'
 import MenuAdmin from '@/components/section/admin/MenuAdmin'
-import FormErrors from '@/mixins/form/errors'
+// import FormErrors from '@/mixins/form/errors'
 import CardMission from '@/components/card/CardMission'
+import QueryBuilder from '@/mixins/query-builder'
 
 export default {
   components: {
     MenuAdmin,
     CardMission
   },
-  mixins: [FormErrors],
-  async asyncData ({ $axios }) {
-    const { data: settings } = await $axios.get('/settings/edito')
-    const { data: missions } = await $axios.get('/missions/prioritaires')
-
-    return {
-      form: settings,
-      missions
+  mixins: [QueryBuilder],
+  asyncData ({ store, error }) {
+    if (
+      !['admin'].includes(
+        store.getters.contextRole
+      )
+    ) {
+      return error({ statusCode: 403 })
     }
   },
   data () {
     return {
       loading: false,
-      autocompleteOptionsMissions: [],
-      formSchema: object({
-        missions_prioritaires: array().min(1)
-      })
+      endpoint: '/missions/prioritaires',
+      autocompleteOptionsMissions: []
     }
   },
   methods: {
@@ -97,23 +106,22 @@ export default {
     },
     handleSelected (event) {
       console.log('handle', event)
-      this.form.missions_prioritaires.push(event.id)
+      // this.form.missions_prioritaires.push(event.id)
     },
     onSubmit () {
-      this.formSchema
-        .validate(this.form, { abortEarly: false })
-        .then(async () => {
-          this.loading = true
-          console.log('this.form', this.form)
-          await this.$axios.post('/settings/edito', this.form)
-          this.$toast.success('Modifications enregistrées')
-        })
-        .catch((errors) => {
-          this.setErrors(errors)
-        })
-        .finally(() => {
-          this.loading = false
-        })
+      // this.formSchema
+      //   .validate(this.form, { abortEarly: false })
+      //   .then(async () => {
+      //     this.loading = true
+      //     console.log('this.form', this.form)
+      //     this.$toast.success('Modifications enregistrées')
+      //   })
+      //   .catch((errors) => {
+      //     this.setErrors(errors)
+      //   })
+      //   .finally(() => {
+      //     this.loading = false
+      //   })
     }
   }
 }

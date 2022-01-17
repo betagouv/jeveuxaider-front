@@ -16,55 +16,44 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-12">
-          <SectionHeading title="Messages">
-            <template #action>
-              <div class="hidden lg:block space-x-2 flex-shrink-0">
-                <Button type="submit" variant="green" size="xl" :loading="loading" @click.native="onSubmit">
-                  Enregistrer
-                </Button>
-              </div>
-            </template>
-          </Sectionheading>
+          <SectionHeading title="Messages" />
 
           <Box>
-            <Heading :level="3" class="mb-8">
-              Les petits mots
-            </Heading>
             <div class="space-y-8">
               <FormControl label="Auteur des petits mots" html-for="title" required :error="errors.title">
                 <Input v-model="form.title" name="title" placeholder="Le petit mot de Giulietta" />
               </FormControl>
-              <FormControl label="Pour les bénévoles" html-for="benevole" required :error="errors.benevole">
+              <FormControl label="Le petit mot pour les bénévoles" html-for="benevole" required :error="errors.benevole">
                 <Textarea v-model="form.benevole" name="benevole" placeholder="Message que vous souhaitez afficher..." />
               </FormControl>
-              <FormControl label="Pour les responsables d'organisations" html-for="responsable_organisation" required :error="errors.responsable_organisation">
+              <FormControl label="Le petit mot pour les responsables d'organisations" html-for="responsable_organisation" required :error="errors.responsable_organisation">
                 <Textarea v-model="form.responsable_organisation" name="responsable_organisation" placeholder="Message que vous souhaitez afficher..." />
               </FormControl>
-              <FormControl label="Pour les responsables de réseaux" html-for="responsable_reseau" required :error="errors.responsable_reseau">
+              <FormControl label="Le petit mot pour les responsables de réseaux" html-for="responsable_reseau" required :error="errors.responsable_reseau">
                 <Textarea v-model="form.responsable_reseau" name="responsable_reseau" placeholder="Message que vous souhaitez afficher..." />
               </FormControl>
-              <FormControl label="Pour les respondables de collectivités" html-for="responsable_territoire" required :error="errors.responsable_territoire">
+              <FormControl label="Le petit mot pour les respondables de collectivités" html-for="responsable_territoire" required :error="errors.responsable_territoire">
                 <Textarea v-model="form.responsable_territoire" name="responsable_territoire" placeholder="Message que vous souhaitez afficher..." />
               </FormControl>
-              <FormControl label="Pour les référents departementaux" html-for="referent_departemental" required :error="errors.referent_departemental">
+              <FormControl label="Le petit mot pour les référents departementaux" html-for="referent_departemental" required :error="errors.referent_departemental">
                 <Textarea v-model="form.referent_departemental" name="referent_departemental" placeholder="Message que vous souhaitez afficher..." />
               </FormControl>
-              <FormControl label="Pour les référents régionaux" html-for="referent_regional" required :error="errors.referent_regional">
+              <FormControl label="Le petit mot pour les référents régionaux" html-for="referent_regional" required :error="errors.referent_regional">
                 <Textarea v-model="form.referent_regional" name="referent_regional" placeholder="Message que vous souhaitez afficher..." />
               </FormControl>
-              <FormControl label="Pour les analystes" html-for="analyste" required :error="errors.analyste">
+              <FormControl label="Le petit mot pour les analystes" html-for="analyste" required :error="errors.analyste">
                 <Textarea v-model="form.analyste" name="analyste" placeholder="Message que vous souhaitez afficher..." />
               </FormControl>
-              <FormControl label="Pour les modérateurs" html-for="admin" required :error="errors.admin">
+              <FormControl label="Le petit mot pour les modérateurs" html-for="admin" required :error="errors.admin">
                 <Textarea v-model="form.admin" name="admin" placeholder="Message que vous souhaitez afficher..." />
               </FormControl>
+              <div class="text-right">
+                <Button type="submit" variant="green" size="xl" :loading="loading" @click.native="onSubmit">
+                  Enregistrer
+                </Button>
+              </div>
             </div>
           </Box>
-          <div class="text-right">
-            <Button type="submit" variant="green" size="xl" :loading="loading" @click.native="onSubmit">
-              Enregistrer
-            </Button>
-          </div>
         </div>
       </div>
     </div>
