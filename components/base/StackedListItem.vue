@@ -20,7 +20,7 @@
     <div class="flex-1">
       <slot />
     </div>
-    <ChevronRightIcon v-if="link" class="h-5 transition group-hover:scale-125" />
+    <ChevronRightIcon v-if="link || arrow" class="h-5 transition group-hover:scale-125" />
   </div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
   props: {
     icon: {
       type: String,
-      required: true
+      default: null
     },
     iconVariant: {
       type: String,
@@ -38,6 +38,10 @@ export default {
     link: {
       type: String,
       default: null
+    },
+    arrow: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {

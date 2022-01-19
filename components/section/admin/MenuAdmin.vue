@@ -39,6 +39,7 @@ export default {
         label: 'Paramètres',
         links: [
           { name: 'Général', href: '/admin/settings/general' },
+          { name: 'Emails', href: '/admin/settings/emails' },
           { name: 'Messages', href: '/admin/settings/messages' }
         ]
       },
