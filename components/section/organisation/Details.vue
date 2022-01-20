@@ -33,18 +33,18 @@
             <div v-else class="grid md:grid-cols-2 gap-3 xl:gap-x-6">
               <div
                 v-for="domaine in organisation.domaines"
-                :key="domaine.id"
+                :key="domaine"
                 class="flex items-start"
               >
                 <div class="flex-none w-6 h-6 mr-3">
                   <img
-                    :src="$options.filters.label(domaine.id, 'domaines', 'icon')"
-                    :alt="domaine.name.fr"
+                    :src="$options.filters.label(domaine, 'domaines', 'icon')"
+                    :alt="$options.filters.label(domaine, 'domaines')"
                     width="24"
                     height="24"
                   >
                 </div>
-                <div>{{ domaine.name.fr }}</div>
+                <div>{{ $options.filters.label(domaine, 'domaines') }}</div>
               </div>
             </div>
           </template>
