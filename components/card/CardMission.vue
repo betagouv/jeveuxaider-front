@@ -4,9 +4,9 @@
   >
     <div class="thumbnail--wrapper relative">
       <img
-        v-if="thumbnail && domaine"
+        v-if="thumbnail && domainId"
         :srcset="thumbnail"
-        :alt="domaine.name.fr"
+        :alt="$options.filters.label(domainId, 'domaines')"
         class="w-full h-full object-cover"
         width="300"
         height="143"
