@@ -1,5 +1,15 @@
 <template>
   <ContainerRightSidebar>
+    <Drawer :is-open="Boolean(drawerOrganisationId)" @close="drawerOrganisationId = null">
+      <template #title>
+        <Heading v-if="drawerOrganisation" :level="3" class="text-jva-blue-500">
+          <nuxt-link :to="`/admin/organisations/${drawerOrganisationId}`" class="hover:underline">
+            {{ drawerOrganisation.name }}
+          </nuxt-link>
+        </Heading>
+      </template>
+      <DrawerOrganisation :organisation-id="drawerOrganisationId" @loaded="drawerOrganisation = $event" />
+    </Drawer>
     <template #breadcrumb>
       <Breadcrumb
         :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Organisations' }]"
@@ -91,11 +101,11 @@
 
       <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <CardOrganisation
-          v-for="structure in queryResult.data"
-          :key="structure.id"
+          v-for="organisation in queryResult.data"
+          :key="organisation.id"
           class="cursor-pointer"
-          :organisation="structure"
-          @click.native="drawerOrganisationId = structure.id"
+          :organisation="organisation"
+          @click.native="drawerOrganisationId = organisation.id"
         />
       </div>
 
@@ -112,10 +122,12 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import CardOrganisation from '@/components/card/CardOrganisation.vue'
+import DrawerOrganisation from '@/components/drawer/DrawerOrganisation.vue'
 
 export default {
   components: {
-    CardOrganisation
+    CardOrganisation,
+    DrawerOrganisation
   },
   mixins: [QueryBuilder],
   layout: 'admin',
@@ -135,7 +147,8 @@ export default {
         append: 'domaines,places_left',
         include: 'tags'
       },
-      drawerOrganisationId: null
+      drawerOrganisationId: null,
+      drawerOrganisation: null
     }
   }
 }
