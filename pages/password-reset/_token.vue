@@ -131,6 +131,9 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          if (this.loading) {
+            return
+          }
           this.loading = true
           await this.$axios.post('/password/reset', this.form)
           this.submitted = true

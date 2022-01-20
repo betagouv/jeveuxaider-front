@@ -72,8 +72,10 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          if (this.loading) {
+            return
+          }
           this.loading = true
-          console.log('this.form', this.form)
           await this.$axios.post('/settings/messages', this.form)
           this.$toast.success('Modifications enregistrées')
         })

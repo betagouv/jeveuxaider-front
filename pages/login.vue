@@ -218,6 +218,9 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          if (this.loading) {
+            return
+          }
           this.loading = true
           await this.$store.dispatch('auth/login', this.form)
           this.$router.push(

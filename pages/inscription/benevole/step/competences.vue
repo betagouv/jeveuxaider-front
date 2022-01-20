@@ -116,6 +116,9 @@ export default {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
     },
     async onSubmit () {
+      if (this.loading) {
+        return
+      }
       this.loading = true
       await this.$store.dispatch('auth/updateProfile', {
         id: this.$store.getters.profile.id,
