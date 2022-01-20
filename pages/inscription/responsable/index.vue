@@ -452,6 +452,9 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          if (this.loading) {
+            return
+          }
           this.loading = true
           await this.$store.dispatch('auth/registerResponsable', {
             ...this.form,
@@ -472,6 +475,9 @@ export default {
         })
     },
     async registerStructure () {
+      if (this.loading) {
+        return
+      }
       this.loading = true
       this.form.structure.statut_juridique = this.$route.query.orga_type
 

@@ -77,13 +77,14 @@
           </Box>
         </div>
 
-        <Box class="mt-6 lg:w-96 lg:mt-0 z-20 flex-shrink-0 sticky top-6" :padding="false">
+        <Box class="overflow-hidden mt-6 lg:w-96 lg:mt-0 z-20 flex-shrink-0 sticky top-6" :padding="false">
           <img
-            :src="illustration.default"
-            :srcset="illustration.x2 ? `${illustration.x2} 2x` : false"
+            :srcset="illustration"
             alt=""
-            class="w-full object-cover object-top"
-            style="min-height: 180px"
+            class="w-full object-cover object-top min-h-[183px]"
+            width="630"
+            height="300"
+            data-not-lazy
             @error="defaultThumbnail($event)"
           >
 
@@ -417,23 +418,12 @@ export default {
     illustration () {
       if (this.mission.structure.statut_juridique === 'Association') {
         if (this.mission.structure?.override_image_1?.original) {
-          return {
-            default:
-              this.mission.structure.override_image_1.large ??
-              this.mission.structure.override_image_1.original,
-            x2: null
-          }
+          return this.mission.structure?.override_image_1?.large ?? this.mission.structure?.override_image_1?.original
         } else if (this.mission.structure.image_1) {
-          return {
-            default: `/images/organisations/domaines/${this.mission.structure.image_1}.jpg`,
-            x2: null
-          }
+          return `/images/organisations/domaines/${this.mission.structure.image_1}.jpg, /images/organisations/domaines/${this.mission.structure.image_1}@2x.jpg 2x`
         }
       }
-      return {
-        default: '/images/missions/mission-default.jpg',
-        x2: '/images/missions/mission-default@2x.jpg'
-      }
+      return '/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x'
     }
   }
 }

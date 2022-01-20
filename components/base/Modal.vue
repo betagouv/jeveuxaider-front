@@ -7,8 +7,8 @@
         <!-- This element is to trick the browser into centering the modal contents. -->
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-          <div v-click-outside="clickOutside" class="bg-white pl-4 pt-5 pb-4 sm:pl-6 sm:pb-4">
+        <div v-click-outside="onClickOutside" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+          <div class="bg-white pl-4 pt-5 pb-4 sm:pl-6 sm:pb-4">
             <div class="pr-6 sm:pr-12">
               <!-- Title -->
               <h3 class="text-lg leading-6 font-medium text-gray-900 sm:mt-[-4px]" v-html="title" />
@@ -45,7 +45,7 @@
                 />
               </div>
 
-              <div v-scroll-lock="true" :class="[{'mt-3 sm:mt-0 sm:ml-4': icon}]">
+              <div v-scroll-lock="true" class="w-full" :class="[{'mt-3 sm:mt-0 sm:ml-4': icon}]">
                 <!-- Content -->
                 <div class="text-sm text-gray-500">
                   <slot />
@@ -55,7 +55,7 @@
           </div>
 
           <!-- Footer -->
-          <div class="bg-gray-50 px-4 py-3 sm:px-6 flex flex-row-reverse">
+          <div class="bg-gray-50 px-4 py-3 sm:px-6 flex space-x-4 justify-end">
             <slot name="footer">
               <Button @click.native.prevent.stop="$emit('close')">
                 Fermer
@@ -81,7 +81,7 @@ export default {
     }
   },
   methods: {
-    clickOutside () {
+    onClickOutside () {
       this.$emit('close')
     }
   }

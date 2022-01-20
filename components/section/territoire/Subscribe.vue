@@ -138,19 +138,23 @@ export default {
         email: yup.string().required("Merci d'indiquer votre email").email("Le format de l'email n'est pas valide")
       })
 
-      this.loading = true
       schema
         .validate(this.form)
         .then(async (valid) => {
+          this.loading = true
+          if (this.loading) {
+            return
+          }
           await this.$axios.post('/sendinblue/contact', {
             email: this.form.email,
             zipcode: this.territoire.zips ? this.territoire.zips[0] : null,
             department: this.territoire.department
           })
           this.submitted = true
-          this.loading = false
         }).catch((err) => {
           this.errors = err.errors
+        })
+        .finally(() => {
           this.loading = false
         })
     },

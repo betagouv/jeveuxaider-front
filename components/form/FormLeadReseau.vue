@@ -183,6 +183,9 @@ export default {
   },
   methods: {
     onSubmit () {
+      if (this.loading) {
+        return
+      }
       this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })

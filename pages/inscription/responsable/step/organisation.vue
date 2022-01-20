@@ -314,6 +314,9 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          if (this.loading) {
+            return
+          }
           this.loading = true
           await this.$axios.post(`/structure/${this.form.id}`, this.form)
           window.plausible &&

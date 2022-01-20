@@ -30,12 +30,16 @@
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
-          <ImageCrop
-            :default-value="form.avatar"
-            :preview-width="100"
-            @add="addFiles({ files: $event, field: 'avatar'})"
-            @delete="deleteFile($event)"
-          />
+          <FormControl label="Portrait" html-for="avatar">
+            <ImageCrop
+              :default-value="form.avatar"
+              :preview-width="100"
+              :min-width="200"
+              @add="addFiles({ files: [$event], attribute: 'avatar' })"
+              @delete="deleteFile($event, 0)"
+              @crop="onManipulationsChange($event, 0)"
+            />
+          </FormControl>
 
           <FormControl label="Profession" html-for="type" required :error="errors.type">
             <SelectAdvanced
@@ -81,6 +85,7 @@
             variant="green"
             full
             :loading="loading"
+            :disabled="loading"
             @click="onSubmit"
           >
             Continuer
@@ -144,6 +149,9 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          if (this.loading) {
+            return
+          }
           this.loading = true
 
           this.uploadFiles('profile', this.form.id, 'profiles')

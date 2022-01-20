@@ -553,6 +553,9 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          if (this.loading) {
+            return
+          }
           this.loading = true
           await this.$store.dispatch('auth/registerVolontaire', this.form)
           this.$router.push('/inscription/benevole/step/profile')

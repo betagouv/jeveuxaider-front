@@ -32,6 +32,7 @@
 
         <button
           class="w-full lg:w-auto flex items-center justify-center px-12 py-3 font-bold rounded-full text-white bg-jva-blue-500 hover:scale-105 transform transition outline-none focus-visible:ring focus-visible:ring-offset-1 focus-visible:ring-jva-blue-500"
+          :class="[{'opacity-50 cursor-not-allowed': loading}]"
           @click.prevent="onSubmit()"
         >
           <img
@@ -80,13 +81,18 @@ export default {
         email: '',
         error: '',
         isSuccess: false
-      }
+      },
+      loading: false
     }
   },
   methods: {
     onSubmit () {
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       if (re.test(String(this.form.email).toLowerCase())) {
+        if (this.loading) {
+          return
+        }
+        this.loading = true
         this.$axios
           .post('/sendinblue/contact', { email: this.form.email })
           .then(() => {
@@ -95,6 +101,9 @@ export default {
           .catch((error) => {
             console.log(error)
             this.form.error = 'Message erreur !'
+          })
+          .finally(() => {
+            this.loading = false
           })
       } else {
         this.form.error = "L'email renseigné n'est pas valide"
