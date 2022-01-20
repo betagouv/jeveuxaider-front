@@ -20,6 +20,7 @@
         <InputAutocomplete
           v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
           :value="$route.query['filter[structure.name]']"
+          icon="SearchIcon"
           name="autocomplete"
           placeholder="Organisation"
           :options="autocompleteOptionsOrga"
@@ -245,9 +246,6 @@ export default {
         }
       })
       this.autocompleteOptionsOrga = res.data.data
-    },
-    handleSelected (event) {
-      console.log('handle', event)
     }
   }
 

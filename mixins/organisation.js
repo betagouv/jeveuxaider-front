@@ -30,6 +30,21 @@ export default {
       } else {
         return this.organisation?.city
       }
+    },
+    hasPageOnline () {
+      return this.organisation.statut_juridique == 'Association' && this.organisation.state === 'Validée'
+    },
+    canEditStatut () {
+      if (this.$store.getters.contextRole == 'admin') {
+        return true
+      }
+      if (
+        this.$store.getters.contextRole == 'referent' ||
+        this.$store.getters.contextRole == 'referent_regional'
+      ) {
+        return !['Signalée'].includes(this.mission.state)
+      }
+      return false
     }
   },
   methods: {

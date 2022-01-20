@@ -98,10 +98,7 @@
       </div>
     </div>
 
-    <div
-      class="border-t p-4 text-center flex items-center justify-center space-x-2"
-      :class="[$options.filters.label(domainId, 'domaines', 'color')]"
-    >
+    <div class="border-t p-4 text-center flex items-center justify-center space-x-2">
       <span class="text-sm font-bold">
         {{ placesLeftText }}
       </span>

@@ -171,11 +171,18 @@ const labels = {
     { key: 'Autre', label: 'Autre' }
   ],
   structure_workflow_states: [
+    { key: 'En attente de validation', label: 'En attente de validation', description: "L'organisation vient de s'inscrire. Elle est en attente de validation par un référent." },
+    { key: 'En cours de traitement', label: 'En cours de traitement', showIf: ['En attente de validation'], description: "Le référent vérifie des informations avant de valider l'organisation." },
+    { key: 'Validée', label: 'Validée', showIf: ['En cours de traitement', 'En attente de validation'], description: "L'organisation peut poster des missions et a une page publique qu'elle peut éditer." },
+    { key: 'Signalée', label: 'Signalée', showIf: ['En cours de traitement', 'En attente de validation', 'Validée'], description: "L'organisation ne respecte pas la charte de JeVeuxAider.gouv.fr. La page de l'organisation est hors ligne, ainsi que que ses missions." },
+    { key: 'Désinscrite', label: 'Désinscrite', description: "L'organisation s'est désinscrite. Sa page est hors ligne ainsi que ses missions." }
+  ],
+  participation_workflow_states: [
     { key: 'En attente de validation', label: 'En attente de validation' },
     { key: 'En cours de traitement', label: 'En cours de traitement' },
     { key: 'Validée', label: 'Validée' },
-    { key: 'Signalée', label: 'Signalée' },
-    { key: 'Désinscrite', label: 'Désinscrite' }
+    { key: 'Annulée', label: 'Annulée' },
+    { key: 'Refusée', label: 'Refusée' }
   ],
   time_period: [
     { key: 'week', label: 'semaine' },
@@ -229,10 +236,10 @@ const labels = {
   mission_workflow_states: [
     { key: 'Brouillon', label: 'Brouillon', showIf: ['En attente de validation'], description: "La mission est en cours d'édition. Elle n'apparait pas dans la recherche." },
     { key: 'En attente de validation', showIf: ['Brouillon'], label: 'En attente de validation', description: 'La mission est en attente de validation par le référérent départemental.' },
-    { key: 'En cours de traitement', label: 'En cours de traitement', showIf: ['Brouillon'], description: 'La mission est en cours de traitement par le référent départemental.' },
+    { key: 'En cours de traitement', label: 'En cours de traitement', showIf: ['Brouillon', 'En attente de validation'], description: 'La mission est en cours de traitement par le référent départemental.' },
     { key: 'Validée', label: 'Validée', showIf: ['En cours de traitement', 'En attente de validation', 'Signalée'], description: 'La mission est en ligne. Les bénévoles peuvent y participer.' },
     { key: 'Terminée', label: 'Terminée', showIf: ['Validée'], description: 'La mission est terminée. Les participations en attente seront annulées.' },
-    { key: 'Signalée', label: 'Signalée', showIf: ['En cours de traitement', 'En attente de validation', 'Validée'], description: 'La mission ne respecte pas la charte de JeVeuxAider.gouv.fr. Les partiicpations en attente seront annulées. La mission est hors-ligne.' },
+    { key: 'Signalée', label: 'Signalée', showIf: ['En cours de traitement', 'En attente de validation', 'Validée'], description: 'La mission ne respecte pas la charte de JeVeuxAider.gouv.fr. Les participations en attente seront annulées. La mission est hors-ligne.' },
     { key: 'Annulée', label: 'Annulée', showIf: ['Validée'], description: 'La mission est annulée. Les participations en attente seront annulées. La mission est hors-ligne.' }
   ],
   profile_fields: [
