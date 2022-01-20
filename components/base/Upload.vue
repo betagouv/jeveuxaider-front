@@ -24,7 +24,7 @@
             class="relative cursor-pointer rounded-md font-medium text-jva-blue-500 focus-within:outline-none"
             @click.stop
           >
-            <span>Sélectionner un <span v-if="multiple"> ou plusieurs</span> fichier</span>
+            {{ label }}
 
             <input
               id="assetsFieldHandle"
@@ -87,6 +87,10 @@ export default {
     defaultValue: {
       type: Array,
       default: null
+    },
+    label: {
+      type: String,
+      default: () => { return this.multiple ? 'Sélectionner un ou plusieurs fichiers' : 'Sélectionner un fichier' }
     }
   },
   data () {

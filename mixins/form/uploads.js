@@ -3,6 +3,7 @@ export default {
     return {
       uploads: {
         add: [], /* New files to upload */
+        update: [], /* Files to update */
         delete: [] /* Files to delete */
       }
     }
@@ -13,28 +14,34 @@ export default {
         const existingIndex = this.uploads.add.findIndex(
           upload => (upload.name === file.name && upload.lastModified === file.lastModified)
         )
-        if (existingIndex != -1) {
-          this.uploads.add.splice(existingIndex, 1, { file, field: payload.field })
+        const uploadObject = { file, attribute: payload.attribute, name: file.name, manipulations: payload.manipulations }
+        if (existingIndex !== -1) {
+          this.uploads.add.splice(existingIndex, 1, uploadObject)
         } else {
-          this.uploads.add.push({ file, field: payload.field })
+          this.uploads.add.push(uploadObject)
         }
       })
     },
-    deleteFile (file) {
+    deleteFile (file, index) {
       if (file.id) {
         this.uploads.delete.push(file)
       } else {
-        const index = this.uploads.add.findIndex(
-          upload => upload.field === file.field
-        )
         this.uploads.add.splice(index, 1)
       }
     },
+    onManipulationsChange (payload, index) {
+      if (payload.file.id) {
+        this.uploads.update.splice(index, 1, { ...payload.file, manipulations: payload.manipulations })
+      } else {
+        this.uploads.add.splice(index, 1, { ...this.uploads.add[index], manipulations: payload.manipulations })
+      }
+    },
+
     uploadFiles (modelType, modelId, collection) {
       if (this.form.id) {
         const promises = []
 
-        // Files to delete
+        // Files to be deleted
         this.uploads.delete.forEach((upload) => {
           promises.push(
             this.$axios.delete(`/medias/${upload.id}`)
@@ -43,19 +50,32 @@ export default {
 
         // New files to be added.
         this.uploads.add.forEach((upload) => {
-          console.log(upload)
           const form = new FormData()
           form.append('file', upload.file)
-          // form.append('cropSettings', JSON.stringify(upload.coordinates))
+          form.append('manipulations', JSON.stringify(upload.manipulations))
 
           promises.push(
             this.$axios.post(
-              `/medias/${modelType}/${modelId}/${collection}/${upload.field}`,
+              `/medias/${modelType}/${modelId}/${collection}/${upload.attribute}`,
               form,
               { 'Content-Type': 'multipart/form-data' }
             )
           )
         })
+
+        // Files to be updated.
+        this.uploads.update.forEach((upload) => {
+          const form = new FormData()
+          form.append('manipulations', JSON.stringify(upload.manipulations))
+          promises.push(
+            this.$axios.post(
+              `/medias/${upload.id}`,
+              form,
+              { 'Content-Type': 'multipart/form-data' }
+            )
+          )
+        })
+
         Promise.all(promises)
       }
     }
