@@ -22,7 +22,7 @@
             :aria-current="tab.current ? 'page' : undefined"
           >
             <component :is="tab.icon" v-if="tab.icon" :class="[tab.current ? 'text-jva-blue-500' : 'text-gray-400 group-hover:text-gray-500', '-ml-0.5 mr-2 h-5 w-5']" aria-hidden="true" />
-            <span>{{ tab.name }}</span>
+            <span>{{ tab.name }}</span> <span v-if="tab.count" class="font-normal">&nbsp;({{ tab.count }})</span>
           </nuxt-link>
         </nav>
       </div>

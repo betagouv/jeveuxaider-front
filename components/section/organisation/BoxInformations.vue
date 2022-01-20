@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
+    <div v-if="showTitle" class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
       Informations
     </div>
-    <Box variant="flat" padding="xs">
+    <Box :variant="boxVariant" :padding="boxPadding">
       <DescriptionList>
         <DescriptionListItem term="Adresse" :description="`${organisation.city} - ${organisation.zip}`" />
         <DescriptionListItem term="Département" :description="`${organisation.department} - ${$options.filters.label(organisation.department, 'departments')}`" />
@@ -23,6 +23,18 @@ export default {
     organisation: {
       type: Object,
       required: true
+    },
+    showTitle: {
+      type: Boolean,
+      default: false
+    },
+    boxVariant: {
+      type: String,
+      default: 'flat'
+    },
+    boxPadding: {
+      type: String,
+      default: 'xs'
     }
   }
 }

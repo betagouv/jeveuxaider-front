@@ -252,7 +252,7 @@ export default {
       } else if (this.$store.getters.currentRole?.key === 'admin') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations') },
+          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink({ regex: 'organisations/*' }) },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
           { name: 'Utilisateurs', href: '#', isActive: false },
           { name: 'Liens utiles', href: '#', isActive: false }
@@ -267,7 +267,7 @@ export default {
       } else if (this.$store.getters.currentRole?.key === 'referent') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations') },
+          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink({ regex: 'organisations/*' }) },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
           { name: 'Utilisateurs', href: '#', isActive: false },
           { name: 'Liens utiles', href: '#', isActive: false }
@@ -275,7 +275,7 @@ export default {
       } else if (this.$store.getters.currentRole?.key === 'referent_regional') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations') },
+          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink({ regex: 'organisations/*' }) },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
           { name: 'Liens utiles', href: '#', isActive: false }
         ]
