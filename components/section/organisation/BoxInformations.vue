@@ -11,7 +11,7 @@
         <DescriptionListItem term="Crée le" :description="$dayjs(organisation.created_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Modifié le" :description="$dayjs(organisation.updated_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Statut" :description="organisation.statut_juridique | label('structure_legal_status')" />
-        <DescriptionListItem term="Agréements" :description="organisation.association_types.join(', ')" />
+        <DescriptionListItem v-if="organisation.association_types" term="Agréements" :description="organisation.association_types.join(', ')" />
       </DescriptionList>
     </Box>
   </div>
