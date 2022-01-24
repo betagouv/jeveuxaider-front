@@ -17,7 +17,7 @@
         <div class="flex items-start justify-between">
           <div>
             <Heading :level="1">
-              Mission <span class=" font-normal text-gray-500 text-2xl">#{{ mision.id }}</span>
+              Mission <span class=" font-normal text-gray-500 text-2xl">#{{ mission.id }}</span>
             </Heading>
             <nuxt-link class="flex items-center space-x-2 mt-2" target="_blank" :to="`/missions-benevolat/${mission.id}/${mission.slug}`">
               <div

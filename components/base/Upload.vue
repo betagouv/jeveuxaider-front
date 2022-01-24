@@ -3,7 +3,7 @@
     <div
       v-show="multiple || !files.length"
       ref="dropZone"
-      class="max-w-lg w-full flex justify-center px-6 pt-5 pb-6 border-2  border-dashed rounded-lg hover:border-jva-blue-500 focus:border-jva-blue-500 cursor-pointer group transition"
+      class="w-full flex justify-center px-6 pt-5 pb-6 border-2  border-dashed rounded-lg hover:border-jva-blue-500 focus:border-jva-blue-500 cursor-pointer group transition"
       :class="[
         { 'border-jva-blue-500': dragging },
         { 'border-gray-300': !dragging }

@@ -122,6 +122,8 @@ export default {
           return 'Ville'
         case 'dates_infos':
           return 'Information sur la date'
+        case 'Statut_juridique':
+          return 'Statut juridique'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },

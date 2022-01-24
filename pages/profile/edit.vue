@@ -24,9 +24,16 @@
               Informations personnels
             </Heading>
             <div class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2">
-              <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-                @TODO: avatar upload
-              </div>
+              <FormControl label="Portrait" html-for="avatar" class="col-span-2">
+                <ImageCrop
+                  :default-value="form.avatar"
+                  :preview-width="100"
+                  :min-width="200"
+                  @add="addFiles({ files: [$event], attribute: 'avatar' })"
+                  @delete="deleteFile($event, 0)"
+                  @crop="onManipulationsChange($event, 0)"
+                />
+              </FormControl>
               <FormControl
                 label="Prénom"
                 html-for="first_name"
@@ -236,13 +243,14 @@
 import { string, object, array, date } from 'yup'
 import _ from 'lodash'
 import FormErrors from '@/mixins/form/errors'
+import FormUploads from '@/mixins/form/uploads'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 
 export default {
   components: {
     AlgoliaSkillsInput
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, FormUploads],
   data () {
     return {
       loading: false,
@@ -276,6 +284,9 @@ export default {
             return
           }
           this.loading = true
+
+          this.uploadFiles('profile', this.form.id, 'profiles')
+
           await this.$store.dispatch('auth/updateProfile', {
             id: this.$store.getters.profile.id,
             ...this.form
