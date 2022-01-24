@@ -90,7 +90,7 @@ export default {
     return {
       showOptions: false,
       highlightIndex: null,
-      selectedOption: this.value ? this.options.find(item => item[this.attributeKey] === this.value) : null
+      selectedOption: this.value ? this.options.find(item => item[this.attributeKey] == this.value) : null
     }
   },
   methods: {

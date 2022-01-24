@@ -1,58 +1,39 @@
 <template>
-  <Box padding="sm">
-    <div
-      class="flex gap-6"
-    >
-      <div class="">
-        <Avatar
-          :source="
-            profile.image
-              ? profile.image.thumb
-              : null
-          "
-          :fallback="profile.short_name"
-          width="h-16 w-16"
-          font-size="text-lg font-bold"
-        />
-      </div>
-      <div class="flex-1">
-        <div class="flex justify-between">
-          <h3
-            class="font-black text-black text-lg relative mb-auto line-clamp-3"
-          >
-            {{ profile.first_name }} {{ profile.last_name[0] }}.
-          </h3>
-          <div
-            v-if="profile.zip"
-            class="text-gray-500 text-sm mt-2 truncate max-w-full"
-          >
-            📍 {{ profile.zip }}
+  <div
+    class="shadow-xl bg-white rounded-xl overflow-hidden safari-fix-scale cursor-pointer hover:shadow-2xl"
+  >
+    <div class="relative bg-cover pt-8 pb-4 px-6 text-white" style="background-image: url('/images/profiles/bg-card-profile.jpg')">
+      <div class="flex space-x-3 items-center">
+        <div class="h-16 w-16 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0">
+          <UserSolidIcon class="h-8 w-8 text-gray-500" />
+        </div>
+        <div>
+          <div class="font-extrabold line-clamp-1">
+            {{ profile.full_name }}
+          </div>
+          <div class="text-sm">
+            {{ profile.type | label('profile_type') }}
           </div>
         </div>
+      </div>
 
-        <template v-if="profile.disponibilities || profile.commitment__duration">
-          <div class="flex flex-wrap gap-4 mt-2">
-            <template v-if="profile.commitment__duration">
-              <Badge color="green" size="xs">
-                {{ profile.commitment__duration | label('duration') }}
-                <template v-if="profile.commitment__time_period">
-                  par {{
-                    profile.commitment__time_period | label('time_period')
-                  }}
-                </template>
-              </Badge>
-            </template>
-            <Badge v-for="item,i in profile.disponibilities" :key="i" color="gray-light" size="xs">
-              {{ $options.filters.label(
-                item,
-                'disponibilities'
-              ) }}
-            </Badge>
-          </div>
-        </template>
+      <div class="font-bold text-sm mt-2">
+        <span>📍</span> {{ profile.zip }}
+      </div>
+
+      <div
+        class="absolute top-0 flex justify-center inset-x-0"
+      >
+        <div class="pill !rounded-t-none capitalize">
+          {{ profile.user.context_role | label('role') }}
+        </div>
       </div>
     </div>
-  </Box>
+
+    <div class="border-t px-6 py-4 text-sm font-bold">
+      {{ profile.participations_validated_count | pluralize('participation') }}
+    </div>
+  </div>
 </template>
 
 <script>
@@ -71,5 +52,14 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-
+.pill {
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 11px;
+  font-weight: bold;
+  color: #171725;
+  height: 23.5px;
+  @apply px-3 inline-flex items-center truncate;
+}
 </style>
