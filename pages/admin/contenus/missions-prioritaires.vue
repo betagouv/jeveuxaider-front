@@ -29,7 +29,7 @@
         <div class="flex flex-col gap-12">
           <SectionHeading title="Mission prioritaires">
             <template #action>
-              <div class="hidden lg:block space-x-2 flex-shrink-0">
+              <div class="hidden lg:block space-x-2 flex-shrink-0 opacity-25">
                 <Button size="lg" :loading="loading" icon="PlusIcon">
                   Prioriser une mission
                 </Button>
@@ -75,48 +75,17 @@ export default {
     DrawerMission
   },
   mixins: [QueryBuilder],
+  layout: 'admin',
   middleware: 'admin',
   data () {
     return {
       loading: false,
       endpoint: '/missions/prioritaires',
-      autocompleteOptionsMissions: [],
       drawerMissionId: null,
       drawerMission: null
     }
   },
   methods: {
-    async onFetchSuggestionsMissions (value) {
-      const res = await this.$axios.get('/missions', {
-        params: {
-          'filter[search]': value,
-          pagination: 20
-        }
-      })
-      this.autocompleteOptionsMissions = res.data.data
-    },
-    handleSelected (event) {
-      console.log('handle', event)
-      // this.form.missions_prioritaires.push(event.id)
-    },
-    onSubmit () {
-      // this.formSchema
-      //   .validate(this.form, { abortEarly: false })
-      //   .then(async () => {
-      //     if (this.loading) {
-      //       return
-      //     }
-      //     this.loading = true
-      //     console.log('this.form', this.form)
-      //     this.$toast.success('Modifications enregistrées')
-      //   })
-      //   .catch((errors) => {
-      //     this.setErrors(errors)
-      //   })
-      //   .finally(() => {
-      //     this.loading = false
-      //   })
-    }
   }
 }
 </script>

@@ -24,8 +24,8 @@ export default {
         label: 'Contenus',
         links: [
           { name: 'Missions prioritaires', href: '/admin/contenus/missions-prioritaires' },
-          { name: "Domaines d'actions", href: '/admin/contenus/domaines-action' },
-          { name: 'Modèles de mission', href: '/admin/contenus/modeles-missions' },
+          { name: "Domaines d'action", href: '/admin/contenus/domaines-action' },
+          { name: 'Modèles de mission', href: '/admin/contenus/modeles-mission' },
           { name: 'Départements', href: '/admin/contenus/departements' },
           { name: 'Compétences', href: '/admin/contenus/competences' },
           { name: 'Pages', href: '/admin/contenus/pages' },
