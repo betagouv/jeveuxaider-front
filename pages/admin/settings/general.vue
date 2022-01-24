@@ -19,22 +19,22 @@
           <SectionHeading title="Paramétrage général" />
           <Box>
             <div class="space-y-8">
-              <CheckboxSwitch
+              <Toggle
                 v-model="form.blog_active"
                 label="Blog"
                 description="Récupèration des articles du blog sur la page d'accueil"
               />
-              <CheckboxSwitch
+              <Toggle
                 v-model="form.france_connect_active"
                 label="France Connect"
                 description="Activer le France Connect pour la connexion et l'inscription des utilisateurs"
               />
-              <CheckboxSwitch
+              <Toggle
                 v-model="form.maintenance_mode_active"
                 label="Mode de maintenance"
                 description="Activer le mode maintenance pour les autres utilisateurs"
               />
-              <CheckboxSwitch
+              <Toggle
                 v-model="form.light_mode_active"
                 label="Mode dégradé"
                 description="Activer le mode dégradé lors de très fort trafic (inscriptions désactivées)"
