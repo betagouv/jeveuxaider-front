@@ -1,15 +1,15 @@
 <template>
   <ContainerRightSidebar>
-    <!-- <Drawer :is-open="Boolean(drawerMissionId)" @close="drawerMissionId = null">
+    <Drawer :is-open="Boolean(drawerProfileId)" @close="drawerProfileId = null">
       <template #title>
-        <Heading v-if="drawerMission" :level="3" class="text-jva-blue-500">
-          <nuxt-link :to="`/admin/missions/${drawerMissionId}`" class="hover:underline">
-            {{ drawerMission.name }}
+        <Heading v-if="drawerProfile" :level="3" class="text-jva-blue-500">
+          <nuxt-link :to="`/admin/utilisateurs/${drawerProfileId}`" class="hover:underline">
+            {{ drawerProfile.full_name }}
           </nuxt-link>
         </Heading>
       </template>
-      <DrawerMission :mission-id="drawerMissionId" @loaded="drawerMission = $event" />
-    </Drawer> -->
+      <DrawerProfile :profile-id="drawerProfileId" @loaded="drawerProfile = $event" />
+    </Drawer>
     <template #breadcrumb>
       <Breadcrumb
         :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Utilisateurs' }]"
@@ -143,7 +143,12 @@
         />
       </div>
       <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <CardProfile v-for="profile in queryResult.data" :key="profile.id" :profile="profile" />
+        <CardProfile
+          v-for="profile in queryResult.data"
+          :key="profile.id"
+          :profile="profile"
+          @click.native="drawerProfileId = profile.id"
+        />
       </div>
 
       <Pagination
@@ -159,12 +164,12 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import CardProfile from '@/components/card/CardProfile.vue'
-// import DrawerUser from '@/components/drawer/DrawerUser.vue'
+import DrawerProfile from '@/components/drawer/DrawerProfile.vue'
 
 export default {
   components: {
-    CardProfile
-    // DrawerUser
+    CardProfile,
+    DrawerProfile
   },
   mixins: [QueryBuilder],
   layout: 'admin',
@@ -182,9 +187,9 @@ export default {
       endpoint: '/profiles',
       queryParams: {
         include: 'user,participationsValidatedCount'
-      }
-    //   drawerUserId: null,
-    //   drawerUser: null,
+      },
+      drawerProfileId: null,
+      drawerProfile: null
     }
   }
 }
