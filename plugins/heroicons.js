@@ -28,7 +28,7 @@ import {
   TrashIcon,
   SpeakerphoneIcon
 } from '@vue-hero-icons/outline'
-import { InformationCircleIcon, UsersIcon, HomeIcon, ChevronDownIcon as ChevronDownSolidIcon, CheckIcon as CheckSolidIcon, PlusCircleIcon, MinusCircleIcon } from '@vue-hero-icons/solid'
+import { InformationCircleIcon, UsersIcon, HomeIcon, ChevronDownIcon as ChevronDownSolidIcon, CheckIcon as CheckSolidIcon, PlusCircleIcon, MinusCircleIcon, UserIcon as UserSolidIcon } from '@vue-hero-icons/solid'
 
 const components = {
   EyeIcon,
@@ -64,6 +64,7 @@ const components = {
   PhotographIcon,
   DownloadIcon,
   TrashIcon,
+  UserSolidIcon,
   SpeakerphoneIcon
 }
 

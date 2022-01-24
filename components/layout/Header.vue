@@ -253,8 +253,8 @@ export default {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
           { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink({ regex: 'organisations/*' }) },
-          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
-          { name: 'Utilisateurs', href: '#', isActive: false },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink({ regex: 'missions/*' }) },
+          { name: 'Utilisateurs', to: '/admin/utilisateurs', isActive: this.isActiveLink({ regex: 'utilisateurs/*' }) },
           { name: 'Liens utiles', href: '#', isActive: false }
         ]
       } else if (this.$store.getters.currentRole?.key === 'responsable') {
@@ -274,15 +274,15 @@ export default {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
           { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink({ regex: 'organisations/*' }) },
-          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
-          { name: 'Utilisateurs', href: '#', isActive: false },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink({ regex: 'missions/*' }) },
+          { name: 'Utilisateurs', to: '/admin/utilisateurs', isActive: this.isActiveLink({ regex: 'utilisateurs/*' }) },
           { name: 'Liens utiles', href: '#', isActive: false }
         ]
       } else if (this.$store.getters.currentRole?.key === 'referent_regional') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
           { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink({ regex: 'organisations/*' }) },
-          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions') },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink({ regex: 'missions/*' }) },
           { name: 'Liens utiles', href: '#', isActive: false }
         ]
       } else if (this.$store.getters.currentRole?.key === 'analyste') {

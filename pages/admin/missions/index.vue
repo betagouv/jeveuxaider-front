@@ -80,7 +80,7 @@
           :key="`place-${$route.fullPath}`"
           name="place"
           placeholder="Place restante"
-          :options="[{key: true, label: 'Oui'}, {key: false, label: 'Non'}]"
+          :options="[{key: 'true', label: 'Oui'}, {key: 'false', label: 'Non'}]"
           :value="$route.query['filter[place]']"
           variant="transparent"
           clearable
