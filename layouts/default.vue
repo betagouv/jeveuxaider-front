@@ -1,5 +1,6 @@
 <template>
   <div class="h-full">
+    <HeaderBanner />
     <Header />
     <Nuxt :key="$route.fullPath" />
     <Footer />
@@ -12,17 +13,17 @@
 <script>
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
+import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 
 export default {
   components: {
     Header,
-    Footer
+    Footer,
+    HeaderBanner
   }
 }
 </script>
 
 <style scoped>
-  body, #__nuxt,  #__layout {
-    @apply h-full
-  }
+
 </style>

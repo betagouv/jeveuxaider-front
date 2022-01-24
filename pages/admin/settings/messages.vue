@@ -101,7 +101,6 @@ export default {
             return
           }
           this.loading = true
-          console.log('this.form', this.form)
           await this.$axios.post('/settings/messages', this.form)
           this.$toast.success('Modifications enregistrées')
         })

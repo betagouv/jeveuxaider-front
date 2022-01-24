@@ -264,6 +264,12 @@ export default {
           { name: 'Participations', href: '#' },
           { name: 'Liens utiles', href: '#' }
         ]
+      } else if (this.$store.getters.currentRole?.key === 'tete_de_reseau') {
+        return [
+          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
+          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink({ regex: 'organisations/*' }) },
+          { name: 'Liens utiles', href: '#' }
+        ]
       } else if (this.$store.getters.currentRole?.key === 'referent') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },

@@ -1,9 +1,20 @@
 <template>
-  <Nuxt />
+  <div>
+    <HeaderBanner />
+    <Nuxt />
+  </div>
 </template>
 
-<style scoped>
-  body, #__nuxt,  #__layout {
-    @apply h-full
+<script>
+import HeaderBanner from '@/components/layout/HeaderBanner.vue'
+
+export default {
+  components: {
+    HeaderBanner
   }
+}
+</script>
+
+<style scoped>
+
 </style>

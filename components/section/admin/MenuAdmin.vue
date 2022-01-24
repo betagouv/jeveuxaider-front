@@ -13,8 +13,6 @@
       </div>
     </div>
   </div>
-
-  </div>
 </template>
 
 <script>
@@ -47,7 +45,6 @@ export default {
         name: 'scripts',
         label: 'Scripts',
         links: [
-          { name: 'Algolia', href: '/admin/scripts/algolia' },
           { name: 'Migrer les missions', href: '/admin/scripts/migrate-organisation-missions' }
         ]
       }

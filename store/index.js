@@ -15,6 +15,7 @@ export const actions = {
       commit('auth/setAccessToken', this.$cookies.get('access-token'))
       await store.dispatch('auth/fetchUser')
     }
+    await store.dispatch('settings/fetchGeneral')
   }
 }
 

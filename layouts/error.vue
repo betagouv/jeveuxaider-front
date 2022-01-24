@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center justify-center bg-blue-50 px-4 py-8 text-center min-h-screen">
+  <div id="main-error" class="flex flex-col items-center justify-center bg-gray-50 px-4 py-8 text-center">
     <template v-if="error.statusCode == 404">
       <Heading as="h1" :level="1" class="jva-blue">
         Oups, cette page est introuvable
@@ -12,7 +12,7 @@
     </template>
 
     <template v-else-if="error.statusCode == 403">
-      <Heading as="h1" :level="1" class="jva-blue">
+      <Heading as="h1" :level="1">
         Oups, ce contenu ne vous est pas destiné…
       </Heading>
 
@@ -22,7 +22,7 @@
     </template>
 
     <template v-else>
-      <Heading as="h1" :level="1" class="jva-blue">
+      <Heading as="h1" :level="1">
         Erreur {{ error.statusCode }}
       </Heading>
 
@@ -44,8 +44,11 @@
 </template>
 
 <script>
+
 export default {
-  layout: 'empty',
+  components: {
+
+  },
   props: {
     error: {
       type: Object,
@@ -60,3 +63,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  #main-error {
+    min-height: 700px
+  }
+</style>

@@ -25,7 +25,8 @@ import {
   ExclamationIcon,
   PhotographIcon,
   DownloadIcon,
-  TrashIcon
+  TrashIcon,
+  SpeakerphoneIcon
 } from '@vue-hero-icons/outline'
 import { InformationCircleIcon, UsersIcon, HomeIcon, ChevronDownIcon as ChevronDownSolidIcon, CheckIcon as CheckSolidIcon, PlusCircleIcon, MinusCircleIcon } from '@vue-hero-icons/solid'
 
@@ -62,7 +63,8 @@ const components = {
   ExclamationIcon,
   PhotographIcon,
   DownloadIcon,
-  TrashIcon
+  TrashIcon,
+  SpeakerphoneIcon
 }
 
 Object.entries(components).forEach(([name, component]) => {
