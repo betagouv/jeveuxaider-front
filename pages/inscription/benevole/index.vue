@@ -96,7 +96,7 @@
                     isLoadingFranceConnect ? 'rounded-lg' : 'rounded-t-lg'
                   "
                 >
-                  <template v-if="isFranceConnectActive">
+                  <template v-if="$store.state.settings.general.france_connect_active">
                     <div class="pt-8">
                       <h2
                         class="mt-2 text-center text-3xl font-bold text-gray-900 leading-8 px-4"
@@ -142,9 +142,11 @@
                   v-show="!isLoadingFranceConnect"
                   class="border-t-2 border-gray-100 rounded-b-lg pt-10 pb-2 px-4 sm:px-12 bg-gray-50"
                 >
-                  <template v-if="modeLight">
-                    <div class="pt-6 pb-16 text-center">
-                      <p>Quel élan de solidarité&nbsp;!</p>
+                  <template v-if="$store.state.settings.general.light_mode_active">
+                    <div class="text-center space-y-6 pb-12">
+                      <p class="font-medium">
+                        Quel élan de solidarité&nbsp;!
+                      </p>
                       <p>
                         Vous êtes actuellement très nombreux·ses à vouloir vous
                         engager et notre plateforme rencontre des difficultés.
@@ -153,6 +155,17 @@
                         Revenez dans quelques minutes pour vous inscrire. Nous
                         avons plus que jamais besoin de vous&nbsp;!
                       </p>
+                      <div>
+                        <nuxt-link to="/missions-benevolat">
+                          <Button
+                            size="xl"
+                            variant="green"
+                            full
+                          >
+                            Décrouvrir les missions
+                          </Button>
+                        </nuxt-link>
+                      </div>
                     </div>
                   </template>
                   <template v-else>
@@ -539,11 +552,6 @@ export default {
     }
   },
   computed: {
-    modeLight () {
-      return this.$config.app.modeLight
-        ? JSON.parse(this.$config.app.modeLight)
-        : false
-    },
     isFranceConnectActive () {
       return !!this.$config.franceConnect
     }

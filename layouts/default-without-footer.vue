@@ -1,5 +1,6 @@
 <template>
   <div>
+    <HeaderBanner />
     <Header />
     <Nuxt />
     <client-only>
@@ -9,17 +10,17 @@
 </template>
 
 <script>
+import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 import Header from '@/components/layout/Header.vue'
 
 export default {
   components: {
+    HeaderBanner,
     Header
   }
 }
 </script>
 
 <style scoped>
-  body, #__nuxt,  #__layout {
-    @apply h-full
-  }
+
 </style>

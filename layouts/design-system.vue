@@ -37,7 +37,6 @@
 
 <script>
 export default {
-  layout: 'design-system',
   data () {
     return {
       menu: [

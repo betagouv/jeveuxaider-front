@@ -70,7 +70,6 @@ export default {
     apiUrl: process.env.API_URL,
     appUrl: process.env.APP_URL,
     app: {
-      modeLight: process.env.MODE_LIGHT
     },
     axios: {
       browserBaseURL: `${process.env.API_URL}/api`
@@ -104,6 +103,10 @@ export default {
       missionsIndex: process.env.ALGOLIA_MISSIONS_INDEX,
       skillsIndex: process.env.ALGOLIA_SKILLS_INDEX
     }
+  },
+
+  router: {
+    middleware: 'maintenance'
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

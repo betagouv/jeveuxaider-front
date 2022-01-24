@@ -154,11 +154,11 @@
             </Heading>
 
             <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
-              <FormControl label="Souhaitez-vous être visible des organisations ?" html-for="is_visible">
-                <div class="bg-yellow-100 p-4 text-sm rounded-lg">
-                  @TODO toggle component
-                </div>
-              </FormControl>
+              <Toggle
+                v-model="form.is_visible"
+                :label="form.is_visible ? 'Visible des organisations' : 'Invisible des organisations'"
+                description="Souhaitez-vous que les organisations de la plateforme vous proposent des missions ?"
+              />
               <FormControl
                 label="Sélectionnez vos disponibilités"
                 html-for="disponibilities"

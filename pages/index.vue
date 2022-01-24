@@ -9,7 +9,7 @@
 
     <Domaines />
     <EngagezVous />
-    <Blog />
+    <Blog v-if="$store.state.settings.general.blog_active" />
     <Temoignages />
 
     <section>

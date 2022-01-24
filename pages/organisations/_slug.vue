@@ -105,7 +105,7 @@ import Presentation from '@/components/section/organisation/Presentation'
 import Details from '@/components/section/organisation/Details'
 import Contact from '@/components/section/organisation/Contact'
 import Donation from '@/components/section/organisation/Donation'
-// import CardMission from '@/components/card/CardMission'
+import CardMission from '@/components/card/CardMission'
 import MixinOrganisation from '@/mixins/organisation'
 
 export default {
@@ -113,8 +113,8 @@ export default {
     Presentation,
     Details,
     Contact,
-    Donation
-    // CardMission
+    Donation,
+    CardMission
   },
   mixins: [MixinOrganisation],
   layout: 'default-without-header',
