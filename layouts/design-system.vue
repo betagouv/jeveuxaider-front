@@ -37,6 +37,7 @@
 
 <script>
 export default {
+  middleware: 'admin',
   data () {
     return {
       menu: [
@@ -62,6 +63,7 @@ export default {
             { name: 'Inputs', href: '/design-system/forms/inputs' },
             { name: 'Selects', href: '/design-system/forms/selects' },
             { name: 'Radio', href: '/design-system/forms/radio' },
+            { name: 'Toggles', href: '/design-system/forms/toggles' },
             { name: 'Textarea', href: '/design-system/forms/textarea' },
             { name: 'Forms', href: '/design-system/forms/forms' }
           ]

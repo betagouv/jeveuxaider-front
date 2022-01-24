@@ -62,6 +62,7 @@ export default {
     MenuAdmin
   },
   mixins: [FormErrors],
+  middleware: 'admin',
   async asyncData ({ $axios }) {
     const { data: settings } = await $axios.get('/settings/general')
     return {

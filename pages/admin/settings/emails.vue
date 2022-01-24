@@ -85,15 +85,7 @@ export default {
     MenuAdmin,
     DrawerNotification
   },
-  asyncData ({ $axios, store, error }) {
-    if (
-      !['admin'].includes(
-        store.getters.contextRole
-      )
-    ) {
-      return error({ statusCode: 403 })
-    }
-  },
+  middleware: 'admin',
   data () {
     return {
       loading: false,

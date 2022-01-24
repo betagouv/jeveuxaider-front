@@ -46,7 +46,6 @@ export default {
 
   methods: {
     onToggleSwitch () {
-      console.log('value', this.value)
       this.$emit('input', !this.value)
     }
   }

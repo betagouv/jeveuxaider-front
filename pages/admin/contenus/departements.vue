@@ -34,7 +34,9 @@ export default {
   components: {
     MenuAdmin
   },
+
   mixins: [FormErrors],
+  middleware: 'admin',
   async asyncData ({ $axios }) {
 
   },

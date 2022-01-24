@@ -16,7 +16,7 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-12">
-          <SectionHeading title="Départements" />
+          <SectionHeading title="Migrer des missions" />
           <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
             @TODO: Script de migration des missions d'une orga
           </div>
@@ -34,7 +34,9 @@ export default {
   components: {
     MenuAdmin
   },
+
   mixins: [FormErrors],
+  middleware: 'admin',
   async asyncData ({ $axios }) {
 
   },
