@@ -1,5 +1,16 @@
 <template>
   <div class="container">
+    <Drawer :is-open="Boolean(drawerMissionId)" @close="drawerMissionId = null">
+      <template #title>
+        <Heading v-if="drawerMission" :level="3" class="text-jva-blue-500">
+          <nuxt-link :to="`/admin/missions/${drawerMissionId}`" class="hover:underline">
+            {{ drawerMission.name }}
+          </nuxt-link>
+        </Heading>
+      </template>
+      <DrawerMission :mission-id="drawerMissionId" @loaded="drawerMission = $event" />
+    </Drawer>
+
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
@@ -19,8 +30,8 @@
           <SectionHeading title="Mission prioritaires">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
-                <Button type="submit" variant="green" size="xl" :loading="loading" @click.native="onSubmit">
-                  Ajouter
+                <Button size="lg" :loading="loading" icon="PlusIcon">
+                  Prioriser une mission
                 </Button>
               </div>
             </template>
@@ -35,21 +46,6 @@
             :value="$route.query['filter[search]']"
             @input="changeFilter('filter[search]', $event)"
           />
-
-          <!-- <Box>
-            <Heading :level="3" class="mb-8">
-              Gérer les missions prioritaires
-            </Heading>
-            <FormControl label="Ajouter une mission en prioritaire" html-for="autocomplete" :error="errors.missions_prioritaires">
-              <InputAutocomplete
-                name="autocomplete"
-                placeholder="Recherche par mots clés ou IDs"
-                :options="autocompleteOptionsMissions"
-                @fetch-suggestions="onFetchSuggestionsMissions"
-                @selected="handleSelected"
-              />
-            </FormControl>
-          </Box> -->
 
           <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <CardMission
@@ -68,14 +64,15 @@
 
 <script>
 import MenuAdmin from '@/components/section/admin/MenuAdmin'
-// import FormErrors from '@/mixins/form/errors'
+import DrawerMission from '@/components/drawer/DrawerMission'
 import CardMission from '@/components/card/CardMission'
 import QueryBuilder from '@/mixins/query-builder'
 
 export default {
   components: {
     MenuAdmin,
-    CardMission
+    CardMission,
+    DrawerMission
   },
   mixins: [QueryBuilder],
   middleware: 'admin',
@@ -83,7 +80,9 @@ export default {
     return {
       loading: false,
       endpoint: '/missions/prioritaires',
-      autocompleteOptionsMissions: []
+      autocompleteOptionsMissions: [],
+      drawerMissionId: null,
+      drawerMission: null
     }
   },
   methods: {
