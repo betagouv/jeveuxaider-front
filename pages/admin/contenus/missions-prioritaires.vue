@@ -19,14 +19,14 @@
       ]"
     />
 
-    <div class="grid grid-cols-5 py-12 ">
+    <div class="grid grid-cols-5 py-12">
       <aside class="relative col-span-1">
         <div class="sticky top-12">
           <MenuAdmin />
         </div>
       </aside>
       <div class="col-span-4">
-        <div class="flex flex-col gap-12">
+        <div class="flex flex-col gap-8">
           <SectionHeading title="Mission prioritaires">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
@@ -40,7 +40,6 @@
           </Sectionheading>
 
           <Input
-            class="mt-8"
             name="search"
             placeholder="Recherche par mots clés..."
             icon="SearchIcon"
@@ -49,7 +48,7 @@
             @input="changeFilter('filter[search]', $event)"
           />
 
-          <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <CardMission
               v-for="mission in queryResult.data"
               :key="mission.id"
