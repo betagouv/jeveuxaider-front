@@ -324,10 +324,13 @@ export default {
   components: {
     SearchMissions
   },
-  async asyncData ({ params, error, $axios }) {
+  async asyncData ({ params, error, $axios, store }) {
     const { data: thematique } = await $axios.get(`/thematique/${params.slug}`)
     if (!thematique) {
       return error({ statusCode: 404 })
+    }
+    if (!thematique.published && store.getters.contextRole !== 'admin') {
+      return error({ statusCode: 403 })
     }
     const { data: statistics } = await $axios.get(`/thematique/${thematique.id}/statistics`)
     return {

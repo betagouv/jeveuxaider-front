@@ -49,6 +49,14 @@ export default {
             subtitle: 'Des organisations souhaitent publier des missions',
             link: '/admin/organisations?filter[state]=En attente de validation'
           }
+        case 'mission_template_waiting_validation':
+          return {
+            icon: '✊',
+            iconVariant: 'warning',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'modèle de mission', 'modèles de mission', false)}</b> en attente de validation`,
+            subtitle: 'Des responsables de réseau souhaitent publier des modèles de mission',
+            link: '/admin/contenus/modeles-mission?filter[state]=waiting'
+          }
         case 'organisation_incomplete':
           return {
             icon: '✍',

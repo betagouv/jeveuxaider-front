@@ -5,8 +5,10 @@
     <div
       class="text-white px-3 py-1 inline-block mx-auto z-10 font-medium text-xs rounded-b"
       :class="{
-        'bg-jva-green-500': stateStyle == 'success',
-        'bg-jva-orange-500': stateStyle == 'warning',
+        'bg-gray-500': ['draft'].includes(stateStyle),
+        'bg-jva-red-500': ['refused'].includes(stateStyle),
+        'bg-jva-green-500': ['success','validated'].includes(stateStyle),
+        'bg-jva-orange-500': ['warning','waiting'].includes(stateStyle),
       }"
     >
       {{ stateText }}

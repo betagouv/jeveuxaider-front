@@ -44,6 +44,7 @@
             icon="SearchIcon"
             variant="transparent"
             :value="$route.query['filter[search]']"
+            clearable
             @input="changeFilter('filter[search]', $event)"
           />
 
