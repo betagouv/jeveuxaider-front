@@ -29,10 +29,12 @@
         <div class="flex flex-col gap-12">
           <SectionHeading title="Mission prioritaires">
             <template #action>
-              <div class="hidden lg:block space-x-2 flex-shrink-0 opacity-25">
-                <Button size="lg" :loading="loading" icon="PlusIcon">
-                  Prioriser une mission
-                </Button>
+              <div class="hidden lg:block space-x-2 flex-shrink-0">
+                <nuxt-link :to="`/admin/missions`">
+                  <Button size="lg" :loading="loading" icon="PlusIcon">
+                    Prioriser une mission
+                  </Button>
+                </nuxt-link>
               </div>
             </template>
           </Sectionheading>

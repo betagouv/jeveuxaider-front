@@ -1,10 +1,22 @@
 <template>
   <div class="relative">
-    <div class="inline-flex border rounded-md divide-x divide-gray-100">
+    <div class="inline-flex border border-cool-gray-300 rounded-md divide-x divide-gray-100">
       <div class="relative z-0 inline-flex rounded-md divide-x divide-gray-100">
-        <div class="relative inline-flex items-center bg-white py-2 pl-3 pr-4 border border-transparent rounded-l-md text-white">
-          <CheckSolidIcon class="h-5 w-5 text-gray-800" />
-          <p class="ml-2.5 text-sm font-medium text-gray-800">
+        <div
+          :class="[
+            'relative inline-flex items-center bg-white border border-transparent rounded-l-md text-white',
+            { 'py-2 pl-3 pr-4' : size === 'sm'},
+            { 'py-2 pl-3 pr-4' : size === 'md'}
+          ]"
+        >
+          <CheckSolidIcon
+            :class="[
+              'text-cool-gray-700',
+              { 'h-4 w-4' : size === 'sm'},
+              { 'h-5 w-5' : size === 'md'}
+            ]"
+          />
+          <p class="ml-2.5 text-sm font-bold text-cool-gray-700 leading-4">
             {{ selected.label }}
           </p>
         </div>
@@ -16,7 +28,11 @@
           aria-labelledby="listbox-label"
           @click="show = !show"
         >
-          <ChevronDownSolidIcon class="h-5 w-5 text-gray-800" />
+          <ChevronDownSolidIcon
+            :class="[
+              'text-cool-gray-700 h-5 w-5'
+            ]"
+          />
         </button>
       </div>
     </div>
@@ -73,8 +89,13 @@ export default {
       required: true
     },
     value: {
-      type: String,
+      type: [String, Boolean],
       default: ''
+    },
+    size: {
+      type: String,
+      default: 'md',
+      validator: s => ['sm', 'md'].includes(s)
     }
   },
 
