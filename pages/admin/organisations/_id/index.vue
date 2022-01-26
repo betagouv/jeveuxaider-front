@@ -109,7 +109,7 @@ export default {
       return error({ statusCode: 403 })
     }
 
-    const { data: organisation } = await $axios.get(`/structure/${params.id}`)
+    const { data: organisation } = await $axios.get(`/structures/${params.id}`)
     if (!organisation) {
       return error({ statusCode: 404 })
     }

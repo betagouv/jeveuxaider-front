@@ -116,7 +116,7 @@ export default {
     ) {
       return error({ statusCode: 403 })
     }
-    const { data: organisation } = await $axios.get(`/structure/${store.getters.currentRole.contextable_id}`)
+    const { data: organisation } = await $axios.get(`/structures/${store.getters.currentRole.contextable_id}`)
 
     return {
       form: {

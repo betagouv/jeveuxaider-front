@@ -416,7 +416,7 @@ export default {
       }
     },
     async onStructureApiSelected (structure) {
-      const res = await this.$axios.get(`/structure/${structure._id}/exist`)
+      const res = await this.$axios.get(`/structures/${structure._id}/exist`)
       if (res.data) {
         this.orgaExist = res.data
       } else {
@@ -435,7 +435,7 @@ export default {
         return
       }
       if (this.$route.query.orga_type === 'Collectivité') {
-        const res = await this.$axios.get(`/structure/${this.form.structure.name}/exist`)
+        const res = await this.$axios.get(`/structures/${this.form.structure.name}/exist`)
         if (res.data) {
           this.orgaExist = res.data
           return false

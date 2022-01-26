@@ -90,7 +90,7 @@ export default {
       return error({ statusCode: 403 })
     }
 
-    const { data: mission } = await $axios.get(`/mission/${params.id}`)
+    const { data: mission } = await $axios.get(`/missions/${params.id}`)
     if (!mission) {
       return error({ statusCode: 404 })
     }

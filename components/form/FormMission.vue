@@ -453,10 +453,10 @@ export default {
         .then(async () => {
           this.loading = true
           if (this.isAdding) {
-            const { data: mission } = await this.$axios.post(`/structure/${this.structureId}/missions`, this.form)
+            const { data: mission } = await this.$axios.post(`/structures/${this.structureId}/missions`, this.form)
             this.$router.push(`/admin/missions/${mission.id}`)
           } else {
-            const { data: mission } = await this.$axios.put(`/mission/${this.mission.id}`, this.form)
+            const { data: mission } = await this.$axios.put(`/missions/${this.mission.id}`, this.form)
             this.$router.push(`/admin/missions/${mission.id}`)
           }
         })

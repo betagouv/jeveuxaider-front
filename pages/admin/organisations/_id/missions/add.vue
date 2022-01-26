@@ -102,7 +102,7 @@ export default {
     ) {
       return error({ statusCode: 403 })
     }
-    const { data: structure } = await $axios.get(`/structure/${params.id}`)
+    const { data: structure } = await $axios.get(`/structures/${params.id}`)
 
     return {
       structure

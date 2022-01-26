@@ -109,7 +109,7 @@ export default {
     if (!this.profileId) {
       return null
     }
-    const { data: profile } = await this.$axios.get(`/profile/${this.profileId}`)
+    const { data: profile } = await this.$axios.get(`/profiles/${this.profileId}`)
     this.profile = profile
     this.$emit('loaded', profile)
   },
