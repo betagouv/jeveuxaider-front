@@ -22,7 +22,7 @@
     />
 
     <Associations
-      v-if="territoire.promoted_organisations &&territoire.promoted_organisations.length"
+      v-if="territoire.promoted_organisations && territoire.promoted_organisations.length"
       :territoire="territoire"
     />
 
@@ -57,7 +57,7 @@ export default {
   },
   async fetch () {
     if (this.territoire.type === 'city') {
-      const { data: cities } = await this.$axios.get(`/territoire/${this.territoire.id}/cities`)
+      const { data: cities } = await this.$axios.get(`/territoires/${this.territoire.id}/available-cities`)
       this.cities = cities
     }
   },

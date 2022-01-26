@@ -2,6 +2,11 @@
   <div v-if="territoire">
     <OnlineIndicator :published="territoire.is_published" :link="territoire.full_url" class="mt-2" />
     <div class="flex gap-2 mt-4">
+      <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}`" class="inline-flex">
+        <Button variant="white" size="sm" icon="EyeIcon">
+          Détails
+        </Button>
+      </nuxt-link>
       <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}/edit`" class="inline-flex">
         <Button variant="white" size="sm" icon="PencilIcon">
           Modifier

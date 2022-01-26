@@ -36,7 +36,7 @@
             </h2>
           </div>
 
-          <div class="flex-none rounded-2xl w-full sm:w-auto">
+          <div class="flex-none rounded-2xl w-full sm:w-auto overflow-hidden">
             <div class="bg-white px-8 sm:px-20 py-6">
               <p
                 class="font-extrabold text-[1.75rem] text-center leading-tight tracking-[-1px]"
@@ -47,55 +47,21 @@
 
             <div class="bg-gray-100 px-10 py-6">
               <p
-                class="text-center uppercase text-gray-700 text-xs tracking-[-1px] font-bold"
+                class="text-center uppercase text-gray-700 text-xs tracking-[-1px] font-bold mb-4"
               >
                 Choisissez un domaine d'action
               </p>
-
-              <!-- <el-select
-                  v-model="domaine"
-                  placeholder="Choisissez un domaine d'action"
-                  class="mb-4 rounded-2xl"
-                >
-                  <el-option
-                    v-for="item in domaines"
-                    :key="item.id"
-                    :label="item.name.fr"
-                    :value="item.name.fr"
-                  />
-                </el-select> -->
               <SelectAdvanced
                 v-model="domaine"
                 class="mb-4"
                 name="domaine"
-                placeholder="Choisissez un domaine d'action"
-                :options="domaines.map((item) => { return {key: item.id, label: item.name.fr}})"
+                :options="$labels.domaines"
               />
 
-              <button
-                class="
-                w-full
-                flex
-                items-center
-                justify-center
-                border
-                border-transparent
-                rounded-2xl
-                text-white
-                !outline-none
-                focus:ring
-                transition
-                duration-150
-                hover:scale-105
-                transform
-                will-change-transform
-                ease-in-out
-                font-bold
-                text-xl
-                px-5
-                py-4
-                leading-none"
-                style="background-color: #09c19d"
+              <Button
+                variant="green"
+                size="xl"
+                full
                 @click="onClick"
               >
                 Je veux aider
@@ -120,15 +86,10 @@ export default {
   },
   data () {
     return {
-      domaines: [],
-      domaine: 'Solidarité et insertion'
+      domaine: 6 // Solidarite et insertion
     }
   },
-  async fetch () {
-    // @TODO: Fetch from labels.json
-    const domaines = await this.$axios.get('/tags', { params: { 'filter[type]': 'domaine' } })
-    this.domaines = domaines.data.data
-  },
+
   computed: {
     banner () {
       return this.territoire.banner?.large
