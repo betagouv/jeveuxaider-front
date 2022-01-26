@@ -26,8 +26,8 @@
       { 'border text-jva-green-500 border-jva-green-500': ['green', 'Validée'].includes(color) && plain},
 
       // RED
-      {'text-white bg-jva-red-500': ['red', 'Signalée', 'Annulée'].includes(color) && !plain},
-      { 'border text-jva-red-500 border-jva-red-500': ['red', 'Signalée', 'Annulée'].includes(color) && plain},
+      {'text-white bg-jva-red-500': ['red', 'Signalée', 'Annulée', 'Refusée'].includes(color) && !plain},
+      { 'border text-jva-red-500 border-jva-red-500': ['red', 'Signalée', 'Annulée', 'Refusée'].includes(color) && plain},
 
       // DOMAINE: Solidarité
       {'text-white bg-domaine-solidarite': [6,'solidarite','solidarite-et-insertion'].includes(color) && !plain},
