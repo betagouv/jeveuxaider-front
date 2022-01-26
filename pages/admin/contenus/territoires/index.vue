@@ -30,9 +30,9 @@
           <SectionHeading title="Territoires">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
-                <nuxt-link :to="`/admin/contenus/modeles-mission/add`">
+                <nuxt-link :to="`/admin/contenus/territoires/add`">
                   <Button size="lg" :loading="loading" icon="PlusIcon">
-                    Nouveau modèle
+                    Territoire
                   </Button>
                 </nuxt-link>
               </div>

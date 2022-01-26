@@ -184,7 +184,12 @@ export default {
   props: {
     territoire: {
       type: Object,
-      default: () => {}
+      default: () => {
+        return {
+          type: 'city',
+          zips: []
+        }
+      }
     }
   },
   data () {

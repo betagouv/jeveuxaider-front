@@ -32,7 +32,7 @@
               <div class="hidden lg:block space-x-2 flex-shrink-0">
                 <nuxt-link :to="`/admin/contenus/thematiques/add`">
                   <Button size="lg" :loading="loading" icon="PlusIcon">
-                    Nouvelle thématique
+                    Thématique
                   </Button>
                 </nuxt-link>
               </div>

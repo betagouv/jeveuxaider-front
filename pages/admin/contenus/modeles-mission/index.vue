@@ -32,7 +32,7 @@
               <div class="hidden lg:block space-x-2 flex-shrink-0">
                 <nuxt-link :to="`/admin/contenus/modeles-mission/add`">
                   <Button size="lg" :loading="loading" icon="PlusIcon">
-                    Nouveau modèle
+                    Modèle de mission
                   </Button>
                 </nuxt-link>
               </div>
