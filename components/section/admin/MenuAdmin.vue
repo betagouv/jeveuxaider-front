@@ -26,7 +26,7 @@ export default {
           { name: 'Missions prioritaires', href: '/admin/contenus/missions-prioritaires' },
           { name: 'Thématiques', href: '/admin/contenus/thematiques' },
           { name: 'Modèles de mission', href: '/admin/contenus/modeles-mission' },
-          { name: 'Départements', href: '/admin/contenus/departements' },
+          { name: 'Territoires', href: '/admin/contenus/territoires' },
           { name: 'Compétences', href: '/admin/contenus/competences' },
           { name: 'Pages', href: '/admin/contenus/pages' },
           { name: 'Releases', href: '/admin/contenus/releases' }

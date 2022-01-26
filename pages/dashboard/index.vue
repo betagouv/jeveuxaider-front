@@ -150,7 +150,7 @@ export default {
       if (this.$store.getters.contextRole === 'admin') {
         return [
           { icon: '🔏', title: 'Missions prioritaires', link: '/admin/contenus/missions-prioritaires' },
-          { icon: '🗂', title: 'Modèles de missions', link: '/admin/contenus/modeles-missions' },
+          { icon: '🗂', title: 'Modèles de missions', link: '/admin/contenus/modeles-mission' },
           { icon: '🪧', title: 'Petit mot', link: '/admin/settings/messages' }
         ]
       }
