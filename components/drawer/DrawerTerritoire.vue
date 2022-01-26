@@ -31,7 +31,6 @@
 
 <script>
 import BoxInformations from '@/components/section/territoire/BoxInformations'
-// import BoxReseau from '@/components/section/territoire/BoxReseau'
 import BoxMission from '@/components/section/territoire/BoxMission'
 import BoxParticipation from '@/components/section/territoire/BoxParticipation'
 import SelectTerritoireState from '@/components/custom/SelectTerritoireState'
@@ -41,7 +40,6 @@ export default {
   components: {
     BoxInformations,
     OnlineIndicator,
-    // BoxReseau,
     BoxMission,
     BoxParticipation,
     SelectTerritoireState
@@ -62,9 +60,9 @@ export default {
     if (!this.territoireId) {
       return null
     }
-    const { data: territoire } = await this.$axios.get(`/territoire/${this.territoireId}`)
+    const { data: territoire } = await this.$axios.get(`/territoires/${this.territoireId}`)
     this.territoire = territoire
-    const { data: territoireStats } = await this.$axios.get(`/territoire/${this.territoireId}/statistics`)
+    const { data: territoireStats } = await this.$axios.get(`/territoires/${this.territoireId}/statistics`)
     this.stats = territoireStats
     this.$emit('loaded', territoire)
   },
@@ -74,7 +72,7 @@ export default {
   methods: {
     async handleChangeState (option) {
       this.territoire.state = option.key
-      await this.$axios.put(`/territoire/${this.territoire.id}`, this.territoire)
+      await this.$axios.put(`/territoires/${this.territoire.id}`, this.territoire)
       this.$fetch()
     }
   }

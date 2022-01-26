@@ -9,7 +9,7 @@
         <DescriptionListItem term="Modifié le" :description="$dayjs(territoire.updated_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Nom" :description="territoire.name" />
         <DescriptionListItem term="Type" :description="$options.filters.label(territoire.type,'territoire_types')" />
-        <DescriptionListItem term="Département" :description="`${territoire.department} - ${$options.filters.label(territoire.department, 'departments')}`" />
+        <DescriptionListItem v-if="territoire.department" term="Département" :description="`${territoire.department} - ${$options.filters.label(territoire.department, 'departments')}`" />
         <DescriptionListItem v-if="territoire.type === 'city'" term="Zips" :description="territoire.zips.join(', ')" />
       </DescriptionList>
     </Box>

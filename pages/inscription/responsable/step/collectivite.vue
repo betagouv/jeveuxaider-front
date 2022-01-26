@@ -72,8 +72,8 @@
               @selected="handleSelectedGeo"
               @fetch-suggestions="onFetchGeoSuggestions"
             />
-            <div v-if="form.zips.length" class="mt-3">
-              <div class="flex flex-wrap gap-2">
+            <div v-if="form.zips.length">
+              <div class="flex flex-wrap gap-2 mt-4">
                 <TagFormItem
                   v-for="zip in form.zips"
                   :key="zip"

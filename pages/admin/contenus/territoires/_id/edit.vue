@@ -4,27 +4,24 @@
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
         { label: 'Contenus' },
-        { label: 'Modèles de mission', link: `/admin/contenus/modeles-mission` },
-        { label: missionTemplate.title }
+        { label: 'Territoires', link: `/admin/contenus/territoires` },
+        { label: territoire.name }
       ]"
     />
     <div class="py-6">
-      <SectionHeading :title="missionTemplate.title">
+      <SectionHeading :title="territoire.name">
         <template #action>
           <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
             <Button size="xl" variant="green" @click.native="$refs.form.handleSubmit()">
               Enregistrer
             </Button>
-            <Link class="text-sm font-medium" @click.native="$refs.form.handleSubmit({state: 'draft'})">
-              Enregistrer en brouillon
-            </Link>
           </div>
         </template>
       </Sectionheading>
 
-      <FormMissionTemplate
+      <FormTerritoire
         ref="form"
-        :mission-template="missionTemplate"
+        :territoire="territoire"
         class="my-8"
       />
     </div>
@@ -32,19 +29,19 @@
 </template>
 
 <script>
-import FormMissionTemplate from '~/components/form/FormMissionTemplate.vue'
+import FormTerritoire from '~/components/form/FormTerritoire'
 
 export default {
-  components: { FormMissionTemplate },
+  components: { FormTerritoire },
   layout: 'admin',
   middleware: 'admin',
   async asyncData ({ $axios, params, error, store }) {
-    const { data: missionTemplate } = await $axios.get(`/mission-templates/${params.id}`)
-    if (!missionTemplate) {
+    const { data: territoire } = await $axios.get(`/territoires/${params.id}`)
+    if (!territoire) {
       return error({ statusCode: 404 })
     }
     return {
-      missionTemplate
+      territoire
     }
   },
   methods: {

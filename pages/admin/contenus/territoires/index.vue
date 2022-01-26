@@ -95,7 +95,7 @@
               :title="territoire.name"
               :state-style="territoire.state"
               :state-text="$options.filters.label(territoire.state, 'mission_template_workflow_states')"
-              :description="`${territoire.department} - ${$options.filters.label(territoire.department,'departments')}`"
+              :description="territoire.department ? `${territoire.department} - ${$options.filters.label(territoire.department,'departments')}` : null"
               :image-url="territoire.photo && territoire.photo.large"
               action-title="XX benévoles recherchés"
               @click.native="drawerTerritoireId = territoire.id"
