@@ -21,8 +21,6 @@
 </template>
 
 <script>
-import clip from 'text-clipper'
-
 export default {
   props: {
     moreClass: {

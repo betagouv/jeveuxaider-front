@@ -44,6 +44,17 @@ export default {
         return !['Signalée'].includes(this.mission.state)
       }
       return false
+    },
+    missionCity () {
+      if (this.mission.city?.includes('Paris')) {
+        return 'Paris'
+      } else if (this.mission.city?.includes('Lyon')) {
+        return 'Lyon'
+      } else if (this.mission.city?.includes('Marseille')) {
+        return 'Marseille'
+      } else {
+        return this.mission?.city
+      }
     }
   },
   methods: {

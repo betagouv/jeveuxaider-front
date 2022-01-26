@@ -160,17 +160,6 @@ export default {
       return startDateObject && startDateObject.isAfter(now)
         ? `À partir du ${startDateObject.format('D MMMM')}`
         : null
-    },
-    missionCity () {
-      if (this.mission.city?.includes('Paris')) {
-        return 'Paris'
-      } else if (this.mission.city?.includes('Lyon')) {
-        return 'Lyon'
-      } else if (this.mission.city?.includes('Marseille')) {
-        return 'Marseille'
-      } else {
-        return this.mission?.city
-      }
     }
   }
 }
