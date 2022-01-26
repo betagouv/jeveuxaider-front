@@ -71,7 +71,6 @@ export const actions = {
     return await this.$axios
       .post('/register/volontaire', form)
       .then(async (response) => {
-        console.log('response', response)
         await dispatch('login', form)
       })
       .catch((error) => {
@@ -81,7 +80,6 @@ export const actions = {
             error.response.data.errors.email[0] ===
           'Cet email est déjà pris. Merci de vous connecter avec vos identifiants.'
           ) {
-            console.log('/login?email=' + form.email)
             this.$router.push('/login?email=' + form.email)
           }
         }
@@ -91,7 +89,6 @@ export const actions = {
   async registerResponsable ({ dispatch }, form) {
     return await this.$axios.post('/register/responsable', form)
       .then(async (response) => {
-        console.log('response', response)
         await dispatch('login', form)
       })
       .catch((error) => {
@@ -100,7 +97,6 @@ export const actions = {
             error.response.data.errors.email[0] ===
             'Cet email est déjà pris. Merci de vous connecter avec vos identifiants.'
           ) {
-            console.log('/login?email=' + form.email)
             this.$router.push('/login?email=' + form.email)
           }
         }

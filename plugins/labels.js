@@ -270,7 +270,7 @@ const labels = {
     { key: 'validated', label: 'Validé', showIf: ['waiting', 'refused'], description: 'Le modèle de mission est en ligne. Les responsables du réseau peuvent s\'en servir.' },
     { key: 'refused', label: 'Refusé', showIf: ['waiting', 'validated'], description: 'Le modèle de mission ne respecte pas la charte de JeVeuxAider.gouv.fr.' }
   ],
-  territoire_type: [
+  territoire_types: [
     { key: 'department', label: 'Département' },
     { key: 'city', label: 'Ville' }
   ],

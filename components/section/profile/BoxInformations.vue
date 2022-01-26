@@ -2,7 +2,7 @@
   <div>
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
       <div class="uppercase font-semibold text-gray-600">
-        Informations
+        Profil
       </div>
       <Link to="/profile/edit" icon="ChevronRightIcon">
         Modifier

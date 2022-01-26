@@ -61,7 +61,7 @@
       </nav>
     </div>
     <div class="hidden lg:flex justify-between border-t text-sm text-gray-800">
-      <div class="flex">
+      <div class="flex w-full">
         <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 1" position="left" class="h-full">
           <template #button>
             <div class="flex items-center justify-between gap-4 border-r py-4 pr-2 pl-6 w-52 truncate">
@@ -109,6 +109,14 @@
           :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': link.isActive}]"
         >
           {{ link.name }}
+        </NavItem>
+        <NavItem
+          v-if="$store.getters.contextRole == 'admin'"
+          to="/admin/contenus/missions-prioritaires"
+          :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500 ml-auto flex items-center', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/admin/(settings|contenus|scripts)/*')}]"
+        >
+          <CogIcon class="h-4 w-4 mr-2" />
+          Administration
         </NavItem>
       </div>
       <div class="flex">
@@ -252,38 +260,34 @@ export default {
       } else if (this.$store.getters.currentRole?.key === 'admin') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink({ regex: 'organisations/*' }) },
-          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink({ regex: 'missions/*' }) },
-          { name: 'Utilisateurs', to: '/admin/utilisateurs', isActive: this.isActiveLink({ regex: 'utilisateurs/*' }) },
-          { name: 'Liens utiles', href: '#', isActive: false }
+          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
+          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') },
+          { name: 'Utilisateurs', to: '/admin/utilisateurs', isActive: this.isActiveLink('/admin/utilisateurs/*') }
         ]
       } else if (this.$store.getters.currentRole?.key === 'responsable') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Mes missions', to: '/admin/missions', isActive: this.isActiveLink({ regex: 'missions/*' }) },
-          { name: 'Participations', href: '#' },
-          { name: 'Liens utiles', href: '#' }
+          { name: 'Mes missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
+          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
         ]
       } else if (this.$store.getters.currentRole?.key === 'tete_de_reseau') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink({ regex: 'organisations/*' }) },
-          { name: 'Liens utiles', href: '#' }
+          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') }
         ]
       } else if (this.$store.getters.currentRole?.key === 'referent') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink({ regex: 'organisations/*' }) },
-          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink({ regex: 'missions/*' }) },
-          { name: 'Utilisateurs', to: '/admin/utilisateurs', isActive: this.isActiveLink({ regex: 'utilisateurs/*' }) },
-          { name: 'Liens utiles', href: '#', isActive: false }
+          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
+          { name: 'Utilisateurs', to: '/admin/utilisateurs', isActive: this.isActiveLink('/admin/utilisateurs/*') }
         ]
       } else if (this.$store.getters.currentRole?.key === 'referent_regional') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink({ regex: 'organisations/*' }) },
-          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink({ regex: 'missions/*' }) },
-          { name: 'Liens utiles', href: '#', isActive: false }
+          { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') }
         ]
       } else if (this.$store.getters.currentRole?.key === 'analyste') {
         return [
@@ -291,7 +295,7 @@ export default {
         ]
       }
       return [
-        { name: 'Mon Profil', to: '/profile', isActive: this.isActiveLink({ regex: 'profile/*' }) },
+        { name: 'Mon Profil', to: '/profile', isActive: this.isActiveLink('profile/*') },
         { name: 'Mes Missions', href: '#', isActive: false },
         { name: 'Aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', isActive: false }
       ]
@@ -313,14 +317,8 @@ export default {
         this.$router.push('/dashboard')
       }
     },
-    isActiveLink (value) {
-      if (typeof value == 'string') {
-        return this.$route.path === value
-      } else if (typeof value == 'object') {
-        if (value.regex) {
-          return RegExp(value.regex).test(this.$route.path)
-        }
-      }
+    isActiveLink (regex) {
+      return RegExp(regex).test(this.$route.path)
     }
   }
 }
