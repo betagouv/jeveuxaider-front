@@ -57,6 +57,14 @@ export default {
             subtitle: 'Des responsables de réseau souhaitent publier des modèles de mission',
             link: '/admin/contenus/modeles-mission?filter[state]=waiting'
           }
+        case 'territoires_waiting_validation':
+          return {
+            icon: '✊',
+            iconVariant: 'warning',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'territoire', 'territoires', false)}</b> en attente de validation`,
+            subtitle: 'Des territoires souhaient créer leur page',
+            link: '/admin/contenus/territoires?filter[state]=waiting'
+          }
         case 'organisation_incomplete':
           return {
             icon: '✍',

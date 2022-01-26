@@ -9,13 +9,14 @@ export default {
   components: {
     TerritoirePage
   },
-  async asyncData ({ $axios, params, error }) {
-    const { data: territoire } = await await $axios.get(`/territoire/${params.slug}`)
+  async asyncData ({ $axios, params, error, store }) {
+    const { data: territoire } = await await $axios.get(`/territoires/${params.slug}`)
     if (
-      !territoire ||
+      store.getters.contextRole !== 'admin' && (
+        !territoire ||
       !territoire.is_published ||
       territoire.state !== 'validated' ||
-      territoire.type !== 'city'
+      territoire.type !== 'city')
     ) {
       return error({ statusCode: 404 })
     }

@@ -149,9 +149,8 @@ export default {
     links () {
       if (this.$store.getters.contextRole === 'admin') {
         return [
-          { icon: '🔏', title: 'Missions prioritaires', link: '/admin/contenus/missions-prioritaires' },
-          { icon: '🗂', title: 'Modèles de missions', link: '/admin/contenus/modeles-mission' },
-          { icon: '🪧', title: 'Petit mot', link: '/admin/settings/messages' }
+          { icon: '🏞', title: 'Territoires', link: '/admin/contenus/territoires' },
+          { icon: '🗂', title: 'Modèles de missions', link: '/admin/contenus/modeles-mission' }
         ]
       }
       return [

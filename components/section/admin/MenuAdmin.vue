@@ -27,9 +27,7 @@ export default {
           { name: 'Thématiques', href: '/admin/contenus/thematiques' },
           { name: 'Modèles de mission', href: '/admin/contenus/modeles-mission' },
           { name: 'Territoires', href: '/admin/contenus/territoires' },
-          { name: 'Compétences', href: '/admin/contenus/competences' },
-          { name: 'Pages', href: '/admin/contenus/pages' },
-          { name: 'Releases', href: '/admin/contenus/releases' }
+          { name: 'Compétences', href: '/admin/contenus/competences' }
         ]
       },
       {

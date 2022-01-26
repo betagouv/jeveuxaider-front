@@ -34,15 +34,8 @@
             <Heading :level="1">
               Organisation <span class=" font-normal text-gray-500 text-2xl">#{{ organisation.id }}</span>
             </Heading>
-            <nuxt-link class="flex items-center space-x-2 mt-2" target="_blank" :to="`/organisations/${organisation.slug}`">
-              <div
-                :class="['h-3 w-3 rounded-full', hasPageOnline ? 'bg-jva-green-500' : 'bg-jva-red-500']"
-              />
-              <div class="underline text-sm">
-                {{ hasPageOnline ? 'En ligne' : 'Hors ligne' }}
-              </div>
-              <ExternalLinkIcon class="h-4 w-4" />
-            </nuxt-link>
+
+            <OnlineIndicator :published="hasPageOnline" :link="`/organisations/${organisation.slug}`" class="mt-2" />
           </div>
           <nuxt-link :to="`/admin/organisations/${organisation.id}/edit`">
             <Button icon="PencilIcon">
@@ -85,11 +78,13 @@ import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublic
 import BoxInformations from '@/components/section/organisation/BoxInformations'
 import BoxMission from '@/components/section/organisation/BoxMission'
 import BoxParticipation from '@/components/section/organisation/BoxParticipation'
+import OnlineIndicator from '~/components/custom/OnlineIndicator'
 
 export default {
   components: {
     History,
     DomainsPublicsLinks,
+    OnlineIndicator,
     BoxInformations,
     BoxMission,
     BoxParticipation

@@ -133,7 +133,6 @@ export default {
         'filter[state]': 'validated',
         'filter[is_published]': true,
         'filter[type]': 'city',
-        append: 'full_url',
         pagination: 9999
       }
     })
@@ -143,7 +142,6 @@ export default {
         'filter[state]': 'validated',
         'filter[is_published]': true,
         'filter[type]': 'department',
-        append: 'full_url',
         pagination: 9999
       }
     })

@@ -4,7 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         Missions
       </div>
-      <Link :to="`/admin/missions?filter[territoire_id]=${territoire.id}`" icon="ChevronRightIcon">
+      <Link v-if="$store.getters.contextRole === 'admin'" :to="`/admin/missions?filter[territoire_id]=${territoire.id}`" icon="ChevronRightIcon">
         Consulter
       </Link>
     </div>
