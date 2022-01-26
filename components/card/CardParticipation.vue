@@ -1,6 +1,6 @@
 <template>
   <Box padding="xs" class="!shadow-sm hover:!shadow-md cursor-pointer grid grid-cols-3">
-    <div class="col-span-1 pr-4">
+    <div v-if="participation.mission" class="col-span-1 pr-4">
       <div class="truncate text-sm text-gray-600">
         <span>📍</span>
 
@@ -38,6 +38,9 @@
         </div>
       </div>
     </div>
+    <div v-else>
+      La mission n'existe plus
+    </div>
     <div class="col-span-2 border-l -my-4 py-4 pl-6">
       <div class="flex">
         <div>
@@ -54,7 +57,7 @@
           </Badge>
         </div>
       </div>
-      <TextFormatted :max-lines="4" :text="participation.conversation.latest_message.content" class="text-gray-600 mt-3" />
+      <TextFormatted v-if="participation.conversation" :max-lines="4" :text="participation.conversation.latest_message.content" class="text-gray-600 mt-3" />
     </div>
   </Box>
 </template>

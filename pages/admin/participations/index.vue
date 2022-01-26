@@ -18,58 +18,35 @@
     <template #sidebar>
       <div class="flex flex-col gap-y-4 sticky top-8">
         <SelectAdvanced
-          :key="`role-${$route.fullPath}`"
-          name="role"
-          placeholder="Rôle"
-          :options="[
-            { key:'responsable', label: 'Responsable' },
-            { key:'responsable_territoire', label: 'Responsable territorial' },
-            { key:'tete_de_reseau', label: 'Responsable d\'un réseau' },
-            { key:'referent', label: 'Référent' },
-            { key:'referent_regional', label: 'Référent régional' },
-            { key:'analyste', label: 'Analyste' }]"
-          :value="$route.query['filter[role]']"
+          :key="`state-${$route.fullPath}`"
+          name="state"
+          placeholder="Statut"
+          :options="$labels.participation_workflow_states"
+          :value="$route.query['filter[state]']"
           variant="transparent"
           clearable
-          @input="changeFilter('filter[role]', $event)"
+          @input="changeFilter('filter[state]', $event)"
         />
+        TODO : <br>
+        Organisation Autocomplete <br>
+        Présentiel vs À distance <br>
+        Responsable (pour responsable seulement, selectlist) <br>
         <SelectAdvanced
           :key="`department-${$route.fullPath}`"
-          name="department"
+          name="mission.department"
           placeholder="Département"
           :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
-          :value="$route.query['filter[department]']"
+          :value="$route.query['filter[mission.department]']"
           variant="transparent"
           clearable
-          @input="changeFilter('filter[department]', $event)"
+          @input="changeFilter('filter[mission.department]', $event)"
         />
         <Input
-          :key="`zip-${$route.fullPath}`"
-          name="zip"
+          name="mission.zip"
           placeholder="Code Postal"
           variant="transparent"
-          :value="$route.query['filter[zip]']"
-          @input="changeFilter('filter[zip]', $event)"
-        />
-        <SelectAdvanced
-          :key="`is_visible-${$route.fullPath}`"
-          name="is_visible"
-          placeholder="Visible dans la recherche"
-          :options="[{key: 'true', label: 'Oui'}, {key: 'false', label: 'Non'}]"
-          :value="$route.query['filter[is_visible]']"
-          variant="transparent"
-          clearable
-          @input="changeFilter('filter[is_visible]', $event)"
-        />
-        <SelectAdvanced
-          :key="`min_participations-${$route.fullPath}`"
-          name="min_participations"
-          placeholder="Participations réalisées"
-          :options="[{key: 1, label: 'Au moins 1'}, {key: 3, label: 'Au moins 3'}, {key: 5, label: 'Au moins 5'}, {key: 10, label: 'Au moins 10'}]"
-          :value="$route.query['filter[min_participations]']"
-          variant="transparent"
-          clearable
-          @input="changeFilter('filter[min_participations]', $event)"
+          :value="$route.query['filter[mission.zip]']"
+          @input="changeFilter('filter[mission.zip]', $event)"
         />
       </div>
     </template>
@@ -96,7 +73,7 @@
         @input="changeFilter('filter[search]', $event)"
       />
       <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
-        <!-- <Checkbox
+        <Checkbox
           :key="`tous-${$route.fullPath}`"
           :option="{key: 'tous', label:'Tous'}"
           :is-checked="hasActiveFilters()"
@@ -106,14 +83,50 @@
           @change="deleteAllFilters()"
         />
         <Checkbox
-          :key="`role-referents-${$route.fullPath}`"
-          :option="{key: 'referent', label:'Référents'}"
-          :is-checked="$route.query['filter[role]'] == 'referent'"
+          :key="`state-encoursvalidation-${$route.fullPath}`"
+          :option="{key: 'En attente de validation', label:'En attente de validation'}"
+          :is-checked="$route.query['filter[state]'] == 'En attente de validation'"
           variant="button"
           size="xs"
           transparent
-          @change="changeFilter('filter[role]', 'referent')"
-        /> -->
+          @change="changeFilter('filter[state]', 'En attente de validation')"
+        />
+        <Checkbox
+          :key="`state-encourstraitement-${$route.fullPath}`"
+          :option="{key: 'En cours de traitement', label:'En cours de traitement'}"
+          :is-checked="$route.query['filter[state]'] == 'En cours de traitement'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[state]', 'En cours de traitement')"
+        />
+        <Checkbox
+          :key="`state-validee-${$route.fullPath}`"
+          :option="{key: 'Validée', label:'Validée'}"
+          :is-checked="$route.query['filter[state]'] == 'Validée'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[state]', 'Validée')"
+        />
+        <Checkbox
+          :key="`state-cancel-${$route.fullPath}`"
+          :option="{key: 'Annulée', label:'Annulée'}"
+          :is-checked="$route.query['filter[state]'] == 'Annulée'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[state]', 'Annulée')"
+        />
+        <Checkbox
+          :key="`state-refus-${$route.fullPath}`"
+          :option="{key: 'Refusée', label:'Refusée'}"
+          :is-checked="$route.query['filter[state]'] == 'Refusée'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[state]', 'Refusée')"
+        />
       </div>
       <div class="my-6 space-y-4">
         <CardParticipation
