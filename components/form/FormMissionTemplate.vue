@@ -1,100 +1,111 @@
 <template>
-  <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
-    <div class="lg:col-span-3 space-y-12">
-      <Box>
-        <Heading :level="3" class="mb-8">
-          Informations générales
-        </Heading>
-        <div class="space-y-10">
-          <FormControl
-            html-for="title"
-            label="Titre"
-            required
-            :error="errors.title"
-          >
-            <FormHelperText>
-              Il s'agit du titre principal affiché sur la page de la mission.
-            </FormHelperText>
-            <Input
-              v-model="form.title"
-              name="title"
-            />
-          </FormControl>
-          <FormControl
-            html-for="subtitle"
-            label="Titre court"
-            required
-            :error="errors.subtitle"
-          >
-            <FormHelperText>
-              Le titre court sera utilisé comme libellé pour le filtre "Type de mission" dans la recherche.
-            </FormHelperText>
-            <Input
-              v-model="form.subtitle"
-              name="subtitle"
-            />
-          </FormControl>
-          <FormControl
-            label="Domaine"
-            html-for="domaine_id"
-            :error="errors.domaine_id"
-            required
-          >
-            <SelectAdvanced
-              v-model="form.domaine_id"
-              name="domaine"
-              placeholder="Sélectionner un domaine"
-              :options="$labels.domaines"
-            />
-          </FormControl>
-          <FormControl
-            label="Description"
-            html-for="description"
-            :error="errors.description"
-            required
-          >
-            <RichEditor
-              v-model="form.objectif"
-              placeholder="Décrivez la mission en quelques mots..."
-            />
-          </FormControl>
-          <FormControl
-            label="Objectif"
-            html-for="objectif"
-            :error="errors.objectif"
-            required
-          >
-            <RichEditor
-              v-model="form.objectif"
-              placeholder="Décrivez la mission en quelques mots..."
-            />
-          </FormControl>
-        </div>
-      </Box>
-    </div>
-    <div class="lg:col-span-2 space-y-8">
-      <Box padding="sm">
-        <Heading :level="3" class="mb-8">
-          Paramètres
-        </Heading>
-        <div class="space-y-12">
-          <Toggle
-            v-model="form.published"
-            :label="form.published ? 'En ligne' : 'Hors ligne'"
-            description="Pour rendre le modèle accessible"
-          />
-        </div>
-      </Box>
-      <Box padding="sm">
-        <Heading :level="3" class="mb-8">
-          Image
-        </Heading>
-        <div class="space-y-12">
-          <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: Upload de l'image principale
+  <div>
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+      <div class="lg:col-span-3 space-y-12">
+        <Box>
+          <Heading :level="3" class="mb-8">
+            Informations générales
+          </Heading>
+          <div class="space-y-10">
+            <FormControl
+              html-for="title"
+              label="Titre"
+              required
+              :error="errors.title"
+            >
+              <FormHelperText>
+                Il s'agit du titre principal affiché sur la page de la mission.
+              </FormHelperText>
+              <Input
+                v-model="form.title"
+                name="title"
+              />
+            </FormControl>
+            <FormControl
+              html-for="subtitle"
+              label="Titre court"
+              required
+              :error="errors.subtitle"
+            >
+              <FormHelperText>
+                Le titre court sera utilisé comme libellé pour le filtre "Type de mission" dans la recherche.
+              </FormHelperText>
+              <Input
+                v-model="form.subtitle"
+                name="subtitle"
+              />
+            </FormControl>
+            <FormControl
+              label="Domaine"
+              html-for="domaine_id"
+              :error="errors.domaine_id"
+              required
+            >
+              <SelectAdvanced
+                v-model="form.domaine_id"
+                name="domaine"
+                placeholder="Sélectionner un domaine"
+                :options="$labels.domaines"
+              />
+            </FormControl>
+            <FormControl
+              label="Description"
+              html-for="description"
+              :error="errors.description"
+              required
+            >
+              <RichEditor
+                v-model="form.objectif"
+                placeholder="Décrivez la mission en quelques mots..."
+              />
+            </FormControl>
+            <FormControl
+              label="Objectif"
+              html-for="objectif"
+              :error="errors.objectif"
+              required
+            >
+              <RichEditor
+                v-model="form.objectif"
+                placeholder="Décrivez la mission en quelques mots..."
+              />
+            </FormControl>
           </div>
-        </div>
-      </Box>
+        </Box>
+      </div>
+      <div class="lg:col-span-2 space-y-8">
+        <Box padding="sm">
+          <Heading :level="3" class="mb-8">
+            Paramètres
+          </Heading>
+          <div class="space-y-12">
+            <Toggle
+              v-model="form.published"
+              :label="form.published ? 'En ligne' : 'Hors ligne'"
+              description="Pour rendre le modèle accessible"
+            />
+          </div>
+        </Box>
+        <Box padding="sm">
+          <Heading :level="3" class="mb-8">
+            Image
+          </Heading>
+          <div class="space-y-12">
+            <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
+              @TODO: Upload de l'image principale
+            </div>
+          </div>
+        </Box>
+      </div>
+    </div>
+
+    <div class="flex lg:hidden flex-col gap-2 flex-shrink-0 items-center justify-center">
+      <Button size="xl" variant="green" @click.native="$refs.form.handleSubmit()">
+        Enregistrer
+      </Button>
+      <Link class="text-sm font-medium" @click.native="$refs.form.handleSubmit({state: 'draft'})">
+        Enregistrer en brouillon
+      </Link>
     </div>
   </div>
 </template>

@@ -26,15 +26,6 @@
         ref="form"
         class="my-8"
       />
-
-      <div class="flex lg:hidden flex-col gap-2 flex-shrink-0 items-center justify-center">
-        <Button size="xl" variant="green" @click.native="$refs.form.handleSubmit()">
-          Enregistrer
-        </Button>
-        <Link class="text-sm font-medium" @click.native="$refs.form.handleSubmit({state: 'draft'})">
-          Enregistrer en brouillon
-        </Link>
-      </div>
     </div>
   </div>
 </template>

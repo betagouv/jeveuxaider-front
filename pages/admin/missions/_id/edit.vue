@@ -11,13 +11,16 @@
     <div class="py-6">
       <SectionHeading :title="mission.name">
         <template #action>
-          <div class="hidden lg:block space-x-2 flex-shrink-0">
-            <Button variant="white" @click.native="handleSubmitBrouillon()">
-              Enregistrer en brouillon
+          <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
+            <Button v-if="$store.getters.contextRole === 'admin' || mission.state !== 'Brouillon'" size="xl" variant="green" @click.native="$refs.formMission.handleSubmit()">
+              Enregistrer
             </Button>
-            <Button variant="green" @click.native="handleSubmitPublish()">
+            <Button v-else size="xl" variant="green" @click.native="$refs.formMission.handleSubmit({state: 'En attente de validation'})">
               Soumettre à validation
             </Button>
+            <Link v-if="['Brouillon','En attente de validation'].includes(mission.state)" class="text-sm font-medium" @click.native="$refs.formMission.handleSubmit({state: 'Brouillon'})">
+              Enregistrer en brouillon
+            </Link>
           </div>
         </template>
       </Sectionheading>
@@ -26,7 +29,7 @@
         ref="formMission"
         :mission="mission"
         :structure="mission.structure"
-        class="mt-8"
+        class="my-8"
       />
     </div>
   </div>
@@ -69,12 +72,7 @@ export default {
     }
   },
   methods: {
-    handleSubmitBrouillon () {
-      this.$refs.formMission.handleSubmitBrouillon()
-    },
-    handleSubmitPublish () {
-      this.$refs.formMission.handleSubmitPublish()
-    }
+
   }
 }
 </script>

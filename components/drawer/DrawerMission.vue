@@ -20,7 +20,7 @@
           Modifier
         </Button>
       </nuxt-link>
-      <SelectWithDescription
+      <!-- <SelectWithDescription
         v-if="$store.getters.contextRole === 'admin'"
         :options="[
           {key: true, label: 'Prioritaire', description: 'Passer en prioritaire pour l\'afficher sur la page d\'accueil'},
@@ -29,7 +29,7 @@
         :value="mission.is_priority"
         size="sm"
         @selected="handleChangePriority($event)"
-      />
+      /> -->
       <Button v-if="$store.getters.contextRole === 'responsable'" class="opacity-25" variant="white" size="sm" icon="DuplicateIcon">
         Dupliquer
       </Button>

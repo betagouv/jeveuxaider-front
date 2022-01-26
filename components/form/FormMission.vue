@@ -119,6 +119,12 @@
           Paramètres
         </Heading>
         <div class="space-y-12">
+          <Toggle
+            v-if="$store.getters.contextRole === 'admin'"
+            v-model="form.is_priority"
+            :label="form.is_priority ? 'Prioritaire' : 'Non prioritaire'"
+            description="Pour rendre la mission prioritaire"
+          />
           <div class="grid grid-cols-2 gap-4">
             <FormControl
               label="Début de la mission"
@@ -330,15 +336,16 @@
         </div>
       </div>
     </Box>
-    <div class="lg:col-span-5 flex">
-      <div class="space-x-2 ml-auto">
-        <Button variant="white" @click.native="handleSubmitBrouillon()">
-          Enregistrer en brouillon
-        </Button>
-        <Button variant="green" @click.native="handleSubmitPublish()">
-          Enregistrer et publier
-        </Button>
-      </div>
+    <div class="flex lg:hidden flex-col gap-2 flex-shrink-0 items-center justify-center">
+      <Button v-if="$store.getters.contextRole === 'admin' || mission.state !== 'Brouillon'" size="xl" variant="green" @click.native="$refs.formMission.handleSubmit()">
+        Enregistrer
+      </Button>
+      <Button v-else size="xl" variant="green" @click.native="$refs.formMission.handleSubmit({state: 'En attente de validation'})">
+        Soumettre à validation
+      </Button>
+      <Link v-if="['Brouillon','En attente de validation'].includes(mission.state)" class="text-sm font-medium" @click.native="$refs.formMission.handleSubmit({state: 'Brouillon'})">
+        Enregistrer en brouillon
+      </Link>
     </div>
   </div>
 </template>
@@ -434,14 +441,13 @@ export default {
     onRemovedSkill (item) {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
     },
-    handleSubmitBrouillon () {
-      this.addOrEditMission()
-    },
-    handleSubmitPublish () {
-      this.form.state = 'En attente de validation'
-      this.addOrEditMission()
-    },
-    addOrEditMission () {
+    handleSubmit (attributes) {
+      if (attributes) {
+        this.form = {
+          attributes,
+          ...this.form
+        }
+      }
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
