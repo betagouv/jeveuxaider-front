@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="py-4 flex"
+    class="py-1 flex"
     aria-label="Breadcrumb"
     :class="[
       { 'bg-jva-blue-500 border-[#3934a7] border-b': theme == 'dark' },
@@ -8,7 +8,7 @@
     ]"
   >
     <ol
-      class="h-6 w-full max-w-full overflow-x-auto whitespace-nowrap flex items-center"
+      class="h-12 w-full max-w-full overflow-x-auto whitespace-nowrap flex items-center"
     >
       <li>
         <nuxt-link to="/">

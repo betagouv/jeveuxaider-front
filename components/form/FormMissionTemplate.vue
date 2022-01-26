@@ -118,21 +118,20 @@ export default {
       form: { ...this.missionTemplate },
       formSchema: object({
         title: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
-        subtitle: string().min(3, 'Le sous titre est trop court').required('Le sous titre est requis'),
+        subtitle: string().min(3, 'Le titre court est trop court').required('Le titre court est requis'),
         description: string().required('La description est requise'),
-        objectif: string().required('L\'objectif est requise')
+        objectif: string().required('L\'objectif est requis')
       })
     }
   },
   methods: {
-    handleSubmitBrouillon () {
-      this.handleSubmit()
-    },
-    handleSubmitPublish () {
-      this.form.state = 'waiting'
-      this.handleSubmit()
-    },
-    handleSubmit () {
+    handleSubmit (attributes) {
+      if (attributes) {
+        this.form = {
+          attributes,
+          ...this.form
+        }
+      }
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {

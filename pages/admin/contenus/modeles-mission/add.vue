@@ -11,21 +11,30 @@
     <div class="py-6">
       <SectionHeading title="Création d'un nouveau modèle de mission">
         <template #action>
-          <div class="hidden lg:block space-x-2 flex-shrink-0">
-            <Button variant="white" @click.native="handleSubmitDraft()">
+          <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
+            <Button size="xl" variant="green" @click.native="$refs.form.handleSubmit()">
+              Enregistrer
+            </Button>
+            <Link class="text-sm font-medium" @click.native="$refs.form.handleSubmit({state: 'draft'})">
               Enregistrer en brouillon
-            </Button>
-            <Button variant="green" @click.native="handleSubmit()">
-              Soumettre à validation
-            </Button>
+            </Link>
           </div>
         </template>
       </Sectionheading>
 
       <FormMissionTemplate
         ref="form"
-        class="mt-8"
+        class="my-8"
       />
+
+      <div class="flex lg:hidden flex-col gap-2 flex-shrink-0 items-center justify-center">
+        <Button size="xl" variant="green" @click.native="$refs.form.handleSubmit()">
+          Enregistrer
+        </Button>
+        <Link class="text-sm font-medium" @click.native="$refs.form.handleSubmit({state: 'draft'})">
+          Enregistrer en brouillon
+        </Link>
+      </div>
     </div>
   </div>
 </template>
@@ -38,12 +47,6 @@ export default {
   layout: 'admin',
   middleware: 'admin',
   methods: {
-    handleSubmitDraft () {
-      this.$refs.form.handleSubmitDraft()
-    },
-    handleSubmit () {
-      this.$refs.form.handleSubmit()
-    }
 
   }
 }

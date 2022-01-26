@@ -58,6 +58,13 @@
               @click.native="drawerMissionId = mission.id"
             />
           </div>
+
+          <Pagination
+            :current-page="queryResult.current_page"
+            :total-rows="queryResult.total"
+            :per-page="queryResult.per_page"
+            @page-change="changePage"
+          />
         </div>
       </div>
     </div>
