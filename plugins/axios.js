@@ -4,8 +4,6 @@ export default function ({ $axios, redirect, app, store, error, $message, $toast
   $axios.interceptors.request.use(function (config) {
     const isExternalCall = config.url.includes('http')
 
-    // console.log('config.headers', config.headers)
-
     if (isExternalCall) {
       return config
     }
