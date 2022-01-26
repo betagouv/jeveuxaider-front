@@ -75,7 +75,7 @@ export default {
     if (!this.organisationId) {
       return null
     }
-    const { data } = await this.$axios.get(`/structure/${this.organisationId}`)
+    const { data } = await this.$axios.get(`/structures/${this.organisationId}`)
     this.organisation = data
     this.loading = false
     this.$emit('loaded', data)
@@ -87,7 +87,7 @@ export default {
   methods: {
     // async handleChangeState (option) {
     //   this.mission.state = option.key
-    //   await this.$axios.put(`/mission/${this.mission.id}`, this.mission)
+    //   await this.$axios.put(`/missions/${this.mission.id}`, this.mission)
     //   this.$fetch()
     // }
   }

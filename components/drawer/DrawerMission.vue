@@ -1,14 +1,6 @@
 <template>
   <div v-if="mission">
-    <nuxt-link class="inline-flex items-center space-x-2 mt-2" target="_blank" :to="`/missions-benevolat/${mission.id}/${mission.slug}`">
-      <div
-        :class="['h-3 w-3 rounded-full', hasPageOnline ? 'bg-jva-green-500' : 'bg-jva-red-500']"
-      />
-      <div class="underline text-sm">
-        {{ hasPageOnline ? 'En ligne' : 'Hors ligne' }}
-      </div>
-      <ExternalLinkIcon class="h-4 w-4" />
-    </nuxt-link>
+    <OnlineIndicator :published="hasPageOnline" :link="`/missions-benevolat/${mission.id}/${mission.slug}`" class="mt-2" />
     <div class="flex gap-2 mt-4">
       <nuxt-link :to="`/admin/missions/${mission.id}`" class="inline-flex">
         <Button variant="white" size="sm" icon="EyeIcon">
@@ -60,13 +52,15 @@ import BoxPlace from '@/components/section/mission/BoxPlace'
 import BoxResponsable from '@/components/section/mission/BoxResponsable'
 import BoxInformations from '@/components/section/mission/BoxInformations'
 import MixinMission from '@/mixins/mission'
+import OnlineIndicator from '~/components/custom/OnlineIndicator'
 
 export default {
   components: {
     SelectMissionState,
     BoxPlace,
     BoxResponsable,
-    BoxInformations
+    BoxInformations,
+    OnlineIndicator
   },
   mixins: [MixinMission],
   props: {
@@ -84,7 +78,7 @@ export default {
     if (!this.missionId) {
       return null
     }
-    const { data } = await this.$axios.get(`/mission/${this.missionId}`)
+    const { data } = await this.$axios.get(`/missions/${this.missionId}`)
     this.mission = data
     this.$emit('loaded', data)
   },
@@ -94,12 +88,12 @@ export default {
   methods: {
     async handleChangeState (option) {
       this.mission.state = option.key
-      await this.$axios.put(`/mission/${this.mission.id}`, this.mission)
+      await this.$axios.put(`/missions/${this.mission.id}`, this.mission)
       this.$fetch()
     },
     async handleChangePriority (option) {
       this.mission.is_priority = option.key
-      await this.$axios.put(`/mission/${this.mission.id}`, this.mission)
+      await this.$axios.put(`/missions/${this.mission.id}`, this.mission)
       this.$fetch()
     }
   }

@@ -237,7 +237,7 @@ export default {
     ) {
       return error({ statusCode: 403 })
     }
-    const { data: organisation } = await $axios.get(`/structure/${store.getters.currentRole.contextable_id}`)
+    const { data: organisation } = await $axios.get(`/structures/${store.getters.currentRole.contextable_id}`)
     return {
       form: organisation
     }
@@ -318,7 +318,7 @@ export default {
             return
           }
           this.loading = true
-          await this.$axios.post(`/structure/${this.form.id}`, this.form)
+          await this.$axios.put(`/structures/${this.form.id}`, this.form)
           window.plausible &&
                   window.plausible(
                     'Inscription responsable - Étape 3 - Informations sur l’organisation'

@@ -64,7 +64,7 @@ export const actions = {
     this.$cookies.remove('access-token')
   },
   async updateProfile ({ dispatch }, payload) {
-    await this.$axios.post(`/profile/${payload.id}`, payload)
+    await this.$axios.put(`/profiles/${payload.id}`, payload)
     await dispatch('fetchUser')
   },
   async registerVolontaire ({ dispatch }, form) {

@@ -1,21 +1,21 @@
 <template>
   <div class="container">
-    <Drawer :is-open="Boolean(drawerMissionTemplateId)" @close="drawerMissionTemplateId = null">
+    <Drawer :is-open="Boolean(drawerTerritoireId)" @close="drawerTerritoireId = null">
       <template #title>
-        <Heading v-if="drawerMissionTemplate" :level="3" class="text-jva-blue-500">
-          <nuxt-link :to="`/admin/contenus/modeles-mission/${drawerMissionTemplateId}/edit`" class="hover:underline" target="_blank">
-            {{ drawerMissionTemplate.title }}
+        <Heading v-if="drawerTerritoire" :level="3" class="text-jva-blue-500">
+          <nuxt-link :to="`/admin/contenus/territoires/${drawerTerritoireId}`" class="hover:underline" target="_blank">
+            {{ drawerTerritoire.name }}
           </nuxt-link>
         </Heading>
       </template>
-      <DrawerMissionTemplate :mission-template-id="drawerMissionTemplateId" @loaded="drawerMissionTemplate = $event" />
+      <DrawerTerritoire :territoire-id="drawerTerritoireId" @loaded="drawerTerritoire = $event" />
     </Drawer>
 
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
         { label: 'Contenus' },
-        { label: 'Modèles de mission' }
+        { label: 'Territoires' }
       ]"
     />
 
@@ -27,12 +27,12 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-8">
-          <SectionHeading title="Modèles de mission">
+          <SectionHeading title="Territoires">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
-                <nuxt-link :to="`/admin/contenus/modeles-mission/add`">
+                <nuxt-link :to="`/admin/contenus/territoires/add`">
                   <Button size="lg" :loading="loading" icon="PlusIcon">
-                    Modèle de mission
+                    Territoire
                   </Button>
                 </nuxt-link>
               </div>
@@ -68,37 +68,43 @@
                 @change="changeFilter('filter[state]', 'waiting')"
               />
               <Checkbox
-                :key="`state-validated-${$route.fullPath}`"
-                :option="{key: 'validated', label:'Validé'}"
-                :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'validated'"
+                :key="`type-dep-${$route.fullPath}`"
+                :option="{key: 'department', label:'Départements'}"
+                :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'] == 'department'"
                 variant="button"
                 size="xs"
                 transparent
-                @change="changeFilter('filter[state]', 'validated')"
+                @change="changeFilter('filter[type]', 'department')"
               />
               <Checkbox
-                :key="`published-${$route.fullPath}`"
-                :option="{key: true, label:'En ligne'}"
-                :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 1"
+                :key="`type-city-${$route.fullPath}`"
+                :option="{key: 'city', label:'Villes'}"
+                :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'] == 'city'"
                 variant="button"
                 size="xs"
                 transparent
-                @change="changeFilter('filter[published]', 1)"
+                @change="changeFilter('filter[type]', 'city')"
               />
             </div>
           </div>
 
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <CardMissionTemplate
-              v-for="missionTemplate in queryResult.data"
-              :key="missionTemplate.id"
-              :title="missionTemplate.title"
-              :state-style="missionTemplate.state"
-              :state-text="$options.filters.label(missionTemplate.state, 'mission_template_workflow_states')"
-              :description="missionTemplate.subtitle"
-              :image-url="missionTemplate.photo && missionTemplate.photo.large"
-              @click.native="drawerMissionTemplateId = missionTemplate.id"
-            />
+            <Card
+              v-for="territoire in queryResult.data"
+              :key="territoire.id"
+              :title="territoire.name"
+              :state-style="territoire.state"
+              :state-text="$options.filters.label(territoire.state, 'mission_template_workflow_states')"
+              :description="territoire.department ? `${territoire.department} - ${$options.filters.label(territoire.department,'departments')}` : null"
+              :image-url="territoire.photo && territoire.photo.large"
+              @click.native="drawerTerritoireId = territoire.id"
+            >
+              <div
+                class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
+              >
+                {{ $options.filters.formatNumber(territoire.places_left) }} {{ $options.filters.pluralize(territoire.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
+              </div>
+            </Card>
           </div>
 
           <Pagination
@@ -116,14 +122,14 @@
 <script>
 import MenuAdmin from '@/components/section/admin/MenuAdmin'
 import QueryBuilder from '@/mixins/query-builder'
-import CardMissionTemplate from '@/components/card/CardMissionTemplate'
-import DrawerMissionTemplate from '@/components/drawer/DrawerMissionTemplate'
+import Card from '@/components/card/Card'
+import DrawerTerritoire from '@/components/drawer/DrawerTerritoire'
 
 export default {
   components: {
     MenuAdmin,
-    CardMissionTemplate,
-    DrawerMissionTemplate
+    Card,
+    DrawerTerritoire
   },
   mixins: [QueryBuilder],
   layout: 'admin',
@@ -131,9 +137,9 @@ export default {
   data () {
     return {
       loading: false,
-      endpoint: '/mission-templates',
-      drawerMissionTemplateId: null,
-      drawerMissionTemplate: null
+      endpoint: '/territoires?append=places_left',
+      drawerTerritoireId: null,
+      drawerTerritoire: null
     }
   },
   methods: {

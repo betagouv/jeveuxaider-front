@@ -263,7 +263,7 @@ export default {
     Details
   },
   async asyncData ({ $axios, params, error, store }) {
-    const { data: mission } = await $axios.get(`/mission/${params.id}`).catch((err) => {
+    const { data: mission } = await $axios.get(`/missions/${params.id}`).catch((err) => {
       return error({ statusCode: err.response.status, message: err.response.statusText })
     })
 
@@ -321,7 +321,7 @@ export default {
     }
   },
   async fetch () {
-    const { data: missions } = await this.$axios.get(`/mission/${this.mission.id}/similar`)
+    const { data: missions } = await this.$axios.get(`/missions/${this.mission.id}/similar`)
     this.similarMissions = missions
   },
   head () {

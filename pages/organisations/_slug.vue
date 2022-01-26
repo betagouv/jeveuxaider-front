@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <SectionOrganisationEditShortcut
-      :link="`/dashboard/structure/${organisation.id}/edit`"
+      :link="`/dashboard/structures/${organisation.id}/edit`"
     /> -->
 
     <!-- PRESENTATION -->
@@ -132,7 +132,7 @@ export default {
     }
 
     // @TODO: Utiliser plutôt $algoliaApi.getMissions
-    const { data: missions } = await $axios.get(`/structure/${organisation.id}/availableMissions`, {
+    const { data: missions } = await $axios.get(`/structures/${organisation.id}/available-missions`, {
       append: 'domaines',
       itemsPerPage: 6,
       sort: '-places_left'

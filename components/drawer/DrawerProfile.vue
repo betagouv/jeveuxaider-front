@@ -47,8 +47,8 @@
       <Box variant="flat" padding="xs">
         <DescriptionList>
           <DescriptionListItem term="Nom" :description="territoire.name" />
-          <DescriptionListItem term="Statuut" :description="territoire.state | label('territoires_states')" />
-          <DescriptionListItem term="Type" :description="territoire.type | label('territoires_types')" />
+          <DescriptionListItem term="Statut" :description="territoire.state | label('territoire_workflow_states')" />
+          <DescriptionListItem term="Type" :description="territoire.type | label('territoire_types')" />
           <DescriptionListItem term="Département" :description="territoire.department | label('departments')" />
           <DescriptionListItem term="Zips" :description="territoire.zips.join(', ')" />
         </DescriptionList>
@@ -109,7 +109,7 @@ export default {
     if (!this.profileId) {
       return null
     }
-    const { data: profile } = await this.$axios.get(`/profile/${this.profileId}`)
+    const { data: profile } = await this.$axios.get(`/profiles/${this.profileId}`)
     this.profile = profile
     this.$emit('loaded', profile)
   },
