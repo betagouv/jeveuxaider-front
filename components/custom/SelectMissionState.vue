@@ -47,7 +47,7 @@ export default {
         return this.$labels.mission_workflow_states
       }
       const currentState = this.statesByRole.find(option => option.key == this.value)
-      return this.statesByRole.filter(option => currentState.showIf.includes(option.key) || option.key == this.value)
+      return this.statesByRole.filter(option => currentState.from.includes(option.key) || option.key == this.value)
     }
   }
 }
