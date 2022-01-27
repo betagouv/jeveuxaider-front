@@ -248,6 +248,5 @@ export default {
       this.autocompleteOptionsOrga = res.data.data
     }
   }
-
 }
 </script>

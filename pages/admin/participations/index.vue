@@ -27,10 +27,26 @@
           clearable
           @input="changeFilter('filter[state]', $event)"
         />
-        TODO : <br>
-        Organisation Autocomplete <br>
-        Présentiel vs À distance <br>
-        Responsable (pour responsable seulement, selectlist) <br>
+        <InputAutocomplete
+          :value="$route.query['filter[mission.structure.name]']"
+          icon="SearchIcon"
+          name="autocomplete"
+          placeholder="Organisation"
+          :options="autocompleteOptionsOrga"
+          variant="transparent"
+          @fetch-suggestions="onFetchSuggestionsOrga"
+          @selected="changeFilter('filter[mission.structure.name]', $event ? $event.name : undefined)"
+        />
+        <InputAutocomplete
+          :value="$route.query['filter[mission_id]']"
+          icon="SearchIcon"
+          name="autocomplete"
+          placeholder="Mission"
+          :options="autocompleteOptionsMission"
+          variant="transparent"
+          @fetch-suggestions="onFetchSuggestionsMission"
+          @selected="changeFilter('filter[mission_id]', $event ? $event.id : undefined)"
+        />
         <SelectAdvanced
           :key="`department-${$route.fullPath}`"
           name="mission.department"
@@ -48,6 +64,24 @@
           :value="$route.query['filter[mission.zip]']"
           @input="changeFilter('filter[mission.zip]', $event)"
         />
+        <div class="flex space-x-4 mb-2">
+          <Checkbox
+            :key="`type-1-${$route.fullPath}`"
+            :option="{key:'presentiel', label: 'Présentiel'}"
+            :is-checked="$route.query['filter[mission.type]'] && $route.query['filter[mission.type]'].includes('Mission en présentiel')"
+            transparent
+            variant="button"
+            @change="changeFilter('filter[mission.type]', 'Mission en présentiel', true)"
+          />
+          <Checkbox
+            :key="`type-2-${$route.fullPath}`"
+            :option="{key:'distance', label: 'À distance'}"
+            :is-checked="$route.query['filter[mission.type]'] && $route.query['filter[mission.type]'].includes('Mission à distance')"
+            transparent
+            variant="button"
+            @change="changeFilter('filter[mission.type]', 'Mission à distance', true)"
+          />
+        </div>
       </div>
     </template>
     <div>
@@ -175,7 +209,29 @@ export default {
         include: 'conversation.latestMessage'
       },
       drawerParticipationId: null,
-      drawerParticipation: null
+      drawerParticipation: null,
+      autocompleteOptionsOrga: [],
+      autocompleteOptionsMission: []
+    }
+  },
+  methods: {
+    async onFetchSuggestionsOrga (value) {
+      const res = await this.$axios.get('/structures', {
+        params: {
+          'filter[search]': value,
+          pagination: 20
+        }
+      })
+      this.autocompleteOptionsOrga = res.data.data
+    },
+    async onFetchSuggestionsMission (value) {
+      const res = await this.$axios.get('/missions', {
+        params: {
+          'filter[search]': value,
+          pagination: 20
+        }
+      })
+      this.autocompleteOptionsMission = res.data.data
     }
   }
 }
