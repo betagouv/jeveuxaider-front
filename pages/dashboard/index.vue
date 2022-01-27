@@ -94,7 +94,7 @@
             :value="statistics.users_benevoles"
             title="Bénévoles"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.users)} utilisateurs`"
-            link="/admin/users"
+            link="/admin/utilisateurs"
             link-label="Utilisateurs"
           />
         </div>
