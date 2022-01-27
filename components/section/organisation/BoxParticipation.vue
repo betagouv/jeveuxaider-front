@@ -4,7 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         Participations
       </div>
-      <Link :to="`/admin/participations?filter[structure.name]=${organisation.name}`" icon="ChevronRightIcon" class="opacity-25">
+      <Link :to="`/admin/participations?filter[mission.structure.name]=${organisation.name}`" icon="ChevronRightIcon">
         Consulter
       </Link>
     </div>

@@ -18,7 +18,26 @@
 export default {
   methods: {
     onClick () {
-      window.open('https://reserve-civique.crisp.help/fr/', '_blank')
+      let url = 'https://reserve-civique.crisp.help/fr/'
+      switch (this.$store.getters.contextRole) {
+        case 'referent':
+        case 'referent_regional':
+          url = 'https://reserve-civique.crisp.help/fr/category/referent-1j08uk0/'
+          break
+        case 'responsable':
+          url = 'https://reserve-civique.crisp.help/fr/category/organisation-1u4m061/'
+          break
+        case 'responsable_territoire':
+          url = 'https://reserve-civique.crisp.help/fr/category/collectivites-1s01ktj/'
+          break
+        case 'tete_de_reseau':
+          url = 'https://reserve-civique.crisp.help/fr/category/tetes-de-reseau-1pfzcje/'
+          break
+        case 'volontaire':
+          url = 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/'
+          break
+      }
+      window.open(url, '_blank')
     }
   }
 }
