@@ -1,16 +1,6 @@
 <template>
   <div class="container">
-    <Drawer :is-open="Boolean(drawerTerritoireId)" @close="drawerTerritoireId = null">
-      <template #title>
-        <Heading v-if="drawerTerritoire" :level="3" class="text-jva-blue-500">
-          <nuxt-link :to="`/admin/contenus/territoires/${drawerTerritoireId}`" class="hover:underline" target="_blank">
-            {{ drawerTerritoire.name }}
-          </nuxt-link>
-        </Heading>
-      </template>
-      <DrawerTerritoire :territoire-id="drawerTerritoireId" @loaded="drawerTerritoire = $event" />
-    </Drawer>
-
+    <DrawerTerritoire :territoire-id="drawerTerritoireId" @close="drawerTerritoireId = null" />
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },

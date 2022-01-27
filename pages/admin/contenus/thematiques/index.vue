@@ -1,16 +1,6 @@
 <template>
   <div class="container">
-    <Drawer :is-open="Boolean(drawerThematiqueId)" @close="drawerThematiqueId = null">
-      <template #title>
-        <Heading v-if="drawerThematique" :level="3" class="text-jva-blue-500">
-          <nuxt-link :to="drawerThematique.full_url" class="hover:underline" target="_blank">
-            {{ drawerThematique.name }}
-          </nuxt-link>
-        </Heading>
-      </template>
-      <DrawerThematique :thematique-id="drawerThematiqueId" @loaded="drawerThematique = $event" />
-    </Drawer>
-
+    <DrawerThematique :thematique-id="drawerThematiqueId" @close="drawerThematiqueId = null" />
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
@@ -89,18 +79,8 @@ export default {
     return {
       loading: false,
       endpoint: '/thematiques',
-      drawerThematiqueId: null,
-      drawerThematique: null
-    }
-  },
-  methods: {
-    onSubmit () {
-      //
+      drawerThematiqueId: null
     }
   }
 }
 </script>
-
-<style>
-
-</style>

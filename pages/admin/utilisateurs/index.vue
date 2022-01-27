@@ -1,15 +1,6 @@
 <template>
   <ContainerRightSidebar>
-    <Drawer :is-open="Boolean(drawerProfileId)" @close="drawerProfileId = null">
-      <template #title>
-        <Heading v-if="drawerProfile" :level="3" class="text-jva-blue-500">
-          <nuxt-link :to="`/admin/utilisateurs/${drawerProfileId}`" class="hover:underline">
-            {{ drawerProfile.full_name }}
-          </nuxt-link>
-        </Heading>
-      </template>
-      <DrawerProfile :profile-id="drawerProfileId" @loaded="drawerProfile = $event" />
-    </Drawer>
+    <DrawerProfile :profile-id="drawerProfileId" @close="drawerProfileId = null" />
     <template #breadcrumb>
       <Breadcrumb
         :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Utilisateurs' }]"
@@ -188,8 +179,7 @@ export default {
       queryParams: {
         include: 'user,participationsValidatedCount'
       },
-      drawerProfileId: null,
-      drawerProfile: null
+      drawerProfileId: null
     }
   }
 }

@@ -1,37 +1,46 @@
 <template>
-  <div v-if="territoire">
-    <OnlineIndicator :published="territoire.is_published" :link="territoire.full_url" class="mt-2" />
-    <div class="flex gap-2 mt-4">
-      <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}`" class="inline-flex">
-        <Button variant="white" size="sm" icon="EyeIcon">
-          Détails
-        </Button>
-      </nuxt-link>
-      <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}/edit`" class="inline-flex">
-        <Button variant="white" size="sm" icon="PencilIcon">
-          Modifier
-        </Button>
-      </nuxt-link>
-    </div>
+  <Drawer :is-open="Boolean(territoireId)" @close="$emit('close')">
+    <template #title>
+      <Heading v-if="territoire" :level="3" class="text-jva-blue-500">
+        <nuxt-link :to="`/admin/contenus/territoires/${territoireId}`" class="hover:underline" target="_blank">
+          {{ territoire.name }}
+        </nuxt-link>
+      </Heading>
+    </template>
+    <template v-if="territoire">
+      <OnlineIndicator :published="territoire.is_published" :link="territoire.full_url" class="mt-2" />
+      <div class="flex gap-2 mt-4">
+        <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}`" class="inline-flex">
+          <Button variant="white" size="sm" icon="EyeIcon">
+            Détails
+          </Button>
+        </nuxt-link>
+        <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}/edit`" class="inline-flex">
+          <Button variant="white" size="sm" icon="PencilIcon">
+            Modifier
+          </Button>
+        </nuxt-link>
+      </div>
 
-    <div class="border-t -mx-6 my-6" />
-    <div class="text-sm  uppercase font-semibold text-gray-600">
-      Statut du territoire
-    </div>
-    <SelectTerritoireState :value="territoire.state" class="mt-4" @selected="handleChangeState($event)" />
+      <div class="border-t -mx-6 my-6" />
+      <div class="text-sm  uppercase font-semibold text-gray-600">
+        Statut du territoire
+      </div>
+      <SelectTerritoireState :value="territoire.state" class="mt-4" @selected="handleChangeState($event)" />
 
-    <div class="border-t -mx-6 my-6" />
-    <BoxInformations class="mb-8" :territoire="territoire" />
-    <BoxMission class="mb-8" :territoire="territoire" :stats="stats" />
-    <BoxParticipation class="mb-8" :territoire="territoire" :stats="stats" />
-    <!-- <BoxReseau v-if="territoire.reseau" class="mb-8" :mission-template="territoire" /> -->
+      <div class="border-t -mx-6 my-6" />
+      <BoxInformations class="mb-8" :territoire="territoire" />
+      <BoxMission class="mb-8" :territoire="territoire" :stats="stats" />
+      <BoxParticipation class="mb-8" :territoire="territoire" :stats="stats" />
+      <!-- <BoxReseau v-if="territoire.reseau" class="mb-8" :mission-template="territoire" /> -->
 
-    <div class="flex justify-center mb-10">
-      <Link :to="`/admin/contenus/territoires/${territoire.id}`" class="uppercase font-semibold text-sm hover:underline">
-        Détails du territoire
-      </Link>
-    </div>
-  </div>
+      <div class="flex justify-center mb-10">
+        <Link :to="`/admin/contenus/territoires/${territoire.id}`" class="uppercase font-semibold text-sm hover:underline">
+          Détails du territoire
+        </Link>
+      </div>
+    </template>
+  </Drawer>
 </template>
 
 <script>

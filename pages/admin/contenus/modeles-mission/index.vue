@@ -1,16 +1,6 @@
 <template>
   <div class="container">
-    <Drawer :is-open="Boolean(drawerMissionTemplateId)" @close="drawerMissionTemplateId = null">
-      <template #title>
-        <Heading v-if="drawerMissionTemplate" :level="3" class="text-jva-blue-500">
-          <nuxt-link :to="`/admin/contenus/modeles-mission/${drawerMissionTemplateId}/edit`" class="hover:underline" target="_blank">
-            {{ drawerMissionTemplate.title }}
-          </nuxt-link>
-        </Heading>
-      </template>
-      <DrawerMissionTemplate :mission-template-id="drawerMissionTemplateId" @loaded="drawerMissionTemplate = $event" />
-    </Drawer>
-
+    <DrawerMissionTemplate :mission-template-id="drawerMissionTemplateId" @close="drawerMissionTemplateId = null" />
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
@@ -132,18 +122,8 @@ export default {
     return {
       loading: false,
       endpoint: '/mission-templates',
-      drawerMissionTemplateId: null,
-      drawerMissionTemplate: null
-    }
-  },
-  methods: {
-    onSubmit () {
-      //
+      drawerMissionTemplateId: null
     }
   }
 }
 </script>
-
-<style>
-
-</style>

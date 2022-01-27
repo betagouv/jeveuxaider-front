@@ -1,17 +1,11 @@
 <template>
   <div class="container">
-    <Drawer :is-open="Boolean(drawerNotificationKey)" @close="drawerNotificationKey = null">
-      <template #title>
-        <Heading :level="3">
-          {{ drawerNotification.label }}
-        </Heading>
-      </template>
-      <div v-if="drawerNotificationKey" class="text-gray-500 text-sm py-6">
-        {{ drawerNotification.description }}
-      </div>
-      <DrawerNotification :notification-key="drawerNotificationKey" />
-    </Drawer>
-
+    <DrawerNotification
+      :notification-key="drawerNotificationKey"
+      :notification-label="drawerNotification && drawerNotification.label"
+      :notification-description="drawerNotification && drawerNotification.description"
+      @close="drawerNotificationKey = null"
+    />
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
@@ -160,7 +154,3 @@ export default {
   }
 }
 </script>
-
-<style >
-
-</style>

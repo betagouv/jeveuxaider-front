@@ -1,16 +1,6 @@
 <template>
   <div class="container">
-    <Drawer :is-open="Boolean(drawerMissionId)" @close="drawerMissionId = null">
-      <template #title>
-        <Heading v-if="drawerMission" :level="3" class="text-jva-blue-500">
-          <nuxt-link :to="`/admin/missions/${drawerMissionId}`" class="hover:underline">
-            {{ drawerMission.name }}
-          </nuxt-link>
-        </Heading>
-      </template>
-      <DrawerMission :mission-id="drawerMissionId" @loaded="drawerMission = $event" />
-    </Drawer>
-
+    <DrawerMission :mission-id="drawerMissionId" @close="drawerMissionId = null" />
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
@@ -90,15 +80,8 @@ export default {
     return {
       loading: false,
       endpoint: '/missions/prioritaires',
-      drawerMissionId: null,
-      drawerMission: null
+      drawerMissionId: null
     }
-  },
-  methods: {
   }
 }
 </script>
-
-<style>
-
-</style>

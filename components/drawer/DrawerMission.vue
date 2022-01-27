@@ -1,18 +1,26 @@
 <template>
-  <div v-if="mission">
-    <OnlineIndicator :published="hasPageOnline" :link="`/missions-benevolat/${mission.id}/${mission.slug}`" class="mt-2" />
-    <div class="flex gap-2 mt-4">
-      <nuxt-link :to="`/admin/missions/${mission.id}`" class="inline-flex">
-        <Button variant="white" size="sm" icon="EyeIcon">
-          Détails
-        </Button>
-      </nuxt-link>
-      <nuxt-link :to="`/admin/missions/${mission.id}/edit`" class="inline-flex">
-        <Button variant="white" size="sm" icon="PencilIcon">
-          Modifier
-        </Button>
-      </nuxt-link>
-      <!-- <SelectWithDescription
+  <Drawer :is-open="Boolean(missionId)" @close="$emit('close')">
+    <template #title>
+      <Heading v-if="mission" :level="3" class="text-jva-blue-500">
+        <nuxt-link :to="`/admin/missions/${missionId}`" class="hover:underline">
+          {{ mission.name }}
+        </nuxt-link>
+      </Heading>
+    </template>
+    <div v-if="mission">
+      <OnlineIndicator :published="hasPageOnline" :link="`/missions-benevolat/${mission.id}/${mission.slug}`" class="mt-2" />
+      <div class="flex gap-2 mt-4">
+        <nuxt-link :to="`/admin/missions/${mission.id}`" class="inline-flex">
+          <Button variant="white" size="sm" icon="EyeIcon">
+            Détails
+          </Button>
+        </nuxt-link>
+        <nuxt-link :to="`/admin/missions/${mission.id}/edit`" class="inline-flex">
+          <Button variant="white" size="sm" icon="PencilIcon">
+            Modifier
+          </Button>
+        </nuxt-link>
+        <!-- <SelectWithDescription
         v-if="$store.getters.contextRole === 'admin'"
         :options="[
           {key: true, label: 'Prioritaire', description: 'Passer en prioritaire pour l\'afficher sur la page d\'accueil'},
@@ -22,28 +30,29 @@
         size="sm"
         @selected="handleChangePriority($event)"
       /> -->
-      <Button v-if="$store.getters.contextRole === 'responsable'" class="opacity-25" variant="white" size="sm" icon="DuplicateIcon">
-        Dupliquer
-      </Button>
+        <Button v-if="$store.getters.contextRole === 'responsable'" class="opacity-25" variant="white" size="sm" icon="DuplicateIcon">
+          Dupliquer
+        </Button>
+      </div>
+      <div class="border-t -mx-6 my-6" />
+      <div class="text-sm  uppercase font-semibold text-gray-600">
+        Statut de la mission
+      </div>
+      <SelectMissionState v-if="canEditStatut" :value="mission.state" class="mt-4" @selected="handleChangeState($event)" />
+      <div v-else class="mt-4 font-medium text-gray-800">
+        {{ mission.state }}
+      </div>
+      <div class="border-t -mx-6 my-6" />
+      <BoxPlace class="mb-8" :mission="mission" />
+      <BoxInformations class="mb-8" :mission="mission" />
+      <BoxResponsable class="mb-8" :mission="mission" />
+      <div class="flex justify-center mb-10">
+        <Link :to="`/admin/missions/${mission.id}`" class="uppercase font-semibold text-sm hover:underline">
+          Détails de la mission
+        </Link>
+      </div>
     </div>
-    <div class="border-t -mx-6 my-6" />
-    <div class="text-sm  uppercase font-semibold text-gray-600">
-      Statut de la mission
-    </div>
-    <SelectMissionState v-if="canEditStatut" :value="mission.state" class="mt-4" @selected="handleChangeState($event)" />
-    <div v-else class="mt-4 font-medium text-gray-800">
-      {{ mission.state }}
-    </div>
-    <div class="border-t -mx-6 my-6" />
-    <BoxPlace class="mb-8" :mission="mission" />
-    <BoxInformations class="mb-8" :mission="mission" />
-    <BoxResponsable class="mb-8" :mission="mission" />
-    <div class="flex justify-center mb-10">
-      <Link :to="`/admin/missions/${mission.id}`" class="uppercase font-semibold text-sm hover:underline">
-        Détails de la mission
-      </Link>
-    </div>
-  </div>
+  </Drawer>
 </template>
 
 <script>
@@ -80,7 +89,6 @@ export default {
     }
     const { data } = await this.$axios.get(`/missions/${this.missionId}`)
     this.mission = data
-    this.$emit('loaded', data)
   },
   watch: {
     missionId: '$fetch'

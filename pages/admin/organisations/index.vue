@@ -1,15 +1,6 @@
 <template>
   <ContainerRightSidebar>
-    <Drawer :is-open="Boolean(drawerOrganisationId)" @close="drawerOrganisationId = null">
-      <template #title>
-        <Heading v-if="drawerOrganisation" :level="3" class="text-jva-blue-500">
-          <nuxt-link :to="`/admin/organisations/${drawerOrganisationId}`" class="hover:underline">
-            {{ drawerOrganisation.name }}
-          </nuxt-link>
-        </Heading>
-      </template>
-      <DrawerOrganisation :organisation-id="drawerOrganisationId" @loaded="drawerOrganisation = $event" />
-    </Drawer>
+    <DrawerOrganisation :organisation-id="drawerOrganisationId" @close="drawerOrganisationId = null" />
     <template #breadcrumb>
       <Breadcrumb
         :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Organisations' }]"
@@ -147,8 +138,7 @@ export default {
         append: 'domaines,places_left',
         include: 'tags'
       },
-      drawerOrganisationId: null,
-      drawerOrganisation: null
+      drawerOrganisationId: null
     }
   }
 }

@@ -1,15 +1,6 @@
 <template>
   <ContainerRightSidebar>
-    <Drawer :is-open="Boolean(drawerMissionId)" @close="drawerMissionId = null">
-      <template #title>
-        <Heading v-if="drawerMission" :level="3" class="text-jva-blue-500">
-          <nuxt-link :to="`/admin/missions/${drawerMissionId}`" class="hover:underline">
-            {{ drawerMission.name }}
-          </nuxt-link>
-        </Heading>
-      </template>
-      <DrawerMission :mission-id="drawerMissionId" @loaded="drawerMission = $event" />
-    </Drawer>
+    <DrawerMission :mission-id="drawerMissionId" @close="drawerMissionId = null" />
     <template #breadcrumb>
       <Breadcrumb
         :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Missions' }]"
@@ -233,7 +224,6 @@ export default {
     return {
       endpoint: '/missions',
       drawerMissionId: null,
-      drawerMission: null,
       autocompleteOptionsOrga: []
     }
   },

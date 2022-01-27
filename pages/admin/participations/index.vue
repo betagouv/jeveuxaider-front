@@ -1,15 +1,6 @@
 <template>
   <ContainerRightSidebar>
-    <!-- <Drawer :is-open="Boolean(drawerParticipationId)" @close="drawerParticipationId = null">
-      <template #title>
-        <Heading v-if="drawerParticipation" :level="3" class="text-jva-blue-500">
-          <nuxt-link :to="`/admin/utilisateurs/${drawerParticipationId}`" class="hover:underline">
-            {{ drawerParticipation.full_name }}
-          </nuxt-link>
-        </Heading>
-      </template>
-      <DrawerParticipation :profile-id="drawerParticipationId" @loaded="drawerParticipation = $event" />
-    </Drawer> -->
+    <DrawerParticipation :participation-id="drawerParticipationId" @close="drawerParticipationId = null" />
     <template #breadcrumb>
       <Breadcrumb
         :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Participations' }]"
@@ -184,12 +175,12 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import CardParticipation from '@/components/card/CardParticipation.vue'
-// import DrawerParticipation from '@/components/drawer/DrawerParticipation.vue'
+import DrawerParticipation from '@/components/drawer/DrawerParticipation.vue'
 
 export default {
   components: {
-    CardParticipation
-    // DrawerParticipation
+    CardParticipation,
+    DrawerParticipation
   },
   mixins: [QueryBuilder],
   layout: 'admin',
@@ -209,7 +200,6 @@ export default {
         include: 'conversation.latestMessage'
       },
       drawerParticipationId: null,
-      drawerParticipation: null,
       autocompleteOptionsOrga: [],
       autocompleteOptionsMission: []
     }
