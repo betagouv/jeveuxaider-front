@@ -76,7 +76,7 @@ export default {
   },
   computed: {
     uselessProperties () {
-      return ['user_id', 'latitude', 'longitude', 'country']
+      return ['user_id', 'latitude', 'longitude', 'country', 'api_id']
     }
   },
   methods: {
@@ -118,12 +118,16 @@ export default {
           return 'Publics Bénéficiaires'
         case 'template_id':
           return 'Template de mission'
+        case 'statut_juridique':
+          return 'Statut juridique'
         case 'city':
           return 'Ville'
         case 'dates_infos':
           return 'Information sur la date'
-        case 'Statut_juridique':
-          return 'Statut juridique'
+        case 'color':
+          return 'Couleur'
+        case 'association_types':
+          return 'Agréments'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },

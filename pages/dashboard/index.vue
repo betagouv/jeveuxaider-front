@@ -76,7 +76,7 @@
           <CardStatistic
             v-if="['admin', 'responsable', 'referent','referent_regional'].includes($store.getters.contextRole)"
             :value="statistics.missions_actives"
-            :title="`${$options.filters.pluralize(statistics.missions_actives, 'Mission active', 'Missions actives', false)}`"
+            :title="`${$options.filters.pluralize(statistics.missions_actives, 'Mission en ligne', 'Missions en ligne', false)}`"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.missions)} ${$options.filters.pluralize(statistics.missions, 'mission', 'missions', false)}`"
             link="/admin/missions"
             link-label="Missions"

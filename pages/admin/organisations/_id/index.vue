@@ -26,7 +26,24 @@
         <Box :style="`background-color: ${organisation.color ? organisation.color : '#B91C1C'}`" class="text-white">
           <DomainsPublicsLinks :organisation="organisation" />
         </Box>
-        <Box>Todo : Siège de l'organisation avec map</Box>
+        <Box :padding="false">
+          <iframe
+            width="100%"
+            height="100%"
+            style="border: 0; min-height: 190px"
+            loading="lazy"
+            allowfullscreen
+            :src="`https://www.google.com/maps/embed/v1/place?key=${$config.google.places}&q=${organisation.full_address}`"
+          />
+          <div class="text-sm px-6 py-4 flex justify-between items-center">
+            <div class="font-bold text-gray-800 uppercase">
+              Siège de l'organisation
+            </div>
+            <div class="text-gray-500">
+              📍 {{ organisation.full_address }}
+            </div>
+          </div>
+        </Box>
       </div>
       <div class="lg:col-span-2 space-y-8">
         <div class="flex items-start justify-between">
@@ -50,9 +67,67 @@
             { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash == '#historique' }
           ]"
         />
-        <div v-if="!$route.hash" class="space-y-8">
-          <BoxMission class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
-          <BoxParticipation class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
+        <div v-if="!$route.hash">
+          <div class="mb-8">
+            <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
+              Votre activité en chiffres
+            </div>
+            <Box variant="flat" :padding="!Boolean(organisationStats) ? 'lg' : false" :loading="!Boolean(organisationStats)" loading-text="Récupération de l'activité ..." class="!border-none">
+              <div v-if="organisationStats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+                <CardStatistic
+                  :value="organisationStats.places_left"
+                  :title="`${$options.filters.pluralize(organisationStats.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
+                />
+                <CardStatistic
+                  :value="`${organisationStats.places_occupation_rate}%`"
+                  :gauge-percentage="organisationStats.places_occupation_rate"
+                  title="Taux d'occupation"
+                />
+                <CardStatistic
+                  :value="organisationStats.missions_available"
+                  :title="`${$options.filters.pluralize(organisationStats.missions_available, 'Missions en ligne', 'Missions en ligne', false)}`"
+                  :subtitle="`sur ${$options.filters.formatNumber(organisationStats.missions_total)} ${$options.filters.pluralize(organisationStats.missions_total, 'mission', 'missions', false)}`"
+                  :link="`/admin/missions?filter[structure.name]=${organisation.name}`"
+                  link-label="Missions"
+                />
+                <CardStatistic
+                  :value="organisationStats.participations_state['Validée']"
+                  :title="`${$options.filters.pluralize(organisationStats.participations_state['Validée'], 'Participation validée', 'Participations validées', false)}`"
+                  :subtitle="`sur ${$options.filters.formatNumber(organisationStats.participations_total)} ${$options.filters.pluralize(organisationStats.participations_total, 'candidature', 'candidatures', false)}`"
+                  :link="`/admin/participations?filter[mission.structure.name]=${organisation.name}`"
+                  link-label="Participations"
+                />
+              </div>
+            </Box>
+          </div>
+          <div v-if="organisationStats && organisationStats.response_ratio" class="mb-8">
+            <div class="px-2 mb-2 text-sm uppercase font-semibold text-gray-600">
+              Vos échanges avec les bénévoles
+            </div>
+            <Box variant="flat" :padding="!Boolean(organisationStats) ? 'lg' : false" :loading="!Boolean(organisationStats)" loading-text="Récupération de l'activité ..." class="!border-none">
+              <div v-if="organisationStats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+                <CardStatistic
+                  :value="`${organisationStats.response_ratio}%`"
+                  title="Taux de réponse"
+                  subtitle="aux participations"
+                />
+                <CardStatistic
+                  :value="`${(organisationStats.response_time / (60 * 60 * 24)).toFixed(0)} jours`"
+                  title="Temps de réponse"
+                  subtitle="aux participations"
+                />
+                <div class="col-span-2 bg-white">
+                  <CardStatistic
+                    :value="`${organisationStats.score_response_time}/100`"
+                    title="Score de réactivité"
+                  />
+                  <div class="text-xs text-gray-700 font-medium text-center px-12 -mt-3 mb-4">
+                    🏆 Améliorez votre visibilité sur la plateforme<br> en améliorant votre réactivité ›
+                  </div>
+                </div>
+              </div>
+            </Box>
+          </div>
         </div>
         <History v-if="$route.hash == '#historique'" :model-id="organisation.id" model-type="structure" />
         <template v-if="$route.hash == '#membres'">
@@ -64,6 +139,9 @@
                 <DescriptionListItem term="Mobile" :description="responsable.mobile" />
               </DescriptionList>
             </Box>
+            <Button variant="white" class="opacity-50">
+              <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
+            </Button>
           </div>
         </template>
       </div>
@@ -76,9 +154,8 @@ import History from '@/components/section/History.vue'
 import MixinOrganisation from '@/mixins/organisation'
 import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks.vue'
 import BoxInformations from '@/components/section/organisation/BoxInformations'
-import BoxMission from '@/components/section/organisation/BoxMission'
-import BoxParticipation from '@/components/section/organisation/BoxParticipation'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
+import CardStatistic from '@/components/card/CardStatistic'
 
 export default {
   components: {
@@ -86,8 +163,7 @@ export default {
     DomainsPublicsLinks,
     OnlineIndicator,
     BoxInformations,
-    BoxMission,
-    BoxParticipation
+    CardStatistic
   },
   mixins: [MixinOrganisation],
   layout: 'admin',

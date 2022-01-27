@@ -119,7 +119,7 @@ export default {
   mixins: [MixinOrganisation],
   layout: 'default-without-header',
   async asyncData ({ $axios, params, error, redirect }) {
-    const { data: organisation } = await $axios.get(`/association/${params.slug}`).catch((err) => {
+    const { data: organisation } = await $axios.get(`/associations/${params.slug}`).catch((err) => {
       return error({ statusCode: err.response.status, message: err.response.statusText })
     })
 

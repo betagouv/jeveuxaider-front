@@ -8,16 +8,6 @@
     </template>
     <template #sidebar>
       <div class="flex flex-col gap-y-4 sticky top-8">
-        <SelectAdvanced
-          :key="`state-${$route.fullPath}`"
-          name="state"
-          placeholder="Statut"
-          :options="$labels.participation_workflow_states"
-          :value="$route.query['filter[state]']"
-          variant="transparent"
-          clearable
-          @input="changeFilter('filter[state]', $event)"
-        />
         <InputAutocomplete
           :value="$route.query['filter[mission.structure.name]']"
           icon="SearchIcon"
@@ -37,6 +27,16 @@
           variant="transparent"
           @fetch-suggestions="onFetchSuggestionsMission"
           @selected="changeFilter('filter[mission_id]', $event ? $event.id : undefined)"
+        />
+        <SelectAdvanced
+          :key="`state-${$route.fullPath}`"
+          name="state"
+          placeholder="Statut"
+          :options="$labels.participation_workflow_states"
+          :value="$route.query['filter[state]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[state]', $event)"
         />
         <SelectAdvanced
           :key="`department-${$route.fullPath}`"
