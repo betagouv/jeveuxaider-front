@@ -4,10 +4,10 @@
       Responsable
     </div>
     <Box variant="flat" padding="xs">
-      <DescriptionList v-if="mission.responsable">
-        <DescriptionListItem term="Nom" :description="mission.responsable.full_name" />
-        <DescriptionListItem term="E-mail" :description="mission.responsable.email" />
-        <DescriptionListItem term="Mobile" :description="mission.responsable.mobile" />
+      <DescriptionList v-if="profile">
+        <DescriptionListItem term="Nom" :description="profile.full_name" />
+        <DescriptionListItem term="E-mail" :description="profile.email" />
+        <DescriptionListItem term="Mobile" :description="profile.mobile" />
       </DescriptionList>
     </Box>
   </div>
@@ -16,7 +16,7 @@
 <script>
 export default {
   props: {
-    mission: {
+    profile: {
       type: Object,
       required: true
     }

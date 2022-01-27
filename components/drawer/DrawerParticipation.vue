@@ -1,33 +1,49 @@
 <template>
   <Drawer :is-open="Boolean(participationId)" @close="$emit('close')">
     <template #title>
-      <Heading v-if="participation" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/utilisateurs/${participationId}`" class="hover:underline">
-          {{ participation.id }}
-        </nuxt-link>
-      </Heading>
+      <div v-if="participation" class="text-xl">
+        Participation de <br>
+        <span class="font-extrabold">{{ participation.profile.full_name }}</span>
+      </div>
     </template>
-    <div v-if="participation">
-      <div class="mt-1 text-gray-500">
-        {{ participation.profile.full_name }}
-      </div>
-      <div class="border-t -mx-6 my-6" />
-      <div class="text-sm  uppercase font-semibold text-gray-600">
-        Statut de la participation
-      </div>
-      <!-- <SelectMissionState v-if="canEditStatut" :value="participation.state" class="mt-4" @selected="handleChangeState($event)" /> -->
-      <div class="mt-4 font-medium text-gray-800">
+    <template v-if="participation">
+      <SelectParticipationState v-if="canEditStatut" :value="participation.state" class="mt-4" @selected="handleChangeState($event)" />
+      <div v-else class="mt-4 font-medium text-gray-800">
         {{ participation.state }}
       </div>
-    </div>
+      <div class="border-t -mx-6 my-6" />
+      <div class="text-jva-blue-500 flex items-center text-sm font-bold">
+        <ChatAltIcon class="h-4 w-4 mr-4" /> Accéder à la messagerie
+      </div>
+      <div class="border-t -mx-6 my-6" />
+      <BoxInformationsProfile class="mb-8" :profile="participation.profile" title="Bénévole" :show-action="false" />
+      <BoxInformationsMission class="mb-8" :mission="participation.mission" title="Mission">
+        <template #action>
+          <Link :to="`/admin/missions/${participation.mission.id}`" icon="ChevronRightIcon">
+            Consulter
+          </Link>
+        </template>
+      </BoxInformationsMission>
+      <BoxResponsable :profile="participation.mission.responsable" />
+    </template>
   </Drawer>
 </template>
 
 <script>
+import SelectParticipationState from '@/components/custom/SelectParticipationState'
+import MixinParticipation from '@/mixins/participation'
+import BoxInformationsProfile from '@/components/section/profile/BoxInformations'
+import BoxInformationsMission from '@/components/section/mission/BoxInformations'
+import BoxResponsable from '@/components/section/mission/BoxResponsable'
 
 export default {
   components: {
+    SelectParticipationState,
+    BoxInformationsProfile,
+    BoxInformationsMission,
+    BoxResponsable
   },
+  mixins: [MixinParticipation],
   props: {
     participationId: {
       type: Number,
@@ -49,6 +65,13 @@ export default {
   },
   watch: {
     participationId: '$fetch'
+  },
+  methods: {
+    async handleChangeState (option) {
+      this.participation.state = option.key
+      await this.$axios.put(`/participations/${this.participation.id}`, this.participation)
+      this.$fetch()
+    }
   }
 }
 </script>

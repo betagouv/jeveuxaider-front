@@ -45,7 +45,7 @@
       <div class="border-t -mx-6 my-6" />
       <BoxPlace class="mb-8" :mission="mission" />
       <BoxInformations class="mb-8" :mission="mission" />
-      <BoxResponsable class="mb-8" :mission="mission" />
+      <BoxResponsable class="mb-8" :profile="mission.responsable" />
       <div class="flex justify-center mb-10">
         <Link :to="`/admin/missions/${mission.id}`" class="uppercase font-semibold text-sm hover:underline">
           Détails de la mission

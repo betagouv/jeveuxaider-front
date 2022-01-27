@@ -1,8 +1,12 @@
 <template>
   <div>
-    <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
-      Informations
+    <div class="text-sm flex justify-between px-2 mb-2 items-center">
+      <div class="uppercase font-semibold text-gray-600">
+        {{ title }}
+      </div>
+      <slot name="action" />
     </div>
+
     <Box variant="flat" padding="xs">
       <DescriptionList>
         <DescriptionListItem term="Crée le" :description="$dayjs(mission.created_at).format('D MMMM YYYY à HH:mm')" />
@@ -27,6 +31,10 @@ export default {
     mission: {
       type: Object,
       required: true
+    },
+    title: {
+      type: String,
+      default: 'Informations'
     }
   }
 }

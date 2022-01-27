@@ -2,11 +2,13 @@
   <div>
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
       <div class="uppercase font-semibold text-gray-600">
-        Profil
+        {{ title }}
       </div>
-      <Link to="/profile/edit" icon="ChevronRightIcon">
-        Modifier
-      </Link>
+      <slot v-if="showAction" name="action">
+        <Link to="/profile/edit" icon="ChevronRightIcon">
+          Modifier
+        </Link>
+      </slot>
     </div>
     <Box variant="flat" padding="xs">
       <DescriptionList>
@@ -39,6 +41,14 @@ export default {
     profile: {
       type: Object,
       required: true
+    },
+    title: {
+      type: String,
+      default: 'Profil'
+    },
+    showAction: {
+      type: Boolean,
+      default: true
     }
   }
 }

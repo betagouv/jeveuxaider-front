@@ -178,11 +178,11 @@ const labels = {
     { key: 'Désinscrite', label: 'Désinscrite', description: "L'organisation s'est désinscrite. Sa page est hors ligne ainsi que ses missions." }
   ],
   participation_workflow_states: [
-    { key: 'En attente de validation', label: 'En attente de validation' },
-    { key: 'En cours de traitement', label: 'En cours de traitement' },
-    { key: 'Validée', label: 'Validée' },
-    { key: 'Annulée', label: 'Annulée' },
-    { key: 'Refusée', label: 'Refusée' }
+    { key: 'En attente de validation', label: 'En attente de validation', description: 'Le bénévole vient de candidater. Il est en attente de validation par le responsable de la mission.' },
+    { key: 'En cours de traitement', label: 'En cours de traitement', from: ['En attente de validation'], description: 'Le responsable vérifie des informations avant de valider la participation.' },
+    { key: 'Validée', label: 'Validée', from: ['En cours de traitement', 'En attente de validation'], description: 'La participation est validée, elle va avoir lieu ou a déjà été faite.' },
+    { key: 'Annulée', label: 'Annulée', from: ['En cours de traitement', 'En attente de validation'], description: 'La participation est annulée si la mission a été annulée.' },
+    { key: 'Refusée', label: 'Refusée', from: ['En cours de traitement', 'En attente de validation', 'Validée'], description: 'Le profil du bénévole ne correspond pas à la mission.' }
   ],
   time_period: [
     { key: 'week', label: 'semaine' },

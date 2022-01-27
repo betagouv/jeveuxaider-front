@@ -87,22 +87,14 @@
 </template>
 
 <script>
-// import SelectMissionState from '@/components/custom/SelectMissionState'
-// import BoxPlace from '@/components/section/mission/BoxPlace'
-// import BoxResponsable from '@/components/section/mission/BoxResponsable'
 import BoxInformations from '@/components/section/profile/BoxInformations'
 import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
-// import MixinMission from '@/mixins/mission'
 
 export default {
   components: {
-    // SelectMissionState,
-    // BoxPlace,
-    // BoxResponsable,
     BoxInformations,
     BoxDisponibilities
   },
-  // mixins: [MixinMission],
   props: {
     profileId: {
       type: Number,
