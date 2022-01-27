@@ -1,6 +1,6 @@
 <template>
   <Box padding="xs" class="!shadow-sm hover:!shadow-md cursor-pointer grid grid-cols-3">
-    <div v-if="participation.mission" class="col-span-1 pr-4">
+    <div v-if="participation.mission" class="col-span-1 pr-4 py-2">
       <div class="truncate text-sm text-gray-600">
         <span>📍</span>
 
@@ -26,7 +26,7 @@
           À distance
         </template>
       </div>
-      <div class="font-extrabold line-clamp-3 mt-2 text-gray-900">
+      <div class="font-extrabold line-clamp-3 mt-2 text-gray-900 leading-tight">
         {{ participation.mission.name }}
       </div>
       <div class="mt-4 pt-4 border-t border-dashed text-sm flex">
@@ -41,7 +41,7 @@
     <div v-else>
       La mission n'existe plus
     </div>
-    <div class="col-span-2 border-l -my-4 py-4 pl-6">
+    <div class="col-span-2 border-l -my-4 py-6 pl-6">
       <div class="flex">
         <div>
           <div class="font-bold">
