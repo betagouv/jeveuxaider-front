@@ -27,7 +27,15 @@ export default {
           { name: 'Thématiques', href: '/admin/contenus/thematiques' },
           { name: 'Modèles de mission', href: '/admin/contenus/modeles-mission' },
           { name: 'Territoires', href: '/admin/contenus/territoires' },
-          { name: 'Compétences', href: '/admin/contenus/competences' }
+          { name: 'Reseaux', href: '/admin/contenus/reseaux' }
+        ]
+      },
+      {
+        name: 'taxonomies',
+        label: 'Taxonomies',
+        links: [
+          { name: 'Compétences', href: '/admin/taxonomies/competences' },
+          { name: 'Tags', href: '/admin/taxonomies/tags' }
         ]
       },
       {

@@ -4,7 +4,7 @@
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
         { label: 'Contenus' },
-        { label: 'Releases' }
+        { label: 'Réseaux' }
       ]"
     />
 
@@ -16,9 +16,9 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-12">
-          <SectionHeading title="Releases" />
+          <SectionHeading title="Réseaux" />
           <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: Listing des Releases
+            @TODO: Listing des réseaux
           </div>
         </div>
       </div>
@@ -34,7 +34,6 @@ export default {
   components: {
     MenuAdmin
   },
-
   mixins: [FormErrors],
   middleware: 'admin',
   async asyncData ({ $axios }) {
