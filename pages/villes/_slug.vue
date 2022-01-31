@@ -11,15 +11,17 @@ export default {
   },
   async asyncData ({ $axios, params, error, store }) {
     const { data: territoire } = await await $axios.get(`/territoires/${params.slug}`)
-    if (
-      store.getters.contextRole !== 'admin' && (
-        !territoire ||
-      !territoire.is_published ||
-      territoire.state !== 'validated' ||
-      territoire.type !== 'city')
-    ) {
-      return error({ statusCode: 404 })
-    }
+
+    // Refactoriser avec 404 et 403
+    // if (
+    //   store.getters.contextRole !== 'admin' && (
+    //     !territoire ||
+    //   !territoire.is_published ||
+    //   territoire.state !== 'validated' ||
+    //   territoire.type !== 'city')
+    // ) {
+    //   return error({ statusCode: 404 })
+    // }
 
     return {
       territoire

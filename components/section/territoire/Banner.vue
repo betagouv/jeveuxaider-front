@@ -9,7 +9,7 @@
     <div class="banner-gradient absolute inset-0" style="" />
 
     <div class="relative">
-      <Breadcrumb theme="transparent" :items="breadcrumb" class="px-4" />
+      <Breadcrumb v-if="showBreadcrumb" theme="transparent" :items="breadcrumb" class="px-4" />
 
       <hr class="opacity-25">
 
@@ -36,7 +36,7 @@
             </h2>
           </div>
 
-          <div class="flex-none rounded-2xl w-full sm:w-auto overflow-hidden">
+          <div v-if="showSearch" class="flex-none rounded-2xl w-full sm:w-auto overflow-hidden">
             <div class="bg-white px-8 sm:px-20 py-6">
               <p
                 class="font-extrabold text-[1.75rem] text-center leading-tight tracking-[-1px]"
@@ -82,6 +82,14 @@ export default {
     territoire: {
       type: Object,
       required: true
+    },
+    showBreadcrumb: {
+      type: Boolean,
+      default: true
+    },
+    showSearch: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
