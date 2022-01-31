@@ -32,7 +32,8 @@ export default {
     '~/plugins/yup.js',
     '~/plugins/vue-filters.js',
     { src: '~/plugins/vue-libraries.js', mode: 'client' },
-    '@/plugins/numeral.js'
+    '@/plugins/numeral.js',
+    '@/plugins/marked.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -77,6 +78,10 @@ export default {
     oauth: {
       clientId: process.env.OAUTH_CLIENT_ID,
       clientSecret: process.env.OAUTH_CLIENT_SECRET
+    },
+    strapi: {
+      url: process.env.STRAPI_URL,
+      token: process.env.STRAPI_TOKEN
     },
     blog: {
       restApiUrl: process.env.BLOG_REST_API_URL,
