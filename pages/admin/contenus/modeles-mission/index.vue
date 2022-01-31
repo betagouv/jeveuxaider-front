@@ -79,7 +79,7 @@
           </div>
 
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <CardMissionTemplate
+            <Card
               v-for="missionTemplate in queryResult.data"
               :key="missionTemplate.id"
               :title="missionTemplate.title"
@@ -88,7 +88,22 @@
               :description="missionTemplate.subtitle"
               :image-url="missionTemplate.photo && missionTemplate.photo.large"
               @click.native="drawerMissionTemplateId = missionTemplate.id"
-            />
+            >
+              <template #badges>
+                <div class="mb-2">
+                  <Badge class="" :color="missionTemplate.reseau ? 'gray' : 'gray-light'">
+                    {{ missionTemplate.reseau ? missionTemplate.reseau.name : 'Disponible pour tous' }}
+                  </Badge>
+                </div>
+              </template>
+              <template #footer>
+                <div
+                  class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
+                >
+                  {{ $options.filters.formatNumber(missionTemplate.missions_count) }} {{ $options.filters.pluralize(missionTemplate.missions_count, 'mission', 'missions', false) }}
+                </div>
+              </template>
+            </Card>
           </div>
 
           <Pagination
@@ -106,13 +121,13 @@
 <script>
 import MenuAdmin from '@/components/section/admin/MenuAdmin'
 import QueryBuilder from '@/mixins/query-builder'
-import CardMissionTemplate from '@/components/card/CardMissionTemplate'
+import Card from '@/components/card/Card'
 import DrawerMissionTemplate from '@/components/drawer/DrawerMissionTemplate'
 
 export default {
   components: {
     MenuAdmin,
-    CardMissionTemplate,
+    Card,
     DrawerMissionTemplate
   },
   mixins: [QueryBuilder],

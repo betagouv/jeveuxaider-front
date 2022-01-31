@@ -7,7 +7,7 @@
       class="text-white px-3 py-1 inline-block mx-auto z-10 font-medium text-xs rounded-b"
       :class="{
         'bg-gray-500': ['draft'].includes(stateStyle),
-        'bg-jva-red-500': ['refused'].includes(stateStyle),
+        'bg-jva-red-500': ['error','refused'].includes(stateStyle),
         'bg-jva-green-500': ['success','validated'].includes(stateStyle),
         'bg-jva-orange-500': ['warning','waiting'].includes(stateStyle),
       }"
@@ -16,14 +16,16 @@
     </div>
     <img class="object-cover h-36 w-full mt-[-24px]" :src="imageUrl">
     <div class="px-6 py-4 flex-1">
+      <slot name="badges" />
       <div class="font-extrabold mb-2 tracking-tight text-lg line-clamp-4">
         {{ title }}
       </div>
       <p class="text-gray-500 text-sm">
         {{ description }}
       </p>
+      <slot />
     </div>
-    <slot />
+    <slot name="footer" />
   </div>
 </template>
 

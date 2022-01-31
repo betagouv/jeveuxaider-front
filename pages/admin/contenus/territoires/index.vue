@@ -89,11 +89,13 @@
               :image-url="territoire.photo && territoire.photo.large"
               @click.native="drawerTerritoireId = territoire.id"
             >
-              <div
-                class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
-              >
-                {{ $options.filters.formatNumber(territoire.places_left) }} {{ $options.filters.pluralize(territoire.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
-              </div>
+              <template #footer>
+                <div
+                  class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
+                >
+                  {{ $options.filters.formatNumber(territoire.places_left) }} {{ $options.filters.pluralize(territoire.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
+                </div>
+              </template>
             </Card>
           </div>
 

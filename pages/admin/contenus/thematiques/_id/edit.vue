@@ -36,7 +36,7 @@ export default {
   layout: 'admin',
   middleware: 'admin',
   async asyncData ({ $axios, params, error, store }) {
-    const { data: thematique } = await $axios.get(`/thematique/${params.id}`)
+    const { data: thematique } = await $axios.get(`/thematiques/${params.id}`)
     if (!thematique) {
       return error({ statusCode: 404 })
     }

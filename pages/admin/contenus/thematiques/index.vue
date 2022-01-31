@@ -39,13 +39,25 @@
           />
 
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <CardThematique
+            <Card
               v-for="thematique in queryResult.data"
               :key="thematique.id"
-              class="cursor-pointer"
-              :thematique="thematique"
+              :title="thematique.name"
+              :state-style="thematique.published ? 'success' : 'error'"
+              :state-text="thematique.published ? 'En ligne' : 'Hors ligne'"
+              :description="thematique.title"
+              :image-url="thematique.photo && thematique.photo.large"
               @click.native="drawerThematiqueId = thematique.id"
-            />
+            >
+              <template #footer>
+                <div
+                  class="border-t text-gray-900 font-semibold  text-sm text-center py-4 opacity-25"
+                >
+                  @TODO
+                  {{ $options.filters.formatNumber(thematique.missions_count) }} {{ $options.filters.pluralize(thematique.missions_count, 'mission', 'missions', false) }}
+                </div>
+              </template>
+            </Card>
           </div>
 
           <Pagination
@@ -63,13 +75,13 @@
 <script>
 import MenuAdmin from '@/components/section/admin/MenuAdmin'
 import QueryBuilder from '@/mixins/query-builder'
-import CardThematique from '@/components/card/CardThematique'
+import Card from '@/components/card/Card'
 import DrawerThematique from '@/components/drawer/DrawerThematique'
 
 export default {
   components: {
     MenuAdmin,
-    CardThematique,
+    Card,
     DrawerThematique
   },
   mixins: [QueryBuilder],
