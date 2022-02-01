@@ -32,8 +32,8 @@ export default {
     '~/plugins/yup.js',
     '~/plugins/vue-filters.js',
     { src: '~/plugins/vue-libraries.js', mode: 'client' },
-    '@/plugins/numeral.js',
-    '@/plugins/marked.js'
+    '~/plugins/numeral.js',
+    '~/plugins/marked.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -54,6 +54,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/strapi',
     '@nuxtjs/dayjs',
     'nuxt-lazy-load',
     'vue-scrollto/nuxt',
@@ -80,7 +81,7 @@ export default {
       clientSecret: process.env.OAUTH_CLIENT_SECRET
     },
     strapi: {
-      url: process.env.STRAPI_URL,
+      url: `${process.env.STRAPI_URL}`,
       token: process.env.STRAPI_TOKEN
     },
     blog: {

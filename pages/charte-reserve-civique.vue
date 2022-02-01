@@ -1,46 +1,46 @@
 <template>
   <div class="py-12">
-    <div class="container">
-      <Heading as="h1" :level="1">
-        {{ page.title }}
-      </Heading>
-      <Box class="mt-12">
-        <TextFormatted :text="page.description" class="text-gray-800 wysiwyg-field" />
-      </Box>
+    <div v-if="page" class="container">
+      <div class="max-w-4xl mx-auto">
+        <Heading as="h1" :level="1">
+          {{ page.attributes.name }}
+        </Heading>
+        <div class="text-lg mt-12">
+          {{ page.attributes.subtitle }}
+        </div>
+        <Box class="mt-12">
+          <template v-for="component in page.attributes.zone">
+            <template v-if="component.__component === 'fields.rich-text'">
+              <TextFormatted :key="component.id" :text="$options.filters.marked(component.body)" />
+            </template>
+          </template>
+        </Box>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import MixinStrapi from '@/mixins/strapi'
 export default {
-  async asyncData ({ $axios }) {
-    const { data: page } = await $axios.get('/page/4')
+  mixins: [MixinStrapi],
+  async asyncData ({ $config, $strapi }) {
+    $strapi.setToken($config.strapi.token)
+    const response = await $strapi.find('api/pages',
+      {
+        'slug[$eq]': 'charte-reserve-civique',
+        'populate[zone][populate]': '*',
+        'populate[seo][populate][image][populate]': '*'
+
+      })
+
     return {
-      page
+      page: response.data.length ? response.data[0] : null
     }
   },
   head () {
-    return {
-      title: 'Charte de la Réserve Civique | JeVeuxAider.gouv.fr',
-      link: [
-        {
-          rel: 'canonical',
-          href: 'https://www.jeveuxaider.gouv.fr/charte-reserve-civique'
-        }
-      ],
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content:
-            "La plateforme JeVeuxAider.gouv.fr est un service public numérique destiné à organiser l'engagement civique bénévole en France. Elle permet à toute personne âgée de plus de 16 ans de s’engager dans des missions de bénévolat."
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: '/images/share-image.jpg'
-        }
-      ]
+    if (this.strapiSeoHead) {
+      return this.strapiSeoHead
     }
   }
 }

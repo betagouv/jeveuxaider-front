@@ -21,45 +21,27 @@
 </template>
 
 <script>
-import axios from 'axios'
-
+import MixinStrapi from '@/mixins/strapi'
 export default {
-  async asyncData ({ $config }) {
-    const { data: page } = await axios.get(
-      `${$config.strapi.url}/api/pages?filters[slug][$eq]=mentions-legales&populate[zone][populate]=*&populate[seo][populate][image][populate]=*`, {
-        headers: {
-          Authorization: `Bearer ${$config.strapi.token}`
-        }
-      }
-    )
-    console.log('page', page)
+  mixins: [MixinStrapi],
+  async asyncData ({ $config, $strapi }) {
+    $strapi.setToken($config.strapi.token)
+    const response = await $strapi.find('api/pages',
+      {
+        'filters[slug][$eq]': 'mentions-legales',
+        'populate[zone][populate]': '*',
+        'populate[seo][populate][image][populate]': '*'
+
+      })
+
     return {
-      page: page.data.length ? page.data[0] : null
+      page: response.data.length ? response.data[0] : null
+    }
+  },
+  head () {
+    if (this.strapiSeoHead) {
+      return this.strapiSeoHead
     }
   }
-  // head () {
-  //   return {
-  //     title: 'Mentions légales | JeVeuxAider.gouv.fr',
-  //     link: [
-  //       {
-  //         rel: 'canonical',
-  //         href: 'https://www.jeveuxaider.gouv.fr/mentions-legales'
-  //       }
-  //     ],
-  //     meta: [
-  //       {
-  //         hid: 'description',
-  //         name: 'description',
-  //         content:
-  //           "La plateforme JeVeuxAider.gouv.fr est un service public numérique destiné à organiser l'engagement civique bénévole en France. Elle permet à toute personne âgée de plus de 16 ans de s’engager dans des missions de bénévolat."
-  //       },
-  //       {
-  //         hid: 'og:image',
-  //         property: 'og:image',
-  //         content: '/images/share-image.jpg'
-  //       }
-  //     ]
-  //   }
-  // }
 }
 </script>
