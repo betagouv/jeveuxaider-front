@@ -171,7 +171,8 @@ export default {
         facebook: string().nullable().url(),
         twitter: string().nullable().url(),
         instagram: string().nullable().url(),
-        donation: string().nullable().url()
+        donation: string().nullable().url(),
+        phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v)
       })
     }
   },
