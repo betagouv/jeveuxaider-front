@@ -128,6 +128,26 @@ export default {
           return 'Couleur'
         case 'association_types':
           return 'Agréments'
+        case 'first_name':
+          return 'Prénom'
+        case 'last_name':
+          return 'Nom'
+        case 'reseau_id':
+          return 'Réseau'
+        case 'mobile':
+          return 'Mobile'
+        case 'phone':
+          return 'Téléphone'
+        case 'email':
+          return 'E-mail'
+        case 'can_export_profiles':
+          return 'Peut exporter les profils'
+        case 'tete_de_reseau_id':
+          return 'Tête de réseau'
+        case 'referent_department':
+          return 'Référent départemental'
+        case 'disponibilities':
+          return 'Disponibilités'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },

@@ -45,7 +45,7 @@
           <BoxPlace :mission="mission" />
           <BoxEnChiffre :mission="mission" />
           <BoxInformations :mission="mission" />
-          <BoxResponsable :profile="mission.responsable" />
+          <BoxResponsable v-if="mission.responsable" :profile="mission.responsable" />
         </div>
         <History v-if="$route.hash == '#historique'" :model-id="mission.id" model-type="mission" />
       </div>

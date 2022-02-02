@@ -1,14 +1,15 @@
 <template>
   <div>
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
-      <div class="uppercase font-semibold text-gray-600">
+      <div v-if="showTitle" class="uppercase font-semibold text-gray-600">
         Engagement
       </div>
-      <Link to="/profile/edit" icon="ChevronRightIcon">
+      <Link v-if="showAction" to="/profile/edit" icon="ChevronRightIcon">
         Modifier
       </Link>
     </div>
-    <Box variant="flat" padding="xs">
+    <Box :variant="boxVariant" :padding="boxPadding">
+      <slot name="box-before" />
       <DescriptionList>
         <DescriptionListItem term="Visibilité" :description="profile.is_visible ? 'Visible des organisations' : 'Invisible des organisations'" />
         <DescriptionListItem term="Fréquence" :description="commitmentLabel" />
@@ -24,6 +25,22 @@ export default {
     profile: {
       type: Object,
       required: true
+    },
+    showAction: {
+      type: Boolean,
+      default: true
+    },
+    showTitle: {
+      type: Boolean,
+      default: true
+    },
+    boxVariant: {
+      type: [String],
+      default: 'flat'
+    },
+    boxPadding: {
+      type: [String, Boolean],
+      default: 'xs'
     }
   },
   computed: {

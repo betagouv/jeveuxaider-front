@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
-      <div class="uppercase font-semibold text-gray-600">
+      <div v-if="showTitle" class="uppercase font-semibold text-gray-600">
         {{ title }}
       </div>
       <slot v-if="showAction" name="action">
@@ -10,7 +10,7 @@
         </Link>
       </slot>
     </div>
-    <Box variant="flat" padding="xs">
+    <Box :variant="boxVariant" :padding="boxPadding">
       <DescriptionList>
         <DescriptionListItem term="Crée le" :description="$dayjs(profile.created_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Nom" :description="profile.full_name" />
@@ -49,6 +49,18 @@ export default {
     showAction: {
       type: Boolean,
       default: true
+    },
+    showTitle: {
+      type: Boolean,
+      default: true
+    },
+    boxVariant: {
+      type: [String],
+      default: 'flat'
+    },
+    boxPadding: {
+      type: [String, Boolean],
+      default: 'xs'
     }
   }
 }

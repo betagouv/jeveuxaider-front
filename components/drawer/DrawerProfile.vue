@@ -26,57 +26,9 @@
       <div class="border-t -mx-6 my-6" />
       <BoxDisponibilities class="mb-8" :profile="profile" />
       <BoxInformations class="mb-8" :profile="profile" />
-      <div v-for="organisation in profile.structures" :key="organisation.id" class="mb-8">
-        <div class="text-sm flex justify-between px-2 mb-2 items-center">
-          <div class="uppercase font-semibold text-gray-600">
-            Organisation
-          </div>
-          <Link :to="`/admin/organisations/${organisation.id}`" icon="ChevronRightIcon">
-            Consulter
-          </Link>
-        </div>
-        <Box variant="flat" padding="xs">
-          <DescriptionList>
-            <DescriptionListItem term="Nom" :description="organisation.name" />
-            <DescriptionListItem term="Statut" :description="organisation.state" />
-            <DescriptionListItem term="Type" :description="organisation.statut_juridique | label('structure_legal_status')" />
-          </DescriptionList>
-        </Box>
-      </div>
-      <div v-for="territoire in profile.territoires" :key="territoire.id" class="mb-8">
-        <div class="text-sm flex justify-between px-2 mb-2 items-center">
-          <div class="uppercase font-semibold text-gray-600">
-            Territoire
-          </div>
-          <Link to="/admin/organisations/" icon="ChevronRightIcon" class="opacity-25">
-            Consulter
-          </Link>
-        </div>
-        <Box variant="flat" padding="xs">
-          <DescriptionList>
-            <DescriptionListItem term="Nom" :description="territoire.name" />
-            <DescriptionListItem term="Statut" :description="territoire.state | label('territoire_workflow_states')" />
-            <DescriptionListItem term="Type" :description="territoire.type | label('territoire_types')" />
-            <DescriptionListItem term="Département" :description="territoire.department | label('departments')" />
-            <DescriptionListItem term="Zips" :description="territoire.zips.join(', ')" />
-          </DescriptionList>
-        </Box>
-      </div>
-      <div v-if="profile.tete_de_reseau" class="mb-8">
-        <div class="text-sm flex justify-between px-2 mb-2 items-center">
-          <div class="uppercase font-semibold text-gray-600">
-            Réseau
-          </div>
-          <Link to="/admin/organisations/" icon="ChevronRightIcon" class="opacity-25">
-            Consulter
-          </Link>
-        </div>
-        <Box variant="flat" padding="xs">
-          <DescriptionList>
-            <DescriptionListItem term="Nom" :description="profile.tete_de_reseau.name" />
-          </DescriptionList>
-        </Box>
-      </div>
+      <BoxOrganisations v-if="profile.structures" :structures="profile.structures" class="mb-8" />
+      <BoxTerritoires v-if="profile.territoires" :territoires="profile.territoires" class="mb-8" />
+      <BoxReseaux v-if="profile.tete_de_reseau" :reseau="profile.tete_de_reseau" class="mb-8" />
       <div class="flex justify-center mt-10 mb-10">
         <Link :to="`/admin/utilisateurs/${profile.id}`" class="uppercase font-semibold text-sm hover:underline">
           Détails de l'utilisateur
@@ -89,11 +41,17 @@
 <script>
 import BoxInformations from '@/components/section/profile/BoxInformations'
 import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
+import BoxReseaux from '@/components/section/profile/BoxReseaux'
+import BoxTerritoires from '@/components/section/profile/BoxTerritoires'
+import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
 
 export default {
   components: {
     BoxInformations,
-    BoxDisponibilities
+    BoxDisponibilities,
+    BoxReseaux,
+    BoxTerritoires,
+    BoxOrganisations
   },
   props: {
     profileId: {
