@@ -17,20 +17,27 @@
       </div>
 
       <Box class="mt-6" padding="sm" variant="flat">
-        <div class="text-xl font-extrabold mb-4">
-          {{ mission.name }}
+        <div class="flex justify-between">
+          <div class="text-xl font-extrabold mb-4">
+            {{ mission.name }}
+          </div>
+          <div class="font-bold text-jva-green-500">
+            {{ notifications.total | pluralize('notification envoyée', 'notifications envoyées') }}
+          </div>
         </div>
-        <DescriptionList class="max-w-lg">
-          <DescriptionListItem term="Bénévoles recherchés" :description="`${$options.filters.pluralize(mission.places_left, 'place disponible', 'places disponibles')}`" />
-          <DescriptionListItem term="Type" :description="mission.type" />
-          <DescriptionListItem term="Domaine" :description="mission.domaine && mission.domaine.name.fr" />
-          <DescriptionListItem
-            v-if="mission.publics_beneficiaires"
-            term="Publics bénéf."
-            :description="mission.publics_beneficiaires.map((item) => $options.filters.label(item, 'mission_publics_beneficiaires')).join(', ')"
-          />
-          <DescriptionListItem v-if="mission.department" term="Département" :description="`${mission.department} - ${$options.filters.label(mission.department, 'departments')}`" />
-        </DescriptionList>
+        <div class="flex">
+          <DescriptionList class="max-w-lg">
+            <DescriptionListItem term="Bénévoles recherchés" :description="`${$options.filters.pluralize(mission.places_left, 'place disponible', 'places disponibles')}`" />
+            <DescriptionListItem term="Type" :description="mission.type" />
+            <DescriptionListItem term="Domaine" :description="mission.domaine && mission.domaine.name.fr" />
+            <DescriptionListItem
+              v-if="mission.publics_beneficiaires"
+              term="Publics bénéf."
+              :description="mission.publics_beneficiaires.map((item) => $options.filters.label(item, 'mission_publics_beneficiaires')).join(', ')"
+            />
+            <DescriptionListItem v-if="mission.department" term="Département" :description="`${mission.department} - ${$options.filters.label(mission.department, 'departments')}`" />
+          </DescriptionList>
+        </div>
       </Box>
 
       <div class="flex text-sm items-end gap-x-3 text-gray-500 mt-4">
@@ -102,7 +109,11 @@
           v-for="profile in queryResult.data"
           :key="profile.id"
           :profile="profile"
+          :notifications="notifications.data.filter(
+            (notification) => notification.profile_id == profile.id
+          )"
           @click.native="drawerProfileId = profile.id"
+          @clickedProposerMission="handleProposerMission($event)"
         />
       </div>
 
@@ -158,10 +169,22 @@ export default {
       queryParams: {
         include: 'user,participationsValidatedCount'
       },
-      drawerProfileId: null
+      drawerProfileId: null,
+      notifications: []
     }
   },
+  created () {
+    this.fetchNotificationsBenevoles()
+  },
   methods: {
+    async fetchNotificationsBenevoles () {
+      const { data: notifications } = await this.$axios.get('/notifications-benevoles', {
+        params: {
+          'filter[mission.id]': this.$route.params.id
+        }
+      })
+      this.notifications = notifications
+    },
     handleChangeCommitment (type, value) {
       const commitment = this.$route.query['filter[minimum_commitment]'] ? this.$route.query['filter[minimum_commitment]'].split(',') : []
       if (type == 'duration') {
@@ -170,6 +193,14 @@ export default {
         commitment[1] = value
       }
       this.changeFilter('filter[minimum_commitment]', commitment.join(','))
+    },
+    async handleProposerMission (profile) {
+      await this.$axios.post('/notifications-benevoles', {
+        mission_id: this.mission.id,
+        profile_id: profile.id
+      })
+      this.fetchNotificationsBenevoles()
+      this.$toast.success(`Un e-mail a été envoyé à ${profile.first_name} ${profile.last_name[0]}.`)
     }
   }
 }

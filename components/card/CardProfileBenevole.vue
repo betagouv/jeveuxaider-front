@@ -36,9 +36,18 @@
       {{ profile.disponibilities.map((item) => $options.filters.label(item,'disponibilities')).join(' • ') }}
     </div>
     <div class="text-center text-jva-blue-500 font-bold text-sm border-t mt-4 py-3 bg-cool-gray-100 mt-auto">
-      <div class="cursor-pointer hover:underline">
-        Proposer la mission
-      </div>
+      <template
+        v-if="
+          notifications.filter(
+            (notification) => notification.profile_id == profile.id
+          ).length == 0
+        "
+      >
+        <button class="cursor-pointer hover:underline" @click="$emit('clickedProposerMission', profile);">
+          Proposer la mission
+        </button>
+      </template>
+      <span v-else class="text-jva-green-500 font-semibold">E-mail envoyé !</span>
     </div>
   </div>
 </template>
@@ -50,6 +59,10 @@ export default {
     profile: {
       type: Object,
       required: true
+    },
+    notifications: {
+      type: Array,
+      default: () => []
     }
   }
 }
