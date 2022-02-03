@@ -50,7 +50,6 @@
 import MixinAction from '@/mixins/action'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
-// import CardProfile from '@/components/card/CardProfile'
 import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
 import BoxInformations from '@/components/section/profile/BoxInformations'
 

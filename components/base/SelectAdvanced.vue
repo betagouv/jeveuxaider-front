@@ -13,8 +13,10 @@
         :tabindex="!disabled && '0'"
         class="cursor-pointer px-6 py-3 text-sm rounded-xl block w-full focus:outline-none border border-gray-200 focus:ring-1  bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500"
         :class=" [
-          { 'pl-10': icon, 'bg-transparent': variant == 'transparent'},
-          {'!cursor-not-allowed !bg-gray-100': disabled}
+          { 'pl-10': icon},
+          {'!cursor-not-allowed !bg-gray-100': disabled},
+          {'bg-transparent': variant == 'transparent' && !value},
+          {'bg-white': variant == 'transparent' && value}
         ]"
         autocomplete="off"
         @keydown="!disabled && onKeydown"

@@ -23,8 +23,8 @@
         </div>
       </div>
       <div class="border-t -mx-6 mt-6 mb-4" />
-      <div class="flex justify-center text-sm opacity-25">
-        <Link>
+      <div class="flex justify-center text-sm">
+        <Link :to="`/admin/missions/${mission.id}/trouver-des-benevoles`">
           Trouver des bénévoles
         </Link>
       </div>

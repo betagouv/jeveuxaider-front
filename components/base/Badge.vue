@@ -2,6 +2,7 @@
   <span
     class="inline-flex items-center rounded-full font-semibold max-w-full"
     :class="[
+      {'px-2 py-0.5 text-xs': size == 'xxs'},
       {'px-3 py-1 text-xs': size == 'xs'},
       {'px-4 py-2 text-sm': size == 'sm'},
 
@@ -86,7 +87,7 @@ export default {
     size: {
       type: String,
       default: 'xs',
-      validator: s => ['xs', 'sm'].includes(s)
+      validator: s => ['xxs', 'xs', 'sm'].includes(s)
     },
     color: {
       type: [String, Number],
