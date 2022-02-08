@@ -16,7 +16,7 @@
       <template v-if="initialSource">
         <img
           class="object-cover w-full h-full"
-          :src="initialSource"
+          :srcset="initialSource"
           :alt="fallback"
           data-not-lazy
           @error="onSourceError"

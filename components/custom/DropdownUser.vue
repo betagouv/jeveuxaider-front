@@ -5,8 +5,8 @@
         <Avatar
           v-if="$store.state.auth.user.profile"
           :source="
-            $store.state.auth.user.profile.image
-              ? $store.state.auth.user.profile.image.thumb
+            $store.state.auth.user.profile.avatar
+              ? $store.state.auth.user.profile.avatar.urls.thumb
               : null
           "
           :fallback="$store.state.auth.user.profile.short_name"

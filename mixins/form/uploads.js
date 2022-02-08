@@ -65,14 +65,8 @@ export default {
 
         // Files to be updated.
         this.uploads.update.forEach((upload) => {
-          const form = new FormData()
-          form.append('manipulations', JSON.stringify(upload.manipulations))
           promises.push(
-            this.$axios.put(
-              `/medias/${upload.id}`,
-              form,
-              { 'Content-Type': 'multipart/form-data' }
-            )
+            this.$axios.put(`/medias/${upload.id}`, { manipulations: upload.manipulations })
           )
         })
 
