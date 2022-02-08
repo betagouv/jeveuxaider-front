@@ -4,7 +4,7 @@
       <div class="flex">
         <Avatar
           width="h-12 w-12"
-          :source="profile.image ? profile.image.thumb: null"
+          :source="profile.avatar ? profile.avatar.urls.thumb_medium: null"
           :fallback="profile.short_name"
         />
         <div class="ml-4">

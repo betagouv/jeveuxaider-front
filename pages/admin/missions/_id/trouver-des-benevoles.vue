@@ -132,7 +132,7 @@ import QueryBuilder from '@/mixins/query-builder'
 import CardProfileBenevole from '@/components/card/CardProfileBenevole.vue'
 
 export default {
-  components: { CardProfileBenevole },
+  components: { CardProfileBenevole },
   mixins: [QueryBuilder],
   layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
@@ -167,7 +167,8 @@ export default {
     return {
       endpoint: `/missions/${this.$route.params.id}/benevoles`,
       queryParams: {
-        include: 'user,participationsValidatedCount'
+        include: 'user,participationsValidatedCount,media',
+        append: 'avatar'
       },
       drawerProfileId: null,
       notifications: []

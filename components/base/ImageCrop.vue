@@ -94,7 +94,7 @@ export default {
       files: this.defaultValue ? [this.defaultValue] : [],
       previewSrcset: this.defaultValue?.urls?.formPreview ?? this.defaultValue?.urls?.original,
       originalSrc: this.defaultValue?.urls?.original,
-      manipulations: this.defaultValue?.manipulations ?? {}
+      manipulations: this.defaultValue?.manipulations && this.defaultValue.manipulations.length ? this.defaultValue.manipulations : {}
     }
   },
   methods: {

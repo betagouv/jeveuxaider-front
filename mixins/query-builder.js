@@ -9,7 +9,7 @@ export default {
       params: { ...this.queryParams, ...this.$route.query }
     })
     this.queryResult = data
-    window.scrollTo(0, 0)
+    // window.scrollTo(0, 0)
   },
   fetchOnServer: false,
   watch: {

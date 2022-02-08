@@ -50,7 +50,7 @@
           </FormControl>
           <div>
             <FormLabel html-for="frequence" required>
-              À quelle fréquence souhaitez-vous vous engager ?
+              À quelle fréquence souhaitez-vous vous engager&nbsp;?
             </FormLabel>
             <div class="flex flex-col lg:flex-row gap-2 lg:gap-8 lg:items-center lg:justify-center">
               <div class="lg:w-1/2">

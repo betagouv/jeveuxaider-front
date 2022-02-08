@@ -6,7 +6,7 @@
           v-if="$store.state.auth.user.profile"
           :source="
             $store.state.auth.user.profile.avatar
-              ? $store.state.auth.user.profile.avatar.urls.thumb
+              ? $store.state.auth.user.profile.avatar.urls.thumb_small
               : null
           "
           :fallback="$store.state.auth.user.profile.short_name"
