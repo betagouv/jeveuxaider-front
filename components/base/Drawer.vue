@@ -9,7 +9,7 @@
   >
     <div v-if="isOpen" class="fixed z-30 inset-y-0 right-0 pl-10 flex" role="dialog" aria-modal="true">
       <div aria-hidden="true" class="w-screen max-w-md">
-        <div :style="{ paddingTop: paddingTop + 'px' }" class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll">
+        <div :style="{ paddingTop: paddingTop + 'px' }" class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll overscroll-contain">
           <div class="px-4 sm:px-6">
             <div class="flex items-start justify-between">
               <slot name="title" />

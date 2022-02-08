@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
     <div class="lg:col-span-3 space-y-12">
-      <Box>
+      <Box class="h-full">
         <Heading :level="3" class="mb-8">
           Description de la mission
         </Heading>
@@ -113,7 +113,7 @@
         </div>
       </Box>
     </div>
-    <div class="lg:col-span-2 space-y-8">
+    <div class="lg:col-span-2 space-y-8 flex flex-col">
       <Box padding="sm">
         <Heading :level="3" class="mb-8">
           Paramètres
@@ -276,7 +276,7 @@
           </div>
         </div>
       </Box>
-      <Box padding="sm">
+      <Box padding="sm" class="h-full">
         <Heading :level="3" class="mb-8">
           Compétences recherchées
         </Heading>

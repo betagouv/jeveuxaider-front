@@ -27,7 +27,7 @@
     </div>
     <div
       v-show="showOptions"
-      class="absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-1"
+      class="absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-1 overscroll-contain"
       @focusout="showOptions = false"
     >
       <ul
