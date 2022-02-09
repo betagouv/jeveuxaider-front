@@ -551,11 +551,6 @@ export default {
       ]
     }
   },
-  computed: {
-    isFranceConnectActive () {
-      return !!this.$config.franceConnect
-    }
-  },
   methods: {
     onSubmit () {
       this.formSchema
