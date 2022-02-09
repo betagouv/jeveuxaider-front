@@ -31,6 +31,9 @@
         <DropdownOptionsItem>
           Mes missions
         </DropdownOptionsItem>
+        <DropdownOptionsItem @click.native="$router.push('/parameters')">
+          Mes paramètres
+        </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="$store.dispatch('auth/logout')">
           <span class="text-[#E2011C]">Se déconnecter</span>
         </DropdownOptionsItem>

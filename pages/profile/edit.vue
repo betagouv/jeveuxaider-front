@@ -46,7 +46,7 @@ export default {
         ...profile
       })
       this.$toast.success('Modifications enregistrées')
-      this.$router.push('/profile')
+      // this.$router.push('/profile')
     }
   }
 }
