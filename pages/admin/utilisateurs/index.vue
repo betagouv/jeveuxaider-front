@@ -178,7 +178,8 @@ export default {
     return {
       endpoint: '/profiles',
       queryParams: {
-        include: 'user,participationsValidatedCount'
+        include: 'user,participationsValidatedCount,media',
+        append: 'avatar'
       },
       drawerProfileId: null
     }

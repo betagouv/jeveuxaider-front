@@ -3,9 +3,8 @@
     <div class="px-4 pt-4 flex">
       <div class="flex">
         <Avatar
-          width="h-12 w-12"
-          :source="profile.avatar ? profile.avatar.urls.thumb_medium: null"
-          :fallback="profile.short_name"
+          :image="profile.avatar ? profile.avatar.urls.thumbMedium: null"
+          :initials="profile.short_name"
         />
         <div class="ml-4">
           <div class="font-semibold text-sm text-gray-900">

@@ -6,7 +6,7 @@
           Informations personnels
         </Heading>
         <div class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2">
-          <FormControl label="Portrait" html-for="avatar" class="col-span-2">
+          <FormControl label="Photo de profil" html-for="avatar" class="col-span-2">
             <ImageCrop
               :default-value="form.avatar"
               :preview-width="100"

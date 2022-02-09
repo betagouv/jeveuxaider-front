@@ -2,11 +2,15 @@
   <div
     class="shadow-xl bg-white rounded-xl overflow-hidden safari-fix-scale cursor-pointer hover:shadow-2xl"
   >
-    <div class="relative bg-cover pt-8 pb-4 px-6 text-white" style="background-image: url('/images/profiles/bg-card-profile.jpg')">
+    <div class="relative bg-cover pt-9 pb-5 px-6 text-white" style="background-image: url('/images/profiles/bg-card-profile.jpg')">
       <div class="flex space-x-3 items-center">
-        <div class="h-16 w-16 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0">
-          <UserSolidIcon class="h-8 w-8 text-gray-500" />
-        </div>
+        <Avatar
+          :image="profile.avatar ? profile.avatar.urls.thumbLarge: null"
+          background-color="white"
+          class="shadow-lg"
+          size="md"
+        />
+
         <div>
           <div class="font-extrabold line-clamp-1">
             {{ profile.full_name }}
