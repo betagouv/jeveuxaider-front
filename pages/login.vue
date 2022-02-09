@@ -7,7 +7,7 @@
       data-not-lazy
     >
     <div class="py-12 px-4 relative w-full lg:inset-y-0 text-center z-10">
-      <template v-if="isFranceConnectActive">
+      <template v-if="$store.state.settings.general.france_connect_active">
         <div class="">
           <h2
             class="mt-6 mb-4 md:mb-0 text-center text-3xl font-bold text-white leading-8 px-4"
@@ -38,7 +38,7 @@
       </template>
       <div v-show="!isLoadingFranceConnect">
         <div
-          v-if="isFranceConnectActive"
+          v-if="$store.state.settings.general.france_connect_active"
           class="mt-4 sm:mx-auto sm:w-full sm:max-w-md text-left"
         >
           <div class="py-4 px-4 sm:px-10 text-center">
@@ -206,11 +206,6 @@ export default {
           content: '/images/share-image.jpg'
         }
       ]
-    }
-  },
-  computed: {
-    isFranceConnectActive () {
-      return !!this.$config.franceConnect
     }
   },
   methods: {
