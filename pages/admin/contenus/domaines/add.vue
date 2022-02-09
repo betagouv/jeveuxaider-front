@@ -4,12 +4,12 @@
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
         { label: 'Contenus' },
-        { label: 'Thématiques', link: `/admin/contenus/thematiques` },
-        { label: 'Nouvelle thématique' }
+        { label: 'Domaines', link: `/admin/contenus/domaines` },
+        { label: 'Nouveau domaine' }
       ]"
     />
     <div class="py-6">
-      <SectionHeading title="Création d'une nouvelle thématique">
+      <SectionHeading title="Création d'un nouveau domaine d'action">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
             <Button variant="green" size="xl" @click.native="handleSubmit()">
@@ -19,7 +19,7 @@
         </template>
       </Sectionheading>
 
-      <FormThematique
+      <FormDomaine
         ref="form"
         class="mt-8"
       />
@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import FormThematique from '~/components/form/FormThematique.vue'
+import FormDomaine from '~/components/form/FormDomaine.vue'
 
 export default {
-  components: { FormThematique },
+  components: { FormDomaine },
   layout: 'admin',
   middleware: 'admin',
   methods: {

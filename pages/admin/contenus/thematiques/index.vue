@@ -18,7 +18,7 @@
       <div class="col-span-4">
         <div class="flex flex-col gap-8">
           <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: Refonte sur un Model DomaineAction.php
+            @TODO: Va disparaitre au profit de Domaine.php
           </div>
           <SectionHeading title="Thématiques">
             <template #action>

@@ -4,12 +4,12 @@
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
         { label: 'Contenus' },
-        { label: 'Thématiques', link: `/admin/contenus/thematiques` },
-        { label: thematique.name }
+        { label: 'Domaines', link: `/admin/contenus/domaines` },
+        { label: domaine.name }
       ]"
     />
     <div class="py-6">
-      <SectionHeading :title="thematique.name">
+      <SectionHeading :title="domaine.name">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
             <Button variant="green" size="xl" @click.native="handleSubmit()">
@@ -19,9 +19,9 @@
         </template>
       </Sectionheading>
 
-      <FormThematique
+      <FormDomaine
         ref="form"
-        :thematique="thematique"
+        :domaine="domaine"
         class="mt-8"
       />
     </div>
@@ -29,20 +29,20 @@
 </template>
 
 <script>
-import FormThematique from '~/components/form/FormThematique.vue'
+import FormDomaine from '~/components/form/FormDomaine.vue'
 
 export default {
-  components: { FormThematique },
+  components: { FormDomaine },
   layout: 'admin',
   middleware: 'admin',
   async asyncData ({ $axios, params, error, store }) {
-    const { data: thematique } = await $axios.get(`/thematiques/${params.id}`)
-    if (!thematique) {
+    const { data: domaine } = await $axios.get(`/domaines/${params.id}`)
+    if (!domaine) {
       return error({ statusCode: 404 })
     }
 
     return {
-      thematique
+      domaine
     }
   },
 
