@@ -18,7 +18,7 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-12">
-          <SectionHeading :title="$route.params.slug">
+          <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} ${title}`">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
                 <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/add`">
@@ -29,16 +29,47 @@
               </div>
             </template>
           </SectionHeading>
+          <div>
+            <Input
+              name="search"
+              placeholder="Recherche par mots clés..."
+              icon="SearchIcon"
+              variant="transparent"
+              :value="$route.query['filter[search]']"
+              clearable
+              @input="changeFilter('filter[search]', $event)"
+            />
 
-          <Input
-            name="search"
-            placeholder="Recherche par mots clés..."
-            icon="SearchIcon"
-            variant="transparent"
-            :value="$route.query['filter[search]']"
-            clearable
-            @input="changeFilter('filter[search]', $event)"
-          />
+            <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
+              <Checkbox
+                :key="`toutes-${$route.fullPath}`"
+                :option="{key: 'toutes', label:'Toutes'}"
+                :is-checked="hasActiveFilters()"
+                variant="button"
+                size="xs"
+                transparent
+                @change="deleteAllFilters()"
+              />
+              <Checkbox
+                :key="`terms-with-related-${$route.fullPath}`"
+                :option="{key: 'yes', label:'Avec des liaisons'}"
+                :is-checked="$route.query['filter[has_related]'] && $route.query['filter[has_related]'] == 'yes'"
+                variant="button"
+                size="xs"
+                transparent
+                @change="changeFilter('filter[has_related]', 'yes')"
+              />
+              <Checkbox
+                :key="`terms-without-related-${$route.fullPath}`"
+                :option="{key: 'no', label:'Sans liaison'}"
+                :is-checked="$route.query['filter[has_related]'] && $route.query['filter[has_related]'] == 'no'"
+                variant="button"
+                size="xs"
+                transparent
+                @change="changeFilter('filter[has_related]', 'no')"
+              />
+            </div>
+          </div>
 
           <Table v-if="queryResult.total">
             <TableHead>
@@ -96,6 +127,18 @@ export default {
     return {
       endpoint: `/vocabularies/${this.$route.params.slug}/terms`,
       drawerTermId: null
+    }
+  },
+  computed: {
+    title () {
+      switch (this.$route.params.slug) {
+        case 'skills':
+          return 'compétences'
+        case 'tags':
+          return 'tags'
+        default:
+          return this.$route.params.slug
+      }
     }
   },
   methods: {
