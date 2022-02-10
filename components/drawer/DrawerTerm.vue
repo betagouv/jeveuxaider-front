@@ -19,17 +19,20 @@
 
       <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :term="term" />
+      <BoxLiaisons class="mb-8" :term="term" />
     </template>
   </Drawer>
 </template>
 
 <script>
 import BoxInformations from '@/components/section/term/BoxInformations'
+import BoxLiaisons from '@/components/section/term/BoxLiaisons'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
 
 export default {
   components: {
     BoxInformations,
+    BoxLiaisons,
     OnlineIndicator
   },
   props: {
