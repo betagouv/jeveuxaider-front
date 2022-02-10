@@ -1,8 +1,6 @@
 <template>
   <Modal :title="title" :is-open="isOpen" :theme="theme" @close="$emit('cancel')">
-    <div class="text-sm text-gray-500" v-html="text">
-      Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.
-    </div>
+    <div class="text-sm text-gray-500" v-html="text" />
     <template #footer>
       <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
         Annuler
