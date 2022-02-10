@@ -6,7 +6,7 @@
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
         { label: 'Taxonomies' },
-        { label: 'Compétences' }
+        { label: $route.params.slug }
       ]"
     />
 
@@ -61,7 +61,7 @@
                   </div>
                 </TableRowCell>
                 <TableRowCell>
-                  {{ term.related_count ? $options.filters.pluralize(term.related_count, 'liaisons') : '-' }}
+                  {{ term.related_count ? $options.filters.pluralize(term.related_count, 'liaison') : '-' }}
                 </TableRowCell>
               </TableRow>
             </TableBody>

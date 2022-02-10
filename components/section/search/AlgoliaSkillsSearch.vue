@@ -39,7 +39,7 @@
                 >
                   <div class="flex items-center space-x-2">
                     <div class="">
-                      {{ suggestion.item.name.fr }}
+                      {{ suggestion.item.name }}
                     </div>
                     <div
                       v-if="isAlreadySelected(suggestion.item.id)"
@@ -48,8 +48,8 @@
                       Ajoutée
                     </div>
                   </div>
-                  <div class="text-xs italic">
-                    {{ suggestion.item.group }}
+                  <div v-if="suggestion.item.properties" class="text-xs italic">
+                    {{ suggestion.item.properties['group'] }}
                   </div>
                 </div>
               </div>
@@ -103,7 +103,7 @@ export default {
   data () {
     return {
       searchClient,
-      indexName: process.env.algolia.skillsIndex,
+      indexName: process.env.algolia.termsIndex,
       selectedItem: null,
       query: null
     }
