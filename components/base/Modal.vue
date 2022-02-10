@@ -53,7 +53,7 @@
                   <ExclamationIcon v-else-if="theme == 'warning'" class="h-6 w-6 text-jva-orange-500" />
                   <ExclamationIcon v-else-if="theme == 'danger'" class="h-6 w-6 text-jva-red-500" />
                 </div>
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left max-w-full min-w-0">
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left min-w-0">
                   <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900" v-html="title" />
 
                   <div class="mt-2">
