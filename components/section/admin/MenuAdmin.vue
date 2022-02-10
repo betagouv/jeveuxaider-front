@@ -25,6 +25,7 @@ export default {
         links: [
           { name: 'Missions prioritaires', href: '/admin/contenus/missions-prioritaires' },
           { name: 'Thématiques', href: '/admin/contenus/thematiques' },
+          { name: "Domaines d'action", href: '/admin/contenus/domaines' },
           { name: 'Modèles de mission', href: '/admin/contenus/modeles-mission' },
           { name: 'Territoires', href: '/admin/contenus/territoires' },
           { name: 'Reseaux', href: '/admin/contenus/reseaux' }
@@ -34,7 +35,7 @@ export default {
         name: 'taxonomies',
         label: 'Taxonomies',
         links: [
-          { name: 'Compétences', href: '/admin/taxonomies/competences' },
+          { name: 'Compétences', href: '/admin/taxonomies/skills' },
           { name: 'Tags', href: '/admin/taxonomies/tags' }
         ]
       },

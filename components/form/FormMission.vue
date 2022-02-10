@@ -374,16 +374,16 @@ export default {
   data () {
     return {
       form: {
-        name: this.mission.template?.title,
-        participations_max: '1',
-        skills: [],
-        state: 'Brouillon',
-        type: 'Mission en présentiel',
+        ...this.mission,
+        participations_max: this.mission.participations_max || '1',
+        skills: this.mission.skills || [],
+        state: this.mission.state || 'Brouillon',
+        type: this.mission.type || 'Mission en présentiel',
+        name: this.mission.template?.title || this.mission.name,
         template_id: this.mission.template?.id,
-        domaine_id: this.mission.template?.domaine_id,
-        objectif: this.mission.template?.objectif,
-        description: this.mission.template?.description,
-        ...this.mission
+        domaine_id: this.mission.template?.domaine_id || this.mission.domaine_id,
+        objectif: this.mission.template?.objectif || this.mission.objectif,
+        description: this.mission.template?.description || this.mission.description
       },
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
@@ -422,13 +422,19 @@ export default {
     onRemovedSkill (item) {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
     },
+    handleSelectedAdress (payload) {
+      console.log('@todo handleSelectedAdress', payload)
+    },
     handleSubmit (attributes) {
+      console.log('handleSubmit formMission attributes', attributes)
       if (attributes) {
         this.form = {
           attributes,
           ...this.form
         }
       }
+      console.log('handleSubmit formMission form', this.form)
+
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
@@ -442,6 +448,7 @@ export default {
           }
         })
         .catch((errors) => {
+          console.log('errorrsssss', errors)
           this.setErrors(errors)
         })
         .finally(() => {

@@ -8,39 +8,26 @@
         <div class="space-y-10">
           <FormControl
             html-for="name"
-            label="Nom de la thématique"
+            label="Nom du domaine d'action"
             required
             :error="errors.name"
           >
             <Input
               v-model="form.name"
               name="name"
-              placeholder="Nom de la thématique"
+              placeholder="Nom du domaine d'action"
             />
           </FormControl>
           <FormControl
             html-for="title"
-            label="Titre de la thématique"
+            label="Titre de la page de ce domaine d'action"
             required
             :error="errors.title"
           >
             <Input
               v-model="form.title"
               name="title"
-              placeholder="Titre de la thématique"
-            />
-          </FormControl>
-          <FormControl
-            label="Domaine"
-            html-for="domaine_id"
-            :error="errors.domaine_id"
-            required
-          >
-            <SelectAdvanced
-              v-model="form.domaine_id"
-              name="domaine"
-              placeholder="Sélectionner un domaine"
-              :options="$labels.domaines"
+              placeholder="Titre de la page"
             />
           </FormControl>
           <FormControl
@@ -52,9 +39,29 @@
             <Textarea
               v-model="form.description"
               name="description"
-              placeholder="Décrivez la thématique en quelques mots..."
+              placeholder="Décrivez le domaine d'action en quelques mots..."
             />
           </FormControl>
+        </div>
+      </Box>
+      <Box>
+        <Heading :level="3" class="mb-8">
+          Images pour les organisations
+        </Heading>
+        <div class="space-y-12">
+          <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
+            @TODO: Upload des images à destination des organisations
+          </div>
+        </div>
+      </Box>
+      <Box>
+        <Heading :level="3" class="mb-8">
+          Images pour les missions
+        </Heading>
+        <div class="space-y-12">
+          <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
+            @TODO: Upload des images à destination des missions
+          </div>
         </div>
       </Box>
     </div>
@@ -96,7 +103,7 @@
 </template>
 
 <script>
-import { string, object, number } from 'yup'
+import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 
 export default {
@@ -104,17 +111,16 @@ export default {
   layout: 'admin',
   middleware: 'admin',
   props: {
-    thematique: {
+    domaine: {
       type: Object,
       default: () => {}
     }
   },
   data () {
     return {
-      form: { ...this.thematique },
+      form: { ...this.domaine },
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
-        domaine_id: number().nullable().required('Le domaine est requis'),
         title: string().required("L'objectif est requis"),
         description: string().required('La description est requise')
       })
@@ -127,11 +133,11 @@ export default {
         .then(async () => {
           this.loading = true
           if (this.form.id) {
-            await this.$axios.put(`/thematiques/${this.form.id}`, this.form)
+            await this.$axios.put(`/domaines/${this.form.id}`, this.form)
           } else {
-            await this.$axios.post('/thematiques', this.form)
+            await this.$axios.post('/domaines', this.form)
           }
-          this.$router.push('/admin/contenus/thematiques')
+          this.$router.push('/admin/contenus/domaines')
         })
         .catch((errors) => {
           this.setErrors(errors)

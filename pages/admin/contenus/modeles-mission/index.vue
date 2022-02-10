@@ -86,7 +86,7 @@
               :state-style="missionTemplate.state"
               :state-text="$options.filters.label(missionTemplate.state, 'mission_template_workflow_states')"
               :description="missionTemplate.subtitle"
-              :image-url="missionTemplate.photo && missionTemplate.photo.large"
+              :image-url="missionTemplate.photo && missionTemplate.photo.urls.card"
               @click.native="drawerMissionTemplateId = missionTemplate.id"
             >
               <template #badges>
@@ -137,6 +137,10 @@ export default {
     return {
       loading: false,
       endpoint: '/mission-templates',
+      queryParams: {
+        include: 'media',
+        append: 'photo'
+      },
       drawerMissionTemplateId: null
     }
   }

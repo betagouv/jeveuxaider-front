@@ -1,80 +1,88 @@
 <template>
   <div
-    class="component--avatar overflow-hidden rounded-full flex-none flex items-center justify-center text-white"
+    class="component--avatar overflow-hidden rounded-full flex-none flex items-center justify-center"
     :class="[
-      width,
-      fontSize,
-      { 'bg-jva-blue-500': !initialSource },
-      { 'bg-white': initialSource },
+      // Size
+      {'w-10 h-10': size == 'xs'},
+      {'w-12 h-12': size == 'sm'},
+      {'w-16 h-16': size == 'md'},
+
+      // Background color
+      {'bg-jva-blue-500 ': backgroundColor == 'blue' && !srcset},
+      {'bg-white ': backgroundColor == 'white' && !srcset},
     ]"
   >
-    <template v-if="icon">
-      <i :class="icon" />
-    </template>
+    <img
+      v-if="srcset"
+      :srcset="srcset"
+      :alt="initials"
+      class="object-cover w-full h-full"
+      data-not-lazy
+      @error="onError"
+    >
 
-    <template v-else>
-      <template v-if="initialSource">
-        <img
-          class="object-cover w-full h-full"
-          :srcset="initialSource"
-          :alt="fallback"
-          data-not-lazy
-          @error="onSourceError"
-        >
-      </template>
-      <template v-else>
-        {{ fallback }}
-      </template>
-    </template>
+    <span
+      v-else-if="initials"
+      class="uppercase"
+      :class="[
+        // Font size
+        {'text-lg': size == 'sm'},
+        {'text-2xl': size == 'md'},
+
+        // Colors
+        {'text-white': backgroundColor == 'blue'},
+        {'text-gray-700': backgroundColor == 'white'},
+      ]"
+    >
+      {{ initials }}
+    </span>
+
+    <UserSolidIcon
+      v-else
+      :class="[
+        // Sizes
+        {'h-4 w-4': size == 'xs'},
+        {'h-6 w-6': size == 'sm'},
+        {'h-8 w-8': size == 'md'},
+
+        // Colors
+        {'text-white': backgroundColor == 'blue'},
+        {'text-gray-700': backgroundColor == 'white'},
+      ]"
+    />
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    fallback: {
+    image: {
       type: String,
       default: undefined
     },
-    source: {
+    initials: {
       type: String,
       default: undefined
     },
-    icon: {
+    size: {
       type: String,
-      default: undefined
+      default: 'sm',
+      validator: s => ['xs', 'sm', 'md'].includes(s)
     },
-    width: {
+    backgroundColor: {
       type: String,
-      default: 'w-10 h-10'
-    },
-    fontSize: {
-      type: String,
-      default: 'text-sm'
+      default: 'blue',
+      validator: b => ['blue', 'white'].includes(b)
     }
   },
   data () {
     return {
-      initialSource: this.source
-    }
-  },
-  watch: {
-    source: {
-      handler (value) {
-        if (value && typeof this.fallback === 'undefined') {
-          console.error(
-            "Avatar.vue : property 'fallback' is required when using property 'source'. "
-          )
-        }
-        this.initialSource = value
-      },
-      immediate: true
+      srcset: this.image
     }
   },
   methods: {
-    onSourceError () {
-      // console.error('Source error', this.initialSource)
-      this.initialSource = null
+    onError () {
+      this.srcset = null
     }
   }
 }

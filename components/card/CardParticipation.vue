@@ -43,6 +43,12 @@
     </div>
     <div class="col-span-2 border-l -my-4 py-6 pl-6">
       <div class="flex">
+        <Avatar
+          :image="participation.profile_avatar ? participation.profile_avatar.urls.thumbMedium : null"
+          :initials="profile.short_name"
+          size="sm"
+          class="mr-4"
+        />
         <div>
           <div class="font-bold">
             {{ profile.full_name }}

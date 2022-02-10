@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <DrawerThematique :thematique-id="drawerThematiqueId" @close="drawerThematiqueId = null" />
+    <DrawerDomaine :domaine-id="drawerDomaineId" @close="drawerDomaineId = null" />
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
         { label: 'Contenus' },
-        { label: 'Thématiques' }
+        { label: 'Domaines d\'action' }
       ]"
     />
 
@@ -17,15 +17,12 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-8">
-          <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: Va disparaitre au profit de Domaine.php
-          </div>
-          <SectionHeading title="Thématiques">
+          <SectionHeading title="Domaines d'action">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
-                <nuxt-link :to="`/admin/contenus/thematiques/add`">
+                <nuxt-link :to="`/admin/contenus/domaines/add`">
                   <Button size="lg" :loading="loading" icon="PlusIcon">
-                    Thématique
+                    Domaine
                   </Button>
                 </nuxt-link>
               </div>
@@ -43,21 +40,21 @@
 
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card
-              v-for="thematique in queryResult.data"
-              :key="thematique.id"
-              :title="thematique.name"
-              :state-style="thematique.published ? 'success' : 'error'"
-              :state-text="thematique.published ? 'En ligne' : 'Hors ligne'"
-              :description="thematique.title"
-              :image-url="thematique.photo && thematique.photo.large"
-              @click.native="drawerThematiqueId = thematique.id"
+              v-for="domaine in queryResult.data"
+              :key="domaine.id"
+              :title="domaine.name"
+              :state-style="domaine.published ? 'success' : 'error'"
+              :state-text="domaine.published ? 'En ligne' : 'Hors ligne'"
+              :description="domaine.title"
+              :image-url="domaine.photo && domaine.photo.large"
+              @click.native="drawerDomaineId = domaine.id"
             >
               <template #footer>
                 <div
                   class="border-t text-gray-900 font-semibold  text-sm text-center py-4 opacity-25"
                 >
                   @TODO
-                  {{ $options.filters.formatNumber(thematique.missions_count) }} {{ $options.filters.pluralize(thematique.missions_count, 'mission', 'missions', false) }}
+                  {{ $options.filters.formatNumber(domaine.missions_count) }} {{ $options.filters.pluralize(domaine.missions_count, 'mission', 'missions', false) }}
                 </div>
               </template>
             </Card>
@@ -79,13 +76,13 @@
 import MenuAdmin from '@/components/section/admin/MenuAdmin'
 import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
-import DrawerThematique from '@/components/drawer/DrawerThematique'
+import DrawerDomaine from '@/components/drawer/DrawerDomaine'
 
 export default {
   components: {
     MenuAdmin,
     Card,
-    DrawerThematique
+    DrawerDomaine
   },
   mixins: [QueryBuilder],
   layout: 'admin',
@@ -93,8 +90,8 @@ export default {
   data () {
     return {
       loading: false,
-      endpoint: '/thematiques',
-      drawerThematiqueId: null
+      endpoint: '/domaines',
+      drawerDomaineId: null
     }
   }
 }
