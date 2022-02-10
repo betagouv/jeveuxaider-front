@@ -103,7 +103,7 @@ export default {
   data () {
     return {
       searchClient,
-      indexName: process.env.algolia.termsIndex,
+      indexName: this.$config.algolia.termsIndex,
       selectedItem: null,
       query: null
     }

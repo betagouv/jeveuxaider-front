@@ -44,7 +44,7 @@
       </div>
 
       <Modal
-        v-if="showModal"
+        :is-open="showModal"
         title="Recadrer"
         @close="showModal = false"
       >
