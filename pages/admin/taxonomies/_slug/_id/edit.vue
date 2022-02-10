@@ -4,7 +4,7 @@
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
         { label: 'Taxonomies' },
-        { label: 'Compétences', link: `/admin/taxonomies/competences` },
+        { label: 'Tous les termes', link: `/admin/taxonomies/${$route.params.slug}` },
         { label: term.name }
       ]"
     />
@@ -23,7 +23,7 @@
         ref="form"
         :term="term"
         class="mt-8"
-        vocabulary="skills"
+        :vocabulary="$route.params.slug"
       />
     </div>
   </div>

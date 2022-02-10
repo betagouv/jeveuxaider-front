@@ -4,12 +4,12 @@
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
         { label: 'Taxonomies' },
-        { label: 'Compétences', link: `/admin/taxonomies/competences` },
-        { label: 'Nouvelle compétence' }
+        { label: 'Tous les termes', link: `/admin/taxonomies/${$route.params.slug}` },
+        { label: 'Nouvelle entrée' }
       ]"
     />
     <div class="py-6">
-      <SectionHeading title="Création d'un nouvelle compétence">
+      <SectionHeading title="Nouvelle entrée">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
             <Button variant="green" size="xl" @click.native="handleSubmit()">
@@ -22,7 +22,7 @@
       <FormTerm
         ref="form"
         class="mt-8"
-        vocabulary="skills"
+        :vocabulary="$route.params.slug"
       />
     </div>
   </div>

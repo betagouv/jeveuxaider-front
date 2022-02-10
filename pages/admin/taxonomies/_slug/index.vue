@@ -18,10 +18,10 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-12">
-          <SectionHeading title="Compétences">
+          <SectionHeading :title="$route.params.slug">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
-                <nuxt-link :to="`/admin/taxonomies/competences/add`">
+                <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/add`">
                   <Button size="lg" icon="PlusIcon">
                     Nouveau
                   </Button>
@@ -43,8 +43,7 @@
           <Table v-if="queryResult.total">
             <TableHead>
               <TableHeadCell>Nom</TableHeadCell>
-              <TableHeadCell>Profils</TableHeadCell>
-              <TableHeadCell>Missions</TableHeadCell>
+              <TableHeadCell>Liaisons</TableHeadCell>
             </TableHead>
             <TableBody>
               <TableRow
@@ -62,10 +61,7 @@
                   </div>
                 </TableRowCell>
                 <TableRowCell>
-                  {{ term.profiles_count ? $options.filters.pluralize(term.profiles_count, 'profil') : '-' }}
-                </TableRowCell>
-                <TableRowCell>
-                  {{ term.missions_count ? $options.filters.pluralize(term.missions_count, 'mission') : '-' }}
+                  {{ term.related_count ? $options.filters.pluralize(term.related_count, 'liaisons') : '-' }}
                 </TableRowCell>
               </TableRow>
             </TableBody>
@@ -98,7 +94,7 @@ export default {
   middleware: 'admin',
   data () {
     return {
-      endpoint: '/vocabularies/skills/terms',
+      endpoint: `/vocabularies/${this.$route.params.slug}/terms`,
       drawerTermId: null
     }
   },

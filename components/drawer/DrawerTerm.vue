@@ -2,7 +2,7 @@
   <Drawer :is-open="Boolean(termId)" @close="$emit('close')">
     <template #title>
       <Heading v-if="term" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/taxonomies/competences/${termId}/edit`" class="hover:underline">
+        <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/${termId}/edit`" class="hover:underline">
           {{ term.name }}
         </nuxt-link>
       </Heading>
@@ -10,7 +10,7 @@
     <template v-if="term">
       <OnlineIndicator :published="term.is_published" class="mt-2" />
       <div class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/taxonomies/competences/${term.id}/edit`" class="inline-flex">
+        <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/${term.id}/edit`" class="inline-flex">
           <Button variant="white" size="sm" icon="PencilIcon">
             Modifier
           </Button>
