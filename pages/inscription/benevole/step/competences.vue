@@ -48,7 +48,7 @@
               :tag="item"
               @removed="onRemovedTagItem"
             >
-              {{ item.name.fr }}
+              {{ item.name }}
             </TagFormItem>
           </div>
         </div>

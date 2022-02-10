@@ -106,7 +106,7 @@ export default {
       appId: process.env.ALGOLIA_APP_ID,
       searchKey: process.env.ALGOLIA_SEARCH_KEY,
       missionsIndex: process.env.ALGOLIA_MISSIONS_INDEX,
-      skillsIndex: process.env.ALGOLIA_SKILLS_INDEX
+      termsIndex: process.env.ALGOLIA_TERMS_INDEX
     }
   },
 
