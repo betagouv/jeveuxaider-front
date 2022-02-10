@@ -91,9 +91,16 @@
             Image
           </Heading>
           <div class="space-y-12">
-            <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-              @TODO: Upload de l'image principale
-            </div>
+            <FormControl label="Principale" html-for="photo" class="col-span-2">
+              <ImageCrop
+                :default-value="form.photo"
+                :preview-width="100"
+                :min-width="200"
+                @add="addFiles({ files: [$event], attribute: 'photo' })"
+                @delete="deleteFile($event, 0)"
+                @crop="onManipulationsChange($event, 0)"
+              />
+            </FormControl>
           </div>
         </Box>
       </div>
@@ -113,9 +120,10 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import FormUploads from '@/mixins/form/uploads'
 
 export default {
-  mixins: [FormErrors],
+  mixins: [FormErrors, FormUploads],
   layout: 'admin',
   middleware: 'admin',
   props: {
@@ -150,8 +158,13 @@ export default {
           if (this.form.id) {
             await this.$axios.put(`/mission-templates/${this.form.id}`, this.form)
           } else {
+            // @todo: récupérer le model id pour permettre d'uploader l'image ensuite
             await this.$axios.post('/mission-templates', this.form)
           }
+
+          this.uploadFiles('mission_template', this.form.id, 'templates')
+
+          this.$toast.success('Modifications enregistrées')
           this.$router.push('/admin/contenus/modeles-mission')
         })
         .catch((errors) => {

@@ -85,7 +85,7 @@
       </div>
 
       <!-- Content -->
-      <div class="px-4 max-w-3xl mx-auto lg:ma max-w-7xl">
+      <div class="px-4 max-w-3xl mx-auto lg:max-w-7xl">
         <div ref="contentWrapper" class="pt-8">
           <div class="flex">
             <!-- Filtres -->

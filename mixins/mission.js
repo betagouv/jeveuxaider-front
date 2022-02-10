@@ -16,9 +16,8 @@ export default {
     },
     thumbnail () {
       let thumbnail = null
-      // @todo: faire marcher pour les templates
       if (this.mission.template_id) {
-        return this.mission.template?.photo ? `${this.mission.template.photo.thumb}, ${this.mission.template.photo.large} 2x` : null
+        return this.mission.template_photo?.urls.card
       }
       if (this.mission.thumbnail) {
         thumbnail = `/images/domaines/${this.mission.thumbnail}.webp, /images/domaines/${this.mission.thumbnail}.jpg, /images/domaines/${this.mission.thumbnail}@2x.webp 2x, /images/domaines/${this.mission.thumbnail}@2x.jpg 2x, `
