@@ -38,20 +38,32 @@
             @input="changeFilter('filter[search]', $event)"
           />
 
-          <Table>
+          <Table v-if="queryResult.total">
+            <TableHead>
+              <TableHeadCell>Nom</TableHeadCell>
+              <TableHeadCell>Profils</TableHeadCell>
+              <TableHeadCell>Missions</TableHeadCell>
+            </TableHead>
             <TableBody>
               <TableRow
                 v-for="term in queryResult.data"
                 :key="term.id"
+                class="cursor-pointer"
                 @click.native="drawerTermId = term.id"
               >
-                <TableRowCell class="cursor-pointer">
+                <TableRowCell>
                   <div class="font-medium text-gray-900">
                     {{ term.name }}
                   </div>
                   <div class="text-gray-500">
                     {{ term.related_count ? $options.filters.pluralize(term.related_count, 'élément lié', 'éléments liés') : 'Aucun élément lié' }}
                   </div>
+                </TableRowCell>
+                <TableRowCell>
+                  {{ term.profiles_count ? $options.filters.pluralize(term.profiles_count, 'profil') : '-' }}
+                </TableRowCell>
+                <TableRowCell>
+                  {{ term.missions_count ? $options.filters.pluralize(term.missions_count, 'mission') : '-' }}
                 </TableRowCell>
               </TableRow>
             </TableBody>
@@ -80,9 +92,6 @@ export default {
   mixins: [QueryBuilder],
   layout: 'admin',
   middleware: 'admin',
-  async asyncData ({ $axios }) {
-
-  },
   data () {
     return {
       endpoint: '/vocabularies/skills/terms',

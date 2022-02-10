@@ -426,12 +426,15 @@ export default {
       console.log('@todo handleSelectedAdress', payload)
     },
     handleSubmit (attributes) {
+      console.log('handleSubmit formMission attributes', attributes)
       if (attributes) {
         this.form = {
           attributes,
           ...this.form
         }
       }
+      console.log('handleSubmit formMission form', this.form)
+
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
@@ -445,6 +448,7 @@ export default {
           }
         })
         .catch((errors) => {
+          console.log('errorrsssss', errors)
           this.setErrors(errors)
         })
         .finally(() => {
