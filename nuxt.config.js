@@ -98,6 +98,9 @@ export default {
     plausible: {
       site_id: process.env.PLAUSIBLE_SITE_ID,
       token: process.env.PLAUSIBLE_TOKEN
+    },
+    algolia: {
+      termsIndex: process.env.ALGOLIA_TERMS_INDEX
     }
   },
 
@@ -105,8 +108,7 @@ export default {
     algolia: {
       appId: process.env.ALGOLIA_APP_ID,
       searchKey: process.env.ALGOLIA_SEARCH_KEY,
-      missionsIndex: process.env.ALGOLIA_MISSIONS_INDEX,
-      skillsIndex: process.env.ALGOLIA_SKILLS_INDEX
+      missionsIndex: process.env.ALGOLIA_MISSIONS_INDEX
     }
   },
 

@@ -44,7 +44,7 @@
       </div>
 
       <Modal
-        v-if="showModal"
+        :is-open="showModal"
         title="Recadrer"
         @close="showModal = false"
       >
@@ -61,11 +61,11 @@
         />
 
         <template #footer slot-scope="">
-          <Button variant="secondary" @click.native.prevent.stop="showModal = false">
+          <Button class="mr-3" variant="white" @click.native="showModal = false">
             Annuler
           </Button>
 
-          <Button @click.native.prevent.stop="doCrop">
+          <Button @click.native="doCrop">
             Valider
           </Button>
         </template>

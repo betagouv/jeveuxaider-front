@@ -1,68 +1,61 @@
 <template>
-  <transition name="fade">
-    <div class="fixed z-50 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  <transition
+    enter-active-class="ease-out duration-300"
+    enter-class="opacity-0"
+    enter-to-class="opacity-100"
+    leave-active-class="ease-in duration-200"
+    leave-class="opacity-100"
+    leave-to-class="opacity-0"
+  >
+    <div v-show="isOpen" class="fixed z-50 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-black bg-opacity-40 transition-opacity" aria-hidden="true" />
-
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" />
         <!-- This element is to trick the browser into centering the modal contents. -->
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-        <div v-click-outside="onClickOutside" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-          <div class="bg-white pl-4 pt-5 pb-4 sm:pl-6 sm:pb-4">
-            <div class="pr-6 sm:pr-12">
-              <!-- Title -->
-              <h3 class="text-lg leading-6 font-medium text-gray-900 sm:mt-[-4px]" v-html="title" />
-
-              <!-- Close -->
-              <div class="hidden sm:block absolute top-0 right-0 p-5">
-                <button
-                  type="button"
-                  class="bg-white rounded-md text-gray-400 hover:text-jva-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500 transition-all"
-                  @click.prevent.stop="$emit('close')"
-                >
+        <transition
+          enter-active-class="ease-out duration-300"
+          enter-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          enter-to-class="opacity-100 translate-y-0 sm:scale-100"
+          leave-active-class="tease-in duration-200"
+          leave-class="opacity-100 translate-y-0 sm:scale-100"
+          leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+        >
+          <div v-if="isOpen" v-click-outside="() => $emit('close')" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div class="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
+                <button type="button" class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cool-gray-500" @click="$emit('close')">
                   <span class="sr-only">Close</span>
                   <XIcon />
                 </button>
               </div>
-            </div>
+              <div class="sm:flex sm:items-start">
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900" v-html="title" />
 
-            <div class="pr-6 sm:flex sm:items-start mt-6">
-              <!-- Icon -->
-              <div
-                v-if="icon"
-                class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10"
-                :class="[
-                  { 'bg-red-100': icon == 'warning'},
-                  { 'bg-green-100': icon == 'success'},
-                ]"
-              >
-                <component
-                  :is="icon == 'warning' ? 'ExclamationIcon' : 'CheckIcon'"
-                  :class="[
-                    {'text-red-600': icon == 'warning'},
-                    {'text-green-600': icon == 'success'}
-                  ]"
-                />
-              </div>
-
-              <div v-scroll-lock="true" class="w-full" :class="[{'mt-3 sm:mt-0 sm:ml-4': icon}]">
-                <!-- Content -->
-                <div class="text-sm text-gray-500">
-                  <slot />
+                  <div class="mt-2">
+                    <slot />
+                    <!-- <p class="text-sm text-gray-500">
+                      Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.
+                    </p> -->
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <!-- Footer -->
-          <div class="bg-gray-50 px-4 py-3 sm:px-6 flex space-x-4 justify-end">
-            <slot name="footer">
-              <Button @click.native.prevent.stop="$emit('close')">
-                Fermer
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:justify-end">
+              <slot name="footer">
+                <Button variant="white" @click.native="$emit('close')">
+                  Fermer
+                </Button>
+              </slot>
+              <!-- <Button variant="red">
+                Deactivate
               </Button>
-            </slot>
+              <Button class="ml-3" variant="white" @click.native="$emit('close')">
+                Cancel
+              </Button> -->
+            </div>
           </div>
-        </div>
+        </transition>
       </div>
     </div>
   </transition>
@@ -71,6 +64,10 @@
 <script>
 export default {
   props: {
+    isOpen: {
+      type: Boolean,
+      default: false
+    },
     title: {
       type: String,
       required: true
@@ -78,11 +75,6 @@ export default {
     icon: {
       type: String, /* warning || success */
       default: null
-    }
-  },
-  methods: {
-    onClickOutside () {
-      this.$emit('close')
     }
   }
 }

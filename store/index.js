@@ -12,15 +12,17 @@ export const mutations = {
 export const actions = {
   async nuxtServerInit ({ commit }, { store, req }) {
     if (this.$cookies.get('access-token')) {
-      commit('auth/setAccessToken', this.$cookies.get('access-token'))
       await store.dispatch('auth/fetchUser')
+    }
+    if (this.$cookies.get('access-token-impersonate')) {
+      await store.commit('auth/setIsImpersonate', true)
     }
     await store.dispatch('settings/fetchGeneral')
   }
 }
 
 export const getters = {
-  isLogged: state => !!(state.auth.access_token && state.auth.user),
+  isLogged: state => !!(state.auth.user),
   contextRole: state => state.auth.user ? state.auth.user.context_role : null,
   contextableId: state => state.auth.user ? state.auth.user.contextable_id : null,
   roles: state => state.auth.user ? state.auth.user.roles : null,

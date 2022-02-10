@@ -35,7 +35,7 @@ export default {
         name: 'taxonomies',
         label: 'Taxonomies',
         links: [
-          { name: 'Compétences', href: '/admin/taxonomies/competences' },
+          { name: 'Compétences', href: '/admin/taxonomies/skills' },
           { name: 'Tags', href: '/admin/taxonomies/tags' }
         ]
       },

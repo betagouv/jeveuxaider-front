@@ -295,7 +295,7 @@
                   :tag="item"
                   @removed="onRemovedSkill"
                 >
-                  {{ item.name.fr }}
+                  {{ item.name }}
                 </TagFormItem>
               </div>
             </div>

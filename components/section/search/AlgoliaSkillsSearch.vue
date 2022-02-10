@@ -1,6 +1,6 @@
 <template>
   <ais-instant-search :search-client="searchClient" :index-name="indexName">
-    <ais-configure :hits-per-page.camel="5" />
+    <ais-configure :hits-per-page.camel="5" filters="vocabulary_name:Skills" />
     <ais-autocomplete>
       <template slot-scope="{ indices, refine }">
         <div class="">
@@ -39,7 +39,7 @@
                 >
                   <div class="flex items-center space-x-2">
                     <div class="">
-                      {{ suggestion.item.name.fr }}
+                      {{ suggestion.item.name }}
                     </div>
                     <div
                       v-if="isAlreadySelected(suggestion.item.id)"
@@ -48,7 +48,7 @@
                       Ajoutée
                     </div>
                   </div>
-                  <div class="text-xs italic">
+                  <div v-if="suggestion.item.group" class="text-xs italic">
                     {{ suggestion.item.group }}
                   </div>
                 </div>
@@ -103,7 +103,7 @@ export default {
   data () {
     return {
       searchClient,
-      indexName: process.env.algolia.skillsIndex,
+      indexName: this.$config.algolia.termsIndex,
       selectedItem: null,
       query: null
     }

@@ -17,7 +17,7 @@ export default {
       required: true
     },
     description: {
-      type: String,
+      type: [String, Number],
       default: null
     }
   }

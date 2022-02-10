@@ -5,7 +5,7 @@
         {{ title }}
       </div>
       <slot v-if="showAction" name="action">
-        <Link to="/profile/edit" icon="ChevronRightIcon">
+        <Link :to="`/admin/utilisateurs/${profile.id}/edit`" icon="ChevronRightIcon">
           Modifier
         </Link>
       </slot>
