@@ -1,5 +1,5 @@
 <template>
-  <header class="relative bg-white shadow-lg z-40">
+  <header class="relative bg-white shadow-lg z-30">
     <div class="flex justify-between items-center relative lg:max-w-7xl lg:mx-auto lg:p-2">
       <div class="lg:flex lg:space-x-6 lg:items-center">
         <img
