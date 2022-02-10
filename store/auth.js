@@ -1,14 +1,14 @@
 export const state = () => ({
-  access_token: null,
-  user: null
+  user: null,
+  isImpersonate: false
 })
 
 export const mutations = {
   setUser (state, user) {
     state.user = user
   },
-  setAccessToken (state, accessToken) {
-    state.access_token = accessToken
+  setIsImpersonate (state, isImpersonate) {
+    state.isImpersonate = isImpersonate
   }
 }
 
@@ -34,7 +34,6 @@ export const actions = {
         scope: '*'
       })
       .then(async (response) => {
-        await commit('setAccessToken', response?.data?.access_token)
         await this.$cookies.set('access-token', response?.data?.access_token, {
           maxAge: response?.data?.expires_in,
           path: '/',
@@ -44,8 +43,8 @@ export const actions = {
         await dispatch('fetchUser')
       })
       .catch((error) => {
-        commit('setAccessToken', null)
         this.$cookies.remove('access-token')
+        this.$cookies.remove('access-token-impersonate')
         return Promise.reject(new Error(error))
       })
   },
@@ -59,9 +58,10 @@ export const actions = {
   async logout ({ commit }) {
     this.$router.push('/')
     await this.$axios.post('/logout')
-    commit('setAccessToken', null)
     commit('setUser', null)
+    commit('setIsImpersonate', false)
     this.$cookies.remove('access-token')
+    this.$cookies.remove('access-token-impersonate')
   },
   async updateProfile ({ dispatch }, payload) {
     await this.$axios.put(`/profiles/${payload.id}`, payload)
@@ -74,7 +74,6 @@ export const actions = {
         await dispatch('login', form)
       })
       .catch((error) => {
-        console.log('error', error.response.data.errors.email)
         if (error.response.data.errors && error.response.data.errors.email) {
           if (
             error.response.data.errors.email[0] ===
@@ -102,5 +101,32 @@ export const actions = {
         }
         return Promise.reject(new Error(error))
       })
+  },
+  async impersonate ({ commit, dispatch }, userId) {
+    const { data } = await this.$axios.post(`/users/${userId}/impersonate`)
+    // commit('messaging/reset', null, { root: true })
+    this.$cookies.set('access-token-impersonate', data.accessToken, {
+      maxAge: 3600, // 1 heure
+      path: '/',
+      secure: true
+    })
+    this.$cookies.set('token-id-impersonate', data.token.id, {
+      maxAge: 3600, // 1 heure
+      path: '/'
+    })
+    commit('setIsImpersonate', true)
+    await dispatch('fetchUser')
+    this.$router.push('/')
+  },
+  async stopImpersonate ({ commit, dispatch }) {
+    commit('setIsImpersonate', false)
+    if (this.$cookies.get('token-id-impersonate')) {
+      await this.$axios.delete(`/impersonate/${this.$cookies.get('token-id-impersonate')}`)
+    }
+    // commit('messaging/reset', null, { root: true })
+    this.$cookies.remove('access-token-impersonate')
+    this.$cookies.remove('token-id-impersonate')
+    await dispatch('fetchUser')
+    this.$router.push('/')
   }
 }

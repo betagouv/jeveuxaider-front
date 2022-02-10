@@ -22,6 +22,9 @@
             Modifier
           </Button>
         </nuxt-link>
+        <Button variant="white" size="sm" icon="IdentificationIcon" @click.native="handleImpersonate()">
+          Prendre sa place
+        </Button>
       </div>
       <div class="border-t -mx-6 my-6" />
       <BoxDisponibilities class="mb-8" :profile="profile" />
@@ -74,6 +77,11 @@ export default {
   },
   watch: {
     profileId: '$fetch'
+  },
+  methods: {
+    async handleImpersonate () {
+      await this.$store.dispatch('auth/impersonate', this.profile.user.id)
+    }
   }
 }
 </script>

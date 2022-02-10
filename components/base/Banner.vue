@@ -1,9 +1,9 @@
 <template>
   <div class="bg-jva-blue-600">
-    <div class="py-3 px-3 sm:px-6 lg:px-8">
+    <div class="container py-3">
       <div class="flex items-center justify-between flex-wrap">
         <div class="w-0 flex-1 flex items-center">
-          <span class="flex p-2 rounded-lg bg-jva-blue-800">
+          <span class="flex rounded-lg bg-jva-blue-800">
             <component
               :is="icon"
               class="h-6 w-6 text-white"

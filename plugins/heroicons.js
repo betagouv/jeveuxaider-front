@@ -28,7 +28,8 @@ import {
   TrashIcon,
   SpeakerphoneIcon,
   CogIcon,
-  ChatAltIcon
+  ChatAltIcon,
+  IdentificationIcon
 } from '@vue-hero-icons/outline'
 import { InformationCircleIcon, UsersIcon, HomeIcon, ChevronDownIcon as ChevronDownSolidIcon, CheckIcon as CheckSolidIcon, PlusCircleIcon, MinusCircleIcon, UserIcon as UserSolidIcon } from '@vue-hero-icons/solid'
 
@@ -69,7 +70,8 @@ const components = {
   UserSolidIcon,
   SpeakerphoneIcon,
   CogIcon,
-  ChatAltIcon
+  ChatAltIcon,
+  IdentificationIcon
 }
 
 Object.entries(components).forEach(([name, component]) => {
