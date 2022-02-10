@@ -1,8 +1,8 @@
 <template>
   <div
-    class="flex items-center space-x-3 px-3 py-2 rounded-lg border border-jva-blue-500 bg-white"
+    class="flex items-center space-x-3 px-3 py-2 rounded-lg border border-jva-blue-500 bg-white max-w-full"
   >
-    <div class="flex-none text-sm text-jva-blue-500 font-bold">
+    <div class="flex-none text-sm text-jva-blue-500 font-bold truncate flex-shrink">
       <slot />
     </div>
     <XIcon
