@@ -1,5 +1,16 @@
 <template>
-  <SelectWithDescription :options="statesAvailable" :value="value" @selected="$emit('selected', $event)" />
+  <div>
+    <SelectWithDescription :options="statesAvailable" :value="value" @selected="$emit('selected', $event)" />
+    <!-- <Modal
+      title="Deactivate account"
+      icon="warning"
+    >
+      Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.
+      <template #footer slot-scope="">
+        Footer
+      </template>
+    </Modal> -->
+  </div>
 </template>
 
 <script>
