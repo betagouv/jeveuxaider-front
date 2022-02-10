@@ -28,7 +28,7 @@
       <div
         class="absolute top-0 flex justify-center inset-x-0"
       >
-        <div class="pill !rounded-t-none capitalize">
+        <div v-if="profile.user" class="pill !rounded-t-none capitalize">
           {{ profile.user.context_role | label('role') }}
         </div>
       </div>
