@@ -1,6 +1,6 @@
 <template>
   <ais-instant-search :search-client="searchClient" :index-name="indexName">
-    <ais-configure :hits-per-page.camel="5" />
+    <ais-configure :hits-per-page.camel="5" filters="vocabulary_name:Skills" />
     <ais-autocomplete>
       <template slot-scope="{ indices, refine }">
         <div class="">
@@ -48,8 +48,8 @@
                       Ajoutée
                     </div>
                   </div>
-                  <div v-if="suggestion.item.properties" class="text-xs italic">
-                    {{ suggestion.item.properties['group'] }}
+                  <div v-if="suggestion.item.group" class="text-xs italic">
+                    {{ suggestion.item.group }}
                   </div>
                 </div>
               </div>
