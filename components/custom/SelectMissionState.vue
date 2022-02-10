@@ -1,6 +1,7 @@
 <template>
   <div>
     <SelectWithDescription :options="statesAvailable" :value="value" @selected="$emit('selected', $event)" />
+    <AlertDialog title="Êtes-vous sûr de vouloir supprimer ?" text="En supprimant ça va être galère !" is-open="true" />
     <!-- <Modal
       title="Deactivate account"
       icon="warning"
