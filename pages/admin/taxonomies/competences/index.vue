@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <DrawerTerm :term-id="drawerTermId" @close="drawerTermId = null" />
+
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
@@ -19,9 +21,9 @@
           <SectionHeading title="Compétences">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
-                <nuxt-link :to="`/admin/missions`">
+                <nuxt-link :to="`/admin/taxonomies/competences/add`">
                   <Button size="lg" icon="PlusIcon">
-                    Compétence
+                    Nouveau
                   </Button>
                 </nuxt-link>
               </div>
@@ -56,7 +58,7 @@
                     {{ term.name }}
                   </div>
                   <div class="text-gray-500">
-                    {{ term.related_count ? $options.filters.pluralize(term.related_count, 'élément lié', 'éléments liés') : 'Aucun élément lié' }}
+                    {{ term.is_published ? 'En ligne' : 'Hors ligne' }}
                   </div>
                 </TableRowCell>
                 <TableRowCell>
@@ -84,10 +86,12 @@
 <script>
 import MenuAdmin from '@/components/section/admin/MenuAdmin'
 import QueryBuilder from '@/mixins/query-builder'
+import DrawerTerm from '@/components/drawer/DrawerTerm'
 
 export default {
   components: {
-    MenuAdmin
+    MenuAdmin,
+    DrawerTerm
   },
   mixins: [QueryBuilder],
   layout: 'admin',

@@ -48,7 +48,7 @@ import BoxInformations from '@/components/section/territoire/BoxInformations'
 import BoxMission from '@/components/section/territoire/BoxMission'
 import BoxParticipation from '@/components/section/territoire/BoxParticipation'
 import SelectTerritoireState from '@/components/custom/SelectTerritoireState'
-import OnlineIndicator from '~/components/custom/OnlineIndicator'
+import OnlineIndicator from '@/components/custom/OnlineIndicator'
 
 export default {
   components: {
