@@ -2,6 +2,7 @@
   <div>
     <SelectWithDescription :options="statesAvailable" :value="value" @selected="handleSelect($event)" />
     <AlertDialog
+      theme="warning"
       :title="titleAlert"
       :text="textAlert"
       :is-open="showAlert"
@@ -65,7 +66,7 @@ export default {
   },
   methods: {
     handleSelect ($event) {
-      this.titleAlert = 'Supprimer mon compte'
+      this.titleAlert = 'Changer le statut'
       this.textAlert = 'Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.'
       this.selected = $event
       this.showAlert = true
