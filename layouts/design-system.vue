@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="h-full">
     <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
       <div class="max-w-6xl mx-auto py-16 sm:py-24">
         <div class="sm:mt-8">
@@ -32,6 +32,9 @@
         </div>
       </div>
     </div>
+    <client-only>
+      <portal-target name="body-end" />
+    </client-only>
   </div>
 </template>
 
@@ -83,6 +86,13 @@ export default {
             { name: 'Pagination', href: '/design-system/navigation/pagination' },
             { name: 'Tabs', href: '/design-system/navigation/tabs' },
             { name: 'Steps', href: '/design-system/navigation/steps' }
+          ]
+        },
+        {
+          category: 'Overlay',
+          components: [
+            { name: 'Modal', href: '/design-system/overlay/modal' },
+            { name: 'AlertDialog', href: '/design-system/overlay/alert-dialog' }
           ]
         },
         {
