@@ -107,7 +107,7 @@ export default {
     onDelete () {
       this.$emit('delete', this.files[0])
       this.files = []
-      this.manipulations = []
+      this.manipulations = {}
     },
     onCropperReady () {
       if (this.manipulations?.manualCrop) {
