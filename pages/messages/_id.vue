@@ -1,14 +1,15 @@
 <template>
-  <ConversationPage />
+  <!-- <ConversationPage /> -->
+  <div>todo</div>
 </template>
 
 <script>
-import ConversationPage from '@/components/conversation/Page.vue'
+// import ConversationPage from '@/components/conversation/Page.vue'
 
 export default {
-  components: {
-    ConversationPage
-  },
+//   components: {
+//     ConversationPage
+//   },
   layout: 'messages',
   async asyncData ({ store, error, $api, params, $axios }) {
     const { data: conversation } = await $axios.get(`/conversation/${params.id}`)
