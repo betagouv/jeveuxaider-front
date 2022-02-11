@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import ConversationMessage from '@/components/conversation/message'
+import ConversationMessage from '@/components/conversation/Message.vue'
 import ConversationContextualMessage from '@/components/conversation/ContextualMessage.vue'
 
 export default {
