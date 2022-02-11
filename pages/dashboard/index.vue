@@ -150,11 +150,12 @@ export default {
       if (this.$store.getters.contextRole === 'admin') {
         return [
           { icon: '🏞', title: 'Territoires', link: '/admin/contenus/territoires' },
-          { icon: '🗂', title: 'Modèles de missions', link: '/admin/contenus/modeles-mission' }
+          { icon: '🗂', title: 'Modèles de missions', link: '/admin/contenus/modeles-mission' },
+          { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
         ]
       }
       return [
-        { icon: '🪧', title: 'Ressources', link: '/admin/ressources' }
+        { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
       ]
     }
   },
