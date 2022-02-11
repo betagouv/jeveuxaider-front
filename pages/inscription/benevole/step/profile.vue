@@ -144,7 +144,7 @@ export default {
           }
           this.loading = true
 
-          this.uploadFiles('profile', this.form.id, 'profiles')
+          await this.uploadFiles('profile', this.form.id, 'profiles')
 
           await this.$store.dispatch('auth/updateProfile', {
             id: this.$store.getters.profile.id,

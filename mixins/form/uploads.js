@@ -41,7 +41,7 @@ export default {
       }
     },
 
-    uploadFiles (modelType, modelId, collection) {
+    async uploadFiles (modelType, modelId, collection) {
       if (this.form.id) {
         const promises = []
 
@@ -74,7 +74,7 @@ export default {
           )
         })
 
-        Promise.all(promises)
+        await Promise.all(promises)
       }
     }
   }

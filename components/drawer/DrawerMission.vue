@@ -38,7 +38,7 @@
       <div class="text-sm  uppercase font-semibold text-gray-600">
         Statut de la mission
       </div>
-      <SelectMissionState v-if="canEditStatut" :value="mission.state" class="mt-4" @selected="handleChangeState($event)" />
+      <SelectMissionState v-if="canEditStatut" :value="mission.state" :mission-stats="missionStats" class="mt-4" @selected="handleChangeState($event)" />
       <div v-else class="mt-4 font-medium text-gray-800">
         {{ mission.state }}
       </div>
@@ -80,14 +80,20 @@ export default {
   },
   data () {
     return {
-      mission: null
+      mission: null,
+      missionStats: null
     }
   },
   async fetch () {
     if (!this.missionId) {
       return null
     }
+
     const { data } = await this.$axios.get(`/missions/${this.missionId}`)
+    this.$axios.get(`/statistics/missions/${this.missionId}`).then(({ data }) => {
+      this.missionStats = data
+    })
+
     this.mission = data
   },
   watch: {

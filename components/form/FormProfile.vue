@@ -264,13 +264,13 @@ export default {
     handleSubmit () {
       this.formSchema
         .validate(this.form, { abortEarly: false })
-        .then(() => {
+        .then(async () => {
           if (this.loading) {
             return
           }
           this.loading = true
 
-          this.uploadFiles('profile', this.form.id, 'profiles')
+          await this.uploadFiles('profile', this.form.id, 'profiles')
           this.$emit('submited', this.form)
         })
         .catch((errors) => {
