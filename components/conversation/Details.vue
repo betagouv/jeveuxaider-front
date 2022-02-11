@@ -29,7 +29,7 @@
           :src="participation.mission.domaine.image"
           width="56"
           :alt="participation.mission.domaine.name.fr"
-        />
+        >
       </div>
 
       <h3 class="text-xl leading-8 font-bold text-gray-900 mb-4">
@@ -45,8 +45,7 @@
             'text-[#03543f]': participation.state == 'Validée',
             'text-[#f56565]': participation.state == 'Refusée',
           }"
-          >{{ participation.state | lowercase }}</span
-        >
+        >{{ participation.state }}</span>
       </div>
 
       <ButtonParticipationCancel
@@ -59,28 +58,32 @@
         "
       />
 
-      <hr class="my-6" />
+      <hr class="my-6">
 
       <div class="flex mb-6">
         <div
           v-if="participation.mission.start_date"
           class="w-1/2 border-r pr-4"
         >
-          <div class="text-sm text-gray-500 mb-4 font-light">Début</div>
+          <div class="text-sm text-gray-500 mb-4 font-light">
+            Début
+          </div>
           <div class="font-light">
-            {{ participation.mission.start_date | formatCustom('ddd D MMM') }}
+            {{ $dayjs(participation.mission.start_date).format('ddd D MMM') }}
           </div>
           <div class="text-2xl">
-            {{ participation.mission.start_date | formatCustom('HH[h]mm') }}
+            {{ $dayjs(participation.mission.start_date).format('HH[h]mm') }}
           </div>
         </div>
         <div v-if="participation.mission.end_date" class="w-1/2 ml-4">
-          <div class="text-sm text-gray-500 mb-4 font-light">Fin</div>
+          <div class="text-sm text-gray-500 mb-4 font-light">
+            Fin
+          </div>
           <div class="font-light">
-            {{ participation.mission.end_date | formatCustom('ddd D MMM') }}
+            {{ $dayjs(participation.mission.end_date).format('ddd D MMM') }}
           </div>
           <div class="text-2xl">
-            {{ participation.mission.end_date | formatCustom('HH[h]mm') }}
+            {{ $dayjs(participation.mission.end_date).format('HH[h]mm') }}
           </div>
         </div>
       </div>
@@ -89,9 +92,11 @@
         v-if="participation.mission.type == 'Mission en présentiel'"
         class="mb-6"
       >
-        <div class="text-sm text-gray-500 mb-4 font-light">Adresse</div>
+        <div class="text-sm text-gray-500 mb-4 font-light">
+          Adresse
+        </div>
         <div class="font-light">
-          {{ participation.mission.address }}<br />
+          {{ participation.mission.address }}<br>
           {{ participation.mission.zip }} {{ participation.mission.city }}
         </div>
       </div>
@@ -113,7 +118,7 @@
         <h3 class="text-xl leading-8 font-bold text-gray-900 mb-4">
           Objectif de la mission
         </h3>
-        <div class="font-light" v-html="participation.mission.objectif"></div>
+        <div class="font-light" v-html="participation.mission.objectif" />
       </section>
 
       <section>
@@ -123,7 +128,7 @@
         <div
           class="font-light"
           v-html="participation.mission.description"
-        ></div>
+        />
       </section>
 
       <section>
@@ -167,35 +172,43 @@
         <div
           class="font-light"
           v-html="participation.mission.information"
-        ></div>
+        />
       </section>
     </template>
   </div>
 </template>
 
 <script>
+import ConversationBenevole from '@/components/conversation/Benevole.vue'
+
 export default {
+  components: {
+    ConversationBenevole
+  },
   computed: {
-    conversation() {
+    conversation () {
       return this.$store.getters['messaging/conversation']
     },
-    participation() {
+    participation () {
       return this.conversation.conversable
     },
-    isBenevole() {
+    isBenevole () {
       return (
-        this.participation.profile_id == this.$store.getters.user.profile.id
+        this.participation.profile_id == this.$store.getters.profile.id
       )
-    },
+    }
   },
   methods: {
-    async onParticipationUpdate(participation) {
+    async onParticipationUpdate (participation) {
       // A participation update adds 1 or 2 new messages, so re-fetch them.
-      const messages = await this.$api.fetchMessages(this.conversation.id, {
-        itemsPerPage:
+      const messages = await this.$axios.get(`/conversations/${this.conversation.id}/messages`, {
+        params: {
+          itemsPerPage:
           this.$store.getters['messaging/messages'].length +
-          this.$store.getters['messaging/newMessagesCount'],
+          this.$store.getters['messaging/newMessagesCount']
+        }
       })
+
       this.$store.commit('messaging/setMessages', messages.data.data)
 
       // Refresh the conversation to get the latest message
@@ -204,8 +217,8 @@ export default {
         'messaging/refreshConversation',
         this.conversation
       )
-    },
-  },
+    }
+  }
 }
 </script>
 

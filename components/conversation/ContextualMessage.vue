@@ -1,9 +1,9 @@
 <template>
   <div class="my-10 text-center">
     <div class="text-gray-400 font-light text-sm">
-      {{ message.created_at | formatCustom('D MMM HH[h]mm') }}
+      {{ $dayjs(message.created_at).format('D MMM HH[h]mm') }}
     </div>
-    <div class="font-semibold text-center" v-html="content"></div>
+    <div class="font-semibold text-center" v-html="content" />
   </div>
 </template>
 
@@ -12,27 +12,27 @@ export default {
   props: {
     message: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   computed: {
-    content() {
+    content () {
       let message = ''
       switch (this.message.contextual_state) {
         case 'En attente de validation':
-          message = `La participation est en attente de validation`
+          message = 'La participation est en attente de validation'
           break
         case 'Validée':
-          message = `La participation a été validée`
+          message = 'La participation a été validée'
           break
         case 'Annulée':
-          message = `La participation a été annulée`
+          message = 'La participation a été annulée'
           break
         case 'Annulée par bénévole':
           message = this.message.content
           break
         case 'Refusée':
-          message = `La participation a été déclinée`
+          message = 'La participation a été déclinée'
           break
         default:
           message = `Le nouveau statut de la participation est: ${this.message.contextual_state}`
@@ -56,7 +56,7 @@ export default {
         }
       }
       return message
-    },
-  },
+    }
+  }
 }
 </script>

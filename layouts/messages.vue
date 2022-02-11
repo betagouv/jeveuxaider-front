@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-100 h-full flex flex-col">
-    <Header />
+    <Header full-width />
 
     <client-only>
       <div
@@ -120,10 +120,12 @@
 <script>
 import { debounce } from 'lodash'
 import ConversationTeaser from '@/components/conversation/Teaser.vue'
+import Header from '@/components/layout/Header.vue'
 
 export default {
   name: 'MessagesLayout',
   components: {
+    Header,
     ConversationTeaser
   },
   middleware: 'authenticated',
@@ -151,7 +153,7 @@ export default {
       const currentUser = this.$store.getters[
         'messaging/conversation'
       ].users.find((user) => {
-        return user.id == this.$store.getters.user.id
+        return user.id == this.$store.getters.profile.user_id
       })
 
       if (currentUser && !currentUser.pivot.status) {
@@ -177,9 +179,7 @@ export default {
         return conversation.id == this.$router.currentRoute.params.id
       })
       if (!isInConversations) {
-        const conversation = await this.$api.getConversation(
-          this.$router.currentRoute.params.id
-        )
+        const { data: conversation } = await this.$axios.get(`/conversation/${this.$router.currentRoute.params.id}`)
         conversations = [...conversations, conversation]
         this.conversationFilters['filter[exclude]'] = conversation.id
       }

@@ -7,11 +7,11 @@
         <div class="flex items-baseline">
           <span class="font-bold mr-2">{{ name }}</span>
           <span v-if="date" class="text-gray-500 font-light text-sm">
-            {{ date | formatCustom('D MMM HH[h]mm') }}
+            {{ $dayjs(date).format('D MMM HH[h]mm') }}
           </span>
         </div>
         <div>
-          <slot></slot>
+          <slot />
         </div>
       </div>
     </div>
@@ -23,25 +23,25 @@ export default {
   props: {
     name: {
       type: String,
-      required: true,
+      required: true
     },
     shortName: {
       type: String,
-      required: true,
+      required: true
     },
     thumbnail: {
       type: String,
-      default: null,
+      default: null
     },
     date: {
       type: String,
-      default: null,
-    },
+      default: null
+    }
   },
   computed: {
-    formatStatus() {
+    formatStatus () {
       return this.status ? 'En cours' : 'Archivé'
-    },
-  },
+    }
+  }
 }
 </script>

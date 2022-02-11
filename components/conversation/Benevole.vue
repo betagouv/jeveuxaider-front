@@ -1,40 +1,50 @@
 <template>
   <transition-group name="fade-in" tag="div">
-    <ElContainer v-if="loading" key="loading" v-loading="loading">
+    <!-- <ElContainer v-if="loading" key="loading" v-loading="loading">
       <div class="w-full h-64"></div>
-    </ElContainer>
+    </ElContainer> -->
 
-    <section v-else ref="container" key="loaded">
+    <section v-if="!loading" ref="container" key="loaded">
       <h3 class="text-xl leading-8 font-bold text-gray-900 mb-4">
         À propos de {{ profile.full_name }}
       </h3>
 
       <div v-if="profile.email" class="mb-2 flex">
-        <div class="text-gray-500 w-24 text-sm mr-1">Email</div>
+        <div class="text-gray-500 w-24 text-sm mr-1">
+          Email
+        </div>
         <div class="text-gray-900 flex-1">
           {{ profile.email }}
         </div>
       </div>
       <div v-if="profile.mobile" class="mb-2 flex">
-        <div class="text-gray-500 w-24 text-sm mr-1">Portable</div>
+        <div class="text-gray-500 w-24 text-sm mr-1">
+          Portable
+        </div>
         <div class="text-gray-900 flex-1">
           {{ profile.mobile }}
         </div>
       </div>
       <div v-if="profile.phone" class="mb-2 flex">
-        <div class="text-gray-500 w-24 text-sm mr-1">Téléphone</div>
+        <div class="text-gray-500 w-24 text-sm mr-1">
+          Téléphone
+        </div>
         <div class="text-gray-900 flex-1">
           {{ profile.phone }}
         </div>
       </div>
       <div v-if="profile.birthday" class="mb-2 flex">
-        <div class="text-gray-500 w-24 text-sm mr-1">Naissance</div>
+        <div class="text-gray-500 w-24 text-sm mr-1">
+          Naissance
+        </div>
         <div class="text-gray-900 flex-1">
           {{ profile.birthday }}
         </div>
       </div>
       <div v-if="profile.zip" class="mb-2 flex">
-        <div class="text-gray-500 w-24 text-sm mr-1">Code postal</div>
+        <div class="text-gray-500 w-24 text-sm mr-1">
+          Code postal
+        </div>
         <div class="text-gray-900 flex-1">
           {{ profile.zip }}
         </div>
@@ -43,7 +53,9 @@
         v-if="profile.domaines && profile.domaines.length > 0"
         class="mb-2 flex"
       >
-        <div class="text-gray-500 w-24 text-sm mr-1">Domaines</div>
+        <div class="text-gray-500 w-24 text-sm mr-1">
+          Domaines
+        </div>
         <div class="text-gray-900 flex-1">
           {{
             profile.domaines
@@ -55,7 +67,9 @@
         </div>
       </div>
       <div v-if="profile.skills && profile.skills.length > 0" class="mb-2 flex">
-        <div class="text-gray-500 w-24 text-sm mr-1">Compétences</div>
+        <div class="text-gray-500 w-24 text-sm mr-1">
+          Compétences
+        </div>
         <div class="text-gray-900 flex-1">
           {{
             profile.skills
@@ -67,7 +81,9 @@
         </div>
       </div>
       <div v-if="profile.disponibilities" class="mb-2 flex">
-        <div class="text-gray-500 w-24 text-sm mr-1">Dispos</div>
+        <div class="text-gray-500 w-24 text-sm mr-1">
+          Dispos
+        </div>
         <div class="text-gray-900 flex-1">
           {{
             profile.disponibilities
@@ -82,7 +98,9 @@
         </div>
       </div>
       <div v-if="profile.commitment__duration" class="mb-2 flex">
-        <div class="text-gray-500 w-24 text-sm mr-1">Fréquence</div>
+        <div class="text-gray-500 w-24 text-sm mr-1">
+          Fréquence
+        </div>
         <div class="text-gray-900 flex-1">
           {{ profile.commitment__duration | labelFromValue('duration') }}
           <template v-if="profile.commitment__time_period">
@@ -96,7 +114,9 @@
         </div>
       </div>
       <div v-if="profile.description" class="mb-2 flex">
-        <div class="text-gray-500 w-24 text-sm mr-1">Motivation</div>
+        <div class="text-gray-500 w-24 text-sm mr-1">
+          Motivation
+        </div>
         <div class="text-gray-900 flex-1">
           {{ profile.description }}
         </div>
@@ -106,24 +126,23 @@
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {
       profile: null,
-      loading: true,
+      loading: true
     }
   },
-  async fetch() {
+  async fetch () {
     this.loading = true
-    const profile = await this.$api.getConversationBenevole(
-      this.conversation.id
-    )
+    const { data: profile } = await this.$axios.get(`/conversation/${this.conversation.id}/benevole`)
+
     this.profile = profile
     this.loading = false
   },
   computed: {
-    conversation() {
+    conversation () {
       return this.$store.getters['messaging/conversation']
-    },
-  },
+    }
+  }
 }
 </script>
