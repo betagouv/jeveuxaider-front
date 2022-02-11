@@ -70,7 +70,7 @@ export default {
   components: {
   },
   mixins: [FormErrors],
-  layout: 'maintenance',
+  layout: 'empty',
   middleware: 'guest',
   data () {
     return {

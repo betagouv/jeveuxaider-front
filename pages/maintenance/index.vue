@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  layout: 'maintenance'
+  layout: 'empty'
 }
 </script>
 
