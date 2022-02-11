@@ -1,15 +1,14 @@
 <template>
   <div>
-    <SelectWithDescription :options="statesAvailable" :value="value" @selected="$emit('selected', $event)" />
-    <!-- <Modal
-      title="Deactivate account"
-      icon="warning"
-    >
-      Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.
-      <template #footer slot-scope="">
-        Footer
-      </template>
-    </Modal> -->
+    <SelectWithDescription :options="statesAvailable" :value="value" @selected="handleSelect($event)" />
+    <AlertDialog
+      theme="warning"
+      :title="titleAlert"
+      :text="textAlert"
+      :is-open="showAlert"
+      @confirm="$emit('selected', selected)"
+      @cancel="showAlert = false"
+    />
   </div>
 </template>
 
@@ -24,6 +23,10 @@ export default {
   },
   data () {
     return {
+      selected: null,
+      showAlert: false,
+      titleAlert: '',
+      textAlert: ''
     }
   },
   computed: {
@@ -59,6 +62,14 @@ export default {
       }
       const currentState = this.statesByRole.find(option => option.key == this.value)
       return this.statesByRole.filter(option => currentState.from.includes(option.key) || option.key == this.value)
+    }
+  },
+  methods: {
+    handleSelect ($event) {
+      this.titleAlert = 'Changer le statut'
+      this.textAlert = 'Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.'
+      this.selected = $event
+      this.showAlert = true
     }
   }
 }
