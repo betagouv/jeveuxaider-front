@@ -94,10 +94,12 @@
 
 <script>
 import ConversationMessage from '@/components/conversation/message'
+import ConversationContextualMessage from '@/components/conversation/ContextualMessage.vue'
 
 export default {
   components: {
-    ConversationMessage
+    ConversationMessage,
+    ConversationContextualMessage
   },
   data () {
     return {
