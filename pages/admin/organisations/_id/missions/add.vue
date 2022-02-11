@@ -69,7 +69,7 @@
             :key="missionTemplate.id"
             :title="missionTemplate.title"
             :description="missionTemplate.subtitle"
-            :image-url="missionTemplate.photo && missionTemplate.photo.large"
+            :image-url="missionTemplate.photo.urls.card.length ? missionTemplate.photo.urls.card : undefined"
             @click.native="onSelectTemplate(missionTemplate)"
           />
         </div>
@@ -128,7 +128,9 @@ export default {
           'filter[with_reseaux]': this.structure.reseaux?.length
             ? this.structure.reseaux.map(reseau => reseau.id).join(',')
             : 'empty',
-          pagination: 99
+          pagination: 99,
+          append: 'photo',
+          include: 'media'
         }
       })
       this.templates = templates.data.data
