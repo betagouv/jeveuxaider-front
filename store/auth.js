@@ -49,7 +49,7 @@ export const actions = {
       })
   },
   async updateUser ({ state, commit }, attributes) {
-    const res = await this.$axios.post('/user', {
+    const res = await this.$axios.put('/user', {
       ...state.user,
       ...attributes
     })

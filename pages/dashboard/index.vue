@@ -154,8 +154,7 @@ export default {
         ]
       }
       return [
-        { icon: '🪧', title: 'Lien 1', link: '#' },
-        { icon: '🗂', title: 'Lien 2', link: '#' }
+        { icon: '🪧', title: 'Ressources', link: '/admin/ressources' }
       ]
     }
   },

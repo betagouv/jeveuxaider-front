@@ -146,7 +146,8 @@ export default {
       formSchema: object({
         title: string().min(2, 'Le nom est trop court').required('Le nom est requis'),
         type: string().required('Le type est requis'),
-        roles: array().min(1, 'Merci de sélectionner au moins 1 élement')
+        roles: array().min(1, 'Merci de sélectionner au moins 1 élement'),
+        link: string().url('L\'url n\'est pas valide').nullable()
       })
     }
   },

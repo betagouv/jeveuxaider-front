@@ -8,6 +8,10 @@
         <DescriptionListItem term="Crée le" :description="$dayjs(ressource.created_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Modifié le" :description="$dayjs(ressource.updated_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Titre" :description="ressource.title" />
+        <DescriptionListItem term="Type" :description="ressource.type" />
+        <DescriptionListItem term="Roles" :description="ressource.roles.join(', ')" />
+        <DescriptionListItem v-if="ressource.type ==='link'" term="Lien" :description="ressource.link" />
+        <DescriptionListItem v-if="ressource.type ==='file'" term="Fichier" description="@TODO file" />
         <DescriptionListItem term="Description" :description="ressource.description" />
       </DescriptionList>
     </Box>
