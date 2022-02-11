@@ -180,7 +180,7 @@
           @change="changeFilter('filter[publics_volontaires]', 'Mineurs')"
         />
       </div>
-      <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <CardMission
           v-for="mission in queryResult.data"
           :key="mission.id"

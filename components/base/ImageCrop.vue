@@ -10,14 +10,14 @@
 
     <template v-else>
       <!-- Preview -->
-      <div :style="`width: ${previewWidth}px; height: ${previewWidth * ratio}px`">
+      <div :style="`width: ${previewWidth}px; height: ${previewWidth / ratio}px`">
         <img
           class="rounded-lg shadow-xl object-cover object-center w-full h-full"
           :srcset="previewSrcset"
           alt="Preview"
           :sizes="`${previewWidth}px`"
           :width="previewWidth"
-          :height="previewWidth * ratio"
+          :height="previewWidth / ratio"
         >
       </div>
 
@@ -56,7 +56,7 @@
           :resize-image="false"
           :transitions="false"
           :min-width="minWidth"
-          :min-height="minWidth * ratio"
+          :min-height="minWidth / ratio"
           @ready="onCropperReady"
         />
 

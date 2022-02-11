@@ -55,7 +55,7 @@
               required
             >
               <RichEditor
-                v-model="form.objectif"
+                v-model="form.description"
                 placeholder="Décrivez la mission en quelques mots..."
               />
             </FormControl>
@@ -94,8 +94,9 @@
             <FormControl label="Principale" html-for="photo" class="col-span-2">
               <ImageCrop
                 :default-value="form.photo"
-                :preview-width="100"
-                :min-width="200"
+                :ratio="300/143"
+                :min-width="300"
+                :preview-width="235"
                 @add="addFiles({ files: [$event], attribute: 'photo' })"
                 @delete="deleteFile($event, 0)"
                 @crop="onManipulationsChange($event, 0)"
@@ -158,11 +159,10 @@ export default {
           if (this.form.id) {
             await this.$axios.put(`/mission-templates/${this.form.id}`, this.form)
           } else {
-            // @todo: récupérer le model id pour permettre d'uploader l'image ensuite
-            await this.$axios.post('/mission-templates', this.form)
+            const { data: missionTemplate } = await this.$axios.post('/mission-templates', this.form)
+            this.form.id = missionTemplate.id
           }
-
-          this.uploadFiles('mission_template', this.form.id, 'templates')
+          await this.uploadFiles('mission_template', this.form.id, 'templates')
 
           this.$toast.success('Modifications enregistrées')
           this.$router.push('/admin/contenus/modeles-mission')
