@@ -8,19 +8,19 @@
     <div class="panel--content flex-1">
       <div class="h-full">
         <transition-group name="fade-in" tag="div" class="h-full">
-          <ElContainer v-if="loading" key="loading" v-loading="loading">
-            <div class="w-16 h-16"></div>
-          </ElContainer>
+          <!-- <ElContainer v-if="loading" key="loading" v-loading="loading">
+            <div class="w-16 h-16" />
+          </ElContainer> -->
 
-          <div v-else key="loaded" class="h-full flex flex-col">
+          <div v-if="!loading" key="loaded" class="h-full flex flex-col">
             <!-- Fake loading -->
-            <ElContainer
+            <!-- <ElContainer
               v-if="currentPageMessages < lastPageMessages"
               v-loading="true"
               class="mt-64"
             >
-              <div class="w-16 h-16"></div>
-            </ElContainer>
+              <div class="w-16 h-16" />
+            </ElContainer> -->
 
             <template
               v-for="message in $store.getters['messaging/messages']
@@ -45,11 +45,12 @@
                 "
                 :date="message.created_at"
               >
-                <nl2br
+                <!-- <nl2br
                   tag="p"
                   :text="message.content"
                   class-name="break-word"
-                />
+                /> -->
+                {{ message.content }}
               </ConversationMessage>
             </template>
 
@@ -92,27 +93,34 @@
 </template>
 
 <script>
+import ConversationMessage from '@/components/conversation/message'
+import ConversationContextualMessage from '@/components/conversation/ContextualMessage.vue'
+
 export default {
-  data() {
+  components: {
+    ConversationMessage,
+    ConversationContextualMessage
+  },
+  data () {
     return {
       newMessage: '',
       loading: true,
       loadingNewMessages: false,
       currentPageMessages: 1,
-      lastPageMessages: null,
+      lastPageMessages: null
     }
   },
-  async fetch() {
+  async fetch () {
     this.loading = true
-    const messages = await this.$api.fetchMessages(
-      this.$store.getters['messaging/conversation'].id
-    )
+
+    const messages = await this.$axios.get(`/conversations/${this.$store.getters['messaging/conversation'].id}/messages`)
+
     this.$store.commit('messaging/setMessages', messages.data.data)
     this.lastPageMessages = messages.data.last_page
     this.loading = false
   },
   methods: {
-    onScrollMessages() {
+    onScrollMessages () {
       const scrollHeight =
         this.$refs.messagesContainer.scrollHeight -
         this.$refs.messagesContainer.offsetHeight
@@ -125,38 +133,38 @@ export default {
         this.fetchNextPageMessages()
       }
     },
-    async fetchNextPageMessages() {
+    async fetchNextPageMessages () {
       this.loadingNewMessages = true
       this.currentPageMessages++
-      const messages = await this.$api.fetchMessages(
-        this.$store.getters['messaging/conversation'].id,
-        {
+
+      const messages = await this.$axios.get(`/conversations/${this.$store.getters['messaging/conversation'].id}/messages`, {
+        params: {
           page: this.currentPageMessages,
-          itemsPerPage: 15 + this.$store.getters['messaging/newMessagesCount'],
+          itemsPerPage: 15 + this.$store.getters['messaging/newMessagesCount']
         }
-      )
+      })
 
       this.$store.commit('messaging/setMessages', [
         ...this.$store.getters['messaging/messages'],
-        ...messages.data.data,
+        ...messages.data.data
       ])
 
       this.$nextTick(() => {
         this.loadingNewMessages = false
       })
     },
-    async onAddMessage() {
+    async onAddMessage () {
       if (this.newMessage.trim().length) {
         const response = await this.$api.addMessageToConversation(
           this.$store.getters['messaging/conversation'].id,
           {
-            content: this.newMessage,
+            content: this.newMessage
           }
         )
 
         this.$store.commit('messaging/setMessages', [
           response.data,
-          ...this.$store.getters['messaging/messages'],
+          ...this.$store.getters['messaging/messages']
         ])
 
         this.$store.commit('messaging/incrementNewMessagesCount')
@@ -167,8 +175,8 @@ export default {
           this.$store.getters['messaging/conversation']
         )
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -35,7 +35,9 @@
         class="panel--header sticky top-0 bg-white px-6 border-b border-gray-200 flex items-center"
       >
         <div class="flex flex-1 justify-between">
-          <h3 class="text-lg leading-8 font-bold text-gray-900">Détails</h3>
+          <h3 class="text-lg leading-8 font-bold text-gray-900">
+            Détails
+          </h3>
 
           <i
             class="w-6 h-6 p-1 !flex items-center justify-center rounded-full border cursor-pointer leading-none transition hover:border-black el-icon-close"
@@ -56,9 +58,16 @@
 </template>
 
 <script>
+import ConversationMessages from '@/components/conversation/Messages.vue'
+import ConversationDetails from '@/components/conversation/Details.vue'
+import ConversationMessagesHeader from '@/components/conversation/MessagesHeader.vue'
+
 export default {
+  components: {
+    ConversationMessages, ConversationDetails, ConversationMessagesHeader
+  },
   methods: {
-    onPanelRightToggle() {
+    onPanelRightToggle () {
       this.$store.commit(
         'messaging/setShowPanelRight',
         !this.$store.getters['messaging/showPanelRight']
@@ -75,9 +84,7 @@ export default {
             !this.$store.getters['messaging/showPanelLeft']
           )
         }
-      }
-      // Hide
-      else if (this.$store.getters['messaging/isMobile']) {
+      } else if (this.$store.getters['messaging/isMobile']) { // Hide
         this.$store.commit('messaging/setShowPanelCenter', true)
         this.$store.commit('messaging/setShowPanelLeft', false)
       } else if (!this.$store.getters['messaging/isDesktop']) {
@@ -86,8 +93,8 @@ export default {
           !this.$store.getters['messaging/showPanelLeft']
         )
       }
-    },
-  },
+    }
+  }
 }
 </script>
 

@@ -39,7 +39,7 @@
           </span>
 
           <span class="flex-none text-secondary text-sm">
-            {{ conversation.latest_message.created_at | formatCustom('D MMM') }}
+            {{ $dayjs(conversation.latest_message.created_at).format('D MMM') }}
           </span>
         </div>
 
@@ -98,9 +98,11 @@ export default {
         .join(', ')
     },
     hasRead () {
-      return !this.$store.getters.user.unreadConversations.includes(
-        this.conversation.id
-      )
+      return false
+      // TODO : avec unread dans la conversation plutôt que de load tout les unreads du user
+      // return !this.$store.getters.user.unreadConversations.includes(
+      //   this.conversation.id
+      // )
     },
     nametype () {
       return this.$store.getters.contextRole == 'volontaire'

@@ -27,13 +27,13 @@
       <DropdownParticipationState
         v-if="
           $store.getters.contextRole == 'responsable' &&
-          $store.getters.contextStructure.id ==
+            $store.getters.contextStructure.id ==
             conversation.conversable.mission.structure_id &&
-          !![
-            'En attente de validation',
-            'En cours de traitement',
-            'Validée',
-          ].includes(conversation.conversable.state)
+            !![
+              'En attente de validation',
+              'En cours de traitement',
+              'Validée',
+            ].includes(conversation.conversable.state)
         "
         class="mt-1.5"
         :participation="conversation.conversable"
@@ -110,15 +110,15 @@
 <script>
 export default {
   computed: {
-    conversation() {
+    conversation () {
       return this.$store.getters['messaging/conversation']
     },
-    formattedDate() {
+    formattedDate () {
       let start = this.conversation.conversable.mission.start_date
       let end = this.conversation.conversable.mission.end_date
 
-      start = this.$options.filters.formatCustom(start, 'D MMM YYYY')
-      end = this.$options.filters.formatCustom(end, 'D MMM YYYY')
+      start = this.$dayjs(start).format('D MMM YYYY')
+      end = this.$dayjs(end).format('D MMM YYYY')
 
       if (start == end) {
         return start
@@ -126,25 +126,28 @@ export default {
 
       return `${start} - ${end}`
     },
-    recipient() {
+    recipient () {
       return this.conversation.users.filter((user) => {
-        return user.id != this.$store.getters.user.id
+        return user.id != this.$store.getters.profile.user_id
       })[0]
     },
-    currentUser() {
+    currentUser () {
       return this.conversation.users.find((user) => {
-        return user.id == this.$store.getters.user.id
+        return user.id == this.$store.getters.profile.user_id
       })
-    },
+    }
   },
   methods: {
-    async onParticipationUpdate(participation) {
+    async onParticipationUpdate (participation) {
       // A participation update adds 1 or 2 new messages, so re-fetch them.
-      const messages = await this.$api.fetchMessages(this.conversation.id, {
-        itemsPerPage:
+      const messages = await this.$axios.get(`/conversations/${this.conversation.id}/messages`, {
+        params: {
+          itemsPerPage:
           this.$store.getters['messaging/messages'].length +
-          this.$store.getters['messaging/newMessagesCount'],
+          this.$store.getters['messaging/newMessagesCount']
+        }
       })
+
       this.$store.commit('messaging/setMessages', messages.data.data)
 
       // Refresh the conversation to get the latest message
@@ -154,14 +157,14 @@ export default {
         this.conversation
       )
     },
-    onPanelLeftToggle() {
+    onPanelLeftToggle () {
       this.$store.commit('messaging/setShowPanelCenter', false)
       this.$store.commit('messaging/setShowPanelLeft', true)
     },
-    onArchiveClick() {
+    onArchiveClick () {
       // Update status
       this.$api.setConversationStatus(this.conversation.id, {
-        status: this.currentUser.pivot.status == 0,
+        status: this.currentUser.pivot.status == 0
       })
 
       // Change current conversation
@@ -191,7 +194,7 @@ export default {
         'messaging/removeConversationInConversations',
         this.conversation
       )
-    },
-  },
+    }
+  }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <header class="relative bg-white shadow-lg z-30">
-    <div class="flex justify-between items-center relative lg:max-w-7xl lg:mx-auto lg:p-2">
+    <div class="flex justify-between items-center relative lg:p-2" :class="{'lg:max-w-7xl lg:mx-auto': !fullWidth}">
       <div class="lg:flex lg:space-x-6 lg:items-center">
         <img
           src="@/assets/images/republique-francaise-logo.svg"
@@ -61,7 +61,7 @@
       </nav>
     </div>
     <div class="hidden lg:block w-full border-t" />
-    <div class="hidden lg:flex max-w-7xl mx-auto justify-between text-sm text-gray-800">
+    <div class="hidden lg:flex justify-between text-sm text-gray-800" :class="{'lg:max-w-7xl lg:mx-auto': !fullWidth}">
       <div class="flex w-full">
         <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 1" position="left" class="h-full">
           <template #button>
@@ -229,6 +229,12 @@ export default {
   components: {
     DropdownUser,
     LazySearchOverlay
+  },
+  props: {
+    fullWidth: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     return {
