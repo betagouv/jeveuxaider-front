@@ -1,5 +1,13 @@
 <template>
   <Container2Cols>
+    <AlertDialog
+      theme="warning"
+      title="Supprimer mon compte"
+      text="Attention, cette action est irréversible et toutes vos données de la plateforme JeVeuxAider.gouv.fr seront anonymisées."
+      :is-open="showAlert"
+      @confirm="handleConfirmDeleteUser()"
+      @cancel="showAlert = false"
+    />
     <template #breadcrumb>
       <Breadcrumb
         :items="[{ label: 'Mes paramètres' }]"
@@ -25,7 +33,7 @@
           Vous souhaitez désactiver votre compte ?<br><br> Attention, cette action est irréversible et toutes vos données de la plateforme JeVeuxAider.gouv.fr seront anonymisées.
         </div>
         <div class="ml-auto">
-          <Button variant="white" size="lg" type="submit">
+          <Button variant="white" size="lg" type="submit" @click.native="showAlert = true">
             Je souhaite me désinscrire
           </Button>
         </div>
@@ -44,11 +52,13 @@ export default {
   middleware: 'authenticated',
   data () {
     return {
-
+      showAlert: false
     }
   },
-  created () {
-
+  methods: {
+    async handleConfirmDeleteUser () {
+      await this.$axios.post('/user/anonymize')
+    }
   }
 }
 </script>

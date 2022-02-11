@@ -1,6 +1,6 @@
 <template>
   <form
-    id="password"
+    id="form"
     class="gap-8 grid grid-cols-1"
     @submit.prevent="onSubmit"
   >
