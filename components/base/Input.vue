@@ -16,7 +16,7 @@
         :disabled="disabled"
         :min="typeValue == 'number' && min"
         :class="[
-          'px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500',
+          'px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500 overflow-ellipsis',
           {'pr-8': suffix , 'pl-10': icon, 'bg-gray-100 cursor-not-allowed': disabled},
           {'!pr-3 !pl-4': ['date','datetime-local'].includes(typeValue), '!text-gray-400': ['date','datetime-local'].includes(typeValue) && !Boolean(inputValue)},
           {'hide-picker': hidePicker},
