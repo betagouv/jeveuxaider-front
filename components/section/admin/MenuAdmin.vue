@@ -28,7 +28,8 @@ export default {
           { name: "Domaines d'action", href: '/admin/contenus/domaines' },
           { name: 'Modèles de mission', href: '/admin/contenus/modeles-mission' },
           { name: 'Territoires', href: '/admin/contenus/territoires' },
-          { name: 'Reseaux', href: '/admin/contenus/reseaux' }
+          { name: 'Reseaux', href: '/admin/contenus/reseaux' },
+          { name: 'Ressources', href: '/admin/contenus/ressources' }
         ]
       },
       {
