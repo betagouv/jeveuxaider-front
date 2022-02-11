@@ -23,7 +23,7 @@ export default {
             iconVariant: 'warning',
             title: `<b>${this.$options.filters.formatNumber(action.value)} message(s)</b> non lu(s)`,
             subtitle: 'Vous avez de nouveaux messages en attente',
-            link: '/messagerie'
+            link: '/messages'
           }
         case 'profile_incomplete':
           return {

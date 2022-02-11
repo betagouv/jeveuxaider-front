@@ -10,7 +10,7 @@
         <template #action>
           <nuxt-link
             v-if="$store.getters.contextRole === 'responsable'"
-            :to="`/admin/organisations/${$store.getters.contextableId}/missions/add`"
+            :to="`/admin/organisations/${$store.getters.currentRole.contextable_id}/missions/add`"
           >
             <Button icon="PlusIcon" size="xl">
               Publier une mission
