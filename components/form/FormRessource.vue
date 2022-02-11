@@ -7,15 +7,15 @@
         </Heading>
         <div class="space-y-10">
           <FormControl
-            html-for="name"
-            label="Nom"
+            html-for="title"
+            label="Titre du document"
             required
-            :error="errors.name"
+            :error="errors.title"
           >
             <Input
-              v-model="form.name"
+              v-model="form.title"
               name="name"
-              placeholder="Nom"
+              placeholder="Entrez un titre"
             />
           </FormControl>
           <FormControl
@@ -40,7 +40,7 @@
           <Toggle
             v-model="form.is_published"
             :label="form.is_published ? 'En ligne' : 'Hors ligne'"
-            description="Pour rendre le tag accessible de tous"
+            description="Pour le rendre accessible"
           />
         </div>
       </Box>
@@ -57,20 +57,20 @@ export default {
   layout: 'admin',
   middleware: 'admin',
   props: {
-    vocabulary: {
-      type: String,
-      required: true
-    },
-    term: {
+    ressource: {
       type: Object,
-      default: () => {}
+      default: () => {
+        return {
+          is_published: true
+        }
+      }
     }
   },
   data () {
     return {
-      form: { ...this.term },
+      form: { ...this.ressource },
       formSchema: object({
-        name: string().min(2, 'Le nom est trop court').required('Le nom est requis')
+        title: string().min(2, 'Le nom est trop court').required('Le nom est requis')
       })
     }
   },
@@ -81,12 +81,12 @@ export default {
         .then(async () => {
           this.loading = true
           if (this.form.id) {
-            await this.$axios.put(`/vocabularies/${this.vocabulary}/terms/${this.form.id}`, this.form)
+            await this.$axios.put(`/documents/${this.form.id}`, this.form)
           } else {
-            await this.$axios.post(`/vocabularies/${this.vocabulary}/terms`, this.form)
+            await this.$axios.post('/documents', this.form)
           }
           this.$emit('submitted')
-          this.$toast.success(`${this.form.name} a bien été enregistré !`)
+          this.$toast.success(`${this.form.title} a bien été enregistré !`)
         })
         .catch((errors) => {
           this.setErrors(errors)

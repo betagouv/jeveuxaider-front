@@ -134,7 +134,7 @@
           @change="changeFilter('filter[role]', 'responsable_territoire')"
         />
       </div>
-      <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <CardProfile
           v-for="profile in queryResult.data"
           :key="profile.id"

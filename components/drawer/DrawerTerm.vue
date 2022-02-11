@@ -43,8 +43,7 @@ export default {
   },
   data () {
     return {
-      term: null,
-      stats: null
+      term: null
     }
   },
   async fetch () {

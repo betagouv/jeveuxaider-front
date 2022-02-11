@@ -78,7 +78,7 @@
             </div>
           </div>
 
-          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <Card
               v-for="territoire in queryResult.data"
               :key="territoire.id"

@@ -168,7 +168,6 @@ export default {
 <style lang="postcss" scoped>
 .card--mission {
   box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
-  max-width: 300px;
   @apply transition;
   @screen sm {
     &:hover {

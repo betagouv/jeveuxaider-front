@@ -14,7 +14,7 @@ export default {
         const existingIndex = this.uploads.add.findIndex(
           upload => (upload.name === file.name && upload.lastModified === file.lastModified)
         )
-        const uploadObject = { file, attribute: payload.attribute, name: file.name, manipulations: payload.manipulations }
+        const uploadObject = { file, attribute: payload.attribute, name: file.name }
         if (existingIndex !== -1) {
           this.uploads.add.splice(existingIndex, 1, uploadObject)
         } else {
@@ -25,6 +25,10 @@ export default {
     deleteFile (file, index) {
       if (file.id) {
         this.uploads.delete.push(file)
+        const updateIndex = this.uploads.update?.findIndex(upload => upload.id == file.id)
+        if (updateIndex !== -1) {
+          this.uploads.update.splice(updateIndex, 1)
+        }
       } else {
         this.uploads.add.splice(index, 1)
       }
@@ -37,7 +41,7 @@ export default {
       }
     },
 
-    uploadFiles (modelType, modelId, collection) {
+    async uploadFiles (modelType, modelId, collection) {
       if (this.form.id) {
         const promises = []
 
@@ -70,7 +74,7 @@ export default {
           )
         })
 
-        Promise.all(promises)
+        await Promise.all(promises)
       }
     }
   }
