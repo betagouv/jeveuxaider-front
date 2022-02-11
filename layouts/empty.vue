@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderBanner />
+    <HeaderBanner v-if="!$store.state.settings.general.maintenance_mode_active" />
     <Nuxt />
   </div>
 </template>

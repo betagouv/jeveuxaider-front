@@ -2,7 +2,7 @@
   <div class="h-full">
     <HeaderBanner />
     <Header />
-    <Nuxt :key="$route.fullPath" />
+    <Nuxt />
     <Footer />
     <client-only>
       <portal-target name="body-end" />
@@ -23,7 +23,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -20,6 +20,7 @@ export const actions = {
         this.$cookies.remove('access-token')
       })
     if (res.data) {
+      console.log('set user !', res.data)
       commit('setUser', res.data)
     }
   },

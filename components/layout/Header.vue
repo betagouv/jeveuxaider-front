@@ -246,7 +246,7 @@ export default {
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-        { name: 'Messagerie', to: '/messagerie', icon: ChatAltIcon }
+        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon }
       ]
     },
     secondNavigation () {
