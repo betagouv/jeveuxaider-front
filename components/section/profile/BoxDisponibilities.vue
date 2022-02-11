@@ -4,7 +4,7 @@
       <div v-if="showTitle" class="uppercase font-semibold text-gray-600">
         Engagement
       </div>
-      <Link v-if="showAction" :to="`/admin/utilisateurs/${profile.id}/edit`" icon="ChevronRightIcon">
+      <Link v-if="showAction" :to="`/profile/edit`" icon="ChevronRightIcon">
         Modifier
       </Link>
     </div>
