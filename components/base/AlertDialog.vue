@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     confirmButtonVariant () {
-      return this.theme == 'danger' ? 'red' : this.theme == 'warning' ? 'primary' : 'green'
+      return this.theme == 'danger' ? 'red' : this.theme == 'warning' ? 'white-blue' : 'green'
     },
     confirmLabel () {
       return this.theme == 'danger' ? 'Supprimer' : this.theme == 'success' ? 'Confirmer' : 'Valider'

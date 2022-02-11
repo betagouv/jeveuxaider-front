@@ -5,7 +5,7 @@
     <Nuxt />
     <Footer />
     <client-only>
-      <portal-target name="body-end" />
+      <portal-target name="body-end" multiple />
     </client-only>
   </div>
 </template>
