@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ConversationPage from '@/components/conversation/page'
+import ConversationPage from '@/components/conversation/Page.vue'
 
 export default {
   components: {
