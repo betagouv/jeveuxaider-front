@@ -46,7 +46,7 @@
               :state-style="domaine.published ? 'success' : 'error'"
               :state-text="domaine.published ? 'En ligne' : 'Hors ligne'"
               :description="domaine.title"
-              :image-url="domaine.photo && domaine.photo.large"
+              :image-url="domaine.banner ? domaine.banner.urls.card : undefined"
               @click.native="drawerDomaineId = domaine.id"
             >
               <template #footer>
@@ -91,6 +91,9 @@ export default {
     return {
       loading: false,
       endpoint: '/domaines',
+      queryParams: {
+        append: 'banner'
+      },
       drawerDomaineId: null
     }
   }

@@ -11,18 +11,10 @@ export default {
   methods: {
     addFiles (payload) {
       payload.files.forEach((file) => {
-        const existingIndex = this.uploads.add.findIndex(
-          upload => (upload.name === file.name && upload.lastModified === file.lastModified)
-        )
-        const uploadObject = { file, attribute: payload.attribute, name: file.name }
-        if (existingIndex !== -1) {
-          this.uploads.add.splice(existingIndex, 1, uploadObject)
-        } else {
-          this.uploads.add.push(uploadObject)
-        }
+        this.uploads.add.push({ file, attribute: payload.attribute, collection: payload.collection, name: file.name })
       })
     },
-    deleteFile (file, index) {
+    deleteFile (file) {
       if (file.id) {
         this.uploads.delete.push(file)
         const updateIndex = this.uploads.update?.findIndex(upload => upload.id == file.id)
@@ -30,18 +22,28 @@ export default {
           this.uploads.update.splice(updateIndex, 1)
         }
       } else {
+        const index = this.uploads.add.findIndex(upload => upload.name === file.name)
         this.uploads.add.splice(index, 1)
       }
     },
-    onManipulationsChange (payload, index) {
+    onManipulationsChange (payload) {
       if (payload.file.id) {
-        this.uploads.update.splice(index, 1, { ...payload.file, manipulations: payload.manipulations })
+        this.uploads.update.splice(
+          this.uploads.update.findIndex(upload => upload.id === payload.file.id),
+          1,
+          { ...payload.file, manipulations: payload.manipulations }
+        )
       } else {
-        this.uploads.add.splice(index, 1, { ...this.uploads.add[index], manipulations: payload.manipulations })
+        const index = this.uploads.add.findIndex(upload => upload.name === payload.file.name)
+        this.uploads.add.splice(
+          index,
+          1,
+          { ...this.uploads.add[index], manipulations: payload.manipulations }
+        )
       }
     },
 
-    async uploadFiles (modelType, modelId, collection) {
+    async uploadFiles (modelType, modelId) {
       if (this.form.id) {
         const promises = []
 
@@ -60,7 +62,7 @@ export default {
 
           promises.push(
             this.$axios.post(
-              `/medias/${modelType}/${modelId}/${collection}/${upload.attribute}`,
+              `/medias/${modelType}/${modelId}/${upload.collection}/${upload.attribute}`,
               form,
               { 'Content-Type': 'multipart/form-data' }
             )

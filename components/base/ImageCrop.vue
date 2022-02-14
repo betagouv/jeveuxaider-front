@@ -8,24 +8,26 @@
       @add="onUploadAdd"
     />
 
-    <template v-else>
+    <div v-else class="flex flex-col h-full">
       <!-- Preview -->
-      <div :style="`width: ${previewWidth}px; height: ${previewWidth / ratio}px`">
+      <div class="preview-wrapper flex-grow" :style="`max-width: ${previewWidth}px; max-height: ${previewWidth / ratio}px`">
         <img
-          class="rounded-lg shadow-xl object-cover object-center w-full h-full"
+          class="preview rounded-lg shadow-xl object-cover object-center w-full h-full"
           :srcset="previewSrcset"
           alt="Preview"
           :sizes="`${previewWidth}px`"
           :width="previewWidth"
           :height="previewWidth / ratio"
+          :style="`aspect-ratio:${ratio}`"
         >
       </div>
 
       <!-- Actions -->
-      <div class="mt-4 flex items-start space-x-4">
+      <div class="actions mt-4 flex items-stretch space-x-4">
         <slot name="button-crop" :events="{ showModal }">
           <Button
             variant="secondary"
+            class="button-crop"
             @click.native.prevent="showModal = true"
           >
             Recadrer
@@ -36,6 +38,7 @@
           <Button
             variant="red"
             icon="TrashIcon"
+            class="button-delete"
             @click.native.prevent="onDelete"
           >
             Supprimer
@@ -70,7 +73,7 @@
           </Button>
         </template>
       </Modal>
-    </template>
+    </div>
   </div>
 </template>
 

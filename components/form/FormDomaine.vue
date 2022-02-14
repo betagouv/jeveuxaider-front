@@ -90,12 +90,36 @@
       </Box>
       <Box padding="sm">
         <Heading :level="3" class="mb-8">
-          Image
+          Images
         </Heading>
         <div class="space-y-12">
-          <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: Upload de l'image principale
-          </div>
+          <FormControl label="Bannière" html-for="banner">
+            <ImageCrop
+              :default-value="form.banner"
+              :ratio="300/143"
+              :min-width="300"
+              :preview-width="235"
+              @add="addFiles({ files: [$event], attribute: 'banner', collection: 'domaines_banner' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
+            />
+          </FormControl>
+
+          <FormControl label="Illustrations" html-for="illustrations">
+            <div id="illustrations" class="grid md:grid-cols-2 gap-4">
+              <ImageCrop
+                v-for="(n, index) in 6"
+                :key="index"
+                :default-value="form.illustrations[index] && form.illustrations[index].id ? form.illustrations[index] : undefined"
+                :ratio="1/1"
+                :min-width="430"
+                :preview-width="200"
+                @add="addFiles({ files: [$event], attribute: 'illustrations', collection: 'domaines_illustrations' })"
+                @delete="deleteFile($event)"
+                @crop="onManipulationsChange($event)"
+              />
+            </div>
+          </FormControl>
         </div>
       </Box>
     </div>
@@ -105,9 +129,10 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import FormUploads from '@/mixins/form/uploads'
 
 export default {
-  mixins: [FormErrors],
+  mixins: [FormErrors, FormUploads],
   layout: 'admin',
   middleware: 'admin',
   props: {
@@ -137,6 +162,8 @@ export default {
           } else {
             await this.$axios.post('/domaines', this.form)
           }
+          await this.uploadFiles('domaine', this.form.id)
+
           this.$router.push('/admin/contenus/domaines')
         })
         .catch((errors) => {
@@ -146,7 +173,29 @@ export default {
           this.loading = false
         })
     }
-
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+#illustrations {
+  ::v-deep .actions {
+    button {
+      padding: 0.25rem 0.5rem;
+      &.button-delete {
+        span {
+          @apply hidden;
+        }
+        svg {
+          @apply mr-0;
+        }
+      }
+    }
+  }
+
+  ::v-deep .preview-wrapper {
+    @apply !w-full !h-auto;
+  }
+
+}
+</style>

@@ -97,9 +97,9 @@
                 :ratio="300/143"
                 :min-width="300"
                 :preview-width="235"
-                @add="addFiles({ files: [$event], attribute: 'photo' })"
-                @delete="deleteFile($event, 0)"
-                @crop="onManipulationsChange($event, 0)"
+                @add="addFiles({ files: [$event], attribute: 'photo', collection: 'templates' })"
+                @delete="deleteFile($event)"
+                @crop="onManipulationsChange($event)"
               />
             </FormControl>
           </div>
@@ -162,7 +162,7 @@ export default {
             const { data: missionTemplate } = await this.$axios.post('/mission-templates', this.form)
             this.form.id = missionTemplate.id
           }
-          await this.uploadFiles('mission_template', this.form.id, 'templates')
+          await this.uploadFiles('mission_template', this.form.id)
 
           this.$toast.success('Modifications enregistrées')
           this.$router.push('/admin/contenus/modeles-mission')

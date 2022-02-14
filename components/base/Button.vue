@@ -44,7 +44,8 @@
         'mr-3 h-6 w-6': size == 'xl',
       }"
     />
-    <slot />
+
+    <span><slot /></span>
   </button>
 </template>
 

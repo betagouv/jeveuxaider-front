@@ -11,9 +11,9 @@
               :default-value="form.avatar"
               :preview-width="100"
               :min-width="200"
-              @add="addFiles({ files: [$event], attribute: 'avatar' })"
-              @delete="deleteFile($event, 0)"
-              @crop="onManipulationsChange($event, 0)"
+              @add="addFiles({ files: [$event], attribute: 'avatar', collection: 'profiles' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
             />
           </FormControl>
           <FormControl
@@ -270,7 +270,7 @@ export default {
           }
           this.loading = true
 
-          await this.uploadFiles('profile', this.form.id, 'profiles')
+          await this.uploadFiles('profile', this.form.id)
           this.$emit('submited', this.form)
         })
         .catch((errors) => {
