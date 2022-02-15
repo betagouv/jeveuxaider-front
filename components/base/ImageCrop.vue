@@ -20,10 +20,14 @@
         }"
       >
         <img
-          class="preview rounded-lg shadow-xl object-center w-full h-full"
-          :class="[{'object-cover': previewFit == 'cover'}, {'object-contain': previewFit == 'contain'}, previewClasses]"
-          :srcset="previewSrcset"
           alt="Preview"
+          class="preview rounded-lg shadow-xl object-center w-full h-full"
+          :class="[
+            {'object-cover': previewFit == 'cover'},
+            {'object-contain': previewFit == 'contain'},
+            previewClasses
+          ]"
+          :srcset="previewSrcset"
           :sizes="previewWidth ? `${previewWidth}px` : null"
           :width="previewWidth ? previewWidth : null"
           :height="previewHeight ? previewHeight : ratio ? previewWidth / ratio : null"

@@ -111,9 +111,27 @@
           Organisations actives
         </Heading>
         <div class="space-y-12">
-          <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: Upload des images des logos partenaires actives
-          </div>
+          <FormControl html-for="logos_partenaires">
+            <div class="grid-media grid sm:grid-cols-3 lg:grid-cols-2 gap-4">
+              <ImageCrop
+                v-for="(n, index) in 5"
+                :key="index"
+                :default-value="form.logos_partenaires_actifs[index] && form.logos_partenaires_actifs[index].id ? form.logos_partenaires_actifs[index] : undefined"
+                :ratio="null"
+                :min-height="112"
+                :preview-width="null"
+                :preview-height="56"
+                preview-fit="contain"
+                preview-classes="p-2"
+                :upload-max-size="500000"
+                variant="compact"
+                upload-variant="compact"
+                @add="addFiles({ files: [$event], attribute: 'logos_partenaires_actifs', collection: 'domaines_logos_partenaires_actifs' })"
+                @delete="deleteFile($event)"
+                @crop="onManipulationsChange($event)"
+              />
+            </div>
+          </FormControl>
         </div>
       </Box>
       <Box padding="sm">
