@@ -97,7 +97,8 @@ export default {
     },
     variant: {
       type: String,
-      default: 'default'
+      default: 'default',
+      validator: s => ['default', 'compact'].includes(s)
     }
   },
   data () {

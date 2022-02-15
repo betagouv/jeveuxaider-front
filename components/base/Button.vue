@@ -1,7 +1,7 @@
 <template>
   <button
     :type="type"
-    class="inline-flex items-center border focus:outline-none focus:ring-2 focus:ring-offset-2 hover:shadow-lg hover:scale-105 transform transition"
+    class="inline-flex items-center border font-bold shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 hover:shadow-lg hover:scale-105 transform transition"
     :class="[
       {
         'text-white bg-jva-blue-500 hover:bg-jva-blue-700 border-transparent focus:ring-jva-blue-500': variant == 'primary',
@@ -11,11 +11,12 @@
         'text-jva-blue-400 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-blue-400': variant == 'white-blue',
         'text-jva-green-500 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-green-500': variant == 'white-green',
         'text-white bg-jva-red-500 hover:bg-jva-red-600 border-transparent focus:ring-jva-red-500': variant == 'red',
-        'px-2.5 py-1.5 shadow-sm text-xs font-bold': size == 'xs',
-        'px-3 py-2 shadow-sm text-sm leading-4 font-bold': size == 'sm',
-        'px-4 py-2 shadow-sm text-sm font-bold': size == 'md',
-        'px-4 py-2 shadow-sm text-base font-bold': size == 'lg',
-        'px-6 py-3 shadow-sm text-lg font-bold': size == 'xl',
+        'px-2 py-1 text-xs': size == 'xxs',
+        'px-2.5 py-1.5 text-xs': size == 'xs',
+        'px-3 py-2 text-sm leading-4': size == 'sm',
+        'px-4 py-2 text-sm': size == 'md',
+        'px-4 py-2 text-base': size == 'lg',
+        'px-6 py-3 text-lg': size == 'xl',
         'w-full justify-center' : full
       },
       rounded ? 'rounded-full' : 'rounded-md'
@@ -25,11 +26,13 @@
       v-if="loading"
       class="animate-spin"
       :class="{
-        'mr-2 h-3 w-3': size == 'xs',
-        'mr-3 h-3 w-3': size == 'sm',
-        'mr-3 h-4 w-4': size == 'md',
-        'mr-3 h-5 w-5': size == 'lg',
-        'mr-4 h-6 w-6': size == 'xl',
+        'h-4 w-4': ['xxs', 'xs', 'sm', 'md'].includes(size),
+        'h-5 w-5': size == 'lg',
+        'h-6 w-6': size == 'xl',
+        'mr-1': size == 'xxs' && $slots.default,
+        'mr-2': size == 'xs' && $slots.default,
+        'mr-3': ['sm', 'md', 'lg'].includes(size) && $slots.default,
+        'mr-4': size == 'xl' && $slots.default,
       }"
     />
 
@@ -37,15 +40,16 @@
       :is="icon"
       v-if="icon && !loading"
       :class="{
-        'mr-2 h-3 w-3': size == 'xs',
-        'mr-2 h-3 w-3': size == 'sm',
-        'mr-2 h-4 w-4': size == 'md',
-        'mr-2 h-5 w-5': size == 'lg',
-        'mr-3 h-6 w-6': size == 'xl',
+        'h-4 w-4': ['xxs', 'xs', 'sm', 'md'].includes(size),
+        'h-5 w-5': size == 'lg',
+        'h-6 w-6': size == 'xl',
+        'mr-1': size == 'xxs' && $slots.default,
+        'mr-2': ['xs', 'sm', 'md', 'lg'].includes(size) && $slots.default,
+        'mr-3': size == 'xl' && $slots.default,
       }"
     />
 
-    <span><slot /></span>
+    <slot />
   </button>
 </template>
 
@@ -65,7 +69,7 @@ export default {
     size: {
       type: String,
       default: 'md',
-      validator: s => ['xs', 'sm', 'md', 'lg', 'xl'].includes(s)
+      validator: s => ['xxs', 'xs', 'sm', 'md', 'lg', 'xl'].includes(s)
     },
     type: {
       type: String,

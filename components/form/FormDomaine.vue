@@ -95,6 +95,8 @@
                 :preview-height="56"
                 preview-fit="contain"
                 preview-classes="p-2"
+                :upload-max-size="500000"
+                variant="compact"
                 upload-variant="compact"
                 @add="addFiles({ files: [$event], attribute: 'logos_partenaires', collection: 'domaines_logos_partenaires' })"
                 @delete="deleteFile($event)"
@@ -125,6 +127,7 @@
               :ratio="300/143"
               :min-width="300"
               :preview-width="235"
+              :upload-max-size="2000000"
               @add="addFiles({ files: [$event], attribute: 'banner', collection: 'domaines_banner' })"
               @delete="deleteFile($event)"
               @crop="onManipulationsChange($event)"
@@ -140,6 +143,7 @@
                 :ratio="1/1"
                 :min-width="430"
                 :preview-width="200"
+                variant="compact"
                 upload-variant="compact"
                 @add="addFiles({ files: [$event], attribute: 'illustrations', collection: 'domaines_illustrations' })"
                 @delete="deleteFile($event)"
@@ -203,26 +207,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-.grid-media {
-  ::v-deep .actions {
-    button {
-      padding: 0.25rem 0.5rem;
-      &.button-delete {
-        span {
-          @apply hidden;
-        }
-        svg {
-          @apply mr-0;
-        }
-      }
-    }
-  }
-
-  ::v-deep .preview-wrapper {
-    @apply !w-full !h-auto;
-  }
-
-}
-</style>

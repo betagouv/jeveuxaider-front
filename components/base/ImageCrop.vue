@@ -6,6 +6,7 @@
       :default-value="files"
       extensions=".jpg, .png, .webp"
       :variant="uploadVariant"
+      :max-size="uploadMaxSize"
       @add="onUploadAdd"
     />
 
@@ -40,6 +41,7 @@
           <Button
             variant="secondary"
             class="button-crop"
+            :size="variant == 'compact' ? 'xs' : 'sm'"
             @click.native.prevent="showModal = true"
           >
             Recadrer
@@ -50,11 +52,10 @@
           <Button
             variant="red"
             icon="TrashIcon"
+            :size="variant == 'compact' ? 'xs' : 'sm'"
             class="button-delete"
             @click.native.prevent="onDelete"
-          >
-            Supprimer
-          </Button>
+          />
         </slot>
       </div>
 
@@ -106,7 +107,9 @@ export default {
     minWidth: { type: Number, default: 200 },
     minHeight: { type: Number, default: null },
     ratio: { type: Number, default: 1 },
-    uploadVariant: { type: String, default: 'default' }
+    variant: { type: String, default: 'default', validator: s => ['default', 'compact'].includes(s) },
+    uploadVariant: { type: String, default: 'default' },
+    uploadMaxSize: { type: Number, default: 1000000 }
   },
   data () {
     return {
