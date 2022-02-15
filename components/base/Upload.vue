@@ -3,10 +3,12 @@
     <div
       v-show="multiple || !files.length"
       ref="dropZone"
-      class="w-full flex justify-center px-6 pt-5 pb-6 border-2  border-dashed rounded-lg hover:border-jva-blue-500 focus:border-jva-blue-500 cursor-pointer group transition"
+      class="w-full flex justify-center  border-2  border-dashed rounded-lg hover:border-jva-blue-500 focus:border-jva-blue-500 cursor-pointer group transition"
       :class="[
         { 'border-jva-blue-500': dragging },
-        { 'border-gray-300': !dragging }
+        { 'border-gray-300': !dragging },
+        { 'px-6 pt-5 pb-6': variant == 'default' },
+        { 'px-3 pt-2 pb-3': variant == 'compact' },
       ]"
       @dragover.prevent="dragging = true"
       @dragleave="dragging = false"
@@ -15,7 +17,8 @@
     >
       <div class="space-y-1 text-center">
         <DownloadIcon
-          class="mx-auto h-12 w-12 text-gray-300 group-hover:text-jva-blue-500 transition"
+          class="mx-auto  text-gray-300 group-hover:text-jva-blue-500 transition"
+          :class="[{ 'h-12 w-12': variant == 'default' }, { 'h-8 w-8': variant == 'compact' }]"
         />
 
         <div class="text-sm text-gray-600">
@@ -39,7 +42,7 @@
           </label>
         </div>
 
-        <p v-if="extensions != '*'" class="text-xs text-gray-500">
+        <p v-if="extensions != '*' && variant != 'compact'" class="text-xs text-gray-500">
           Formats acceptés : {{ extensions }}
         </p>
 
@@ -91,6 +94,10 @@ export default {
     label: {
       type: String,
       default: () => { return this.multiple ? 'Sélectionner un ou plusieurs fichiers' : 'Sélectionner un fichier' }
+    },
+    variant: {
+      type: String,
+      default: 'default'
     }
   },
   data () {

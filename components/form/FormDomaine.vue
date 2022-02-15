@@ -83,14 +83,40 @@
           Organisations partenaires
         </Heading>
         <div class="space-y-12">
+          <FormControl html-for="logos_partenaires">
+            <div class="grid-media grid sm:grid-cols-3 lg:grid-cols-2 gap-4">
+              <ImageCrop
+                v-for="(n, index) in 4"
+                :key="index"
+                :default-value="form.logos_partenaires[index] && form.logos_partenaires[index].id ? form.logos_partenaires[index] : undefined"
+                :ratio="null"
+                :min-height="112"
+                :preview-width="null"
+                :preview-height="56"
+                preview-fit="contain"
+                preview-classes="p-2"
+                upload-variant="compact"
+                @add="addFiles({ files: [$event], attribute: 'logos_partenaires', collection: 'domaines_logos_partenaires' })"
+                @delete="deleteFile($event)"
+                @crop="onManipulationsChange($event)"
+              />
+            </div>
+          </FormControl>
+        </div>
+      </Box>
+      <Box padding="sm">
+        <Heading :level="3" class="mb-8">
+          Organisations actives
+        </Heading>
+        <div class="space-y-12">
           <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: Upload des images des logos partenaires
+            @TODO: Upload des images des logos partenaires actives
           </div>
         </div>
       </Box>
       <Box padding="sm">
         <Heading :level="3" class="mb-8">
-          Images
+          Images pour la page publique
         </Heading>
         <div class="space-y-12">
           <FormControl label="Bannière" html-for="banner">
@@ -106,7 +132,7 @@
           </FormControl>
 
           <FormControl label="Illustrations" html-for="illustrations">
-            <div id="illustrations" class="grid md:grid-cols-2 gap-4">
+            <div class="grid-media grid sm:grid-cols-3 lg:grid-cols-2 gap-4">
               <ImageCrop
                 v-for="(n, index) in 6"
                 :key="index"
@@ -114,6 +140,7 @@
                 :ratio="1/1"
                 :min-width="430"
                 :preview-width="200"
+                upload-variant="compact"
                 @add="addFiles({ files: [$event], attribute: 'illustrations', collection: 'domaines_illustrations' })"
                 @delete="deleteFile($event)"
                 @crop="onManipulationsChange($event)"
@@ -178,7 +205,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-#illustrations {
+.grid-media {
   ::v-deep .actions {
     button {
       padding: 0.25rem 0.5rem;

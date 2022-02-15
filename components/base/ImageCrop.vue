@@ -5,20 +5,32 @@
       label="Ajouter une photo"
       :default-value="files"
       extensions=".jpg, .png, .webp"
+      :variant="uploadVariant"
       @add="onUploadAdd"
     />
 
     <div v-else class="flex flex-col h-full">
       <!-- Preview -->
-      <div class="preview-wrapper flex-grow" :style="`max-width: ${previewWidth}px; max-height: ${previewWidth / ratio}px`">
+      <div
+        class="preview-wrapper flex-grow"
+        :style="{
+          maxWidth: previewWidth ? `${previewWidth}px` : null,
+          maxHeight: previewHeight ? `${previewHeight}px` : ratio ? `${previewWidth / ratio}px` : null,
+        }"
+      >
         <img
-          class="preview rounded-lg shadow-xl object-cover object-center w-full h-full"
+          class="preview rounded-lg shadow-xl object-center w-full h-full"
+          :class="[{'object-cover': previewFit == 'cover'}, {'object-contain': previewFit == 'contain'}, previewClasses]"
           :srcset="previewSrcset"
           alt="Preview"
-          :sizes="`${previewWidth}px`"
-          :width="previewWidth"
-          :height="previewWidth / ratio"
-          :style="`aspect-ratio:${ratio}`"
+          :sizes="previewWidth ? `${previewWidth}px` : null"
+          :width="previewWidth ? previewWidth : null"
+          :height="previewHeight ? previewHeight : ratio ? previewWidth / ratio : null"
+          :style="{
+            aspectRatio: ratio ? ratio : null,
+            width: previewWidth ? `${previewWidth}px` : null,
+            height: previewHeight ? `${previewHeight}px` : null
+          }"
         >
       </div>
 
@@ -59,7 +71,7 @@
           :resize-image="false"
           :transitions="false"
           :min-width="minWidth"
-          :min-height="minWidth / ratio"
+          :min-height="minHeight ? minHeight : ratio ? minWidth / ratio : null"
           @ready="onCropperReady"
         />
 
@@ -88,8 +100,13 @@ export default {
   props: {
     defaultValue: { type: Object, default: () => {} },
     previewWidth: { type: Number, default: 200 },
+    previewHeight: { type: Number, default: null },
+    previewFit: { type: String, default: 'cover', validator: s => ['cover', 'contain'].includes(s) },
+    previewClasses: { type: String, default: '' },
     minWidth: { type: Number, default: 200 },
-    ratio: { type: Number, default: 1 }
+    minHeight: { type: Number, default: null },
+    ratio: { type: Number, default: 1 },
+    uploadVariant: { type: String, default: 'default' }
   },
   data () {
     return {
