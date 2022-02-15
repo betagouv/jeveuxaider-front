@@ -6,12 +6,19 @@ export default {
         update: [], /* Files to update */
         delete: [] /* Files to delete */
       }
+      // suffix: 0
     }
   },
   methods: {
     addFiles (payload) {
       payload.files.forEach((file) => {
-        this.uploads.add.push({ file, collection: payload.collection, name: file.name })
+        const name = file.name
+        // @todo: this.uploads dans un store pour corriger probleme lorsque plusieurs fois le meme fichier
+        // if (this.uploads.add.some(upload => upload.name == file.name)) {
+        //   name = file.name.replace(/(\.[\w\d_-]+)$/i, `_${this.suffix}$1`)
+        //   this.suffix++
+        // }
+        this.uploads.add.push({ file, collection: payload.collection, name })
       })
     },
     deleteFile (file) {
@@ -27,6 +34,9 @@ export default {
       }
     },
     onManipulationsChange (payload) {
+      // @todo: this.uploads dans un store pour corriger probleme lorsque plusieurs fois le meme fichier
+      // console.log('onManipulationsChange', payload.file)
+
       if (payload.file.id) {
         this.uploads.update.splice(
           this.uploads.update.findIndex(upload => upload.id === payload.file.id),

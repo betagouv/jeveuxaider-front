@@ -88,7 +88,7 @@
               <ImageCrop
                 v-for="(n, index) in 4"
                 :key="index"
-                :default-value="form.logos_partenaires[index] && form.logos_partenaires[index].id ? form.logos_partenaires[index] : undefined"
+                :default-value="form.logos_partenaires && form.logos_partenaires[index] && form.logos_partenaires[index].id ? form.logos_partenaires[index] : undefined"
                 :ratio="null"
                 :min-height="112"
                 :preview-width="null"
@@ -111,12 +111,12 @@
           Organisations actives
         </Heading>
         <div class="space-y-12">
-          <FormControl html-for="logos_partenaires">
+          <FormControl html-for="logos_partenaires_actifs">
             <div class="grid-media grid sm:grid-cols-3 lg:grid-cols-2 gap-4">
               <ImageCrop
                 v-for="(n, index) in 5"
                 :key="index"
-                :default-value="form.logos_partenaires_actifs[index] && form.logos_partenaires_actifs[index].id ? form.logos_partenaires_actifs[index] : undefined"
+                :default-value="form.logos_partenaires_actifs && form.logos_partenaires_actifs[index] && form.logos_partenaires_actifs[index].id ? form.logos_partenaires_actifs[index] : undefined"
                 :ratio="null"
                 :min-height="112"
                 :preview-width="null"
@@ -157,7 +157,7 @@
               <ImageCrop
                 v-for="(n, index) in 6"
                 :key="index"
-                :default-value="form.illustrations[index] && form.illustrations[index].id ? form.illustrations[index] : undefined"
+                :default-value="form.illustrations && form.illustrations[index] && form.illustrations[index].id ? form.illustrations[index] : undefined"
                 :ratio="1/1"
                 :min-width="430"
                 :preview-width="200"
@@ -209,7 +209,8 @@ export default {
           if (this.form.id) {
             await this.$axios.put(`/domaines/${this.form.id}`, this.form)
           } else {
-            await this.$axios.post('/domaines', this.form)
+            const { data: domaine } = await this.$axios.post('/domaines', this.form)
+            this.form.id = domaine.id
           }
           await this.uploadFiles('domaine', this.form.id)
 

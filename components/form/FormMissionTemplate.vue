@@ -91,12 +91,13 @@
             Image
           </Heading>
           <div class="space-y-12">
-            <FormControl label="Principale" html-for="photo" class="col-span-2">
+            <FormControl label="Carte mission" html-for="photo" class="col-span-2">
               <ImageCrop
                 :default-value="form.photo"
                 :ratio="300/143"
                 :min-width="300"
                 :preview-width="235"
+                :upload-max-size="2000000"
                 @add="addFiles({ files: [$event], collection: 'mission_template__photo' })"
                 @delete="deleteFile($event)"
                 @crop="onManipulationsChange($event)"
