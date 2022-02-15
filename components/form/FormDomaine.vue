@@ -59,8 +59,21 @@
           Images pour les missions
         </Heading>
         <div class="space-y-12">
-          <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: Upload des images à destination des missions
+          <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <ImageCrop
+              v-for="(n, index) in 9"
+              :key="index"
+              :default-value="form.illustrations_mission && form.illustrations_mission[index] && form.illustrations_mission[index].id ? form.illustrations_mission[index] : undefined"
+              :ratio="300/143"
+              :min-width="300"
+              :preview-width="235"
+              variant="compact"
+              upload-variant="compact"
+              disable-delete
+              @add="addFiles({ files: [$event], collection: 'illustrations_mission' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
+            />
           </div>
         </div>
       </Box>
@@ -84,7 +97,7 @@
         </Heading>
         <div class="space-y-12">
           <FormControl html-for="logos_partenaires">
-            <div class="grid-media grid sm:grid-cols-3 lg:grid-cols-2 gap-4">
+            <div class="grid sm:grid-cols-3 lg:grid-cols-2 gap-4">
               <ImageCrop
                 v-for="(n, index) in 4"
                 :key="index"
@@ -112,7 +125,7 @@
         </Heading>
         <div class="space-y-12">
           <FormControl html-for="logos_partenaires_actifs">
-            <div class="grid-media grid sm:grid-cols-3 lg:grid-cols-2 gap-4">
+            <div class="grid sm:grid-cols-3 lg:grid-cols-2 gap-4">
               <ImageCrop
                 v-for="(n, index) in 5"
                 :key="index"
@@ -153,7 +166,7 @@
           </FormControl>
 
           <FormControl label="Illustrations" html-for="illustrations">
-            <div class="grid-media grid sm:grid-cols-3 lg:grid-cols-2 gap-4">
+            <div class="grid sm:grid-cols-3 gap-4">
               <ImageCrop
                 v-for="(n, index) in 6"
                 :key="index"

@@ -54,6 +54,7 @@
 
         <slot :events="{ onDelete }" name="button-delete">
           <Button
+            :disabled="disableDelete"
             variant="red"
             icon="TrashIcon"
             :size="variant == 'compact' ? 'xs' : 'sm'"
@@ -113,7 +114,8 @@ export default {
     ratio: { type: Number, default: 1 },
     variant: { type: String, default: 'default', validator: s => ['default', 'compact'].includes(s) },
     uploadVariant: { type: String, default: 'default' },
-    uploadMaxSize: { type: Number, default: 1000000 }
+    uploadMaxSize: { type: Number, default: 1000000 },
+    disableDelete: { type: Boolean, default: false } // @todo handle relations
   },
   data () {
     return {
@@ -132,9 +134,11 @@ export default {
       this.originalSrc = this.previewSrcset
     },
     onDelete () {
-      this.$emit('delete', this.files[0])
-      this.files = []
-      this.manipulations = {}
+      if (!this.disableDelete) {
+        this.$emit('delete', this.files[0])
+        this.files = []
+        this.manipulations = {}
+      }
     },
     onCropperReady () {
       if (this.manipulations?.manualCrop) {
