@@ -11,7 +11,7 @@ export default {
   methods: {
     addFiles (payload) {
       payload.files.forEach((file) => {
-        this.uploads.add.push({ file, attribute: payload.attribute, collection: payload.collection, name: file.name })
+        this.uploads.add.push({ file, collection: payload.collection, name: file.name })
       })
     },
     deleteFile (file) {
@@ -62,7 +62,7 @@ export default {
 
           promises.push(
             this.$axios.post(
-              `/medias/${modelType}/${modelId}/${upload.collection}/${upload.attribute}`,
+              `/medias/${modelType}/${modelId}/${upload.collection}`,
               form,
               { 'Content-Type': 'multipart/form-data' }
             )

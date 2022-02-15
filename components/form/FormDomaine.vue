@@ -98,7 +98,7 @@
                 :upload-max-size="500000"
                 variant="compact"
                 upload-variant="compact"
-                @add="addFiles({ files: [$event], attribute: 'logos_partenaires', collection: 'domaines_logos_partenaires' })"
+                @add="addFiles({ files: [$event], collection: 'domaine__logos_partenaires' })"
                 @delete="deleteFile($event)"
                 @crop="onManipulationsChange($event)"
               />
@@ -126,7 +126,7 @@
                 :upload-max-size="500000"
                 variant="compact"
                 upload-variant="compact"
-                @add="addFiles({ files: [$event], attribute: 'logos_partenaires_actifs', collection: 'domaines_logos_partenaires_actifs' })"
+                @add="addFiles({ files: [$event], collection: 'domaine__logos_partenaires_actifs' })"
                 @delete="deleteFile($event)"
                 @crop="onManipulationsChange($event)"
               />
@@ -146,7 +146,7 @@
               :min-width="300"
               :preview-width="235"
               :upload-max-size="2000000"
-              @add="addFiles({ files: [$event], attribute: 'banner', collection: 'domaines_banner' })"
+              @add="addFiles({ files: [$event], collection: 'domaine__banner' })"
               @delete="deleteFile($event)"
               @crop="onManipulationsChange($event)"
             />
@@ -163,7 +163,7 @@
                 :preview-width="200"
                 variant="compact"
                 upload-variant="compact"
-                @add="addFiles({ files: [$event], attribute: 'illustrations', collection: 'domaines_illustrations' })"
+                @add="addFiles({ files: [$event], collection: 'domaine__illustrations' })"
                 @delete="deleteFile($event)"
                 @crop="onManipulationsChange($event)"
               />

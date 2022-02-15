@@ -11,7 +11,7 @@
               :default-value="form.avatar"
               :preview-width="100"
               :min-width="200"
-              @add="addFiles({ files: [$event], attribute: 'avatar', collection: 'profiles' })"
+              @add="addFiles({ files: [$event], collection: 'profile__avatar' })"
               @delete="deleteFile($event)"
               @crop="onManipulationsChange($event)"
             />

@@ -97,7 +97,7 @@
                 :ratio="300/143"
                 :min-width="300"
                 :preview-width="235"
-                @add="addFiles({ files: [$event], attribute: 'photo', collection: 'templates' })"
+                @add="addFiles({ files: [$event], collection: 'mission_template__photo' })"
                 @delete="deleteFile($event)"
                 @crop="onManipulationsChange($event)"
               />
