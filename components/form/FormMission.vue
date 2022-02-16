@@ -42,10 +42,10 @@
             </FormControl>
             <FormControl
               label="Domaine d'action secondaire"
-              html-for="domaine_id"
+              html-for="domaine_secondary_id"
             >
               <SelectAdvanced
-                v-model="form.domaine_secondaire"
+                v-model="form.domaine_secondary_id"
                 name="domaine"
                 placeholder="Sélectionner un domaine"
                 :options="$labels.domaines.filter(

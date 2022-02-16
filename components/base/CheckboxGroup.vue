@@ -12,7 +12,7 @@
         :key="option.key"
         :option="option"
         class="relative flex items-start m-1"
-        :is-checked="modelValue.includes(option.key)"
+        :is-checked="isModel ? modelValue.some(item => item.id == option.key) : modelValue.includes(option.key)"
         :variant="variant"
         @change="onChange"
       />
@@ -34,7 +34,8 @@ export default {
       default: 'checkbox',
       validator: s =>
         ['checkbox', 'button'].includes(s)
-    }
+    },
+    isModel: { type: Boolean, default: false }
   },
   computed: {
     modelValue: {
@@ -48,16 +49,23 @@ export default {
   },
   methods: {
     onChange (toggleItemKey) {
-      if (this.modelValue.includes(toggleItemKey)) {
+      if (this.isModel) {
+        const index = this.modelValue.findIndex(item => item.id == toggleItemKey)
+        if (index > -1) {
+          this.modelValue.splice(index, 1)
+        } else {
+          this.modelValue.push({ id: toggleItemKey })
+        }
+      } else if (this.modelValue.includes(toggleItemKey)) {
         const index = this.modelValue.indexOf(toggleItemKey)
         if (index > -1) {
           this.modelValue.splice(index, 1)
-          this.$emit('input', this.modelValue)
         }
       } else {
         this.modelValue.push(toggleItemKey)
-        this.$emit('input', this.modelValue)
       }
+
+      this.$emit('input', this.modelValue)
     }
   }
 }

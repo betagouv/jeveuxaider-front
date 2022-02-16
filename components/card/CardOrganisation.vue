@@ -46,8 +46,8 @@
     </div>
 
     <div class="mx-8 my-6 flex-1 flex flex-col items-start">
-      <Badge v-if="organisation.domaines[0]" :color="organisation.domaines[0]" class="uppercase mb-4">
-        {{ $options.filters.label(organisation.domaines[0], 'domaines') }}
+      <Badge v-if="organisation.domaines[0]" :color="organisation.domaines[0].id" class="uppercase mb-4">
+        {{ $options.filters.label(organisation.domaines[0].id, 'domaines') }}
       </Badge>
 
       <h3
