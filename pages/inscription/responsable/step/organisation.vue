@@ -200,7 +200,7 @@
             <InputAutocomplete
               name="autocomplete"
               label="Autocomplete"
-              placeholder="Choisissez un territoire"
+              placeholder="Choisissez un réseau"
               :options="autocompleteReseauxOptions"
               @selected="handleSelectedReseau"
               @fetch-suggestions="onFetchReseauxSuggestions"
