@@ -1,5 +1,10 @@
 <template>
-  <div class="group flex justify-between items-center cursor-pointer p-4 hover:bg-gray-50" role="menuitem" tabindex="-1">
+  <div
+    class="group flex justify-between items-center cursor-pointer p-4 hover:bg-gray-50"
+    :class="[{'p-4': size == 'md', 'px-3 py-2': size == 'sm'}]"
+    role="menuitem"
+    tabindex="-1"
+  >
     <div class="truncate mr-2">
       <div v-if="label" class="text-gray-500 uppercase text-xs">
         {{ label }}
@@ -18,11 +23,11 @@ export default {
     label: {
       type: String,
       default: null
+    },
+    size: {
+      type: String,
+      default: 'md'
     }
   }
 }
 </script>
-
-<style>
-
-</style>

@@ -43,16 +43,10 @@ export default {
         this.message.contextual_reason != 'other'
       ) {
         if (this.message.contextual_state == 'Refusée') {
-          message += `<br><span class="font-light text-sm"> ${this.$options.filters.labelFromValue(
-            this.message.contextual_reason,
-            'participation_declined_reasons'
-          )}</span>`
+          message += `<br><span class="font-light text-sm"> ${this.$options.filters.label(this.message.contextual_reason, 'participation_declined_reasons')}</span>`
         }
         if (this.message.contextual_state == 'Annulée par bénévole') {
-          message += `<br><span class="font-light text-sm"> ${this.$options.filters.labelFromValue(
-            this.message.contextual_reason,
-            'participation_canceled_by_benevole_reasons'
-          )}</span>`
+          message += `<br><span class="font-light text-sm"> ${this.$options.filters.label(this.message.contextual_reason, 'participation_canceled_by_benevole_reasons')}</span>`
         }
       }
       return message

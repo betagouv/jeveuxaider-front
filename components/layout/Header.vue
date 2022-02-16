@@ -51,8 +51,11 @@
             :href="link.href"
             :to="link.to"
             :click="link.click"
-            class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1"
+            class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1 relative"
           >
+            <div v-if="link.count" class="absolute -top-1.5 -right-1 bg-[#e41e3f] px-1.5 py-0.5 rounded-lg text-white font-bold text-xs">
+              {{ link.count > 99 ? "99+" : link.count }}
+            </div>
             <component :is="link.icon" class="flex-shrink-0 mr-3 h-4 w-4" aria-hidden="true" />
             {{ link.name }}
           </NavItem>
@@ -238,8 +241,13 @@ export default {
   },
   data () {
     return {
-      showMobileMenu: false
+      showMobileMenu: false,
+      unreadMessageCount: 0
     }
+  },
+  async fetch () {
+    const { data: unreadMessageCount } = await this.$axios.get('user/unreadMessages')
+    this.unreadMessageCount = unreadMessageCount
   },
   computed: {
     navigation () {
@@ -252,7 +260,7 @@ export default {
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon }
+        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.unreadMessageCount }
       ]
     },
     secondNavigation () {
