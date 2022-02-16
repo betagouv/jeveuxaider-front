@@ -102,13 +102,11 @@
           Fréquence
         </div>
         <div class="text-gray-900 flex-1">
-          {{ profile.commitment__duration | labelFromValue('duration') }}
+          {{ profile.commitment__duration | label('duration') }}
           <template v-if="profile.commitment__time_period">
             <span>par</span>
             <span>
-              {{
-                profile.commitment__time_period | labelFromValue('time_period')
-              }}
+              {{ profile.commitment__time_period | label('time_period') }}
             </span>
           </template>
         </div>
@@ -134,7 +132,7 @@ export default {
   },
   async fetch () {
     this.loading = true
-    const { data: profile } = await this.$axios.get(`/conversation/${this.conversation.id}/benevole`)
+    const { data: profile } = await this.$axios.get(`/conversations/${this.conversation.id}/benevole`)
 
     this.profile = profile
     this.loading = false

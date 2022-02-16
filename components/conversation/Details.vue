@@ -41,9 +41,9 @@
         <span
           class="font-bold text-primary"
           :class="{
-            'text-[#f6ad55]': participation.state == 'En attente de validation',
-            'text-[#03543f]': participation.state == 'Validée',
-            'text-[#f56565]': participation.state == 'Refusée',
+            'text-jva-orange-500': participation.state == 'En attente de validation',
+            'text-jva-green-500': participation.state == 'Validée',
+            'text-jva-red-500': participation.state == 'Refusée',
           }"
         >{{ participation.state }}</span>
       </div>
@@ -156,10 +156,7 @@
               </svg>
             </div>
             <p class="ml-3">
-              {{
-                beneficiaryPublic
-                  | labelFromValue('mission_publics_beneficiaires')
-              }}
+              {{ beneficiaryPublic | label('mission_publics_beneficiaires') }}
             </p>
           </li>
         </ul>

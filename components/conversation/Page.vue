@@ -39,10 +39,14 @@
             Détails
           </h3>
 
-          <i
-            class="w-6 h-6 p-1 !flex items-center justify-center rounded-full border cursor-pointer leading-none transition hover:border-black el-icon-close"
+          <button
+            class="h-7 w-7 flex items-center justify-center border rounded-full hover:border-gray-900"
             @click="onPanelRightToggle"
-          />
+          >
+            <XIcon
+              class="text-gray-600 hover:border-black h-4 w-4"
+            />
+          </button>
         </div>
       </div>
 

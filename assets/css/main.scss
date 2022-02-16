@@ -236,3 +236,11 @@ body {
   --ck-color-focus-border: #070191;
   --ck-focus-ring: 2px solid #070191;
 }
+
+body.full-height-layout {
+  height: 100%;
+  #__nuxt,
+  #__layout {
+    height: 100%;
+  }
+}

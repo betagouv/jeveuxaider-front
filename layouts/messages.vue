@@ -34,8 +34,8 @@
             >
               <div class="panel--content">
                 <!-- Rechercher un utilisateur -->
-                <div v-if="$store.getters.contextRole == 'admin'" class="m-4">
-                  <!-- <el-input
+                <!-- <div v-if="$store.getters.contextRole == 'admin'" class="m-4"> -->
+                <!-- <el-input
                     v-model="conversationFilters['filter[search]']"
                     placeholder="Rechercher un utilisateur"
                     clearable
@@ -57,16 +57,7 @@
                       />
                     </svg>
                   </el-input> -->
-                </div>
-
-                <!-- <ElContainer
-                  v-if="loading"
-                  key="loading"
-                  v-loading="true"
-                  class="border-cool-gray-200 md:border-r"
-                >
-                  <div class="w-16 h-16" />
-                </ElContainer> -->
+                <!-- </div> -->
 
                 <template v-if="!loading">
                   <div
@@ -179,7 +170,7 @@ export default {
         return conversation.id == this.$router.currentRoute.params.id
       })
       if (!isInConversations) {
-        const { data: conversation } = await this.$axios.get(`/conversation/${this.$router.currentRoute.params.id}`)
+        const { data: conversation } = await this.$axios.get(`/conversations/${this.$router.currentRoute.params.id}`)
         conversations = [...conversations, conversation]
         this.conversationFilters['filter[exclude]'] = conversation.id
       }
