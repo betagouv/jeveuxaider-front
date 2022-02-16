@@ -89,9 +89,7 @@
             profile.disponibilities
               .map(
                 (disponibility) =>
-                  $store.getters.taxonomies.profile_disponibilities.terms.filter(
-                    (dispo) => dispo.value == disponibility
-                  )[0].label
+                  $options.filters.label(disponibility, 'disponibilities')
               )
               .join(', ')
           }}

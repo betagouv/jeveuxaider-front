@@ -278,5 +278,18 @@ const labels = {
     { key: 'waiting', label: 'En attente de validation', from: ['draft'], description: 'Le territoire est en attente de validation par les modérateurs.' },
     { key: 'validated', label: 'Validé', from: ['waiting', 'refused'], description: 'Le territoire est en ligne. Les responsables du réseau peuvent s\'en servir.' },
     { key: 'refused', label: 'Refusé', from: ['waiting', 'validated'], description: 'Le territoire ne respecte pas la charte de JeVeuxAider.gouv.fr.' }
+  ],
+  participation_declined_reasons: [
+    { key: 'no_response', label: 'Le bénévole ne répond pas.' },
+    { key: 'requirements_not_fulfilled', label: 'Le bénévole ne correspond pas aux besoins.' },
+    { key: 'change_mind', label: 'Le bénévole a changé d\'avis.' },
+    { key: 'mission_terminated', label: 'La mission est terminée.' },
+    { key: 'other', label: 'Autres.' }
+  ],
+  participation_canceled_by_benevole_reasons: [
+    { key: 'no_response', label: 'L\'organisation ne répond pas.' },
+    { key: 'requirements_not_fulfilled', label: 'La mission ne correspond pas à mes attentes.' },
+    { key: 'not_available', label: 'Je ne suis plus disponible.' },
+    { key: 'other', label: 'Autres.' }
   ]
 }
