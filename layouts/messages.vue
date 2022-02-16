@@ -1,5 +1,6 @@
 <template>
   <div class="bg-gray-100 h-full flex flex-col">
+    <HeaderBanner />
     <Header full-width />
 
     <client-only>
@@ -20,10 +21,24 @@
                 {{ conversationsLabel }}
               </div>
 
-              <ConversationToggleStatus
-                v-if="$store.getters.contextRole != 'admin'"
-                @update="onStatusChange"
-              />
+              <Dropdown>
+                <template #button>
+                  <button class="border py-1 px-3 rounded-full text-xs border-gray-300 text-gray-900 hover:border-gray-800 transition-all">
+                    Filtres
+                  </button>
+                </template>
+
+                <template #items>
+                  <div>
+                    <DropdownOptionsItem size="sm" @click.native="onStatusChange(1)">
+                      Conversations actives
+                    </DropdownOptionsItem>
+                    <DropdownOptionsItem size="sm" @click.native="onStatusChange(0)">
+                      Conversations archivées
+                    </DropdownOptionsItem>
+                  </div>
+                </template>
+              </Dropdown>
             </div>
 
             <div
@@ -34,8 +49,8 @@
             >
               <div class="panel--content">
                 <!-- Rechercher un utilisateur -->
-                <div v-if="$store.getters.contextRole == 'admin'" class="m-4">
-                  <!-- <el-input
+                <!-- <div v-if="$store.getters.contextRole == 'admin'" class="m-4"> -->
+                <!-- <el-input
                     v-model="conversationFilters['filter[search]']"
                     placeholder="Rechercher un utilisateur"
                     clearable
@@ -57,16 +72,7 @@
                       />
                     </svg>
                   </el-input> -->
-                </div>
-
-                <!-- <ElContainer
-                  v-if="loading"
-                  key="loading"
-                  v-loading="true"
-                  class="border-cool-gray-200 md:border-r"
-                >
-                  <div class="w-16 h-16" />
-                </ElContainer> -->
+                <!-- </div> -->
 
                 <template v-if="!loading">
                   <div
@@ -97,14 +103,6 @@
                     ]"
                     @click.native="onConversationClick(conversationTeaser)"
                   />
-
-                  <!-- Fake loading -->
-                  <!-- <ElContainer
-                    v-if="currentPageConversation < lastPageConversation"
-                    v-loading="true"
-                  >
-                    <div class="w-16 h-16" />
-                  </ElContainer> -->
                 </template>
               </div>
             </div>
@@ -121,11 +119,13 @@
 import { debounce } from 'lodash'
 import ConversationTeaser from '@/components/conversation/Teaser.vue'
 import Header from '@/components/layout/Header.vue'
+import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 
 export default {
   name: 'MessagesLayout',
   components: {
     Header,
+    HeaderBanner,
     ConversationTeaser
   },
   middleware: 'authenticated',
@@ -179,7 +179,7 @@ export default {
         return conversation.id == this.$router.currentRoute.params.id
       })
       if (!isInConversations) {
-        const { data: conversation } = await this.$axios.get(`/conversation/${this.$router.currentRoute.params.id}`)
+        const { data: conversation } = await this.$axios.get(`/conversations/${this.$router.currentRoute.params.id}`)
         conversations = [...conversations, conversation]
         this.conversationFilters['filter[exclude]'] = conversation.id
       }
@@ -292,10 +292,10 @@ export default {
         this.$store.getters['messaging/isDesktop']
       )
     },
-    onStatusChange ($event) {
-      if (this.conversationFilters['filter[status]'] != $event.status) {
+    onStatusChange (status) {
+      if (this.conversationFilters['filter[status]'] != status) {
         this.loading = true
-        this.conversationFilters['filter[status]'] = $event.status
+        this.conversationFilters['filter[status]'] = status
         this.debouncedFetch()
       }
     }

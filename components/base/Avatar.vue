@@ -23,7 +23,7 @@
 
     <span
       v-else-if="initials"
-      class="uppercase"
+      class="first-letter:uppercase"
       :class="[
         // Font size
         {'text-lg': size == 'sm'},

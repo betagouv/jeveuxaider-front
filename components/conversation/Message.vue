@@ -1,12 +1,17 @@
 <template>
   <div class="mb-4">
     <div class="flex items-start">
-      <Avatar class="mr-4" :source="thumbnail" :fallback="shortName" />
+      <Avatar
+        class="mr-4"
+        :image="thumbnail"
+        :initials="shortName"
+        size="xs"
+      />
 
       <div>
         <div class="flex items-baseline">
           <span class="font-bold mr-2">{{ name }}</span>
-          <span v-if="date" class="text-gray-500 font-light text-sm">
+          <span v-if="date" class="text-cool-gray-600 font-light text-sm">
             {{ $dayjs(date).format('D MMM HH[h]mm') }}
           </span>
         </div>

@@ -1,32 +1,23 @@
 <template>
-  <!-- <ConversationPage /> -->
-  <div>todo</div>
+  <ConversationPage />
 </template>
 
 <script>
-// import ConversationPage from '@/components/conversation/Page.vue'
+import ConversationPage from '@/components/conversation/Page.vue'
 
 export default {
-//   components: {
-//     ConversationPage
-//   },
+  components: {
+    ConversationPage
+  },
   layout: 'messages',
   async asyncData ({ store, error, $api, params, $axios }) {
-    const { data: conversation } = await $axios.get(`/conversation/${params.id}`)
+    const { data: conversation } = await $axios.get(`/conversations/${params.id}`)
 
     if (!conversation) {
       return error({ statusCode: 403 })
     }
 
     store.commit('messaging/setConversation', conversation)
-
-    // Remove conversation from user unread conversations
-    // if (store.getters.user.unreadConversations.includes(conversation.id)) {
-    //   store.commit(
-    //     'auth/deleteConversationFromUserUnreadConversations',
-    //     conversation.id
-    //   )
-    // }
   },
   mounted () {
     if (this.$store.getters['messaging/isMobile']) {
