@@ -38,6 +38,7 @@
                 name="domaines"
                 variant="button"
                 :options="$labels.domaines"
+                is-model
               />
             </FormControl>
             <FormControl label="Publics bénéficiaires" html-for="publics_beneficiaires" required :error="errors.publics_beneficiaires">

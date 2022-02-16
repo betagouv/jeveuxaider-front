@@ -34,6 +34,7 @@ export default {
   components: {
     FormProfile
   },
+  middleware: 'authenticated',
   data () {
     return {
       form: _.cloneDeep(this.$store.state.auth.user.profile)

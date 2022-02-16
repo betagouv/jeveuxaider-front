@@ -121,6 +121,7 @@
               name="domaines"
               variant="button"
               :options="$labels.domaines"
+              is-model
             />
           </FormControl>
           <FormControl label="Décrivez vos motivations" html-for="description" class="col-span-2">
