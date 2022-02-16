@@ -314,15 +314,7 @@ export default {
   mixins: [FormErrors],
   data () {
     return {
-      currentStepKey:
-        this.$route.query.orga_type === 'Association' ||
-        this.$route.query.orga_type === 'Collectivité' ||
-        this.$route.query.orga_type === 'Organisation publique' ||
-        this.$route.query.orga_type === 'Organisation privée'
-          ? 'choix_orga_nom'
-          : this.$route.query.orga_type === 'Tête de réseau'
-            ? 'form_reseau'
-            : 'choix_orga_type',
+      currentStepKey: 'choix_orga_type',
       form: {
         structure: {}
       },
@@ -407,7 +399,25 @@ export default {
       return organisations.length ? organisations[0] : false
     }
   },
+  watch: {
+    $route: {
+      immediate: true,
+      handler () {
+        this.initCurrentStep()
+      }
+    }
+  },
   methods: {
+    initCurrentStep () {
+      this.currentStepKey = this.$route.query.orga_type === 'Association' ||
+        this.$route.query.orga_type === 'Collectivité' ||
+        this.$route.query.orga_type === 'Organisation publique' ||
+        this.$route.query.orga_type === 'Organisation privée'
+        ? 'choix_orga_nom'
+        : this.$route.query.orga_type === 'Tête de réseau'
+          ? 'form_reseau'
+          : 'choix_orga_type'
+    },
     handleChooseOrgaType (orgaType) {
       if (orgaType === 'Crisp') {
         window.open('https://go.crisp.chat/chat/embed/?website_id=4b843a95-8a0b-4274-bfd5-e81cbdc188ac', '_blank')
