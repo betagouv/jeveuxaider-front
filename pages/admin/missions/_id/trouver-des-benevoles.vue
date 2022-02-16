@@ -1,5 +1,7 @@
 <template>
   <div class="container">
+    <DrawerBenevole :profile="drawerProfile" @close="drawerProfile = null" />
+
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
@@ -108,11 +110,12 @@
         <CardProfileBenevole
           v-for="profile in queryResult.data"
           :key="profile.id"
+          class="cursor-pointer hover:shadow-xl"
           :profile="profile"
           :notifications="notifications.data.filter(
             (notification) => notification.profile_id == profile.id
           )"
-          @click.native="drawerProfileId = profile.id"
+          @click.native="drawerProfile = profile"
           @clickedProposerMission="handleProposerMission($event)"
         />
       </div>
@@ -130,9 +133,10 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import CardProfileBenevole from '@/components/card/CardProfileBenevole.vue'
+import DrawerBenevole from '@/components/drawer/DrawerBenevole.vue'
 
 export default {
-  components: { CardProfileBenevole },
+  components: { CardProfileBenevole, DrawerBenevole },
   mixins: [QueryBuilder],
   layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
@@ -171,7 +175,8 @@ export default {
         append: 'avatar'
       },
       drawerProfileId: null,
-      notifications: []
+      notifications: [],
+      drawerProfile: null
     }
   },
   created () {

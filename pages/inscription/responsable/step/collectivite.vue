@@ -133,7 +133,8 @@ export default {
         name: string().required(),
         department: string().required(),
         zips: array().min(1, 'Merci de renseigner au moins 1 code postal')
-      })
+      }),
+      inputGeoType: 'municipality'
     }
   },
   computed: {

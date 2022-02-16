@@ -59,7 +59,8 @@ export default {
     'nuxt-lazy-load',
     'vue-scrollto/nuxt',
     'cookie-universal-nuxt',
-    'vue-toastification/nuxt'
+    'vue-toastification/nuxt',
+    'portal-vue/nuxt'
   ],
 
   privateRuntimeConfig: {

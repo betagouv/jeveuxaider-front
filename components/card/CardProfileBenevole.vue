@@ -42,9 +42,17 @@
           ).length == 0
         "
       >
-        <button class="cursor-pointer hover:underline" @click="$emit('clickedProposerMission', profile);">
+        <button class="cursor-pointer hover:underline" @click.stop="showAlert = true">
           Proposer la mission
         </button>
+        <AlertDialog
+          theme="warning"
+          title="Proposer la mission"
+          :text="`${profile.first_name} ${profile.last_name[0]} recevra un e-mail pour l'inviter à participer à votre mission`"
+          :is-open="showAlert"
+          @confirm="$emit('clickedProposerMission', profile)"
+          @cancel="showAlert = false"
+        />
       </template>
       <span v-else class="text-jva-green-500 font-semibold">E-mail envoyé !</span>
     </div>
@@ -62,6 +70,11 @@ export default {
     notifications: {
       type: Array,
       default: () => []
+    }
+  },
+  data () {
+    return {
+      showAlert: false
     }
   }
 }

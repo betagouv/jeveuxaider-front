@@ -27,7 +27,7 @@
       <DropdownParticipationState
         v-if="
           $store.getters.contextRole == 'responsable' &&
-            $store.getters.contextStructure.id ==
+            $store.getters.contextableId ==
             conversation.conversable.mission.structure_id &&
             !![
               'En attente de validation',

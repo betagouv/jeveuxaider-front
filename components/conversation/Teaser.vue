@@ -117,7 +117,8 @@ export default {
       return false
     },
     nametype () {
-      return this.conversation.conversable.mission.structure.name
+      console.log(this.conversation)
+      return this.conversation.conversable.mission?.structure.name
     }
   },
   methods: {

@@ -71,7 +71,7 @@
                     :to="
                       $store.getters.isLogged &&
                         $store.getters.contextRole == 'responsable'
-                        ? `/dashboard/structures/${$store.getters.contextStructure.id}/missions/add`
+                        ? `/dashboard/structures/${$store.getters.contextableId}/missions/add`
                         : '/login'
                     "
                     class="shadow-lg w-full flex items-center justify-center px-8 py-3 border-transparent border text-base mb-4 font-medium rounded-full text-white bg-red-600 hover:bg-red-700 !outline-none focus:ring transition md:py-4 md:text-lg md:px-9"
@@ -254,7 +254,7 @@
                 :to="
                   $store.getters.isLogged &&
                     $store.getters.contextRole == 'responsable'
-                    ? `/admin/organisations/${$store.getters.contextStructure.id}/missions/add`
+                    ? `/admin/organisations/${$store.getters.contextableId}/missions/add`
                     : '/inscription/responsable'
                 "
                 :class="$options.filters.label(thematique.domaine_id, 'domaines', 'bg')"
