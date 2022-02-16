@@ -1,6 +1,6 @@
 <template>
   <div class="my-10 text-center">
-    <div class="text-gray-400 font-light text-sm">
+    <div class="text-cool-gray-600 font-light text-sm">
       {{ $dayjs(message.created_at).format('D MMM HH[h]mm') }}
     </div>
     <div class="font-semibold text-center" v-html="content" />

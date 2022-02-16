@@ -55,23 +55,21 @@
             </template>
 
             <div
+              v-if="canWriteMessage"
               id="textarea--container"
               class="fixed md:sticky bottom-0 bg-white pb-6 mt-auto"
               style="border-top-right-radius: 8px; border-top-left-radius: 8px"
             >
               <div class="m-auto w-full" style="max-width: 550px">
                 <div
-                  class="px-4 py-2 pr-2 border focus-within:border-black transition flex items-end"
-                  style="border-radius: 8px"
+                  class="px-4 py-2 pr-2 border border-gray-600 focus-within:border-jva-blue-500 focus-within:border-2  transition flex items-center rounded-xl"
                 >
                   <client-only>
                     <textarea-autosize
                       v-model="newMessage"
-                      placeholder="Saisissez un message"
-                      :disabled="$store.getters.contextRole == 'admin'"
+                      placeholder="Écrivez un message"
                       rows="1"
-                      :max-height="120"
-                      class="m-auto w-full outline-none leading-tight custom-scrollbar"
+                      class="m-auto w-full !outline-none leading-tight border-0"
                       @keydown.enter.exact.prevent.native="onAddMessage"
                     />
                   </client-only>
@@ -119,6 +117,16 @@ export default {
     this.lastPageMessages = messages.data.last_page
     this.loading = false
   },
+  computed: {
+    conversation () {
+      return this.$store.getters['messaging/conversation']
+    },
+    canWriteMessage () {
+      return !!this.conversation.users.find((user) => {
+        return user.id == this.$store.getters.profile.user_id
+      })
+    }
+  },
   methods: {
     onScrollMessages () {
       const scrollHeight =
@@ -155,12 +163,9 @@ export default {
     },
     async onAddMessage () {
       if (this.newMessage.trim().length) {
-        const response = await this.$api.addMessageToConversation(
-          this.$store.getters['messaging/conversation'].id,
-          {
-            content: this.newMessage
-          }
-        )
+        const response = await this.$axios.post(`/conversations/${this.conversation.id}/messages`, {
+          content: this.newMessage
+        })
 
         this.$store.commit('messaging/setMessages', [
           response.data,
@@ -186,5 +191,10 @@ export default {
   @screen md {
     @apply w-auto;
   }
+}
+
+#textarea--container textarea:focus {
+  border: 0;
+  box-shadow: none
 }
 </style>

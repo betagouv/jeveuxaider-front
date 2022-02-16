@@ -80,7 +80,7 @@ export const mutations = {
 
 export const actions = {
   async refreshConversation ({ state, commit }, payload) {
-    const { data: conversation } = await this.$axios.get(`/conversation/${payload.id}`)
+    const { data: conversation } = await this.$axios.get(`/conversations/${payload.id}`)
 
     commit('setConversation', conversation)
     commit('replaceConversationInConversations', conversation)

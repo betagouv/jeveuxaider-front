@@ -27,22 +27,8 @@ export default {
       immediate: true,
       async handler () {
         if (this.conversation && !this.conversationIsSet) {
-          const { data: conversation } = await this.$axios.get(`/conversation/${this.conversation.id}`)
+          const { data: conversation } = await this.$axios.get(`/conversations/${this.conversation.id}`)
           this.$store.commit('messaging/setConversation', conversation)
-
-          // Remove conversation from user unread conversations
-          // TODO: avoir le unread dans la conversation plutôt que tableau unreadConversations
-          // if (
-          //   this.$store.getters.user.unreadConversations.includes(
-          //     conversation.id
-          //   )
-          // ) {
-          //   this.$store.commit(
-          //     'auth/deleteConversationFromUserUnreadConversations',
-          //     conversation.id
-          //   )
-          // }
-
           this.conversationIsSet = true
         }
       }
