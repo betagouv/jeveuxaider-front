@@ -49,8 +49,22 @@
           Images pour les organisations
         </Heading>
         <div class="space-y-12">
-          <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: Upload des images à destination des organisations
+          <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <ImageCrop
+              v-for="(n, index) in 6"
+              :key="index"
+              :default-value="form.illustrations_organisation && form.illustrations_organisation[index] && form.illustrations_organisation[index].id ? form.illustrations_organisation[index] : undefined"
+              :ratio="300/143"
+              :min-width="300"
+              :preview-width="235"
+              variant="compact"
+              upload-variant="compact"
+              :upload-max-size="2000000"
+              disable-delete
+              @add="addFiles({ files: [$event], collection: 'illustrations_organisation' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
+            />
           </div>
         </div>
       </Box>
