@@ -2,14 +2,12 @@ export default {
   computed: {
     domaine () {
       return (
-        this.thematique?.domaine ??
         this.mission?.domaine ??
         this.mission?.template?.domaine
       )
     },
     domainId () {
       return (
-        this.thematique?.domaine_id ??
         this.mission?.domaine_id ??
         this.mission?.template?.domaine_id
       )
