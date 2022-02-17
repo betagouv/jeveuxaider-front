@@ -69,7 +69,9 @@
         <div v-if="!$route.hash">
           <div class="space-y-8">
             <BoxInformations :reseau="reseau" />
-            <BoxMission :reseau="reseau" :reseau-stats="stats" />
+            <BoxAntenne class="mb-8" :reseau="reseau" :stats="stats" />
+            <BoxMission class="mb-8" :reseau="reseau" :stats="stats" />
+            <BoxParticipation class="mb-8" :reseau="reseau" :stats="stats" />
           </div>
         </div>
         <History v-if="$route.hash == '#historique'" :model-id="reseau.id" model-type="reseau" />
@@ -97,7 +99,9 @@ import MixinReseau from '@/mixins/reseau'
 import History from '@/components/section/History'
 import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks'
 import BoxInformations from '@/components/section/reseau/BoxInformations'
+import BoxAntenne from '@/components/section/reseau/BoxAntenne'
 import BoxMission from '@/components/section/reseau/BoxMission'
+import BoxParticipation from '@/components/section/reseau/BoxParticipation'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
 
 export default {
@@ -105,7 +109,9 @@ export default {
     History,
     DomainsPublicsLinks,
     BoxInformations,
+    BoxAntenne,
     BoxMission,
+    BoxParticipation,
     OnlineIndicator
   },
   mixins: [MixinReseau],

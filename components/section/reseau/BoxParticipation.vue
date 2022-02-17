@@ -25,7 +25,7 @@
         </div>
         <template v-if="stats.participations_state['En attente de validation'] > 0">
           <div class="border-t -mx-6 mt-6 mb-4" />
-          <nuxt-link :to="`/admin/participations?filter[ofReseau]=${reseau.name}&filter[state]=En attente de validation`" class="flex justify-center items-center text-sm text-jva-orange-500 font-medium">
+          <nuxt-link :to="`/admin/participations?filter[ofReseau]=${reseau.id}&filter[state]=En attente de validation`" class="flex justify-center items-center text-sm text-jva-orange-500 font-medium">
             {{ stats.participations_state['En attente de validation']| pluralize('participation') }} en attente de validation <ChevronRightIcon class="h-3 w-3 ml-2" />
           </nuxt-link>
         </template>
