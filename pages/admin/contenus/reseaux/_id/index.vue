@@ -3,40 +3,57 @@
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Territoires', link: '/admin/contenus/territoires' },
-        { label: territoire.name },
+        { label: 'Réseaux', link: '/admin/contenus/reseaux' },
+        { label: reseau.name },
       ]"
     />
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
+    <div v-if="reseau" class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
       <div class="lg:col-span-3 space-y-6">
-        <Box class="overflow-hidden" :padding="false">
-          <Banner :territoire="territoire" :show-breadcrumb="false" :show-search="false" />
+        <Box class="relative z-10">
+          <img
+            v-if="reseau.logo"
+            :srcset="reseau.logo.large"
+            :alt="reseau.name"
+            class="my-8 h-auto"
+            style="max-width: 16rem; max-height: 10rem"
+          >
+          <Heading as="h1" :level="1" class="mb-4">
+            {{ reseau.name }}
+          </Heading>
+          <TextFormatted :max-lines="2" :text="reseau.description" class="text-cool-gray-500 text-lg" />
         </Box>
-        <Box class="overflow-hidden opacity-25" :padding="false">
-          <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO ORGANISATIONS PARTENAIRES
-          </div>
-          <Associations
-            v-if="territoire.promoted_organisations && territoire.promoted_organisations.length"
-            :territoire="territoire"
+        <Box :style="`background-color: ${reseau.color ? reseau.color : '#B91C1C'}`" class="text-white">
+          <DomainsPublicsLinks :organisation="reseau" />
+        </Box>
+        <Box :padding="false">
+          <iframe
+            width="100%"
+            height="100%"
+            style="border: 0; min-height: 190px"
+            loading="lazy"
+            allowfullscreen
+            :src="`https://www.google.com/maps/embed/v1/place?key=${$config.google.places}&q=${reseau.full_address}`"
           />
-        </Box>
-        <Box class="overflow-hidden opacity-25" :padding="false">
-          <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO SEO
+          <div class="text-sm px-6 py-4 flex justify-between items-center">
+            <div class="font-bold text-gray-800 uppercase">
+              Siège du réseau
+            </div>
+            <div class="text-gray-500">
+              📍 {{ reseau.full_address }}
+            </div>
           </div>
-          <Engagement :territoire="territoire" />
         </Box>
       </div>
       <div class="lg:col-span-2 space-y-8">
         <div class="flex items-start justify-between">
           <div>
             <Heading :level="1">
-              Territoire <span class=" font-normal text-gray-500 text-2xl">#{{ territoire.id }}</span>
+              Réseau <span class=" font-normal text-gray-500 text-2xl">#{{ reseau.id }}</span>
             </Heading>
-            <OnlineIndicator :published="territoire.is_published" :link="territoire.full_url" class="mt-2" />
+
+            <OnlineIndicator :published="reseau.is_published" :link="reseau.full_url" class="mt-2" />
           </div>
-          <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}/edit`">
+          <nuxt-link :to="`/admin/contenus/reseaux/${reseau.id}/edit`">
             <Button icon="PencilIcon">
               Modifier
             </Button>
@@ -45,18 +62,22 @@
         <Tabs
           :tabs="[
             { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: !$route.hash },
-            { name: 'Responsables', to: '#responsables', icon: 'InformationCircleIcon', current: $route.hash == '#responsables' },
+            { name: 'Responsables', to: '#responsables', icon: 'UsersIcon', current: $route.hash == '#responsables', count: reseau.responsables_count },
             { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash == '#historique' }
           ]"
         />
-        <div v-if="!$route.hash" class="space-y-8">
-          <BoxInformations :territoire="territoire" />
-          <BoxMission :territoire="territoire" :stats="stats" />
-          <BoxParticipation :territoire="territoire" :stats="stats" />
+        <div v-if="!$route.hash">
+          <div class="space-y-8">
+            <BoxInformations :reseau="reseau" />
+            <BoxAntenne class="mb-8" :reseau="reseau" :stats="stats" />
+            <BoxMission class="mb-8" :reseau="reseau" :stats="stats" />
+            <BoxParticipation class="mb-8" :reseau="reseau" :stats="stats" />
+          </div>
         </div>
+        <History v-if="$route.hash == '#historique'" :model-id="reseau.id" model-type="reseau" />
         <template v-if="$route.hash == '#responsables'">
           <div class="space-y-2">
-            <Box v-for="responsable in territoire.responsables" :key="responsable.id" variant="flat" padding="xs">
+            <Box v-for="responsable in reseau.responsables" :key="responsable.id" variant="flat" padding="xs">
               <DescriptionList v-if="responsable">
                 <DescriptionListItem term="Nom" :description="responsable.full_name" />
                 <DescriptionListItem term="E-mail" :description="responsable.email" />
@@ -64,56 +85,55 @@
               </DescriptionList>
             </Box>
             <Button variant="white" class="opacity-50">
-              <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
+              <UsersIcon class="h-4 w-4 mr-2" /> Inviter un responsable
             </Button>
           </div>
         </template>
-        <History v-if="$route.hash == '#historique'" :model-id="territoire.id" model-type="territoire" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import MixinReseau from '@/mixins/reseau'
 import History from '@/components/section/History'
+import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks'
+import BoxInformations from '@/components/section/reseau/BoxInformations'
+import BoxAntenne from '@/components/section/reseau/BoxAntenne'
+import BoxMission from '@/components/section/reseau/BoxMission'
+import BoxParticipation from '@/components/section/reseau/BoxParticipation'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
-import BoxInformations from '@/components/section/territoire/BoxInformations'
-import BoxMission from '@/components/section/territoire/BoxMission'
-import BoxParticipation from '@/components/section/territoire/BoxParticipation'
-import Banner from '@/components/section/territoire/Banner'
-import Associations from '@/components/section/territoire/Associations'
-import Engagement from '@/components/section/territoire/Engagement'
 
 export default {
   components: {
-    OnlineIndicator,
+    History,
+    DomainsPublicsLinks,
     BoxInformations,
+    BoxAntenne,
     BoxMission,
     BoxParticipation,
-    History,
-    Banner,
-    Associations,
-    Engagement
+    OnlineIndicator
   },
+  mixins: [MixinReseau],
   layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
-    const { data: territoire } = await $axios.get(`/territoires/${params.id}`)
-    if (!territoire) {
+    const { data: reseau } = await $axios.get(`/reseaux/${params.id}`)
+    if (!reseau) {
       return error({ statusCode: 404 })
     }
 
-    if (store.getters.contextRole == 'responsable_territoire') {
-      if (store.getters.contextableId != territoire.id) {
-        return error({ statusCode: 403 })
-      }
-    }
-
-    const { data: stats } = await $axios.get(`/territoires/${params.id}/statistics`)
-
     return {
-      territoire,
-      stats
+      reseau
     }
+  },
+  data () {
+    return {
+      stats: null
+    }
+  },
+  async fetch () {
+    const { data: stats } = await this.$axios.get(`/statistics/reseaux/${this.reseau.id}`)
+    this.stats = stats
   }
 }
 </script>

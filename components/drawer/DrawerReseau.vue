@@ -24,9 +24,9 @@
 
       <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :reseau="reseau" />
-      <!-- <BoxMission class="mb-8" :territoire="territoire" :stats="stats" />
-      <BoxParticipation class="mb-8" :territoire="territoire" :stats="stats" /> -->
-      <!-- <BoxReseau v-if="territoire.reseau" class="mb-8" :mission-template="territoire" /> -->
+      <BoxAntenne class="mb-8" :reseau="reseau" :stats="stats" />
+      <BoxMission class="mb-8" :reseau="reseau" :stats="stats" />
+      <BoxParticipation class="mb-8" :reseau="reseau" :stats="stats" />
 
       <div class="flex justify-center mb-10">
         <Link :to="`/admin/contenus/reseaux/${reseau.id}`" class="uppercase font-semibold text-sm hover:underline">
@@ -39,11 +39,17 @@
 
 <script>
 import BoxInformations from '@/components/section/reseau/BoxInformations'
+import BoxMission from '@/components/section/reseau/BoxMission'
+import BoxAntenne from '@/components/section/reseau/BoxAntenne'
+import BoxParticipation from '@/components/section/reseau/BoxParticipation'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
 
 export default {
   components: {
     BoxInformations,
+    BoxMission,
+    BoxAntenne,
+    BoxParticipation,
     OnlineIndicator
   },
   props: {
@@ -64,8 +70,8 @@ export default {
     }
     const { data: reseau } = await this.$axios.get(`/reseaux/${this.reseauId}`)
     this.reseau = reseau
-    // const { data: territoireStats } = await this.$axios.get(`/reseaux/${this.reseauId}/statistics`)
-    // this.stats = territoireStats
+    const { data: stats } = await this.$axios.get(`/statistics/reseaux/${this.reseauId}`)
+    this.stats = stats
     this.$emit('loaded', reseau)
   },
   watch: {

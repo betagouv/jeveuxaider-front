@@ -7,7 +7,7 @@
       <DescriptionList>
         <DescriptionListItem term="Crée le" :description="$dayjs(reseau.created_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Modifié le" :description="$dayjs(reseau.updated_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Nom" :description="reseau.name" />
+        <DescriptionListItem term="Couleur" :description="reseau.color" />
       </DescriptionList>
     </Box>
   </div>

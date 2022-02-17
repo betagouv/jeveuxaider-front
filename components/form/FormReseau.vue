@@ -290,7 +290,7 @@ export default {
         twitter: string().nullable().url(),
         instagram: string().nullable().url(),
         donation: string().nullable().url(),
-        phone: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required()
+        phone: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').nullable()
       })
     }
   },

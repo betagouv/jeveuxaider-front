@@ -76,7 +76,7 @@ export default {
   },
   computed: {
     uselessProperties () {
-      return ['user_id', 'latitude', 'longitude', 'country', 'api_id']
+      return ['user_id', 'latitude', 'longitude', 'country', 'api_id', 'updated_at']
     }
   },
   methods: {
@@ -90,6 +90,8 @@ export default {
     },
     formatPropertyLabel (property) {
       switch (property) {
+        case 'updated_at':
+          return 'Modification'
         case 'state':
           return 'Statut'
         case 'responsable_id':
