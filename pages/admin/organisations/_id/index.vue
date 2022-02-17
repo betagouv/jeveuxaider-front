@@ -146,52 +146,7 @@
         <History v-if="$route.hash == '#historique'" :model-id="organisation.id" model-type="structure" />
         <template v-if="$route.hash == '#membres'">
           <div class="space-y-2">
-            <Box v-if="queryInvitations && queryInvitations.data.length > 0" variant="flat" padding="xs">
-              <Disclosure>
-                <template #button="{ isOpen }">
-                  <div class="flex items-center group">
-                    <div class="font-bold flex mr-auto flex-shrink-0">
-                      <MailIcon class="mr-3" />{{ queryInvitations.data.length | pluralize("Invitation") }} Invitations en attente
-                    </div>
-                    <ChevronUpIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
-                    <ChevronDownIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
-                  </div>
-                </template>
-                <div class="divide-y divide-gray-200 mt-4">
-                  <div v-for="invitation in queryInvitations.data" :key="invitation.id" class="grid grid-cols-12 gap-2 text-sm py-4">
-                    <div class="col-span-5 text-gray-900 font-semibold truncate flex items-center">
-                      {{ invitation.email }}
-                    </div>
-                    <div class="col-span-7 flex items-center justify-end">
-                      <div class="text-gray-500 mr-4">
-                        envoyée le {{ $dayjs(invitation.last_sent_at).format('D MMM YYYY') }}
-                      </div>
-
-                      <Dropdown>
-                        <template #button>
-                          <Button size="xs" variant="white">
-                            Action
-                          </Button>
-                        </template>
-                        <template #items>
-                          <div class="w-56 divide-y">
-                            <DropdownOptionsItem size="sm">
-                              Copier le lien d'invitation
-                            </DropdownOptionsItem>
-                            <DropdownOptionsItem size="sm">
-                              Renvoyer l'email
-                            </DropdownOptionsItem>
-                            <DropdownOptionsItem size="sm">
-                              Supprimer l'invitation
-                            </DropdownOptionsItem>
-                          </div>
-                        </template>
-                      </Dropdown>
-                    </div>
-                  </div>
-                </div>
-              </Disclosure>
-            </Box>
+            <BoxInvitations v-if="queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" />
 
             <Box v-for="responsable in organisation.members" :key="responsable.id" variant="flat" padding="xs">
               <DescriptionList v-if="responsable">
@@ -211,13 +166,14 @@
 </template>
 
 <script>
-import History from '@/components/section/History.vue'
+import History from '@/components/section/History'
 import MixinOrganisation from '@/mixins/organisation'
-import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks.vue'
+import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks'
 import BoxInformations from '@/components/section/organisation/BoxInformations'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
 import CardStatistic from '@/components/card/CardStatistic'
-import FormInvitation from '@/components/form/FormInvitation.vue'
+import FormInvitation from '@/components/form/FormInvitation'
+import BoxInvitations from '@/components/section/BoxInvitations'
 
 export default {
   components: {
@@ -226,7 +182,8 @@ export default {
     OnlineIndicator,
     BoxInformations,
     CardStatistic,
-    FormInvitation
+    FormInvitation,
+    BoxInvitations
   },
   mixins: [MixinOrganisation],
   layout: 'admin',
