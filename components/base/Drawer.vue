@@ -55,10 +55,6 @@ export default {
       type: Boolean,
       default: false
     },
-    setOpen: {
-      type: Function,
-      default: () => null
-    },
     formId: {
       type: String,
       default: null

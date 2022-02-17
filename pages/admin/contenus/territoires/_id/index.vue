@@ -7,6 +7,20 @@
         { label: territoire.name },
       ]"
     />
+    <Drawer :is-open="showDrawerInvitation" form-id="form-invitation" submit-label="Envoyer l'invitation" @close="showDrawerInvitation = false">
+      <template #title>
+        <Heading :level="3">
+          Inviter un responsable
+        </Heading>
+      </template>
+      <FormInvitation
+        class="mt-8"
+        role="responsable_territoire"
+        :invitable-id="territoire.id"
+        invitable-type="App\Models\Territoire"
+        @submited="handleSubmitInvitation"
+      />
+    </Drawer>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="overflow-hidden" :padding="false">
@@ -56,6 +70,8 @@
         </div>
         <template v-if="$route.hash == '#responsables'">
           <div class="space-y-2">
+            <BoxInvitations v-if="queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" @updated="$fetch()" />
+
             <Box v-for="responsable in territoire.responsables" :key="responsable.id" variant="flat" padding="xs">
               <DescriptionList v-if="responsable">
                 <DescriptionListItem term="Nom" :description="responsable.full_name" />
@@ -63,8 +79,8 @@
                 <DescriptionListItem term="Mobile" :description="responsable.mobile" />
               </DescriptionList>
             </Box>
-            <Button variant="white" class="opacity-50">
-              <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
+            <Button variant="white" @click.native="showDrawerInvitation = true">
+              <UsersIcon class="h-4 w-4 mr-2" /> Inviter un responsable
             </Button>
           </div>
         </template>
@@ -83,6 +99,8 @@ import BoxParticipation from '@/components/section/territoire/BoxParticipation'
 import Banner from '@/components/section/territoire/Banner'
 import Associations from '@/components/section/territoire/Associations'
 import Engagement from '@/components/section/territoire/Engagement'
+import BoxInvitations from '@/components/section/BoxInvitations'
+import FormInvitation from '@/components/form/FormInvitation'
 
 export default {
   components: {
@@ -93,7 +111,9 @@ export default {
     History,
     Banner,
     Associations,
-    Engagement
+    Engagement,
+    BoxInvitations,
+    FormInvitation
   },
   layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
@@ -113,6 +133,27 @@ export default {
     return {
       territoire,
       stats
+    }
+  },
+  data () {
+    return {
+      showDrawerInvitation: false,
+      queryInvitations: null
+    }
+  },
+  fetch () {
+    this.$axios.get('/invitations', {
+      params: {
+        'filter[of_territoire]': this.territoire.id
+      }
+    }).then(({ data: queryInvitations }) => {
+      this.queryInvitations = queryInvitations
+    })
+  },
+  methods: {
+    handleSubmitInvitation () {
+      this.showDrawerInvitation = false
+      this.$fetch()
     }
   }
 }

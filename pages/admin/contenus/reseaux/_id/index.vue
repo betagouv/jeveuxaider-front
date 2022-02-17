@@ -7,6 +7,20 @@
         { label: reseau.name },
       ]"
     />
+    <Drawer :is-open="showDrawerInvitation" form-id="form-invitation" submit-label="Envoyer l'invitation" @close="showDrawerInvitation = false">
+      <template #title>
+        <Heading :level="3">
+          Inviter un responsable
+        </Heading>
+      </template>
+      <FormInvitation
+        class="mt-8"
+        role="responsable_reseau"
+        :invitable-id="reseau.id"
+        invitable-type="App\Models\Reseau"
+        @submited="handleSubmitInvitation"
+      />
+    </Drawer>
     <div v-if="reseau" class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="relative z-10">
@@ -51,7 +65,7 @@
               Réseau <span class=" font-normal text-gray-500 text-2xl">#{{ reseau.id }}</span>
             </Heading>
 
-            <OnlineIndicator :published="reseau.is_published" :link="reseau.full_url" class="mt-2" />
+            <OnlineIndicator :published="!!reseau.is_published" :link="reseau.full_url" class="mt-2" />
           </div>
           <nuxt-link :to="`/admin/contenus/reseaux/${reseau.id}/edit`">
             <Button icon="PencilIcon">
@@ -77,6 +91,8 @@
         <History v-if="$route.hash == '#historique'" :model-id="reseau.id" model-type="reseau" />
         <template v-if="$route.hash == '#responsables'">
           <div class="space-y-2">
+            <BoxInvitations v-if="queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" />
+
             <Box v-for="responsable in reseau.responsables" :key="responsable.id" variant="flat" padding="xs">
               <DescriptionList v-if="responsable">
                 <DescriptionListItem term="Nom" :description="responsable.full_name" />
@@ -84,7 +100,7 @@
                 <DescriptionListItem term="Mobile" :description="responsable.mobile" />
               </DescriptionList>
             </Box>
-            <Button variant="white" class="opacity-50">
+            <Button variant="white" @click.native="showDrawerInvitation = true">
               <UsersIcon class="h-4 w-4 mr-2" /> Inviter un responsable
             </Button>
           </div>
@@ -102,7 +118,9 @@ import BoxInformations from '@/components/section/reseau/BoxInformations'
 import BoxAntenne from '@/components/section/reseau/BoxAntenne'
 import BoxMission from '@/components/section/reseau/BoxMission'
 import BoxParticipation from '@/components/section/reseau/BoxParticipation'
-import OnlineIndicator from '~/components/custom/OnlineIndicator'
+import FormInvitation from '@/components/form/FormInvitation'
+import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import BoxInvitations from '@/components/section/BoxInvitations'
 
 export default {
   components: {
@@ -112,7 +130,9 @@ export default {
     BoxAntenne,
     BoxMission,
     BoxParticipation,
-    OnlineIndicator
+    OnlineIndicator,
+    FormInvitation,
+    BoxInvitations
   },
   mixins: [MixinReseau],
   layout: 'admin',
@@ -128,12 +148,29 @@ export default {
   },
   data () {
     return {
-      stats: null
+      stats: null,
+      showDrawerInvitation: false,
+      queryInvitations: null
     }
   },
-  async fetch () {
-    const { data: stats } = await this.$axios.get(`/statistics/reseaux/${this.reseau.id}`)
-    this.stats = stats
+  fetch () {
+    this.$axios.get(`/statistics/reseaux/${this.reseau.id}`).then(({ data: stats }) => {
+      this.stats = stats
+    })
+
+    this.$axios.get('/invitations', {
+      params: {
+        'filter[of_reseau]': this.reseau.id
+      }
+    }).then(({ data: queryInvitations }) => {
+      this.queryInvitations = queryInvitations
+    })
+  },
+  methods: {
+    handleSubmitInvitation () {
+      this.showDrawerInvitation = false
+      this.$fetch()
+    }
   }
 }
 </script>
