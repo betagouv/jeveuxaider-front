@@ -4,9 +4,23 @@
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
         { label: 'Organisations', link: '/admin/organisations' },
-        { label: organisation.name },
+        { label: organisation && organisation.name },
       ]"
     />
+    <Drawer :is-open="showDrawerInvitation" form-id="form-invitation" submit-label="Envoyer l'invitation" @close="showDrawerInvitation = false">
+      <template #title>
+        <Heading :level="3">
+          Inviter un nouveau membre
+        </Heading>
+      </template>
+      <FormInvitation
+        class="mt-8"
+        role="responsable_organisation"
+        :invitable-id="organisation.id"
+        invitable-type="App\Models\Structure"
+        @submited="handleSubmitInvitation"
+      />
+    </Drawer>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="relative z-10">
@@ -132,6 +146,53 @@
         <History v-if="$route.hash == '#historique'" :model-id="organisation.id" model-type="structure" />
         <template v-if="$route.hash == '#membres'">
           <div class="space-y-2">
+            <Box v-if="queryInvitations && queryInvitations.data.length > 0" variant="flat" padding="xs">
+              <Disclosure>
+                <template #button="{ isOpen }">
+                  <div class="flex items-center group">
+                    <div class="font-bold flex mr-auto flex-shrink-0">
+                      <MailIcon class="mr-3" />{{ queryInvitations.data.length | pluralize("Invitation") }} Invitations en attente
+                    </div>
+                    <ChevronUpIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+                    <ChevronDownIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+                  </div>
+                </template>
+                <div class="divide-y divide-gray-200 mt-4">
+                  <div v-for="invitation in queryInvitations.data" :key="invitation.id" class="grid grid-cols-12 gap-2 text-sm py-4">
+                    <div class="col-span-5 text-gray-900 font-semibold truncate flex items-center">
+                      {{ invitation.email }}
+                    </div>
+                    <div class="col-span-7 flex items-center justify-end">
+                      <div class="text-gray-500 mr-4">
+                        envoyée le {{ $dayjs(invitation.last_sent_at).format('D MMM YYYY') }}
+                      </div>
+
+                      <Dropdown>
+                        <template #button>
+                          <Button size="xs" variant="white">
+                            Action
+                          </Button>
+                        </template>
+                        <template #items>
+                          <div class="w-56 divide-y">
+                            <DropdownOptionsItem size="sm">
+                              Copier le lien d'invitation
+                            </DropdownOptionsItem>
+                            <DropdownOptionsItem size="sm">
+                              Renvoyer l'email
+                            </DropdownOptionsItem>
+                            <DropdownOptionsItem size="sm">
+                              Supprimer l'invitation
+                            </DropdownOptionsItem>
+                          </div>
+                        </template>
+                      </Dropdown>
+                    </div>
+                  </div>
+                </div>
+              </Disclosure>
+            </Box>
+
             <Box v-for="responsable in organisation.members" :key="responsable.id" variant="flat" padding="xs">
               <DescriptionList v-if="responsable">
                 <DescriptionListItem term="Nom" :description="responsable.full_name" />
@@ -139,7 +200,7 @@
                 <DescriptionListItem term="Mobile" :description="responsable.mobile" />
               </DescriptionList>
             </Box>
-            <Button variant="white" class="opacity-50">
+            <Button variant="white" @click.native="showDrawerInvitation = true">
               <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
             </Button>
           </div>
@@ -156,6 +217,7 @@ import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublic
 import BoxInformations from '@/components/section/organisation/BoxInformations'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
 import CardStatistic from '@/components/card/CardStatistic'
+import FormInvitation from '@/components/form/FormInvitation.vue'
 
 export default {
   components: {
@@ -163,7 +225,8 @@ export default {
     DomainsPublicsLinks,
     OnlineIndicator,
     BoxInformations,
-    CardStatistic
+    CardStatistic,
+    FormInvitation
   },
   mixins: [MixinOrganisation],
   layout: 'admin',
@@ -197,12 +260,29 @@ export default {
   },
   data () {
     return {
-      organisationStats: null
+      organisationStats: null,
+      showDrawerInvitation: false,
+      queryInvitations: null
     }
   },
-  async fetch () {
-    const { data: stats } = await this.$axios.get(`/statistics/organisations/${this.organisation.id}`)
-    this.organisationStats = stats
+  fetch () {
+    this.$axios.get(`/statistics/organisations/${this.organisation.id}`).then(({ data: stats }) => {
+      this.organisationStats = stats
+    })
+
+    this.$axios.get('/invitations', {
+      params: {
+        'filter[of_structure]': this.organisation.id
+      }
+    }).then(({ data: queryInvitations }) => {
+      this.queryInvitations = queryInvitations
+    })
+  },
+  methods: {
+    handleSubmitInvitation () {
+      this.showDrawerInvitation = false
+      this.$fetch()
+    }
   }
 }
 </script>

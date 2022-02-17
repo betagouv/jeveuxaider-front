@@ -16,7 +16,7 @@
       <div
         v-if="show"
         :class="[
-          ' absolute  mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none',
+          ' absolute  mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30',
           {'origin-top-right right-0': position == 'right', 'origin-top-left left-0': position == 'left'}
         ]"
         role="menu"

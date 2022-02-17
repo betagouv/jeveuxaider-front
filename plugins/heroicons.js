@@ -30,7 +30,9 @@ import {
   CogIcon,
   ChatAltIcon,
   IdentificationIcon,
-  ArchiveIcon
+  ArchiveIcon,
+  MailIcon,
+  ChevronUpIcon
 } from '@vue-hero-icons/outline'
 import { InformationCircleIcon, UsersIcon, HomeIcon, ChevronDownIcon as ChevronDownSolidIcon, CheckIcon as CheckSolidIcon, PlusCircleIcon, MinusCircleIcon, UserIcon as UserSolidIcon } from '@vue-hero-icons/solid'
 
@@ -73,7 +75,9 @@ const components = {
   CogIcon,
   ChatAltIcon,
   IdentificationIcon,
-  ArchiveIcon
+  ArchiveIcon,
+  MailIcon,
+  ChevronUpIcon
 }
 
 Object.entries(components).forEach(([name, component]) => {

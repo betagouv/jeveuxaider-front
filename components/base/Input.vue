@@ -15,6 +15,7 @@
         :placeholder="placeholder"
         :disabled="disabled"
         :min="typeValue == 'number' && min"
+        :required="required"
         :class="[
           'px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500 overflow-ellipsis',
           {'pr-8': suffix , 'pl-10': icon, 'bg-gray-100 cursor-not-allowed': disabled},
@@ -67,6 +68,7 @@ export default {
     clearable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     min: { type: Number, default: 1 },
+    required: { type: Boolean, default: false },
     hidePicker: { type: Boolean, default: false },
     type: {
       type: String,

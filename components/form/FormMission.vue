@@ -448,7 +448,7 @@ export default {
           }
         })
         .catch((errors) => {
-          console.log('errorrsssss', errors)
+          console.log('errors', errors)
           this.setErrors(errors)
         })
         .finally(() => {
