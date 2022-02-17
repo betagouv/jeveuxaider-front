@@ -4,9 +4,23 @@
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
         { label: 'Organisations', link: '/admin/organisations' },
-        { label: organisation.name },
+        { label: organisation && organisation.name },
       ]"
     />
+    <Drawer :is-open="showDrawerInvitation" form-id="form-invitation" submit-label="Envoyer l'invitation" @close="showDrawerInvitation = false">
+      <template #title>
+        <Heading :level="3">
+          Inviter un nouveau membre
+        </Heading>
+      </template>
+      <FormInvitation
+        class="mt-8"
+        role="responsable_organisation"
+        :invitable-id="organisation.id"
+        invitable-type="App\Models\Structure"
+        @submited="handleSubmitInvitation"
+      />
+    </Drawer>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="relative z-10">
@@ -132,6 +146,8 @@
         <History v-if="$route.hash == '#historique'" :model-id="organisation.id" model-type="structure" />
         <template v-if="$route.hash == '#membres'">
           <div class="space-y-2">
+            <BoxInvitations v-if="queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" />
+
             <Box v-for="responsable in organisation.members" :key="responsable.id" variant="flat" padding="xs">
               <DescriptionList v-if="responsable">
                 <DescriptionListItem term="Nom" :description="responsable.full_name" />
@@ -139,7 +155,7 @@
                 <DescriptionListItem term="Mobile" :description="responsable.mobile" />
               </DescriptionList>
             </Box>
-            <Button variant="white" class="opacity-50">
+            <Button variant="white" @click.native="showDrawerInvitation = true">
               <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
             </Button>
           </div>
@@ -150,12 +166,14 @@
 </template>
 
 <script>
-import History from '@/components/section/History.vue'
+import History from '@/components/section/History'
 import MixinOrganisation from '@/mixins/organisation'
-import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks.vue'
+import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks'
 import BoxInformations from '@/components/section/organisation/BoxInformations'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
 import CardStatistic from '@/components/card/CardStatistic'
+import FormInvitation from '@/components/form/FormInvitation'
+import BoxInvitations from '@/components/section/BoxInvitations'
 
 export default {
   components: {
@@ -163,7 +181,9 @@ export default {
     DomainsPublicsLinks,
     OnlineIndicator,
     BoxInformations,
-    CardStatistic
+    CardStatistic,
+    FormInvitation,
+    BoxInvitations
   },
   mixins: [MixinOrganisation],
   layout: 'admin',
@@ -197,12 +217,29 @@ export default {
   },
   data () {
     return {
-      organisationStats: null
+      organisationStats: null,
+      showDrawerInvitation: false,
+      queryInvitations: null
     }
   },
-  async fetch () {
-    const { data: stats } = await this.$axios.get(`/statistics/organisations/${this.organisation.id}`)
-    this.organisationStats = stats
+  fetch () {
+    this.$axios.get(`/statistics/organisations/${this.organisation.id}`).then(({ data: stats }) => {
+      this.organisationStats = stats
+    })
+
+    this.$axios.get('/invitations', {
+      params: {
+        'filter[of_structure]': this.organisation.id
+      }
+    }).then(({ data: queryInvitations }) => {
+      this.queryInvitations = queryInvitations
+    })
+  },
+  methods: {
+    handleSubmitInvitation () {
+      this.showDrawerInvitation = false
+      this.$fetch()
+    }
   }
 }
 </script>

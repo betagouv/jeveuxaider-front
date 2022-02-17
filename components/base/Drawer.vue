@@ -9,28 +9,38 @@
   >
     <div v-if="isOpen" class="fixed z-20 inset-y-0 right-0 pl-10 flex" role="dialog" aria-modal="true">
       <div aria-hidden="true" class="w-screen max-w-md">
-        <div :style="{ paddingTop: paddingTop + 'px' }" class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll overscroll-contain">
-          <div class="px-4 sm:px-6">
-            <div class="flex items-start justify-between">
-              <slot name="title" />
-              <div class="ml-3 h-7 flex items-center">
-                <button
-                  type="button"
-                  class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500"
-                  @click="$emit('close')"
-                >
-                  <span class="sr-only">Close panel</span>
-                  <XIcon class="h-6 w-6" />
-                </button>
+        <div class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl">
+          <div :style="{ paddingTop: paddingTop + 'px' }" class="min-h-0 flex-1 flex flex-col py-6 overflow-y-scroll overscroll-contain">
+            <div class="px-4 sm:px-6">
+              <div class="flex items-start justify-between">
+                <slot name="title" />
+                <div class="ml-3 h-7 flex items-center">
+                  <button
+                    type="button"
+                    class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500"
+                    @click="$emit('close')"
+                  >
+                    <span class="sr-only">Close panel</span>
+                    <XIcon class="h-6 w-6" />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="relative flex-1 px-4 sm:px-6">
+              <div class="absolute inset-0 px-4 sm:px-6">
+                <slot />
+                <!-- Hack pour avoir un padding bottom quand on scroll en bas -->
+                <div class="h-8" />
               </div>
             </div>
           </div>
-          <div class="relative flex-1 px-4 sm:px-6">
-            <div class="absolute inset-0 px-4 sm:px-6">
-              <slot />
-              <!-- Hack pour avoir un padding bottom quand on scroll en bas -->
-              <div class="h-8" />
-            </div>
+          <div v-if="formId" class="flex-shrink-0 px-4 py-4 flex justify-end space-x-3">
+            <Button variant="white" @click.native="$emit('close')">
+              Annuler
+            </Button>
+            <Button type="submit" :form="formId">
+              {{ submitLabel }}
+            </Button>
           </div>
         </div>
       </div>
@@ -45,9 +55,13 @@ export default {
       type: Boolean,
       default: false
     },
-    setOpen: {
-      type: Function,
-      default: () => null
+    formId: {
+      type: String,
+      default: null
+    },
+    submitLabel: {
+      type: String,
+      default: 'Enregister'
     }
   },
   data () {

@@ -31,44 +31,44 @@
       { 'border text-jva-red-500 border-jva-red-500': ['red', 'Signalée', 'Annulée', 'Refusée'].includes(color) && plain},
 
       // DOMAINE: Solidarité
-      {'text-white bg-domaine-solidarite': [6,'solidarite','solidarite-et-insertion'].includes(color) && !plain},
-      { 'border text-domaine-solidarite border-domaine-solidarite': [6,'solidarite','solidarite-et-insertion'].includes(color) && plain},
+      {'text-white bg-domaine-solidarite': [7,'solidarite','solidarite-et-insertion'].includes(color) && !plain},
+      { 'border text-domaine-solidarite border-domaine-solidarite': [7,'solidarite','solidarite-et-insertion'].includes(color) && plain},
 
       // DOMAINE: Nature
-      {'text-white bg-domaine-nature': [4,'nature'].includes(color) && !plain},
-      { 'border text-domaine-nature border-domaine-nature': [4,'nature'].includes(color) && plain},
+      {'text-white bg-domaine-nature': [10,'nature'].includes(color) && !plain},
+      { 'border text-domaine-nature border-domaine-nature': [10,'nature'].includes(color) && plain},
 
       // DOMAINE: Education
-      {'text-white bg-domaine-education': [2,'education'].includes(color) && !plain},
-      { 'border text-domaine-education border-domaine-education': [2,'education'].includes(color) && plain},
+      {'text-white bg-domaine-education': [9,'education'].includes(color) && !plain},
+      { 'border text-domaine-education border-domaine-education': [9,'education'].includes(color) && plain},
 
       // DOMAINE: Santé
-      {'text-white bg-domaine-sante': [3,'sante','sante-pour-tous'].includes(color) && !plain},
-      { 'border text-domaine-sante border-domaine-sante': [3,'sante','sante-pour-tous'].includes(color) && plain},
+      {'text-white bg-domaine-sante': [1,'sante','sante-pour-tous'].includes(color) && !plain},
+      { 'border text-domaine-sante border-domaine-sante': [1,'sante','sante-pour-tous'].includes(color) && plain},
 
       // DOMAINE: Covid
-      {'text-white bg-domaine-covid': [1,'covid'].includes(color) && !plain},
-      { 'border text-domaine-covid border-domaine-covid': [1,'covid'].includes(color) && plain},
+      {'text-white bg-domaine-covid': [5,'covid'].includes(color) && !plain},
+      { 'border text-domaine-covid border-domaine-covid': [5,'covid'].includes(color) && plain},
 
       // DOMAINE: Prévention
-      {'text-white bg-domaine-prevention': [8,'prevention'].includes(color) && !plain},
-      { 'border text-domaine-prevention border-domaine-prevention': [8,'prevention'].includes(color) && plain},
+      {'text-white bg-domaine-prevention': [2,'prevention'].includes(color) && !plain},
+      { 'border text-domaine-prevention border-domaine-prevention': [2,'prevention'].includes(color) && plain},
 
       // DOMAINE: Sport
-      {'text-white bg-domaine-sport': [7,'sport','sport-pour-tous'].includes(color) && !plain},
-      { 'border text-domaine-sport border-domaine-sport': [7,'sport', 'sport-pour-tous'].includes(color) && plain},
+      {'text-white bg-domaine-sport': [4,'sport','sport-pour-tous'].includes(color) && !plain},
+      { 'border text-domaine-sport border-domaine-sport': [4,'sport', 'sport-pour-tous'].includes(color) && plain},
 
       // DOMAINE: Mémoire
-      {'text-white bg-domaine-memoire': [9,'memoire'].includes(color) && !plain},
-      { 'border text-domaine-memoire border-domaine-memoire': [9,'memoire'].includes(color) && plain},
+      {'text-white bg-domaine-memoire': [8,'memoire'].includes(color) && !plain},
+      { 'border text-domaine-memoire border-domaine-memoire': [8,'memoire'].includes(color) && plain},
 
       // DOMAINE: Coopération
-      {'text-white bg-domaine-cooperation': [10,'cooperation'].includes(color) && !plain},
-      { 'border text-domaine-cooperation border-domaine-cooperation': [10,'cooperation'].includes(color) && plain},
+      {'text-white bg-domaine-cooperation': [6,'cooperation'].includes(color) && !plain},
+      { 'border text-domaine-cooperation border-domaine-cooperation': [6,'cooperation'].includes(color) && plain},
 
       // DOMAINE: Culture
-      {'text-white bg-domaine-culture': [11,'culture'].includes(color) && !plain},
-      { 'border text-domaine-culture border-domaine-culture': [11,'culture'].includes(color) && plain}
+      {'text-white bg-domaine-culture': [3,'culture'].includes(color) && !plain},
+      { 'border text-domaine-culture border-domaine-culture': [3,'culture'].includes(color) && plain}
     ]"
   >
     <span class="truncate">

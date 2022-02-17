@@ -65,18 +65,7 @@
       </div>
     </template>
     <div>
-      <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} utilisateurs`">
-        <template #action>
-          <nuxt-link
-            :to="`/admin/utilisateurs/add`"
-            class="opacity-25"
-          >
-            <Button icon="PlusIcon" size="lg">
-              Inviter un utilisateur
-            </Button>
-          </nuxt-link>
-        </template>
-      </Sectionheading>
+      <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} utilisateurs`" />
       <Input
         class="mt-8"
         name="search"
