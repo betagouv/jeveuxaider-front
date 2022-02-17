@@ -12,14 +12,14 @@
       <template v-if="stats">
         <div class="flex items-center">
           <div class="text-4xl font-semibold pr-4">
-            {{ stats.missions_available }}
+            {{ stats.missions_actives }}
           </div>
           <div>
             <div class="font-semibold">
-              {{ stats.missions_available | pluralize('mission', 'missions', false) }} en ligne
+              {{ stats.missions_actives | pluralize('mission', 'missions', false) }} en ligne
             </div>
             <div class="text-gray-500 -mt-1">
-              sur {{ stats.missions_total| pluralize('mission') }}
+              sur {{ stats.missions| pluralize('mission') }}
             </div>
           </div>
         </div>

@@ -15,7 +15,7 @@ export default async function (to, from, savedPosition) {
 
   if (to.hash) {
     const el = await findEl(to.hash)
-    return { x: 0, y: el.offsetTop, behavior: 'smooth' }
+    return { x: 0, y: el ? el.offsetTop : 0, behavior: 'smooth' }
   }
 
   return { x: 0, y: 0 }

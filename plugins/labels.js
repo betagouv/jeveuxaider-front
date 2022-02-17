@@ -237,7 +237,7 @@ const labels = {
     { key: 'Brouillon', label: 'Brouillon', from: ['En attente de validation'], description: "La mission est en cours d'édition. Elle n'apparait pas dans la recherche." },
     { key: 'En attente de validation', from: ['Brouillon'], label: 'En attente de validation', description: 'La mission est en attente de validation par le référérent départemental.' },
     { key: 'En cours de traitement', label: 'En cours de traitement', from: ['Brouillon', 'En attente de validation'], description: 'La mission est en cours de traitement par le référent départemental.' },
-    { key: 'Validée', label: 'Validée', from: ['En cours de traitement', 'En attente de validation', 'Signalée'], description: 'La mission est en ligne. Les bénévoles peuvent y participer.' },
+    { key: 'Validée', label: 'Validée', from: ['En cours de traitement', 'En attente de validation'], description: 'La mission est en ligne. Les bénévoles peuvent y participer.' },
     { key: 'Terminée', label: 'Terminée', from: ['Validée'], description: 'La mission est terminée. Les participations en attente seront annulées.' },
     { key: 'Signalée', label: 'Signalée', from: ['En cours de traitement', 'En attente de validation', 'Validée'], description: 'La mission ne respecte pas la charte de JeVeuxAider.gouv.fr. Les participations en attente seront annulées. La mission est hors-ligne.' },
     { key: 'Annulée', label: 'Annulée', from: ['Validée'], description: 'La mission est annulée. Les participations en attente seront annulées. La mission est hors-ligne.' }

@@ -66,7 +66,7 @@
           />
           <CardStatistic :value="`${statistics.places_occupation_rate}%`" title="Taux d'occupation" :gauge-percentage="statistics.places_occupation_rate" />
           <CardStatistic
-            v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
+            v-if="['admin', 'referent','referent_regional','tete_de_reseau'].includes($store.getters.contextRole)"
             :value="statistics.organisations_actives"
             :title="`${$options.filters.pluralize(statistics.organisations_actives, 'Organisation active', 'Organisations actives', false)}`"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations)} ${$options.filters.pluralize(statistics.organisations, 'organisations', 'organisations', false)}`"
@@ -74,7 +74,7 @@
             link-label="Organisations"
           />
           <CardStatistic
-            v-if="['admin', 'responsable', 'referent','referent_regional'].includes($store.getters.contextRole)"
+            v-if="['admin', 'responsable', 'referent','referent_regional','tete_de_reseau'].includes($store.getters.contextRole)"
             :value="statistics.missions_actives"
             :title="`${$options.filters.pluralize(statistics.missions_actives, 'Mission en ligne', 'Missions en ligne', false)}`"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.missions)} ${$options.filters.pluralize(statistics.missions, 'mission', 'missions', false)}`"
@@ -82,7 +82,7 @@
             link-label="Missions"
           />
           <CardStatistic
-            v-if="['admin', 'responsable', 'referent','referent_regional'].includes($store.getters.contextRole)"
+            v-if="['admin', 'responsable', 'referent','referent_regional','tete_de_reseau'].includes($store.getters.contextRole)"
             :value="statistics.participations_validated"
             :title="`${$options.filters.pluralize(statistics.participations_validated, 'Participation validée', 'Participations validées', false)}`"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.participations)} ${$options.filters.pluralize(statistics.participations, 'candidature', 'candidatures', false)}`"
