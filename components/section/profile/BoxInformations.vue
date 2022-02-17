@@ -23,12 +23,12 @@
         <DescriptionListItem
           v-if="profile.domaines"
           term="Domaines"
-          :description="profile.domaines.map((item) => $options.filters.label(item, 'domaines')).join(', ')"
+          :description="profile.domaines.map((item) => $options.filters.label(item.id, 'domaines')).join(', ')"
         />
         <DescriptionListItem
           v-if="profile.skills"
           term="Compétences"
-          :description="profile.skills.map((item) => item.name.fr).join(', ')"
+          :description="profile.skills.map((item) => item.name).join(', ')"
         />
       </DescriptionList>
     </Box>

@@ -4,9 +4,7 @@
     <Header />
     <Nuxt />
     <Footer />
-    <client-only>
-      <portal-target name="body-end" />
-    </client-only>
+    <portal-target name="body-end" multiple />
   </div>
 </template>
 

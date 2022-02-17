@@ -73,7 +73,6 @@ export default {
     }
     const { data: profile } = await this.$axios.get(`/profiles/${this.profileId}`)
     this.profile = profile
-    this.$emit('loaded', profile)
   },
   watch: {
     profileId: '$fetch'

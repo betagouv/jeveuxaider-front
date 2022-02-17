@@ -136,8 +136,8 @@ export default {
     return {
       endpoint: '/structures',
       queryParams: {
-        append: 'domaines,places_left',
-        include: 'tags'
+        append: 'places_left',
+        include: 'domaines'
       },
       drawerOrganisationId: null
     }

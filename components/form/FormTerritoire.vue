@@ -199,7 +199,8 @@ export default {
         name: string().min(3, 'Le nom est trop court').required('Le nom est requis'),
         suffix_title: string().min(3, 'Le titre court est trop court').required('Le titre court est requis'),
         zips: array().min(1, 'Merci de renseigner au moins 1 code postal')
-      })
+      }),
+      inputGeoType: 'municipality'
     }
   },
   methods: {
