@@ -20,12 +20,12 @@
           <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
             @TODO: Va disparaitre au profit de Domaine.php
           </div>
-          <SectionHeading title="Thématiques">
+          <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} thématiques`">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
                 <nuxt-link :to="`/admin/contenus/thematiques/add`">
                   <Button size="lg" :loading="loading" icon="PlusIcon">
-                    Thématique
+                    Nouveau
                   </Button>
                 </nuxt-link>
               </div>

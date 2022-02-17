@@ -17,7 +17,7 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-8">
-          <SectionHeading title="Réseaux">
+          <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} réseaux`">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
                 <nuxt-link :to="`/admin/contenus/reseaux/add`">

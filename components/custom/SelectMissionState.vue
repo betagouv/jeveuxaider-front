@@ -48,6 +48,7 @@ export default {
               ].includes(option.key)
           )
         case 'responsable':
+        case 'tete_de_reseau':
           return this.$labels.mission_workflow_states.filter(
             option =>
               [
@@ -64,7 +65,12 @@ export default {
       if (this.$store.getters.contextRole == 'admin') {
         return this.$labels.mission_workflow_states
       }
-      const currentState = this.statesByRole.find(option => option.key == this.value)
+      // @TODO : à revoir quand on est responsable / tete de reseau ça plante quand le statut est Validée -> pouvoir passer en Terminée/ Annulée
+      // console.log('this.$labels.mission_workflow_states', this.$labels.mission_workflow_states)
+      // console.log('this.value', this.value)
+      // console.log('this.statesByRole', this.statesByRole)
+      const currentState = this.statesByRole.find(option => option.key === this.value)
+      // console.log('currentState', currentState)
       return this.statesByRole.filter(option => currentState.from.includes(option.key) || option.key == this.value)
     }
   },

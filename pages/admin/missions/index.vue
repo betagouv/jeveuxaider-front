@@ -214,7 +214,7 @@ export default {
   layout: 'admin',
   asyncData ({ store, error }) {
     if (
-      !['admin', 'referent', 'referent_regional', 'responsable'].includes(
+      !['admin', 'referent', 'referent_regional', 'responsable', 'tete_de_reseau'].includes(
         store.getters.contextRole
       )
     ) {
