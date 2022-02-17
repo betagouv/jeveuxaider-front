@@ -72,7 +72,7 @@
             <BoxMission :reseau="reseau" :reseau-stats="stats" />
           </div>
         </div>
-        <History v-if="$route.hash == '#historique'" :model-id="reseau.id" model-type="structure" />
+        <History v-if="$route.hash == '#historique'" :model-id="reseau.id" model-type="reseau" />
         <template v-if="$route.hash == '#responsables'">
           <div class="space-y-2">
             <Box v-for="responsable in reseau.responsables" :key="responsable.id" variant="flat" padding="xs">
