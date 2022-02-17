@@ -22,7 +22,6 @@
           </Heading>
           <TextFormatted :max-lines="2" :text="reseau.description" class="text-cool-gray-500 text-lg" />
         </Box>
-        <BoxInformations class="mb-8" :reseau="reseau" :show-title="false" box-variant="shadow" box-padding="lg" />
         <Box :style="`background-color: ${reseau.color ? reseau.color : '#B91C1C'}`" class="text-white">
           <DomainsPublicsLinks :organisation="reseau" />
         </Box>
@@ -68,10 +67,9 @@
           ]"
         />
         <div v-if="!$route.hash">
-          <div class="mb-8">
-            <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-              @TODO: Informations sur le réseau
-            </div>
+          <div class="space-y-8">
+            <BoxInformations :reseau="reseau" />
+            <BoxMission :reseau="reseau" :reseau-stats="stats" />
           </div>
         </div>
         <History v-if="$route.hash == '#historique'" :model-id="reseau.id" model-type="structure" />
@@ -99,6 +97,7 @@ import MixinReseau from '@/mixins/reseau'
 import History from '@/components/section/History'
 import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks'
 import BoxInformations from '@/components/section/reseau/BoxInformations'
+import BoxMission from '@/components/section/reseau/BoxMission'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
 
 export default {
@@ -106,6 +105,7 @@ export default {
     History,
     DomainsPublicsLinks,
     BoxInformations,
+    BoxMission,
     OnlineIndicator
   },
   mixins: [MixinReseau],
@@ -122,12 +122,12 @@ export default {
   },
   data () {
     return {
-      organisationStats: null
+      stats: null
     }
   },
   async fetch () {
-    // const { data: stats } = await this.$axios.get(`/statistics/organisations/${this.organisation.id}`)
-    // this.organisationStats = stats
+    const { data: stats } = await this.$axios.get(`/statistics/reseaux/${this.reseau.id}`)
+    this.stats = stats
   }
 }
 </script>

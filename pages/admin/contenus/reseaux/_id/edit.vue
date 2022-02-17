@@ -5,7 +5,7 @@
         { label: 'Tableau de bord', link: '/dashboard' },
         { label: 'Contenus' },
         { label: 'Réseaux', link: `/admin/contenus/reseaux` },
-        { label: reseau.name }
+        { label: reseau.name, link: `/admin/contenus/reseaux/${reseau.id}` }
       ]"
     />
     <div class="py-6">
