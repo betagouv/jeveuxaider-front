@@ -120,7 +120,7 @@
                 {{ missionsFrom(antenne.id).missionCount | formatNumber }}
                 {{
                   missionsFrom(antenne.id).missionCount
-                    | pluralize(['mission ›', 'missions ›'])
+                    | pluralize('mission ›', 'missions ›', false)
                 }}
               </nuxt-link>
             </div>
@@ -169,126 +169,7 @@
     </template>
 
     <!-- FAIRE UN DON -->
-    <div v-if="reseau.donation" id="faire-un-don" class="gradient mt-20">
-      <div class="container px-4 md:px-8 mx-auto relative">
-        <div
-          class="max-w-[960px] mx-auto rounded-[24px] transform -translate-y-16 mb-6"
-        >
-          <div class="relative rounded-[24px] overflow-hidden shadow-lg">
-            <img
-              src="/images/bg_don.png"
-              srcset="/images/bg_don@2x.png 2x"
-              class="bg-img absolute object-cover w-full h-full"
-            >
-
-            <div
-              class="absolute inset-0 w-full h-full opacity-90"
-              :style="`background: ${color}`"
-            />
-
-            <div class="relative text-white p-8 py-16 text-center">
-              <h2
-                class="font-bold text-center mb-6 text-3xl leading-8 tracking-tight sm:text-5xl sm:leading-tight"
-              >
-                <span>Faites un don à l'organisation</span>
-                <br class="hidden xl:block">
-                <span class="font-extrabold">{{ reseau.name }}</span>
-              </h2>
-
-              <p class="text-xl max-w-xl mx-auto">
-                Plus que jamais, l'organisation {{ reseau.name }} a besoin de
-                votre générosité
-              </p>
-            </div>
-          </div>
-
-          <div>
-            <div
-              class="text-center transform -translate-y-1/2"
-              :class="[
-                {
-                  'absolute inset-x-0':
-                    !reseau.donation.includes('helloasso') &&
-                    !reseau.donation.includes('leetchi') &&
-                    !reseau.donation.includes('microdon') &&
-                    !reseau.donation.includes('ulule'),
-                },
-              ]"
-            >
-              <button
-                class="mx-auto flex items-center justify-center font-extrabold cursor-pointer shadow-lg text-xl leading-6 rounded-full text-white bg-jva-green py-4 px-10 hover:shadow-lg hover:scale-105 focus:scale-105 !outline-none transform transition will-change-transform"
-                @click="goTo(reseau.donation)"
-              >
-                Faire un don
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-4 w-4 ml-2"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <div
-              v-if="
-                reseau.donation.includes('helloasso') ||
-                  reseau.donation.includes('leetchi') ||
-                  reseau.donation.includes('microdon') ||
-                  reseau.donation.includes('ulule')
-              "
-              class="-mt-7 pt-6"
-            >
-              <div class="flex items-center justify-center">
-                <span
-                  class="uppercase text-gray-500 mr-2"
-                  style="font-size: 10px"
-                >Par</span>
-
-                <img
-                  v-if="reseau.donation.includes('helloasso')"
-                  src="/images/helloasso.svg"
-                  alt="Helloasso"
-                  class="flex-none"
-                  width="92px"
-                >
-
-                <img
-                  v-if="reseau.donation.includes('leetchi')"
-                  src="/images/leetchi.png"
-                  srcset="/images/leetchi@2x.png 2x"
-                  alt="Leetchi"
-                  class="flex-none"
-                >
-
-                <img
-                  v-if="reseau.donation.includes('ulule')"
-                  src="/images/ulule.svg"
-                  alt="Ulule"
-                  class="flex-none"
-                  width="92px"
-                >
-
-                <img
-                  v-if="reseau.donation.includes('microdon')"
-                  src="/images/microdon.png"
-                  srcset="/images/microdon@2x.png 2x"
-                  alt="Microdon"
-                  class="flex-none"
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Donation v-if="reseau.donation" :organisation="reseau" />
 
     <Contact :organisation="reseau" />
   </div>
@@ -299,12 +180,16 @@
 import Presentation from '@/components/section/organisation/Presentation'
 import Details from '@/components/section/organisation/Details'
 import Contact from '@/components/section/organisation/Contact'
+import Donation from '@/components/section/organisation/Donation'
+import CardMission from '@/components/card/CardMission'
 
 export default {
   components: {
     Presentation,
     Details,
-    Contact
+    Contact,
+    Donation,
+    CardMission
   },
   layout: 'default-without-header',
   async asyncData ({ $axios, params, error, $algoliaApi, store }) {
@@ -326,29 +211,27 @@ export default {
     }
   },
   async fetch () {
-    // const missions = []
-    // await Promise.all(
-    //   this.reseau.structures.map(async (antenne) => {
-    //     const config = {
-    //       filters: `structure.id = ${antenne.id}`,
-    //       hitsPerPage: 3
-    //     }
-    //     const missionsData = await this.$algoliaApi.getMissions(config)
-    //     if (missionsData.json.nbHits) {
-    //       missions.push({
-    //         antenneId: antenne.id,
-    //         missions: missionsData.json.hits,
-    //         missionCount: missionsData.json.nbHits
-    //       })
-    //     }
-    //   })
-    // )
-    // this.$set(this, 'missions', missions)
+    const missions = []
+    await Promise.all(
+      this.reseau.structures.map(async (antenne) => {
+        const config = {
+          filters: `structure.id = ${antenne.id}`,
+          hitsPerPage: 3
+        }
+        const missionsData = await this.$algoliaApi.getMissions(config)
+        if (missionsData.json.nbHits) {
+          missions.push({
+            antenneId: antenne.id,
+            missions: missionsData.json.hits,
+            missionCount: missionsData.json.nbHits
+          })
+        }
+      })
+    )
+    this.$set(this, 'missions', missions)
 
-    // const { data: structures } = await this.$api.getStructuresFromReseau(
-    //   this.reseau.id
-    // )
-    // this.$set(this, 'structures', structures)
+    const { data: structures } = await this.$axios(`/reseaux/${this.reseau.id}/structures`)
+    this.$set(this, 'structures', structures)
   },
   head () {
     return {

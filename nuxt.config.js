@@ -33,7 +33,8 @@ export default {
     '~/plugins/vue-filters.js',
     { src: '~/plugins/vue-libraries.js', mode: 'client' },
     '~/plugins/numeral.js',
-    '~/plugins/marked.js'
+    '~/plugins/marked.js',
+    '~/plugins/api-algolia.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
