@@ -5,7 +5,7 @@
         <div class="uppercase font-semibold text-gray-600">
           Territoire
         </div>
-        <Link to="/admin/organisations/" icon="ChevronRightIcon" class="opacity-25">
+        <Link :to="`/admin/contenus/territoires/${territoire.id}`" icon="ChevronRightIcon">
           Consulter
         </Link>
       </div>

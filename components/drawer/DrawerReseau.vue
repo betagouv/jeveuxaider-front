@@ -24,7 +24,9 @@
 
       <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :reseau="reseau" />
-      <BoxMission class="mb-8" :reseau="reseau" :reseau-stats="stats" />
+      <BoxAntenne class="mb-8" :reseau="reseau" :stats="stats" />
+      <BoxMission class="mb-8" :reseau="reseau" :stats="stats" />
+      <BoxParticipation class="mb-8" :reseau="reseau" :stats="stats" />
 
       <div class="flex justify-center mb-10">
         <Link :to="`/admin/contenus/reseaux/${reseau.id}`" class="uppercase font-semibold text-sm hover:underline">
@@ -38,12 +40,16 @@
 <script>
 import BoxInformations from '@/components/section/reseau/BoxInformations'
 import BoxMission from '@/components/section/reseau/BoxMission'
+import BoxAntenne from '@/components/section/reseau/BoxAntenne'
+import BoxParticipation from '@/components/section/reseau/BoxParticipation'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
 
 export default {
   components: {
     BoxInformations,
     BoxMission,
+    BoxAntenne,
+    BoxParticipation,
     OnlineIndicator
   },
   props: {
