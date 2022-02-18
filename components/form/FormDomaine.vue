@@ -168,7 +168,7 @@
         <div class="space-y-12">
           <FormControl label="Bannière" html-for="banner">
             <ImageCrop
-              :default-value="form.banner"
+              :default-value="form.media.find(media => media.collection_name == 'domaine__banner')"
               :ratio="300/143"
               :min-width="300"
               :preview-width="235"
@@ -180,21 +180,18 @@
           </FormControl>
 
           <FormControl label="Illustrations" html-for="illustrations">
-            <div class="grid sm:grid-cols-3 gap-4">
-              <ImageCrop
-                v-for="(n, index) in 6"
-                :key="index"
-                :default-value="form.illustrations && form.illustrations[index] && form.illustrations[index].id ? form.illustrations[index] : undefined"
-                :ratio="1/1"
-                :min-width="430"
-                :preview-width="200"
-                variant="compact"
-                upload-variant="compact"
-                @add="addFiles({ files: [$event], collection: 'domaine__illustrations' })"
-                @delete="deleteFile($event)"
-                @crop="onManipulationsChange($event)"
-              />
-            </div>
+            <ImageCropMultiple
+              class="grid sm:grid-cols-3 gap-4"
+              :medias="form.media.filter(media => media.collection_name == 'domaine__illustrations')"
+              :ratio="1/1"
+              :min-width="430"
+              :preview-width="200"
+              variant="compact"
+              upload-variant="compact"
+              @add="addFiles({ files: [$event], collection: 'domaine__illustrations' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
+            />
           </FormControl>
         </div>
       </Box>

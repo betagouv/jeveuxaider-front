@@ -171,8 +171,8 @@ export default {
     return {
       endpoint: `/missions/${this.$route.params.id}/benevoles`,
       queryParams: {
-        include: 'user,participationsValidatedCount,media',
-        append: 'avatar'
+        include: 'user,participationsValidatedCount,media'
+        // append: 'avatar'
       },
       drawerProfileId: null,
       notifications: [],

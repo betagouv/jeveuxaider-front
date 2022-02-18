@@ -138,8 +138,8 @@ export default {
       loading: false,
       endpoint: '/mission-templates',
       queryParams: {
-        include: 'media',
-        append: 'photo'
+        include: 'media'
+        // append: 'photo'
       },
       drawerMissionTemplateId: null
     }

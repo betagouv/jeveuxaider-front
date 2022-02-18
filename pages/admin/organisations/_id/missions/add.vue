@@ -129,7 +129,7 @@ export default {
             ? this.structure.reseaux.map(reseau => reseau.id).join(',')
             : 'empty',
           pagination: 99,
-          append: 'photo',
+          // append: 'photo',
           include: 'media'
         }
       })
