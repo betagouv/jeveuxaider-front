@@ -12,10 +12,13 @@
     <div class="grid grid-cols-5 py-12">
       <aside class="relative col-span-1">
         <div class="sticky top-12">
-          <MenuAdmin />
+          <SecondaryMenuAdmin v-if="$store.getters.contextRole === 'admin'" />
+          <SecondaryMenuTeteDeReseau v-if="$store.getters.contextRole === 'tete_de_reseau'" />
         </div>
       </aside>
-      <div class="col-span-4">
+      <div
+        class="col-span-4"
+      >
         <div class="flex flex-col gap-8">
           <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} modèles de mission`">
             <template #action>
@@ -119,20 +122,28 @@
 </template>
 
 <script>
-import MenuAdmin from '@/components/section/admin/MenuAdmin'
+import SecondaryMenuAdmin from '@/components/section/admin/SecondaryMenuAdmin'
+import SecondaryMenuTeteDeReseau from '@/components/section/reseau/SecondaryMenuTeteDeReseau'
 import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerMissionTemplate from '@/components/drawer/DrawerMissionTemplate'
 
 export default {
   components: {
-    MenuAdmin,
+    SecondaryMenuAdmin,
+    SecondaryMenuTeteDeReseau,
     Card,
     DrawerMissionTemplate
   },
   mixins: [QueryBuilder],
   layout: 'admin',
-  middleware: 'admin',
+  asyncData ({ $axios, params, error, store }) {
+    if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {
+      return error({ statusCode: 403 })
+    }
+    return {
+    }
+  },
   data () {
     return {
       loading: false,

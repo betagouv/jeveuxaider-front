@@ -47,6 +47,7 @@ export default {
     if (!reseau) {
       return error({ statusCode: 404 })
     }
+
     return {
       reseau
     }

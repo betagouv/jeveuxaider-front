@@ -13,7 +13,7 @@
     <div class="grid grid-cols-5 py-12 ">
       <aside class="relative col-span-1">
         <div class="sticky top-12">
-          <MenuAdmin />
+          <SecondaryMenuAdmin />
         </div>
       </aside>
       <div class="col-span-4">
@@ -111,13 +111,13 @@
 </template>
 
 <script>
-import MenuAdmin from '@/components/section/admin/MenuAdmin'
+import SecondaryMenuAdmin from '@/components/section/admin/SecondaryMenuAdmin'
 import QueryBuilder from '@/mixins/query-builder'
 import DrawerTerm from '@/components/drawer/DrawerTerm'
 
 export default {
   components: {
-    MenuAdmin,
+    SecondaryMenuAdmin,
     DrawerTerm
   },
   mixins: [QueryBuilder],

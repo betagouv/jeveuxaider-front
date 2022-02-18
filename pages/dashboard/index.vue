@@ -154,6 +154,12 @@ export default {
           { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
         ]
       }
+      if (this.$store.getters.contextRole === 'tete_de_reseau') {
+        return [
+          { icon: '🗂', title: 'Modèles de missions', link: '/admin/contenus/modeles-mission' },
+          { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
+        ]
+      }
       return [
         { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
       ]
