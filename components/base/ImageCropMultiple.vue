@@ -2,7 +2,7 @@
   <div>
     <ImageCrop
       v-for="(value, index) in values"
-      :key="index"
+      :key="value.id"
       :default-value="value"
       :preview-width="previewWidth"
       :preview-height="previewHeight"
@@ -15,7 +15,7 @@
       :upload-variant="uploadVariant"
       :upload-max-size="uploadMaxSize"
       :disable-delete="disableDelete"
-      @add="onAdd($event)"
+      @add="onAdd($event, index)"
       @delete="onDelete($event, index)"
       @crop="$emit('crop', $event)"
     />
@@ -42,26 +42,37 @@ export default {
   },
   data () {
     return {
-      addedMedias: 0,
-      // deletedMedias: 0,
+      id: 0,
       values: this.medias
     }
   },
   computed: {
-    nbMedias () {
-      const nbMedias = this.medias.length + this.addedMedias
-      return this.limit ? Math.min(this.limit, nbMedias) : nbMedias
+
+  },
+  mounted () {
+    if (!this.limit || this.values.length < this.limit) {
+      this.addEmptyMedia()
     }
   },
   methods: {
-    onAdd ($event) {
-      this.addedMedias++
+    onAdd ($event, index) {
       this.$emit('add', $event)
+      if (!this.limit || this.values.length < this.limit) {
+        this.addEmptyMedia()
+      }
     },
     onDelete ($event, index) {
-      // this.values.splice(index, 1)
-      // this.deletedMedias++
+      this.values.splice(index, 1)
       this.$emit('delete', $event)
+
+      // @todo: seulement si necessaire
+      if (this.limit && this.limit == (this.values.length + 1)) {
+        this.addEmptyMedia()
+      }
+    },
+    addEmptyMedia () {
+      this.values.push({ id: `${this._uid}__${this.id}` })
+      this.id++
     }
   }
 }

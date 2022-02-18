@@ -120,7 +120,7 @@ export default {
   data () {
     return {
       showModal: false,
-      files: this.defaultValue ? [this.defaultValue] : [],
+      files: this.defaultValue?.urls ? [this.defaultValue] : [],
       previewSrcset: this.defaultValue?.urls?.formPreview ?? this.defaultValue?.urls?.original,
       originalSrc: this.defaultValue?.urls?.original,
       manipulations: this.defaultValue?.manipulation ?? {}
