@@ -92,7 +92,7 @@
       </div>
 
       <!-- Tab content -->
-      <div class="relative">
+      <div class="relative mb-12">
         <div class="mx-auto">
           <div v-for="(group, index) in groups[activeType]" :key="index">
             <div
@@ -169,11 +169,11 @@ export default {
       activeType: types[0].slug,
       groups: {
         cities: [
-          ['A', 'B', 'C', 'D', 'E'],
+          ['A', 'À', 'Á', 'Ã', 'Â', 'B', 'C', 'Ç', 'D', 'É', 'È', 'Ê', 'E'],
           ['F', 'G', 'H', 'I', 'J'],
-          ['K', 'L', 'M', 'N', 'O'],
+          ['K', 'L', 'M', 'N', 'Ó', 'Ò', 'Ô', 'Õ', 'O'],
           ['P', 'Q', 'R', 'S', 'T'],
-          ['U', 'V', 'W', 'X', 'Y', 'Z']
+          ['U', 'Ú', 'Ù', 'Û', 'Ü', 'V', 'W', 'X', 'Y', 'Z']
         ],
         departments: [
           ['A'],
