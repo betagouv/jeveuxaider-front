@@ -12,7 +12,7 @@
         <DescriptionListItem term="Crée le" :description="$dayjs(mission.created_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Modifié le" :description="$dayjs(mission.updated_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Type" :description="mission.type" />
-        <DescriptionListItem term="Domaine" :description="mission.domaine && mission.domaine.name.fr" />
+        <DescriptionListItem term="Domaine" :description="mission.domaine && mission.domaine.name" />
         <DescriptionListItem
           v-if="mission.publics_beneficiaires"
           term="Publics bénéf."

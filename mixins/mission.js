@@ -28,19 +28,9 @@ export default {
       return this.mission.structure.state === 'Validée' && ['Validée', 'Terminée'].includes(this.mission.state)
     },
     canEditStatut () {
-      if (this.$store.getters.contextRole == 'admin') {
-        return true
-      }
-      if (this.mission.state == 'Validée') {
-        return true
-      }
-      if (
-        this.$store.getters.contextRole == 'referent' ||
-        this.$store.getters.contextRole == 'referent_regional'
-      ) {
-        return !['Signalée'].includes(this.mission.state)
-      }
-      return false
+      const rolesWhoCanEdit = this.$options.filters.label(this.mission.state, 'mission_workflow_states', 'roles')
+      console.log('rolesWhoCanEdit', rolesWhoCanEdit)
+      return !!rolesWhoCanEdit.includes(this.$store.getters.contextRole)
     },
     missionCity () {
       if (this.mission.city?.includes('Paris')) {

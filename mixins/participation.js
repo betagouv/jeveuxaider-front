@@ -1,15 +1,9 @@
 export default {
   computed: {
     canEditStatut () {
-      if (this.$store.getters.contextRole == 'admin') {
-        return true
-      }
-      if (
-        this.$store.getters.contextRole == 'responsable'
-      ) {
-        return true
-      }
-      return false
+      const rolesWhoCanEdit = this.$options.filters.label(this.participation.state, 'participation_workflow_states', 'roles')
+      console.log('rolesWhoCanEdit', rolesWhoCanEdit)
+      return !!rolesWhoCanEdit.includes(this.$store.getters.contextRole)
     }
   }
 }

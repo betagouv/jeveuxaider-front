@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SelectWithDescription :options="statesAvailable" :value="value" @selected="handleSelect($event)" />
+    <SelectWithDescription v-if="statesAvailable.length" :options="statesAvailable" :value="value" @selected="handleSelect($event)" />
     <AlertDialog
       theme="warning"
       :title="titleAlert"
@@ -34,44 +34,13 @@ export default {
     }
   },
   computed: {
-    statesByRole () {
-      switch (this.$store.getters.contextRole) {
-        case 'referent':
-        case 'referent_regional':
-          return this.$labels.mission_workflow_states.filter(
-            option =>
-              [
-                'En attente de validation',
-                'En cours de traitement',
-                'Validée',
-                'Signalée'
-              ].includes(option.key)
-          )
-        case 'responsable':
-        case 'tete_de_reseau':
-          return this.$labels.mission_workflow_states.filter(
-            option =>
-              [
-                'En attente de validation',
-                'Terminée',
-                'Annulée'
-              ].includes(option.key)
-          )
-        default:
-          return []
-      }
-    },
     statesAvailable () {
-      if (this.$store.getters.contextRole == 'admin') {
-        return this.$labels.mission_workflow_states
+      let toStates = this.$options.filters.label(this.value, 'mission_workflow_states', 'to')
+      if (this.$store.getters.contextRole === 'responsable') {
+        // Si responsable on retire l'option Signalée
+        toStates = toStates.filter(state => state !== 'Signalée')
       }
-      // @TODO : à revoir quand on est responsable / tete de reseau ça plante quand le statut est Validée -> pouvoir passer en Terminée/ Annulée
-      // console.log('this.$labels.mission_workflow_states', this.$labels.mission_workflow_states)
-      // console.log('this.value', this.value)
-      // console.log('this.statesByRole', this.statesByRole)
-      const currentState = this.statesByRole.find(option => option.key === this.value)
-      // console.log('currentState', currentState)
-      return this.statesByRole.filter(option => currentState.from.includes(option.key) || option.key == this.value)
+      return this.$labels.mission_workflow_states.filter(state => toStates.includes(state.key))
     }
   },
   methods: {

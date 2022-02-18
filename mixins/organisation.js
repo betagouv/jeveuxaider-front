@@ -35,16 +35,9 @@ export default {
       return this.organisation.statut_juridique == 'Association' && this.organisation.state === 'Validée'
     },
     canEditStatut () {
-      if (this.$store.getters.contextRole == 'admin') {
-        return true
-      }
-      if (
-        this.$store.getters.contextRole == 'referent' ||
-        this.$store.getters.contextRole == 'referent_regional'
-      ) {
-        return !['Signalée'].includes(this.mission.state)
-      }
-      return false
+      const rolesWhoCanEdit = this.$options.filters.label(this.organisation.state, 'structure_workflow_states', 'roles')
+      console.log('rolesWhoCanEdit', rolesWhoCanEdit)
+      return !!rolesWhoCanEdit.includes(this.$store.getters.contextRole)
     }
   },
   methods: {
