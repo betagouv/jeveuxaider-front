@@ -77,7 +77,7 @@ export default {
       loading: false,
       endpoint: '/documents',
       queryParams: {
-        append: 'file'
+        // append: 'file'
       },
       drawerRessourceId: null
     }

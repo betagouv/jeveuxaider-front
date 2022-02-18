@@ -49,23 +49,20 @@
           Images pour les organisations
         </Heading>
         <div class="space-y-12">
-          <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-            <ImageCrop
-              v-for="(n, index) in 6"
-              :key="index"
-              :default-value="form.illustrations_organisation && form.illustrations_organisation[index] && form.illustrations_organisation[index].id ? form.illustrations_organisation[index] : undefined"
-              :ratio="300/143"
-              :min-width="300"
-              :preview-width="235"
-              variant="compact"
-              upload-variant="compact"
-              :upload-max-size="2000000"
-              disable-delete
-              @add="addFiles({ files: [$event], collection: 'illustrations_organisation' })"
-              @delete="deleteFile($event)"
-              @crop="onManipulationsChange($event)"
-            />
-          </div>
+          <ImageCropMultiple
+            class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"
+            :medias="form.illustrations_organisation"
+            :ratio="300/143"
+            :min-width="300"
+            :preview-width="235"
+            variant="compact"
+            upload-variant="compact"
+            :upload-max-size="2000000"
+            disable-delete
+            @add="addFiles({ files: [$event], collection: 'illustrations_organisation' })"
+            @delete="deleteFile($event)"
+            @crop="onManipulationsChange($event)"
+          />
         </div>
       </Box>
       <Box>
@@ -73,22 +70,19 @@
           Images pour les missions
         </Heading>
         <div class="space-y-12">
-          <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-            <ImageCrop
-              v-for="(n, index) in 9"
-              :key="index"
-              :default-value="form.illustrations_mission && form.illustrations_mission[index] && form.illustrations_mission[index].id ? form.illustrations_mission[index] : undefined"
-              :ratio="300/143"
-              :min-width="300"
-              :preview-width="235"
-              variant="compact"
-              upload-variant="compact"
-              disable-delete
-              @add="addFiles({ files: [$event], collection: 'illustrations_mission' })"
-              @delete="deleteFile($event)"
-              @crop="onManipulationsChange($event)"
-            />
-          </div>
+          <ImageCropMultiple
+            class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"
+            :medias="form.illustrations_mission"
+            :ratio="300/143"
+            :min-width="300"
+            :preview-width="235"
+            variant="compact"
+            upload-variant="compact"
+            disable-delete
+            @add="addFiles({ files: [$event], collection: 'illustrations_mission' })"
+            @delete="deleteFile($event)"
+            @crop="onManipulationsChange($event)"
+          />
         </div>
       </Box>
     </div>
@@ -111,25 +105,22 @@
         </Heading>
         <div class="space-y-12">
           <FormControl html-for="logos_partenaires">
-            <div class="grid sm:grid-cols-3 lg:grid-cols-2 gap-4">
-              <ImageCrop
-                v-for="(n, index) in 4"
-                :key="index"
-                :default-value="form.logos_partenaires && form.logos_partenaires[index] && form.logos_partenaires[index].id ? form.logos_partenaires[index] : undefined"
-                :ratio="null"
-                :min-height="112"
-                :preview-width="null"
-                :preview-height="56"
-                preview-fit="contain"
-                preview-classes="p-2"
-                :upload-max-size="500000"
-                variant="compact"
-                upload-variant="compact"
-                @add="addFiles({ files: [$event], collection: 'domaine__logos_partenaires' })"
-                @delete="deleteFile($event)"
-                @crop="onManipulationsChange($event)"
-              />
-            </div>
+            <ImageCropMultiple
+              class="grid sm:grid-cols-3 lg:grid-cols-2 gap-4"
+              :medias="form.logos_partenaires"
+              :ratio="null"
+              :min-height="112"
+              :preview-width="null"
+              :preview-height="56"
+              preview-fit="contain"
+              preview-classes="p-2"
+              :upload-max-size="500000"
+              variant="compact"
+              upload-variant="compact"
+              @add="addFiles({ files: [$event], collection: 'domaine__logos_partenaires' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
+            />
           </FormControl>
         </div>
       </Box>
@@ -139,25 +130,22 @@
         </Heading>
         <div class="space-y-12">
           <FormControl html-for="logos_partenaires_actifs">
-            <div class="grid sm:grid-cols-3 lg:grid-cols-2 gap-4">
-              <ImageCrop
-                v-for="(n, index) in 5"
-                :key="index"
-                :default-value="form.logos_partenaires_actifs && form.logos_partenaires_actifs[index] && form.logos_partenaires_actifs[index].id ? form.logos_partenaires_actifs[index] : undefined"
-                :ratio="null"
-                :min-height="112"
-                :preview-width="null"
-                :preview-height="56"
-                preview-fit="contain"
-                preview-classes="p-2"
-                :upload-max-size="500000"
-                variant="compact"
-                upload-variant="compact"
-                @add="addFiles({ files: [$event], collection: 'domaine__logos_partenaires_actifs' })"
-                @delete="deleteFile($event)"
-                @crop="onManipulationsChange($event)"
-              />
-            </div>
+            <ImageCropMultiple
+              class="grid sm:grid-cols-3 lg:grid-cols-2 gap-4"
+              :medias="form.logos_partenaires_actifs"
+              :ratio="null"
+              :min-height="112"
+              :preview-width="null"
+              :preview-height="56"
+              preview-fit="contain"
+              preview-classes="p-2"
+              :upload-max-size="500000"
+              variant="compact"
+              upload-variant="compact"
+              @add="addFiles({ files: [$event], collection: 'domaine__logos_partenaires_actifs' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
+            />
           </FormControl>
         </div>
       </Box>
@@ -180,21 +168,19 @@
           </FormControl>
 
           <FormControl label="Illustrations" html-for="illustrations">
-            <div class="grid sm:grid-cols-3 gap-4">
-              <ImageCrop
-                v-for="(n, index) in 6"
-                :key="index"
-                :default-value="form.illustrations && form.illustrations[index] && form.illustrations[index].id ? form.illustrations[index] : undefined"
-                :ratio="1/1"
-                :min-width="430"
-                :preview-width="200"
-                variant="compact"
-                upload-variant="compact"
-                @add="addFiles({ files: [$event], collection: 'domaine__illustrations' })"
-                @delete="deleteFile($event)"
-                @crop="onManipulationsChange($event)"
-              />
-            </div>
+            <ImageCropMultiple
+              class="grid sm:grid-cols-3 gap-4"
+              :limit="6"
+              :medias="form.illustrations"
+              :ratio="1/1"
+              :min-width="430"
+              :preview-width="200"
+              variant="compact"
+              upload-variant="compact"
+              @add="addFiles({ files: [$event], collection: 'domaine__illustrations' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
+            />
           </FormControl>
         </div>
       </Box>

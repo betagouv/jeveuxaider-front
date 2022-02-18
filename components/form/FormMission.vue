@@ -110,6 +110,13 @@
               :options="$labels.mission_publics_volontaires"
             />
           </FormControl>
+
+          <FormControl
+            label="Visuel d'illustration"
+            html-for="publics_volontaires"
+          >
+            <MediaPicker />
+          </FormControl>
         </div>
       </Box>
     </div>
