@@ -308,10 +308,11 @@ export default {
           this.loading = true
           if (this.form.id) {
             await this.$axios.put(`/reseaux/${this.form.id}`, this.form)
+            this.$router.push(`/admin/contenus/reseaux/${this.form.id}`)
           } else {
-            await this.$axios.post('/reseaux', this.form)
+            const { data: newReseau } = await this.$axios.post('/reseaux', this.form)
+            this.$router.push(`/admin/contenus/reseaux/${newReseau.id}`)
           }
-          this.$router.push('/admin/contenus/reseaux')
         })
         .catch((errors) => {
           this.setErrors(errors)

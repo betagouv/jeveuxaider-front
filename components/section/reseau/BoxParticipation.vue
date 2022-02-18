@@ -19,7 +19,7 @@
               {{ stats.participations_state['Validée'] | pluralize('participation validée', 'participations validées', false) }}
             </div>
             <div class="text-gray-500 -mt-1">
-              sur {{ stats.participations_total| pluralize('participation') }}
+              sur {{ stats.participations| pluralize('participation') }}
             </div>
           </div>
         </div>

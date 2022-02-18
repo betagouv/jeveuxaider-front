@@ -48,14 +48,14 @@ export default {
           { name: 'Emails', href: '/admin/settings/emails' },
           { name: 'Messages', href: '/admin/settings/messages' }
         ]
-      },
-      {
-        name: 'scripts',
-        label: 'Scripts',
-        links: [
-          { name: 'Migrer les missions', href: '/admin/scripts/migrate-organisation-missions' }
-        ]
       }
+      // {
+      //   name: 'scripts',
+      //   label: 'Scripts',
+      //   links: [
+      //     { name: 'Migrer les missions', href: '/admin/scripts/migrate-organisation-missions' }
+      //   ]
+      // }
       ]
     }
   }

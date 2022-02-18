@@ -19,7 +19,7 @@
               {{ stats.organisations_actives | pluralize('antenne active', 'antennes actives', false) }}
             </div>
             <div class="text-gray-500 -mt-1">
-              sur {{ stats.organisations_total| pluralize('antenne') }}
+              sur {{ stats.organisations| pluralize('antenne') }}
             </div>
           </div>
         </div>

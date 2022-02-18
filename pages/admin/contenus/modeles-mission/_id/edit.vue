@@ -15,9 +15,6 @@
             <Button size="xl" variant="green" @click.native="$refs.form.handleSubmit()">
               Enregistrer
             </Button>
-            <Link class="text-sm font-medium" @click.native="$refs.form.handleSubmit({state: 'draft'})">
-              Enregistrer en brouillon
-            </Link>
           </div>
         </template>
       </Sectionheading>
@@ -37,12 +34,23 @@ import FormMissionTemplate from '~/components/form/FormMissionTemplate.vue'
 export default {
   components: { FormMissionTemplate },
   layout: 'admin',
-  middleware: 'admin',
   async asyncData ({ $axios, params, error, store }) {
+    if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {
+      return error({ statusCode: 403 })
+    }
+
     const { data: missionTemplate } = await $axios.get(`/mission-templates/${params.id}`)
+
     if (!missionTemplate) {
       return error({ statusCode: 404 })
     }
+
+    if (store.getters.contextRole === 'tete_de_reseau') {
+      if (missionTemplate.reseau_id != store.getters.profile.tete_de_reseau_id) {
+        return error({ statusCode: 403 })
+      }
+    }
+
     return {
       missionTemplate
     }

@@ -171,18 +171,18 @@ const labels = {
     { key: 'Autre', label: 'Autre' }
   ],
   structure_workflow_states: [
-    { key: 'En attente de validation', label: 'En attente de validation', description: "L'organisation vient de s'inscrire. Elle est en attente de validation par un référent." },
-    { key: 'En cours de traitement', label: 'En cours de traitement', from: ['En attente de validation'], description: "Le référent vérifie des informations avant de valider l'organisation." },
-    { key: 'Validée', label: 'Validée', from: ['En cours de traitement', 'En attente de validation'], description: "L'organisation peut poster des missions et a une page publique qu'elle peut éditer." },
-    { key: 'Signalée', label: 'Signalée', from: ['En cours de traitement', 'En attente de validation', 'Validée'], description: "L'organisation ne respecte pas la charte de JeVeuxAider.gouv.fr. La page de l'organisation est hors ligne, ainsi que que ses missions." },
-    { key: 'Désinscrite', label: 'Désinscrite', description: "L'organisation s'est désinscrite. Sa page est hors ligne ainsi que ses missions." }
+    { key: 'En attente de validation', to: ['En attente de validation', 'En cours de traitement', 'Validée', 'Signalée', 'Désinscrite'], roles: ['admin', 'referent', 'referent_regional'], label: 'En attente de validation', description: "L'organisation vient de s'inscrire. Elle est en attente de validation par un référent." },
+    { key: 'En cours de traitement', to: ['En cours de traitement', 'Validée', 'Signalée', 'Désinscrite'], roles: ['admin', 'referent', 'referent_regional'], label: 'En cours de traitement', description: "Le référent vérifie des informations avant de valider l'organisation." },
+    { key: 'Validée', to: ['Validée', 'Signalée', 'Désinscrite'], roles: ['admin', 'referent', 'referent_regional'], label: 'Validée', description: "L'organisation peut poster des missions et a une page publique qu'elle peut éditer." },
+    { key: 'Signalée', to: ['Signalée'], roles: ['admin'], label: 'Signalée', description: "L'organisation ne respecte pas la charte de JeVeuxAider.gouv.fr. La page de l'organisation est hors ligne, ainsi que que ses missions." },
+    { key: 'Désinscrite', to: ['Désinscrite'], roles: ['admin'], label: 'Désinscrite', description: "L'organisation s'est désinscrite. Sa page est hors ligne ainsi que ses missions." }
   ],
   participation_workflow_states: [
-    { key: 'En attente de validation', label: 'En attente de validation', description: 'Le bénévole vient de candidater. Il est en attente de validation par le responsable de la mission.' },
-    { key: 'En cours de traitement', label: 'En cours de traitement', from: ['En attente de validation'], description: 'Le responsable vérifie des informations avant de valider la participation.' },
-    { key: 'Validée', label: 'Validée', from: ['En cours de traitement', 'En attente de validation'], description: 'La participation est validée, elle va avoir lieu ou a déjà été faite.' },
-    { key: 'Annulée', label: 'Annulée', from: ['En cours de traitement', 'En attente de validation'], description: 'La participation est annulée si la mission a été annulée.' },
-    { key: 'Refusée', label: 'Refusée', from: ['En cours de traitement', 'En attente de validation', 'Validée'], description: 'Le profil du bénévole ne correspond pas à la mission.' }
+    { key: 'En attente de validation', to: ['En attente de validation', 'En cours de traitement', 'Validée', 'Refusée'], roles: ['admin', 'responsable'], label: 'En attente de validation', description: 'Le bénévole vient de candidater. Il est en attente de validation par le responsable de la mission.' },
+    { key: 'En cours de traitement', to: ['En cours de traitement', 'Validée', 'Refusée'], roles: ['admin', 'responsable'], label: 'En cours de traitement', from: ['En attente de validation'], description: 'Le responsable vérifie des informations avant de valider la participation.' },
+    { key: 'Validée', label: 'Validée', to: ['Validée', 'Annulée'], roles: ['admin', 'responsable'], description: 'La participation est validée, elle va avoir lieu ou a déjà été faite.' },
+    { key: 'Annulée', label: 'Annulée', to: ['Annulée'], roles: ['admin', 'responsable'], description: 'La participation est annulée si la mission a été annulée.' },
+    { key: 'Refusée', label: 'Refusée', to: ['Refusée', 'Validée'], roles: ['admin', 'responsable'], description: 'Le profil du bénévole ne correspond pas à la mission.' }
   ],
   time_period: [
     { key: 'week', label: 'semaine' },
@@ -234,13 +234,13 @@ const labels = {
     { key: 'Mission à distance', label: 'Mission à distance' }
   ],
   mission_workflow_states: [
-    { key: 'Brouillon', label: 'Brouillon', from: ['En attente de validation'], description: "La mission est en cours d'édition. Elle n'apparait pas dans la recherche." },
-    { key: 'En attente de validation', from: ['Brouillon'], label: 'En attente de validation', description: 'La mission est en attente de validation par le référérent départemental.' },
-    { key: 'En cours de traitement', label: 'En cours de traitement', from: ['Brouillon', 'En attente de validation'], description: 'La mission est en cours de traitement par le référent départemental.' },
-    { key: 'Validée', label: 'Validée', from: ['En cours de traitement', 'En attente de validation', 'Signalée'], description: 'La mission est en ligne. Les bénévoles peuvent y participer.' },
-    { key: 'Terminée', label: 'Terminée', from: ['Validée'], description: 'La mission est terminée. Les participations en attente seront annulées.' },
-    { key: 'Signalée', label: 'Signalée', from: ['En cours de traitement', 'En attente de validation', 'Validée'], description: 'La mission ne respecte pas la charte de JeVeuxAider.gouv.fr. Les participations en attente seront annulées. La mission est hors-ligne.' },
-    { key: 'Annulée', label: 'Annulée', from: ['Validée'], description: 'La mission est annulée. Les participations en attente seront annulées. La mission est hors-ligne.' }
+    { key: 'Brouillon', to: ['Brouillon', 'En attente de validation'], roles: ['admin', 'responsable'], label: 'Brouillon', description: "La mission est en cours d'édition. Elle n'apparait pas dans la recherche." },
+    { key: 'En attente de validation', to: ['En attente de validation', 'En cours de traitement', 'Validée', 'Signalée'], roles: ['admin', 'referent', 'referent_regional'], label: 'En attente de validation', description: 'La mission est en attente de validation par le référérent départemental.' },
+    { key: 'En cours de traitement', to: ['En cours de traitement', 'Validée', 'Signalée'], roles: ['admin', 'referent', 'referent_regional'], label: 'En cours de traitement', description: 'La mission est en cours de traitement par le référent départemental.' },
+    { key: 'Validée', to: ['Validée', 'Terminée', 'Signalée', 'Annulée'], roles: ['admin', 'referent', 'referent_regional', 'responsable'], label: 'Validée', description: 'La mission est en ligne. Les bénévoles peuvent y participer.' },
+    { key: 'Terminée', to: ['Terminée', 'Validée', 'Annulée'], roles: ['admin'], label: 'Terminée', description: 'La mission est terminée. Les participations en attente seront annulées.' },
+    { key: 'Signalée', to: ['Signalée', 'Annulée'], roles: ['admin'], label: 'Signalée', description: 'La mission ne respecte pas la charte de JeVeuxAider.gouv.fr. Les participations en attente seront annulées. La mission est hors-ligne.' },
+    { key: 'Annulée', to: ['Annulée', 'Signalée'], roles: ['admin'], label: 'Annulée', description: 'La mission est annulée. Les participations en attente seront annulées. La mission est hors-ligne.' }
   ],
   profile_fields: [
     { key: 'mobile', label: 'Téléphone mobile' },
@@ -265,19 +265,19 @@ const labels = {
     { key: 'domaines', label: 'Domaines' }
   ],
   mission_template_workflow_states: [
-    { key: 'draft', label: 'Brouillon', from: ['waiting'], description: "Le modèle de mission est en cours d'édition. Elle n'apparait pas dans les propositions." },
-    { key: 'waiting', label: 'En attente de validation', from: ['draft'], description: 'Le modèle de mission est en attente de validation par les modérateurs.' },
-    { key: 'validated', label: 'Validé', from: ['waiting', 'refused'], description: 'Le modèle de mission est en ligne. Les responsables du réseau peuvent s\'en servir.' },
-    { key: 'refused', label: 'Refusé', from: ['waiting', 'validated'], description: 'Le modèle de mission ne respecte pas la charte de JeVeuxAider.gouv.fr.' }
+    { key: 'draft', to: ['draft', 'waiting'], roles: ['admin', 'tete_de_reseau'], label: 'Brouillon', description: "Le modèle de mission est en cours d'édition. Elle n'apparait pas dans les propositions." },
+    { key: 'waiting', to: ['waiting', 'draft', 'validated', 'refused'], roles: ['admin', 'tete_de_reseau'], label: 'En attente de validation', description: 'Le modèle de mission est en attente de validation par les modérateurs.' },
+    { key: 'validated', to: ['validated', 'refused'], roles: ['admin'], label: 'Validé', description: 'Le modèle de mission est en ligne. Les responsables du réseau peuvent s\'en servir.' },
+    { key: 'refused', to: ['refused', 'validated'], roles: ['admin'], label: 'Refusé', description: 'Le modèle de mission ne respecte pas la charte de JeVeuxAider.gouv.fr.' }
   ],
   territoire_types: [
     { key: 'department', label: 'Département' },
     { key: 'city', label: 'Ville' }
   ],
   territoire_workflow_states: [
-    { key: 'waiting', label: 'En attente de validation', from: ['draft'], description: 'Le territoire est en attente de validation par les modérateurs.' },
-    { key: 'validated', label: 'Validé', from: ['waiting', 'refused'], description: 'Le territoire est en ligne. Les responsables du réseau peuvent s\'en servir.' },
-    { key: 'refused', label: 'Refusé', from: ['waiting', 'validated'], description: 'Le territoire ne respecte pas la charte de JeVeuxAider.gouv.fr.' }
+    { key: 'waiting', to: ['waiting', 'validated', 'refused'], roles: ['admin'], label: 'En attente de validation', description: 'Le territoire est en attente de validation par les modérateurs.' },
+    { key: 'validated', to: ['validated', 'refused'], roles: ['admin'], label: 'Validé', description: 'Le territoire est en ligne. Les responsables du réseau peuvent s\'en servir.' },
+    { key: 'refused', to: ['validated', 'refused'], roles: ['admin'], label: 'Refusé', description: 'Le territoire ne respecte pas la charte de JeVeuxAider.gouv.fr.' }
   ],
   participation_declined_reasons: [
     { key: 'no_response', label: 'Le bénévole ne répond pas.' },

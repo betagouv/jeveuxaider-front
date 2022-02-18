@@ -25,6 +25,7 @@
       <FormMissionTemplate
         ref="form"
         class="my-8"
+        :mission-template="{reseau_id: $store.getters.contextRole === 'tete_de_reseau' ? $store.getters.profile.tete_de_reseau_id: null}"
       />
     </div>
   </div>
@@ -36,7 +37,13 @@ import FormMissionTemplate from '~/components/form/FormMissionTemplate.vue'
 export default {
   components: { FormMissionTemplate },
   layout: 'admin',
-  middleware: 'admin',
+  asyncData ({ $axios, params, error, store }) {
+    if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {
+      return error({ statusCode: 403 })
+    }
+    return {
+    }
+  },
   methods: {
 
   }

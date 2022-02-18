@@ -12,7 +12,7 @@
     <div class="grid grid-cols-5 py-12">
       <aside class="relative col-span-1">
         <div class="sticky top-12">
-          <MenuAdmin />
+          <SecondaryMenuAdmin />
         </div>
       </aside>
       <div class="col-span-4">
@@ -20,12 +20,12 @@
           <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
             @TODO: Va disparaitre au profit de Domaine.php
           </div>
-          <SectionHeading title="Thématiques">
+          <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} thématiques`">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
                 <nuxt-link :to="`/admin/contenus/thematiques/add`">
                   <Button size="lg" :loading="loading" icon="PlusIcon">
-                    Thématique
+                    Nouveau
                   </Button>
                 </nuxt-link>
               </div>
@@ -76,14 +76,14 @@
 </template>
 
 <script>
-import MenuAdmin from '@/components/section/admin/MenuAdmin'
+import SecondaryMenuAdmin from '@/components/section/admin/SecondaryMenuAdmin'
 import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerThematique from '@/components/drawer/DrawerThematique'
 
 export default {
   components: {
-    MenuAdmin,
+    SecondaryMenuAdmin,
     Card,
     DrawerThematique
   },

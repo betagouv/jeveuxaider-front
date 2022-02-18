@@ -5,16 +5,16 @@
         <Badge
           v-if="mission.domaine"
           class="uppercase"
-          :color="mission.domaine.slug.fr"
+          :color="mission.domaine.slug"
         >
-          {{ mission.domaine.name.fr }}
+          {{ mission.domaine.name }}
         </Badge>
         <Badge
-          v-if="mission.domaine_secondaire"
+          v-if="mission.domaine_secondary"
           class="uppercase"
           color="gray-light"
         >
-          {{ mission.domaine_secondaire.name.fr }}
+          {{ mission.domaine_secondary.name }}
         </Badge>
       </div>
       <div>Share todo</div>

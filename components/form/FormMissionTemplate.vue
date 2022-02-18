@@ -141,7 +141,8 @@ export default {
         title: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
         subtitle: string().min(3, 'Le titre court est trop court').required('Le titre court est requis'),
         description: string().required('La description est requise'),
-        objectif: string().required('L\'objectif est requis')
+        objectif: string().required('L\'objectif est requis'),
+        domaine_id: string().required('Le domaine est requis')
       })
     }
   },

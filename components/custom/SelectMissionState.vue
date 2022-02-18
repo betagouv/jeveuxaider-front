@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SelectWithDescription :options="statesAvailable" :value="value" @selected="handleSelect($event)" />
+    <SelectWithDescription v-if="statesAvailable.length" :options="statesAvailable" :value="value" @selected="handleSelect($event)" />
     <AlertDialog
       theme="warning"
       :title="titleAlert"
@@ -34,38 +34,13 @@ export default {
     }
   },
   computed: {
-    statesByRole () {
-      switch (this.$store.getters.contextRole) {
-        case 'referent':
-        case 'referent_regional':
-          return this.$labels.mission_workflow_states.filter(
-            option =>
-              [
-                'En attente de validation',
-                'En cours de traitement',
-                'Validée',
-                'Signalée'
-              ].includes(option.key)
-          )
-        case 'responsable':
-          return this.$labels.mission_workflow_states.filter(
-            option =>
-              [
-                'En attente de validation',
-                'Terminée',
-                'Annulée'
-              ].includes(option.key)
-          )
-        default:
-          return []
-      }
-    },
     statesAvailable () {
-      if (this.$store.getters.contextRole == 'admin') {
-        return this.$labels.mission_workflow_states
+      let toStates = this.$options.filters.label(this.value, 'mission_workflow_states', 'to')
+      if (this.$store.getters.contextRole === 'responsable') {
+        // Si responsable on retire l'option Signalée
+        toStates = toStates.filter(state => state !== 'Signalée')
       }
-      const currentState = this.statesByRole.find(option => option.key == this.value)
-      return this.statesByRole.filter(option => currentState.from.includes(option.key) || option.key == this.value)
+      return this.$labels.mission_workflow_states.filter(state => toStates.includes(state.key))
     }
   },
   methods: {

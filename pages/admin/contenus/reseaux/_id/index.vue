@@ -82,10 +82,45 @@
         />
         <div v-if="!$route.hash">
           <div class="space-y-8">
-            <BoxInformations :reseau="reseau" />
-            <BoxAntenne class="mb-8" :reseau="reseau" :stats="stats" />
-            <BoxMission class="mb-8" :reseau="reseau" :stats="stats" />
-            <BoxParticipation class="mb-8" :reseau="reseau" :stats="stats" />
+            <div>
+              <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
+                Votre activité en chiffres
+              </div>
+              <Box variant="flat" :padding="!Boolean(stats) ? 'lg' : false" :loading="!Boolean(stats)" loading-text="Récupération de l'activité ..." class="!border-none">
+                <div v-if="stats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+                  <CardStatistic
+                    :value="stats.places_left"
+                    :title="`${$options.filters.pluralize(stats.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
+                  />
+                  <CardStatistic
+                    :value="`${stats.places_occupation_rate}%`"
+                    :gauge-percentage="stats.places_occupation_rate"
+                    title="Taux d'occupation"
+                  />
+                  <CardStatistic
+                    :value="stats.organisations_actives"
+                    :title="`${$options.filters.pluralize(stats.organisations_actives, 'Organisation active', 'Organisations actives', false)}`"
+                    :subtitle="`sur ${$options.filters.formatNumber(stats.organisations)} ${$options.filters.pluralize(stats.organisations, 'organisations', 'organisations', false)}`"
+                    link="/admin/organisations"
+                    link-label="Organisations"
+                  />
+                  <CardStatistic
+                    :value="stats.missions_actives"
+                    :title="`${$options.filters.pluralize(stats.missions_actives, 'Missions en ligne', 'Missions en ligne', false)}`"
+                    :subtitle="`sur ${$options.filters.formatNumber(stats.missions)} ${$options.filters.pluralize(stats.missions, 'mission', 'missions', false)}`"
+                    :link="`/admin/missions?filter[ofReseau]=${reseau.id}`"
+                    link-label="Missions"
+                  />
+                  <CardStatistic
+                    :value="stats.participations_state['Validée']"
+                    :title="`${$options.filters.pluralize(stats.participations_state['Validée'], 'Participation validée', 'Participations validées', false)}`"
+                    :subtitle="`sur ${$options.filters.formatNumber(stats.participations)} ${$options.filters.pluralize(stats.participations, 'candidature', 'candidatures', false)}`"
+                    :link="`/admin/participations?filter[ofReseau]=${reseau.id}`"
+                    link-label="Participations"
+                  />
+                </div>
+              </Box>
+            </div>
           </div>
         </div>
         <History v-if="$route.hash == '#historique'" :model-id="reseau.id" model-type="reseau" />
@@ -114,25 +149,19 @@
 import MixinReseau from '@/mixins/reseau'
 import History from '@/components/section/History'
 import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks'
-import BoxInformations from '@/components/section/reseau/BoxInformations'
-import BoxAntenne from '@/components/section/reseau/BoxAntenne'
-import BoxMission from '@/components/section/reseau/BoxMission'
-import BoxParticipation from '@/components/section/reseau/BoxParticipation'
 import FormInvitation from '@/components/form/FormInvitation'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
 import BoxInvitations from '@/components/section/BoxInvitations'
+import CardStatistic from '@/components/card/CardStatistic'
 
 export default {
   components: {
     History,
     DomainsPublicsLinks,
-    BoxInformations,
-    BoxAntenne,
-    BoxMission,
-    BoxParticipation,
     OnlineIndicator,
     FormInvitation,
-    BoxInvitations
+    BoxInvitations,
+    CardStatistic
   },
   mixins: [MixinReseau],
   layout: 'admin',
@@ -141,7 +170,6 @@ export default {
     if (!reseau) {
       return error({ statusCode: 404 })
     }
-
     return {
       reseau
     }
@@ -157,7 +185,6 @@ export default {
     this.$axios.get(`/statistics/reseaux/${this.reseau.id}`).then(({ data: stats }) => {
       this.stats = stats
     })
-
     this.$axios.get('/invitations', {
       params: {
         'filter[of_reseau]': this.reseau.id

@@ -17,7 +17,7 @@
     <div class="grid grid-cols-5 py-12 ">
       <aside class="relative col-span-1">
         <div class="sticky top-12">
-          <MenuAdmin />
+          <SecondaryMenuAdmin />
         </div>
       </aside>
       <div class="col-span-4">
@@ -71,12 +71,12 @@
 </template>
 
 <script>
-import MenuAdmin from '@/components/section/admin/MenuAdmin'
+import SecondaryMenuAdmin from '@/components/section/admin/SecondaryMenuAdmin'
 import DrawerNotification from '@/components/drawer/DrawerNotification'
 
 export default {
   components: {
-    MenuAdmin,
+    SecondaryMenuAdmin,
     DrawerNotification
   },
   middleware: 'admin',
