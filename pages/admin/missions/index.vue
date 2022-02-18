@@ -186,6 +186,7 @@
           :key="mission.id"
           class="cursor-pointer"
           :mission="mission"
+          show-state
           @click.native="drawerMissionId = mission.id"
         />
       </div>
