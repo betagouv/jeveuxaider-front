@@ -69,7 +69,7 @@
             :key="missionTemplate.id"
             :title="missionTemplate.title"
             :description="missionTemplate.subtitle"
-            :image-url="missionTemplate.photo && missionTemplate.photo.urls.card"
+            :image-url="missionTemplate.photo ? missionTemplate.photo.urls.card : undefined"
             @click.native="onSelectTemplate(missionTemplate)"
           />
         </div>
