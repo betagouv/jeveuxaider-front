@@ -198,8 +198,7 @@ export default {
     return {
       endpoint: '/participations',
       queryParams: {
-        include: 'conversation.latestMessage,profile.media'
-        // append: 'profile_avatar'
+        include: 'conversation.latestMessage,profile.avatar'
       },
       drawerParticipationId: null,
       autocompleteOptionsOrga: [],

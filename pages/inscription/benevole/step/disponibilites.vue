@@ -110,7 +110,6 @@ export default {
     return {
       loading: false,
       model: 'profile',
-      avatar: null,
       steps: [
         {
           name: 'Rejoignez le mouvement',

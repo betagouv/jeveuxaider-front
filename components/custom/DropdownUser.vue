@@ -5,9 +5,7 @@
         <Avatar
           v-if="$store.state.auth.user.profile"
           :image="
-            $store.state.auth.user.profile.avatar
-              ? $store.state.auth.user.profile.avatar.urls.thumbSmall
-              : null
+            $store.state.auth.user.profile.avatar && $store.state.auth.user.profile.avatar.urls.thumbSmall
           "
           :initials="$store.state.auth.user.profile.short_name"
           class="transition transform group-hover:scale-110"

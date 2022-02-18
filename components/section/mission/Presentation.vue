@@ -3,11 +3,11 @@
     <div class="flex justify-between mb-6">
       <div class="flex flex-wrap gap-2">
         <Badge
-          v-if="mission.domaine"
+          v-if="domaine"
           class="uppercase"
-          :color="mission.domaine.slug"
+          :color="domaine.slug"
         >
-          {{ mission.domaine.name }}
+          {{ domaine.name }}
         </Badge>
         <Badge
           v-if="mission.domaine_secondary"
@@ -87,7 +87,10 @@
 </template>
 
 <script>
+import MixinMission from '@/mixins/mission'
+
 export default {
+  mixins: [MixinMission],
   props: {
     mission: {
       type: Object,

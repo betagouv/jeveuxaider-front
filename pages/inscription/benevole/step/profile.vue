@@ -32,7 +32,7 @@
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
           <FormControl label="Portrait" html-for="avatar">
             <ImageCrop
-              :default-value="form.media.find(media => media.collection_name == 'profile__avatar')"
+              :default-value="form.avatar"
               :preview-width="100"
               :min-width="200"
               @add="addFiles({ files: [$event], collection: 'profile__avatar' })"
