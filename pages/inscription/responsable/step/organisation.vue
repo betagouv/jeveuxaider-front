@@ -118,6 +118,7 @@
               name="domaines"
               variant="button"
               :options="$labels.domaines"
+              is-model
             />
           </FormControl>
           <FormControl label="Choisissez les publics bénéficiaires de vos missions" html-for="publics_beneficiaires" required :error="errors.publics_beneficiaires">

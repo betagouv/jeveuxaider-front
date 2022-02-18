@@ -246,8 +246,11 @@ export default {
     }
   },
   async fetch () {
-    const { data: unreadMessageCount } = await this.$axios.get('user/unreadMessages')
-    this.unreadMessageCount = unreadMessageCount
+    console.log('header fetch unreadMessages isLogged ?', this.$store.getters.isLogged)
+    if (this.$store.getters.isLogged) {
+      const { data: unreadMessageCount } = await this.$axios.get('user/unreadMessages')
+      this.unreadMessageCount = unreadMessageCount
+    }
   },
   computed: {
     navigation () {
@@ -314,8 +317,8 @@ export default {
         ]
       }
       return [
-        { name: 'Mon Profil', to: '/profile', isActive: this.isActiveLink('profile/*') },
-        { name: 'Mes Missions', href: '#', isActive: false },
+        { name: 'Mon profil', to: '/profile', isActive: this.isActiveLink('profile') },
+        { name: 'Mes missions', href: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
         { name: 'Aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', isActive: false }
       ]
     }
