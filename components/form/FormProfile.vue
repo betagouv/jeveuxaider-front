@@ -8,7 +8,7 @@
         <div class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2">
           <FormControl label="Photo de profil" html-for="avatar" class="col-span-2">
             <ImageCrop
-              :default-value="form.media.find(media => media.collection_name == 'profile__avatar')"
+              :default-value="form.avatar"
               :preview-width="100"
               :min-width="200"
               @add="addFiles({ files: [$event], collection: 'profile__avatar' })"

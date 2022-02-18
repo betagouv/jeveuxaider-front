@@ -31,7 +31,7 @@
           <DescriptionList class="max-w-lg">
             <DescriptionListItem term="Bénévoles recherchés" :description="`${$options.filters.pluralize(mission.places_left, 'place disponible', 'places disponibles')}`" />
             <DescriptionListItem term="Type" :description="mission.type" />
-            <DescriptionListItem term="Domaine" :description="mission.domaine && mission.domaine.name.fr" />
+            <DescriptionListItem term="Domaine" :description="domaine && domaine.name" />
             <DescriptionListItem
               v-if="mission.publics_beneficiaires"
               term="Publics bénéf."
@@ -134,10 +134,11 @@
 import QueryBuilder from '@/mixins/query-builder'
 import CardProfileBenevole from '@/components/card/CardProfileBenevole.vue'
 import DrawerBenevole from '@/components/drawer/DrawerBenevole.vue'
+import MixinMission from '@/mixins/mission'
 
 export default {
   components: { CardProfileBenevole, DrawerBenevole },
-  mixins: [QueryBuilder],
+  mixins: [QueryBuilder, MixinMission],
   layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (
@@ -171,8 +172,7 @@ export default {
     return {
       endpoint: `/missions/${this.$route.params.id}/benevoles`,
       queryParams: {
-        include: 'user,participationsValidatedCount,media'
-        // append: 'avatar'
+        include: 'user,participationsValidatedCount,avatar'
       },
       drawerProfileId: null,
       notifications: [],

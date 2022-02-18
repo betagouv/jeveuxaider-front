@@ -6,7 +6,7 @@
         :key="recipient.id"
         class="mr-4 relative"
         :class="[{ '-ml-10': i !== 0 }, { 'shadow-md': recipients.length > 1 }]"
-        :image="recipient.profile.avatar ? recipient.profile.avatar.urls.thumbMedium: null"
+        :image="recipient.profile.avatar && recipient.profile.avatar.urls.thumbMedium"
         :initials="recipient.profile.short_name"
         size="xs"
       />
