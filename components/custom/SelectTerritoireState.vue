@@ -1,5 +1,5 @@
 <template>
-  <SelectWithDescription :options="$labels.territoire_workflow_states" :value="value" @selected="$emit('selected', $event)" />
+  <SelectWithDescription :options="statesAvailable" :value="value" @selected="$emit('selected', $event)" />
 </template>
 
 <script>
@@ -16,7 +16,10 @@ export default {
     }
   },
   computed: {
-
+    statesAvailable () {
+      const toStates = this.$options.filters.label(this.value, 'territoire_workflow_states', 'to')
+      return this.$labels.territoire_workflow_states.filter(state => toStates.includes(state.key))
+    }
   }
 }
 </script>

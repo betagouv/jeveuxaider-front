@@ -26,8 +26,10 @@
       <div class="text-sm  uppercase font-semibold text-gray-600">
         Statut du territoire
       </div>
-      <SelectTerritoireState :value="territoire.state" class="mt-4" @selected="handleChangeState($event)" />
-
+      <SelectTerritoireState v-if="canEditStatut" :value="territoire.state" class="mt-4" @selected="handleChangeState($event)" />
+      <div v-else class="mt-4 font-medium text-gray-800">
+        {{ $options.filters.label(territoire.state,'territoire_workflow_states') }}
+      </div>
       <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :territoire="territoire" />
       <BoxMission class="mb-8" :territoire="territoire" :stats="stats" />
@@ -49,6 +51,7 @@ import BoxMission from '@/components/section/territoire/BoxMission'
 import BoxParticipation from '@/components/section/territoire/BoxParticipation'
 import SelectTerritoireState from '@/components/custom/SelectTerritoireState'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import MixinTerritoire from '@/mixins/territoire'
 
 export default {
   components: {
@@ -58,6 +61,7 @@ export default {
     BoxParticipation,
     SelectTerritoireState
   },
+  mixins: [MixinTerritoire],
   props: {
     territoireId: {
       type: Number,

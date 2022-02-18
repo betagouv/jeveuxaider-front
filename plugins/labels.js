@@ -265,19 +265,19 @@ const labels = {
     { key: 'domaines', label: 'Domaines' }
   ],
   mission_template_workflow_states: [
-    { key: 'draft', label: 'Brouillon', from: ['waiting'], description: "Le modèle de mission est en cours d'édition. Elle n'apparait pas dans les propositions." },
-    { key: 'waiting', label: 'En attente de validation', from: ['draft'], description: 'Le modèle de mission est en attente de validation par les modérateurs.' },
-    { key: 'validated', label: 'Validé', from: ['waiting', 'refused'], description: 'Le modèle de mission est en ligne. Les responsables du réseau peuvent s\'en servir.' },
-    { key: 'refused', label: 'Refusé', from: ['waiting', 'validated'], description: 'Le modèle de mission ne respecte pas la charte de JeVeuxAider.gouv.fr.' }
+    { key: 'draft', to: ['draft', 'waiting'], roles: ['admin', 'tete_de_reseau'], label: 'Brouillon', description: "Le modèle de mission est en cours d'édition. Elle n'apparait pas dans les propositions." },
+    { key: 'waiting', to: ['waiting', 'validated', 'refused'], roles: ['admin'], label: 'En attente de validation', description: 'Le modèle de mission est en attente de validation par les modérateurs.' },
+    { key: 'validated', to: ['validated', 'refused'], roles: ['admin'], label: 'Validé', description: 'Le modèle de mission est en ligne. Les responsables du réseau peuvent s\'en servir.' },
+    { key: 'refused', to: ['refused', 'validated'], roles: ['admin'], label: 'Refusé', description: 'Le modèle de mission ne respecte pas la charte de JeVeuxAider.gouv.fr.' }
   ],
   territoire_types: [
     { key: 'department', label: 'Département' },
     { key: 'city', label: 'Ville' }
   ],
   territoire_workflow_states: [
-    { key: 'waiting', label: 'En attente de validation', from: ['draft'], description: 'Le territoire est en attente de validation par les modérateurs.' },
-    { key: 'validated', label: 'Validé', from: ['waiting', 'refused'], description: 'Le territoire est en ligne. Les responsables du réseau peuvent s\'en servir.' },
-    { key: 'refused', label: 'Refusé', from: ['waiting', 'validated'], description: 'Le territoire ne respecte pas la charte de JeVeuxAider.gouv.fr.' }
+    { key: 'waiting', to: ['waiting', 'validated', 'refused'], roles: ['admin'], label: 'En attente de validation', description: 'Le territoire est en attente de validation par les modérateurs.' },
+    { key: 'validated', to: ['validated', 'refused'], roles: ['admin'], label: 'Validé', description: 'Le territoire est en ligne. Les responsables du réseau peuvent s\'en servir.' },
+    { key: 'refused', to: ['validated', 'refused'], roles: ['admin'], label: 'Refusé', description: 'Le territoire ne respecte pas la charte de JeVeuxAider.gouv.fr.' }
   ],
   participation_declined_reasons: [
     { key: 'no_response', label: 'Le bénévole ne répond pas.' },

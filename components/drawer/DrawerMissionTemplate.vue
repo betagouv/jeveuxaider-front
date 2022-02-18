@@ -28,8 +28,10 @@
       <div class="text-sm  uppercase font-semibold text-gray-600">
         Statut du modèle
       </div>
-      <SelectMissionTemplateState :value="missionTemplate.state" class="mt-4" @selected="handleChangeState($event)" />
-
+      <SelectMissionTemplateState v-if="canEditStatut" :value="missionTemplate.state" class="mt-4" @selected="handleChangeState($event)" />
+      <div v-else class="mt-4 font-medium text-gray-800">
+        {{ $options.filters.label(missionTemplate.state,'mission_template_workflow_states') }}
+      </div>
       <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :mission-template="missionTemplate" />
       <BoxMission class="mb-8" :mission-template="missionTemplate" :stats="stats" />
@@ -51,6 +53,7 @@ import BoxReseau from '@/components/section/mission-template/BoxReseau'
 import BoxMission from '@/components/section/mission-template/BoxMission'
 import BoxParticipation from '@/components/section/mission-template/BoxParticipation'
 import SelectMissionTemplateState from '@/components/custom/SelectMissionTemplateState'
+import MixinMissionTemplate from '@/mixins/mission-template'
 
 export default {
   components: {
@@ -60,6 +63,7 @@ export default {
     BoxParticipation,
     SelectMissionTemplateState
   },
+  mixins: [MixinMissionTemplate],
   props: {
     missionTemplateId: {
       type: Number,
