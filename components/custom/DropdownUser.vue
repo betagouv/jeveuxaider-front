@@ -32,7 +32,7 @@
         <DropdownOptionsItem @click.native="$router.push('/profile')">
           Mon profil
         </DropdownOptionsItem>
-        <DropdownOptionsItem>
+        <DropdownOptionsItem @click.native="$router.push('/profile/missions')">
           Mes missions
         </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="$router.push('/parameters')">

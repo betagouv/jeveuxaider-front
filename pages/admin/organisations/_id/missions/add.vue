@@ -7,7 +7,7 @@
         { label: 'Publier une mission' }
       ]"
     />
-    <div class="py-6">
+    <div class="py-6 mb-12">
       <SectionHeading title="Création d'une nouvelle mission" secondary-title-bottom="Choisissez le domaine d'action de cette mission">
         <template #action>
           <div v-if="step == 1" class="text-gray-500 text-sm lg:text-right">
@@ -69,7 +69,7 @@
             :key="missionTemplate.id"
             :title="missionTemplate.title"
             :description="missionTemplate.subtitle"
-            :image-url="missionTemplate.photo.urls.card.length ? missionTemplate.photo.urls.card : undefined"
+            :image-url="missionTemplate.photo"
             @click.native="onSelectTemplate(missionTemplate)"
           />
         </div>
