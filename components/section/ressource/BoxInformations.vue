@@ -11,7 +11,7 @@
         <DescriptionListItem term="Type" :description="ressource.type" />
         <DescriptionListItem term="Roles" :description="ressource.roles.join(', ')" />
         <DescriptionListItem v-if="ressource.type ==='link'" term="Lien" :description="ressource.link" />
-        <DescriptionListItem v-if="ressource.type ==='file'" term="Fichier" description="@TODO file" />
+        <DescriptionListItem v-if="ressource.type ==='file'" term="Fichier" :description="ressource.file.urls && ressource.file.urls.original" />
         <DescriptionListItem term="Description" :description="ressource.description" />
       </DescriptionList>
     </Box>

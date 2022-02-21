@@ -27,7 +27,7 @@
             class="relative cursor-pointer rounded-md font-medium text-jva-blue-500 focus-within:outline-none"
             @click.stop
           >
-            {{ label }}
+            {{ cLabel }}
 
             <input
               id="assetsFieldHandle"
@@ -56,15 +56,21 @@
       <li
         v-for="(file, i) in files"
         :key="i"
-        class="py-3 flex justify-between items-center bg-gray-50 rounded-lg"
+        class="py-3 flex items-center bg-gray-50 rounded-lg"
       >
-        <p class="text-sm font-medium text-gray-900 truncate">
+        <p class="ml-2 text-sm font-medium text-gray-900 truncate mr-auto">
           {{ file.name }}
         </p>
 
-        <Button icon="TrashIcon" class="ml-2" @click.native.prevent.stop="deleteFile(i)">
-          Retirer
-        </Button>
+        <div class="flex space-x-2 mr-2">
+          <a v-if="file.urls" :href="file.urls.original" target="_blank" class="inline-flex ml-2">
+            <Button icon="DownloadIcon">
+              Télécharger
+            </Button>
+          </a>
+
+          <Button icon="TrashIcon" variant="red" class="ml-2" @click.native.prevent.stop="deleteFile(i)" />
+        </div>
       </li>
     </ul>
   </div>
@@ -93,7 +99,7 @@ export default {
     },
     label: {
       type: String,
-      default: () => { return this.multiple ? 'Sélectionner un ou plusieurs fichiers' : 'Sélectionner un fichier' }
+      default: null
     },
     variant: {
       type: String,
@@ -110,10 +116,15 @@ export default {
     }
   },
   computed: {
+    cLabel () {
+      return this.label ?? this.multiple ? 'Sélectionner un ou plusieurs fichiers' : 'Sélectionner un fichier'
+    },
     mimeTypes () {
       const mimes = []
-      const extensions = this.extensions.split(',')
-      extensions.forEach(extension => mimes.push(mime.lookup(extension)))
+      if (this.extensions != '*') {
+        const extensions = this.extensions.split(',')
+        extensions.forEach(extension => mimes.push(mime.lookup(extension)))
+      }
       return mimes
     },
     files () {
@@ -192,7 +203,7 @@ export default {
       }
     },
     validateExtension (file) {
-      if (!this.mimeTypes.includes(file.type)) {
+      if (this.extensions != '*' && !this.mimeTypes.includes(file.type)) {
         this.errors.push(
           `Seuls les fichiers ayant les extensions suivantes sont autorisés : ${this.extensions}.`
         )
