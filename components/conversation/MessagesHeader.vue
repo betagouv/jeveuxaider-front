@@ -102,7 +102,7 @@ export default {
       let end = this.conversation.conversable.mission.end_date
 
       start = this.$dayjs(start).format('D MMM YYYY')
-      end = end ? this.$options.filters.formatCustom(end, 'D MMM YYYY') : null
+      end = end ? this.$dayjs(end).format('D MMM YYYY') : null
 
       if (start == end) {
         return start
