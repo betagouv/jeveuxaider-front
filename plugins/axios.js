@@ -55,13 +55,23 @@ export default function ({ $axios, redirect, app, store, error, $message, $toast
           message: err.message || err.response.data
         })
       case 422:
-        app.$toast.error({
-          component: Toast,
-          props: {
-            message: 'Merci de corriger les éléments suivants',
-            errors: err.response.data.errors
-          }
-        })
+        if (err.response.data.message) {
+          app.$toast.error({
+            component: Toast,
+            props: {
+              message: err.response.data.message
+            }
+          })
+        } else {
+          app.$toast.error({
+            component: Toast,
+            props: {
+              message: 'Merci de corriger les éléments suivants',
+              errors: err.response.data.errors
+            }
+          })
+        }
+
         break
     }
   })

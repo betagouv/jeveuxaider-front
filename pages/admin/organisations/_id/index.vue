@@ -146,7 +146,11 @@
         <History v-if="$route.hash == '#historique'" :model-id="organisation.id" model-type="structure" />
         <template v-if="$route.hash == '#membres'">
           <div class="space-y-2">
-            <BoxInvitations v-if="queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" />
+            <BoxInvitations
+              v-if="queryInvitations && queryInvitations.data.length > 0"
+              :invitations="queryInvitations.data"
+              @updated="$fetch()"
+            />
 
             <Box v-for="responsable in organisation.members" :key="responsable.id" variant="flat" padding="xs">
               <DescriptionList v-if="responsable">
