@@ -222,18 +222,16 @@ export default {
       queryInvitations: null
     }
   },
-  fetch () {
-    this.$axios.get(`/statistics/organisations/${this.organisation.id}`).then(({ data: stats }) => {
-      this.organisationStats = stats
-    })
+  async fetch () {
+    const { data: stats } = await this.$axios.get(`/statistics/organisations/${this.organisation.id}`)
+    this.organisationStats = stats
 
-    this.$axios.get('/invitations', {
+    const { data: queryInvitations } = await this.$axios.get('/invitations', {
       params: {
         'filter[of_structure]': this.organisation.id
       }
-    }).then(({ data: queryInvitations }) => {
-      this.queryInvitations = queryInvitations
     })
+    this.queryInvitations = queryInvitations
   },
   methods: {
     handleSubmitInvitation () {

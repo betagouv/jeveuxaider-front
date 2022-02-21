@@ -182,16 +182,15 @@ export default {
     }
   },
   fetch () {
-    this.$axios.get(`/statistics/reseaux/${this.reseau.id}`).then(({ data: stats }) => {
-      this.stats = stats
-    })
-    this.$axios.get('/invitations', {
+    const { data: stats } = this.$axios.get(`/statistics/reseaux/${this.reseau.id}`)
+    this.stats = stats
+
+    const { data: queryInvitations } = this.$axios.get('/invitations', {
       params: {
         'filter[of_reseau]': this.reseau.id
       }
-    }).then(({ data: queryInvitations }) => {
-      this.queryInvitations = queryInvitations
     })
+    this.queryInvitations = queryInvitations
   },
   methods: {
     handleSubmitInvitation () {

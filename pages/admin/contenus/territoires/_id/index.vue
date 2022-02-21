@@ -142,13 +142,12 @@ export default {
     }
   },
   fetch () {
-    this.$axios.get('/invitations', {
+    const { data: queryInvitations } = this.$axios.get('/invitations', {
       params: {
         'filter[of_territoire]': this.territoire.id
       }
-    }).then(({ data: queryInvitations }) => {
-      this.queryInvitations = queryInvitations
     })
+    this.queryInvitations = queryInvitations
   },
   methods: {
     handleSubmitInvitation () {
