@@ -165,6 +165,7 @@
                 :ratio="null"
                 :min-height="112"
                 :preview-width="235"
+                :preview-height="56"
                 preview-fit="contain"
                 preview-classes="p-2"
                 :upload-max-size="2000000"
@@ -199,10 +200,11 @@
 <script>
 import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import FormUploads from '@/mixins/form/uploads'
 import MixinInputGeo from '@/mixins/input-geo'
 
 export default {
-  mixins: [FormErrors, MixinInputGeo],
+  mixins: [FormErrors, FormUploads, MixinInputGeo],
   layout: 'admin',
   middleware: 'admin',
   props: {
@@ -254,8 +256,11 @@ export default {
           if (this.form.id) {
             await this.$axios.put(`/territoires/${this.form.id}`, this.form)
           } else {
-            await this.$axios.post('/territoires', this.form)
+            const { data: territoire } = await this.$axios.post('/territoires', this.form)
+            this.form.id = territoire.id
           }
+          await this.uploadFiles('territoire', this.form.id)
+
           this.$router.push('/admin/contenus/territoires')
         })
         .catch((errors) => {
