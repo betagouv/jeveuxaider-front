@@ -317,7 +317,24 @@
           Visuels d'illustration de l'organisation
         </Heading>
         <div class="space-y-8">
-          @todo
+          <FormControl label="Logo" html-for="logo">
+            <ImageCrop
+              :default-value="form.logo"
+              :ratio="null"
+              :min-height="112"
+              :preview-width="235"
+              :preview-height="56"
+              preview-fit="contain"
+              preview-classes="p-2"
+              @add="addFiles({ files: [$event], collection: 'structure__logo' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
+            />
+          </FormControl>
+
+          <div class="bg-yellow-100 p-4 text-sm rounded-lg">
+            @TODO: Media picker illustration 1 & 2
+          </div>
         </div>
       </Box>
     </div>
@@ -333,9 +350,10 @@
 import { string, object, array } from 'yup'
 import inputGeo from '@/mixins/input-geo'
 import FormErrors from '@/mixins/form/errors'
+import FormUploads from '@/mixins/form/uploads'
 
 export default {
-  mixins: [inputGeo, FormErrors],
+  mixins: [inputGeo, FormErrors, FormUploads],
   props: {
     structure: {
       type: Object,
@@ -371,8 +389,12 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          if (this.loading) {
+            return
+          }
           this.loading = true
           const { data: structure } = await this.$axios.put(`/structures/${this.structure.id}`, this.form)
+          await this.uploadFiles('reseau', structure.id)
           this.$router.push(`/admin/organisations/${structure.id}`)
         })
         .catch((errors) => {

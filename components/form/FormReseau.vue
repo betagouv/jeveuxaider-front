@@ -239,8 +239,23 @@
             Image
           </Heading>
           <div class="space-y-12">
+            <FormControl label="Logo" html-for="logo">
+              <ImageCrop
+                :default-value="form.logo"
+                :ratio="null"
+                :min-height="112"
+                :preview-width="235"
+                :preview-height="56"
+                preview-fit="contain"
+                preview-classes="p-2"
+                @add="addFiles({ files: [$event], collection: 'reseau__logo' })"
+                @delete="deleteFile($event)"
+                @crop="onManipulationsChange($event)"
+              />
+            </FormControl>
+
             <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-              @TODO: Upload de l'image principale + LOGO
+              @TODO: Media picker Illustration 1 & 2
             </div>
           </div>
         </Box>
@@ -258,10 +273,11 @@
 <script>
 import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import FormUploads from '@/mixins/form/uploads'
 import MixinInputGeo from '@/mixins/input-geo'
 
 export default {
-  mixins: [FormErrors, MixinInputGeo],
+  mixins: [FormErrors, FormUploads, MixinInputGeo],
   layout: 'admin',
   middleware: 'admin',
   props: {
@@ -305,14 +321,20 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          if (this.loading) {
+            return
+          }
           this.loading = true
           if (this.form.id) {
             await this.$axios.put(`/reseaux/${this.form.id}`, this.form)
-            this.$router.push(`/admin/contenus/reseaux/${this.form.id}`)
           } else {
             const { data: newReseau } = await this.$axios.post('/reseaux', this.form)
-            this.$router.push(`/admin/contenus/reseaux/${newReseau.id}`)
+            this.form.id = newReseau.id
           }
+
+          await this.uploadFiles('reseau', this.form.id)
+
+          this.$router.push(`/admin/contenus/reseaux/${this.form.id}`)
         })
         .catch((errors) => {
           this.setErrors(errors)
