@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-::v-deep p {
+::v-deep p:not(:last-child) {
   @apply mb-4
 }
 ::v-deep ol {

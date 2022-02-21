@@ -2,7 +2,7 @@
   <section class="relative">
     <img
       v-if="banner"
-      :src="banner"
+      :srcset="banner"
       :alt="`Bénévolat ${territoire.name}`"
       class="absolute object-cover object-center w-full h-full"
     >
@@ -100,7 +100,7 @@ export default {
 
   computed: {
     banner () {
-      return this.territoire.banner?.large
+      return this.territoire.banner?.urls.large
     },
     breadcrumb () {
       const breadcrumb = [

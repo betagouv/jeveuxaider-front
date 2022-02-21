@@ -108,6 +108,26 @@ const labels = {
     { key: '976', label: 'Mayotte' },
     { key: '987', label: 'Polynésie française' }
   ],
+  regions: [
+    { key: 'Auvergne-Rhône-Alpes', label: 'Auvergne-Rhône-Alpes' },
+    { key: 'Bourgogne-Franche-Comté', label: 'Bourgogne-Franche-Comté' },
+    { key: 'Bretagne', label: 'Bretagne' },
+    { key: 'Centre-Val de Loire', label: 'Centre-Val de Loire' },
+    { key: 'Corse', label: 'Corse' },
+    { key: 'Grand Est', label: 'Grand Est' },
+    { key: 'Hauts-de-France', label: 'Hauts-de-France' },
+    { key: 'Île-de-France', label: 'Île-de-France' },
+    { key: 'Normandie', label: 'Normandie' },
+    { key: 'Nouvelle-Aquitaine', label: 'Nouvelle-Aquitaine' },
+    { key: 'Occitanie', label: 'Occitanie' },
+    { key: 'Pays de la Loire', label: 'Pays de la Loire' },
+    { key: "Provence-Alpes-Côte d'Azur", label: "Provence-Alpes-Côte d'Azur" },
+    { key: 'Guadeloupe', label: 'Guadeloupe' },
+    { key: 'Martinique', label: 'Martinique' },
+    { key: 'Guyane', label: 'Guyane' },
+    { key: 'La Réunion', label: 'La Réunion' },
+    { key: 'Mayotte', label: 'Mayotte' }
+  ],
   duration: [
     { key: '1_hour', label: '1 heure' },
     { key: '2_hours', label: '2 heures' },
