@@ -15,8 +15,8 @@
           :options="[
             { key:'responsable', label: 'Responsable' },
             { key:'responsable_territoire', label: 'Responsable territorial' },
-            { key:'tete_de_reseau', label: 'Responsable d\'un réseau' },
-            { key:'referent', label: 'Référent' },
+            { key:'tete_de_reseau', label: 'Tête de réseau' },
+            { key:'referent', label: 'Référent départemental' },
             { key:'referent_regional', label: 'Référent régional' },
             { key:'analyste', label: 'Analyste' }]"
           :value="$route.query['filter[role]']"
@@ -88,7 +88,7 @@
         />
         <Checkbox
           :key="`role-referents-${$route.fullPath}`"
-          :option="{key: 'referent', label:'Référents'}"
+          :option="{key: 'referent', label:'Référents départementaux'}"
           :is-checked="$route.query['filter[role]'] == 'referent'"
           variant="button"
           size="xs"
@@ -97,7 +97,7 @@
         />
         <Checkbox
           :key="`role-responsable-${$route.fullPath}`"
-          :option="{key: 'responsable', label:'Responsables'}"
+          :option="{key: 'responsable', label:'Responsables d\'organisations'}"
           :is-checked="$route.query['filter[role]'] == 'responsable'"
           variant="button"
           size="xs"
@@ -106,7 +106,7 @@
         />
         <Checkbox
           :key="`role-tete_de_reseau-${$route.fullPath}`"
-          :option="{key: 'tete_de_reseau', label:'Responsables Réseau'}"
+          :option="{key: 'tete_de_reseau', label:'Têtes de réseau'}"
           :is-checked="$route.query['filter[role]'] == 'tete_de_reseau'"
           variant="button"
           size="xs"
@@ -115,7 +115,7 @@
         />
         <Checkbox
           :key="`role-responsable_territoire-${$route.fullPath}`"
-          :option="{key: 'responsable_territoire', label:'Responsables Territoire'}"
+          :option="{key: 'responsable_territoire', label:'Responsables territoriaux'}"
           :is-checked="$route.query['filter[role]'] == 'responsable_territoire'"
           variant="button"
           size="xs"
