@@ -34,14 +34,14 @@
           >
             <div class="cursor-pointer">
               <div class="font-bold">
-                {{ ressource.title }}  {{ ressource.roles }}
+                {{ ressource.title }}
               </div>
-              <div class="text-gray-500">
+              <div class="text-gray-500 text-sm hover:text-gray-700">
                 <template v-if="ressource.type === 'link'">
-                  Lien externe <ExternalLinkIcon class="h-4 w-4 inline-block" />
+                  Lien externe <ExternalLinkIcon class="h-3 w-3 inline-block" />
                 </template>
-                <template v-else>
-                  Fichier de XXX ko
+                <template v-if="ressource.type === 'file' && ressource.file">
+                  {{ ressource.file.file_name }}
                 </template>
               </div>
             </div>
@@ -77,18 +77,20 @@ export default {
       loading: false,
       endpoint: '/documents',
       queryParams: {
-        // append: 'file'
+        include: 'file'
       },
       drawerRessourceId: null
     }
   },
   methods: {
     handleClickRessource (ressource) {
+      if (ressource.type === 'file') {
+        if (ressource.file.urls) {
+          window.open(ressource.file.urls.original, '_blank').focus()
+        }
+      }
       if (ressource.type === 'link') {
         window.open(ressource.link, '_blank').focus()
-      }
-      if (ressource.type === 'file') {
-        alert('@TODO')
       }
     }
   }

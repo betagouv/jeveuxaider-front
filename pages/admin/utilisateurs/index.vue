@@ -18,7 +18,9 @@
             { key:'tete_de_reseau', label: 'Tête de réseau' },
             { key:'referent', label: 'Référent départemental' },
             { key:'referent_regional', label: 'Référent régional' },
-            { key:'analyste', label: 'Analyste' }]"
+            { key:'analyste', label: 'Analyste' },
+            { key:'admin', label: 'Modérateur' }
+          ]"
           :value="$route.query['filter[role]']"
           variant="transparent"
           clearable

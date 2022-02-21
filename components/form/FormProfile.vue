@@ -215,6 +215,53 @@
           </div>
         </div>
       </Box>
+      <Box v-if="$store.getters.contextRole === 'admin'">
+        <Heading :level="3" class="mb-8">
+          Rôles
+        </Heading>
+
+        <div class="gap-8 grid grid-cols-1">
+          <FormControl
+            label="Tête de réseau"
+            html-for="reseau_id"
+            required
+          >
+            <InputAutocomplete
+              name="autocomplete"
+              label="Autocomplete"
+              placeholder="Choisissez un réseau"
+              :options="autocompleteReseauxOptions"
+              :value="form.reseau ? form.reseau.name : null"
+              @selected="handleSelectedReseau"
+              @fetch-suggestions="onFetchReseauxSuggestions"
+            />
+          </FormControl>
+
+          <FormControl label="Référent départemental" html-for="referent_department">
+            <SelectAdvanced
+              v-model="form.referent_department"
+              name="referent_department"
+              placeholder="Sélectionnez un département"
+              :options="$labels.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
+            />
+          </FormControl>
+
+          <FormControl label="Référent régional" html-for="referent_region">
+            <SelectAdvanced
+              v-model="form.referent_region"
+              name="referent_region"
+              placeholder="Sélectionnez une région"
+              :options="$labels.regions"
+            />
+          </FormControl>
+
+          <Toggle
+            v-model="form.can_export_profiles"
+            :label="form.can_export_profiles ? 'Oui' : 'Non'"
+            description="Peut-il exporter les utilisateurs ?"
+          />
+        </div>
+      </Box>
     </div>
   </div>
 </template>
@@ -251,8 +298,9 @@ export default {
         phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v),
         zip: string().min(5, 'Le format du code postal est incorrect').required('Un code postal est requis'),
         domaines: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action'),
-        disponibilities: array().min(1, 'Merci de sélectionner au moins 1 disponibilité')
-      })
+        disponibilities: array().transform(v => (!v ? [] : v)).min(1, 'Merci de sélectionner au moins 1 disponibilité').required('df')
+      }),
+      autocompleteReseauxOptions: []
     }
   },
   methods: {
@@ -280,6 +328,18 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    async onFetchReseauxSuggestions (value) {
+      const res = await this.$axios.get('/reseaux', {
+        params: {
+          'filter[search]': value,
+          pagination: 6
+        }
+      })
+      this.autocompleteReseauxOptions = res.data.data
+    },
+    handleSelectedReseau (reseau) {
+      this.form.tete_de_reseau_id = reseau ? reseau.id : null
     }
   }
 }

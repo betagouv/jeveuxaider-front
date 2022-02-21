@@ -15,6 +15,10 @@
         </nuxt-link>
       </div>
       <div class="border-t -mx-6 my-6" />
+      <div class="text-jva-blue-500 flex items-center text-sm font-bold cursor-pointer hover:text-jva-blue-400" @click="handleDownload">
+        <DownloadIcon class="h-4 w-4 mr-4" /> Accéder à la ressource
+      </div>
+      <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :ressource="ressource" />
     </template>
   </Drawer>
@@ -52,7 +56,16 @@ export default {
     ressourceId: '$fetch'
   },
   methods: {
-
+    handleDownload () {
+      if (this.ressource.type === 'file') {
+        if (this.ressource.file.urls) {
+          window.open(this.ressource.file.urls.original, '_blank').focus()
+        }
+      }
+      if (this.ressource.type === 'link') {
+        window.open(this.ressource.link, '_blank').focus()
+      }
+    }
   }
 }
 </script>
