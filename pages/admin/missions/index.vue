@@ -1,6 +1,6 @@
 <template>
   <ContainerRightSidebar>
-    <DrawerMission :mission-id="drawerMissionId" @close="drawerMissionId = null" />
+    <DrawerMission :mission-id="drawerMissionId" @close="drawerMissionId = null" @updated="$fetch()" />
     <template #breadcrumb>
       <Breadcrumb
         :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Missions' }]"

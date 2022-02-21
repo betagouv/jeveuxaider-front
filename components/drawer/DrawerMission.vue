@@ -28,7 +28,13 @@
       <div class="text-sm  uppercase font-semibold text-gray-600">
         Statut de la mission
       </div>
-      <SelectMissionState v-if="canEditStatut" :value="mission.state" :mission-stats="missionStats" class="mt-4" @selected="handleChangeState($event)" />
+      <SelectMissionState
+        v-if="canEditStatut"
+        :value="mission.state"
+        :mission-stats="missionStats"
+        class="mt-4"
+        @selected="handleChangeState($event)"
+      />
       <div v-else class="mt-4 font-medium text-gray-800">
         {{ mission.state }}
       </div>
@@ -94,11 +100,13 @@ export default {
       this.mission.state = option.key
       await this.$axios.put(`/missions/${this.mission.id}`, this.mission)
       this.$fetch()
+      this.$emit('updated')
     },
     async handleChangePriority (option) {
       this.mission.is_priority = option.key
       await this.$axios.put(`/missions/${this.mission.id}`, this.mission)
       this.$fetch()
+      this.$emit('updated')
     }
   }
 }
