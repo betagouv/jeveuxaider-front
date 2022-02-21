@@ -31,10 +31,10 @@
 
           <img
             v-if="organisation.logo"
-            :srcset="organisation.logo.large"
+            :srcset="organisation.logo.urls.large"
             :alt="organisation.name"
             class="my-8 h-auto"
-            style="max-width: 16rem; max-height: 10rem"
+            style="max-width: 16rem; max-height: 120px"
           >
 
           <h1

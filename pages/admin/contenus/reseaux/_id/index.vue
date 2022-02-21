@@ -29,7 +29,7 @@
             :srcset="reseau.logo.large"
             :alt="reseau.name"
             class="my-8 h-auto"
-            style="max-width: 16rem; max-height: 10rem"
+            style="max-width: 16rem; max-height: 120px"
           >
           <Heading as="h1" :level="1" class="mb-4">
             {{ reseau.name }}
