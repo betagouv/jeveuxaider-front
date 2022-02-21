@@ -181,9 +181,22 @@
             Assocations partenaires
           </Heading>
           <div class="space-y-12">
-            <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-              @TODO: Media multiple + script pour récupérer les logos
-            </div>
+            <ImageCropMultiple
+              class="grid sm:grid-cols-3 lg:grid-cols-2 gap-4"
+              :medias="form.promoted_organisations"
+              :ratio="null"
+              :min-height="112"
+              :preview-width="null"
+              :preview-height="56"
+              preview-fit="contain"
+              preview-classes="p-2"
+              :upload-max-size="500000"
+              variant="compact"
+              upload-variant="compact"
+              @add="addFiles({ files: [$event], collection: 'territoire__promoted_organisations' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
+            />
           </div>
         </Box>
       </div>

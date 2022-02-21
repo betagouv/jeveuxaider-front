@@ -30,7 +30,8 @@
               class="lg:col-span-2 text-2xl font-extrabold tracking-[-1px]"
               v-html="item.title"
             />
-            <div class="lg:col-span-3" v-html="item.description" />
+
+            <TextFormatted class="lg:col-span-3 tracking-tight" :text="item.description" />
           </div>
         </div>
       </div>

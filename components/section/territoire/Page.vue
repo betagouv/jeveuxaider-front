@@ -4,7 +4,7 @@
 
     <div v-if="territoire.type == 'city' && logo" class="bg-white pt-12">
       <img
-        :src="logo"
+        :srcset="logo"
         :alt="territoire.name"
         class="mx-auto"
         style="max-height: 110px"
@@ -21,12 +21,10 @@
       :cities="cities"
     />
 
-    <Associations
-      v-if="territoire.promoted_organisations && territoire.promoted_organisations.length"
-      :territoire="territoire"
-    />
+    <Associations :territoire="territoire" />
 
     <Engagement :territoire="territoire" />
+
     <Subscribe :territoire="territoire" />
   </div>
 </template>
@@ -63,7 +61,7 @@ export default {
   },
   computed: {
     logo () {
-      return this.territoire.logo?.thumb
+      return this.territoire.logo?.urls.small
     }
   }
 }
