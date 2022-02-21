@@ -21,17 +21,17 @@
 
             <div class="mt-12 grid grid-cols-2 gap-8">
               <img
-                v-for="structure in structuresLogos"
-                :key="structure.id"
+                v-for="media in territoire.promoted_organisations"
+                :key="media.id"
                 class="mx-auto lg:mx-0 my-auto w-full sm:w-auto h-20 object-contain"
-                :alt="structure.name"
-                :src="structure.logo"
+                :alt="media.name"
+                :src="media.urls.small"
                 style="max-width: 130px"
               >
             </div>
           </div>
 
-          <div v-html="territoire.seo_recruit_description" />
+          <TextFormatted :text="territoire.seo_recruit_description" class="tracking-tight" />
         </div>
       </div>
     </section>
@@ -44,15 +44,6 @@ export default {
     territoire: {
       type: Object,
       required: true
-    }
-  },
-  computed: {
-    structuresLogos () {
-      return this.territoire.promoted_organisations
-        .filter(({ logo }) => logo)
-        .map(({ logo, id, name }) => {
-          return { id, name, logo: logo.thumb || logo.original }
-        })
     }
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <ContainerRightSidebar>
-    <DrawerOrganisation :organisation-id="drawerOrganisationId" @close="drawerOrganisationId = null" />
+    <DrawerOrganisation :organisation-id="drawerOrganisationId" @close="drawerOrganisationId = null" @updated="$fetch()" />
     <template #breadcrumb>
       <Breadcrumb
         :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Organisations' }]"

@@ -95,11 +95,12 @@ export default {
     organisationId: '$fetch'
   },
   methods: {
-    // async handleChangeState (option) {
-    //   this.mission.state = option.key
-    //   await this.$axios.put(`/missions/${this.mission.id}`, this.mission)
-    //   this.$fetch()
-    // }
+    async handleChangeState (option) {
+      this.organisation.state = option.key
+      await this.$axios.put(`/structures/${this.organisation.id}`, this.organisation)
+      this.$fetch()
+      this.$emit('updated')
+    }
   }
 }
 </script>

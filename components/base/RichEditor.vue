@@ -116,7 +116,7 @@ export default {
 
 <style lang="postcss" scoped>
 .wrapper {
-    ::v-deep .ck-content {
+  ::v-deep .ck-content {
     padding: 6px 1.5rem !important;
     @apply text-sm;
     a {
@@ -139,6 +139,9 @@ export default {
         background-color: #f5f5f5 !important;
         @apply cursor-not-allowed;
     }
+    p:not(:last-child) {
+      @apply mb-4
     }
+  }
 }
 </style>

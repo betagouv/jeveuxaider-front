@@ -6,7 +6,7 @@
       :title="titleAlert"
       :text="textAlert"
       :is-open="showAlert"
-      @confirm="$emit('selected', selected)"
+      @confirm="handleConfirmDialog()"
       @cancel="showAlert = false"
     />
   </div>
@@ -44,6 +44,10 @@ export default {
     }
   },
   methods: {
+    handleConfirmDialog () {
+      this.$emit('selected', this.selected)
+      this.showAlert = false
+    },
     handleSelect ($event) {
       this.titleAlert = 'Changement de statut'
       if ($event.key == 'En attente de validation') {
