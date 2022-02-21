@@ -126,7 +126,7 @@
         <History v-if="$route.hash == '#historique'" :model-id="reseau.id" model-type="reseau" />
         <template v-if="$route.hash == '#responsables'">
           <div class="space-y-2">
-            <BoxInvitations v-if="queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" />
+            <BoxInvitations v-if="queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" @updated="$fetch()" />
 
             <Box v-for="responsable in reseau.responsables" :key="responsable.id" variant="flat" padding="xs">
               <DescriptionList v-if="responsable">
@@ -181,11 +181,11 @@ export default {
       queryInvitations: null
     }
   },
-  fetch () {
-    const { data: stats } = this.$axios.get(`/statistics/reseaux/${this.reseau.id}`)
+  async fetch () {
+    const { data: stats } = await this.$axios.get(`/statistics/reseaux/${this.reseau.id}`)
     this.stats = stats
 
-    const { data: queryInvitations } = this.$axios.get('/invitations', {
+    const { data: queryInvitations } = await this.$axios.get('/invitations', {
       params: {
         'filter[of_reseau]': this.reseau.id
       }
