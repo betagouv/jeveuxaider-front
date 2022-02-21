@@ -89,7 +89,7 @@
               :state-style="missionTemplate.state"
               :state-text="$options.filters.label(missionTemplate.state, 'mission_template_workflow_states')"
               :description="missionTemplate.subtitle"
-              :image-url="missionTemplate.photo && missionTemplate.photo.urls.card"
+              :image-url="missionTemplate.photo ? missionTemplate.photo.urls.card : undefined"
               @click.native="drawerMissionTemplateId = missionTemplate.id"
             >
               <template #badges>

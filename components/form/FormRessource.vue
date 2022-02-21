@@ -53,9 +53,22 @@
               placeholder="Entrez le lien"
             />
           </FormControl>
-          <div v-if="form.type === 'file'" class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: Paragraphe comme https://www.jeveuxaider.gouv.fr/dashboard/territoire/1376/edit
-          </div>
+
+          <FormControl
+            v-if="form.type === 'file'"
+            html-for="file"
+            label="Fichier"
+            required
+            :error="errors.file"
+          >
+            <Upload
+              :default-value="[ressource.file]"
+              :max-size="5000000"
+              @add="addFiles({ files: $event, collection: 'document__file' })"
+              @delete="deleteFile($event)"
+            />
+          </FormControl>
+
           <FormControl
             label="Description"
             html-for="description"
@@ -123,9 +136,10 @@
 <script>
 import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import FormUploads from '@/mixins/form/uploads'
 
 export default {
-  mixins: [FormErrors],
+  mixins: [FormErrors, FormUploads],
   layout: 'admin',
   middleware: 'admin',
   props: {
@@ -148,6 +162,7 @@ export default {
         type: string().required('Le type est requis'),
         roles: array().min(1, 'Merci de sélectionner au moins 1 élement'),
         link: string().url('L\'url n\'est pas valide').nullable()
+        // file: object().nullable().required('Le fichier est requis')
       })
     }
   },
@@ -162,8 +177,12 @@ export default {
             this.sendNotification(this.form)
           } else {
             const { res: ressource } = await this.$axios.post('/documents', this.form)
+            this.form.id = ressource.id
             this.sendNotification(ressource)
           }
+
+          await this.uploadFiles('document', this.form.id)
+
           this.$emit('submitted')
           this.$toast.success(`${this.form.title} a bien été enregistré !`)
           this.$router.push('/admin/contenus/ressources')

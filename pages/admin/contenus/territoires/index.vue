@@ -86,7 +86,7 @@
               :state-style="territoire.state"
               :state-text="$options.filters.label(territoire.state, 'mission_template_workflow_states')"
               :description="territoire.department ? `${territoire.department} - ${$options.filters.label(territoire.department,'departments')}` : null"
-              :image-url="territoire.photo && territoire.photo.large"
+              :image-url="territoire.banner ? territoire.banner.urls.card : undefined"
               @click.native="drawerTerritoireId = territoire.id"
             >
               <template #footer>
@@ -129,7 +129,11 @@ export default {
   data () {
     return {
       loading: false,
-      endpoint: '/territoires?append=places_left',
+      endpoint: '/territoires',
+      queryParams: {
+        include: 'banner',
+        append: 'places_left'
+      },
       drawerTerritoireId: null,
       drawerTerritoire: null
     }

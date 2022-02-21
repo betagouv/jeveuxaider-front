@@ -3,7 +3,7 @@
     <dt class="text-sm text-gray-500">
       {{ term }}
     </dt>
-    <dd class="mt-1 text-sm text-gray-900 font-semibold sm:mt-0 sm:col-span-2">
+    <dd class="mt-1 text-sm text-gray-900 font-semibold sm:mt-0 sm:col-span-2 break-words">
       {{ description || '-' }}
     </dd>
   </div>

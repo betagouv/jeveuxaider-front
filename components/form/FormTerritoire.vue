@@ -56,7 +56,7 @@
               />
             </FormControl>
 
-            <FormControl label="Ajouter les codes postaux" html-for="autocomplete" required :error="errors.zips">
+            <FormControl v-if="form.type == 'city'" label="Ajouter les codes postaux" html-for="autocomplete" required :error="errors.zips">
               <InputAutocomplete
                 icon="LocationMarkerIcon"
                 name="autocomplete"
@@ -146,9 +146,33 @@
             Image
           </Heading>
           <div class="space-y-12">
-            <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-              @TODO: Upload de l'image principale + LOGO
-            </div>
+            <FormControl label="Bannière" html-for="banner">
+              <ImageCrop
+                :default-value="form.banner"
+                :ratio="300/143"
+                :min-width="300"
+                :preview-width="235"
+                :upload-max-size="2000000"
+                @add="addFiles({ files: [$event], collection: 'territoire__banner' })"
+                @delete="deleteFile($event)"
+                @crop="onManipulationsChange($event)"
+              />
+            </FormControl>
+
+            <FormControl label="Logo" html-for="logo">
+              <ImageCrop
+                :default-value="form.logo"
+                :ratio="null"
+                :min-height="112"
+                :preview-width="235"
+                preview-fit="contain"
+                preview-classes="p-2"
+                :upload-max-size="2000000"
+                @add="addFiles({ files: [$event], collection: 'territoire__logo' })"
+                @delete="deleteFile($event)"
+                @crop="onManipulationsChange($event)"
+              />
+            </FormControl>
           </div>
         </Box>
         <Box padding="sm">
@@ -157,7 +181,7 @@
           </Heading>
           <div class="space-y-12">
             <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-              @TODO: Autocomplete list
+              @TODO: Media multiple + script pour récupérer les logos
             </div>
           </div>
         </Box>
@@ -198,7 +222,11 @@ export default {
       formSchema: object({
         name: string().min(3, 'Le nom est trop court').required('Le nom est requis'),
         suffix_title: string().min(3, 'Le titre court est trop court').required('Le titre court est requis'),
-        zips: array().min(1, 'Merci de renseigner au moins 1 code postal')
+        zips: array().when('type', {
+          is: 'city',
+          then: schema => schema.min(1, 'Merci de renseigner au moins 1 code postal'),
+          otherwise: schema => schema.nullable()
+        })
       }),
       inputGeoType: 'municipality'
     }

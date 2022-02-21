@@ -10,7 +10,7 @@ export default {
     TerritoirePage
   },
   async asyncData ({ $axios, params, error }) {
-    const { data: territoire } = await await $axios.get(`/territoire/${params.slug}`)
+    const { data: territoire } = await await $axios.get(`/territoires/${params.slug}`)
     if (
       !territoire ||
       !territoire.is_published ||
