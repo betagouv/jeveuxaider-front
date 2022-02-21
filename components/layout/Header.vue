@@ -247,6 +247,7 @@ export default {
   },
   async fetch () {
     console.log('header fetch unreadMessages isLogged ?', this.$store.getters.isLogged)
+    console.log('user ?', this.$store.state.auth.user)
     if (this.$store.getters.isLogged) {
       const { data: unreadMessageCount } = await this.$axios.get('user/unreadMessages')
       this.unreadMessageCount = unreadMessageCount

@@ -56,12 +56,10 @@ export const actions = {
     commit('setUser', res ? res.data : null)
   },
   async logout ({ commit }) {
-    this.$router.push('/')
     await this.$axios.post('/logout')
-    commit('setUser', null)
-    commit('setIsImpersonate', false)
     this.$cookies.remove('access-token')
     this.$cookies.remove('access-token-impersonate')
+    window.location.href = '/'
   },
   async updateProfile ({ dispatch }, payload) {
     await this.$axios.put(`/profiles/${payload.id}`, payload)
