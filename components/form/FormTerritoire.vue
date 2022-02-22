@@ -30,6 +30,7 @@
               />
             </FormControl>
             <FormControl
+              v-if="$store.getters.contextRole === 'admin'"
               label="Type"
               html-for="type"
               :error="errors.type"
@@ -84,7 +85,7 @@
             </FormControl>
           </div>
         </Box>
-        <Box>
+        <Box v-if="$store.getters.contextRole === 'admin'">
           <Heading :level="3" class="mb-8">
             SEO
           </Heading>
@@ -176,7 +177,7 @@
             </FormControl>
           </div>
         </Box>
-        <Box padding="sm">
+        <Box v-if="$store.getters.contextRole === 'admin'" padding="sm">
           <Heading :level="3" class="mb-8">
             Assocations partenaires
           </Heading>

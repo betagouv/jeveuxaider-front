@@ -12,7 +12,7 @@
       <SectionHeading :title="mission.name">
         <template #action>
           <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-            <Button v-if="!mission.template_id || mission.structure.state != 'Validée'" size="xl" variant="green" @click.native="$refs.formMission.handleSubmit({state: 'En attente de validation'})">
+            <Button v-if="!mission.template_id || mission.structure.state === 'En attente de validation'" size="xl" variant="green" @click.native="$refs.formMission.handleSubmit({state: 'En attente de validation'})">
               Soumettre à validation
             </Button>
             <Button v-else size="xl" variant="green" @click.native="$refs.formMission.handleSubmit({state: 'Validée'})">

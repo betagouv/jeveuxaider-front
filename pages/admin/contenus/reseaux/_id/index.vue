@@ -31,10 +31,10 @@
             class="my-8 h-auto"
             style="max-width: 16rem; max-height: 120px"
           >
-          <Heading as="h1" :level="1" class="mb-4">
+          <Heading as="h1" :level="1">
             {{ reseau.name }}
           </Heading>
-          <TextFormatted :max-lines="2" :text="reseau.description" class="text-cool-gray-500 text-lg" />
+          <TextFormatted v-if="reseau.description" :max-lines="2" :text="reseau.description" class="text-cool-gray-500 text-lg mt-4" />
         </Box>
         <Box :style="`background-color: ${reseau.color ? reseau.color : '#B91C1C'}`" class="text-white">
           <DomainsPublicsLinks :organisation="reseau" />
@@ -61,11 +61,12 @@
       <div class="lg:col-span-2 space-y-8">
         <div class="flex items-start justify-between">
           <div>
-            <Heading :level="1">
+            <Heading :level="1" class="mb-4">
               Réseau <span class=" font-normal text-gray-500 text-2xl">#{{ reseau.id }}</span>
             </Heading>
-
-            <OnlineIndicator :published="!!reseau.is_published" :link="reseau.full_url" class="mt-2" />
+            <div class="flex items-center space-x-4">
+              <OnlineIndicator :published="!!reseau.is_published" :link="reseau.full_url" />
+            </div>
           </div>
           <nuxt-link :to="`/admin/contenus/reseaux/${reseau.id}/edit`">
             <Button icon="PencilIcon">

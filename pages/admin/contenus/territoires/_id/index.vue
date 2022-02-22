@@ -55,7 +55,7 @@
               <OnlineIndicator :published="territoire.is_published" :link="territoire.full_url" />
             </div>
           </div>
-          <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}/edit`">
+          <nuxt-link v-if="canManageTerritoire" :to="`/admin/contenus/territoires/${territoire.id}/edit`">
             <Button icon="PencilIcon">
               Modifier
             </Button>
@@ -75,7 +75,7 @@
         </div>
         <template v-if="$route.hash == '#responsables'">
           <div class="space-y-2">
-            <BoxInvitations v-if="queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" @updated="$fetch()" />
+            <BoxInvitations v-if="canManageTerritoire && queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" @updated="$fetch()" />
 
             <Box v-for="responsable in territoire.responsables" :key="responsable.id" variant="flat" padding="xs">
               <DescriptionList v-if="responsable">
@@ -84,7 +84,7 @@
                 <DescriptionListItem term="Mobile" :description="responsable.mobile" />
               </DescriptionList>
             </Box>
-            <Button variant="white" @click.native="showDrawerInvitation = true">
+            <Button v-if="canManageTerritoire" variant="white" @click.native="showDrawerInvitation = true">
               <UsersIcon class="h-4 w-4 mr-2" /> Inviter un responsable
             </Button>
           </div>
@@ -106,6 +106,7 @@ import Associations from '@/components/section/territoire/Associations'
 import Engagement from '@/components/section/territoire/Engagement'
 import BoxInvitations from '@/components/section/BoxInvitations'
 import FormInvitation from '@/components/form/FormInvitation'
+import MixinTerritoire from '@/mixins/territoire'
 
 export default {
   components: {
@@ -120,6 +121,7 @@ export default {
     BoxInvitations,
     FormInvitation
   },
+  mixins: [MixinTerritoire],
   layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (!['admin', 'responsable_territoire'].includes(store.getters.contextRole)) {

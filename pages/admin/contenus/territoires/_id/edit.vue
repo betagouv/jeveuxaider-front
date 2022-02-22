@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import FormTerritoire from '~/components/form/FormTerritoire'
+import FormTerritoire from '@/components/form/FormTerritoire'
 
 export default {
   components: { FormTerritoire },
@@ -42,7 +42,7 @@ export default {
       return error({ statusCode: 404 })
     }
     if (store.getters.contextRole == 'responsable_territoire') {
-      if (store.getters.contextableId != territoire.id) {
+      if (store.getters.contextableId != territoire.id || territoire.state != 'validated') {
         return error({ statusCode: 403 })
       }
     }

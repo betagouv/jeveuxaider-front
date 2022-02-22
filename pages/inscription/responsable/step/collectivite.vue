@@ -40,6 +40,20 @@
               @blur="validate('name')"
             />
           </FormControl>
+          <FormControl
+            html-for="suffix_title"
+            label="Devenez bénévole ..."
+            required
+            :error="errors.suffix_title"
+          >
+            <FormHelperText>
+              Complétez la phrase pour votre page publique. Ex: Devenez bénévole à Bayonne
+            </FormHelperText>
+            <Input
+              v-model="form.suffix_title"
+              name="suffix_title"
+            />
+          </FormControl>
           <FormControl label="Département de votre collectivté" html-for="department" required :error="errors.department">
             <SelectAdvanced
               v-model="form.department"
@@ -64,11 +78,12 @@
               icon="LocationMarkerIcon"
               name="autocomplete"
               label="Autocomplete"
-              placeholder="Ex: Recherche par mots clés"
+              placeholder="Recherche de vos codes postaux"
               :options="autocompleteOptions"
               attribute-key="id"
               attribute-label="label"
               attribute-right-label="typeLabel"
+              clear-after-selected
               @selected="handleSelectedGeo"
               @fetch-suggestions="onFetchGeoSuggestions"
             />
@@ -132,6 +147,7 @@ export default {
       formSchema: object({
         name: string().required(),
         department: string().required(),
+        suffix_title: string().required(),
         zips: array().min(1, 'Merci de renseigner au moins 1 code postal')
       }),
       inputGeoType: 'municipality'
@@ -185,7 +201,7 @@ export default {
             return
           }
           this.loading = true
-          await this.$axios.post(`/territoire/${this.form.id}`, this.form)
+          await this.$axios.put(`/territoires/${this.form.id}`, this.form)
           this.$router.push('/inscription/responsable/step/collectivite-confirmation')
         })
         .catch((errors) => {

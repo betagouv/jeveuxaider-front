@@ -2,9 +2,7 @@
   <Drawer :is-open="Boolean(missionTemplateId)" @close="$emit('close')">
     <template #title>
       <Heading v-if="missionTemplate" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/contenus/modeles-mission/${missionTemplateId}/edit`" class="hover:underline" target="_blank">
-          {{ missionTemplate.title }}
-        </nuxt-link>
+        {{ missionTemplate.title }}
       </Heading>
     </template>
     <template v-if="missionTemplate">
