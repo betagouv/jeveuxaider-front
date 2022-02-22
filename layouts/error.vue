@@ -5,7 +5,11 @@
         Oups, cette page est introuvable
       </Heading>
 
-      <p class="my-8 text-gray-900">
+      <p v-if="error.message && error.message != 'Request failed with status code 404'" class="my-8 text-gray-900">
+        {{ error.message }}
+      </p>
+
+      <p v-else class="my-8 text-gray-900">
         À priori cette page n'existe plus. <br class="hidden sm:block">
         Ou pire, elle peut ne jamais avoir existée…
       </p>
