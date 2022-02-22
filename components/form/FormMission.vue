@@ -112,7 +112,7 @@
           </FormControl>
 
           <FormControl
-            v-if="!Boolean(mission.template)"
+            v-if="!Boolean(mission.template) && form.domaine_id"
             label="Visuel d'illustration"
             html-for="publics_volontaires"
           >
@@ -396,7 +396,8 @@ export default {
         template_id: this.mission.template?.id,
         domaine_id: this.mission.template?.domaine_id || this.mission.domaine_id,
         objectif: this.mission.template?.objectif || this.mission.objectif,
-        description: this.mission.template?.description || this.mission.description
+        description: this.mission.template?.description || this.mission.description,
+        illustrations: this.mission.illustrations || []
       },
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),

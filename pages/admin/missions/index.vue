@@ -226,7 +226,7 @@ export default {
     return {
       endpoint: '/missions',
       queryParams: {
-        include: 'template.photo'
+        include: 'template.photo,illustrations'
       },
       drawerMissionId: null,
       autocompleteOptionsOrga: []

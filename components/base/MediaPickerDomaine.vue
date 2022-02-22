@@ -73,6 +73,12 @@ export default {
       async handler (domainId, oldDomainId) {
         await this.fetchMediasDomaine(domainId)
         if (oldDomainId) {
+          // Le domaine principale a changé
+          [...Array(this.limit)].forEach((_, index) => {
+            this.$emit('change', { media: this.mediasFromDomaine[index] ?? this.mediasFromDomaine[0], index })
+          })
+        } else if (!this.defaults.length) {
+          // Form add
           [...Array(this.limit)].forEach((_, index) => {
             this.$emit('change', { media: this.mediasFromDomaine[index] ?? this.mediasFromDomaine[0], index })
           })
