@@ -730,15 +730,6 @@ export default {
 .sort {
   width: 180px;
   ::v-deep {
-    .el-input__prefix {
-      pointer-events: none;
-      left: 15px;
-      top: 10px;
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.7);
-      letter-spacing: -0.1px;
-      line-height: 18px;
-    }
     input {
       height: 60px;
       padding: 0 15px;
@@ -750,18 +741,6 @@ export default {
       border: none;
       position: relative;
       top: 10px;
-    }
-    .el-input {
-      border: 1px solid white;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    .el-select__caret {
-      color: white;
-      font-weight: bold;
-      font-size: 12px;
-      position: relative;
-      right: 10px;
     }
   }
 }
@@ -788,30 +767,6 @@ export default {
   &:hover {
     .clear-refinement--icon {
       @apply opacity-100;
-    }
-  }
-}
-
-.header.custom-color {
-  ::v-deep .el-radio {
-    color: white;
-    border-color: white;
-    .el-radio__label {
-      color: currentColor;
-    }
-    .el-radio__input {
-      .el-radio__inner {
-        background: currentColor;
-        border-color: currentColor;
-        &::after {
-          filter: grayscale(1) invert(1) contrast(0.5);
-        }
-      }
-    }
-    .el-radio__input.is-checked {
-      .el-radio__inner::after {
-        filter: grayscale(1) invert(1);
-      }
     }
   }
 }
