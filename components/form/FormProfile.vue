@@ -224,7 +224,6 @@
           <FormControl
             label="Tête de réseau"
             html-for="reseau_id"
-            required
           >
             <InputAutocomplete
               name="autocomplete"
@@ -243,6 +242,7 @@
               name="referent_department"
               placeholder="Sélectionnez un département"
               :options="$labels.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
+              clearable
             />
           </FormControl>
 
@@ -257,8 +257,8 @@
 
           <Toggle
             v-model="form.can_export_profiles"
-            :label="form.can_export_profiles ? 'Oui' : 'Non'"
-            description="Peut-il exporter les utilisateurs ?"
+            :description="form.can_export_profiles ? 'Oui' : 'Non'"
+            label="Export des utilisateurs"
           />
         </div>
       </Box>
