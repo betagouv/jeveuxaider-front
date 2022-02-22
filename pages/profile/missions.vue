@@ -84,7 +84,6 @@ export default {
     CardParticipation
   },
   mixins: [QueryBuilder],
-  layout: 'admin',
   data () {
     return {
       loading: false,

@@ -1,5 +1,5 @@
 <template>
-  <Dropdown>
+  <Dropdown ref="dropdownUser">
     <template #button>
       <div class="group flex items-center gap-4 w-48 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-jva-blue-500">
         <Avatar
@@ -27,19 +27,39 @@
 
     <template #items>
       <div class="w-56 divide-y">
-        <DropdownOptionsItem @click.native="$router.push('/profile')">
+        <DropdownOptionsItem @click.native="handleClick('/profile')">
           Mon profil
         </DropdownOptionsItem>
-        <DropdownOptionsItem @click.native="$router.push('/profile/missions')">
+        <DropdownOptionsItem @click.native="handleClick('/profile/missions')">
           Mes missions
         </DropdownOptionsItem>
-        <DropdownOptionsItem @click.native="$router.push('/parameters')">
+        <DropdownOptionsItem @click.native="handleClick('/parameters')">
           Mes paramètres
         </DropdownOptionsItem>
-        <DropdownOptionsItem @click.native="$store.dispatch('auth/logout')">
+        <DropdownOptionsItem @click.native="handleClick('logout')">
           <span class="text-[#E2011C]">Se déconnecter</span>
         </DropdownOptionsItem>
       </div>
     </template>
   </Dropdown>
 </template>
+
+<script>
+export default {
+  methods: {
+    handleClick (action) {
+      switch (action) {
+        case 'logout':
+          this.$store.dispatch('auth/logout')
+          break
+        case '/profile':
+        case '/profile/missions':
+        case '/parameters':
+          this.$router.push(action)
+          break
+      }
+      this.$refs.dropdownUser.close()
+    }
+  }
+}
+</script>
