@@ -55,7 +55,7 @@ export default function ({ $axios, redirect, app, store, error, $message, $toast
           message: err.message || err.response.data
         })
       case 422:
-        if (err.response.data.message) {
+        if (err.response.data.message && !err.response.data.errors) {
           app.$toast.error({
             component: Toast,
             props: {

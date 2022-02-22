@@ -83,7 +83,8 @@ export default {
     attributeLabel: { type: String, default: 'name' },
     attributeRightLabel: { type: String, default: '' },
     classOptions: { type: String, default: '' },
-    variant: { type: String, default: null } // transparent
+    variant: { type: String, default: null }, // transparent
+    clearAfterSelected: { type: Boolean, default: false }
   },
   data () {
     return {
@@ -116,6 +117,10 @@ export default {
       this.showOptions = false
       this.$refs.input.focus()
       this.highlightIndex = null
+
+      if (this.clearAfterSelected) {
+        this.reset()
+      }
     },
     clickedOutside () {
       this.showOptions = false

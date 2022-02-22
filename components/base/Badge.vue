@@ -19,7 +19,7 @@
       { 'border text-jva-blue-500 border-jva-blue-500': ['blue', 'Terminée'].includes(color) && plain},
 
       // ORANGE
-      {'text-white bg-jva-orange-500': ['orange', 'En attente de validation', 'En cours de traitement'].includes(color) && !plain},
+      {'text-white bg-jva-orange-500': ['orange', 'En attente de validation', 'En cours de traitement', 'waiting'].includes(color) && !plain},
       { 'border text-jva-orange-500 border-jva-orange-500': ['orange', 'En attente de validation', 'En cours de traitement'].includes(color) && plain},
 
       // GREEN

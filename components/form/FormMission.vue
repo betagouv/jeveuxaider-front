@@ -430,15 +430,12 @@ export default {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
     },
     handleSubmit (attributes) {
-      console.log('handleSubmit formMission attributes', attributes)
       if (attributes) {
         this.form = {
           ...this.form,
           ...attributes
         }
       }
-      console.log('handleSubmit formMission form', this.form)
-
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
