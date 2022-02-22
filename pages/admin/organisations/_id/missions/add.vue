@@ -15,12 +15,23 @@
             <a class="underline text-gray-700" href="/charte-reserve-civique" target="_blank">la charte</a> de Jeveuxaider.gouv.fr
           </div>
           <div v-if="step == 2" class="hidden lg:block space-x-2">
-            <Button variant="white" @click.native="handleSubmitBrouillon()">
+            <!-- <Button variant="white" @click.native="handleSubmitBrouillon()">
               Enregistrer en brouillon
             </Button>
             <Button variant="green" @click.native="handleSubmitPublish()">
               Enregistrer et publier
-            </Button>
+            </Button> -->
+            <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
+              <Button v-if="template_id" size="xl" variant="green" @click.native="$refs.formMission.handleSubmit({state: 'Validée'})">
+                Enregistrer et publier
+              </Button>
+              <Button v-else size="xl" variant="green" @click.native="$refs.formMission.handleSubmit({state: 'En attente de validation'})">
+                Soumettre à validation
+              </Button>
+              <Link class="text-sm font-medium" @click.native="$refs.formMission.handleSubmit({state: 'Brouillon'})">
+                Enregistrer en brouillon
+              </Link>
+            </div>
           </div>
         </template>
       </Sectionheading>

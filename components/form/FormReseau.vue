@@ -298,8 +298,8 @@ export default {
     handleSubmit (attributes) {
       if (attributes) {
         this.form = {
-          attributes,
-          ...this.form
+          ...this.form,
+          ...attributes
         }
       }
       this.formSchema

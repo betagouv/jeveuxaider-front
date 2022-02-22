@@ -4,7 +4,7 @@
       <template #button="{ isOpen }">
         <div class="flex items-center group">
           <div class="font-bold flex mr-auto flex-shrink-0">
-            <MailIcon class="mr-3" />{{ invitations.length | pluralize("Invitation") }} Invitations en attente
+            <MailIcon class="mr-3" />{{ invitations.length | pluralize("invitation") }} en attente
           </div>
           <ChevronUpIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
           <ChevronDownIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />

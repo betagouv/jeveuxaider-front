@@ -20,7 +20,7 @@ export default {
   props: {
     text: {
       type: String,
-      default: 'base'
+      default: null
     },
     maxLines: {
       type: [Number, Boolean],
@@ -37,7 +37,7 @@ export default {
       return this.maxLines ? clip(this.text, undefined, { html: true, maxLines: this.maxLines }) : this.text
     },
     needClip () {
-      return this.textHtml !== this.text
+      return this.textHtml && this.textHtml !== this.text
     }
   },
   methods: {

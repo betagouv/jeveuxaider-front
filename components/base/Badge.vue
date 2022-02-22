@@ -7,8 +7,8 @@
       {'px-4 py-2 text-sm': size == 'sm'},
 
       // GRAY
-      {'text-white bg-gray-600': ['gray', 'Brouillon'].includes(color) && !plain},
-      { 'border text-gray-600 border-gray-600': ['gray', 'Brouillon'].includes(color) && plain},
+      {'text-white bg-gray-600': ['gray', 'Brouillon','Désinscrite'].includes(color) && !plain},
+      { 'border text-gray-600 border-gray-600': ['gray', 'Brouillon','Désinscrite'].includes(color) && plain},
 
       // GRAY LIGHT
       {'bg-gray-200 text-gray-900': ['gray-light'].includes(color) && !plain},

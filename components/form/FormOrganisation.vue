@@ -1,5 +1,13 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+    <AlertDialog
+      theme="danger"
+      title="Désinscrire l'organisation"
+      :text="`Attention, cette action est irréversible et vous ne serez plus en mesure de gérer les missions reliées à ${structure.name}.`"
+      :is-open="showAlert"
+      @confirm="handleConfirmUnregister()"
+      @cancel="showAlert = false"
+    />
     <div class="lg:col-span-3 space-y-12">
       <Box>
         <Heading :level="3" class="mb-8">
@@ -300,7 +308,6 @@
         <FormControl
           label="Faites-vous partie d'un réseau national ?"
           html-for="reseau_id"
-          required
         >
           <InputAutocomplete
             name="autocomplete"
@@ -318,6 +325,20 @@
         </Heading>
         <div class="space-y-8">
           @todo
+        </div>
+      </Box>
+      <Box padding="sm">
+        <Heading as="h3" :level="3" class="mb-4">
+          Désinscription
+        </Heading>
+        <FormHelperText class="mb-6">
+          Vous pouvez désinscrire l'organisation. Cependant vous ne serez plus en mesure de gérer les missions reliées à {{ structure.name }}.
+        </FormHelperText>
+
+        <div class="ml-auto">
+          <Button variant="white" size="md" type="submit" @click.native="() => showAlert = true">
+            Désinscrire l'organisation
+          </Button>
         </div>
       </Box>
     </div>
@@ -363,6 +384,7 @@ export default {
         donation: string().nullable().url(),
         phone: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').nullable()
       }),
+      showAlert: false,
       autocompleteReseauxOptions: []
     }
   },
@@ -393,6 +415,11 @@ export default {
     },
     handleSelectedReseau (reseau) {
       this.form.tete_de_reseau_id = reseau ? reseau.id : null
+    },
+    async handleConfirmUnregister () {
+      await this.$axios.post(`/structures/${this.structure.id}/unregister`)
+      await this.$store.dispatch('auth/fetchUser')
+      this.$router.push('/')
     }
   }
 }
