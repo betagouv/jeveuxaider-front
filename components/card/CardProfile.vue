@@ -29,7 +29,7 @@
         class="absolute top-0 flex justify-center inset-x-0"
       >
         <div v-if="profile.user" class="pill !rounded-t-none">
-          {{ profile.user.context_role | label('role') }}
+          {{ role }}
         </div>
       </div>
     </div>
@@ -50,7 +50,16 @@ export default {
     }
   },
   computed: {
-
+    role () {
+      switch (this.profile.user.context_role) {
+        case 'referent':
+          return `${this.profile.referent_department} - ${this.$options.filters.label(this.profile.referent_department, 'departments')}`
+        case 'referent_regional':
+          return `${this.profile.referent_region}`
+        default:
+          return this.$options.filters.label(this.profile.user.context_role, 'role')
+      }
+    }
   }
 }
 </script>

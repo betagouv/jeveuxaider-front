@@ -44,6 +44,11 @@ export default {
     return {
       show: false
     }
+  },
+  methods: {
+    close () {
+      this.show = false
+    }
   }
 }
 </script>

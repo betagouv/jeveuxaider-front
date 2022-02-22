@@ -150,14 +150,4 @@ export default {
     }
   }
 }
-
-::v-deep .el-dropdown-menu__item:not(.is-disabled) {
-  @apply text-gray-500;
-  &:hover {
-    @apply bg-gray-200 text-gray-500;
-  }
-  &.active {
-    @apply bg-gray-200 text-black;
-  }
-}
 </style>

@@ -10,7 +10,7 @@
         <DescriptionListItem term="RNA" :description="organisation.rna" />
         <DescriptionListItem term="Crée le" :description="$dayjs(organisation.created_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Modifié le" :description="$dayjs(organisation.updated_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Statut" :description="organisation.statut_juridique | label('structure_legal_status')" />
+        <DescriptionListItem term="Statut juridique" :description="organisation.statut_juridique | label('structure_legal_status')" />
         <DescriptionListItem v-if="organisation.association_types" term="Agréements" :description="organisation.association_types.join(', ')" />
       </DescriptionList>
     </Box>

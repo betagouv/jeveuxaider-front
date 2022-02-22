@@ -31,7 +31,7 @@ export default function ({ $axios, redirect, app, store, error, $message, $toast
   })
 
   $axios.onError((err) => {
-    // console.log(err)
+    // console.log(err.response.data)
     // console.log(err.response.status)
     // console.log(err.response.data)
 
@@ -50,9 +50,10 @@ export default function ({ $axios, redirect, app, store, error, $message, $toast
           message: err.message || err.response.data
         })
       case 404:
+        console.log('noooot 404')
         return error({
           statusCode: 404,
-          message: err.message || err.response.data
+          message: err.response.data.message || err.message || err.response.data
         })
       case 422:
         if (err.response.data.message) {

@@ -7,8 +7,8 @@
       {'px-4 py-2 text-sm': size == 'sm'},
 
       // GRAY
-      {'text-white bg-gray-600': ['gray', 'Brouillon'].includes(color) && !plain},
-      { 'border text-gray-600 border-gray-600': ['gray', 'Brouillon'].includes(color) && plain},
+      {'text-white bg-gray-600': ['gray', 'Brouillon','Désinscrite'].includes(color) && !plain},
+      { 'border text-gray-600 border-gray-600': ['gray', 'Brouillon','Désinscrite'].includes(color) && plain},
 
       // GRAY LIGHT
       {'bg-gray-200 text-gray-900': ['gray-light'].includes(color) && !plain},
@@ -23,12 +23,12 @@
       { 'border text-jva-orange-500 border-jva-orange-500': ['orange', 'En attente de validation', 'En cours de traitement'].includes(color) && plain},
 
       // GREEN
-      {'text-white bg-jva-green-500': ['green', 'Validée'].includes(color) && !plain},
-      { 'border text-jva-green-500 border-jva-green-500': ['green', 'Validée'].includes(color) && plain},
+      {'text-white bg-jva-green-500': ['green', 'Validée', 'validated'].includes(color) && !plain},
+      { 'border text-jva-green-500 border-jva-green-500': ['green', 'Validée', 'validated'].includes(color) && plain},
 
       // RED
-      {'text-white bg-jva-red-500': ['red', 'Signalée', 'Annulée', 'Refusée'].includes(color) && !plain},
-      { 'border text-jva-red-500 border-jva-red-500': ['red', 'Signalée', 'Annulée', 'Refusée'].includes(color) && plain},
+      {'text-white bg-jva-red-500': ['red', 'Signalée', 'Annulée', 'Refusée', 'refused'].includes(color) && !plain},
+      { 'border text-jva-red-500 border-jva-red-500': ['red', 'Signalée', 'Annulée', 'Refusée', 'refused'].includes(color) && plain},
 
       // DOMAINE: Solidarité
       {'text-white bg-domaine-solidarite': [7,'solidarite','solidarite-et-insertion'].includes(color) && !plain},

@@ -196,7 +196,6 @@
             v-if="form.statut_juridique !== 'Collectivité'"
             label="Faites-vous partie d'un réseau national ?"
             html-for="tete_de_reseau_id"
-            required
           >
             <InputAutocomplete
               name="autocomplete"
