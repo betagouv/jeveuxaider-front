@@ -61,7 +61,6 @@ export default {
     BoxInformations
   },
   mixins: [MixinAction],
-  layout: 'admin',
   middleware: 'authenticated',
   data () {
     return {

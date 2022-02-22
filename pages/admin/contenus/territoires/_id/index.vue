@@ -3,7 +3,7 @@
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Territoires', link: '/admin/contenus/territoires' },
+        { label: 'Territoires', link: $store.getters.contextRole === 'admin' ? '/admin/contenus/territoires' : null },
         { label: territoire.name },
       ]"
     />
@@ -45,10 +45,15 @@
       <div class="lg:col-span-2 space-y-8">
         <div class="flex items-start justify-between">
           <div>
-            <Heading :level="1">
+            <Heading :level="1" class="mb-4">
               Territoire <span class=" font-normal text-gray-500 text-2xl">#{{ territoire.id }}</span>
             </Heading>
-            <OnlineIndicator :published="territoire.is_published" :link="territoire.full_url" class="mt-2" />
+            <div class="flex items-center space-x-4">
+              <Badge :color="territoire.state">
+                {{ territoire.state |label('territoire_workflow_states') }}
+              </Badge>
+              <OnlineIndicator :published="territoire.is_published" :link="territoire.full_url" />
+            </div>
           </div>
           <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}/edit`">
             <Button icon="PencilIcon">
@@ -117,11 +122,13 @@ export default {
   },
   layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
+    if (!['admin', 'responsable_territoire'].includes(store.getters.contextRole)) {
+      return error({ statusCode: 403 })
+    }
     const { data: territoire } = await $axios.get(`/territoires/${params.id}`)
     if (!territoire) {
       return error({ statusCode: 404 })
     }
-
     if (store.getters.contextRole == 'responsable_territoire') {
       if (store.getters.contextableId != territoire.id) {
         return error({ statusCode: 403 })

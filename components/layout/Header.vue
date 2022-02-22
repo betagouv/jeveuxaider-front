@@ -96,8 +96,20 @@
                     {{ role.label }}
                   </template>
                   <template #icon>
-                    <CheckIcon v-if="role.key == $store.getters.contextRole" class="h-5 text-jva-green-500 " />
-                    <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
+                    <template v-if="['responsable','responsable_territoire'].includes($store.getters.contextRole)">
+                      <template v-if="$store.getters.contextRole === 'responsable'">
+                        <CheckIcon v-if="role.contextable_type === 'structure' && role.contextable_id === $store.getters.contextableId " class="h-5 text-jva-green-500 " />
+                        <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
+                      </template>
+                      <template v-if="$store.getters.contextRole === 'responsable_territoire'">
+                        <CheckIcon v-if="role.contextable_type === 'territoire' && role.contextable_id === $store.getters.contextableId " class="h-5 text-jva-green-500 " />
+                        <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
+                      </template>
+                    </template>
+                    <template v-else>
+                      <CheckIcon v-if="role.key === $store.getters.contextRole " class="h-5 text-jva-green-500 " />
+                      <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
+                    </template>
                   </template>
                 </DropdownOptionsItem>
               </div>
@@ -288,6 +300,11 @@ export default {
           { name: 'Mon organisation', to: `/admin/organisations/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/organisations/*') },
           { name: 'Mes missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
           { name: 'Mes participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
+        ]
+      } else if (this.$store.getters.currentRole?.key === 'responsable_territoire') {
+        return [
+          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
+          { name: 'Mon territoire', to: `/admin/contenus/territoires/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/contenus/territoires/*') }
         ]
       } else if (this.$store.getters.currentRole?.key === 'tete_de_reseau') {
         return [

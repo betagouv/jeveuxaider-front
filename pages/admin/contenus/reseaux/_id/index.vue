@@ -3,7 +3,7 @@
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Réseaux', link: '/admin/contenus/reseaux' },
+        { label: 'Réseaux', link: $store.getters.contextRole === 'admin' ? '/admin/contenus/reseaux' : null },
         { label: reseau.name },
       ]"
     />

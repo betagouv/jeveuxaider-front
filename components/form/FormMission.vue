@@ -239,7 +239,7 @@
               :options="autocompleteOptions"
               attribute-key="id"
               attribute-label="label"
-              @selected="handleSelectedAdress"
+              @selected="handleSelectedGeo"
               @fetch-suggestions="onFetchGeoSuggestions"
             />
           </FormControl>
@@ -283,7 +283,7 @@
           </div>
         </div>
       </Box>
-      <Box padding="sm" class="h-full">
+      <Box padding="sm">
         <Heading :level="3" class="mb-8">
           Compétences recherchées
         </Heading>
@@ -429,15 +429,12 @@ export default {
     onRemovedSkill (item) {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
     },
-    handleSelectedAdress (payload) {
-      console.log('@todo handleSelectedAdress', payload)
-    },
     handleSubmit (attributes) {
       console.log('handleSubmit formMission attributes', attributes)
       if (attributes) {
         this.form = {
-          attributes,
-          ...this.form
+          ...this.form,
+          ...attributes
         }
       }
       console.log('handleSubmit formMission form', this.form)

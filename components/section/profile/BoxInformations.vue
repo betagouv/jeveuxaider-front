@@ -12,6 +12,9 @@
     </div>
     <Box :variant="boxVariant" :padding="boxPadding">
       <DescriptionList>
+        <DescriptionListItem v-if="profile.referent_department" term="Référent dep." :description="`${profile.referent_department} - ${$options.filters.label(profile.referent_department, 'departments')}`" />
+        <DescriptionListItem v-if="profile.referent_region" term="Référent dep." :description="profile.referent_region" />
+        <DescriptionListItem v-if="profile.is_analyste" term="Analyste" description="Oui" />
         <DescriptionListItem term="Crée le" :description="$dayjs(profile.created_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Nom" :description="profile.full_name" />
         <DescriptionListItem term="Email" :description="profile.email" />

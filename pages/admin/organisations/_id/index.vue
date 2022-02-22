@@ -31,10 +31,10 @@
             class="my-8 h-auto"
             style="max-width: 16rem; max-height: 120px"
           >
-          <Heading as="h1" :level="1" class="mb-4">
+          <Heading as="h1" :level="1">
             {{ organisation.name }}
           </Heading>
-          <TextFormatted :max-lines="2" :text="organisation.description" class="text-cool-gray-500 text-lg" />
+          <TextFormatted v-if="organisation.description" :max-lines="2" :text="organisation.description" class="text-cool-gray-500 text-lg mt-4" />
         </Box>
         <BoxInformations class="mb-8" :organisation="organisation" :show-title="false" box-variant="shadow" box-padding="lg" />
         <Box :style="`background-color: ${organisation.color ? organisation.color : '#B91C1C'}`" class="text-white">
@@ -62,11 +62,15 @@
       <div class="lg:col-span-2 space-y-8">
         <div class="flex items-start justify-between">
           <div>
-            <Heading :level="1">
+            <Heading :level="1" class="mb-4">
               Organisation <span class=" font-normal text-gray-500 text-2xl">#{{ organisation.id }}</span>
             </Heading>
-
-            <OnlineIndicator :published="hasPageOnline" :link="`/organisations/${organisation.slug}`" class="mt-2" />
+            <div class="flex items-center space-x-4">
+              <Badge :color="organisation.state">
+                {{ organisation.state }}
+              </Badge>
+              <OnlineIndicator :published="hasPageOnline" :link="`/organisations/${organisation.slug}`" />
+            </div>
           </div>
           <nuxt-link :to="`/admin/organisations/${organisation.id}/edit`">
             <Button icon="PencilIcon">
