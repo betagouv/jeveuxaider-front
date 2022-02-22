@@ -286,7 +286,7 @@ const labels = {
   ],
   mission_template_workflow_states: [
     { key: 'draft', to: ['draft', 'waiting'], roles: ['admin', 'tete_de_reseau'], label: 'Brouillon', description: "Le modèle de mission est en cours d'édition. Elle n'apparait pas dans les propositions." },
-    { key: 'waiting', to: ['waiting', 'draft', 'validated', 'refused'], roles: ['admin', 'tete_de_reseau'], label: 'En attente de validation', description: 'Le modèle de mission est en attente de validation par les modérateurs.' },
+    { key: 'waiting', to: ['waiting', 'draft', 'validated', 'refused'], roles: ['admin', 'tete_de_reseau'], label: 'En attente de validation', description: 'Le modèle de mission est soumis à validation par les modérateurs.' },
     { key: 'validated', to: ['validated', 'refused'], roles: ['admin'], label: 'Validé', description: 'Le modèle de mission est en ligne. Les responsables du réseau peuvent s\'en servir.' },
     { key: 'refused', to: ['refused', 'validated'], roles: ['admin'], label: 'Refusé', description: 'Le modèle de mission ne respecte pas la charte de JeVeuxAider.gouv.fr.' }
   ],

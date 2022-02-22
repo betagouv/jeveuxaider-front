@@ -80,7 +80,7 @@
       </div>
       <div
         class="text-cool-gray-500"
-        v-html="mission.skills.map((skill) => skill.name.fr).join(`<span class='mx-2'>•</span>`)"
+        v-html="mission.skills.map((skill) => skill.name).join(`<span class='mx-2'>•</span>`)"
       />
     </template>
   </Box>

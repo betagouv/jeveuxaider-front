@@ -59,6 +59,8 @@
           <FormControl
             label="Publics aidés"
             html-for="publics_beneficiaires"
+            :error="errors.publics_beneficiaires"
+            required
           >
             <CheckboxGroup
               v-model="form.publics_beneficiaires"
@@ -210,17 +212,15 @@
             </FormHelperText>
           </div>
           <FormControl
-            v-if="isPresentiel"
             label="Département"
             html-for="department"
             required
             :error="errors.department"
           >
             <SelectAdvanced
-              v-if="isPresentiel"
               v-model="form.department"
               name="department"
-              placeholder="Département"
+              placeholder="Sélectionnez un département"
               :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
             />
           </FormControl>
@@ -253,6 +253,7 @@
               <Input
                 v-model="form.address"
                 name="address"
+                placeholder="..."
                 disabled
               />
             </FormControl>
@@ -265,6 +266,7 @@
               <Input
                 v-model="form.zip"
                 name="zip"
+                placeholder="..."
                 disabled
               />
             </FormControl>
@@ -277,6 +279,7 @@
               <Input
                 v-model="form.city"
                 name="city"
+                placeholder="..."
                 disabled
               />
             </FormControl>
@@ -294,16 +297,18 @@
               :items="form.skills"
               @add-item="handleSelectedSkill"
             />
-            <div v-if="form.skills.length" class="mt-6">
-              <div class="flex flex-wrap gap-2">
-                <TagFormItem
-                  v-for="item in form.skills"
-                  :key="item.id"
-                  :tag="item"
-                  @removed="onRemovedSkill"
-                >
-                  {{ item.name }}
-                </TagFormItem>
+            <div>
+              <div v-if="form.skills.length" class="mt-6">
+                <div class="flex flex-wrap gap-2">
+                  <TagFormItem
+                    v-for="item in form.skills"
+                    :key="item.id"
+                    :tag="item"
+                    @removed="onRemovedSkill"
+                  >
+                    {{ item.name }}
+                  </TagFormItem>
+                </div>
               </div>
             </div>
           </FormControl>
@@ -358,7 +363,7 @@
 </template>
 
 <script>
-import { string, object, number, date } from 'yup'
+import { string, object, number, date, array } from 'yup'
 import inputGeo from '@/mixins/input-geo'
 import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
@@ -397,6 +402,7 @@ export default {
         domaine_id: number().nullable().required('Le domaine principal est requis'),
         objectif: string().required("L'objectif est requis"),
         description: string().required('La description est requise'),
+        publics_beneficiaires: array().transform(v => (!v ? [] : v)).min(1, 'Au moins 1 public bénéficiaire'),
         start_date: date().nullable().required('La date de début est requise').transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
         end_date: date().nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)).when(
           'start_date',
@@ -404,9 +410,21 @@ export default {
         commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
         participations_max: number().min(1, 'Le nombre de bénévole recherché doit être supérieur à 1').required('Le nombre de bénévole recherché est requis'),
         department: string().nullable().required('Le département est requis'),
-        address: string().nullable().required("L'adresse est requise"),
-        zip: string().nullable().required('Le code postal est requis'),
-        city: string().nullable().required('La ville est requise'),
+        address: string().when('type', {
+          is: 'Mission en présentiel',
+          then: schema => schema.required("L'adresse est requise"),
+          otherwise: schema => schema.nullable()
+        }),
+        zip: string().when('type', {
+          is: 'Mission en présentiel',
+          then: schema => schema.required('Le code postal est requis'),
+          otherwise: schema => schema.nullable()
+        }),
+        city: string().when('type', {
+          is: 'Mission en présentiel',
+          then: schema => schema.required('La ville est requise'),
+          otherwise: schema => schema.nullable()
+        }),
         responsable_id: number().nullable().required('Le contact de la mission doit être renseigné')
       })
     }
