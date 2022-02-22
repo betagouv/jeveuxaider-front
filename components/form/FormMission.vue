@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
     <div class="lg:col-span-3 space-y-12">
-      <Box class="h-full">
+      <Box>
         <Heading :level="3" class="mb-8">
           Description de la mission
         </Heading>
