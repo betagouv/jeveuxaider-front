@@ -29,7 +29,7 @@
             :srcset="organisation.logo.large"
             :alt="organisation.name"
             class="my-8 h-auto"
-            style="max-width: 16rem; max-height: 10rem"
+            style="max-width: 16rem; max-height: 120px"
           >
           <Heading as="h1" :level="1">
             {{ organisation.name }}
@@ -150,7 +150,11 @@
         <History v-if="$route.hash == '#historique'" :model-id="organisation.id" model-type="structure" />
         <template v-if="$route.hash == '#membres'">
           <div class="space-y-2">
-            <BoxInvitations v-if="queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" />
+            <BoxInvitations
+              v-if="queryInvitations && queryInvitations.data.length > 0"
+              :invitations="queryInvitations.data"
+              @updated="$fetch()"
+            />
 
             <Box v-for="responsable in organisation.members" :key="responsable.id" variant="flat" padding="xs">
               <DescriptionList v-if="responsable">

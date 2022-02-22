@@ -26,9 +26,25 @@
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
+          <FormControl label="Logo" html-for="logo">
+            <ImageCrop
+              :default-value="form.logo"
+              :ratio="null"
+              :min-height="112"
+              :preview-width="235"
+              :preview-height="56"
+              preview-fit="contain"
+              preview-classes="p-2"
+              @add="addFiles({ files: [$event], collection: 'structure__logo' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
+            />
+          </FormControl>
+
           <div class="bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: logo upload et autres images ?
+            @TODO: Media picker illustration 1 & 2
           </div>
+
           <Button
             type="submit"
             size="xl"
@@ -46,8 +62,10 @@
 </template>
 
 <script>
+import FormUploads from '@/mixins/form/uploads'
 
 export default {
+  mixins: [FormUploads],
   layout: 'register-steps',
   async asyncData ({ $axios, store, error }) {
     if (
@@ -92,8 +110,13 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
-      // TODO
+    async onSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+
+      await this.uploadFiles('structure', this.form.id)
 
       window.plausible &&
         window.plausible(
@@ -109,6 +132,8 @@ export default {
           '/inscription/responsable/step/organisation-confirmation'
         )
       }
+
+      this.loading = false
     }
   }
 

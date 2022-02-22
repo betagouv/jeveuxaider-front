@@ -48,6 +48,13 @@ export default {
           { name: 'Emails', href: '/admin/settings/emails' },
           { name: 'Messages', href: '/admin/settings/messages' }
         ]
+      },
+      {
+        name: 'other',
+        label: 'Autre',
+        links: [
+          { name: 'Invitations', href: '/admin/other/invitations' }
+        ]
       }
       // {
       //   name: 'scripts',

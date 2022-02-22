@@ -141,8 +141,8 @@ export default {
       queryInvitations: null
     }
   },
-  fetch () {
-    const { data: queryInvitations } = this.$axios.get('/invitations', {
+  async fetch () {
+    const { data: queryInvitations } = await this.$axios.get('/invitations', {
       params: {
         'filter[of_territoire]': this.territoire.id
       }

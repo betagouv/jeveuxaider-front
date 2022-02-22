@@ -46,23 +46,27 @@
       </div>
 
       <div
-        v-for="(
-          public_beneficiaire, key
-        ) in organisation.publics_beneficiaires"
         v-else
-        :key="key"
-        class="flex items-center mb-3"
+        class="space-y-3"
       >
         <div
-          class="public-wrapper w-6 h-6 mr-3 flex items-center justify-center"
-          v-html="iconPublicType(public_beneficiaire)"
-        />
+          v-for="(
+            public_beneficiaire, key
+          ) in organisation.publics_beneficiaires"
+          :key="key"
+          class="flex items-center"
+        >
+          <div
+            class="public-wrapper w-6 h-6 mr-3 flex items-center justify-center"
+            v-html="iconPublicType(public_beneficiaire)"
+          />
 
-        <div>
-          {{
-            public_beneficiaire
-              | label('mission_publics_beneficiaires')
-          }}
+          <div>
+            {{
+              public_beneficiaire
+                | label('mission_publics_beneficiaires')
+            }}
+          </div>
         </div>
       </div>
     </template>

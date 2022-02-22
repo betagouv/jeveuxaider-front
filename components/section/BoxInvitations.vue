@@ -1,5 +1,13 @@
 <template>
   <Box variant="flat" padding="xs">
+    <AlertDialog
+      theme="danger"
+      title="Supprimer l'invitation"
+      :text="`L'invitation pour ${invitationSelected.email}  sera supprimée.`"
+      :is-open="showAlertDeleted"
+      @confirm="handleConfirmDelete"
+      @cancel="showAlertDeleted = false"
+    />
     <Disclosure>
       <template #button="{ isOpen }">
         <div class="flex items-center group">
@@ -56,6 +64,12 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      invitationSelected: {},
+      showAlertDeleted: false
+    }
+  },
   methods: {
     handleCopy (invitation) {
       navigator.clipboard.writeText(`${this.$config.appUrl}/invitations/${invitation.token}`)
@@ -77,12 +91,17 @@ export default {
       })
     },
     handleDelete (invitation) {
-      // todo alert
-      this.$axios.delete(`/invitations/${invitation.token}/delete`).then(() => {
-        this.$toast.success("L'invitation a été supprimée : " + invitation.email)
+      this.invitationSelected = invitation
+      this.showAlertDeleted = true
+    },
+    handleConfirmDelete () {
+      this.$axios.delete(`/invitations/${this.invitationSelected.token}/delete`).then(() => {
+        this.$toast.success("L'invitation a été supprimée : " + this.invitationSelected.email)
         this.$emit('updated')
+        this.showAlertDeleted = false
       }).catch((err) => {
         console.log('Something went wrong', err)
+        this.showAlertDeleted = false
       })
     }
   }

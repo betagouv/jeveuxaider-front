@@ -442,6 +442,9 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          if (this.loading) {
+            return
+          }
           this.loading = true
           if (this.isAdding) {
             const { data: mission } = await this.$axios.post(`/structures/${this.structureId}/missions`, this.form)

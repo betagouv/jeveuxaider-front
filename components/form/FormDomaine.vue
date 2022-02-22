@@ -218,6 +218,9 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          if (this.loading) {
+            return
+          }
           this.loading = true
           if (this.form.id) {
             await this.$axios.put(`/domaines/${this.form.id}`, this.form)
