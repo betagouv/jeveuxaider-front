@@ -112,10 +112,16 @@
           </FormControl>
 
           <FormControl
+            v-if="!Boolean(mission.template)"
             label="Visuel d'illustration"
             html-for="publics_volontaires"
           >
-            <MediaPicker />
+            <MediaPickerDomaine
+              class="grid sm:grid-cols-2 gap-8"
+              :domaine-id="form.domaine_id"
+              :defaults="form.illustrations"
+              @change="onMediaPickerChange($event, 'illustrations')"
+            />
           </FormControl>
         </div>
       </Box>
@@ -464,6 +470,9 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    onMediaPickerChange (payload, field) {
+      this.form[field].splice(payload.index, 1, payload.media)
     }
   }
 }
