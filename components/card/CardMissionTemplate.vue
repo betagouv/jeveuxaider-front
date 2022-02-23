@@ -31,10 +31,7 @@
 </template>
 
 <script>
-// import MissionMixin from '@/mixins/MissionMixin'
-
 export default {
-//   mixins: [MissionMixin],
   props: {
     title: {
       type: String,
@@ -46,7 +43,7 @@ export default {
     },
     imageUrl: {
       type: String,
-      default: '/images/missions/card-thumbnail-default@2x.jpg'
+      default: '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     },
     actionTitle: {
       type: String,

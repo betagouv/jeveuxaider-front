@@ -43,7 +43,7 @@ export default {
     },
     imageUrl: {
       type: String,
-      default: '/images/missions/card-thumbnail-default@2x.jpg'
+      default: '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     },
     stateText: {
       type: String,

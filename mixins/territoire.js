@@ -7,11 +7,5 @@ export default {
     canManageTerritoire () {
       return this.$store.getters.contextRole === 'admin' || this.territoire.state === 'validated'
     }
-  },
-  methods: {
-    // defaultThumbnail (e) {
-    //   e.target.src = '/images/missions/card-thumbnail-default.jpg'
-    //   e.target.srcset = '/images/missions/card-thumbnail-default@2x.jpg 2x'
-    // }
   }
 }

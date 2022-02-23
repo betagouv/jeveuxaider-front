@@ -10,7 +10,6 @@
         class="w-full h-full object-cover"
         width="300"
         height="143"
-        @error="defaultThumbnail($event)"
       >
 
       <div class="custom-gradient absolute inset-0" />

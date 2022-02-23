@@ -262,16 +262,14 @@ export default {
   },
   computed: {
     image1 () {
-      return (
-        this.reseau?.override_image_1?.xxl ??
-        `/images/organisations/domaines/${this.reseau.image_1}.jpg, /images/organisations/domaines/${this.reseau.image_1}@2x.jpg 2x`
-      )
+      return this.reseau.override_image1?.urls.large ??
+        this.reseau.illustrations?.[0]?.urls.large ??
+        '/images/organisations/domaines/1_1.jpg, /images/organisations/domaines/1_1@2x.jpg 2x'
     },
     image2 () {
-      return (
-        this.reseau?.override_image_2?.xxl ??
-        `/images/organisations/domaines/${this.reseau.image_2}.jpg, /images/organisations/domaines/${this.reseau.image_2}@2x.jpg 2x`
-      )
+      return this.reseau?.override_image2?.urls.large ??
+        this.reseau?.illustrations?.[1]?.urls.large ??
+        '/images/organisations/domaines/2_1.jpg, /images/organisations/domaines/2_1@2x.jpg 2x'
     },
     color () {
       return this.reseau.color ?? '#B91C1C'

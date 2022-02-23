@@ -13,7 +13,9 @@ export default {
       )
     },
     thumbnail () {
-      return this.mission.template?.photo?.urls.card ?? (this.mission.illustrations && this.mission.illustrations[0]?.urls.card)
+      return this.mission.template?.photo?.urls.card ??
+        this.mission.illustrations?.[0]?.urls.card ??
+        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     },
     hasPageOnline () {
       return this.mission.structure.state === 'Validée' && ['Validée', 'Terminée'].includes(this.mission.state)
@@ -23,21 +25,15 @@ export default {
       return !!rolesWhoCanEdit.includes(this.$store.getters.contextRole)
     },
     missionCity () {
-      if (this.mission.city?.includes('Paris')) {
+      if (this.mission.city?.startsWith('Paris ')) {
         return 'Paris'
-      } else if (this.mission.city?.includes('Lyon')) {
+      } else if (this.mission.city?.startsWith('Lyon ')) {
         return 'Lyon'
-      } else if (this.mission.city?.includes('Marseille')) {
+      } else if (this.mission.city?.startsWith('Marseille ')) {
         return 'Marseille'
       } else {
-        return this.mission?.city
+        return this.mission.city?.replace(' Arrondissement', '')
       }
-    }
-  },
-  methods: {
-    defaultThumbnail (e) {
-      e.target.src = '/images/missions/card-thumbnail-default.jpg'
-      e.target.srcset = '/images/missions/card-thumbnail-default@2x.jpg 2x'
     }
   }
 }

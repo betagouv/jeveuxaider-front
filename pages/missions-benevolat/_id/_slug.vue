@@ -80,12 +80,12 @@
         <Box class="overflow-hidden mt-6 lg:w-96 lg:mt-0 z-20 flex-shrink-0 sticky top-6" :padding="false">
           <img
             :srcset="illustration"
+            sizes="(min-width: 1024px) 384px, 100vw"
             alt=""
             class="w-full object-cover object-top min-h-[183px]"
             width="630"
             height="300"
             data-not-lazy
-            @error="defaultThumbnail($event)"
           >
 
           <component
@@ -344,7 +344,7 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: this.illustration.x2 ?? this.illustration.default
+          content: this.illustration
         }
       ]
     }
@@ -416,14 +416,9 @@ export default {
       return portraits
     },
     illustration () {
-      if (this.mission.structure.statut_juridique === 'Association') {
-        if (this.mission.structure?.override_image_1?.original) {
-          return this.mission.structure?.override_image_1?.large ?? this.mission.structure?.override_image_1?.original
-        } else if (this.mission.structure.image_1) {
-          return `/images/organisations/domaines/${this.mission.structure.image_1}.jpg, /images/organisations/domaines/${this.mission.structure.image_1}@2x.jpg 2x`
-        }
-      }
-      return '/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x'
+      return this.mission.structure.override_image_1?.sidebar ??
+        this.mission.structure.illustrations[0]?.urls.sidebar ??
+        '/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x'
     }
   }
 }
