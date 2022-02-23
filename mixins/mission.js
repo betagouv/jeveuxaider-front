@@ -34,6 +34,13 @@ export default {
       } else {
         return this.mission.city?.replace(' Arrondissement', '')
       }
+    },
+    canRegister () {
+      if (!this.mission.has_places_left || !this.hasPageOnline) {
+        return false
+      }
+
+      return true
     }
   }
 }

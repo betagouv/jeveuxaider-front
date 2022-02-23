@@ -24,6 +24,7 @@
 <script>
 export default {
   computed: {
+
     isImpersonate () {
       return this.$cookies.get('access-token-impersonate')
     }

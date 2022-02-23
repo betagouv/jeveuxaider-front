@@ -1,6 +1,7 @@
 <template>
   <div class="h-full">
     <HeaderBanner />
+    <portal-target name="header-top" multiple />
     <Header />
     <Nuxt />
     <Footer />

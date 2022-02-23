@@ -1,11 +1,19 @@
 
 export const state = () => ({
-  showSearchOverlay: false
+  showSearchOverlay: false,
+  showSoftGateOverlay: false,
+  softGateMissionSelected: null
 })
 
 export const mutations = {
   toggleSearchOverlay: (state) => {
     state.showSearchOverlay = !state.showSearchOverlay
+  },
+  toggleSoftGateOverlay: (state) => {
+    state.showSoftGateOverlay = !state.showSoftGateOverlay
+  },
+  setSoftGateMissionSelected: (state, mission) => {
+    state.softGateMissionSelected = mission
   }
 }
 
