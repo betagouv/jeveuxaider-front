@@ -14,18 +14,8 @@
             Votre mission doit respecter<br>
             <a class="underline text-gray-700" href="/charte-reserve-civique" target="_blank">la charte</a> de Jeveuxaider.gouv.fr
           </div>
-          <div v-if="step == 2" class="hidden lg:block space-x-2">
-            <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-              <Button v-if="template_id" size="xl" variant="green" @click.native="$refs.formMission.handleSubmit({state: 'Validée'})">
-                Enregistrer et publier
-              </Button>
-              <Button v-else size="xl" variant="green" @click.native="$refs.formMission.handleSubmit({state: 'En attente de validation'})">
-                Soumettre à validation
-              </Button>
-              <Link class="text-sm font-medium" @click.native="$refs.formMission.handleSubmit({state: 'Brouillon'})">
-                Enregistrer en brouillon
-              </Link>
-            </div>
+          <div v-if="step == 2">
+            <ButtonsSubmitFormMission class="hidden lg:flex" :structure="structure" :template-id="template_id" @submitted="$refs.formMission.handleSubmit($event)" />
           </div>
         </template>
       </Sectionheading>
@@ -87,6 +77,8 @@
         :structure="structure"
         class="mt-8"
       />
+
+      <ButtonsSubmitFormMission class="flex lg:hidden" :structure="structure" :template-id="template_id" @submitted="$refs.formMission.handleSubmit($event)" />
     </div>
   </div>
 </template>
@@ -94,11 +86,13 @@
 <script>
 import CardMissionTemplate from '@/components/card/CardMissionTemplate.vue'
 import FormMission from '@/components/form/FormMission.vue'
+import ButtonsSubmitFormMission from '@/components/custom/ButtonsSubmitFormMission.vue'
 
 export default {
   components: {
     CardMissionTemplate,
-    FormMission
+    FormMission,
+    ButtonsSubmitFormMission
   },
   layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {

@@ -39,7 +39,14 @@
       </div>
     </template>
     <div>
-      <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} organisations`" />
+      <SectionHeading
+        :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+          queryResult.total,
+          'organisation',
+          'organisations',
+          false
+        )}`"
+      />
       <Input
         class="mt-8"
         name="search"
