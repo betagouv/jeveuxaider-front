@@ -17,7 +17,14 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-8">
-          <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} missions prioritaires`">
+          <SectionHeading
+            :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+              queryResult.total,
+              'mission prioritaire',
+              'missions prioritaires',
+              false
+            )}`"
+          >
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
                 <nuxt-link :to="`/admin/missions`">

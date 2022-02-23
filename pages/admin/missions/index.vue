@@ -90,7 +90,14 @@
       </div>
     </template>
     <div>
-      <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} missions`">
+      <SectionHeading
+        :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+          queryResult.total,
+          'mission',
+          'missions',
+          false
+        )}`"
+      >
         <template #action>
           <nuxt-link
             v-if="$store.getters.contextRole === 'responsable'"

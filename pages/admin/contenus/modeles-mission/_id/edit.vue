@@ -10,12 +10,13 @@
     />
     <div class="py-6">
       <SectionHeading :title="missionTemplate.title">
+        <template #tags>
+          <Badge :color="missionTemplate.state" class="mt-4">
+            {{ missionTemplate.state| label('mission_template_workflow_states') }}
+          </Badge>
+        </template>
         <template #action>
-          <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-            <Button size="xl" variant="green" @click.native="$refs.form.handleSubmit()">
-              Enregistrer
-            </Button>
-          </div>
+          <ButtonsSubmitFormMissionTemplate class="hidden lg:flex" :mission-template="missionTemplate" @submitted="$refs.form.handleSubmit($event)" />
         </template>
       </Sectionheading>
 
@@ -24,15 +25,18 @@
         :mission-template="missionTemplate"
         class="my-8"
       />
+
+      <ButtonsSubmitFormMissionTemplate class="flex lg:hidden" :mission-template="missionTemplate" @submitted="$refs.form.handleSubmit($event)" />
     </div>
   </div>
 </template>
 
 <script>
 import FormMissionTemplate from '~/components/form/FormMissionTemplate.vue'
+import ButtonsSubmitFormMissionTemplate from '@/components/custom/ButtonsSubmitFormMissionTemplate.vue'
 
 export default {
-  components: { FormMissionTemplate },
+  components: { FormMissionTemplate, ButtonsSubmitFormMissionTemplate },
   layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {

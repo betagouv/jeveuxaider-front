@@ -7,12 +7,12 @@
       {'px-4 py-2 text-sm': size == 'sm'},
 
       // GRAY
-      {'text-white bg-gray-600': ['gray', 'Brouillon','Désinscrite'].includes(color) && !plain},
-      { 'border text-gray-600 border-gray-600': ['gray', 'Brouillon','Désinscrite'].includes(color) && plain},
+      {'text-white bg-gray-600': ['gray'].includes(color) && !plain},
+      { 'border text-gray-600 border-gray-600': ['gray'].includes(color) && plain},
 
       // GRAY LIGHT
-      {'bg-gray-200 text-gray-900': ['gray-light'].includes(color) && !plain},
-      { 'border text-gray-600 border-gray-600': ['gray-light'].includes(color) && plain},
+      {'bg-gray-200 text-gray-900': ['gray-light','draft','Brouillon','Désinscrite'].includes(color) && !plain},
+      { 'border text-gray-600 border-gray-600': ['gray-light', 'draft','Brouillon','Désinscrite'].includes(color) && plain},
 
       // BLUE
       {'text-white bg-jva-blue-500': ['blue', 'Terminée'].includes(color) && !plain},

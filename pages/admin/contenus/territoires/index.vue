@@ -17,7 +17,14 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-8">
-          <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} territoires`">
+          <SectionHeading
+            :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+              queryResult.total,
+              'territoire',
+              'territoires',
+              false
+            )}`"
+          >
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
                 <nuxt-link :to="`/admin/contenus/territoires/add`">

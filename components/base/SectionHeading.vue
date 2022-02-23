@@ -7,6 +7,7 @@
       <Heading as="h1" :level="1">
         {{ title }}
       </Heading>
+      <slot name="tags" />
       <div v-if="secondaryTitleBottom" class="text-gray-600 mt-2">
         {{ secondaryTitleBottom }}
       </div>

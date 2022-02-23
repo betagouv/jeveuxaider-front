@@ -76,7 +76,14 @@
       </div>
     </template>
     <div>
-      <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} participations`">
+      <SectionHeading
+        :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+          queryResult.total,
+          'participation',
+          'participations',
+          false
+        )}`"
+      >
         <template #action>
           <nuxt-link
             :to="`/admin/utilisateurs/add`"

@@ -354,17 +354,6 @@
         </div>
       </div>
     </Box>
-    <div class="flex lg:hidden flex-col gap-2 flex-shrink-0 items-center justify-center">
-      <Button v-if="$store.getters.contextRole === 'admin' || mission.state !== 'Brouillon'" size="xl" variant="green" @click.native="$refs.formMission.handleSubmit()">
-        Enregistrer
-      </Button>
-      <Button v-else size="xl" variant="green" @click.native="$refs.formMission.handleSubmit({state: 'En attente de validation'})">
-        Soumettre à validation
-      </Button>
-      <Link v-if="['Brouillon','En attente de validation'].includes(mission.state)" class="text-sm font-medium" @click.native="$refs.formMission.handleSubmit({state: 'Brouillon'})">
-        Enregistrer en brouillon
-      </Link>
-    </div>
   </div>
 </template>
 
@@ -409,7 +398,7 @@ export default {
         domaine_id: number().nullable().required('Le domaine principal est requis'),
         objectif: string().required("L'objectif est requis"),
         description: string().required('La description est requise'),
-        publics_beneficiaires: array().transform(v => (!v ? [] : v)).min(1, 'Au moins 1 public bénéficiaire'),
+        publics_beneficiaires: array().transform(v => (!v ? [] : v)).min(1, 'Sélectionnez au moins 1 public bénéficiaire').required('Sélectionnez au moins 1 public bénéficiaire'),
         start_date: date().nullable().required('La date de début est requise').transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
         end_date: date().nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)).when(
           'start_date',

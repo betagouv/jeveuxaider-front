@@ -11,14 +11,7 @@
     <div class="py-6">
       <SectionHeading title="Création d'un nouveau modèle de mission">
         <template #action>
-          <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-            <Button size="xl" variant="green" @click.native="$refs.form.handleSubmit()">
-              Enregistrer
-            </Button>
-            <Link class="text-sm font-medium" @click.native="$refs.form.handleSubmit({state: 'draft'})">
-              Enregistrer en brouillon
-            </Link>
-          </div>
+          <ButtonsSubmitFormMissionTemplate class="hidden lg:flex" @submitted="$refs.form.handleSubmit($event)" />
         </template>
       </Sectionheading>
 
@@ -27,15 +20,17 @@
         class="my-8"
         :mission-template="{reseau_id: $store.getters.contextRole === 'tete_de_reseau' ? $store.getters.profile.tete_de_reseau_id: null}"
       />
+      <ButtonsSubmitFormMissionTemplate class="flex lg:hidden" @submitted="$refs.form.handleSubmit($event)" />
     </div>
   </div>
 </template>
 
 <script>
 import FormMissionTemplate from '~/components/form/FormMissionTemplate.vue'
+import ButtonsSubmitFormMissionTemplate from '@/components/custom/ButtonsSubmitFormMissionTemplate.vue'
 
 export default {
-  components: { FormMissionTemplate },
+  components: { FormMissionTemplate, ButtonsSubmitFormMissionTemplate },
   layout: 'admin',
   asyncData ({ $axios, params, error, store }) {
     if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {

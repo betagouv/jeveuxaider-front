@@ -10,18 +10,13 @@
     />
     <div class="py-6">
       <SectionHeading :title="mission.name">
+        <template #tags>
+          <Badge :color="mission.state" class="mt-4">
+            {{ mission.state }}
+          </Badge>
+        </template>
         <template #action>
-          <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-            <Button v-if="!mission.template_id || mission.structure.state === 'En attente de validation'" size="xl" variant="green" @click.native="$refs.formMission.handleSubmit({state: 'En attente de validation'})">
-              Soumettre à validation
-            </Button>
-            <Button v-else size="xl" variant="green" @click.native="$refs.formMission.handleSubmit({state: 'Validée'})">
-              Enregistrer et publier
-            </Button>
-            <Link v-if="['Brouillon','En attente de validation'].includes(mission.state)" class="text-sm font-medium" @click.native="$refs.formMission.handleSubmit({state: 'Brouillon'})">
-              Enregistrer en brouillon
-            </Link>
-          </div>
+          <ButtonsSubmitFormMission class="hidden lg:flex" :mission="mission" :structure="mission.structure" :template-id="mission.template_id" @submitted="$refs.formMission.handleSubmit($event)" />
         </template>
       </Sectionheading>
 
@@ -31,16 +26,20 @@
         :structure="mission.structure"
         class="my-8"
       />
+
+      <ButtonsSubmitFormMission class="flex lg:hidden" :mission="mission" :structure="mission.structure" :template-id="mission.template_id" @submitted="$refs.formMission.handleSubmit($event)" />
     </div>
   </div>
 </template>
 
 <script>
 import FormMission from '@/components/form/FormMission.vue'
+import ButtonsSubmitFormMission from '@/components/custom/ButtonsSubmitFormMission.vue'
 
 export default {
   components: {
-    FormMission
+    FormMission,
+    ButtonsSubmitFormMission
   },
   layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
