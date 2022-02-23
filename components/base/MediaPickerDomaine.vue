@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="(i, index) in limit" :key="index" class="relative inline-flex flex-col group" :class="[`test_${index}`]">
+    <div v-for="(i, index) in limit" :key="index" class="relative inline-flex flex-col mb-auto group">
       <img
         v-if="values[index]"
         :srcset="values[index].urls.formPreview"
@@ -9,9 +9,13 @@
       >
       <div
         v-else
-        class="w-full h-full rounded-lg cursor-pointer border-dashed border-2 transition hover:border-jva-blue-500"
+        class="w-full h-full min-h-[120px] rounded-lg cursor-pointer border-dashed border-2 transition hover:border-jva-blue-500 flex items-center justify-center"
         @click.prevent="openModal = index"
-      />
+      >
+        <div class="text-xs text-jva-blue-500">
+          Selectionnez un visuel
+        </div>
+      </div>
 
       <div
         class="z-1 absolute flex justify-center items-center w-8 h-8 text-[#070191] bg-white rounded-full opacity-75 group-hover:opacity-100 pointer-events-none transition"
@@ -47,9 +51,13 @@
 <script>
 export default {
   props: {
-    domaineId: {
-      type: Number,
+    collection: {
+      type: String,
       required: true
+    },
+    domaineIds: {
+      type: Array,
+      default: () => []
     },
     defaults: {
       type: Array,
@@ -68,31 +76,20 @@ export default {
     }
   },
   watch: {
-    domaineId: {
+    domaineIds: {
       immediate: true,
-      async handler (domainId, oldDomainId) {
-        await this.fetchMediasDomaine(domainId)
-        if (oldDomainId) {
-          // Le domaine principale a changé
-          [...Array(this.limit)].forEach((_, index) => {
-            this.$emit('change', { media: this.mediasFromDomaine[index] ?? this.mediasFromDomaine[0], index })
-          })
-        } else if (!this.defaults.length) {
-          // Form add
-          [...Array(this.limit)].forEach((_, index) => {
-            this.$emit('change', { media: this.mediasFromDomaine[index] ?? this.mediasFromDomaine[0], index })
-          })
-        }
+      async handler () {
+        await this.fetchMediasDomaine()
       }
     }
   },
   methods: {
-    async fetchMediasDomaine (domainId) {
+    async fetchMediasDomaine () {
       const { data: medias } = await this.$axios.get('/medias', {
         params: {
-          'filter[collection_name]': 'domaine__illustrations_mission',
-          'filter[model_id]': domainId,
-          pagination: 99
+          'filter[collection_name]': this.collection,
+          'filter[model_id]': this.domaineIds.join(','),
+          itemsPerPage: 99
         }
       })
 

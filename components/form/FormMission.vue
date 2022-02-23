@@ -114,13 +114,14 @@
           </FormControl>
 
           <FormControl
-            v-if="!Boolean(mission.template) && form.domaine_id"
+            v-if="!Boolean(mission.template)"
             label="Visuel d'illustration"
-            html-for="publics_volontaires"
+            html-for="illustrations"
           >
             <MediaPickerDomaine
               class="grid sm:grid-cols-2 gap-8"
-              :domaine-id="form.domaine_id"
+              collection="domaine__illustrations_mission"
+              :domaine-ids="[form.domaine_id]"
               :defaults="form.illustrations"
               @change="onMediaPickerChange($event, 'illustrations')"
             />

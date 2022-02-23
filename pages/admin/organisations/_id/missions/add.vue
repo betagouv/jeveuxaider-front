@@ -120,6 +120,7 @@ export default {
     this.template_id = parseInt(this.$route.query.template) || null
 
     if (this.domaine_id) {
+      this.$set(this.mission, 'domaine_id', this.domaine_id)
       const templates = await this.$axios.get('/mission-templates', {
         params: {
           'filter[domaine.id]': this.domaine_id,

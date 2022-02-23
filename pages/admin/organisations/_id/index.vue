@@ -26,7 +26,7 @@
         <Box class="relative z-10">
           <img
             v-if="organisation.logo"
-            :srcset="organisation.logo.large"
+            :srcset="organisation.logo.urls.large"
             :alt="organisation.name"
             class="my-8 h-auto"
             style="max-width: 16rem; max-height: 120px"

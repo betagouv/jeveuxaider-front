@@ -10,7 +10,7 @@
         class="grid divide-x divide-gray-200 text-center border-t"
         :class="[
           { 'grid-cols-3': antennesWithMissions.length && reseau.donation },
-          { 'grid-cols-2': antennesWithMissions.length || reseau.donation },
+          { 'grid-cols-2': (antennesWithMissions.length && !reseau.donation) || (!antennesWithMissions.length && reseau.donation) },
         ]"
       >
         <button
@@ -264,12 +264,12 @@ export default {
     image1 () {
       return this.reseau.override_image1?.urls.large ??
         this.reseau.illustrations?.[0]?.urls.large ??
-        '/images/organisations/domaines/1_1.jpg, /images/organisations/domaines/1_1@2x.jpg 2x'
+        '/images/organisation-default-1.webp'
     },
     image2 () {
       return this.reseau?.override_image2?.urls.large ??
         this.reseau?.illustrations?.[1]?.urls.large ??
-        '/images/organisations/domaines/2_1.jpg, /images/organisations/domaines/2_1@2x.jpg 2x'
+        '/images/organisation-default-2.webp'
     },
     color () {
       return this.reseau.color ?? '#B91C1C'

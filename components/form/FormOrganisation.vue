@@ -339,9 +339,19 @@
             />
           </FormControl>
 
-          <div class="bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: Media picker illustration 1 & 2
-          </div>
+          <FormControl
+            label="Visuels d'illustration"
+            html-for="illustrations"
+          >
+            <MediaPickerDomaine
+              class="grid sm:grid-cols-2 gap-4"
+              collection="domaine__illustrations_organisation"
+              :domaine-ids="form.domaines.map(domaine => domaine.id)"
+              :defaults="form.illustrations"
+              :limit="2"
+              @change="onMediaPickerChange($event, 'illustrations')"
+            />
+          </FormControl>
         </div>
       </Box>
       <Box padding="sm">
@@ -416,7 +426,7 @@ export default {
           }
           this.loading = true
           const { data: structure } = await this.$axios.put(`/structures/${this.structure.id}`, this.form)
-          await this.uploadFiles('reseau', structure.id)
+          await this.uploadFiles('structure', structure.id)
           this.$router.push(`/admin/organisations/${structure.id}`)
         })
         .catch((errors) => {
@@ -442,6 +452,9 @@ export default {
       await this.$axios.post(`/structures/${this.structure.id}/unregister`)
       await this.$store.dispatch('auth/fetchUser')
       this.$router.push('/')
+    },
+    onMediaPickerChange (payload, field) {
+      this.form[field].splice(payload.index, 1, payload.media)
     }
   }
 }

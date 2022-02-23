@@ -254,9 +254,19 @@
               />
             </FormControl>
 
-            <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-              @TODO: Media picker Illustration 1 & 2
-            </div>
+            <FormControl
+              label="Visuels d'illustration"
+              html-for="illustrations"
+            >
+              <MediaPickerDomaine
+                class="grid sm:grid-cols-2 gap-4"
+                collection="domaine__illustrations_organisation"
+                :domaine-ids="form.domaines.map(domaine => domaine.id)"
+                :defaults="form.illustrations"
+                :limit="2"
+                @change="onMediaPickerChange($event, 'illustrations')"
+              />
+            </FormControl>
           </div>
         </Box>
       </div>
@@ -342,8 +352,10 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    onMediaPickerChange (payload, field) {
+      this.form[field].splice(payload.index, 1, payload.media)
     }
-
   }
 }
 </script>
