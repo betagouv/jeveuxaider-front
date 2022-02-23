@@ -93,3 +93,18 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+  .custom-gradient-2 {
+    background: linear-gradient(to right, #070191 5px, #eeedf7 5px);
+  }
+  .citation {
+    display: flex;
+    &::before {
+      content: '“\00A0';
+    }
+    &::after {
+      content: '\00A0”';
+    }
+  }
+</style>

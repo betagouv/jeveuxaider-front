@@ -1,5 +1,21 @@
 <template>
   <div>
+    <client-only>
+      <portal v-if="!hasPageOnline" to="header-top">
+        <transition name="fade">
+          <Banner icon="ExclamationIcon">
+            La mission n'est pas visible car elle est au statut «{{ mission.state }}» et l'organisation est «{{ mission.structure.state }}»
+            <template #action>
+              <nuxt-link :to="`/admin/missions?filter[id]=${mission.id}`">
+                <Button variant="white">
+                  Gérer
+                </Button>
+              </nuxt-link>
+            </template>
+          </Banner>
+        </transition>
+      </portal>
+    </client-only>
     <div class="absolute w-full" style="height: 360px">
       <img
         src="/images/missions/bg_header_mission.jpg"
@@ -184,27 +200,40 @@
               </div>
             </div>
 
-            <div class="mx-8 sm:mx-12">
-              <div v-if="mission.commitment__duration" class="text-center">
-                <div
-                  class="mt-6 uppercase text-[#777E90] text-xs font-bold"
-                >
-                  Engagement minimum
-                </div>
-                <div class="font-bold">
-                  <span>{{ mission.commitment__duration|label('duration') }}</span>
-                  <template v-if="mission.commitment__time_period">
-                    <span class="font-normal">par</span>
-                    <span>{{ mission.commitment__time_period|label('time_period') }}</span>
-                  </template>
+            <div class="flex flex-col gap-8">
+              <div class="mx-8 sm:mx-12">
+                <div class="text-center">
+                  <div
+                    class="mt-6 uppercase text-[#777E90] text-xs font-bold"
+                  >
+                    Engagement minimum
+                  </div>
+                  <div class="font-bold">
+                    <template v-if="mission.commitment__duration">
+                      <span>{{ mission.commitment__duration|label('duration') }}</span>
+                      <template v-if="mission.commitment__time_period">
+                        <span class="font-normal">par</span>
+                        <span>{{ mission.commitment__time_period|label('time_period') }}</span>
+                      </template>
+                    </template>
+                    <template v-else>
+                      Non spécifié
+                    </template>
+                  </div>
                 </div>
               </div>
 
-            <!-- <ButtonJeProposeMonAide
-              class="mt-6"
-              additional-btn-classes="shadow-xl"
-              :mission="mission"
-            /> -->
+              <div class="mx-8 sm:mx-12">
+                <ButtonJeProposeMonAide
+                  v-if="canRegister"
+                  :mission="mission"
+                />
+                <template v-else>
+                  <Button size="xl" rounded full variant="white" plain>
+                    Inscription fermée
+                  </Button>
+                </template>
+              </div>
             </div>
           </div>
         </Box>
@@ -254,62 +283,35 @@ import CardMission from '~/components/card/CardMission'
 import PresentielOrDistance from '@/components/section/mission/PresentielOrDistance.vue'
 import Presentation from '@/components/section/mission/Presentation.vue'
 import Details from '@/components/section/mission/Details.vue'
+import ButtonJeProposeMonAide from '@/components/custom/ButtonJeProposeMonAide.vue'
+import MixinMission from '@/mixins/mission'
 
 export default {
   components: {
     CardMission,
     PresentielOrDistance,
     Presentation,
-    Details
+    Details,
+    ButtonJeProposeMonAide
   },
+  mixins: [MixinMission],
   async asyncData ({ $axios, params, error, store }) {
     const { data: mission } = await $axios.get(`/missions/${params.id}`).catch((err) => {
       return error({ statusCode: err.response.status, message: err.response.statusText })
     })
 
-    // if (['Brouillon', 'En attente de validation'].includes(mission.state)) {
-    //   // Si on est pas modérateur
-    //   // Ou si on n'est pas responsable de la structure
-    //   if (store.getters.isLogged) {
-    //     if (
-    //       store.getters.user.context_role != 'admin' &&
-    //       !store.getters.user.profile.structures.filter(
-    //         structure => structure.id == mission.structure_id
-    //       ).length
-    //     ) {
-    //       return error({ statusCode: 403 })
-    //     }
-    //   } else {
-    //     return error({ statusCode: 403 })
-    //   }
-    // }
-
-    // // Si mission signalée ou organisation désinscrite / signalée / en attente de validation
-    // if (
-    //   ['Signalée'].includes(mission.state) ||
-    //   ['Désinscrite', 'Signalée', 'En attente de validation'].includes(
-    //     mission.structure.state
-    //   )
-    // ) {
-    //   if (store.getters.isLogged) {
-    //     // Si on est pas modérateur
-    //     // Si on ne participe pas à cette mission
-    //     // Ou si on n'est pas responsable de la structure
-    //     if (
-    //       store.getters.user.context_role != 'admin' &&
-    //       !store.getters.user.profile.participations.filter(
-    //         participation => participation.mission_id == mission.id
-    //       ).length &&
-    //       !store.getters.user.profile.structures.filter(
-    //         structure => structure.id == mission.structure_id
-    //       ).length
-    //     ) {
-    //       return error({ statusCode: 403 })
-    //     }
-    //   } else {
-    //     return error({ statusCode: 403 })
-    //   }
-    // }
+    if (!(mission.structure.state === 'Validée' && ['Validée', 'Terminée'].includes(mission.state))) {
+      if (store.getters.isLogged) {
+        if (
+          store.getters.contextRole != 'admin' &&
+            store.getters.contextableId != mission.structure_id
+        ) {
+          return error({ statusCode: 403 })
+        }
+      } else {
+        return error({ statusCode: 403 })
+      }
+    }
 
     return {
       mission
@@ -436,18 +438,6 @@ export default {
       rgba(0, 0, 0, 0.5) 0%,
       rgba(0, 0, 0, 0) 70.1%
     );
-  }
-  .custom-gradient-2 {
-    background: linear-gradient(to right, #070191 5px, #eeedf7 5px);
-  }
-  .citation {
-    display: flex;
-    &::before {
-      content: '“\00A0';
-    }
-    &::after {
-      content: '\00A0”';
-    }
   }
 
   .card--mission--wrapper {

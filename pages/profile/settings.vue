@@ -9,8 +9,12 @@
         @confirm="handleConfirmDeleteUser()"
         @cancel="showAlert = false"
       />
+
       <Breadcrumb
-        :items="[{ label: 'Mes paramètres' }]"
+        :items="[
+          { label: 'Mon profil', link: '/profile' },
+          { label: 'Mes paramètres' },
+        ]"
       />
     </template>
     <template #header>

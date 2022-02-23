@@ -33,7 +33,7 @@
         <DropdownOptionsItem @click.native="handleClick('/profile/missions')">
           Mes missions
         </DropdownOptionsItem>
-        <DropdownOptionsItem @click.native="handleClick('/parameters')">
+        <DropdownOptionsItem @click.native="handleClick('/profile/settings')">
           Mes paramètres
         </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="handleClick('logout')">
@@ -54,7 +54,7 @@ export default {
           break
         case '/profile':
         case '/profile/missions':
-        case '/parameters':
+        case '/profile/settings':
           this.$router.push(action)
           break
       }

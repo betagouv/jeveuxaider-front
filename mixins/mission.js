@@ -32,6 +32,13 @@ export default {
       } else {
         return this.mission?.city
       }
+    },
+    canRegister () {
+      if (!this.mission.has_places_left || !this.hasPageOnline) {
+        return false
+      }
+
+      return true
     }
   },
   methods: {
