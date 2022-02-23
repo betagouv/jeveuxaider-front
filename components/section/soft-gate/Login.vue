@@ -138,9 +138,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-::placeholder {
-  font-weight: 500;
-}
-</style>

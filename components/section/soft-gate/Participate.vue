@@ -58,9 +58,8 @@ export default {
         content: `Bonjour ${this.$store.state.softGateMissionSelected.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
       },
       formSchema: object({
-        content: string().required('Entrez un message').min(10, 'Votre message est trop court')
+        content: string().min(10, 'Votre message est trop court').required('Un message est requis')
       })
-
     }
   },
   methods: {
@@ -98,9 +97,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-textarea {
-  @apply flex flex-col;
-}
-</style>

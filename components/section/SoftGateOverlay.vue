@@ -44,13 +44,13 @@
                 @next="step = 'participate'"
                 @too-many-participations="step = 'too-many-participations'"
               />
-              <!-- <SoftGateRegister
+              <SoftGateRegister
                 v-if="step == 'register'"
                 :datas="datas"
                 @next="step = 'participate'"
                 @too-many-participations="step = 'too-many-participations'"
               />
-
+              <!--
               <SoftGateTooManyParticipations
                 v-if="step == 'too-many-participations'"
                 @next="step = 'participate'"
@@ -72,7 +72,7 @@
 <script>
 import SoftGateEmail from '@/components/section/soft-gate/Email'
 import SoftGateLogin from '@/components/section/soft-gate/Login'
-// import SoftGateRegister from '@/components/section/soft-gate/Register'
+import SoftGateRegister from '@/components/section/soft-gate/Register'
 // import SoftGateTooManyParticipations from '@/components/section/soft-gate/TooManyParticipations'
 import SoftGateParticipate from '@/components/section/soft-gate/Participate'
 // import SoftGateShare from '@/components/section/soft-gate/Share'
@@ -82,7 +82,7 @@ export default {
   components: {
     SoftGateEmail,
     SoftGateLogin,
-    // SoftGateRegister,
+    SoftGateRegister,
     // SoftGateTooManyParticipations,
     SoftGateParticipate
     // SoftGateShare
@@ -114,10 +114,8 @@ export default {
       this.datas = datas
     },
     onClose () {
-      console.log('close soft gate')
       this.$store.commit('setSoftGateMissionSelected', null)
       this.$store.commit('toggleSoftGateOverlay')
-
       // this.$emit('closed')
       if (this.step == 'share') {
         this.$router.push('/profile/missions')

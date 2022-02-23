@@ -109,42 +109,7 @@ export default {
         .finally(() => {
           this.loading = false
         })
-      // this.$refs.emailForm.validate((valid, fields) => {
-      //   if (valid) {
-      //     this.loading = true
-      //     this.$api
-      //       .getUserFirstname(this.form.email)
-      //       .then((res) => {
-      //         this.loading = false
-      //         if (!res.data) {
-      //           this.$gtm.push({ event: 'benevole-email-register-soft-gate' })
-      //           this.$axios.post('/sendinblue/contact', {
-      //             email: this.form.email,
-      //             id_liste: 383,
-      //             url_mission: window.location.href,
-      //           })
-      //           this.$emit('register', { email: this.form.email })
-      //         } else {
-      //           this.$emit('login', res.data)
-      //         }
-
-      //         window.plausible &&
-      //           window.plausible('Soft Gate - Étape 1 - Email')
-      //       })
-      //       .catch(() => {
-      //         this.loading = false
-      //       })
-      //   } else {
-      //     this.showErrors(fields)
-      //   }
-      // })
     }
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-::placeholder {
-  font-weight: 500;
-}
-</style>
