@@ -59,6 +59,7 @@
           </div>
 
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- :image-url="reseau.illustrations ? reseau.illustrations[0].urls.card : undefined" -->
             <Card
               v-for="reseau in queryResult.data"
               :key="reseau.id"
@@ -66,6 +67,7 @@
               :state-text="reseau.is_published ? 'En ligne' : 'Hors ligne'"
               :state-style="reseau.is_published ? 'validated' : 'error'"
               :description="`${reseau.structures_count} antennes`"
+              :image-url="illustration(reseau)"
               @click.native="drawerReseauId = reseau.id"
             >
               <template #footer>
@@ -109,6 +111,9 @@ export default {
     return {
       loading: false,
       endpoint: '/reseaux',
+      queryParams: {
+        include: 'illustrations,overrideImage1'
+      },
       drawerReseauId: null,
       drawerReseau: null
     }
@@ -116,6 +121,11 @@ export default {
   methods: {
     onSubmit () {
       //
+    },
+    illustration (reseau) {
+      return reseau.override_image_1?.card ??
+        reseau.illustrations[0]?.urls.card ??
+        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     }
   }
 }

@@ -144,7 +144,7 @@ export default {
       endpoint: '/structures',
       queryParams: {
         append: 'places_left',
-        include: 'domaines'
+        include: 'domaines,illustrations'
       },
       drawerOrganisationId: null
     }

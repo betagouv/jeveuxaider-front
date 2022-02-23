@@ -175,6 +175,18 @@ export default {
       ]
     }
   },
+  computed: {
+    image1 () {
+      return this.organisation?.override_image_1?.large ??
+        this.organisation?.illustrations?.[0]?.urls.large ??
+        '/images/organisations/domaines/1_1.jpg, /images/organisations/domaines/1_1@2x.jpg 2x'
+    },
+    image2 () {
+      return this.organisation?.override_image_2?.large ??
+        this.organisation?.illustrations?.[1]?.urls.large ??
+        '/images/organisations/domaines/2_1.jpg, /images/organisations/domaines/2_1@2x.jpg 2x'
+    }
+  },
   methods: {
     goTo (url) {
       window.plausible &&

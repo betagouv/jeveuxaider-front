@@ -52,8 +52,8 @@
           <ImageCropMultiple
             class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"
             :medias="form.illustrations_organisation"
-            :ratio="300/143"
-            :min-width="300"
+            :ratio="945/450"
+            :min-width="945"
             :preview-width="235"
             variant="compact"
             upload-variant="compact"

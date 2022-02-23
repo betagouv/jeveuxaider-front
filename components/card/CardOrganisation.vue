@@ -8,7 +8,6 @@
         class="w-full h-full object-cover"
         width="300"
         height="143"
-        @error="defaultThumbnail($event)"
       >
 
       <div class="custom-gradient absolute inset-0" />
@@ -89,6 +88,13 @@ export default {
     organisation: {
       type: Object,
       default: null
+    }
+  },
+  computed: {
+    image1 () {
+      return this.organisation?.override_image_1?.card ??
+        this.organisation?.illustrations?.[0]?.urls.card ??
+        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     }
   }
 }
