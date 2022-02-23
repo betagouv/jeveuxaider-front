@@ -41,9 +41,19 @@
             />
           </FormControl>
 
-          <div class="bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO: Media picker illustration 1 & 2
-          </div>
+          <FormControl
+            label="Visuels d'illustration"
+            html-for="illustrations"
+          >
+            <MediaPickerDomaine
+              class="grid sm:grid-cols-2 gap-4"
+              collection="domaine__illustrations_organisation"
+              :domaine-ids="form.domaines.map(domaine => domaine.id)"
+              :defaults="form.illustrations"
+              :limit="2"
+              @change="onMediaPickerChange($event, 'illustrations')"
+            />
+          </FormControl>
 
           <Button
             type="submit"
@@ -117,6 +127,7 @@ export default {
       this.loading = true
 
       await this.uploadFiles('structure', this.form.id)
+      await this.$axios.put(`/structures/${this.form.id}`, this.form)
 
       window.plausible &&
         window.plausible(
@@ -134,6 +145,9 @@ export default {
       }
 
       this.loading = false
+    },
+    onMediaPickerChange (payload, field) {
+      this.form[field].splice(payload.index, 1, payload.media)
     }
   }
 

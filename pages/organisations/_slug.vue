@@ -177,14 +177,14 @@ export default {
   },
   computed: {
     image1 () {
-      return this.organisation?.override_image_1?.large ??
+      return this.organisation?.override_image1?.urls.large ??
         this.organisation?.illustrations?.[0]?.urls.large ??
-        '/images/organisations/domaines/1_1.jpg, /images/organisations/domaines/1_1@2x.jpg 2x'
+        '/images/organisation-default-1.webp'
     },
     image2 () {
-      return this.organisation?.override_image_2?.large ??
+      return this.organisation?.override_image2?.urls.large ??
         this.organisation?.illustrations?.[1]?.urls.large ??
-        '/images/organisations/domaines/2_1.jpg, /images/organisations/domaines/2_1@2x.jpg 2x'
+        '/images/organisation-default-2.webp'
     }
   },
   methods: {

@@ -92,8 +92,8 @@ export default {
   },
   computed: {
     image1 () {
-      return this.organisation?.override_image_1?.card ??
-        this.organisation?.illustrations?.[0]?.urls.card ??
+      return this.organisation.override_image1?.urls.card ??
+        this.organisation.illustrations?.[0]?.urls.card ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     }
   }

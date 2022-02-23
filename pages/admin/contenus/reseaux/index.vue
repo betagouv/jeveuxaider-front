@@ -59,7 +59,6 @@
           </div>
 
           <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- :image-url="reseau.illustrations ? reseau.illustrations[0].urls.card : undefined" -->
             <Card
               v-for="reseau in queryResult.data"
               :key="reseau.id"
@@ -123,7 +122,7 @@ export default {
       //
     },
     illustration (reseau) {
-      return reseau.override_image_1?.card ??
+      return reseau.override_image1?.urls.card ??
         reseau.illustrations[0]?.urls.card ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     }

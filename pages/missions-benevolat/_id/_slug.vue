@@ -416,7 +416,7 @@ export default {
       return portraits
     },
     illustration () {
-      return this.mission.structure.override_image_1?.sidebar ??
+      return this.mission.structure.override_image1?.urls.sidebar ??
         this.mission.structure.illustrations[0]?.urls.sidebar ??
         '/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x'
     }
