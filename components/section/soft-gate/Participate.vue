@@ -7,14 +7,15 @@
         Proposez votre aide
       </div>
       <div
+        v-if="$store.state.softGate.selectedMission"
         class="text-gray-500 font-semibold text-lg lg:text-xl max-w-md mx-auto"
       >
         Vous allez être mis en relation avec
         <span class="font-extrabold">{{
-          $store.state.softGateMissionSelected.responsable.first_name
+          $store.state.softGate.selectedMission.responsable.first_name
         }}</span>, responsable de la mission chez
         <span class="font-extrabold">{{
-          $store.state.softGateMissionSelected.structure.name
+          $store.state.softGate.selectedMission.structure.name
         }}</span>.
       </div>
     </div>
@@ -55,7 +56,7 @@ export default {
     return {
       loading: false,
       form: {
-        content: `Bonjour ${this.$store.state.softGateMissionSelected.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
+        content: `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
       },
       formSchema: object({
         content: string().min(10, 'Votre message est trop court').required('Un message est requis')

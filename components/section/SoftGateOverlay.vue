@@ -114,8 +114,7 @@ export default {
       this.datas = datas
     },
     onClose () {
-      this.$store.commit('setSoftGateMissionSelected', null)
-      this.$store.commit('toggleSoftGateOverlay')
+      this.$store.commit('softGate/hideOverlay')
       // this.$emit('closed')
       if (this.step == 'share') {
         this.$router.push('/profile/missions')
