@@ -111,8 +111,8 @@ export default {
       //
     },
     illustration (reseau) {
-      return reseau.override_image1?.urls.card ??
-        reseau.illustrations[0]?.urls.card ??
+      return reseau.override_image1?.urls.large ??
+        reseau.illustrations[0]?.urls.large ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     }
   }

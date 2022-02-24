@@ -5,6 +5,7 @@
     <div class="thumbnail--wrapper relative">
       <img
         :srcset="image1"
+        sizes="300px"
         class="w-full h-full object-cover"
         width="300"
         height="143"
@@ -92,8 +93,8 @@ export default {
   },
   computed: {
     image1 () {
-      return this.organisation.override_image1?.urls.card ??
-        this.organisation.illustrations?.[0]?.urls.card ??
+      return this.organisation.override_image1?.urls.large ??
+        this.organisation.illustrations?.[0]?.urls.large ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     }
   }

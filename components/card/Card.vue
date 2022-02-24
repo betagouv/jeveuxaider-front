@@ -14,7 +14,7 @@
     >
       {{ stateText }}
     </div>
-    <img class="object-cover h-36 w-full mt-[-24px]" :srcset="imageUrl">
+    <img class="object-cover h-36 w-full mt-[-24px]" :srcset="imageUrl" sizes="300px">
     <div class="px-6 py-4 flex-1">
       <slot name="badges" />
       <div class="font-extrabold mb-2 tracking-tight text-lg line-clamp-4">
