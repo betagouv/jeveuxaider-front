@@ -29,6 +29,7 @@ export default {
           { name: 'Modèles de mission', href: '/admin/contenus/modeles-mission' },
           { name: 'Territoires', href: '/admin/contenus/territoires' },
           { name: 'Reseaux', href: '/admin/contenus/reseaux' },
+          { name: 'Témoignages', href: '/admin/contenus/testimonials' },
           { name: 'Ressources', href: '/admin/contenus/ressources' }
         ]
       },

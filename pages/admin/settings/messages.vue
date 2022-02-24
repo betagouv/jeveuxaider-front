@@ -62,7 +62,7 @@
 
 <script>
 import { string, object } from 'yup'
-import SecondaryMenuAdmin from '@/components/section/admin/SecondaryMenuAdmin'
+import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin'
 import FormErrors from '@/mixins/form/errors'
 
 export default {

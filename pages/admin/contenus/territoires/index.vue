@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import SecondaryMenuAdmin from '@/components/section/admin/SecondaryMenuAdmin'
+import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin'
 import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerTerritoire from '@/components/drawer/DrawerTerritoire'
