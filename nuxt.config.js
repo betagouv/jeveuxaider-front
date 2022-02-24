@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -79,6 +81,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/sitemap',
     '@nuxtjs/strapi',
     '@nuxtjs/dayjs',
     'nuxt-lazy-load',
@@ -169,5 +172,16 @@ export default {
   gtm: {
     id: 'GTM-5S3DCV6',
     enabled: true
+  },
+  sitemap: () => {
+    return {
+      hostname: 'https://www.jeveuxaider.gouv.fr',
+      gzip: true,
+      exclude: ['/**'],
+      routes: async () => {
+        const { data } = await axios.get(`${process.env.API_URL}/api/sitemap`)
+        return data
+      }
+    }
   }
 }
