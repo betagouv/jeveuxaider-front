@@ -246,3 +246,8 @@ body.full-height-layout {
     height: 100%;
   }
 }
+
+.safari-fix-scale {
+  position: relative;
+  z-index: 1;
+}
