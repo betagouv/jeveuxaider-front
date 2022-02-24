@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import SecondaryMenuAdmin from '@/components/section/admin/SecondaryMenuAdmin'
+import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin'
 import DrawerNotification from '@/components/drawer/DrawerNotification'
 
 export default {

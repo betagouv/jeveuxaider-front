@@ -129,8 +129,8 @@
 </template>
 
 <script>
-import SecondaryMenuAdmin from '@/components/section/admin/SecondaryMenuAdmin'
-import SecondaryMenuTeteDeReseau from '@/components/section/reseau/SecondaryMenuTeteDeReseau'
+import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin'
+import SecondaryMenuTeteDeReseau from '@/components/menu/SecondaryMenuTeteDeReseau'
 import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerMissionTemplate from '@/components/drawer/DrawerMissionTemplate'

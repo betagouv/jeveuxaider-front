@@ -311,5 +311,12 @@ const labels = {
     { key: 'requirements_not_fulfilled', label: 'La mission ne correspond pas à mes attentes.' },
     { key: 'not_available', label: 'Je ne suis plus disponible.' },
     { key: 'other', label: 'Autres.' }
+  ],
+  testimonial_grade: [
+    { key: 1, label: '1 étoile' },
+    { key: 2, label: '2 étoiles' },
+    { key: 3, label: '3 étoiles' },
+    { key: 4, label: '4 étoiles' },
+    { key: 5, label: '5 étoiles' }
   ]
 }

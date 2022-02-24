@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import SecondaryMenuAdmin from '@/components/section/admin/SecondaryMenuAdmin'
+import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin'
 import DrawerMission from '@/components/drawer/DrawerMission'
 import CardMission from '@/components/card/CardMission'
 import QueryBuilder from '@/mixins/query-builder'
