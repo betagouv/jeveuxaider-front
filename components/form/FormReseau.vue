@@ -259,6 +259,7 @@
               html-for="illustrations"
             >
               <MediaPickerDomaine
+                v-if="$store.getters.contextRole === 'admin' || (!form.override_image1 && !form.override_image2)"
                 class="grid sm:grid-cols-2 gap-4"
                 collection="domaine__illustrations_organisation"
                 :domaine-ids="form.domaines.map(domaine => domaine.id)"
@@ -266,7 +267,37 @@
                 :limit="2"
                 @change="onMediaPickerChange($event, 'illustrations')"
               />
+
+              <div v-else class="text-gray-600 text-sm">
+                Les images ont été surchargées par un administrateur et ne sont pas modifiables.
+              </div>
             </FormControl>
+
+            <div v-if="$store.getters.contextRole === 'admin'" class="grid grid-cols-2 gap-4">
+              <FormControl label="Surcharger visuel 1" html-for="avatar">
+                <ImageCrop
+                  :default-value="form.override_image1"
+                  :min-width="1920"
+                  :ratio="1920/1080"
+                  :upload-max-size="2000000"
+                  @add="addFiles({ files: [$event], collection: 'reseau__override_image_1' })"
+                  @delete="deleteFile($event)"
+                  @crop="onManipulationsChange($event)"
+                />
+              </FormControl>
+
+              <FormControl label="Surcharger visuel 2" html-for="avatar">
+                <ImageCrop
+                  :default-value="form.override_image2"
+                  :min-width="1920"
+                  :ratio="1920/1080"
+                  :upload-max-size="2000000"
+                  @add="addFiles({ files: [$event], collection: 'reseau__override_image_2' })"
+                  @delete="deleteFile($event)"
+                  @crop="onManipulationsChange($event)"
+                />
+              </FormControl>
+            </div>
           </div>
         </Box>
       </div>

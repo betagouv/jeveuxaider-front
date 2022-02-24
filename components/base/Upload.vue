@@ -6,7 +6,6 @@
       class="w-full flex justify-center  border-2  border-dashed rounded-lg hover:border-jva-blue-500 focus:border-jva-blue-500 cursor-pointer group transition"
       :class="[
         { 'border-jva-blue-500': dragging },
-        { 'border-gray-300': !dragging },
         { 'px-6 pt-5 pb-6': variant == 'default' },
         { 'px-3 pt-2 pb-3': variant == 'compact' },
       ]"
@@ -17,7 +16,7 @@
     >
       <div class="space-y-1 text-center">
         <DownloadIcon
-          class="mx-auto  text-gray-300 group-hover:text-jva-blue-500 transition"
+          class="mx-auto text-gray-300 group-hover:text-jva-blue-500 transition"
           :class="[{ 'h-12 w-12': variant == 'default' }, { 'h-8 w-8': variant == 'compact' }]"
         />
 

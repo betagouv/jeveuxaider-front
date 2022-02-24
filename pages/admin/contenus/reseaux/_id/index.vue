@@ -26,7 +26,7 @@
         <Box class="relative z-10">
           <img
             v-if="reseau.logo"
-            :srcset="reseau.logo.large"
+            :srcset="reseau.logo.urls.large"
             :alt="reseau.name"
             class="my-8 h-auto"
             style="max-width: 16rem; max-height: 120px"
