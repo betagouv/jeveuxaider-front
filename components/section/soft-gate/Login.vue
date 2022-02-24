@@ -105,36 +105,6 @@ export default {
         .finally(() => {
           this.loading = false
         })
-      // this.$refs.loginForm.validate((valid, fields) => {
-      //   if (valid) {
-      //     this.loading = true
-      //     this.$store
-      //       .dispatch('auth/login', {
-      //         email: this.form.email,
-      //         password: this.form.password
-      //       })
-      //       .then(() => {
-      //         this.loading = false
-
-      //         if (
-      //           this.$store.getters.user
-      //             .statistics.new_participations_today >= 3
-      //         ) {
-      //           this.$emit('too-many-participations')
-      //         } else {
-      //           this.$emit('next')
-      //         }
-
-      //         window.plausible &&
-      //           window.plausible('Soft Gate - Étape 2 - Login')
-      //       })
-      //       .catch(() => {
-      //         this.loading = false
-      //       })
-      //   } else {
-      //     this.showErrors(fields)
-      //   }
-      // })
     }
   }
 }

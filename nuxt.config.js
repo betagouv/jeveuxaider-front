@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -15,7 +17,27 @@ export default {
         : {}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+      {
+        rel: 'preconnect',
+        href: 'https://gqlg3qh7po-dsn.algolia.net',
+        crossorigin: 'anonymous'
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://static.axept.io',
+        crossorigin: 'anonymous'
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://client.axept.io',
+        crossorigin: 'anonymous'
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://client.crisp.chat',
+        crossorigin: 'anonymous'
+      }
     ]
   },
 
@@ -29,12 +51,16 @@ export default {
     '~/plugins/labels.js',
     '~/plugins/axios.js',
     '~/plugins/heroicons.js',
+    '~/plugins/axeptio.client.js',
+    '~/plugins/atinternet.client.js',
     '~/plugins/yup.js',
     '~/plugins/vue-filters.js',
     { src: '~/plugins/vue-libraries.js', mode: 'client' },
     '~/plugins/numeral.js',
     '~/plugins/marked.js',
-    '~/plugins/api-algolia.js'
+    '~/plugins/api-algolia.js',
+    '~/plugins/plausible.client.js',
+    '~/plugins/apiengagement.client.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -55,13 +81,15 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/sitemap',
     '@nuxtjs/strapi',
     '@nuxtjs/dayjs',
     'nuxt-lazy-load',
     'vue-scrollto/nuxt',
     'cookie-universal-nuxt',
     'vue-toastification/nuxt',
-    'portal-vue/nuxt'
+    'portal-vue/nuxt',
+    '@nuxtjs/gtm'
   ],
 
   privateRuntimeConfig: {
@@ -140,5 +168,20 @@ export default {
   toast: {
     timeout: 5000,
     draggable: true
+  },
+  gtm: {
+    id: 'GTM-5S3DCV6',
+    enabled: true
+  },
+  sitemap: () => {
+    return {
+      hostname: 'https://www.jeveuxaider.gouv.fr',
+      gzip: true,
+      exclude: ['/**'],
+      routes: async () => {
+        const { data } = await axios.get(`${process.env.API_URL}/api/sitemap`)
+        return data
+      }
+    }
   }
 }

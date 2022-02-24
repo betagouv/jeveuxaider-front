@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerRessource :ressource-id="drawerRessourceId" @close="drawerRessourceId = null" />
     <portal to="breadcrumb">
       <Breadcrumb
         :items="[
@@ -25,36 +24,34 @@
       <TableHead>
         <TableHeadCell>E-mail</TableHeadCell>
         <TableHeadCell center>
-          Invité le
+          XXX
         </TableHeadCell>
         <TableHeadCell center>
-          Action
+          XXX
         </TableHeadCell>
       </TableHead>
       <TableBody>
         <TableRow
-          v-for="ressource in queryResult.data"
-          :key="ressource.id"
-          class="cursor-pointer"
-          @click.native="drawerRessourceId = ressource.id"
+          v-for="invitation in queryResult.data"
+          :key="invitation.id"
         >
           <TableRowCell>
             <div class="font-medium text-gray-900">
-              {{ ressource.title }}
+              {{ invitation.email }}
             </div>
             <div class="text-gray-500">
-              {{ ressource.is_published ? 'En ligne' : 'Hors ligne' }}
+              <!-- {{ ressource.is_published ? 'En ligne' : 'Hors ligne' }} -->
             </div>
           </TableRowCell>
           <TableRowCell center>
-            <template v-if="ressource.roles.includes('referent')">
+            <!-- <template v-if="ressource.roles.includes('referent')">
               <CheckIcon class="h-5 w-5 mx-auto" />
-            </template>
+            </template> -->
           </TableRowCell>
           <TableRowCell center>
-            <template v-if="ressource.roles.includes('responsable')">
+            <!-- <template v-if="ressource.roles.includes('responsable')">
               <CheckIcon class="h-5 w-5 mx-auto" />
-            </template>
+            </template> -->
           </TableRowCell>
         </TableRow>
       </TableBody>
@@ -71,11 +68,9 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import DrawerRessource from '@/components/drawer/DrawerRessource'
 
 export default {
   components: {
-    DrawerRessource
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',
@@ -83,8 +78,7 @@ export default {
   data () {
     return {
       loading: false,
-      endpoint: '/documents',
-      drawerRessourceId: null
+      endpoint: '/invitations'
     }
   }
 }

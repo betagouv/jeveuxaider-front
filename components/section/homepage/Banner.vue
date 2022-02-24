@@ -28,7 +28,6 @@
 
     <video
       ref="video"
-      autoplay
       loop
       muted
       class="object-cover absolute w-full h-full hidden lg:block"
@@ -84,10 +83,15 @@ export default {
   mixins: [inViewport],
   watch: {
     'inViewport.now' (visible) {
-      if (!visible) {
-        this.$refs?.video?.pause()
+      const video = this.$refs.video
+      const isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > video.HAVE_CURRENT_DATA
+      if (!visible && isPlaying) {
+        video.pause()
       } else {
-        this.$refs?.video?.play()
+        const playPromise = video.play()
+        if (playPromise !== null) {
+          playPromise.catch(() => { /* discard runtime error */ })
+        }
       }
     }
   },
