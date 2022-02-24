@@ -134,7 +134,7 @@ export default {
     // @TODO: Utiliser plutôt $algoliaApi.getMissions
     const { data: missions } = await $axios.get(`/structures/${organisation.id}/available-missions`, {
       append: 'domaines',
-      itemsPerPage: 6,
+      pagination: 6,
       sort: '-places_left'
     })
 

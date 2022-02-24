@@ -53,6 +53,24 @@
         </template>
       </Box>
       <LePetitMot />
+
+      <Box padding="sm" :loading="loadingTestimonials" loading-text="Récupération des témoignages ...">
+        <Heading as="h2" :level="3" class="mb-8">
+          Retour d'expériences des bénévoles
+        </Heading>
+        <div class="grid grid-cols-1 gap-6">
+          <CardTemoignage
+            v-for="temoignage in testimonials"
+            :key="temoignage.id"
+            :temoignage="temoignage"
+          />
+        </div>
+        <div class="flex justify-center mt-8">
+          <Link :to="`/admin/contenus/testimonials`" class="uppercase font-semibold text-sm hover:underline">
+            Tous les retours
+          </Link>
+        </div>
+      </Box>
     </template>
     <template #right>
       <Box padding="sm" :loading="loadingStatistics" loading-text="Récupération de votre activité ...">
@@ -128,21 +146,25 @@ import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import CardStatistic from '@/components/card/CardStatistic'
+import CardTemoignage from '@/components/card/CardTemoignage'
 
 export default {
   components: {
     HelpCenter,
     LePetitMot,
     CardStatistic,
-    MoreNumbers
+    MoreNumbers,
+    CardTemoignage
   },
   mixins: [MixinAction],
   layout: 'admin',
   data () {
     return {
       statistics: null,
+      testimonials: null,
       loadingActions: true,
-      loadingStatistics: true
+      loadingStatistics: true,
+      loadingTestimonials: true
     }
   },
   computed: {
@@ -173,6 +195,10 @@ export default {
     this.$axios.get('/statistics').then((response) => {
       this.loadingStatistics = false
       this.statistics = response.data
+    })
+    this.$axios.get('/temoignages?pagination=3').then((response) => {
+      this.loadingTestimonials = false
+      this.testimonials = response.data.data
     })
   }
 }

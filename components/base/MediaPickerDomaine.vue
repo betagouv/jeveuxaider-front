@@ -89,7 +89,7 @@ export default {
         params: {
           'filter[collection_name]': this.collection,
           'filter[model_id]': this.domaineIds.join(','),
-          itemsPerPage: 99
+          pagination: 99
         }
       })
 

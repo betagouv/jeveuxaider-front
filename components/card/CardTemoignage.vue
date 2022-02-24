@@ -1,10 +1,10 @@
 <template>
-  <Box :padding="false">
+  <Box :padding="false" variant="flat">
     <div class="border-b p-6">
       <div class="font-bold">
         {{ temoignage.participation.mission.name }}
       </div>
-      <div class="text-gray-500 text-sm mt-2">
+      <div v-if="$store.getters.contextRole != 'responsable'" class="text-gray-500 text-sm mt-2">
         {{ temoignage.participation.mission.structure.name }}
       </div>
     </div>

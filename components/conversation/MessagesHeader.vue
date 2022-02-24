@@ -126,7 +126,7 @@ export default {
       // A participation update adds 1 or 2 new messages, so re-fetch them.
       const messages = await this.$axios.get(`/conversations/${this.conversation.id}/messages`, {
         params: {
-          itemsPerPage:
+          pagination:
           this.$store.getters['messaging/messages'].length +
           this.$store.getters['messaging/newMessagesCount']
         }
