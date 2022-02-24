@@ -15,7 +15,27 @@ export default {
         : {}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+      {
+        rel: 'preconnect',
+        href: 'https://gqlg3qh7po-dsn.algolia.net',
+        crossorigin: 'anonymous'
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://static.axept.io',
+        crossorigin: 'anonymous'
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://client.axept.io',
+        crossorigin: 'anonymous'
+      },
+      {
+        rel: 'preconnect',
+        href: 'https://client.crisp.chat',
+        crossorigin: 'anonymous'
+      }
     ]
   },
 
@@ -29,12 +49,16 @@ export default {
     '~/plugins/labels.js',
     '~/plugins/axios.js',
     '~/plugins/heroicons.js',
+    '~/plugins/axeptio.client.js',
+    '~/plugins/atinternet.client.js',
     '~/plugins/yup.js',
     '~/plugins/vue-filters.js',
     { src: '~/plugins/vue-libraries.js', mode: 'client' },
     '~/plugins/numeral.js',
     '~/plugins/marked.js',
-    '~/plugins/api-algolia.js'
+    '~/plugins/api-algolia.js',
+    '~/plugins/plausible.client.js',
+    '~/plugins/apiengagement.client.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
