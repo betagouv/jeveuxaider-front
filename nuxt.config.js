@@ -85,7 +85,8 @@ export default {
     'vue-scrollto/nuxt',
     'cookie-universal-nuxt',
     'vue-toastification/nuxt',
-    'portal-vue/nuxt'
+    'portal-vue/nuxt',
+    '@nuxtjs/gtm'
   ],
 
   privateRuntimeConfig: {
@@ -164,5 +165,9 @@ export default {
   toast: {
     timeout: 5000,
     draggable: true
+  },
+  gtm: {
+    id: 'GTM-5S3DCV6',
+    enabled: true
   }
 }

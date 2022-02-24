@@ -39,7 +39,7 @@ export const actions = {
           path: '/',
           secure: true
         })
-        // await this.$gtm.push({ event: 'user-login' })
+        await this.$gtm.push({ event: 'user-login' })
         await dispatch('fetchUser')
       })
       .catch((error) => {

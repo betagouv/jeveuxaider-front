@@ -33,30 +33,6 @@
           Connexion
         </Button>
       </form>
-      <!-- <el-form
-        ref="emailForm"
-        :model="form"
-        :rules="rules"
-        label-position="top"
-        class="mb-0 form-register-steps"
-        :hide-required-asterisk="true"
-        @submit.prevent.native="onSubmit"
-      >
-        <el-form-item label="Email" prop="email" class="mb-5">
-          <el-input
-            v-model.trim="form.email"
-            placeholder="prenom.nom@email.fr"
-          />
-        </el-form-item>
-
-        <el-button
-          :loading="loading"
-          class="!font-bold !max-w-sm !mx-auto !w-full !flex !items-center !justify-center !px-5 !py-3 !border !border-transparent !text-xl !leading-6 !rounded-full !text-white !bg-jva-green hover:!bg-[#0e9f6e] focus:!outline-none focus:!ring !transition !mt-8"
-          @click.prevent="onSubmit"
-        >
-          Continuer
-        </el-button>
-      </el-form> -->
     </div>
   </div>
 </template>
@@ -79,23 +55,18 @@ export default {
   },
   methods: {
     onSubmit () {
-      console.log('onSubmit')
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          console.log('ok validate', this.loading)
           if (this.loading) {
             return
           }
           this.loading = true
           const { data: profile } = await this.$axios.post('firstname', this.form)
-
           if (profile) {
-            console.log('login', profile)
             this.$emit('login', profile)
           } else {
-            console.log('register', profile)
-
+            this.$gtm.push({ event: 'benevole-email-register-soft-gate' })
             this.$axios.post('/sendinblue/contact', {
               email: this.form.email,
               id_liste: 383,
