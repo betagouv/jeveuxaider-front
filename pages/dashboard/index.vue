@@ -54,21 +54,23 @@
       </Box>
       <LePetitMot />
 
-      <Box padding="sm" :loading="loadingTestimonials" loading-text="Récupération des témoignages ...">
-        <Heading as="h2" :level="3" class="mb-8">
+      <Box v-if="testimonials.length && !['responsable_territoire'].includes($store.getters.contextRole)" padding="sm" :loading="loadingTestimonials" loading-text="Récupération des témoignages ...">
+        <Heading as="h2" :level="3">
           Retour d'expériences des bénévoles
         </Heading>
-        <div class="grid grid-cols-1 gap-6">
-          <CardTemoignage
-            v-for="temoignage in testimonials"
-            :key="temoignage.id"
-            :temoignage="temoignage"
-          />
-        </div>
-        <div class="flex justify-center mt-8">
-          <Link :to="`/admin/contenus/testimonials`" class="uppercase font-semibold text-sm hover:underline">
-            Tous les retours
-          </Link>
+        <div class="mt-8">
+          <div class="grid grid-cols-1 gap-6">
+            <CardTemoignage
+              v-for="temoignage in testimonials"
+              :key="temoignage.id"
+              :temoignage="temoignage"
+            />
+          </div>
+          <div class="flex justify-center mt-8">
+            <Link :to="`/admin/contenus/testimonials`" class="uppercase font-semibold text-sm hover:underline">
+              Tous les retours
+            </Link>
+          </div>
         </div>
       </Box>
     </template>
@@ -161,7 +163,7 @@ export default {
   data () {
     return {
       statistics: null,
-      testimonials: null,
+      testimonials: [],
       loadingActions: true,
       loadingStatistics: true,
       loadingTestimonials: true
@@ -187,19 +189,46 @@ export default {
       ]
     }
   },
-  created () {
-    this.$axios.get('/user/actions').then((response) => {
-      this.loadingActions = false
-      this.actions = response.data
-    })
-    this.$axios.get('/statistics').then((response) => {
-      this.loadingStatistics = false
-      this.statistics = response.data
-    })
-    this.$axios.get('/temoignages?pagination=3').then((response) => {
-      this.loadingTestimonials = false
-      this.testimonials = response.data.data
-    })
+  async created () {
+    // this.$axios.get('/user/actions').then((response) => {
+    //   this.loadingActions = false
+    //   this.actions = response.data
+    // })
+    // this.$axios.get('/statistics').then((response) => {
+    //   this.loadingStatistics = false
+    //   this.statistics = response.data
+    // })
+    // this.$axios.get('/temoignages?pagination=3').then((response) => {
+    //   this.loadingTestimonials = false
+    //   this.testimonials = response.data.data
+    // })
+    await Promise.all([
+      this.getActions(),
+      this.getStatistics(),
+      this.getTemoignages()
+    ])
+  },
+  methods: {
+    getActions () {
+      this.$axios.get('/user/actions').then((response) => {
+        this.loadingActions = false
+        this.actions = response.data
+      })
+    },
+    getStatistics () {
+      this.$axios.get('/statistics').then((response) => {
+        this.loadingStatistics = false
+        this.statistics = response.data
+      })
+    },
+    getTemoignages () {
+      if (!['responsable_territoire'].includes(this.$store.getters.contextRole)) {
+        this.$axios.get('/temoignages?pagination=3').then((response) => {
+          this.loadingTestimonials = false
+          this.testimonials = response.data.data
+        })
+      }
+    }
   }
 }
 </script>
