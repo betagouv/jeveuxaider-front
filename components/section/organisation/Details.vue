@@ -4,7 +4,6 @@
     <div class="order-2 lg:order-1">
       <img
         :srcset="srcSet"
-        sizes="(min-width: 1024px) 50vw, 100vw"
         class="lg:absolute object-cover w-full lg:w-1/2 h-full max-h-[400px] lg:max-h-full"
       >
     </div>

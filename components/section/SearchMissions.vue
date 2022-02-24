@@ -27,18 +27,12 @@
         <div class="px-4 max-w-3xl mx-auto lg:max-w-7xl">
           <div class="flex flex-wrap justify-between items-center -m-2">
             <div class="m-2">
-              <h1
-                v-if="titleTag == 'h1'"
-                class="text-xl sm:text-2xl lg:text-3xl font-black"
-              >
-                Trouver une mission de bénévolat test
-              </h1>
-              <h2
-                v-else-if="titleTag == 'h2'"
+              <component
+                :is="titleTag"
                 class="text-xl sm:text-2xl lg:text-3xl font-black"
               >
                 Trouver une mission de bénévolat
-              </h2>
+              </component>
               <AisStateResults>
                 <template slot-scope="{ nbHits }">
                   <div>

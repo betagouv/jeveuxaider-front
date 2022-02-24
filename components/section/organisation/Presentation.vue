@@ -22,7 +22,7 @@
         </div>
       </header>
 
-      <div class="max-w-3xl ml-auto">
+      <div class="max-w-3xl lg:ml-auto">
         <div class="px-4 pb-8 md:p-8 lg:pt-6 xl:p-16 xl:pt-8">
           <Breadcrumb
             class="breadcrumb"
@@ -60,7 +60,6 @@
     <div>
       <img
         :srcset="srcSet"
-        sizes="(min-width: 1024px) 50vw, 100vw"
         class="lg:absolute object-cover w-full lg:w-1/2 h-full max-h-[400px] lg:max-h-full"
       >
     </div>

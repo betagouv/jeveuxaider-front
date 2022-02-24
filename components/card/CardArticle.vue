@@ -83,7 +83,7 @@ export default {
   height: 180px;
   @apply bg-gray-200 overflow-hidden;
   img {
-    transition: all 0.4s ease-in-out;
+    transition: all 0.25s;
   }
 }
 
