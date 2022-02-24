@@ -1,84 +1,57 @@
 <template>
-  <div class="container">
+  <div class="flex flex-col gap-8">
     <DrawerNotification
       :notification-key="drawerNotificationKey"
       :notification-label="drawerNotification && drawerNotification.label"
       :notification-description="drawerNotification && drawerNotification.description"
       @close="drawerNotificationKey = null"
     />
-    <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Paramètres' },
-        { label: 'Emails' },
-      ]"
-    />
+    <portal to="breadcrumb">
+      <Breadcrumb
+        :items="[
+          { label: 'Tableau de bord', link: '/dashboard' },
+          { label: 'Paramètres' },
+          { label: 'Emails' },
+        ]"
+      />
+    </portal>
 
-    <div class="grid grid-cols-5 py-12 ">
-      <aside class="relative col-span-1">
-        <div class="sticky top-12">
-          <SecondaryMenuAdmin />
-        </div>
-      </aside>
-      <div class="col-span-4">
-        <div class="flex flex-col gap-12">
-          <SectionHeading title="Emails transactionnels" />
-          <div class="space-y-12">
-            <div
-              v-for="group in groups"
-              :key="group.key"
+    <SectionHeading title="Emails transactionnels" />
+    <div class="space-y-8">
+      <div
+        v-for="group in groups"
+        :key="group.key"
+      >
+        <Box>
+          <Heading as="h2" :level="3" class="mb-8">
+            {{ group.label }}
+          </Heading>
+          <StackedList :divided="false">
+            <StackedListItem
+              v-for="notification in group.notifications"
+              :key="notification.key"
+              class="cursor-pointer"
+              arrow
+              @click.native="onClick(notification)"
             >
-              <Box>
-                <Heading as="h2" :level="3" class="mb-8">
-                  {{ group.label }}
-                </Heading>
-                <StackedList :divided="false">
-                  <StackedListItem
-                    v-for="notification in group.notifications"
-                    :key="notification.key"
-                    class="cursor-pointer"
-                    arrow
-                    @click.native="onClick(notification)"
-                  >
-                    <div class="text-gray-900 font-semibold" v-html="notification.label" />
-                    <div v-if="notification.description" class="text-gray-500 text-sm" v-html="notification.description" />
-                  </StackedListItem>
-                </StackedList>
-              </Box>
-
-              <!-- <div class="space-y-4">
-                <Box
-                  v-for="notification in group.notifications"
-                  :key="notification.key"
-                  padding="xs"
-                  variant="flat"
-                  class="hover:bg-gray-50 cursor-pointer"
-                >
-                  <div class="text-md font-medium">
-                    {{ notification.label }}
-                  </div>
-                  <div class="text-xs text-gray-500">
-                    {{ notification.description }}
-                  </div>
-                </Box>
-              </div> -->
-            </div>
-          </div>
-        </div>
+              <div class="text-gray-900 font-semibold" v-html="notification.label" />
+              <div v-if="notification.description" class="text-gray-500 text-sm" v-html="notification.description" />
+            </StackedListItem>
+          </StackedList>
+        </Box>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin'
 import DrawerNotification from '@/components/drawer/DrawerNotification'
 
 export default {
   components: {
-    SecondaryMenuAdmin,
     DrawerNotification
   },
+  layout: 'admin-with-sidebar-menu',
   middleware: 'admin',
   data () {
     return {

@@ -24,7 +24,6 @@ export default {
         label: 'Contenus',
         links: [
           { name: 'Missions prioritaires', href: '/admin/contenus/missions-prioritaires' },
-          { name: 'Thématiques', href: '/admin/contenus/thematiques' },
           { name: "Domaines d'action", href: '/admin/contenus/domaines' },
           { name: 'Modèles de mission', href: '/admin/contenus/modeles-mission' },
           { name: 'Territoires', href: '/admin/contenus/territoires' },
