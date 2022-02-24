@@ -4,15 +4,20 @@
     <Header />
     <div class="container">
       <portal-target name="breadcrumb" />
-      <div class="grid grid-cols-5 py-12">
-        <aside class="relative col-span-1">
-          <div class="sticky top-12">
+      <div class="grid lg:grid-cols-5 gap-6 lg:gap-12 py-6 lg:py-12">
+        <aside class="relative lg:col-span-1">
+          <div class="hidden lg:block sticky top-12">
             <SecondaryMenuAdmin v-if="$store.getters.contextRole === 'admin'" />
             <SecondaryMenuResponsable v-if="$store.getters.contextRole === 'responsable'" />
             <SecondaryMenuTeteDeReseau v-if="$store.getters.contextRole === 'tete_de_reseau'" />
           </div>
+          <div class="block lg:hidden">
+            <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
+              @TODO Menu dans select list
+            </div>
+          </div>
         </aside>
-        <div class="col-span-4">
+        <div class="lg:col-span-4">
           <Nuxt />
         </div>
       </div>

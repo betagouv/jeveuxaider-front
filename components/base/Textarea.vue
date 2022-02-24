@@ -7,8 +7,8 @@
     :rows="rows"
     class="
             px-6
-            py-3
-            text-sm
+            py-6
+            text-md
             appearance-none
             rounded-xl
             block
