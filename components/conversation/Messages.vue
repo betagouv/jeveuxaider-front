@@ -148,7 +148,7 @@ export default {
       const messages = await this.$axios.get(`/conversations/${this.$store.getters['messaging/conversation'].id}/messages`, {
         params: {
           page: this.currentPageMessages,
-          itemsPerPage: 15 + this.$store.getters['messaging/newMessagesCount']
+          pagination: 15 + this.$store.getters['messaging/newMessagesCount']
         }
       })
 
