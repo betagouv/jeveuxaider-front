@@ -347,6 +347,8 @@
               v-if="$store.getters.contextRole === 'admin' || (!form.override_image1 && !form.override_image2)"
               class="grid sm:grid-cols-2 gap-4"
               collection="domaine__illustrations_organisation"
+              preview-conversion="large"
+              preview-sizes="200px"
               :domaine-ids="form.domaines.map(domaine => domaine.id)"
               :defaults="form.illustrations"
               :limit="2"
@@ -362,8 +364,11 @@
             <FormControl label="Surcharger visuel 1" html-for="avatar">
               <ImageCrop
                 :default-value="form.override_image1"
-                :min-width="1920"
-                :ratio="1920/1080"
+                :min-width="1400"
+                :min-height="900"
+                preview-conversion="large"
+                :preview-width="200"
+                :ratio="null"
                 :upload-max-size="2000000"
                 @add="addFiles({ files: [$event], collection: 'structure__override_image_1' })"
                 @delete="deleteFile($event)"
@@ -374,8 +379,11 @@
             <FormControl label="Surcharger visuel 2" html-for="avatar">
               <ImageCrop
                 :default-value="form.override_image2"
-                :min-width="1920"
-                :ratio="1920/1080"
+                :min-width="1400"
+                :min-height="900"
+                :preview-width="200"
+                :preview-height="95"
+                :ratio="null"
                 :upload-max-size="2000000"
                 @add="addFiles({ files: [$event], collection: 'structure__override_image_2' })"
                 @delete="deleteFile($event)"

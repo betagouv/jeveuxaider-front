@@ -3,7 +3,8 @@
     <div v-for="(i, index) in limit" :key="index" class="relative inline-flex flex-col mb-auto group">
       <img
         v-if="values[index]"
-        :srcset="values[index].urls.formPreview"
+        :srcset="getSrcset(values[index])"
+        :sizes="previewSizes"
         class="w-full h-auto rounded-lg cursor-pointer shadow-xl transition"
         @click.prevent="openModal = index"
       >
@@ -66,7 +67,9 @@ export default {
     limit: {
       type: Number,
       default: 1
-    }
+    },
+    previewConversion: { type: String, default: 'formPreview' },
+    previewSizes: { type: String, default: undefined }
   },
   data () {
     return {
@@ -98,6 +101,9 @@ export default {
     onNewSelection (media, index) {
       console.log('onNewSelection', index)
       this.$emit('change', { media, index })
+    },
+    getSrcset (item) {
+      return item.urls?.[this.previewConversion]
     }
   }
 }

@@ -109,6 +109,7 @@ export default {
     previewHeight: { type: Number, default: null },
     previewFit: { type: String, default: 'cover', validator: s => ['cover', 'contain'].includes(s) },
     previewClasses: { type: String, default: '' },
+    previewConversion: { type: String, default: 'formPreview' },
     minWidth: { type: Number, default: 200 },
     minHeight: { type: Number, default: null },
     ratio: { type: Number, default: 1 },
@@ -121,7 +122,7 @@ export default {
     return {
       showModal: false,
       files: this.defaultValue?.urls ? [this.defaultValue] : [],
-      previewSrcset: this.defaultValue?.urls?.formPreview ?? this.defaultValue?.urls?.original,
+      previewSrcset: this.defaultValue?.urls?.[this.previewConversion] ?? this.defaultValue?.urls?.original,
       originalSrc: this.defaultValue?.urls?.original,
       manipulations: this.defaultValue?.manipulation ?? {}
     }

@@ -48,6 +48,8 @@
             <MediaPickerDomaine
               class="grid sm:grid-cols-2 gap-4"
               collection="domaine__illustrations_organisation"
+              preview-conversion="large"
+              preview-sizes="100w, (min-width: 640px) 248px"
               :domaine-ids="form.domaines.map(domaine => domaine.id)"
               :defaults="form.illustrations"
               :limit="2"
