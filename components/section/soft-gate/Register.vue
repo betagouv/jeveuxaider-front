@@ -128,6 +128,7 @@
         form="inscription"
         variant="green"
         full
+        rounded
         :loading="loading"
         @click="onSubmit"
       >

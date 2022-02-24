@@ -42,25 +42,25 @@
                 v-if="step == 'login'"
                 :datas="datas"
                 @next="step = 'participate'"
-                @too-many-participations="step = 'too-many-participations'"
+                @anti-flood="step = 'anti-flood'"
               />
               <SoftGateRegister
                 v-if="step == 'register'"
                 :datas="datas"
                 @next="step = 'participate'"
-                @too-many-participations="step = 'too-many-participations'"
+                @anti-flood="step = 'anti-flood'"
               />
-              <!--
-              <SoftGateTooManyParticipations
-                v-if="step == 'too-many-participations'"
+
+              <SoftGateAntiFlood
+                v-if="step == 'anti-flood'"
                 @next="step = 'participate'"
                 @close="onClose"
-              /> -->
+              />
               <SoftGateParticipate
                 v-if="step == 'participate'"
                 @next="step = 'share'"
               />
-              <!-- <SoftGateShare v-if="step == 'share'" @next="onClose" /> -->
+              <SoftGateShare v-if="step == 'share'" @next="onClose" />
             </div>
           </div>
         </div>
@@ -73,9 +73,9 @@
 import SoftGateEmail from '@/components/section/soft-gate/Email'
 import SoftGateLogin from '@/components/section/soft-gate/Login'
 import SoftGateRegister from '@/components/section/soft-gate/Register'
-// import SoftGateTooManyParticipations from '@/components/section/soft-gate/TooManyParticipations'
+import SoftGateAntiFlood from '@/components/section/soft-gate/AntiFlood'
 import SoftGateParticipate from '@/components/section/soft-gate/Participate'
-// import SoftGateShare from '@/components/section/soft-gate/Share'
+import SoftGateShare from '@/components/section/soft-gate/Share'
 
 export default {
   name: 'SoftGateOverlay',
@@ -83,9 +83,9 @@ export default {
     SoftGateEmail,
     SoftGateLogin,
     SoftGateRegister,
-    // SoftGateTooManyParticipations,
-    SoftGateParticipate
-    // SoftGateShare
+    SoftGateAntiFlood,
+    SoftGateParticipate,
+    SoftGateShare
   },
   data () {
     return {
@@ -98,7 +98,7 @@ export default {
       if (
         this.$store.state.auth.user.statistics.new_participations_today >= 3
       ) {
-        this.step = 'too-many-participations'
+        this.step = 'anti-flood'
       } else {
         this.step = 'participate'
       }

@@ -34,6 +34,7 @@
           type="submit"
           size="xl"
           variant="green"
+          rounded
           full
           :loading="loading"
           @click="onSubmit"
@@ -73,7 +74,7 @@ export default {
           }
           this.loading = true
           await this.$axios.post('/participations', {
-            mission_id: this.$store.state.softGateMissionSelected.id,
+            mission_id: this.$store.state.softGate.selectedMission.id,
             profile_id: this.$store.state.auth.user.profile.id,
             content: this.form.content
           })

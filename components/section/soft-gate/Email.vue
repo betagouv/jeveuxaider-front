@@ -25,6 +25,7 @@
           type="submit"
           size="xl"
           variant="green"
+          rounded
           full
           :loading="loading"
           @click="onSubmit"
