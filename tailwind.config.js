@@ -17,6 +17,10 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
+    container: {
+      center: true,
+      padding: '1rem'
+    },
     fontSize: {
       xxs: ['0.60rem', { lineHeight: '1rem', letterSpacing: '-0.025em' }],
       xs: ['0.75rem', { lineHeight: '1rem', letterSpacing: '-0.025em' }],

@@ -155,10 +155,13 @@
         </Heading>
         <div class="space-y-12">
           <FormControl label="Bannière" html-for="banner">
+            <!-- <div class="text-gray-500 text-sm !mb-2">
+              Résolution minimale: 1600 par 600 pixels
+            </div> -->
             <ImageCrop
               :default-value="form.banner"
-              :ratio="300/143"
-              :min-width="300"
+              :ratio="1600/600"
+              :min-width="1600"
               :preview-width="235"
               :upload-max-size="2000000"
               @add="addFiles({ files: [$event], collection: 'domaine__banner' })"

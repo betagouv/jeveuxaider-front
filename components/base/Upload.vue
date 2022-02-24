@@ -117,7 +117,7 @@ export default {
   },
   computed: {
     cLabel () {
-      return this.label ?? this.multiple ? 'Sélectionner un ou plusieurs fichiers' : 'Sélectionner un fichier'
+      return this.label ?? (this.multiple ? 'Sélectionner un ou plusieurs fichiers' : 'Sélectionner un fichier')
     },
     mimeTypes () {
       const mimes = []

@@ -20,8 +20,8 @@
         ref="header"
         class="header pt-4 lg:pt-7 pb-8 text-white"
         :class="[
-          domainId ? $options.filters.label(domainId, 'domaines', 'bg') : 'bg-jva-blue-500',
-          { 'custom-color': $options.propsData.thematique },
+          domaine && domaine.id ? $options.filters.label(domaine.id, 'domaines', 'bg') : 'bg-jva-blue-500',
+          { 'custom-color': $options.propsData.domaine },
         ]"
       >
         <div class="px-4 max-w-3xl mx-auto lg:max-w-7xl">
@@ -57,7 +57,7 @@
                   :initial-place="placeLabel"
                   :initial-around-radius="aroundRadius"
                   :color="$options.propsData.color ? color : null"
-                  :thematique="thematique"
+                  :thematique="domaine"
                   @selected="onPlaceSelect($event)"
                   @clear="onPlaceClear()"
                   @typeChanged="onTypeChanged($event)"
@@ -356,7 +356,6 @@ import {
 } from 'vue-instantsearch'
 
 import { debounce } from 'lodash'
-import MixinMission from '@/mixins/mission'
 import MixinSearchRouter from '@/mixins/search-router'
 import AlgoliaRefinementList from '@/components/section/search/AlgoliaRefinementList.vue'
 import AlgoliaToggleRefinement from '@/components/section/search/AlgoliaToggleRefinement.vue'
@@ -377,9 +376,9 @@ export default {
     CardMission,
     LieuSwitcher
   },
-  mixins: [MixinMission, MixinSearchRouter],
+  mixins: [MixinSearchRouter],
   props: {
-    thematique: {
+    domaine: {
       type: Object,
       default: null
     },
