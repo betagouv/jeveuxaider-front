@@ -42,8 +42,10 @@ html {
   @apply antialiased bg-gray-50 h-full;
 }
 
+// todo: dans tailwind config, sinon toutes les classes dérivées ne sont pas prises en compte,
+// ex .sm:container
 .container {
-  @apply px-4 mx-auto lg:max-w-7xl
+  @apply xl:max-w-7xl
 }
 
 .fade-enter-active,

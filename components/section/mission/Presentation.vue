@@ -5,7 +5,7 @@
         <Badge
           v-if="domaine"
           class="uppercase"
-          :color="domaine.slug"
+          :color="domaine.id"
         >
           {{ domaine.name }}
         </Badge>

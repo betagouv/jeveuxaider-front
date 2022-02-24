@@ -18,5 +18,7 @@ export default async function (to, from, savedPosition) {
     return { x: 0, y: el ? el.offsetTop : 0, behavior: 'smooth' }
   }
 
-  return { x: 0, y: 0 }
+  if (from.name != to.name) {
+    return { x: 0, y: 0 }
+  }
 }
