@@ -10,7 +10,7 @@
       <div class="text-gray-500 text-lg lg:text-xl max-w-md mx-auto">
         Vous vous êtes déjà inscrit à
         <strong>{{
-          $store.getters.user.nbTodayParticipationsOnPendingValidation
+          $store.state.auth.user.statistics.new_participations_today
         }}
           missions</strong>
         aujourd'hui&nbsp;: c'est beaucoup&nbsp;! Nous vous recommandons
@@ -19,27 +19,33 @@
       </div>
     </div>
 
-    <div class="max-w-md mx-auto">
-      <el-button
-        class="!font-bold !w-full !flex !items-center !justify-center !px-5 !py-4 !border !border-transparent !text-lg !leading-6 !rounded-full !text-white !bg-jva-green hover:!bg-[#0e9f6e] focus:!outline-none focus:!ring !transition !whitespace-normal"
-        @click.prevent="$emit('close')"
+    <div class="max-w-md mx-auto flex flex-col gap-4">
+      <Button
+        size="xl"
+        variant="green"
+        rounded
+        full
+        @click.native="$emit('close')"
       >
         J'attends la validation de mes inscriptions
-      </el-button>
+      </Button>
 
-      <el-button
-        class="!mt-4 !mx-0 !font-bold !w-full !flex !items-center !justify-center !px-5 !py-4 !border !border-transparent !text-lg !leading-6 !rounded-full !text-gray-500 !bg-white hover:!bg-gray-200 focus:!outline-none focus:!ring !transition !shadow-md"
-        @click.prevent="$emit('next')"
+      <Button
+        size="xl"
+        variant="white"
+        rounded
+        full
+        @click.native="$emit('next')"
       >
         Je m'inscris quand même
-      </el-button>
+      </Button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'SoftGateTooManyParticipations',
+  name: 'SoftGateAntiFlood',
   data () {
     return {}
   }

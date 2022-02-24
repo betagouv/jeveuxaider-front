@@ -42,6 +42,7 @@
           size="xl"
           variant="green"
           full
+          rounded
           :loading="loading"
           @click="onSubmit"
         >
@@ -91,7 +92,7 @@ export default {
           if (
             this.$store.state.auth.user.statistics.new_participations_today >= 3
           ) {
-            this.$emit('too-many-participations')
+            this.$emit('anti-flood')
           } else {
             this.$emit('next')
           }
@@ -138,9 +139,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-::placeholder {
-  font-weight: 500;
-}
-</style>

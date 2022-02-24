@@ -7,14 +7,15 @@
         Proposez votre aide
       </div>
       <div
+        v-if="$store.state.softGate.selectedMission"
         class="text-gray-500 font-semibold text-lg lg:text-xl max-w-md mx-auto"
       >
         Vous allez être mis en relation avec
         <span class="font-extrabold">{{
-          $store.state.softGateMissionSelected.responsable.first_name
+          $store.state.softGate.selectedMission.responsable.first_name
         }}</span>, responsable de la mission chez
         <span class="font-extrabold">{{
-          $store.state.softGateMissionSelected.structure.name
+          $store.state.softGate.selectedMission.structure.name
         }}</span>.
       </div>
     </div>
@@ -33,6 +34,7 @@
           type="submit"
           size="xl"
           variant="green"
+          rounded
           full
           :loading="loading"
           @click="onSubmit"
@@ -55,12 +57,11 @@ export default {
     return {
       loading: false,
       form: {
-        content: `Bonjour ${this.$store.state.softGateMissionSelected.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
+        content: `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
       },
       formSchema: object({
-        content: string().required('Entrez un message').min(10, 'Votre message est trop court')
+        content: string().min(10, 'Votre message est trop court').required('Un message est requis')
       })
-
     }
   },
   methods: {
@@ -73,7 +74,7 @@ export default {
           }
           this.loading = true
           await this.$axios.post('/participations', {
-            mission_id: this.$store.state.softGateMissionSelected.id,
+            mission_id: this.$store.state.softGate.selectedMission.id,
             profile_id: this.$store.state.auth.user.profile.id,
             content: this.form.content
           })
@@ -98,9 +99,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-textarea {
-  @apply flex flex-col;
-}
-</style>

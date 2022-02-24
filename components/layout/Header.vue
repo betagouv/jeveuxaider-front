@@ -229,7 +229,7 @@
       <portal to="body-end">
         <transition name="fade">
           <LazySearchOverlay v-if="$store.state.showSearchOverlay" />
-          <LazySoftGateOverlay v-if="$store.state.showSoftGateOverlay" />
+          <LazySoftGateOverlay v-if="$store.state.softGate.showOverlay" />
         </transition>
       </portal>
     </client-only>

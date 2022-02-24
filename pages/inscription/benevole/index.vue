@@ -513,7 +513,8 @@ export default {
       isLoadingFranceConnect: false,
       form: {
         email: this.$route.query.email ? this.$route.query.email : '',
-        password: ''
+        password: '',
+        utm_source: this.$cookies.get('utm_source')
       },
       formSchema: object({
         first_name: string().min(3).required('Un prénom est requis'),

@@ -21,23 +21,32 @@
         <ShareTwitter :message="message" />
         <ShareLinkedin :message="message" />
         <ShareMail
-          :subject="$store.getters.missionSelected.name"
+          v-if="$store.state.softGate.selectedMission"
+          :subject="$store.state.softGate.selectedMission.name"
           :message="message"
         />
       </div>
-      <el-button
-        class="!font-bold !text-gray-500 !max-w-sm !mx-auto !w-full !flex !items-center !justify-center !px-5 !py-3 !border !border-transparent !text-xl !leading-6 !rounded-full !bg-white focus:!outline-none focus:!ring !shadow-lg hover:!scale-105 !transform !transition !will-change-transform hover:!text-[#070191]"
-        @click.prevent="onSkip"
-      >
+      <Button full size="xl" rounded variant="white" @click.native="$emit('next')">
         Passer
-      </el-button>
+      </Button>
     </div>
   </div>
 </template>
 
 <script>
+import ShareFacebook from '@/components/share/Facebook.vue'
+import ShareTwitter from '@/components/share/Twitter.vue'
+import ShareLinkedin from '@/components/share/Linkedin.vue'
+import ShareMail from '@/components/share/Mail.vue'
+
 export default {
   name: 'SoftGateShare',
+  components: {
+    ShareFacebook,
+    ShareTwitter,
+    ShareLinkedin,
+    ShareMail
+  },
   data () {
     return {
       message:
@@ -46,9 +55,7 @@ export default {
     }
   },
   methods: {
-    onSkip () {
-      this.$emit('next')
-    }
+
   }
 }
 </script>
