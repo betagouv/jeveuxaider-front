@@ -21,4 +21,8 @@ export default async function (to, from, savedPosition) {
   if (from.name != to.name) {
     return { x: 0, y: 0 }
   }
+
+  if (to.query?.page && (!from.query?.page || to.query.page != from.query.page)) {
+    return { x: 0, y: 0 }
+  }
 }
