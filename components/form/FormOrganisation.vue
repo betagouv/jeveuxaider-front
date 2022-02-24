@@ -352,6 +352,17 @@
               @change="onMediaPickerChange($event, 'illustrations')"
             />
           </FormControl>
+
+          <FormControl v-if="$store.getters.contextRole === 'admin'" label="Photo de profil" html-for="avatar" class="col-span-2">
+            <ImageCrop
+              :default-value="form.avatar"
+              :preview-width="100"
+              :min-width="200"
+              @add="addFiles({ files: [$event], collection: 'profile__avatar' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
+            />
+          </FormControl>
         </div>
       </Box>
       <Box padding="sm">
