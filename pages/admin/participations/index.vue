@@ -85,14 +85,9 @@
         )}`"
       >
         <template #action>
-          <nuxt-link
-            :to="`/admin/utilisateurs/add`"
-            class="opacity-25"
-          >
-            <Button icon="DownloadIcon" size="lg">
-              Exporter
-            </Button>
-          </nuxt-link>
+          <Button icon="DownloadIcon" size="lg" @click.native="handleExport">
+            Exporter
+          </Button>
         </template>
       </Sectionheading>
       <Input
@@ -230,6 +225,12 @@ export default {
         }
       })
       this.autocompleteOptionsMission = res.data.data
+    },
+    async handleExport () {
+      await this.$axios.get('/export/participations', {
+        params: { ...this.$route.query }
+      })
+      this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
     }
   }
 }

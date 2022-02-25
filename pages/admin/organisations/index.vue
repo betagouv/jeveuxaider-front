@@ -48,7 +48,7 @@
         )}`"
       >
         <template #action>
-          <Button icon="DownloadIcon" size="lg" @click.native="handleExport">
+          <Button icon="DownloadIcon" variant="white" size="lg" @click.native="handleExport">
             Exporter
           </Button>
         </template>
@@ -157,11 +157,10 @@ export default {
   },
   methods: {
     async handleExport () {
-      console.log('export')
-      await this.$axios.get('/structures/export', {
+      await this.$axios.get('/export/structures', {
         params: { ...this.$route.query }
       })
-      this.$toast.success("Vous recevrez une notification mail contenant l'export")
+      this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
     }
   }
 }

@@ -20,7 +20,10 @@
       )}`"
     >
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
+        <div class="flex space-x-2">
+          <Button icon="DownloadIcon" variant="white" size="lg" @click.native="handleExport">
+            Exporter
+          </Button>
           <nuxt-link :to="`/admin/contenus/territoires/add`">
             <Button size="lg" :loading="loading" icon="PlusIcon">
               Nouveau
@@ -135,8 +138,11 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
-      //
+    async handleExport () {
+      await this.$axios.get('/export/territoires', {
+        params: { ...this.$route.query }
+      })
+      this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
     }
   }
 }
