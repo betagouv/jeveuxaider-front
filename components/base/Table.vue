@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+  <div class="shadow border-b border-gray-200" :class="[{'overflow-hidden sm:rounded-lg': overflow}]">
     <table class="min-w-full divide-y divide-gray-200">
       <slot />
     </table>
@@ -7,7 +7,12 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    overflow: {
+      type: Boolean,
+      default: true
+    }
+  }
+}
 </script>
-
-<style></style>

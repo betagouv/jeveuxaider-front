@@ -46,7 +46,13 @@
           'organisations',
           false
         )}`"
-      />
+      >
+        <template #action>
+          <Button icon="DownloadIcon" variant="white" size="lg" @click.native="handleExport">
+            Exporter
+          </Button>
+        </template>
+      </SectionHeading>
       <Input
         class="mt-8"
         name="search"
@@ -147,6 +153,14 @@ export default {
         include: 'domaines,illustrations,overrideImage1'
       },
       drawerOrganisationId: null
+    }
+  },
+  methods: {
+    async handleExport () {
+      await this.$axios.get('/export/structures', {
+        params: { ...this.$route.query }
+      })
+      this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
     }
   }
 }

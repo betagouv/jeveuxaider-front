@@ -17,7 +17,13 @@
           {{ mission.domaine_secondary.name }}
         </Badge>
       </div>
-      <div>Share todo</div>
+      <div
+        class="absolute sm:static bg-white flex-none rounded-full h-8 w-8 flex items-center justify-center p-2 border-2 transform will-change-transform hover:scale-110 focus:scale-110 !outline-none transition cursor-pointer"
+        style="right: -8px; top: -46px"
+        @click="handleClickShare"
+      >
+        <ShareIcon class="text-gray-500 h-10 w-10" />
+      </div>
     </div>
     <Heading as="h1" :level="1">
       {{ mission.name }}
@@ -95,6 +101,13 @@ export default {
     mission: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    handleClickShare () {
+      console.log('handleClickShare')
+      this.$store.commit('missionShare/showOverlay')
+      this.$store.commit('missionShare/setSelectedMission', this.mission)
     }
   }
 }

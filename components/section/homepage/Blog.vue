@@ -55,7 +55,7 @@ export default {
   },
   async fetch () {
     const { data: articles } = await axios.get(
-      `${this.$config.blog.restApiUrl}/posts/?per_page=6`
+      `${this.$config.blog.restApiUrl}/?per_page=6`
     )
     const articlesWithMedia = []
     for (const article of articles) {
