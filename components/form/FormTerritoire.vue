@@ -122,9 +122,16 @@
               label="Description pour l'engagement"
               html-for="seo_engage_paragraphs"
             >
-              <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-                @TODO: Paragraphe comme https://www.jeveuxaider.gouv.fr/dashboard/territoire/1376/edit
-              </div>
+              <Paragraph
+                :schema="[
+                  { key: 'title', label: 'Titre', type: 'text' },
+                  { key: 'description', label: 'Description', type: 'richtext' },
+                ]"
+                :items="form.seo_engage_paragraphs"
+                @add="onParagraphAddItem('seo_engage_paragraphs', $event)"
+                @update="onParagraphUpdateItem('seo_engage_paragraphs', $event)"
+                @remove="onParagraphRemoveItem('seo_engage_paragraphs', $event)"
+              />
             </FormControl>
           </div>
         </Box>
@@ -153,6 +160,7 @@
                 :ratio="1600/600"
                 :min-width="1600"
                 :preview-width="235"
+                preview-conversion="desktop"
                 :upload-max-size="2000000"
                 @add="addFiles({ files: [$event], collection: 'territoire__banner' })"
                 @delete="deleteFile($event)"
@@ -215,10 +223,11 @@
 import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
+import FormParagraphs from '@/mixins/form/paragraphs'
 import MixinInputGeo from '@/mixins/input-geo'
 
 export default {
-  mixins: [FormErrors, FormUploads, MixinInputGeo],
+  mixins: [FormErrors, FormUploads, FormParagraphs, MixinInputGeo],
   layout: 'admin',
   middleware: 'admin',
   props: {
