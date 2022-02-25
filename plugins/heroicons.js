@@ -32,11 +32,13 @@ import {
   IdentificationIcon,
   ArchiveIcon,
   MailIcon,
-  ChevronUpIcon
+  ChevronUpIcon,
+  ShareIcon
 } from '@vue-hero-icons/outline'
 import { InformationCircleIcon, UsersIcon, HomeIcon, ChevronDownIcon as ChevronDownSolidIcon, CheckIcon as CheckSolidIcon, PlusCircleIcon, MinusCircleIcon, UserIcon as UserSolidIcon } from '@vue-hero-icons/solid'
 
 const components = {
+  ShareIcon,
   EyeIcon,
   EyeOffIcon,
   SearchIcon,

@@ -230,6 +230,7 @@
         <transition name="fade">
           <LazySearchOverlay v-if="$store.state.showSearchOverlay" />
           <LazySoftGateOverlay v-if="$store.state.softGate.showOverlay" />
+          <LazyMissionShareOverlay v-if="$store.state.missionShare.showOverlay" />
         </transition>
       </portal>
     </client-only>
@@ -241,12 +242,14 @@ import { CalendarIcon, SearchIcon, UserIcon, ChatAltIcon } from '@vue-hero-icons
 import DropdownUser from '@/components/custom/DropdownUser'
 import LazySearchOverlay from '@/components/section/SearchOverlay'
 import LazySoftGateOverlay from '@/components/section/SoftGateOverlay'
+import LazyMissionShareOverlay from '@/components/section/MissionShareOverlay'
 
 export default {
   components: {
     DropdownUser,
     LazySearchOverlay,
-    LazySoftGateOverlay
+    LazySoftGateOverlay,
+    LazyMissionShareOverlay
   },
   props: {
     fullWidth: {
