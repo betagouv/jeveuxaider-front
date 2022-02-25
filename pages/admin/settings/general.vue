@@ -71,13 +71,13 @@ export default {
   },
   methods: {
     onSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           await this.$store.dispatch('settings/updateGeneral', this.form)
           this.$toast.success('Modifications enregistrées')
         })

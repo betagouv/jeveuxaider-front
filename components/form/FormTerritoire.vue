@@ -211,8 +211,8 @@
       </div>
     </div>
 
-    <div class="flex lg:hidden flex-col gap-2 flex-shrink-0 items-center justify-center">
-      <Button size="xl" variant="green" @click.native="$refs.form.handleSubmit()">
+    <div class="flex justify-center lg:hidden mt-6">
+      <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
         Enregistrer
       </Button>
     </div>
@@ -243,6 +243,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       form: { ...this.territoire },
       formSchema: object({
         name: string().min(3, 'Le nom est trop court').required('Le nom est requis'),
@@ -265,20 +266,14 @@ export default {
         this.form.zips.push(item.postcode)
       }
     },
-    handleSubmit (attributes) {
-      if (attributes) {
-        this.form = {
-          ...this.form,
-          ...attributes
-        }
+    handleSubmit () {
+      if (this.loading) {
+        return
       }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           if (this.form.id) {
             await this.$axios.put(`/territoires/${this.form.id}`, this.form)
           } else {
@@ -286,7 +281,6 @@ export default {
             this.form.id = territoire.id
           }
           await this.uploadFiles('territoire', this.form.id)
-
           this.$router.push('/admin/contenus/territoires')
         })
         .catch((errors) => {

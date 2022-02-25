@@ -127,6 +127,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       form: { ...this.missionTemplate },
       formSchema: object({
         title: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
@@ -139,6 +140,11 @@ export default {
   },
   methods: {
     handleSubmit (attributes) {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+
       if (attributes) {
         this.form = {
           ...this.form,
@@ -148,10 +154,6 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           if (this.form.id) {
             await this.$axios.put(`/mission-templates/${this.form.id}`, this.form)
           } else {

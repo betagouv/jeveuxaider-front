@@ -194,13 +194,13 @@ export default {
       }
     },
     onSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           await this.$axios.put(`/territoires/${this.form.id}`, this.form)
           this.$router.push('/inscription/responsable/step/collectivite-confirmation')
         })

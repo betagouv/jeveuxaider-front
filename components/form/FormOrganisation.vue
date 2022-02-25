@@ -432,6 +432,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       form: {
         ...this.structure
       },
@@ -457,13 +458,13 @@ export default {
   },
   methods: {
     handleSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           const { data: structure } = await this.$axios.put(`/structures/${this.structure.id}`, this.form)
           await this.uploadFiles('structure', structure.id)
           this.$router.push(`/admin/organisations/${structure.id}`)

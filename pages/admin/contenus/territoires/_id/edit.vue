@@ -11,6 +11,7 @@
       <SectionHeading :title="territoire.name">
         <template #action>
           <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
+            <!-- @todo: loading -->
             <Button size="xl" variant="green" @click.native="$refs.form.handleSubmit()">
               Enregistrer
             </Button>

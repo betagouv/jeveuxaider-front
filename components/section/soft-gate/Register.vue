@@ -192,13 +192,13 @@ export default {
   created () {},
   methods: {
     onSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           await this.$store.dispatch('auth/registerVolontaire', this.form)
 
           window.plausible &&

@@ -77,22 +77,22 @@
 export default {
   data () {
     return {
+      loading: false,
       form: {
         email: '',
         error: '',
         isSuccess: false
-      },
-      loading: false
+      }
     }
   },
   methods: {
     onSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       if (re.test(String(this.form.email).toLowerCase())) {
-        if (this.loading) {
-          return
-        }
-        this.loading = true
         this.$axios
           .post('/sendinblue/contact', { email: this.form.email })
           .then(() => {
@@ -100,7 +100,7 @@ export default {
           })
           .catch((error) => {
             console.log(error)
-            this.form.error = 'Message erreur !'
+            this.form.error = 'Erreur !'
           })
           .finally(() => {
             this.loading = false

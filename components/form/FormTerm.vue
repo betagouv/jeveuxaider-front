@@ -68,6 +68,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       form: { ...this.term },
       formSchema: object({
         name: string().min(2, 'Le nom est trop court').required('Le nom est requis')
@@ -76,13 +77,13 @@ export default {
   },
   methods: {
     handleSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           if (this.form.id) {
             await this.$axios.put(`/vocabularies/${this.vocabulary}/terms/${this.form.id}`, this.form)
           } else {

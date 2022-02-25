@@ -311,14 +311,13 @@ export default {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
     },
     handleSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
-
           await this.uploadFiles('profile', this.form.id)
           this.$emit('submited', this.form)
         })

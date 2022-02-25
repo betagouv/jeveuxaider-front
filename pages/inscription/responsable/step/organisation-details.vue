@@ -212,18 +212,18 @@ export default {
   },
   methods: {
     onSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           await this.$axios.put(`/structures/${this.form.id}`, this.form)
           window.plausible &&
-                  window.plausible(
-                    'Inscription responsable - Étape 4 - Quelques mots sur l’organisation'
-                  )
+            window.plausible(
+              'Inscription responsable - Étape 4 - Quelques mots sur l’organisation'
+            )
           if (this.form.statut_juridique === 'Collectivité') {
             this.$router.push('/inscription/responsable/step/collectivite')
           } else {

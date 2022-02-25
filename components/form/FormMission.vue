@@ -381,6 +381,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       form: {
         ...this.mission,
         participations_max: this.mission.participations_max || '1',
@@ -445,19 +446,21 @@ export default {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
     },
     handleSubmit (attributes) {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+
       if (attributes) {
         this.form = {
           ...this.form,
           ...attributes
         }
       }
+
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           if (this.isAdding) {
             const { data: mission } = await this.$axios.post(`/structures/${this.structureId}/missions`, this.form)
             this.$router.push(`/admin/missions/${mission.id}`)
@@ -467,7 +470,6 @@ export default {
           }
         })
         .catch((errors) => {
-          console.log('errors', errors)
           this.setErrors(errors)
         })
         .finally(() => {

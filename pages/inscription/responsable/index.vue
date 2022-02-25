@@ -314,12 +314,12 @@ export default {
   mixins: [FormErrors],
   data () {
     return {
+      loading: false,
       currentStepKey: 'choix_orga_type',
       form: {
         structure: {}
       },
       orgaExist: null,
-      loading: false,
       autocompleteOptions: [],
       formSchema: object({
         first_name: string().min(3).required('Un prénom est requis'),
@@ -458,13 +458,13 @@ export default {
       }
     },
     onSubmitRegisterResponsableForm () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           await this.$store.dispatch('auth/registerResponsable', {
             ...this.form,
             structure_name: this.form.structure.name,
@@ -489,9 +489,7 @@ export default {
       }
       this.loading = true
       this.form.structure.statut_juridique = this.$route.query.orga_type
-
       const res = await this.$axios.post('/structure', this.form.structure)
-
       if (res.data) {
         await this.$store.dispatch('auth/updateUser', {
           context_role: 'responsable',

@@ -126,14 +126,19 @@ export default {
   },
   data () {
     return {
-      form: {},
       loading: false,
+      form: {},
       submitted: false,
       errors: false
     }
   },
   methods: {
     onSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+
       const schema = yup.object().shape({
         email: yup.string().required("Merci d'indiquer votre email").email("Le format de l'email n'est pas valide")
       })
@@ -141,10 +146,6 @@ export default {
       schema
         .validate(this.form)
         .then(async (valid) => {
-          this.loading = true
-          if (this.loading) {
-            return
-          }
           await this.$axios.post('/sendinblue/contact', {
             email: this.form.email,
             zipcode: this.territoire.zips ? this.territoire.zips[0] : null,

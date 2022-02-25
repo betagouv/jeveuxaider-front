@@ -311,18 +311,18 @@ export default {
       this.form.tete_de_reseau_id = reseau ? reseau.id : null
     },
     onSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           await this.$axios.put(`/structures/${this.form.id}`, this.form)
           window.plausible &&
-                  window.plausible(
-                    'Inscription responsable - Étape 3 - Informations sur l’organisation'
-                  )
+            window.plausible(
+              'Inscription responsable - Étape 3 - Informations sur l’organisation'
+            )
           this.$router.push('/inscription/responsable/step/organisation-details')
         })
         .catch((errors) => {
@@ -336,7 +336,3 @@ export default {
 
 }
 </script>
-
-<style>
-
-</style>

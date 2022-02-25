@@ -79,16 +79,14 @@ export default {
   created () {},
   methods: {
     onSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          console.log('ok validate', this.loading)
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           await this.$store.dispatch('auth/login', this.form)
-
           if (
             this.$store.state.auth.user.statistics.new_participations_today >= 3
           ) {
@@ -96,8 +94,7 @@ export default {
           } else {
             this.$emit('next')
           }
-          window.plausible &&
-                 window.plausible('Soft Gate - Étape 2 - Login')
+          window.plausible && window.plausible('Soft Gate - Étape 2 - Login')
         })
         .catch((errors) => {
           this.setErrors(errors)

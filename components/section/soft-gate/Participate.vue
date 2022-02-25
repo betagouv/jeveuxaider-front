@@ -66,13 +66,13 @@ export default {
   },
   methods: {
     onSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           await this.$axios.post('/participations', {
             mission_id: this.$store.state.softGate.selectedMission.id,
             profile_id: this.$store.state.auth.user.profile.id,
@@ -81,9 +81,9 @@ export default {
 
           window.apiEngagement && window.apiEngagement('trackApplication')
           window.plausible &&
-                window.plausible(
-                  'Soft Gate - Étape 3 - Demande de participation'
-                )
+            window.plausible(
+              'Soft Gate - Étape 3 - Demande de participation'
+            )
 
           this.$toast.success('Votre participation a été enregistrée et est en attente de validation !')
           await this.$store.dispatch('auth/fetchUser')

@@ -341,6 +341,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       form: { ...this.reseau },
       formSchema: object({
         name: string().min(3, 'Le nom est trop court').required('Le nom est requis'),
@@ -361,6 +362,11 @@ export default {
   },
   methods: {
     handleSubmit (attributes) {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+
       if (attributes) {
         this.form = {
           ...this.form,
@@ -370,19 +376,13 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           if (this.form.id) {
             await this.$axios.put(`/reseaux/${this.form.id}`, this.form)
           } else {
             const { data: newReseau } = await this.$axios.post('/reseaux', this.form)
             this.form.id = newReseau.id
           }
-
           await this.uploadFiles('reseau', this.form.id)
-
           this.$router.push(`/admin/contenus/reseaux/${this.form.id}`)
         })
         .catch((errors) => {

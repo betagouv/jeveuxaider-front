@@ -55,13 +55,13 @@ export default {
   },
   methods: {
     onSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           const { data: profile } = await this.$axios.post('firstname', this.form)
           if (profile) {
             this.$emit('login', profile)

@@ -213,18 +213,20 @@ export default {
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
         title: string().required("L'objectif est requis"),
         description: string().required('La description est requise')
-      })
+      }),
+      loading: false
     }
   },
   methods: {
     handleSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.loading) {
-            return
-          }
-          this.loading = true
           if (this.form.id) {
             await this.$axios.put(`/domaines/${this.form.id}`, this.form)
           } else {
@@ -232,7 +234,6 @@ export default {
             this.form.id = domaine.id
           }
           await this.uploadFiles('domaine', this.form.id)
-
           this.$router.push('/admin/contenus/domaines')
         })
         .catch((errors) => {
