@@ -74,9 +74,7 @@ export default {
       let link = null
       switch (this.territoire.type) {
         case 'department':
-          link = `/missions-benevolat?refinementList[department_name][0]=${this.$options.filters.label(
-            this.territoire.department, 'departments'
-          )}`
+          link = `/missions-benevolat?refinementList[department_name][0]=${this.departmentName}`
           break
         case 'city':
           link = `/missions-benevolat?refinementList[type][0]=Mission en présentiel&aroundLatLng=${this.territoire.latitude},${this.territoire.longitude}&place=${this.territoire.zips[0]}&aroundRadius=35000`
@@ -86,8 +84,7 @@ export default {
     },
     filters () {
       if (this.territoire.type === 'department') {
-        const departmentName = `${this.territoire.department} - ${this.$options.filters.label(this.territoire.department, 'departments')}`
-        return `department_name:"${departmentName}"`
+        return `department_name:"${this.departmentName}"`
       }
 
       return ''
@@ -102,6 +99,9 @@ export default {
       return {
         aroundLatLng: `${this.territoire.latitude}, ${this.territoire.longitude}`
       }
+    },
+    departmentName () {
+      return `${this.territoire.department} - ${this.$options.filters.label(this.territoire.department, 'departments')}`
     }
   }
 }
