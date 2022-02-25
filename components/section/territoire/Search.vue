@@ -86,7 +86,7 @@ export default {
     },
     filters () {
       if (this.territoire.type === 'department') {
-        const departmentName = this.$options.filters.label(this.territoire.department, 'departments')
+        const departmentName = `${this.territoire.department} - ${this.$options.filters.label(this.territoire.department, 'departments')}`
         return `department_name:"${departmentName}"`
       }
 
