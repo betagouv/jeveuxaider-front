@@ -264,7 +264,7 @@
                 collection="domaine__illustrations_organisation"
                 preview-conversion="large"
                 preview-sizes="200px"
-                :domaine-ids="form.domaines.map(domaine => domaine.id)"
+                :domaine-ids="form.domaines && form.domaines.map(domaine => domaine.id)"
                 :defaults="form.illustrations"
                 :limit="2"
                 @change="onMediaPickerChange($event, 'illustrations')"
@@ -361,7 +361,7 @@ export default {
     }
   },
   methods: {
-    handleSubmit (attributes) {
+    async handleSubmit (attributes) {
       if (this.loading) {
         return
       }
@@ -373,7 +373,8 @@ export default {
           ...attributes
         }
       }
-      this.formSchema
+
+      await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.form.id) {

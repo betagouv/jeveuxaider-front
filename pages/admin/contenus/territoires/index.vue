@@ -21,11 +21,11 @@
     >
       <template #action>
         <div class="flex space-x-2">
-          <Button icon="DownloadIcon" variant="white" size="lg" @click.native="handleExport">
+          <Button icon="DownloadIcon" variant="white" size="lg" :loading="loading" @click.native="handleExport">
             Exporter
           </Button>
           <nuxt-link :to="`/admin/contenus/territoires/add`">
-            <Button size="lg" :loading="loading" icon="PlusIcon">
+            <Button size="lg" icon="PlusIcon">
               Nouveau
             </Button>
           </nuxt-link>
@@ -139,15 +139,16 @@ export default {
   },
   methods: {
     async handleExport () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       await this.$axios.get('/export/territoires', {
         params: { ...this.$route.query }
       })
+      this.loading = false
       this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
     }
   }
 }
 </script>
-
-<style>
-
-</style>

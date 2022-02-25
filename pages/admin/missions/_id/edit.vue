@@ -16,18 +16,32 @@
           </Badge>
         </template>
         <template #action>
-          <ButtonsSubmitFormMission class="hidden lg:flex" :mission="mission" :structure="mission.structure" :template-id="mission.template_id" @submitted="$refs.formMission.handleSubmit($event)" />
+          <ButtonsSubmitFormMission
+            class="hidden lg:flex"
+            :mission="mission"
+            :structure="mission.structure"
+            :template-id="mission.template_id"
+            :loading="loading"
+            @submitted="handleSubmit($event)"
+          />
         </template>
       </Sectionheading>
 
       <FormMission
-        ref="formMission"
+        ref="form"
         :mission="mission"
         :structure="mission.structure"
         class="my-8"
       />
 
-      <ButtonsSubmitFormMission class="flex lg:hidden" :mission="mission" :structure="mission.structure" :template-id="mission.template_id" @submitted="$refs.formMission.handleSubmit($event)" />
+      <ButtonsSubmitFormMission
+        class="flex lg:hidden"
+        :mission="mission"
+        :structure="mission.structure"
+        :template-id="mission.template_id"
+        :loading="loading"
+        @submitted="handleSubmit($event)"
+      />
     </div>
   </div>
 </template>
@@ -70,8 +84,20 @@ export default {
       mission
     }
   },
+  data () {
+    return {
+      loading: false
+    }
+  },
   methods: {
-
+    async handleSubmit (payload) {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      await this.$refs.form.handleSubmit(payload)
+      this.loading = false
+    }
   }
 }
 </script>

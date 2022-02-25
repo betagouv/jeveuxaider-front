@@ -12,7 +12,7 @@
       <SectionHeading :title="term.name">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
-            <Button variant="green" size="xl" @click.native="handleSubmit()">
+            <Button variant="green" size="xl" :loading="loading" @click.native="handleSubmit">
               Enregistrer
             </Button>
           </div>
@@ -46,12 +46,20 @@ export default {
       term
     }
   },
-
-  methods: {
-    handleSubmit () {
-      this.$refs.form.handleSubmit()
+  data () {
+    return {
+      loading: false
     }
-
+  },
+  methods: {
+    async handleSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      await this.$refs.form.handleSubmit()
+      this.loading = false
+    }
   }
 }
 </script>

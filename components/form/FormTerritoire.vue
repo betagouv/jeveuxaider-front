@@ -266,12 +266,12 @@ export default {
         this.form.zips.push(item.postcode)
       }
     },
-    handleSubmit () {
+    async handleSubmit () {
       if (this.loading) {
         return
       }
       this.loading = true
-      this.formSchema
+      await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.form.id) {

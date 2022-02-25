@@ -457,12 +457,12 @@ export default {
     }
   },
   methods: {
-    handleSubmit () {
+    async handleSubmit () {
       if (this.loading) {
         return
       }
       this.loading = true
-      this.formSchema
+      await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           const { data: structure } = await this.$axios.put(`/structures/${this.structure.id}`, this.form)

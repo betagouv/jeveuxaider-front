@@ -100,7 +100,7 @@
       >
         <template #action>
           <div class="flex space-x-2">
-            <Button icon="DownloadIcon" variant="white" size="lg" @click.native="handleExport">
+            <Button icon="DownloadIcon" variant="white" size="lg" :loading="loading" @click.native="handleExport">
               Exporter
             </Button>
             <nuxt-link
@@ -236,6 +236,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       endpoint: '/missions',
       queryParams: {
         include: 'template.photo,illustrations'
@@ -255,10 +256,14 @@ export default {
       this.autocompleteOptionsOrga = res.data.data
     },
     async handleExport () {
-      console.log('export')
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       await this.$axios.get('/export/missions', {
         params: { ...this.$route.query }
       })
+      this.loading = false
       this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
     }
   }

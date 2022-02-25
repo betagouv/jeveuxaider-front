@@ -139,7 +139,7 @@ export default {
     }
   },
   methods: {
-    handleSubmit (attributes) {
+    async handleSubmit (attributes) {
       if (this.loading) {
         return
       }
@@ -151,7 +151,7 @@ export default {
           ...attributes
         }
       }
-      this.formSchema
+      await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.form.id) {
@@ -172,7 +172,6 @@ export default {
           this.loading = false
         })
     }
-
   }
 }
 </script>

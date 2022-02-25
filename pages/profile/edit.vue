@@ -10,7 +10,13 @@
       <SectionHeading :title="$store.state.auth.user.profile.full_name">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
-            <Button type="submit" variant="green" size="xl" @click.native="$refs.formProfile.handleSubmit()">
+            <Button
+              type="submit"
+              variant="green"
+              size="xl"
+              :loading="loading"
+              @click.native="handleSubmit"
+            >
               Enregistrer
             </Button>
           </div>
@@ -18,9 +24,9 @@
       </Sectionheading>
 
       <FormProfile
-        ref="formProfile"
+        ref="form"
         :profile="form"
-        @submited="handleSubmit($event)"
+        @submited="afterSubmit($event)"
       />
     </div>
   </div>
@@ -37,15 +43,28 @@ export default {
   middleware: 'authenticated',
   data () {
     return {
+      loading: false,
       form: _.cloneDeep(this.$store.state.auth.user.profile)
     }
   },
   methods: {
-    async handleSubmit (profile) {
+    async handleSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      try {
+        await this.$refs.form.handleSubmit()
+      } catch (e) {
+        this.loading = false
+      }
+    },
+    async afterSubmit (profile) {
       await this.$store.dispatch('auth/updateProfile', {
         id: this.$store.getters.profile.id,
         ...profile
       })
+      this.loading = false
       this.$toast.success('Modifications enregistrées')
       // this.$router.push('/profile')
     }

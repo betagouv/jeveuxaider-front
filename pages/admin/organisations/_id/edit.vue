@@ -11,14 +11,14 @@
     <div class="py-6">
       <SectionHeading :title="structure.name">
         <template #action>
-          <Button size="xl" variant="green" @click.native="$refs.formOrganisation.handleSubmit()">
+          <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit">
             Enregistrer
           </Button>
         </template>
       </Sectionheading>
 
       <FormOrganisation
-        ref="formOrganisation"
+        ref="form"
         :structure="structure"
         class="my-8"
       />
@@ -60,6 +60,21 @@ export default {
 
     return {
       structure
+    }
+  },
+  data () {
+    return {
+      loading: false
+    }
+  },
+  methods: {
+    async handleSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      await this.$refs.form.handleSubmit()
+      this.loading = false
     }
   }
 }

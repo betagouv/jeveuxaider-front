@@ -48,7 +48,7 @@
         )}`"
       >
         <template #action>
-          <Button icon="DownloadIcon" variant="white" size="lg" @click.native="handleExport">
+          <Button icon="DownloadIcon" variant="white" size="lg" :loading="loading" @click.native="handleExport">
             Exporter
           </Button>
         </template>
@@ -147,6 +147,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       endpoint: '/structures',
       queryParams: {
         append: 'places_left',
@@ -157,9 +158,14 @@ export default {
   },
   methods: {
     async handleExport () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       await this.$axios.get('/export/structures', {
         params: { ...this.$route.query }
       })
+      this.loading = false
       this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
     }
   }

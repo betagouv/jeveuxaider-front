@@ -168,12 +168,12 @@ export default {
     }
   },
   methods: {
-    handleSubmit () {
+    async handleSubmit () {
       if (this.loading) {
         return
       }
       this.loading = true
-      this.formSchema
+      await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.form.id) {
@@ -184,9 +184,7 @@ export default {
             this.form.id = ressource.id
             this.sendNotification(ressource)
           }
-
           await this.uploadFiles('document', this.form.id)
-
           this.$emit('submitted')
           this.$toast.success(`${this.form.title} a bien été enregistré !`)
           this.$router.push('/admin/contenus/ressources')

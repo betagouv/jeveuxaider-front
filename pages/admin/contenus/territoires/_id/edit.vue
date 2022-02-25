@@ -11,8 +11,7 @@
       <SectionHeading :title="territoire.name">
         <template #action>
           <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-            <!-- @todo: loading -->
-            <Button size="xl" variant="green" @click.native="$refs.form.handleSubmit()">
+            <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit">
               Enregistrer
             </Button>
           </div>
@@ -51,8 +50,20 @@ export default {
       territoire
     }
   },
+  data () {
+    return {
+      loading: false
+    }
+  },
   methods: {
-
+    async handleSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      await this.$refs.form.handleSubmit()
+      this.loading = false
+    }
   }
 }
 </script>

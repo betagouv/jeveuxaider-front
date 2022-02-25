@@ -11,7 +11,7 @@
     <div class="py-6">
       <SectionHeading title="Création d'un nouveau modèle de mission">
         <template #action>
-          <ButtonsSubmitFormMissionTemplate class="hidden lg:flex" @submitted="$refs.form.handleSubmit($event)" />
+          <ButtonsSubmitFormMissionTemplate class="hidden lg:flex" :loading="loading" @submitted="handleSubmit($event)" />
         </template>
       </Sectionheading>
 
@@ -20,7 +20,7 @@
         class="my-8"
         :mission-template="{reseau_id: $store.getters.contextRole === 'tete_de_reseau' ? $store.getters.profile.tete_de_reseau_id: null}"
       />
-      <ButtonsSubmitFormMissionTemplate class="flex lg:hidden" @submitted="$refs.form.handleSubmit($event)" />
+      <ButtonsSubmitFormMissionTemplate class="flex lg:hidden" :loading="loading" @submitted="handleSubmit($event)" />
     </div>
   </div>
 </template>
@@ -39,8 +39,20 @@ export default {
     return {
     }
   },
+  data () {
+    return {
+      loading: false
+    }
+  },
   methods: {
-
+    async handleSubmit (payload) {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      await this.$refs.form.handleSubmit(payload)
+      this.loading = false
+    }
   }
 }
 </script>

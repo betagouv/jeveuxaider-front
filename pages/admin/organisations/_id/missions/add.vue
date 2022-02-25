@@ -15,7 +15,13 @@
             <a class="underline text-gray-700" href="/charte-reserve-civique" target="_blank">la charte</a> de Jeveuxaider.gouv.fr
           </div>
           <div v-if="step == 2">
-            <ButtonsSubmitFormMission class="hidden lg:flex" :structure="structure" :template-id="template_id" @submitted="$refs.formMission.handleSubmit($event)" />
+            <ButtonsSubmitFormMission
+              class="hidden lg:flex"
+              :structure="structure"
+              :template-id="template_id"
+              :loading="loading"
+              @submitted="handleSubmit($event)"
+            />
           </div>
         </template>
       </Sectionheading>
@@ -72,13 +78,19 @@
 
       <FormMission
         v-if="step == 2"
-        ref="formMission"
+        ref="form"
         :mission="mission"
         :structure="structure"
         class="mt-8"
       />
 
-      <ButtonsSubmitFormMission class="flex lg:hidden" :structure="structure" :template-id="template_id" @submitted="$refs.formMission.handleSubmit($event)" />
+      <ButtonsSubmitFormMission
+        class="flex lg:hidden"
+        :structure="structure"
+        :template-id="template_id"
+        :loading="loading"
+        @submitted="handleSubmit($event)"
+      />
     </div>
   </div>
 </template>
@@ -109,6 +121,7 @@ export default {
   },
   data () {
     return {
+      loading: false,
       template_id: parseInt(this.$route.query.template) || null,
       domaine_id: parseInt(this.$route.query.domaine) || null,
       templates: [],
@@ -169,6 +182,14 @@ export default {
           query: { ...this.$route.query, domaine: this.domaine_id, step: 2 }
         })
       }
+    },
+    async handleSubmit (payload) {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      await this.$refs.form.handleSubmit(payload)
+      this.loading = false
     }
   }
 }

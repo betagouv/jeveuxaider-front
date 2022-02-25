@@ -445,7 +445,7 @@ export default {
     onRemovedSkill (item) {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
     },
-    handleSubmit (attributes) {
+    async handleSubmit (attributes) {
       if (this.loading) {
         return
       }
@@ -458,7 +458,7 @@ export default {
         }
       }
 
-      this.formSchema
+      await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.isAdding) {

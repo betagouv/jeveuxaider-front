@@ -310,12 +310,12 @@ export default {
     onRemovedTagItem (item) {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
     },
-    handleSubmit () {
+    async handleSubmit () {
       if (this.loading) {
         return
       }
       this.loading = true
-      this.formSchema
+      await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           await this.uploadFiles('profile', this.form.id)
@@ -323,6 +323,7 @@ export default {
         })
         .catch((errors) => {
           this.setErrors(errors)
+          throw new Error('error')
         })
         .finally(() => {
           this.loading = false
