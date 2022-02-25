@@ -3,12 +3,14 @@
     <Banner :territoire="territoire" />
 
     <div v-if="territoire.type == 'city' && logo" class="bg-white pt-12">
-      <img
-        :srcset="logo"
-        :alt="territoire.name"
-        class="mx-auto"
-        style="max-height: 110px"
-      >
+      <div class="container">
+        <img
+          :srcset="logo"
+          :alt="territoire.name"
+          class="mx-auto"
+          style="max-height: 110px"
+        >
+      </div>
     </div>
 
     <Search :territoire="territoire" />

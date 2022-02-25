@@ -87,7 +87,7 @@
         :state-style="territoire.state"
         :state-text="$options.filters.label(territoire.state, 'mission_template_workflow_states')"
         :description="territoire.department ? `${territoire.department} - ${$options.filters.label(territoire.department,'departments')}` : null"
-        :image-url="territoire.banner ? territoire.banner.urls.card : undefined"
+        :image-url="territoire.banner ? territoire.banner.urls.desktop : undefined"
         @click.native="drawerTerritoireId = territoire.id"
       >
         <template #footer>

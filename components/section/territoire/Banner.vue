@@ -1,11 +1,24 @@
 <template>
-  <section class="relative">
-    <img
-      v-if="banner"
-      :srcset="banner"
-      :alt="`Bénévolat ${territoire.name}`"
-      class="absolute object-cover object-center w-full h-full"
-    >
+  <section class="relative bg-white lg:bg-gray-50">
+    <picture v-if="territoire.banner">
+      <source
+        media="(min-width: 1024px)"
+        :srcset="territoire.banner.urls.desktop"
+      >
+      <source
+        media="(min-width: 768px) and (max-width: 1024px)"
+        :srcset="territoire.banner.urls.tablet"
+      >
+      <img
+        :srcset="territoire.banner.urls.mobile"
+        sizes="100w"
+        :alt="`Bénévolat ${territoire.name}`"
+        width="425"
+        height="572"
+        class="banner absolute object-cover object-center w-full h-full"
+      >
+    </picture>
+
     <div class="banner-gradient absolute inset-0" style="" />
 
     <div class="relative">
@@ -15,7 +28,7 @@
 
       <div class="px-4 max-w-3xl mx-auto lg:max-w-7xl">
         <div
-          class="py-20 flex flex-col lg:flex-row items-center gap-16 lg:gap-32"
+          class="pt-20 lg:py-20 flex flex-col lg:flex-row items-center gap-16 lg:gap-32"
         >
           <div class="text-white">
             <h1
@@ -36,7 +49,7 @@
             </h2>
           </div>
 
-          <div v-if="showSearch" class="flex-none rounded-2xl w-full sm:w-auto overflow-hidden">
+          <div v-if="showSearch" class="flex-none rounded-2xl w-full sm:w-auto overflow-hidden shadow-lg lg:shadow-none">
             <div class="bg-white px-8 sm:px-20 py-6">
               <p
                 class="font-extrabold text-[1.75rem] text-center leading-tight tracking-[-1px]"
@@ -99,9 +112,6 @@ export default {
   },
 
   computed: {
-    banner () {
-      return this.territoire.banner?.urls.large
-    },
     breadcrumb () {
       const breadcrumb = [
         { label: 'Missions de bénévolat', link: '/missions-benevolat' }
@@ -155,5 +165,13 @@ export default {
     rgba(11, 8, 86, 0.7) 8.07%,
     rgba(17, 14, 82, 0.147) 100%
   );
+}
+
+.banner,
+.banner-gradient {
+  height: calc(100% - 195px);
+  @screen lg {
+    height: 100%;
+  }
 }
 </style>

@@ -119,7 +119,7 @@
               />
             </FormControl>
             <FormControl
-              label="Description pour le recrutement"
+              label="Description pour l'engagement"
               html-for="seo_engage_paragraphs"
             >
               <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">

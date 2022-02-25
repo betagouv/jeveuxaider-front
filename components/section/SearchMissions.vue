@@ -1,6 +1,6 @@
 <template>
   <div class="component--search-missions bg-cool-gray-100">
-    <AisInstantSearchSsr ref="AisInstantSearchSsr">
+    <AisInstantSearchSsr ref="AisInstantSearchSsr" class="w-full">
       <AisConfigure
         ref="aisConfigure"
         :hits-per-page.camel="hitsPerPage ? hitsPerPage : type ? 18 : 17"
