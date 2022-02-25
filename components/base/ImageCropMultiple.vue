@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import uniqid from 'uniqid'
 
 export default {
   props: {
@@ -42,7 +43,6 @@ export default {
   },
   data () {
     return {
-      id: 0,
       values: this.medias
     }
   },
@@ -71,8 +71,7 @@ export default {
       }
     },
     addEmptyMedia () {
-      this.values.push({ id: `${this._uid}__${this.id}` })
-      this.id++
+      this.values.push({ id: uniqid() })
     }
   }
 }

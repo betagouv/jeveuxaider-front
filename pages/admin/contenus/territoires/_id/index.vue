@@ -28,14 +28,10 @@
         </Box>
         <Box class="overflow-hidden" :padding="false">
           <Associations
-            v-if="territoire.promoted_organisations && territoire.promoted_organisations.length"
             :territoire="territoire"
           />
         </Box>
-        <Box class="overflow-hidden opacity-25" :padding="false">
-          <div class="col-span-2 bg-yellow-100 p-4 text-sm rounded-lg">
-            @TODO SEO
-          </div>
+        <Box class="overflow-hidden" :padding="false">
           <Engagement :territoire="territoire" />
         </Box>
       </div>

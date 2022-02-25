@@ -6,19 +6,12 @@ export default {
         update: [], /* Files to update */
         delete: [] /* Files to delete */
       }
-      // suffix: 0
     }
   },
   methods: {
     addFiles (payload) {
       payload.files.forEach((file) => {
-        const name = file.name
-        // @todo: this.uploads dans un store pour corriger probleme lorsque plusieurs fois le meme fichier
-        // if (this.uploads.add.some(upload => upload.name == file.name)) {
-        //   name = file.name.replace(/(\.[\w\d_-]+)$/i, `_${this.suffix}$1`)
-        //   this.suffix++
-        // }
-        this.uploads.add.push({ file, collection: payload.collection, name })
+        this.uploads.add.push({ file, collection: payload.collection, name: file.name })
       })
     },
     deleteFile (file) {
@@ -29,14 +22,11 @@ export default {
           this.uploads.update.splice(updateIndex, 1)
         }
       } else {
-        const index = this.uploads.add.findIndex(upload => upload.name === file.name)
+        const index = this.uploads.add.findIndex(upload => upload.file?.uuid ? upload.file.uuid === file.uuid : upload.name === file.name)
         this.uploads.add.splice(index, 1)
       }
     },
     onManipulationsChange (payload) {
-      // @todo: this.uploads dans un store pour corriger probleme lorsque plusieurs fois le meme fichier
-      // console.log('onManipulationsChange', payload.file)
-
       if (payload.file.id) {
         this.uploads.update.splice(
           this.uploads.update.findIndex(upload => upload.id === payload.file.id),
@@ -44,7 +34,7 @@ export default {
           { ...payload.file, manipulations: payload.manipulations }
         )
       } else {
-        const index = this.uploads.add.findIndex(upload => upload.name === payload.file.name)
+        const index = this.uploads.add.findIndex(upload => upload.file?.uuid ? upload.file.uuid === payload.file.uuid : upload.name === payload.file.name)
         this.uploads.add.splice(
           index,
           1,

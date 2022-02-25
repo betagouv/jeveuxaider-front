@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import uniqid from 'uniqid'
 const mime = require('mime-types')
 
 export default {
@@ -142,6 +143,10 @@ export default {
     // Use case : add a file, then delete, then add the same file again.
     addFiles (files) {
       if (this.validateFiles(files)) {
+        files.forEach((file) => {
+          file.uuid = uniqid()
+        })
+
         this.$emit('add', files)
 
         const dt = new DataTransfer()
