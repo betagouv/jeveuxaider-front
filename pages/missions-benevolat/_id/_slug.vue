@@ -419,7 +419,7 @@ export default {
     },
     illustration () {
       return this.mission.structure.override_image1?.urls.large ??
-        this.mission.structure.illustrations[0]?.urls.sidebar ??
+        this.mission.structure.illustrations[0]?.urls.large ??
         '/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x'
     }
   }

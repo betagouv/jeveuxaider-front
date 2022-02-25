@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="territoire.seo_recruit_title && (territoire.promoted_organisations.length || territoire.seo_recruit_description)">
     <section class="section-associations bg-white">
       <div class="container mx-auto px-4 py-12">
         <div
