@@ -99,14 +99,19 @@
         )}`"
       >
         <template #action>
-          <nuxt-link
-            v-if="$store.getters.contextRole === 'responsable'"
-            :to="`/admin/organisations/${$store.getters.currentRole.contextable_id}/missions/add`"
-          >
-            <Button icon="PlusIcon" size="lg">
-              Publier une mission
+          <div class="flex space-x-2">
+            <Button icon="DownloadIcon" variant="white" size="lg" @click.native="handleExport">
+              Exporter
             </Button>
-          </nuxt-link>
+            <nuxt-link
+              v-if="$store.getters.contextRole === 'responsable'"
+              :to="`/admin/organisations/${$store.getters.currentRole.contextable_id}/missions/add`"
+            >
+              <Button icon="PlusIcon" size="lg">
+                Publier une mission
+              </Button>
+            </nuxt-link>
+          </div>
         </template>
       </Sectionheading>
       <Input
@@ -248,6 +253,13 @@ export default {
         }
       })
       this.autocompleteOptionsOrga = res.data.data
+    },
+    async handleExport () {
+      console.log('export')
+      await this.$axios.get('/export/missions', {
+        params: { ...this.$route.query }
+      })
+      this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
     }
   }
 }
