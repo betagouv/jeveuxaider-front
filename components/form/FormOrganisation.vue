@@ -314,9 +314,22 @@
             label="Autocomplete"
             placeholder="Choisissez un réseau"
             :options="autocompleteReseauxOptions"
+            clear-after-selected
             @selected="handleSelectedReseau"
             @fetch-suggestions="onFetchReseauxSuggestions"
           />
+          <div v-if="form.reseaux && form.reseaux.length">
+            <div class="flex flex-wrap gap-2 mt-4">
+              <TagFormItem
+                v-for="reseau in form.reseaux"
+                :key="reseau.id"
+                :tag="reseau"
+                @removed="onRemovedReseau"
+              >
+                {{ reseau.name }}
+              </TagFormItem>
+            </div>
+          </div>
         </FormControl>
       </Box>
       <Box padding="sm">
@@ -391,6 +404,36 @@
               />
             </FormControl>
           </div>
+        </div>
+      </Box>
+      <Box
+        v-if="$store.getters.contextRole === 'admin'"
+        padding="sm"
+      >
+        <Heading as="h3" :level="3" class="mb-4">
+          Répertoire national des associations
+        </Heading>
+        <div class="grid col-span-1 gap-8">
+          <FormControl
+            label="# RNA"
+            html-for="rna"
+          >
+            <Input
+              v-model="form.rna"
+              name="rna"
+              placeholder="Numéro RNA"
+            />
+          </FormControl>
+          <FormControl
+            label="# API Enagagement"
+            html-for="api_id"
+          >
+            <Input
+              v-model="form.api_id"
+              name="api_id"
+              placeholder="Identifiant pour l'API Engagement"
+            />
+          </FormControl>
         </div>
       </Box>
       <Box padding="sm">
@@ -485,8 +528,16 @@ export default {
       })
       this.autocompleteReseauxOptions = res.data.data
     },
-    handleSelectedReseau (reseau) {
-      this.form.tete_de_reseau_id = reseau ? reseau.id : null
+    handleSelectedReseau (item) {
+      if (item) {
+        const index = this.form.reseaux.findIndex(reseau => reseau.id == item.id)
+        if (index === -1) {
+          this.$set(this.form, 'reseaux', [...this.form.reseaux, item])
+        }
+      }
+    },
+    onRemovedReseau (item) {
+      this.form.reseaux = this.form.reseaux.filter(reseau => reseau.id !== item.id)
     },
     async handleConfirmUnregister () {
       await this.$axios.post(`/structures/${this.structure.id}/unregister`)

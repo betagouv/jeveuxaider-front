@@ -197,14 +197,32 @@
             label="Faites-vous partie d'un réseau national ?"
             html-for="tete_de_reseau_id"
           >
+            <div>
+              <FormHelperText class="mb-4">
+                Si votre organisation est membre d'un réseau national ou territorial qui figure dans le menu déroulant du champ ci-dessous, sélectionnez-le. Vous permettrez à la tête de réseau de visualiser les missions et bénévoles rattachés à votre organisation. Vous faciliterez également la validation de votre organisation par les autorités territoriales lors de votre inscription.
+              </FormHelperText>
+            </div>
             <InputAutocomplete
               name="autocomplete"
               label="Autocomplete"
               placeholder="Choisissez un réseau"
+              clear-after-selected
               :options="autocompleteReseauxOptions"
               @selected="handleSelectedReseau"
               @fetch-suggestions="onFetchReseauxSuggestions"
             />
+            <div v-if="form.reseaux && form.reseaux.length">
+              <div class="flex flex-wrap gap-2 mt-4">
+                <TagFormItem
+                  v-for="reseau in form.reseaux"
+                  :key="reseau.id"
+                  :tag="reseau"
+                  @removed="onRemovedReseau"
+                >
+                  {{ reseau.name }}
+                </TagFormItem>
+              </div>
+            </div>
           </FormControl>
 
           <Button
@@ -307,8 +325,16 @@ export default {
       })
       this.autocompleteReseauxOptions = res.data.data
     },
-    handleSelectedReseau (reseau) {
-      this.form.tete_de_reseau_id = reseau ? reseau.id : null
+    handleSelectedReseau (item) {
+      if (item) {
+        const index = this.form.reseaux.findIndex(reseau => reseau.id == item.id)
+        if (index === -1) {
+          this.$set(this.form, 'reseaux', [...this.form.reseaux, item])
+        }
+      }
+    },
+    onRemovedReseau (item) {
+      this.form.reseaux = this.form.reseaux.filter(reseau => reseau.id !== item.id)
     },
     onSubmit () {
       if (this.loading) {
