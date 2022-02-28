@@ -213,7 +213,7 @@
         </Heading>
         <div class="space-y-8">
           <div>
-            <RadioGroup v-model="form.type" :options="$labels.mission_types" />
+            <RadioGroup v-model="form.type" :options="$labels.mission_types" variant="tabs" />
             <FormHelperText v-if="isPresentiel" class="mt-4">
               Recruter au plus près du lieu de mission et des bénéficiaires permet de faciliter l'engagement des bénévoles. Vous avez la possibilité de dupliquer cette mission sur plusieurs lieux.
             </FormHelperText>
