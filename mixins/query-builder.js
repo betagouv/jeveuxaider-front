@@ -1,3 +1,5 @@
+import { debounce } from 'lodash'
+
 export default {
   data () {
     return {
@@ -17,24 +19,29 @@ export default {
   },
   methods: {
     changeFilter (filterName, filterValue, multiple = false) {
-      const filterQueryValues = this.$route.query[filterName] ? this.$route.query[filterName].split(',') : []
-
-      if (filterQueryValues.includes(filterValue) || filterQueryValues == filterValue) { // L'option est déjà filtrée, on la retire
-        this.deleteFilter(filterName, filterValue, multiple)
-      } else if (filterValue === '' || filterValue === null) {
-        this.deleteFilter(filterName, filterValue, multiple)
-      } else {
-        this.addFilter(filterName, filterValue, multiple)
+      if (this.timeout) {
+        this.timeout.cancel()
       }
+      this.timeout = debounce(() => {
+        const filterQueryValues = this.$route.query[filterName] ? this.$route.query[filterName].split(',') : []
+        if (filterQueryValues.includes(filterValue) || filterQueryValues == filterValue) { // L'option est déjà filtrée, on la retire
+          this.deleteFilter(filterName, filterValue, multiple)
+        } else if (filterValue === '' || filterValue === null) {
+          this.deleteFilter(filterName, filterValue, multiple)
+        } else {
+          this.addFilter(filterName, filterValue, multiple)
+        }
+      }, 100)
+      this.timeout()
     },
     addFilter (filterName, filterValue, multiple) {
       let filterQueryValues = this.$route.query[filterName] ? this.$route.query[filterName].split(',') : []
-
       if (multiple) {
         filterQueryValues.push(filterValue)
       } else {
         filterQueryValues = [filterValue]
       }
+
       this.$router.push({
         path: this.$route.path,
         query: { ...this.$route.query, [filterName]: filterQueryValues.join(','), page: undefined }
