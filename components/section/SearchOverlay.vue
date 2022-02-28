@@ -132,7 +132,8 @@ export default {
       const { data } = await this.$axios.get('https://api-adresse.data.gouv.fr/search', {
         params: {
           q: value,
-          limit: 15
+          limit: 15,
+          type: 'municipality'
         }
       })
 
