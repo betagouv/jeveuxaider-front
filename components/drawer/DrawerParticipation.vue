@@ -70,8 +70,7 @@ export default {
   },
   methods: {
     async handleChangeState (option) {
-      this.participation.state = option.key
-      await this.$axios.put(`/participations/${this.participation.id}`, this.participation)
+      await this.$axios.put(`/participations/${this.participation.id}`, { ...this.participation, state: option.key })
       this.$fetch()
     }
   }

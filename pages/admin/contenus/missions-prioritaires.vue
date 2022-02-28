@@ -24,7 +24,7 @@
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
             <nuxt-link :to="`/admin/missions`">
-              <Button size="lg" :loading="loading" icon="PlusIcon">
+              <Button size="lg" icon="PlusIcon">
                 Prioriser une mission
               </Button>
             </nuxt-link>

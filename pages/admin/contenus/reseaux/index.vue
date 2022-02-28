@@ -20,9 +20,12 @@
       )}`"
     >
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
+        <div class="flex space-x-2">
+          <Button icon="DownloadIcon" variant="white" size="lg" :loading="loading" @click.native="handleExport">
+            Exporter
+          </Button>
           <nuxt-link :to="`/admin/contenus/reseaux/add`">
-            <Button size="lg" :loading="loading" icon="PlusIcon">
+            <Button size="lg" icon="PlusIcon">
               Nouveau
             </Button>
           </nuxt-link>
@@ -107,8 +110,16 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
-      //
+    async handleExport () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      await this.$axios.get('/export/reseaux', {
+        params: { ...this.$route.query }
+      })
+      this.loading = false
+      this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
     },
     illustration (reseau) {
       return reseau.override_image1?.urls.large ??
