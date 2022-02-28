@@ -85,7 +85,7 @@
         )}`"
       >
         <template #action>
-          <Button icon="DownloadIcon" size="lg" :loading="loading" @click.native="handleExport">
+          <Button icon="DownloadIcon" size="lg" :loading="exportLoading" @click.native="handleExport">
             Exporter
           </Button>
         </template>
@@ -179,13 +179,14 @@
 import QueryBuilder from '@/mixins/query-builder'
 import CardParticipation from '@/components/card/CardParticipation.vue'
 import DrawerParticipation from '@/components/drawer/DrawerParticipation.vue'
+import MixinExport from '@/mixins/export'
 
 export default {
   components: {
     CardParticipation,
     DrawerParticipation
   },
-  mixins: [QueryBuilder],
+  mixins: [QueryBuilder, MixinExport],
   layout: 'admin',
   asyncData ({ store, error }) {
     if (
@@ -200,6 +201,7 @@ export default {
     return {
       loading: false,
       endpoint: '/participations',
+      exportEndpoint: '/export/participations',
       queryParams: {
         include: 'conversation.latestMessage,profile.avatar'
       },
@@ -226,17 +228,6 @@ export default {
         }
       })
       this.autocompleteOptionsMission = res.data.data
-    },
-    async handleExport () {
-      if (this.loading) {
-        return
-      }
-      this.loading = true
-      await this.$axios.get('/export/participations', {
-        params: { ...this.$route.query }
-      })
-      this.loading = false
-      this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
     }
   }
 }

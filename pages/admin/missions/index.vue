@@ -100,7 +100,7 @@
       >
         <template #action>
           <div class="flex space-x-2">
-            <Button icon="DownloadIcon" variant="white" size="lg" :loading="loading" @click.native="handleExport">
+            <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
               Exporter
             </Button>
             <nuxt-link
@@ -217,13 +217,14 @@
 import QueryBuilder from '@/mixins/query-builder'
 import CardMission from '@/components/card/CardMission.vue'
 import DrawerMission from '@/components/drawer/DrawerMission.vue'
+import MixinExport from '@/mixins/export'
 
 export default {
   components: {
     CardMission,
     DrawerMission
   },
-  mixins: [QueryBuilder],
+  mixins: [QueryBuilder, MixinExport],
   layout: 'admin',
   asyncData ({ store, error }) {
     if (
@@ -238,6 +239,7 @@ export default {
     return {
       loading: false,
       endpoint: '/missions',
+      exportEndpoint: '/export/missions',
       queryParams: {
         include: 'template.photo,illustrations'
       },
@@ -254,17 +256,6 @@ export default {
         }
       })
       this.autocompleteOptionsOrga = res.data.data
-    },
-    async handleExport () {
-      if (this.loading) {
-        return
-      }
-      this.loading = true
-      await this.$axios.get('/export/missions', {
-        params: { ...this.$route.query }
-      })
-      this.loading = false
-      this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
     }
   }
 }

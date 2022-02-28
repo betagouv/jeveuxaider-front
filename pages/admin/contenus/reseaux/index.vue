@@ -21,7 +21,7 @@
     >
       <template #action>
         <div class="flex space-x-2">
-          <Button icon="DownloadIcon" variant="white" size="lg" :loading="loading" @click.native="handleExport">
+          <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
             Exporter
           </Button>
           <nuxt-link :to="`/admin/contenus/reseaux/add`">
@@ -89,19 +89,21 @@
 import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerReseau from '@/components/drawer/DrawerReseau'
+import MixinExport from '@/mixins/export'
 
 export default {
   components: {
     Card,
     DrawerReseau
   },
-  mixins: [QueryBuilder],
+  mixins: [QueryBuilder, MixinExport],
   layout: 'admin-with-sidebar-menu',
   middleware: 'admin',
   data () {
     return {
       loading: false,
       endpoint: '/reseaux',
+      exportEndpoint: '/export/reseaux',
       queryParams: {
         include: 'illustrations,overrideImage1'
       },
@@ -110,17 +112,6 @@ export default {
     }
   },
   methods: {
-    async handleExport () {
-      if (this.loading) {
-        return
-      }
-      this.loading = true
-      await this.$axios.get('/export/reseaux', {
-        params: { ...this.$route.query }
-      })
-      this.loading = false
-      this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
-    },
     illustration (reseau) {
       return reseau.override_image1?.urls.large ??
         reseau.illustrations[0]?.urls.large ??

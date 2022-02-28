@@ -21,7 +21,7 @@
     >
       <template #action>
         <div class="flex space-x-2">
-          <Button icon="DownloadIcon" variant="white" size="lg" :loading="loading" @click.native="handleExport">
+          <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
             Exporter
           </Button>
           <nuxt-link :to="`/admin/contenus/territoires/add`">
@@ -116,19 +116,21 @@
 import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerTerritoire from '@/components/drawer/DrawerTerritoire'
+import MixinExport from '@/mixins/export'
 
 export default {
   components: {
     Card,
     DrawerTerritoire
   },
-  mixins: [QueryBuilder],
+  mixins: [QueryBuilder, MixinExport],
   layout: 'admin-with-sidebar-menu',
   middleware: 'admin',
   data () {
     return {
       loading: false,
       endpoint: '/territoires',
+      exportEndpoint: '/export/territoires',
       queryParams: {
         include: 'banner',
         append: 'places_left'
@@ -138,17 +140,7 @@ export default {
     }
   },
   methods: {
-    async handleExport () {
-      if (this.loading) {
-        return
-      }
-      this.loading = true
-      await this.$axios.get('/export/territoires', {
-        params: { ...this.$route.query }
-      })
-      this.loading = false
-      this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
-    }
+
   }
 }
 </script>

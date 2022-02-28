@@ -48,7 +48,7 @@
         )}`"
       >
         <template #action>
-          <Button icon="DownloadIcon" variant="white" size="lg" :loading="loading" @click.native="handleExport">
+          <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
             Exporter
           </Button>
         </template>
@@ -128,13 +128,14 @@
 import QueryBuilder from '@/mixins/query-builder'
 import CardOrganisation from '@/components/card/CardOrganisation.vue'
 import DrawerOrganisation from '@/components/drawer/DrawerOrganisation.vue'
+import MixinExport from '@/mixins/export'
 
 export default {
   components: {
     CardOrganisation,
     DrawerOrganisation
   },
-  mixins: [QueryBuilder],
+  mixins: [QueryBuilder, MixinExport],
   layout: 'admin',
   asyncData ({ store, error }) {
     if (
@@ -149,6 +150,7 @@ export default {
     return {
       loading: false,
       endpoint: '/structures',
+      exportEndpoint: '/export/structures',
       queryParams: {
         append: 'places_left',
         include: 'domaines,illustrations,overrideImage1'
@@ -157,17 +159,7 @@ export default {
     }
   },
   methods: {
-    async handleExport () {
-      if (this.loading) {
-        return
-      }
-      this.loading = true
-      await this.$axios.get('/export/structures', {
-        params: { ...this.$route.query }
-      })
-      this.loading = false
-      this.$toast.success("L'export est en cours.\nVous recevrez une notification lorsqu'il sera prêt.")
-    }
+
   }
 }
 </script>
