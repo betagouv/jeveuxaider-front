@@ -85,9 +85,12 @@
         )}`"
       >
         <template #action>
-          <Button icon="DownloadIcon" size="lg" :loading="exportLoading" @click.native="handleExport">
-            Exporter
-          </Button>
+          <div class="flex space-x-2">
+            <Button variant="white" icon="DownloadIcon" size="lg" :loading="exportLoading" @click.native="handleExport">
+              Exporter
+            </Button>
+            <ButtonMassValidation v-if="$store.getters.contextRole === 'responsable' && waitingParticipationsCount" :structure-id="$store.getters.contextableId" :count="waitingParticipationsCount" />
+          </div>
         </template>
       </Sectionheading>
       <Input
@@ -180,21 +183,30 @@ import QueryBuilder from '@/mixins/query-builder'
 import CardParticipation from '@/components/card/CardParticipation.vue'
 import DrawerParticipation from '@/components/drawer/DrawerParticipation.vue'
 import MixinExport from '@/mixins/export'
+import ButtonMassValidation from '@/components/custom/ButtonMassValidation'
 
 export default {
   components: {
     CardParticipation,
-    DrawerParticipation
+    DrawerParticipation,
+    ButtonMassValidation
   },
   mixins: [QueryBuilder, MixinExport],
   layout: 'admin',
-  asyncData ({ store, error }) {
+  async asyncData ({ $axios, store, error }) {
     if (
       !['admin', 'referent', 'referent_regional', 'responsable', 'tete_de_reseau'].includes(
         store.getters.contextRole
       )
     ) {
       return error({ statusCode: 403 })
+    }
+
+    if (store.getters.contextRole === 'responsable' && store.getters.contextableId) {
+      const res = await $axios.post(`/structures/${store.getters.contextableId}/waiting-participations`)
+      return {
+        waitingParticipationsCount: res.data
+      }
     }
   },
   data () {
