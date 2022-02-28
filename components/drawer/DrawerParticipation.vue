@@ -11,10 +11,12 @@
       <div v-else class="mt-4 font-medium text-gray-800">
         {{ participation.state }}
       </div>
-      <div class="border-t -mx-6 my-6" />
-      <div class="text-jva-blue-500 flex items-center text-sm font-bold">
-        <ChatAltIcon class="h-4 w-4 mr-4" /> Accéder à la messagerie
-      </div>
+      <template v-if="participation.conversation">
+        <div class="border-t -mx-6 my-6" />
+        <nuxt-link :to="`/messages/${participation.conversation.id}`" class="text-jva-blue-500 flex items-center text-sm font-bold">
+          <ChatAltIcon class="h-4 w-4 mr-4" /> Accéder à la messagerie
+        </nuxt-link>
+      </template>
       <div class="border-t -mx-6 my-6" />
       <BoxInformationsProfile class="mb-8" :profile="participation.profile" title="Bénévole" :show-action="false" />
       <BoxInformationsMission class="mb-8" :mission="participation.mission" title="Mission">
