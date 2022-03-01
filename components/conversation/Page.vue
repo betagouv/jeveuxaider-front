@@ -15,7 +15,7 @@
       class="panel--center min-w-0 border-r border-gray-200"
     >
       <div
-        class="panel--header sticky top-0 bg-white px-6 border-b border-gray-200 flex items-center"
+        class="panel--header relative top-0 bg-white px-6 py-3 border-b border-gray-200 flex items-center"
       >
         <ConversationMessagesHeader
           v-if="$store.getters['messaging/conversation']"
@@ -32,7 +32,7 @@
       class="panel--right"
     >
       <div
-        class="panel--header sticky top-0 bg-white px-6 border-b border-gray-200 flex items-center"
+        class="panel--header sticky top-0 bg-white px-6 py-3 border-b border-gray-200 flex items-center"
       >
         <div class="flex flex-1 justify-between">
           <h3 class="text-lg leading-8 font-bold text-gray-900">

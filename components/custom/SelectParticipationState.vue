@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SelectWithDescription :options="statesAvailable" :value="value" @selected="handleSelected($event)" />
+    <SelectWithDescription :size="size" :options="statesAvailable" :value="value" @selected="handleSelected($event)" />
 
     <ModalParticipationDecline
       :participation="participation"
@@ -26,6 +26,11 @@ export default {
     participation: {
       type: Object,
       required: true
+    },
+    size: {
+      type: String,
+      default: 'md',
+      validator: s => ['sm', 'md'].includes(s)
     }
   },
   data () {
@@ -44,11 +49,14 @@ export default {
       if (payload.key == 'Refusée') {
         this.showModalDecline = true
       } else {
+        this.$store.commit('messaging/incrementNewMessagesCount')
         this.$emit('selected', payload)
       }
     },
     handleConfirmDecline (payload) {
       this.$emit('selected', { key: 'Refusée', form: payload })
+      const nbNewMessages = this.form.content?.trim().length ? 2 : 1
+      this.$store.commit('messaging/incrementNewMessagesCount', nbNewMessages)
       this.showModalDecline = false
     }
   }

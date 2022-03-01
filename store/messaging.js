@@ -13,6 +13,7 @@ export const state = () => ({
 export const getters = {
   conversations: state => state.conversations,
   conversation: state => state.conversation,
+  conversable: state => state.conversation.conversable,
   messages: state => state.messages,
   newMessagesCount: state => state.newMessagesCount,
   isMobile: state => state.isMobile,
@@ -28,6 +29,9 @@ export const mutations = {
   },
   setConversation: (state, payload) => {
     state.conversation = payload
+  },
+  setConversable: (state, payload) => {
+    state.conversation.conversable = payload
   },
   removeConversationInConversations (state, payload) {
     state.conversations.splice(
