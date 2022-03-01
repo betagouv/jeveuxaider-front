@@ -67,7 +67,15 @@
       </div>
     </template>
     <div>
-      <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} utilisateurs`" />
+      <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} utilisateurs`">
+        <template #action>
+          <div v-if="$store.getters.profile.can_export_profiles" class="flex space-x-2">
+            <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
+              Exporter
+            </Button>
+          </div>
+        </template>
+      </SectionHeading>
       <Input
         class="mt-8"
         name="search"
@@ -146,6 +154,7 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
+import MixinExport from '@/mixins/export'
 import CardProfile from '@/components/card/CardProfile.vue'
 import DrawerProfile from '@/components/drawer/DrawerProfile.vue'
 
@@ -154,7 +163,7 @@ export default {
     CardProfile,
     DrawerProfile
   },
-  mixins: [QueryBuilder],
+  mixins: [QueryBuilder, MixinExport],
   layout: 'admin',
   asyncData ({ store, error }) {
     if (
@@ -167,12 +176,17 @@ export default {
   },
   data () {
     return {
+      loading: false,
       endpoint: '/profiles',
+      exportEndpoint: '/export/profiles',
       queryParams: {
         include: 'user,participationsValidatedCount,avatar'
       },
       drawerProfileId: null
     }
+  },
+  methods: {
+
   }
 }
 </script>
