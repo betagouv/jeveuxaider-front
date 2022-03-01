@@ -39,6 +39,7 @@
           ]"
         />
         <div v-if="!$route.hash" class="space-y-8">
+          <BoxDates :mission="mission" />
           <BoxPlace :mission="mission" />
           <BoxEnChiffre :mission="mission" />
           <BoxInformations :mission="mission" />
@@ -58,6 +59,7 @@ import BoxPlace from '@/components/section/mission/BoxPlace.vue'
 import BoxResponsable from '@/components/section/mission/BoxResponsable.vue'
 import BoxInformations from '@/components/section/mission/BoxInformations.vue'
 import BoxEnChiffre from '@/components/section/mission/BoxEnChiffre.vue'
+import BoxDates from '@/components/section/mission/BoxDates.vue'
 import History from '@/components/section/History.vue'
 import MixinMission from '@/mixins/mission'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
@@ -71,6 +73,7 @@ export default {
     BoxResponsable,
     BoxInformations,
     BoxEnChiffre,
+    BoxDates,
     History,
     OnlineIndicator
   },
