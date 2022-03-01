@@ -53,9 +53,6 @@
         class="mt-3"
         :participation="participation"
         @update="onParticipationUpdate"
-        @messages-added="
-          $store.commit('messaging/incrementNewMessagesCount', $event.count)
-        "
       />
 
       <hr class="my-6">
@@ -198,7 +195,7 @@ export default {
     }
   },
   methods: {
-    async onParticipationUpdate (participation) {
+    async onParticipationUpdate () {
       // A participation update adds 1 or 2 new messages, so re-fetch them.
       const messages = await this.$axios.get(`/conversations/${this.conversation.id}/messages`, {
         params: {

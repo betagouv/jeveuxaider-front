@@ -28,25 +28,14 @@
         <SelectParticipationState
           v-if="
             $store.getters.contextRole == 'responsable' &&
-              $store.getters.contextableId ==
-              conversation.conversable.mission.structure_id &&
-              !![
-                'En attente de validation',
-                'En cours de traitement',
-                'Validée',
-              ].includes(conversation.conversable.state)
+              $store.getters.contextableId == conversation.conversable.mission.structure_id &&
+              canEditState
           "
           :value="conversation.conversable.state"
           :participation="conversation.conversable"
           size="sm"
           @selected="handleChangeState($event)"
         />
-
-        <!--
-          @updated="onParticipationUpdate"
-          @messages-added="
-            $store.commit('messaging/incrementNewMessagesCount', $event.count)
-          " -->
 
         <button
           v-if="$store.getters.contextRole != 'admin'"
@@ -130,6 +119,10 @@ export default {
       return this.conversation.users.find((user) => {
         return user.id == this.$store.getters.profile.user_id
       })
+    },
+    canEditState () {
+      const rolesWhoCanEdit = this.$options.filters.label(this.$store.getters['messaging/conversable'].state, 'participation_workflow_states', 'roles')
+      return !!rolesWhoCanEdit.includes(this.$store.getters.contextRole)
     }
   },
   methods: {
