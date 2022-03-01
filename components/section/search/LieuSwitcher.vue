@@ -75,7 +75,7 @@
             v-model="aroundRadius"
             name="radius"
             :value="aroundRadius"
-            class="text-sm appearance-none  block  placeholder-gray-text-400 focus:outline-none border-0 py-0 pl-0 text-gray-800 cursor-pointer"
+            class="text-sm appearance-none block placeholder-gray-text-400 focus:outline-none focus:ring-0 border-0 py-0 pl-0 text-gray-800 cursor-pointer"
             @change="$emit('change-radius', aroundRadius)"
           >
             <option v-for="option in aroundRadiusOptions" :key="option.value" :value="option.value">
