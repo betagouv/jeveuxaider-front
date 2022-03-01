@@ -70,8 +70,14 @@ export default {
   },
   methods: {
     async handleChangeState (payload) {
-      await this.$axios.put(`/participations/${this.participation.id}`, { ...this.participation, state: payload })
+      this.participation.state = payload.key
+      if (payload.key == 'Refusée') {
+        await this.$axios.put(`/participations/${this.participation.id}/decline`, payload.form)
+      } else {
+        await this.$axios.put(`/participations/${this.participation.id}`, this.participation)
+      }
       this.$fetch()
+      this.$emit('updated', this.participation)
     }
   }
 }

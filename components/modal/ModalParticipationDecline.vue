@@ -85,7 +85,7 @@ export default {
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(() => {
-          this.$emit('confirm')
+          this.$emit('confirm', this.form)
         })
         .catch((errors) => {
           this.setErrors(errors)

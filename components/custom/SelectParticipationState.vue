@@ -4,9 +4,9 @@
 
     <ModalParticipationDecline
       :participation="participation"
-      :is-open="showModal"
-      @cancel="showModal = false"
-      @confirm="$emit('selected', $event)"
+      :is-open="showModalDecline"
+      @cancel="showModalDecline = false"
+      @confirm="handleConfirmDecline"
     />
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
   },
   data () {
     return {
-      showModal: false
+      showModalDecline: false
     }
   },
   computed: {
@@ -42,10 +42,14 @@ export default {
   methods: {
     handleSelected (payload) {
       if (payload.key == 'Refusée') {
-        this.showModal = true
+        this.showModalDecline = true
       } else {
-        this.$emit('selected', payload.key)
+        this.$emit('selected', payload)
       }
+    },
+    handleConfirmDecline (payload) {
+      this.$emit('selected', { key: 'Refusée', form: payload })
+      this.showModalDecline = false
     }
   }
 }
