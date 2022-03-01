@@ -64,33 +64,35 @@
         </slot>
       </div>
 
-      <Modal
-        :is-open="showModal"
-        title="Recadrer"
-        @close="showModal = false"
-      >
-        <Cropper
-          ref="cropper"
-          class="cropper"
-          :src.sync="originalSrc"
-          :stencil-props="{ aspectRatio: ratio }"
-          :resize-image="false"
-          :transitions="false"
-          :min-width="minWidth"
-          :min-height="minHeight ? minHeight : ratio ? minWidth / ratio : null"
-          @ready="onCropperReady"
-        />
+      <portal to="body-end">
+        <Modal
+          :is-open="showModal"
+          title="Recadrer"
+          @close="showModal = false"
+        >
+          <Cropper
+            ref="cropper"
+            class="cropper"
+            :src.sync="originalSrc"
+            :stencil-props="{ aspectRatio: ratio }"
+            :resize-image="false"
+            :transitions="false"
+            :min-width="minWidth"
+            :min-height="minHeight ? minHeight : ratio ? minWidth / ratio : null"
+            @ready="onCropperReady"
+          />
 
-        <template #footer slot-scope="">
-          <Button class="mr-3" variant="white" @click.native="showModal = false">
-            Annuler
-          </Button>
+          <template #footer slot-scope="">
+            <Button class="mr-3" variant="white" @click.native="showModal = false">
+              Annuler
+            </Button>
 
-          <Button @click.native="doCrop">
-            Valider
-          </Button>
-        </template>
-      </Modal>
+            <Button @click.native="doCrop">
+              Valider
+            </Button>
+          </template>
+        </Modal>
+      </portal>
     </div>
   </div>
 </template>

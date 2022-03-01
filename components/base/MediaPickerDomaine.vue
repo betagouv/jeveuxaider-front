@@ -25,26 +25,28 @@
         <PencilIcon class="text-[#070191] w-4" />
       </div>
 
-      <Modal
-        :is-open="openModal === index"
-        title="Choisissez un visuel"
-        @close="openModal = null"
-      >
-        <div class="grid sm:grid-cols-2 gap-4">
-          <img
-            v-for="media in mediasFromDomaine"
-            :key="media.id"
-            :srcset="media.urls.formPreview"
-            :alt="media.name"
-            class="rounded-lg cursor-pointer transition ring-offset-4 hover:opacity-50"
-            :class="[
-              {'!opacity-100 ring-2 ring-jva-blue-500': values[index] && values[index].id == media.id},
-              {'opacity-25': values[index] && values[index].id != media.id}
-            ]"
-            @click.stop="onNewSelection(media, index)"
-          >
-        </div>
-      </Modal>
+      <portal to="body-end">
+        <Modal
+          :is-open="openModal === index"
+          title="Choisissez un visuel"
+          @close="openModal = null"
+        >
+          <div class="grid sm:grid-cols-2 gap-4">
+            <img
+              v-for="media in mediasFromDomaine"
+              :key="media.id"
+              :srcset="media.urls.formPreview"
+              :alt="media.name"
+              class="rounded-lg cursor-pointer transition ring-offset-4 hover:opacity-50"
+              :class="[
+                {'!opacity-100 ring-2 ring-jva-blue-500': values[index] && values[index].id == media.id},
+                {'opacity-25': values[index] && values[index].id != media.id}
+              ]"
+              @click.stop="onNewSelection(media, index)"
+            >
+          </div>
+        </Modal>
+      </portal>
     </div>
   </div>
 </template>

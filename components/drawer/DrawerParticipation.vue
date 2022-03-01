@@ -7,7 +7,7 @@
       </div>
     </template>
     <template v-if="participation">
-      <SelectParticipationState v-if="canEditStatut" :value="participation.state" class="mt-4" @selected="handleChangeState($event)" />
+      <SelectParticipationState v-if="canEditStatut" :value="participation.state" :participation="participation" class="mt-4" @selected="handleChangeState($event)" />
       <div v-else class="mt-4 font-medium text-gray-800">
         {{ participation.state }}
       </div>
@@ -69,9 +69,15 @@ export default {
     participationId: '$fetch'
   },
   methods: {
-    async handleChangeState (option) {
-      await this.$axios.put(`/participations/${this.participation.id}`, { ...this.participation, state: option.key })
+    async handleChangeState (payload) {
+      this.participation.state = payload.key
+      if (payload.key == 'Refusée') {
+        await this.$axios.put(`/participations/${this.participation.id}/decline`, payload.form)
+      } else {
+        await this.$axios.put(`/participations/${this.participation.id}`, this.participation)
+      }
       this.$fetch()
+      this.$emit('updated', this.participation)
     }
   }
 }

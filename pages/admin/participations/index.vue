@@ -1,6 +1,11 @@
 <template>
   <ContainerRightSidebar>
-    <DrawerParticipation :participation-id="drawerParticipationId" @close="drawerParticipationId = null" />
+    <DrawerParticipation
+      :participation-id="drawerParticipationId"
+      @close="drawerParticipationId = null"
+      @updated="handleUpdate"
+    />
+
     <template #breadcrumb>
       <Breadcrumb
         :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Participations' }]"
@@ -240,6 +245,10 @@ export default {
         }
       })
       this.autocompleteOptionsMission = res.data.data
+    },
+    handleUpdate (payload) {
+      const index = this.queryResult.data.findIndex(participation => participation.id === payload.id)
+      this.queryResult.data.splice(index, 1, payload)
     }
   }
 }
