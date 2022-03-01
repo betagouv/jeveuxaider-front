@@ -51,8 +51,8 @@
       <ButtonParticipationCancel
         v-if="isBenevole && participation.state == 'En attente de validation'"
         class="mt-3"
-        :form="participation"
-        @updated="onParticipationUpdate"
+        :participation="participation"
+        @update="onParticipationUpdate"
         @messages-added="
           $store.commit('messaging/incrementNewMessagesCount', $event.count)
         "
@@ -177,10 +177,12 @@
 
 <script>
 import ConversationBenevole from '@/components/conversation/Benevole.vue'
+import ButtonParticipationCancel from '@/components/custom/ButtonParticipationCancel.vue'
 
 export default {
   components: {
-    ConversationBenevole
+    ConversationBenevole,
+    ButtonParticipationCancel
   },
   computed: {
     conversation () {

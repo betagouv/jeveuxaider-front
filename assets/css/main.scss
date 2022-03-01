@@ -251,3 +251,17 @@ body.full-height-layout {
   position: relative;
   z-index: 1;
 }
+
+.custom-scrollbar {
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgba(30, 66, 59, 0.15);
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    @apply bg-jva-blue-500;
+  }
+}

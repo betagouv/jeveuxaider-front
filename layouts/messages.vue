@@ -112,6 +112,8 @@
         </div>
       </div>
     </client-only>
+
+    <portal-target name="body-end" multiple />
   </div>
 </template>
 
