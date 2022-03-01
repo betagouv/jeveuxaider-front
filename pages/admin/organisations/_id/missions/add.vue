@@ -134,6 +134,8 @@ export default {
 
     if (this.domaine_id) {
       this.$set(this.mission, 'domaine_id', this.domaine_id)
+      console.log('this.structure.reseaux', this.structure.reseau)
+      console.log('this.structure.reseaux', this.structure.reseaux)
       const templates = await this.$axios.get('/mission-templates', {
         params: {
           'filter[domaine.id]': this.domaine_id,

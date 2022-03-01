@@ -110,6 +110,7 @@ export default {
   data () {
     return {
       radio: this.initialType,
+      inputGeoType: 'municipality',
       radios: [
         { value: 'Mission en présentiel', label: 'Près de chez moi' },
         { value: 'Mission à distance', label: 'À distance' }
