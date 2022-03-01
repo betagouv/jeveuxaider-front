@@ -56,23 +56,47 @@
           besoin de validation.
         </div>
         <div class="grid grid-cols-4 gap-6">
-          <CardMissionTemplate
+          <Card
             title="Personnalisez votre mission"
             description="Tous les champs sont éditables. Elle sera publiée après validation par le référent départemental."
             image-url="/images/missions/card-add.png"
             state-text="Validation par un référent"
             state-style="warning"
             @click.native="onSelectTemplate()"
-          />
-
-          <CardMissionTemplate
+          >
+            <template #footer>
+              <div
+                class="border-t text-jva-blue-500 font-semibold text-center py-4 group-hover:bg-jva-blue-500 group-hover:text-white"
+              >
+                Choisir
+              </div>
+            </template>
+          </Card>
+          <Card
             v-for="missionTemplate in templates"
             :key="missionTemplate.id"
             :title="missionTemplate.title"
+            state-style="success"
+            state-text="Validation automatique"
             :description="missionTemplate.subtitle"
             :image-url="missionTemplate.photo ? missionTemplate.photo.urls.card : undefined"
             @click.native="onSelectTemplate(missionTemplate)"
-          />
+          >
+            <template #badges>
+              <div class="mb-2">
+                <Badge class="" :color="missionTemplate.reseau ? 'gray' : 'gray-light'">
+                  {{ missionTemplate.reseau ? missionTemplate.reseau.name : 'Disponible pour tous' }}
+                </Badge>
+              </div>
+            </template>
+            <template #footer>
+              <div
+                class="border-t text-jva-blue-500 font-semibold text-center py-4 group-hover:bg-jva-blue-500 group-hover:text-white"
+              >
+                Choisir
+              </div>
+            </template>
+          </Card>
         </div>
       </div>
 
@@ -96,13 +120,13 @@
 </template>
 
 <script>
-import CardMissionTemplate from '@/components/card/CardMissionTemplate.vue'
+import Card from '@/components/card/Card.vue'
 import FormMission from '@/components/form/FormMission.vue'
 import ButtonsSubmitFormMission from '@/components/custom/ButtonsSubmitFormMission.vue'
 
 export default {
   components: {
-    CardMissionTemplate,
+    Card,
     FormMission,
     ButtonsSubmitFormMission
   },
@@ -134,12 +158,11 @@ export default {
 
     if (this.domaine_id) {
       this.$set(this.mission, 'domaine_id', this.domaine_id)
-      console.log('this.structure.reseaux', this.structure.reseau)
-      console.log('this.structure.reseaux', this.structure.reseaux)
       const templates = await this.$axios.get('/mission-templates', {
         params: {
           'filter[domaine.id]': this.domaine_id,
           'filter[published]': 1,
+          'filter[state]': 'validated',
           'filter[with_reseaux]': this.structure.reseaux?.length
             ? this.structure.reseaux.map(reseau => reseau.id).join(',')
             : 'empty',

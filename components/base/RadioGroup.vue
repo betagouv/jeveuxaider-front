@@ -38,6 +38,7 @@ export default {
       },
       set (newValue) {
         this.$emit('input', newValue)
+        this.$emit('updated')
       }
     }
   }

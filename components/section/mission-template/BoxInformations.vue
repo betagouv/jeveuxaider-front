@@ -9,6 +9,7 @@
         <DescriptionListItem term="Modifié le" :description="$dayjs(missionTemplate.updated_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Titre" :description="missionTemplate.title" />
         <DescriptionListItem term="Sous titre" :description="missionTemplate.subtitle" />
+        <DescriptionListItem term="Domaine" :description="missionTemplate.domaine.name" />
       </DescriptionList>
     </Box>
   </div>

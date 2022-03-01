@@ -91,8 +91,14 @@ export default {
   data () {
     return {
       showOptions: false,
-      highlightIndex: null,
-      selectedOption: this.value ? this.options.find(item => item[this.attributeKey] == this.value) : null
+      highlightIndex: null
+    }
+  },
+  computed: {
+    selectedOption: {
+      get () {
+        return this.value ? this.options.find(item => item[this.attributeKey] == this.value) : null
+      }
     }
   },
   methods: {

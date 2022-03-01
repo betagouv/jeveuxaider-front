@@ -5,7 +5,7 @@
     />
     <div class="py-12">
       <div class="flex items-center justify-center text-3xl text-center h-32 my-32 text-gray-300">
-        Cette page est en construction
+        À venir prochainement
       </div>
     </div>
   </div>

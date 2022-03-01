@@ -28,12 +28,18 @@ export default {
       document.querySelector('#autocomplete-place').focus()
     },
     clearAddress () {
-      this.form.address = ''
-      this.form.zip = ''
-      this.form.city = ''
-      this.form.latitude = ''
-      this.form.longitude = ''
-      this.form.department = ''
+      this.$set(this.form, 'address', null)
+      this.$set(this.form, 'zip', null)
+      this.$set(this.form, 'city', null)
+      this.$set(this.form, 'latitude', null)
+      this.$set(this.form, 'longitude', null)
+      // this.$set(this.form, 'department', null)
+      // this.form.address = ''
+      // this.form.zip = ''
+      // this.form.city = ''
+      // this.form.latitude = ''
+      // this.form.longitude = ''
+      // this.form.department = ''
     },
     handleSelectedGeo (item) {
       if (!item) {

@@ -20,9 +20,14 @@
             Modifier
           </Button>
         </nuxt-link>
-        <Button v-if="$store.getters.contextRole === 'responsable'" class="opacity-25" variant="white" size="sm" icon="DuplicateIcon">
+        <ButtonMissionDuplicate
+          v-if="$store.getters.contextRole === 'responsable'"
+          :mission-id="mission.id"
+          :mission="mission"
+          @duplicated="handleDuplicated($event)"
+        >
           Dupliquer
-        </Button>
+        </ButtonMissionDuplicate>
       </div>
       <div class="border-t -mx-6 my-6" />
       <div class="text-sm  uppercase font-semibold text-gray-600">
@@ -57,7 +62,8 @@ import BoxPlace from '@/components/section/mission/BoxPlace'
 import BoxResponsable from '@/components/section/mission/BoxResponsable'
 import BoxInformations from '@/components/section/mission/BoxInformations'
 import MixinMission from '@/mixins/mission'
-import OnlineIndicator from '~/components/custom/OnlineIndicator'
+import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import ButtonMissionDuplicate from '@/components/custom/ButtonMissionDuplicate'
 
 export default {
   components: {
@@ -65,7 +71,8 @@ export default {
     BoxPlace,
     BoxResponsable,
     BoxInformations,
-    OnlineIndicator
+    OnlineIndicator,
+    ButtonMissionDuplicate
   },
   mixins: [MixinMission],
   props: {
@@ -96,14 +103,12 @@ export default {
     missionId: '$fetch'
   },
   methods: {
-    async handleChangeState (option) {
-      this.mission.state = option.key
-      await this.$axios.put(`/missions/${this.mission.id}`, this.mission)
-      this.$fetch()
+    handleDuplicated (mission) {
+      this.$emit('close')
       this.$emit('updated')
     },
-    async handleChangePriority (option) {
-      this.mission.is_priority = option.key
+    async handleChangeState (option) {
+      this.mission.state = option.key
       await this.$axios.put(`/missions/${this.mission.id}`, this.mission)
       this.$fetch()
       this.$emit('updated')

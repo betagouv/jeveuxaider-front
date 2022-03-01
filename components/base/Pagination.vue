@@ -67,15 +67,17 @@ export default {
       return Math.ceil(this.maxPages / 2) - 1
     },
     startPage () {
+      let startPage = 1
       if (this.currentPage <= this.maxPagesBeforeCurrentPage) {
-        return 1
+        return startPage
       } else if (this.currentPage + this.maxPagesAfterCurrentPage >= this.totalPages) {
         // current page near the end
-        return this.totalPages - this.maxPages + 1
+        startPage = this.totalPages - this.maxPages + 1
       } else {
         // current page somewhere in the middle
-        return this.currentPage - this.maxPagesBeforeCurrentPage
+        startPage = this.currentPage - this.maxPagesBeforeCurrentPage
       }
+      return startPage <= 0 ? 1 : startPage
     },
     endPage () {
       if (this.currentPage <= this.maxPagesBeforeCurrentPage) {
