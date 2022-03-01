@@ -1,7 +1,6 @@
 <template>
-  <div class="container">
+  <div class="">
     <DrawerMission :mission-id="drawerMissionId" @close="drawerMissionId = null" />
-
     <portal to="breadcrumb">
       <Breadcrumb
         :items="[

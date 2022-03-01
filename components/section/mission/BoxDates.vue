@@ -16,7 +16,7 @@
             {{ formattedDates }}
           </div>
           <div class="text-gray-500 text-sm">
-            {{ formattedCommitment }}
+            {{ formattedCommitment ? formattedCommitment : 'Engagement non spécifié' }}
           </div>
         </StackedListItem>
         <StackedListItem v-if="hasExpired" class="px-4" icon="⏰">

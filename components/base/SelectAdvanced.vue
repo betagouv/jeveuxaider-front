@@ -100,6 +100,7 @@ export default {
         return this.value ? this.options.find(item => item[this.attributeKey] == this.value) : null
       },
       set (newItem) {
+        this.$emit('changed', newItem)
         // this.handleSelectOption(newItem)
       }
     }

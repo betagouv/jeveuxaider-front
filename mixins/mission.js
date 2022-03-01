@@ -49,7 +49,7 @@ export default {
         return
       }
       if (startDate && endDate) {
-        return `Du ${this.$dayjs(startDate).format('D MMMM')} au ${this.$dayjs(endDate).format('D MMMM')}`
+        return `Du ${this.$dayjs(startDate).format('D MMMM')} au ${this.$dayjs(endDate).format('D MMMM YYYY')}`
       }
 
       return `À partir du ${this.$dayjs(startDate).format('D MMMM')}`
@@ -76,7 +76,7 @@ export default {
       if (this.mission.commitment__time_period) {
         return `${this.$options.filters.label(this.mission.commitment__duration, 'duration')} par ${this.$options.filters.label(this.mission.commitment__time_period, 'time_period')}`
       }
-      return this.$options.filters.label(this.mission.commitment__duration, 'duration')
+      return this.mission.commitment__duration ? this.$options.filters.label(this.mission.commitment__duration, 'duration') : null
     }
   }
 }

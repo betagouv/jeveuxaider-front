@@ -1,5 +1,5 @@
 <template>
-  <Box padding="xs" class="!shadow-sm hover:!shadow-md cursor-pointer grid grid-cols-3">
+  <Box padding="xs" class="!shadow-sm hover:!shadow-md cursor-pointer grid grid-cols-1 lg:grid-cols-3">
     <div v-if="participation.mission" class="col-span-1 pr-4 py-2 flex flex-col justify-between gap-4">
       <div>
         <div class="truncate text-sm text-gray-600">
@@ -31,7 +31,7 @@
           {{ participation.mission.name }}
         </div>
       </div>
-      <div class="pt-4 border-t border-dashed text-sm flex">
+      <div class="hidden lg:flex pt-4 border-t border-dashed text-sm">
         <div class="font-medium">
           {{ participation.mission.places_left | pluralize('place restante', 'places restantes') }}
         </div>
@@ -43,23 +43,25 @@
     <div v-else>
       La mission n'existe plus
     </div>
-    <div class="col-span-2 border-l -my-4 py-6 pl-6">
-      <div class="flex">
-        <Avatar
-          :image="participation.profile.avatar && participation.profile.avatar.urls.thumbMedium"
-          :initials="profile.short_name"
-          size="sm"
-          class="mr-4"
-        />
-        <div>
-          <div class="font-bold">
-            {{ profile.full_name }}
-          </div>
-          <div class="text-sm text-gray-600">
-            {{ $dayjs().to($dayjs(participation.created_at)).charAt(0).toUpperCase() + $dayjs().to($dayjs(participation.created_at)).slice(1) }}
+    <div class="col-span-2 lg:border-l -my-4 py-6 lg:pl-6 flex flex-col lg:flex-row ">
+      <div class="flex flex-col space-y-4 lg:flex-row lg:space-y-0">
+        <div class="flex">
+          <Avatar
+            :image="participation.profile.avatar && participation.profile.avatar.urls.thumbMedium"
+            :initials="profile.short_name"
+            size="sm"
+            class="mr-4"
+          />
+          <div>
+            <div class="font-bold">
+              {{ profile.full_name }}
+            </div>
+            <div class="text-sm text-gray-600">
+              {{ $dayjs().to($dayjs(participation.created_at)).charAt(0).toUpperCase() + $dayjs().to($dayjs(participation.created_at)).slice(1) }}
+            </div>
           </div>
         </div>
-        <div class="ml-auto">
+        <div class="lg:ml-auto">
           <Badge :color="participation.state">
             {{ participation.state }}
           </Badge>
