@@ -48,9 +48,11 @@
         )}`"
       >
         <template #action>
-          <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
-            Exporter
-          </Button>
+          <div class="">
+            <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
+              Exporter
+            </Button>
+          </div>
         </template>
       </SectionHeading>
       <Input

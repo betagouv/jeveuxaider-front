@@ -62,20 +62,21 @@
             >
               <div class="m-auto w-full" style="max-width: 550px">
                 <div
-                  class="px-4 py-2 pr-2 border border-gray-600 focus-within:border-jva-blue-500 focus-within:border-2  transition flex items-center rounded-xl"
+                  class="px-4 py-2 pr-2 border m-[1px] border-gray-600 focus-within:border-jva-blue-500 focus-within:border-2 focus-within:m-0 transition flex items-end rounded-xl"
                 >
                   <client-only>
-                    <textarea-autosize
+                    <TextareaAutosize
                       v-model="newMessage"
                       placeholder="Écrivez un message"
                       rows="1"
-                      class="m-auto w-full !outline-none leading-tight border-0"
+                      :max-height="120"
+                      class="m-auto w-full !outline-none leading-tight border-0 custom-scrollbar"
                       @keydown.enter.exact.prevent.native="onAddMessage"
                     />
                   </client-only>
 
                   <button
-                    class="px-3 py-1 ml-3 font-semibold text-sm rounded-full bg-[#070191] text-white hover:scale-105 transform transition"
+                    class="px-3 py-1 ml-3 font-semibold text-sm rounded-full bg-[#070191] text-white hover:scale-105 transform transition mb-1"
                     @click="onAddMessage"
                   >
                     Envoyer

@@ -5,7 +5,7 @@
         <div
           :class="[
             'relative inline-flex items-center bg-white border border-transparent rounded-l-md text-white',
-            { 'py-2 pl-3 pr-4' : size === 'sm'},
+            { 'pl-2 pr-3' : size === 'sm'},
             { 'py-2 pl-3 pr-4' : size === 'md'}
           ]"
         >
@@ -16,13 +16,17 @@
               { 'h-5 w-5' : size === 'md'}
             ]"
           />
-          <p class="ml-2.5 text-sm font-bold text-cool-gray-700 leading-4">
+          <p class="ml-2.5 text-sm font-bold text-cool-gray-700 leading-4 truncate">
             {{ selected.label }}
           </p>
         </div>
         <button
           type="button"
           class="relative inline-flex items-center bg-white p-2 rounded-l-none rounded-r-md text-sm font-medium text-white hover:bg-gray-100 focus:outline-none focus:z-10 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500"
+          :class="[
+            { 'p-1' : size === 'sm'},
+            { 'p-2' : size === 'md'},
+          ]"
           aria-haspopup="listbox"
           aria-expanded="true"
           aria-labelledby="listbox-label"

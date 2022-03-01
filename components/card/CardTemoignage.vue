@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="p-6">
-      <div class="flex justify-between gap-8">
+      <div class="flex flex-col lg:flex-row lg:justify-between gap-8">
         <div class="flex">
           <Avatar
             :image="temoignage.participation.profile.avatar && temoignage.participation.profile.avatar.urls.thumbMedium"

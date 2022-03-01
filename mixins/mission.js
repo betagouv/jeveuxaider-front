@@ -41,6 +41,42 @@ export default {
       }
 
       return true
+    },
+    formattedDates () {
+      const startDate = this.mission.start_date
+      const endDate = this.mission.end_date
+      if (!startDate) {
+        return
+      }
+      if (startDate && endDate) {
+        return `Du ${this.$dayjs(startDate).format('D MMMM')} au ${this.$dayjs(endDate).format('D MMMM YYYY')}`
+      }
+
+      return `À partir du ${this.$dayjs(startDate).format('D MMMM')}`
+    },
+    hasExpired () {
+      const now = this.$dayjs()
+      const endDate = this.mission.end_date
+      if (!endDate) {
+        return false
+      }
+
+      const endDateObject =
+        Number.isInteger(endDate) && this.$dayjs.unix(endDate).isValid()
+          ? this.$dayjs.unix(endDate)
+          : this.$dayjs(endDate, 'YYYY-MM-DD HH:mm:ss', 'fr', true).isValid()
+            ? this.$dayjs(endDate, 'YYYY-MM-DD HH:mm:ss')
+            : this.$dayjs(endDate).isValid()
+              ? this.$dayjs(endDate)
+              : null
+
+      return endDateObject && endDateObject.isBefore(now)
+    },
+    formattedCommitment () {
+      if (this.mission.commitment__time_period) {
+        return `${this.$options.filters.label(this.mission.commitment__duration, 'duration')} par ${this.$options.filters.label(this.mission.commitment__time_period, 'time_period')}`
+      }
+      return this.mission.commitment__duration ? this.$options.filters.label(this.mission.commitment__duration, 'duration') : null
     }
   }
 }

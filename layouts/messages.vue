@@ -15,7 +15,7 @@
             :class="[{ hide: !$store.getters['messaging/showPanelLeft'] }]"
           >
             <div
-              class="panel--header sticky top-0 bg-white px-6 border-b border-r border-cool-gray-200 flex items-center justify-between"
+              class="panel--header sticky top-0 bg-white px-6 py-3 border-b border-r border-cool-gray-200 flex items-center justify-between"
             >
               <div class="text-lg leading-8 font-bold text-gray-900">
                 {{ conversationsLabel }}
@@ -112,6 +112,8 @@
         </div>
       </div>
     </client-only>
+
+    <portal-target name="body-end" multiple />
   </div>
 </template>
 

@@ -27,13 +27,16 @@
                 v-for="(item, index) in radios"
                 :key="item.value"
                 class="flex flex-col lg:flex-row"
+                :class="[{'lg:border-l': index == 1}]"
               >
                 <div
-                  class="item w-full lg:w-auto lg:h-full flex items-center bg-white rounded-full lg:rounded-none transition m-0 mb-4 lg:mb-0 py-6 px-10"
+                  class="item w-full lg:w-auto lg:h-full flex items-center bg-white rounded-full lg:rounded-none transition m-0 mb-4 lg:mb-0 py-6 px-10 cursor-pointer"
                   :class="[{ 'lg:rounded-l-full': index == 0 }]"
+                  @click="$refs[`radio-${index}`][0].click()"
                 >
                   <input
                     :id="`radio-${index}`"
+                    :ref="`radio-${index}`"
                     v-model="radio"
                     type="radio"
                     :value="item.value"
@@ -49,21 +52,24 @@
                   >
                     <img :src="radio == item.value ? '/images/icons/check-primary.svg' : '/images/icons/check-gray.svg'">
                   </span>
-                  <label class="text-base font-extrabold text-black" :for="`radio-${index}`">{{ item.label }}</label>
+                  <label class="text-base font-extrabold text-black cursor-pointer" :for="`radio-${index}`">{{ item.label }}</label>
                 </div>
 
                 <transition name="fade-in">
                   <div v-if="index == 0 && radio == 'Mission en présentiel'" class="relative bg-white rounded-full transition m-0 mb-4 lg:mb-0 lg:rounded-none py-2 px-10">
                     <label class="text-sm text-gray-500" for="place">Votre ville</label>
                     <InputAutocomplete
-                      name="autocomplete-place"
+                      id="overlay-autocomplete"
+                      name="autocomplete-place-overlay"
                       label="Autocomplete"
                       placeholder="Ex: Paris"
                       :options="autocompleteOptions"
                       attribute-key="id"
                       attribute-label="label"
                       attribute-right-label="typeLabel"
-                      class-options="lg:w-96 lg:-left-28"
+                      class-options="pr-1 py-1"
+                      class-options-ul="custom-scrollbar"
+                      style-input="width: calc(100% - 38px)"
                       @selected="onPlaceSelect"
                       @fetch-suggestions="onFetchGeoSuggestions"
                       @mounted="onInitializedAutocomplete"
@@ -191,7 +197,7 @@ export default {
       }, 550)
     },
     onInitializedAutocomplete () {
-      document.querySelector('#autocomplete-place').focus()
+      document.querySelector('#autocomplete-place-overlay')?.focus()
     }
   }
 }
@@ -221,9 +227,26 @@ export default {
   }
 }
 
-::v-deep #autocomplete-place {
+::v-deep #autocomplete-place-overlay {
   border: none;
   @apply border-none py-0 px-0 ring-0 outline-none h-8 font-bold text-base;
+}
+
+#overlay-autocomplete {
+  ::v-deep .options-wrapper {
+    width: calc(100vw - 2rem);
+    left: -40px;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    @screen lg {
+      width: calc(100% + 200px);
+      left: -100px;
+    }
+    .options-wrapper-ul {
+      max-height: 210px;
+      overflow: auto;
+    }
+  }
 }
 
 </style>

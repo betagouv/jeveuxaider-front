@@ -139,7 +139,7 @@
           <Heading :level="3" class="mb-8">
             Votre organisation sur Internet
           </Heading>
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <FormControl
               label="Email public"
               html-for="email"
@@ -358,7 +358,7 @@
           >
             <MediaPickerDomaine
               v-if="$store.getters.contextRole === 'admin' || (!form.override_image1 && !form.override_image2)"
-              class="grid sm:grid-cols-2 gap-4"
+              class="grid grid-cols-1 lg:grid-cols-2 gap-4"
               collection="domaine__illustrations_organisation"
               preview-conversion="large"
               preview-sizes="200px"
@@ -373,7 +373,7 @@
             </div>
           </FormControl>
 
-          <div v-if="$store.getters.contextRole === 'admin'" class="grid grid-cols-2 gap-4">
+          <div v-if="$store.getters.contextRole === 'admin'" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <FormControl label="Surcharger visuel 1" html-for="avatar">
               <ImageCrop
                 :default-value="form.override_image1"

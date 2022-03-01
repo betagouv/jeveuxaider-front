@@ -108,7 +108,9 @@ export default {
         return false
       }
 
-      // TODO : Vérifier stockage heure updated_at et read_at
+      if (this.$dayjs(this.currentConversationUser.pivot.read_at).isSame(this.$dayjs(this.conversation.updated_at))) {
+        return true
+      }
 
       if (this.$dayjs(this.currentConversationUser.pivot.read_at).isAfter(this.$dayjs(this.conversation.updated_at))) {
         return true
@@ -117,7 +119,6 @@ export default {
       return false
     },
     nametype () {
-      // console.log(this.conversation)
       return this.conversation.conversable.mission?.structure.name
     }
   },

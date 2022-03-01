@@ -182,11 +182,11 @@
             </FormControl>
             <FormControl
               label="Fréquence"
-              html-for="commitment_frequency"
+              html-for="commitment__time_period"
             >
               <SelectAdvanced
-                v-model="form.commitment_frequency"
-                name="commitment_frequency"
+                v-model="form.commitment__time_period"
+                name="commitment__time_period"
                 placeholder="Fréquence"
                 :options="$labels.time_period"
               />
@@ -213,7 +213,7 @@
         </Heading>
         <div class="space-y-8">
           <div>
-            <RadioGroup v-model="form.type" :options="$labels.mission_types" variant="tabs" />
+            <RadioGroup v-model="form.type" :options="$labels.mission_types" variant="tabs" @updated="handleTypeChange" />
             <FormHelperText v-if="isPresentiel" class="mt-4">
               Recruter au plus près du lieu de mission et des bénéficiaires permet de faciliter l'engagement des bénévoles. Vous avez la possibilité de dupliquer cette mission sur plusieurs lieux.
             </FormHelperText>
@@ -408,17 +408,17 @@ export default {
         commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
         participations_max: number().min(1, 'Le nombre de bénévole recherché doit être supérieur à 1').required('Le nombre de bénévole recherché est requis'),
         department: string().nullable().required('Le département est requis'),
-        address: string().when('type', {
+        address: string().nullable().when('type', {
           is: 'Mission en présentiel',
           then: schema => schema.required("L'adresse est requise"),
           otherwise: schema => schema.nullable()
         }),
-        zip: string().when('type', {
+        zip: string().nullable().when('type', {
           is: 'Mission en présentiel',
           then: schema => schema.required('Le code postal est requis'),
           otherwise: schema => schema.nullable()
         }),
-        city: string().when('type', {
+        city: string().nullable().when('type', {
           is: 'Mission en présentiel',
           then: schema => schema.required('La ville est requise'),
           otherwise: schema => schema.nullable()
@@ -439,6 +439,11 @@ export default {
     }
   },
   methods: {
+    handleTypeChange () {
+      if (this.form.type === 'Mission à distance') {
+        this.clearAddress()
+      }
+    },
     handleSelectedSkill (item) {
       this.$set(this.form, 'skills', [...this.form.skills, item])
     },

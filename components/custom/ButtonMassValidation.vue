@@ -38,6 +38,7 @@ export default {
       if (res) {
         this.$toast.success(`Les ${this.count} participation(s) en attente ont été validée(s)`)
       }
+      this.showDialog = false
       this.loading = false
     }
   }

@@ -51,11 +51,8 @@
       <ButtonParticipationCancel
         v-if="isBenevole && participation.state == 'En attente de validation'"
         class="mt-3"
-        :form="participation"
-        @updated="onParticipationUpdate"
-        @messages-added="
-          $store.commit('messaging/incrementNewMessagesCount', $event.count)
-        "
+        :participation="participation"
+        @update="onParticipationUpdate"
       />
 
       <hr class="my-6">
@@ -177,10 +174,12 @@
 
 <script>
 import ConversationBenevole from '@/components/conversation/Benevole.vue'
+import ButtonParticipationCancel from '@/components/custom/ButtonParticipationCancel.vue'
 
 export default {
   components: {
-    ConversationBenevole
+    ConversationBenevole,
+    ButtonParticipationCancel
   },
   computed: {
     conversation () {
@@ -196,7 +195,7 @@ export default {
     }
   },
   methods: {
-    async onParticipationUpdate (participation) {
+    async onParticipationUpdate () {
       // A participation update adds 1 or 2 new messages, so re-fetch them.
       const messages = await this.$axios.get(`/conversations/${this.conversation.id}/messages`, {
         params: {
