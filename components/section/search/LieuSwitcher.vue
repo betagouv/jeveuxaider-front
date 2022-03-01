@@ -15,24 +15,27 @@
       ]"
       @click.prevent="onClickRadio(item.value)"
     >
-      <input
-        :id="`radio-${index}`"
-        v-model="radio"
-        type="radio"
-        :value="item.value"
-        name="mission-type"
-        class="hidden"
-      >
-      <span
-        class="h-5 w-5 flex items-center justify-center rounded-full"
-        :class="[
-          {'bg-gray-200': item.value == radio},
-          {'bg-jva-blue-400': (item.value != radio) && !thematique},
-          {'bg-gray-200': (item.value != radio) && thematique}
-        ]"
-      >
-        <img src="/images/icons/check-primary.svg">
-      </span>
+      <div>
+        <input
+          :id="`radio-${index}`"
+          v-model="radio"
+          type="radio"
+          :value="item.value"
+          name="mission-type"
+          class="hidden"
+        >
+        <span
+          class="h-5 w-5 flex items-center justify-center rounded-full"
+          :class="[
+            {'bg-gray-200': item.value == radio},
+            {'bg-jva-blue-400': (item.value != radio) && !thematique},
+            {'bg-gray-200': (item.value != radio) && thematique}
+          ]"
+        >
+          <img src="/images/icons/check-primary.svg">
+        </span>
+      </div>
+
       <label
         class="cursor-pointer"
         :for="`radio-${index}`"
@@ -48,6 +51,7 @@
           <label for="code_postal" class="text-gray-800 font-semibold text-xs">Votre ville</label>
           <InputAutocomplete
             id="code_postal"
+            :key="`code_postal_${$route.fullPath}`"
             name="autocomplete-place"
             class="-mt-1"
             label="Autocomplete"
@@ -57,7 +61,8 @@
             attribute-key="id"
             attribute-label="label"
             attribute-right-label="typeLabel"
-            class-options="lg:w-96 lg:-left-28 text-gray-800 font-medium"
+            class-options="!mt-4 lg:w-96 lg:-left-16 text-gray-800 font-medium"
+            style-input="width: calc(100% - 38px)"
             @selected="$emit('selected', $event)"
             @fetch-suggestions="onFetchGeoSuggestions"
             @mounted="onInitializedAutocomplete"
@@ -156,5 +161,15 @@ export default {
   ::v-deep #autocomplete-place {
     border: none;
     @apply border-none py-0 px-0 ring-0 outline-none h-8 font-bold text-base;
+  }
+
+  #code_postal {
+    ::v-deep .options-wrapper {
+      width: calc(100vw - 2rem);
+      left: -57px;
+      @screen md {
+        width: calc(100% + 181px);
+      }
+    }
   }
 </style>

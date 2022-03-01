@@ -16,14 +16,13 @@
         :placeholder="placeholder"
         :class="[
           'px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate',
-
-          //'px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate',
           {'pl-10': icon},
           {'bg-transparent': variant == 'transparent' && !value},
-          {'bg-white': variant == 'transparent' && value}
+          {'bg-white': variant == 'transparent' && value},
+          classInput
         ]"
         autocomplete="off"
-        ssstyle="width: calc(100% - 38px);"
+        :style="styleInput"
         @input="handleInput"
         @keydown="onKeydown"
       >
@@ -36,17 +35,18 @@
     </div>
     <div
       v-show="searchTerm && showOptions"
-      class="absolute w-full z-50 bg-white border border-gray-200 mt-2 overflow-hidden rounded-xl shadow-md"
+      class="options-wrapper absolute w-full z-50 bg-white border border-gray-200 mt-2 overflow-hidden rounded-xl shadow-md"
       :class="classOptions"
       @focusout="showOptions = false"
     >
       <ul
-        class="py-2"
+        class="options-wrapper-ul py-2"
+        :class="[classOptionsUl]"
       >
         <li
           v-for="(item, index) in options"
           :key="index"
-          class="flex justify-between items-center text-sm px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
+          class="flex justify-between items-center text-sm px-4 sm:px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
           :class="[
             {'bg-gray-50 text-jva-blue-500': highlightIndex == index},
             {'bg-gray-50 text-jva-blue-500': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
@@ -86,6 +86,9 @@ export default {
     attributeLabel: { type: String, default: 'name' },
     attributeRightLabel: { type: String, default: '' },
     classOptions: { type: String, default: '' },
+    classOptionsUl: { type: String, default: '' },
+    classInput: { type: String, default: '' },
+    styleInput: { type: String, default: '' },
     variant: { type: String, default: null }, // transparent
     clearAfterSelected: { type: Boolean, default: false }
   },
