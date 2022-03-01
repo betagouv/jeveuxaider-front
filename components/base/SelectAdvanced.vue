@@ -98,6 +98,9 @@ export default {
     selectedOption: {
       get () {
         return this.value ? this.options.find(item => item[this.attributeKey] == this.value) : null
+      },
+      set (newItem) {
+        // this.handleSelectOption(newItem)
       }
     }
   },

@@ -182,11 +182,11 @@
             </FormControl>
             <FormControl
               label="Fréquence"
-              html-for="commitment_frequency"
+              html-for="commitment__time_period"
             >
               <SelectAdvanced
-                v-model="form.commitment_frequency"
-                name="commitment_frequency"
+                v-model="form.commitment__time_period"
+                name="commitment__time_period"
                 placeholder="Fréquence"
                 :options="$labels.time_period"
               />
