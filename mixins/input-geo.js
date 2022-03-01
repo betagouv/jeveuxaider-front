@@ -25,7 +25,9 @@ export default {
       this.autocompleteOptions = formatOptions
     },
     onInitializedAutocomplete () {
-      document.querySelector('#autocomplete-place').focus()
+      if (!this.$route.query.place) {
+        document.querySelector('#autocomplete-place')?.focus()
+      }
     },
     clearAddress () {
       this.$set(this.form, 'address', null)
