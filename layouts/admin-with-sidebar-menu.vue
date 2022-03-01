@@ -12,7 +12,7 @@
             <SecondaryMenuTeteDeReseau v-if="$store.getters.contextRole === 'tete_de_reseau'" />
           </div>
         </aside>
-        <div class="lg:col-span-4">
+        <div class="lg:col-span-4 min-w-0">
           <Nuxt />
         </div>
       </div>

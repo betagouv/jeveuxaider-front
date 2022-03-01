@@ -11,9 +11,11 @@
     <div class="py-6">
       <SectionHeading :title="structure.name">
         <template #action>
-          <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit">
-            Enregistrer
-          </Button>
+          <div class="hidden lg:block">
+            <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit">
+              Enregistrer
+            </Button>
+          </div>
         </template>
       </Sectionheading>
 

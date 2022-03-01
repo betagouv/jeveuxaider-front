@@ -62,7 +62,7 @@
                 </div>
               </div>
             </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:justify-end">
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 flex justify-center lg:justify-end">
               <slot name="footer">
                 <Button variant="white" @click.native="$emit('close')">
                   Fermer
