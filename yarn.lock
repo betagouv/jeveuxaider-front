@@ -1337,6 +1337,25 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@flareapp/flare-client@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@flareapp/flare-client/-/flare-client-3.0.1.tgz#38651686d21279532977632efc822e20c55e7dbe"
+  integrity sha512-EQkFYKnh12D1cqRjmojPagqnlTR1Cis1NLFfZ+mjlCTN1Hy7NVFc/9+n7qoH2bl6yXLIn/CD5o52RY1jBGnYMw==
+  dependencies:
+    error-stack-parser "^2.0.2"
+
+"@flareapp/flare-vue@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@flareapp/flare-vue/-/flare-vue-3.0.1.tgz#8bf8b2a91ec38179323badad6c11ba46e369cbf5"
+  integrity sha512-zeE6BAIHTvac5Fqniz8gj7uud5iuHOsDuKG654xl+m8fav0pPsqUugFJO9glkCEdzSobuQz3fgWCdCf7pjdy6Q==
+
+"@flareapp/flare-webpack-plugin-sourcemap@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@flareapp/flare-webpack-plugin-sourcemap/-/flare-webpack-plugin-sourcemap-1.1.3.tgz#de2a1db8c0dd6a46468036ed8445c2fd8523d787"
+  integrity sha512-+vKZtNoc2suT+8MALI56TTE5NGQtFCU+5B3OvlowI+pzF+PM8YFbj+WEpu1wB2zR4DAFFEsS2y+X47FzTYp0YA==
+  dependencies:
+    axios "^0.21.1"
+
 "@gar/promisify@^1.0.1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
@@ -4498,6 +4517,13 @@ error-stack-parser@^2.0.0:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/error-stack-parser/-/error-stack-parser-2.0.6.tgz#5a99a707bd7a4c58a797902d48d82803ede6aad8"
   integrity sha512-d51brTeqC+BHlwF0BhPtcYgF5nlzf9ZZ0ZIUQNZpc9ZB9qw5IJ2diTrBY9jlCJkTLITYPjmiX6OWCwH+fuyNgQ==
+  dependencies:
+    stackframe "^1.1.1"
+
+error-stack-parser@^2.0.2:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/error-stack-parser/-/error-stack-parser-2.0.7.tgz#b0c6e2ce27d0495cf78ad98715e0cad1219abb57"
+  integrity sha512-chLOW0ZGRf4s8raLrDxa5sdkvPec5YdvwbFnqJme4rk0rFajP8mPtrDL1+I+CwrQDCjswDA5sREX7jYQDQs9vA==
   dependencies:
     stackframe "^1.1.1"
 

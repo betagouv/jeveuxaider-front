@@ -1,4 +1,5 @@
 import axios from 'axios'
+import FlareWebpackPluginSourcemap from '@flareapp/flare-webpack-plugin-sourcemap'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -52,7 +53,9 @@ export default {
     '~/plugins/axios.js',
     '~/plugins/heroicons.js',
     '~/plugins/axeptio.client.js',
+    '~/plugins/userback.client.js',
     '~/plugins/atinternet.client.js',
+    '~/plugins/flare.client.js',
     '~/plugins/yup.js',
     '~/plugins/vue-filters.js',
     { src: '~/plugins/vue-libraries.js', mode: 'client' },
@@ -131,6 +134,9 @@ export default {
     },
     algolia: {
       termsIndex: process.env.ALGOLIA_TERMS_INDEX
+    },
+    flare: {
+      projectKey: process.env.FLARE_KEY
     }
   },
 
@@ -153,7 +159,10 @@ export default {
         'tailwindcss/nesting': {}
       }
     },
-    transpile: ['vue-instantsearch', 'instantsearch.js/es', 'numeral']
+    transpile: ['vue-instantsearch', 'instantsearch.js/es', 'numeral'],
+    plugins: [
+      new FlareWebpackPluginSourcemap({ key: process.env.FLARE_KEY })
+    ]
   },
 
   // Plugins config
