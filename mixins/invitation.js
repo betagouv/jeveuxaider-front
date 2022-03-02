@@ -23,15 +23,13 @@ export default {
       this.invitationSelected = invitation
       this.showAlertDeleted = true
     },
-    handleConfirmDelete () {
-      this.$axios.delete(`/invitations/${this.invitationSelected.token}/delete`).then(() => {
-        this.$toast.success("L'invitation a été supprimée : " + this.invitationSelected.email)
-        this.$emit('updated')
-        this.showAlertDeleted = false
-      }).catch((err) => {
+    async handleConfirmDelete () {
+      await this.$axios.delete(`/invitations/${this.invitationSelected.token}/delete`).catch((err) => {
         console.log('Something went wrong', err)
         this.showAlertDeleted = false
       })
+      this.$toast.success("L'invitation a été supprimée : " + this.invitationSelected.email)
+      this.showAlertDeleted = false
     },
     roleLabel (role) {
       switch (role) {

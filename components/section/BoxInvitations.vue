@@ -5,7 +5,7 @@
       title="Supprimer l'invitation"
       :text="`L'invitation pour ${invitationSelected.email}  sera supprimée.`"
       :is-open="showAlertDeleted"
-      @confirm="handleConfirmDelete"
+      @confirm="handleConfirmDeleteInvitation"
       @cancel="showAlertDeleted = false"
     />
     <Disclosure>
@@ -70,6 +70,12 @@ export default {
     return {
       invitationSelected: {},
       showAlertDeleted: false
+    }
+  },
+  methods: {
+    async handleConfirmDeleteInvitation () {
+      await this.handleConfirmDelete()
+      this.$emit('updated')
     }
   }
 }
