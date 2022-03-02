@@ -120,16 +120,16 @@
           </div>
 
           <div class="mt-6">
+            <a href="/accessibilite" class="mr-2 hover:underline border-r pr-2">
+              Accessibilité : Non conforme
+            </a>
             Sauf mention contraire, tous les textes de ce site sont sous
             <a
               href="https://github.com/etalab/licence-ouverte/blob/master/LO.md"
               target="_blank"
               class="inline-flex items-baseline"
             >
-              <span class="underline">licence etatlab-2.0</span>
-
-              <ExternalSvg class="flex-none ml-1" width="10" height="10" />
-            </a>
+              <span class="underline">licence etatlab-2.0</span> <ExternalSvg class="flex-none ml-1" width="10" height="10" /></a>
           </div>
         </div>
       </div>
