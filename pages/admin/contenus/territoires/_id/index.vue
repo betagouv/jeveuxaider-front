@@ -7,6 +7,14 @@
         { label: territoire.name },
       ]"
     />
+    <AlertDialog
+      theme="danger"
+      title="Supprimer le responsable"
+      :text="`<strong>${memberSelected.full_name}</strong> ne sera plus responsable du territoire <strong>${territoire.name}</strong>`"
+      :is-open="showAlertMemberDeleted"
+      @confirm="handleConfirmDeleteMember"
+      @cancel="showAlertMemberDeleted = false"
+    />
     <Drawer :is-open="showDrawerInvitation" form-id="form-invitation" submit-label="Envoyer l'invitation" @close="showDrawerInvitation = false">
       <template #title>
         <Heading :level="3">
@@ -71,11 +79,19 @@
             <BoxInvitations v-if="canManageTerritoire && queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" @updated="$fetch()" />
 
             <Box v-for="responsable in territoire.responsables" :key="responsable.id" variant="flat" padding="xs">
-              <DescriptionList v-if="responsable">
-                <DescriptionListItem term="Nom" :description="responsable.full_name" />
-                <DescriptionListItem term="E-mail" :description="responsable.email" />
-                <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-              </DescriptionList>
+              <div class="flex justify-between items-start">
+                <DescriptionList v-if="responsable">
+                  <DescriptionListItem term="Nom" :description="responsable.full_name" />
+                  <DescriptionListItem term="E-mail" :description="responsable.email" />
+                  <DescriptionListItem term="Mobile" :description="responsable.mobile" />
+                </DescriptionList>
+                <div class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                  <div class="group-hover:block hidden">
+                    Supprimer
+                  </div>
+                  <div><TrashIcon class="ml-2 h-5 w-5" /></div>
+                </div>
+              </div>
             </Box>
             <Button v-if="canManageTerritoire" variant="white" @click.native="showDrawerInvitation = true">
               <UsersIcon class="h-4 w-4 mr-2" /> Inviter un responsable
@@ -140,7 +156,9 @@ export default {
   data () {
     return {
       showDrawerInvitation: false,
-      queryInvitations: null
+      queryInvitations: null,
+      memberSelected: {},
+      showAlertMemberDeleted: false
     }
   },
   async fetch () {
@@ -155,6 +173,17 @@ export default {
     handleSubmitInvitation () {
       this.showDrawerInvitation = false
       this.$fetch()
+    },
+    handleDeleteMember (member) {
+      this.memberSelected = member
+      this.showAlertMemberDeleted = true
+    },
+    async handleConfirmDeleteMember () {
+      await this.$axios.delete(`/territoires/${this.territoire.id}/responsables/${this.memberSelected.id}`)
+      const { data: territoire } = await this.$axios.get(`/territoires/${this.territoire.id}`)
+      this.territoire = territoire
+      this.memberSelected = {}
+      this.showAlertMemberDeleted = false
     }
   }
 }

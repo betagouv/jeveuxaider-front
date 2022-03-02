@@ -7,6 +7,14 @@
         { label: reseau.name },
       ]"
     />
+    <AlertDialog
+      theme="danger"
+      title="Supprimer le responsable"
+      :text="`<strong>${memberSelected.full_name}</strong> ne sera plus responsable du réseau <strong>${reseau.name}</strong>`"
+      :is-open="showAlertMemberDeleted"
+      @confirm="handleConfirmDeleteMember"
+      @cancel="showAlertMemberDeleted = false"
+    />
     <Drawer :is-open="showDrawerInvitation" form-id="form-invitation" submit-label="Envoyer l'invitation" @close="showDrawerInvitation = false">
       <template #title>
         <Heading :level="3">
@@ -130,11 +138,19 @@
             <BoxInvitations v-if="queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" @updated="$fetch()" />
 
             <Box v-for="responsable in reseau.responsables" :key="responsable.id" variant="flat" padding="xs">
-              <DescriptionList v-if="responsable">
-                <DescriptionListItem term="Nom" :description="responsable.full_name" />
-                <DescriptionListItem term="E-mail" :description="responsable.email" />
-                <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-              </DescriptionList>
+              <div class="flex justify-between items-start">
+                <DescriptionList v-if="responsable">
+                  <DescriptionListItem term="Nom" :description="responsable.full_name" />
+                  <DescriptionListItem term="E-mail" :description="responsable.email" />
+                  <DescriptionListItem term="Mobile" :description="responsable.mobile" />
+                </DescriptionList>
+                <div class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                  <div class="group-hover:block hidden">
+                    Supprimer
+                  </div>
+                  <div><TrashIcon class="ml-2 h-5 w-5" /></div>
+                </div>
+              </div>
             </Box>
             <Button variant="white" @click.native="showDrawerInvitation = true">
               <UsersIcon class="h-4 w-4 mr-2" /> Inviter un responsable
@@ -179,7 +195,9 @@ export default {
     return {
       stats: null,
       showDrawerInvitation: false,
-      queryInvitations: null
+      queryInvitations: null,
+      memberSelected: {},
+      showAlertMemberDeleted: false
     }
   },
   async fetch () {
@@ -197,6 +215,17 @@ export default {
     handleSubmitInvitation () {
       this.showDrawerInvitation = false
       this.$fetch()
+    },
+    handleDeleteMember (member) {
+      this.memberSelected = member
+      this.showAlertMemberDeleted = true
+    },
+    async handleConfirmDeleteMember () {
+      await this.$axios.delete(`/reseaux/${this.reseau.id}/responsables/${this.memberSelected.id}`)
+      const { data: reseau } = await this.$axios.get(`/reseaux/${this.reseau.id}`)
+      this.reseau = reseau
+      this.memberSelected = {}
+      this.showAlertMemberDeleted = false
     }
   }
 }
