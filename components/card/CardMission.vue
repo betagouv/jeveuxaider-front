@@ -10,6 +10,7 @@
         class="w-full h-full object-cover"
         width="300"
         height="143"
+        @error="onImgError"
       >
 
       <div class="custom-gradient absolute inset-0" />
@@ -163,6 +164,11 @@ export default {
       return startDateObject && startDateObject.isAfter(now)
         ? `À partir du ${startDateObject.format('D MMMM')}`
         : null
+    }
+  },
+  methods: {
+    onImgError ($event) {
+      $event.target.srcset = '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     }
   }
 }

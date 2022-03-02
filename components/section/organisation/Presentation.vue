@@ -35,6 +35,7 @@
             :alt="organisation.name"
             class="my-8 h-auto"
             style="max-width: 16rem; max-height: 120px"
+            @error="onLogoError"
           >
 
           <h1
@@ -61,6 +62,7 @@
       <img
         :srcset="srcSet"
         class="lg:absolute object-cover w-full lg:w-1/2 h-full max-h-[400px] lg:max-h-full"
+        @error="onIllustrationError"
       >
     </div>
   </div>
@@ -81,6 +83,14 @@ export default {
   data () {
     return {
       expandDescription: false
+    }
+  },
+  methods: {
+    onLogoError ($event) {
+      $event.target.remove()
+    },
+    onIllustrationError ($event) {
+      $event.target.srcset = '/images/organisation-default-2.webp'
     }
   }
 }

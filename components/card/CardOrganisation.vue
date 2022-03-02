@@ -9,6 +9,7 @@
         class="w-full h-full object-cover"
         width="300"
         height="143"
+        @error="onImgError"
       >
 
       <div class="custom-gradient absolute inset-0" />
@@ -96,6 +97,11 @@ export default {
       return this.organisation.override_image1?.urls.large ??
         this.organisation.illustrations?.[0]?.urls.large ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+    }
+  },
+  methods: {
+    onImgError ($event) {
+      $event.target.srcset = '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     }
   }
 }
