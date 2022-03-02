@@ -43,7 +43,7 @@
     <div v-else>
       La mission n'existe plus
     </div>
-    <div class="col-span-2 lg:border-l -my-4 py-6 lg:pl-6 flex flex-col lg:flex-row ">
+    <div class="col-span-2 lg:border-l -my-4 py-6 lg:pl-6 flex flex-col">
       <div class="flex flex-col space-y-4 lg:flex-row lg:space-y-0">
         <div class="flex">
           <Avatar
