@@ -289,7 +289,7 @@
                       :loading="loading"
                       @click="onSubmit"
                     >
-                      Je m'inscrit en tant que bénévole
+                      Je m'inscris en tant que bénévole
                     </Button>
 
                     <div class="mt-6 mb-3 bg-gray-50">
