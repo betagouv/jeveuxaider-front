@@ -36,8 +36,13 @@ export default {
   },
   methods: {
     strapiSeoOgImage (format) {
-      // console.log('this.page.attributes.seo.image.media.data.attributes.formats', this.page.attributes.seo.image.media.data.attributes.formats)
-      return this.page.attributes.seo?.image?.media?.data ? this.$config.strapi.url + this.page.attributes.seo.image.media.data.attributes.formats[format].url : '/images/share-image.jpg'
+      if (!this.page.attributes.seo) {
+        return '/images/share-image.jpg'
+      }
+      if (!this.page.attributes.seo.image.media.data.attributes.formats[format]) {
+        return '/images/share-image.jpg'
+      }
+      return this.$config.strapi.url + this.page.attributes.seo.image.media.data.attributes.formats[format].url
     }
   }
 }
