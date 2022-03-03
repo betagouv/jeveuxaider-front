@@ -34,7 +34,8 @@ import {
   MailIcon,
   ChevronUpIcon,
   ShareIcon,
-  DotsVerticalIcon
+  DotsVerticalIcon,
+  AdjustmentsIcon
 } from '@vue-hero-icons/outline'
 import { InformationCircleIcon, UsersIcon, HomeIcon, ChevronDownIcon as ChevronDownSolidIcon, CheckIcon as CheckSolidIcon, PlusCircleIcon, MinusCircleIcon, UserIcon as UserSolidIcon } from '@vue-hero-icons/solid'
 
@@ -81,7 +82,8 @@ const components = {
   IdentificationIcon,
   ArchiveIcon,
   MailIcon,
-  ChevronUpIcon
+  ChevronUpIcon,
+  AdjustmentsIcon
 }
 
 Object.entries(components).forEach(([name, component]) => {

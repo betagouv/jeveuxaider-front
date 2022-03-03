@@ -63,13 +63,14 @@
                   class="toggle-filters w-full p-2 pr-3 lg:hidden border border-white rounded-lg flex items-center justify-center"
                   @click="showFilters = !showFilters"
                 >
-                  <img
+                  <!-- <img
                     class="flex-none mr-4"
                     src="/images/filter.svg"
                     alt="Filtrer"
                     width="18px"
                     height="23px"
-                  >
+                  > -->
+                  <AdjustmentsIcon class="mr-2" />
                   <span>Précisez votre recherche</span>
                 </div>
               </div>
@@ -105,7 +106,8 @@
                     </div>
 
                     <Button class="p-2 right-0 top-0" @click.native="showFilters = false">
-                      Afficher les résultats
+                      <span class="hidden sm:inline">Afficher les résultats</span>
+                      <span class="sm:hidden">Afficher</span>
                     </Button>
                   </div>
                 </div>
