@@ -39,6 +39,12 @@
           ]"
         />
         <div v-if="!$route.hash" class="space-y-8">
+          <SelectMissionState
+            v-if="canEditStatut"
+            :value="mission.state"
+            :mission-stats="missionStats"
+            @selected="handleChangeState($event)"
+          />
           <BoxDates :mission="mission" />
           <BoxPlace :mission="mission" />
           <BoxEnChiffre :mission="mission" />
@@ -63,6 +69,7 @@ import BoxDates from '@/components/section/mission/BoxDates.vue'
 import History from '@/components/section/History.vue'
 import MixinMission from '@/mixins/mission'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
+import SelectMissionState from '@/components/custom/SelectMissionState'
 
 export default {
   components: {
@@ -75,7 +82,8 @@ export default {
     BoxEnChiffre,
     BoxDates,
     History,
-    OnlineIndicator
+    OnlineIndicator,
+    SelectMissionState
   },
   mixins: [MixinMission],
   layout: 'admin',
@@ -97,6 +105,8 @@ export default {
       return error({ statusCode: 404 })
     }
 
+    const { data: missionStats } = await $axios.get(`/statistics/missions/${params.id}`)
+
     if (store.getters.contextRole == 'responsable') {
       if (store.getters.contextableId != mission.structure_id) {
         return error({ statusCode: 403 })
@@ -104,7 +114,14 @@ export default {
     }
 
     return {
-      mission
+      mission,
+      missionStats
+    }
+  },
+  methods: {
+    async handleChangeState (event) {
+      this.mission.state = event.key
+      await this.$axios.put(`/missions/${this.mission.id}`, this.mission)
     }
   }
 }

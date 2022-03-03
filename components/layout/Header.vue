@@ -347,7 +347,6 @@ export default {
   },
   methods: {
     async switchRole (role) {
-      console.log('switchRole', role)
       await this.$store.dispatch('auth/updateUser', {
         context_role: role.key,
         contextable_type: role.contextable_type ?? null,

@@ -27,17 +27,17 @@ export default {
   async asyncData ({ $config, $strapi, error }) {
     $strapi.setToken($config.strapi.token)
 
-    try {
-      const response = await $strapi.find('api/pages',
-        {
-          'filters[slug][$eq]': 'politique-de-confidentialite',
-          'populate[zone][populate]': '*',
-          'populate[seo][populate][image][populate]': '*'
-        })
+    const response = await $strapi.find('api/pages',
+      {
+        'filters[slug][$eq]': 'politique-de-confidentialite',
+        'populate[zone][populate]': '*',
+        'populate[seo][populate][image][populate]': '*'
+      })
+    if (response.data.length) {
       return {
-        page: response.data.length ? response.data[0] : null
+        page: response.data[0]
       }
-    } catch (err) {
+    } else {
       return error({ statusCode: 404 })
     }
   },

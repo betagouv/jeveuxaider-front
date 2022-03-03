@@ -5,6 +5,7 @@
         v-if="domaine.banner"
         :srcset="domaine.banner.urls.large"
         :alt="domaine.title"
+        sizes="100vw"
         class="absolute object-cover object-center w-full h-full"
         @error="$event.target.srcset = '/images/organisation-default-2.webp'"
       >
@@ -121,6 +122,7 @@
             <img
               :srcset="media.urls.carousel"
               :alt="`illustration ${domaine.name}`"
+              sizes="(min-width: 1024px) 16.666vw, (min-width: 768px) 33.333vw, 50vw"
               height="430"
               width="430"
               @error="$event.target.remove()"
