@@ -24,18 +24,20 @@
 import MixinStrapi from '@/mixins/strapi'
 export default {
   mixins: [MixinStrapi],
-  async asyncData ({ $config, $strapi }) {
+  async asyncData ({ $config, $strapi, error }) {
     $strapi.setToken($config.strapi.token)
     const response = await $strapi.find('api/pages',
       {
         'filters[slug][$eq]': 'mentions-legales',
         'populate[zone][populate]': '*',
         'populate[seo][populate][image][populate]': '*'
-
       })
-
-    return {
-      page: response.data.length ? response.data[0] : null
+    if (response.data.length) {
+      return {
+        page: response.data[0]
+      }
+    } else {
+      return error({ statusCode: 404 })
     }
   },
   head () {
