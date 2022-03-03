@@ -110,21 +110,21 @@
                     :value="stats.organisations_actives"
                     :title="`${$options.filters.pluralize(stats.organisations_actives, 'Organisation active', 'Organisations actives', false)}`"
                     :subtitle="`sur ${$options.filters.formatNumber(stats.organisations)} ${$options.filters.pluralize(stats.organisations, 'organisations', 'organisations', false)}`"
-                    link="/admin/organisations"
+                    :link="`/admin/organisations?filter[reseaux.id]=${reseau.id}&filter[reseaux.name]=${reseau.name}`"
                     link-label="Organisations"
                   />
                   <CardStatistic
                     :value="stats.missions_actives"
                     :title="`${$options.filters.pluralize(stats.missions_actives, 'Missions en ligne', 'Missions en ligne', false)}`"
                     :subtitle="`sur ${$options.filters.formatNumber(stats.missions)} ${$options.filters.pluralize(stats.missions, 'mission', 'missions', false)}`"
-                    :link="`/admin/missions?filter[ofReseau]=${reseau.id}`"
+                    :link="`/admin/missions?filter[structure.reseaux.id]=${reseau.id}&filter[structure.reseaux.name]=${reseau.name}`"
                     link-label="Missions"
                   />
                   <CardStatistic
                     :value="stats.participations_state['Validée']"
                     :title="`${$options.filters.pluralize(stats.participations_state['Validée'], 'Participation validée', 'Participations validées', false)}`"
                     :subtitle="`sur ${$options.filters.formatNumber(stats.participations)} ${$options.filters.pluralize(stats.participations, 'candidature', 'candidatures', false)}`"
-                    :link="`/admin/participations?filter[ofReseau]=${reseau.id}`"
+                    :link="`/admin/participations?filter[ofReseau]=${reseau.id}&reseau_name=${reseau.name}`"
                     link-label="Participations"
                   />
                 </div>

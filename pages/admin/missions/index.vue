@@ -7,6 +7,7 @@
       />
     </template>
     <template #sidebar>
+      <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
       <div class="flex flex-col gap-y-4 sticky top-8">
         <InputAutocomplete
           v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
@@ -218,11 +219,13 @@ import QueryBuilder from '@/mixins/query-builder'
 import CardMission from '@/components/card/CardMission.vue'
 import DrawerMission from '@/components/drawer/DrawerMission.vue'
 import MixinExport from '@/mixins/export'
+import BoxContext from '@/components/section/BoxContext.vue'
 
 export default {
   components: {
     CardMission,
-    DrawerMission
+    DrawerMission,
+    BoxContext
   },
   mixins: [QueryBuilder, MixinExport],
   layout: 'admin',

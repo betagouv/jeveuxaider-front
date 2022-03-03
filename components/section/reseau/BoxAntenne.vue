@@ -4,7 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         Antennes
       </div>
-      <Link :to="`/admin/organisations?filter[ofReseau]=${reseau.id}`" icon="ChevronRightIcon">
+      <Link :to="`/admin/organisations?filter[reseaux.id]=${reseau.id}&filter[reseaux.name]=${reseau.name}`" icon="ChevronRightIcon">
         Consulter
       </Link>
     </div>

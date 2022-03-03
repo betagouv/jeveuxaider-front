@@ -4,7 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         Participations
       </div>
-      <Link :to="`/admin/participations?filter[mission.template_id]=${missionTemplate.id}`" icon="ChevronRightIcon">
+      <Link :to="`/admin/participations?filter[mission.template.id]=${missionTemplate.id}&template_name=${missionTemplate.title}`" icon="ChevronRightIcon">
         Consulter
       </Link>
     </div>

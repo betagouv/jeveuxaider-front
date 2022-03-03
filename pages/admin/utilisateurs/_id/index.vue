@@ -79,7 +79,7 @@
               </div>
               <div class="border-t -mx-6 mt-6 mb-4" />
               <div class="flex justify-center text-sm">
-                <Link :to="`/admin/participations?filter[search]=${profile.full_name}`">
+                <Link :to="`/admin/participations?filter[profile.id]=${profile.id}&full_name=${profile.full_name}`">
                   Voir les participations
                 </Link>
               </div>
