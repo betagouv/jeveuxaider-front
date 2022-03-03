@@ -24,7 +24,7 @@
             <div>
               {{ invitation.email }}
             </div>
-            <div class="text-gray-500 font-medium">
+            <div v-if="invitation.properties && invitation.properties.antenne_name" class="text-gray-500 font-medium">
               {{ invitation.properties.antenne_name }}
             </div>
           </div>
