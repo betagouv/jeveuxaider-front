@@ -8,7 +8,7 @@ export default {
       return this.page.attributes.seo.metaDescription
     },
     strapiSeoHead () {
-      if (this.page.attributes.seo) {
+      if (this.page && this.page.attributes.seo) {
         return {
           title: `${this.strapiSeoMetaTitle} | JeVeuxAider.gouv.fr`,
           link: [

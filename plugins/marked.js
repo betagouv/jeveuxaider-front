@@ -14,6 +14,9 @@ const renderer = {
   },
   strong (text) {
     return `<span class="font-medium text-gray-900">${text}</span>`
+  },
+  list (body, ordered, start) {
+    return `<ul class="ml-4 text-gray-600">${body}</ul>`
   }
 }
 
