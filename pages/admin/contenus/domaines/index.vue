@@ -52,10 +52,9 @@
       >
         <template #footer>
           <div
-            class="border-t text-gray-900 font-semibold  text-sm text-center py-4 opacity-25"
+            class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
           >
-            @TODO
-            {{ $options.filters.formatNumber(domaine.missions_count) }} {{ $options.filters.pluralize(domaine.missions_count, 'mission', 'missions', false) }}
+            {{ $options.filters.formatNumber(domaine.mission_templates_count) }} {{ $options.filters.pluralize(domaine.mission_templates_count, 'modèle de mission', 'modèles de missions', false) }}
           </div>
         </template>
       </Card>
