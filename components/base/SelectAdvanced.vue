@@ -11,7 +11,7 @@
         :id="name"
         :name="name"
         :tabindex="!disabled && '0'"
-        class="cursor-pointer px-6 py-3 text-sm rounded-xl block w-full focus:outline-none border border-gray-200 focus:ring-1  bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500"
+        class="cursor-pointer px-6 py-3 pr-10 text-sm rounded-xl block w-full focus:outline-none border border-gray-200 focus:ring-1 bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate"
         :class=" [
           { 'pl-10': icon},
           {'!cursor-not-allowed !bg-gray-100': disabled},
@@ -43,7 +43,7 @@
     </div>
     <div
       v-show="showOptions"
-      class="absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-1 overscroll-contain"
+      class="absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-1 overscroll-contain min-w-[200px]"
       @focusout="showOptions = false"
     >
       <ul
@@ -52,7 +52,7 @@
         <li
           v-for="(item, index) in options"
           :key="index"
-          class="flex justify-between items-center text-sm px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
+          class="relative flex justify-between items-center text-sm px-8 py-2 pr-10 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
           :class="[
             {'bg-gray-50 text-jva-blue-500': highlightIndex == index},
             {'bg-gray-50 text-jva-blue-500': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
@@ -62,7 +62,7 @@
           <span class="">
             {{ item[attributeLabel] }}
           </span>
-          <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="" />
+          <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="absolute right-2" />
         </li>
         <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
           {{ labelEmpty }}
