@@ -53,6 +53,7 @@ export default {
       articles: []
     }
   },
+  fetchOnServer: false,
   async fetch () {
     const { data: articles } = await axios.get(
       `${this.$config.blog.restApiUrl}/?per_page=6`
