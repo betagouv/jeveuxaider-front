@@ -5,8 +5,8 @@
         <Heading :level="3" class="mb-8">
           Informations personnels
         </Heading>
-        <div class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2">
-          <FormControl label="Photo de profil" html-for="avatar" class="col-span-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <FormControl class="md:col-span-2" label="Photo de profil" html-for="avatar">
             <ImageCrop
               :default-value="form.avatar"
               :preview-width="100"
@@ -115,7 +115,7 @@
             />
           </FormControl>
 
-          <FormControl label="Choisissez vos domaines de prédilection" html-for="domaines" required :error="errors.domaines" class="col-span-2">
+          <FormControl label="Choisissez vos domaines de prédilection" html-for="domaines" required :error="errors.domaines" class="md:col-span-2">
             <CheckboxGroup
               v-model="form.domaines"
               name="domaines"
@@ -124,13 +124,13 @@
               is-model
             />
           </FormControl>
-          <FormControl label="Décrivez vos motivations" html-for="description" class="col-span-2">
+          <FormControl label="Décrivez vos motivations" html-for="description" class="md:col-span-2">
             <Textarea v-model="form.description" name="description" placeholder="Vos motivations en quelques mots..." />
           </FormControl>
         </div>
       </Box>
     </div>
-    <div class="lg:col-span-2 space-y-12">
+    <div class="md:col-span-2 space-y-12">
       <Box>
         <Heading :level="3" class="mb-8">
           Disponibilités
@@ -159,12 +159,12 @@
             <FormLabel html-for="frequence" required>
               À quelle fréquence souhaitez-vous vous engager&nbsp;?
             </FormLabel>
-            <div class="flex flex-col lg:flex-row gap-2 lg:gap-8 lg:items-center lg:justify-center">
+            <div class="flex flex-col sm:flex-row gap-2 lg:gap-4 sm:items-center">
               <div class="lg:w-1/2">
                 <SelectAdvanced
                   v-model="form.commitment__duration"
                   name="commitment__duration"
-                  placeholder="Sélectionnez une durée"
+                  placeholder="Durée"
                   :options="$labels.duration"
                 />
                 <FormError v-if="errors.commitment__duration">
@@ -177,9 +177,8 @@
               <div class="lg:w-1/2">
                 <SelectAdvanced
                   v-model="form.commitment__time_period"
-                  class="lg:w-1/2"
                   name="commitment__time_period"
-                  placeholder="Sélectionnez une durée"
+                  placeholder="Fréquence"
                   :options="$labels.time_period"
                 />
                 <FormError v-if="errors.commitment__time_period">
