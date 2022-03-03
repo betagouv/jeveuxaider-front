@@ -27,6 +27,7 @@
                 :alt="media.name"
                 :srcset="media.urls.small"
                 style="max-width: 130px"
+                @error="$event.target.remove()"
               >
             </div>
           </div>

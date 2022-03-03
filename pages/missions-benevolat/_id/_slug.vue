@@ -102,6 +102,7 @@
             width="630"
             height="300"
             data-not-lazy
+            @error="$event.target.srcset = '/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x'"
           >
 
           <component
@@ -116,6 +117,7 @@
               :alt="mission.structure.name"
               class="my-auto h-10 object-contain"
               style="max-width: 120px"
+              @error="$event.target.remove()"
             >
           </component>
 

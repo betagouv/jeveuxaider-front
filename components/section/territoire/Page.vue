@@ -9,6 +9,7 @@
           :alt="territoire.name"
           class="mx-auto"
           style="max-height: 110px"
+          @error="$event.target.remove()"
         >
       </div>
     </div>

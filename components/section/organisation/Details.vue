@@ -5,6 +5,7 @@
       <img
         :srcset="srcSet"
         class="lg:absolute object-cover w-full lg:w-1/2 h-full max-h-[400px] lg:max-h-full"
+        @error="onIllustrationError"
       >
     </div>
 
@@ -38,6 +39,11 @@ export default {
     srcSet: {
       type: String,
       required: true
+    }
+  },
+  methods: {
+    onIllustrationError ($event) {
+      $event.target.srcset = '/images/organisation-default-1.webp'
     }
   }
 }

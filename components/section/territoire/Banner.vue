@@ -16,6 +16,7 @@
         width="425"
         height="572"
         class="banner absolute object-cover object-center w-full h-full"
+        @error="$event.target.remove()"
       >
     </picture>
 

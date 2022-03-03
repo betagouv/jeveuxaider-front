@@ -14,7 +14,7 @@
     >
       {{ stateText }}
     </div>
-    <img class="object-cover h-36 w-full mt-[-24px]" :srcset="imageUrl" sizes="320px">
+    <img class="object-cover h-36 w-full mt-[-24px]" :srcset="imageUrl" sizes="320px" @error="onImgError">
     <div class="px-6 py-4 flex-1">
       <slot name="badges" />
       <div class="font-extrabold mb-2 tracking-tight text-lg line-clamp-4">
@@ -52,6 +52,11 @@ export default {
     stateStyle: {
       type: String,
       default: 'success'
+    }
+  },
+  methods: {
+    onImgError ($event) {
+      $event.target.srcset = '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     }
   }
 }

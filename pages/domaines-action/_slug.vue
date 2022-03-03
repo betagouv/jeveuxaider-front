@@ -6,6 +6,7 @@
         :srcset="domaine.banner.urls.large"
         :alt="domaine.title"
         class="absolute object-cover object-center w-full h-full"
+        @error="$event.target.srcset = '/images/organisation-default-2.webp'"
       >
 
       <div
@@ -102,6 +103,7 @@
               class="h-14 object-contain"
               alt="logo-partenaire-domaine"
               :srcset="media.urls.small"
+              @error="$event.target.remove()"
             >
           </div>
         </div>
@@ -121,6 +123,7 @@
               :alt="`illustration ${domaine.name}`"
               height="430"
               width="430"
+              @error="$event.target.remove()"
             >
           </div>
         </div>
@@ -233,6 +236,7 @@
               alt="Partenaire"
               class="h-14 object-contain"
               :srcset="media.urls.small"
+              @error="$event.target.remove()"
             >
           </div>
         </div>
