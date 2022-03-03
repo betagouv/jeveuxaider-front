@@ -91,6 +91,8 @@
         />
         <div v-if="!$route.hash">
           <div class="space-y-8">
+            <BoxAntenne :reseau="reseau" :stats="stats" @updated="$fetch()" />
+            <BoxInvitations v-if="queryInvitationsAntennes && queryInvitationsAntennes.data.length > 0" class="!mt-4" :invitations="queryInvitationsAntennes.data" @updated="$fetch()" />
             <div>
               <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
                 Votre activité en chiffres
@@ -105,13 +107,6 @@
                     :value="`${stats.places_occupation_rate}%`"
                     :gauge-percentage="stats.places_occupation_rate"
                     title="Taux d'occupation"
-                  />
-                  <CardStatistic
-                    :value="stats.organisations_actives"
-                    :title="`${$options.filters.pluralize(stats.organisations_actives, 'Organisation active', 'Organisations actives', false)}`"
-                    :subtitle="`sur ${$options.filters.formatNumber(stats.organisations)} ${$options.filters.pluralize(stats.organisations, 'organisations', 'organisations', false)}`"
-                    :link="`/admin/organisations?filter[reseaux.id]=${reseau.id}&filter[reseaux.name]=${reseau.name}`"
-                    link-label="Organisations"
                   />
                   <CardStatistic
                     :value="stats.missions_actives"
@@ -170,6 +165,7 @@ import FormInvitation from '@/components/form/FormInvitation'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
 import BoxInvitations from '@/components/section/BoxInvitations'
 import CardStatistic from '@/components/card/CardStatistic'
+import BoxAntenne from '@/components/section/reseau/BoxAntenne'
 
 export default {
   components: {
@@ -178,7 +174,8 @@ export default {
     OnlineIndicator,
     FormInvitation,
     BoxInvitations,
-    CardStatistic
+    CardStatistic,
+    BoxAntenne
   },
   mixins: [MixinReseau],
   layout: 'admin',
@@ -196,6 +193,7 @@ export default {
       stats: null,
       showDrawerInvitation: false,
       queryInvitations: null,
+      queryInvitationsAntennes: null,
       memberSelected: {},
       showAlertMemberDeleted: false
     }
@@ -210,6 +208,13 @@ export default {
       }
     })
     this.queryInvitations = queryInvitations
+
+    const { data: queryInvitationsAntennes } = await this.$axios.get('/invitations', {
+      params: {
+        'filter[of_reseau_and_role_antenne]': this.reseau.id
+      }
+    })
+    this.queryInvitationsAntennes = queryInvitationsAntennes
   },
   methods: {
     handleSubmitInvitation () {
