@@ -44,6 +44,10 @@
         Page précédente ›
       </Link>
     </div>
+
+    <client-only>
+      <portal-target name="body-end" multiple />
+    </client-only>
   </div>
 </template>
 

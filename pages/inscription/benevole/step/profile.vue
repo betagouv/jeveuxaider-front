@@ -30,7 +30,7 @@
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
-          <FormControl label="Portrait" html-for="avatar">
+          <FormControl label="Photo de profil" html-for="avatar">
             <ImageCrop
               :default-value="form.avatar"
               :preview-width="100"
