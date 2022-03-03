@@ -7,6 +7,7 @@
       />
     </template>
     <template #sidebar>
+      <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
       <div class="flex flex-col gap-y-4 sticky top-8">
         <SelectAdvanced
           :key="`role-${$route.fullPath}`"
@@ -157,11 +158,13 @@ import QueryBuilder from '@/mixins/query-builder'
 import MixinExport from '@/mixins/export'
 import CardProfile from '@/components/card/CardProfile.vue'
 import DrawerProfile from '@/components/drawer/DrawerProfile.vue'
+import BoxContext from '@/components/section/BoxContext.vue'
 
 export default {
   components: {
     CardProfile,
-    DrawerProfile
+    DrawerProfile,
+    BoxContext
   },
   mixins: [QueryBuilder, MixinExport],
   layout: 'admin',

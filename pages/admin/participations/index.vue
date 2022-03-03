@@ -12,6 +12,7 @@
       />
     </template>
     <template #sidebar>
+      <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
       <div class="flex flex-col gap-y-4 sticky top-8">
         <InputAutocomplete
           :value="$route.query['filter[mission.structure.name]']"
@@ -24,14 +25,14 @@
           @selected="changeFilter('filter[mission.structure.name]', $event ? $event.name : undefined)"
         />
         <InputAutocomplete
-          :value="$route.query['filter[mission_id]']"
+          :value="$route.query['filter[mission.name]']"
           icon="SearchIcon"
           name="autocomplete"
           placeholder="Mission"
           :options="autocompleteOptionsMission"
           variant="transparent"
           @fetch-suggestions="onFetchSuggestionsMission"
-          @selected="changeFilter('filter[mission_id]', $event ? $event.id : undefined)"
+          @selected="changeFilter('filter[mission.id]', $event ? $event.id : undefined)"
         />
         <SelectAdvanced
           :key="`state-${$route.fullPath}`"
@@ -189,12 +190,14 @@ import CardParticipation from '@/components/card/CardParticipation.vue'
 import DrawerParticipation from '@/components/drawer/DrawerParticipation.vue'
 import MixinExport from '@/mixins/export'
 import ButtonMassValidation from '@/components/custom/ButtonMassValidation'
+import BoxContext from '@/components/section/BoxContext.vue'
 
 export default {
   components: {
     CardParticipation,
     DrawerParticipation,
-    ButtonMassValidation
+    ButtonMassValidation,
+    BoxContext
   },
   mixins: [QueryBuilder, MixinExport],
   layout: 'admin',

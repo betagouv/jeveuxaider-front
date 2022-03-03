@@ -4,7 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         Missions
       </div>
-      <Link :to="`/admin/missions?filter[structure.id]=${organisation.id}`" icon="ChevronRightIcon">
+      <Link :to="`/admin/missions?filter[structure.id]=${organisation.id}&filter[structure.name]=${organisation.name}`" icon="ChevronRightIcon">
         Consulter
       </Link>
     </div>

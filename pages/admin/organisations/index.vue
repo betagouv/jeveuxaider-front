@@ -7,6 +7,7 @@
       />
     </template>
     <template #sidebar>
+      <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
       <div class="flex flex-col gap-y-4 sticky top-8">
         <SelectAdvanced
           name="statut_juridique"
@@ -131,11 +132,13 @@ import QueryBuilder from '@/mixins/query-builder'
 import CardOrganisation from '@/components/card/CardOrganisation.vue'
 import DrawerOrganisation from '@/components/drawer/DrawerOrganisation.vue'
 import MixinExport from '@/mixins/export'
+import BoxContext from '@/components/section/BoxContext.vue'
 
 export default {
   components: {
     CardOrganisation,
-    DrawerOrganisation
+    DrawerOrganisation,
+    BoxContext
   },
   mixins: [QueryBuilder, MixinExport],
   layout: 'admin',
