@@ -93,8 +93,14 @@
             { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash == '#historique' }
           ]"
         />
-        <div v-if="!$route.hash">
-          <div class="mb-8">
+        <div v-if="!$route.hash" class="space-y-8">
+          <SelectOrganisationState
+            v-if="canEditStatut"
+            :value="organisation.state"
+            @selected="handleChangeState($event)"
+          />
+
+          <div>
             <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
               Votre activité en chiffres
             </div>
@@ -126,7 +132,7 @@
               </div>
             </Box>
           </div>
-          <div v-if="organisationStats && organisationStats.response_ratio" class="mb-8">
+          <div v-if="organisationStats && organisationStats.response_ratio">
             <div class="px-2 mb-2 text-sm uppercase font-semibold text-gray-600">
               Vos échanges avec les bénévoles
             </div>
@@ -198,6 +204,7 @@ import OnlineIndicator from '~/components/custom/OnlineIndicator'
 import CardStatistic from '@/components/card/CardStatistic'
 import FormInvitation from '@/components/form/FormInvitation'
 import BoxInvitations from '@/components/section/BoxInvitations'
+import SelectOrganisationState from '@/components/custom/SelectOrganisationState'
 
 export default {
   components: {
@@ -207,7 +214,8 @@ export default {
     BoxInformations,
     CardStatistic,
     FormInvitation,
-    BoxInvitations
+    BoxInvitations,
+    SelectOrganisationState
   },
   mixins: [MixinOrganisation],
   layout: 'admin',
@@ -260,6 +268,10 @@ export default {
     this.queryInvitations = queryInvitations
   },
   methods: {
+    async handleChangeState (event) {
+      this.organisation.state = event.key
+      await this.$axios.put(`/structures/${this.organisation.id}`, this.organisation)
+    },
     handleSubmitInvitation () {
       this.showDrawerInvitation = false
       this.$fetch()

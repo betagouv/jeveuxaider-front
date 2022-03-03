@@ -20,8 +20,13 @@
       </template>
       <div class="divide-y divide-gray-200 mt-4">
         <div v-for="invitation in invitations" :key="invitation.id" class="grid grid-cols-12 gap-2 text-sm py-4">
-          <div class="col-span-5 text-gray-900 font-semibold truncate flex items-center">
-            {{ invitation.email }}
+          <div class="col-span-5 text-gray-900 font-semibold truncate items-center">
+            <div>
+              {{ invitation.email }}
+            </div>
+            <div class="text-gray-500 font-medium">
+              {{ invitation.properties.antenne_name }}
+            </div>
           </div>
           <div class="col-span-7 flex items-center justify-end">
             <div class="text-gray-500 mr-4">
