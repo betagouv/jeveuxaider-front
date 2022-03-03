@@ -34,6 +34,10 @@
         <Nuxt class="" />
       </div>
     </div>
+
+    <client-only>
+      <portal-target name="body-end" multiple />
+    </client-only>
   </div>
 </template>
 

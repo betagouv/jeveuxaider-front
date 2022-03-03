@@ -35,7 +35,7 @@
             <img
               v-for="media in mediasFromDomaine"
               :key="media.id"
-              :srcset="media.urls.formPreview"
+              :srcset="media.urls[previewConversion]"
               :alt="media.name"
               class="rounded-lg cursor-pointer transition ring-offset-4 hover:opacity-50"
               :class="[
