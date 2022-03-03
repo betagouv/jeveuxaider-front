@@ -7,6 +7,9 @@ const renderer = {
     if (level === 2) {
       className = 'text-xl font-extrabold mb-2'
     }
+    if (level === 3) {
+      className = 'text-lg font-bold mb-2'
+    }
     return `<h${level} class="${className}">${text}</h${level}>`
   },
   paragraph (text) {

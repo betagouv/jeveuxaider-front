@@ -26,12 +26,12 @@ export default {
   mixins: [MixinStrapi],
   async asyncData ({ $config, $strapi, error }) {
     $strapi.setToken($config.strapi.token)
+
     const response = await $strapi.find('api/pages',
       {
-        'filters[slug][$eq]': 'charte-reserve-civique',
+        'filters[slug][$eq]': 'accessibilite',
         'populate[zone][populate]': '*',
         'populate[seo][populate][image][populate]': '*'
-
       })
     if (response.data.length) {
       return {

@@ -28,7 +28,7 @@ export default {
     $strapi.setToken($config.strapi.token)
     const response = await $strapi.find('api/pages',
       {
-        'slug[$eq]': 'conditions-generales-d-utilisation',
+        'filters[slug][$eq]': 'conditions-generales-d-utilisation',
         'populate[zone][populate]': '*',
         'populate[seo][populate][image][populate]': '*'
 
