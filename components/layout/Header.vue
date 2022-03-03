@@ -122,6 +122,7 @@
           :href="link.href"
           :to="link.to"
           :click="link.click"
+          :target="link.target"
           :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': link.isActive}]"
         >
           {{ link.name }}
@@ -215,6 +216,7 @@
                 :key="link.name"
                 :href="link.href"
                 :to="link.to"
+                :target="link.target"
                 :click="link.click"
                 class="block rounded-md px-3 py-2 text-base text-cool-gray-600 font-medium hover:bg-gray-100 hover:text-gray-800"
               >
@@ -286,11 +288,11 @@ export default {
     secondNavigation () {
       if (!this.$store.getters.isLogged) {
         return [
-          { name: 'Associations', href: '#' },
+          { name: 'Organisations', href: 'https://www.jeveuxaider.gouv.fr/engagement/organisations/', target: '_blank' },
           { name: 'Territoires', to: '/territoires', isActive: this.isActiveLink('/territoires') },
-          { name: 'Écoles et universités', href: '#' },
-          { name: 'Actualités', href: '#' },
-          { name: 'Centre d\'aide', href: '#' }
+          { name: 'Écoles et universités', href: 'https://www.jeveuxaider.gouv.fr/engagement/ecoles-et-universites/', target: '_blank' },
+          { name: 'Actualités', href: 'https://www.jeveuxaider.gouv.fr/engagement/actualites/', target: '_blank' },
+          { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/', target: '_blank' }
         ]
       } else if (this.$store.getters.currentRole?.key === 'admin') {
         return [
