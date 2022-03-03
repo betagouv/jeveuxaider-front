@@ -228,7 +228,6 @@ export default {
     BoxContext
   },
   mixins: [QueryBuilder, MixinExport],
-  layout: 'admin',
   asyncData ({ store, error }) {
     if (
       !['admin', 'referent', 'referent_regional', 'responsable', 'tete_de_reseau'].includes(

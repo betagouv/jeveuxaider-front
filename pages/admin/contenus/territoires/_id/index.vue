@@ -131,7 +131,6 @@ export default {
     FormInvitation
   },
   mixins: [MixinTerritoire],
-  layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (!['admin', 'responsable_territoire'].includes(store.getters.contextRole)) {
       return error({ statusCode: 403 })

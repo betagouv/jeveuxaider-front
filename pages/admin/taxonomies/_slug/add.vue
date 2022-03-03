@@ -33,7 +33,6 @@ import FormTerm from '@/components/form/FormTerm'
 
 export default {
   components: { FormTerm },
-  layout: 'admin',
   middleware: 'admin',
   data () {
     return {

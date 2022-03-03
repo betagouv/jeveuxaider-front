@@ -130,7 +130,6 @@ export default {
     FormMission,
     ButtonsSubmitFormMission
   },
-  layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (
       !store.getters.currentRole || store.getters.currentRole.contextable_type !== 'structure'

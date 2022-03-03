@@ -66,7 +66,7 @@
     <div class="hidden lg:block w-full border-t" />
     <div class="hidden lg:flex justify-between text-sm text-gray-800" :class="{'lg:max-w-7xl lg:mx-auto': !fullWidth}">
       <div class="flex w-full">
-        <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 1" position="left" class="h-full">
+        <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 1" ref="switchRole" position="left" class="h-full">
           <template #button>
             <div class="flex items-center justify-between gap-4 border-r py-4 pr-2 pl-6 w-52 truncate">
               <div>
@@ -354,6 +354,8 @@ export default {
         contextable_type: role.contextable_type ?? null,
         contextable_id: role.contextable_id ?? null
       })
+
+      this.$refs.switchRole.show = false
 
       if (this.$router.history.current.path === '/dashboard') {
         window.location.reload(true)

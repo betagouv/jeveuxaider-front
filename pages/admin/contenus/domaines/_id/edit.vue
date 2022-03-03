@@ -33,7 +33,6 @@ import FormDomaine from '~/components/form/FormDomaine.vue'
 
 export default {
   components: { FormDomaine },
-  layout: 'admin',
   middleware: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     const { data: domaine } = await $axios.get(`/domaines/${params.id}`)

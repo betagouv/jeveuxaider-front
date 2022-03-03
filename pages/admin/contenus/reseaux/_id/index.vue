@@ -178,7 +178,6 @@ export default {
     BoxAntenne
   },
   mixins: [MixinReseau],
-  layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     const { data: reseau } = await $axios.get(`/reseaux/${params.id}`)
     if (!reseau) {

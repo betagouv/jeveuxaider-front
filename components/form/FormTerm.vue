@@ -54,7 +54,6 @@ import FormErrors from '@/mixins/form/errors'
 
 export default {
   mixins: [FormErrors],
-  layout: 'admin',
   middleware: 'admin',
   props: {
     vocabulary: {

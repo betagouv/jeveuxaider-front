@@ -54,7 +54,7 @@
       </Box>
       <LePetitMot />
 
-      <Box v-if="testimonials.length && !['responsable_territoire'].includes($store.getters.contextRole)" padding="sm" :loading="loadingTestimonials" loading-text="Récupération des témoignages ...">
+      <Box v-if="testimonials.length && !['responsable_territoire','analyste'].includes($store.getters.contextRole)" padding="sm" :loading="loadingTestimonials" loading-text="Récupération des témoignages ...">
         <Heading as="h2" :level="3">
           Retour d'expériences des bénévoles
         </Heading>
@@ -92,6 +92,7 @@
             :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations)} ${$options.filters.pluralize(statistics.organisations, 'organisations', 'organisations', false)}`"
             link="/admin/organisations"
             link-label="Organisations"
+            :link-hidden="['analyste','responsable_territoire'].includes($store.getters.contextRole)"
           />
           <CardStatistic
             v-if="['admin', 'responsable', 'referent','referent_regional','tete_de_reseau','analyste','responsable_territoire'].includes($store.getters.contextRole)"
@@ -100,6 +101,7 @@
             :subtitle="`sur ${$options.filters.formatNumber(statistics.missions)} ${$options.filters.pluralize(statistics.missions, 'mission', 'missions', false)}`"
             link="/admin/missions"
             link-label="Missions"
+            :link-hidden="['analyste','responsable_territoire'].includes($store.getters.contextRole)"
           />
           <CardStatistic
             v-if="['admin', 'responsable', 'referent','referent_regional','tete_de_reseau','analyste','responsable_territoire'].includes($store.getters.contextRole)"
@@ -108,6 +110,7 @@
             :subtitle="`sur ${$options.filters.formatNumber(statistics.participations)} ${$options.filters.pluralize(statistics.participations, 'candidature', 'candidatures', false)}`"
             link="/admin/participations"
             link-label="Participations"
+            :link-hidden="['analyste','responsable_territoire'].includes($store.getters.contextRole)"
           />
           <CardStatistic
             v-if="['admin','analyste'].includes($store.getters.contextRole)"
@@ -116,6 +119,7 @@
             :subtitle="`sur ${$options.filters.formatNumber(statistics.users)} utilisateurs`"
             link="/admin/utilisateurs"
             link-label="Utilisateurs"
+            :link-hidden="['analyste'].includes($store.getters.contextRole)"
           />
         </div>
       </Box>
@@ -159,7 +163,6 @@ export default {
     CardTemoignage
   },
   mixins: [MixinAction],
-  layout: 'admin',
   data () {
     return {
       statistics: null,

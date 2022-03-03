@@ -218,7 +218,6 @@ export default {
     SelectOrganisationState
   },
   mixins: [MixinOrganisation],
-  layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (
       ![

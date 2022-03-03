@@ -32,7 +32,6 @@ import FormReseau from '~/components/form/FormReseau'
 
 export default {
   components: { FormReseau },
-  layout: 'admin',
   middleware: 'admin',
   data () {
     return {

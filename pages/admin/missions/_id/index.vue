@@ -86,7 +86,6 @@ export default {
     SelectMissionState
   },
   mixins: [MixinMission],
-  layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (
       ![

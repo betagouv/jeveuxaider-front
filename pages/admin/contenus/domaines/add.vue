@@ -32,7 +32,6 @@ import FormDomaine from '@/components/form/FormDomaine'
 
 export default {
   components: { FormDomaine },
-  layout: 'admin',
   middleware: 'admin',
   data () {
     return {
