@@ -71,7 +71,6 @@ export default {
     HelpCenter
   },
   mixins: [QueryBuilder],
-  layout: 'admin',
   data () {
     return {
       loading: false,

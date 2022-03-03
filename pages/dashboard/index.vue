@@ -163,7 +163,6 @@ export default {
     CardTemoignage
   },
   mixins: [MixinAction],
-  layout: 'admin',
   data () {
     return {
       statistics: null,

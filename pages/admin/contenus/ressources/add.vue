@@ -32,7 +32,6 @@ import FormRessource from '@/components/form/FormRessource'
 
 export default {
   components: { FormRessource },
-  layout: 'admin',
   middleware: 'admin',
   data () {
     return {

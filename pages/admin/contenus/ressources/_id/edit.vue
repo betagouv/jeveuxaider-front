@@ -33,7 +33,6 @@ import FormRessource from '~/components/form/FormRessource.vue'
 
 export default {
   components: { FormRessource },
-  layout: 'admin',
   middleware: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     const { data: ressource } = await $axios.get(`/documents/${params.id}`)

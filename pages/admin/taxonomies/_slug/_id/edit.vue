@@ -34,7 +34,6 @@ import FormTerm from '~/components/form/FormTerm.vue'
 
 export default {
   components: { FormTerm },
-  layout: 'admin',
   middleware: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     const { data: term } = await $axios.get(`/terms/${params.id}`)

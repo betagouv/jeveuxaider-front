@@ -35,7 +35,6 @@ export default {
   components: {
     FormOrganisation
   },
-  layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (
       ![

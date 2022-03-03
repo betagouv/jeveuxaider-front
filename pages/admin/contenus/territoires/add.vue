@@ -32,7 +32,6 @@ import FormTerritoire from '~/components/form/FormTerritoire'
 
 export default {
   components: { FormTerritoire },
-  layout: 'admin',
   middleware: 'admin',
   data () {
     return {

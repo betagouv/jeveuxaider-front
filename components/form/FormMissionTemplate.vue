@@ -117,7 +117,6 @@ import FormUploads from '@/mixins/form/uploads'
 
 export default {
   mixins: [FormErrors, FormUploads],
-  layout: 'admin',
   middleware: 'admin',
   props: {
     missionTemplate: {

@@ -41,7 +41,6 @@ export default {
   components: {
     FormProfile
   },
-  layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (
       !['admin', 'referent', 'referent_regional'].includes(store.getters.contextRole)

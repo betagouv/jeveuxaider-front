@@ -139,7 +139,6 @@ import MixinMission from '@/mixins/mission'
 export default {
   components: { CardProfileBenevole, DrawerBenevole },
   mixins: [QueryBuilder, MixinMission],
-  layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (
       ![

@@ -112,7 +112,6 @@ export default {
     BoxTerritoires,
     BoxOrganisations
   },
-  layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (
       !['admin', 'referent', 'referent_regional'].includes(

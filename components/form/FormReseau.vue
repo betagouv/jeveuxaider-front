@@ -327,7 +327,6 @@ import MixinInputGeo from '@/mixins/input-geo'
 
 export default {
   mixins: [FormErrors, FormUploads, MixinInputGeo],
-  layout: 'admin',
   middleware: 'admin',
   props: {
     reseau: {

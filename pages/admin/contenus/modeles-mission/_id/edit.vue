@@ -47,7 +47,6 @@ import ButtonsSubmitFormMissionTemplate from '@/components/custom/ButtonsSubmitF
 
 export default {
   components: { FormMissionTemplate, ButtonsSubmitFormMissionTemplate },
-  layout: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {
       return error({ statusCode: 403 })
