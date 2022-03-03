@@ -33,6 +33,20 @@
         />
       </FormControl>
       <FormControl
+        v-if="form.role == 'responsable_antenne'"
+        class="mb-6"
+        label="Nom de l'antenne de votre réseau"
+        html-for="antenne_name"
+        required
+      >
+        <Input
+          v-model="form.properties.antenne_name"
+          name="antenne_name"
+          placeholder="Ex : Vacances et Familles - Occitanie"
+          required
+        />
+      </FormControl>
+      <FormControl
         v-if="form.role == 'referent_regional'"
         class="mb-6"
         label="Région"
