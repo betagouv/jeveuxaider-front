@@ -123,7 +123,7 @@
           />
         </div>
       </Box>
-      <MoreNumbers />
+      <!-- <MoreNumbers /> -->
       <Box>
         <Heading as="h2" :level="2" class="mb-8 font-extrabold">
           {{ $store.getters.contextRole === 'admin' ? 'Liens utiles' : 'Suivez le guide' }}
@@ -149,7 +149,7 @@
 <script>
 import MixinAction from '@/mixins/action'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
-import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
+// import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import CardStatistic from '@/components/card/CardStatistic'
 import CardTemoignage from '@/components/card/CardTemoignage'
@@ -159,14 +159,14 @@ export default {
     HelpCenter,
     LePetitMot,
     CardStatistic,
-    MoreNumbers,
+    // MoreNumbers,
     CardTemoignage
   },
   mixins: [MixinAction],
   middleware: 'authenticated',
   asyncData ({ store, error }) {
     if (
-      !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'analyste'].includes(
+      !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'analyste', 'responsable', 'responsable_territoire'].includes(
         store.getters.contextRole
       )
     ) {
