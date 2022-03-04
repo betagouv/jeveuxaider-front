@@ -341,9 +341,9 @@ export default {
         ]
       }
       return [
-        { name: 'Mon profil', to: '/profile', isActive: this.isActiveLink('profile') },
+        { name: 'Mon profil', to: '/profile', isActive: this.isActiveLink('/profile', true) },
         { name: 'Mes missions', href: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
-        { name: 'Aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', isActive: false }
+        { name: 'Aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', target: '_blank' }
       ]
     }
   },
@@ -363,8 +363,8 @@ export default {
         this.$router.push('/dashboard')
       }
     },
-    isActiveLink (regex) {
-      return RegExp(regex).test(this.$route.path)
+    isActiveLink (regex, exact = false) {
+      return exact ? this.$route.path === regex : RegExp(regex).test(this.$route.path)
     }
   }
 }

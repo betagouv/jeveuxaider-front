@@ -1,9 +1,5 @@
 <template>
   <div>
-    <!-- <SectionOrganisationEditShortcut
-      :link="`/dashboard/structures/${organisation.id}/edit`"
-    /> -->
-
     <!-- PRESENTATION -->
     <Presentation
       :organisation="organisation"

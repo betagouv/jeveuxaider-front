@@ -332,9 +332,9 @@
             Les notifications lors de la prise de contact d'un bénévole concernant cette mission seront envoyées à cette personne.
           </div>
           <div class="text-sm">
-            Vous pouvez également <a class="underline opacity-25" href="/todo">
+            Vous pouvez également <nuxt-link class="underline" :to="`/admin/organisations/${form.structure_id}#membres`">
               ajouter un nouveau membre
-            </a> à votre équipe.
+            </nuxt-link> à votre équipe.
           </div>
         </div>
         <div class="lg:col-span-2 space-y-12">

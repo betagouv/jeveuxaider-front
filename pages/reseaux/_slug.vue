@@ -1,9 +1,5 @@
 <template>
   <div>
-    <!-- <SectionOrganisationEditShortcut
-      :link="`/dashboard/reseaux/${reseau.id}/edit`"
-    /> -->
-
     <Presentation :organisation="reseau" :src-set="image1">
       <footer
         slot="anchors"
