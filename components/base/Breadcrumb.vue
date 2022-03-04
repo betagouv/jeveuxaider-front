@@ -8,7 +8,7 @@
     ]"
   >
     <ol
-      class="h-12 w-full max-w-full overflow-x-auto whitespace-nowrap flex items-center"
+      class="container h-12 w-full max-w-full overflow-x-auto whitespace-nowrap flex items-center"
     >
       <li>
         <nuxt-link to="/">
