@@ -228,6 +228,7 @@ export default {
     BoxContext
   },
   mixins: [QueryBuilder, MixinExport],
+  middleware: 'authenticated',
   asyncData ({ store, error }) {
     if (
       !['admin', 'referent', 'referent_regional', 'responsable', 'tete_de_reseau'].includes(

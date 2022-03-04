@@ -178,7 +178,11 @@ export default {
     BoxAntenne
   },
   mixins: [MixinReseau],
+  middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {
+    if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {
+      return error({ statusCode: 403 })
+    }
     const { data: reseau } = await $axios.get(`/reseaux/${params.id}`)
     if (!reseau) {
       return error({ statusCode: 404 })

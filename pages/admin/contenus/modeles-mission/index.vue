@@ -129,6 +129,7 @@ export default {
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',
+  middleware: 'authenticated',
   asyncData ({ $axios, params, error, store }) {
     if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {
       return error({ statusCode: 403 })

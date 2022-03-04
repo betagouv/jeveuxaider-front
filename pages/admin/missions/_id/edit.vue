@@ -55,6 +55,7 @@ export default {
     FormMission,
     ButtonsSubmitFormMission
   },
+  middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {
     if (
       ![

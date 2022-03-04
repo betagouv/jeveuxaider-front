@@ -86,6 +86,7 @@ export default {
     SelectMissionState
   },
   mixins: [MixinMission],
+  middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {
     if (
       ![

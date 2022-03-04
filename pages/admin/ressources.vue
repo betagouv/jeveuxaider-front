@@ -71,6 +71,7 @@ export default {
     HelpCenter
   },
   mixins: [QueryBuilder],
+  middleware: 'authenticated',
   data () {
     return {
       loading: false,

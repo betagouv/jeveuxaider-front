@@ -32,6 +32,7 @@ import FormTerritoire from '@/components/form/FormTerritoire'
 
 export default {
   components: { FormTerritoire },
+  middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {
     if (!['admin', 'responsable_territoire'].includes(store.getters.contextRole)) {
       return error({ statusCode: 403 })

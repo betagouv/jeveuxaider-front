@@ -81,6 +81,7 @@ export default {
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',
+  middleware: 'authenticated',
   asyncData ({ store, error }) {
     if (
       !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'responsable'].includes(

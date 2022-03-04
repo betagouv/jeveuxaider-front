@@ -32,6 +32,7 @@ import FormReseau from '~/components/form/FormReseau'
 
 export default {
   components: { FormReseau },
+  middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {
     if (
       ![

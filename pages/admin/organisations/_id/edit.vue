@@ -35,6 +35,7 @@ export default {
   components: {
     FormOrganisation
   },
+  middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {
     if (
       ![

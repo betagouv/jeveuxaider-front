@@ -163,6 +163,16 @@ export default {
     CardTemoignage
   },
   mixins: [MixinAction],
+  middleware: 'authenticated',
+  asyncData ({ store, error }) {
+    if (
+      !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'analyste'].includes(
+        store.getters.contextRole
+      )
+    ) {
+      return error({ statusCode: 403 })
+    }
+  },
   data () {
     return {
       statistics: null,
