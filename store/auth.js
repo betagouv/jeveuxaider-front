@@ -17,9 +17,10 @@ export const actions = {
     const res = await this.$axios
       .get('/user')
       .catch(() => {
+        commit('setUser', null)
         this.$cookies.remove('access-token')
       })
-    if (res.data) {
+    if (res?.data) {
       commit('setUser', res.data)
     }
   },
