@@ -55,7 +55,7 @@ export default {
     },
     handleConfirmDecline (payload) {
       this.$emit('selected', { key: 'Refusée', form: payload })
-      const nbNewMessages = this.form.content?.trim().length ? 2 : 1
+      const nbNewMessages = payload.content?.trim().length ? 2 : 1
       this.$store.commit('messaging/incrementNewMessagesCount', nbNewMessages)
       this.showModalDecline = false
     }
