@@ -13,13 +13,16 @@ export default async function (to, from, savedPosition) {
       })
   }
 
-  if (to.hash) {
-    const el = await findEl(to.hash)
-    return { x: 0, y: el ? el.offsetTop : 0, behavior: 'smooth' }
-  }
-
   if (from.name != to.name) {
     return { x: 0, y: 0 }
+  }
+
+  if (to.hash) {
+    const el = await findEl(to.hash)
+    if (!el) {
+      return
+    }
+    return { x: 0, y: el.offsetTop, behavior: 'smooth' }
   }
 
   if (to.query?.page && (!from.query?.page || to.query.page != from.query.page)) {
