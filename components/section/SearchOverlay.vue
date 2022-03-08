@@ -61,7 +61,6 @@
                     <InputAutocomplete
                       id="overlay-autocomplete"
                       name="autocomplete-place-overlay"
-                      label="Autocomplete"
                       placeholder="Ex: Paris"
                       :options="autocompleteOptions"
                       attribute-key="id"

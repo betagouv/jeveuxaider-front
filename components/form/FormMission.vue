@@ -234,14 +234,13 @@
           <FormControl
             v-if="isPresentiel"
             label="Rechercher l'adresse du lieu de la mission"
-            html-for="autocomplete-place"
+            html-for="adress"
             required
           >
             <FormHelperText>Si l'adresse n'est pas reconnue veuillez saisir le nom de la ville.</FormHelperText>
             <InputAutocomplete
               icon="LocationMarkerIcon"
-              name="autocomplete-place"
-              label="Autocomplete"
+              name="adress"
               placeholder="Commencer à taper une adresse"
               :options="autocompleteOptions"
               attribute-key="id"
