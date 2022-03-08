@@ -165,9 +165,9 @@ export default {
     async handleChangeState (payload) {
       this.$store.commit('messaging/setConversable', { ...this.$store.getters['messaging/conversable'], state: payload.key })
       if (payload.key == 'Refusée') {
-        await this.$axios.put(`/participations/${this.$store.getters['messaging/conversable'].id}/decline`, payload.form)
+        await this.$axios.put(`/participations/${this.$store.getters['messaging/conversable'].id}/decline`, payload.form).catch(() => {})
       } else {
-        await this.$axios.put(`/participations/${this.$store.getters['messaging/conversable'].id}`, this.$store.getters['messaging/conversable'])
+        await this.$axios.put(`/participations/${this.$store.getters['messaging/conversable'].id}`, this.$store.getters['messaging/conversable']).catch(() => {})
       }
       await this.onParticipationUpdate()
     },

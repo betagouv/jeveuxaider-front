@@ -90,7 +90,7 @@ export default {
   methods: {
     async handleChangeState (option) {
       this.missionTemplate.state = option.key
-      await this.$axios.put(`/mission-templates/${this.missionTemplate.id}`, this.missionTemplate)
+      await this.$axios.put(`/mission-templates/${this.missionTemplate.id}`, this.missionTemplate).catch(() => {})
       this.$fetch()
     }
   }

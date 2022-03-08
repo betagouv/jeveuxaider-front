@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     async handleConfirmDeleteUser () {
-      await this.$axios.post('/user/anonymize')
+      await this.$axios.post('/user/anonymize').catch(() => {})
       this.$router.push('/')
       this.$store.dispatch('auth/logout')
     }
