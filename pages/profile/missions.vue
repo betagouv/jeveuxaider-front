@@ -58,6 +58,7 @@
             v-for="participation in queryResult.data"
             :key="participation.id"
             :participation="participation"
+            display="responsable"
             @click.native="handleClickParticipation(participation)"
           />
         </div>
@@ -92,7 +93,7 @@ export default {
       loading: false,
       endpoint: '/user/participations',
       queryParams: {
-        include: 'conversation.latestMessage,profile.avatar'
+        include: 'conversation.latestMessage,mission.responsable.avatar'
       }
     }
   },
