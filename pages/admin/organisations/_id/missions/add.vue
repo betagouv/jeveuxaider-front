@@ -207,6 +207,8 @@ export default {
           query: { ...this.$route.query, domaine: this.domaine_id, step: 2 }
         })
       }
+
+      window.scrollTo(0, 0)
     },
     async handleSubmit (payload) {
       if (this.loading) {
