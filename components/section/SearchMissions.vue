@@ -148,7 +148,7 @@
                         name="search-query"
                         placeholder="Recherche par mots-clés"
                         clearable
-                        autocomplete="off"
+                        autocomplete="new-password"
                         @input="onQueryInput(refine, $event)"
                       />
                     </div>
