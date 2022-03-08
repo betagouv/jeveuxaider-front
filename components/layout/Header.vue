@@ -68,8 +68,8 @@
       <div class="flex w-full">
         <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 1" ref="switchRole" position="left" class="h-full">
           <template #button>
-            <div class="flex items-center justify-between gap-4 border-r py-4 pr-2 pl-6 w-52 truncate">
-              <div>
+            <div class="flex items-center justify-between gap-4 border-r py-4 pr-2 pl-6 w-52">
+              <div class="truncate">
                 <!-- <div class="text-gray-500 uppercase text-xs">
                   {{ $options.filters.label($store.getters.currentRole.key, 'role', 'espace') }}
                 </div> -->
