@@ -44,16 +44,18 @@
           <nuxt-link
             v-if="item.link"
             :to="item.link"
-            class="flex h-full items-center"
+            class="inline-flex h-full items-center"
           >
-            {{ item.label }}
+            <span class="truncate max-w-xs">{{ item.label }}</span>
           </nuxt-link>
 
-          <h1 v-else-if="item.h1">
-            {{ item.label }}
+          <h1 v-else-if="item.h1" class="inline-flex">
+            <span class="truncate max-w-xs">{{ item.label }}</span>
           </h1>
 
-          <span v-else>{{ item.label }}</span>
+          <div v-else class="inline-flex">
+            <span class="truncate max-w-xs">{{ item.label }}</span>
+          </div>
         </div>
       </li>
     </ol>

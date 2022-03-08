@@ -25,7 +25,7 @@
         <ShareIcon class="text-gray-500 h-10 w-10" />
       </div>
     </div>
-    <Heading as="h1" :level="1">
+    <Heading as="h1" :level="1" class="line-clamp-4">
       {{ mission.name }}
     </Heading>
     <div v-if="mission.responsable" class="my-6 text-cool-gray-500 font-medium">

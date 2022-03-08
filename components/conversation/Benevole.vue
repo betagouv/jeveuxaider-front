@@ -60,7 +60,7 @@
           {{
             profile.domaines
               .map(function (item) {
-                return item.name.fr
+                return item.name
               })
               .join(', ')
           }}
@@ -74,7 +74,7 @@
           {{
             profile.skills
               .map(function (item) {
-                return item.name.fr
+                return item.name
               })
               .join(', ')
           }}
