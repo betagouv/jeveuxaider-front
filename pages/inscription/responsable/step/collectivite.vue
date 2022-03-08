@@ -125,7 +125,7 @@ import MixinInputGeo from '@/mixins/input-geo'
 export default {
   mixins: [FormErrors, MixinInputGeo],
   layout: 'register-steps',
-  async asyncData ({ $axios, store, error }) {
+  async asyncData ({ $axios, store, error, redirect }) {
     if (
       !store.getters.currentRole || store.getters.currentRole.contextable_type !== 'structure'
     ) {
@@ -133,10 +133,14 @@ export default {
     }
     const { data: organisation } = await $axios.get(`/structures/${store.getters.currentRole.contextable_id}`)
 
+    if (!organisation.territoire) {
+      redirect('/dashboard')
+    }
+
     return {
       form: {
         ...organisation.territoire,
-        zips: organisation.territoire.zips ? organisation.territoire.zips : [],
+        zips: organisation.territoire.zips && organisation.territoire.zips.length ? organisation.territoire.zips : (organisation.zip ? [organisation.zip] : []),
         department: !organisation.territoire.department ? organisation.department : organisation.territoire.department
       }
     }
