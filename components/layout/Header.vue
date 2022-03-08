@@ -302,7 +302,7 @@ export default {
   },
   async fetch () {
     if (this.$store.getters.isLogged) {
-      const { data: unreadMessageCount } = await this.$axios.get('user/unreadMessages')
+      const { data: unreadMessageCount } = await this.$axios.get('user/unread-messages')
       this.unreadMessageCount = unreadMessageCount
     }
   },
