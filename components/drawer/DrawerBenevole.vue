@@ -24,7 +24,7 @@
             <DescriptionListItem
               v-if="profile.skills"
               term="Compétences"
-              :description="profile.skills.map(function (item) { return item.name.fr }).join(', ')"
+              :description="profile.skills.map(function (item) { return item.name }).join(', ')"
             />
           </DescriptionList>
         </Box>
@@ -45,7 +45,7 @@
             <DescriptionListItem
               v-if="profile.skills"
               term="Compétences"
-              :description="profile.skills.map((item) => item.name.fr).join(', ')"
+              :description="profile.skills.map((item) => item.name).join(', ')"
             />
           </DescriptionList>
         </Box>
