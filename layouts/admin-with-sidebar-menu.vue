@@ -14,10 +14,12 @@
         </aside>
         <div class="lg:col-span-4 min-w-0">
           <Nuxt />
+          <portal-target name="drawer" class="relative z-20" multiple />
         </div>
       </div>
     </div>
     <Footer />
+
     <client-only>
       <portal-target name="body-end" multiple />
     </client-only>

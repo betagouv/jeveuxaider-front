@@ -4,6 +4,7 @@
     <portal-target name="header-top" multiple />
     <Header />
     <Nuxt />
+    <portal-target name="drawer" class="relative z-20" multiple />
     <Footer />
     <portal-target name="body-end" multiple />
   </div>
