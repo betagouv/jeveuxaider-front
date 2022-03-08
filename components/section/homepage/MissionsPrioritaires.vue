@@ -25,8 +25,12 @@
             link: '/missions-benevolat?toggle[is_priority]=true',
             label: 'Plus de missions ›',
           }"
-          :slides-count="missions.length"
+          :slides-count="missions.length + 1"
         >
+          <div key="ukraine" href="" class="card--mission--wrapper">
+            <CardUkraine class="!h-full" />
+          </div>
+
           <nuxt-link
             v-for="mission in missions"
             :key="mission.id"
@@ -43,10 +47,12 @@
 
 <script>
 import CardMission from '@/components/card/CardMission'
+import CardUkraine from '@/components/card/CardUkraine'
 
 export default {
   components: {
-    CardMission
+    CardMission,
+    CardUkraine
   },
   data () {
     return {
