@@ -31,7 +31,7 @@
           {{ participation.mission.name }}
         </div>
       </div>
-      <div class="hidden lg:flex pt-4 border-t border-dashed text-sm">
+      <div v-if="display === 'benevole'" class="hidden lg:flex pt-4 border-t border-dashed text-sm">
         <div class="font-medium">
           {{ participation.mission.places_left | pluralize('place restante', 'places restantes') }}
         </div>
@@ -47,7 +47,7 @@
       <div class="flex flex-col space-y-4 lg:flex-row lg:space-y-0">
         <div class="flex">
           <Avatar
-            :image="participation.profile.avatar && participation.profile.avatar.urls.thumbMedium"
+            :image="profile.avatar && profile.avatar.urls.thumbMedium"
             :initials="profile.short_name"
             size="sm"
             class="mr-4"
@@ -81,6 +81,10 @@ export default {
     participation: {
       type: Object,
       default: null
+    },
+    display: {
+      type: String,
+      default: 'benevole'
     }
   },
   computed: {
@@ -88,7 +92,7 @@ export default {
       return this.participation.mission
     },
     profile () {
-      return this.participation.profile
+      return this.mode === 'benevole' ? this.participation.profile : this.participation.mission.responsable
     }
   }
 }
