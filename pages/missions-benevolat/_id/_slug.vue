@@ -388,8 +388,8 @@ export default {
     },
     domainName () {
       return (
-        this.mission?.domaine?.name.fr ??
-        this.mission?.template?.domaine?.name.fr ??
+        this.mission?.domaine?.name ??
+        this.mission?.template?.domaine?.name ??
         null
       )
     },
