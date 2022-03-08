@@ -90,7 +90,7 @@ export default {
   methods: {
     async handleChangeState (option) {
       this.territoire.state = option.key
-      await this.$axios.put(`/territoires/${this.territoire.id}`, this.territoire)
+      await this.$axios.put(`/territoires/${this.territoire.id}`, this.territoire).catch(() => {})
       this.$fetch()
     }
   }

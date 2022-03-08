@@ -34,7 +34,7 @@ export default {
   methods: {
     async handleConfirm () {
       this.loading = true
-      const res = await this.$axios.post(`/structures/${this.structureId}/validate-waiting-participations`)
+      const res = await this.$axios.post(`/structures/${this.structureId}/validate-waiting-participations`).catch(() => {})
       if (res) {
         this.$toast.success(`Les ${this.count} participation(s) en attente ont été validée(s)`)
       }

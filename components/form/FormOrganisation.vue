@@ -540,7 +540,7 @@ export default {
       this.form.reseaux = this.form.reseaux.filter(reseau => reseau.id !== item.id)
     },
     async handleConfirmUnregister () {
-      await this.$axios.post(`/structures/${this.structure.id}/unregister`)
+      await this.$axios.post(`/structures/${this.structure.id}/unregister`).catch(() => {})
       await this.$store.dispatch('auth/fetchUser')
       this.$router.push('/')
     },

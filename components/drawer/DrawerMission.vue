@@ -109,7 +109,7 @@ export default {
     },
     async handleChangeState (option) {
       this.mission.state = option.key
-      await this.$axios.put(`/missions/${this.mission.id}`, this.mission)
+      await this.$axios.put(`/missions/${this.mission.id}`, this.mission).catch(() => {})
       this.$fetch()
       this.$emit('updated')
     }

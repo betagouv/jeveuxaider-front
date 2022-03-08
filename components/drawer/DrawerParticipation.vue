@@ -72,8 +72,8 @@ export default {
     async handleChangeState (payload) {
       this.participation.state = payload.key
       const { data: participation } = payload.key == 'Refusée'
-        ? await this.$axios.put(`/participations/${this.participation.id}/decline`, payload.form)
-        : await this.$axios.put(`/participations/${this.participation.id}`, this.participation)
+        ? await this.$axios.put(`/participations/${this.participation.id}/decline`, payload.form).catch(() => {})
+        : await this.$axios.put(`/participations/${this.participation.id}`, this.participation).catch(() => {})
       this.$fetch()
       this.$emit('updated', participation)
     }

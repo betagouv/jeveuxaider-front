@@ -467,10 +467,10 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.isAdding) {
-            const { data: mission } = await this.$axios.post(`/structures/${this.structureId}/missions`, this.form)
+            const { data: mission } = await this.$axios.post(`/structures/${this.structureId}/missions`, this.form).catch(() => {})
             this.$router.push(`/admin/missions/${mission.id}`)
           } else {
-            const { data: mission } = await this.$axios.put(`/missions/${this.mission.id}`, this.form)
+            const { data: mission } = await this.$axios.put(`/missions/${this.mission.id}`, this.form).catch(() => {})
             this.$router.push(`/admin/missions/${mission.id}`)
           }
         })

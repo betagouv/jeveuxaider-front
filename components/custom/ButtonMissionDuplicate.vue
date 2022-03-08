@@ -35,7 +35,7 @@ export default {
   methods: {
     async handleConfirm () {
       this.loading = true
-      const res = await this.$axios.post(`/missions/${this.missionId}/duplicate`)
+      const res = await this.$axios.post(`/missions/${this.missionId}/duplicate`).catch(() => {})
       if (res) {
         this.$toast.success('La mission a été dupliquée')
         this.$emit('duplicated', res.data)

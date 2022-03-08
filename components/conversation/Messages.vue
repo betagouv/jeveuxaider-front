@@ -166,7 +166,7 @@ export default {
       if (this.newMessage.trim().length) {
         const response = await this.$axios.post(`/conversations/${this.conversation.id}/messages`, {
           content: this.newMessage
-        })
+        }).catch(() => {})
 
         this.$store.commit('messaging/setMessages', [
           response.data,
