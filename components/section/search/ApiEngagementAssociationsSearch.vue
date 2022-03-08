@@ -125,6 +125,11 @@ export default {
     },
     async search () {
       this.loading = true
+      if (!this.query) {
+        this.suggestions = []
+        return
+      }
+
       const res = await this.$axios
         .post(
           'https://api.api-engagement.beta.gouv.fr/v1/association/search',
