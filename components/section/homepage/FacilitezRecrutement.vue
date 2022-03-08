@@ -47,7 +47,7 @@
       </ul>
 
       <nuxt-link
-        to="/inscription/organisation"
+        to="/inscription/responsable"
         class="w-full lg:w-auto flex items-center justify-center px-12 py-3 font-bold rounded-full text-white bg-jva-blue-500 hover:scale-105 transform transition mt-auto lg:mx-auto"
       >
         Inscrire mon organisation

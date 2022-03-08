@@ -180,7 +180,7 @@ export default {
 
     .slick-dots {
       position: inherit;
-      @apply !space-x-3 text-center sm:text-left bottom-0 w-auto flex-none mr-8;
+      @apply !space-x-3 text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8;
       > li {
         @apply w-auto h-auto m-0;
         &.slick-active > div {
