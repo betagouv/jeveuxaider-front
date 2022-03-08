@@ -140,6 +140,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="postcss" scoped>
+.card--domaine--wrapper {
+  width: calc(100vw - 64px)!important;
+  max-width: 360px;
+}
 </style>
