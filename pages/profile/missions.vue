@@ -9,7 +9,10 @@
       />
     </template>
     <template #header>
-      <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} participation(s)`" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
+      <SectionHeading
+        :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(queryResult.total, 'participation', 'participations', false)}`"
+        :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`"
+      >
         <template #action>
           <div>
             <Button size="xl" icon="SearchIcon" @click.native="$store.commit('toggleSearchOverlay')">
