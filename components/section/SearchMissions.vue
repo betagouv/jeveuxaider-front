@@ -543,7 +543,7 @@ export default {
       this.timeout = debounce(() => {
         refine(this.routeState.query)
         this.writeUrl()
-      }, 100)
+      }, 275)
       this.timeout()
     },
     onPlaceSelect (place) {

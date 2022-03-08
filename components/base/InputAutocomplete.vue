@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { debounce } from 'lodash'
 
 export default {
   props: {
@@ -113,8 +114,14 @@ export default {
     },
     handleInput (evt) {
       this.searchTerm = evt.target.value
-      this.$emit('fetch-suggestions', this.searchTerm)
       this.showOptions = true
+      if (this.timeout) {
+        this.timeout.cancel()
+      }
+      this.timeout = debounce(() => {
+        this.$emit('fetch-suggestions', this.searchTerm)
+      }, 275)
+      this.timeout()
     },
     handleClick (item) {
       this.searchTerm = item[this.attributeLabel]

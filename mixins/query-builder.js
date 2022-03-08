@@ -123,7 +123,7 @@ export default {
         } else {
           this.addFilter(filterName, filterValue, multiple)
         }
-      }, 100)
+      }, 275)
       this.timeout()
     },
     addFilter (filterName, filterValue, multiple) {

@@ -90,8 +90,10 @@ export default {
     },
     formatPropertyLabel (property) {
       switch (property) {
+        case 'created_at':
+          return 'Crée le'
         case 'updated_at':
-          return 'Modification'
+          return 'Modifié le'
         case 'state':
           return 'Statut'
         case 'responsable_id':
