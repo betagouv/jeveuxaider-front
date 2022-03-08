@@ -1,7 +1,7 @@
 <template>
   <Dropdown ref="dropdownUser">
     <template #button>
-      <div class="group flex items-center gap-4 w-48 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-jva-blue-500">
+      <div class="group flex items-center gap-3 w-48 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-jva-blue-500">
         <Avatar
           v-if="$store.state.auth.user.profile"
           :image="
@@ -12,7 +12,7 @@
           size="xs"
         />
 
-        <div>
+        <div class="overflow-hidden">
           <div class="text-sm font-bold truncate">
             {{ $store.state.auth.user.profile.first_name }}
           </div>
@@ -21,7 +21,7 @@
           </div>
         </div>
 
-        <ChevronDownIcon class="h-4 ml-auto" />
+        <ChevronDownIcon class="h-4 ml-auto flex-none" />
       </div>
     </template>
 
