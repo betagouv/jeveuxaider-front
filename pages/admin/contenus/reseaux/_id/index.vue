@@ -76,7 +76,7 @@
               <OnlineIndicator :published="!!reseau.is_published" :link="reseau.full_url" />
             </div>
           </div>
-          <nuxt-link :to="`/admin/contenus/reseaux/${reseau.id}/edit`">
+          <nuxt-link v-if="$store.getters.contextRole === 'admin'" :to="`/admin/contenus/reseaux/${reseau.id}/edit`">
             <Button icon="PencilIcon">
               Modifier
             </Button>

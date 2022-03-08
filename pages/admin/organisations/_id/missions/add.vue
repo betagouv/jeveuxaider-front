@@ -83,9 +83,9 @@
             @click.native="onSelectTemplate(missionTemplate)"
           >
             <template #badges>
-              <div class="mb-2">
-                <Badge class="" :color="missionTemplate.reseau ? 'gray' : 'gray-light'">
-                  {{ missionTemplate.reseau ? missionTemplate.reseau.name : 'Disponible pour tous' }}
+              <div v-if="missionTemplate.reseau" class="mb-2">
+                <Badge class="" color="gray-light">
+                  {{ missionTemplate.reseau.name }}
                 </Badge>
               </div>
             </template>

@@ -61,7 +61,7 @@
         />
       </FormControl>
       <FormControl
-        label="E-mail"
+        :label="form.role == 'responsable_antenne' ? 'E-mail du responsable' : 'E-mail'"
         html-for="email"
         required
       >

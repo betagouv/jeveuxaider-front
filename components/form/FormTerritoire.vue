@@ -280,7 +280,7 @@ export default {
             this.form.id = territoire.id
           }
           await this.uploadFiles('territoire', this.form.id)
-          this.$router.push('/admin/contenus/territoires')
+          this.$router.push(`/admin/contenus/territoires/${this.form.id}`)
         })
         .catch((errors) => {
           this.setErrors(errors)

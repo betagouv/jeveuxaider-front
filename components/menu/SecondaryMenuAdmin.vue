@@ -82,7 +82,7 @@ export default {
 </script>
 
 <style scoped>
-a.nuxt-link-exact-active {
+a.nuxt-link-active {
   @apply text-jva-blue-500;
 }
 </style>

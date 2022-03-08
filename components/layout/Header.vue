@@ -317,10 +317,11 @@ export default {
       } else if (this.$store.getters.currentRole?.key === 'tete_de_reseau') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Mon réseau', to: `/admin/contenus/reseaux/${this.$store.getters.profile.tete_de_reseau_id}`, isActive: this.isActiveLink('/admin/contenus/reseaux/*') },
-          { name: 'Mes antennes', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
-          { name: 'Mes missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
-          { name: 'Mes participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
+          { name: 'Mon Réseau', to: `/admin/contenus/reseaux/${this.$store.getters.profile.tete_de_reseau_id}`, isActive: this.isActiveLink('/admin/contenus/reseaux/*') },
+          { name: 'Antennes', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
+          { name: 'Modèles de missions', to: '/admin/contenus/modeles-mission', isActive: this.isActiveLink('/admin/contenus/modeles-mission/*') },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
+          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
         ]
       } else if (this.$store.getters.currentRole?.key === 'referent') {
         return [
