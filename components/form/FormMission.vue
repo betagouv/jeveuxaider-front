@@ -332,7 +332,7 @@
             Les notifications lors de la prise de contact d'un bénévole concernant cette mission seront envoyées à cette personne.
           </div>
           <div class="text-sm">
-            Vous pouvez également <nuxt-link class="underline" :to="`/admin/organisations/${form.structure_id}#membres`">
+            Vous pouvez également <nuxt-link class="underline" :to="`/admin/organisations/${structureId}#membres`">
               ajouter un nouveau membre
             </nuxt-link> à votre équipe.
           </div>
@@ -429,7 +429,7 @@ export default {
   },
   computed: {
     structureId () {
-      return this.$route.params.id
+      return this.form.structure_id ? this.form.structure_id : this.$route.params.id
     },
     isAdding () {
       return !this.mission.id
