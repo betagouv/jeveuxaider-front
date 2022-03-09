@@ -92,7 +92,7 @@ export default {
       return this.participation.mission
     },
     profile () {
-      return this.mode === 'benevole' ? this.participation.profile : this.participation.mission.responsable
+      return this.display === 'benevole' ? this.participation.profile : this.participation.mission.responsable
     }
   }
 }
