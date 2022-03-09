@@ -407,11 +407,7 @@ export default {
         commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
         participations_max: number().min(1, 'Le nombre de bénévole recherché doit être supérieur à 1').required('Le nombre de bénévole recherché est requis'),
         department: string().nullable().required('Le département est requis'),
-        address: string().nullable().when('type', {
-          is: 'Mission en présentiel',
-          then: schema => schema.required("L'adresse est requise"),
-          otherwise: schema => schema.nullable()
-        }),
+        address: string().nullable(),
         zip: string().nullable().when('type', {
           is: 'Mission en présentiel',
           then: schema => schema.required('Le code postal est requis'),
