@@ -74,6 +74,14 @@ export default {
           childrens: [
             { label: 'Invitations', to: '/admin/other/invitations' }
           ]
+        },
+        {
+          key: 'scripts',
+          label: 'Scripts',
+          childrens: [
+            { label: 'Transfert de missions', to: '/admin/scripts/migrate-organisation-missions' },
+            { label: 'Reset du context role', to: '/admin/scripts/user-reset-context-role' }
+          ]
         }
       ]
     }
