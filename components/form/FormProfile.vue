@@ -129,6 +129,25 @@
           </FormControl>
         </div>
       </Box>
+      <Box>
+        <Heading :level="3" class="mb-8">
+          Service Civique
+        </Heading>
+        <div class="flex space-x-8 justify-between">
+          <Toggle
+            v-model="form.service_civique"
+            label="Êtes-vous déjà volontaire en Service Civique ?"
+            :description="form.service_civique ? 'Oui, je suis déjà volontaire chez eux' : 'Non, je ne suis pas volontaire chez eux'"
+          />
+          <img
+            src="@/assets/images/service-civique-logo.png"
+            alt="Service Civique"
+            title="Service Civique"
+            class="hidden lg:block h-10"
+            data-not-lazy
+          >
+        </div>
+      </Box>
     </div>
     <div class="md:col-span-2 space-y-12">
       <Box>
