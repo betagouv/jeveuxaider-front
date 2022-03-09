@@ -1,5 +1,5 @@
 <template>
-  <Box v-if="mission.type == 'Mission en présentiel'" :padding="false">
+  <Box v-if="mission.type == 'Mission en présentiel'" :padding="false" class="overflow-hidden">
     <iframe
       width="100%"
       height="100%"

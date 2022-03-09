@@ -25,7 +25,7 @@
     </div>
     <Breadcrumb
       theme="transparent"
-      class="relative z-10 container"
+      class="relative z-10 px-4 xl:container !max-w-7xl"
       :items="[
         { label: 'Missions de bénévolat', link: '/missions-benevolat' },
         {
@@ -43,7 +43,7 @@
     />
     <div class="px-4 pb-12 max-w-3xl mx-auto lg:max-w-7xl">
       <div class="lg:flex lg:items-start lg:gap-6">
-        <div class="space-y-6">
+        <div class="space-y-6 flex-1">
           <Presentation :mission="mission" />
           <PresentielOrDistance :mission="mission" />
           <Details :mission="mission" />
