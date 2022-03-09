@@ -148,6 +148,7 @@ const labels = {
     { key: 'people_in_difficulty', label: 'Personnes en difficulté' },
     { key: 'parents', label: 'Parents' },
     { key: 'children', label: 'Jeunes / enfants' },
+    { key: 'refugees', label: 'Nouveaux Arrivants / Réfugiés' },
     { key: 'any_public', label: 'Tous publics' }
   ],
   mission_publics_volontaires: [
