@@ -1,5 +1,16 @@
 <template>
   <div class="container">
+    <AlertDialog
+      v-if="form.origin && form.destination"
+      theme="danger"
+      title="Êtes-vous sûrs ?"
+      :text="`Vous êtes sur le point de transférer les missions de « ${form.origin.name} #${form.origin.id} » vers « ${form.destination.name} #${form.destination.id} ».`"
+      :is-open="showAlert"
+      button-label="Oui, je confirme"
+      @confirm="handleConfirmSubmit()"
+      @cancel="showAlert = false"
+    />
+
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
@@ -138,6 +149,7 @@ export default {
   data () {
     return {
       loading: false,
+      showAlert: false,
       form: {
         missions: []
       },
@@ -191,23 +203,25 @@ export default {
       this.form.missions = this.form.missions.filter(item => item.id !== mission.id)
     },
     async handleSubmit () {
-      if (this.loading) {
-        return
-      }
-      this.loading = true
       await this.formSchema
         .validate(this.form, { abortEarly: false })
-        .then(async () => {
-          await this.$axios.post('/scripts/migrate-organisation-missions', this.form).then(() => {
-            this.$toast.success('Le transfert a été effectué !')
-          }).catch(() => {})
+        .then(() => {
+          this.showAlert = true
         })
         .catch((errors) => {
           this.setErrors(errors)
         })
         .finally(() => {
-          this.loading = false
         })
+    },
+    async handleConfirmSubmit () {
+      this.showAlert = false
+      this.loading = true
+      await this.$axios.post('/scripts/migrate-organisation-missions', this.form).then(() => {
+        this.$toast.success('Le transfert a été effectué !')
+        this.$router.push(`/admin/organisations/${this.form.destination.id}`)
+      }).catch(() => {})
+      this.loading = false
     }
   }
 }
