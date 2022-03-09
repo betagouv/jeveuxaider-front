@@ -21,7 +21,7 @@
           {'bg-white': variant == 'transparent' && value},
           classInput
         ]"
-        autocomplete="new-password"
+        autocomplete="off"
         :style="styleInput"
         @input="handleInput"
         @keydown="onKeydown"
