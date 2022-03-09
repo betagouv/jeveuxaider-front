@@ -8,12 +8,12 @@
     ]"
   >
     <ol
-      class="container h-12 w-full max-w-full overflow-x-auto whitespace-nowrap flex items-center"
+      class="h-12 w-full max-w-full overflow-x-auto whitespace-nowrap flex items-center"
     >
       <li>
         <nuxt-link to="/">
           <HomeIcon
-            class="h-4"
+            class="w-4 h-4"
             :class="[
               { 'text-gray-500 hover:text-gray-700': theme == 'light' },
               { 'text-white hover:text-gray-200': theme == 'dark' },

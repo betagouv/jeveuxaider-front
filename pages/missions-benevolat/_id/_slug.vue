@@ -25,7 +25,7 @@
     </div>
     <Breadcrumb
       theme="transparent"
-      class="relative z-10 px-4"
+      class="relative z-10 container"
       :items="[
         { label: 'Missions de bénévolat', link: '/missions-benevolat' },
         {

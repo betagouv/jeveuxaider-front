@@ -1,10 +1,13 @@
 <template>
-  <div class="bg-gray-100">
-    <Breadcrumb
-      theme="dark"
-      :items="[{ label: 'Missions de bénévolat', link: '/missions-benevolat' }]"
-      class="px-4"
-    />
+  <div>
+    <div class="bg-jva-blue-500 border-[#3934a7] border-b">
+      <Breadcrumb
+        theme="dark"
+        :items="[{ label: 'Missions de bénévolat', link: '/missions-benevolat' }]"
+        class="container border-b-0"
+      />
+    </div>
+
     <SearchMissions />
   </div>
 </template>

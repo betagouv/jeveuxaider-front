@@ -23,7 +23,7 @@
     <div class="banner-gradient absolute inset-0" style="" />
 
     <div class="relative">
-      <Breadcrumb v-if="showBreadcrumb" theme="transparent" :items="breadcrumb" class="px-4" />
+      <Breadcrumb v-if="showBreadcrumb" theme="transparent" :items="breadcrumb" class="container" />
 
       <hr class="opacity-25">
 
