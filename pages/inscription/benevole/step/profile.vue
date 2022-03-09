@@ -78,12 +78,7 @@
           <FormControl label="Décrivez vos motivations" html-for="description">
             <Textarea v-model="form.description" name="description" placeholder="Vos motivations en quelques mots..." />
           </FormControl>
-          <div class="flex space-x-8 justify-between">
-            <Toggle
-              v-model="form.service_civique"
-              label="Êtes-vous déjà volontaire en Service Civique ?"
-              :description="form.service_civique ? 'Oui, je suis déjà volontaire chez eux' : 'Non, je ne suis pas volontaire chez eux'"
-            />
+          <div class="flex space-x-8">
             <img
               src="@/assets/images/service-civique-logo.png"
               alt="Service Civique"
@@ -91,6 +86,12 @@
               class="hidden lg:block h-10"
               data-not-lazy
             >
+            <Toggle
+              v-model="form.service_civique"
+              class="flex-1"
+              label="Êtes-vous déjà volontaire en Service Civique ?"
+              :description="form.service_civique ? 'Oui, je suis déjà volontaire chez eux' : 'Non, je ne suis pas volontaire chez eux'"
+            />
           </div>
           <Button
             type="submit"
