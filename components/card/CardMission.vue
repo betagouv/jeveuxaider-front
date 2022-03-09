@@ -79,9 +79,9 @@
 
       <div
         v-if="mission.provider == 'api_engagement'"
-        class="text-gray-500 text-sm self-stretch"
+        class="text-gray-500 text-sm self-stretch mt-2"
       >
-        <div class="flex items-center justify-between space-x-8">
+        <div class="flex items-center justify-between space-x-6">
           <div>
             <div>Mission proposée par</div>
             <div class="font-bold text-black">
@@ -98,12 +98,12 @@
       </div>
     </div>
 
-    <div class="border-t p-4 text-center flex items-center justify-center space-x-2">
+    <div class="border-t p-4 text-center flex items-center justify-center space-x-2" :class="[domainColor]">
       <span class="text-sm font-bold">
         {{ placesLeftText }}
       </span>
 
-      <ExternalLinkIcon v-if="mission.provider == 'api_engagement'" class="flex-none" />
+      <ExternalLinkIcon v-if="mission.provider == 'api_engagement'" class="flex-none w-4" />
     </div>
   </div>
 </template>
@@ -164,6 +164,11 @@ export default {
       return startDateObject && startDateObject.isAfter(now)
         ? `À partir du ${startDateObject.format('D MMMM')}`
         : null
+    },
+    domainColor () {
+      return this.$labels.domaines.find(
+        domaine => domaine.key == this.domainId
+      )?.color
     }
   },
   methods: {
@@ -215,7 +220,7 @@ export default {
   );
 }
 
-.fake-purge {
+/* .fake-purge {
   @apply text-domaine-nature text-domaine-education text-domaine-sante text-domaine-covid text-domaine-prevention text-domaine-culture text-domaine-cooperation text-domaine-memoire text-domaine-solidarite
-}
+} */
 </style>

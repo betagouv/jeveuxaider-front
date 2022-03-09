@@ -56,7 +56,7 @@
         </h2>
       </component>
     </div>
-    <div class="flex items-center gap-4 mb-4">
+    <div v-if="mission.publics_beneficiaires && mission.publics_beneficiaires.length" class="flex items-center gap-4 mb-4">
       <div
         class="flex-none font-bold text-xs uppercase text-gray-500"
       >
@@ -88,6 +88,28 @@
         class="text-cool-gray-500"
         v-html="mission.skills.map((skill) => skill.name).join(`<span class='mx-2'>•</span>`)"
       />
+    </template>
+
+    <template v-if="mission.isFromApi">
+      <hr class="border-gray-200 my-8">
+
+      <div>
+        <h2 class="text-lg font-medium">
+          <span>L'organisation</span>
+          <b class="text-[#070191]">
+            {{ mission.structure.name }}
+          </b>
+        </h2>
+      </div>
+      <div class="mt-4">
+        <span>Mission proposée par</span>
+        <span class="font-bold text-black">
+          {{ mission.publisher_name }}
+        </span>
+        <div class="text-gray-600 text-base">
+          Vous serez redirigé vers {{ mission.publisher_url }}
+        </div>
+      </div>
     </template>
   </Box>
 </template>

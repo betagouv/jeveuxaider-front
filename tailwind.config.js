@@ -26,7 +26,7 @@ module.exports = {
       xs: ['0.75rem', { lineHeight: '1rem', letterSpacing: '-0.025em' }],
       sm: ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '-0.025em' }],
       base: ['1rem', { lineHeight: '1.5rem', letterSpacing: '-0.025em' }],
-      lg: ['1.125rem', { lineHeight: '1.75rem', letterSpacing: '-0.025em' }],
+      lg: ['1.125rem', { lineHeight: '1.5rem', letterSpacing: '-0.025em' }],
       xl: ['1.25rem', { lineHeight: '1.75rem', letterSpacing: '-0.025em' }],
       '2xl': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.025em' }],
       '3xl': ['1.875rem', { lineHeight: '2.25rem', letterSpacing: '-0.025em' }],
