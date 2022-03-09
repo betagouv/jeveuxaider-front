@@ -19,7 +19,7 @@
             focus:ring-jva-blue-500 focus:border-jva-blue-500
           "
     :class=" [{ 'border-jva-red-primary': error, 'cursor-not-allowed bg-gray-100': disabled }]"
-    autocomplete="new-password"
+    autocomplete="off"
     :disabled="disabled"
   />
 </template>

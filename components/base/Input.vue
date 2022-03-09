@@ -24,7 +24,7 @@
           {'bg-transparent': variant == 'transparent' && !value},
           {'bg-white': variant == 'transparent' && value},
         ]"
-        autocomplete="new-password"
+        autocomplete="off"
         @blur="handleBlur"
       >
       <div v-if="type == 'password' && inputValue" class="absolute right-3">

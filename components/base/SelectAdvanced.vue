@@ -18,7 +18,7 @@
           {'bg-transparent': variant == 'transparent' && !value},
           {'bg-white': variant == 'transparent' && value}
         ]"
-        autocomplete="new-password"
+        autocomplete="off"
         @keydown="!disabled && onKeydown"
         @click="!disabled ? showOptions = !showOptions : null"
       >
