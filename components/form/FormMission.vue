@@ -84,6 +84,7 @@
           <FormControl
             label="Précisions"
             html-for="description"
+            required
             :error="errors.description"
           >
             <RichEditor

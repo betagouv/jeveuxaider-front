@@ -54,6 +54,7 @@
           @click="handleClick(item)"
         >
           <span class="">
+            <span v-if="showKeyInOptions" class="text-gray-500"> #{{ item[attributeKey] }}</span>
             {{ item[attributeLabel] }}
           </span>
           <div class="space-x-4 flex">
@@ -91,7 +92,8 @@ export default {
     classInput: { type: String, default: '' },
     styleInput: { type: String, default: '' },
     variant: { type: String, default: null }, // transparent
-    clearAfterSelected: { type: Boolean, default: false }
+    clearAfterSelected: { type: Boolean, default: false },
+    showKeyInOptions: { type: Boolean, default: false }
   },
   data () {
     return {
