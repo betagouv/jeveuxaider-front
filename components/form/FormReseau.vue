@@ -393,6 +393,9 @@ export default {
         })
     },
     onMediaPickerChange (payload, field) {
+      if (!this.form[field]) {
+        this.$set(this.form, field, [null, null])
+      }
       this.form[field].splice(payload.index, 1, payload.media)
     }
   }

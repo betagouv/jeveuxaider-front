@@ -76,7 +76,7 @@
               <OnlineIndicator :published="!!reseau.is_published" :link="reseau.full_url" />
             </div>
           </div>
-          <nuxt-link v-if="$store.getters.contextRole === 'admin'" :to="`/admin/contenus/reseaux/${reseau.id}/edit`">
+          <nuxt-link v-if="['admin', 'tete_de_reseau'].includes($store.getters.contextRole)" :to="`/admin/contenus/reseaux/${reseau.id}/edit`">
             <Button icon="PencilIcon">
               Modifier
             </Button>
@@ -187,6 +187,13 @@ export default {
     if (!reseau) {
       return error({ statusCode: 404 })
     }
+
+    if (store.getters.contextRole == 'tete_de_reseau') {
+      if (store.getters.contextableId != reseau.id) {
+        return error({ statusCode: 403 })
+      }
+    }
+
     return {
       reseau
     }

@@ -74,7 +74,7 @@
         </Box>
       </div>
       <div class="lg:col-span-2 space-y-8">
-        <Box padding="sm">
+        <Box v-if="['admin'].includes($store.getters.contextRole)" padding="sm">
           <Heading :level="3" class="mb-8">
             Paramètres
           </Heading>
