@@ -415,6 +415,11 @@ export default {
       ]
     }
   },
+  watch: {
+    $route () {
+      this.showMobileMenu = false
+    }
+  },
   methods: {
     async switchRole (role) {
       await this.$store.dispatch('auth/updateUser', {
