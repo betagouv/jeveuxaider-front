@@ -155,11 +155,14 @@
               description="Pour rendre la page accessible"
             />
             <FormControl
+              v-if="['admin'].includes($store.getters.contextRole)"
               html-for="color"
               label="Couleur"
             >
+              <FormHelperText>La valeur doit être comprise par le CSS. Code hexadecimal accepté.</FormHelperText>
               <Input
                 v-model="form.color"
+                placeholder="#B91C1C"
                 name="color"
               />
             </FormControl>

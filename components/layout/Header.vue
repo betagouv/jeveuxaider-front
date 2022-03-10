@@ -1,5 +1,5 @@
 <template>
-  <header id="header" class="relative bg-white shadow-lg z-30">
+  <header id="header" ref="header" class="relative bg-white shadow-lg z-30">
     <div class="flex justify-between items-center relative lg:p-2" :class="{'lg:max-w-7xl lg:mx-auto': !fullWidth}">
       <div class="lg:flex lg:space-x-6 lg:items-center">
         <img
@@ -191,10 +191,10 @@
         leave-class="opacity-100 scale-100"
         leave-to-class="opacity-0 scale-95"
       >
-        <div v-show="showMobileMenu" class="z-30 absolute top-0 inset-x-0 max-w-3xl mx-auto w-full p-2 transition transform origin-top">
-          <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white divide-y divide-gray-200">
-            <div class="pt-3 pb-2">
-              <div class="flex items-center justify-between px-4">
+        <div v-show="showMobileMenu" v-scroll-lock="showMobileMenu" class="h-screen overflow-y-auto z-30 absolute top-0 inset-x-0 mx-auto w-full transition transform origin-top">
+          <div class="bg-white h-full flex flex-col gap-3 justify-between">
+            <div class="p-4 bg-white">
+              <div class="flex items-center justify-between pl-4 pb-6">
                 <div>
                   <img
                     class="h-8 w-auto"
@@ -214,7 +214,7 @@
                   </button>
                 </div>
               </div>
-              <div class="flex flex-col mt-3 px-2 space-y-1">
+              <div class="">
                 <NavItem
                   v-for="link in navigation"
                   :key="link.name"
@@ -227,35 +227,51 @@
                   <span class="text-base font-medium ml-2">{{ link.name }}</span>
                 </NavItem>
               </div>
+              <div class="border-t my-2" />
+
+              <div class="">
+                <NavItem
+                  v-for="link in secondNavigation"
+                  :key="link.name"
+                  :href="link.href"
+                  :to="link.to"
+                  :target="link.target"
+                  :click="link.click"
+                  :class="['block rounded-md px-3 py-2 text-base text-cool-gray-600', {'!text-jva-blue-500 bg-gray-50 font-medium': link.isActive}]"
+                >
+                  {{ link.name }}
+                </NavItem>
+
+                <NavItem
+                  key="ukraine"
+                  href="https://www.jeveuxaider.gouv.fr/engagement/benevolat-ukraine/"
+                  target="_blank"
+                  :class="['flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600']"
+                >
+                  <img
+                    src="/images/flag-ukraine.svg"
+                    alt="Drapeau ukrainien"
+                    width="16"
+                    height="20"
+                    class="w-4"
+                    data-not-lazy
+                  >
+                  <span>Ukraine</span>
+                </NavItem>
+              </div>
             </div>
-            <div class="mt-3 p-2">
+
+            <div class="bg-jva-blue-500 text-white p-4">
               <NavItem
-                v-for="link in secondNavigation"
+                v-for="link in mobileLoggedNavigation"
                 :key="link.name"
                 :href="link.href"
                 :to="link.to"
                 :target="link.target"
                 :click="link.click"
-                class="block rounded-md px-3 py-2 text-base text-cool-gray-600 font-medium hover:bg-gray-100 hover:text-gray-800"
+                :class="['block rounded-md px-3 py-2 text-base text-cool-gray-100', {'bg-jva-blue-600 font-medium': link.isActive}]"
               >
                 {{ link.name }}
-              </NavItem>
-
-              <NavItem
-                key="ukraine"
-                href="https://www.jeveuxaider.gouv.fr/engagement/benevolat-ukraine/"
-                target="_blank"
-                class="block rounded-md px-3 py-2 text-base text-cool-gray-600 font-medium hover:bg-gray-100 hover:text-gray-800 flex space-x-1"
-              >
-                <img
-                  src="/images/flag-ukraine.svg"
-                  alt="Drapeau ukrainien"
-                  width="16"
-                  height="20"
-                  class="w-4"
-                  data-not-lazy
-                >
-                <span>Ukraine</span>
               </NavItem>
             </div>
           </div>
@@ -320,6 +336,20 @@ export default {
         { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.unreadMessageCount }
       ]
     },
+    mobileLoggedNavigation () {
+      if (!this.$store.getters.isLogged) {
+        return [
+          { name: 'Inscription', to: '/inscription', isActive: this.isActiveLink('inscription') },
+          { name: 'Connexion', to: '/login', isActive: this.isActiveLink('login') }
+        ]
+      }
+      return [
+        { name: `${this.$store.state.auth.user.profile.full_name}`, to: '/profile', isActive: this.isActiveLink('/profile', true) },
+        { name: 'Mes missions', to: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
+        { name: 'Mes paramètres', to: '/profile/settings', isActive: this.isActiveLink('profile/settings') },
+        { name: 'Se déconnecter', click: () => this.$store.dispatch('auth/logout') }
+      ]
+    },
     secondNavigation () {
       if (!this.$store.getters.isLogged) {
         return [
@@ -379,7 +409,7 @@ export default {
         ]
       }
       return [
-        { name: 'Mon profil', to: '/profile', isActive: this.isActiveLink('/profile', true) },
+        { name: 'Profil', to: '/profile', isActive: this.isActiveLink('/profile', true) },
         { name: 'Mes missions', href: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
         { name: 'Aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', target: '_blank' }
       ]

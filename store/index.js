@@ -1,7 +1,6 @@
 
 export const state = () => ({
   showSearchOverlay: false
-
 })
 
 export const mutations = {
