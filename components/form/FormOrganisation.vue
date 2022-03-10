@@ -436,7 +436,7 @@
           </FormControl>
         </div>
       </Box>
-      <Box padding="sm">
+      <Box v-if="['admin','responsable'].includes($store.getters.contextRole)" padding="sm">
         <Heading as="h3" :level="3" class="mb-4">
           Désinscription
         </Heading>
