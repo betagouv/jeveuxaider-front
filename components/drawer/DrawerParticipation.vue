@@ -11,7 +11,7 @@
       <div v-else class="mt-4 font-medium text-gray-800">
         {{ participation.state }}
       </div>
-      <template v-if="participation.conversation">
+      <template v-if="participation.conversation && ['admin','responsable'].includes($store.getters.contextRole)">
         <div class="border-t -mx-6 my-6" />
         <nuxt-link :to="`/messages/${participation.conversation.id}`" class="text-jva-blue-500 flex items-center text-sm font-bold">
           <ChatAltIcon class="h-4 w-4 mr-4" /> Accéder à la messagerie

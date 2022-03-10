@@ -80,7 +80,7 @@ export default {
           label: 'Scripts',
           childrens: [
             { label: 'Transfert de missions', to: '/admin/scripts/migrate-organisation-missions' },
-            { label: 'Reset du context role', to: '/admin/scripts/user-reset-context-role' }
+            { label: 'Réinitialisation d\'un utilisateur', to: '/admin/scripts/user-reset-context-role' }
           ]
         }
       ]

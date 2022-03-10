@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div
+    v-if="organisation"
+    class="container"
+  >
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
@@ -177,7 +180,7 @@
                   <DescriptionListItem term="E-mail" :description="responsable.email" />
                   <DescriptionListItem term="Mobile" :description="responsable.mobile" />
                 </DescriptionList>
-                <div class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                <div v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
                   <div class="group-hover:block hidden">
                     Supprimer
                   </div>

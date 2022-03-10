@@ -36,6 +36,9 @@ export default {
   computed: {
     statesAvailable () {
       let toStates = this.$options.filters.label(this.value, 'mission_workflow_states', 'to')
+      if (this.$store.getters.contextRole === 'admin') {
+        return this.$labels.mission_workflow_states
+      }
       if (this.$store.getters.contextRole === 'responsable') {
         // Si responsable on retire l'option Signalée
         toStates = toStates.filter(state => state !== 'Signalée')

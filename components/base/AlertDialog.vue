@@ -32,6 +32,10 @@ export default {
     theme: {
       type: String,
       default: 'success' // success, warning, danger
+    },
+    buttonLabel: {
+      type: String,
+      default: null
     }
   },
   computed: {
@@ -39,6 +43,9 @@ export default {
       return this.theme == 'danger' ? 'red' : this.theme == 'warning' ? 'primary' : 'green'
     },
     confirmLabel () {
+      if (this.buttonLabel) {
+        return this.buttonLabel
+      }
       return this.theme == 'danger' ? 'Supprimer' : this.theme == 'success' ? 'Confirmer' : 'Valider'
     }
   }
