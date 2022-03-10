@@ -156,6 +156,7 @@
           <div class="space-y-12">
             <FormControl label="Bannière" html-for="banner">
               <ImageCrop
+                key="crop--banner"
                 :default-value="form.banner"
                 :ratio="1600/600"
                 :min-width="1600"
@@ -170,6 +171,7 @@
 
             <FormControl label="Logo" html-for="logo">
               <ImageCrop
+                key="crop--logo"
                 :default-value="form.logo"
                 :ratio="null"
                 :min-height="112"
@@ -191,6 +193,7 @@
           </Heading>
           <div class="space-y-12">
             <ImageCropMultiple
+              key="crop--promoted_organisations"
               class="grid sm:grid-cols-3 lg:grid-cols-2 gap-4"
               :medias="form.promoted_organisations"
               :ratio="null"
