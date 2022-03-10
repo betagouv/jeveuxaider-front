@@ -1,5 +1,15 @@
 <template>
-  <SelectWithDescription :options="statesAvailable" :value="value" @selected="$emit('selected', $event)" />
+  <div>
+    <SelectWithDescription :options="statesAvailable" :value="value" @selected="handleSelect($event)" />
+    <AlertDialog
+      theme="warning"
+      :title="titleAlert"
+      :text="textAlert"
+      :is-open="showAlert"
+      @confirm="handleConfirmDialog()"
+      @cancel="showAlert = false"
+    />
+  </div>
 </template>
 
 <script>
@@ -13,12 +23,51 @@ export default {
   },
   data () {
     return {
+      selected: null,
+      showAlert: false,
+      titleAlert: '',
+      textAlert: ''
     }
   },
   computed: {
     statesAvailable () {
       const toStates = this.$options.filters.label(this.value, 'structure_workflow_states', 'to')
+      if (this.$store.getters.contextRole === 'admin') {
+        return this.$labels.structure_workflow_states
+      }
       return this.$labels.structure_workflow_states.filter(state => toStates.includes(state.key))
+    }
+  },
+  methods: {
+    handleConfirmDialog () {
+      this.$emit('selected', this.selected)
+      this.showAlert = false
+    },
+    handleSelect ($event) {
+      this.titleAlert = 'Changement de statut'
+
+      if ($event.key == 'En attente de validation') {
+        this.textAlert = 'Vous êtes sur le point de passer la mission au statut <b>en attente de validation</b>.'
+      }
+
+      if ($event.key == 'En cours de traitement') {
+        this.textAlert = 'Vous êtes sur le point de passer la mission au statut <b>en cours de traitement</b>.'
+      }
+
+      if ($event.key == 'Validée') {
+        this.textAlert = 'Vous êtes sur le point de <b>valider</b> cette organisation. Ses missions seront disponibles dans la recherche.'
+      }
+
+      if ($event.key == 'Signalée') {
+        this.textAlert = 'Vous êtes sur le point de <b>signaler</b> cette organisation qui ne répond pas aux exigences de la charte ou des règles fixés par le Décret n° 2017-930 du 9 mai 2017 relatif à la Réserve Civique. Ses missions seront également signalée et toutes les participations déjà effectuées seront annulées.'
+      }
+
+      if ($event.key == 'Désinscrite') {
+        this.textAlert = 'Vous êtes sur le point de <b>désinscrire</b> cette organisation. Tous les responsables seront exclues de l\'organisation.'
+      }
+
+      this.selected = $event
+      this.showAlert = true
     }
   }
 }
