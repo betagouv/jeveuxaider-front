@@ -31,7 +31,7 @@
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
                 <Button variant="green" size="xl" :loading="loading" @click.native="handleSubmit">
-                  Exécuter le transfert
+                  Exécuter le script
                 </Button>
               </div>
             </template>
@@ -62,7 +62,17 @@
                       :tag="form.origin"
                       @removed="handleRemoveOrigin"
                     >
-                      #{{ form.origin.id }} {{ form.origin.name }}
+                      <div class="truncate">
+                        #{{ form.origin.id }} {{ form.origin.name }}
+                      </div>
+                      <div class="text-gray-500 text-xs font-normal">
+                        <div>
+                          {{ form.origin.state }}
+                        </div>
+                        <div>
+                          {{ form.origin.missions_count }} mission(s)
+                        </div>
+                      </div>
                     </TagFormItem>
                   </div>
                 </FormControl>
@@ -94,7 +104,17 @@
                         :tag="mission"
                         @removed="onRemovedMission"
                       >
-                        #{{ mission.id }} {{ mission.name }}
+                        <div class="truncate">
+                          #{{ mission.id }} {{ mission.name }}
+                        </div>
+                        <div class="text-gray-500 text-xs font-normal">
+                          <div>
+                            {{ mission.state }}
+                          </div>
+                          <div>
+                            {{ mission.participations_count }} participation(s)
+                          </div>
+                        </div>
                       </TagFormItem>
                     </div>
                   </div>
@@ -122,7 +142,17 @@
                       :tag="form.destination"
                       @removed="form.destination = null"
                     >
-                      #{{ form.destination.id }} {{ form.destination.name }}
+                      <div class="truncate">
+                        #{{ form.destination.id }} {{ form.destination.name }}
+                      </div>
+                      <div class="text-gray-500 text-xs font-normal">
+                        <div>
+                          {{ form.destination.state }}
+                        </div>
+                        <div>
+                          {{ form.destination.missions_count }} mission(s)
+                        </div>
+                      </div>
                     </TagFormItem>
                   </div>
                 </FormControl>
@@ -175,6 +205,7 @@ export default {
     async onFetchSuggestionsOrga (value) {
       const res = await this.$axios.get('/structures', {
         params: {
+          include: 'missionsCount',
           'filter[search]': value,
           pagination: 7
         }
@@ -184,6 +215,7 @@ export default {
     async onFetchSuggestionsMissions (value) {
       const res = await this.$axios.get('/missions', {
         params: {
+          include: 'participationsCount',
           'filter[structure.id]': this.form.origin?.id,
           'filter[search]': value,
           pagination: 7
