@@ -92,6 +92,7 @@ export default {
       this.missionTemplate.state = option.key
       await this.$axios.put(`/mission-templates/${this.missionTemplate.id}`, this.missionTemplate).catch(() => {})
       this.$fetch()
+      this.$emit('updated')
     }
   }
 }

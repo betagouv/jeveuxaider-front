@@ -1,7 +1,7 @@
 
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerMissionTemplate :mission-template-id="drawerMissionTemplateId" @close="drawerMissionTemplateId = null" />
+    <DrawerMissionTemplate :mission-template-id="drawerMissionTemplateId" @close="drawerMissionTemplateId = null" @updated="$fetch()" />
     <portal to="breadcrumb">
       <Breadcrumb
         :items="[
