@@ -50,6 +50,15 @@
           @change="deleteAllFilters()"
         />
         <Checkbox
+          :key="`draft-${$route.fullPath}`"
+          :option="{key: 'draft', label:'Brouillon'}"
+          :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'draft'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[state]', 'draft')"
+        />
+        <Checkbox
           :key="`state-en-attente-validation-${$route.fullPath}`"
           :option="{key: 'en-attente-validation', label:'En attente de validation'}"
           :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'waiting'"
@@ -68,6 +77,15 @@
           @change="changeFilter('filter[state]', 'validated')"
         />
         <Checkbox
+          :key="`state-refused-${$route.fullPath}`"
+          :option="{key: 'refused', label:'Refusé'}"
+          :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'refused'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[state]', 'refused')"
+        />
+        <Checkbox
           :key="`published-${$route.fullPath}`"
           :option="{key: true, label:'En ligne'}"
           :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 1"
@@ -75,6 +93,15 @@
           size="xs"
           transparent
           @change="changeFilter('filter[published]', 1)"
+        />
+        <Checkbox
+          :key="`unpublished-${$route.fullPath}`"
+          :option="{key: 0, label: 'Hors ligne'}"
+          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 0"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[published]', 0)"
         />
       </div>
     </div>

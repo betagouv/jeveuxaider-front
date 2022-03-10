@@ -116,7 +116,7 @@ export default {
       }
       this.timeout = debounce(() => {
         const filterQueryValues = this.$route.query[filterName] ? this.$route.query[filterName].split(',') : []
-        if (filterQueryValues.includes(filterValue) || filterQueryValues == filterValue) { // L'option est déjà filtrée, on la retire
+        if (filterQueryValues.includes(filterValue) || filterQueryValues === filterValue) { // L'option est déjà filtrée, on la retire
           this.deleteFilter(filterName, filterValue, multiple)
         } else if (filterValue === '' || filterValue === null) {
           this.deleteFilter(filterName, filterValue, multiple)
