@@ -22,18 +22,17 @@
 
         <div class="text-sm text-gray-600">
           <label
-            for="assetsFieldHandle"
+            :for="`inputfile--${_uid}`"
             class="relative cursor-pointer rounded-md font-medium text-jva-blue-500 focus-within:outline-none"
             @click.stop
           >
             {{ cLabel }}
 
             <input
-              id="assetsFieldHandle"
+              :id="`inputfile--${_uid}`"
               ref="inputFile"
               type="file"
               :multiple="multiple"
-              name="fields[assetsFieldHandle][]"
               class="sr-only"
               :accept="extensions"
               @change="onChange"
