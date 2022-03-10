@@ -48,6 +48,12 @@ export default {
       return error({ statusCode: 404 })
     }
 
+    if (store.getters.contextRole == 'tete_de_reseau') {
+      if (store.getters.contextableId != reseau.id) {
+        return error({ statusCode: 403 })
+      }
+    }
+
     return {
       reseau
     }

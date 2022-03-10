@@ -2,8 +2,8 @@
   <div>
     <div v-for="(i, index) in limit" :key="index" class="relative inline-flex flex-col mb-auto group">
       <img
-        v-if="values[index]"
-        :srcset="getSrcset(values[index])"
+        v-if="defaults[index]"
+        :srcset="getSrcset(defaults[index])"
         :sizes="previewSizes"
         class="w-full h-auto rounded-lg cursor-pointer shadow-xl transition"
         @click.prevent="openModal = index"
@@ -39,8 +39,8 @@
               :alt="media.name"
               class="rounded-lg cursor-pointer transition ring-offset-4 hover:opacity-50"
               :class="[
-                {'!opacity-100 ring-2 ring-jva-blue-500': values[index] && values[index].id == media.id},
-                {'opacity-25': values[index] && values[index].id != media.id}
+                {'!opacity-100 ring-2 ring-jva-blue-500': defaults[index] && defaults[index].id == media.id},
+                {'opacity-25': defaults[index] && defaults[index].id != media.id}
               ]"
               @click.stop="onNewSelection(media, index)"
             >
@@ -76,8 +76,7 @@ export default {
   data () {
     return {
       openModal: null,
-      mediasFromDomaine: [],
-      values: this.defaults
+      mediasFromDomaine: []
     }
   },
   watch: {
