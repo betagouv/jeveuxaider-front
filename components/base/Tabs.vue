@@ -10,8 +10,8 @@
       </select>
     </div>
     <div class="hidden sm:block">
-      <div class="border-b border-gray-200">
-        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+      <div class="border-b border-gray-200 overflow-hidden">
+        <nav v-dragscroll class="nav -mb-px flex space-x-4 xl:space-x-8 overflow-x-auto" aria-label="Tabs">
           <nuxt-link
             v-for="tab in tabs"
             :key="tab.name"
@@ -41,6 +41,8 @@ export default {
 }
 </script>
 
-<style>
-
-</style>
+<style lang="postcss" scoped>
+.nav::-webkit-scrollbar {
+  display: none;
+}
+</style>-
