@@ -15,6 +15,7 @@
       <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
       <div class="flex flex-col gap-y-4 sticky top-8">
         <InputAutocomplete
+          v-if="['admin','tete_de_reseau','referent','referent_regional'].includes($store.getters.contextRole)"
           :value="$route.query['filter[mission.structure.name]']"
           icon="SearchIcon"
           name="autocomplete"

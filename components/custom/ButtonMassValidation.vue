@@ -28,7 +28,8 @@ export default {
   },
   data () {
     return {
-      showDialog: false
+      showDialog: false,
+      loading: false
     }
   },
   methods: {
