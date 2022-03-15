@@ -82,7 +82,7 @@
           :key="`publics_volontaires-${$route.fullPath}`"
           name="publics_volontaires"
           placeholder="Proposé aux"
-          :options="[{key: 'Mineurs', label: 'Mineurs'}, {key: 'Jeunes volontaires du Service National Universel', label: 'Jeunes du SNU'}]"
+          :options="[{key: 'Mineurs', label: 'Mineurs'}]"
           :value="$route.query['filter[publics_volontaires]']"
           variant="transparent"
           clearable
@@ -176,11 +176,11 @@
           v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
           :key="`snu-mig-${$route.fullPath}`"
           :option="{key: 'snu-mig', label:'SNU/MIG'}"
-          :is-checked="$route.query['filter[publics_volontaires]'] && $route.query['filter[publics_volontaires]'] == 'Jeunes volontaires du Service National Universel'"
+          :is-checked="$route.query['filter[is_snu_mig_compatible]'] && $route.query['filter[is_snu_mig_compatible]'] == 1"
           variant="button"
           size="xs"
           transparent
-          @change="changeFilter('filter[publics_volontaires]', 'Jeunes volontaires du Service National Universel')"
+          @change="changeFilter('filter[is_snu_mig_compatible]', 1)"
         />
         <Checkbox
           v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"

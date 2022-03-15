@@ -1,14 +1,19 @@
 <template>
-  <div class="flex items-center justify-between gap-4">
+  <div
+    class="flex items-center justify-between gap-4"
+    :class="[
+      {'flex-row-reverse': position === 'left'}
+    ]"
+  >
     <span class="flex-grow flex flex-col">
-      <span v-if="label" id="availability-label" class="block text-xs uppercase font-bold text-gray-700">{{ label }}</span>
-      <span v-if="description" id="availability-description" class="text-sm text-gray-500">{{ description }}</span>
+      <span v-if="label" id="availability-label" class="block text-sm text-black" v-html="label" />
+      <span v-if="description" id="availability-description" class="text-sm text-gray-500" v-html="description" />
     </span>
     <button
       type="button"
-      class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500"
+      class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 "
       :class="[
-        value ?'bg-jva-blue-600': 'bg-gray-200'
+        value ?'bg-jva-green-600 focus:ring-jva-green-500': 'bg-gray-200 focus:ring-gray-200'
       ]"
       role="switch"
       aria-checked="false"
@@ -18,11 +23,14 @@
     >
       <span
         aria-hidden="true"
-        class="pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
+        class="pointer-events-none inline-flex items-center justify-center h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
         :class="[
-          value ?'translate-x-5': 'translate-x-0'
+          value ? 'translate-x-5': 'translate-x-0'
         ]"
-      />
+      >
+        <CheckIcon v-if="value" class="h-3 text-jva-green-500" />
+        <XIcon v-else class="h-3 text-gray-400" />
+      </span>
     </button>
   </div>
 </template>
@@ -41,6 +49,10 @@ export default {
     description: {
       type: String,
       default: null
+    },
+    position: {
+      type: String,
+      default: 'left'
     }
   },
 

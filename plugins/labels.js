@@ -152,8 +152,7 @@ const labels = {
     { key: 'any_public', label: 'Tous publics' }
   ],
   mission_publics_volontaires: [
-    { key: 'Mineurs', label: 'Mineurs' },
-    { key: 'Jeunes volontaires du Service National Universel', label: 'Jeunes volontaires du Service National Universel' }
+    { key: 'Mineurs', label: 'Mineurs' }
   ],
   structure_legal_status: [
     { key: 'Association', label: 'Association', label2: "l'association" },

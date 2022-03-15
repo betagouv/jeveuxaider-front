@@ -76,11 +76,11 @@ export default {
           closeContext: () => this.deleteAllFilters()
         }
       }
-      if (this.$route.query.territoire_name && this.$route.query['filter[OfTerritoire]']) {
+      if (this.$route.query.territoire_name && this.$route.query['filter[ofTerritoire]']) {
         return {
           name: this.$route.query.territoire_name,
-          id: this.$route.query['filter[OfTerritoire]'],
-          link: `/admin/contenus/territoires/${this.$route.query['filter[OfTerritoire]']}`,
+          id: this.$route.query['filter[ofTerritoire]'],
+          link: `/admin/contenus/territoires/${this.$route.query['filter[ofTerritoire]']}`,
           type: 'Territoire',
           closeContext: () => this.deleteAllFilters()
         }

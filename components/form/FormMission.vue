@@ -293,6 +293,72 @@
           </div>
         </div>
       </Box>
+      <Box :padding="false">
+        <div class="px-6 py-8 xl:py-10 xl:px-8">
+          <div class="flex space-x-6">
+            <img
+              src="@/assets/images/snu-logo.png"
+              alt="SNU"
+              title="SNU"
+              class="hidden lg:block h-10 lg:mt-2"
+              data-not-lazy
+            >
+            <Heading :level="3" class="mb-8">
+              Proposer cette mission aux jeunes volontaires du Services National Universel
+            </Heading>
+          </div>
+          <div class="space-y-8">
+            <Toggle
+              v-model="form.is_snu_mig_compatible"
+              label="Accueillir des <strong>bénévoles de 15 à 18 ans</strong> pour cette mission"
+            />
+            <FormControl
+              v-if="form.is_snu_mig_compatible"
+              label="Nombre de volontaires du snu acceptés"
+              html-for="snu_mig_places"
+              required
+              :error="errors.snu_mig_places"
+            >
+              <Input
+                v-model="form.snu_mig_places"
+                name="snu_mig_places"
+                type="number"
+                suffix="volontaires"
+              />
+            </FormControl>
+          </div>
+        </div>
+        <div class="bg-gray-50 rounded-b-lg">
+          <div class="flex divide-x">
+            <div class="py-5 w-1/2 text-center">
+              <Link
+                to="https://www.youtube.com/watch?v=2LlYM9C693E"
+                icon="VideoCameraIcon"
+                icon-class="h-5 mr-2"
+                icon-position="left"
+                class="flex justify-center !text-gray-900 text-sm"
+                target="_blank"
+                external
+              >
+                Le SNU en 30 secondes
+              </Link>
+            </div>
+            <div class="py-5 w-1/2">
+              <Link
+                to="https://www.snu.gouv.fr/"
+                target="_blank"
+                external
+                icon="LinkIcon"
+                icon-class="h-5 mr-2"
+                icon-position="left"
+                class="flex justify-center !text-gray-900 text-sm"
+              >
+                En savoir plus
+              </Link>
+            </div>
+          </div>
+        </div>
+      </Box>
       <Box padding="sm">
         <Heading :level="3" class="mb-8">
           Compétences recherchées
@@ -406,7 +472,7 @@ export default {
           'start_date',
           (startDate, schema) => startDate && schema.min(startDate, 'La date de fin doit être supérieur à la date de début')),
         commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
-        participations_max: number().min(1, 'Le nombre de bénévole recherché doit être supérieur à 1').required('Le nombre de bénévole recherché est requis'),
+        participations_max: number().min(1, 'Le nombre de bénévole recherché doit être supérieur à 0').required('Le nombre de bénévole recherché est requis'),
         department: string().nullable().required('Le département est requis'),
         address: string().nullable(),
         zip: string().nullable().when('type', {
@@ -419,7 +485,11 @@ export default {
           then: schema => schema.required('La ville est requise'),
           otherwise: schema => schema.nullable()
         }),
-        responsable_id: number().nullable().required('Le contact de la mission doit être renseigné')
+        responsable_id: number().nullable().required('Le contact de la mission doit être renseigné'),
+        snu_mig_places: number().nullable().when('is_snu_mig_compatible', {
+          is: true,
+          then: schema => schema.min(1, 'Le nombre de volontaire recherché doit être supérieur à 0').required('Le nombre de volontaire recherché est requis')
+        })
       })
     }
   },

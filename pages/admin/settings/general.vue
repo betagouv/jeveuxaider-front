@@ -19,6 +19,11 @@
           description="Récupèration des articles du blog sur la page d'accueil"
         />
         <Toggle
+          v-model="form.snu_mig_active"
+          label="SNU MIG"
+          description="Récupèration des actions en attente côté SNU"
+        />
+        <Toggle
           v-model="form.france_connect_active"
           label="France Connect"
           description="Activer le France Connect pour la connexion et l'inscription des utilisateurs"

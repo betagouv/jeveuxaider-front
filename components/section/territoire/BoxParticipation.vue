@@ -4,7 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         Participations
       </div>
-      <Link v-if="$store.getters.contextRole === 'admin'" :to="`/admin/participations?filter[OfTerritoire]=${territoire.id}&territoire_name=${territoire.name}`" icon="ChevronRightIcon">
+      <Link v-if="$store.getters.contextRole === 'admin'" :to="`/admin/participations?filter[ofTerritoire]=${territoire.id}&territoire_name=${territoire.name}`" icon="ChevronRightIcon">
         Consulter
       </Link>
     </div>
