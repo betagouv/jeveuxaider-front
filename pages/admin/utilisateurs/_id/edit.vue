@@ -16,7 +16,6 @@
               type="submit"
               variant="green"
               size="xl"
-              :loading="loading"
               @click.native="handleSubmit"
             >
               Enregistrer
@@ -28,7 +27,6 @@
       <FormProfile
         ref="form"
         :profile="profile"
-        @submited="afterSubmit($event)"
       />
     </div>
   </div>
@@ -64,21 +62,13 @@ export default {
   },
   methods: {
     async handleSubmit () {
-      if (this.loading) {
-        return
-      }
-      this.loading = true
-      try {
-        await this.$refs.form.handleSubmit()
-      } catch (e) {
-        this.loading = false
-      }
-    },
-    async afterSubmit (profile) {
-      await this.$axios.put(`/profiles/${profile.id}`, profile)
-      this.$router.push(`/admin/utilisateurs/${profile.id}`)
-      this.loading = false
+      await this.$refs.form.handleSubmit()
     }
+    // async onSubmitted (profile) {
+    //   await this.$axios.put(`/profiles/${profile.id}`, profile)
+    //   this.$router.push(`/admin/utilisateurs/${profile.id}`)
+    //   this.loading = false
+    // }
   }
 }
 </script>
