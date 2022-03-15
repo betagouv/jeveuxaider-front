@@ -1,49 +1,58 @@
 <template>
-  <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
-    <div class="lg:col-span-3 space-y-12">
-      <Box>
-        <Heading :level="3" class="mb-8">
-          Informations générales
-        </Heading>
-        <div class="space-y-10">
-          <FormControl
-            html-for="name"
-            label="Nom"
-            required
-            :error="errors.name"
-          >
-            <Input
-              v-model="form.name"
-              name="name"
-              placeholder="Nom"
+  <div>
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+      <div class="lg:col-span-3 space-y-12">
+        <Box>
+          <Heading :level="3" class="mb-8">
+            Informations générales
+          </Heading>
+          <div class="space-y-10">
+            <FormControl
+              html-for="name"
+              label="Nom"
+              required
+              :error="errors.name"
+            >
+              <Input
+                v-model="form.name"
+                name="name"
+                placeholder="Nom"
+              />
+            </FormControl>
+            <FormControl
+              label="Description"
+              html-for="description"
+            >
+              <Textarea
+                v-model="form.description"
+                name="description"
+                placeholder="Entrez une description..."
+              />
+            </FormControl>
+          </div>
+        </Box>
+      </div>
+      <div class="lg:col-span-2 space-y-8">
+        <Box padding="sm">
+          <Heading :level="3" class="mb-8">
+            Paramètres
+          </Heading>
+          <div class="space-y-12">
+            <Toggle
+              v-model="form.is_published"
+              :label="form.is_published ? 'En ligne' : 'Hors ligne'"
+              description="Pour rendre le tag accessible de tous"
             />
-          </FormControl>
-          <FormControl
-            label="Description"
-            html-for="description"
-          >
-            <Textarea
-              v-model="form.description"
-              name="description"
-              placeholder="Entrez une description..."
-            />
-          </FormControl>
-        </div>
-      </Box>
+          </div>
+        </Box>
+      </div>
     </div>
-    <div class="lg:col-span-2 space-y-8">
-      <Box padding="sm">
-        <Heading :level="3" class="mb-8">
-          Paramètres
-        </Heading>
-        <div class="space-y-12">
-          <Toggle
-            v-model="form.is_published"
-            :label="form.is_published ? 'En ligne' : 'Hors ligne'"
-            description="Pour rendre le tag accessible de tous"
-          />
-        </div>
-      </Box>
+    <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
+      <div class="flex flex-col gap-2 flex-shrink-0 items-center justify-center">
+        <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
+          Enregistrer
+        </Button>
+      </div>
     </div>
   </div>
 </template>

@@ -26,7 +26,6 @@
       <FormProfile
         ref="form"
         :profile="form"
-        @submited="afterSubmit($event)"
       />
     </div>
   </div>
@@ -53,21 +52,18 @@ export default {
         return
       }
       this.loading = true
-      try {
-        await this.$refs.form.handleSubmit()
-      } catch (e) {
-        this.loading = false
-      }
-    },
-    async afterSubmit (profile) {
-      await this.$store.dispatch('auth/updateProfile', {
-        id: this.$store.getters.profile.id,
-        ...profile
-      })
+      await this.$refs.form.handleSubmit()
       this.loading = false
-      this.$toast.success('Modifications enregistrées')
-      // this.$router.push('/profile')
     }
+    // async onSubmitted (profile) {
+    //   await this.$store.dispatch('auth/updateProfile', {
+    //     id: this.$store.getters.profile.id,
+    //     ...profile
+    //   })
+    //   // this.loading = false
+    //   this.$toast.success('Modifications enregistrées')
+    //   // this.$router.push('/profile')
+    // }
   }
 }
 </script>

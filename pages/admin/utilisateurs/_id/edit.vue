@@ -28,7 +28,6 @@
       <FormProfile
         ref="form"
         :profile="profile"
-        @submited="afterSubmit($event)"
       />
     </div>
   </div>
@@ -68,17 +67,14 @@ export default {
         return
       }
       this.loading = true
-      try {
-        await this.$refs.form.handleSubmit()
-      } catch (e) {
-        this.loading = false
-      }
-    },
-    async afterSubmit (profile) {
-      await this.$axios.put(`/profiles/${profile.id}`, profile)
-      this.$router.push(`/admin/utilisateurs/${profile.id}`)
+      await this.$refs.form.handleSubmit()
       this.loading = false
     }
+    // async onSubmitted (profile) {
+    //   await this.$axios.put(`/profiles/${profile.id}`, profile)
+    //   this.$router.push(`/admin/utilisateurs/${profile.id}`)
+    //   this.loading = false
+    // }
   }
 }
 </script>

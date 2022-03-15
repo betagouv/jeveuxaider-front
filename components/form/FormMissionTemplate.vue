@@ -107,6 +107,16 @@
         </Box>
       </div>
     </div>
+    <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
+      <div class="flex flex-col gap-2 flex-shrink-0 items-center justify-center">
+        <ButtonsSubmitFormMissionTemplate
+          class="flex"
+          :mission-template="form"
+          :loading="loading"
+          @submitted="handleSubmit($event)"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -114,10 +124,13 @@
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
+import ButtonsSubmitFormMissionTemplate from '@/components/custom/ButtonsSubmitFormMissionTemplate.vue'
 
 export default {
+  components: {
+    ButtonsSubmitFormMissionTemplate
+  },
   mixins: [FormErrors, FormUploads],
-  middleware: 'admin',
   props: {
     missionTemplate: {
       type: Object,
