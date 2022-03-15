@@ -40,7 +40,7 @@
               @blur="validate('name')"
             />
           </FormControl>
-          <FormControl
+          <!-- <FormControl
             html-for="suffix_title"
             label="Devenez bénévole ..."
             required
@@ -53,7 +53,7 @@
               v-model="form.suffix_title"
               name="suffix_title"
             />
-          </FormControl>
+          </FormControl> -->
           <FormControl label="Département de votre collectivté" html-for="department" required :error="errors.department">
             <SelectAdvanced
               v-model="form.department"
@@ -151,7 +151,7 @@ export default {
       formSchema: object({
         name: string().required(),
         department: string().required(),
-        suffix_title: string().required(),
+        // suffix_title: string().required(),
         zips: array().min(1, 'Merci de renseigner au moins 1 code postal')
       }),
       inputGeoType: 'municipality'

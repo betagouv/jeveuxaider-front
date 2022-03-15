@@ -59,7 +59,7 @@ export default {
       }
 
       if ($event.key == 'Signalée') {
-        this.textAlert = 'Vous êtes sur le point de <b>signaler</b> cette organisation qui ne répond pas aux exigences de la charte ou des règles fixés par le Décret n° 2017-930 du 9 mai 2017 relatif à la Réserve Civique. Ses missions seront également signalée et toutes les participations déjà effectuées seront annulées.'
+        this.textAlert = 'Vous êtes sur le point de <b>signaler</b> cette organisation qui ne répond pas aux exigences de la charte ou des règles fixés par le Décret n° 2017-930 du 9 mai 2017 relatif à la Réserve Civique. Ses missions seront également signalées et toutes les participations déjà effectuées seront annulées.'
       }
 
       if ($event.key == 'Désinscrite') {

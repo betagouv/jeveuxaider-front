@@ -9,7 +9,7 @@
     <div class="relative p-6 lg:p-12">
       <div class="mb-6 lg:mb-12 text-center text-white">
         <h1 class="text-4xl lg:text-5xl font-medium leading-12 mb-4">
-          Féliciations <span class="font-bold">{{ $store.getters.profile.first_name }}</span> !<br>
+          Félicitations <span class="font-bold">{{ $store.getters.profile.first_name }}</span> !<br>
           Votre organisation est prête pour la suite
         </h1>
       </div>

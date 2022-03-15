@@ -29,7 +29,7 @@
           v-model="form.properties.referent_departemental"
           name="referent_departemental"
           placeholder="Sélectionner un département"
-          :options="$labels.departments"
+          :options="$labels.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
         />
       </FormControl>
       <FormControl

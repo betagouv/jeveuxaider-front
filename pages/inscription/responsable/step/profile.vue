@@ -19,7 +19,7 @@
         <span class="font-bold">{{ $store.getters.profile.first_name }}</span> !
       </h1>
       <div class="text-lg font-medium">
-        Nous sommes ravis de vous compter parmi nos bénévoles.
+        Nous sommes ravis de vous compter parmi nos utilisateurs.
       </div>
     </div>
     <div class="max-w-xl mx-auto">
