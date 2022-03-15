@@ -30,13 +30,6 @@
         :mission-template="missionTemplate"
         class="my-8"
       />
-
-      <ButtonsSubmitFormMissionTemplate
-        class="flex lg:hidden"
-        :mission-template="missionTemplate"
-        :loading="loading"
-        @submitted="handleSubmit($event)"
-      />
     </div>
   </div>
 </template>

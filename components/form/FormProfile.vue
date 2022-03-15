@@ -286,7 +286,7 @@
     </div>
     <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
       <div class="flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-        <Button size="xl" variant="green" @click.native="handleSubmit()">
+        <Button size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
           Enregistrer
         </Button>
       </div>

@@ -20,7 +20,6 @@
         class="my-8"
         :mission-template="{reseau_id: $store.getters.contextRole === 'tete_de_reseau' ? $store.getters.profile.tete_de_reseau_id: null}"
       />
-      <ButtonsSubmitFormMissionTemplate class="flex lg:hidden" :loading="loading" @submitted="handleSubmit($event)" />
     </div>
   </div>
 </template>

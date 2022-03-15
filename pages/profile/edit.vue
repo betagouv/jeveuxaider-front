@@ -14,6 +14,7 @@
               type="submit"
               variant="green"
               size="xl"
+              :loading="loading"
               @click.native="handleSubmit"
             >
               Enregistrer
@@ -47,7 +48,12 @@ export default {
   },
   methods: {
     async handleSubmit () {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
       await this.$refs.form.handleSubmit()
+      this.loading = false
     }
     // async onSubmitted (profile) {
     //   await this.$store.dispatch('auth/updateProfile', {
