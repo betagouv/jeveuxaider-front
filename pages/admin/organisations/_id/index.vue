@@ -12,8 +12,8 @@
     />
     <AlertDialog
       theme="danger"
-      title="Supprimer le membre"
-      :text="`<strong>${memberSelected.full_name}</strong> ne fera plus parti de l'organisation <strong>${organisation.name}</strong>.<br />Il ne pourra plus gérer les missions.`"
+      title="Supprimer un membre de votre organisation"
+      :text="`<strong>${memberSelected.full_name}</strong> ne fera plus partie de l'organisation <strong>${organisation.name}</strong>.<br />Cette personne ne pourra plus gérer les missions proposées sur JeVeuxAider.gouv.fr.`"
       :is-open="showAlertMemberDeleted"
       @confirm="handleConfirmDeleteMember"
       @cancel="showAlertMemberDeleted = false"

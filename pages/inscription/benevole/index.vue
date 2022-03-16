@@ -218,7 +218,9 @@
                         <Input
                           v-model="form.zip"
                           name="zip"
+                          type="tel"
                           placeholder="56000"
+                          maxlength="5"
                           @blur="validate('zip')"
                         />
                       </FormControl>
@@ -231,6 +233,8 @@
                         <Input
                           v-model="form.mobile"
                           name="mobile"
+                          type="tel"
+                          maxlength="14"
                           placeholder="0612345678"
                           @blur="validate('mobile')"
                         />

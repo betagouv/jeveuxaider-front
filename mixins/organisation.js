@@ -16,7 +16,6 @@ export default {
     },
     canEditStatut () {
       const rolesWhoCanEdit = this.$options.filters.label(this.organisation.state, 'structure_workflow_states', 'roles')
-      console.log('rolesWhoCanEdit', rolesWhoCanEdit)
       return !!rolesWhoCanEdit.includes(this.$store.getters.contextRole)
     }
   }

@@ -47,6 +47,8 @@
       <BoxPlace class="mb-8" :mission="mission" />
       <BoxInformations class="mb-8" :mission="mission" />
       <BoxResponsable class="mb-8" :profile="mission.responsable" />
+      <BoxOrganisation class="mb-8" :organisation="mission.structure" />
+
       <div class="flex justify-center mb-10">
         <Link :to="`/admin/missions/${mission.id}`" class="uppercase font-semibold text-sm hover:underline">
           Détails de la mission
@@ -60,6 +62,7 @@
 import SelectMissionState from '@/components/custom/SelectMissionState'
 import BoxPlace from '@/components/section/mission/BoxPlace'
 import BoxResponsable from '@/components/section/mission/BoxResponsable'
+import BoxOrganisation from '@/components/section/mission/BoxOrganisation'
 import BoxInformations from '@/components/section/mission/BoxInformations'
 import MixinMission from '@/mixins/mission'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
@@ -70,6 +73,7 @@ export default {
     SelectMissionState,
     BoxPlace,
     BoxResponsable,
+    BoxOrganisation,
     BoxInformations,
     OnlineIndicator,
     ButtonMissionDuplicate
