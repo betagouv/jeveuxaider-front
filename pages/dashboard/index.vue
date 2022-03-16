@@ -31,6 +31,7 @@
               :key="i"
               :icon="action.icon"
               :link="action.link"
+              :href="action.href"
               :icon-variant="action.iconVariant"
             >
               <div class="text-gray-900 font-semibold" v-html="action.title" />
@@ -178,6 +179,7 @@ export default {
       statistics: null,
       testimonials: [],
       loadingActions: true,
+      loadingSnuActions: true,
       loadingStatistics: true,
       loadingTestimonials: true
     }
@@ -203,29 +205,27 @@ export default {
     }
   },
   async created () {
-    // this.$axios.get('/user/actions').then((response) => {
-    //   this.loadingActions = false
-    //   this.actions = response.data
-    // })
-    // this.$axios.get('/statistics').then((response) => {
-    //   this.loadingStatistics = false
-    //   this.statistics = response.data
-    // })
-    // this.$axios.get('/temoignages?pagination=3').then((response) => {
-    //   this.loadingTestimonials = false
-    //   this.testimonials = response.data.data
-    // })
     await Promise.all([
       this.getActions(),
       this.getStatistics(),
       this.getTemoignages()
     ])
+
+    if (this.$store.getters.contextRole === 'responsable') {
+      await this.getSnuActions()
+    }
   },
   methods: {
     getActions () {
       this.$axios.get('/user/actions').then((response) => {
         this.loadingActions = false
         this.actions = response.data
+      })
+    },
+    getSnuActions () {
+      this.$axios.get('/user/snu-actions').then((response) => {
+        this.loadingSnuActions = false
+        this.snuActions = response.data
       })
     },
     getStatistics () {

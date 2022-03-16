@@ -12,10 +12,22 @@
       :class="[
         { 'bg-[#FFE5D2] border border-[#EAD7A1]' : iconVariant === 'warning'},
         { 'bg-[#FA9D96] border border-[#E88D96]' : iconVariant === 'danger'},
-        { 'bg-[#E1E8EE] border border-[#B6E1EE]' : iconVariant === 'info' }
+        { 'bg-[#E1E8EE] border border-[#B6E1EE]' : iconVariant === 'info' },
+        { 'bg-[#5B5198] border border-[#32257F]' : iconVariant === 'snu' }
       ]"
     >
-      {{ icon }}
+      <template v-if="icon === 'snu'">
+        <img
+          src="@/assets/images/snu-logo.png"
+          alt="SNU"
+          title="SNU"
+          class="h-8"
+          data-not-lazy
+        >
+      </template>
+      <template v-else>
+        {{ icon }}
+      </template>
     </div>
     <div class="flex-1">
       <slot />
@@ -39,6 +51,10 @@ export default {
       type: String,
       default: null
     },
+    href: {
+      type: String,
+      default: null
+    },
     arrow: {
       type: Boolean,
       default: false
@@ -46,6 +62,11 @@ export default {
   },
   methods: {
     handleClick () {
+      if (this.href) {
+        window.open(this.href, '_blank').focus()
+        return
+      }
+
       if (this.link) {
         this.$router.push(this.link)
       }

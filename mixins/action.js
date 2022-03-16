@@ -1,12 +1,14 @@
 export default {
   data () {
     return {
-      actions: []
+      actions: [],
+      snuActions: []
     }
   },
   computed: {
     formattedActions () {
-      return this.actions.filter(item => item.value).map((item) => {
+      const mergedActions = [...this.actions, ...this.snuActions]
+      return mergedActions.filter(item => item.value).map((item) => {
         return {
           ...item,
           ...this.formatAction(item)
@@ -112,6 +114,30 @@ export default {
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'participation', 'participations', false)}</b> en cours de traitement`,
             subtitle: 'Pensez à traiter ces candidatures',
             link: '/admin/participations'
+          }
+        case 'snu_waiting_validation':
+          return {
+            icon: 'snu',
+            iconVariant: 'snu',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'candidature', 'candidatures', false)} SNU</b> en attente de validation`,
+            subtitle: 'Des jeunes volontaires souhaitent vous aider',
+            href: action.link
+          }
+        case 'snu_contract_to_be_filled':
+          return {
+            icon: 'snu',
+            iconVariant: 'snu',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, "contrat d'engagement", "contrats d'engagement", false)} SNU</b> à éditer`,
+            subtitle: 'Formalité à remplir pour valider les candidatures de vos volontaires',
+            href: action.link
+          }
+        case 'snu_contract_to_be_signed':
+          return {
+            icon: 'snu',
+            iconVariant: 'snu',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, "contrat d'engagement", "contrats d'engagement", false)} SNU</b> à signer`,
+            subtitle: 'Formalité à signer pour valider les candidatures de vos volontaires',
+            href: action.link
           }
       }
     }
