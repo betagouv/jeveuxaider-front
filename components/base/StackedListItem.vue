@@ -2,7 +2,7 @@
   <div
     class="group flex py-2 space-x-4 lg:py-4 lg:space-x-8 items-center"
     :class="[
-      { 'cursor-pointer': link }
+      { 'cursor-pointer': link || href }
     ]"
     @click="handleClick"
   >
@@ -32,7 +32,7 @@
     <div class="flex-1">
       <slot />
     </div>
-    <ChevronRightIcon v-if="link || arrow" class="h-5 transition group-hover:scale-125" />
+    <ChevronRightIcon v-if="link || href || arrow" class="h-5 transition group-hover:scale-125" />
   </div>
 </template>
 

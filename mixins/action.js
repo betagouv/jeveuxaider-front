@@ -121,7 +121,7 @@ export default {
             iconVariant: 'snu',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'candidature', 'candidatures', false)} SNU</b> en attente de validation`,
             subtitle: 'Des jeunes volontaires souhaitent vous aider',
-            href: action.link
+            href: action.href
           }
         case 'snu_contract_to_be_filled':
           return {
@@ -129,7 +129,7 @@ export default {
             iconVariant: 'snu',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, "contrat d'engagement", "contrats d'engagement", false)} SNU</b> à éditer`,
             subtitle: 'Formalité à remplir pour valider les candidatures de vos volontaires',
-            href: action.link
+            href: action.href
           }
         case 'snu_contract_to_be_signed':
           return {
@@ -137,7 +137,7 @@ export default {
             iconVariant: 'snu',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, "contrat d'engagement", "contrats d'engagement", false)} SNU</b> à signer`,
             subtitle: 'Formalité à signer pour valider les candidatures de vos volontaires',
-            href: action.link
+            href: action.href
           }
       }
     }
