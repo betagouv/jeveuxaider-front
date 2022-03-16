@@ -102,6 +102,7 @@
 
       <FormMission
         v-if="step == 2"
+        :key="`form-mission-${$route.fullPath}`"
         ref="form"
         :mission="mission"
         :structure="structure"
@@ -202,6 +203,7 @@ export default {
           query: { ...this.$route.query, template: missionTemplate.id, step: 2 }
         })
       } else {
+        this.$set(this.mission, 'template', null)
         this.$router.push({
           path: this.$route.path,
           query: { ...this.$route.query, domaine: this.domaine_id, step: 2 }

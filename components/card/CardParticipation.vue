@@ -67,7 +67,7 @@
           </Badge>
         </div>
       </div>
-      <TextFormatted v-if="participation.conversation" :max-lines="4" :text="participation.conversation.latest_message.content" class="text-gray-600 mt-3" />
+      <TextFormatted v-if="participation.conversation.latest_message" :max-lines="4" :text="participation.conversation.latest_message.content" class="text-gray-600 mt-3" />
     </div>
   </Box>
 </template>

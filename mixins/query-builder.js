@@ -24,20 +24,22 @@ export default {
           type: 'Organisation'
         }
       }
-      if (this.$route.query['filter[structure.name]'] && this.$route.query['filter[structure.id]']) {
+      if (this.$route.query.context_name && this.$route.query['filter[structure.id]']) {
         return {
-          name: this.$route.query['filter[structure.name]'],
+          name: this.$route.query.context_name,
           id: this.$route.query['filter[structure.id]'],
           link: `/admin/organisations/${this.$route.query['filter[structure.id]']}`,
-          type: 'Organisation'
+          type: 'Organisation',
+          closeContext: () => this.deleteAllFilters()
         }
       }
-      if (this.$route.query['filter[mission.name]'] && this.$route.query['filter[mission.id]']) {
+      if (this.$route.query.context_name && this.$route.query['filter[mission.id]']) {
         return {
-          name: this.$route.query['filter[mission.name]'],
+          name: this.$route.query.context_name,
           id: this.$route.query['filter[mission.id]'],
           link: `/admin/missions/${this.$route.query['filter[mission.id]']}`,
-          type: 'Mission'
+          type: 'Mission',
+          closeContext: () => this.deleteAllFilters()
         }
       }
       if (this.$route.query['filter[structure.reseaux.name]'] && this.$route.query['filter[structure.reseaux.id]']) {
