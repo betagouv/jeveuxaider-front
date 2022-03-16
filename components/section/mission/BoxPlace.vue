@@ -4,7 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         Places
       </div>
-      <Link :to="`/admin/participations?filter[mission.id]=${mission.id}&filter[mission.name]=${mission.name}`" icon="ChevronRightIcon">
+      <Link :to="`/admin/participations?filter[mission.id]=${mission.id}&context_name=${mission.name}`" icon="ChevronRightIcon">
         Participations
       </Link>
     </div>
