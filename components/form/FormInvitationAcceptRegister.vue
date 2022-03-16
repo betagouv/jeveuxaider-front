@@ -78,6 +78,9 @@ export default {
         email: this.invitation.email
       },
       formSchema: object({
+        first_name: string().min(3).required('Un prénom est requis'),
+        last_name: string().min(2).required('Un nom est requis'),
+        email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
         password: string().min(8).required('Un mot de passe est requis'),
         password_confirmation: string().required('Une confirmation de mot de passe est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
       })

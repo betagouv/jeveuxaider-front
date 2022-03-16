@@ -64,10 +64,16 @@ export default {
     FormInvitationAcceptRegister
   },
   layout: 'empty',
-  async asyncData ({ $axios, params, error }) {
+  async asyncData ({ $axios, params, error, store }) {
     const { data: invitation } = await $axios.get(`/invitations/${params.hash}`).catch((err) => {
       console.log(err)
     })
+
+    if (store.getters.isLogged) {
+      if (store.getters.profile.email !== invitation.email) {
+        return error({ statusCode: 403 })
+      }
+    }
 
     return {
       invitation

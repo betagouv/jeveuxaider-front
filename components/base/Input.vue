@@ -13,8 +13,10 @@
         :name="name"
         :type="typeValue"
         :placeholder="placeholder"
+        :maxlength="maxlength"
         :disabled="disabled"
         :min="typeValue == 'number' && min"
+        :max="typeValue == 'number' && max"
         :required="required"
         :class="[
           'px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500 overflow-ellipsis',
@@ -61,6 +63,7 @@ export default {
   props: {
     value: { type: [String, Number], default: null },
     placeholder: { type: String, default: null },
+    maxlength: { type: [String, Number], default: null },
     suffix: { type: String, default: null },
     name: { type: String, required: true },
     icon: { type: String, default: null },
@@ -68,13 +71,14 @@ export default {
     clearable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     min: { type: Number, default: 1 },
+    max: { type: Number, default: null },
     required: { type: Boolean, default: false },
     hidePicker: { type: Boolean, default: false },
     type: {
       type: String,
       default: 'text',
       validator: s =>
-        ['text', 'email', 'password', 'date', 'number', 'datetime-local'].includes(s)
+        ['text', 'email', 'password', 'date', 'number', 'datetime-local', 'tel'].includes(s)
     }
   },
   data () {

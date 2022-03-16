@@ -106,12 +106,12 @@ export default {
   },
   methods: {
     async handleSubmit () {
-      const res = await this.$axios.post('/invitations', this.form).catch((errors) => {
+      await this.$axios.post('/invitations', this.form).then((res) => {
+        this.$toast.success("L'invitation a bien été envoyée")
+        this.$emit('submited', res.data)
+      }).catch((errors) => {
         console.log('errors', errors)
       })
-      if (res?.data) {
-        this.$emit('submited', res.data)
-      }
     }
   }
 }
