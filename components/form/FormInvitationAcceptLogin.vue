@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import { string, object } from 'yup'
 
 export default {
   props: {
@@ -54,18 +55,31 @@ export default {
       loading: false,
       form: {
         email: this.invitation.email
-      }
+      },
+      formSchema: object({
+        email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
+        password: string().min(8).required('Un mot de passe est requis')
+      })
     }
   },
   methods: {
-    async onSubmit () {
-      this.loading = true
-      await this.$store.dispatch('auth/login', this.form).catch((err) => {
-        console.log(err)
-      })
-      if (this.$store.getters.isLogged) {
-        this.$emit('submitted')
+    onSubmit () {
+      if (this.loading) {
+        return
       }
+      this.loading = true
+      this.formSchema
+        .validate(this.form, { abortEarly: false })
+        .then(async () => {
+          await this.$store.dispatch('auth/login', this.form)
+          this.$emit('submitted')
+        })
+        .catch((errors) => {
+          this.setErrors(errors)
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   }
 }
