@@ -122,7 +122,7 @@
                   :value="organisationStats.missions_available"
                   :title="`${$options.filters.pluralize(organisationStats.missions_available, 'Missions en ligne', 'Missions en ligne', false)}`"
                   :subtitle="`sur ${$options.filters.formatNumber(organisationStats.missions_total)} ${$options.filters.pluralize(organisationStats.missions_total, 'mission', 'missions', false)}`"
-                  :link="`/admin/missions?filter[structure.name]=${organisation.name}&filter[structure.id]=${organisation.id}`"
+                  :link="`/admin/missions?context_name=${organisation.name}&filter[structure.id]=${organisation.id}`"
                   link-label="Missions"
                 />
                 <CardStatistic

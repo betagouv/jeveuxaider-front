@@ -24,12 +24,13 @@ export default {
           type: 'Organisation'
         }
       }
-      if (this.$route.query['filter[structure.name]'] && this.$route.query['filter[structure.id]']) {
+      if (this.$route.query.context_name && this.$route.query['filter[structure.id]']) {
         return {
-          name: this.$route.query['filter[structure.name]'],
+          name: this.$route.query.context_name,
           id: this.$route.query['filter[structure.id]'],
           link: `/admin/organisations/${this.$route.query['filter[structure.id]']}`,
-          type: 'Organisation'
+          type: 'Organisation',
+          closeContext: () => this.deleteAllFilters()
         }
       }
       if (this.$route.query.context_name && this.$route.query['filter[mission.id]']) {
