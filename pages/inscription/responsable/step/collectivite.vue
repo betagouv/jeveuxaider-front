@@ -55,7 +55,7 @@
             />
           </FormControl> -->
           <FormControl label="Département de votre collectivté" html-for="department" required :error="errors.department">
-            <SelectAdvanced
+            <Combobox
               v-model="form.department"
               name="department"
               placeholder="Sélectionnez votre département"
