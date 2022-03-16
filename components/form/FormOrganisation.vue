@@ -122,6 +122,7 @@
             </Heading>
             <FormControl
               label="À propos de votre organisation"
+              label-suffix="(200 caractères min)"
               html-for="description"
               required
               :error="errors.description"
