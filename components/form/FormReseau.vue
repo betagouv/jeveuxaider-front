@@ -269,7 +269,7 @@
                 collection="domaine__illustrations_organisation"
                 preview-conversion="large"
                 preview-sizes="200px"
-                :domaine-ids="form.domaines && form.domaines.map(domaine => domaine.id)"
+                :domaine-ids="mediaPickerDomaineIds"
                 :defaults="form.illustrations"
                 :limit="2"
                 @change="onMediaPickerChange($event, 'illustrations')"
@@ -363,6 +363,11 @@ export default {
         donation: string().nullable().url(),
         phone: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').nullable()
       })
+    }
+  },
+  computed: {
+    mediaPickerDomaineIds () {
+      return this.form.domaines?.map(domaine => domaine.id)
     }
   },
   methods: {
