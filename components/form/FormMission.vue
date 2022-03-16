@@ -122,7 +122,7 @@
             <MediaPickerDomaine
               class="grid sm:grid-cols-2 gap-8"
               collection="domaine__illustrations_mission"
-              :domaine-ids="[form.domaine_id]"
+              :domaine-ids="mediaPickerDomaineIds"
               :defaults="form.illustrations"
               @change="onMediaPickerChange($event, 'illustrations')"
             />
@@ -502,6 +502,9 @@ export default {
     },
     isPresentiel () {
       return this.form.type == 'Mission en présentiel'
+    },
+    mediaPickerDomaineIds () {
+      return [this.form.domaine_id]
     }
   },
   methods: {

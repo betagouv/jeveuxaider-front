@@ -364,7 +364,7 @@
                 collection="domaine__illustrations_organisation"
                 preview-conversion="large"
                 preview-sizes="200px"
-                :domaine-ids="form.domaines.map(domaine => domaine.id)"
+                :domaine-ids="mediaPickerDomaineIds"
                 :defaults="form.illustrations"
                 :limit="2"
                 @change="onMediaPickerChange($event, 'illustrations')"
@@ -502,6 +502,11 @@ export default {
       }),
       showAlert: false,
       autocompleteReseauxOptions: []
+    }
+  },
+  computed: {
+    mediaPickerDomaineIds () {
+      return this.form.domaines.map(domaine => domaine.id)
     }
   },
   methods: {
