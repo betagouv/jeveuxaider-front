@@ -193,7 +193,7 @@
                 v-model="form.zip"
                 name="zip"
                 type="tel"
-                maxlength="6"
+                maxlength="5"
                 placeholder="56000"
                 @blur="validate('zip')"
               />

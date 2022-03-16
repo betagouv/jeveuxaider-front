@@ -220,7 +220,7 @@
                           name="zip"
                           type="tel"
                           placeholder="56000"
-                          maxlength="6"
+                          maxlength="5"
                           @blur="validate('zip')"
                         />
                       </FormControl>
