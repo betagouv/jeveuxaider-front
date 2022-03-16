@@ -50,6 +50,7 @@
           <BoxEnChiffre :mission="mission" />
           <BoxInformations :mission="mission" />
           <BoxResponsable v-if="mission.responsable" :profile="mission.responsable" />
+          <BoxOrganisation :organisation="mission.structure" />
         </div>
         <History v-if="$route.hash == '#historique'" :model-id="mission.id" model-type="mission" />
       </div>
@@ -66,6 +67,7 @@ import BoxResponsable from '@/components/section/mission/BoxResponsable.vue'
 import BoxInformations from '@/components/section/mission/BoxInformations.vue'
 import BoxEnChiffre from '@/components/section/mission/BoxEnChiffre.vue'
 import BoxDates from '@/components/section/mission/BoxDates.vue'
+import BoxOrganisation from '@/components/section/mission/BoxOrganisation.vue'
 import History from '@/components/section/History.vue'
 import MixinMission from '@/mixins/mission'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
@@ -81,6 +83,7 @@ export default {
     BoxInformations,
     BoxEnChiffre,
     BoxDates,
+    BoxOrganisation,
     History,
     OnlineIndicator,
     SelectMissionState

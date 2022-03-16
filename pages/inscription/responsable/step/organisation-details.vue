@@ -29,6 +29,7 @@
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
           <FormControl
             label="À propos de votre organisation"
+            label-suffix="(200 caractères min)"
             html-for="description"
             required
             :error="errors.description"

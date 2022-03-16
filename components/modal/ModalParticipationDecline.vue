@@ -35,7 +35,7 @@
           html-for="content"
           label="Précisions"
         >
-          <Textarea v-model="form.content" name="content" placeholder="Plus d'explications si nécéssaire" />
+          <Textarea v-model="form.content" name="content" placeholder="Vous pouvez compléter par un commentaire si vous le souhaitez. À noter : celui-ci pourra être consulté par le bénévole" />
         </FormControl>
       </div>
 
