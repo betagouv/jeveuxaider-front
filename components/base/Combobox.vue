@@ -154,7 +154,7 @@ export default {
         return
       }
       const keyValue = e.which // enter key
-      console.log('keyValue', keyValue)
+      // console.log('keyValue', keyValue)
       if (keyValue === 9) {
         this.showOptions = false
         this.highlightIndex = null

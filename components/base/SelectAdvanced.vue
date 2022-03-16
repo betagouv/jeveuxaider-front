@@ -19,7 +19,7 @@
           {'bg-white': variant == 'transparent' && value}
         ]"
         autocomplete="off"
-        @keydown="!disabled && onKeydown"
+        @keydown="onKeydown"
         @click="!disabled ? showOptions = !showOptions : null"
       >
         <template v-if="selectedOption">
@@ -137,13 +137,13 @@ export default {
         this.highlightIndex = null
       }
 
-      if (keyValue === 13 || keyValue === 32) {
+      if (keyValue === 13) {
         if (this.highlightIndex !== null) {
           this.handleSelectOption(this.options[this.highlightIndex])
           return
         }
       }
-      if (keyValue === 40 || keyValue === 38 || keyValue === 32) {
+      if (keyValue === 40 || keyValue === 38 || keyValue === 13) {
         if (this.highlightIndex === null) {
           this.showOptions = true
           this.highlightIndex = 0
