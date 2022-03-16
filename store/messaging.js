@@ -7,7 +7,8 @@ export const state = () => ({
   showPanelCenter: false,
   showPanelRight: false,
   isMobile: true,
-  isDesktop: false
+  isDesktop: false,
+  unreadMessages: 18
 })
 
 export const getters = {
@@ -20,7 +21,8 @@ export const getters = {
   isDesktop: state => state.isDesktop,
   showPanelLeft: state => state.showPanelLeft,
   showPanelCenter: state => state.showPanelCenter,
-  showPanelRight: state => state.showPanelRight
+  showPanelRight: state => state.showPanelRight,
+  unreadMessages: state => state.unreadMessages
 }
 
 export const mutations = {
@@ -79,6 +81,9 @@ export const mutations = {
     state.conversation = {}
     state.messages = []
     state.newMessagesCount = 0
+  },
+  setUnreadMessages: (state, unreadMessages) => {
+    state.unreadMessages = unreadMessages
   }
 }
 
@@ -88,5 +93,10 @@ export const actions = {
 
     commit('setConversation', conversation)
     commit('replaceConversationInConversations', conversation)
+  },
+  async fetchUnreadMessages ({ commit }) {
+    const { data: unreadMessages } = await this.$axios.get('user/unread-messages')
+
+    commit('setUnreadMessages', unreadMessages)
   }
 }
