@@ -114,6 +114,8 @@ export default {
     previewConversion: { type: String, default: 'formPreview' },
     minWidth: { type: Number, default: 200 },
     minHeight: { type: Number, default: null },
+    maxWidth: { type: Number, default: 4000 },
+    maxHeight: { type: Number, default: 4000 },
     ratio: { type: Number, default: 1 },
     variant: { type: String, default: 'default', validator: s => ['default', 'compact'].includes(s) },
     uploadVariant: { type: String, default: 'default' },
@@ -131,10 +133,32 @@ export default {
   },
   methods: {
     onUploadAdd (files) {
-      this.$emit('add', files[0])
-      this.files = files
-      this.previewSrcset = URL.createObjectURL(files[0])
-      this.originalSrc = this.previewSrcset
+      const errors = []
+      const img = URL.createObjectURL(files[0])
+      const imgDom = document.createElement('img')
+      imgDom.src = img
+      imgDom.onload = () => {
+        if (imgDom.width > this.maxWidth) {
+          errors.push(
+            `La largeur ne doit pas dépasser ${this.maxWidth} pixels.`
+          )
+        }
+        if (imgDom.height > this.maxHeight) {
+          errors.push(
+            `La hauteur ne doit pas dépasser ${this.maxWidth} pixels.`
+          )
+        }
+
+        if (errors.length === 0) {
+          this.$emit('add', files[0])
+          this.files = files
+          this.previewSrcset = img
+          this.originalSrc = this.previewSrcset
+        } else {
+          this.files = []
+          this.$toast.error(errors.join('\n'))
+        }
+      }
     },
     onDelete () {
       if (!this.disableDelete) {

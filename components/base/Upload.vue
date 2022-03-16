@@ -130,6 +130,12 @@ export default {
       return [...this.newFiles, ...this.existingFiles].filter(Boolean)
     }
   },
+  watch: {
+    defaultValue (newVal) {
+      this.existingFiles = newVal
+      this.newFiles = []
+    }
+  },
   methods: {
     onChange () {
       this.addFiles(this.$refs.inputFile.files)
