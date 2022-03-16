@@ -65,6 +65,8 @@
               <Input
                 v-model="form.zip"
                 name="zip"
+                type="tel"
+                maxlength="6"
                 placeholder="56000"
                 @blur="validate('zip')"
               />
@@ -78,6 +80,8 @@
               <Input
                 v-model="form.mobile"
                 name="mobile"
+                type="tel"
+                maxlength="14"
                 placeholder="0612345678"
                 @blur="validate('mobile')"
               />
@@ -86,6 +90,8 @@
               <Input
                 v-model="form.phone"
                 name="phone"
+                type="tel"
+                maxlength="14"
                 placeholder="0123456789"
                 @blur="validate('phone')"
               />

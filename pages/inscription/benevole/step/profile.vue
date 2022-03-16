@@ -62,6 +62,8 @@
             <Input
               v-model="form.phone"
               name="phone"
+              type="tel"
+              maxlength="14"
               placeholder="0123456789"
               @blur="validate('phone')"
             />

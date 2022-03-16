@@ -110,6 +110,7 @@ export default {
         console.log('errors', errors)
       })
       if (res?.data) {
+        this.$toast.success("L'invitation a bien été envoyée")
         this.$emit('submited', res.data)
       }
     }

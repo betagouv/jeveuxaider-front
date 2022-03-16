@@ -507,6 +507,8 @@ export default {
   methods: {
     handleTypeChange () {
       if (this.form.type === 'Mission à distance') {
+        this.form.is_snu_mig_compatible = false
+        this.form.snu_mig_places = null
         this.clearAddress()
       }
     },

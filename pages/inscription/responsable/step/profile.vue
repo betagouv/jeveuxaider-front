@@ -55,6 +55,8 @@
               v-model="form.mobile"
               name="mobile"
               placeholder="0612345678"
+              type="tel"
+              maxlength="14"
               @blur="validate('mobile')"
             />
           </FormControl>
@@ -62,6 +64,8 @@
             <Input
               v-model="form.phone"
               name="phone"
+              type="tel"
+              maxlength="14"
               placeholder="0123456789"
               @blur="validate('phone')"
             />

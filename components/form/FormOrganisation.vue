@@ -161,7 +161,9 @@
                 <Input
                   v-model="form.phone"
                   name="phone"
-                  placeholder="01 23 45 67 89"
+                  type="tel"
+                  maxlength="14"
+                  placeholder="0123456789"
                   @blur="validate('phone')"
                 />
               </FormControl>
