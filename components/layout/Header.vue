@@ -318,8 +318,7 @@ export default {
   },
   async fetch () {
     if (this.$store.getters.isLogged) {
-      const { data: unreadMessageCount } = await this.$axios.get('user/unread-messages')
-      this.unreadMessageCount = unreadMessageCount
+      await this.$store.dispatch('messaging/fetchUnreadMessages')
     }
   },
   computed: {
@@ -333,7 +332,7 @@ export default {
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
-        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.unreadMessageCount }
+        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessages'] }
       ]
     },
     mobileLoggedNavigation () {
