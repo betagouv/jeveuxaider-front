@@ -169,9 +169,13 @@ export default {
       formSchema: object({
         title: string().min(2, 'Le nom est trop court').required('Le nom est requis'),
         type: string().required('Le type est requis'),
-        roles: array().min(1, 'Merci de sélectionner au moins 1 élement'),
+        roles: array().required('La visibilité est requise').min(1, 'Merci de sélectionner au moins 1 élement'),
         link: string().url('L\'url n\'est pas valide').nullable()
-        // file: object().nullable().required('Le fichier est requis')
+        // file: object().nullable().when('type', {
+        //   is: 'file',
+        //   then: schema => schema.required('Le fichier est requis'),
+        //   otherwise: schema => schema.nullable()
+        // })
       })
     }
   },
@@ -188,7 +192,7 @@ export default {
             await this.$axios.put(`/documents/${this.form.id}`, this.form)
             this.sendNotification(this.form)
           } else {
-            const { res: ressource } = await this.$axios.post('/documents', this.form)
+            const { data: ressource } = await this.$axios.post('/documents', this.form)
             this.form.id = ressource.id
             this.sendNotification(ressource)
           }
