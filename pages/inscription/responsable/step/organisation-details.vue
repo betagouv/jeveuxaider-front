@@ -35,7 +35,7 @@
             :error="errors.description"
           >
             <FormHelperText>
-              Cette description doit expliquer votre raison d'être et susciter le désir d'engagement des milliers de bénévoles découvrant votre organisation sur la plateforme JeVeuxAider. Cette description apparaîtra sur votre future page vitrine et sur l'ensemble de vos missions de bénévolat publiées sur la plateforme.
+              Cette description doit expliquer votre raison d'être et susciter le désir d'engagement des milliers de bénévoles découvrant votre organisation sur la plateforme JeVeuxAider.gouv.fr. Cette description apparaîtra sur votre future page vitrine et sur l'ensemble de vos missions de bénévolat publiées sur la plateforme.
             </FormHelperText>
             <Textarea
               v-model="form.description"
@@ -119,6 +119,7 @@
             />
           </FormControl>
           <FormControl
+            v-if="!form.territoire"
             label="URL de donation"
             html-for="donation"
             :error="errors.donation"
