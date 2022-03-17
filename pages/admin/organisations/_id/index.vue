@@ -80,7 +80,7 @@
               <Badge :color="organisation.state">
                 {{ organisation.state }}
               </Badge>
-              <OnlineIndicator :published="hasPageOnline" :link="`/organisations/${organisation.slug}`" />
+              <OnlineIndicator v-if="organisation.statut_juridique === 'Association'" :published="hasPageOnline" :link="hasPageOnline ? `/organisations/${organisation.slug}` : null" />
             </div>
           </div>
           <nuxt-link :to="`/admin/organisations/${organisation.id}/edit`">
