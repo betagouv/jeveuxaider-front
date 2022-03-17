@@ -8,7 +8,7 @@ export const state = () => ({
   showPanelRight: false,
   isMobile: true,
   isDesktop: false,
-  unreadMessages: 18
+  unreadMessages: 0
 })
 
 export const getters = {
