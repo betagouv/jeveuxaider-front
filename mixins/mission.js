@@ -13,8 +13,8 @@ export default {
       )
     },
     thumbnail () {
-      return this.mission.template?.photo?.urls.card ??
-        this.mission.illustrations?.[0]?.urls.card ??
+      return this.mission.template?.photo?.urls?.card ??
+        this.mission.illustrations?.[0]?.urls?.card ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     },
     hasPageOnline () {

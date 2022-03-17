@@ -106,6 +106,7 @@ const labels = {
     { key: '973', label: 'Guyane' },
     { key: '974', label: 'La Réunion' },
     { key: '976', label: 'Mayotte' },
+    { key: '98', label: 'Nouvelle-Calédonie' },
     { key: '987', label: 'Polynésie française' }
   ],
   regions: [

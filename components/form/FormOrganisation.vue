@@ -273,7 +273,7 @@
           </Heading>
           <div class="space-y-6">
             <FormControl label="Département de votre organisation" html-for="department" required :error="errors.department">
-              <SelectAdvanced
+              <Combobox
                 key="department"
                 v-model="form.department"
                 name="department"

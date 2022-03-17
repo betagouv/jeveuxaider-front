@@ -98,7 +98,7 @@
     <ol class="block lg:hidden flex items-center justify-center">
       <template v-for="(step, stepIdx) in steps">
         <li
-          v-if="!step.disable"
+          v-if="step && !step.disable"
           :key="step.name"
           :class="[
             stepIdx !== steps.length - 1 ? 'pr-8 sm:pr-20' : '',

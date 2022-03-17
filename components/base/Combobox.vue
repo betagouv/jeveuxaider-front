@@ -7,10 +7,13 @@
           class="h-4 w-4 text-gray-400"
         />
       </div>
-      <div
+      <input
         :id="name"
+        v-model="search"
         :name="name"
+        type="input"
         :tabindex="!disabled && '0'"
+        :placeholder="placeholder"
         class="cursor-pointer px-6 py-3 pr-10 text-sm rounded-xl block w-full focus:outline-none border border-gray-200 focus:ring-1 bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate"
         :class=" [
           { 'pl-10': icon},
@@ -22,16 +25,9 @@
         @keydown="onKeydown"
         @click="!disabled ? showOptions = !showOptions : null"
       >
-        <template v-if="selectedOption">
-          {{ selectedOption[attributeLabel] }}
-        </template>
-        <template v-else>
-          <span class="text-gray-500">{{ placeholder }}</span>
-        </template>
-      </div>
       <div class="absolute right-3">
         <XIcon
-          v-if="selectedOption && clearable"
+          v-if="selectedOption"
           class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
           @click="reset()"
         />
@@ -50,7 +46,7 @@
         class="py-2"
       >
         <li
-          v-for="(item, index) in options"
+          v-for="(item, index) in filteredOptions"
           :key="index"
           class="relative flex justify-between items-center text-sm px-8 py-2 pr-10 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
           :class="[
@@ -64,7 +60,7 @@
           </span>
           <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="absolute right-2" />
         </li>
-        <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
+        <li v-if="!filteredOptions.length" class="px-8 py-2 text-center text-sm text-gray-500">
           {{ labelEmpty }}
         </li>
       </ul>
@@ -90,6 +86,7 @@ export default {
   },
   data () {
     return {
+      search: this.value ? this.options.find(item => item[this.attributeKey] == this.value).label : null,
       showOptions: false,
       highlightIndex: null
     }
@@ -103,6 +100,28 @@ export default {
         this.$emit('changed', newItem)
         // this.handleSelectOption(newItem)
       }
+    },
+    filteredOptions () {
+      if (this.search && this.search !== '') {
+        return this.options.filter((option) => {
+          return option[this.attributeLabel].toLowerCase().includes(this.search.toLowerCase())
+        })
+      }
+      return this.options
+    }
+  },
+  watch: {
+    search: {
+      handler (value, oldValue) {
+        // console.log('search value', value)
+        // console.log('selectedOption value', this.selectedOption)
+        if (value === '') {
+          // console.log('RESET SELECTED OPTION')
+          this.selectedOption = null
+        } else {
+          this.showOptions = true
+        }
+      }
     }
   },
   methods: {
@@ -110,6 +129,7 @@ export default {
       this.highlightIndex = null
       this.selectedOption = null
       this.showOptions = false
+      this.search = null
       this.$emit('input', null)
     },
     clickedOutside () {
@@ -119,19 +139,22 @@ export default {
       if (item && this.selectedOption && this.selectedOption[this.attributeKey] === item[this.attributeKey]) {
         this.$emit('input', null)
         this.selectedOption = null
+        this.search = null
       } else if (item) {
         this.$emit('input', item[this.attributeKey])
         this.selectedOption = item
+        this.search = item[this.attributeLabel]
       }
-      this.$emit('blur')
       this.showOptions = false
       this.highlightIndex = null
+      this.$emit('blur')
     },
     onKeydown (e) {
       if (this.disabled) {
         return
       }
       const keyValue = e.which // enter key
+      // console.log('keyValue', keyValue)
       if (keyValue === 9) {
         this.showOptions = false
         this.highlightIndex = null
@@ -139,7 +162,7 @@ export default {
 
       if (keyValue === 13) {
         if (this.highlightIndex !== null) {
-          this.handleSelectOption(this.options[this.highlightIndex])
+          this.handleSelectOption(this.filteredOptions[this.highlightIndex])
           return
         }
       }
@@ -150,7 +173,7 @@ export default {
           return
         }
         if (keyValue === 40) {
-          if (this.highlightIndex + 1 === this.options.length) {
+          if (this.highlightIndex + 1 === this.filteredOptions.length) {
             this.highlightIndex = 0
           } else {
             this.highlightIndex += 1
@@ -158,7 +181,7 @@ export default {
         }
         if (keyValue === 38) {
           if (this.highlightIndex === 0) {
-            this.highlightIndex = this.options.length - 1
+            this.highlightIndex = this.filteredOptions.length - 1
           } else {
             this.highlightIndex -= 1
           }

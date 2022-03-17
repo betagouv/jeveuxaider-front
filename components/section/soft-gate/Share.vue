@@ -50,7 +50,7 @@ export default {
   data () {
     return {
       message:
-        "J'ai trouvé ma future mission de bénévolat sur JeVeuxAider. Rejoignez le mouvement %23ChacunPourTous ",
+        "J'ai trouvé ma future mission de bénévolat sur JeVeuxAider.gouv.fr. Rejoignez le mouvement %23ChacunPourTous ",
       baseUrl: this.$config.appUrl
     }
   },
