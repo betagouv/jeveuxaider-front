@@ -106,7 +106,7 @@
                   <CardStatistic
                     :value="`${stats.places_occupation_rate}%`"
                     :gauge-percentage="stats.places_occupation_rate"
-                    title="Taux d'occupation"
+                    title="Taux de remplissage"
                   />
                   <CardStatistic
                     :value="stats.missions_actives"

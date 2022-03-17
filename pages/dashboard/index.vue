@@ -85,7 +85,7 @@
             :value="statistics.places_left"
             :title="`${$options.filters.pluralize(statistics.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
           />
-          <CardStatistic :value="`${statistics.places_occupation_rate}%`" title="Taux d'occupation" :gauge-percentage="statistics.places_occupation_rate" />
+          <CardStatistic :value="`${statistics.places_occupation_rate}%`" title="Taux de remplissage" :gauge-percentage="statistics.places_occupation_rate" />
           <CardStatistic
             v-if="['admin', 'referent','referent_regional','tete_de_reseau','analyste','responsable_territoire'].includes($store.getters.contextRole)"
             :value="statistics.organisations_actives"

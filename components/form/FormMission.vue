@@ -478,7 +478,7 @@ export default {
           }
         ),
         commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
-        participations_max: number().min(1, 'Le nombre de bénévoles recherchés doit être supérieur à 0').required('Le nombre de bénévole recherché est requis'),
+        participations_max: number().min(1, 'Le nombre de bénévoles recherchés doit être supérieur à 0').required('Le nombre de bénévole(s) recherché(s) est requis'),
         department: string().nullable().required('Le département est requis'),
         address: string().nullable(),
         zip: string().nullable().when('type', {
