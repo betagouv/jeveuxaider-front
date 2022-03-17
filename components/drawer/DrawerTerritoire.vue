@@ -34,7 +34,7 @@
       <BoxInformations class="mb-8" :territoire="territoire" />
       <BoxMission class="mb-8" :territoire="territoire" :stats="stats" />
       <BoxParticipation class="mb-8" :territoire="territoire" :stats="stats" />
-      <!-- <BoxReseau v-if="territoire.reseau" class="mb-8" :mission-template="territoire" /> -->
+      <BoxResponsable v-for="responsable in territoire.responsables" :key="responsable.id" class="mb-8" :responsable="responsable" />
 
       <div class="flex justify-center mb-10">
         <Link :to="`/admin/contenus/territoires/${territoire.id}`" class="uppercase font-semibold text-sm hover:underline">
@@ -49,6 +49,7 @@
 import BoxInformations from '@/components/section/territoire/BoxInformations'
 import BoxMission from '@/components/section/territoire/BoxMission'
 import BoxParticipation from '@/components/section/territoire/BoxParticipation'
+import BoxResponsable from '@/components/section/territoire/BoxResponsable'
 import SelectTerritoireState from '@/components/custom/SelectTerritoireState'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
 import MixinTerritoire from '@/mixins/territoire'
@@ -59,6 +60,7 @@ export default {
     OnlineIndicator,
     BoxMission,
     BoxParticipation,
+    BoxResponsable,
     SelectTerritoireState
   },
   mixins: [MixinTerritoire],

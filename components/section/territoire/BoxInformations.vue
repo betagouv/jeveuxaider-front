@@ -11,6 +11,12 @@
         <DescriptionListItem term="Type" :description="$options.filters.label(territoire.type,'territoire_types')" />
         <DescriptionListItem v-if="territoire.department" term="Département" :description="`${territoire.department} - ${$options.filters.label(territoire.department, 'departments')}`" />
         <DescriptionListItem v-if="territoire.type === 'city'" term="Zips" :description="territoire.zips.join(', ')" />
+        <DescriptionListItem term="Tx. complétion" :description="`${territoire.completion_rate}%`" />
+        <DescriptionListItem
+          v-if="territoire.missing_fields.length"
+          term="Champs"
+          :description="territoire.missing_fields.map((option) => $options.filters.label(option, 'territoire_fields')).join(', ')"
+        />
       </DescriptionList>
     </Box>
   </div>

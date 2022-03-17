@@ -24,18 +24,10 @@
 
       <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :reseau="reseau" />
-      <div v-if="reseau.responsables.length > 0" class="mb-10">
-        <template v-for="responsable in reseau.responsables">
-          <BoxResponsable :key="responsable.id" :profile="responsable" />
-        </template>
-      </div>
-      <Box v-else class="mb-8" variant="flat" padding="xs">
-        Aucun responsable
-      </Box>
-
       <BoxAntenne class="mb-8" :reseau="reseau" :stats="stats" />
       <BoxMission class="mb-8" :reseau="reseau" :stats="stats" />
       <BoxParticipation class="mb-8" :reseau="reseau" :stats="stats" />
+      <BoxResponsable v-for="responsable in reseau.responsables" :key="responsable.id" class="mb-8" :responsable="responsable" />
 
       <div class="flex justify-center mb-10">
         <Link :to="`/admin/contenus/reseaux/${reseau.id}`" class="uppercase font-semibold text-sm hover:underline">
