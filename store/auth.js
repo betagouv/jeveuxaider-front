@@ -38,8 +38,8 @@ export const actions = {
       .then(async (response) => {
         await this.$cookies.set('access-token', response?.data?.access_token, {
           maxAge: response?.data?.expires_in,
-          path: '/'
-          // secure: true
+          path: '/',
+          secure: true
         })
         await this.$gtm.push({ event: 'user-login' })
         await dispatch('fetchUser')
