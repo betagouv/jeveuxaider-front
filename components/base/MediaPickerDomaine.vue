@@ -3,6 +3,7 @@
     <div v-for="(i, index) in limit" :key="index" class="relative inline-flex flex-col mb-auto group">
       <img
         v-if="defaults[index]"
+        :src="getSrc(defaults[index])"
         :srcset="getSrcset(defaults[index])"
         :sizes="previewSizes"
         class="w-full h-auto rounded-lg cursor-pointer shadow-xl transition"
@@ -105,6 +106,9 @@ export default {
     },
     getSrcset (item) {
       return item.urls?.[this.previewConversion]
+    },
+    getSrc (item) {
+      return item.urls?.original
     }
   }
 }

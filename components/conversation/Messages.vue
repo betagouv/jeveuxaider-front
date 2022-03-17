@@ -38,11 +38,8 @@
                 :key="message.id"
                 :name="message.from.profile.first_name"
                 :short-name="message.from.profile.short_name"
-                :thumbnail="
-                  message.from.profile.image
-                    ? message.from.profile.image.thumb
-                    : null
-                "
+                :img-srcset="message.from.profile.avatar && message.from.profile.avatar.urls.thumbSmall"
+                :img-src="message.from.profile.avatar && message.from.profile.avatar.urls.original"
                 :date="message.created_at"
               >
                 <!-- <nl2br

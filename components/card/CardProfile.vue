@@ -5,7 +5,8 @@
     <div class="relative bg-cover pt-9 pb-5 px-6 text-white" style="background-image: url('/images/profiles/bg-card-profile.jpg')">
       <div class="flex space-x-3 items-center">
         <Avatar
-          :image="profile.avatar ? profile.avatar.urls.thumbLarge: null"
+          :img-srcset="profile.avatar ? profile.avatar.urls.thumbLarge: null"
+          :img-src="profile.avatar ? profile.avatar.urls.original : null"
           background-color="white"
           class="shadow-lg"
           size="md"

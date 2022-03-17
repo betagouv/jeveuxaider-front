@@ -81,7 +81,8 @@
         :state-text="reseau.is_published ? 'En ligne' : 'Hors ligne'"
         :state-style="reseau.is_published ? 'validated' : 'error'"
         :description="`${reseau.structures_count} antennes`"
-        :image-url="illustration(reseau)"
+        :image-srcset="illustrationSrcset(reseau)"
+        :image-src="illustrationSrc(reseau)"
         @click.native="drawerReseauId = reseau.id"
       >
         <template #footer>
@@ -130,9 +131,14 @@ export default {
     }
   },
   methods: {
-    illustration (reseau) {
+    illustrationSrcset (reseau) {
       return reseau.override_image1?.urls.large ??
         reseau.illustrations[0]?.urls.large ??
+        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+    },
+    illustrationSrc (reseau) {
+      return reseau.override_image1?.urls.original ??
+        reseau.illustrations[0]?.urls.original ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     }
   }

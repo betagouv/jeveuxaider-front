@@ -3,7 +3,8 @@
     <div class="flex items-start">
       <Avatar
         class="mr-4"
-        :image="thumbnail"
+        :img-srcset="imgSrcset"
+        :img-src="imgSrc"
         :initials="shortName"
         size="xs"
       />
@@ -34,7 +35,11 @@ export default {
       type: String,
       required: true
     },
-    thumbnail: {
+    imgSrcset: {
+      type: String,
+      default: null
+    },
+    imgSrc: {
       type: String,
       default: null
     },

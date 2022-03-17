@@ -47,7 +47,8 @@
         :state-style="domaine.published ? 'success' : 'error'"
         :state-text="domaine.published ? 'En ligne' : 'Hors ligne'"
         :description="domaine.title"
-        :image-url="domaine.banner ? domaine.banner.urls.card : undefined"
+        :image-srcset="domaine.banner ? domaine.banner.urls.card : undefined"
+        :image-src="domaine.banner ? domaine.banner.urls.original : undefined"
         @click.native="drawerDomaineId = domaine.id"
       >
         <template #footer>

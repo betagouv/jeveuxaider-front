@@ -4,9 +4,10 @@
       <div class="group flex items-center gap-3 w-48 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-jva-blue-500">
         <Avatar
           v-if="$store.state.auth.user.profile"
-          :image="
+          :img-srcset="
             $store.state.auth.user.profile.avatar && $store.state.auth.user.profile.avatar.urls.thumbSmall
           "
+          :img-src="$store.state.auth.user.profile.avatar && $store.state.auth.user.profile.avatar.urls.original"
           :initials="$store.state.auth.user.profile.short_name"
           class="transition transform group-hover:scale-110"
           size="xs"
