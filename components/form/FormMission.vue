@@ -345,7 +345,7 @@
             </div>
             <div class="py-5 w-1/2">
               <Link
-                to="https://www.snu.gouv.fr/"
+                to="https://www.snu.gouv.fr/le-service-national-universel-29"
                 target="_blank"
                 external
                 icon="LinkIcon"
