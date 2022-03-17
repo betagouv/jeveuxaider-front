@@ -478,7 +478,12 @@ export default {
               : null
           })
           window.plausible && window.plausible('Inscription responsable - Étape 1 - Création de compte')
-          this.$router.push('/inscription/responsable/step/profile')
+          this.$router.push({
+            path: '/inscription/responsable/step/profile',
+            query: {
+              orga_type: this.$route.query.orga_type
+            }
+          })
         })
         .catch((errors) => {
           this.setErrors(errors)

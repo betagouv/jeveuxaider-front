@@ -29,12 +29,12 @@
             @blur="validate('password')"
           />
           <template #description>
-            <Link
-              to="/password-reset"
-              class="text-sm font-medium mt-2 opacity-5"
+            <a
+              href="/password-reset"
+              class="text-sm font-medium mt-2 text-jva-blue-500 hover:text-jva-blue-600"
             >
               Mot de passe perdu ?
-            </Link>
+            </a>
           </template>
         </FormControl>
         <Button

@@ -119,6 +119,7 @@
             />
           </FormControl>
           <FormControl
+            v-if="!form.territoire"
             label="URL de donation"
             html-for="donation"
             :error="errors.donation"
