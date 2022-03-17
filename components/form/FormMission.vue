@@ -392,20 +392,20 @@
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
         <div class="lg:col-span-3 lg:mr-8">
           <Heading :level="3" class="mb-6">
-            Contact principal de la mission
+            Responsable de la mission
           </Heading>
           <div class="font-bold mb-3 text-sm">
-            Les notifications lors de la prise de contact d'un bénévole concernant cette mission seront envoyées à cette personne.
+            Le responsable de la mission est la personne qui sera en contact avec les bénévoles et qui sera chargé de les accompagner dans leur intégration dans la structure.
           </div>
           <div class="text-sm">
-            Vous pouvez également <nuxt-link class="underline" :to="`/admin/organisations/${structureId}#membres`">
+            Vous pouvez <nuxt-link class="underline" :to="`/admin/organisations/${structureId}#membres`">
               ajouter un nouveau membre
-            </nuxt-link> à votre équipe.
+            </nuxt-link> à votre équipe pour vous répartir la publication de mission.
           </div>
         </div>
         <div class="lg:col-span-2 space-y-12">
           <FormControl
-            label="Contact principal"
+            label="Responsable de la mission"
             class="lg:mt-10"
             html-for="contact_principal"
             required
