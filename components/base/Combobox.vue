@@ -23,7 +23,7 @@
         ]"
         autocomplete="off"
         @keydown="onKeydown"
-        @click="!disabled ? showOptions = !showOptions : null"
+        @click="!disabled ? showOptions = true : null"
       >
       <div class="absolute right-3">
         <XIcon
@@ -110,20 +110,6 @@ export default {
       return this.options
     }
   },
-  watch: {
-    search: {
-      handler (value, oldValue) {
-        // console.log('search value', value)
-        // console.log('selectedOption value', this.selectedOption)
-        if (value === '') {
-          // console.log('RESET SELECTED OPTION')
-          this.selectedOption = null
-        } else {
-          this.showOptions = true
-        }
-      }
-    }
-  },
   methods: {
     reset () {
       this.highlightIndex = null
@@ -153,8 +139,13 @@ export default {
       if (this.disabled) {
         return
       }
-      const keyValue = e.which // enter key
+
+      this.showOptions = true
+
+      const keyValue = e.which
       // console.log('keyValue', keyValue)
+
+      // enter key
       if (keyValue === 9) {
         this.showOptions = false
         this.highlightIndex = null
