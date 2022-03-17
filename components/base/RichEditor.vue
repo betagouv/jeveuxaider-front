@@ -120,27 +120,31 @@ export default {
     padding: 6px 1.5rem !important;
     @apply text-sm;
     a {
-        @apply underline
+      @apply underline;
     }
     ul,
     ol {
-        @apply pb-6 pl-6;
-        li {
-        @apply leading-6
-        }
+      @apply pb-6 pl-6;
+      li {
+        @apply leading-6;
+      }
     }
     ul {
-        list-style: disc;
+      list-style: disc;
     }
     ol {
-        list-style: decimal;
+      list-style: decimal;
     }
     &.ck-read-only {
-        background-color: #f5f5f5 !important;
-        @apply cursor-not-allowed;
+      background-color: #f5f5f5 !important;
+      @apply cursor-not-allowed;
     }
     p:not(:last-child) {
-      @apply mb-4
+      @apply mb-4;
+    }
+
+    &.ck-focused {
+      margin: -1px;
     }
   }
 }
