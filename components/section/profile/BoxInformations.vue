@@ -5,8 +5,8 @@
         {{ title }}
       </div>
       <slot v-if="showAction" name="action">
-        <Link :to="`/profile/edit`" icon="ChevronRightIcon">
-          Modifier
+        <Link v-if="showAction" :to="linkAction" icon="ChevronRightIcon">
+          {{ linkLabel }}
         </Link>
       </slot>
     </div>
@@ -54,6 +54,14 @@ export default {
     showAction: {
       type: Boolean,
       default: true
+    },
+    linkAction: {
+      type: String,
+      default: '/profile/edit'
+    },
+    linkLabel: {
+      type: String,
+      default: 'Modifier'
     },
     showTitle: {
       type: Boolean,

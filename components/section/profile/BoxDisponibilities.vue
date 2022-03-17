@@ -4,8 +4,8 @@
       <div v-if="showTitle" class="uppercase font-semibold text-gray-600">
         Engagement
       </div>
-      <Link v-if="showAction" :to="`/profile/edit`" icon="ChevronRightIcon">
-        Modifier
+      <Link v-if="showAction" :to="linkAction" icon="ChevronRightIcon">
+        {{ linkLabel }}
       </Link>
     </div>
     <Box :variant="boxVariant" :padding="boxPadding">
@@ -29,6 +29,14 @@ export default {
     showAction: {
       type: Boolean,
       default: true
+    },
+    linkAction: {
+      type: String,
+      default: '/profile/edit'
+    },
+    linkLabel: {
+      type: String,
+      default: 'Modifier'
     },
     showTitle: {
       type: Boolean,

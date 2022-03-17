@@ -4,13 +4,13 @@
       <div class="uppercase font-semibold text-gray-600">
         Réseau
       </div>
-      <Link v-if="['admin', 'referent'].includes($store.getters.contextRole)" :to="`/admin/contenus/reseaux/${missionTemplate.reseau.id}`" icon="ChevronRightIcon">
+      <Link v-if="['admin', 'referent'].includes($store.getters.contextRole)" :to="`/admin/contenus/reseaux/${reseau.id}`" icon="ChevronRightIcon">
         Consulter
       </Link>
     </div>
     <Box variant="flat" padding="xs">
       <DescriptionList>
-        <DescriptionListItem term="Nom" :description="missionTemplate.reseau.name" />
+        <DescriptionListItem term="Nom" :description="reseau.name" />
       </DescriptionList>
     </Box>
   </div>
@@ -19,7 +19,7 @@
 <script>
 export default {
   props: {
-    missionTemplate: {
+    reseau: {
       type: Object,
       required: true
     }

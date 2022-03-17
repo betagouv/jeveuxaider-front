@@ -11,7 +11,7 @@
         <DescriptionListItem term="Tx. complétion" :description="`${reseau.completion_rate}%`" />
         <DescriptionListItem
           v-if="reseau.missing_fields.length"
-          term="Champs"
+          term="Champs manquants"
           :description="reseau.missing_fields.map((option) => $options.filters.label(option, 'reseau_fields')).join(', ')"
         />
       </DescriptionList>

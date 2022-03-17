@@ -46,6 +46,7 @@
         <BoxMission class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
         <BoxParticipation class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
         <BoxResponsable v-for="responsable in organisation.members" :key="responsable.id" class="mb-8" :responsable="responsable" />
+        <BoxReseau v-for="reseau in organisation.reseaux" :key="reseau.id" class="mb-8" :reseau="reseau" />
 
         <div class="flex justify-center mb-10">
           <Link :to="`/admin/organisations/${organisation.id}`" class="uppercase font-semibold text-sm hover:underline">
@@ -64,6 +65,7 @@ import BoxMission from '@/components/section/organisation/BoxMission'
 import BoxParticipation from '@/components/section/organisation/BoxParticipation'
 import BoxInformations from '@/components/section/organisation/BoxInformations'
 import BoxResponsable from '@/components/section/organisation/BoxResponsable'
+import BoxReseau from '@/components/section/organisation/BoxReseau'
 import LoadingIndicator from '@/components/custom/LoadingIndicator'
 
 export default {
@@ -73,6 +75,7 @@ export default {
     BoxParticipation,
     BoxInformations,
     BoxResponsable,
+    BoxReseau,
     LoadingIndicator
   },
   mixins: [MixinOrganisation],

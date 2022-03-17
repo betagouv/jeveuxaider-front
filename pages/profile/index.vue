@@ -37,9 +37,9 @@
       <LePetitMot />
     </template>
     <template #right>
-      <BoxDisponibilities :profile="$store.state.auth.user.profile" />
+      <BoxDisponibilities :profile="{...$store.state.auth.user.profile, user: $store.state.auth.user }" />
 
-      <BoxInformations :profile="$store.state.auth.user.profile" />
+      <BoxInformations :profile="{...$store.state.auth.user.profile, user: $store.state.auth.user }" />
 
       <HelpCenter />
     </template>
