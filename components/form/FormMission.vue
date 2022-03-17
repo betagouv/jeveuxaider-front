@@ -425,7 +425,7 @@
 </template>
 
 <script>
-import { string, object, number, date, array } from 'yup'
+import { string, object, number, date, array, ref } from 'yup'
 import inputGeo from '@/mixins/input-geo'
 import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
@@ -467,10 +467,16 @@ export default {
         objectif: string().required("L'objectif est requis"),
         description: string().required('La description est requise'),
         publics_beneficiaires: array().transform(v => (!v ? [] : v)).min(1, 'Sélectionnez au moins 1 public bénéficiaire').required('Sélectionnez au moins 1 public bénéficiaire'),
-        start_date: date().nullable().required('La date de début est requise').transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
-        end_date: date().nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)).when(
-          'start_date',
-          (startDate, schema) => startDate && schema.min(startDate, 'La date de fin doit être supérieur à la date de début')),
+        start_date: date()
+          .required('La date de début est requise')
+          .nullable()
+          .transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
+        end_date: date().nullable().when(
+          'start_date', {
+            is: startDate => startDate instanceof Date,
+            then: schema => schema.transform(v => (v instanceof Date && !isNaN(v) ? v : null)).min(ref('start_date'), 'La date de fin doit être supérieur à la date de début')
+          }
+        ),
         commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
         participations_max: number().min(1, 'Le nombre de bénévole recherché doit être supérieur à 0').required('Le nombre de bénévole recherché est requis'),
         department: string().nullable().required('Le département est requis'),
@@ -546,6 +552,7 @@ export default {
           }
         })
         .catch((errors) => {
+          console.log(errors)
           this.setErrors(errors)
         })
         .finally(() => {
