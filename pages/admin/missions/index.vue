@@ -8,7 +8,7 @@
     </template>
     <template #sidebar>
       <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
-      <div class="flex flex-col gap-y-4 sticky top-8">
+      <div class="flex flex-col gap-y-4 sticky top-8 mb-24">
         <InputAutocomplete
           v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
           :value="$route.query['filter[structure.name]']"
