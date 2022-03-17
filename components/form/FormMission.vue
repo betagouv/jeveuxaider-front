@@ -552,7 +552,6 @@ export default {
           }
         })
         .catch((errors) => {
-          console.log(errors)
           this.setErrors(errors)
         })
         .finally(() => {
