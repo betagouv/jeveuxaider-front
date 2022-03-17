@@ -6,7 +6,7 @@
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Organisations', link: '/admin/organisations' },
+        { label: 'Organisations', link: ['admin','referent','referent_regional','tete_de_reseau'].includes($store.getters.contextRole) ? '/admin/organisations' : null },
         { label: organisation && organisation.name },
       ]"
     />
