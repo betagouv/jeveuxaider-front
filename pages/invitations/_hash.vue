@@ -102,17 +102,15 @@ export default {
   },
   methods: {
     async handleAcceptInvitation () {
-      if (this.$store.getters.profile.email == this.invitation.email) {
-        await this.$axios.post(`/invitations/${this.invitation.token}/accept`)
-        // Fetch User for new ContextRole
-        await this.$store.dispatch('auth/fetchUser')
-        if (this.invitation.role == 'benevole') {
-          this.$router.push('/')
-        } else if (this.invitation.role == 'responsable_antenne') {
-          this.$router.push('/inscription/responsable/step/profile')
-        } else {
-          this.$router.push('/dashboard')
-        }
+      await this.$axios.post(`/invitations/${this.invitation.token}/accept`)
+      // Fetch User for new ContextRole
+      await this.$store.dispatch('auth/fetchUser')
+      if (this.invitation.role == 'benevole') {
+        this.$router.push('/')
+      } else if (this.invitation.role == 'responsable_antenne') {
+        this.$router.push('/inscription/responsable/step/profile')
+      } else {
+        this.$router.push('/dashboard')
       }
     }
   }

@@ -6,7 +6,7 @@
       <portal-target name="breadcrumb" />
       <div class="grid lg:grid-cols-5 gap-6 lg:gap-12 py-6 lg:py-12">
         <aside class="relative lg:col-span-1">
-          <div class="lg:block lg:sticky lg:top-12">
+          <div class="lg:block">
             <SecondaryMenuAdmin v-if="$store.getters.contextRole === 'admin'" />
             <SecondaryMenuResponsable v-if="$store.getters.contextRole === 'responsable'" />
             <SecondaryMenuTeteDeReseau v-if="$store.getters.contextRole === 'tete_de_reseau'" />

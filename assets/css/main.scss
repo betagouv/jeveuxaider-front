@@ -206,6 +206,10 @@ html {
   }
 }
 
+.break-word {
+  word-break: break-word !important;
+}
+
 .wysiwyg-field {
   ol {
     list-style: decimal;

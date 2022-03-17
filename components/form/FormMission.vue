@@ -479,7 +479,7 @@ export default {
           }
         ),
         commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
-        participations_max: number().min(1, 'Le nombre de bénévoles recherchés doit être supérieur à 0').required('Le nombre de bénévole(s) recherché(s) est requis'),
+        participations_max: number().min(1, 'Le nombre de bénévole(s) recherché(s) doit être supérieur à 0').required('Le nombre de bénévole(s) recherché(s) est requis'),
         department: string().nullable().required('Le département est requis'),
         address: string().nullable(),
         zip: string().nullable().when('type', {
@@ -495,7 +495,7 @@ export default {
         responsable_id: number().nullable().required('Le contact de la mission doit être renseigné'),
         snu_mig_places: number().nullable().when('is_snu_mig_compatible', {
           is: true,
-          then: schema => schema.min(0, 'Le nombre de volontaires recherchés est incorrect').required('Le nombre de volontaire recherché est requis')
+          then: schema => schema.min(0, 'Le nombre de volontaire(s) recherché(s) est incorrect').required('Le nombre de volontaire(s) recherché(s) est requis')
         })
       })
     }

@@ -109,13 +109,15 @@
         class="mt-8"
       />
 
-      <ButtonsSubmitFormMission
-        class="flex lg:hidden"
-        :structure="structure"
-        :template-id="template_id"
-        :loading="loading"
-        @submitted="handleSubmit($event)"
-      />
+      <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
+        <ButtonsSubmitFormMission
+          class="flex"
+          :structure="structure"
+          :template-id="template_id"
+          :loading="loading"
+          @submitted="handleSubmit($event)"
+        />
+      </div>
     </div>
   </div>
 </template>

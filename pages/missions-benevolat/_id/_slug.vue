@@ -77,13 +77,12 @@
                   {{ mission.structure.name }}
                 </component>
               </h2>
-              <div class="text-cool-gray-500 line-clamp-3">
+              <div class="text-cool-gray-500 line-clamp-3 break-word">
                 {{ mission.structure.description }}
               </div>
 
-              <Button variant="white" rounded class="mt-4">
+              <Button v-if="mission.structure.statut_juridique == 'Association' && mission.structure.state == 'Validée'" variant="white" rounded class="mt-4">
                 <nuxt-link
-                  v-if="mission.structure.statut_juridique == 'Association' && mission.structure.state == 'Validée'"
                   :to="`/organisations/${mission.structure.slug}`"
                 >
                   En savoir plus

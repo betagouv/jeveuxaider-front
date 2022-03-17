@@ -408,7 +408,7 @@ export default {
         ]
       }
       return [
-        { name: 'Profil', to: '/profile', isActive: this.isActiveLink('/profile', true) },
+        { name: 'Mon Profil', to: '/profile', isActive: this.isActiveLink('/profile', true) },
         { name: 'Mes missions', href: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
         { name: 'Aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', target: '_blank' }
       ]
