@@ -46,11 +46,19 @@
           <Heading :level="1">
             Utilisateur <span class=" font-normal text-gray-500 text-2xl">#{{ profile.id }}</span>
           </Heading>
-          <nuxt-link :to="`/admin/utilisateurs/${profile.id}/edit`">
-            <Button icon="PencilIcon">
-              Modifier
-            </Button>
-          </nuxt-link>
+          <ButtonWithDropown class="ml-4 flex-shrink-0" :button-click="() => $router.push(`/admin/utilisateurs/${profile.id}/edit`)">
+            <template #buttonText>
+              <PencilIcon class="h-3 w-3 mr-3" /> Modifier
+            </template>
+            <template #items>
+              <div
+                class="text-gray-700 block cursor-pointer px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
+                @click="handleImpersonate()"
+              >
+                Prendre sa place
+              </div>
+            </template>
+          </ButtonWithDropown>
         </div>
         <Tabs
           :tabs="[
@@ -128,6 +136,11 @@ export default {
 
     return {
       profile
+    }
+  },
+  methods: {
+    async handleImpersonate () {
+      await this.$store.dispatch('auth/impersonate', this.profile.user.id)
     }
   }
 }
