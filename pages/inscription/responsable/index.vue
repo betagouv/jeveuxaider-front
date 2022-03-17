@@ -30,8 +30,8 @@
         />
         <BoxItem
           icon="🏫️"
-          title="Une <strong>collectivité</strong> ou <br>un <strong>CCAS</strong>"
-          subtitle="Mairies, CCAS, EPCI,<br> départements, régions"
+          title="Une <strong>collectivité territoriale</strong>"
+          subtitle="Mairies, CCAS, EPCI et tout établissement public local"
           @click.native="handleChooseOrgaType('Collectivité')"
         />
         <BoxItem
