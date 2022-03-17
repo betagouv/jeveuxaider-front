@@ -217,7 +217,7 @@
                 />
               </FormControl>
               <FormControl
-                label="URL de donation"
+                label="URL vers la plateforme de dons"
                 html-for="donation"
                 :error="errors.donation"
               >
@@ -297,7 +297,7 @@
               />
             </FormControl>
             <FormControl
-              label="Addresse"
+              label="Adresse"
               html-for="address"
               required
             >

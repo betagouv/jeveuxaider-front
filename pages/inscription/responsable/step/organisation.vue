@@ -154,7 +154,7 @@
             />
           </FormControl>
           <FormControl
-            label="Addresse"
+            label="Adresse"
             html-for="address"
             required
           >
