@@ -70,7 +70,7 @@
         <div class="flex items-start justify-between">
           <div>
             <Heading :level="1" class="mb-4">
-              Réseau <span class=" font-normal text-gray-500 text-2xl">#{{ reseau.id }}</span>
+              Réseau <span v-if="['admin'].includes($store.getters.contextRole)" class=" font-normal text-gray-500 text-2xl">#{{ reseau.id }}</span>
             </Heading>
             <div class="flex items-center space-x-4">
               <OnlineIndicator :published="!!reseau.is_published" :link="reseau.full_url" />
