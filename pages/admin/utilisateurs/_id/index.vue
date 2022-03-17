@@ -13,7 +13,7 @@
           <Heading as="h1" :level="1" class="mb-2">
             {{ profile.full_name }}
           </Heading>
-          <div class="text-cool-gray-500 font-semibold">
+          <div v-if="profile.user.last_online_at" class="text-cool-gray-500 font-semibold">
             Dernière connexion le {{ $dayjs(profile.user.last_online_at).format('D MMMM YYYY à HH:mm') }}
           </div>
           <TextFormatted v-if="profile.description" :max-lines="6" :text="profile.description" class="text-cool-gray-500 text-lg mt-4 " />
