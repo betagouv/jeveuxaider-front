@@ -4,7 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         Réseau
       </div>
-      <Link to="/admin/organisations/" icon="ChevronRightIcon" class="opacity-25">
+      <Link v-if="['admin', 'referent'].includes($store.getters.contextRole)" :to="`/admin/contenus/reseaux/${reseau.id}`" icon="ChevronRightIcon">
         Consulter
       </Link>
     </div>

@@ -13,6 +13,7 @@
         <DescriptionListItem term="Nom" :description="profile.full_name" />
         <DescriptionListItem term="E-mail" :description="profile.email" />
         <DescriptionListItem term="Mobile" :description="profile.mobile" />
+        <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="profile" />
       </DescriptionList>
     </Box>
   </div>

@@ -14,7 +14,7 @@
         <DescriptionListItem term="Tx. complétion" :description="`${territoire.completion_rate}%`" />
         <DescriptionListItem
           v-if="territoire.missing_fields.length"
-          term="Champs"
+          term="Champs manquants"
           :description="territoire.missing_fields.map((option) => $options.filters.label(option, 'territoire_fields')).join(', ')"
         />
       </DescriptionList>

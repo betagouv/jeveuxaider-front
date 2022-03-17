@@ -95,7 +95,7 @@
           </div>
           <BoxOrganisations v-if="profile.structures" :structures="profile.structures" />
           <BoxTerritoires v-if="profile.territoires" :territoires="profile.territoires" />
-          <BoxReseaux v-if="profile.tete_de_reseau" :reseau="profile.tete_de_reseau" />
+          <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" />
         </div>
         <History v-if="$route.hash == '#historique'" :model-id="profile.id" model-type="profile" />
       </div>
@@ -107,7 +107,7 @@
 import History from '@/components/section/History.vue'
 import BoxInformations from '@/components/section/profile/BoxInformations'
 import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
-import BoxReseaux from '@/components/section/profile/BoxReseaux'
+import BoxReseau from '@/components/section/profile/BoxReseau'
 import BoxTerritoires from '@/components/section/profile/BoxTerritoires'
 import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
 
@@ -116,7 +116,7 @@ export default {
     History,
     BoxInformations,
     BoxDisponibilities,
-    BoxReseaux,
+    BoxReseau,
     BoxTerritoires,
     BoxOrganisations
   },

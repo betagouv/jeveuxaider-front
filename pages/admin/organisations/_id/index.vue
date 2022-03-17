@@ -164,7 +164,6 @@
             </Box>
           </div>
         </div>
-        <History v-if="$route.hash == '#historique'" :model-id="organisation.id" model-type="structure" />
         <template v-if="$route.hash == '#membres'">
           <div class="space-y-2">
             <BoxInvitations
@@ -179,6 +178,7 @@
                   <DescriptionListItem term="Nom" :description="responsable.full_name" />
                   <DescriptionListItem term="E-mail" :description="responsable.email" />
                   <DescriptionListItem term="Mobile" :description="responsable.mobile" />
+                  <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
                 </DescriptionList>
                 <div v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
                   <div class="group-hover:block hidden">
@@ -193,6 +193,7 @@
             </Button>
           </div>
         </template>
+        <History v-if="$route.hash == '#historique'" :model-id="organisation.id" model-type="structure" />
       </div>
     </div>
   </div>

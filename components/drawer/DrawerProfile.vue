@@ -27,11 +27,11 @@
         </Button>
       </div>
       <div class="border-t -mx-6 my-6" />
-      <BoxDisponibilities class="mb-8" :profile="profile" />
-      <BoxInformations class="mb-8" :profile="profile" />
+      <BoxDisponibilities class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
+      <BoxInformations class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
       <BoxOrganisations v-if="profile.structures" :structures="profile.structures" class="mb-8" />
       <BoxTerritoires v-if="profile.territoires" :territoires="profile.territoires" class="mb-8" />
-      <BoxReseaux v-if="profile.tete_de_reseau" :reseau="profile.tete_de_reseau" class="mb-8" />
+      <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" class="mb-8" />
       <div class="flex justify-center mt-10 mb-10">
         <Link :to="`/admin/utilisateurs/${profile.id}`" class="uppercase font-semibold text-sm hover:underline">
           Détails de l'utilisateur
@@ -44,7 +44,7 @@
 <script>
 import BoxInformations from '@/components/section/profile/BoxInformations'
 import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
-import BoxReseaux from '@/components/section/profile/BoxReseaux'
+import BoxReseau from '@/components/section/profile/BoxReseau'
 import BoxTerritoires from '@/components/section/profile/BoxTerritoires'
 import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
 
@@ -52,7 +52,7 @@ export default {
   components: {
     BoxInformations,
     BoxDisponibilities,
-    BoxReseaux,
+    BoxReseau,
     BoxTerritoires,
     BoxOrganisations
   },
