@@ -1,7 +1,7 @@
 <template>
   <div class="overflow-hidden">
     <div
-      class="break-words"
+      class="break-word"
       v-html="isExpanded ? text : textHtml"
     />
     <div

@@ -91,8 +91,8 @@
             <Toggle
               v-model="form.service_civique"
               class="flex-1"
-              label="Êtes-vous déjà volontaire en Service Civique ?"
-              :description="form.service_civique ? 'Oui, je suis déjà volontaire chez eux' : 'Non, je ne suis pas volontaire chez eux'"
+              label="Etes-vous volontaire en Service Civique ?"
+              :description="form.service_civique ? 'Oui, je suis volontaire' : 'Non, je ne suis pas volontaire'"
             />
           </div>
           <Button
