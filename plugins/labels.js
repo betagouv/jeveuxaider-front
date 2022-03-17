@@ -284,6 +284,29 @@ const labels = {
     { key: 'website', label: 'Site internet' },
     { key: 'domaines', label: 'Domaines' }
   ],
+  reseau_fields: [
+    { key: 'description', label: 'Description' },
+    { key: 'publics_beneficiaires', label: 'Publics bénéficiaires' },
+    { key: 'department', label: 'Département' },
+    { key: 'logo', label: 'Logo' },
+    { key: 'email', label: 'Email public' },
+    { key: 'phone', label: 'Téléphone public' },
+    { key: 'website', label: 'Site internet' },
+    { key: 'domaines', label: 'Domaines' },
+    { key: 'address', label: 'Adresse' },
+    { key: 'zip', label: 'Code postal' },
+    { key: 'city', label: 'Ville' }
+  ],
+  territoire_fields: [
+    { key: 'suffix_title', label: 'Sous titre' },
+    { key: 'department', label: 'Département' },
+    { key: 'banner', label: 'Bannière' },
+    { key: 'zips', label: 'Codes postaux' },
+    { key: 'seo_recruit_title', label: 'Titre de recrutement' },
+    { key: 'seo_recruit_description', label: 'Description pour le recrutement' },
+    { key: 'seo_engage_title', label: 'Titre pour l\'engagement' },
+    { key: 'seo_engage_paragraphs', label: 'Description pour l\'engagement' }
+  ],
   mission_template_workflow_states: [
     { key: 'draft', to: ['draft', 'waiting'], roles: ['admin', 'tete_de_reseau'], label: 'Brouillon', description: "Le modèle de mission est en cours d'édition. Elle n'apparait pas dans les propositions." },
     { key: 'waiting', to: ['waiting', 'draft', 'validated', 'refused'], roles: ['admin', 'tete_de_reseau'], label: 'En attente de validation', description: 'Le modèle de mission est soumis à validation par les modérateurs.' },

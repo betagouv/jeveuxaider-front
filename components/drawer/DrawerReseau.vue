@@ -28,6 +28,8 @@
       <BoxMission class="mb-8" :reseau="reseau" :stats="stats" />
       <BoxParticipation class="mb-8" :reseau="reseau" :stats="stats" />
 
+      <BoxResponsable v-for="responsable in reseau.responsables" :key="responsable.id" class="mb-8" :responsable="responsable" />
+
       <div class="flex justify-center mb-10">
         <Link :to="`/admin/contenus/reseaux/${reseau.id}`" class="uppercase font-semibold text-sm hover:underline">
           Détails du réseau
@@ -42,6 +44,7 @@ import BoxInformations from '@/components/section/reseau/BoxInformations'
 import BoxMission from '@/components/section/reseau/BoxMission'
 import BoxAntenne from '@/components/section/reseau/BoxAntenne'
 import BoxParticipation from '@/components/section/reseau/BoxParticipation'
+import BoxResponsable from '@/components/section/reseau/BoxResponsable'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
 
 export default {
@@ -50,6 +53,7 @@ export default {
     BoxMission,
     BoxAntenne,
     BoxParticipation,
+    BoxResponsable,
     OnlineIndicator
   },
   props: {
