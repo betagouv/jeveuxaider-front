@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
-    <div class="lg:col-span-3 space-y-12">
+    <div class="lg:col-span-3 space-y-8">
       <Box>
         <Heading :level="3" class="mb-8">
           Description de la mission
@@ -127,6 +127,40 @@
               @change="onMediaPickerChange($event, 'illustrations')"
             />
           </FormControl>
+        </div>
+      </Box>
+
+      <Box>
+        <div class="grid gap-8">
+          <div>
+            <Heading :level="3" class="mb-6">
+              Responsable de la mission
+            </Heading>
+            <div class="font-bold mb-3 text-sm">
+              Le responsable de la mission est la personne qui sera en contact avec les bénévoles et qui sera chargé de les accompagner dans leur intégration dans la structure.
+            </div>
+            <div class="text-sm">
+              Vous pouvez <nuxt-link class="underline" :to="`/admin/organisations/${structureId}#membres`">
+                ajouter un nouveau membre
+              </nuxt-link> à votre équipe pour vous répartir la publication de mission.
+            </div>
+          </div>
+          <div>
+            <FormControl
+              label="Responsable de la mission"
+              class=""
+              html-for="contact_principal"
+              required
+              :error="errors.responsable_id"
+            >
+              <SelectAdvanced
+                v-model="form.responsable_id"
+                name="contact_principal"
+                placeholder="Sélectionnez un responsable"
+                :options="structure.members.map((member) => {return {key: member.id, label: member.full_name}})"
+              />
+            </FormControl>
+          </div>
         </div>
       </Box>
     </div>
@@ -388,39 +422,6 @@
         </div>
       </Box>
     </div>
-    <Box class="lg:col-span-5">
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
-        <div class="lg:col-span-3 lg:mr-8">
-          <Heading :level="3" class="mb-6">
-            Responsable de la mission
-          </Heading>
-          <div class="font-bold mb-3 text-sm">
-            Le responsable de la mission est la personne qui sera en contact avec les bénévoles et qui sera chargé de les accompagner dans leur intégration dans la structure.
-          </div>
-          <div class="text-sm">
-            Vous pouvez <nuxt-link class="underline" :to="`/admin/organisations/${structureId}#membres`">
-              ajouter un nouveau membre
-            </nuxt-link> à votre équipe pour vous répartir la publication de mission.
-          </div>
-        </div>
-        <div class="lg:col-span-2 space-y-12">
-          <FormControl
-            label="Responsable de la mission"
-            class="lg:mt-10"
-            html-for="contact_principal"
-            required
-            :error="errors.responsable_id"
-          >
-            <SelectAdvanced
-              v-model="form.responsable_id"
-              name="contact_principal"
-              placeholder="Sélectionnez un responsable"
-              :options="structure.members.map((member) => {return {key: member.id, label: member.full_name}})"
-            />
-          </FormControl>
-        </div>
-      </div>
-    </Box>
   </div>
 </template>
 
