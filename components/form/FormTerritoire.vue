@@ -49,7 +49,7 @@
               :error="errors.department"
               required
             >
-              <SelectAdvanced
+              <Combobox
                 v-model="form.department"
                 name="department"
                 placeholder="Sélectionner un département"

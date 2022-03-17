@@ -263,7 +263,7 @@
             </FormControl>
 
             <FormControl label="Référent départemental" html-for="referent_department">
-              <SelectAdvanced
+              <Combobox
                 v-model="form.referent_department"
                 name="referent_department"
                 placeholder="Sélectionnez un département"
@@ -273,11 +273,12 @@
             </FormControl>
 
             <FormControl label="Référent régional" html-for="referent_region">
-              <SelectAdvanced
+              <Combobox
                 v-model="form.referent_region"
                 name="referent_region"
                 placeholder="Sélectionnez une région"
                 :options="$labels.regions"
+                clearable
               />
             </FormControl>
 
