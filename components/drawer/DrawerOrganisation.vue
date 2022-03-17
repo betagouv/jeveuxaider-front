@@ -42,9 +42,16 @@
           {{ organisation.state }}
         </div>
         <div class="border-t -mx-6 my-6" />
+        <BoxInformations class="mb-8" :organisation="organisation" show-title />
         <BoxMission class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
         <BoxParticipation class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
-        <BoxInformations class="mb-8" :organisation="organisation" />
+        <BoxResponsable v-for="responsable in organisation.members" :key="responsable.id" class="mb-8" :responsable="responsable" />
+
+        <div class="flex justify-center mb-10">
+          <Link :to="`/admin/organisations/${organisation.id}`" class="uppercase font-semibold text-sm hover:underline">
+            Détails de l'organisation
+          </Link>
+        </div>
       </div>
     </template>
   </Drawer>
@@ -56,6 +63,7 @@ import SelectOrganisationState from '@/components/custom/SelectOrganisationState
 import BoxMission from '@/components/section/organisation/BoxMission'
 import BoxParticipation from '@/components/section/organisation/BoxParticipation'
 import BoxInformations from '@/components/section/organisation/BoxInformations'
+import BoxResponsable from '@/components/section/organisation/BoxResponsable'
 import LoadingIndicator from '@/components/custom/LoadingIndicator'
 
 export default {
@@ -64,6 +72,7 @@ export default {
     BoxMission,
     BoxParticipation,
     BoxInformations,
+    BoxResponsable,
     LoadingIndicator
   },
   mixins: [MixinOrganisation],
