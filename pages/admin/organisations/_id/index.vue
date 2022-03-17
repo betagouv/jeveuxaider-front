@@ -6,7 +6,7 @@
     <Breadcrumb
       :items="[
         { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Organisations', link: '/admin/organisations' },
+        { label: 'Organisations', link: ['admin','referent','referent_regional','tete_de_reseau'].includes($store.getters.contextRole) ? '/admin/organisations' : null },
         { label: organisation && organisation.name },
       ]"
     />
@@ -74,13 +74,13 @@
         <div class="flex items-start justify-between">
           <div>
             <Heading :level="1" class="mb-4">
-              Organisation <span class=" font-normal text-gray-500 text-2xl">#{{ organisation.id }}</span>
+              Organisation <span v-if="['admin'].includes($store.getters.contextRole)" class=" font-normal text-gray-500 text-2xl">#{{ organisation.id }}</span>
             </Heading>
             <div class="flex items-center space-x-4">
               <Badge :color="organisation.state">
                 {{ organisation.state }}
               </Badge>
-              <OnlineIndicator :published="hasPageOnline" :link="`/organisations/${organisation.slug}`" />
+              <OnlineIndicator v-if="organisation.statut_juridique === 'Association'" :published="hasPageOnline" :link="hasPageOnline ? `/organisations/${organisation.slug}` : null" />
             </div>
           </div>
           <nuxt-link :to="`/admin/organisations/${organisation.id}/edit`">

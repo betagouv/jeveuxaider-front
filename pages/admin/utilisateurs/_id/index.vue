@@ -44,7 +44,7 @@
       <div class="lg:col-span-2 space-y-8">
         <div class="flex items-start justify-between">
           <Heading :level="1">
-            Utilisateur <span class=" font-normal text-gray-500 text-2xl">#{{ profile.id }}</span>
+            Utilisateur <span v-if="['admin'].includes($store.getters.contextRole)" class=" font-normal text-gray-500 text-2xl">#{{ profile.id }}</span>
           </Heading>
           <ButtonWithDropown class="ml-4 flex-shrink-0" :button-click="() => $router.push(`/admin/utilisateurs/${profile.id}/edit`)">
             <template #buttonText>

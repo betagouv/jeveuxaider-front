@@ -8,12 +8,14 @@
         <DescriptionListItem term="Crée le" :description="$dayjs(reseau.created_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Modifié le" :description="$dayjs(reseau.updated_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Couleur" :description="reseau.color" />
-        <DescriptionListItem term="Tx. complétion" :description="`${reseau.completion_rate}%`" />
-        <DescriptionListItem
-          v-if="reseau.missing_fields.length"
-          term="Champs manquants"
-          :description="reseau.missing_fields.map((option) => $options.filters.label(option, 'reseau_fields')).join(', ')"
-        />
+        <template v-if="['admin'].includes($store.getters.contextRole)">
+          <DescriptionListItem term="Tx. complétion" :description="`${reseau.completion_rate}%`" />
+          <DescriptionListItem
+            v-if="reseau.missing_fields.length"
+            term="Champs manquants"
+            :description="reseau.missing_fields.map((option) => $options.filters.label(option, 'reseau_fields')).join(', ')"
+          />
+        </template>
       </DescriptionList>
     </Box>
   </div>

@@ -12,12 +12,14 @@
         <DescriptionListItem term="Modifié le" :description="$dayjs(organisation.updated_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Statut juridique" :description="organisation.statut_juridique | label('structure_legal_status')" />
         <DescriptionListItem v-if="organisation.association_types" term="Agréements" :description="organisation.association_types.join(', ')" />
-        <DescriptionListItem term="Tx. complétion" :description="`${organisation.completion_rate}%`" />
-        <DescriptionListItem
-          v-if="organisation.missing_fields.length"
-          term="Champs manquants"
-          :description="organisation.missing_fields.map((option) => $options.filters.label(option, 'structure_fields')).join(', ')"
-        />
+        <template v-if="['admin'].includes($store.getters.contextRole)">
+          <DescriptionListItem term="Tx. complétion" :description="`${organisation.completion_rate}%`" />
+          <DescriptionListItem
+            v-if="organisation.missing_fields.length"
+            term="Champs manquants"
+            :description="organisation.missing_fields.map((option) => $options.filters.label(option, 'structure_fields')).join(', ')"
+          />
+        </template>
       </DescriptionList>
     </Box>
   </div>

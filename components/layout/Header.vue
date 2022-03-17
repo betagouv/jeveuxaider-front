@@ -369,9 +369,9 @@ export default {
       } else if (this.$store.getters.currentRole?.key === 'responsable') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Mon organisation', to: `/admin/organisations/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/organisations/*(?!.*missions/add)') },
-          { name: 'Mes missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*|missions/add') },
-          { name: 'Mes participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
+          { name: 'Organisation', to: `/admin/organisations/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/organisations/*(?!.*missions/add)') },
+          { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*|missions/add') },
+          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
         ]
       } else if (this.$store.getters.currentRole?.key === 'responsable_territoire') {
         return [

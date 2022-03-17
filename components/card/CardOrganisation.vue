@@ -62,7 +62,7 @@
         <Badge :color="organisation.state" plain>
           {{ organisation.state }}
         </Badge>
-        <div class="text-gray-500 text-xs flex-shrink-0 ml-2">
+        <div v-if="['admin'].includes($store.getters.contextRole)" class="text-gray-500 text-xs flex-shrink-0 ml-2">
           ID <span class="font-semibold">{{ organisation.id }}</span>
         </div>
       </div>

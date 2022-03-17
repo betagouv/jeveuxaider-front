@@ -47,7 +47,7 @@
         <div class="flex items-start justify-between">
           <div>
             <Heading :level="1" class="mb-4">
-              Territoire <span class=" font-normal text-gray-500 text-2xl">#{{ territoire.id }}</span>
+              Territoire <span v-if="['admin'].includes($store.getters.contextRole)" class=" font-normal text-gray-500 text-2xl">#{{ territoire.id }}</span>
             </Heading>
             <div class="flex items-center space-x-4">
               <Badge :color="territoire.state">

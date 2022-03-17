@@ -13,7 +13,7 @@
       <div
         :class="['h-3 w-3 rounded-full', published ? 'bg-jva-green-500' : 'bg-jva-red-500']"
       />
-      <div class="underline text-sm">
+      <div class="text-sm">
         {{ published ? publishedLabel : unpublishedLabel }}
       </div>
     </div>
