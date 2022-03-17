@@ -3,7 +3,8 @@
     <div class="px-4 pt-4 flex">
       <div class="flex">
         <Avatar
-          :image="profile.avatar ? profile.avatar.urls.thumbMedium: null"
+          :img-srcset="profile.avatar ? profile.avatar.urls.thumbMedium: null"
+          :img-src="profile.avatar ? profile.avatar.urls.original : null"
           :initials="profile.short_name"
         />
         <div class="ml-4">

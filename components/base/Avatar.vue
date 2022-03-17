@@ -8,16 +8,16 @@
       {'w-16 h-16': size == 'md'},
 
       // Background color
-      {'bg-jva-blue-500 ': backgroundColor == 'blue' && !srcset},
-      {'bg-white ': backgroundColor == 'white' && !srcset},
+      {'bg-jva-blue-500 ': backgroundColor == 'blue' && !sources},
+      {'bg-white ': backgroundColor == 'white' && !sources},
     ]"
   >
     <img
-      v-if="srcset"
-      :srcset="srcset"
+      v-if="sources"
+      :srcset="sources"
+      :src="imgSrc"
       :alt="initials"
       class="object-cover w-full h-full"
-      data-not-lazy
       @error="onError"
     >
 
@@ -56,7 +56,11 @@
 <script>
 export default {
   props: {
-    image: {
+    imgSrcset: {
+      type: String,
+      default: undefined
+    },
+    imgSrc: {
       type: String,
       default: undefined
     },
@@ -77,12 +81,12 @@ export default {
   },
   data () {
     return {
-      srcset: this.image
+      sources: this.imgSrcset
     }
   },
   methods: {
     onError () {
-      this.srcset = null
+      this.sources = null
     }
   }
 }

@@ -59,7 +59,7 @@
           <Card
             title="Personnalisez votre mission"
             description="L'intégralité des champs sont éditables. Votre mission sera publiée dans un délai de 2 à 5 jours, après modération par un référent départemental."
-            image-url="/images/missions/card-add.png"
+            image-srcset="/images/missions/card-add.png"
             state-text="Validation par un référent"
             state-style="warning"
             @click.native="onSelectTemplate()"
@@ -79,7 +79,8 @@
             state-style="success"
             state-text="Validation automatique"
             :description="missionTemplate.subtitle"
-            :image-url="missionTemplate.photo ? missionTemplate.photo.urls.card : undefined"
+            :image-srcset="missionTemplate.photo ? missionTemplate.photo.urls.card : undefined"
+            :image-src="missionTemplate.photo ? missionTemplate.photo.urls.original : undefined"
             @click.native="onSelectTemplate(missionTemplate)"
           >
             <template #badges>

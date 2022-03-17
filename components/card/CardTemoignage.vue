@@ -12,7 +12,8 @@
       <div class="flex flex-col lg:flex-row lg:justify-between gap-8">
         <div class="flex">
           <Avatar
-            :image="temoignage.participation.profile.avatar && temoignage.participation.profile.avatar.urls.thumbMedium"
+            :img-srcset="temoignage.participation.profile.avatar && temoignage.participation.profile.avatar.urls.thumbMedium"
+            :img-src="temoignage.participation.profile.avatar ? temoignage.participation.profile.avatar.urls.original : null"
             :initials="temoignage.participation.profile.short_name"
             size="sm"
             class="mr-4"

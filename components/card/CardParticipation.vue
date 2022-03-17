@@ -47,7 +47,8 @@
       <div class="flex flex-col space-y-4 lg:flex-row lg:space-y-0">
         <div class="flex">
           <Avatar
-            :image="profile.avatar && profile.avatar.urls.thumbMedium"
+            :img-srcset="profile.avatar ? profile.avatar.urls.thumbMedium : null"
+            :img-src="profile.avatar ? profile.avatar.urls.original : null"
             :initials="profile.short_name"
             size="sm"
             class="mr-4"

@@ -114,7 +114,8 @@
         :state-style="missionTemplate.state"
         :state-text="$options.filters.label(missionTemplate.state, 'mission_template_workflow_states')"
         :description="missionTemplate.subtitle"
-        :image-url="missionTemplate.photo ? missionTemplate.photo.urls.card : undefined"
+        :image-srcset="missionTemplate.photo ? missionTemplate.photo.urls.card : undefined"
+        :image-src="missionTemplate.photo ? missionTemplate.photo.urls.original : undefined"
         @click.native="drawerMissionTemplateId = missionTemplate.id"
       >
         <template #badges>

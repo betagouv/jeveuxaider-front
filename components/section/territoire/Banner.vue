@@ -11,6 +11,7 @@
       >
       <img
         :srcset="territoire.banner.urls.mobile"
+        :src="territoire.banner.urls.original"
         sizes="100w"
         :alt="`Bénévolat ${territoire.name}`"
         width="425"
