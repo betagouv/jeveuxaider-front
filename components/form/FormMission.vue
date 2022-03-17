@@ -242,7 +242,7 @@
             <InputAutocomplete
               icon="LocationMarkerIcon"
               name="adress"
-              placeholder="Commencer à taper une adresse"
+              placeholder="Renseignez une adresse"
               :options="autocompleteOptions"
               attribute-key="id"
               attribute-label="label"

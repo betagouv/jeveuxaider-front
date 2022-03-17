@@ -18,7 +18,7 @@
         </div>
       </div>
       <div v-if="apiEngagementStats && apiEngagementStats.clicks.length > 0" class="text-sm text-gray-500 mt-4">
-        <span class="text-gray-900 font-medium">Grâce à <a href="https://api-engagement.beta.gouv.fr/" target="_blank" class="underline">l’API Engagement</a></span>, les missions sont diffusées sur nos plateformes partenaires pour vous amener plus de visibilité.
+        <span class="text-gray-900 font-medium">Grâce à <a href="https://api-engagement.beta.gouv.fr/" target="_blank" class="underline">l’API Engagement</a></span>, les missions sont diffusées sur nos plateformes partenaires pour plus de visibilité.
       </div>
       <div v-if="apiEngagementStats" class="mt-4 grid grid-cols-2 gap-4">
         <div v-for="(stat, index) in apiEngagementStats.clicks" :key="index" class="grid-cols-1">
