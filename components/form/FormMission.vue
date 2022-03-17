@@ -293,7 +293,7 @@
           </div>
         </div>
       </Box>
-      <Box :padding="false">
+      <Box v-if="form.type === 'Mission en présentiel'" :padding="false">
         <div class="px-6 py-8 xl:py-10 xl:px-8">
           <div class="flex space-x-6">
             <img
@@ -304,7 +304,7 @@
               data-not-lazy
             >
             <Heading :level="3" class="mb-8">
-              Proposer cette mission aux jeunes volontaires du Services National Universel
+              Proposer cette mission aux jeunes volontaires du Service National Universel
             </Heading>
           </div>
           <div class="space-y-8">
