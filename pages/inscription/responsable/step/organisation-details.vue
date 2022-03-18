@@ -204,7 +204,7 @@ export default {
         },
         this.form.statut_juridique === 'Collectivité'
           ? {
-              name: 'Informations sur la collectivité',
+              name: 'Informations sur la collectivité territoriale',
               status: 'upcoming'
             }
           : {

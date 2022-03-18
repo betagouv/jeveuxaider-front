@@ -120,7 +120,7 @@
           </div>
         </div>
       </div>
-      <div class="max-w-2xl mx-auto">
+      <div class="max-w-3xl mx-auto">
         <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div
             class="border-[#1e429f] border overflow-hidden shadow rounded-lg"
@@ -143,7 +143,7 @@
           >
             <div class="px-4 py-5 sm:p-6">
               <dt class="text-base font-medium text-[#c3ddfd] truncate">
-                Vous êtes une collectivité ?
+                Vous êtes une collectivité territoriale ?
               </dt>
               <nuxt-link
                 to="/inscription/responsable?orga_type=Collectivité"

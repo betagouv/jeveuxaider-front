@@ -8,7 +8,7 @@
       ]"
     />
     <div class="py-6 mb-12">
-      <SectionHeading title="Création d'une nouvelle mission" secondary-title-bottom="Choisissez le domaine d'action de cette mission">
+      <SectionHeading title="Publication d'une nouvelle mission" secondary-title-bottom="Choisissez le domaine d'action de cette mission">
         <template #action>
           <div v-if="step == 1" class="text-gray-500 text-sm lg:text-right">
             Votre mission doit respecter<br>

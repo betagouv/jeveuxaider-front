@@ -68,7 +68,7 @@ export default {
             title: 'Comment trouver une mission ?',
             content: `Bonjour et merci pour votre engagement !
               <br /><br />
-              La plateforme JeVeuxAider.gouv.fr est alimentée par les propositions de missions émanant d'organisations telles que des associations ou des collectivités. Vous pouvez facilement voir les missions disponibles.
+              La plateforme JeVeuxAider.gouv.fr est alimentée par les propositions de missions émanant d'organisations telles que des associations ou des collectivités territoriales. Vous pouvez facilement voir les missions disponibles.
               <br /><br />
               <a class="text-jva-blue-500 hover:underline" href="https://reserve-civique.crisp.help/fr/article/comment-trouver-une-missison-sur-jeveuxaidergouvfr-a1fbnf/" target="_blank">En lire plus ›</a>`
           },
