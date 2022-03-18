@@ -2,7 +2,7 @@
   <div class="relative bg-[#081992]">
     <img
       class="z-1 object-cover absolute h-screen lg:h-auto w-full max-h-full object-top"
-      alt="JeVeuxAider"
+      alt="JeVeuxAider.gouv.fr"
       srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
       data-not-lazy
     >
@@ -25,7 +25,7 @@
           <BoxItem
             icon="💪"
             title="Je veux devenir<br><strong>bénévole</strong>"
-            subtitle="Citoyens français et résidents réguliers (mineurs inclus)"
+            subtitle="Vous avez plus de 16 ans, vous avez la nationalité française ou le statut de résident régulier."
           />
         </nuxt-link>
         <div class="text-white text-lg">
@@ -35,7 +35,7 @@
           <BoxItem
             icon="📢"
             title="Je veux publier<br><strong>des missions</strong>"
-            subtitle="Organisations publiques, collectivités territoriales et associations"
+            subtitle="Vous représentez une association, une organisation publique ou bien une collectivité territoriale."
           />
         </nuxt-link>
       </div>

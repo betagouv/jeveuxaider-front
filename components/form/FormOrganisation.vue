@@ -446,7 +446,7 @@
             Désinscription
           </Heading>
           <FormHelperText class="mb-6">
-            Vous pouvez désinscrire l'organisation. Cependant vous ne serez plus en mesure de gérer les missions reliées à {{ structure.name }}.
+            En vous désinscrivant de JeVeuxAider.gouv.fr vous ne serez plus en mesure de publier de nouvelles missions de bénévolat ni de communiquer avec les bénévoles souhaitant s’investir au sein de votre organisation.
           </FormHelperText>
 
           <div class="ml-auto">

@@ -25,7 +25,7 @@
     >
       <img
         class="z-1 object-cover absolute h-screen lg:h-auto w-full max-h-full object-top"
-        alt="JeVeuxAider"
+        alt="JeVeuxAider.gouv.fr"
         srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
         data-not-lazy
       >
