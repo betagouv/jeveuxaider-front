@@ -13,16 +13,16 @@ export const mutations = {
 }
 
 export const actions = {
-  async fetchUser ({ commit }) {
+  async fetchUser ({ commit, dispatch }) {
     const res = await this.$axios
       .get('/user')
       .catch(() => {
-        console.log('fetchUser CATCH', this.$cookies.getAll())
         commit('setUser', null)
         this.$cookies.remove('access-token')
       })
     if (res?.data) {
       commit('setUser', res.data)
+      await dispatch('messaging/fetchUnreadMessages', null, { root: true })
     }
   },
   async login ({ commit, dispatch }, form) {
@@ -61,6 +61,7 @@ export const actions = {
     await this.$axios.post('/logout')
     this.$cookies.remove('access-token')
     this.$cookies.remove('access-token-impersonate')
+    commit('setUser', null)
     window.location.href = '/'
   },
   async updateProfile ({ dispatch }, payload) {
@@ -104,7 +105,6 @@ export const actions = {
   },
   async impersonate ({ commit, dispatch }, userId) {
     const { data } = await this.$axios.post(`/users/${userId}/impersonate`)
-    // commit('messaging/reset', null, { root: true })
     this.$cookies.set('access-token-impersonate', data.accessToken, {
       maxAge: 3600, // 1 heure
       path: '/',
@@ -123,7 +123,6 @@ export const actions = {
     if (this.$cookies.get('token-id-impersonate')) {
       await this.$axios.delete(`/impersonate/${this.$cookies.get('token-id-impersonate')}`)
     }
-    // commit('messaging/reset', null, { root: true })
     this.$cookies.remove('access-token-impersonate')
     this.$cookies.remove('token-id-impersonate')
     await dispatch('fetchUser')

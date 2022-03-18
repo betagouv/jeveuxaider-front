@@ -81,6 +81,7 @@ export const mutations = {
     state.conversation = {}
     state.messages = []
     state.newMessagesCount = 0
+    state.unreadMessages = 0
   },
   setUnreadMessages: (state, unreadMessages) => {
     state.unreadMessages = unreadMessages
@@ -96,7 +97,6 @@ export const actions = {
   },
   async fetchUnreadMessages ({ commit }) {
     const { data: unreadMessages } = await this.$axios.get('user/unread-messages')
-
     commit('setUnreadMessages', unreadMessages)
   }
 }
