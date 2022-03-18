@@ -19,6 +19,7 @@
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/dayjs": "^1.4.1",
     "@nuxtjs/gtm": "^2.4.0",
+    "@nuxtjs/redirect-module": "^0.3.1",
     "@nuxtjs/sitemap": "^2.4.0",
     "@nuxtjs/strapi": "^0.3.1",
     "@nuxtjs/svg": "^0.3.0",

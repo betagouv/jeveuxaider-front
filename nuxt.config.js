@@ -84,6 +84,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/redirect-module',
     '@nuxtjs/sitemap',
     '@nuxtjs/strapi',
     '@nuxtjs/dayjs',
@@ -165,6 +166,21 @@ export default {
     ]
   },
 
+  redirect: [
+    { from: '^/register/volontaire(.*)$', to: '/inscription/benevole$1', statusCode: 301 },
+    { from: '^/register/responsable(.*)$', to: '/inscription/responsable$1', statusCode: 301 },
+    { from: '^/user/settings', to: '/profile/settings', statusCode: 301 },
+    { from: '^/user/(.*)$', to: '/profile', statusCode: 301 },
+    { from: '^/dashboard/structures', to: '/admin/organisations', statusCode: 301 },
+    { from: '^/dashboard/structure/(.*)$', to: '/admin/organisations/$1', statusCode: 301 },
+    { from: '^/dashboard/mission/(.*)$', to: '/admin/missions/$1', statusCode: 301 },
+    { from: '^/dashboard/participation/(.*)$', to: '/admin/participations', statusCode: 301 },
+    { from: '^/dashboard/profiles', to: '/admin/utilisateurs', statusCode: 301 },
+    { from: '^/dashboard/profile/(.*)$', to: '/admin/utilisateurs/$1', statusCode: 301 },
+    { from: '^/dashboard/reseaux/(.*)$', to: '/admin/contenus/reseaux/$1', statusCode: 301 },
+    { from: '^/dashboard/(.*)$', to: '/admin/$1', statusCode: 301 }
+  ],
+
   // Plugins config
   dayjs: {
     locales: ['fr'],
@@ -174,14 +190,17 @@ export default {
       'customParseFormat'
     ]
   },
+
   toast: {
     timeout: 5000,
     draggable: true
   },
+
   gtm: {
     id: 'GTM-5S3DCV6',
     enabled: true
   },
+
   sitemap: () => {
     return {
       hostname: 'https://www.jeveuxaider.gouv.fr',
