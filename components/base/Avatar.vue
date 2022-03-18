@@ -84,6 +84,11 @@ export default {
       sources: this.imgSrcset
     }
   },
+  watch: {
+    imgSrcset (newVal) {
+      this.sources = newVal
+    }
+  },
   methods: {
     onError () {
       this.sources = null

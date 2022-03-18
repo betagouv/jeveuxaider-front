@@ -53,7 +53,7 @@
             :click="link.click"
             class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1 relative"
           >
-            <div v-if="link.count" class="absolute -top-1.5 -right-1 bg-[#e41e3f] px-1.5 py-0.5 rounded-lg text-white font-bold text-xs">
+            <div v-if="link.count" class="absolute -top-1.5 -right-1 bg-[#e41e3f] px-1.5 py-0.5 rounded-full text-white font-bold text-xs min-w-[20px] inline-flex justify-center">
               {{ link.count > 99 ? "99+" : link.count }}
             </div>
             <component :is="link.icon" class="flex-shrink-0 mr-3 h-4 w-4" aria-hidden="true" />
@@ -314,11 +314,6 @@ export default {
     return {
       showMobileMenu: false,
       unreadMessageCount: 0
-    }
-  },
-  async fetch () {
-    if (this.$store.getters.isLogged) {
-      await this.$store.dispatch('messaging/fetchUnreadMessages')
     }
   },
   computed: {
