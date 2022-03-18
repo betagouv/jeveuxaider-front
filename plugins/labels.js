@@ -150,6 +150,8 @@ const labels = {
     { key: 'parents', label: 'Parents' },
     { key: 'children', label: 'Jeunes / enfants' },
     { key: 'refugees', label: 'Nouveaux Arrivants / Réfugiés' },
+    { key: 'people_being_excluded', label: 'Personnes en situation d’exclusion' },
+    { key: 'people_sick', label: 'Personnes malades' },
     { key: 'any_public', label: 'Tous publics' }
   ],
   mission_publics_volontaires: [

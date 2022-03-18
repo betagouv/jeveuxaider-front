@@ -188,8 +188,8 @@ export default {
       return error({ statusCode: 404 })
     }
 
-    if (store.getters.contextRole == 'tete_de_reseau') {
-      if (store.getters.contextableId != reseau.id) {
+    if (store.getters.contextRole === 'tete_de_reseau') {
+      if (store.state.auth.user.profile.tete_de_reseau_id !== reseau.id) {
         return error({ statusCode: 403 })
       }
     }
