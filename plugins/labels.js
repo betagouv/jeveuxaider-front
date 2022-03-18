@@ -157,7 +157,7 @@ const labels = {
   ],
   structure_legal_status: [
     { key: 'Association', label: 'Association', label2: "l'association" },
-    { key: 'Collectivité', label: 'Collectivité', label2: 'la collectivité' },
+    { key: 'Collectivité', label: 'Collectivité territoriale', label2: 'la collectivité territoriale' },
     { key: 'Organisation publique', label: 'Organisation publique', label2: "l'organisation publique" },
     { key: 'Organisation privée', label: 'Organisation privée', label2: "l'organisation privée" },
     { key: 'Autre', label: 'Autre', label2: "l'organisation" }

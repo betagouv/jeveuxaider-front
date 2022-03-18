@@ -8,7 +8,7 @@
       <div
         class="flex-none w-full font-bold text-white tracking-wide leading-[22px] mb-6 truncate"
       >
-        COLLECTIVITÉS ET TERRITOIRES
+        COLLECTIVITÉS TERRITORIALES ET TERRITOIRES
       </div>
       <h2
         class="text-white justify-end text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight mb-8"
@@ -19,7 +19,7 @@
       </h2>
       <img
         src="/images/homepage/collectivites_territoires.svg"
-        alt="Collectivités et territoires"
+        alt="Collectivités territoriales et territoires"
         width="311"
         height="299"
         class="mx-auto mb-8 md:h-full md:max-h-[170px] lg:max-h-[270px]"
@@ -49,7 +49,7 @@
         to="/inscription/responsable?orga_type=Collectivité"
         class="w-full lg:w-auto flex items-center justify-center px-12 py-3 font-bold rounded-full text-jva-green-500 bg-white hover:scale-105 transform transition mt-auto lg:mx-auto"
       >
-        Inscrire ma collectivité
+        Inscrire ma collectivité territoriale
       </nuxt-link>
     </div>
   </div>
@@ -61,7 +61,7 @@ export default {
     return {
       goals: {
         collectivites: [
-          'Créez une page dédiée à votre collectivité',
+          'Créez une page dédiée à votre collectivité territoriale',
           'Centralisez les missions des organisations locales',
           'Encouragez et valorisez l\'engagement de vos citoyens'
         ]

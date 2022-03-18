@@ -68,7 +68,7 @@
           class="max-w-2xl mx-auto bg-gray-100 p-6 sm:p-12 rounded-2xl"
           @submit.prevent="onSubmitChooseName"
         >
-          <FormControl html-for="name" :label="$route.query.orga_type === 'Collectivité' ? 'Nom de votre collectivité' : $route.query.orga_type === 'Association' ? 'Nom de votre association' : 'Nom de votre organisation' ">
+          <FormControl html-for="name" :label="$route.query.orga_type === 'Collectivité' ? 'Nom de votre collectivité territoriale' : $route.query.orga_type === 'Association' ? 'Nom de votre association' : 'Nom de votre organisation' ">
             <ApiEngagementAssociationsSearch
               v-if="$route.query.orga_type === 'Association'"
               v-model="form.structure.name"
@@ -85,7 +85,7 @@
               name="name"
               :placeholder="
                 $route.query.orga_type === 'Collectivité'
-                  ? 'Nom de votre collectivité'
+                  ? 'Nom de votre collectivité territoriale'
                   : 'Nom de votre organisation'
               "
             />
@@ -268,7 +268,7 @@
             @click="onSubmitRegisterResponsableForm"
           >
             <template v-if="$route.query.orga_type === 'Collectivité'">
-              J'inscris ma collectivité
+              J'inscris ma collectivité territoriale
             </template>
             <template v-else-if="$route.query.orga_type === 'Association'">
               J'inscris mon association
@@ -368,7 +368,7 @@ export default {
           key: 'choix_orga_nom',
           title:
             this.$route.query.orga_type === 'Collectivité'
-              ? 'Voilà un grand pas<br /> pour votre collectivité !'
+              ? 'Voilà un grand pas<br /> pour votre collectivité territoriale !'
               : this.$route.query.orga_type === 'Association'
                 ? 'Votre association est <br /> la bienvenue chez nous !'
                 : 'Voilà un grand pas<br /> pour votre organisation !',

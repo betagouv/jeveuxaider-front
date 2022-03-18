@@ -80,7 +80,7 @@ export default {
             { key: 'responsable_organisation_being_processed', label: 'Organisation en cours de traitement', description: 'Notification envoyée au responsable lorsque son organisation est en cours de traitement' },
             { key: 'responsable_organisation_validated', label: 'Votre organisation a été validée', description: 'Notification envoyée au responsable lorsque son organisation est validée' },
             { key: 'responsable_association_validated', label: 'Bienvenue sur JeVeuxAider.gouv.fr', description: 'Notification envoyée au responsable lorsque son organisation de type association est validée' },
-            { key: 'responsable_collectivite_validated', label: 'Organisation de type collectivité validée', description: 'Notification envoyée au responsable lorsque son organisation de type collectivité est validée' },
+            { key: 'responsable_collectivite_validated', label: 'Organisation de type collectivité territoriale validée', description: 'Notification envoyée au responsable lorsque son organisation de type collectivité territoriale est validée' },
             { key: 'responsable_organisation_signaled', label: 'Votre organisation a été signalée', description: 'Notification envoyée au responsable lorsque son organisation est signalée' },
             { key: 'responsable_mission_created', label: 'Votre mission a bien été déposée', description: "Notification envoyée au responsable lorsqu'une mission est postée" },
             { key: 'responsable_mission_validated', label: 'Votre mission est validée !', description: 'Notification envoyée au responsable lorsque sa mission est validée' },

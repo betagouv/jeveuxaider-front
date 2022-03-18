@@ -10,7 +10,7 @@
       <div class="mb-6 lg:mb-12 text-center text-white">
         <h1 class="text-4xl lg:text-5xl font-medium leading-12 mb-4">
           Félicitations <span class="font-bold">{{ $store.getters.profile.first_name }}</span> !<br>
-          Votre collectivité est en cours de validation
+          Votre collectivité territoriale est en cours de validation
         </h1>
         <div class="text-lg">
           Vous recevrez un email de confirmation lorsque votre compte aura été

@@ -26,7 +26,7 @@
         <FormControl label="Le petit mot pour les responsables de réseaux" html-for="responsable_reseau" required :error="errors.responsable_reseau">
           <Textarea v-model="form.responsable_reseau" name="responsable_reseau" placeholder="Message que vous souhaitez afficher..." />
         </FormControl>
-        <FormControl label="Le petit mot pour les respondables de collectivités" html-for="responsable_territoire" required :error="errors.responsable_territoire">
+        <FormControl label="Le petit mot pour les responsables de collectivités territoriales" html-for="responsable_territoire" required :error="errors.responsable_territoire">
           <Textarea v-model="form.responsable_territoire" name="responsable_territoire" placeholder="Message que vous souhaitez afficher..." />
         </FormControl>
         <FormControl label="Le petit mot pour les référents departementaux" html-for="referent_departemental" required :error="errors.referent_departemental">

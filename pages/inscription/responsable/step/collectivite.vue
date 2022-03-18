@@ -23,12 +23,12 @@
       <div
         class="px-8 py-6 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
       >
-        Complétez les informations liées à votre collectivité
+        Complétez les informations liées à votre collectivité territoriale
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
           <FormControl
-            label="Nom de votre collectivité"
+            label="Nom de votre collectivité territoriale"
             html-for="name"
             required
             :error="errors.name"
@@ -54,7 +54,7 @@
               name="suffix_title"
             />
           </FormControl> -->
-          <FormControl label="Département de votre collectivté" html-for="department" required :error="errors.department">
+          <FormControl label="Département de votre collectivité territoriale" html-for="department" required :error="errors.department">
             <Combobox
               v-model="form.department"
               name="department"
@@ -64,10 +64,10 @@
           </FormControl>
           <FormControl label="Ajouter les codes postaux" html-for="autocomplete" required :error="errors.zips">
             <FormHelperText>
-              En tant que collectivité, vous aurez accès au statistiques des
-              organisations enregistrées avec vos codes postaux. <br>Vous
-              aurez aussi la possibilité de gérer la page de votre collectivité
-              qui listera toutes les missions dans votre collectivité. Par
+              En tant que collectivité territoriale, vous aurez accès aux statistiques des
+              organisations enregistrées avec vos codes postaux. Vous
+              aurez aussi la possibilité de gérer la page de votre collectivité territoriale
+              qui listera toutes les missions présentes sur votre territoire. Par
               exemple pour Bayonne :
               <a
                 href="https://jeveuxaider.gouv.fr/territoires/bayonne"
@@ -182,7 +182,7 @@ export default {
 
         },
         {
-          name: 'Informations sur la collectivité',
+          name: 'Informations sur la collectivité territoriale',
           status: 'current'
         }
       ]

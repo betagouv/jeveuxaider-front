@@ -35,7 +35,7 @@
           <BoxItem
             icon="📢"
             title="Je veux publier<br><strong>des missions</strong>"
-            subtitle="Organisations publiques, collectivités et associations"
+            subtitle="Organisations publiques, collectivités territoriales et associations"
           />
         </nuxt-link>
       </div>
