@@ -273,7 +273,7 @@ export default {
   },
   computed: {
     routeHash () {
-      return this.$route.hash
+      return this.$route.hash && this.$route.hash !== '' ? this.$route.hash : null
     }
   },
   methods: {
