@@ -89,111 +89,114 @@
             </Button>
           </nuxt-link>
         </div>
-        <Tabs
-          :tabs="[
-            { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: !routeHash },
-            { name: 'Membres', to: '#membres', icon: 'UsersIcon', current: routeHash == '#membres', count: organisation.members.length },
-            { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: routeHash == '#historique' }
-          ]"
-        />
-        <div v-if="!routeHash" class="space-y-8">
-          <SelectOrganisationState
-            v-if="canEditStatut"
-            :value="organisation.state"
-            @selected="handleChangeState($event)"
-          />
 
-          <div>
-            <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
-              Votre activité en chiffres
-            </div>
-            <Box variant="flat" :padding="!Boolean(organisationStats) ? 'lg' : false" :loading="!Boolean(organisationStats)" loading-text="Récupération de l'activité ..." class="!border-none">
-              <div v-if="organisationStats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
-                <CardStatistic
-                  :value="organisationStats.places_left"
-                  :title="`${$options.filters.pluralize(organisationStats.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
-                />
-                <CardStatistic
-                  :value="`${organisationStats.places_occupation_rate}%`"
-                  :gauge-percentage="organisationStats.places_occupation_rate"
-                  title="Taux de remplissage"
-                />
-                <CardStatistic
-                  :value="organisationStats.missions_available"
-                  :title="`${$options.filters.pluralize(organisationStats.missions_available, 'Missions en ligne', 'Missions en ligne', false)}`"
-                  :subtitle="`sur ${$options.filters.formatNumber(organisationStats.missions_total)} ${$options.filters.pluralize(organisationStats.missions_total, 'mission', 'missions', false)}`"
-                  :link="`/admin/missions?context_name=${organisation.name}&filter[structure.id]=${organisation.id}`"
-                  link-label="Missions"
-                />
-                <CardStatistic
-                  :value="organisationStats.participations_state['Validée']"
-                  :title="`${$options.filters.pluralize(organisationStats.participations_state['Validée'], 'Participation validée', 'Participations validées', false)}`"
-                  :subtitle="`sur ${$options.filters.formatNumber(organisationStats.participations_total)} ${$options.filters.pluralize(organisationStats.participations_total, 'candidature', 'candidatures', false)}`"
-                  :link="`/admin/participations?filter[mission.structure.name]=${organisation.name}&filter[mission.structure.id]=${organisation.id}`"
-                  link-label="Participations"
-                />
-              </div>
-            </Box>
-          </div>
-          <div v-if="organisationStats && organisationStats.response_ratio">
-            <div class="px-2 mb-2 text-sm uppercase font-semibold text-gray-600">
-              Vos échanges avec les bénévoles
-            </div>
-            <Box variant="flat" :padding="!Boolean(organisationStats) ? 'lg' : false" :loading="!Boolean(organisationStats)" loading-text="Récupération de l'activité ..." class="!border-none">
-              <div v-if="organisationStats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
-                <CardStatistic
-                  :value="`${organisationStats.response_ratio}%`"
-                  title="Taux de réponse"
-                  subtitle="aux participations"
-                />
-                <CardStatistic
-                  :value="`${(organisationStats.response_time / (60 * 60 * 24)).toFixed(0)} jours`"
-                  title="Temps de réponse"
-                  subtitle="aux participations"
-                />
-                <div class="col-span-2 bg-white">
-                  <CardStatistic
-                    :value="`${organisationStats.score_response_time}/100`"
-                    title="Score de réactivité"
-                  />
-                  <div class="text-xs text-gray-700 font-medium text-center px-12 -mt-3 mb-4">
-                    🏆 Améliorez votre visibilité sur la plateforme<br> en améliorant votre réactivité ›
-                  </div>
-                </div>
-              </div>
-            </Box>
-          </div>
-        </div>
-        <template v-if="routeHash == '#membres'">
-          <div class="space-y-2">
-            <BoxInvitations
-              v-if="queryInvitations && queryInvitations.data.length > 0"
-              :invitations="queryInvitations.data"
-              @updated="$fetch()"
+        <client-only>
+          <Tabs
+            :tabs="[
+              { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: $route.hash === '' },
+              { name: 'Membres', to: '#membres', icon: 'UsersIcon', current: $route.hash === '#membres', count: organisation.members.length },
+              { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash === '#historique' }
+            ]"
+          />
+          <div v-if="$route.hash === ''" class="space-y-8">
+            <SelectOrganisationState
+              v-if="canEditStatut"
+              :value="organisation.state"
+              @selected="handleChangeState($event)"
             />
 
-            <Box v-for="responsable in organisation.members" :key="responsable.id" variant="flat" padding="xs">
-              <div class="flex justify-between items-start">
-                <DescriptionList v-if="responsable">
-                  <DescriptionListItem term="Nom" :description="responsable.full_name" />
-                  <DescriptionListItem term="E-mail" :description="responsable.email" />
-                  <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-                  <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
-                </DescriptionList>
-                <div v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
-                  <div class="group-hover:block hidden">
-                    Supprimer
-                  </div>
-                  <div><TrashIcon class="ml-2 h-5 w-5" /></div>
-                </div>
+            <div>
+              <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
+                Votre activité en chiffres
               </div>
-            </Box>
-            <Button variant="white" @click.native="showDrawerInvitation = true">
-              <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
-            </Button>
+              <Box variant="flat" :padding="!Boolean(organisationStats) ? 'lg' : false" :loading="!Boolean(organisationStats)" loading-text="Récupération de l'activité ..." class="!border-none">
+                <div v-if="organisationStats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+                  <CardStatistic
+                    :value="organisationStats.places_left"
+                    :title="`${$options.filters.pluralize(organisationStats.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
+                  />
+                  <CardStatistic
+                    :value="`${organisationStats.places_occupation_rate}%`"
+                    :gauge-percentage="organisationStats.places_occupation_rate"
+                    title="Taux de remplissage"
+                  />
+                  <CardStatistic
+                    :value="organisationStats.missions_available"
+                    :title="`${$options.filters.pluralize(organisationStats.missions_available, 'Missions en ligne', 'Missions en ligne', false)}`"
+                    :subtitle="`sur ${$options.filters.formatNumber(organisationStats.missions_total)} ${$options.filters.pluralize(organisationStats.missions_total, 'mission', 'missions', false)}`"
+                    :link="`/admin/missions?context_name=${organisation.name}&filter[structure.id]=${organisation.id}`"
+                    link-label="Missions"
+                  />
+                  <CardStatistic
+                    :value="organisationStats.participations_state['Validée']"
+                    :title="`${$options.filters.pluralize(organisationStats.participations_state['Validée'], 'Participation validée', 'Participations validées', false)}`"
+                    :subtitle="`sur ${$options.filters.formatNumber(organisationStats.participations_total)} ${$options.filters.pluralize(organisationStats.participations_total, 'candidature', 'candidatures', false)}`"
+                    :link="`/admin/participations?filter[mission.structure.name]=${organisation.name}&filter[mission.structure.id]=${organisation.id}`"
+                    link-label="Participations"
+                  />
+                </div>
+              </Box>
+            </div>
+            <div v-if="organisationStats && organisationStats.response_ratio">
+              <div class="px-2 mb-2 text-sm uppercase font-semibold text-gray-600">
+                Vos échanges avec les bénévoles
+              </div>
+              <Box variant="flat" :padding="!Boolean(organisationStats) ? 'lg' : false" :loading="!Boolean(organisationStats)" loading-text="Récupération de l'activité ..." class="!border-none">
+                <div v-if="organisationStats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+                  <CardStatistic
+                    :value="`${organisationStats.response_ratio}%`"
+                    title="Taux de réponse"
+                    subtitle="aux participations"
+                  />
+                  <CardStatistic
+                    :value="`${(organisationStats.response_time / (60 * 60 * 24)).toFixed(0)} jours`"
+                    title="Temps de réponse"
+                    subtitle="aux participations"
+                  />
+                  <div class="col-span-2 bg-white">
+                    <CardStatistic
+                      :value="`${organisationStats.score_response_time}/100`"
+                      title="Score de réactivité"
+                    />
+                    <div class="text-xs text-gray-700 font-medium text-center px-12 -mt-3 mb-4">
+                      🏆 Améliorez votre visibilité sur la plateforme<br> en améliorant votre réactivité ›
+                    </div>
+                  </div>
+                </div>
+              </Box>
+            </div>
           </div>
-        </template>
-        <History v-if="routeHash == '#historique'" :model-id="organisation.id" model-type="structure" />
+          <template v-if="$route.hash === '#membres'">
+            <div class="space-y-2">
+              <BoxInvitations
+                v-if="queryInvitations && queryInvitations.data.length > 0"
+                :invitations="queryInvitations.data"
+                @updated="$fetch()"
+              />
+
+              <Box v-for="responsable in organisation.members" :key="responsable.id" variant="flat" padding="xs">
+                <div class="flex justify-between items-start">
+                  <DescriptionList v-if="responsable">
+                    <DescriptionListItem term="Nom" :description="responsable.full_name" />
+                    <DescriptionListItem term="E-mail" :description="responsable.email" />
+                    <DescriptionListItem term="Mobile" :description="responsable.mobile" />
+                    <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
+                  </DescriptionList>
+                  <div v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                    <div class="group-hover:block hidden">
+                      Supprimer
+                    </div>
+                    <div><TrashIcon class="ml-2 h-5 w-5" /></div>
+                  </div>
+                </div>
+              </Box>
+              <Button variant="white" @click.native="showDrawerInvitation = true">
+                <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
+              </Button>
+            </div>
+          </template>
+          <History v-if="$route.hash === '#historique'" :model-id="organisation.id" model-type="structure" />
+        </client-only>
       </div>
     </div>
   </div>
@@ -270,11 +273,6 @@ export default {
       }
     })
     this.queryInvitations = queryInvitations
-  },
-  computed: {
-    routeHash () {
-      return this.$route.hash && this.$route.hash !== '' ? this.$route.hash : null
-    }
   },
   methods: {
     async handleChangeState (event) {
