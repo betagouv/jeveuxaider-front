@@ -8,14 +8,14 @@
         <div class="space-y-10">
           <FormControl
             html-for="name"
-            :label="Boolean(mission.template) ? 'ℹ️  Information' : 'Titre de la mission'"
+            :label="Boolean(mission.template) ? 'ℹ️   Information' : 'Titre de la mission'"
             :required="!Boolean(mission.template)"
             :error="errors.name"
           >
             <div v-if="Boolean(mission.template)" class="text-sm mb-4">
               <div class="text-gray-500">
-                Ce modèle de mission vient pré-remplir certaines informations.
-                Ils ne sont donc pas éditables. Si vous souhaitez les éditer, préférez une <span class="underline">mission libre ›</span>
+                Vous avez choisi d’utiliser un modèle de mission : certaines informations sont complétées par défaut et ne peuvent être modifiées.
+                Si vous souhaitez adapter les contenus, nous vous recommandons de publier une <span class="underline">mission personnalisée</span>.
               </div>
             </div>
             <Input
