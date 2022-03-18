@@ -76,7 +76,7 @@ export default {
   },
   computed: {
     uselessProperties () {
-      return ['user_id', 'latitude', 'longitude', 'country', 'api_id', 'updated_at']
+      return ['user_id', 'latitude', 'longitude', 'country', 'api_id', 'updated_at', 'commitment__total']
     }
   },
   methods: {
@@ -119,7 +119,13 @@ export default {
         case 'tuteur_id':
           return 'Tuteur'
         case 'publics_beneficiaires':
-          return 'Publics Bénéficiaires'
+          return 'Publics bénéficiaires'
+        case 'publics_volontaires':
+          return 'Publics volontaires'
+        case 'is_snu_mig_compatible':
+          return 'SNU MIG'
+        case 'snu_mig_places':
+          return 'Places SNU'
         case 'template_id':
           return 'Template de mission'
         case 'statut_juridique':
@@ -150,8 +156,22 @@ export default {
           return 'Tête de réseau'
         case 'referent_department':
           return 'Référent départemental'
+        case 'referent_region':
+          return 'Référent régional'
         case 'disponibilities':
           return 'Disponibilités'
+        case 'commitment__duration':
+          return 'Durée d\'engagement'
+        case 'commitment__time_period':
+          return 'Période d\'engagement'
+        case 'start_date':
+          return 'Date de début'
+        case 'end_date':
+          return 'Date de fin'
+        case 'is_visible':
+          return 'Visibilité'
+        case 'suffix_title':
+          return 'Sous-titre'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },

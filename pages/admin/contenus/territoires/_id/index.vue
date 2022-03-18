@@ -62,43 +62,46 @@
             </Button>
           </nuxt-link>
         </div>
-        <Tabs
-          :tabs="[
-            { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: !$route.hash },
-            { name: 'Responsables', to: '#responsables', icon: 'InformationCircleIcon', current: $route.hash == '#responsables' },
-            { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash == '#historique' }
-          ]"
-        />
-        <div v-if="!$route.hash" class="space-y-8">
-          <BoxInformations :territoire="territoire" />
-          <BoxMission :territoire="territoire" :stats="stats" />
-          <BoxParticipation :territoire="territoire" :stats="stats" />
-        </div>
-        <template v-if="$route.hash == '#responsables'">
-          <div class="space-y-2">
-            <BoxInvitations v-if="canManageTerritoire && queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" @updated="$fetch()" />
-
-            <Box v-for="responsable in territoire.responsables" :key="responsable.id" variant="flat" padding="xs">
-              <div class="flex justify-between items-start">
-                <DescriptionList v-if="responsable">
-                  <DescriptionListItem term="Nom" :description="responsable.full_name" />
-                  <DescriptionListItem term="E-mail" :description="responsable.email" />
-                  <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-                </DescriptionList>
-                <div class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
-                  <div class="group-hover:block hidden">
-                    Supprimer
-                  </div>
-                  <div><TrashIcon class="ml-2 h-5 w-5" /></div>
-                </div>
-              </div>
-            </Box>
-            <Button v-if="canManageTerritoire" variant="white" @click.native="showDrawerInvitation = true">
-              <UsersIcon class="h-4 w-4 mr-2" /> Inviter un responsable
-            </Button>
+        <client-only>
+          <Tabs
+            :tabs="[
+              { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: $route.hash === '' },
+              { name: 'Responsables', to: '#responsables', icon: 'InformationCircleIcon', current: $route.hash === '#responsables', count: territoire.responsables.length },
+              { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash === '#historique' }
+            ]"
+          />
+          <div v-if="$route.hash === ''" class="space-y-8">
+            <BoxInformations :territoire="territoire" />
+            <BoxMission :territoire="territoire" :stats="stats" />
+            <BoxParticipation :territoire="territoire" :stats="stats" />
           </div>
-        </template>
-        <History v-if="$route.hash == '#historique'" :model-id="territoire.id" model-type="territoire" />
+          <template v-if="$route.hash === '#responsables'">
+            <div class="space-y-2">
+              <BoxInvitations v-if="canManageTerritoire && queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" @updated="$fetch()" />
+
+              <Box v-for="responsable in territoire.responsables" :key="responsable.id" variant="flat" padding="xs">
+                <div class="flex justify-between items-start">
+                  <DescriptionList v-if="responsable">
+                    <DescriptionListItem term="Nom" :description="responsable.full_name" />
+                    <DescriptionListItem term="E-mail" :description="responsable.email" />
+                    <DescriptionListItem term="Mobile" :description="responsable.mobile" />
+                    <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
+                  </DescriptionList>
+                  <div class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                    <div class="group-hover:block hidden">
+                      Supprimer
+                    </div>
+                    <div><TrashIcon class="ml-2 h-5 w-5" /></div>
+                  </div>
+                </div>
+              </Box>
+              <Button v-if="canManageTerritoire" variant="white" @click.native="showDrawerInvitation = true">
+                <UsersIcon class="h-4 w-4 mr-2" /> Inviter un responsable
+              </Button>
+            </div>
+          </template>
+          <History v-if="$route.hash === '#historique'" :model-id="territoire.id" model-type="territoire" />
+        </client-only>
       </div>
     </div>
   </div>

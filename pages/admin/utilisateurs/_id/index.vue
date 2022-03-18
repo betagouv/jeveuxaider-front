@@ -60,44 +60,46 @@
             </template>
           </ButtonWithDropown>
         </div>
-        <Tabs
-          :tabs="[
-            { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: !$route.hash },
-            { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash == '#historique' }
-          ]"
-        />
-        <div v-if="!$route.hash" class="space-y-8">
-          <div>
-            <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
-              Participations
+        <client-only>
+          <Tabs
+            :tabs="[
+              { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: $route.hash === '' },
+              { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash === '#historique' }
+            ]"
+          />
+          <div v-if="$route.hash === ''" class="space-y-8">
+            <div>
+              <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
+                Participations
+              </div>
+              <Box variant="flat" padding="xs">
+                <div class="flex items-center">
+                  <div class="text-4xl font-semibold pr-4">
+                    {{ profile.participations_validated_count }}
+                  </div>
+                  <div>
+                    <div class="font-semibold">
+                      {{ profile.participations_validated_count | pluralize('participation validée', 'participations validées', false) }}
+                    </div>
+                    <div class="text-gray-500 -mt-1">
+                      sur {{ profile.participations_count }} candidatures
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t -mx-6 mt-6 mb-4" />
+                <div class="flex justify-center text-sm">
+                  <Link :to="`/admin/participations?filter[profile.id]=${profile.id}&full_name=${profile.full_name}`">
+                    Voir les participations
+                  </Link>
+                </div>
+              </Box>
             </div>
-            <Box variant="flat" padding="xs">
-              <div class="flex items-center">
-                <div class="text-4xl font-semibold pr-4">
-                  {{ profile.participations_validated_count }}
-                </div>
-                <div>
-                  <div class="font-semibold">
-                    {{ profile.participations_validated_count | pluralize('participation validée', 'participations validées', false) }}
-                  </div>
-                  <div class="text-gray-500 -mt-1">
-                    sur {{ profile.participations_count }} candidatures
-                  </div>
-                </div>
-              </div>
-              <div class="border-t -mx-6 mt-6 mb-4" />
-              <div class="flex justify-center text-sm">
-                <Link :to="`/admin/participations?filter[profile.id]=${profile.id}&full_name=${profile.full_name}`">
-                  Voir les participations
-                </Link>
-              </div>
-            </Box>
+            <BoxOrganisations v-if="profile.structures" :structures="profile.structures" />
+            <BoxTerritoires v-if="profile.territoires" :territoires="profile.territoires" />
+            <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" />
           </div>
-          <BoxOrganisations v-if="profile.structures" :structures="profile.structures" />
-          <BoxTerritoires v-if="profile.territoires" :territoires="profile.territoires" />
-          <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" />
-        </div>
-        <History v-if="$route.hash == '#historique'" :model-id="profile.id" model-type="profile" />
+          <History v-if="$route.hash === '#historique'" :model-id="profile.id" model-type="profile" />
+        </client-only>
       </div>
     </div>
   </div>

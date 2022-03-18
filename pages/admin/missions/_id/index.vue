@@ -32,27 +32,29 @@
             </Button>
           </nuxt-link>
         </div>
-        <Tabs
-          :tabs="[
-            { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: !$route.hash },
-            { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash == '#historique' }
-          ]"
-        />
-        <div v-if="!$route.hash" class="space-y-8">
-          <SelectMissionState
-            v-if="canEditStatut"
-            :value="mission.state"
-            :mission-stats="missionStats"
-            @selected="handleChangeState($event)"
+        <client-only>
+          <Tabs
+            :tabs="[
+              { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: $route.hash === '' },
+              { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash === '#historique' }
+            ]"
           />
-          <BoxDates :mission="mission" />
-          <BoxPlace :mission="mission" />
-          <BoxEnChiffre :mission="mission" />
-          <BoxInformations :mission="mission" />
-          <BoxResponsable v-if="mission.responsable" :profile="mission.responsable" />
-          <BoxOrganisation :organisation="mission.structure" />
-        </div>
-        <History v-if="$route.hash == '#historique'" :model-id="mission.id" model-type="mission" />
+          <div v-if="$route.hash === ''" class="space-y-8">
+            <SelectMissionState
+              v-if="canEditStatut"
+              :value="mission.state"
+              :mission-stats="missionStats"
+              @selected="handleChangeState($event)"
+            />
+            <BoxDates :mission="mission" />
+            <BoxPlace :mission="mission" />
+            <BoxEnChiffre :mission="mission" />
+            <BoxInformations :mission="mission" />
+            <BoxResponsable v-if="mission.responsable" :profile="mission.responsable" />
+            <BoxOrganisation :organisation="mission.structure" />
+          </div>
+          <History v-if="$route.hash === '#historique'" :model-id="mission.id" model-type="mission" />
+        </client-only>
       </div>
     </div>
   </div>

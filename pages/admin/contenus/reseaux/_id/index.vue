@@ -82,76 +82,79 @@
             </Button>
           </nuxt-link>
         </div>
-        <Tabs
-          :tabs="[
-            { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: !$route.hash },
-            { name: 'Responsables', to: '#responsables', icon: 'UsersIcon', current: $route.hash == '#responsables', count: reseau.responsables_count },
-            { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash == '#historique' }
-          ]"
-        />
-        <div v-if="!$route.hash">
-          <div class="space-y-8">
-            <BoxAntenne :reseau="reseau" :stats="stats" @updated="$fetch()" />
-            <BoxInvitations v-if="queryInvitationsAntennes && queryInvitationsAntennes.data.length > 0" class="!mt-4" :invitations="queryInvitationsAntennes.data" @updated="$fetch()" />
-            <div>
-              <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
-                Votre activité en chiffres
-              </div>
-              <Box variant="flat" :padding="!Boolean(stats) ? 'lg' : false" :loading="!Boolean(stats)" loading-text="Récupération de l'activité ..." class="!border-none">
-                <div v-if="stats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
-                  <CardStatistic
-                    :value="stats.places_left"
-                    :title="`${$options.filters.pluralize(stats.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
-                  />
-                  <CardStatistic
-                    :value="`${stats.places_occupation_rate}%`"
-                    :gauge-percentage="stats.places_occupation_rate"
-                    title="Taux de remplissage"
-                  />
-                  <CardStatistic
-                    :value="stats.missions_actives"
-                    :title="`${$options.filters.pluralize(stats.missions_actives, 'Missions en ligne', 'Missions en ligne', false)}`"
-                    :subtitle="`sur ${$options.filters.formatNumber(stats.missions)} ${$options.filters.pluralize(stats.missions, 'mission', 'missions', false)}`"
-                    :link="`/admin/missions?filter[structure.reseaux.id]=${reseau.id}&filter[structure.reseaux.name]=${reseau.name}`"
-                    link-label="Missions"
-                  />
-                  <CardStatistic
-                    :value="stats.participations_state['Validée']"
-                    :title="`${$options.filters.pluralize(stats.participations_state['Validée'], 'Participation validée', 'Participations validées', false)}`"
-                    :subtitle="`sur ${$options.filters.formatNumber(stats.participations)} ${$options.filters.pluralize(stats.participations, 'candidature', 'candidatures', false)}`"
-                    :link="`/admin/participations?filter[ofReseau]=${reseau.id}&reseau_name=${reseau.name}`"
-                    link-label="Participations"
-                  />
+        <client-only>
+          <Tabs
+            :tabs="[
+              { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: $route.hash === '' },
+              { name: 'Responsables', to: '#responsables', icon: 'UsersIcon', current: $route.hash === '#responsables', count: reseau.responsables_count },
+              { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash === '#historique' }
+            ]"
+          />
+          <div v-if="$route.hash === ''">
+            <div class="space-y-8">
+              <BoxAntenne :reseau="reseau" :stats="stats" @updated="$fetch()" />
+              <BoxInvitations v-if="queryInvitationsAntennes && queryInvitationsAntennes.data.length > 0" class="!mt-4" :invitations="queryInvitationsAntennes.data" @updated="$fetch()" />
+              <div>
+                <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
+                  Votre activité en chiffres
                 </div>
-              </Box>
+                <Box variant="flat" :padding="!Boolean(stats) ? 'lg' : false" :loading="!Boolean(stats)" loading-text="Récupération de l'activité ..." class="!border-none">
+                  <div v-if="stats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+                    <CardStatistic
+                      :value="stats.places_left"
+                      :title="`${$options.filters.pluralize(stats.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
+                    />
+                    <CardStatistic
+                      :value="`${stats.places_occupation_rate}%`"
+                      :gauge-percentage="stats.places_occupation_rate"
+                      title="Taux de remplissage"
+                    />
+                    <CardStatistic
+                      :value="stats.missions_actives"
+                      :title="`${$options.filters.pluralize(stats.missions_actives, 'Missions en ligne', 'Missions en ligne', false)}`"
+                      :subtitle="`sur ${$options.filters.formatNumber(stats.missions)} ${$options.filters.pluralize(stats.missions, 'mission', 'missions', false)}`"
+                      :link="`/admin/missions?filter[structure.reseaux.id]=${reseau.id}&filter[structure.reseaux.name]=${reseau.name}`"
+                      link-label="Missions"
+                    />
+                    <CardStatistic
+                      :value="stats.participations_state['Validée']"
+                      :title="`${$options.filters.pluralize(stats.participations_state['Validée'], 'Participation validée', 'Participations validées', false)}`"
+                      :subtitle="`sur ${$options.filters.formatNumber(stats.participations)} ${$options.filters.pluralize(stats.participations, 'candidature', 'candidatures', false)}`"
+                      :link="`/admin/participations?filter[ofReseau]=${reseau.id}&reseau_name=${reseau.name}`"
+                      link-label="Participations"
+                    />
+                  </div>
+                </Box>
+              </div>
             </div>
           </div>
-        </div>
-        <History v-if="$route.hash == '#historique'" :model-id="reseau.id" model-type="reseau" />
-        <template v-if="$route.hash == '#responsables'">
-          <div class="space-y-2">
-            <BoxInvitations v-if="queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" @updated="$fetch()" />
+          <History v-if="$route.hash === '#historique'" :model-id="reseau.id" model-type="reseau" />
+          <template v-if="$route.hash === '#responsables'">
+            <div class="space-y-2">
+              <BoxInvitations v-if="queryInvitations && queryInvitations.data.length > 0" :invitations="queryInvitations.data" @updated="$fetch()" />
 
-            <Box v-for="responsable in reseau.responsables" :key="responsable.id" variant="flat" padding="xs">
-              <div class="flex justify-between items-start">
-                <DescriptionList v-if="responsable">
-                  <DescriptionListItem term="Nom" :description="responsable.full_name" />
-                  <DescriptionListItem term="E-mail" :description="responsable.email" />
-                  <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-                </DescriptionList>
-                <div class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
-                  <div class="group-hover:block hidden">
-                    Supprimer
+              <Box v-for="responsable in reseau.responsables" :key="responsable.id" variant="flat" padding="xs">
+                <div class="flex justify-between items-start">
+                  <DescriptionList v-if="responsable">
+                    <DescriptionListItem term="Nom" :description="responsable.full_name" />
+                    <DescriptionListItem term="E-mail" :description="responsable.email" />
+                    <DescriptionListItem term="Mobile" :description="responsable.mobile" />
+                    <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
+                  </DescriptionList>
+                  <div class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                    <div class="group-hover:block hidden">
+                      Supprimer
+                    </div>
+                    <div><TrashIcon class="ml-2 h-5 w-5" /></div>
                   </div>
-                  <div><TrashIcon class="ml-2 h-5 w-5" /></div>
                 </div>
-              </div>
-            </Box>
-            <Button variant="white" @click.native="showDrawerInvitation = true">
-              <UsersIcon class="h-4 w-4 mr-2" /> Inviter un responsable
-            </Button>
-          </div>
-        </template>
+              </Box>
+              <Button variant="white" @click.native="showDrawerInvitation = true">
+                <UsersIcon class="h-4 w-4 mr-2" /> Inviter un responsable
+              </Button>
+            </div>
+          </template>
+        </client-only>
       </div>
     </div>
   </div>
