@@ -261,7 +261,7 @@
               </div>
             </div>
 
-            <div class="bg-jva-blue-500 text-white p-4">
+            <div class="bg-jva-blue-500 text-white p-4 pb-32">
               <NavItem
                 v-for="link in mobileLoggedNavigation"
                 :key="link.name"
