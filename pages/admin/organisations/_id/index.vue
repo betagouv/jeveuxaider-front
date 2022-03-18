@@ -91,12 +91,12 @@
         </div>
         <Tabs
           :tabs="[
-            { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: !$route.hash },
-            { name: 'Membres', to: '#membres', icon: 'UsersIcon', current: $route.hash == '#membres', count: organisation.members.length },
-            { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash == '#historique' }
+            { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: !routeHash },
+            { name: 'Membres', to: '#membres', icon: 'UsersIcon', current: routeHash == '#membres', count: organisation.members.length },
+            { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: routeHash == '#historique' }
           ]"
         />
-        <div v-if="!$route.hash" class="space-y-8">
+        <div v-if="!routeHash" class="space-y-8">
           <SelectOrganisationState
             v-if="canEditStatut"
             :value="organisation.state"
@@ -164,7 +164,7 @@
             </Box>
           </div>
         </div>
-        <template v-if="$route.hash == '#membres'">
+        <template v-if="routeHash == '#membres'">
           <div class="space-y-2">
             <BoxInvitations
               v-if="queryInvitations && queryInvitations.data.length > 0"
@@ -193,7 +193,7 @@
             </Button>
           </div>
         </template>
-        <History v-if="$route.hash == '#historique'" :model-id="organisation.id" model-type="structure" />
+        <History v-if="routeHash == '#historique'" :model-id="organisation.id" model-type="structure" />
       </div>
     </div>
   </div>
@@ -270,6 +270,11 @@ export default {
       }
     })
     this.queryInvitations = queryInvitations
+  },
+  computed: {
+    routeHash () {
+      return this.$route.hash
+    }
   },
   methods: {
     async handleChangeState (event) {
