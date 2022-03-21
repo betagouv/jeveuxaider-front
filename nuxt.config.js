@@ -163,7 +163,13 @@ export default {
     transpile: ['vue-instantsearch', 'instantsearch.js/es', 'numeral'],
     plugins: [
       new FlareWebpackPluginSourcemap({ key: process.env.FLARE_KEY })
-    ]
+    ],
+    extend (config, { isClient }) {
+      // Extend only webpack config for client-bundle
+      if (isClient) {
+        config.devtool = 'hidden-source-map'
+      }
+    }
   },
 
   redirect: [
