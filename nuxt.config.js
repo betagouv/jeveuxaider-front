@@ -184,7 +184,8 @@ export default {
     { from: '^/dashboard/profiles', to: '/admin/utilisateurs', statusCode: 301 },
     { from: '^/dashboard/profile/(.*)$', to: '/admin/utilisateurs/$1', statusCode: 301 },
     { from: '^/dashboard/reseaux/(.*)$', to: '/admin/contenus/reseaux/$1', statusCode: 301 },
-    { from: '^/dashboard/(.*)$', to: '/admin/$1', statusCode: 301 }
+    { from: '^/dashboard/(.*)$', to: '/admin/$1', statusCode: 301 },
+    { from: '^/missions/(.*)$', to: '/missions-benevolat/$1', statusCode: 301 }
   ],
 
   // Plugins config
