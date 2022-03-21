@@ -18,6 +18,9 @@ export default {
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     },
     hasPageOnline () {
+      if (!this.mission.structure) {
+        return false
+      }
       return this.mission.structure.state === 'Validée' && ['Validée', 'Terminée'].includes(this.mission.state)
     },
     canEditStatut () {

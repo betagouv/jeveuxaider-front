@@ -1,5 +1,5 @@
 <template>
-  <section class="relative bg-white lg:bg-gray-50">
+  <section class="relative bg-white">
     <picture v-if="territoire.banner">
       <source
         media="(min-width: 1024px)"
@@ -51,8 +51,8 @@
             </h2>
           </div>
 
-          <div v-if="showSearch" class="flex-none rounded-2xl w-full sm:w-auto overflow-hidden shadow-lg lg:shadow-none">
-            <div class="bg-white px-8 sm:px-20 py-6">
+          <div v-if="showSearch" class="flex-none bg-transparent rounded-2xl w-full sm:w-auto shadow-lg lg:shadow-none">
+            <div class="bg-white rounded-t-2xl px-8 sm:px-20 py-6">
               <p
                 class="font-extrabold text-[1.75rem] text-center leading-tight tracking-[-1px]"
               >
@@ -60,7 +60,7 @@
               </p>
             </div>
 
-            <div class="bg-gray-100 px-10 py-6">
+            <div class="bg-gray-100 rounded-b-2xl px-10 py-6">
               <p
                 class="text-center uppercase text-gray-700 text-xs tracking-[-1px] font-bold mb-4"
               >
@@ -77,7 +77,7 @@
                 variant="green"
                 size="xl"
                 full
-                @click="onClick"
+                @click.native="onClick"
               >
                 Je veux aider
               </button>

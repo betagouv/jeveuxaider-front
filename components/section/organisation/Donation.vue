@@ -129,7 +129,15 @@ export default {
       type: Object,
       required: true
     }
-
+  },
+  methods: {
+    goTo (url) {
+      window.plausible &&
+        window.plausible('Click Module de don - Page Orga', {
+          props: { isLogged: this.$store.getters.isLogged }
+        })
+      window.open(url, '_blank')
+    }
   }
 }
 </script>
