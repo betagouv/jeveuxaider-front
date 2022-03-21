@@ -88,6 +88,7 @@ export default {
     CardParticipation
   },
   mixins: [QueryBuilder],
+  middleware: 'authenticated',
   data () {
     return {
       loading: false,

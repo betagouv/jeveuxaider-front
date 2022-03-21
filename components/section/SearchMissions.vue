@@ -507,8 +507,10 @@ export default {
   },
   methods: {
     scrollToTop () {
-      if (window && window.scrollY > 290) {
-        this.$refs.header.scrollIntoView()
+      if (!this.noHeader) {
+        if (window && window.scrollY > 290) {
+          this.$refs.header.scrollIntoView()
+        }
       }
     },
     sizeListener () {
