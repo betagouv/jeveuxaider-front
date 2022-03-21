@@ -64,7 +64,7 @@ export default {
     async handleClickFranceConnect () {
       const response = await this.$axios.get('/franceconnect/login-authorize')
       if (response.data) {
-        console.log('handleClickFranceConnect', response)
+        console.log('handleClickFranceConnect', response.data)
         window.location.href = response.data
       }
     }
