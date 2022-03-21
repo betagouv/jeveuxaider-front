@@ -1,7 +1,7 @@
 <template>
   <div class="overflow-hidden">
     <div
-      class="break-word"
+      class="break-word whitespace-pre-line"
       v-html="isExpanded ? text : textHtml"
     />
     <div
