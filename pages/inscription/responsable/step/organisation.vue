@@ -309,6 +309,10 @@ export default {
   },
   methods: {
     handleSelectedGeo (item) {
+      if (!item) {
+        this.clearAddress()
+        return
+      }
       this.form.address = item.name
       this.form.zip = item.postcode
       this.form.city = item.city
