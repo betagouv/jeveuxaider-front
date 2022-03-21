@@ -53,7 +53,7 @@ export default {
     '~/plugins/axios.js',
     '~/plugins/heroicons.js',
     '~/plugins/axeptio.client.js',
-    '~/plugins/userback.client.js',
+    // '~/plugins/userback.client.js',
     '~/plugins/atinternet.client.js',
     '~/plugins/flare.client.js',
     '~/plugins/yup.js',
