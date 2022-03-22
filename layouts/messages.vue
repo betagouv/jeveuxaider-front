@@ -108,7 +108,22 @@
             </div>
           </div>
 
-          <Nuxt />
+          <div v-if="$store.getters['messaging/conversations'].length == 0" class="mt-12 w-full text-center">
+            <ChatAltIcon class="mx-auto h-12 w-12 text-gray-400" />
+            <h3 class="mt-2 font-medium text-gray-900">
+              Vous n'avez pas encore de message
+            </h3>
+            <p class="mt-1 text-gray-500">
+              Inscrivez-vous sur votre première mission en quelques secondes.
+            </p>
+            <div class="mt-6">
+              <Button @click.native="$store.commit('toggleSearchOverlay')">
+                <SearchIcon class="-ml-1 mr-2 h-5 w-5" />
+                Trouver une mission
+              </Button>
+            </div>
+          </div>
+          <Nuxt v-else />
         </div>
       </div>
     </client-only>
