@@ -10,6 +10,7 @@
     ]"
   >
     <!-- CENTER -->
+    Coucou
     <div
       :class="[{ hide: !$store.getters['messaging/showPanelCenter'] }]"
       class="panel--center min-w-0 border-r border-gray-200"
