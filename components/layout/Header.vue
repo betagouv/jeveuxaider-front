@@ -146,6 +146,16 @@
         </NavItem>
 
         <NavItem
+          key="election-2022"
+          href="https://www.jeveuxaider.gouv.fr/engagement/devenir-assesseur/"
+          target="_blank"
+          class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1"
+        >
+          <span>✉️ </span>
+          <span>Élections 2022</span>
+        </NavItem>
+
+        <NavItem
           v-if="$store.getters.contextRole == 'admin'"
           to="/admin/contenus/missions-prioritaires"
           :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500 ml-auto flex items-center', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/admin/(settings|contenus|scripts)/*')}]"
@@ -257,6 +267,16 @@
                     data-not-lazy
                   >
                   <span>Ukraine</span>
+                </NavItem>
+
+                <NavItem
+                  key="election-2022"
+                  href="https://www.jeveuxaider.gouv.fr/engagement/devenir-assesseur/"
+                  target="_blank"
+                  class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1"
+                >
+                  <span>✉️ </span>
+                  <span>Élections 2022</span>
                 </NavItem>
               </div>
             </div>
