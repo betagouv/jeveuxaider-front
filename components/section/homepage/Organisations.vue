@@ -42,7 +42,7 @@
             Chacun pour tous
           </h2>
           <p class="text-[#696974] text-2xl mb-6">
-            Plus de <strong>60 000 missions de bénévolat</strong> sont
+            Plus de <strong>10 000 missions de bénévolat</strong> sont
             disponibles chez les petits et grands acteurs de l'engagement.
           </p>
           <a
