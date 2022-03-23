@@ -21,6 +21,20 @@
             data-not-lazy
           >
         </nuxt-link>
+        <img
+          src="@/assets/images/2ans.jpg"
+          alt="Anniversaire 2 ans"
+          width="110"
+          class="hidden lg:block relative -top-1 -left-3 hover:scale-110 transform transition-all cursor-pointer"
+          data-not-lazy
+        >
+        <img
+          src="@/assets/images/2ans-mobile.jpg"
+          alt="Anniversaire 2 ans"
+          width="40"
+          class="lg:hidden absolute inset-x-0 top-3.5 left-[260px] mx-auto hover:scale-110 transform transition-all cursor-pointer"
+          data-not-lazy
+        >
       </div>
       <div class="flex lg:hidden space-x-2 pr-4 text-jva-blue-500">
         <button @click="$store.commit('toggleSearchOverlay')">
