@@ -22,7 +22,7 @@ export const actions = {
 }
 
 export const getters = {
-  isLogged: state => !!(state.auth.user),
+  isLogged: state => !!(state.auth.user && state.auth.user.profile),
   contextRole: state => state.auth.user ? state.auth.user.context_role : null,
   contextableId: state => state.auth.user ? state.auth.user.contextable_id : null,
   // contextableId: (state, getters) => state.auth.user ? getters.currentRole.contextable_id : state.auth.user.contextable_id,
