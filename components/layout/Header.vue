@@ -25,14 +25,14 @@
           src="@/assets/images/2ans.jpg"
           alt="Anniversaire 2 ans"
           width="110"
-          class="hidden lg:block relative -top-1 -left-3 hover:scale-110 transform transition-all cursor-pointer"
+          class="hidden lg:block lg:hidden relative -top-1 -left-3 hover:scale-110 transform transition-all cursor-pointer"
           data-not-lazy
         >
         <img
           src="@/assets/images/2ans-mobile.jpg"
           alt="Anniversaire 2 ans"
           width="40"
-          class="lg:hidden absolute inset-x-0 top-3.5 left-[260px] mx-auto hover:scale-110 transform transition-all cursor-pointer"
+          class="hidden lg:hidden absolute inset-x-0 top-3.5 left-[260px] mx-auto hover:scale-110 transform transition-all cursor-pointer"
           data-not-lazy
         >
       </div>
