@@ -12,7 +12,7 @@
         <DescriptionListItem term="Modifié le" :description="$dayjs(organisation.updated_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Statut juridique" :description="organisation.statut_juridique | label('structure_legal_status')" />
         <DescriptionListItem v-if="organisation.association_types" term="Agréements" :description="organisation.association_types.join(', ')" />
-        <template v-if="['admin'].includes($store.getters.contextRole)">
+        <template v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole)">
           <DescriptionListItem term="Tx. complétion" :description="`${organisation.completion_rate}%`" />
           <DescriptionListItem
             v-if="organisation.missing_fields.length"
