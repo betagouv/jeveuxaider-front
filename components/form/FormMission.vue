@@ -284,9 +284,10 @@
               @fetch-suggestions="onFetchGeoSuggestions"
             />
           </FormControl>
-          <div v-if="isPresentiel" class="grid grid-cols-12 gap-2">
+
+          <div v-if="isPresentiel" class="grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
             <FormControl
-              class="col-span-5"
+              class="lg:col-span-2"
               label="Adresse"
               html-for="address"
               :error="errors.address"
@@ -295,11 +296,11 @@
                 v-model="form.address"
                 name="address"
                 placeholder="..."
-                disabled
+                :disabled="!['admin'].includes($store.getters.contextRole)"
               />
             </FormControl>
+
             <FormControl
-              class="col-span-3"
               label="Code postal"
               html-for="zip"
               :error="errors.zip"
@@ -308,11 +309,10 @@
                 v-model="form.zip"
                 name="zip"
                 placeholder="..."
-                disabled
+                :disabled="!['admin'].includes($store.getters.contextRole)"
               />
             </FormControl>
             <FormControl
-              class="col-span-4"
               label="Ville"
               html-for="city"
               :error="errors.city"
@@ -321,9 +321,31 @@
                 v-model="form.city"
                 name="city"
                 placeholder="..."
-                disabled
+                :disabled="!['admin'].includes($store.getters.contextRole)"
               />
             </FormControl>
+            <template v-if="['admin'].includes($store.getters.contextRole)">
+              <FormControl
+                label="Latitude"
+                html-for="latitude"
+              >
+                <Input
+                  v-model="form.latitude"
+                  name="latitude"
+                  placeholder="..."
+                />
+              </FormControl>
+              <FormControl
+                label="Longitude"
+                html-for="longitude"
+              >
+                <Input
+                  v-model="form.longitude"
+                  name="longitude"
+                  placeholder="..."
+                />
+              </FormControl>
+            </template>
           </div>
         </div>
       </Box>

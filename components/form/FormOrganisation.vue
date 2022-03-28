@@ -271,7 +271,7 @@
           <Heading :level="3" class="mb-8">
             Adresse de l'organisation
           </Heading>
-          <div class="space-y-6">
+          <div class="space-y-8">
             <FormControl label="Département de votre organisation" html-for="department" required :error="errors.department">
               <Combobox
                 key="department"
@@ -304,7 +304,8 @@
               <Input
                 v-model="form.address"
                 name="address"
-                disabled
+                :disabled="!['admin'].includes($store.getters.contextRole)"
+
                 placeholder="Ex: 14 rue de Rivoli"
               />
             </FormControl>
@@ -318,7 +319,7 @@
                   v-model="form.zip"
                   name="zip"
                   placeholder="Ex: 75001"
-                  disabled
+                  :disabled="!['admin'].includes($store.getters.contextRole)"
                 />
               </FormControl>
               <FormControl
@@ -329,10 +330,33 @@
                 <Input
                   v-model="form.city"
                   name="city"
-                  disabled
+                  :disabled="!['admin'].includes($store.getters.contextRole)"
+
                   placeholder="Ex: Paris"
                 />
               </FormControl>
+              <template v-if="['admin'].includes($store.getters.contextRole)">
+                <FormControl
+                  label="Latitude"
+                  html-for="latitude"
+                >
+                  <Input
+                    v-model="form.latitude"
+                    name="latitude"
+                    placeholder="..."
+                  />
+                </FormControl>
+                <FormControl
+                  label="Longitude"
+                  html-for="longitude"
+                >
+                  <Input
+                    v-model="form.longitude"
+                    name="longitude"
+                    placeholder="..."
+                  />
+                </FormControl>
+              </template>
             </div>
           </div>
         </Box>
