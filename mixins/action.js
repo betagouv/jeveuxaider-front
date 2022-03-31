@@ -123,12 +123,28 @@ export default {
             subtitle: 'Des jeunes volontaires en SNU souhaitent vous aider',
             href: action.href
           }
+        case 'snu_application_waiting_validation':
+          return {
+            icon: 'snu',
+            iconVariant: 'snu',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'candidature', 'candidatures', false)} SNU</b> en attente de validation`,
+            subtitle: 'Des jeunes volontaires en SNU souhaitent vous aider',
+            href: action.href
+          }
+        case 'snu_mission_waiting_correction':
+          return {
+            icon: 'snu',
+            iconVariant: 'snu',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'mission', 'missions', false)} SNU</b> en attente de correction`,
+            subtitle: action.value > 1 ? 'Corriger les informations des missions afin qu’elles soient publiées' : 'Corriger les informations de la mission afin qu’elle soit publiée',
+            href: action.href
+          }
         case 'snu_contract_to_be_filled':
           return {
             icon: 'snu',
             iconVariant: 'snu',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, "contrat d'engagement", "contrats d'engagement", false)} SNU</b> à éditer`,
-            subtitle: 'Complétez les contrats d\'engagement pour accueillir des jeunes en SNU sur vos missions.',
+            subtitle: action.value > 1 ? 'Renseignez les contrats d\'engagement pour accueillir un volontaire SNU.' : 'Renseignez le contrat d’engagement pour accueillir un volontaire SNU',
             href: action.href
           }
         case 'snu_contract_to_be_signed':
@@ -136,7 +152,23 @@ export default {
             icon: 'snu',
             iconVariant: 'snu',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, "contrat d'engagement", "contrats d'engagement", false)} SNU</b> à signer`,
-            subtitle: 'N\'oubliez pas de signer les contrats d\'engagement pour accueillir des jeunes en SNU sur vos missions.',
+            subtitle: action.value > 1 ? 'Signer les contrats d’engagement pour accueillir des volontaires SNU.' : 'Signer le contrat d’engagement pour accueillir un volontaire SNU',
+            href: action.href
+          }
+        case 'snu_volunteer_to_host':
+          return {
+            icon: 'snu',
+            iconVariant: 'snu',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'volontaire', 'volontaires', false)} SNU</b> à accueillir`,
+            subtitle: action.value > 1 ? 'Tout est prêt pour accueillir les volontaires SNU sur vos missions. Une fois la mission débutée, passez-les en statut “mission en cours”' : 'Tout est prêt pour accueillir le volontaire SNU sur sa mission. Une fois la mission débutée, passez-le en statut “mission en cours”',
+            href: action.href
+          }
+        case 'snu_mission_in_progress':
+          return {
+            icon: 'snu',
+            iconVariant: 'snu',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'volontaire', 'volontaires', false)} SNU</b> en cours de mission`,
+            subtitle: action.value > 1 ? 'À la fin de sa mission, passer les volontaires SNU en statut “mission effectuée” et renseigner le nombre d’heure effectué !' : 'À la fin de sa mission, passer le volontaire SNU en statut “mission effectuée” et renseigner le nombre d’heure effectué !',
             href: action.href
           }
       }
