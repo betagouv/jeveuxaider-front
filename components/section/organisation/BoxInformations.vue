@@ -13,7 +13,10 @@
         <DescriptionListItem term="Statut juridique" :description="organisation.statut_juridique | label('structure_legal_status')" />
         <DescriptionListItem v-if="organisation.association_types" term="Agréements" :description="organisation.association_types.join(', ')" />
         <template v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole)">
-          <DescriptionListItem term="Tx. complétion" :description="`${organisation.completion_rate}%`" />
+          <DescriptionListItemGauge
+            term="Tx. complétion"
+            :percentage="organisation.completion_rate"
+          />
           <DescriptionListItem
             v-if="organisation.missing_fields.length"
             term="Champs manquants"

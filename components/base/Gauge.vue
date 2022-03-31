@@ -1,5 +1,6 @@
 <template>
   <div
+    v-tooltip="tooltip ? tooltip : null"
     class="w-full bg-gray-200"
     :class="[
       { 'h-1': size === 'xs'},
@@ -25,6 +26,10 @@ export default {
     percentage: {
       type: Number,
       required: true
+    },
+    tooltip: {
+      type: String,
+      default: null
     },
     size: {
       type: String,

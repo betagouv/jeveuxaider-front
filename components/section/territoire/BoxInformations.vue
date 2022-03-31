@@ -12,7 +12,10 @@
         <DescriptionListItem v-if="territoire.department" term="Département" :description="`${territoire.department} - ${$options.filters.label(territoire.department, 'departments')}`" />
         <DescriptionListItem v-if="territoire.type === 'city'" term="Zips" :description="territoire.zips.join(', ')" />
         <template v-if="['admin'].includes($store.getters.contextRole)">
-          <DescriptionListItem term="Tx. complétion" :description="`${territoire.completion_rate}%`" />
+          <DescriptionListItemGauge
+            term="Tx. complétion"
+            :percentage="territoire.completion_rate"
+          />
           <DescriptionListItem
             v-if="territoire.missing_fields.length"
             term="Champs manquants"

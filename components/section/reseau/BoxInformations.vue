@@ -9,7 +9,10 @@
         <DescriptionListItem term="Modifié le" :description="$dayjs(reseau.updated_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Couleur" :description="reseau.color" />
         <template v-if="['admin'].includes($store.getters.contextRole)">
-          <DescriptionListItem term="Tx. complétion" :description="`${reseau.completion_rate}%`" />
+          <DescriptionListItemGauge
+            term="Tx. complétion"
+            :percentage="reseau.completion_rate"
+          />
           <DescriptionListItem
             v-if="reseau.missing_fields.length"
             term="Champs manquants"
