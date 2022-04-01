@@ -56,56 +56,61 @@
           </div>
         </template>
       </SectionHeading>
-      <Input
-        class="mt-8"
-        name="search"
-        placeholder="Rechercher une organisation (code postal, ville, id, ou rna)"
-        icon="SearchIcon"
-        variant="transparent"
-        :value="$route.query['filter[search]']"
-        clearable
-        @input="changeFilter('filter[search]', $event)"
-      />
-      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
-        <Checkbox
-          :key="`toutes-${$route.fullPath}`"
-          :option="{key: 'toutes', label:'Toutes'}"
-          :is-checked="hasActiveFilters()"
-          variant="button"
-          size="xs"
-          transparent
-          @change="deleteAllFilters()"
-        />
-        <Checkbox
-          v-for="option in $labels.structure_workflow_states"
-          :key="`${option.key}-${$route.fullPath}`"
-          :option="{key: option.key, label:option.label}"
-          :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == option.key"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', option.key)"
-        />
-      </div>
-      <div class="lg:hidden mt-4 gap-y-4 flex flex-col">
+      <SearchFilters class="mt-8">
         <Input
           name="search"
-          placeholder="Nom de l'organisation"
+          placeholder="Rechercher une organisation (ville, id, ou rna)"
           icon="SearchIcon"
           variant="transparent"
           :value="$route.query['filter[search]']"
+          clearable
           @input="changeFilter('filter[search]', $event)"
         />
-        <SelectAdvanced
-          name="state"
-          placeholder="Statut de l'organisation"
-          :options="$labels.structure_workflow_states"
-          :value="$route.query['filter[state]']"
-          variant="transparent"
-          clearable
-          @input="changeFilter('filter[state]', $event)"
-        />
-      </div>
+        <template #prefilters>
+          <Checkbox
+            :key="`toutes-${$route.fullPath}`"
+            :option="{key: 'toutes', label:'Toutes'}"
+            :is-checked="hasActiveFilters()"
+            variant="button"
+            size="xs"
+            transparent
+            @change="deleteAllFilters()"
+          />
+          <Checkbox
+            :key="`state-en-attente-validation-${$route.fullPath}`"
+            :option="{key: 'en-attente-validation', label:'En attente de validation'}"
+            :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En attente de validation'"
+            variant="button"
+            size="xs"
+            transparent
+            @change="changeFilter('filter[state]', 'En attente de validation')"
+          />
+          <Checkbox
+            :key="`state-en-cours-traitement-${$route.fullPath}`"
+            :option="{key: 'en-cours-traitement', label:'En cours de traitement'}"
+            :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En cours de traitement'"
+            variant="button"
+            size="xs"
+            transparent
+            @change="changeFilter('filter[state]', 'En cours de traitement')"
+          />
+        </template>
+        <template #sorts>
+          <Sort
+            key="sort"
+            name="sort"
+            transparent
+            :value="$route.query['sort'] ? $route.query['sort'] : '-created_at'"
+            :options="[
+              { key: '-created_at', label: 'Date de création' },
+              { key: '-updated_at', label: 'Date de denière modification' },
+              { key: '-missions_count', label: 'Nombre de missions proposées' },
+              { key: '-places_left', label: 'Nombre de bénévoles recherchés' },
+            ]"
+            @input="changeFilter('sort', $event)"
+          />
+        </template>
+      </SearchFilters>
 
       <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <CardOrganisation
@@ -133,12 +138,14 @@ import CardOrganisation from '@/components/card/CardOrganisation.vue'
 import DrawerOrganisation from '@/components/drawer/DrawerOrganisation.vue'
 import MixinExport from '@/mixins/export'
 import BoxContext from '@/components/section/BoxContext.vue'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default {
   components: {
     CardOrganisation,
     DrawerOrganisation,
-    BoxContext
+    BoxContext,
+    SearchFilters
   },
   mixins: [QueryBuilder, MixinExport],
   middleware: 'authenticated',

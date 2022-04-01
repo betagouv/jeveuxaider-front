@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-2 relative flex items-start">
+  <div class="relative flex items-start">
     <template v-if="variant == 'checkbox'">
       <div class="flex items-center h-5">
         <input
