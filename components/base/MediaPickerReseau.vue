@@ -1,6 +1,6 @@
 <template>
   <MediaPicker
-    :medias="mediasFromDomaine"
+    :medias="medias"
     :defaults="defaults"
     :limit="limit"
     :preview-conversion="previewConversion"
@@ -12,9 +12,9 @@
 <script>
 export default {
   props: {
-    collection: {
-      type: String,
-      required: true
+    reseauIds: {
+      type: Array,
+      default: null
     },
     domaineIds: {
       type: Array,
@@ -34,28 +34,52 @@ export default {
   data () {
     return {
       openModal: null,
-      mediasFromDomaine: []
+      mediasFromDomaines: [],
+      mediasFromReseau: []
+    }
+  },
+  computed: {
+    medias () {
+      return [...this.mediasFromReseau, ...this.mediasFromDomaines]
     }
   },
   watch: {
     domaineIds: {
-      immediate: true,
+      immediate: false,
       async handler () {
-        await this.fetchMediasDomaine()
+        await this.fetchMediasFromDomaines()
       }
     }
   },
+  created () {
+    this.fetchMedias()
+  },
   methods: {
-    async fetchMediasDomaine () {
+    fetchMedias () {
+      Promise.all([
+        this.reseauIds ? this.fetchMediasFromReseau() : null,
+        this.fetchMediasFromDomaines()
+      ])
+    },
+    async fetchMediasFromReseau () {
       const { data: medias } = await this.$axios.get('/medias', {
         params: {
-          'filter[collection_name]': this.collection,
+          'filter[collection_name]': 'reseau__illustrations_antennes',
+          'filter[model_id]': this.reseauIds,
+          pagination: 99
+        }
+      })
+      this.mediasFromReseau = medias.data
+    },
+    async fetchMediasFromDomaines () {
+      const { data: medias } = await this.$axios.get('/medias', {
+        params: {
+          'filter[collection_name]': 'domaine__illustrations_organisation',
           'filter[model_id]': this.domaineIds.join(','),
           pagination: 99
         }
       })
-
-      this.mediasFromDomaine = medias.data
+      this.mediasFromDomaines = medias.data
     },
     onNewSelection (media, index) {
       this.$emit('change', { media, index })

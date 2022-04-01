@@ -144,6 +144,34 @@
             </FormControl>
           </div>
         </Box>
+
+        <Box>
+          <Heading :level="3" class="mb-8">
+            Images à destination de vos antennes
+          </Heading>
+
+          <FormControl
+            html-for="illustrations_antennes"
+          >
+            <ImageCropMultiple
+              class="grid sm:grid-cols-2 md:grid-cols-3 gap-4"
+              :medias="form.illustrations_antennes"
+              :limit="6"
+              :upload-max-size="2000000"
+              :min-width="1400"
+              :min-height="900"
+              :preview-width="200"
+              :ratio="null"
+              variant="compact"
+              upload-variant="compact"
+              preview-conversion="large"
+              disable-delete
+              @add="addFiles({ files: [$event], collection: 'reseau__illustrations_antennes' })"
+              @delete="deleteFile($event)"
+              @crop="onManipulationsChange($event)"
+            />
+          </FormControl>
+        </Box>
       </div>
       <div class="lg:col-span-2 space-y-8">
         <Box padding="sm">
@@ -241,7 +269,7 @@
         </Box>
         <Box padding="sm">
           <Heading :level="3" class="mb-8">
-            Image
+            Images
           </Heading>
           <div class="space-y-12">
             <FormControl label="Logo" html-for="logo">
@@ -265,13 +293,13 @@
             >
               <MediaPickerDomaine
                 v-if="$store.getters.contextRole === 'admin' || (!form.override_image1 && !form.override_image2)"
-                class="grid sm:grid-cols-2 gap-4"
                 collection="domaine__illustrations_organisation"
-                preview-conversion="large"
-                preview-sizes="200px"
-                :domaine-ids="mediaPickerDomaineIds"
+                :domaine-ids="mediaPickerIds"
                 :defaults="form.illustrations"
                 :limit="2"
+                preview-conversion="large"
+                preview-sizes="200px"
+                class="grid sm:grid-cols-2 gap-4"
                 @change="onMediaPickerChange($event, 'illustrations')"
               />
 
@@ -366,7 +394,7 @@ export default {
     }
   },
   computed: {
-    mediaPickerDomaineIds () {
+    mediaPickerIds () {
       return this.form.domaines?.map(domaine => domaine.id)
     }
   },
