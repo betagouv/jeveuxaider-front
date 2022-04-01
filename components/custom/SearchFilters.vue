@@ -4,7 +4,7 @@
     <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start">
       <div
         :class="[
-          hasPrefiltersSlot ? 'hidden lg:flex gap-4 text-sm flex-wrap items-center' : '',
+          hasPrefiltersSlot ? 'flex gap-4 text-sm flex-wrap items-center' : '',
         ]"
       >
         <slot name="prefilters" />

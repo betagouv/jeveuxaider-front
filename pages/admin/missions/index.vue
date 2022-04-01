@@ -21,6 +21,16 @@
           @selected="changeFilter('filter[structure.name]', $event ? $event.name : undefined)"
         />
         <SelectAdvanced
+          v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
+          name="statut_juridique"
+          placeholder="Statut juridique"
+          :options="$labels.structure_legal_status"
+          :value="$route.query['filter[structure.statut_juridique]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[structure.statut_juridique]', $event)"
+        />
+        <SelectAdvanced
           :key="`department-${$route.fullPath}`"
           name="department"
           placeholder="Département"
@@ -116,7 +126,7 @@
         </template>
       </Sectionheading>
 
-      <SearchFilters class="mt-8">
+      <SearchFilters class="my-8">
         <Input
           name="search"
           placeholder="Recherche par mots clés..."

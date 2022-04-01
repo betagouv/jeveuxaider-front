@@ -56,7 +56,7 @@
           </div>
         </template>
       </SectionHeading>
-      <SearchFilters class="mt-8">
+      <SearchFilters class="my-8">
         <Input
           name="search"
           placeholder="Rechercher une organisation (ville, id, ou rna)"
