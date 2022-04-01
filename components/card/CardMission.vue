@@ -56,9 +56,14 @@
     </div>
 
     <div class="mx-8 my-6 flex-1 flex flex-col items-start">
-      <Badge :color="domainId" class="uppercase mb-4">
-        {{ $options.filters.label(domainId, 'domaines') }}
-      </Badge>
+      <div class="mb-4 flex flex-wrap gap-2">
+        <Badge :color="domainId" class="uppercase">
+          {{ $options.filters.label(domainId, 'domaines') }}
+        </Badge>
+        <Badge v-if="mission.domaine_secondary_id" color="gray-light">
+          +1
+        </Badge>
+      </div>
 
       <h3
         :title="mission.name"
