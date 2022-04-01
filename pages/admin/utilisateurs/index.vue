@@ -28,23 +28,28 @@
           @input="changeFilter('filter[role]', $event)"
         />
         <SelectAdvanced
-          :key="`department-${$route.fullPath}`"
-          name="department"
-          placeholder="Département"
+          v-if="$route.query['filter[role]'] === 'referent'"
+          :key="`referent-department-${$route.fullPath}`"
+          name="referent-department"
+          placeholder="Département du référent"
           :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
-          :value="$route.query['filter[department]']"
+          :value="$route.query['filter[referent_department]']"
           variant="transparent"
           clearable
-          @input="changeFilter('filter[department]', $event)"
+          @input="changeFilter('filter[referent_department]', $event)"
         />
-        <Input
-          :key="`zip-${$route.fullPath}`"
-          name="zip"
-          placeholder="Code Postal"
+        <SelectAdvanced
+          v-if="$route.query['filter[role]'] === 'referent_regional'"
+          :key="`referent-region-${$route.fullPath}`"
+          name="referent-region"
+          placeholder="Région du référent"
+          :options="$labels.regions"
+          :value="$route.query['filter[referent_region]']"
           variant="transparent"
-          :value="$route.query['filter[zip]']"
-          @input="changeFilter('filter[zip]', $event)"
+          clearable
+          @input="changeFilter('filter[referent_region]', $event)"
         />
+
         <SelectAdvanced
           :key="`is_visible-${$route.fullPath}`"
           name="is_visible"
@@ -64,6 +69,24 @@
           variant="transparent"
           clearable
           @input="changeFilter('filter[min_participations]', $event)"
+        />
+        <SelectAdvanced
+          :key="`department-${$route.fullPath}`"
+          name="department"
+          placeholder="Département"
+          :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
+          :value="$route.query['filter[department]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[department]', $event)"
+        />
+        <Input
+          :key="`zip-${$route.fullPath}`"
+          name="zip"
+          placeholder="Code postal"
+          variant="transparent"
+          :value="$route.query['filter[zip]']"
+          @input="changeFilter('filter[zip]', $event)"
         />
       </div>
     </template>
