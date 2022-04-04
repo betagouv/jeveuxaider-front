@@ -41,19 +41,27 @@
           title="Choisissez un visuel"
           @close="openModal = null"
         >
-          <div class="grid sm:grid-cols-2 gap-4">
-            <img
-              v-for="media in medias"
-              :key="media.id"
-              :srcset="media.urls[previewConversion]"
-              :alt="media.name"
-              class="rounded-lg cursor-pointer transition ring-offset-4 hover:opacity-50"
-              :class="[
-                {'!opacity-100 ring-2 ring-jva-blue-500': defaults[index] && defaults[index].id == media.id},
-                {'opacity-25': defaults[index] && defaults[index].id != media.id}
-              ]"
-              @click.stop="onNewSelection(media, index)"
-            >
+          <div class="space-y-8">
+            <div v-for="group in mediasByGroups" :key="group.id">
+              <div class="mb-3 text-gray-600 uppercase text-xs">
+                {{ group.label }}
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-4">
+                <img
+                  v-for="media in group.medias"
+                  :key="media.id"
+                  :srcset="media.urls[previewConversion]"
+                  :alt="media.name"
+                  class="rounded-lg cursor-pointer transition ring-offset-4 hover:opacity-50"
+                  :class="[
+                    {'!opacity-100 ring-2 ring-jva-blue-500': defaults[index] && defaults[index].id == media.id},
+                    {'opacity-25': defaults[index] && defaults[index].id != media.id}
+                  ]"
+                  @click.stop="onNewSelection(media, index)"
+                >
+              </div>
+            </div>
           </div>
         </Modal>
       </portal>
@@ -86,37 +94,40 @@ export default {
   },
   computed: {
     mediasByGroups () {
-      const groups = [
-        {
-          id: 'reseau',
-          label: 'parmi ceux mon réseau'
-        }
-      ]
-
+      const groups = []
       this.$labels.domaines.forEach((domaine) => {
         groups.push({
           id: `domaine_${domaine.key}`,
-          label: `parmi le domaine ${domaine.label}`
+          label: `Parmi le domaine ${domaine.label}`,
+          medias: [],
+          weight: 2
         })
       })
 
-      return groups
+      this.medias.forEach((media) => {
+        switch (media.model_type) {
+          case 'App\\Models\\Domaine':
+            groups.find(group => group.id == `domaine_${media.model_id}`)?.medias.push(media)
+            break
+          case 'App\\Models\\Reseau': {
+            const group = groups.find(group => group.id == `reseau__${media.model.id}`)
+            if (!group) {
+              groups.push({
+                id: `reseau__${media.model.id}`,
+                label: `Parmi le réseau ${media.model.name}`,
+                medias: [],
+                weight: 1
+              })
+            }
+            groups.find(group => group.id == `reseau__${media.model.id}`).medias.push(media)
+            break
+          }
 
-      // const mediasGrouped = [
-      //   {
-      //     id: 'domaine_1'
-      //   }
-      // ]
-      // this.medias.forEach((media) => {
-      //   switch (media.model_type) {
-      //     case 'App\\Models\\Domaine':
-      //       mediasGrouped
-      //       break
-      //     default:
-      //       break
-      //   }
-      // })
-      // return mediasGrouped
+          default:
+            break
+        }
+      })
+      return groups.filter(group => group.medias.length).sort((a, b) => a.weight - b.weight)
     }
   },
   methods: {

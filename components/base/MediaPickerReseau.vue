@@ -12,9 +12,10 @@
 <script>
 export default {
   props: {
-    reseauIds: {
+    reseaux: {
       type: Array,
-      default: null
+      required: true,
+      validator: value => value.length
     },
     domaineIds: {
       type: Array,
@@ -57,15 +58,18 @@ export default {
   methods: {
     fetchMedias () {
       Promise.all([
-        this.reseauIds ? this.fetchMediasFromReseau() : null,
+        this.fetchMediasFromReseau(),
         this.fetchMediasFromDomaines()
       ])
     },
     async fetchMediasFromReseau () {
+      if (!this.reseaux.length) {
+        return
+      }
       const { data: medias } = await this.$axios.get('/medias', {
         params: {
           'filter[collection_name]': 'reseau__illustrations_antennes',
-          'filter[model_id]': this.reseauIds,
+          'filter[model_id]': this.reseaux.map(reseau => reseau.id).join(','),
           pagination: 99
         }
       })
