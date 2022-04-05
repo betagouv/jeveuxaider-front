@@ -50,6 +50,7 @@
     "vue-dragscroll": "^3.0.1",
     "vue-in-viewport-mixin": "^2.0.2",
     "vue-instantsearch": "^3.5.0",
+    "vue-nl2br": "^0.1.2",
     "vue-scrollto": "^2.20.0",
     "vue-slick-carousel": "^1.0.6",
     "vue-star-rating": "^1.7.0",
