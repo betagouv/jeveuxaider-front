@@ -109,19 +109,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-/* ::placeholder {
-  font-weight: 300;
-  color: #8b8b8b !important;
-}
-
-input.hide-picker[type="date"] {
-  &::-webkit-calendar-picker-indicator{
-    display: none;
-  }
-  &::-webkit-input-placeholder{
-    visibility: hidden !important;
-  }
-} */
-</style>

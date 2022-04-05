@@ -5,6 +5,7 @@ import VScrollLock from 'v-scroll-lock'
 import TextareaAutosize from 'vue-textarea-autosize'
 import VueStarRating from 'vue-star-rating'
 import VueDragscroll from 'vue-dragscroll'
+import VCalendar from 'v-calendar'
 
 Vue.component('StarRating', VueStarRating)
 
@@ -27,3 +28,4 @@ Vue.use(VTooltip, {
 Vue.use(TextareaAutosize)
 
 Vue.use(VueDragscroll)
+Vue.use(VCalendar)
