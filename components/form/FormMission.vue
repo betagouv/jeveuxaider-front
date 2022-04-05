@@ -183,22 +183,24 @@
               required
               :error="errors.start_date"
             >
-              <Input
+              <InputDate v-model="form.start_date" name="start_date" />
+              <!-- <Input
                 v-model="form.start_date"
                 name="start_date"
                 type="datetime-local"
-              />
+              /> -->
             </FormControl>
             <FormControl
               label="Fin de la mission"
               html-for="end_date"
               :error="errors.end_date"
             >
-              <Input
+              <InputDate v-model="form.end_date" name="end_date" />
+              <!-- <Input
                 v-model="form.end_date"
                 name="end_date"
                 type="datetime-local"
-              />
+              /> -->
             </FormControl>
           </div>
           <div class="grid grid-cols-2 gap-4">
