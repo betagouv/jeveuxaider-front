@@ -85,14 +85,7 @@
           required
           :error="errors.birthday"
         >
-          <Input
-            v-model="form.birthday"
-            name="birthday"
-            placeholder="jj/mm/aaaa"
-            type="date"
-            hide-picker
-            @blur="validate('birthday')"
-          />
+          <InputDate v-model="form.birthday" name="birthday" />
         </FormControl>
         <FormControl
           label="Mot de passe"

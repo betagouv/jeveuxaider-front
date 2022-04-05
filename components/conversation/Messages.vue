@@ -42,12 +42,11 @@
                 :img-src="message.from.profile.avatar && message.from.profile.avatar.urls.original"
                 :date="message.created_at"
               >
-                <!-- <nl2br
+                <nl2br
                   tag="p"
                   :text="message.content"
                   class-name="break-word"
-                /> -->
-                {{ message.content }}
+                />
               </ConversationMessage>
             </template>
 
