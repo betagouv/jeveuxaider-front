@@ -68,6 +68,7 @@
       <h3
         :title="mission.name"
         class="font-black text-black text-lg relative mb-auto line-clamp-3"
+        style="word-break: break-word"
       >
         {{ mission.name }}
       </h3>
