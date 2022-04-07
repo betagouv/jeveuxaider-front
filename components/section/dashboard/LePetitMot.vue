@@ -14,8 +14,17 @@
           <div class="text-xl mb-6">
             <span class="font-bold">{{ messages.title }}</span> de l'équipe JeVeuxAider.gouv.fr
           </div>
-          <div class="text-lg">
-            “{{ petitMotByRole }}”
+          <div class="flex">
+            <svg
+              class=" flex-shrink-0 mr-2"
+              fill="#F0E7DE"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            ><path d="M13 14.725c0-5.141 3.892-10.519 10-11.725l.984 2.126c-2.215.835-4.163 3.742-4.38 5.746 2.491.392 4.396 2.547 4.396 5.149 0 3.182-2.584 4.979-5.199 4.979-3.015 0-5.801-2.305-5.801-6.275zm-13 0c0-5.141 3.892-10.519 10-11.725l.984 2.126c-2.215.835-4.163 3.742-4.38 5.746 2.491.392 4.396 2.547 4.396 5.149 0 3.182-2.584 4.979-5.199 4.979-3.015 0-5.801-2.305-5.801-6.275z" /></svg>
+
+            <div class="content text-lg" v-html="petitMotByRole" />
           </div>
         </div>
       </div>
@@ -71,5 +80,9 @@ export default {
   background-image: url('/images/dashboard/bg-petit-mot.png');
   background-position: right 38px bottom 38px;
   background-repeat: no-repeat;
+}
+
+#petit-mot .content ::v-deep a {
+  text-decoration: underline !important;
 }
 </style>
