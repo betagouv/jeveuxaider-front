@@ -8,7 +8,7 @@ export default {
   computed: {
     formattedActions () {
       const mergedActions = [...this.actions, ...this.snuActions]
-      return mergedActions.filter(item => item.value).map((item) => {
+      return mergedActions.filter(item => Array.isArray(item.value) ? item.value.length : item.value).map((item) => {
         return {
           ...item,
           ...this.formatAction(item)
