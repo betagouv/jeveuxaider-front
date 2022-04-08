@@ -47,11 +47,18 @@
         :title="activity.name"
         :state-style="activity.is_published ? 'success' : 'error'"
         :state-text="activity.is_published ? 'En ligne' : 'Hors ligne'"
-        :description="activity.title"
-        :image-srcset="activity.banner ? activity.banner.urls.card : undefined"
+        :description="`Réalisez une mission de bénévolat ${activity.name}`"
+        :image-srcset="activity.banner ? activity.banner.urls.desktop : undefined"
         :image-src="activity.banner ? activity.banner.urls.original : undefined"
         @click.native="drawerActivityId = activity.id"
       >
+        <template #badges>
+          <div v-if="activity.domaines.length" class="mb-2 flex gap-2">
+            <Badge class="uppercase" :color="activity.domaines[0].id">
+              {{ activity.domaines[0].name }}
+            </Badge>
+          </div>
+        </template>
         <template #footer>
           <div
             class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
@@ -89,7 +96,7 @@ export default {
       loading: false,
       endpoint: '/activities',
       queryParams: {
-        include: 'banner'
+        include: 'banner,domaines'
       },
       drawerActivityId: null
     }

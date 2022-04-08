@@ -2,8 +2,8 @@
   <div>
     <Banner :activity="activity" />
     <Search :activity="activity" />
-    <Promote :activity="activity" class="translate-y-1/2" />
-    <Associations :activity="activity" class="" />
+    <Promote :activity="activity" class="-mb-32" />
+    <Associations :activity="activity" />
     <Engagement :activity="activity" />
     <Subscribe :activity="activity" />
   </div>
@@ -69,3 +69,10 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+::v-deep .section-associations {
+  @apply pt-40;
+}
+
+</style>
