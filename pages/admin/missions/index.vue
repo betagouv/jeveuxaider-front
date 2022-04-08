@@ -50,6 +50,17 @@
           clearable
           @input="changeFilter('filter[domaine]', $event)"
         />
+        <SelectAdvanced
+          v-if="activities.length"
+          name="activity_id"
+          placeholder="Sélectionner une activité"
+          :options="activities"
+          clearable
+          attribute-key="id"
+          attribute-label="name"
+          :value="$route.query['filter[ofActivity]']"
+          @input="changeFilter('filter[ofActivity]', $event)"
+        />
         <div class="flex space-x-4 mb-2">
           <Checkbox
             :key="`type-1-${$route.fullPath}`"
@@ -165,15 +176,6 @@
             transparent
             @change="changeFilter('filter[state]', 'En attente de validation')"
           />
-          <!-- <Checkbox
-            :key="`state-en-cours-traitement-${$route.fullPath}`"
-            :option="{key: 'en-cours-traitement', label:'En cours de traitement'}"
-            :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En cours de traitement'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[state]', 'En cours de traitement')"
-          /> -->
           <Checkbox
             :key="`available-${$route.fullPath}`"
             :option="{key: 'available', label:'En ligne'}"
@@ -258,13 +260,19 @@ export default {
   },
   mixins: [QueryBuilder, MixinExport],
   middleware: 'authenticated',
-  asyncData ({ store, error }) {
+  async asyncData ({ $axios, store, error }) {
     if (
       !['admin', 'referent', 'referent_regional', 'responsable', 'tete_de_reseau'].includes(
         store.getters.contextRole
       )
     ) {
       return error({ statusCode: 403 })
+    }
+
+    const { data: activities } = await $axios.get('/activities?pagination=0')
+
+    return {
+      activities: activities.data
     }
   },
   data () {

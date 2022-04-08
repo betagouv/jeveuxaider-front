@@ -1,6 +1,6 @@
 <template>
-  <div v-if="queryActivities && queryActivities.total > 0" class="text-sm space-y-2">
-    <Box v-for="activity in queryActivities.data" :key="activity.id" variant="flat" padding="xs">
+  <div v-if="queryActivityLogs && queryActivityLogs.total > 0" class="text-sm space-y-2">
+    <Box v-for="activity in queryActivityLogs.data" :key="activity.id" variant="flat" padding="xs">
       <div class="font-medium">
         {{ activity.data.full_name }}
       </div>
@@ -62,17 +62,17 @@ export default {
   },
   data () {
     return {
-      queryActivities: null
+      queryActivityLogs: null
     }
   },
   async fetch () {
-    const { data: queryActivities } = await this.$axios.get('/activities', {
+    const { data: queryActivityLogs } = await this.$axios.get('/activity-logs', {
       params: {
         'filter[subject_id]': this.modelId,
         'filter[subject_type]': this.modelType
       }
     })
-    this.queryActivities = queryActivities
+    this.queryActivityLogs = queryActivityLogs
   },
   computed: {
     uselessProperties () {
