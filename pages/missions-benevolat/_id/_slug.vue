@@ -106,13 +106,15 @@
 
           <component
             :is="mission.structure.statut_juridique == 'Association' && mission.structure.state == 'Validée'? 'nuxt-link' : 'div'"
-            v-if="mission.structure.logo && (mission.structure.logo.thumb || mission.structure.logo.original)"
+            v-if="mission.structure.logo"
             target="_blank"
             :to="`/organisations/${mission.structure.slug}`"
             class="left-2/4 absolute -translate-x-1/2 -translate-y-3/4 bg-white shadow-lg rounded-xl p-4"
           >
             <img
-              :src="mission.structure.logo.thumb ? mission.structure.logo.thumb : mission.structure.logo.original"
+              sizes="120px"
+              :srcset="mission.structure.logo.urls.large"
+              :src="mission.structure.logo.urls.original"
               :alt="mission.structure.name"
               class="my-auto h-10 object-contain"
               style="max-width: 120px"
