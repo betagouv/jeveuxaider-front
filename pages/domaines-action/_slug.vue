@@ -142,7 +142,7 @@
           >
             Rejoignez le mouvement #JeVeuxAider
           </h2>
-          <p class="text-xl max-w-2xl mx-auto leading-8 text-gray-200 mt-2">
+          <p class="text-xl max-w-2xl mx-auto leading-8 text-white mt-2">
             Sur l’ensemble du territoire français, des milliers de bénévoles
             et d’organisations se sont déjà ralliés à JeVeuxAider.gouv.fr pour
             soutenir ce domaine d'action.
