@@ -89,7 +89,6 @@ export default {
     '@nuxtjs/strapi',
     '@nuxtjs/dayjs',
     'nuxt-lazy-load',
-    'vue-scrollto/nuxt',
     'cookie-universal-nuxt',
     'vue-toastification/nuxt',
     'portal-vue/nuxt',
