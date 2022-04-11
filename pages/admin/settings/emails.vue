@@ -63,7 +63,7 @@ export default {
           key: 'benevole',
           label: '🙋‍♀️ Emails envoyés aux bénévoles',
           notifications: [
-            { key: 'benevole_register', label: 'Votre compte a été validé', description: "Notification envoyée au bénévole lorsqu'il s'inscrit" },
+            { key: 'benevole_register', label: '💪 Une dernière étape pour s’engager XXX !', description: "Notification envoyée au bénévole lorsqu'il s'inscrit" },
             { key: 'benevole_participation_being_processed', label: 'Votre demande de participation est en cours de traitement', description: 'Notification envoyée au bénévole lorsque le responsable passe la participation en cours de traitement' },
             { key: 'benevole_participation_validated', label: 'Bravo ! Votre demande de participation vient d’être acceptée', description: 'Notification envoyée au bénévole lorsque sa participation est validée' },
             { key: 'benevole_participation_temoignage', label: 'Participation terminée, demande de témoignage', description: 'Notification envoyée au bénévole lorsque sa participation est terminée' },
