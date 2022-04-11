@@ -6,7 +6,7 @@
       >
         <InformationCircleIcon class="h-5 w-5 inline text-gray-400 translate-y-[-2px] md:translate-y-0 flex-none" />
         <span class="text-sm md:text-base">
-          Une tête de réseau fédère, regroupe et administre plusieurs associations d’un même réseau, à l’instar des Restos du Coeur ou de la Croix-Rouge. A contrario, une association indépendante qui pas des adhérents dans le cadre d’une fédération, ou une antenne d’un réseau associatif n’est pas une tête de réseau.
+          Une tête de réseau fédère, regroupe et administre plusieurs associations d’un même réseau, à l’instar des Restos du Coeur ou de la Croix-Rouge. A contrario, une association indépendante qui n’a pas d’adhérents dans le cadre d’une fédération, ou une antenne d’un réseau associatif n’est pas une tête de réseau.
         </span>
       </div>
 
