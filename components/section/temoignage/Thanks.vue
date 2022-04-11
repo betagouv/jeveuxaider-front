@@ -95,7 +95,7 @@ export default {
     },
     structureType () {
       let status = this.$options.filters
-        .labelFromValue(
+        .label(
           this.structure.statut_juridique,
           'structure_legal_status'
         )

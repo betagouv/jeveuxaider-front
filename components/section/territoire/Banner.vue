@@ -136,6 +136,13 @@ export default {
       })
 
       return breadcrumb
+    },
+    domaineName () {
+      return this.$options.filters
+        .label(
+          this.domaine,
+          'domaines'
+        )
     }
   },
   methods: {
@@ -150,7 +157,7 @@ export default {
           break
       }
       return withDomaine
-        ? `/missions-benevolat?refinementList[domaines][0]=${this.domaine}&${link}`
+        ? `/missions-benevolat?refinementList[domaines][0]=${this.domaineName}&${link}`
         : `/missions-benevolat?${link}`
     },
     onClick () {
