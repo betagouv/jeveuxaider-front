@@ -56,9 +56,16 @@ export default {
     width: 100% !important;
   }
 }
-::v-deep table p {
+::v-deep table p,
+::v-deep table ul {
   margin-bottom: 15px !important;
 }
+
+::v-deep table ul {
+  list-style: disc;
+  padding-left: 15px;
+}
+
 ::v-deep a {
   pointer-events: none !important;
   word-break: break-word !important;
