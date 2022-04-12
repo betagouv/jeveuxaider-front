@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerReseau :reseau-id="drawerReseauId" @close="drawerReseauId = null" />
+    <DrawerReseau :reseau-id="drawerReseauId" @close="drawerReseauId = null" @refetch="$fetch" />
     <portal to="breadcrumb">
       <Breadcrumb
         :items="[
