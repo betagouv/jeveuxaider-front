@@ -14,14 +14,15 @@
     <template #sidebar>
       <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
       <div class="flex flex-col gap-y-4 sticky top-8">
-        <SelectAdvanced
+        <Combobox
           v-if="activities.length"
           name="activity_id"
-          placeholder="Sélectionner une activité"
+          placeholder="Activité"
           :options="activities"
           clearable
           attribute-key="id"
           attribute-label="name"
+          variant="transparent"
           :value="$route.query['filter[ofActivity]']"
           @input="changeFilter('filter[ofActivity]', $event)"
         />

@@ -89,7 +89,7 @@
           <div
             class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
           >
-            {{ $options.filters.formatNumber(reseau.missions_count) }} {{ $options.filters.pluralize(reseau.missions_count, 'mission', 'missions', false) }}
+            {{ $options.filters.formatNumber(reseau.places_left) }} {{ $options.filters.pluralize(reseau.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
           </div>
         </template>
       </Card>
@@ -124,7 +124,8 @@ export default {
       endpoint: '/reseaux',
       exportEndpoint: '/export/reseaux',
       queryParams: {
-        include: 'illustrations,overrideImage1'
+        include: 'illustrations,overrideImage1,structuresCount',
+        append: 'places_left'
       },
       drawerReseauId: null,
       drawerReseau: null

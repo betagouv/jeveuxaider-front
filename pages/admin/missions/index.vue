@@ -50,14 +50,15 @@
           clearable
           @input="changeFilter('filter[ofDomaine]', $event)"
         />
-        <SelectAdvanced
+        <Combobox
           v-if="activities.length"
           name="activity_id"
-          placeholder="Sélectionner une activité"
+          placeholder="Activité"
           :options="activities"
           clearable
           attribute-key="id"
           attribute-label="name"
+          variant="transparent"
           :value="$route.query['filter[ofActivity]']"
           @input="changeFilter('filter[ofActivity]', $event)"
         />

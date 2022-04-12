@@ -98,7 +98,10 @@
           <div
             class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
           >
-            @TODO
+            {{
+              activity.places_left
+                | pluralize('bénévole recherché', 'bénévoles recherchés')
+            }}
           </div>
         </template>
       </Card>
@@ -133,7 +136,8 @@ export default {
       loading: false,
       endpoint: '/activities',
       queryParams: {
-        include: 'banner,domaines,missionsCount'
+        include: 'banner,domaines',
+        append: 'places_left'
       },
       drawerActivityId: null
     }
