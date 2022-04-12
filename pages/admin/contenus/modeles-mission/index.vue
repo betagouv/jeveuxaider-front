@@ -119,9 +119,9 @@
         @click.native="drawerMissionTemplateId = missionTemplate.id"
       >
         <template #badges>
-          <div v-if="missionTemplate.reseau" class="mb-2">
+          <div class="mb-2">
             <Badge class="" color="gray-light">
-              {{ missionTemplate.reseau.name }}
+              {{ missionTemplate.reseau ? missionTemplate.reseau.name : 'Accessible pour tous' }}
             </Badge>
           </div>
         </template>
@@ -129,7 +129,7 @@
           <div
             class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
           >
-            {{ $options.filters.formatNumber(missionTemplate.missions_count) }} {{ $options.filters.pluralize(missionTemplate.missions_count, 'mission', 'missions', false) }}
+            {{ $options.filters.formatNumber(missionTemplate.places_left) }} {{ $options.filters.pluralize(missionTemplate.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
           </div>
         </template>
       </Card>
@@ -170,7 +170,8 @@ export default {
       loading: false,
       endpoint: '/mission-templates',
       queryParams: {
-        include: 'photo'
+        include: 'photo,reseau',
+        append: 'places_left'
       },
       drawerMissionTemplateId: null
     }
