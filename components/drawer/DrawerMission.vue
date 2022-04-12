@@ -1,5 +1,14 @@
 <template>
   <Drawer :is-open="Boolean(missionId)" @close="$emit('close')">
+    <AlertDialog
+      v-if="mission"
+      theme="danger"
+      title="Supprimer la mission"
+      :text="`Vous êtes sur le point de supprimer la mission ${mission.name}.`"
+      :is-open="showAlert"
+      @confirm="handleConfirmDelete()"
+      @cancel="showAlert = false"
+    />
     <template #title>
       <Heading v-if="mission" :level="3" class="text-jva-blue-500">
         <nuxt-link :to="`/admin/missions/${missionId}`" class="hover:underline">
@@ -28,6 +37,7 @@
         >
           Dupliquer
         </ButtonMissionDuplicate>
+        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
       </div>
       <div class="border-t -mx-6 my-6" />
       <div class="text-sm  uppercase font-semibold text-gray-600">
@@ -87,6 +97,7 @@ export default {
   },
   data () {
     return {
+      showAlert: false,
       mission: null,
       missionStats: null
     }
@@ -113,9 +124,16 @@ export default {
     },
     async handleChangeState (option) {
       this.mission.state = option.key
-      await this.$axios.put(`/missions/${this.mission.id}`, this.mission).catch(() => {})
+      await this.$axios.put(`/missions/${this.missionId}`, this.mission).catch(() => {})
       this.$fetch()
       this.$emit('updated')
+    },
+    async handleConfirmDelete () {
+      await this.$axios.delete(`/missions/${this.missionId}/delete`).then((res) => {
+        this.showAlert = false
+        this.$emit('close')
+        this.$emit('refetch')
+      }).catch(() => {})
     }
   }
 }
