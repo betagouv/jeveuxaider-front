@@ -78,7 +78,7 @@ export default {
       }
     },
     async handleConfirmDelete () {
-      await this.$axios.delete(`/documents/${this.ressourceId}/delete`).then((res) => {
+      await this.$axios.delete(`/documents/${this.ressourceId}`).then((res) => {
         this.showAlert = false
         this.$emit('close')
         this.$emit('refetch')

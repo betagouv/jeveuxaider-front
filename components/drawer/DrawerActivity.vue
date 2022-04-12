@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     async handleConfirmDelete () {
-      await this.$axios.delete(`/activities/${this.activityId}/delete`).then((res) => {
+      await this.$axios.delete(`/activities/${this.activityId}`).then((res) => {
         this.showAlert = false
         this.$emit('close')
         this.$emit('refetch')

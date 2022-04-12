@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     async handleConfirmDelete () {
-      await this.$axios.delete(`/reseaux/${this.reseauId}/delete`).then((res) => {
+      await this.$axios.delete(`/reseaux/${this.reseauId}`).then((res) => {
         this.showAlert = false
         this.$emit('close')
         this.$emit('refetch')

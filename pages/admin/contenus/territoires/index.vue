@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerTerritoire :territoire-id="drawerTerritoireId" @close="drawerTerritoireId = null" />
+    <DrawerTerritoire :territoire-id="drawerTerritoireId" @close="drawerTerritoireId = null" @refetch="$fetch" />
     <portal to="breadcrumb">
       <Breadcrumb
         :items="[
