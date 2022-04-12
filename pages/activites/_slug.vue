@@ -29,8 +29,6 @@ export default {
   async asyncData ({ $axios, params, error, store }) {
     const { data: activity } = await $axios.get(`/activities/${params.slug}`)
 
-    console.log('activity', activity)
-
     if (!activity) {
       return error({ statusCode: 404 })
     }

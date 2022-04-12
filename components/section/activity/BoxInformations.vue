@@ -8,6 +8,7 @@
         <DescriptionListItem term="Crée le" :description="$dayjs(activity.created_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Modifié le" :description="$dayjs(activity.updated_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Nom" :description="activity.name" />
+        <DescriptionListItem term="Domaines" :description="activity.domaines.map(item => item.name).join(', ')" />
       </DescriptionList>
     </Box>
   </div>

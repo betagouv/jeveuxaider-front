@@ -29,15 +29,47 @@
         </div>
       </template>
     </SectionHeading>
-    <Input
-      name="search"
-      placeholder="Recherche par mots clés..."
-      icon="SearchIcon"
-      variant="transparent"
-      :value="$route.query['filter[search]']"
-      clearable
-      @input="changeFilter('filter[search]', $event)"
-    />
+
+    <SearchFilters>
+      <Input
+        name="search"
+        placeholder="Recherche par mots clés..."
+        icon="SearchIcon"
+        variant="transparent"
+        :value="$route.query['filter[search]']"
+        clearable
+        @input="changeFilter('filter[search]', $event)"
+      />
+      <template #prefilters>
+        <Checkbox
+          :key="`toutes-${$route.fullPath}`"
+          :option="{key: 'toutes', label:'Toutes'}"
+          :is-checked="hasActiveFilters()"
+          variant="button"
+          size="xs"
+          transparent
+          @change="deleteAllFilters()"
+        />
+        <Checkbox
+          :key="`published-${$route.fullPath}`"
+          :option="{key: 1, label:'En ligne'}"
+          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 1"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[is_published]', 1)"
+        />
+        <Checkbox
+          :key="`unpublished-${$route.fullPath}`"
+          :option="{key: 0, label:'Hors ligne'}"
+          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 0"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[is_published]', 0)"
+        />
+      </template>
+    </SearchFilters>
 
     <Table v-if="queryResult.total">
       <TableHead>
@@ -90,10 +122,12 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import DrawerRessource from '@/components/drawer/DrawerRessource'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default {
   components: {
-    DrawerRessource
+    DrawerRessource,
+    SearchFilters
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',

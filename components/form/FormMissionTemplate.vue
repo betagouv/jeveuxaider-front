@@ -53,8 +53,9 @@
               label="Activité"
               html-for="activity_id"
             >
-              <SelectAdvanced
+              <Combobox
                 v-model="form.activity_id"
+                :value="form.activity_id"
                 name="activity_id"
                 placeholder="Sélectionner une activité"
                 :options="activities"
@@ -169,8 +170,7 @@ export default {
   fetchOnServer: false,
   async fetch () {
     const { data: activities } = await this.$axios.get('/activities?pagination=0')
-    console.log('activities fetch', activities.data)
-    this.activities = activities.data
+    this.activities = activities.data.filter(item => item.is_published || item.id === this.missionTemplate.activity_id)
   },
   methods: {
     async handleSubmit (attributes) {

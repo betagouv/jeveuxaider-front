@@ -1,5 +1,14 @@
 <template>
   <Drawer :is-open="Boolean(activityId)" @close="$emit('close')">
+    <AlertDialog
+      v-if="activity"
+      theme="danger"
+      title="Supprimer l'activité"
+      :text="`Vous êtes sur le point de supprimer l'actitivité ${activity.name}.`"
+      :is-open="showAlert"
+      @confirm="handleConfirmDelete()"
+      @cancel="showAlert = false"
+    />
     <template #title>
       <Heading v-if="activity" :level="3" class="text-jva-blue-500">
         <nuxt-link :to="`/admin/contenus/activites/${activityId}`" class="hover:underline" target="_blank">
@@ -20,6 +29,7 @@
             Modifier
           </Button>
         </nuxt-link>
+        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
       </div>
 
       <div class="border-t -mx-6 my-6" />
@@ -57,6 +67,7 @@ export default {
   },
   data () {
     return {
+      showAlert: false,
       activity: null,
       stats: null
     }
@@ -75,7 +86,13 @@ export default {
     activityId: '$fetch'
   },
   methods: {
-
+    async handleConfirmDelete () {
+      await this.$axios.delete(`/activities/${this.activityId}/delete`).then((res) => {
+        this.showAlert = false
+        this.$emit('close')
+        this.$emit('refetch')
+      }).catch(() => {})
+    }
   }
 }
 </script>

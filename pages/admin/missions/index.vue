@@ -45,10 +45,10 @@
           name="domaine"
           placeholder="Domaine d'action"
           :options="$labels.domaines"
-          :value="$route.query['filter[domaine]']"
+          :value="$route.query['filter[ofDomaine]']"
           variant="transparent"
           clearable
-          @input="changeFilter('filter[domaine]', $event)"
+          @input="changeFilter('filter[ofDomaine]', $event)"
         />
         <SelectAdvanced
           v-if="activities.length"

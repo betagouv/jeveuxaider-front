@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerDomaine :domaine-id="drawerDomaineId" @close="drawerDomaineId = null" />
+    <DrawerDomaine :domaine-id="drawerDomaineId" @close="drawerDomaineId = null" @refetch="$fetch" />
     <portal to="breadcrumb">
       <Breadcrumb
         :items="[

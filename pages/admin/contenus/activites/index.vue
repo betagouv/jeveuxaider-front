@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerActivity :activity-id="drawerActivityId" @close="drawerActivityId = null" />
+    <DrawerActivity :activity-id="drawerActivityId" @close="drawerActivityId = null" @refetch="$fetch" />
 
     <portal to="breadcrumb">
       <Breadcrumb
@@ -30,15 +30,47 @@
         </div>
       </template>
     </SectionHeading>
-    <Input
-      name="search"
-      placeholder="Recherche par mots clés..."
-      icon="SearchIcon"
-      variant="transparent"
-      :value="$route.query['filter[search]']"
-      clearable
-      @input="changeFilter('filter[search]', $event)"
-    />
+
+    <SearchFilters>
+      <Input
+        name="search"
+        placeholder="Recherche par mots clés..."
+        icon="SearchIcon"
+        variant="transparent"
+        :value="$route.query['filter[search]']"
+        clearable
+        @input="changeFilter('filter[search]', $event)"
+      />
+      <template #prefilters>
+        <Checkbox
+          :key="`toutes-${$route.fullPath}`"
+          :option="{key: 'toutes', label:'Toutes'}"
+          :is-checked="hasActiveFilters()"
+          variant="button"
+          size="xs"
+          transparent
+          @change="deleteAllFilters()"
+        />
+        <Checkbox
+          :key="`published-${$route.fullPath}`"
+          :option="{key: 1, label:'En ligne'}"
+          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 1"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[is_published]', 1)"
+        />
+        <Checkbox
+          :key="`unpublished-${$route.fullPath}`"
+          :option="{key: 0, label:'Hors ligne'}"
+          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 0"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[is_published]', 0)"
+        />
+      </template>
+    </SearchFilters>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <Card
@@ -56,6 +88,9 @@
           <div v-if="activity.domaines.length" class="mb-2 flex gap-2">
             <Badge class="uppercase" :color="activity.domaines[0].id">
               {{ activity.domaines[0].name }}
+            </Badge>
+            <Badge v-if="activity.domaines.length - 1 > 0" color="gray-light">
+              +{{ activity.domaines.length - 1 }}
             </Badge>
           </div>
         </template>
@@ -82,11 +117,13 @@
 import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerActivity from '@/components/drawer/DrawerActivity'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default {
   components: {
     Card,
-    DrawerActivity
+    DrawerActivity,
+    SearchFilters
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',
@@ -96,7 +133,7 @@ export default {
       loading: false,
       endpoint: '/activities',
       queryParams: {
-        include: 'banner,domaines'
+        include: 'banner,domaines,missionsCount'
       },
       drawerActivityId: null
     }

@@ -1,5 +1,14 @@
 <template>
   <Drawer :is-open="Boolean(domaineId)" @close="$emit('close')">
+    <AlertDialog
+      v-if="domaine"
+      theme="danger"
+      title="Supprimer le domaine"
+      :text="`Vous êtes sur le point de supprimer le domaine ${domaine.name}.`"
+      :is-open="showAlert"
+      @confirm="handleConfirmDelete()"
+      @cancel="showAlert = false"
+    />
     <template #title>
       <Heading v-if="domaine" :level="3" class="text-jva-blue-500">
         <nuxt-link :to="domaine.full_url" class="hover:underline" target="_blank">
@@ -23,20 +32,27 @@
             Modifier
           </Button>
         </nuxt-link>
+        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
       </div>
 
       <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :domaine="domaine" />
+      <BoxMission class="mb-8" :domaine="domaine" :stats="stats" />
+      <BoxParticipation class="mb-8" :domaine="domaine" :stats="stats" />
     </template>
   </Drawer>
 </template>
 
 <script>
 import BoxInformations from '@/components/section/domaine/BoxInformations'
+import BoxMission from '@/components/section/domaine/BoxMission'
+import BoxParticipation from '@/components/section/domaine/BoxParticipation'
 
 export default {
   components: {
-    BoxInformations
+    BoxInformations,
+    BoxMission,
+    BoxParticipation
   },
   props: {
     domaineId: {
@@ -46,18 +62,33 @@ export default {
   },
   data () {
     return {
-      domaine: null
+      showAlert: false,
+      domaine: null,
+      stats: null
     }
   },
   async fetch () {
     if (!this.domaineId) {
       return null
     }
-    const { data } = await this.$axios.get(`/domaines/${this.domaineId}`)
-    this.domaine = data
+    const { data: domaine } = await this.$axios.get(`/domaines/${this.domaineId}`)
+    this.domaine = domaine
+
+    const { data: domaineStats } = await this.$axios.get(`/domaines/${this.domaineId}/statistics`)
+    this.stats = domaineStats
+    this.$emit('loaded', domaine)
   },
   watch: {
     domaineId: '$fetch'
+  },
+  methods: {
+    async handleConfirmDelete () {
+      await this.$axios.delete(`/domaines/${this.domaineId}/delete`).then((res) => {
+        this.showAlert = false
+        this.$emit('close')
+        this.$emit('refetch')
+      }).catch(() => {})
+    }
   }
 }
 </script>

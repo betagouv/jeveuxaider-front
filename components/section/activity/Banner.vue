@@ -66,7 +66,7 @@
               >
                 Choisissez un département
               </p>
-              <SelectAdvanced
+              <Combobox
                 v-model="department"
                 class="mb-4"
                 name="department"
