@@ -162,10 +162,12 @@
               :min-height="900"
               :preview-width="200"
               :ratio="null"
+              warning-title="Ajouter une image"
+              :warning="`Vous êtes tenu responsable des visuels proposés pour le réseau ${form.name}. Vous vous engagez ainsi à proposer des visuels libres de droit, qui ne présentent pas de contenus offensants ou inappropriés.<br><br>Les administrateurs de JeVeuxAider.gouv.fr se réservent le droit de supprimer et de modérer sans préavis un visuel si les présentes règles ne sont pas respectées.`"
               variant="compact"
               upload-variant="compact"
               preview-conversion="large"
-              disable-delete
+              :disable-delete="$store.getters.contextRole !== 'admin'"
               @add="addFiles({ files: [$event], collection: 'reseau__illustrations_antennes' })"
               @delete="deleteFile($event)"
               @crop="onManipulationsChange($event)"

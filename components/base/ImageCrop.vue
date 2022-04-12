@@ -7,6 +7,8 @@
       extensions=".jpg, .png, .webp"
       :variant="uploadVariant"
       :max-size="uploadMaxSize"
+      :warning-title="warningTitle"
+      :warning="warning"
       @add="onUploadAdd"
     />
 
@@ -120,7 +122,9 @@ export default {
     variant: { type: String, default: 'default', validator: s => ['default', 'compact'].includes(s) },
     uploadVariant: { type: String, default: 'default' },
     uploadMaxSize: { type: Number, default: 1000000 },
-    disableDelete: { type: Boolean, default: false } // @todo handle relations
+    disableDelete: { type: Boolean, default: false }, // @todo handle relations
+    warningTitle: { type: String, default: null },
+    warning: { type: String, default: null }
   },
   data () {
     return {

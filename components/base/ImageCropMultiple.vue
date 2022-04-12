@@ -16,6 +16,8 @@
       :upload-variant="uploadVariant"
       :upload-max-size="uploadMaxSize"
       :disable-delete="disableDelete && !!value.created_at"
+      :warning-title="warningTitle"
+      :warning="warning"
       @add="onAdd($event, index)"
       @delete="onDelete($event, index)"
       @crop="$emit('crop', $event)"
@@ -41,7 +43,9 @@ export default {
     variant: { type: String, default: 'default', validator: s => ['default', 'compact'].includes(s) },
     uploadVariant: { type: String, default: 'default' },
     uploadMaxSize: { type: Number, default: 1000000 },
-    disableDelete: { type: Boolean, default: false }
+    disableDelete: { type: Boolean, default: false },
+    warningTitle: { type: String, default: null },
+    warning: { type: String, default: null }
   },
   data () {
     return {
