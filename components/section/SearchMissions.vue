@@ -190,6 +190,15 @@
                   />
 
                   <AlgoliaRefinementList
+                    v-if="facets.includes('structure.reseaux.name')"
+                    name="structure.reseaux.name"
+                    label="Réseaux"
+                    is-searchable
+                    class="mb-6"
+                    @toggle-facet="onToggleFacet($event)"
+                  />
+
+                  <AlgoliaRefinementList
                     v-if="facets.includes('structure.name')"
                     name="structure.name"
                     label="Organisations"
@@ -390,6 +399,7 @@ export default {
           'domaines',
           'template_subtitle',
           'department_name',
+          'structure.reseaux.name',
           'structure.name'
         ]
       }

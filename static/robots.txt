@@ -3,3 +3,4 @@ Sitemap: https://www.jeveuxaider.gouv.fr/sitemap.xml
 Disallow: /*?*
 Disallow: /login
 Disallow: /password-reset
+User-agent: AdsBot-Google

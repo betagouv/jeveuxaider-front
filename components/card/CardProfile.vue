@@ -23,14 +23,14 @@
       </div>
 
       <div class="font-bold text-sm mt-2">
-        <span>📍</span> {{ profile.zip }}
+        <span>📍</span> {{ profile.zip ? profile.zip : 'Non communiqué' }}
       </div>
 
       <div
         class="absolute top-0 flex justify-center inset-x-0"
       >
         <div v-if="profile.user" class="pill !rounded-t-none">
-          {{ role }}
+          {{ $options.filters.label(profile.user.context_role, 'role') }}
         </div>
       </div>
     </div>

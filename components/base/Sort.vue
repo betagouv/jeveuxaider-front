@@ -1,0 +1,161 @@
+<template>
+  <div v-click-outside="clickedOutside" class="relative">
+    <div class="flex items-center relative w-full">
+      <div v-if="icon" class="absolute left-4">
+        <component
+          :is="icon"
+          class="h-4 w-4 text-gray-400"
+        />
+      </div>
+
+      <div
+        :id="name"
+        :name="name"
+        tabindex="0"
+        class="max-w-[250px] px-2 py-1 space-x-2 cursor-pointer text-sm border rounded-xl inline-flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500 text-gray-500 border-gray-300"
+        autocomplete="off"
+        @keydown="onKeydown"
+        @click="!disabled ? showOptions = !showOptions : null"
+      >
+        <div class="flex-none text-gray-400">
+          Trier par :
+        </div>
+        <div class="truncate">
+          <template v-if="selectedOption">
+            {{ selectedOption[attributeLabel] }}
+          </template>
+          <template v-else>
+            <span class="text-gray-500">{{ placeholder }}</span>
+          </template>
+        </div>
+        <ChevronDownSolidIcon
+          class="flex-none h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+        />
+      </div>
+    </div>
+    <div
+      v-show="showOptions"
+      class="absolute right-0 w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md overflow-auto mt-2 overscroll-contain min-w-[300px]"
+      @focusout="showOptions = false"
+    >
+      <ul
+        class="py-2"
+      >
+        <li
+          v-for="(item, index) in options"
+          :key="index"
+          class="relative flex justify-between items-center text-sm px-8 py-2 pr-10 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
+          :class="[
+            {'bg-gray-50 text-jva-blue-500': highlightIndex == index},
+            {'bg-gray-50 text-jva-blue-500': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
+          ]"
+          @click="handleSelectOption(item)"
+        >
+          <span class="">
+            {{ item[attributeLabel] }}
+          </span>
+          <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="absolute right-2" />
+        </li>
+        <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
+          {{ labelEmpty }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</template>
+
+<script>
+
+export default {
+  props: {
+    value: { type: [String, Number], default: null },
+    placeholder: { type: String, default: null },
+    labelEmpty: { type: String, default: 'Aucune option' },
+    name: { type: String, required: true },
+    icon: { type: String, default: null },
+    options: { type: Array, default: () => [] },
+    attributeKey: { type: String, default: 'key' },
+    attributeLabel: { type: String, default: 'label' },
+    disabled: { type: Boolean, default: false }
+  },
+  data () {
+    return {
+      showOptions: false,
+      highlightIndex: null
+    }
+  },
+  computed: {
+    selectedOption: {
+      get () {
+        return this.value ? this.options.find(item => item[this.attributeKey] == this.value) : null
+      },
+      set (newItem) {
+        this.$emit('changed', newItem)
+        // this.handleSelectOption(newItem)
+      }
+    }
+  },
+  methods: {
+    reset () {
+      this.highlightIndex = null
+      this.selectedOption = null
+      this.showOptions = false
+      this.$emit('input', null)
+    },
+    clickedOutside () {
+      this.showOptions = false
+    },
+    handleSelectOption (item) {
+      if (item && this.selectedOption && this.selectedOption[this.attributeKey] === item[this.attributeKey]) {
+        this.$emit('input', null)
+        this.selectedOption = null
+      } else if (item) {
+        this.$emit('input', item[this.attributeKey])
+        this.selectedOption = item
+      }
+      this.$emit('blur')
+      this.showOptions = false
+      this.highlightIndex = null
+    },
+    onKeydown (e) {
+      if (this.disabled) {
+        return
+      }
+      const keyValue = e.which // enter key
+      if (keyValue === 9) {
+        this.showOptions = false
+        this.highlightIndex = null
+      }
+
+      if (keyValue === 13) {
+        if (this.highlightIndex !== null) {
+          this.handleSelectOption(this.options[this.highlightIndex])
+          return
+        }
+      }
+      if (keyValue === 40 || keyValue === 38 || keyValue === 13) {
+        if (this.highlightIndex === null) {
+          this.showOptions = true
+          this.highlightIndex = 0
+          return
+        }
+        if (keyValue === 40) {
+          if (this.highlightIndex + 1 === this.options.length) {
+            this.highlightIndex = 0
+          } else {
+            this.highlightIndex += 1
+          }
+        }
+        if (keyValue === 38) {
+          if (this.highlightIndex === 0) {
+            this.highlightIndex = this.options.length - 1
+          } else {
+            this.highlightIndex -= 1
+          }
+        }
+      }
+    }
+
+  }
+}
+</script>

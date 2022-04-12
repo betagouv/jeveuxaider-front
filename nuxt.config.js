@@ -89,7 +89,6 @@ export default {
     '@nuxtjs/strapi',
     '@nuxtjs/dayjs',
     'nuxt-lazy-load',
-    'vue-scrollto/nuxt',
     'cookie-universal-nuxt',
     'vue-toastification/nuxt',
     'portal-vue/nuxt',
@@ -185,7 +184,8 @@ export default {
     { from: '^/dashboard/profile/(.*)$', to: '/admin/utilisateurs/$1', statusCode: 301 },
     { from: '^/dashboard/reseaux/(.*)$', to: '/admin/contenus/reseaux/$1', statusCode: 301 },
     { from: '^/dashboard/(.*)$', to: '/admin/$1', statusCode: 301 },
-    { from: '^/missions/(.*)$', to: '/missions-benevolat/$1', statusCode: 301 }
+    { from: '^/missions/(.*)$', to: '/missions-benevolat/$1', statusCode: 301 },
+    { from: '^/inscription/organisation$', to: '/inscription/responsable', statusCode: 301 }
   ],
 
   // Plugins config

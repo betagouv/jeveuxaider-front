@@ -110,7 +110,7 @@
         class="mt-8"
       />
 
-      <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
+      <div v-if="step == 2" class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
         <ButtonsSubmitFormMission
           class="flex"
           :structure="structure"

@@ -33,22 +33,22 @@
           class="pt-20 lg:py-20 flex flex-col lg:flex-row items-center gap-16 lg:gap-32"
         >
           <div class="text-white">
-            <h1
+            <h2
               class="text-4xl lg:text-5xl leading-none font-extrabold text-white tracking-[-1px] lg:tracking-[-2px]"
             >
               Devenez bénévole {{ territoire.suffix_title }}
-            </h1>
+            </h2>
 
             <hr class="border-t-4 w-10 my-8">
 
-            <h2 class="text-xl tracking-[-1px]">
+            <div class="text-xl tracking-[-1px]">
               Trouvez une mission de
               <b class="font-extrabold">
                 bénévolat {{ territoire.suffix_title }}
               </b>
               parmi les missions actuellement disponibles et faites vivre
               l'engagement de chacun pour tous
-            </h2>
+            </div>
           </div>
 
           <div v-if="showSearch" class="flex-none bg-transparent rounded-2xl w-full sm:w-auto shadow-lg lg:shadow-none">
@@ -136,6 +136,13 @@ export default {
       })
 
       return breadcrumb
+    },
+    domaineName () {
+      return this.$options.filters
+        .label(
+          this.domaine,
+          'domaines'
+        )
     }
   },
   methods: {
@@ -150,7 +157,7 @@ export default {
           break
       }
       return withDomaine
-        ? `/missions-benevolat?refinementList[domaines][0]=${this.domaine}&${link}`
+        ? `/missions-benevolat?refinementList[domaines][0]=${this.domaineName}&${link}`
         : `/missions-benevolat?${link}`
     },
     onClick () {

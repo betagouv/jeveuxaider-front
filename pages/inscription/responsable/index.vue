@@ -62,67 +62,85 @@
       </div>
 
       <div v-else-if="currentStep.key == 'choix_orga_nom'" class="mt-4">
-        <form
-          v-if="!userHasRoleResponsable"
-          id="organisation"
-          class="max-w-2xl mx-auto bg-gray-100 p-6 sm:p-12 rounded-2xl"
-          @submit.prevent="onSubmitChooseName"
-        >
-          <FormControl html-for="name" :label="$route.query.orga_type === 'Collectivité' ? 'Nom de votre collectivité territoriale' : $route.query.orga_type === 'Association' ? 'Nom de votre association' : 'Nom de votre organisation' ">
-            <ApiEngagementAssociationsSearch
-              v-if="$route.query.orga_type === 'Association'"
-              v-model="form.structure.name"
-              placeholder="Retrouvez votre association depuis notre base RNA"
-              :show-add-button="!orgaExist"
-              :loading-add-button="loading"
-              @selected="onStructureApiSelected"
-              @change="orgaExist = null"
-              @added="onSubmitChooseName"
-            />
-            <Input
-              v-else
-              v-model="form.structure.name"
-              name="name"
-              :placeholder="
-                $route.query.orga_type === 'Collectivité'
-                  ? 'Nom de votre collectivité territoriale'
-                  : 'Nom de votre organisation'
-              "
-            />
-          </FormControl>
-
-          <template v-if="!orgaExist && $route.query.orga_type !== 'Association'">
-            <Button
-              class="mt-4"
-              variant="green"
-              form="inscription"
-              full
-              size="xl"
-              @click.native="onSubmitChooseName"
+        <template v-if="!userHasRoleResponsable">
+          <form
+            id="organisation"
+            class="max-w-2xl mx-auto bg-gray-100 p-6 sm:p-12 rounded-2xl"
+            @submit.prevent="onSubmitChooseName"
+          >
+            <div
+              v-if="['Association', 'Collectivité'].includes($route.query.orga_type)"
+              class="mb-8 py-4 px-6 border border-gray-400 text-gray-500 rounded-2xl md:flex md:space-x-4"
             >
-              Continuer
-            </Button>
-          </template>
-          <div v-if="orgaExist" class="text-center mt-4">
-            <p class="mb-0 font-bold">
-              L'organisation
-              <span class="text-jva-blue-500">{{ orgaExist.structure_name }}</span>
-              est déjà inscrite sur la plateforme.
-            </p>
-            <p class="text-gray-500 text-sm">
-              <template v-if="orgaExist.responsable_fullname">
-                Veuillez vous rapprocher de la personne suivante pour intégrer
-                l'équipe :<br>
-                <span class="text-black">{{
-                  orgaExist.responsable_fullname
-                }}</span>
-              </template>
-              <template v-else>
-                Merci de contacter notre support pour plus de détails.
-              </template>
-            </p>
+              <InformationCircleIcon class="h-5 w-5 inline text-gray-400 translate-y-[-2px] md:translate-y-0 flex-none" />
+              <span class="text-sm md:text-base">
+                <template v-if="$route.query.orga_type === 'Association'">Vous êtes une association indépendante ou une association antenne d’un réseau associatif. Vous êtes reconnue association loi 1901 ou bien association de droit local.</template>
+                <template v-else-if="$route.query.orga_type === 'Collectivité'">Une collectivité territoriale est une autorité publique distincte de l'État. Il peut s’agir d’une commune, d’un CCAS, d’un département ou bien d’une région.</template>
+              </span>
+            </div>
+
+            <FormControl html-for="name" :label="$route.query.orga_type === 'Collectivité' ? 'Nom de votre collectivité territoriale' : $route.query.orga_type === 'Association' ? 'Nom de votre association' : 'Nom de votre organisation' ">
+              <ApiEngagementAssociationsSearch
+                v-if="$route.query.orga_type === 'Association'"
+                v-model="form.structure.name"
+                placeholder="Retrouvez votre association depuis notre base RNA"
+                :show-add-button="!orgaExist"
+                :loading-add-button="loading"
+                @selected="onStructureApiSelected"
+                @change="orgaExist = null"
+                @added="onSubmitChooseName"
+              />
+              <Input
+                v-else
+                v-model="form.structure.name"
+                name="name"
+                :placeholder="
+                  $route.query.orga_type === 'Collectivité'
+                    ? 'Nom de votre collectivité territoriale'
+                    : 'Nom de votre organisation'
+                "
+              />
+            </FormControl>
+
+            <template v-if="!orgaExist && $route.query.orga_type !== 'Association'">
+              <Button
+                class="mt-4"
+                variant="green"
+                form="inscription"
+                full
+                size="xl"
+                @click.native="onSubmitChooseName"
+              >
+                Continuer
+              </Button>
+            </template>
+            <div v-if="orgaExist" class="text-center mt-4">
+              <p class="mb-0 font-bold">
+                L'organisation
+                <span class="text-jva-blue-500">{{ orgaExist.structure_name }}</span>
+                est déjà inscrite sur la plateforme.
+              </p>
+              <p class="text-gray-500 text-sm">
+                <template v-if="orgaExist.responsable_fullname">
+                  Veuillez vous rapprocher de la personne suivante pour intégrer
+                  l'équipe :<br>
+                  <span class="text-black">{{
+                    orgaExist.responsable_fullname
+                  }}</span>
+                </template>
+                <template v-else>
+                  Merci de contacter notre support pour plus de détails.
+                </template>
+              </p>
+            </div>
+          </form>
+
+          <div class="container mt-4 text-center">
+            <nuxt-link to="/inscription/responsable" class="text-sm text-white hover:underline">
+              Retour
+            </nuxt-link>
           </div>
-        </form>
+        </template>
 
         <div v-else class="max-w-2xl mx-auto bg-gray-100 p-6 sm:p-12 rounded-2xl">
           <div class="mb-6">
@@ -219,14 +237,7 @@
               required
               :error="errors.birthday"
             >
-              <Input
-                v-model="form.birthday"
-                name="birthday"
-                placeholder="jj/mm/aaaa"
-                type="date"
-                hide-picker
-                @blur="validate('birthday')"
-              />
+              <InputDate v-model="form.birthday" name="birthday" />
             </FormControl>
             <FormControl
               label="Mot de passe"
@@ -407,7 +418,11 @@ export default {
     $route: {
       immediate: true,
       handler () {
+        this.orgaExist = null
         this.initCurrentStep()
+        if (!process.server) {
+          window.scrollTo(0, 0)
+        }
       }
     }
   },

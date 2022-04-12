@@ -158,7 +158,9 @@ export default {
     deleteAllFilters () {
       this.$router.push({
         path: this.$route.path,
-        query: {}
+        query: {
+          sort: this.$route.query.sort
+        }
       })
     },
 

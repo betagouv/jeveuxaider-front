@@ -28,23 +28,28 @@
           @input="changeFilter('filter[role]', $event)"
         />
         <SelectAdvanced
-          :key="`department-${$route.fullPath}`"
-          name="department"
-          placeholder="Département"
+          v-if="$route.query['filter[role]'] === 'referent'"
+          :key="`referent-department-${$route.fullPath}`"
+          name="referent-department"
+          placeholder="Département du référent"
           :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
-          :value="$route.query['filter[department]']"
+          :value="$route.query['filter[referent_department]']"
           variant="transparent"
           clearable
-          @input="changeFilter('filter[department]', $event)"
+          @input="changeFilter('filter[referent_department]', $event)"
         />
-        <Input
-          :key="`zip-${$route.fullPath}`"
-          name="zip"
-          placeholder="Code Postal"
+        <SelectAdvanced
+          v-if="$route.query['filter[role]'] === 'referent_regional'"
+          :key="`referent-region-${$route.fullPath}`"
+          name="referent-region"
+          placeholder="Région du référent"
+          :options="$labels.regions"
+          :value="$route.query['filter[referent_region]']"
           variant="transparent"
-          :value="$route.query['filter[zip]']"
-          @input="changeFilter('filter[zip]', $event)"
+          clearable
+          @input="changeFilter('filter[referent_region]', $event)"
         />
+
         <SelectAdvanced
           :key="`is_visible-${$route.fullPath}`"
           name="is_visible"
@@ -65,6 +70,24 @@
           clearable
           @input="changeFilter('filter[min_participations]', $event)"
         />
+        <SelectAdvanced
+          :key="`department-${$route.fullPath}`"
+          name="department"
+          placeholder="Département"
+          :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
+          :value="$route.query['filter[department]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[department]', $event)"
+        />
+        <Input
+          :key="`zip-${$route.fullPath}`"
+          name="zip"
+          placeholder="Code postal"
+          variant="transparent"
+          :value="$route.query['filter[zip]']"
+          @input="changeFilter('filter[zip]', $event)"
+        />
       </div>
     </template>
     <div>
@@ -77,54 +100,54 @@
           </div>
         </template>
       </SectionHeading>
-      <Input
-        class="mt-8"
-        name="search"
-        placeholder="Recherche par prénom, nom ou e-mail"
-        icon="SearchIcon"
-        variant="transparent"
-        :value="$route.query['filter[search]']"
-        clearable
-        @input="changeFilter('filter[search]', $event)"
-      />
-      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
-        <Checkbox
-          :key="`tous-${$route.fullPath}`"
-          :option="{key: 'tous', label:'Tous'}"
-          :is-checked="hasActiveFilters()"
-          variant="button"
-          size="xs"
-          transparent
-          @change="deleteAllFilters()"
+      <SearchFilters class="my-8">
+        <Input
+          name="search"
+          placeholder="Recherche par prénom, nom ou e-mail"
+          icon="SearchIcon"
+          variant="transparent"
+          :value="$route.query['filter[search]']"
+          clearable
+          @input="changeFilter('filter[search]', $event)"
         />
-        <Checkbox
-          :key="`role-referents-${$route.fullPath}`"
-          :option="{key: 'referent', label:'Référents départementaux'}"
-          :is-checked="$route.query['filter[role]'] == 'referent'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[role]', 'referent')"
-        />
-        <Checkbox
-          :key="`role-responsable-${$route.fullPath}`"
-          :option="{key: 'responsable', label:'Responsables d\'organisations'}"
-          :is-checked="$route.query['filter[role]'] == 'responsable'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[role]', 'responsable')"
-        />
-        <Checkbox
-          :key="`role-tete_de_reseau-${$route.fullPath}`"
-          :option="{key: 'tete_de_reseau', label:'Têtes de réseau'}"
-          :is-checked="$route.query['filter[role]'] == 'tete_de_reseau'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[role]', 'tete_de_reseau')"
-        />
-        <Checkbox
+        <template #prefilters>
+          <Checkbox
+            :key="`tous-${$route.fullPath}`"
+            :option="{key: 'tous', label:'Tous'}"
+            :is-checked="hasActiveFilters()"
+            variant="button"
+            size="xs"
+            transparent
+            @change="deleteAllFilters()"
+          />
+          <Checkbox
+            :key="`role-referents-${$route.fullPath}`"
+            :option="{key: 'referent', label:'Référents départementaux'}"
+            :is-checked="$route.query['filter[role]'] == 'referent'"
+            variant="button"
+            size="xs"
+            transparent
+            @change="changeFilter('filter[role]', 'referent')"
+          />
+          <Checkbox
+            :key="`role-responsable-${$route.fullPath}`"
+            :option="{key: 'responsable', label:'Responsables d\'organisations'}"
+            :is-checked="$route.query['filter[role]'] == 'responsable'"
+            variant="button"
+            size="xs"
+            transparent
+            @change="changeFilter('filter[role]', 'responsable')"
+          />
+          <Checkbox
+            :key="`role-tete_de_reseau-${$route.fullPath}`"
+            :option="{key: 'tete_de_reseau', label:'Têtes de réseau'}"
+            :is-checked="$route.query['filter[role]'] == 'tete_de_reseau'"
+            variant="button"
+            size="xs"
+            transparent
+            @change="changeFilter('filter[role]', 'tete_de_reseau')"
+          />
+        <!-- <Checkbox
           :key="`role-responsable_territoire-${$route.fullPath}`"
           :option="{key: 'responsable_territoire', label:'Responsables territoriaux'}"
           :is-checked="$route.query['filter[role]'] == 'responsable_territoire'"
@@ -132,8 +155,23 @@
           size="xs"
           transparent
           @change="changeFilter('filter[role]', 'responsable_territoire')"
-        />
-      </div>
+        /> -->
+        </template>
+        <template #sorts>
+          <Sort
+            key="sort"
+            name="sort"
+            transparent
+            :value="$route.query['sort'] ? $route.query['sort'] : '-created_at'"
+            :options="[
+              { key: '-created_at', label: 'Date de création' },
+              { key: '-participations_validated_count', label: 'Nombre de participations réalisées' },
+            ]"
+            @input="changeFilter('sort', $event)"
+          />
+        </template>
+      </SearchFilters>
+
       <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <CardProfile
           v-for="profile in queryResult.data"
@@ -159,12 +197,14 @@ import MixinExport from '@/mixins/export'
 import CardProfile from '@/components/card/CardProfile.vue'
 import DrawerProfile from '@/components/drawer/DrawerProfile.vue'
 import BoxContext from '@/components/section/BoxContext.vue'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default {
   components: {
     CardProfile,
     DrawerProfile,
-    BoxContext
+    BoxContext,
+    SearchFilters
   },
   mixins: [QueryBuilder, MixinExport],
   asyncData ({ store, error }) {
