@@ -1,7 +1,7 @@
 
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerMissionTemplate :mission-template-id="drawerMissionTemplateId" @close="drawerMissionTemplateId = null" @updated="$fetch()" />
+    <DrawerMissionTemplate :mission-template-id="drawerMissionTemplateId" @close="drawerMissionTemplateId = null" @updated="$fetch()" @refetch="$fetch()" />
     <portal to="breadcrumb">
       <Breadcrumb
         :items="[
@@ -29,7 +29,8 @@
         </div>
       </template>
     </SectionHeading>
-    <div>
+
+    <SearchFilters>
       <Input
         name="search"
         placeholder="Recherche par mots clés..."
@@ -39,7 +40,7 @@
         clearable
         @input="changeFilter('filter[search]', $event)"
       />
-      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
+      <template #prefilters>
         <Checkbox
           :key="`toutes-${$route.fullPath}`"
           :option="{key: 'toutes', label:'Toutes'}"
@@ -103,8 +104,8 @@
           transparent
           @change="changeFilter('filter[published]', 0)"
         />
-      </div>
-    </div>
+      </template>
+    </SearchFilters>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <Card
@@ -149,11 +150,13 @@
 import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerMissionTemplate from '@/components/drawer/DrawerMissionTemplate'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default {
   components: {
     Card,
-    DrawerMissionTemplate
+    DrawerMissionTemplate,
+    SearchFilters
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',
