@@ -30,7 +30,10 @@
         <div class="font-extrabold line-clamp-3 mt-2 text-gray-900 leading-tight">
           {{ participation.mission.name }}
         </div>
-        <div class="mt-2 text-sm text-gray-600 leading-tight">
+        <div
+          v-if="!['responsable'].includes($store.getters.contextRole)"
+          class="mt-2 text-sm text-gray-600 leading-tight"
+        >
           {{ participation.mission.structure.name }}
         </div>
       </div>
@@ -66,8 +69,8 @@
             <div class="font-bold">
               {{ profile.full_name }}
             </div>
-            <div class="text-sm text-gray-600">
-              {{ $dayjs().to($dayjs(participation.created_at)).charAt(0).toUpperCase() + $dayjs().to($dayjs(participation.created_at)).slice(1) }}
+            <div class="text-sm text-gray-600 first-letter:uppercase">
+              {{ $dayjs(participation.created_at).fromNow() }}
             </div>
           </div>
         </div>
