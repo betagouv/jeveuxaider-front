@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerDomaine :domaine-id="drawerDomaineId" @close="drawerDomaineId = null" />
+    <DrawerDomaine :domaine-id="drawerDomaineId" @close="drawerDomaineId = null" @refetch="$fetch" />
     <portal to="breadcrumb">
       <Breadcrumb
         :items="[
@@ -55,7 +55,10 @@
           <div
             class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
           >
-            {{ $options.filters.formatNumber(domaine.mission_templates_count) }} {{ $options.filters.pluralize(domaine.mission_templates_count, 'modèle de mission', 'modèles de missions', false) }}
+            {{
+              domaine.places_left
+                | pluralize('bénévole recherché', 'bénévoles recherchés')
+            }}
           </div>
         </template>
       </Card>
@@ -88,7 +91,8 @@ export default {
       loading: false,
       endpoint: '/domaines',
       queryParams: {
-        include: 'banner'
+        include: 'banner',
+        append: 'places_left'
       },
       drawerDomaineId: null
     }

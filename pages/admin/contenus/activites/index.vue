@@ -1,12 +1,13 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerReseau :reseau-id="drawerReseauId" @close="drawerReseauId = null" @refetch="$fetch" />
+    <DrawerActivity :activity-id="drawerActivityId" @close="drawerActivityId = null" @refetch="$fetch" />
+
     <portal to="breadcrumb">
       <Breadcrumb
         :items="[
           { label: 'Tableau de bord', link: '/dashboard' },
           { label: 'Contenus' },
-          { label: 'Réseaux' }
+          { label: 'Activités' }
         ]"
       />
     </portal>
@@ -14,17 +15,14 @@
     <SectionHeading
       :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
         queryResult.total,
-        'réseau',
-        'réseaux',
+        'activité',
+        'activités',
         false
       )}`"
     >
       <template #action>
-        <div class="flex space-x-2">
-          <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
-            Exporter
-          </Button>
-          <nuxt-link :to="`/admin/contenus/reseaux/add`">
+        <div class="hidden lg:block space-x-2 flex-shrink-0">
+          <nuxt-link :to="`/admin/contenus/activites/add`">
             <Button size="lg" icon="PlusIcon">
               Nouveau
             </Button>
@@ -55,7 +53,7 @@
         />
         <Checkbox
           :key="`published-${$route.fullPath}`"
-          :option="{key: true, label:'En ligne'}"
+          :option="{key: 1, label:'En ligne'}"
           :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 1"
           variant="button"
           size="xs"
@@ -64,7 +62,7 @@
         />
         <Checkbox
           :key="`unpublished-${$route.fullPath}`"
-          :option="{key: 0, label: 'Hors ligne'}"
+          :option="{key: 0, label:'Hors ligne'}"
           :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 0"
           variant="button"
           size="xs"
@@ -76,21 +74,34 @@
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <Card
-        v-for="reseau in queryResult.data"
-        :key="reseau.id"
-        :title="reseau.name"
-        :state-text="reseau.is_published ? 'En ligne' : 'Hors ligne'"
-        :state-style="reseau.is_published ? 'validated' : 'error'"
-        :description="`${reseau.structures_count} antennes`"
-        :image-srcset="illustrationSrcset(reseau)"
-        :image-src="illustrationSrc(reseau)"
-        @click.native="drawerReseauId = reseau.id"
+        v-for="activity in queryResult.data"
+        :key="activity.id"
+        :title="activity.name"
+        :state-style="activity.is_published ? 'success' : 'error'"
+        :state-text="activity.is_published ? 'En ligne' : 'Hors ligne'"
+        :description="`Réalisez une mission de bénévolat ${activity.name}`"
+        :image-srcset="activity.banner ? activity.banner.urls.desktop : undefined"
+        :image-src="activity.banner ? activity.banner.urls.original : undefined"
+        @click.native="drawerActivityId = activity.id"
       >
+        <template #badges>
+          <div v-if="activity.domaines.length" class="mb-2 flex gap-2">
+            <Badge class="uppercase" :color="activity.domaines[0].id">
+              {{ activity.domaines[0].name }}
+            </Badge>
+            <Badge v-if="activity.domaines.length - 1 > 0" color="gray-light">
+              +{{ activity.domaines.length - 1 }}
+            </Badge>
+          </div>
+        </template>
         <template #footer>
           <div
             class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
           >
-            {{ $options.filters.formatNumber(reseau.places_left) }} {{ $options.filters.pluralize(reseau.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
+            {{
+              activity.places_left
+                | pluralize('bénévole recherché', 'bénévoles recherchés')
+            }}
           </div>
         </template>
       </Card>
@@ -108,42 +119,27 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
-import DrawerReseau from '@/components/drawer/DrawerReseau'
-import MixinExport from '@/mixins/export'
+import DrawerActivity from '@/components/drawer/DrawerActivity'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default {
   components: {
     Card,
-    DrawerReseau,
+    DrawerActivity,
     SearchFilters
   },
-  mixins: [QueryBuilder, MixinExport],
+  mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',
   middleware: 'admin',
   data () {
     return {
       loading: false,
-      endpoint: '/reseaux',
-      exportEndpoint: '/export/reseaux',
+      endpoint: '/activities',
       queryParams: {
-        include: 'illustrations,overrideImage1,structuresCount',
+        include: 'banner,domaines',
         append: 'places_left'
       },
-      drawerReseauId: null,
-      drawerReseau: null
-    }
-  },
-  methods: {
-    illustrationSrcset (reseau) {
-      return reseau.override_image1?.urls.large ??
-        reseau.illustrations[0]?.urls.large ??
-        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
-    },
-    illustrationSrc (reseau) {
-      return reseau.override_image1?.urls.original ??
-        reseau.illustrations[0]?.urls.original ??
-        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+      drawerActivityId: null
     }
   }
 }

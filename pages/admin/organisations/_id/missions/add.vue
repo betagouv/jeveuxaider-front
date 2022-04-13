@@ -171,7 +171,7 @@ export default {
             ? this.structure.reseaux.map(reseau => reseau.id).join(',')
             : 'empty',
           pagination: 99,
-          include: 'photo'
+          include: 'photo,reseau'
         }
       })
       this.templates = templates.data.data

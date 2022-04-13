@@ -1,5 +1,14 @@
 <template>
   <Drawer :is-open="Boolean(missionTemplateId)" @close="$emit('close')">
+    <AlertDialog
+      v-if="missionTemplate"
+      theme="danger"
+      title="Supprimer le modèle de mission"
+      :text="`Vous êtes sur le point de supprimer le modèle de mission ${missionTemplate.name}.`"
+      :is-open="showAlert"
+      @confirm="handleConfirmDelete()"
+      @cancel="showAlert = false"
+    />
     <template #title>
       <Heading v-if="missionTemplate" :level="3" class="text-jva-blue-500">
         {{ missionTemplate.title }}
@@ -20,6 +29,7 @@
             Modifier
           </Button>
         </nuxt-link>
+        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
       </div>
 
       <div class="border-t -mx-6 my-6" />
@@ -71,7 +81,8 @@ export default {
   data () {
     return {
       missionTemplate: null,
-      stats: null
+      stats: null,
+      showAlert: false
     }
   },
   async fetch () {
@@ -90,9 +101,16 @@ export default {
   methods: {
     async handleChangeState (option) {
       this.missionTemplate.state = option.key
-      await this.$axios.put(`/mission-templates/${this.missionTemplate.id}`, this.missionTemplate).catch(() => {})
+      await this.$axios.put(`/mission-templates/${this.missionTemplateId}`, this.missionTemplate).catch(() => {})
       this.$fetch()
       this.$emit('updated')
+    },
+    async handleConfirmDelete () {
+      await this.$axios.delete(`/mission-templates/${this.missionTemplateIdisis}`).then((res) => {
+        this.showAlert = false
+        this.$emit('close')
+        this.$emit('refetch')
+      }).catch(() => {})
     }
   }
 }

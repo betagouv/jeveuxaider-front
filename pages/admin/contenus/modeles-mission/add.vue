@@ -35,8 +35,7 @@ export default {
     if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {
       return error({ statusCode: 403 })
     }
-    return {
-    }
+    return {}
   },
   data () {
     return {

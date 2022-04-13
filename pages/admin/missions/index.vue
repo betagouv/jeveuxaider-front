@@ -1,6 +1,6 @@
 <template>
   <ContainerRightSidebar>
-    <DrawerMission :mission-id="drawerMissionId" @close="drawerMissionId = null" @updated="$fetch()" />
+    <DrawerMission :mission-id="drawerMissionId" @close="drawerMissionId = null" @updated="$fetch()" @refetch="$fetch()" />
     <template #breadcrumb>
       <Breadcrumb
         :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Missions' }]"
@@ -45,10 +45,22 @@
           name="domaine"
           placeholder="Domaine d'action"
           :options="$labels.domaines"
-          :value="$route.query['filter[domaine]']"
+          :value="$route.query['filter[ofDomaine]']"
           variant="transparent"
           clearable
-          @input="changeFilter('filter[domaine]', $event)"
+          @input="changeFilter('filter[ofDomaine]', $event)"
+        />
+        <Combobox
+          v-if="activities.length"
+          name="activity_id"
+          placeholder="Activité"
+          :options="activities"
+          clearable
+          attribute-key="id"
+          attribute-label="name"
+          variant="transparent"
+          :value="$route.query['filter[ofActivity]']"
+          @input="changeFilter('filter[ofActivity]', $event)"
         />
         <div class="flex space-x-4 mb-2">
           <Checkbox
@@ -165,15 +177,6 @@
             transparent
             @change="changeFilter('filter[state]', 'En attente de validation')"
           />
-          <!-- <Checkbox
-            :key="`state-en-cours-traitement-${$route.fullPath}`"
-            :option="{key: 'en-cours-traitement', label:'En cours de traitement'}"
-            :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En cours de traitement'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[state]', 'En cours de traitement')"
-          /> -->
           <Checkbox
             :key="`available-${$route.fullPath}`"
             :option="{key: 'available', label:'En ligne'}"
@@ -258,13 +261,19 @@ export default {
   },
   mixins: [QueryBuilder, MixinExport],
   middleware: 'authenticated',
-  asyncData ({ store, error }) {
+  async asyncData ({ $axios, store, error }) {
     if (
       !['admin', 'referent', 'referent_regional', 'responsable', 'tete_de_reseau'].includes(
         store.getters.contextRole
       )
     ) {
       return error({ statusCode: 403 })
+    }
+
+    const { data: activities } = await $axios.get('/activities?pagination=0')
+
+    return {
+      activities: activities.data
     }
   },
   data () {

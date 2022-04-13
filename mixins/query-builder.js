@@ -69,6 +69,15 @@ export default {
           closeContext: () => this.deleteAllFilters()
         }
       }
+      if (this.$route.query.domaine_name && this.$route.query['filter[ofDomaine]']) {
+        return {
+          name: this.$route.query.domaine_name,
+          id: this.$route.query['filter[ofDomaine]'],
+          link: `/admin/contenus/activites/${this.$route.query['filter[ofDomaine]']}`,
+          type: 'Domaine',
+          closeContext: () => this.deleteAllFilters()
+        }
+      }
       if (this.$route.query.full_name && this.$route.query['filter[profile.id]']) {
         return {
           name: this.$route.query.full_name,
