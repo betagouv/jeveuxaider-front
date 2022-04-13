@@ -1,6 +1,22 @@
 <template>
   <div>
-    <Banner :activity="activity" />
+    <client-only>
+      <portal v-if="!activity.is_published" to="header-top">
+        <transition name="fade">
+          <Banner icon="ExclamationIcon">
+            L'activité n'est pas visible car elle est non publiée
+            <template #action>
+              <nuxt-link :to="`/admin/contenus/activites/${activity.id}/edit`">
+                <Button variant="white">
+                  Gérer
+                </Button>
+              </nuxt-link>
+            </template>
+          </Banner>
+        </transition>
+      </portal>
+    </client-only>
+    <ActivityBanner :activity="activity" />
     <Search :activity="activity" />
     <Promote :activity="activity" class="-mb-32" />
     <Associations :activity="activity" />
@@ -10,7 +26,7 @@
 </template>
 
 <script>
-import Banner from '@/components/section/activity/Banner'
+import ActivityBanner from '@/components/section/activity/Banner'
 import Search from '@/components/section/activity/Search'
 import Promote from '@/components/section/activity/Promote'
 import Associations from '@/components/section/activity/Associations'
@@ -19,7 +35,7 @@ import Subscribe from '@/components/section/activity/Subscribe'
 
 export default {
   components: {
-    Banner,
+    ActivityBanner,
     Search,
     Promote,
     Associations,

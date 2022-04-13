@@ -1,6 +1,23 @@
 <template>
   <div>
-    <Banner :territoire="territoire" />
+    <client-only>
+      <portal v-if="!territoire.is_published" to="header-top">
+        <transition name="fade">
+          <Banner icon="ExclamationIcon">
+            La page n'est pas visible car elle est non publiée
+            <template #action>
+              <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}/edit`">
+                <Button variant="white">
+                  Gérer
+                </Button>
+              </nuxt-link>
+            </template>
+          </Banner>
+        </transition>
+      </portal>
+    </client-only>
+
+    <TerritoireBanner :territoire="territoire" />
 
     <div v-if="territoire.type == 'city' && logo" class="bg-white pt-12">
       <div class="container">
@@ -33,7 +50,7 @@
 </template>
 
 <script>
-import Banner from '@/components/section/territoire/Banner'
+import TerritoireBanner from '@/components/section/territoire/Banner'
 import Search from '@/components/section/territoire/Search'
 import Promote from '@/components/section/territoire/Promote'
 import Cities from '@/components/section/territoire/Cities'
@@ -43,7 +60,7 @@ import Subscribe from '@/components/section/territoire/Subscribe'
 
 export default {
   components: {
-    Banner, Promote, Cities, Associations, Engagement, Subscribe, Search
+    TerritoireBanner, Promote, Cities, Associations, Engagement, Subscribe, Search
   },
   props: {
     territoire: {

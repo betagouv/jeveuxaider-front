@@ -77,10 +77,14 @@
         class="text-gray-500 text-sm mt-2 truncate max-w-full"
         v-text="mission.structure.name"
       />
-      <div v-if="showState" class="mt-4">
+
+      <div v-if="showState" class="mt-4 flex items-center justify-center">
         <Badge :color="mission.state" plain>
           {{ mission.state }}
         </Badge>
+        <div v-if="['admin'].includes($store.getters.contextRole)" class="text-gray-500 text-xs flex-shrink-0 ml-2">
+          ID <span class="font-semibold">{{ mission.id }}</span>
+        </div>
       </div>
 
       <div
