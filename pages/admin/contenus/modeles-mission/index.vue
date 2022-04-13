@@ -121,8 +121,8 @@
       >
         <template #badges>
           <div class="mb-2">
-            <Badge class="" color="gray-light">
-              {{ missionTemplate.reseau ? missionTemplate.reseau.name : 'Accessible pour tous' }}
+            <Badge v-if=" missionTemplate.reseau" class="" color="gray-light">
+              {{ missionTemplate.reseau.name }}
             </Badge>
           </div>
         </template>

@@ -106,7 +106,7 @@ export default {
       this.$emit('updated')
     },
     async handleConfirmDelete () {
-      await this.$axios.delete(`/mission-templates/${this.missionTemplateId}`).then((res) => {
+      await this.$axios.delete(`/mission-templates/${this.missionTemplateIdisis}`).then((res) => {
         this.showAlert = false
         this.$emit('close')
         this.$emit('refetch')
