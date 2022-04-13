@@ -112,8 +112,8 @@
         v-for="missionTemplate in queryResult.data"
         :key="missionTemplate.id"
         :title="missionTemplate.title"
-        :state-style="missionTemplate.state"
-        :state-text="$options.filters.label(missionTemplate.state, 'mission_template_workflow_states')"
+        :state-style="missionTemplate.published ? 'success' : 'error'"
+        :state-text="missionTemplate.published ? 'En ligne' : 'Hors ligne'"
         :description="missionTemplate.subtitle"
         :image-srcset="missionTemplate.photo ? missionTemplate.photo.urls.card : undefined"
         :image-src="missionTemplate.photo ? missionTemplate.photo.urls.original : undefined"
@@ -126,9 +126,17 @@
             </Badge>
           </div>
         </template>
+        <div class="mt-3">
+          <Badge :color="missionTemplate.state" plain>
+            {{ missionTemplate.state | label('mission_template_workflow_states') }}
+          </Badge>
+        </div>
         <template #footer>
           <div
-            class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
+            class="border-t font-semibold text-sm text-center py-4"
+            :class="[
+              missionTemplate.published ? 'text-gray-900' : 'text-gray-400'
+            ]"
           >
             {{ $options.filters.formatNumber(missionTemplate.places_left) }} {{ $options.filters.pluralize(missionTemplate.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
           </div>
