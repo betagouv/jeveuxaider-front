@@ -88,16 +88,24 @@
         v-for="territoire in queryResult.data"
         :key="territoire.id"
         :title="territoire.name"
-        :state-style="territoire.state"
-        :state-text="$options.filters.label(territoire.state, 'mission_template_workflow_states')"
+        :state-style="territoire.is_published ? 'success' : 'error'"
+        :state-text="territoire.is_published ? 'En ligne' : 'Hors ligne'"
         :description="territoire.department ? `${territoire.department} - ${$options.filters.label(territoire.department,'departments')}` : null"
         :image-srcset="territoire.banner ? territoire.banner.urls.desktop : undefined"
         :image-src="territoire.banner ? territoire.banner.urls.original : undefined"
         @click.native="drawerTerritoireId = territoire.id"
       >
+        <div class="mt-3">
+          <Badge :color="territoire.state" plain>
+            {{ territoire.state | label('territoire_workflow_states') }}
+          </Badge>
+        </div>
         <template #footer>
           <div
-            class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
+            class="border-t font-semibold  text-sm text-center py-4"
+            :class="[
+              territoire.is_published && territoire.state === 'validated' ? 'text-gray-900' : 'text-gray-400'
+            ]"
           >
             {{ $options.filters.formatNumber(territoire.places_left) }} {{ $options.filters.pluralize(territoire.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
           </div>

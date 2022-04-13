@@ -135,7 +135,7 @@
           <div
             class="border-t font-semibold text-sm text-center py-4"
             :class="[
-              missionTemplate.published ? 'text-gray-900' : 'text-gray-400'
+              missionTemplate.published && missionTemplate.state === 'validated' ? 'text-gray-900' : 'text-gray-400'
             ]"
           >
             {{ $options.filters.formatNumber(missionTemplate.places_left) }} {{ $options.filters.pluralize(missionTemplate.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
