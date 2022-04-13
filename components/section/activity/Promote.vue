@@ -65,7 +65,7 @@
                       class="p-4 pb-8 md:px-8 lg:px-12 xl:px-16 flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
                     >
                       <div class="font-extrabold text-4xl">
-                        7000
+                        8000
                       </div>
                       <div class="text-lg">
                         organisations publiques<br>et associatives
