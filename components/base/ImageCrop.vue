@@ -68,6 +68,7 @@
 
       <portal to="body-end">
         <Modal
+          :key="`modal_crop_${_uid}`"
           :is-open="showModal"
           title="Recadrer"
           @close="showModal = false"
