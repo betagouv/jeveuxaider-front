@@ -84,6 +84,8 @@ export default {
       let label = 'Crée le '
       if (activity.description == 'updated') {
         label = 'Modifiée le '
+      } else if (activity.description == 'duplicated') {
+        label = 'Dupliquée le '
       }
       label = label + this.$dayjs(activity.created_at).format('D MMM YYYY')
       return label
@@ -172,6 +174,8 @@ export default {
           return 'Visibilité'
         case 'suffix_title':
           return 'Sous-titre'
+        case 'from_id':
+          return "Depuis l'ID"
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },

@@ -39,11 +39,11 @@ export default {
       }
     },
     canRegister () {
-      if (!this.mission.has_places_left || !this.hasPageOnline) {
-        return false
+      if (this.mission.has_places_left && this.mission.state === 'Validée' && this.mission.structure.state === 'Validée') {
+        return true
       }
 
-      return true
+      return false
     },
     formattedDates () {
       const startDate = this.mission.start_date

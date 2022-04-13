@@ -35,18 +35,17 @@ export default {
   methods: {
     async handleConfirm () {
       this.loading = true
-      const res = await this.$axios.post(`/missions/${this.missionId}/duplicate`).catch(() => {})
-      if (res) {
-        this.$toast.success('La mission a été dupliquée')
-        this.$emit('duplicated', res.data)
-      }
-      this.showDialog = false
-      this.loading = false
+      await this.$axios.post(`/missions/${this.missionId}/duplicate`)
+        .then((response) => {
+          this.$toast.success('La mission a été dupliquée')
+          this.$emit('duplicated', response.data)
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.showDialog = false
+          this.loading = false
+        })
     }
   }
 }
 </script>
-
-<style>
-
-</style>

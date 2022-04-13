@@ -115,6 +115,7 @@ export default {
             { key: 'invitation_sent', label: 'Invitation en attente', description: "Lorsqu'une inviation est envoyée. Le wording dépend du type d'invitation." },
             { key: 'mission_template_created', label: 'XXX : Nouveau modèle de mission en attente de validation', description: "Lorsqu'un réseau créé un nouveau template de mission" },
             { key: 'reset_password', label: 'Réinitialiser mon mot de passe', description: "Lorsqu'un utilisateur réinialise son mot de passe" },
+            { key: 'user_anonymize', label: 'Suppression de votre compte sur JeVeuxAider.gouv.fr', description: "Lorsqu'un utilisateur supprime son compte" },
             { key: 'moderateur_daily_todo', label: 'Arf on a perdu des référents', description: "Envoyée à Giulietta quand des référents ont trop d'actions en attente sous les 3 derniers jours" }
           ]
         }
