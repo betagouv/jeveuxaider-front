@@ -32,7 +32,8 @@
         </div>
       </template>
     </SectionHeading>
-    <div>
+
+    <SearchFilters>
       <Input
         name="search"
         placeholder="Recherche par mots clés..."
@@ -42,7 +43,7 @@
         clearable
         @input="changeFilter('filter[search]', $event)"
       />
-      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
+      <template #prefilters>
         <Checkbox
           :key="`toutes-${$route.fullPath}`"
           :option="{key: 'toutes', label:'Toutes'}"
@@ -79,8 +80,8 @@
           transparent
           @change="changeFilter('filter[type]', 'city')"
         />
-      </div>
-    </div>
+      </template>
+    </SearchFilters>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <Card
@@ -118,11 +119,13 @@ import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerTerritoire from '@/components/drawer/DrawerTerritoire'
 import MixinExport from '@/mixins/export'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default {
   components: {
     Card,
-    DrawerTerritoire
+    DrawerTerritoire,
+    SearchFilters
   },
   mixins: [QueryBuilder, MixinExport],
   layout: 'admin-with-sidebar-menu',
