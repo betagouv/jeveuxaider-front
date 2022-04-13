@@ -270,7 +270,12 @@ export default {
       return error({ statusCode: 403 })
     }
 
-    const { data: activities } = await $axios.get('/activities?pagination=0')
+    const { data: activities } = await $axios.get('/activities', {
+      params: {
+        pagination: 0,
+        'filter[is_published]': 1
+      }
+    })
 
     return {
       activities: activities.data

@@ -223,7 +223,12 @@ export default {
       return error({ statusCode: 403 })
     }
 
-    const { data: activities } = await $axios.get('/activities?pagination=0')
+    const { data: activities } = await $axios.get('/activities', {
+      params: {
+        pagination: 0,
+        'filter[is_published]': 1
+      }
+    })
 
     if (store.getters.contextRole === 'responsable' && store.getters.contextableId) {
       const res = await $axios.post(`/structures/${store.getters.contextableId}/waiting-participations`)
