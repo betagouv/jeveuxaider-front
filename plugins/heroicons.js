@@ -38,9 +38,24 @@ import {
   AdjustmentsIcon,
   VideoCameraIcon
 } from '@vue-hero-icons/outline'
-import { InformationCircleIcon, UsersIcon, HomeIcon, ChevronDownIcon as ChevronDownSolidIcon, CheckIcon as CheckSolidIcon, PlusCircleIcon, MinusCircleIcon, UserIcon as UserSolidIcon } from '@vue-hero-icons/solid'
+import {
+  InformationCircleIcon,
+  UsersIcon,
+  HomeIcon,
+  ChevronDownIcon as ChevronDownSolidIcon,
+  CheckCircleIcon as CheckCircleSolidIcon,
+  XCircleIcon as XCircleSolidIcon,
+  CheckIcon as CheckSolidIcon,
+  PlusCircleIcon,
+  MinusCircleIcon,
+  UserIcon as UserSolidIcon,
+  ClockIcon as ClockSolidIcon
+} from '@vue-hero-icons/solid'
 
 const components = {
+  ClockSolidIcon,
+  CheckCircleSolidIcon,
+  XCircleSolidIcon,
   VideoCameraIcon,
   DotsVerticalIcon,
   ShareIcon,

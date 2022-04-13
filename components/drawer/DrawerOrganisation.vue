@@ -37,6 +37,7 @@
         </div>
         <div class="border-t -mx-6 my-6" />
         <BoxInformations class="mb-8" :organisation="organisation" show-title />
+        <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="organisation.department" />
         <BoxMission class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
         <BoxParticipation class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
         <BoxResponsable v-for="responsable in organisation.members" :key="responsable.id" class="mb-8" :responsable="responsable" />
@@ -60,6 +61,7 @@ import BoxParticipation from '@/components/section/organisation/BoxParticipation
 import BoxInformations from '@/components/section/organisation/BoxInformations'
 import BoxResponsable from '@/components/section/organisation/BoxResponsable'
 import BoxReseau from '@/components/section/organisation/BoxReseau'
+import BoxReferents from '@/components/section/BoxReferents'
 import LoadingIndicator from '@/components/custom/LoadingIndicator'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
 
@@ -72,7 +74,8 @@ export default {
     BoxResponsable,
     BoxReseau,
     LoadingIndicator,
-    OnlineIndicator
+    OnlineIndicator,
+    BoxReferents
   },
   mixins: [MixinOrganisation],
   props: {

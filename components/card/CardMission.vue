@@ -73,14 +73,25 @@
         {{ mission.name }}
       </h3>
 
-      <div
-        class="text-gray-500 text-sm mt-2 truncate max-w-full"
-        v-text="mission.structure.name"
-      />
-      <div v-if="showState" class="mt-4">
+      <div class="flex items-center space-x-1 mt-2 truncate max-w-full">
+        <template v-if="['admin','referent'].includes($store.getters.contextRole) && showState">
+          <CheckCircleSolidIcon v-if="['Validée'].includes(mission.structure.state)" class="flex-none w-auto h-4 text-jva-green-500" />
+          <XCircleSolidIcon v-if="['Signalée', 'Désinscrite'].includes(mission.structure.state)" class="flex-none w-auto h-4 text-jva-red-500" />
+          <ClockSolidIcon v-if="['En attente de validation', 'En cours de traitement', 'Brouillon'].includes(mission.structure.state)" class="flex-none w-auto h-4 text-gray-500" />
+        </template>
+        <div
+          class="text-gray-500 text-sm truncate max-w-full"
+          v-text="mission.structure.name"
+        />
+      </div>
+
+      <div v-if="showState" class="mt-4 flex items-center justify-center">
         <Badge :color="mission.state" plain>
           {{ mission.state }}
         </Badge>
+        <div v-if="['admin'].includes($store.getters.contextRole)" class="text-gray-500 text-xs flex-shrink-0 ml-2">
+          ID <span class="font-semibold">{{ mission.id }}</span>
+        </div>
       </div>
 
       <div

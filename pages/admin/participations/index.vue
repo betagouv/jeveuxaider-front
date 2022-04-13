@@ -224,7 +224,7 @@ export default {
       endpoint: '/participations',
       exportEndpoint: '/export/participations',
       queryParams: {
-        include: 'conversation.latestMessage,profile.avatar'
+        include: 'conversation.latestMessage,profile.avatar,mission.responsable,mission.structure'
       },
       drawerParticipationId: null,
       autocompleteOptionsOrga: [],

@@ -94,7 +94,7 @@ export default {
       loading: false,
       endpoint: '/user/participations',
       queryParams: {
-        include: 'conversation.latestMessage,mission.responsable.avatar'
+        include: 'conversation.latestMessage,mission.responsable.avatar,mission.structure'
       }
     }
   },

@@ -58,6 +58,10 @@
         {{ organisation.name }}
       </h3>
 
+      <div v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole)" class="mt-4 text-[13px] text-gray-500">
+        Complétion: <span class="font-semibold">{{ organisation.completion_rate }}%</span>
+      </div>
+
       <div class="mt-4 flex items-center justify-center">
         <Badge :color="organisation.state" plain>
           {{ organisation.state }}
@@ -71,7 +75,12 @@
     <div
       class="border-t p-4 text-center flex items-center justify-center space-x-2"
     >
-      <span class="text-sm font-bold">
+      <span
+        class="text-sm font-bold"
+        :class="[
+          organisation.state === 'Validée' ? 'text-gray-900' : 'text-gray-400'
+        ]"
+      >
         {{
           organisation.places_left
             | pluralize('bénévole recherché', 'bénévoles recherchés')

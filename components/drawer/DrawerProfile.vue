@@ -22,7 +22,7 @@
             Modifier
           </Button>
         </nuxt-link>
-        <Button variant="white" size="sm" icon="IdentificationIcon" @click.native="handleImpersonate()">
+        <Button v-if="['admin'].includes($store.getters.contextRole)" variant="white" size="sm" icon="IdentificationIcon" @click.native="handleImpersonate()">
           Prendre sa place
         </Button>
       </div>

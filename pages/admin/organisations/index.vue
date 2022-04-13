@@ -102,7 +102,8 @@
             transparent
             :value="$route.query['sort'] ? $route.query['sort'] : '-created_at'"
             :options="[
-              { key: '-created_at', label: 'Date de création' },
+              { key: '-created_at', label: 'Les plus récentes' },
+              { key: 'created_at', label: 'Les plus anciennes' },
               { key: '-updated_at', label: 'Date de denière modification' },
               { key: '-missions_count', label: 'Nombre de missions proposées' },
               { key: '-places_left', label: 'Nombre de bénévoles recherchés' },
@@ -164,7 +165,7 @@ export default {
       endpoint: '/structures',
       exportEndpoint: '/export/structures',
       queryParams: {
-        append: 'places_left',
+        append: ['places_left', 'completion_rate'],
         include: 'domaines,illustrations,overrideImage1'
       },
       drawerOrganisationId: null
