@@ -37,7 +37,7 @@
         >
           Dupliquer
         </ButtonMissionDuplicate>
-        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
+        <Button v-if="['admin','responsable'].includes($store.getters.contextRole)" variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
       </div>
       <div class="border-t -mx-6 my-6" />
       <div class="text-sm  uppercase font-semibold text-gray-600">
