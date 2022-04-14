@@ -47,7 +47,7 @@
       <BoxDates class="mb-8" :mission="mission" />
       <BoxPlace class="mb-8" :mission="mission" />
       <BoxInformations class="mb-8" :mission="mission" />
-      <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="mission.department" />
+      <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" :key="mission.department" :department="mission.department" class="mb-8" />
       <BoxResponsable class="mb-8" :profile="mission.responsable" />
       <BoxOrganisation class="mb-8" :organisation="mission.structure" />
 
@@ -99,15 +99,13 @@ export default {
   },
   async fetch () {
     if (!this.missionId) {
-      return null
+      return
     }
-
     const { data } = await this.$axios.get(`/missions/${this.missionId}`)
+    this.mission = data
     this.$axios.get(`/statistics/missions/${this.missionId}`).then(({ data }) => {
       this.missionStats = data
     })
-
-    this.mission = data
   },
   watch: {
     missionId: '$fetch'

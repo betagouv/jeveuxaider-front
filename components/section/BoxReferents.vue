@@ -10,8 +10,12 @@
     </div>
     <Box :variant="boxVariant" :padding="boxPadding" :loading="loading">
       <DescriptionList>
+        <div v-if="!referents.length" class="text-sm text-gray-500">
+          Aucun
+        </div>
         <div
           v-for="referent,i in referents"
+          v-else
           :key="referent.id"
         >
           <DescriptionListItem
@@ -65,8 +69,8 @@ export default {
         include: 'user'
       }
     })
-    this.loading = false
     this.referents = referents.data
+    this.loading = false
   },
   computed: {
     lastConnexion () {
@@ -74,11 +78,6 @@ export default {
         ? this.referents.reduce((m, current, index) =>
           (this.$dayjs(current.user.last_online_at).isAfter(m.user.last_online_at)) && index ? current : m).user.last_online_at
         : null
-    }
-  },
-  watch: {
-    department () {
-      this.$fetch()
     }
   }
 }
