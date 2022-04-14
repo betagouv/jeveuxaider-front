@@ -75,6 +75,11 @@ export default {
           (this.$dayjs(current.user.last_online_at).isAfter(m.user.last_online_at)) && index ? current : m).user.last_online_at
         : null
     }
+  },
+  watch: {
+    department () {
+      this.$fetch()
+    }
   }
 }
 </script>
