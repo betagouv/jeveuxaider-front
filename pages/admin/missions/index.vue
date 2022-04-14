@@ -116,9 +116,14 @@
             </Button>
             <nuxt-link
               v-if="$store.getters.contextRole === 'responsable'"
+              v-tooltip="organisation.state == 'Brouillon' && {
+                content: 'Vous ne pouvez pas créer de mission tant que votre organisation est incomplète.',
+                hideOnTargetClick: true,
+                placement: 'top',
+              }"
               :to="`/admin/organisations/${$store.getters.currentRole.contextable_id}/missions/add`"
             >
-              <Button icon="PlusIcon" size="lg">
+              <Button icon="PlusIcon" size="lg" :disabled="organisation.state == 'Brouillon'">
                 Publier une mission
               </Button>
             </nuxt-link>
@@ -259,13 +264,20 @@ export default {
   },
   mixins: [QueryBuilder, MixinExport],
   middleware: 'authenticated',
-  asyncData ({ store, error }) {
+  async asyncData ({ store, error, $axios }) {
     if (
       !['admin', 'referent', 'referent_regional', 'responsable', 'tete_de_reseau'].includes(
         store.getters.contextRole
       )
     ) {
       return error({ statusCode: 403 })
+    }
+
+    if (store.getters.contextRole == 'responsable') {
+      const { data: organisation } = await $axios.get(`/structures/${store.getters.currentRole.contextable_id}`)
+      return {
+        organisation
+      }
     }
   },
   data () {

@@ -76,7 +76,8 @@ export default {
           key: 'responsable',
           label: '👨‍💼 Emails envoyés aux responsables',
           notifications: [
-            { key: 'responsable_register', label: 'Votre organisation est en cours de validation', description: "Notification envoyée au responsable d'organisation lorsqu'il s'inscrit" },
+            { key: 'responsable_register', label: 'Votre organisation est en cours de validation', description: "Notification envoyée au responsable d'organisation lorsque le statut passe de Brouillon à En attente de validation" },
+            { key: 'responsable_still_in_draft', label: 'Finalisez votre inscription sur JeVeuxAider.gouv.fr', description: "Notification envoyée au responsable d'organisation lorsque son organisation est toujours en Brouillon. (J+1, J+7, J+15)" },
             { key: 'responsable_organisation_being_processed', label: 'Organisation en cours de traitement', description: 'Notification envoyée au responsable lorsque son organisation est en cours de traitement' },
             { key: 'responsable_organisation_validated', label: 'Votre organisation a été validée', description: 'Notification envoyée au responsable lorsque son organisation est validée' },
             { key: 'responsable_association_validated', label: 'Bienvenue sur JeVeuxAider.gouv.fr', description: 'Notification envoyée au responsable lorsque son organisation de type association est validée' },
