@@ -438,7 +438,6 @@
           </div>
         </Box>
         <Box
-          v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole)"
           padding="sm"
         >
           <Heading as="h3" :level="3" class="mb-4">
@@ -456,6 +455,7 @@
               />
             </FormControl>
             <FormControl
+              v-if="['admin'].includes($store.getters.contextRole)"
               label="# API Engagement"
               html-for="api_id"
             >
