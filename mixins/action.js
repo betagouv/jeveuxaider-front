@@ -75,6 +75,14 @@ export default {
             subtitle: 'Complétez les informations manquantes pour gagner en visibilité !',
             link: `/admin/organisations/${this.$store.getters.currentRole.contextable_id}/edit`
           }
+        case 'organisation_brouillon_incomplete':
+          return {
+            icon: '✍',
+            iconVariant: 'warning',
+            title: 'Votre organisation est <b>incomplète</b>',
+            subtitle: 'Complétez les informations manquantes pour que votre organisation soit modérée par notre équipe',
+            link: `/admin/organisations/${this.$store.getters.currentRole.contextable_id}/edit`
+          }
         case 'missions_waiting_validation':
           return {
             icon: '✊',

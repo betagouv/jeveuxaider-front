@@ -385,15 +385,17 @@
               label="Visuels d'illustration"
               html-for="illustrations"
             >
-              <MediaPickerDomaine
+              <component
+                :is="form.reseaux.length ? 'MediaPickerReseau' : 'MediaPickerDomaine'"
                 v-if="$store.getters.contextRole === 'admin' || (!form.override_image1 && !form.override_image2)"
-                class="grid grid-cols-1 lg:grid-cols-2 gap-4"
-                collection="domaine__illustrations_organisation"
-                preview-conversion="large"
-                preview-sizes="200px"
+                :reseaux="form.reseaux"
                 :domaine-ids="mediaPickerDomaineIds"
                 :defaults="form.illustrations"
                 :limit="2"
+                collection="domaine__illustrations_organisation"
+                preview-conversion="large"
+                preview-sizes="200px"
+                class="grid grid-cols-1 lg:grid-cols-2 gap-4"
                 @change="onMediaPickerChange($event, 'illustrations')"
               />
 

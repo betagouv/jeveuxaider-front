@@ -1,6 +1,13 @@
 <template>
   <portal to="body-end">
-    <Modal v-scroll-lock="isOpen" :title="title" :is-open="isOpen" :theme="theme" @close="$emit('cancel')">
+    <Modal
+      :key="`modal_alert_dialog_${_uid}`"
+      v-scroll-lock="isOpen"
+      :title="title"
+      :is-open="isOpen"
+      :theme="theme"
+      @close="$emit('cancel')"
+    >
       <div class="text-sm text-gray-500" v-html="text" />
       <template #footer>
         <Button class="mr-3" variant="white" @click.native="$emit('cancel')">

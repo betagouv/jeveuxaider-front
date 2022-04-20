@@ -50,6 +50,8 @@
             <BoxPlace :mission="mission" />
             <BoxEnChiffre :mission="mission" />
             <BoxInformations :mission="mission" />
+            <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="mission.department" />
+
             <BoxResponsable v-if="mission.responsable" :profile="mission.responsable" />
             <BoxOrganisation :organisation="mission.structure" />
           </div>
@@ -74,6 +76,7 @@ import History from '@/components/section/History.vue'
 import MixinMission from '@/mixins/mission'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
 import SelectMissionState from '@/components/custom/SelectMissionState'
+import BoxReferents from '@/components/section/BoxReferents'
 
 export default {
   components: {
@@ -88,7 +91,8 @@ export default {
     BoxOrganisation,
     History,
     OnlineIndicator,
-    SelectMissionState
+    SelectMissionState,
+    BoxReferents
   },
   mixins: [MixinMission],
   middleware: 'authenticated',

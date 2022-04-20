@@ -30,13 +30,25 @@
         <div class="font-extrabold line-clamp-3 mt-2 text-gray-900 leading-tight">
           {{ participation.mission.name }}
         </div>
+        <div
+          v-if="!['responsable'].includes($store.getters.contextRole)"
+          class="mt-2 text-sm text-gray-600 leading-tight"
+        >
+          {{ participation.mission.structure.name }}
+        </div>
       </div>
-      <div v-if="display === 'benevole'" class="hidden lg:flex pt-4 border-t border-dashed text-sm">
+      <!-- <div v-if="display === 'benevole'" class="hidden lg:flex pt-4 border-t border-dashed text-sm">
         <div class="font-medium">
           {{ participation.mission.places_left | pluralize('place restante', 'places restantes') }}
         </div>
         <div class="ml-auto text-gray-500">
           {{ participation.mission.participations_max - participation.mission.places_left }}/{{ participation.mission.participations_max }}
+        </div>
+      </div> -->
+      <div class="hidden lg:flex pt-4 border-t border-dashed">
+        <div class="flex space-x-1 text-sm truncate max-w-full text-gray-600">
+          <span class="">Responsable :</span>
+          <span class="font-bold truncate">{{ participation.mission.responsable.full_name }}</span>
         </div>
       </div>
     </div>
@@ -57,8 +69,8 @@
             <div class="font-bold">
               {{ profile.full_name }}
             </div>
-            <div class="text-sm text-gray-600">
-              {{ $dayjs().to($dayjs(participation.created_at)).charAt(0).toUpperCase() + $dayjs().to($dayjs(participation.created_at)).slice(1) }}
+            <div class="text-sm text-gray-600 first-letter:uppercase">
+              {{ $dayjs(participation.created_at).fromNow() }}
             </div>
           </div>
         </div>

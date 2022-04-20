@@ -51,7 +51,7 @@
           @input="changeFilter('filter[ofDomaine]', $event)"
         />
         <Combobox
-          v-if="activities.length"
+          v-if="activities.length && ['admin'].includes($store.getters.contextRole)"
           name="activity_id"
           placeholder="Activité"
           :options="activities"
@@ -128,9 +128,14 @@
             </Button>
             <nuxt-link
               v-if="$store.getters.contextRole === 'responsable'"
+              v-tooltip="organisation.state == 'Brouillon' && {
+                content: 'Vous ne pouvez pas créer de mission tant que votre organisation est incomplète.',
+                hideOnTargetClick: true,
+                placement: 'top',
+              }"
               :to="`/admin/organisations/${$store.getters.currentRole.contextable_id}/missions/add`"
             >
-              <Button icon="PlusIcon" size="lg">
+              <Button icon="PlusIcon" size="lg" :disabled="organisation.state == 'Brouillon'">
                 Publier une mission
               </Button>
             </nuxt-link>
@@ -214,7 +219,8 @@
             transparent
             :value="$route.query['sort'] ? $route.query['sort'] : '-created_at'"
             :options="[
-              { key: '-created_at', label: 'Date de création' },
+              { key: '-created_at', label: 'Les plus récentes' },
+              { key: 'created_at', label: 'Les plus anciennes' },
               { key: '-updated_at', label: 'Date de denière modification' },
               { key: '-places_left', label: 'Nombre de bénévoles recherchés' },
             ]"
@@ -276,6 +282,14 @@ export default {
         'filter[is_published]': 1
       }
     })
+
+    if (store.getters.contextRole == 'responsable') {
+      const { data: organisation } = await $axios.get(`/structures/${store.getters.currentRole.contextable_id}`)
+      return {
+        organisation,
+        activities: activities.data
+      }
+    }
 
     return {
       activities: activities.data

@@ -12,9 +12,21 @@
             v-if="$store.getters.contextRole === 'responsable'"
             :to="`/admin/organisations/${$store.getters.currentRole.contextable_id}/missions/add`"
           >
-            <Button icon="PlusIcon" size="xl">
-              Publier une mission
-            </Button>
+            <div
+              v-tooltip="isOrgaIncomplete && {
+                content: 'Vous ne pouvez pas créer de mission tant que votre organisation est incomplète.',
+                hideOnTargetClick: true,
+                placement: 'top',
+              }"
+            >
+              <Button
+                icon="PlusIcon"
+                size="xl"
+                :disabled="isOrgaIncomplete"
+              >
+                Publier une mission
+              </Button>
+            </div>
           </nuxt-link>
         </template>
       </Sectionheading>
@@ -202,6 +214,9 @@ export default {
       return [
         { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
       ]
+    },
+    isOrgaIncomplete () {
+      return this.actions.filter(action => action.type == 'organisation_brouillon_incomplete').length > 0
     }
   },
   async created () {

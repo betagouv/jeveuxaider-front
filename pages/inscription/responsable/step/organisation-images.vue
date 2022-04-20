@@ -45,14 +45,16 @@
             label="Visuels d'illustration"
             html-for="illustrations"
           >
-            <MediaPickerDomaine
-              class="grid sm:grid-cols-2 gap-4"
-              collection="domaine__illustrations_organisation"
-              preview-conversion="large"
-              preview-sizes="100w, (min-width: 640px) 248px"
+            <component
+              :is="form.reseaux.length ? 'MediaPickerReseau' : 'MediaPickerDomaine'"
+              :reseaux="form.reseaux"
               :domaine-ids="mediaPickerDomaineIds"
               :defaults="form.illustrations"
               :limit="2"
+              collection="domaine__illustrations_organisation"
+              preview-conversion="large"
+              preview-sizes="100w, (min-width: 640px) 248px"
+              class="grid sm:grid-cols-2 gap-4"
               @change="onMediaPickerChange($event, 'illustrations')"
             />
           </FormControl>

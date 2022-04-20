@@ -52,6 +52,7 @@
             </template>
             <template #items>
               <div
+                v-if="['admin'].includes($store.getters.contextRole)"
                 class="text-gray-700 block cursor-pointer px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
                 @click="handleImpersonate()"
               >

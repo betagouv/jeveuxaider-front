@@ -222,7 +222,7 @@ export default {
       endpoint: '/profiles',
       exportEndpoint: '/export/profiles',
       queryParams: {
-        include: 'user,participationsValidatedCount,avatar'
+        include: 'user,avatar'
       },
       drawerProfileId: null
     }

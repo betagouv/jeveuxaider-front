@@ -15,7 +15,7 @@
       <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
       <div class="flex flex-col gap-y-4 sticky top-8">
         <Combobox
-          v-if="activities.length"
+          v-if="activities.length && ['admin'].includes($store.getters.contextRole)"
           name="activity_id"
           placeholder="Activité"
           :options="activities"
@@ -235,9 +235,9 @@ export default {
       return {
         waitingParticipationsCount: res.data,
         activities: activities.data
-
       }
     }
+
     return {
       activities: activities.data
     }
@@ -248,7 +248,7 @@ export default {
       endpoint: '/participations',
       exportEndpoint: '/export/participations',
       queryParams: {
-        include: 'conversation.latestMessage,profile.avatar'
+        include: 'conversation.latestMessage,profile.avatar,mission.responsable,mission.structure'
       },
       drawerParticipationId: null,
       autocompleteOptionsOrga: [],

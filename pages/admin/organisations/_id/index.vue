@@ -165,6 +165,7 @@
                 </div>
               </Box>
             </div>
+            <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="organisation.department" />
           </div>
           <template v-if="$route.hash === '#membres'">
             <div class="space-y-2">
@@ -212,6 +213,7 @@ import CardStatistic from '@/components/card/CardStatistic'
 import FormInvitation from '@/components/form/FormInvitation'
 import BoxInvitations from '@/components/section/BoxInvitations'
 import SelectOrganisationState from '@/components/custom/SelectOrganisationState'
+import BoxReferents from '@/components/section/BoxReferents'
 
 export default {
   components: {
@@ -222,7 +224,8 @@ export default {
     CardStatistic,
     FormInvitation,
     BoxInvitations,
-    SelectOrganisationState
+    SelectOrganisationState,
+    BoxReferents
   },
   mixins: [MixinOrganisation],
   middleware: 'authenticated',

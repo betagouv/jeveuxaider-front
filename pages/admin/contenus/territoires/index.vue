@@ -81,6 +81,20 @@
           @change="changeFilter('filter[type]', 'city')"
         />
       </template>
+      <template #sorts>
+        <Sort
+          key="sort"
+          name="sort"
+          transparent
+          :value="$route.query['sort'] ? $route.query['sort'] : '-created_at'"
+          :options="[
+            { key: '-created_at', label: 'Les plus récentes' },
+            { key: 'created_at', label: 'Les plus anciennes' },
+            { key: '-updated_at', label: 'Date de denière modification' },
+          ]"
+          @input="changeFilter('sort', $event)"
+        />
+      </template>
     </SearchFilters>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -95,10 +109,16 @@
         :image-src="territoire.banner ? territoire.banner.urls.original : undefined"
         @click.native="drawerTerritoireId = territoire.id"
       >
-        <div class="mt-3">
+        <div class="mt-4 text-[13px] text-gray-500">
+          Complétion: <span class="font-semibold">{{ territoire.completion_rate }}%</span>
+        </div>
+        <div class="mt-4 flex items-center">
           <Badge :color="territoire.state" plain>
             {{ territoire.state | label('territoire_workflow_states') }}
           </Badge>
+          <div v-if="['admin'].includes($store.getters.contextRole)" class="text-gray-500 text-xs flex-shrink-0 ml-2">
+            ID <span class="font-semibold">{{ territoire.id }}</span>
+          </div>
         </div>
         <template #footer>
           <div
@@ -145,7 +165,7 @@ export default {
       exportEndpoint: '/export/territoires',
       queryParams: {
         include: 'banner',
-        append: 'places_left'
+        append: ['places_left', 'completion_rate']
       },
       drawerTerritoireId: null,
       drawerTerritoire: null

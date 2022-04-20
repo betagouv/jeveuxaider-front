@@ -36,7 +36,8 @@
     </div>
 
     <div class="border-t px-6 py-4 text-sm font-bold">
-      {{ profile.participations_validated_count | pluralize('participation') }}
+      <span class="text-gray-400">Der. connexion : </span>
+      <span class="font-bold">{{ profile.user.last_online_at ? $dayjs(profile.user.last_online_at).fromNow() : 'Jamais' }}</span>
     </div>
   </div>
 </template>

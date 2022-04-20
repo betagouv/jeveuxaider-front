@@ -71,6 +71,16 @@
         </div>
       </li>
     </ul>
+
+    <AlertDialog
+      v-if="warning"
+      :text="warning"
+      :is-open="showAlert"
+      theme="warning"
+      :title="warningTitle"
+      @confirm="handleAdd(tmpFiles); showAlert = false"
+      @cancel="() => { tmpFiles = null; showAlert = false }"
+    />
   </div>
 </template>
 
@@ -104,6 +114,14 @@ export default {
       type: String,
       default: 'default',
       validator: s => ['default', 'compact'].includes(s)
+    },
+    warning: {
+      type: String,
+      default: null
+    },
+    warningTitle: {
+      type: String,
+      default: 'Ajouter un fichier'
     }
   },
   data () {
@@ -111,7 +129,8 @@ export default {
       newFiles: [],
       existingFiles: this.defaultValue ?? [],
       errors: [],
-      dragging: false
+      dragging: false,
+      showAlert: false
     }
   },
   computed: {
@@ -138,10 +157,21 @@ export default {
   },
   methods: {
     onChange () {
-      this.addFiles(this.$refs.inputFile.files)
+      this.onDropOrChange(this.$refs.inputFile.files)
     },
     onDrop ($event) {
-      this.addFiles($event.dataTransfer.files)
+      this.onDropOrChange($event.dataTransfer.files)
+    },
+    onDropOrChange (files) {
+      if (this.warning) {
+        this.showAlert = true
+        this.tmpFiles = files
+      } else {
+        this.handleAdd(files)
+      }
+    },
+    handleAdd (files) {
+      this.addFiles(files)
       this.dragging = false
     },
     // The input need to have the correct files, hence the use of new dataTransfert instead of just an array.

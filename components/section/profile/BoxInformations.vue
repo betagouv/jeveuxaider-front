@@ -18,7 +18,7 @@
         <DescriptionListItem v-if="$store.getters.contextRole === 'admin'" term="User ID" :description="profile.user_id" />
         <DescriptionListItem term="Crée le" :description="$dayjs(profile.created_at).format('D MMMM YYYY à HH:mm')" />
         <!-- todo timeago il y a -->
-        <DescriptionListItem v-if="profile.user" term="Dernière co." :description="profile.user.last_online_at ? $dayjs(profile.user.last_online_at).fromNow() : null" />
+        <DescriptionListItem v-if="profile.user" term="Der. connexion" :description="profile.user.last_online_at ? $dayjs(profile.user.last_online_at).fromNow() : null" />
         <DescriptionListItem term="Nom" :description="profile.full_name" />
         <DescriptionListItem term="Email" :description="profile.email" />
         <DescriptionListItem term="Code postal" :description="profile.zip" />
