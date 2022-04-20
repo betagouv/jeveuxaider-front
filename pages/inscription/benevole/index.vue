@@ -333,7 +333,7 @@
         <h3
           class="text-center leading-8 pb-8 text-gray-900 font-medium text-3xl tracking-tight px-4"
         >
-          Plus de <b class="font-bold">7000 organisations</b> ont déjà rejoint
+          Plus de <b class="font-bold">8000 organisations</b> ont déjà rejoint
           JeVeuxAider.gouv.fr
         </h3>
         <div class="overflow-hidden">

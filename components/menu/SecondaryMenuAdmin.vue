@@ -44,6 +44,7 @@ export default {
           childrens: [
             { label: 'Missions prioritaires', to: '/admin/contenus/missions-prioritaires' },
             { label: "Domaines d'action", to: '/admin/contenus/domaines' },
+            { label: 'Activités', to: '/admin/contenus/activites' },
             { label: 'Modèles de mission', to: '/admin/contenus/modeles-mission' },
             { label: 'Territoires', to: '/admin/contenus/territoires' },
             { label: 'Reseaux', to: '/admin/contenus/reseaux' },

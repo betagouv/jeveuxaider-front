@@ -1,17 +1,9 @@
 <template>
   <section
-    class="section-promote bg-white"
-    :class="[{ 'bg-[#fafaff]': territoire.type == 'city' }]"
+    class="section-promote bg-transparent"
   >
     <div class="container px-4 mx-auto">
-      <div
-        :class="[
-          {
-            'transform -translate-y-32 -mb-32 lg:-translate-y-1/2':
-              territoire.type != 'city',
-          },
-        ]"
-      >
+      <div>
         <div class="shadow-lg rounded-2xl overflow-hidden">
           <div class="relative">
             <img
@@ -93,7 +85,7 @@
 <script>
 export default {
   props: {
-    territoire: {
+    activity: {
       type: Object,
       required: true
     }

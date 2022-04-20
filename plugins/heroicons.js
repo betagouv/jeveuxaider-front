@@ -36,7 +36,8 @@ import {
   ShareIcon,
   DotsVerticalIcon,
   AdjustmentsIcon,
-  VideoCameraIcon
+  VideoCameraIcon,
+  LockClosedIcon
 } from '@vue-hero-icons/outline'
 import {
   InformationCircleIcon,
@@ -53,6 +54,7 @@ import {
 } from '@vue-hero-icons/solid'
 
 const components = {
+  LockClosedIcon,
   ClockSolidIcon,
   CheckCircleSolidIcon,
   XCircleSolidIcon,

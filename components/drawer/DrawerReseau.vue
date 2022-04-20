@@ -1,5 +1,14 @@
 <template>
   <Drawer :is-open="Boolean(reseauId)" @close="$emit('close')">
+    <AlertDialog
+      v-if="reseau"
+      theme="danger"
+      title="Supprimer le réseau"
+      :text="`Vous êtes sur le point de supprimer le réseau ${reseau.name}.`"
+      :is-open="showAlert"
+      @confirm="handleConfirmDelete()"
+      @cancel="showAlert = false"
+    />
     <template #title>
       <Heading v-if="reseau" :level="3" class="text-jva-blue-500">
         <nuxt-link :to="`/admin/contenus/reseaux/${reseauId}`" class="hover:underline" target="_blank">
@@ -20,6 +29,7 @@
             Modifier
           </Button>
         </nuxt-link>
+        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
       </div>
 
       <div class="border-t -mx-6 my-6" />
@@ -63,6 +73,7 @@ export default {
   },
   data () {
     return {
+      showAlert: false,
       reseau: null,
       stats: null
     }
@@ -81,7 +92,13 @@ export default {
     reseauId: '$fetch'
   },
   methods: {
-
+    async handleConfirmDelete () {
+      await this.$axios.delete(`/reseaux/${this.reseauId}`).then((res) => {
+        this.showAlert = false
+        this.$emit('close')
+        this.$emit('refetch')
+      }).catch(() => {})
+    }
   }
 }
 </script>

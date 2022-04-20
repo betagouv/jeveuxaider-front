@@ -1,5 +1,14 @@
 <template>
   <Drawer :is-open="Boolean(ressourceId)" @close="$emit('close')">
+    <AlertDialog
+      v-if="ressource"
+      theme="danger"
+      title="Supprimer la ressource"
+      :text="`Vous êtes sur le point de supprimer la ressource ${ressource.name}.`"
+      :is-open="showAlert"
+      @confirm="handleConfirmDelete()"
+      @cancel="showAlert = false"
+    />
     <template #title>
       <Heading v-if="ressource" :level="3" class="text-jva-blue-500">
         {{ ressource.title }}
@@ -13,6 +22,7 @@
             Modifier
           </Button>
         </nuxt-link>
+        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
       </div>
       <div class="border-t -mx-6 my-6" />
       <div class="text-jva-blue-500 flex items-center text-sm font-bold cursor-pointer hover:text-jva-blue-400" @click="handleDownload">
@@ -41,7 +51,8 @@ export default {
   },
   data () {
     return {
-      ressource: null
+      ressource: null,
+      showAlert: false
     }
   },
   async fetch () {
@@ -65,6 +76,13 @@ export default {
       if (this.ressource.type === 'link') {
         window.open(this.ressource.link, '_blank').focus()
       }
+    },
+    async handleConfirmDelete () {
+      await this.$axios.delete(`/documents/${this.ressourceId}`).then((res) => {
+        this.showAlert = false
+        this.$emit('close')
+        this.$emit('refetch')
+      }).catch(() => {})
     }
   }
 }

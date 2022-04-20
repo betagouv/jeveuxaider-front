@@ -14,6 +14,18 @@
     <template #sidebar>
       <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
       <div class="flex flex-col gap-y-4 sticky top-8">
+        <Combobox
+          v-if="activities.length && ['admin'].includes($store.getters.contextRole)"
+          name="activity_id"
+          placeholder="Activité"
+          :options="activities"
+          clearable
+          attribute-key="id"
+          attribute-label="name"
+          variant="transparent"
+          :value="$route.query['filter[ofActivity]']"
+          @input="changeFilter('filter[ofActivity]', $event)"
+        />
         <InputAutocomplete
           v-if="['admin','tete_de_reseau','referent','referent_regional'].includes($store.getters.contextRole)"
           :value="$route.query['filter[mission.structure.name]']"
@@ -211,11 +223,23 @@ export default {
       return error({ statusCode: 403 })
     }
 
+    const { data: activities } = await $axios.get('/activities', {
+      params: {
+        pagination: 0,
+        'filter[is_published]': 1
+      }
+    })
+
     if (store.getters.contextRole === 'responsable' && store.getters.contextableId) {
       const res = await $axios.post(`/structures/${store.getters.contextableId}/waiting-participations`)
       return {
-        waitingParticipationsCount: res.data
+        waitingParticipationsCount: res.data,
+        activities: activities.data
       }
+    }
+
+    return {
+      activities: activities.data
     }
   },
   data () {

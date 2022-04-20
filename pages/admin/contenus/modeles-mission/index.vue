@@ -1,7 +1,7 @@
 
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerMissionTemplate :mission-template-id="drawerMissionTemplateId" @close="drawerMissionTemplateId = null" @updated="$fetch()" />
+    <DrawerMissionTemplate :mission-template-id="drawerMissionTemplateId" @close="drawerMissionTemplateId = null" @updated="$fetch()" @refetch="$fetch()" />
     <portal to="breadcrumb">
       <Breadcrumb
         :items="[
@@ -29,7 +29,8 @@
         </div>
       </template>
     </SectionHeading>
-    <div>
+
+    <SearchFilters>
       <Input
         name="search"
         placeholder="Recherche par mots clés..."
@@ -39,7 +40,7 @@
         clearable
         @input="changeFilter('filter[search]', $event)"
       />
-      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
+      <template #prefilters>
         <Checkbox
           :key="`toutes-${$route.fullPath}`"
           :option="{key: 'toutes', label:'Toutes'}"
@@ -103,33 +104,41 @@
           transparent
           @change="changeFilter('filter[published]', 0)"
         />
-      </div>
-    </div>
+      </template>
+    </SearchFilters>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <Card
         v-for="missionTemplate in queryResult.data"
         :key="missionTemplate.id"
         :title="missionTemplate.title"
-        :state-style="missionTemplate.state"
-        :state-text="$options.filters.label(missionTemplate.state, 'mission_template_workflow_states')"
+        :state-style="missionTemplate.published ? 'success' : 'error'"
+        :state-text="missionTemplate.published ? 'En ligne' : 'Hors ligne'"
         :description="missionTemplate.subtitle"
         :image-srcset="missionTemplate.photo ? missionTemplate.photo.urls.card : undefined"
         :image-src="missionTemplate.photo ? missionTemplate.photo.urls.original : undefined"
         @click.native="drawerMissionTemplateId = missionTemplate.id"
       >
         <template #badges>
-          <div v-if="missionTemplate.reseau" class="mb-2">
-            <Badge class="" color="gray-light">
+          <div class="mb-2">
+            <Badge v-if=" missionTemplate.reseau" class="" color="gray-light">
               {{ missionTemplate.reseau.name }}
             </Badge>
           </div>
         </template>
+        <div class="mt-3">
+          <Badge :color="missionTemplate.state" plain>
+            {{ missionTemplate.state | label('mission_template_workflow_states') }}
+          </Badge>
+        </div>
         <template #footer>
           <div
-            class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
+            class="border-t font-semibold text-sm text-center py-4"
+            :class="[
+              missionTemplate.published && missionTemplate.state === 'validated' ? 'text-gray-900' : 'text-gray-400'
+            ]"
           >
-            {{ $options.filters.formatNumber(missionTemplate.missions_count) }} {{ $options.filters.pluralize(missionTemplate.missions_count, 'mission', 'missions', false) }}
+            {{ $options.filters.formatNumber(missionTemplate.places_left) }} {{ $options.filters.pluralize(missionTemplate.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
           </div>
         </template>
       </Card>
@@ -149,11 +158,13 @@
 import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerMissionTemplate from '@/components/drawer/DrawerMissionTemplate'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default {
   components: {
     Card,
-    DrawerMissionTemplate
+    DrawerMissionTemplate,
+    SearchFilters
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',
@@ -170,7 +181,8 @@ export default {
       loading: false,
       endpoint: '/mission-templates',
       queryParams: {
-        include: 'photo'
+        include: 'photo,reseau',
+        append: 'places_left'
       },
       drawerMissionTemplateId: null
     }

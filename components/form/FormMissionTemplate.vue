@@ -48,6 +48,24 @@
                 :options="$labels.domaines"
               />
             </FormControl>
+            <template v-if="['admin'].includes($store.getters.contextRole)">
+              <FormControl
+                v-if="activities.length"
+                label="Activité"
+                html-for="activity_id"
+              >
+                <Combobox
+                  v-model="form.activity_id"
+                  :value="form.activity_id"
+                  name="activity_id"
+                  placeholder="Sélectionner une activité"
+                  :options="activities"
+                  clearable
+                  attribute-key="id"
+                  attribute-label="name"
+                />
+              </FormControl>
+            </template>
             <FormControl
               label="Description"
               html-for="description"
@@ -147,8 +165,14 @@ export default {
         description: string().required('La description est requise'),
         objectif: string().required('L\'objectif est requis'),
         domaine_id: string().required('Le domaine est requis')
-      })
+      }),
+      activities: []
     }
+  },
+  fetchOnServer: false,
+  async fetch () {
+    const { data: activities } = await this.$axios.get('/activities?pagination=0')
+    this.activities = activities.data.filter(item => item.is_published || item.id === this.missionTemplate.activity_id)
   },
   methods: {
     async handleSubmit (attributes) {
@@ -163,6 +187,7 @@ export default {
           ...attributes
         }
       }
+
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {

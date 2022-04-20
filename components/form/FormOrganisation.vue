@@ -561,6 +561,7 @@ export default {
     async onFetchReseauxSuggestions (value) {
       const res = await this.$axios.get('/reseaux', {
         params: {
+          'filter[is_published]': 1,
           'filter[search]': value,
           pagination: 6
         }

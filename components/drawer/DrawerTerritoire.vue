@@ -1,5 +1,14 @@
 <template>
   <Drawer :is-open="Boolean(territoireId)" @close="$emit('close')">
+    <AlertDialog
+      v-if="territoire"
+      theme="danger"
+      title="Supprimer le territoire"
+      :text="`Vous êtes sur le point de supprimer le territoire ${territoire.name}.`"
+      :is-open="showAlert"
+      @confirm="handleConfirmDelete()"
+      @cancel="showAlert = false"
+    />
     <template #title>
       <Heading v-if="territoire" :level="3" class="text-jva-blue-500">
         <nuxt-link :to="`/admin/contenus/territoires/${territoireId}`" class="hover:underline" target="_blank">
@@ -20,6 +29,7 @@
             Modifier
           </Button>
         </nuxt-link>
+        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
       </div>
 
       <div class="border-t -mx-6 my-6" />
@@ -73,7 +83,8 @@ export default {
   data () {
     return {
       territoire: null,
-      stats: null
+      stats: null,
+      showAlert: false
     }
   },
   async fetch () {
@@ -92,8 +103,15 @@ export default {
   methods: {
     async handleChangeState (option) {
       this.territoire.state = option.key
-      await this.$axios.put(`/territoires/${this.territoire.id}`, this.territoire).catch(() => {})
+      await this.$axios.put(`/territoires/${this.territoireId}`, this.territoire).catch(() => {})
       this.$fetch()
+    },
+    async handleConfirmDelete () {
+      await this.$axios.delete(`/territoires/${this.territoireId}`).then((res) => {
+        this.showAlert = false
+        this.$emit('close')
+        this.$emit('refetch')
+      }).catch(() => {})
     }
   }
 }
