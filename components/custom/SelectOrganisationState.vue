@@ -31,10 +31,10 @@ export default {
   },
   computed: {
     statesAvailable () {
-      const toStates = this.$options.filters.label(this.value, 'structure_workflow_states', 'to')
       if (this.$store.getters.contextRole === 'admin') {
         return this.$labels.structure_workflow_states
       }
+      const toStates = this.$options.filters.label(this.value, 'structure_workflow_states', 'to')
       return this.$labels.structure_workflow_states.filter(state => toStates.includes(state.key))
     }
   },
