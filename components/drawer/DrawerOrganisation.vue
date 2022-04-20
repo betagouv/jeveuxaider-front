@@ -1,5 +1,14 @@
 <template>
   <Drawer :is-open="Boolean(organisationId)" @close="$emit('close')">
+    <AlertDialog
+      v-if="organisation"
+      theme="danger"
+      title="Supprimer l'organisation"
+      :text="`Vous êtes sur le point de supprimer l'organisation ${organisation.name}.`"
+      :is-open="showAlert"
+      @confirm="handleConfirmDelete()"
+      @cancel="showAlert = false"
+    />
     <template #title>
       <Heading v-if="organisation" :level="3" class="text-jva-blue-500">
         <nuxt-link :to="`/admin/organisations/${organisationId}`" class="hover:underline">
@@ -26,6 +35,7 @@
               Modifier
             </Button>
           </nuxt-link>
+          <Button v-if="['admin'].includes($store.getters.contextRole)" variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
         </div>
         <div class="border-t -mx-6 my-6" />
         <div class="text-sm  uppercase font-semibold text-gray-600">
@@ -83,6 +93,7 @@ export default {
   },
   data () {
     return {
+      showAlert: false,
       organisation: null,
       organisationStats: null,
       loading: false
@@ -108,6 +119,13 @@ export default {
       await this.$axios.put(`/structures/${this.organisation.id}`, this.organisation).catch(() => {})
       this.$fetch()
       this.$emit('updated')
+    },
+    async handleConfirmDelete () {
+      await this.$axios.delete(`/structures/${this.organisationId}`).then((res) => {
+        this.showAlert = false
+        this.$emit('close')
+        this.$emit('refetch')
+      }).catch(() => {})
     }
   }
 }
