@@ -157,7 +157,7 @@ export default {
           )
         )
       } else {
-        return this.mission.has_places_left === false
+        return this.mission.has_places_left === false || this.mission.places_left === 0
           ? 'Complet'
           : 'Plusieurs bénévoles recherchés'
       }
