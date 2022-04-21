@@ -49,7 +49,7 @@
               srcset="/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x"
               sizes="(min-width: 1024px) 384px, 100vw"
               alt="Organisation"
-              class="w-full object-cover object-top min-h-[183px]"
+              class="w-full object-cover object-top"
               width="630"
               height="300"
               data-not-lazy
