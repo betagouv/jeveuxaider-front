@@ -60,7 +60,7 @@ export default {
     }
   },
   async fetch () {
-    const { data: missions } = await this.$axios.get('/missions/prioritaires')
+    const { data: missions } = await this.$axios.get('/missions/prioritaires?filter[available]=true')
     this.missions = missions.data
   }
 }

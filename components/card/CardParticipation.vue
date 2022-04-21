@@ -37,18 +37,10 @@
           {{ participation.mission.structure.name }}
         </div>
       </div>
-      <!-- <div v-if="display === 'benevole'" class="hidden lg:flex pt-4 border-t border-dashed text-sm">
-        <div class="font-medium">
-          {{ participation.mission.places_left | pluralize('place restante', 'places restantes') }}
-        </div>
-        <div class="ml-auto text-gray-500">
-          {{ participation.mission.participations_max - participation.mission.places_left }}/{{ participation.mission.participations_max }}
-        </div>
-      </div> -->
       <div class="hidden lg:flex pt-4 border-t border-dashed">
         <div class="flex space-x-1 text-sm truncate max-w-full text-gray-600">
           <span class="">Responsable :</span>
-          <span class="font-bold truncate">{{ participation.mission.responsable.full_name }}</span>
+          <span v-if="participation.mission.responsable" class="font-bold truncate">{{ participation.mission.responsable.full_name }}</span>
         </div>
       </div>
     </div>

@@ -113,7 +113,7 @@ export default {
             iconVariant: 'warning',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'participation', 'participations', false)}</b> en attente de validation`,
             subtitle: 'Des bénévoles attendent votre réponse pour s\'engager.',
-            link: '/admin/participations'
+            link: this.$store.getters.contextRole === 'responsable' ? `/admin/participations?filter[state]=En attente de validation&filter[ofResponsable]=${this.$store.getters.profile.id}` : '/admin/participations?filter[state]=En attente de validation'
           }
         case 'participations_in_progress':
           return {
@@ -121,7 +121,7 @@ export default {
             iconVariant: 'warning',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'participation', 'participations', false)}</b> en cours de traitement`,
             subtitle: 'Des bénévoles attendent votre réponse pour s\'engager.',
-            link: '/admin/participations'
+            link: this.$store.getters.contextRole === 'responsable' ? `/admin/participations?filter[state]=En cours de traitement&filter[ofResponsable]=${this.$store.getters.profile.id}` : '/admin/participations?filter[state]=En attente de validation'
           }
         case 'snu_waiting_validation':
           return {

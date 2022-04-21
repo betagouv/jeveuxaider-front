@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerTerritoire :territoire-id="drawerTerritoireId" @close="drawerTerritoireId = null" />
+    <DrawerTerritoire :territoire-id="drawerTerritoireId" @close="drawerTerritoireId = null" @refetch="$fetch" />
     <portal to="breadcrumb">
       <Breadcrumb
         :items="[
@@ -32,7 +32,8 @@
         </div>
       </template>
     </SectionHeading>
-    <div>
+
+    <SearchFilters>
       <Input
         name="search"
         placeholder="Recherche par mots clés..."
@@ -42,7 +43,7 @@
         clearable
         @input="changeFilter('filter[search]', $event)"
       />
-      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
+      <template #prefilters>
         <Checkbox
           :key="`toutes-${$route.fullPath}`"
           :option="{key: 'toutes', label:'Toutes'}"
@@ -79,24 +80,52 @@
           transparent
           @change="changeFilter('filter[type]', 'city')"
         />
-      </div>
-    </div>
+      </template>
+      <template #sorts>
+        <Sort
+          key="sort"
+          name="sort"
+          transparent
+          :value="$route.query['sort'] ? $route.query['sort'] : '-created_at'"
+          :options="[
+            { key: '-created_at', label: 'Les plus récentes' },
+            { key: 'created_at', label: 'Les plus anciennes' },
+            { key: '-updated_at', label: 'Date de denière modification' },
+          ]"
+          @input="changeFilter('sort', $event)"
+        />
+      </template>
+    </SearchFilters>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <Card
         v-for="territoire in queryResult.data"
         :key="territoire.id"
         :title="territoire.name"
-        :state-style="territoire.state"
-        :state-text="$options.filters.label(territoire.state, 'mission_template_workflow_states')"
+        :state-style="territoire.is_published ? 'success' : 'error'"
+        :state-text="territoire.is_published ? 'En ligne' : 'Hors ligne'"
         :description="territoire.department ? `${territoire.department} - ${$options.filters.label(territoire.department,'departments')}` : null"
         :image-srcset="territoire.banner ? territoire.banner.urls.desktop : undefined"
         :image-src="territoire.banner ? territoire.banner.urls.original : undefined"
         @click.native="drawerTerritoireId = territoire.id"
       >
+        <div class="mt-4 text-[13px] text-gray-500">
+          Complétion: <span class="font-semibold">{{ territoire.completion_rate }}%</span>
+        </div>
+        <div class="mt-4 flex items-center">
+          <Badge :color="territoire.state" plain>
+            {{ territoire.state | label('territoire_workflow_states') }}
+          </Badge>
+          <div v-if="['admin'].includes($store.getters.contextRole)" class="text-gray-500 text-xs flex-shrink-0 ml-2">
+            ID <span class="font-semibold">{{ territoire.id }}</span>
+          </div>
+        </div>
         <template #footer>
           <div
-            class="border-t text-gray-900 font-semibold  text-sm text-center py-4"
+            class="border-t font-semibold  text-sm text-center py-4"
+            :class="[
+              territoire.is_published && territoire.state === 'validated' ? 'text-gray-900' : 'text-gray-400'
+            ]"
           >
             {{ $options.filters.formatNumber(territoire.places_left) }} {{ $options.filters.pluralize(territoire.places_left, 'bénévole recherché', 'bénévoles recherchés', false) }}
           </div>
@@ -118,11 +147,13 @@ import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerTerritoire from '@/components/drawer/DrawerTerritoire'
 import MixinExport from '@/mixins/export'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default {
   components: {
     Card,
-    DrawerTerritoire
+    DrawerTerritoire,
+    SearchFilters
   },
   mixins: [QueryBuilder, MixinExport],
   layout: 'admin-with-sidebar-menu',
@@ -134,7 +165,7 @@ export default {
       exportEndpoint: '/export/territoires',
       queryParams: {
         include: 'banner',
-        append: 'places_left'
+        append: ['places_left', 'completion_rate']
       },
       drawerTerritoireId: null,
       drawerTerritoire: null

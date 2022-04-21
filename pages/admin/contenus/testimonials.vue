@@ -17,7 +17,7 @@
         false
       )}`"
     />
-    <div>
+    <SearchFilters>
       <Input
         name="search"
         placeholder="Rechercher par mots clés, email, nom"
@@ -27,7 +27,7 @@
         clearable
         @input="changeFilter('filter[search]', $event)"
       />
-      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
+      <template #prefilters>
         <Checkbox
           :key="`toutes-${$route.fullPath}`"
           :option="{key: 'toutes', label:'Toutes'}"
@@ -47,8 +47,8 @@
           transparent
           @change="changeFilter('filter[grade]', option.key)"
         />
-      </div>
-    </div>
+      </template>
+    </SearchFilters>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <CardTemoignage
@@ -73,11 +73,13 @@
 import QueryBuilder from '@/mixins/query-builder'
 import CardTemoignage from '@/components/card/CardTemoignage.vue'
 import DrawerTemoignage from '@/components/drawer/DrawerTemoignage.vue'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default {
   components: {
     CardTemoignage,
-    DrawerTemoignage
+    DrawerTemoignage,
+    SearchFilters
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',

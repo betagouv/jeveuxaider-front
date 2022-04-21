@@ -173,6 +173,18 @@ export default {
 
         case 'any_public':
           return require('@/static/images/icons/tous_public.svg?raw')
+
+        case 'refugees':
+          return require('@/static/images/icons/refugies.svg?raw')
+
+        case 'people_being_excluded':
+          return require('@/static/images/icons/exclusion.svg?raw')
+
+        case 'people_sick':
+          return require('@/static/images/icons/malades.svg?raw')
+
+        default:
+          return require('@/static/images/icons/tous_public.svg?raw')
       }
     },
     goTo (url) {

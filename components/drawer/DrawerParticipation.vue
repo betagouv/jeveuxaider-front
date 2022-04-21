@@ -11,7 +11,7 @@
       <div v-else class="mt-4 font-medium text-gray-800">
         {{ participation.state }}
       </div>
-      <template v-if="participation.conversation && ['admin','responsable'].includes($store.getters.contextRole)">
+      <template v-if="participation.conversation && canEditStatut">
         <div class="border-t -mx-6 my-6" />
         <nuxt-link :to="`/messages/${participation.conversation.id}`" class="text-jva-blue-500 flex items-center text-sm font-bold">
           <ChatAltIcon class="h-4 w-4 mr-4" /> Accéder à la messagerie
@@ -71,11 +71,11 @@ export default {
   methods: {
     async handleChangeState (payload) {
       this.participation.state = payload.key
-      const { data: participation } = payload.key == 'Refusée'
+      payload.key == 'Refusée'
         ? await this.$axios.put(`/participations/${this.participation.id}/decline`, payload.form).catch(() => {})
         : await this.$axios.put(`/participations/${this.participation.id}`, this.participation).catch(() => {})
       this.$fetch()
-      this.$emit('updated', participation)
+      this.$emit('updated')
     }
   }
 }
