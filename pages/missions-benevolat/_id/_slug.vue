@@ -94,13 +94,13 @@
 
         <Box class="overflow-hidden mt-6 lg:w-96 lg:mt-0 z-20 flex-shrink-0 sticky top-6" :padding="false">
           <img
-            :srcset="illustration"
+            :srcset="illustrationSrcset"
+            :src="illustrationSrc"
             sizes="(min-width: 1024px) 384px, 100vw"
             alt=""
-            class="w-full object-cover object-top min-h-[183px]"
+            class="w-full object-cover object-top"
             width="630"
             height="300"
-            data-not-lazy
             @error="$event.target.srcset = '/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x'"
           >
 
@@ -170,9 +170,8 @@
               </template>
             </div>
 
-            <div class="px-8 sm:px-32 lg:px-8 mt-4 sm:mt-8">
+            <div v-if="dates.length" class="px-8 sm:px-32 lg:px-8 mt-4 sm:mt-8">
               <div
-                v-if="dates.length"
                 class="grid sm:divide-x border-b pb-3 sm:pb-0"
                 :class="[{ 'sm:grid-cols-2': dates.length == 2 }]"
               >
@@ -349,7 +348,7 @@ export default {
         {
           hid: 'og:image',
           property: 'og:image',
-          content: this.illustration
+          content: this.illustrationSrcset
         }
       ]
     }
@@ -420,9 +419,14 @@ export default {
 
       return portraits
     },
-    illustration () {
-      return this.mission.structure.override_image1?.urls.large ??
-        this.mission.structure.illustrations[0]?.urls.large ??
+    illustrationSrcset () {
+      return this.mission.template?.photo?.urls?.large ??
+        this.mission.illustrations?.[0]?.urls?.large ??
+        '/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x'
+    },
+    illustrationSrc () {
+      return this.mission.template?.photo?.urls?.original ??
+        this.mission.illustrations?.[0]?.urls?.original ??
         '/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x'
     }
   }
