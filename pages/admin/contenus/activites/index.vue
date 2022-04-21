@@ -94,6 +94,9 @@
             </Badge>
           </div>
         </template>
+        <div class="mt-4 text-[13px] text-gray-500">
+          Complétion: <span class="font-semibold">{{ activity.completion_rate }}%</span>
+        </div>
         <template #footer>
           <div
             class="border-t font-semibold  text-sm text-center py-4"
@@ -140,7 +143,7 @@ export default {
       endpoint: '/activities',
       queryParams: {
         include: 'banner,domaines',
-        append: 'places_left'
+        append: ['places_left', 'completion_rate']
       },
       drawerActivityId: null
     }

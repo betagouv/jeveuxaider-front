@@ -1,7 +1,7 @@
 <template>
   <div>
     <Button size="lg" icon="CheckIcon" :loading="loading" @click.native="showDialog = true">
-      Validation en masse
+      Validation en masse ({{ count }})
     </Button>
     <AlertDialog
       theme="warning"
@@ -37,6 +37,7 @@ export default {
       this.loading = true
       const res = await this.$axios.post(`/structures/${this.structureId}/validate-waiting-participations`).catch(() => {})
       if (res) {
+        this.$emit('mass-validated')
         this.$toast.success(`Les ${this.count} participation(s) en attente ont été validée(s)`)
       }
       this.showDialog = false

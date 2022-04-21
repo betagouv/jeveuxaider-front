@@ -3,7 +3,8 @@
     <DrawerParticipation
       :participation-id="drawerParticipationId"
       @close="drawerParticipationId = null"
-      @updated="handleUpdate"
+      @updated="onDrawerUpdated()"
+      @refetch="$fetch()"
     />
 
     <template #breadcrumb>
@@ -67,6 +68,19 @@
           clearable
           @input="changeFilter('filter[mission.department]', $event)"
         />
+        <SelectAdvanced
+          v-if="responsables.length && ['responsable'].includes($store.getters.contextRole)"
+          :key="`responsable-${$route.fullPath}`"
+          name="responsable"
+          placeholder="Responsable"
+          :options="responsables"
+          :value="$route.query['filter[ofResponsable]']"
+          variant="transparent"
+          attribute-key="id"
+          attribute-label="full_name"
+          clearable
+          @input="changeFilter('filter[ofResponsable]', $event)"
+        />
         <Input
           name="mission.zip"
           placeholder="Code Postal"
@@ -108,7 +122,12 @@
             <Button variant="white" icon="DownloadIcon" size="lg" :loading="exportLoading" @click.native="handleExport">
               Exporter
             </Button>
-            <ButtonMassValidation v-if="$store.getters.contextRole === 'responsable' && waitingParticipationsCount" :structure-id="$store.getters.contextableId" :count="waitingParticipationsCount" />
+            <ButtonMassValidation
+              v-if="$store.getters.contextRole === 'responsable' && waitingParticipationsCount"
+              :structure-id="$store.getters.contextableId"
+              :count="waitingParticipationsCount"
+              @mass-validated="onDrawerUpdated()"
+            />
           </div>
         </template>
       </Sectionheading>
@@ -230,16 +249,18 @@ export default {
       }
     })
 
-    if (store.getters.contextRole === 'responsable' && store.getters.contextableId) {
-      const res = await $axios.post(`/structures/${store.getters.contextableId}/waiting-participations`)
-      return {
-        waitingParticipationsCount: res.data,
-        activities: activities.data
-      }
-    }
+    const waitingParticipationsCountResponse = store.getters.contextRole === 'responsable' && store.getters.contextableId
+      ? await $axios.post(`/structures/${store.getters.contextableId}/waiting-participations`)
+      : null
+
+    const responsablesResponse = store.getters.contextRole === 'responsable' && store.getters.contextableId
+      ? await $axios.post(`/structures/${store.getters.contextableId}/responsables`)
+      : null
 
     return {
-      activities: activities.data
+      activities: activities.data,
+      responsables: responsablesResponse ? responsablesResponse.data : [],
+      waitingParticipationsCount: waitingParticipationsCountResponse ? waitingParticipationsCountResponse.data : null
     }
   },
   data () {
@@ -256,6 +277,12 @@ export default {
     }
   },
   methods: {
+    onDrawerUpdated () {
+      this.$fetch()
+      if (this.$store.getters.contextRole === 'responsable') {
+        this.getWaitingValidationParticipationsCount()
+      }
+    },
     async onFetchSuggestionsOrga (value) {
       const res = await this.$axios.get('/structures', {
         params: {
@@ -265,6 +292,10 @@ export default {
       })
       this.autocompleteOptionsOrga = res.data.data
     },
+    async getWaitingValidationParticipationsCount () {
+      const res = await this.$axios.post(`/structures/${this.$store.getters.contextableId}/waiting-participations`)
+      this.waitingParticipationsCount = res.data
+    },
     async onFetchSuggestionsMission (value) {
       const res = await this.$axios.get('/missions', {
         params: {
@@ -273,10 +304,6 @@ export default {
         }
       })
       this.autocompleteOptionsMission = res.data.data
-    },
-    handleUpdate (payload) {
-      const index = this.queryResult.data.findIndex(participation => participation.id === payload.id)
-      this.queryResult.data.splice(index, 1, payload)
     }
   }
 }
