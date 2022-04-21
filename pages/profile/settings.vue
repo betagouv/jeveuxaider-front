@@ -34,7 +34,7 @@
           Désinscription
         </Heading>
         <div class="text-gray-600 mb-8">
-          Vous souhaitez désactiver votre compte ?<br><br> Attention, cette action est irréversible et toutes vos données de la plateforme JeVeuxAider.gouv.fr seront anonymisées.
+          Vous souhaitez désactiver votre compte&nbsp;?<br><br> Attention, cette action est irréversible et toutes vos données de la plateforme JeVeuxAider.gouv.fr seront anonymisées.
         </div>
         <div class="ml-auto">
           <Button variant="white" size="lg" type="submit" @click.native="() => showAlert = true">
@@ -62,7 +62,6 @@ export default {
   methods: {
     async handleConfirmDeleteUser () {
       await this.$axios.post('/user/anonymize').catch(() => {})
-      this.$router.push('/')
       this.$store.dispatch('auth/logout')
     }
   }

@@ -50,12 +50,6 @@ export default {
     bodyAttrs: {
       class: 'full-height-layout'
     }
-  },
-  methods: {
-    handleLogout () {
-      this.$router.push('/')
-      this.$store.dispatch('auth/logout')
-    }
   }
 }
 </script>
