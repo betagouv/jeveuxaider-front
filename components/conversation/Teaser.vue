@@ -23,7 +23,7 @@
           </div>
           <span
             v-if="!hasRead"
-            class="w-2.5 h-2.5 mr-4 bg-jva-red-500 rounded-full"
+            class="flex-none w-2.5 h-2.5 mr-4 bg-jva-red-500 rounded-full"
             aria-hidden="true"
           />
         </div>
@@ -100,20 +100,25 @@ export default {
         .join(', ')
     },
     hasRead () {
+      console.log('hasRead')
       // Si le current user n'est pas dans la conversation, on affiche les messages comme lus
       if (!this.currentConversationUser) {
         return true
       }
 
       if (this.currentConversationUser.pivot.read_at == null) {
+        console.log('NULL ?')
         return false
       }
 
       if (this.$dayjs(this.currentConversationUser.pivot.read_at).isSame(this.$dayjs(this.conversation.updated_at))) {
+        console.log('SAME')
         return true
       }
 
       if (this.$dayjs(this.currentConversationUser.pivot.read_at).isAfter(this.$dayjs(this.conversation.updated_at))) {
+        console.log('AFTER')
+
         return true
       }
 

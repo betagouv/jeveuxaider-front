@@ -18,6 +18,8 @@ export default {
     }
 
     store.commit('messaging/setConversation', conversation)
+    store.commit('messaging/replaceConversationInConversations', conversation)
+    store.dispatch('messaging/fetchUnreadMessages')
   },
   mounted () {
     if (this.$store.getters['messaging/isMobile']) {
