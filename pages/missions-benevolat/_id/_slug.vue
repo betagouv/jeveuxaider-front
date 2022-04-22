@@ -301,6 +301,9 @@ export default {
     const { data: mission } = await $axios.get(`/missions/${params.id}`).catch((err) => {
       return error({ statusCode: err.response.status, message: err.response.statusText })
     })
+    if (!mission) {
+      return error({ statusCode: 404 })
+    }
 
     if (!(mission.structure.state === 'Validée' && ['Validée', 'Terminée'].includes(mission.state))) {
       if (store.getters.isLogged) {
