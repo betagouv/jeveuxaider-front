@@ -100,25 +100,20 @@ export default {
         .join(', ')
     },
     hasRead () {
-      console.log('hasRead')
       // Si le current user n'est pas dans la conversation, on affiche les messages comme lus
       if (!this.currentConversationUser) {
         return true
       }
 
       if (this.currentConversationUser.pivot.read_at == null) {
-        console.log('NULL ?')
         return false
       }
 
       if (this.$dayjs(this.currentConversationUser.pivot.read_at).isSame(this.$dayjs(this.conversation.updated_at))) {
-        console.log('SAME')
         return true
       }
 
       if (this.$dayjs(this.currentConversationUser.pivot.read_at).isAfter(this.$dayjs(this.conversation.updated_at))) {
-        console.log('AFTER')
-
         return true
       }
 
