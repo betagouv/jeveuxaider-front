@@ -8,18 +8,22 @@
       <h1 class="text-xl sm:text-2xl lg:text-3xl font-black">
         Trouver une mission de bénévolat
       </h1>
-      <div>{{ search.nbHits }} missions disponibles</div>
+      <div>{{ searchResult.nbHits }} missions disponibles</div>
       <div>
-        <input id="presentiel" v-model="picked" type="radio" value="Mission en présentiel" @click="addFilter('type', 'Mission en présentiel')">
+        <input id="presentiel" v-model="type" type="radio" value="Mission en présentiel" @click="addFilter('type', 'Mission en présentiel')">
         <label for="presentiel">Près de chez moi</label>
-        <input id="a_distance" v-model="picked" type="radio" value="Mission à distance" @click="addFilter('type', 'Mission à distance')">
+        <input id="a_distance" v-model="type" type="radio" value="Mission à distance" @click="addFilter('type', 'Mission à distance')">
         <label for="a_distance">En télébénévolat</label>
       </div>
-      <FacetFilter v-if="search.facets" label="Template" facet-name="template_subtitle" :facets="search.facets.template_subtitle" />
 
+      <div v-if="searchResult.facets" class=" grid grid-cols-3 gap-4 mt-6">
+        <FacetFilter label="Template" facet-name="template_subtitle" :facets="facetResults('template_subtitle')" />
+        <FacetFilter label="Domaine" facet-name="domaines" :facets="facetResults('domaines')" />
+        <FacetFilter label="Département" facet-name="department_name" :facets="facetResults('department_name')" />
+      </div>
       <div class="flex gap-4 flex-wrap">
         <nuxt-link
-          v-for="item in search.hits"
+          v-for="item in searchResult.hits"
           :key="item.id"
           class="flex flex-col flex-1 w-[300px] hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px]"
           :to="
@@ -47,21 +51,55 @@ export default {
   },
   data () {
     return {
-      search: [],
-      picked: null
+      searchResult: {},
+      searchFacetResults: [],
+      type: null,
+      indexName: 'local_jeremy_covid_missions',
+      facetFilters: ['type', 'template_subtitle', 'department_name', 'domaines']
     }
   },
   async fetch () {
-    // Get parameters from URL
-    const algoliaQuery = this.urlToAlgoliaQuery()
-    const search = await this.$algolia.search('', {
-      facetFilters: algoliaQuery.facetFilters,
-      facets: ['template_subtitle']
+    const queries = [{
+      indexName: this.indexName,
+      query: '',
+      params: {
+        facetFilters: this.activeFacets,
+        facets: ['template_subtitle', 'department_name', 'domaines']
+      }
+    }]
+
+    this.activeFacets.forEach((facetFilter, key) => {
+      const facetName = facetFilter[0].split(':')[0]
+      queries.push({
+        indexName: this.indexName,
+        query: '',
+        params: {
+          facetFilters: this.activeFacets.filter(facetFilter => facetFilter[0].split(':')[0] != facetName),
+          facets: [facetName],
+          hitsPerPage: 1,
+          attributesToRetrieve: [],
+          attributesToSnippet: [],
+          attributesToHighlight: [],
+          clickAnalytics: false
+
+        }
+      })
     })
-    console.log(this.$algolia)
-    const searchForFacetValues = await this.$algolia.searchForFacetValues('template_subtitle')
-    console.log(searchForFacetValues)
-    this.search = search
+
+    const { results } = await this.$algolia.multipleQueries(queries)
+    this.searchResult = results[0]
+    this.searchFacetResults = results.slice(1)
+  },
+  computed: {
+    activeFacets () {
+      const activeFacets = this.facetFilters.filter(facetName => this.$route.query[facetName])
+
+      return activeFacets.map((facetName) => {
+        return this.$route.query[facetName].split('|').map((facetValue) => {
+          return `${facetName}:${facetValue}`
+        })
+      })
+    }
   },
   watch: {
     $route: '$fetch'
@@ -73,28 +111,12 @@ export default {
         query: { ...this.$route.query, [filterName]: filterValue, page: undefined }
       })
     },
-    handleClickCard () {
-      // window.plausible &&
-      // window.plausible('Click Card Missions - Liste résultat', {
-      //   props: { isLogged: this.$store.getters.isLogged }
-      // })
-    },
-    urlToAlgoliaQuery () {
-      const algoliaQuery = {}
+    facetResults (facetName) {
+      const searchFacetResult = this.searchFacetResults.filter((searchFacetResult) => {
+        return Object.keys(searchFacetResult.facets).includes(facetName)
+      })[0]
 
-      console.log('route query', this.$route.query)
-      let facetFilters = ['type', 'template_subtitle']
-      // On garde seulement les filtres dans l'url
-      facetFilters = facetFilters.filter(facetName => this.$route.query[facetName])
-
-      // On formate la query pour Algolia
-      algoliaQuery.facetFilters = facetFilters.map((facetName) => {
-        return this.$route.query[facetName].split('|').map((facetValue) => {
-          return `${facetName}:${facetValue}`
-        })
-      })
-      console.log(algoliaQuery)
-      return algoliaQuery
+      return searchFacetResult ? searchFacetResult.facets[facetName] : this.searchResult.facets[facetName]
     }
   }
 }
