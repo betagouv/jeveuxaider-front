@@ -109,7 +109,13 @@
                 is-model
               />
             </FormControl>
-            <FormControl label="Publics bénéficiaires" html-for="publics_beneficiaires" required :error="errors.publics_beneficiaires">
+            <FormControl
+              v-if="form.statut_juridique !== 'Collectivité'"
+              label="Publics bénéficiaires"
+              html-for="publics_beneficiaires"
+              required
+              :error="errors.publics_beneficiaires"
+            >
               <CheckboxGroup
                 v-model="form.publics_beneficiaires"
                 name="publics_beneficiaires"
@@ -117,27 +123,31 @@
                 :options="$labels.mission_publics_beneficiaires"
               />
             </FormControl>
-            <Heading :level="3" class="mb-8">
-              Votre organisation en quelques mots
-            </Heading>
-            <FormControl
-              label="À propos de votre organisation"
-              label-suffix="(200 caractères min)"
-              html-for="description"
-              required
-              :error="errors.description"
-            >
-              <FormHelperText class="pb-4">
-                Cette description doit expliquer votre raison d'être et susciter le désir d'engagement des milliers de bénévoles découvrant votre organisation sur la plateforme JeVeuxAider.gouv.fr. Cette description apparaîtra sur votre future page vitrine et sur l'ensemble de vos missions de bénévolat publiées sur la plateforme.
-              </FormHelperText>
-              <Textarea
-                v-model="form.description"
-                name="name"
-                placeholder="Dites-nous tout à propos de votre organisation..."
-                :rows="10"
-                @blur="validate('description')"
-              />
-            </FormControl>
+
+            <template v-if="!['Collectivité', 'Organisation publique'].includes(form.statut_juridique)">
+              <Heading :level="3" class="mb-8">
+                Votre organisation en quelques mots
+              </Heading>
+              <FormControl
+                label="À propos de votre organisation"
+                label-suffix="(200 caractères min)"
+                html-for="description"
+                required
+                :error="errors.description"
+              >
+                <FormHelperText class="pb-4">
+                  Cette description doit expliquer votre raison d'être et susciter le désir d'engagement des milliers de bénévoles découvrant votre organisation sur la plateforme JeVeuxAider.gouv.fr. Cette description apparaîtra sur votre future page vitrine et sur l'ensemble de vos missions de bénévolat publiées sur la plateforme.
+                </FormHelperText>
+                <Textarea
+                  v-model="form.description"
+                  name="name"
+                  placeholder="Dites-nous tout à propos de votre organisation..."
+                  :rows="10"
+                  @blur="validate('description')"
+                />
+              </FormControl>
+            </template>
+
             <Heading :level="3" class="mb-8">
               Votre organisation sur Internet
             </Heading>
@@ -217,6 +227,7 @@
                 />
               </FormControl>
               <FormControl
+                v-if="!['Organisation publique', 'Organisation privée'].includes(form.statut_juridique)"
                 label="URL vers la plateforme de dons"
                 html-for="donation"
                 :error="errors.donation"
@@ -231,7 +242,7 @@
             </div>
           </div>
         </Box>
-        <Box v-if="form.statut_juridique !== 'Collectivité'">
+        <Box v-if="!['Collectivité', 'Organisation privée'].includes(form.statut_juridique)">
           <Heading :level="3" class="mb-8">
             Réseau national ou territorial
           </Heading>
@@ -513,14 +524,18 @@ export default {
       form: {
         ...this.structure
       },
-      formSchema: object({
+      showAlert: false,
+      autocompleteReseauxOptions: []
+    }
+  },
+  computed: {
+    formSchema () {
+      let schema = object({
         name: string().required('Un nom est requis'),
         statut_juridique: string().required('Un statut juridique est requis'),
         department: string().nullable().required('Un département est requis'),
         address: string().nullable().required('Une adresse est requise'),
         domaines: array().min(1, 'Au moins 1 domaine d\'action'),
-        publics_beneficiaires: array().min(1, 'Au moins 1 public bénéficiaire'),
-        description: string().nullable().min(200, 'La description doit contenir au moins 200 caractères').required('Une description est requise'),
         email: string().nullable().email("Le format de l'email public est incorrect"),
         website: string().nullable().url(),
         facebook: string().nullable().url(),
@@ -528,12 +543,22 @@ export default {
         instagram: string().nullable().url(),
         donation: string().nullable().url(),
         phone: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').nullable()
-      }),
-      showAlert: false,
-      autocompleteReseauxOptions: []
-    }
-  },
-  computed: {
+      })
+
+      if (this.form.statut_juridique !== 'Collectivité') {
+        schema = schema.concat(object({
+          publics_beneficiaires: array().min(1, 'Au moins 1 public bénéficiaire')
+        }))
+      }
+
+      if (!['Collectivité', 'Organisation publique'].includes(this.form.statut_juridique)) {
+        schema = schema.concat(object({
+          description: string().nullable().min(200, 'La description doit contenir au moins 200 caractères').required('Une description est requise')
+        }))
+      }
+
+      return schema
+    },
     mediaPickerDomaineIds () {
       return this.form.domaines.map(domaine => domaine.id)
     }
