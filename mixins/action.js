@@ -113,7 +113,7 @@ export default {
             iconVariant: 'danger',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'mission', 'missions', false)}</b> dont la date de fin est passée`,
             subtitle: 'N\'oubliez pas de mettre à jour les dates de vos missions.',
-            link: '/admin/missions'
+            link: '/admin/missions?filter[date]=over&filter[state]=Validée'
           }
         case 'mission_new':
           return {
