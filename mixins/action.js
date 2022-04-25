@@ -51,6 +51,14 @@ export default {
             subtitle: 'Elles n\'attendent que vous pour pouvoir publier leurs missions !',
             link: '/admin/organisations?filter[state]=En attente de validation'
           }
+        case 'organisations_in_progress':
+          return {
+            icon: '✍',
+            iconVariant: 'warning',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'organisation', 'organisations', false)}</b> en cours de traitement`,
+            subtitle: 'Elles n\'attendent que vous pour pouvoir publier leurs missions !',
+            link: '/admin/organisations?filter[state]=En cours de traitement'
+          }
         case 'mission_template_waiting_validation':
           return {
             icon: '✊',
@@ -91,6 +99,14 @@ export default {
             subtitle: 'Modérez les missions proposées afin qu\'elles soient publiées.',
             link: '/admin/missions?filter[state]=En attente de validation'
           }
+        case 'missions_in_progress':
+          return {
+            icon: '✍️',
+            iconVariant: 'warning',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'mission', 'missions', false)}</b> en cours de traitement`,
+            subtitle: 'Modérez les missions proposées afin qu\'elles soient publiées.',
+            link: '/admin/missions?filter[state]=En cours de traitement'
+          }
         case 'missions_outdated':
           return {
             icon: '⏰️',
@@ -117,7 +133,7 @@ export default {
           }
         case 'participations_in_progress':
           return {
-            icon: '✊',
+            icon: '⌛',
             iconVariant: 'warning',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'participation', 'participations', false)}</b> en cours de traitement`,
             subtitle: 'Des bénévoles attendent votre réponse pour s\'engager.',
