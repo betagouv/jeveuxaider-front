@@ -28,6 +28,7 @@
       <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
           <FormControl
+            v-if="!['Collectivité', 'Organisation publique'].includes(form.statut_juridique)"
             label="À propos de votre organisation"
             label-suffix="(200 caractères min)"
             html-for="description"
@@ -119,7 +120,7 @@
             />
           </FormControl>
           <FormControl
-            v-if="!form.territoire"
+            v-if="!form.territoire && !['Organisation publique', 'Organisation privée'].includes(form.statut_juridique)"
             label="URL vers la plateforme de dons"
             html-for="donation"
             :error="errors.donation"
@@ -167,17 +168,7 @@ export default {
   },
   data () {
     return {
-      loading: false,
-      formSchema: object({
-        description: string().nullable().min(200, 'La description doit contenir au moins 200 caractères').required('Une description est requise'),
-        email: string().nullable().email("Le format de l'email public est incorrect"),
-        website: string().nullable().url(),
-        facebook: string().nullable().url(),
-        twitter: string().nullable().url(),
-        instagram: string().nullable().url(),
-        donation: string().nullable().url(),
-        phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v)
-      })
+      loading: false
     }
   },
   computed: {
@@ -212,6 +203,25 @@ export default {
               status: 'upcoming'
             }
       ]
+    },
+    formSchema () {
+      let schema = object({
+        email: string().nullable().email("Le format de l'email public est incorrect"),
+        website: string().nullable().url(),
+        facebook: string().nullable().url(),
+        twitter: string().nullable().url(),
+        instagram: string().nullable().url(),
+        donation: string().nullable().url(),
+        phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v)
+      })
+
+      if (!['Collectivité', 'Organisation publique'].includes(this.form.statut_juridique)) {
+        schema = schema.concat(object({
+          description: string().nullable().min(200, 'La description doit contenir au moins 200 caractères').required('Une description est requise')
+        }))
+      }
+
+      return schema
     }
   },
   methods: {

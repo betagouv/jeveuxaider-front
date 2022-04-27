@@ -112,7 +112,15 @@
               clearable
             />
           </FormControl>
-          <FormControl label="Choisissez les domaines que couvre votre organisation" html-for="domaines" required :error="errors.domaines">
+
+          <!-- @todo Attendre décision sur le sujet -->
+          <!--  v-if="form.statut_juridique != 'Collectivité'" -->
+          <FormControl
+            label="Choisissez les domaines que couvre votre organisation"
+            html-for="domaines"
+            required
+            :error="errors.domaines"
+          >
             <CheckboxGroup
               v-model="form.domaines"
               name="domaines"
@@ -121,7 +129,13 @@
               is-model
             />
           </FormControl>
-          <FormControl label="Choisissez les publics bénéficiaires de vos missions" html-for="publics_beneficiaires" required :error="errors.publics_beneficiaires">
+          <FormControl
+            v-if="form.statut_juridique != 'Collectivité'"
+            label="Choisissez les publics bénéficiaires de vos missions"
+            html-for="publics_beneficiaires"
+            required
+            :error="errors.publics_beneficiaires"
+          >
             <CheckboxGroup
               v-model="form.publics_beneficiaires"
               name="publics_beneficiaires"
@@ -193,7 +207,7 @@
           </div>
 
           <FormControl
-            v-if="form.statut_juridique !== 'Collectivité'"
+            v-if="!['Collectivité', 'Organisation privée'].includes(form.statut_juridique)"
             label="Faites-vous partie d'un réseau national ?"
             html-for="tete_de_reseau_id"
           >
@@ -249,13 +263,19 @@ import MixinInputGeo from '@/mixins/input-geo'
 export default {
   mixins: [FormErrors, MixinInputGeo],
   layout: 'register-steps',
-  async asyncData ({ $axios, store, error }) {
+  async asyncData ({ $axios, store, error, $labels }) {
     if (
       !store.getters.currentRole || store.getters.currentRole.contextable_type !== 'structure'
     ) {
       return error({ statusCode: 403 })
     }
     const { data: organisation } = await $axios.get(`/structures/${store.getters.currentRole.contextable_id}`)
+
+    // @todo attendre décision sur le sujet
+    // if (organisation.statut_juridique === 'Collectivité') {
+    //   organisation.domaines = $labels.domaines.map((domaine) => { return { id: domaine.key } })
+    // }
+
     return {
       form: organisation
     }
@@ -263,14 +283,6 @@ export default {
   data () {
     return {
       loading: false,
-      formSchema: object({
-        name: string().required('Un nom est requis'),
-        statut_juridique: string().required('Un statut juridique est requis'),
-        department: string().nullable().required('Un département est requis'),
-        address: string().nullable().required('Une adresse est requise'),
-        domaines: array().min(1, 'Au moins 1 domaine d\'action'),
-        publics_beneficiaires: array().min(1, 'Au moins 1 public bénéficiaire')
-      }),
       autocompleteReseauxOptions: []
     }
   },
@@ -305,6 +317,24 @@ export default {
               status: 'upcoming'
             }
       ]
+    },
+    formSchema () {
+      let schema = object({
+        name: string().required('Un nom est requis'),
+        statut_juridique: string().required('Un statut juridique est requis'),
+        department: string().nullable().required('Un département est requis'),
+        address: string().nullable().required('Une adresse est requise'),
+        // @todo attendre décision sur le sujet
+        domaines: array().min(1, 'Au moins 1 domaine d\'action')
+      })
+
+      if (this.form.statut_juridique !== 'Collectivité') {
+        schema = schema.concat(object({
+          publics_beneficiaires: array().min(1, 'Au moins 1 public bénéficiaire')
+        }))
+      }
+
+      return schema
     }
   },
   methods: {
