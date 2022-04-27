@@ -448,6 +448,23 @@
             </div>
           </div>
         </Box>
+
+        <Box v-if="$store.getters.contextRole === 'admin'" padding="sm">
+          <Heading :level="3" class="mb-4">
+            Personnalisation
+          </Heading>
+          <FormControl
+            label="Couleur"
+            html-for="color"
+          >
+            <Input
+              v-model="form.color"
+              name="color"
+              placeholder="Code hexadécimal (#FF0000)"
+            />
+          </FormControl>
+        </Box>
+
         <Box
           padding="sm"
         >
