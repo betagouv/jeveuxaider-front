@@ -273,7 +273,8 @@ export default {
 
     const { data: queryInvitations } = await this.$axios.get('/invitations', {
       params: {
-        'filter[of_structure]': this.organisation.id
+        'filter[of_structure]': this.organisation.id,
+        pagination: 999
       }
     })
     this.queryInvitations = queryInvitations

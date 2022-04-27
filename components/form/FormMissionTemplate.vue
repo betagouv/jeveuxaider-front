@@ -171,7 +171,7 @@ export default {
   },
   fetchOnServer: false,
   async fetch () {
-    const { data: activities } = await this.$axios.get('/activities?pagination=0')
+    const { data: activities } = await this.$axios.get('/activities?pagination=999')
     this.activities = activities.data.filter(item => item.is_published || item.id === this.missionTemplate.activity_id)
   },
   methods: {
