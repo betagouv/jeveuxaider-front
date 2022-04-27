@@ -91,6 +91,16 @@
           @input="changeFilter('filter[state]', $event)"
         />
         <SelectAdvanced
+          :key="`date-${$route.fullPath}`"
+          name="date"
+          placeholder="Date"
+          :options="[{key: 'incoming', label: 'À venir'}, {key: 'in_progress', label: 'En cours'}, {key: 'over', label: 'Passée'}]"
+          :value="$route.query['filter[date]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[date]', $event)"
+        />
+        <SelectAdvanced
           :key="`place-${$route.fullPath}`"
           name="place"
           placeholder="Place restante"

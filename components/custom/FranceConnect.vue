@@ -40,8 +40,10 @@ export default {
     if (this.$route.query.state && this.$route.query.code) {
       this.$emit('loading', true)
       const response = await this.$axios.get('/franceconnect/login-callback', {
-        state: this.$route.query.state,
-        code: this.$route.query.code
+        params: {
+          state: this.$route.query.state,
+          code: this.$route.query.code
+        }
       })
       if (response.data) {
         this.$cookies.set('access-token', response.data.accessToken, {
@@ -49,12 +51,12 @@ export default {
           path: '/',
           secure: true
         })
-        this.$store.commit('auth/setAccessToken', response.data.accessToken)
+        await this.$gtm.push({ event: 'user-login' })
         this.$store.dispatch('auth/fetchUser').then(() => {
           if (this.$store.getters.noRole === false) {
             this.$router.push('/dashboard')
           } else {
-            this.$router.push('/missions-benevolat')
+            this.$router.push('/profile')
           }
         })
       }
@@ -64,7 +66,6 @@ export default {
     async handleClickFranceConnect () {
       const response = await this.$axios.get('/franceconnect/login-authorize')
       if (response.data) {
-        console.log('handleClickFranceConnect', response.data)
         window.location.href = response.data
       }
     }
