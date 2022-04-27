@@ -179,10 +179,10 @@
               <Box v-for="responsable in organisation.members" :key="responsable.id" variant="flat" padding="xs">
                 <div class="flex justify-between items-start">
                   <DescriptionList v-if="responsable">
-                    <DescriptionListItem term="Nom" :description="responsable.full_name" />
-                    <DescriptionListItem term="E-mail" :description="responsable.email" />
-                    <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-                    <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
+                    <DescriptionListItem term="Nom" :description="responsable.full_name" :term-size="90" />
+                    <DescriptionListItem term="E-mail" :description="responsable.email" :term-size="90" />
+                    <DescriptionListItem term="Mobile" :description="responsable.mobile" :term-size="90" />
+                    <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" :term-size="90" />
                   </DescriptionList>
                   <div v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
                     <div class="group-hover:block hidden">
