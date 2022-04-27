@@ -1,10 +1,21 @@
 <template>
   <div v-click-outside="clickedOutside" class="relative">
     <div class="flex items-center relative w-full">
-      <div v-if="icon" class="absolute left-4">
+      <div
+        v-if="icon"
+        :class=" [
+          'absolute',
+          {'left-4': theme === 'default'},
+          {'left-1': theme === 'filter'}
+        ]"
+      >
         <component
           :is="icon"
-          class="h-4 w-4 text-gray-400"
+          :class=" [
+            'text-gray-400',
+            {'h-4 ': theme === 'default'},
+            {'h-3 ': theme === 'filter'}
+          ]"
         />
       </div>
       <input
@@ -15,10 +26,13 @@
         type="text"
         :placeholder="placeholder"
         :class="[
-          'px-6 py-3 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-200 focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate',
-          {'pl-10': icon},
+          'pr-6 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-300 focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate',
+          {'pl-10': icon && theme === 'default'},
+          {'pl-7': icon && theme === 'filter'},
           {'bg-transparent': variant == 'transparent' && !value},
           {'bg-white': variant == 'transparent' && value},
+          {'px-6 py-3': theme === 'default'},
+          {'px-2 py-1': theme === 'filter'},
           classInput
         ]"
         autocomplete="off"
@@ -26,9 +40,20 @@
         @input="handleInput"
         @keydown="onKeydown"
       >
-      <div v-if="searchTerm" class="absolute right-3">
+      <div
+        v-if="searchTerm"
+        class="absolute"
+        :class=" [
+          {'right-3': theme === 'default'},
+          {'right-1': theme === 'filter'}
+        ]"
+      >
         <XIcon
-          class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+          class=" text-gray-400 hover:text-gray-500 cursor-pointer"
+          :class="[
+            {'h-5': theme === 'default'},
+            {'h-4': theme === 'filter'},
+          ]"
           @click="reset()"
         />
       </div>
@@ -93,7 +118,8 @@ export default {
     styleInput: { type: String, default: '' },
     variant: { type: String, default: null }, // transparent
     clearAfterSelected: { type: Boolean, default: false },
-    showKeyInOptions: { type: Boolean, default: false }
+    showKeyInOptions: { type: Boolean, default: false },
+    theme: { type: String, default: 'default' }
   },
   data () {
     return {

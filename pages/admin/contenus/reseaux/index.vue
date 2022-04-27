@@ -55,21 +55,21 @@
         />
         <Checkbox
           :key="`published-${$route.fullPath}`"
-          :option="{key: true, label:'En ligne'}"
-          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 1"
+          :option="{key: 'true', label:'En ligne'}"
+          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
           variant="button"
           size="xs"
           transparent
-          @change="changeFilter('filter[is_published]', 1)"
+          @change="changeFilter('filter[is_published]', 'true')"
         />
         <Checkbox
           :key="`unpublished-${$route.fullPath}`"
-          :option="{key: 0, label: 'Hors ligne'}"
-          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 0"
+          :option="{key: 'false', label: 'Hors ligne'}"
+          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
           variant="button"
           size="xs"
           transparent
-          @change="changeFilter('filter[is_published]', 0)"
+          @change="changeFilter('filter[is_published]', 'false')"
         />
       </template>
     </SearchFilters>

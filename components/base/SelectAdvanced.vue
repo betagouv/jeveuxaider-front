@@ -11,12 +11,14 @@
         :id="name"
         :name="name"
         :tabindex="!disabled && '0'"
-        class="cursor-pointer px-6 py-3 pr-10 text-sm rounded-xl block w-full focus:outline-none border border-gray-200 focus:ring-1 bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate"
+        class="cursor-pointer text-sm rounded-xl block w-full focus:outline-none border border-gray-300 focus:ring-1 bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate"
         :class=" [
           { 'pl-10': icon},
           {'!cursor-not-allowed !bg-gray-100': disabled},
           {'bg-transparent': variant == 'transparent' && !value},
-          {'bg-white': variant == 'transparent' && value}
+          {'bg-white': variant == 'transparent' && value},
+          {'px-6 py-3 pr-10': theme === 'default'},
+          {'px-2 py-1 pr-7': theme === 'filter'}
         ]"
         autocomplete="off"
         @keydown="onKeydown"
@@ -29,15 +31,29 @@
           <span class="text-gray-500">{{ placeholder }}</span>
         </template>
       </div>
-      <div class="absolute right-3">
+      <div
+        class="absolute"
+        :class=" [
+          {'right-3': theme === 'default'},
+          {'right-1': theme === 'filter'}
+        ]"
+      >
         <XIcon
           v-if="selectedOption && clearable"
-          class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+          class=" text-gray-400 hover:text-gray-500 cursor-pointer"
+          :class=" [
+            {'h-5': theme === 'default'},
+            {'h-4': theme === 'filter'}
+          ]"
           @click="reset()"
         />
         <SelectorIcon
           v-else
-          class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+          class="text-gray-400 hover:text-gray-500 cursor-pointer"
+          :class=" [
+            {'h-5': theme === 'default'},
+            {'h-4': theme === 'filter'}
+          ]"
         />
       </div>
     </div>
@@ -86,7 +102,8 @@ export default {
     attributeLabel: { type: String, default: 'label' },
     variant: { type: String, default: null }, // transparent
     clearable: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    theme: { type: String, default: 'default' }
   },
   data () {
     return {
