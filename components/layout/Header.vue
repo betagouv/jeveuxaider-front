@@ -21,22 +21,6 @@
             data-not-lazy
           >
         </nuxt-link>
-        <a href="https://www.jeveuxaider.gouv.fr/engagement/actualite/2-ans-de-solidarite-partout-en-france/">
-          <img
-            src="@/assets/images/2ans.jpg"
-            alt="Anniversaire 2 ans"
-            width="110"
-            class="hidden lg:block relative -top-1 -left-3 hover:scale-110 transform transition-all cursor-pointer"
-            data-not-lazy
-          >
-          <img
-            src="@/assets/images/2ans-mobile.jpg"
-            alt="Anniversaire 2 ans"
-            width="40"
-            class="lg:hidden absolute inset-x-0 top-3.5 left-[260px] mx-auto hover:scale-110 transform transition-all cursor-pointer"
-            data-not-lazy
-          >
-        </a>
       </div>
       <div class="flex lg:hidden space-x-2 pr-4 text-jva-blue-500">
         <button @click="$store.commit('toggleSearchOverlay')">
@@ -289,7 +273,7 @@
                   key="election-2022"
                   href="https://www.jeveuxaider.gouv.fr/engagement/devenir-assesseur/"
                   target="_blank"
-                  class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1"
+                  class="flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600"
                 >
                   <span>✉️ </span>
                   <span>Élections 2022</span>
