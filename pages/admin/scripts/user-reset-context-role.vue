@@ -27,7 +27,7 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-12">
-          <SectionHeading title="Réinitialisation du rôle d'un utilisateur">
+          <SectionHeading title="Réinitialisation du rôle d'un utilisateur" secondary-title-bottom="Permet de relier des utilisateurs à leur bon rôle">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
                 <Button variant="green" size="xl" :loading="loading" @click.native="handleSubmit">

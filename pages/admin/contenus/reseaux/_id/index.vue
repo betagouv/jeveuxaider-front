@@ -218,14 +218,16 @@ export default {
 
     const { data: queryInvitations } = await this.$axios.get('/invitations', {
       params: {
-        'filter[of_reseau]': this.reseau.id
+        'filter[of_reseau]': this.reseau.id,
+        pagination: 999
       }
     })
     this.queryInvitations = queryInvitations
 
     const { data: queryInvitationsAntennes } = await this.$axios.get('/invitations', {
       params: {
-        'filter[of_reseau_and_role_antenne]': this.reseau.id
+        'filter[of_reseau_and_role_antenne]': this.reseau.id,
+        pagination: 999
       }
     })
     this.queryInvitationsAntennes = queryInvitationsAntennes

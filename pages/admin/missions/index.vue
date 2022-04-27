@@ -204,12 +204,12 @@
           <Checkbox
             v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
             :key="`snu-mig-${$route.fullPath}`"
-            :option="{key: 'snu-mig', label:'SNU/MIG'}"
-            :is-checked="$route.query['filter[is_snu_mig_compatible]'] && $route.query['filter[is_snu_mig_compatible]'] == 1"
+            :option="{key: 'true', label:'SNU/MIG'}"
+            :is-checked="$route.query['filter[is_snu_mig_compatible]'] && $route.query['filter[is_snu_mig_compatible]'] == 'true'"
             variant="button"
             size="xs"
             transparent
-            @change="changeFilter('filter[is_snu_mig_compatible]', 1)"
+            @change="changeFilter('filter[is_snu_mig_compatible]', 'true')"
           />
           <Checkbox
             v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"

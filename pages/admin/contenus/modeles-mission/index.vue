@@ -50,59 +50,45 @@
           transparent
           @change="deleteAllFilters()"
         />
-        <Checkbox
-          :key="`draft-${$route.fullPath}`"
-          :option="{key: 'draft', label:'Brouillon'}"
-          :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'draft'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'draft')"
+        <SelectAdvanced
+          :key="`state-${$route.fullPath}`"
+          name="state"
+          placeholder="Tous les statuts"
+          :options="$labels.mission_template_workflow_states"
+          :value="$route.query['filter[state]']"
+          theme="filter"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[state]', $event)"
         />
-        <Checkbox
-          :key="`state-en-attente-validation-${$route.fullPath}`"
-          :option="{key: 'en-attente-validation', label:'En attente de validation'}"
-          :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'waiting'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'waiting')"
-        />
-        <Checkbox
-          :key="`state-validated-${$route.fullPath}`"
-          :option="{key: 'validated', label:'Validé'}"
-          :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'validated'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'validated')"
-        />
-        <Checkbox
-          :key="`state-refused-${$route.fullPath}`"
-          :option="{key: 'refused', label:'Refusé'}"
-          :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'refused'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'refused')"
+        <SelectAdvanced
+          :key="`domaine-${$route.fullPath}`"
+          name="domaine"
+          placeholder="Tous les domaines"
+          :options="$labels.domaines"
+          :value="$route.query['filter[domaine.id]']"
+          variant="transparent"
+          theme="filter"
+          clearable
+          @input="changeFilter('filter[domaine.id]', $event)"
         />
         <Checkbox
           :key="`published-${$route.fullPath}`"
-          :option="{key: true, label:'En ligne'}"
-          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 1"
+          :option="{key: 'true', label:'En ligne'}"
+          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 'true'"
           variant="button"
           size="xs"
           transparent
-          @change="changeFilter('filter[published]', 1)"
+          @change="changeFilter('filter[published]', 'true')"
         />
         <Checkbox
           :key="`unpublished-${$route.fullPath}`"
-          :option="{key: 0, label: 'Hors ligne'}"
-          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 0"
+          :option="{key: 'false', label: 'Hors ligne'}"
+          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 'false'"
           variant="button"
           size="xs"
           transparent
-          @change="changeFilter('filter[published]', 0)"
+          @change="changeFilter('filter[published]', 'false')"
         />
       </template>
     </SearchFilters>

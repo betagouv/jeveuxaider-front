@@ -27,7 +27,7 @@
       </aside>
       <div class="col-span-4">
         <div class="flex flex-col gap-12">
-          <SectionHeading title="Transfert de missions">
+          <SectionHeading title="Transfert de missions" secondary-title-bottom="Permet de transférer des missions et leurs responsables d'une organisation à une autre">
             <template #action>
               <div class="hidden lg:block space-x-2 flex-shrink-0">
                 <Button variant="green" size="xl" :loading="loading" @click.native="handleSubmit">
