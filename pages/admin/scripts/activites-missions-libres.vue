@@ -8,6 +8,7 @@
         :is-open="showModal"
         title="Transfert de missions à une activité"
         :prevent-click-outside="true"
+        :overflow-hidden="false"
         @close="showModal = false"
       >
         <div class="space-y-4 relative z-50">

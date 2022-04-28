@@ -20,8 +20,15 @@
           leave-class="opacity-100 translate-y-0 sm:scale-100"
           leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
-          <div v-if="isOpen" v-click-outside="handleClickOutside" class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-            <div class="bg-white p-4 sm:p-6">
+          <div
+            v-if="isOpen"
+            v-click-outside="handleClickOutside"
+            :class="[
+              {'overflow-hidden' : overflowHidden}
+            ]"
+            class="inline-block align-bottom bg-white rounded-lg text-left shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+          >
+            <div class="bg-white rounded-t-lg p-4 sm:p-6">
               <div class="hidden sm:block absolute top-0 right-0 p-4 sm:p-6">
                 <button type="button" class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cool-gray-500" @click="$emit('close')">
                   <span class="sr-only">Close</span>
@@ -62,7 +69,7 @@
                 </div>
               </div>
             </div>
-            <div class="bg-gray-50 px-4 py-3 sm:px-6 flex justify-center lg:justify-end">
+            <div class="bg-gray-50 rounded-b-lg px-4 py-3 sm:px-6 flex justify-center lg:justify-end">
               <slot name="footer">
                 <Button variant="white" @click.native="$emit('close')">
                   Fermer
@@ -98,6 +105,10 @@ export default {
     preventClickOutside: {
       type: Boolean,
       default: false
+    },
+    overflowHidden: {
+      type: Boolean,
+      default: true
     }
   },
   methods: {
