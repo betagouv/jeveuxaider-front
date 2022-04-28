@@ -366,7 +366,7 @@ export default {
       const format =
         startDate && endDate && startDateYear !== endDateYear
           ? 'D MMMM YYYY'
-          : 'D MMMM'
+          : 'D MMMM YYYY'
 
       // Si date de départ dépassée et pas de date de fin, masquer les dates
       if (this.$dayjs(startDate).isBefore(this.$dayjs()) && !endDate) {
