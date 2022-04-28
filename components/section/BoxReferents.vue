@@ -63,7 +63,7 @@ export default {
     this.loading = true
     const { data: referents } = await this.$axios.get('/profiles', {
       params: {
-        pagination: 0,
+        pagination: 999,
         'filter[role]': 'referent',
         'filter[referent_department]': this.department,
         include: 'user'

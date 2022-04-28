@@ -43,141 +43,135 @@
       </Modal>
     </portal>
 
-    <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Scripts' },
-        { label: 'Activités des missions libres' }
-      ]"
-    />
+    <portal to="breadcrumb">
+      <Breadcrumb
+        :items="[
+          { label: 'Tableau de bord', link: '/dashboard' },
+          { label: 'Scripts' },
+          { label: 'Activités des missions libres' }
+        ]"
+      />
+    </portal>
 
-    <div class="grid grid-cols-5 py-12 ">
-      <aside class="relative col-span-1">
-        <div class="sticky top-12">
-          <SecondaryMenuAdmin />
-        </div>
-      </aside>
-      <div class="col-span-4">
-        <SectionHeading
-          title="Liaisons aux activités"
-          secondary-title-bottom="Liste les missions libres sans activité par nombres de bénévoles recherchés"
-        >
-          <template #action>
-            <div class="flex space-x-2">
-              <Button size="xl" :loading="loading" :disabled="queryResult.total == 0" @click.native="showModal = true">
-                Affecter {{ $options.filters.formatNumber(queryResult.total) }}
-                {{ $options.filters.pluralize(
-                  queryResult.total,
-                  'mission libre',
-                  'missions libres',
-                  false
-                ) }}
-              </Button>
-            </div>
-          </template>
-        </Sectionheading>
+    <div class="flex flex-col gap-8">
+      <SectionHeading
+        title="Liaisons aux activités"
+        secondary-title-bottom="Liste les missions libres sans activité par nombres de bénévoles recherchés"
+      >
+        <template #action>
+          <div class="flex space-x-2">
+            <Button size="xl" :loading="loading" :disabled="queryResult.total == 0" @click.native="showModal = true">
+              Affecter {{ $options.filters.formatNumber(queryResult.total) }}
+              {{ $options.filters.pluralize(
+                queryResult.total,
+                'mission libre',
+                'missions libres',
+                false
+              ) }}
+            </Button>
+          </div>
+        </template>
+      </Sectionheading>
 
-        <SearchFilters class="my-8">
-          <Input
-            name="search"
-            placeholder="Recherche par mots clés..."
-            icon="SearchIcon"
+      <SearchFilters>
+        <Input
+          name="search"
+          placeholder="Recherche par mots clés..."
+          icon="SearchIcon"
+          variant="transparent"
+          :value="$route.query['filter[search]']"
+          clearable
+          @input="changeFilter('filter[search]', $event)"
+        />
+        <template #prefilters>
+          <Checkbox
+            :key="`toutes-${$route.fullPath}`"
+            :option="{key: 'toutes', label:'Toutes'}"
+            :is-checked="hasActiveFilters()"
+            variant="button"
+            size="xs"
+            transparent
+            @change="deleteAllFilters()"
+          />
+          <Checkbox
+            :key="`available-${$route.fullPath}`"
+            :option="{key: 'available', label:'En ligne'}"
+            :is-checked="$route.query['filter[available]'] && $route.query['filter[available]'] == 'available'"
+            variant="button"
+            size="xs"
+            transparent
+            @change="changeFilter('filter[available]', 'available')"
+          />
+          <SelectAdvanced
+            :key="`state-${$route.fullPath}`"
+            name="state"
+            placeholder="Tous les statuts"
+            :options="$labels.mission_workflow_states"
+            :value="$route.query['filter[state]']"
+            theme="filter"
             variant="transparent"
-            :value="$route.query['filter[search]']"
             clearable
-            @input="changeFilter('filter[search]', $event)"
+            @input="changeFilter('filter[state]', $event)"
           />
-          <template #prefilters>
-            <Checkbox
-              :key="`toutes-${$route.fullPath}`"
-              :option="{key: 'toutes', label:'Toutes'}"
-              :is-checked="hasActiveFilters()"
-              variant="button"
-              size="xs"
-              transparent
-              @change="deleteAllFilters()"
-            />
-            <Checkbox
-              :key="`available-${$route.fullPath}`"
-              :option="{key: 'available', label:'En ligne'}"
-              :is-checked="$route.query['filter[available]'] && $route.query['filter[available]'] == 'available'"
-              variant="button"
-              size="xs"
-              transparent
-              @change="changeFilter('filter[available]', 'available')"
-            />
-            <SelectAdvanced
-              :key="`state-${$route.fullPath}`"
-              name="state"
-              placeholder="Tous les statuts"
-              :options="$labels.mission_workflow_states"
-              :value="$route.query['filter[state]']"
-              theme="filter"
-              variant="transparent"
-              clearable
-              @input="changeFilter('filter[state]', $event)"
-            />
-            <SelectAdvanced
-              :key="`domaine-${$route.fullPath}`"
-              name="domaine"
-              placeholder="Tous les domaines"
-              :options="$labels.domaines"
-              :value="$route.query['filter[ofDomaine]']"
-              variant="transparent"
-              theme="filter"
-              clearable
-              @input="changeFilter('filter[ofDomaine]', $event)"
-            />
-            <InputAutocomplete
-              :value="$route.query['filter[structure.name]']"
-              icon="SearchIcon"
-              name="autocomplete"
-              placeholder="Toutes les orgas"
-              theme="filter"
-              :options="autocompleteOptionsOrga"
-              variant="transparent"
-              @fetch-suggestions="onFetchSuggestionsOrga"
-              @selected="changeFilter('filter[structure.name]', $event ? $event.name : undefined)"
-            />
-            <InputAutocomplete
-              :value="$route.query['filter[structure.reseaux.name]']"
-              icon="SearchIcon"
-              name="autocomplete"
-              placeholder="Tous les réseaux"
-              theme="filter"
-              :options="autocompleteOptionsReseau"
-              variant="transparent"
-              @fetch-suggestions="onFetchSuggestionsReseau"
-              @selected="changeFilter('filter[structure.reseaux.name]', $event ? $event.name : undefined)"
-            />
-          </template>
-        </SearchFilters>
-
-        <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <CardMission
-            v-for="mission in queryResult.data"
-            :key="mission.id"
-            class="cursor-pointer"
-            :mission="mission"
-            show-state
-            @click.native="drawerMissionId = mission.id"
+          <SelectAdvanced
+            :key="`domaine-${$route.fullPath}`"
+            name="domaine"
+            placeholder="Tous les domaines"
+            :options="$labels.domaines"
+            :value="$route.query['filter[ofDomaine]']"
+            variant="transparent"
+            theme="filter"
+            clearable
+            @input="changeFilter('filter[ofDomaine]', $event)"
           />
-        </div>
+          <InputAutocomplete
+            :value="$route.query['filter[structure.name]']"
+            icon="SearchIcon"
+            name="autocomplete"
+            placeholder="Toutes les orgas"
+            theme="filter"
+            :options="autocompleteOptionsOrga"
+            variant="transparent"
+            @fetch-suggestions="onFetchSuggestionsOrga"
+            @selected="changeFilter('filter[structure.name]', $event ? $event.name : undefined)"
+          />
+          <InputAutocomplete
+            :value="$route.query['filter[structure.reseaux.name]']"
+            icon="SearchIcon"
+            name="autocomplete"
+            placeholder="Tous les réseaux"
+            theme="filter"
+            :options="autocompleteOptionsReseau"
+            variant="transparent"
+            @fetch-suggestions="onFetchSuggestionsReseau"
+            @selected="changeFilter('filter[structure.reseaux.name]', $event ? $event.name : undefined)"
+          />
+        </template>
+      </SearchFilters>
 
-        <Pagination
-          :current-page="queryResult.current_page"
-          :total-rows="queryResult.total"
-          :per-page="queryResult.per_page"
-          @page-change="changePage"
+      <div class=" grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <CardMission
+          v-for="mission in queryResult.data"
+          :key="mission.id"
+          class="cursor-pointer"
+          :mission="mission"
+          show-state
+          @click.native="drawerMissionId = mission.id"
         />
       </div>
+
+      <Pagination
+        :current-page="queryResult.current_page"
+        :total-rows="queryResult.total"
+        :per-page="queryResult.per_page"
+        @page-change="changePage"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import { object, string } from 'yup'
-import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin'
 import FormErrors from '@/mixins/form/errors'
 import QueryBuilder from '@/mixins/query-builder'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
@@ -186,19 +180,15 @@ import DrawerMission from '@/components/drawer/DrawerMission.vue'
 
 export default {
   components: {
-    SecondaryMenuAdmin,
     SearchFilters,
     CardMission,
     DrawerMission
   },
   mixins: [FormErrors, QueryBuilder],
+  layout: 'admin-with-sidebar-menu',
   middleware: 'admin',
   async asyncData ({ $axios, store, error }) {
-    const { data: activities } = await $axios.get('/activities', {
-      params: {
-        pagination: 0
-      }
-    })
+    const { data: activities } = await $axios.get('/activities?pagination=999')
     return {
       activities: activities.data
     }

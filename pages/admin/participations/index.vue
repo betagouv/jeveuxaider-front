@@ -244,7 +244,7 @@ export default {
 
     const { data: activities } = await $axios.get('/activities', {
       params: {
-        pagination: 0,
+        pagination: 999,
         'filter[is_published]': 1
       }
     })

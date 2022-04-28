@@ -179,7 +179,7 @@ export default {
               : null
 
       return startDateObject && startDateObject.isAfter(now)
-        ? `À partir du ${startDateObject.format('D MMMM')}`
+        ? `À partir du ${startDateObject.format('D MMMM YYYY')}`
         : null
     },
     domainColor () {
