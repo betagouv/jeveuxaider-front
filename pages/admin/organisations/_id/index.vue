@@ -166,6 +166,7 @@
                 </div>
               </Box>
             </div>
+            <BoxReseau v-for="reseau in organisation.reseaux" :key="reseau.id" class="mb-8" :reseau="reseau" />
             <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="organisation.department" />
           </div>
           <template v-if="$route.hash === '#membres'">
@@ -215,6 +216,7 @@ import FormInvitation from '@/components/form/FormInvitation'
 import BoxInvitations from '@/components/section/BoxInvitations'
 import SelectOrganisationState from '@/components/custom/SelectOrganisationState'
 import BoxReferents from '@/components/section/BoxReferents'
+import BoxReseau from '@/components/section/organisation/BoxReseau'
 
 export default {
   components: {
@@ -226,7 +228,8 @@ export default {
     FormInvitation,
     BoxInvitations,
     SelectOrganisationState,
-    BoxReferents
+    BoxReferents,
+    BoxReseau
   },
   mixins: [MixinOrganisation],
   middleware: 'authenticated',
