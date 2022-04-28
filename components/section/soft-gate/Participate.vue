@@ -79,7 +79,7 @@ export default {
             content: this.form.content
           })
 
-          window.apiEngagement && window.apiEngagement('trackApplication')
+          window.apieng && window.apieng('trackApplication')
           window.plausible &&
             window.plausible(
               'Soft Gate - Étape 3 - Demande de participation'
