@@ -14,9 +14,7 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <Button variant="white" size="lg" icon="PlusIcon">
-            @TODO sélection périodes
-          </Button>
+          <FiltersNumbers @refetch="$fetch" />
         </div>
       </template>
     </SectionHeading>
@@ -99,10 +97,12 @@
 
 <script>
 import CardStatistic from '@/components/card/CardStatistic'
+import FiltersNumbers from '@/components/custom/FiltersNumbers'
 
 export default {
   components: {
-    CardStatistic
+    CardStatistic,
+    FiltersNumbers
   },
   layout: 'admin-numbers',
   middleware: 'authenticated',
@@ -112,25 +112,30 @@ export default {
       loadingStatistics: true,
       offers: null,
       loadingOffers: true
-
     }
   },
-  async created () {
+  async fetch () {
+    // a checker avec await
     await Promise.all([
       this.getNumbersGlobal(),
       this.getNumbersOffer()
-
     ])
   },
   methods: {
-    getNumbersGlobal () {
-      this.$axios.get('/numbers/global?period=all').then((response) => {
+    async getNumbersGlobal () {
+      this.loadingStatistics = true
+      await this.$axios.get('/numbers/global', {
+        params: this.$store.state.numbers.params
+      }).then((response) => {
         this.loadingStatistics = false
         this.statistics = response.data
       })
     },
-    getNumbersOffer () {
-      this.$axios.get('/numbers/offers?period=all').then((response) => {
+    async getNumbersOffer () {
+      this.loadingOffers = true
+      await this.$axios.get('/numbers/offers', {
+        params: this.$store.state.numbers.params
+      }).then((response) => {
         this.loadingOffers = false
         this.offers = response.data
       })
