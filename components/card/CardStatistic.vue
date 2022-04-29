@@ -17,7 +17,7 @@
       </div>
     </div>
     <Gauge v-if="gaugePercentage" :percentage="gaugePercentage" size="xs" />
-    <Link v-if="link && !linkHidden" :to="link" class="text-xs font-bold">
+    <Link v-if="link && !linkHidden && linkLabel" :to="link" class="text-xs font-bold">
       {{ linkLabel }} ›
     </Link>
   </div>

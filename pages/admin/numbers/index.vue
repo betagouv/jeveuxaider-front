@@ -21,74 +21,79 @@
       </template>
     </SectionHeading>
 
-    <div v-if="global" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
-      <CardStatistic
-        :value="global.participations.total"
-        :title="`${$options.filters.pluralize(global.participations.total, 'participation', 'participations', false)}`"
-        :subtitle="`+${global.participations.current_period} sur la période`"
-        :gauge-percentage="75"
-      />
-      <CardStatistic
-        :value="global.missions.total"
-        :title="`${$options.filters.pluralize(global.missions.total, 'mission', 'missions', false)}`"
-        :subtitle="`+${global.missions.current_period} sur la période`"
-      />
-      <CardStatistic
-        :value="global.organisations.total"
-        :title="`${$options.filters.pluralize(global.organisations.total, 'organisation', 'organisations', false)}`"
-        :subtitle="`+${global.organisations.current_period} sur la période`"
-      />
-      <CardStatistic
-        :value="global.users.total"
-        :title="`${$options.filters.pluralize(global.users.total, 'utilisateurs', 'utilisateurs', false)}`"
-        :subtitle="`+${global.users.current_period} sur la période`"
-      />
-    </div>
+    <Box padding="sm" :loading="loadingStatistics" loading-text="Récupération des statistiques...">
+      <Heading as="h2" :level="3" class="mb-4">
+        Statistiques globales
+      </Heading>
+      <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+        <CardStatistic
+          v-if="['admin', 'referent','referent_regional','tete_de_reseau','analyste','responsable_territoire'].includes($store.getters.contextRole)"
+          :value="statistics.organisations_actives"
+          :title="`${$options.filters.pluralize(statistics.organisations_actives, 'Organisation active', 'Organisations actives', false)}`"
+          :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations)}`"
+          link="/admin/numbers/organisations"
+        />
+        <CardStatistic
+          v-if="['admin', 'responsable', 'referent','referent_regional','tete_de_reseau','analyste','responsable_territoire'].includes($store.getters.contextRole)"
+          :value="statistics.participations_validated"
+          :title="`${$options.filters.pluralize(statistics.participations_validated, 'Participation validée', 'Participations validées', false)}`"
+          :subtitle="`sur ${$options.filters.formatNumber(statistics.participations)} ${$options.filters.pluralize(statistics.participations, 'candidature', 'candidatures', false)}`"
+          link="/admin/numbers/participations"
+        />
+        <CardStatistic
+          v-if="['admin','analyste'].includes($store.getters.contextRole)"
+          :value="statistics.users_benevoles"
+          title="Bénévoles"
+          :subtitle="`sur ${$options.filters.formatNumber(statistics.users)}`"
+          link="/admin/numbers/utilisateurs"
+        />
+        <CardStatistic
+          v-if="['admin','analyste'].includes($store.getters.contextRole)"
+          :value="statistics.reseaux_actives"
+          :title="`${$options.filters.pluralize(statistics.reseaux_actives, 'Réseau en ligne', 'Réseaux en ligne', false)}`"
+          :subtitle="`sur ${$options.filters.formatNumber(statistics.reseaux)}`"
+        />
+        <CardStatistic
+          v-if="['admin','analyste'].includes($store.getters.contextRole)"
+          :value="statistics.territoires_actives"
+          :title="`${$options.filters.pluralize(statistics.territoires_actives, 'Territoire en ligne', 'Territoires en ligne', false)}`"
+          :subtitle="`sur ${$options.filters.formatNumber(statistics.territoires)}`"
+        />
+        <CardStatistic
+          v-if="['admin','analyste'].includes($store.getters.contextRole)"
+          :value="statistics.mission_templates_actives"
+          :title="`${$options.filters.pluralize(statistics.mission_templates_actives, 'Modèle en ligne', 'Modèles en ligne', false)}`"
+          :subtitle="`sur ${$options.filters.formatNumber(statistics.mission_templates)}`"
+        />
+        <CardStatistic
+          v-if="['admin','analyste'].includes($store.getters.contextRole)"
+          :value="statistics.activities_actives"
+          :title="`${$options.filters.pluralize(statistics.activities_actives, 'Activité en ligne', 'Activités en ligne', false)}`"
+          :subtitle="`sur ${$options.filters.formatNumber(statistics.activities)} activités`"
+        />
+      </div>
+    </Box>
 
-    <Heading as="h2" :level="2">
-      Tendances des participations
-    </Heading>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <Box padding="sm" :loading="loadingTrendsParticipationsByActivities" loading-text="Récupération des activités ...">
-        <Heading as="h2" :level="3" class="mb-4">
-          Par activités
-        </Heading>
-        <StackedList v-if="trendsParticipationsByActivities" :divided="false">
-          <StackedListItem
-            v-for="activity, i in trendsParticipationsByActivities"
-            :key="i"
-            :icon="`${(i+1)}.`"
-            icon-class="text-xl font-semibold text-gray-500"
-            :link="`/admin/participations?filter[ofActivity]=${activity.id}`"
-          >
-            <div class="text-gray-900 font-semibold" v-html="activity.name" />
-            <div class="text-gray-500 text-sm">
-              {{ $options.filters.pluralize(activity.count, 'participation', 'participations') }}
-            </div>
-          </StackedListItem>
-        </StackedList>
-      </Box>
-      <Box padding="sm" :loading="loadingTrendsParticipationsByDepartments" loading-text="Récupération des départements ...">
-        <Heading as="h2" :level="3" class="mb-4">
-          Par départements
-        </Heading>
-        <StackedList v-if="trendsParticipationsByDepartments" :divided="false">
-          <StackedListItem
-            v-for="department, i in trendsParticipationsByDepartments"
-            :key="i"
-            :icon="`${(i+1)}.`"
-            icon-class="text-xl font-semibold text-gray-500"
-            :link="`/admin/participations?filter[ofDepartment]=${department.id}`"
-          >
-            <div class="text-gray-900 font-semibold" v-html="department.name" />
-            <div class="text-gray-500 text-sm">
-              {{ $options.filters.pluralize(department.count, 'participation', 'participations') }}
-            </div>
-          </StackedListItem>
-        </StackedList>
-      </Box>
-    </div>
+    <Box padding="sm" :loading="loadingOffers" loading-text="Récupération des statistiques...">
+      <Heading as="h2" :level="3" class="mb-4">
+        Aperçu de l'offre actuelle
+      </Heading>
+      <div v-if="offers" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+        <CardStatistic
+          v-if="['admin', 'responsable', 'referent','referent_regional','tete_de_reseau','analyste','responsable_territoire'].includes($store.getters.contextRole)"
+          :value="offers.missions_actives"
+          :title="`${$options.filters.pluralize(offers.missions_actives, 'Mission en ligne', 'Missions en ligne', false)}`"
+          :subtitle="`sur ${$options.filters.formatNumber(offers.missions)} ${$options.filters.pluralize(offers.missions, 'mission', 'missions', false)}`"
+          link="/admin/numbers/missions"
+        />
+        <CardStatistic
+          :value="offers.places_left"
+          :title="`${$options.filters.pluralize(offers.places_left, 'Place restante', 'Places restantes', false)}`"
+          :subtitle="`sur ${$options.filters.formatNumber(offers.places)} proposées`"
+        />
+        <CardStatistic :value="`${offers.places_occupation_rate}%`" title="Taux de remplissage" :gauge-percentage="offers.places_occupation_rate" />
+      </div>
+    </Box>
   </div>
 </template>
 
@@ -103,38 +108,31 @@ export default {
   middleware: 'authenticated',
   data () {
     return {
-      global: null,
-      loadingGlobal: true,
-      trendsParticipationsByActivities: null,
-      loadingTrendsParticipationsByActivities: true,
-      trendsParticipationsByDepartments: null,
-      loadingTrendsParticipationsByDepartments: true
+      statistics: null,
+      loadingStatistics: true,
+      offers: null,
+      loadingOffers: true
+
     }
   },
   async created () {
     await Promise.all([
       this.getNumbersGlobal(),
-      this.getNumbersTrendsParticipationsByActivities(),
-      this.getNumbersTrendsParticipationsByDepartments()
+      this.getNumbersOffer()
+
     ])
   },
   methods: {
     getNumbersGlobal () {
       this.$axios.get('/numbers/global?period=all').then((response) => {
-        this.loadingGlobal = false
-        this.global = response.data
+        this.loadingStatistics = false
+        this.statistics = response.data
       })
     },
-    getNumbersTrendsParticipationsByActivities () {
-      this.$axios.get('/numbers/trends/participations-by-activities?period=all').then((response) => {
-        this.loadingTrendsParticipationsByActivities = false
-        this.trendsParticipationsByActivities = response.data
-      })
-    },
-    getNumbersTrendsParticipationsByDepartments () {
-      this.$axios.get('/numbers/trends/participations-by-departments?period=all').then((response) => {
-        this.loadingTrendsParticipationsByDepartments = false
-        this.trendsParticipationsByDepartments = response.data
+    getNumbersOffer () {
+      this.$axios.get('/numbers/offers?period=all').then((response) => {
+        this.loadingOffers = false
+        this.offers = response.data
       })
     }
 

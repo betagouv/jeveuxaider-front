@@ -49,21 +49,16 @@ export default {
           key: 'global',
           label: 'Global',
           childrens: [
-            { label: 'Plus de chiffres', to: '/admin/numbers' }
-          ]
-        },
-        {
-          key: 'organisations',
-          label: 'Organisations',
-          childrens: [
-            { label: 'Vue d\'ensemble', to: '/admin/numbers/organisations' },
-            { label: 'Actions en attente', to: '/admin/numbers/organisations/waiting-actions' }
+            { label: 'Plus de chiffres', to: '/admin/numbers' },
+            { label: 'Organisations', to: '/admin/numbers/organisations' },
+            { label: 'Participations', to: '/admin/numbers/participations' }
           ]
         },
         {
           key: 'services',
           label: 'Services tiers',
           childrens: [
+            { label: 'Metabase', href: 'https://reserve-civique-metabase.osc-secnum-fr1.scalingo.io/' },
             { label: 'Plausible', href: 'https://plausible.io/jeveuxaider.gouv.fr' },
             { label: 'API Engagement', href: 'https://api-engagement.beta.gouv.fr/' }
           ]
@@ -75,7 +70,7 @@ export default {
 </script>
 
 <style scoped>
-a.nuxt-link-active {
+a.nuxt-link-exact-active {
   @apply text-jva-blue-500;
 }
 </style>
