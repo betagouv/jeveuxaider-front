@@ -47,7 +47,10 @@
           <Presentation :mission="mission" />
           <PresentielOrDistance :mission="mission" />
           <Details :mission="mission" />
-          <Box class="flex flex-col sm:flex-row gap-6 xl:gap-8 text-center sm:text-left">
+          <Box
+            v-if="!['Organisation publique', 'Collectivité'].includes(mission.structure.statut_juridique)"
+            class="flex flex-col sm:flex-row gap-6 xl:gap-8 text-center sm:text-left"
+          >
             <img
               v-if="
                 mission.structure.logo &&
