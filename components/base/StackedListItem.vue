@@ -26,7 +26,9 @@
         >
       </template>
       <template v-else>
-        {{ icon }}
+        <div :class="iconClass">
+          {{ icon }}
+        </div>
       </template>
     </div>
     <div class="flex-1">
@@ -40,10 +42,14 @@
 export default {
   props: {
     icon: {
-      type: String,
+      type: [String, Number],
       default: null
     },
     iconVariant: {
+      type: String,
+      default: null
+    },
+    iconClass: {
       type: String,
       default: null
     },
