@@ -15,9 +15,7 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <Button variant="white" size="lg" icon="PlusIcon">
-            @TODO sélection périodes
-          </Button>
+          <FiltersNumbers @refetch="$fetch" />
         </div>
       </template>
     </SectionHeading>
@@ -86,9 +84,11 @@
 </template>
 
 <script>
+import FiltersNumbers from '@/components/custom/FiltersNumbers'
 
 export default {
   components: {
+    FiltersNumbers
   },
   layout: 'admin-numbers',
   middleware: 'authenticated',
@@ -102,7 +102,7 @@ export default {
       loadingTrendsParticipationsByDepartments: true
     }
   },
-  async created () {
+  async fetch () {
     await Promise.all([
       this.getNumbersTrendsParticipationsByActivities(),
       this.getNumbersTrendsParticipationsByMissionTemplates(),
@@ -110,20 +110,27 @@ export default {
     ])
   },
   methods: {
-    getNumbersTrendsParticipationsByActivities () {
-      this.$axios.get('/numbers/trends/participations-by-activities?period=all').then((response) => {
+    async getNumbersTrendsParticipationsByActivities () {
+      await this.$axios.get('/numbers/trends/participations-by-activities',
+        {
+          params: this.$store.state.numbers.params
+        }).then((response) => {
         this.loadingTrendsParticipationsByActivities = false
         this.trendsParticipationsByActivities = response.data
       })
     },
-    getNumbersTrendsParticipationsByMissionTemplates () {
-      this.$axios.get('/numbers/trends/participations-by-mission-templates?period=all').then((response) => {
+    async getNumbersTrendsParticipationsByMissionTemplates () {
+      await this.$axios.get('/numbers/trends/participations-by-mission-templates', {
+        params: this.$store.state.numbers.params
+      }).then((response) => {
         this.loadingTrendsParticipationsByMissionTemplates = false
         this.trendsParticipationsByMissionTemplates = response.data
       })
     },
-    getNumbersTrendsParticipationsByDepartments () {
-      this.$axios.get('/numbers/trends/participations-by-departments?period=all').then((response) => {
+    async getNumbersTrendsParticipationsByDepartments () {
+      await this.$axios.get('/numbers/trends/participations-by-departments', {
+        params: this.$store.state.numbers.params
+      }).then((response) => {
         this.loadingTrendsParticipationsByDepartments = false
         this.trendsParticipationsByDepartments = response.data
       })

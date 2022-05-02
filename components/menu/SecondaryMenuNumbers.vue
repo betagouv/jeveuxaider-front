@@ -49,8 +49,9 @@ export default {
           key: 'global',
           label: 'Global',
           childrens: [
-            { label: 'Plus de chiffres', to: '/admin/numbers' },
+            { label: 'Vue d\'ensemble', to: '/admin/numbers' },
             { label: 'Organisations', to: '/admin/numbers/organisations' },
+            { label: 'Missions', to: '/admin/numbers/missions' },
             { label: 'Participations', to: '/admin/numbers/participations' }
           ]
         },

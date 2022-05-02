@@ -56,6 +56,25 @@
               />
             </FormControl>
           </div>
+          <template v-if="['admin'].includes($store.getters.contextRole)">
+            <FormControl
+              v-if="activities.length"
+              label="Activité"
+              html-for="activity_id"
+            >
+              <Combobox
+                v-model="form.activity_id"
+                :value="form.activity_id"
+                name="activity_id"
+                placeholder="Sélectionner une activité"
+                :options="activities"
+                clearable
+                attribute-key="id"
+                attribute-label="name"
+                :disabled="Boolean(mission.template)"
+              />
+            </FormControl>
+          </template>
           <FormControl
             label="Publics aidés"
             html-for="publics_beneficiaires"
@@ -482,6 +501,7 @@ export default {
         name: this.mission.template?.title || this.mission.name,
         template_id: this.mission.template?.id,
         domaine_id: this.mission.template?.domaine_id || this.mission.domaine_id,
+        activity_id: this.mission.template?.activity_id || this.mission.activity_id,
         objectif: this.mission.template?.objectif || this.mission.objectif,
         description: this.mission.template?.description || this.mission.description,
         illustrations: this.mission.illustrations || []
@@ -521,8 +541,15 @@ export default {
           is: true,
           then: schema => schema.min(0, 'Le nombre de volontaire(s) recherché(s) est incorrect').required('Le nombre de volontaire(s) recherché(s) est requis')
         })
-      })
+      }),
+      activities: []
+
     }
+  },
+  fetchOnServer: false,
+  async fetch () {
+    const { data: activities } = await this.$axios.get('/activities?pagination=0')
+    this.activities = activities.data.filter(item => item.is_published || item.id === this.mission.activity_id)
   },
   computed: {
     structureId () {

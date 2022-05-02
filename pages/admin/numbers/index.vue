@@ -5,18 +5,19 @@
         :items="[
           { label: 'Tableau de bord', link: '/dashboard' },
           { label: 'Plus de chiffres' },
+          { label: 'Vue d\'ensemble' },
         ]"
       />
     </portal>
 
     <SectionHeading
-      title="Plus de chiffres"
+      title="Vue d'ensemble"
     >
-      <template #action>
+      <!-- <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
           <FiltersNumbers @refetch="$fetch" />
         </div>
-      </template>
+      </template> -->
     </SectionHeading>
 
     <Box padding="sm" :loading="loadingStatistics" loading-text="Récupération des statistiques...">
@@ -97,12 +98,12 @@
 
 <script>
 import CardStatistic from '@/components/card/CardStatistic'
-import FiltersNumbers from '@/components/custom/FiltersNumbers'
+// import FiltersNumbers from '@/components/custom/FiltersNumbers'
 
 export default {
   components: {
-    CardStatistic,
-    FiltersNumbers
+    CardStatistic
+    // FiltersNumbers
   },
   layout: 'admin-numbers',
   middleware: 'authenticated',
@@ -125,7 +126,7 @@ export default {
     async getNumbersGlobal () {
       this.loadingStatistics = true
       await this.$axios.get('/numbers/global', {
-        params: this.$store.state.numbers.params
+        // params: this.$store.state.numbers.params
       }).then((response) => {
         this.loadingStatistics = false
         this.statistics = response.data
@@ -134,7 +135,7 @@ export default {
     async getNumbersOffer () {
       this.loadingOffers = true
       await this.$axios.get('/numbers/offers', {
-        params: this.$store.state.numbers.params
+        // params: this.$store.state.numbers.params
       }).then((response) => {
         this.loadingOffers = false
         this.offers = response.data

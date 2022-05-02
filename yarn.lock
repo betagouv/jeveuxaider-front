@@ -3288,6 +3288,11 @@ chardet@^0.7.0:
   resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
 
+chart.js@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-3.7.1.tgz#0516f690c6a8680c6c707e31a4c1807a6f400ada"
+  integrity sha512-8knRegQLFnPQAheZV8MjxIXc5gQEfDFD897BJgv/klO/vtIyFFmgMXrNfgrXpbTr/XbTturxRgxIXx/Y+ASJBA==
+
 chokidar@^2.1.8:
   version "2.1.8"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-2.1.8.tgz#804b3a7b6a99358c3c5c61e71d8728f041cff917"
@@ -10986,6 +10991,11 @@ vue-autosuggest@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/vue-autosuggest/-/vue-autosuggest-2.2.0.tgz#0202b9aaeeef6a3a4357bf401a73be2ecbe166f1"
   integrity sha512-cHgEakpoRUOaqXXEo8RcRrbSTM3eAaCu9b55ZXiKbaS6IUD8ewqffQrMy/A1DXqHSQbyEEGui4oAsCbRge29Jg==
+
+vue-chartjs@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/vue-chartjs/-/vue-chartjs-4.0.7.tgz#bf15a8f1f2f4482351e22f34e0400adbfd6209fb"
+  integrity sha512-nlUIyZx/+83BlA+b7Q9JTV96IXweb+atiod2ciYiJyoaGgJ7nBAzt/7L9gugW8gpiqeYqS3ogAlE+y9YyhkTzw==
 
 vue-client-only@^2.0.0:
   version "2.1.0"

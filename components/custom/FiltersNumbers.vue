@@ -38,14 +38,7 @@
         v-model="form.year"
         name="year"
         placeholder="Année"
-        :options="[
-          {key : 2018, label: '2018'},
-          {key : 2019, label: '2019'},
-          {key : 2020, label: '2020'},
-          {key : 2021, label: '2021'},
-          {key : 2022, label: '2022'},
-          {key : 2023, label: '2023'},
-        ]"
+        :options="yearOptions"
         @changed="generate"
       />
     </div>
@@ -65,7 +58,16 @@ export default {
     }
   },
   computed: {
-
+    yearOptions () {
+      return [
+        { key: 2018, label: '2018' },
+        { key: 2019, label: '2019' },
+        { key: 2020, label: '2020' },
+        { key: 2021, label: '2021' },
+        { key: 2022, label: '2022' },
+        { key: 2023, label: '2023' }
+      ]
+    }
   },
   methods: {
     generate () {
