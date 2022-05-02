@@ -15,127 +15,59 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersNumbers @refetch="$fetch" />
+          <FiltersNumbers @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <Box padding="sm" :loading="loadingTrendsMissionsByActivities" loading-text="Récupération des activités...">
-        <Heading as="h2" :level="3" class="mb-4">
-          Par activités
-        </Heading>
-        <StackedList v-if="trendsMissionsByActivities" :divided="false">
-          <StackedListItem
-            v-for="activity, i in trendsMissionsByActivities"
-            :key="i"
-            :icon="`${(i+1)}.`"
-            icon-class="text-xl font-semibold text-gray-500"
-            :link="`/admin/missions?filter[ofActivity]=${activity.id}`"
-          >
-            <div class="text-gray-900 font-semibold" v-html="activity.name" />
-            <div class="text-gray-500 text-sm">
-              {{ $options.filters.pluralize(activity.count, 'mission', 'missions') }}
-            </div>
-          </StackedListItem>
-        </StackedList>
-      </Box>
-
-      <Box padding="sm" :loading="loadingTrendsMissionsByDepartments" loading-text="Récupération des départements...">
-        <Heading as="h2" :level="3" class="mb-4">
-          Par départements
-        </Heading>
-        <StackedList v-if="trendsMissionsByDepartments" :divided="false">
-          <StackedListItem
-            v-for="department, i in trendsMissionsByDepartments"
-            :key="i"
-            :icon="`${(i+1)}.`"
-            icon-class="text-xl font-semibold text-gray-500"
-            :link="`/admin/missions?filter[ofDepartment]=${department.id}`"
-          >
-            <div class="text-gray-900 font-semibold" v-html="department.name" />
-            <div class="text-gray-500 text-sm">
-              {{ $options.filters.pluralize(department.count, 'mission', 'missions') }}
-            </div>
-          </StackedListItem>
-        </StackedList>
-      </Box>
-      <Box padding="sm" :loading="loadingTrendsMissionsByMissionTemplates" loading-text="Récupération des modèles de mission..." class="col-span-2">
-        <Heading as="h2" :level="3" class="mb-4">
-          Par modèles de missions
-        </Heading>
-        <StackedList v-if="trendsMissionsByMissionTemplates" :divided="false">
-          <StackedListItem
-            v-for="missionTemplate, i in trendsMissionsByMissionTemplates"
-            :key="i"
-            :icon="`${(i+1)}.`"
-            icon-class="text-xl font-semibold text-gray-500"
-            :link="`/admin/missions?filter[ofTemplate]=${missionTemplate.id}`"
-          >
-            <div class="text-gray-900 font-semibold" v-html="missionTemplate.title" />
-            <div class="text-gray-500 text-sm">
-              {{ $options.filters.pluralize(missionTemplate.count, 'mission', 'missions') }}
-            </div>
-          </StackedListItem>
-        </StackedList>
-      </Box>
+      <MissionsStatistics ref="missionsStatistics" class="lg:col-span-2" />
+      <MissionsByDate ref="missionsByDate" class="lg:col-span-2" />
+      <MissionsByStates ref="missionsByStates" />
+      <MissionsByStates2 ref="missionsByStates2" />
+      <MissionsByDomaines ref="missionsByDomaines" />
+      <MissionsByTypes ref="missionsByTypes" />
+      <MissionsByActivities ref="missionsByActivities" />
+      <MissionsByTemplates ref="missionsByTemplates" />
     </div>
   </div>
 </template>
 
 <script>
 import FiltersNumbers from '@/components/custom/FiltersNumbers'
+import MissionsStatistics from '@/components/numbers/MissionsStatistics.vue'
+import MissionsByDate from '@/components/numbers/MissionsByDate.vue'
+import MissionsByStates from '@/components/numbers/MissionsByStates.vue'
+import MissionsByStates2 from '@/components/numbers/MissionsByStates2.vue'
+import MissionsByTypes from '@/components/numbers/MissionsByTypes.vue'
+import MissionsByActivities from '@/components/numbers/MissionsByActivities.vue'
+import MissionsByTemplates from '@/components/numbers/MissionsByTemplates.vue'
+import MissionsByDomaines from '@/components/numbers/MissionsByDomaines.vue'
 
 export default {
   components: {
-    FiltersNumbers
+    FiltersNumbers,
+    MissionsStatistics,
+    MissionsByDate,
+    MissionsByStates,
+    MissionsByStates2,
+    MissionsByTypes,
+    MissionsByActivities,
+    MissionsByTemplates,
+    MissionsByDomaines
   },
   layout: 'admin-numbers',
-  middleware: 'authenticated',
+  middleware: 'admin',
   data () {
-    return {
-      trendsMissionsByActivities: null,
-      loadingTrendsMissionsByActivities: true,
-      trendsMissionsByMissionTemplates: null,
-      loadingTrendsMissionsByMissionTemplates: true,
-      trendsMissionsByDepartments: null,
-      loadingTrendsMissionsByDepartments: true
-    }
-  },
-  async fetch () {
-    await Promise.all([
-      this.getNumbersTrendsMissionsByActivities(),
-      this.getNumbersTrendsMissionsByMissionTemplates(),
-      this.getNumbersTrendsMissionsByDepartments()
-    ])
+    return {}
   },
   methods: {
-    async getNumbersTrendsMissionsByActivities () {
-      await this.$axios.get('/numbers/trends/missions-by-activities',
-        {
-          params: this.$store.state.numbers.params
-        }).then((response) => {
-        this.loadingTrendsMissionsByActivities = false
-        this.trendsMissionsByActivities = response.data
-      })
-    },
-    async getNumbersTrendsMissionsByMissionTemplates () {
-      await this.$axios.get('/numbers/trends/missions-by-mission-templates', {
-        params: this.$store.state.numbers.params
-      }).then((response) => {
-        this.loadingTrendsMissionsByMissionTemplates = false
-        this.trendsMissionsByMissionTemplates = response.data
-      })
-    },
-    async getNumbersTrendsMissionsByDepartments () {
-      await this.$axios.get('/numbers/trends/missions-by-departments', {
-        params: this.$store.state.numbers.params
-      }).then((response) => {
-        this.loadingTrendsMissionsByDepartments = false
-        this.trendsMissionsByDepartments = response.data
-      })
+    refetch () {
+      this.$refs.missionsStatistics.$fetch()
+      this.$refs.missionsByDate.$fetch()
+      this.$refs.missionsByStates.$fetch()
+      this.$refs.missionsByTypes.$fetch()
     }
-
   }
 }
 </script>

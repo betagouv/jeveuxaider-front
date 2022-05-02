@@ -15,127 +15,44 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersNumbers @refetch="$fetch" />
+          <FiltersNumbers @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <Box padding="sm" :loading="loadingTrendsParticipationsByActivities" loading-text="Récupération des activités...">
-        <Heading as="h2" :level="3" class="mb-4">
-          Par activités
-        </Heading>
-        <StackedList v-if="trendsParticipationsByActivities" :divided="false">
-          <StackedListItem
-            v-for="activity, i in trendsParticipationsByActivities"
-            :key="i"
-            :icon="`${(i+1)}.`"
-            icon-class="text-xl font-semibold text-gray-500"
-            :link="`/admin/participations?filter[ofActivity]=${activity.id}`"
-          >
-            <div class="text-gray-900 font-semibold" v-html="activity.name" />
-            <div class="text-gray-500 text-sm">
-              {{ $options.filters.pluralize(activity.count, 'participation', 'participations') }}
-            </div>
-          </StackedListItem>
-        </StackedList>
-      </Box>
-
-      <Box padding="sm" :loading="loadingTrendsParticipationsByDepartments" loading-text="Récupération des départements...">
-        <Heading as="h2" :level="3" class="mb-4">
-          Par départements
-        </Heading>
-        <StackedList v-if="trendsParticipationsByDepartments" :divided="false">
-          <StackedListItem
-            v-for="department, i in trendsParticipationsByDepartments"
-            :key="i"
-            :icon="`${(i+1)}.`"
-            icon-class="text-xl font-semibold text-gray-500"
-            :link="`/admin/participations?filter[ofDepartment]=${department.id}`"
-          >
-            <div class="text-gray-900 font-semibold" v-html="department.name" />
-            <div class="text-gray-500 text-sm">
-              {{ $options.filters.pluralize(department.count, 'participation', 'participations') }}
-            </div>
-          </StackedListItem>
-        </StackedList>
-      </Box>
-      <Box padding="sm" :loading="loadingTrendsParticipationsByMissionTemplates" loading-text="Récupération des modèles de mission..." class="col-span-2">
-        <Heading as="h2" :level="3" class="mb-4">
-          Par modèles de missions
-        </Heading>
-        <StackedList v-if="trendsParticipationsByMissionTemplates" :divided="false">
-          <StackedListItem
-            v-for="missionTemplate, i in trendsParticipationsByMissionTemplates"
-            :key="i"
-            :icon="`${(i+1)}.`"
-            icon-class="text-xl font-semibold text-gray-500"
-            :link="`/admin/participations?filter[ofTemplate]=${missionTemplate.id}`"
-          >
-            <div class="text-gray-900 font-semibold" v-html="missionTemplate.title" />
-            <div class="text-gray-500 text-sm">
-              {{ $options.filters.pluralize(missionTemplate.count, 'participation', 'participations') }}
-            </div>
-          </StackedListItem>
-        </StackedList>
-      </Box>
+      <ParticipationsStatistics ref="participationsStatistics" class="lg:col-span-2" />
+      <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" />
+      <ParticipationsByStates ref="participationsByStates" />
     </div>
   </div>
 </template>
 
 <script>
 import FiltersNumbers from '@/components/custom/FiltersNumbers'
+import ParticipationsStatistics from '@/components/numbers/ParticipationsStatistics.vue'
+import ParticipationsByDate from '@/components/numbers/ParticipationsByDate.vue'
+import ParticipationsByStates from '@/components/numbers/ParticipationsByStates.vue'
 
 export default {
   components: {
-    FiltersNumbers
+    FiltersNumbers,
+    ParticipationsStatistics,
+    ParticipationsByDate,
+    ParticipationsByStates
   },
   layout: 'admin-numbers',
-  middleware: 'authenticated',
+  middleware: 'admin',
   data () {
-    return {
-      trendsParticipationsByActivities: null,
-      loadingTrendsParticipationsByActivities: true,
-      trendsParticipationsByMissionTemplates: null,
-      loadingTrendsParticipationsByMissionTemplates: true,
-      trendsParticipationsByDepartments: null,
-      loadingTrendsParticipationsByDepartments: true
-    }
-  },
-  async fetch () {
-    await Promise.all([
-      this.getNumbersTrendsParticipationsByActivities(),
-      this.getNumbersTrendsParticipationsByMissionTemplates(),
-      this.getNumbersTrendsParticipationsByDepartments()
-    ])
+    return {}
   },
   methods: {
-    async getNumbersTrendsParticipationsByActivities () {
-      await this.$axios.get('/numbers/trends/participations-by-activities',
-        {
-          params: this.$store.state.numbers.params
-        }).then((response) => {
-        this.loadingTrendsParticipationsByActivities = false
-        this.trendsParticipationsByActivities = response.data
-      })
-    },
-    async getNumbersTrendsParticipationsByMissionTemplates () {
-      await this.$axios.get('/numbers/trends/participations-by-mission-templates', {
-        params: this.$store.state.numbers.params
-      }).then((response) => {
-        this.loadingTrendsParticipationsByMissionTemplates = false
-        this.trendsParticipationsByMissionTemplates = response.data
-      })
-    },
-    async getNumbersTrendsParticipationsByDepartments () {
-      await this.$axios.get('/numbers/trends/participations-by-departments', {
-        params: this.$store.state.numbers.params
-      }).then((response) => {
-        this.loadingTrendsParticipationsByDepartments = false
-        this.trendsParticipationsByDepartments = response.data
-      })
+    refetch () {
+      this.$refs.participationsStatistics.$fetch()
+      this.$refs.participationsByDate.$fetch()
+      this.$refs.participationsByStates.$fetch()
+      this.$refs.participationsByTypes.$fetch()
     }
-
   }
 }
 </script>
