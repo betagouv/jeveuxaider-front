@@ -1,7 +1,7 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
     <Heading as="h2" :level="3" class="mb-4">
-      Par statuts
+      Par statuts juridiques
     </Heading>
     <div class="w-full">
       <DoughnutChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
@@ -37,8 +37,8 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/numbers/organisations-by-types', {
-      params: this.$store.state.numbers.params
+    await this.$axios.get('/statistics/organisations-by-types', {
+      params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
       this.chartData = {

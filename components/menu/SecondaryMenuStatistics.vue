@@ -49,10 +49,18 @@ export default {
           key: 'global',
           label: 'Global',
           childrens: [
-            { label: 'Vue d\'ensemble', to: '/admin/numbers' },
-            { label: 'Organisations', to: '/admin/numbers/organisations' },
-            { label: 'Missions', to: '/admin/numbers/missions' },
-            { label: 'Participations', to: '/admin/numbers/participations' }
+            { label: 'Vue d\'ensemble', to: '/admin/statistics' },
+            { label: 'Organisations', to: '/admin/statistics/organisations' },
+            { label: 'Missions', to: '/admin/statistics/missions' },
+            { label: 'Participations', to: '/admin/statistics/participations' }
+          ]
+        },
+        {
+          key: 'moderation',
+          label: 'Modération',
+          childrens: [
+            { label: 'Organisations', to: '/admin/statistics/organisations/participations-a-valider' },
+            { label: 'Départements', to: '/admin/statistics/departements' }
           ]
         },
         {

@@ -7,7 +7,7 @@
       <div class="grid lg:grid-cols-5 gap-6 lg:gap-12 py-6 lg:py-12">
         <aside class="relative lg:col-span-1">
           <div class="lg:block">
-            <SecondaryMenuNumbers />
+            <SecondaryMenuStatistics />
           </div>
         </aside>
         <div class="lg:col-span-4 min-w-0">
@@ -28,7 +28,7 @@
 import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
-import SecondaryMenuNumbers from '@/components/menu/SecondaryMenuNumbers'
+import SecondaryMenuStatistics from '@/components/menu/SecondaryMenuStatistics'
 
 export default {
   name: 'Dashboard',
@@ -36,7 +36,7 @@ export default {
     HeaderBanner,
     Header,
     Footer,
-    SecondaryMenuNumbers
+    SecondaryMenuStatistics
   },
   middleware: 'authenticated'
 }

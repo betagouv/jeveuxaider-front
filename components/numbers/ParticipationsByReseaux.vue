@@ -30,8 +30,8 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/numbers/participations-by-reseaux', {
-      params: this.$store.state.numbers.params
+    await this.$axios.get('/statistics/participations-by-reseaux', {
+      params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
       this.items = response.data

@@ -97,7 +97,7 @@ export default {
       this.$store.dispatch('temoignage/nextStep')
     },
     onTestimonySubmit (payload) {
-      console.log('onTestimonySubmit', payload)
+      // console.log('onTestimonySubmit', payload)
       this.form = payload
     },
     onDestroy (payload) {

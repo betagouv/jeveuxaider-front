@@ -54,7 +54,7 @@ export default {
   data () {
     return {
       loading: false,
-      form: { ...this.$store.state.numbers.params }
+      form: { ...this.$store.state.statistics.params }
     }
   },
   computed: {
@@ -71,7 +71,6 @@ export default {
   },
   methods: {
     generate () {
-      console.log('generate')
       if (this.form.period === 'year' && !this.form.year) {
         this.form.year = this.$dayjs().year()
       }
@@ -80,7 +79,7 @@ export default {
         this.form.year = this.$dayjs().year()
         this.form.month = this.$dayjs().format('MM')
       }
-      this.$store.commit('numbers/setParams', { ...this.form })
+      this.$store.commit('statistics/setParams', { ...this.form })
       this.$emit('refetch')
     }
   }

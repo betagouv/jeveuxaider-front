@@ -127,7 +127,6 @@ export default {
   },
   methods: {
     handleClickShare () {
-      console.log('handleClickShare')
       this.$store.commit('missionShare/showOverlay')
       this.$store.commit('missionShare/setSelectedMission', this.mission)
     }

@@ -1,7 +1,7 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des activités...">
     <Heading as="h2" :level="3" class="mb-4">
-      Modèles les plus attractifs
+      Topito des modèles
     </Heading>
     <StackedList v-if="items" :divided="false">
       <StackedListItem
@@ -30,8 +30,8 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/numbers/missions-by-templates', {
-      params: this.$store.state.numbers.params
+    await this.$axios.get('/statistics/missions-by-templates', {
+      params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
       this.items = response.data

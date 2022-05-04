@@ -8,7 +8,19 @@
         :value="statistics.missions_actives"
         :title="`${$options.filters.pluralize(statistics.missions_actives, 'Mission active', 'Missions actives', false)}`"
         :subtitle="`sur ${$options.filters.formatNumber(statistics.missions)}`"
-        link="/admin/numbers/organisations"
+        link="/admin/missions"
+      />
+      <CardStatistic
+        :value="statistics.missions_libres_actives"
+        :title="`${$options.filters.pluralize(statistics.missions_libres_actives, 'Active sans modèle', 'Actives sans modèle', false)}`"
+        :subtitle="`sur ${$options.filters.formatNumber(statistics.missions_libres)}`"
+        link="/admin/missions"
+      />
+      <CardStatistic
+        :value="statistics.missions_templates_actives"
+        :title="`${$options.filters.pluralize(statistics.missions_templates_actives, 'Active avec modèle', 'Actives avec modèle', false)}`"
+        :subtitle="`sur ${$options.filters.formatNumber(statistics.missions_templates)}`"
+        link="/admin/missions"
       />
     </div>
   </Box>
@@ -29,8 +41,8 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/numbers/global/missions', {
-      params: this.$store.state.numbers.params
+    await this.$axios.get('/statistics/global/missions', {
+      params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
       this.statistics = response.data

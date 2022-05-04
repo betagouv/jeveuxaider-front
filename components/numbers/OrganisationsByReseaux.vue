@@ -1,7 +1,7 @@
 <template>
-  <Box padding="sm" :loading="loading" loading-text="Récupération des organisations...">
+  <Box padding="sm" :loading="loading" loading-text="Récupération des réseaux...">
     <Heading as="h2" :level="3" class="mb-4">
-      Topito des organisations
+      Topito des réseaux
     </Heading>
     <StackedList v-if="items" :divided="false">
       <StackedListItem
@@ -9,11 +9,11 @@
         :key="i"
         :icon="`${(i+1)}.`"
         icon-class="text-xl font-semibold text-gray-500"
-        :link="`/admin/organisations/${item.id}`"
+        :link="`/admin/contenus/reseaux/${item.id}`"
       >
         <div class="text-gray-900 font-semibold" v-html="item.name" />
         <div class="text-gray-500 text-sm">
-          {{ $options.filters.pluralize(item.count, 'participation', 'participations') }}
+          {{ $options.filters.pluralize(item.count, 'antenne', 'antennes') }}
         </div>
       </StackedListItem>
     </StackedList>
@@ -30,7 +30,7 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/statistics/participations-by-organisations', {
+    await this.$axios.get('/statistics/organisations-by-reseaux', {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false

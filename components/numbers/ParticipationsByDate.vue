@@ -5,7 +5,7 @@
         Nouvelles missions par date
       </Heading>
       <div class="text-gray-400 font-semibold">
-        Année {{ $store.state.numbers.params.year }}
+        Année {{ $store.state.statistics.params.year }}
       </div>
     </div>
     <div class="w-full">
@@ -43,7 +43,7 @@ export default {
   async fetch () {
     this.loading = true
     await this.$axios.get('/charts/participations-by-date', {
-      params: this.$store.state.numbers.params
+      params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
       this.chartData = {

@@ -63,7 +63,8 @@ export default {
     '~/plugins/marked.js',
     '~/plugins/api-algolia.js',
     '~/plugins/plausible.client.js',
-    '~/plugins/apiengagement.client.js'
+    '~/plugins/apiengagement.client.js',
+    { src: '~/plugins/vue-chart.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

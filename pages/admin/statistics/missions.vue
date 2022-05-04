@@ -15,7 +15,7 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersNumbers @refetch="refetch()" />
+          <FiltersStatistics @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>
@@ -28,13 +28,15 @@
       <MissionsByDomaines ref="missionsByDomaines" />
       <MissionsByTypes ref="missionsByTypes" />
       <MissionsByActivities ref="missionsByActivities" />
-      <MissionsByTemplates ref="missionsByTemplates" />
+      <MissionsByOrganisations ref="missionsByOrganisations" />
+      <MissionsByReseaux ref="missionsByReseaux" />
+      <MissionsByTemplates ref="missionsByTemplates" class="lg:col-span-2" />
     </div>
   </div>
 </template>
 
 <script>
-import FiltersNumbers from '@/components/custom/FiltersNumbers'
+import FiltersStatistics from '@/components/custom/FiltersStatistics'
 import MissionsStatistics from '@/components/numbers/MissionsStatistics.vue'
 import MissionsByDate from '@/components/numbers/MissionsByDate.vue'
 import MissionsByStates from '@/components/numbers/MissionsByStates.vue'
@@ -43,10 +45,12 @@ import MissionsByTypes from '@/components/numbers/MissionsByTypes.vue'
 import MissionsByActivities from '@/components/numbers/MissionsByActivities.vue'
 import MissionsByTemplates from '@/components/numbers/MissionsByTemplates.vue'
 import MissionsByDomaines from '@/components/numbers/MissionsByDomaines.vue'
+import MissionsByOrganisations from '@/components/numbers/MissionsByOrganisations.vue'
+import MissionsByReseaux from '@/components/numbers/MissionsByReseaux.vue'
 
 export default {
   components: {
-    FiltersNumbers,
+    FiltersStatistics,
     MissionsStatistics,
     MissionsByDate,
     MissionsByStates,
@@ -54,9 +58,11 @@ export default {
     MissionsByTypes,
     MissionsByActivities,
     MissionsByTemplates,
-    MissionsByDomaines
+    MissionsByDomaines,
+    MissionsByOrganisations,
+    MissionsByReseaux
   },
-  layout: 'admin-numbers',
+  layout: 'statistics',
   middleware: 'admin',
   data () {
     return {}
@@ -66,7 +72,13 @@ export default {
       this.$refs.missionsStatistics.$fetch()
       this.$refs.missionsByDate.$fetch()
       this.$refs.missionsByStates.$fetch()
+      this.$refs.missionsByStates2.$fetch()
+      this.$refs.missionsByDomaines.$fetch()
       this.$refs.missionsByTypes.$fetch()
+      this.$refs.missionsByActivities.$fetch()
+      this.$refs.missionsByOrganisations.$fetch()
+      this.$refs.missionsByReseaux.$fetch()
+      this.$refs.missionsByTemplates.$fetch()
     }
   }
 }

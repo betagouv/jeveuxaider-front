@@ -7,7 +7,7 @@
       <div class="text-xl text-white font-bold max-w-[260px]">
         Tout l'historique de votre activité sur la plateforme
       </div>
-      <Button variant="white-green" @click.native="$router.push('/admin/numbers')">
+      <Button variant="white-green" @click.native="$router.push('/admin/statistics')">
         Vos performances
       </Button>
     </div>

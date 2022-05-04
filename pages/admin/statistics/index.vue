@@ -12,13 +12,7 @@
 
     <SectionHeading
       title="Vue d'ensemble"
-    >
-      <!-- <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersNumbers @refetch="$fetch" />
-        </div>
-      </template> -->
-    </SectionHeading>
+    />
 
     <Box padding="sm" :loading="loadingStatistics" loading-text="Récupération des statistiques...">
       <Heading as="h2" :level="3" class="mb-4">
@@ -30,21 +24,21 @@
           :value="statistics.organisations_actives"
           :title="`${$options.filters.pluralize(statistics.organisations_actives, 'Organisation active', 'Organisations actives', false)}`"
           :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations)}`"
-          link="/admin/numbers/organisations"
+          link="/admin/statistics/organisations"
         />
         <CardStatistic
           v-if="['admin', 'responsable', 'referent','referent_regional','tete_de_reseau','analyste','responsable_territoire'].includes($store.getters.contextRole)"
           :value="statistics.participations_validated"
           :title="`${$options.filters.pluralize(statistics.participations_validated, 'Participation validée', 'Participations validées', false)}`"
           :subtitle="`sur ${$options.filters.formatNumber(statistics.participations)} ${$options.filters.pluralize(statistics.participations, 'candidature', 'candidatures', false)}`"
-          link="/admin/numbers/participations"
+          link="/admin/statistics/participations"
         />
         <CardStatistic
           v-if="['admin','analyste'].includes($store.getters.contextRole)"
           :value="statistics.users_benevoles"
           title="Bénévoles"
           :subtitle="`sur ${$options.filters.formatNumber(statistics.users)}`"
-          link="/admin/numbers/utilisateurs"
+          link="/admin/statistics/utilisateurs"
         />
         <CardStatistic
           v-if="['admin','analyste'].includes($store.getters.contextRole)"
@@ -83,7 +77,7 @@
           :value="offers.missions_actives"
           :title="`${$options.filters.pluralize(offers.missions_actives, 'Mission en ligne', 'Missions en ligne', false)}`"
           :subtitle="`sur ${$options.filters.formatNumber(offers.missions)} ${$options.filters.pluralize(offers.missions, 'mission', 'missions', false)}`"
-          link="/admin/numbers/missions"
+          link="/admin/statistics/missions"
         />
         <CardStatistic
           :value="offers.places_left"
@@ -98,15 +92,13 @@
 
 <script>
 import CardStatistic from '@/components/card/CardStatistic'
-// import FiltersNumbers from '@/components/custom/FiltersNumbers'
 
 export default {
   components: {
     CardStatistic
-    // FiltersNumbers
   },
-  layout: 'admin-numbers',
-  middleware: 'authenticated',
+  layout: 'statistics',
+  middleware: 'admin',
   data () {
     return {
       statistics: null,
@@ -125,8 +117,8 @@ export default {
   methods: {
     async getNumbersGlobal () {
       this.loadingStatistics = true
-      await this.$axios.get('/numbers/global', {
-        // params: this.$store.state.numbers.params
+      await this.$axios.get('/statistics/global', {
+        // params: this.$store.state.statistics.params
       }).then((response) => {
         this.loadingStatistics = false
         this.statistics = response.data
@@ -134,8 +126,8 @@ export default {
     },
     async getNumbersOffer () {
       this.loadingOffers = true
-      await this.$axios.get('/numbers/offers', {
-        // params: this.$store.state.numbers.params
+      await this.$axios.get('/statistics/offers', {
+        // params: this.$store.state.statistics.params
       }).then((response) => {
         this.loadingOffers = false
         this.offers = response.data

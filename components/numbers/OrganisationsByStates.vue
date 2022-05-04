@@ -37,8 +37,8 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/numbers/organisations-by-states', {
-      params: this.$store.state.numbers.params
+    await this.$axios.get('/statistics/organisations-by-states', {
+      params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
       this.chartData = {

@@ -8,7 +8,7 @@
         :value="statistics.participations_actives"
         :title="`${$options.filters.pluralize(statistics.participations_actives, 'Participation active', 'Participations actives', false)}`"
         :subtitle="`sur ${$options.filters.formatNumber(statistics.participations)}`"
-        link="/admin/numbers/participations"
+        link="/admin/statistics/participations"
       />
     </div>
   </Box>
@@ -29,8 +29,8 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/numbers/global/participations', {
-      params: this.$store.state.numbers.params
+    await this.$axios.get('/statistics/global/participations', {
+      params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
       this.statistics = response.data

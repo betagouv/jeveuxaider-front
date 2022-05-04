@@ -5,26 +5,26 @@
         :items="[
           { label: 'Tableau de bord', link: '/dashboard' },
           { label: 'Plus de chiffres', link: '/admin/numbers' },
-          { label: 'Organisations' },
+          { label: 'Participations' },
         ]"
       />
     </portal>
 
     <SectionHeading
-      title="Organisations"
+      title="Participations"
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersNumbers @refetch="refetch()" />
+          <FiltersStatistics @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <OrganisationsStatistics ref="organisationsStatistics" class="lg:col-span-2" />
-      <OrganisationsByDate ref="organisationsByDate" class="lg:col-span-2" />
-      <OrganisationsByStates ref="organisationsByStates" />
-      <OrganisationsByTypes ref="organisationsByTypes" />
+      <ParticipationsStatistics ref="participationsStatistics" class="lg:col-span-2" />
+      <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" />
+      <ParticipationsByStates ref="participationsByStates" />
+      <ParticipationsByDomaines ref="participationsByDomaines" />
       <ParticipationsByOrganisations ref="participationsByOrganisations" />
       <ParticipationsByReseaux ref="participationsByReseaux" />
     </div>
@@ -32,35 +32,35 @@
 </template>
 
 <script>
-import FiltersNumbers from '@/components/custom/FiltersNumbers'
-import OrganisationsStatistics from '@/components/numbers/OrganisationsStatistics.vue'
-import OrganisationsByDate from '@/components/numbers/OrganisationsByDate.vue'
-import OrganisationsByStates from '@/components/numbers/OrganisationsByStates.vue'
-import OrganisationsByTypes from '@/components/numbers/OrganisationsByTypes.vue'
+import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import ParticipationsStatistics from '@/components/numbers/ParticipationsStatistics.vue'
+import ParticipationsByDate from '@/components/numbers/ParticipationsByDate.vue'
+import ParticipationsByStates from '@/components/numbers/ParticipationsByStates.vue'
 import ParticipationsByOrganisations from '@/components/numbers/ParticipationsByOrganisations.vue'
+import ParticipationsByDomaines from '@/components/numbers/ParticipationsByDomaines.vue'
 import ParticipationsByReseaux from '@/components/numbers/ParticipationsByReseaux.vue'
 
 export default {
   components: {
-    FiltersNumbers,
-    OrganisationsStatistics,
-    OrganisationsByDate,
-    OrganisationsByStates,
-    OrganisationsByTypes,
+    FiltersStatistics,
+    ParticipationsStatistics,
+    ParticipationsByDate,
+    ParticipationsByStates,
     ParticipationsByOrganisations,
+    ParticipationsByDomaines,
     ParticipationsByReseaux
   },
-  layout: 'admin-numbers',
+  layout: 'statistics',
   middleware: 'admin',
   data () {
     return {}
   },
   methods: {
     refetch () {
-      this.$refs.organisationsStatistics.$fetch()
-      this.$refs.organisationsByDate.$fetch()
-      this.$refs.organisationsByStates.$fetch()
-      this.$refs.organisationsByTypes.$fetch()
+      this.$refs.participationsStatistics.$fetch()
+      this.$refs.participationsByDate.$fetch()
+      this.$refs.participationsByStates.$fetch()
+      this.$refs.participationsByDomaines.$fetch()
       this.$refs.participationsByOrganisations.$fetch()
       this.$refs.participationsByReseaux.$fetch()
     }

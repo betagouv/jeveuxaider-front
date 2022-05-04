@@ -1,6 +1,6 @@
 <template>
   <div
-    class="shadow border-b border-gray-200"
+    class="shadow border-b border-gray-200 max-w-full"
     :class="[{'overflow-x-auto rounded-lg': overflow}]"
   >
     <table class="min-w-full divide-y divide-gray-200">

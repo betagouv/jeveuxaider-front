@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-2 items-center">
     <div
-      class=" rounded-lg"
+      class="rounded-lg"
       :class="[
         {'h-[10px] w-[10px]': size == 'xxs'},
         {'h-[30px] w-[30px]': size == 'xs'},
@@ -26,11 +26,16 @@
         {'bg-domaine-culture': [3,'culture','art'].includes(color)},
       ]"
     />
-    <div class="text-gray-500 ">
+    <div class="text-gray-500">
       {{ label }}
     </div>
-    <div class=" font-medium">
-      {{ count | formatNumber }}
+    <div class="font-medium">
+      <template v-if="count">
+        {{ count | formatNumber }}
+      </template>
+      <template v-else>
+        -
+      </template>
     </div>
   </div>
 </template>
@@ -52,7 +57,7 @@ export default {
       required: true
     },
     count: {
-      type: String,
+      type: [String, Number],
       required: true
     }
   }

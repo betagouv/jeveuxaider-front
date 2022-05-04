@@ -24,7 +24,7 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/statistics/missions-by-domaines', {
+    await this.$axios.get('/statistics/participations-by-domaines', {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
