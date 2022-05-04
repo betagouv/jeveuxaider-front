@@ -1,9 +1,9 @@
 <template>
-  <div class="py-2 sm:grid sm:grid-cols-3 sm:gap-4">
-    <dt class="text-sm text-gray-500">
+  <div class="py-2 sm:gap-4 sm:flex">
+    <dt class="text-sm text-gray-500 flex-none" :style="style">
       {{ term }}
     </dt>
-    <dd class="mt-1 text-sm text-gray-900 font-semibold sm:mt-0 sm:col-span-2 break-words">
+    <dd class="mt-1 text-sm text-gray-900 font-semibold sm:mt-0 flex-1" style="word-break: break-word;">
       {{ description || '-' }}
     </dd>
   </div>
@@ -16,9 +16,20 @@ export default {
       type: String,
       required: true
     },
+    termSize: {
+      type: Number,
+      default: null
+    },
     description: {
       type: [String, Number],
       default: null
+    }
+  },
+  data () {
+    return {
+      style: {
+        width: this.termSize ? `${this.termSize}px` : 'calc(100%/3)'
+      }
     }
   }
 }

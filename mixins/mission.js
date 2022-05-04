@@ -52,10 +52,10 @@ export default {
         return
       }
       if (startDate && endDate) {
-        return `Du ${this.$dayjs(startDate).format('D MMMM')} au ${this.$dayjs(endDate).format('D MMMM YYYY')}`
+        return `Du ${this.$dayjs(startDate).format('D MMMM YYYY')} au ${this.$dayjs(endDate).format('D MMMM YYYY')}`
       }
 
-      return `À partir du ${this.$dayjs(startDate).format('D MMMM')}`
+      return `À partir du ${this.$dayjs(startDate).format('D MMMM YYYY')}`
     },
     hasExpired () {
       const now = this.$dayjs()

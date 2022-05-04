@@ -107,12 +107,10 @@ export default {
         return 'Plusieurs bénévoles recherchés'
       } else if (this.mission.has_places_left && this.mission.places_left > 0) {
         return (
-          this.mission.places_left +
-          ' ' +
-          this.$options.filters.pluralize(this.mission.places_left, [
+          this.$options.filters.pluralize(this.mission.places_left,
             'bénévole recherché',
             'bénévoles recherchés'
-          ])
+          )
         )
       } else {
         return this.mission.has_places_left === false

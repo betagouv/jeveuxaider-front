@@ -17,9 +17,7 @@
         class="absolute top-0 flex justify-center inset-x-0"
       >
         <div class="pill !rounded-t-none">
-          {{
-            organisation.statut_juridique | label('structure_legal_status')
-          }}
+          {{ organisation.statut_juridique | label('structure_legal_status') }}
         </div>
       </div>
 
@@ -47,9 +45,14 @@
     </div>
 
     <div class="mx-8 my-6 flex-1 flex flex-col items-start">
-      <Badge v-if="organisation.domaines[0]" :color="organisation.domaines[0].id" class="uppercase mb-4">
-        {{ $options.filters.label(organisation.domaines[0].id, 'domaines') }}
-      </Badge>
+      <div class="mb-4 flex flex-wrap gap-2">
+        <Badge v-if="organisation.domaines[0]" :color="organisation.domaines[0].id" class="uppercase">
+          {{ $options.filters.label(organisation.domaines[0].id, 'domaines') }}
+        </Badge>
+        <Badge v-if="organisation.domaines.length > 1" color="gray-light">
+          +{{ organisation.domaines.length - 1 }}
+        </Badge>
+      </div>
 
       <h3
         :title="organisation.name"

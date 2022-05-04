@@ -47,7 +47,10 @@
           <Presentation :mission="mission" />
           <PresentielOrDistance :mission="mission" />
           <Details :mission="mission" />
-          <Box class="flex flex-col sm:flex-row gap-6 xl:gap-8 text-center sm:text-left">
+          <Box
+            v-if="!['Organisation publique', 'Collectivité'].includes(mission.structure.statut_juridique)"
+            class="flex flex-col sm:flex-row gap-6 xl:gap-8 text-center sm:text-left"
+          >
             <img
               v-if="
                 mission.structure.logo &&
@@ -361,12 +364,6 @@ export default {
       const dates = []
       const startDate = this.mission.start_date?.substring(0, 10)
       const endDate = this.mission.end_date?.substring(0, 10)
-      const startDateYear = startDate?.substring(0, 4)
-      const endDateYear = endDate?.substring(0, 4)
-      const format =
-        startDate && endDate && startDateYear !== endDateYear
-          ? 'D MMMM YYYY'
-          : 'D MMMM'
 
       // Si date de départ dépassée et pas de date de fin, masquer les dates
       if (this.$dayjs(startDate).isBefore(this.$dayjs()) && !endDate) {
@@ -375,14 +372,14 @@ export default {
 
       if (startDate) {
         dates.push({
-          date: this.$dayjs(startDate).format(format),
+          date: this.$dayjs(startDate).format('D MMMM YYYY'),
           label: 'À PARTIR DU'
         })
       }
 
       if (endDate) {
         dates.push({
-          date: this.$dayjs(endDate).format(format),
+          date: this.$dayjs(endDate).format('D MMMM YYYY'),
           label: "JUSQU'AU"
         })
       }

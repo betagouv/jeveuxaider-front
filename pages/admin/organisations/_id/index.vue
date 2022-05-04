@@ -166,6 +166,7 @@
                 </div>
               </Box>
             </div>
+            <BoxReseau v-for="reseau in organisation.reseaux" :key="reseau.id" class="mb-8" :reseau="reseau" />
             <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="organisation.department" />
           </div>
           <template v-if="$route.hash === '#membres'">
@@ -179,10 +180,10 @@
               <Box v-for="responsable in organisation.members" :key="responsable.id" variant="flat" padding="xs">
                 <div class="flex justify-between items-start">
                   <DescriptionList v-if="responsable">
-                    <DescriptionListItem term="Nom" :description="responsable.full_name" />
-                    <DescriptionListItem term="E-mail" :description="responsable.email" />
-                    <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-                    <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
+                    <DescriptionListItem term="Nom" :description="responsable.full_name" :term-size="90" />
+                    <DescriptionListItem term="E-mail" :description="responsable.email" :term-size="90" />
+                    <DescriptionListItem term="Mobile" :description="responsable.mobile" :term-size="90" />
+                    <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" :term-size="90" />
                   </DescriptionList>
                   <div v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
                     <div class="group-hover:block hidden">
@@ -215,6 +216,7 @@ import FormInvitation from '@/components/form/FormInvitation'
 import BoxInvitations from '@/components/section/BoxInvitations'
 import SelectOrganisationState from '@/components/custom/SelectOrganisationState'
 import BoxReferents from '@/components/section/BoxReferents'
+import BoxReseau from '@/components/section/organisation/BoxReseau'
 
 export default {
   components: {
@@ -226,7 +228,8 @@ export default {
     FormInvitation,
     BoxInvitations,
     SelectOrganisationState,
-    BoxReferents
+    BoxReferents,
+    BoxReseau
   },
   mixins: [MixinOrganisation],
   middleware: 'authenticated',
@@ -273,7 +276,8 @@ export default {
 
     const { data: queryInvitations } = await this.$axios.get('/invitations', {
       params: {
-        'filter[of_structure]': this.organisation.id
+        'filter[of_structure]': this.organisation.id,
+        pagination: 999
       }
     })
     this.queryInvitations = queryInvitations

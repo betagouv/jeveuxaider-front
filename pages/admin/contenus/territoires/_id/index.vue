@@ -167,7 +167,8 @@ export default {
   async fetch () {
     const { data: queryInvitations } = await this.$axios.get('/invitations', {
       params: {
-        'filter[of_territoire]': this.territoire.id
+        'filter[of_territoire]': this.territoire.id,
+        pagination: 999
       }
     })
     this.queryInvitations = queryInvitations

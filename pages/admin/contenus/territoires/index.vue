@@ -53,14 +53,16 @@
           transparent
           @change="deleteAllFilters()"
         />
-        <Checkbox
-          :key="`state-en-attente-validation-${$route.fullPath}`"
-          :option="{key: 'en-attente-validation', label:'En attente de validation'}"
-          :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'waiting'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'waiting')"
+        <SelectAdvanced
+          :key="`state-${$route.fullPath}`"
+          name="state"
+          placeholder="Tous les statuts"
+          :options="$labels.territoire_workflow_states"
+          :value="$route.query['filter[state]']"
+          theme="filter"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[state]', $event)"
         />
         <Checkbox
           :key="`type-dep-${$route.fullPath}`"
@@ -79,6 +81,24 @@
           size="xs"
           transparent
           @change="changeFilter('filter[type]', 'city')"
+        />
+        <Checkbox
+          :key="`published-${$route.fullPath}`"
+          :option="{key: 'true', label:'En ligne'}"
+          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[is_published]', 'true')"
+        />
+        <Checkbox
+          :key="`unpublished-${$route.fullPath}`"
+          :option="{key: 'false', label: 'Hors ligne'}"
+          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[is_published]', 'false')"
         />
       </template>
       <template #sorts>

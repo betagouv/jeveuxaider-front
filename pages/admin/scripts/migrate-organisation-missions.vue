@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="">
     <AlertDialog
       v-if="form.origin && form.destination"
       theme="danger"
@@ -10,171 +10,158 @@
       @confirm="handleConfirmSubmit()"
       @cancel="showAlert = false"
     />
+    <portal to="breadcrumb">
+      <Breadcrumb
+        :items="[
+          { label: 'Tableau de bord', link: '/dashboard' },
+          { label: 'Scripts' },
+          { label: 'Transfert de missions' }
+        ]"
+      />
+    </portal>
 
-    <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Scripts' },
-        { label: 'Transfert de missions' }
-      ]"
-    />
-
-    <div class="grid grid-cols-5 py-12 ">
-      <aside class="relative col-span-1">
-        <div class="sticky top-12">
-          <SecondaryMenuAdmin />
-        </div>
-      </aside>
-      <div class="col-span-4">
-        <div class="flex flex-col gap-12">
-          <SectionHeading title="Transfert de missions">
-            <template #action>
-              <div class="hidden lg:block space-x-2 flex-shrink-0">
-                <Button variant="green" size="xl" :loading="loading" @click.native="handleSubmit">
-                  Exécuter le script
-                </Button>
-              </div>
-            </template>
-          </SectionHeading>
-          <div class="">
-            <Box>
-              <div class="max-w-xl space-y-10">
-                <FormControl
-                  html-for="origin"
-                  label="Organisation d'origine"
-                  required
-                  :error="errors.origin"
-                >
-                  <InputAutocomplete
-                    v-if="!form.origin"
-                    :value="$route.query['filter[structure.name]']"
-                    icon="SearchIcon"
-                    name="autocomplete"
-                    placeholder="Recherche par mots clés..."
-                    :options="autocompleteOptionsOrga"
-                    clear-after-selected
-                    show-key-in-options
-                    @fetch-suggestions="onFetchSuggestionsOrga"
-                    @selected="handleSelected($event,'origin')"
-                  />
-                  <div v-else class="flex">
-                    <TagFormItem
-                      :tag="form.origin"
-                      @removed="handleRemoveOrigin"
-                    >
-                      <div class="truncate">
-                        #{{ form.origin.id }} {{ form.origin.name }}
-                      </div>
-                      <div class="text-gray-500 text-xs font-normal">
-                        <div>
-                          {{ form.origin.state }}
-                        </div>
-                        <div>
-                          {{ form.origin.missions_count }} mission(s)
-                        </div>
-                      </div>
-                    </TagFormItem>
+    <div class="flex flex-col gap-8">
+      <SectionHeading title="Transfert de missions" secondary-title-bottom="Permet de transférer des missions et leurs responsables d'une organisation à une autre">
+        <template #action>
+          <div class="hidden lg:block space-x-2 flex-shrink-0">
+            <Button variant="green" size="xl" :loading="loading" @click.native="handleSubmit">
+              Exécuter le script
+            </Button>
+          </div>
+        </template>
+      </SectionHeading>
+      <Box>
+        <div class="max-w-xl space-y-10">
+          <FormControl
+            html-for="origin"
+            label="Organisation d'origine"
+            required
+            :error="errors.origin"
+          >
+            <InputAutocomplete
+              v-if="!form.origin"
+              :value="$route.query['filter[structure.name]']"
+              icon="SearchIcon"
+              name="autocomplete"
+              placeholder="Recherche par mots clés..."
+              :options="autocompleteOptionsOrga"
+              clear-after-selected
+              show-key-in-options
+              @fetch-suggestions="onFetchSuggestionsOrga"
+              @selected="handleSelected($event,'origin')"
+            />
+            <div v-else class="flex">
+              <TagFormItem
+                :tag="form.origin"
+                @removed="handleRemoveOrigin"
+              >
+                <div class="truncate">
+                  #{{ form.origin.id }} {{ form.origin.name }}
+                </div>
+                <div class="text-gray-500 text-xs font-normal">
+                  <div>
+                    {{ form.origin.state }}
                   </div>
-                </FormControl>
-                <FormControl
-                  v-if="form.origin"
-                  html-for="missions"
-                  :label="`Missions de « ${form.origin.name} » à transférer`"
-                  :error="errors.missions"
+                  <div>
+                    {{ form.origin.missions_count }} mission(s)
+                  </div>
+                </div>
+              </TagFormItem>
+            </div>
+          </FormControl>
+          <FormControl
+            v-if="form.origin"
+            html-for="missions"
+            :label="`Missions de « ${form.origin.name} » à transférer`"
+            :error="errors.missions"
+          >
+            <FormHelperText class="pb-2">
+              Laissez vide si vous voulez transférer toutes les missions.
+            </FormHelperText>
+            <InputAutocomplete
+              :value="$route.query['filter[search]']"
+              icon="SearchIcon"
+              name="autocomplete"
+              placeholder="Recherche par mots clés..."
+              :options="autocompleteOptionsMissions"
+              clear-after-selected
+              show-key-in-options
+              @fetch-suggestions="onFetchSuggestionsMissions"
+              @selected="handleSelectMission"
+            />
+            <div v-if="form.missions.length">
+              <div class="flex flex-wrap gap-2 mt-4">
+                <TagFormItem
+                  v-for="mission in form.missions"
+                  :key="mission.id"
+                  :tag="mission"
+                  @removed="onRemovedMission"
                 >
-                  <FormHelperText class="pb-2">
-                    Laissez vide si vous voulez transférer toutes les missions.
-                  </FormHelperText>
-                  <InputAutocomplete
-                    :value="$route.query['filter[search]']"
-                    icon="SearchIcon"
-                    name="autocomplete"
-                    placeholder="Recherche par mots clés..."
-                    :options="autocompleteOptionsMissions"
-                    clear-after-selected
-                    show-key-in-options
-                    @fetch-suggestions="onFetchSuggestionsMissions"
-                    @selected="handleSelectMission"
-                  />
-                  <div v-if="form.missions.length">
-                    <div class="flex flex-wrap gap-2 mt-4">
-                      <TagFormItem
-                        v-for="mission in form.missions"
-                        :key="mission.id"
-                        :tag="mission"
-                        @removed="onRemovedMission"
-                      >
-                        <div class="truncate">
-                          #{{ mission.id }} {{ mission.name }}
-                        </div>
-                        <div class="text-gray-500 text-xs font-normal">
-                          <div>
-                            {{ mission.state }}
-                          </div>
-                          <div>
-                            {{ mission.participations_count }} participation(s)
-                          </div>
-                        </div>
-                      </TagFormItem>
+                  <div class="truncate">
+                    #{{ mission.id }} {{ mission.name }}
+                  </div>
+                  <div class="text-gray-500 text-xs font-normal">
+                    <div>
+                      {{ mission.state }}
+                    </div>
+                    <div>
+                      {{ mission.participations_count }} participation(s)
                     </div>
                   </div>
-                </FormControl>
-                <FormControl
-                  html-for="destination"
-                  label="Organisation de destination"
-                  required
-                  :error="errors.destination"
-                >
-                  <InputAutocomplete
-                    v-if="!form.destination"
-                    :value="$route.query['filter[structure.name]']"
-                    icon="SearchIcon"
-                    name="autocomplete"
-                    placeholder="Recherche par mots clés..."
-                    :options="autocompleteOptionsOrga"
-                    clear-after-selected
-                    show-key-in-options
-                    @fetch-suggestions="onFetchSuggestionsOrga"
-                    @selected="handleSelected($event,'destination')"
-                  />
-                  <div v-else class="flex">
-                    <TagFormItem
-                      :tag="form.destination"
-                      @removed="form.destination = null"
-                    >
-                      <div class="truncate">
-                        #{{ form.destination.id }} {{ form.destination.name }}
-                      </div>
-                      <div class="text-gray-500 text-xs font-normal">
-                        <div>
-                          {{ form.destination.state }}
-                        </div>
-                        <div>
-                          {{ form.destination.missions_count }} mission(s)
-                        </div>
-                      </div>
-                    </TagFormItem>
-                  </div>
-                </FormControl>
+                </TagFormItem>
               </div>
-            </Box>
-          </div>
+            </div>
+          </FormControl>
+          <FormControl
+            html-for="destination"
+            label="Organisation de destination"
+            required
+            :error="errors.destination"
+          >
+            <InputAutocomplete
+              v-if="!form.destination"
+              :value="$route.query['filter[structure.name]']"
+              icon="SearchIcon"
+              name="autocomplete"
+              placeholder="Recherche par mots clés..."
+              :options="autocompleteOptionsOrga"
+              clear-after-selected
+              show-key-in-options
+              @fetch-suggestions="onFetchSuggestionsOrga"
+              @selected="handleSelected($event,'destination')"
+            />
+            <div v-else class="flex">
+              <TagFormItem
+                :tag="form.destination"
+                @removed="form.destination = null"
+              >
+                <div class="truncate">
+                  #{{ form.destination.id }} {{ form.destination.name }}
+                </div>
+                <div class="text-gray-500 text-xs font-normal">
+                  <div>
+                    {{ form.destination.state }}
+                  </div>
+                  <div>
+                    {{ form.destination.missions_count }} mission(s)
+                  </div>
+                </div>
+              </TagFormItem>
+            </div>
+          </FormControl>
         </div>
-      </div>
+      </Box>
     </div>
   </div>
 </template>
 
 <script>
 import { object } from 'yup'
-import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin'
 import FormErrors from '@/mixins/form/errors'
 
 export default {
-  components: {
-    SecondaryMenuAdmin
-  },
   mixins: [FormErrors],
+  layout: 'admin-with-sidebar-menu',
   middleware: 'admin',
   data () {
     return {

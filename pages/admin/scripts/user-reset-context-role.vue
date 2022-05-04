@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="">
     <AlertDialog
       v-if="form.profile"
       theme="danger"
@@ -11,92 +11,80 @@
       @cancel="showAlert = false"
     />
 
-    <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Scripts' },
-        { label: 'Réinitialisation du rôle d\'un utilisateur' }
-      ]"
-    />
+    <portal to="breadcrumb">
+      <Breadcrumb
+        :items="[
+          { label: 'Tableau de bord', link: '/dashboard' },
+          { label: 'Scripts' },
+          { label: 'Réinitialisation du rôle d\'un utilisateur' }
+        ]"
+      />
+    </portal>
 
-    <div class="grid grid-cols-5 py-12 ">
-      <aside class="relative col-span-1">
-        <div class="sticky top-12">
-          <SecondaryMenuAdmin />
-        </div>
-      </aside>
-      <div class="col-span-4">
-        <div class="flex flex-col gap-12">
-          <SectionHeading title="Réinitialisation du rôle d'un utilisateur">
-            <template #action>
-              <div class="hidden lg:block space-x-2 flex-shrink-0">
-                <Button variant="green" size="xl" :loading="loading" @click.native="handleSubmit">
-                  Exécuter le script
-                </Button>
-              </div>
-            </template>
-          </SectionHeading>
-          <div class="">
-            <Box>
-              <div class="space-y-10">
-                <FormControl
-                  html-for="profile"
-                  label="Sélectionnez l'utilisateur à réinitialiser"
-                  required
-                  :error="errors.profile"
-                >
-                  <InputAutocomplete
-                    v-if="!form.profile"
-                    :value="$route.query['filter[search]']"
-                    icon="SearchIcon"
-                    name="autocomplete"
-                    placeholder="Recherche par mots clés..."
-                    :options="autocompleteOptionsProfiles"
-                    clear-after-selected
-                    show-key-in-options
-                    attribute-label="full_name"
-                    class="max-w-xl"
-                    @fetch-suggestions="onFetchSuggestionsProfiles"
-                    @selected="handleSelectedprofile($event)"
-                  />
-                  <div v-else class="flex">
-                    <TagFormItem
-                      :tag="form.profile"
-                      @removed="handleRemoveProfile"
-                    >
-                      <div class="truncate">
-                        #{{ form.profile.id }} {{ form.profile.full_name }}
-                      </div>
-                      <div class="text-gray-500 text-xs font-normal">
-                        <div>
-                          {{ form.profile.email }}
-                        </div>
-                        <div>
-                          {{ form.profile.user.context_role }} {{ form.profile.user.contextable_type }} {{ form.profile.user.contextable_id }}
-                        </div>
-                      </div>
-                    </TagFormItem>
-                  </div>
-                </FormControl>
-              </div>
-            </Box>
+    <div class="flex flex-col gap-8">
+      <SectionHeading title="Réinitialisation du rôle d'un utilisateur" secondary-title-bottom="Permet de relier des utilisateurs à leur bon rôle">
+        <template #action>
+          <div class="hidden lg:block space-x-2 flex-shrink-0">
+            <Button variant="green" size="xl" :loading="loading" @click.native="handleSubmit">
+              Exécuter le script
+            </Button>
           </div>
+        </template>
+      </SectionHeading>
+      <Box>
+        <div class="space-y-10">
+          <FormControl
+            html-for="profile"
+            label="Sélectionnez l'utilisateur à réinitialiser"
+            required
+            :error="errors.profile"
+          >
+            <InputAutocomplete
+              v-if="!form.profile"
+              :value="$route.query['filter[search]']"
+              icon="SearchIcon"
+              name="autocomplete"
+              placeholder="Recherche par mots clés..."
+              :options="autocompleteOptionsProfiles"
+              clear-after-selected
+              show-key-in-options
+              attribute-label="full_name"
+              class="max-w-xl"
+              @fetch-suggestions="onFetchSuggestionsProfiles"
+              @selected="handleSelectedprofile($event)"
+            />
+            <div v-else class="flex">
+              <TagFormItem
+                :tag="form.profile"
+                @removed="handleRemoveProfile"
+              >
+                <div class="truncate">
+                  #{{ form.profile.id }} {{ form.profile.full_name }}
+                </div>
+                <div class="text-gray-500 text-xs font-normal">
+                  <div>
+                    {{ form.profile.email }}
+                  </div>
+                  <div>
+                    {{ form.profile.user.context_role }} {{ form.profile.user.contextable_type }} {{ form.profile.user.contextable_id }}
+                  </div>
+                </div>
+              </TagFormItem>
+            </div>
+          </FormControl>
         </div>
-      </div>
+      </Box>
     </div>
   </div>
 </template>
 
 <script>
 import { object } from 'yup'
-import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin'
 import FormErrors from '@/mixins/form/errors'
 
 export default {
-  components: {
-    SecondaryMenuAdmin
-  },
   mixins: [FormErrors],
+  layout: 'admin-with-sidebar-menu',
   middleware: 'admin',
   data () {
     return {

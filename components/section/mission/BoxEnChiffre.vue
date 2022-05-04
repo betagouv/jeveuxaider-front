@@ -20,21 +20,26 @@
       <div v-if="apiEngagementStats && apiEngagementStats.clicks.length > 0" class="text-sm text-gray-500 mt-4">
         <span class="text-gray-900 font-medium">Grâce à <a href="https://api-engagement.beta.gouv.fr/" target="_blank" class="underline">l’API Engagement</a></span>, les missions sont diffusées sur nos plateformes partenaires pour plus de visibilité.
       </div>
-      <div v-if="apiEngagementStats" class="mt-4 grid grid-cols-2 gap-4">
-        <div v-for="(stat, index) in apiEngagementStats.clicks" :key="index" class="grid-cols-1">
-          <div class="flex items-center text-sm">
-            <div class="w-16">
-              <div class="h-12 w-12  flex items-center justify-center" :class="[stat.name == 'Linkedin' ? 'h-6 w-6' : 'h-12 w-12']">
-                <img :src="stat.logo">
-              </div>
+      <div v-if="apiEngagementStats" class="mt-4 grid sm:grid-cols-2 gap-4">
+        <div v-for="(stat, index) in apiEngagementStats.clicks" :key="index" class="flex items-center text-sm">
+          <div class="w-16">
+            <img
+              :src="stat.logo"
+              :class="[
+                stat.name == 'Linkedin' ? 'h-6 w-6' : 'h-12 w-12',
+                {'-m-2': stat.name == 'API engagement'},
+                {'ml-[-2px]': stat.name == 'Bouygues Telecom'},
+                {'ml-[-3px]': stat.name == 'oneheart'},
+              ]"
+              class="object-contain"
+            >
+          </div>
+          <div>
+            <div class="font-semibold">
+              {{ stat.doc_count }} visites
             </div>
-            <div>
-              <div class="font-semibold">
-                {{ stat.doc_count }} visites
-              </div>
-              <div class="text-gray-500 text-xs">
-                Via {{ stat.name }}
-              </div>
+            <div class="text-gray-500 text-xs">
+              Via {{ stat.name }}
             </div>
           </div>
         </div>

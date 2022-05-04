@@ -29,15 +29,47 @@
         </div>
       </template>
     </SectionHeading>
-    <Input
-      name="search"
-      placeholder="Recherche par mots clés..."
-      icon="SearchIcon"
-      variant="transparent"
-      :value="$route.query['filter[search]']"
-      clearable
-      @input="changeFilter('filter[search]', $event)"
-    />
+
+    <SearchFilters>
+      <Input
+        name="search"
+        placeholder="Recherche par mots clés..."
+        icon="SearchIcon"
+        variant="transparent"
+        :value="$route.query['filter[search]']"
+        clearable
+        @input="changeFilter('filter[search]', $event)"
+      />
+      <template #prefilters>
+        <Checkbox
+          :key="`toutes-${$route.fullPath}`"
+          :option="{key: 'toutes', label:'Toutes'}"
+          :is-checked="hasActiveFilters()"
+          variant="button"
+          size="xs"
+          transparent
+          @change="deleteAllFilters()"
+        />
+        <Checkbox
+          :key="`published-${$route.fullPath}`"
+          :option="{key: 'true', label:'En ligne'}"
+          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 'true'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[published]', 'true')"
+        />
+        <Checkbox
+          :key="`unpublished-${$route.fullPath}`"
+          :option="{key: 'false', label: 'Hors ligne'}"
+          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 'false'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[published]', 'false')"
+        />
+      </template>
+    </SearchFilters>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <Card
@@ -80,11 +112,13 @@
 import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerDomaine from '@/components/drawer/DrawerDomaine'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default {
   components: {
     Card,
-    DrawerDomaine
+    DrawerDomaine,
+    SearchFilters
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',

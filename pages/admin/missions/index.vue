@@ -91,6 +91,16 @@
           @input="changeFilter('filter[state]', $event)"
         />
         <SelectAdvanced
+          :key="`date-${$route.fullPath}`"
+          name="date"
+          placeholder="Date"
+          :options="[{key: 'incoming', label: 'À venir'}, {key: 'in_progress', label: 'En cours'}, {key: 'over', label: 'Passée'}]"
+          :value="$route.query['filter[date]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[date]', $event)"
+        />
+        <SelectAdvanced
           :key="`place-${$route.fullPath}`"
           name="place"
           placeholder="Place restante"
@@ -194,12 +204,12 @@
           <Checkbox
             v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
             :key="`snu-mig-${$route.fullPath}`"
-            :option="{key: 'snu-mig', label:'SNU/MIG'}"
-            :is-checked="$route.query['filter[is_snu_mig_compatible]'] && $route.query['filter[is_snu_mig_compatible]'] == 1"
+            :option="{key: 'true', label:'SNU/MIG'}"
+            :is-checked="$route.query['filter[is_snu_mig_compatible]'] && $route.query['filter[is_snu_mig_compatible]'] == 'true'"
             variant="button"
             size="xs"
             transparent
-            @change="changeFilter('filter[is_snu_mig_compatible]', 1)"
+            @change="changeFilter('filter[is_snu_mig_compatible]', 'true')"
           />
           <Checkbox
             v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
@@ -278,7 +288,7 @@ export default {
 
     const { data: activities } = await $axios.get('/activities', {
       params: {
-        pagination: 0,
+        pagination: 999,
         'filter[is_published]': 1
       }
     })

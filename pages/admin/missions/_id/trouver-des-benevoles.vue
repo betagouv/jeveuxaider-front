@@ -204,9 +204,10 @@ export default {
       await this.$axios.post('/notifications-benevoles', {
         mission_id: this.mission.id,
         profile_id: profile.id
+      }).then(() => {
+        this.$toast.success(`Un e-mail a été envoyé à ${profile.first_name} ${profile.last_name[0]}.`)
+        this.fetchNotificationsBenevoles()
       }).catch(() => {})
-      this.fetchNotificationsBenevoles()
-      this.$toast.success(`Un e-mail a été envoyé à ${profile.first_name} ${profile.last_name[0]}.`)
     }
   }
 }
