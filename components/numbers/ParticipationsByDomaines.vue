@@ -4,7 +4,7 @@
       Par domaines
     </Heading>
     <div v-if="items" class="flex flex-col gap-2">
-      <ListItemCount v-for="item in items" :key="item.id" :color="item.id" :label="item.name" :count="item.count" />
+      <ListItemCount v-for="item in items" :key="item.id" :color="item.id ? item.id : 'gray-light'" :label="item.name ? item.name : 'Sans domaine'" :count="item.count" />
     </div>
   </Box>
 </template>

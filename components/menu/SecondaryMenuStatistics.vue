@@ -52,7 +52,8 @@ export default {
             { label: 'Vue d\'ensemble', to: '/admin/statistics' },
             { label: 'Organisations', to: '/admin/statistics/organisations' },
             { label: 'Missions', to: '/admin/statistics/missions' },
-            { label: 'Participations', to: '/admin/statistics/participations' }
+            { label: 'Participations', to: '/admin/statistics/participations' },
+            { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' }
           ]
         },
         {
