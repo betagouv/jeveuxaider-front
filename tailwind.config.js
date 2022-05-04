@@ -84,14 +84,14 @@ module.exports = {
           50: '#FAFAFA'
         },
         domaine: {
-          solidarite: '#F46D66',
-          nature: '#0B9B6B',
-          education: '#D42EB0',
-          sante: '#61198D',
+          solidarite: '#FF5655',
+          nature: '#21AB8E',
+          education: '#FFA37D',
+          sante: '#518FFF',
           covid: '#070191',
           prevention: '#05D3AB',
-          sport: '#EE6018',
-          culture: '#F99E2D',
+          sport: '#A9C1FA',
+          culture: '#FCC63A',
           memoire: '#175AB6',
           cooperation: '#5B8397'
         },
