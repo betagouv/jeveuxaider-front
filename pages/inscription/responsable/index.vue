@@ -493,6 +493,16 @@ export default {
               : null
           })
           window.plausible && window.plausible('Inscription responsable - Étape 1 - Création de compte')
+          console.log('push gta tag')
+          await this.$gtm.push({
+            event: 'conversion',
+            send_to: 'AW-10823658855/8YvTCLPOvbgDEOfaj6ko',
+            event_callback: (url) => {
+              if (typeof (url) != 'undefined') {
+                window.location = url
+              }
+            }
+          })
           this.$router.push({
             path: '/inscription/responsable/step/profile',
             query: {
