@@ -20,20 +20,28 @@
       </template>
     </SectionHeading>
 
-    <div class="grid grid-cols-1 gap-12">
-      <ModerationByDepartments ref="moderationByDepartments" />
+    <Tabs
+      :tabs="[
+        { name: 'Organisations à valider', to: '/admin/statistics/departements/organisations-a-valider' },
+        { name: 'Missions à valider', to: '/admin/statistics/departements/missions-a-valider'},
+        { name: 'Missions périmées', to: '/admin/statistics/departements/missions-perimees', current: true}
+      ]"
+    />
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <MissionsOutdatedByDepartments ref="missionsOutdatedByDepartments" />
     </div>
   </div>
 </template>
 
 <script>
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
-import ModerationByDepartments from '@/components/numbers/ModerationByDepartments.vue'
+import MissionsOutdatedByDepartments from '@/components/numbers/MissionsOutdatedByDepartments.vue'
 
 export default {
   components: {
     FiltersStatistics,
-    ModerationByDepartments
+    MissionsOutdatedByDepartments
   },
   layout: 'statistics',
   middleware: 'admin',
@@ -42,7 +50,7 @@ export default {
   },
   methods: {
     refetch () {
-      this.$refs.moderationByDepartments.$fetch()
+      this.$refs.missionsOutdatedByDepartments.$fetch()
     }
   }
 }

@@ -60,7 +60,7 @@ export default {
           label: 'Modération',
           childrens: [
             { label: 'Organisations', to: '/admin/statistics/organisations/participations-a-valider' },
-            { label: 'Départements', to: '/admin/statistics/departements' }
+            { label: 'Départements', to: '/admin/statistics/departements/organisations-a-valider' }
           ]
         },
         {
