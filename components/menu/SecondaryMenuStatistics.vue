@@ -46,8 +46,8 @@ export default {
     return {
       items: [
         {
-          key: 'global',
-          label: 'Global',
+          key: 'statistics',
+          label: 'Statistiques',
           childrens: [
             { label: 'Vue d\'ensemble', to: '/admin/statistics' },
             { label: 'Organisations', to: '/admin/statistics/organisations' },
@@ -56,8 +56,8 @@ export default {
           ]
         },
         {
-          key: 'moderation',
-          label: 'Modération',
+          key: 'actions',
+          label: 'Actions en attente',
           childrens: [
             { label: 'Organisations', to: '/admin/statistics/organisations/participations-a-valider' },
             { label: 'Départements', to: '/admin/statistics/departements/organisations-a-valider' }

@@ -10,7 +10,7 @@
           :key="i"
           :icon="`${(i+1)}.`"
           icon-class="text-xl font-semibold text-gray-500"
-          :link="`/admin/organisations/${item.id}`"
+          :link="`/admin/missions?filter[department]=${item.department}&filter[state]=Validée&filter[date]=over`"
         >
           <div class="text-gray-900 font-semibold">
             {{ item.department }} - {{ item.department | label('departments') }}

@@ -9,7 +9,7 @@
         :key="i"
         :icon="`${(i+1)}.`"
         icon-class="text-xl font-semibold text-gray-500"
-        :link="`/admin/organisations/${item.id}`"
+        :link="`/admin/missions?filter[structure.id]=${item.id}&context_name=${item.name}`"
       >
         <div class="text-gray-900 font-semibold" v-html="item.name" />
         <div class="text-gray-500 text-sm">
