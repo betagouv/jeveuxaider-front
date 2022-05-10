@@ -46,6 +46,7 @@ export default {
     }).then((response) => {
       this.loading = false
       const colors = ['#fb7185', '#e879f9', '#a78bfa', '#818cf8', '#138bdf8']
+      this.chartDatasets = []
 
       Object.entries(response.data).forEach(([key, dataset], index) => this.chartDatasets.push({
         label: key,

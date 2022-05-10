@@ -1,8 +1,6 @@
 export const state = () => ({
   params: {
-    period: 'all',
-    year: null,
-    month: null
+    period: 'current_year'
   }
 })
 
