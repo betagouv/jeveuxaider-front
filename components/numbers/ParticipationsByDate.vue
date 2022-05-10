@@ -2,10 +2,10 @@
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
     <div class="mb-6">
       <Heading as="h2" :level="3">
-        Nouvelles missions par date
+        Nouvelles participations par année
       </Heading>
       <div class="text-gray-400 font-semibold">
-        Année {{ $store.state.statistics.params.year }}
+        Répartition sur la date de création
       </div>
     </div>
     <div class="w-full">
@@ -23,18 +23,16 @@ export default {
     return {
       loading: true,
       chartData: null,
+      chartDatasets: [],
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            display: false
+            position: 'bottom'
           },
           datalabels: {
-            color: 'white',
-            font: {
-              weight: 'bold'
-            }
+            display: false
           }
         }
       }
@@ -46,12 +44,19 @@ export default {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
+      const colors = ['#fb7185', '#e879f9', '#a78bfa', '#818cf8', '#138bdf8']
+
+      Object.entries(response.data).forEach(([key, dataset], index) => this.chartDatasets.push({
+        label: key,
+        data: dataset,
+        backgroundColor: colors[index],
+        hidden: ![this.$dayjs().subtract(1, 'year').year().toString(), this.$dayjs().year().toString()].includes(key)
+      }))
+
+      this.chartDatasets.push()
       this.chartData = {
         labels: ['Jan.', 'Fév.', 'Mars', 'Avr.', 'Mai', 'Juin', 'Juil.', 'Aout', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-        datasets: [{
-          data: response.data,
-          backgroundColor: '#f87979'
-        }]
+        datasets: this.chartDatasets
       }
     })
   }

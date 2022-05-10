@@ -1,31 +1,36 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
-    <Heading as="h2" :level="3" class="mb-4">
-      Statistiques globales
-    </Heading>
+    <div class="mb-6">
+      <Heading as="h2" :level="3">
+        Répartition des organisations actives par statut juridique
+      </Heading>
+      <div class="text-gray-400 font-semibold">
+        Une organisation est active si l'une de ses missions est en ligne
+      </div>
+    </div>
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.associations_actives"
         :title="`${$options.filters.pluralize(statistics.associations_actives, 'Association active', 'Associations actives', false)}`"
-        :subtitle="`sur ${$options.filters.formatNumber(statistics.associations)}`"
+        :subtitle="`sur ${$options.filters.formatNumber(statistics.associations)} au total`"
         link="/admin/statistics/organisations"
       />
       <CardStatistic
         :value="statistics.collectivites_actives"
         :title="`${$options.filters.pluralize(statistics.collectivites_actives, 'Collectivité active', 'Collectivités actives', false)}`"
-        :subtitle="`sur ${$options.filters.formatNumber(statistics.collectivites)}`"
+        :subtitle="`sur ${$options.filters.formatNumber(statistics.collectivites)} au total`"
         link="/admin/statistics/organisations"
       />
       <CardStatistic
         :value="statistics.organisations_publiques_actives"
         :title="`${$options.filters.pluralize(statistics.organisations_publiques_actives, 'Orga. publique active', 'Orgas. publiques actives', false)}`"
-        :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations_publiques)}`"
+        :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations_publiques)} au total`"
         link="/admin/statistics/organisations"
       />
       <CardStatistic
         :value="statistics.organisations_privees_actives"
         :title="`${$options.filters.pluralize(statistics.organisations_privees_actives, 'Orga. privée active', 'Orgas. privées actives', false)}`"
-        :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations_privees)}`"
+        :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations_privees)} au total`"
         link="/admin/statistics/organisations"
       />
     </div>

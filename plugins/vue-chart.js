@@ -14,6 +14,8 @@ import {
 } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 
+// import chartjsPluginColorschemes from 'chartjs-plugin-colorschemes'
+
 ChartJS.register(Title, Tooltip, Legend, BarElement, ArcElement, CategoryScale, LinearScale, ChartDataLabels)
 
 Vue.component('Doughnut', {
