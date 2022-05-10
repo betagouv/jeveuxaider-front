@@ -29,6 +29,14 @@ export default {
             color: 'white',
             font: {
               weight: 'bold'
+            },
+            formatter: (value, ctx) => {
+              const datasets = ctx.chart.data.datasets
+              if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+                const sum = datasets[0].data.reduce((a, b) => a + b, 0)
+                const percentage = Math.round((value / sum) * 100) + '%'
+                return percentage
+              }
             }
           }
         }
@@ -46,7 +54,7 @@ export default {
         datasets: [
           {
             data: Object.values(response.data),
-            backgroundColor: ['#f87979', '#f87979', '#f87979', '#f87979', '#f87979', '#f87979']
+            backgroundColor: ['#138bdf8', '#fb923c', '#facc15', '#34d399', '#f87171', '#a8a29e']
           }
         ]
       }
