@@ -1,8 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des organisations...">
-    <Heading as="h2" :level="3" class="mb-4">
-      Topito des organisations
-    </Heading>
+    <BoxHeadingStatistics title="Topito des organisations" show-period class="mb-6" />
     <StackedList v-if="items" :divided="false">
       <StackedListItem
         v-for="item, i in items"
@@ -21,7 +19,12 @@
 </template>
 
 <script>
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
+
 export default {
+  components: {
+    BoxHeadingStatistics
+  },
   data () {
     return {
       loading: true,

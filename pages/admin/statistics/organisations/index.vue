@@ -24,11 +24,11 @@
       <OrganisationsStatistics ref="organisationsStatistics" class="" />
       <OrganisationsByDate ref="organisationsByDate" class="" />
       <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12">
+        <div class="space-y-12 w-1/2">
           <OrganisationsByStates ref="organisationsByStates" />
           <OrganisationsByTypes ref="organisationsByTypes" />
         </div>
-        <div class="space-y-12">
+        <div class="space-y-12 w-1/2">
           <OrganisationsByDomaines ref="organisationsByDomaines" />
           <OrganisationsByReseaux ref="organisationsByReseaux" />
         </div>

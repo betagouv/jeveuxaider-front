@@ -20,17 +20,23 @@
       </template>
     </SectionHeading>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <MissionsStatistics ref="missionsStatistics" class="lg:col-span-2" />
-      <MissionsByDate ref="missionsByDate" class="lg:col-span-2" />
-      <MissionsByStates ref="missionsByStates" />
-      <MissionsByStates2 ref="missionsByStates2" />
-      <MissionsByDomaines ref="missionsByDomaines" />
-      <MissionsByTypes ref="missionsByTypes" />
-      <MissionsByActivities ref="missionsByActivities" />
-      <MissionsByOrganisations ref="missionsByOrganisations" />
-      <MissionsByReseaux ref="missionsByReseaux" />
-      <MissionsByTemplates ref="missionsByTemplates" class="lg:col-span-2" />
+    <div class="space-y-12">
+      <MissionsStatistics ref="missionsStatistics" />
+      <MissionsByDate ref="missionsByDate" />
+      <div class="flex flex-col lg:flex-row gap-12">
+        <div class="space-y-12 w-1/2">
+          <MissionsByStates ref="missionsByStates" />
+          <MissionsByTypes ref="missionsByTypes" />
+          <MissionsByActivities ref="missionsByActivities" />
+          <MissionsByTemplates ref="missionsByTemplates" />
+        </div>
+        <div class="space-y-12 w-1/2">
+          <MissionsByDomaines ref="missionsByDomaines" />
+          <MissionsByTemplateTypes ref="missionsByTemplateTypes" />
+          <MissionsByOrganisations ref="missionsByOrganisations" />
+          <MissionsByReseaux ref="missionsByReseaux" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -40,13 +46,13 @@ import FiltersStatistics from '@/components/custom/FiltersStatistics'
 import MissionsStatistics from '@/components/numbers/MissionsStatistics.vue'
 import MissionsByDate from '@/components/numbers/MissionsByDate.vue'
 import MissionsByStates from '@/components/numbers/MissionsByStates.vue'
-import MissionsByStates2 from '@/components/numbers/MissionsByStates2.vue'
 import MissionsByTypes from '@/components/numbers/MissionsByTypes.vue'
 import MissionsByActivities from '@/components/numbers/MissionsByActivities.vue'
 import MissionsByTemplates from '@/components/numbers/MissionsByTemplates.vue'
 import MissionsByDomaines from '@/components/numbers/MissionsByDomaines.vue'
 import MissionsByOrganisations from '@/components/numbers/MissionsByOrganisations.vue'
 import MissionsByReseaux from '@/components/numbers/MissionsByReseaux.vue'
+import MissionsByTemplateTypes from '@/components/numbers/MissionsByTemplateTypes.vue'
 
 export default {
   components: {
@@ -54,13 +60,13 @@ export default {
     MissionsStatistics,
     MissionsByDate,
     MissionsByStates,
-    MissionsByStates2,
     MissionsByTypes,
     MissionsByActivities,
     MissionsByTemplates,
     MissionsByDomaines,
     MissionsByOrganisations,
-    MissionsByReseaux
+    MissionsByReseaux,
+    MissionsByTemplateTypes
   },
   layout: 'statistics',
   middleware: 'admin',
@@ -72,13 +78,13 @@ export default {
       this.$refs.missionsStatistics.$fetch()
       this.$refs.missionsByDate.$fetch()
       this.$refs.missionsByStates.$fetch()
-      this.$refs.missionsByStates2.$fetch()
       this.$refs.missionsByDomaines.$fetch()
       this.$refs.missionsByTypes.$fetch()
       this.$refs.missionsByActivities.$fetch()
       this.$refs.missionsByOrganisations.$fetch()
       this.$refs.missionsByReseaux.$fetch()
       this.$refs.missionsByTemplates.$fetch()
+      this.$refs.missionsByTemplateTypes.$fetch()
     }
   }
 }

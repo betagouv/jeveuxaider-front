@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Types des missions" show-period class="mb-6" />
+    <BoxHeadingStatistics title="Modèles de missions" show-period class="mb-6" />
     <div class="w-full">
       <DoughnutChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
     </div>
@@ -44,12 +44,12 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/statistics/missions-by-types', {
+    await this.$axios.get('/statistics/missions-by-template-types', {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
       this.chartData = {
-        labels: ['En présentiel', 'A distance'],
+        labels: ['Avec modèle', 'Sans modèle'],
         datasets: [
           {
             data: Object.values(response.data),

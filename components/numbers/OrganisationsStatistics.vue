@@ -5,7 +5,7 @@
       <CardStatistic
         :value="statistics.organisations_count"
         :title="`${$options.filters.pluralize(statistics.organisations_count, 'Organisation', 'Organisations', false)}`"
-        subtitle="inscrites"
+        :subtitle="`${$options.filters.pluralize(statistics.organisations_count, 'inscrite', 'inscrites', false)}`"
         link="/admin/statistics/organisations"
       />
       <CardStatistic
