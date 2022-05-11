@@ -1,46 +1,30 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <Heading as="h2" :level="3" class="mb-4">
-      Par statuts
-    </Heading>
-    <div class="w-full">
-      <DoughnutChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
+    <BoxHeadingStatistics title="Statuts des organisations" show-period class="mb-6" />
+    <div v-if="statistics" class="flex flex-col gap-2">
+      <ListItemCount color="draft" label="Brouillon" :count="statistics.draft" />
+      <ListItemCount color="waiting" label="En attente de validation" :count="statistics.waiting" />
+      <ListItemCount color="in_progress" label="En cours de traitement" :count="statistics.in_progress" />
+      <ListItemCount color="validated" label="Validée" :count="statistics.validated" />
+      <ListItemCount color="signaled" label="Signalée" :count="statistics.signaled" />
+      <ListItemCount color="unsubscribed" label="Désinscrite" :count="statistics.signaled" />
     </div>
   </Box>
 </template>
 
 <script>
-import DoughnutChart from '@/components/chart/DoughnutChart'
+import ListItemCount from '@/components/custom/ListItemCount.vue'
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
 export default {
-  components: { DoughnutChart },
+  components: {
+    ListItemCount,
+    BoxHeadingStatistics
+  },
   data () {
     return {
       loading: true,
-      chartData: null,
-      chartOptions: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom'
-          },
-          datalabels: {
-            color: 'white',
-            font: {
-              weight: 'bold'
-            },
-            formatter: (value, ctx) => {
-              const datasets = ctx.chart.data.datasets
-              if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
-                const sum = datasets[0].data.reduce((a, b) => a + b, 0)
-                const percentage = Math.round((value / sum) * 100) + '%'
-                return percentage
-              }
-            }
-          }
-        }
-      }
+      statistics: null
     }
   },
   async fetch () {
@@ -49,15 +33,7 @@ export default {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
-      this.chartData = {
-        labels: ['Brouillon', 'En attente de validation', 'En cours de traitement', 'Validée', 'Signalée', 'Désinscrite'],
-        datasets: [
-          {
-            data: Object.values(response.data),
-            backgroundColor: ['#138bdf8', '#fb923c', '#facc15', '#34d399', '#f87171', '#a8a29e']
-          }
-        ]
-      }
+      this.statistics = response.data
     })
   }
 }

@@ -345,5 +345,12 @@ const labels = {
     { key: 3, label: '3 étoiles' },
     { key: 4, label: '4 étoiles' },
     { key: 5, label: '5 étoiles' }
+  ],
+  statistics_period: [
+    { key: 'current_year', label: 'Cette année' },
+    { key: 'last_year', label: 'L\'année dernière' },
+    { key: 'current_month', label: 'Ce mois-ci' },
+    { key: 'last_month', label: 'Le mois dernier' },
+    { key: 'all', label: 'Depuis le début' }
   ]
 }

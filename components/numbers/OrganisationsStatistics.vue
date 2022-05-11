@@ -1,13 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
-    <div class="mb-6">
-      <Heading as="h2" :level="3">
-        Chiffres clés
-      </Heading>
-      <div class="text-gray-400 font-semibold">
-        Sur la période XXX
-      </div>
-    </div>
+    <BoxHeadingStatistics title="Chiffres clés" show-period class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.organisations_count"
@@ -16,7 +9,7 @@
         link="/admin/statistics/organisations"
       />
       <CardStatistic
-        :value="`${statistics.organisations_response_time_avg}sec`"
+        :value="`${Math.round((statistics.organisations_response_time_avg / (3600*24)) * 10) / 10} jours`"
         :title="`Temps de réponse`"
         subtitle="en moyenne"
         link="/admin/statistics/organisations"
@@ -33,10 +26,12 @@
 
 <script>
 import CardStatistic from '@/components/card/CardStatistic'
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
 export default {
   components: {
-    CardStatistic
+    CardStatistic,
+    BoxHeadingStatistics
   },
   data () {
     return {

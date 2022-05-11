@@ -1,8 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <Heading as="h2" :level="3" class="mb-4">
-      Par statuts juridiques
-    </Heading>
+    <BoxHeadingStatistics title="Types des organisations" show-period class="mb-6" />
     <div class="w-full">
       <DoughnutChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
     </div>
@@ -11,9 +9,10 @@
 
 <script>
 import DoughnutChart from '@/components/chart/DoughnutChart'
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
 export default {
-  components: { DoughnutChart },
+  components: { DoughnutChart, BoxHeadingStatistics },
   data () {
     return {
       loading: true,
@@ -34,8 +33,8 @@ export default {
               const datasets = ctx.chart.data.datasets
               if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
                 const sum = datasets[0].data.reduce((a, b) => a + b, 0)
-                const percentage = Math.round((value / sum) * 100) + '%'
-                return percentage
+                const percentage = Math.round((value / sum) * 100)
+                return percentage > 4 ? percentage + '%' : ''
               }
             }
           }

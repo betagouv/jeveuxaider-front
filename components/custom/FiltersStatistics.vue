@@ -5,13 +5,7 @@
         v-model="form.period"
         name="role"
         placeholder="Période"
-        :options="[
-          {key : 'current_year', label: 'Cette année'},
-          {key : 'last_year', label: 'L\'année dernière'},
-          {key : 'current_month', label: 'Ce mois-ci'},
-          {key : 'last_month', label: 'Le mois dernier'},
-          {key : 'all', label: 'Depuis le début'},
-        ]"
+        :options="$labels.statistics_period"
         @changed="generate"
       />
     </div>

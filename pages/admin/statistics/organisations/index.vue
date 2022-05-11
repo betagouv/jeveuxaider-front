@@ -20,13 +20,19 @@
       </template>
     </SectionHeading>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <OrganisationsStatistics ref="organisationsStatistics" class="lg:col-span-2" />
-      <OrganisationsByDate ref="organisationsByDate" class="lg:col-span-2" />
-      <OrganisationsByStates ref="organisationsByStates" />
-      <OrganisationsByTypes ref="organisationsByTypes" />
-      <OrganisationsByDomaines ref="organisationsByDomaines" />
-      <OrganisationsByReseaux ref="organisationsByReseaux" />
+    <div class="space-y-12">
+      <OrganisationsStatistics ref="organisationsStatistics" class="" />
+      <OrganisationsByDate ref="organisationsByDate" class="" />
+      <div class="flex flex-col lg:flex-row gap-12">
+        <div class="space-y-12">
+          <OrganisationsByStates ref="organisationsByStates" />
+          <OrganisationsByTypes ref="organisationsByTypes" />
+        </div>
+        <div class="space-y-12">
+          <OrganisationsByDomaines ref="organisationsByDomaines" />
+          <OrganisationsByReseaux ref="organisationsByReseaux" />
+        </div>
+      </div>
     </div>
   </div>
 </template>

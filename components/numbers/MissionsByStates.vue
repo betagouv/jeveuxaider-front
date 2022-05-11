@@ -34,8 +34,8 @@ export default {
               const datasets = ctx.chart.data.datasets
               if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
                 const sum = datasets[0].data.reduce((a, b) => a + b, 0)
-                const percentage = Math.round((value / sum) * 100) + '%'
-                return percentage
+                const percentage = Math.round((value / sum) * 100)
+                return percentage > 4 ? percentage + '%' : ''
               }
             }
           }

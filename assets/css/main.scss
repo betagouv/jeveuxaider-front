@@ -269,3 +269,9 @@ body.full-height-layout {
     @apply bg-jva-blue-500;
   }
 }
+
+.masonry-cols-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: masonry;
+}

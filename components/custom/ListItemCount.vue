@@ -7,7 +7,7 @@
         {'h-[30px] w-[30px]': size == 'xs'},
         {'h-[30px] w-[30px]': size == 'sm'},
 
-        {'bg-gray-600': ['gray','canceled','finished','Terminée'].includes(color)},
+        {'bg-gray-600': ['gray','canceled','finished','Terminée','unsubscribed'].includes(color)},
         {'bg-gray-200': ['gray-light','draft','Brouillon','Désinscrite'].includes(color)},
         {'bg-jva-blue-500': ['blue', 'Terminée'].includes(color)},
         {'bg-jva-orange-500': ['orange', 'En attente de validation', 'En cours de traitement', 'waiting','in_progress'].includes(color)},
