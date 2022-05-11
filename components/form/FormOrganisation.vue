@@ -100,7 +100,13 @@
               />
             </FormControl>
 
-            <FormControl label="Domaines d'action" html-for="domaines" required :error="errors.domaines">
+            <FormControl
+              v-if="form.statut_juridique != 'Collectivité'"
+              label="Domaines d'action"
+              html-for="domaines"
+              required
+              :error="errors.domaines"
+            >
               <CheckboxGroup
                 v-model="form.domaines"
                 name="domaines"
@@ -552,7 +558,6 @@ export default {
         statut_juridique: string().required('Un statut juridique est requis'),
         department: string().nullable().required('Un département est requis'),
         address: string().nullable().required('Une adresse est requise'),
-        domaines: array().min(1, 'Au moins 1 domaine d\'action'),
         email: string().nullable().email("Le format de l'email public est incorrect"),
         website: string().nullable().url(),
         facebook: string().nullable().url(),
@@ -564,7 +569,8 @@ export default {
 
       if (this.form.statut_juridique !== 'Collectivité') {
         schema = schema.concat(object({
-          publics_beneficiaires: array().min(1, 'Au moins 1 public bénéficiaire')
+          publics_beneficiaires: array().min(1, 'Au moins 1 public bénéficiaire'),
+          domaines: array().min(1, 'Au moins 1 domaine d\'action')
         }))
       }
 
