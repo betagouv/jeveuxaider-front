@@ -20,13 +20,21 @@
       </template>
     </SectionHeading>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <div class="space-y-12">
       <ParticipationsStatistics ref="participationsStatistics" class="lg:col-span-2" />
       <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" />
-      <ParticipationsByStates ref="participationsByStates" />
-      <ParticipationsByDomaines ref="participationsByDomaines" />
-      <ParticipationsByOrganisations ref="participationsByOrganisations" />
-      <ParticipationsByReseaux ref="participationsByReseaux" />
+      <div class="flex flex-col lg:flex-row gap-12">
+        <div class="space-y-12 w-1/2">
+          <ParticipationsByStates ref="participationsByStates" />
+          <ParticipationsByActivities ref="participationsByActivities" />
+
+          <ParticipationsByReseaux ref="participationsByReseaux" />
+        </div>
+        <div class="space-y-12 w-1/2">
+          <ParticipationsByDomaines ref="participationsByDomaines" />
+          <ParticipationsByOrganisations ref="participationsByOrganisations" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +47,7 @@ import ParticipationsByStates from '@/components/numbers/ParticipationsByStates.
 import ParticipationsByOrganisations from '@/components/numbers/ParticipationsByOrganisations.vue'
 import ParticipationsByDomaines from '@/components/numbers/ParticipationsByDomaines.vue'
 import ParticipationsByReseaux from '@/components/numbers/ParticipationsByReseaux.vue'
+import ParticipationsByActivities from '@/components/numbers/ParticipationsByActivities.vue'
 
 export default {
   components: {
@@ -48,7 +57,8 @@ export default {
     ParticipationsByStates,
     ParticipationsByOrganisations,
     ParticipationsByDomaines,
-    ParticipationsByReseaux
+    ParticipationsByReseaux,
+    ParticipationsByActivities
   },
   layout: 'statistics',
   middleware: 'admin',
@@ -63,6 +73,7 @@ export default {
       this.$refs.participationsByDomaines.$fetch()
       this.$refs.participationsByOrganisations.$fetch()
       this.$refs.participationsByReseaux.$fetch()
+      this.$refs.participationsByActivities.$fetch()
     }
   }
 }

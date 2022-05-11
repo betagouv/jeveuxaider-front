@@ -1,13 +1,13 @@
 <template>
-  <Box padding="sm" :loading="loading" loading-text="Récupération des organisations...">
-    <BoxHeadingStatistics title="Topito des organisations" show-period class="mb-6" />
+  <Box padding="sm" :loading="loading" loading-text="Récupération des activités...">
+    <BoxHeadingStatistics title="Activités des participations" show-period class="mb-6" />
     <StackedList v-if="items" :divided="false">
       <StackedListItem
         v-for="item, i in items"
         :key="i"
         :icon="`${(i+1)}.`"
         icon-class="text-xl font-semibold text-gray-500"
-        :link="`/admin/participations?filter[mission.structure.name]=${item.name}&filter[mission.structure.id]=${item.id}`"
+        :link="`/admin/participations?filter[ofActivity]=${item.id}`"
       >
         <div class="text-gray-900 font-semibold" v-html="item.name" />
         <div class="text-gray-500 text-sm">
@@ -33,7 +33,7 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/statistics/participations-by-organisations', {
+    await this.$axios.get('/statistics/participations-by-activities', {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false

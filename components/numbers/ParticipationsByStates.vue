@@ -1,38 +1,29 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <Heading as="h2" :level="3" class="mb-4">
-      Par statuts
-    </Heading>
-    <div class="w-full">
-      <DoughnutChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
+    <BoxHeadingStatistics title="Statuts des participations" show-period class="mb-6" />
+    <div v-if="statistics" class="flex flex-col gap-2">
+      <ListItemCount color="waiting" label="En attente de validation" :count="statistics.waiting" />
+      <ListItemCount color="in_progress" label="En cours de traitement" :count="statistics.in_progress" />
+      <ListItemCount color="validated" label="Validée" :count="statistics.validated" />
+      <ListItemCount color="canceled" label="Annulée" :count="statistics.canceled" />
+      <ListItemCount color="refused" label="Refusée" :count="statistics.refused" />
     </div>
   </Box>
 </template>
 
 <script>
-import DoughnutChart from '@/components/chart/DoughnutChart'
+import ListItemCount from '@/components/custom/ListItemCount.vue'
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
 export default {
-  components: { DoughnutChart },
+  components: {
+    ListItemCount,
+    BoxHeadingStatistics
+  },
   data () {
     return {
       loading: true,
-      chartData: null,
-      chartOptions: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'bottom'
-          },
-          datalabels: {
-            color: 'white',
-            font: {
-              weight: 'bold'
-            }
-          }
-        }
-      }
+      statistics: null
     }
   },
   async fetch () {
@@ -41,15 +32,7 @@ export default {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
-      this.chartData = {
-        labels: ['En attente de validation', 'En cours de traitement', 'Validée', 'Refusée', 'Annulée'],
-        datasets: [
-          {
-            data: Object.values(response.data),
-            backgroundColor: ['#f87979', '#f87979', '#f87979', '#f87979', '#f87979', '#f87979']
-          }
-        ]
-      }
+      this.statistics = response.data
     })
   }
 }
