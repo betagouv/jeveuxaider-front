@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Organisations" subtitle="XXX" class="mb-6" />
+    <BoxHeadingStatistics title="Organisations ›" class="mb-6" link="/admin/statistics/organisations" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.organisations"

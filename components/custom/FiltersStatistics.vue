@@ -3,6 +3,7 @@
     <div class="flex gap-4">
       <SelectAdvanced
         v-model="form.period"
+        prefix-label="Période :"
         name="role"
         placeholder="Période"
         :options="$labels.statistics_period"

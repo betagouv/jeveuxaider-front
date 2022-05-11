@@ -68,7 +68,6 @@ export default {
   methods: {
     refetch () {
       this.$refs.participationsStatistics.$fetch()
-      this.$refs.participationsByDate.$fetch()
       this.$refs.participationsByStates.$fetch()
       this.$refs.participationsByDomaines.$fetch()
       this.$refs.participationsByOrganisations.$fetch()

@@ -49,7 +49,6 @@ export default {
   methods: {
     refetch () {
       this.$refs.utilisateursStatistics.$fetch()
-      this.$refs.utilisateursByDate.$fetch()
       this.$refs.utilisateursByDomaines.$fetch()
     }
   }

@@ -76,7 +76,6 @@ export default {
   methods: {
     refetch () {
       this.$refs.missionsStatistics.$fetch()
-      this.$refs.missionsByDate.$fetch()
       this.$refs.missionsByStates.$fetch()
       this.$refs.missionsByDomaines.$fetch()
       this.$refs.missionsByTypes.$fetch()

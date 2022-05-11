@@ -351,6 +351,8 @@ const labels = {
     { key: 'last_year', label: 'L\'année dernière' },
     { key: 'current_month', label: 'Ce mois-ci' },
     { key: 'last_month', label: 'Le mois dernier' },
+    { key: 'current_week', label: 'Cette semaine' },
+    { key: 'last_week', label: 'La semaine dernière' },
     { key: 'all', label: 'Depuis le début' }
   ]
 }

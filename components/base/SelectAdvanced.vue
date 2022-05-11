@@ -24,12 +24,15 @@
         @keydown="onKeydown"
         @click="!disabled ? showOptions = !showOptions : null"
       >
-        <template v-if="selectedOption">
-          {{ selectedOption[attributeLabel] }}
-        </template>
-        <template v-else>
-          <span class="text-gray-500">{{ placeholder }}</span>
-        </template>
+        <div class="flex gap-4">
+          <span v-if="prefixLabel" class="text-gray-400 font-semibold">Période:</span>
+          <template v-if="selectedOption">
+            {{ selectedOption[attributeLabel] }}
+          </template>
+          <template v-else>
+            <span class="text-gray-500">{{ placeholder }}</span>
+          </template>
+        </div>
       </div>
       <div
         class="absolute"
@@ -103,7 +106,8 @@ export default {
     variant: { type: String, default: null }, // transparent
     clearable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
-    theme: { type: String, default: 'default' }
+    theme: { type: String, default: 'default' },
+    prefixLabel: { type: String, default: null }
   },
   data () {
     return {
