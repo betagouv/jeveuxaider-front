@@ -46,7 +46,7 @@
 
           <Box class="overflow-hidden mt-6 lg:w-96 lg:mt-0 z-20 flex-shrink-0 sticky top-6 lg:text-center" :padding="false">
             <img
-              srcset="/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x"
+              srcset="/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x"
               sizes="(min-width: 1024px) 384px, 100vw"
               alt="Organisation"
               class="w-full object-cover object-top"
