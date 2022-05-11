@@ -1,0 +1,53 @@
+<template>
+  <Box padding="sm" :loading="loading" loading-text="Générations des données...">
+    <BoxHeadingStatistics title="Bénévoles" subtitle="XXX" class="mb-6" />
+    <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+      <CardStatistic
+        :value="statistics.benevoles"
+        :title="`${$options.filters.pluralize(statistics.benevoles, 'Bénévole', 'Bénévoles', false)}`"
+        subtitle="au total"
+        link="/admin/statistics/utilisateurs"
+      />
+      <CardStatistic
+        :value="statistics.benevoles_actifs"
+        :title="`${$options.filters.pluralize(statistics.benevoles_actifs, 'Bénévole', 'Bénévoles', false)}`"
+        subtitle="avec participation(s)"
+        link="/admin/statistics/utilisateurs"
+      />
+      <CardStatistic
+        :value="statistics.participations_validated"
+        :title="`${$options.filters.pluralize(statistics.participations_validated, 'Participation', 'Participations', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.participations_validated, 'validée', 'validées', false)}`"
+        link="/admin/statistics/participations"
+      />
+    </div>
+  </Box>
+</template>
+
+<script>
+import CardStatistic from '@/components/card/CardStatistic'
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
+
+export default {
+  components: {
+    CardStatistic,
+    BoxHeadingStatistics
+  },
+  data () {
+    return {
+      loading: true,
+      statistics: null
+    }
+  },
+  async fetch () {
+    this.loading = true
+
+    await this.$axios.get('/statistics/overview-benevoles', {
+      // params: this.$store.state.statistics.params
+    }).then((response) => {
+      this.loading = false
+      this.statistics = response.data
+    })
+  }
+}
+</script>

@@ -4,7 +4,7 @@
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.organisations_count"
-        :title="`${$options.filters.pluralize(statistics.organisations_count, 'Organisation', 'Organisations', false)}`"
+        :title="`${$options.filters.pluralize(statistics.organisations_count, 'Nouvelle organisation', 'Nouvelles organisations', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.organisations_count, 'inscrite', 'inscrites', false)}`"
         link="/admin/statistics/organisations"
       />

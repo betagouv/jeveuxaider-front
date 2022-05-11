@@ -1,13 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <div class="mb-6">
-      <Heading as="h2" :level="3">
-        Aperçu de l'offre actuelle
-      </Heading>
-      <div class="text-gray-400 font-semibold">
-        Ce qui est disponible en ce moment pour les bénévoles
-      </div>
-    </div>
+    <BoxHeadingStatistics title="Missions" subtitle="Aperçu de l'offre actuelle" class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.missions_available"
@@ -21,22 +14,18 @@
         :subtitle="`sur ${$options.filters.formatNumber(statistics.places)} proposées`"
       />
       <CardStatistic :value="`${statistics.places_occupation_rate}%`" title="Taux de remplissage" :gauge-percentage="statistics.places_occupation_rate" />
-      <CardStatistic
-        :value="statistics.activites_available"
-        :title="`${$options.filters.pluralize(statistics.activites_available, 'Activité', 'Activités', false)}`"
-        subtitle="en ligne"
-        link="/admin/statistics/missions"
-      />
     </div>
   </Box>
 </template>
 
 <script>
 import CardStatistic from '@/components/card/CardStatistic'
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
 export default {
   components: {
-    CardStatistic
+    CardStatistic,
+    BoxHeadingStatistics
   },
   data () {
     return {
@@ -47,7 +36,7 @@ export default {
   async fetch () {
     this.loading = true
 
-    await this.$axios.get('/statistics/offers', {
+    await this.$axios.get('/statistics/overview-missions', {
       // params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false

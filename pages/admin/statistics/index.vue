@@ -12,32 +12,44 @@
 
     <SectionHeading
       title="Vue d'ensemble"
-    />
+    >
+      <template #action>
+        <div class="hidden lg:block space-x-2 flex-shrink-0">
+          <FiltersStatistics @refetch="refetch()" />
+        </div>
+      </template>
+    </SectionHeading>
 
-    <StatisticsOffer ref="statisticsOffer" />
-    <StatisticsGlobal ref="statisticsGlobal" />
+    <OverviewQuickGlance ref="overviewQuickGlance" />
+    <OverviewMissions ref="overviewMissions" />
+    <OverviewBenevoles ref="overviewBenevoles" />
+    <OverviewOrganisations ref="overviewOrganisations" />
   </div>
 </template>
 
 <script>
-import StatisticsGlobal from '@/components/numbers/StatisticsGlobal'
-import StatisticsOffer from '@/components/numbers/StatisticsOffer'
+import OverviewOrganisations from '@/components/numbers/OverviewOrganisations'
+import OverviewMissions from '@/components/numbers/OverviewMissions'
+import OverviewQuickGlance from '@/components/numbers/OverviewQuickGlance'
+import OverviewBenevoles from '@/components/numbers/OverviewBenevoles'
+import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
 export default {
   components: {
-    StatisticsGlobal,
-    StatisticsOffer
+    FiltersStatistics,
+    OverviewQuickGlance,
+    OverviewOrganisations,
+    OverviewMissions,
+    OverviewBenevoles
   },
   layout: 'statistics',
   middleware: 'admin',
   data () {
     return {}
   },
-
   methods: {
     refetch () {
-      this.$refs.statisticsGlobal.$fetch()
-      this.$refs.statisticsOffer.$fetch()
+      this.$refs.overviewQuickGlance.$fetch()
     }
   }
 }
