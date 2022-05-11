@@ -2,7 +2,7 @@
   <div class="px-4 py-6 flex flex-col items-center bg-white space-y-2">
     <div v-if="value !== null" class="text-[36px] font-bold leading-10">
       <template v-if="!isNaN(value)">
-        {{ value | formatNumber }}
+        {{ value | formatNumber('0,0.[0]') }}
       </template>
       <template v-else>
         {{ value }}

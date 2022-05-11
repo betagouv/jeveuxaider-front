@@ -1,9 +1,7 @@
 <template>
   <div>
     <Box padding="sm" :loading="loading" loading-text="Récupération des missions...">
-      <Heading as="h2" :level="3" class="mb-4">
-        Dont la date de fin est passée
-      </Heading>
+      <BoxHeadingStatistics title="Missions dont la date de fin est passée" subtitle="Classées par organisations" class="mb-6" />
       <StackedList v-if="items" :divided="false">
         <StackedListItem
           v-for="item, i in items"
@@ -23,8 +21,12 @@
 </template>
 
 <script>
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
 export default {
+  components: {
+    BoxHeadingStatistics
+  },
   data () {
     return {
       loading: true,
@@ -34,7 +36,7 @@ export default {
   async fetch () {
     this.loading = true
     await this.$axios.get('/statistics/missions-outdated-by-organisations', {
-      params: this.$store.state.statistics.params
+      // params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
       this.items = response.data

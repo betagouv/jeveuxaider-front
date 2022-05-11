@@ -12,13 +12,7 @@
 
     <SectionHeading
       title="Organisations"
-    >
-      <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics @refetch="refetch()" />
-        </div>
-      </template>
-    </SectionHeading>
+    />
 
     <Tabs
       :tabs="[
@@ -34,12 +28,10 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
 import MissionsOutdatedByOrganisations from '~/components/numbers/MissionsOutdatedByOrganisations.vue'
 
 export default {
   components: {
-    FiltersStatistics,
     MissionsOutdatedByOrganisations
   },
   layout: 'statistics',

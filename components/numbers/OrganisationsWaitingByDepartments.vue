@@ -1,9 +1,7 @@
 <template>
   <div>
     <Box padding="sm" :loading="loading" loading-text="Récupération des organisations...">
-      <Heading as="h2" :level="3" class="mb-4">
-        En attente de validation
-      </Heading>
+      <BoxHeadingStatistics title="Organisations en attente de validation" subtitle="Classées par départements" class="mb-6" />
       <StackedList v-if="items" :divided="false">
         <StackedListItem
           v-for="item, i in items"
@@ -25,10 +23,11 @@
 </template>
 
 <script>
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
 export default {
   components: {
-
+    BoxHeadingStatistics
   },
   data () {
     return {
@@ -39,7 +38,7 @@ export default {
   async fetch () {
     this.loading = true
     await this.$axios.get('/statistics/organisations-waiting-by-departments', {
-      params: this.$store.state.statistics.params
+      // params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
       this.items = response.data

@@ -12,13 +12,7 @@
 
     <SectionHeading
       title="Départements"
-    >
-      <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics @refetch="refetch()" />
-        </div>
-      </template>
-    </SectionHeading>
+    />
 
     <Tabs
       :tabs="[
@@ -36,13 +30,11 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
 import OrganisationsWaitingByDepartments from '@/components/numbers/OrganisationsWaitingByDepartments.vue'
 import OrganisationsInProgressByDepartments from '@/components/numbers/OrganisationsInProgressByDepartments.vue'
 
 export default {
   components: {
-    FiltersStatistics,
     OrganisationsWaitingByDepartments,
     OrganisationsInProgressByDepartments
   },
