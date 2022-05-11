@@ -113,9 +113,8 @@
             />
           </FormControl>
 
-          <!-- @todo Attendre décision sur le sujet -->
-          <!--  v-if="form.statut_juridique != 'Collectivité'" -->
           <FormControl
+            v-if="form.statut_juridique != 'Collectivité'"
             label="Choisissez les domaines que couvre votre organisation"
             html-for="domaines"
             required
