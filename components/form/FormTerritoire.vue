@@ -67,7 +67,10 @@
                 attribute-key="id"
                 attribute-label="label"
                 attribute-right-label="typeLabel"
+                :authorize-add="true"
                 @selected="handleSelectedGeo"
+                @add="handleAdd"
+                @keyup.enter="onEnter"
                 @fetch-suggestions="onFetchGeoSuggestions"
               />
               <div v-if="form.zips.length">
@@ -259,12 +262,20 @@ export default {
     }
   },
   methods: {
+    onEnter () {
+      console.log('ENTER')
+    },
     onRemovedTagItem (value) {
       this.form.zips = this.form.zips.filter(item => item !== value)
     },
     handleSelectedGeo (item) {
       if (item && !this.form.zips.includes(item)) {
         this.form.zips.push(item.postcode)
+      }
+    },
+    handleAdd (item) {
+      if (item && !this.form.zips.includes(item)) {
+        this.form.zips.push(item)
       }
     },
     async handleSubmit () {
