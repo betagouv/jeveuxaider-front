@@ -298,7 +298,7 @@
                 v-model="form.address"
                 name="address"
                 placeholder="..."
-                :disabled="!['admin'].includes($store.getters.contextRole)"
+                :disabled="isGeoFieldsDisabled"
               />
             </FormControl>
 
@@ -311,7 +311,7 @@
                 v-model="form.zip"
                 name="zip"
                 placeholder="..."
-                :disabled="!['admin'].includes($store.getters.contextRole)"
+                :disabled="isGeoFieldsDisabled"
               />
             </FormControl>
             <FormControl
@@ -323,10 +323,10 @@
                 v-model="form.city"
                 name="city"
                 placeholder="..."
-                :disabled="!['admin'].includes($store.getters.contextRole)"
+                :disabled="isGeoFieldsDisabled"
               />
             </FormControl>
-            <template v-if="['admin'].includes($store.getters.contextRole)">
+            <template v-if="!isGeoFieldsDisabled">
               <FormControl
                 label="Latitude"
                 html-for="latitude"
@@ -536,6 +536,21 @@ export default {
     },
     mediaPickerDomaineIds () {
       return [this.form.domaine_id]
+    },
+    isGeoFieldsDisabled () {
+      if (['admin'].includes(this.$store.getters.contextRole)) {
+        return false
+      }
+
+      // Hack - Nouvelle Calédonie
+      if (['responsable'].includes(this.$store.getters.contextRole)) {
+        const organisation = this.$store.getters.profile?.structures.find(structure => structure.id == this.$store.getters.contextableId)
+        if (organisation?.department == '988') {
+          return false
+        }
+      }
+
+      return true
     }
   },
   methods: {
