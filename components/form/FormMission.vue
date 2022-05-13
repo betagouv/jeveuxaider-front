@@ -522,17 +522,17 @@ export default {
         snu_mig_places: number().nullable().when('is_snu_mig_compatible', {
           is: true,
           then: schema => schema.min(0, 'Le nombre de volontaire(s) recherché(s) est incorrect').required('Le nombre de volontaire(s) recherché(s) est requis')
-        }),
-        latitude: string().nullable().when(['state', 'type'], {
-          is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
-          then: schema => schema.required('La latitude est obligatoire'),
-          otherwise: schema => schema.nullable()
-        }),
-        longitude: string().nullable().when(['state', 'type'], {
-          is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
-          then: schema => schema.required('La longitude est obligatoire'),
-          otherwise: schema => schema.nullable()
         })
+        // latitude: string().nullable().when(['state', 'type'], {
+        //   is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
+        //   then: schema => schema.required('La latitude est obligatoire'),
+        //   otherwise: schema => schema.nullable()
+        // }),
+        // longitude: string().nullable().when(['state', 'type'], {
+        //   is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
+        //   then: schema => schema.required('La longitude est obligatoire'),
+        //   otherwise: schema => schema.nullable()
+        // })
       })
     }
   },
