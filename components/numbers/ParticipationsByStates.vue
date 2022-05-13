@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Statuts des participations" show-period class="mb-6" />
+    <BoxHeadingStatistics title="Répartition des participations par statut" show-period class="mb-6" />
     <div v-if="statistics" class="flex flex-col gap-2">
       <ListItemCount color="waiting" label="En attente de validation" :count="statistics.waiting" />
       <ListItemCount color="in_progress" label="En cours de traitement" :count="statistics.in_progress" />

@@ -5,13 +5,13 @@
       <CardStatistic
         :value="statistics.benevoles"
         :title="`${$options.filters.pluralize(statistics.benevoles, 'Bénévole', 'Bénévoles', false)}`"
-        subtitle="au total"
+        :subtitle="`${$options.filters.pluralize(statistics.benevoles, 'inscrit', 'inscrits', false)}`"
         link="/admin/statistics/utilisateurs"
       />
       <CardStatistic
         :value="statistics.benevoles_actifs"
         :title="`${$options.filters.pluralize(statistics.benevoles_actifs, 'Bénévole', 'Bénévoles', false)}`"
-        subtitle="avec participation(s)"
+        :subtitle="`${$options.filters.pluralize(statistics.benevoles_actifs, 'actif', 'actifs', false)}`"
         link="/admin/statistics/utilisateurs"
       />
       <CardStatistic

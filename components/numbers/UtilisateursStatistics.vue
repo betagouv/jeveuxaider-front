@@ -1,23 +1,21 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
-    <BoxHeadingStatistics title="Chiffres clés" show-period class="mb-6" />
+    <BoxHeadingStatistics title="Les utilisateurs en un coup d’oeil" show-period class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.utilisateurs"
         :title="`${$options.filters.pluralize(statistics.utilisateurs, 'Nouvel utilisateur', 'Nouveaux utilisiteurs', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.utilisateurs, 'inscrit', 'inscrits', false)}`"
         link="/admin/utilisateurs"
       />
       <CardStatistic
         :value="statistics.utilisateurs_with_participations"
         :title="`${$options.filters.pluralize(statistics.utilisateurs_with_participations, 'Bénévole actif', 'Bénévoles actifs', false)}`"
-        :subtitle="`avec au moins une participation`"
         link="/admin/utilisateurs"
       />
       <CardStatistic
         :value="statistics.participations_avg.toString()"
         :title="`${$options.filters.pluralize(statistics.participations_avg, 'Participation', 'Participations', false)}`"
-        :subtitle="`par bénévole actif en moyenne`"
+        :subtitle="`par bénévole actif`"
         link="/admin/utilisateurs"
       />
     </div>

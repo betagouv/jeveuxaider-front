@@ -22,6 +22,9 @@
 
     <div class="space-y-12">
       <MissionsStatistics ref="missionsStatistics" />
+      <Heading as="h2" :level="2">
+        L’activité relative aux missions en détail
+      </Heading>
       <MissionsByDate ref="missionsByDate" />
       <div class="flex flex-col lg:flex-row gap-12">
         <div class="space-y-12 w-1/2">

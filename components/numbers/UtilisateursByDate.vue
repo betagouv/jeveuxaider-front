@@ -1,13 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <div class="mb-6">
-      <Heading as="h2" :level="3">
-        Nouveaux utilisateurs par année
-      </Heading>
-      <div class="text-gray-400 font-semibold">
-        Répartition sur la date de création
-      </div>
-    </div>
+    <BoxHeadingStatistics title="Inscription de nouveaux utilisateurs" subtitle="Répartition par mois et années" class="mb-6" />
     <div class="w-full">
       <BarChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
     </div>
@@ -16,9 +9,10 @@
 
 <script>
 import BarChart from '@/components/chart/BarChart'
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics'
 
 export default {
-  components: { BarChart },
+  components: { BarChart, BoxHeadingStatistics },
   data () {
     return {
       loading: true,

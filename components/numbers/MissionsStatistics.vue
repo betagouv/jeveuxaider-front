@@ -1,23 +1,22 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
-    <BoxHeadingStatistics title="Chiffres clés" show-period class="mb-6" />
+    <BoxHeadingStatistics title="L’activité relative aux missions en un coup d’oeil" show-period class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.missions"
-        :title="`${$options.filters.pluralize(statistics.missions, 'Nouvelle mission', 'Nouvelles missions', false)}`"
+        :title="`${$options.filters.pluralize(statistics.missions, 'Mission', 'Missions', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.missions, 'créée', 'créées', false)}`"
         link="/admin/missions"
       />
       <CardStatistic
         :value="statistics.missions_participations_max_sum"
-        :title="`${$options.filters.pluralize(statistics.missions_participations_max_sum, 'Nouvelle place ', 'Nouvelles places', false)}`"
+        :title="`${$options.filters.pluralize(statistics.missions_participations_max_sum, 'Place', 'Places', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.missions_participations_max_sum, 'proposée', 'proposées', false)}`"
-        link="/admin/missions"
       />
       <CardStatistic
         :value="statistics.missions_snu"
-        :title="`${$options.filters.pluralize(statistics.missions_snu, 'Nouvelle mission', 'Nouvelles missions', false)}`"
-        subtitle="SNU MIG"
+        :title="`${$options.filters.pluralize(statistics.missions_snu, 'Mission SNU-MIG', 'Missions SNU-MIG', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.missions_snu, 'créée', 'créées', false)}`"
         link="/admin/missions"
       />
     </div>

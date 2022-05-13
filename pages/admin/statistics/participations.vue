@@ -22,6 +22,9 @@
 
     <div class="space-y-12">
       <ParticipationsStatistics ref="participationsStatistics" class="lg:col-span-2" />
+      <Heading as="h2" :level="2">
+        Les participations en détail
+      </Heading>
       <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" />
       <div class="flex flex-col lg:flex-row gap-12">
         <div class="space-y-12 w-1/2">

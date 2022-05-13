@@ -22,6 +22,9 @@
 
     <div class="space-y-12">
       <OrganisationsStatistics ref="organisationsStatistics" class="" />
+      <Heading as="h2" :level="2">
+        L’activité des organisations en détail
+      </Heading>
       <OrganisationsByDate ref="organisationsByDate" class="" />
       <div class="flex flex-col lg:flex-row gap-12">
         <div class="space-y-12 w-1/2">

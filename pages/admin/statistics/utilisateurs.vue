@@ -22,6 +22,9 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <UtilisateursStatistics ref="utilisateursStatistics" class="lg:col-span-2" />
+      <Heading as="h2" :level="2">
+        Les utilisateurs en détail
+      </Heading>
       <UtilisateursByDate ref="utilisateursByDate" class="lg:col-span-2" />
       <UtilisateursByDomaines ref="utilisateursByDomaines" />
     </div>

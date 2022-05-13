@@ -5,13 +5,13 @@
       <CardStatistic
         :value="statistics.organisations"
         :title="`${$options.filters.pluralize(statistics.organisations, 'Organisation', 'Organisations', false)}`"
-        subtitle="au total"
+        :subtitle="`${$options.filters.pluralize(statistics.organisations, 'inscrite', 'inscrites', false)}`"
         link="/admin/statistics/organisations"
       />
       <CardStatistic
         :value="statistics.organisations_actives"
         :title="`${$options.filters.pluralize(statistics.organisations_actives, 'Organisation', 'Organisations', false)}`"
-        subtitle="avec une mission en ligne"
+        :subtitle="`${$options.filters.pluralize(statistics.organisations, 'active', 'actives', false)}`"
         link="/admin/statistics/organisations"
       />
       <CardStatistic

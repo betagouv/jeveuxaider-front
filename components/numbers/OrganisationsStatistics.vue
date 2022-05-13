@@ -1,23 +1,20 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
-    <BoxHeadingStatistics title="Chiffres clés" show-period class="mb-6" />
+    <BoxHeadingStatistics title="L’activité des organisations en un coup d’oeil" show-period class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.organisations_count"
         :title="`${$options.filters.pluralize(statistics.organisations_count, 'Nouvelle organisation', 'Nouvelles organisations', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.organisations_count, 'inscrite', 'inscrites', false)}`"
         link="/admin/statistics/organisations"
       />
       <CardStatistic
         :value="`${Math.round((statistics.organisations_response_time_avg / (3600*24)) * 10) / 10} jours`"
         :title="`Temps de réponse`"
-        subtitle="en moyenne"
         link="/admin/statistics/organisations"
       />
       <CardStatistic
         :value="`${statistics.organisations_response_ratio_avg}%`"
         :title="`Taux de réponse`"
-        subtitle="en moyenne"
         link="/admin/statistics/organisations"
       />
     </div>

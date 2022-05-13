@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Rapide coup d'oeil" show-period class="mb-6" />
+    <BoxHeadingStatistics title="L’activité sur JeVeuxAider.gouv.fr en un coup d’oeil" show-period class="mb-6" />
 
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
@@ -12,13 +12,13 @@
       <CardStatistic
         :value="statistics.missions"
         :title="`${$options.filters.pluralize(statistics.missions, 'Mission', 'Missions', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.missions, 'postée', 'postées', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.missions, 'créée', 'créées', false)}`"
         link="/admin/statistics/missions"
       />
       <CardStatistic
         :value="statistics.participations"
         :title="`${$options.filters.pluralize(statistics.participations, 'Participation', 'Participations', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.participations, 'créée', 'créées', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.participations, 'proposée', 'proposées', false)}`"
         link="/admin/statistics/participations"
       />
       <CardStatistic

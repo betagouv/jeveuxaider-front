@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Nouvelles inscriptions d'organisations" subtitle="Répartition par mois et années" class="mb-6" />
+    <BoxHeadingStatistics title="Nouvelles organisations inscrites" subtitle="Répartition par mois et années" class="mb-6" />
     <div class="w-full">
       <BarChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
     </div>

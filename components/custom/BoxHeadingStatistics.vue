@@ -45,13 +45,13 @@ export default {
     periodLabel () {
       switch (this.$store.state.statistics.params.period) {
         case 'current_year':
-          return `Cette année : ${this.$dayjs().year()}`
+          return `En ${this.$dayjs().year()}`
         case 'last_year':
-          return `L'année dernière : ${this.$dayjs().subtract(1, 'year').year()}`
+          return `En ${this.$dayjs().subtract(1, 'year').year()}`
         case 'current_month':
-          return `Ce mois-ci : ${this.$dayjs().format('MMMM YYYY')}`
+          return `En ${this.$dayjs().format('MMMM YYYY')}`
         case 'last_month':
-          return `Le mois dernier : ${this.$dayjs().subtract(1, 'month').format('MMMM YYYY')}`
+          return `En : ${this.$dayjs().subtract(1, 'month').format('MMMM YYYY')}`
         default:
           return this.$options.filters.label(this.$store.state.statistics.params.period, 'statistics_period')
       }

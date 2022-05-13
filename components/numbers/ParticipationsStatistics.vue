@@ -1,17 +1,15 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
-    <BoxHeadingStatistics title="Chiffres clés" show-period class="mb-6" />
+    <BoxHeadingStatistics title="Les participations en un coup d’oeil" show-period class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.participations"
         :title="`${$options.filters.pluralize(statistics.participations, 'Nouvelle candidature', 'Nouvelles candidatures', false)}`"
-        :subtitle="`sur la période`"
         link="/admin/statistics/participations"
       />
       <CardStatistic
         :value="statistics.participations_validated"
         :title="`${$options.filters.pluralize(statistics.participations_validated, 'Participation validée', 'Participations validées', false)}`"
-        :subtitle="`sur la période`"
         link="/admin/statistics/participations"
       />
     </div>

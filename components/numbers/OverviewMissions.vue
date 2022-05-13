@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Missions ›" link="/admin/statistics/missions" class="mb-6" />
+    <BoxHeadingStatistics title="L’activité sur JeVeuxAider.gouv.fr en détail ›" link="/admin/statistics/missions" class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.missions_available"
@@ -9,9 +9,14 @@
         link="/admin/statistics/missions"
       />
       <CardStatistic
+        :value="statistics.places"
+        :title="`${$options.filters.pluralize(statistics.places, 'Place', 'Places', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.places, 'proposée', 'proposées', false)}`"
+      />
+      <CardStatistic
         :value="statistics.places_left"
-        :title="`${$options.filters.pluralize(statistics.places_left, 'Place restante', 'Places restantes', false)}`"
-        :subtitle="`sur ${$options.filters.formatNumber(statistics.places)} proposées`"
+        :title="`${$options.filters.pluralize(statistics.places_left, 'Place', 'Places', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.places_left, 'disponible', 'disponibles', false)}`"
       />
       <CardStatistic :value="`${statistics.places_occupation_rate}%`" title="Taux de remplissage" :gauge-percentage="statistics.places_occupation_rate" />
     </div>
