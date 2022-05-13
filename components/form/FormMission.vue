@@ -554,10 +554,10 @@ export default {
         return false
       }
 
-      // Hack - Nouvelle Calédonie
+      // Hack - Dom Tom (Nouvelle Calédonie & Polynésie française)
       if (['responsable'].includes(this.$store.getters.contextRole)) {
         const organisation = this.$store.getters.profile?.structures.find(structure => structure.id == this.$store.getters.contextableId)
-        if (organisation?.department == '988') {
+        if (['987', '988'].includes(organisation?.department)) {
           return false
         }
       }
