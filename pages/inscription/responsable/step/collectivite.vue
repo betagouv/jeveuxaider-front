@@ -140,7 +140,7 @@ export default {
     return {
       form: {
         ...organisation.territoire,
-        zips: organisation.territoire.zips && organisation.territoire.zips.length ? organisation.territoire.zips : (organisation.zip ? [organisation.zip] : []),
+        zips: organisation.territoire?.zips?.length ? organisation.territoire.zips : (organisation.zip ? [organisation.zip] : []),
         department: !organisation.territoire.department ? organisation.department : organisation.territoire.department
       }
     }
