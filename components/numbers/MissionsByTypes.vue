@@ -49,7 +49,7 @@ export default {
     }).then((response) => {
       this.loading = false
       this.chartData = {
-        labels: ['En présentiel', 'A distance'],
+        labels: ['En présentiel', 'À distance'],
         datasets: [
           {
             data: Object.values(response.data),
