@@ -37,15 +37,34 @@
           transparent
           @change="deleteAllFilters()"
         />
+        <SelectAdvanced
+          :key="`state-${$route.fullPath}`"
+          name="state"
+          placeholder="Toutes les notes"
+          :options="$labels.testimonial_grade"
+          :value="$route.query['filter[grade]']"
+          theme="filter"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[grade]', $event)"
+        />
         <Checkbox
-          v-for="option in $labels.testimonial_grade"
-          :key="`${option.key}-${$route.fullPath}`"
-          :option="{key: option.key, label:option.label}"
-          :is-checked="$route.query['filter[grade]'] && $route.query['filter[grade]'] == option.key"
+          :key="`published-${$route.fullPath}`"
+          :option="{key: 'true', label:'En ligne'}"
+          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
           variant="button"
           size="xs"
           transparent
-          @change="changeFilter('filter[grade]', option.key)"
+          @change="changeFilter('filter[is_published]', 'true')"
+        />
+        <Checkbox
+          :key="`unpublished-${$route.fullPath}`"
+          :option="{key: 'false', label: 'Hors ligne'}"
+          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[is_published]', 'false')"
         />
       </template>
     </SearchFilters>
