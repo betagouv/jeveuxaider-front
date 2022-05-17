@@ -317,7 +317,7 @@
                 v-model="form.address"
                 name="address"
                 placeholder="..."
-                :disabled="!['admin'].includes($store.getters.contextRole)"
+                :disabled="isGeoFieldsDisabled"
               />
             </FormControl>
 
@@ -330,7 +330,7 @@
                 v-model="form.zip"
                 name="zip"
                 placeholder="..."
-                :disabled="!['admin'].includes($store.getters.contextRole)"
+                :disabled="isGeoFieldsDisabled"
               />
             </FormControl>
             <FormControl
@@ -342,13 +342,14 @@
                 v-model="form.city"
                 name="city"
                 placeholder="..."
-                :disabled="!['admin'].includes($store.getters.contextRole)"
+                :disabled="isGeoFieldsDisabled"
               />
             </FormControl>
-            <template v-if="['admin'].includes($store.getters.contextRole)">
+            <template v-if="!isGeoFieldsDisabled">
               <FormControl
                 label="Latitude"
                 html-for="latitude"
+                :error="errors.latitude"
               >
                 <Input
                   v-model="form.latitude"
@@ -359,6 +360,7 @@
               <FormControl
                 label="Longitude"
                 html-for="longitude"
+                :error="errors.longitude"
               >
                 <Input
                   v-model="form.longitude"
@@ -541,9 +543,18 @@ export default {
           is: true,
           then: schema => schema.min(0, 'Le nombre de volontaire(s) recherché(s) est incorrect').required('Le nombre de volontaire(s) recherché(s) est requis')
         })
+        // latitude: string().nullable().when(['state', 'type'], {
+        //   is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
+        //   then: schema => schema.required('La latitude est obligatoire'),
+        //   otherwise: schema => schema.nullable()
+        // }),
+        // longitude: string().nullable().when(['state', 'type'], {
+        //   is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
+        //   then: schema => schema.required('La longitude est obligatoire'),
+        //   otherwise: schema => schema.nullable()
+        // })
       }),
       activities: []
-
     }
   },
   fetchOnServer: false,
@@ -563,6 +574,21 @@ export default {
     },
     mediaPickerDomaineIds () {
       return [this.form.domaine_id]
+    },
+    isGeoFieldsDisabled () {
+      if (['admin'].includes(this.$store.getters.contextRole)) {
+        return false
+      }
+
+      // Hack - Dom Tom (Nouvelle Calédonie & Polynésie française)
+      if (['responsable'].includes(this.$store.getters.contextRole)) {
+        const organisation = this.$store.getters.profile?.structures.find(structure => structure.id == this.$store.getters.contextableId)
+        if (['987', '988'].includes(organisation?.department)) {
+          return false
+        }
+      }
+
+      return true
     }
   },
   methods: {

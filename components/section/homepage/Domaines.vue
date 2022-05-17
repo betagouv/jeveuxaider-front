@@ -45,7 +45,7 @@ export default {
           id: 9,
           name: 'Éducation pour tous',
           slug: 'education-pour-tous',
-          description: 'Mobilisez-vous pour l\'éducation',
+          description: 'Faites du savoir une chance pour tous',
           image:
             '/images/domaines/card_domaine_education.webp, /images/domaines/card_domaine_education@2x.webp 2x, /images/domaines/card_domaine_education.jpg, /images/domaines/card_domaine_education@2x.jpg 2x',
           bottom: true
@@ -55,7 +55,7 @@ export default {
           name: 'Santé pour tous',
           slug: 'sante-pour-tous',
           description:
-            'Venez en aide aux malades, à leurs proches ou aux soignants',
+            'Soutenez les personnes malades et leurs proches',
           image:
             '/images/domaines/card_domaine_sante.webp, /images/domaines/card_domaine_sante@2x.webp 2x, /images/domaines/card_domaine_sante.jpg, /images/domaines/card_domaine_sante@2x.jpg 2x',
           bottom: true
@@ -65,7 +65,7 @@ export default {
           name: 'Protection de la nature',
           slug: 'protection-de-la-nature',
           description:
-            'Aidez les associations locales à protéger l’environnement',
+            'Contribuez à la préservation de l’environnement',
           image:
             '/images/domaines/card_domaine_nature.webp, /images/domaines/card_domaine_nature@2x.webp 2x, /images/domaines/card_domaine_nature.jpg, /images/domaines/card_domaine_nature@2x.jpg 2x',
           bottom: true
@@ -75,7 +75,7 @@ export default {
           name: 'Solidarité et insertion',
           slug: 'solidarite-et-insertion',
           description:
-            'Venez en aide aux plus démunis et aux personnes isolées',
+            'Venez en aide aux personnes exclues, fragiles et isolées',
           image:
             '/images/domaines/card_domaine_solidarite.webp, /images/domaines/card_domaine_solidarite@2x.webp 2x, /images/domaines/card_domaine_solidarite.jpg, /images/domaines/card_domaine_solidarite@2x.jpg 2x',
           bottom: true
@@ -84,7 +84,7 @@ export default {
           id: 4,
           name: 'Sport pour tous',
           slug: 'sport-pour-tous',
-          description: 'Mobilisez-vous pour le sport',
+          description: 'Contribuez à rendre la pratique sportive accessible à tous',
           image:
             '/images/domaines/card_domaine_sport.webp, /images/domaines/card_domaine_sport@2x.webp 2x, /images/domaines/card_domaine_sport.jpg, /images/domaines/card_domaine_sport@2x.jpg 2x',
           bottom: true
@@ -93,7 +93,7 @@ export default {
           id: 2,
           name: 'Prévention et protection',
           slug: 'prevention-et-protection',
-          description: 'Mobilisez-vous pour la prévention et la protection civile',
+          description: 'Engagez-vous pour secourir, protéger et sensibiliser',
           image:
             '/images/domaines/card_domaine_prevention.webp, /images/domaines/card_domaine_prevention@2x.webp 2x, /images/domaines/card_domaine_prevention.jpg, /images/domaines/card_domaine_prevention@2x.jpg 2x',
           bottom: true
@@ -102,7 +102,7 @@ export default {
           id: 8,
           name: 'Mémoire et citoyenneté',
           slug: 'memoire-et-citoyennete',
-          description: 'Mobilisez-vous pour la mémoire et la citoyenneté',
+          description: 'Participez à l’effort de mémoire et aux initiatives citoyennes',
           image:
             '/images/domaines/card_domaine_memoire.webp, /images/domaines/card_domaine_memoire@2x.webp 2x, /images/domaines/card_domaine_memoire.jpg, /images/domaines/card_domaine_memoire@2x.jpg 2x',
           bottom: true
@@ -120,7 +120,7 @@ export default {
           id: 3,
           name: 'Art & Culture pour tous',
           slug: 'art-et-culture-pour-tous',
-          description: 'Mobilisez-vous pour l\'art et la culture',
+          description: 'Faites vivre les initiatives culturelles près de chez vous',
           image:
             '/images/domaines/card_domaine_art.webp, /images/domaines/card_domaine_art@2x.webp 2x, /images/domaines/card_domaine_art.jpg, /images/domaines/card_domaine_art@2x.jpg 2x',
           bottom: true
@@ -129,7 +129,7 @@ export default {
           id: 5,
           name: 'Mobilisation Covid-19',
           slug: 'mobilisation-covid-19',
-          description: 'Mobilisez-vous pour la lutte contre la Covid-19',
+          description: 'Participez à la lutte contre la Covid-19',
           image:
             '/images/domaines/card_domaine_covid19.webp, /images/domaines/card_domaine_covid19@2x.webp 2x, /images/domaines/card_domaine_covid19.jpg, /images/domaines/card_domaine_covid19@2x.jpg 2x',
           bottom: true

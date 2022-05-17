@@ -46,11 +46,11 @@
 
     <div class="mx-8 my-6 flex-1 flex flex-col items-start">
       <div class="mb-4 flex flex-wrap gap-2">
-        <Badge v-if="organisation.domaines[0]" :color="organisation.domaines[0].id" class="uppercase">
-          {{ $options.filters.label(organisation.domaines[0].id, 'domaines') }}
+        <Badge v-if="domaines[0]" :color="domaines[0].id" class="uppercase">
+          {{ $options.filters.label(domaines[0].id, 'domaines') }}
         </Badge>
-        <Badge v-if="organisation.domaines.length > 1" color="gray-light">
-          +{{ organisation.domaines.length - 1 }}
+        <Badge v-if="domaines.length > 1" color="gray-light">
+          +{{ domaines.length - 1 }}
         </Badge>
       </div>
 
@@ -109,6 +109,18 @@ export default {
       return this.organisation.override_image1?.urls.large ??
         this.organisation.illustrations?.[0]?.urls.large ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+    },
+    domaines () {
+      if (this.organisation.statut_juridique != 'Collectivité') {
+        return this.organisation.domaines
+      }
+
+      // Mémoire et cotoyenneté, Solidarité et insertion
+      return [...this.organisation.domaines]
+        .filter(domaine => [7, 8].includes(domaine.id))
+        .sort((a, b) => {
+          return b.id - a.id
+        })
     }
   },
   methods: {

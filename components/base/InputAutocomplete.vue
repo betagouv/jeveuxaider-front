@@ -91,6 +91,9 @@
         </li>
         <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
           {{ labelEmpty }}
+          <template v-if="authorizeAdd">
+            <br><span class="text-xs">Ajoutez l'élément en pressant la touche <span class="text-jva-blue-500">Entrée</span></span>
+          </template>
         </li>
       </ul>
     </div>
@@ -119,7 +122,8 @@ export default {
     variant: { type: String, default: null }, // transparent
     clearAfterSelected: { type: Boolean, default: false },
     showKeyInOptions: { type: Boolean, default: false },
-    theme: { type: String, default: 'default' }
+    theme: { type: String, default: 'default' },
+    authorizeAdd: { type: Boolean, default: false }
   },
   data () {
     return {
@@ -167,14 +171,20 @@ export default {
       this.showOptions = false
     },
     onKeydown (e) {
-      const keyValue = e.which // enter key
+      const keyValue = e.which
       if (keyValue === 9) {
         this.showOptions = false
         this.highlightIndex = null
       }
+      // enter key
       if (keyValue === 13) {
         if (this.highlightIndex !== null) {
           this.handleClick(this.options[this.highlightIndex])
+          return
+        }
+        if (this.authorizeAdd) {
+          this.$emit('add', this.searchTerm)
+          this.reset()
           return
         }
       }

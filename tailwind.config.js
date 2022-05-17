@@ -84,16 +84,17 @@ module.exports = {
           50: '#FAFAFA'
         },
         domaine: {
-          solidarite: '#F46D66',
-          nature: '#0B9B6B',
-          education: '#D42EB0',
-          sante: '#61198D',
+          solidarite: '#FF5655',
+          nature: '#21AB8E',
+          education: '#D47A65',
+          sante: '#518FFF',
           covid: '#070191',
           prevention: '#05D3AB',
-          sport: '#EE6018',
-          culture: '#F99E2D',
+          sport: '#FF732C',
+          culture: '#AA8625',
           memoire: '#175AB6',
           cooperation: '#5B8397'
+
         },
         'cool-gray': { ...colors.coolGray, 500: '#777E90' },
         blue: colors.blue,
