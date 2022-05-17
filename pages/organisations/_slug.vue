@@ -88,6 +88,12 @@
       </div>
     </div>
 
+    <!-- TESTIMONIALS -->
+    <Testimonials
+      :model="organisation"
+      model-type="organisation"
+    />
+
     <!-- FAIRE UN DON -->
     <Donation :organisation="organisation" />
 
@@ -103,6 +109,7 @@ import Contact from '@/components/section/organisation/Contact'
 import Donation from '@/components/section/organisation/Donation'
 import CardMission from '@/components/card/CardMission'
 import MixinOrganisation from '@/mixins/organisation'
+import Testimonials from '@/components/section/temoignage/Testimonials'
 
 export default {
   components: {
@@ -110,7 +117,8 @@ export default {
     Details,
     Contact,
     Donation,
-    CardMission
+    CardMission,
+    Testimonials
   },
   mixins: [MixinOrganisation],
   layout: 'default-without-header',
