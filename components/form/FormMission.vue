@@ -541,7 +541,7 @@ export default {
         responsable_id: number().nullable().required('Le contact de la mission doit être renseigné'),
         snu_mig_places: number().nullable().when('is_snu_mig_compatible', {
           is: true,
-          then: schema => schema.min(0, 'Le nombre de volontaire(s) recherché(s) est incorrect').required('Le nombre de volontaire(s) recherché(s) est requis')
+          then: schema => schema.min(1, 'Le nombre de volontaire(s) recherché(s) est incorrect (minimum: 1)').required('Le nombre de volontaire(s) recherché(s) est requis')
         })
         // latitude: string().nullable().when(['state', 'type'], {
         //   is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
