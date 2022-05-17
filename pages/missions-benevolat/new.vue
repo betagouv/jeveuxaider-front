@@ -34,9 +34,15 @@
           <label for="a_distance">Bénévolat en ligne</label>
         </div>
       </div>
-      <Button v-if="hasActiveFilters" size="xs" variant="white" @click.native="deleteAllFilters()">
+      <Button v-if="hasActiveFilters" class="my-2" size="xs" variant="white" @click.native="deleteAllFilters()">
         Effacer les filtres
       </Button>
+      <div class="bg-white px-6 py-4 shadow rounded grid grid-cols-4">
+        <div>Localisation</div>
+        <div>Activités</div>
+        <div>Disponibilités</div>
+        <div>Mots-clés</div>
+      </div>
       <div v-if="searchResult.facets" class=" grid grid-cols-3 gap-4 mt-6">
         <FacetFilter label="Template" facet-name="template_subtitle" :facets="facetResults('template_subtitle')" />
         <FacetFilter label="Domaine" facet-name="domaines" :facets="facetResults('domaines')" />
