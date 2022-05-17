@@ -244,6 +244,13 @@
         </Box>
       </div>
     </div>
+
+    <!-- TESTIMONIALS -->
+    <Testimonials
+      :model="mission.structure"
+      model-type="organisation"
+    />
+
     <div
       v-if="similarMissions.length > 0"
       class="bg-[#282562] border-t-8 border-jva-red-500 overflow-hidden"
@@ -290,6 +297,7 @@ import Presentation from '@/components/section/mission/Presentation.vue'
 import Details from '@/components/section/mission/Details.vue'
 import ButtonJeProposeMonAide from '@/components/custom/ButtonJeProposeMonAide.vue'
 import MixinMission from '@/mixins/mission'
+import Testimonials from '@/components/section/temoignage/Testimonials'
 
 export default {
   components: {
@@ -297,7 +305,8 @@ export default {
     PresentielOrDistance,
     Presentation,
     Details,
-    ButtonJeProposeMonAide
+    ButtonJeProposeMonAide,
+    Testimonials
   },
   mixins: [MixinMission],
   async asyncData ({ $axios, params, error, store }) {
