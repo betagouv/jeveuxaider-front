@@ -15,11 +15,13 @@
                   {
                     icon: 'LocationMarkerIcon',
                     filterValue: 'Mission en présentiel',
-                    current: !$route.query['type']
+                    current: !$route.query['type'],
+                    label: 'Près de chez moi'
                   },
                   {
                     icon: 'DesktopComputerIcon',
                     filterValue: 'Mission à distance',
+                    label: 'Depuis chez moi'
                   }
                 ]"
               />
@@ -78,7 +80,7 @@
           <div class="my-4 flex items-center justify-center gap-3">
             <FacetFilter facet-name="structure.name" :facets="facetResults('structure.name')">
               <template #button="{ activeValues, firstValueSelected }">
-                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500 hover:bg-[#123456]': ''">
+                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
                   <span v-if="activeValues.length == 0">Organisations</span>
                   <span v-else class="text-jva-blue-500">
                     {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
@@ -88,7 +90,7 @@
             </FacetFilter>
             <FacetFilter facet-name="domaines" :facets="facetResults('domaines')">
               <template #button="{ activeValues, firstValueSelected }">
-                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500 hover:bg-[#123456]': ''">
+                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
                   <span v-if="activeValues.length == 0">Domaines</span>
                   <span v-else class="text-jva-blue-500">
                     {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
@@ -98,7 +100,7 @@
             </FacetFilter>
             <FacetFilter facet-name="structure.reseaux.name" :facets="facetResults('structure.reseaux.name')">
               <template #button="{ activeValues, firstValueSelected }">
-                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500': ''">
+                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
                   <span v-if="activeValues.length == 0">Réseaux</span>
                   <span v-else class="text-jva-blue-500">
                     {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
@@ -108,7 +110,7 @@
             </FacetFilter>
             <FacetFilter facet-name="department_name" :facets="facetResults('department_name')">
               <template #button="{ activeValues, firstValueSelected }">
-                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500': ''">
+                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
                   <span v-if="activeValues.length == 0">Départements</span>
                   <span v-else class="text-jva-blue-500">
                     {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
