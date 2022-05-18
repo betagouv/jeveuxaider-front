@@ -8,6 +8,7 @@
     <div v-if="isOpen" v-click-outside="() => isOpen = false">
       <div class="absolute z-40 bg-white border shadow rounded">
         <Input
+          v-model="facetQuery"
           name="query-facet"
           placeholder="Recherche"
           clearable
@@ -51,11 +52,22 @@ export default {
   },
   data () {
     return {
-      isOpen: false
+      isOpen: false,
+      facetHits: null,
+      facetQuery: null
     }
   },
   computed: {
     allValues () {
+      if (this.facetHits) {
+        console.log('values facetHits')
+        return this.facetHits.map((facetHit) => {
+          return {
+            value: facetHit.value,
+            count: facetHit.count
+          }
+        })
+      }
       return Object.keys(this.facets).map((value) => {
         return {
           value,
@@ -86,8 +98,12 @@ export default {
       this.isOpen = false
     },
     async handleChangeSearchFacetValues (facetQuery) {
-      // index.searchForFacetValues(this.facetName, facetQuery)
-      // await this.$algolia.multipleQueries(queries)
+      if (!facetQuery || facetQuery == '') {
+        this.facetHits = null
+        return
+      }
+      const res = await this.searchForFacetValues(this.facetName, facetQuery)
+      this.facetHits = res.facetHits
     }
   }
 }
