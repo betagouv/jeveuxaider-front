@@ -1,11 +1,29 @@
 <template>
   <div>
-    {{ label }}
-    <div v-for="facet in activeFacets" :key="facet.value" class="text-jva-blue-500 cursor-pointer" @click="deleteFilter(facetName, facet.value, true)">
-      {{ facet.value }} ({{ facet.count }})
+    <div class="cursor-pointer" @click="isOpen = !isOpen">
+      <slot name="button" :isOpen="isOpen" :activeValues="activeValues" :firstValueSelected="firstValueSelected">
+        Toggle facet
+      </slot>
     </div>
-    <div v-for="facet in inactiveFacets" :key="facet.value" class="cursor-pointer" @click="addFilter(facetName, facet.value, true)">
-      {{ facet.value }} ({{ facet.count }})
+    <div v-if="isOpen" v-click-outside="() => isOpen = false">
+      <div class="absolute z-40 bg-white border shadow rounded">
+        <div class="max-h-[320px] overflow-y-auto space-y-2 px-3 py-4">
+          <div v-for="facet in activeValues" :key="facet.value" class="text-jva-blue-500 cursor-pointer" @click="deleteFilter(facetName, facet.value, true)">
+            {{ facet.value }} ({{ facet.count }})
+          </div>
+          <div v-for="facet in inactiveValues" :key="facet.value" class="cursor-pointer" @click="addFilter(facetName, facet.value, true)">
+            {{ facet.value }} ({{ facet.count }})
+          </div>
+        </div>
+        <div class="border-t px-3 py-4 flex justify-between">
+          <div v-if="activeValues.length > 0" class="text-gray-600 cursor-pointer" @click="deleteFacet()">
+            Effacer
+          </div>
+          <div class="ml-auto text-jva-blue-500 cursor-pointer" @click="isOpen = false">
+            Valider
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -23,14 +41,15 @@ export default {
     facets: {
       type: Object,
       required: true
-    },
-    label: {
-      type: String,
-      default: ''
+    }
+  },
+  data () {
+    return {
+      isOpen: false
     }
   },
   computed: {
-    allFacets () {
+    allValues () {
       return Object.keys(this.facets).map((value) => {
         return {
           value,
@@ -38,15 +57,27 @@ export default {
         }
       })
     },
-    activeFacets () {
-      return this.allFacets.filter((facet) => {
+    activeValues () {
+      return this.allValues.filter((facet) => {
         return this.$route.query[this.facetName]?.split('|').includes(facet.value)
       })
     },
-    inactiveFacets () {
-      return this.allFacets.filter((facet) => {
+    inactiveValues () {
+      return this.allValues.filter((facet) => {
         return !this.$route.query[this.facetName]?.split('|').includes(facet.value)
       })
+    },
+    firstValueSelected () {
+      return this.$route.query[this.facetName]?.split('|')[0]
+    }
+  },
+  methods: {
+    deleteFacet () {
+      this.$router.push({
+        path: this.$route.path,
+        query: { ...this.$route.query, [this.facetName]: undefined, page: undefined }
+      })
+      this.isOpen = false
     }
   }
 }
