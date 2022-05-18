@@ -12,7 +12,7 @@
 
       // GRAY LIGHT
       {'bg-gray-200 text-gray-900': ['gray-light','draft','Brouillon','Désinscrite'].includes(color) && !plain},
-      { 'border text-gray-600 border-gray-600': ['gray-light', 'draft','Brouillon','Désinscrite'].includes(color) && plain},
+      { 'border text-gray-500 border-gray-500': ['gray-light', 'draft','Brouillon','Désinscrite'].includes(color) && plain},
 
       // BLUE
       {'text-white bg-jva-blue-500': ['blue', 'Terminée'].includes(color) && !plain},

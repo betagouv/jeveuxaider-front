@@ -37,7 +37,8 @@ import {
   DotsVerticalIcon,
   AdjustmentsIcon,
   VideoCameraIcon,
-  LockClosedIcon
+  LockClosedIcon,
+  DesktopComputerIcon
 } from '@vue-hero-icons/outline'
 import {
   InformationCircleIcon,
@@ -50,10 +51,15 @@ import {
   PlusCircleIcon,
   MinusCircleIcon,
   UserIcon as UserSolidIcon,
-  ClockIcon as ClockSolidIcon
+  ClockIcon as ClockSolidIcon,
+  HandIcon as HandSolidIcon,
+  CalendarIcon as CalendarSolidIcon
 } from '@vue-hero-icons/solid'
 
 const components = {
+  DesktopComputerIcon,
+  CalendarSolidIcon,
+  HandSolidIcon,
   LockClosedIcon,
   ClockSolidIcon,
   CheckCircleSolidIcon,
