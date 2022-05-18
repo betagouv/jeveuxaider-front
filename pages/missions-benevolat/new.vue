@@ -64,9 +64,10 @@
             </div>
             <div class="px-6">
               <div class="text-gray-500 mb-1">
-                Mots-clés
+                Recherche
               </div>
               <Input
+                icon="SearchIcon"
                 :value="$route.query.search"
                 name="search"
                 placeholder="Mots clés"

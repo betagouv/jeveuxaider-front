@@ -4,8 +4,8 @@
       <div v-for="tab,i in tabs" :key="i" class="">
         <div
           :class="[
-            'flex px-8 py-6 cursor-pointer space-x-2',
-            isActiveFilter(filterName, tab.filterValue) || !$route.query[filterName] ? 'bg-white' : 'shadow-inner'
+            'flex justify-center items-center px-8 py-6 cursor-pointer space-x-2',
+            isActiveFilter(filterName, tab.filterValue) || !$route.query[filterName] ? 'bg-white' : 'shadow-inner-xl'
           ]"
           @click="addFilter(filterName, tab.filterValue)"
         >
@@ -41,6 +41,9 @@ export default {
 }
 </script>
 
-<style>
+<style lang="postcss" scoped>
+.shadow-inner-xl {
+    box-shadow: inset 0px 1px 10px rgba(0, 0, 0, 0.15);
+}
 
 </style>
