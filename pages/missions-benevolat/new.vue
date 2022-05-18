@@ -68,6 +68,13 @@
         </div>
         <div class="text-gray-500">
           Mots-clés
+          <Input
+            :value="$route.query.search"
+            name="search"
+            placeholder="Mots clés"
+            clearable
+            @input="handleChangeQuery"
+          />
         </div>
       </div>
       <div class="my-4 flex items-center justify-center gap-3">
@@ -157,7 +164,7 @@ export default {
     // Recherche principale
     const queries = [{
       indexName: this.indexName,
-      query: '',
+      query: this.$route.query.search || '',
       params: {
         facetFilters: this.activeFacets,
         facets: ['*'],
@@ -169,7 +176,7 @@ export default {
       const facetName = facetFilter[0].split(':')[0]
       queries.push({
         indexName: this.indexName,
-        query: '',
+        query: this.$route.query.search || '',
         params: {
           facetFilters: this.activeFacets.filter(facetFilter => facetFilter[0].split(':')[0] != facetName),
           facets: [facetName],
@@ -236,6 +243,9 @@ export default {
       }
 
       return {}
+    },
+    handleChangeQuery (value) {
+      this.addFilter('search', value)
     }
   }
 }
