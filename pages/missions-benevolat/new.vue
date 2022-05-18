@@ -15,6 +15,7 @@
                   {
                     icon: 'LocationMarkerIcon',
                     filterValue: 'Mission en présentiel',
+                    current: !$route.query['type']
                   },
                   {
                     icon: 'DesktopComputerIcon',
@@ -63,14 +64,11 @@
               </CommitmentFilter>
             </div>
             <div class="px-6">
-              <div class="text-gray-500 mb-1">
-                Recherche
-              </div>
               <Input
                 icon="SearchIcon"
                 :value="$route.query.search"
                 name="search"
-                placeholder="Mots clés"
+                placeholder="Mots clés..."
                 clearable
                 @input="handleChangeQuery"
               />
@@ -80,9 +78,9 @@
           <div class="my-4 flex items-center justify-center gap-3">
             <FacetFilter facet-name="structure.name" :facets="facetResults('structure.name')">
               <template #button="{ activeValues, firstValueSelected }">
-                <Badge plain color="gray-light">
+                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500 hover:bg-[#123456]': ''">
                   <span v-if="activeValues.length == 0">Organisations</span>
-                  <span v-else>
+                  <span v-else class="text-jva-blue-500">
                     {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
                   </span>
                 </Badge>
@@ -90,9 +88,9 @@
             </FacetFilter>
             <FacetFilter facet-name="domaines" :facets="facetResults('domaines')">
               <template #button="{ activeValues, firstValueSelected }">
-                <Badge plain color="gray-light">
+                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500 hover:bg-[#123456]': ''">
                   <span v-if="activeValues.length == 0">Domaines</span>
-                  <span v-else>
+                  <span v-else class="text-jva-blue-500">
                     {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
                   </span>
                 </Badge>
@@ -100,9 +98,9 @@
             </FacetFilter>
             <FacetFilter facet-name="structure.reseaux.name" :facets="facetResults('structure.reseaux.name')">
               <template #button="{ activeValues, firstValueSelected }">
-                <Badge plain color="gray-light">
+                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500': ''">
                   <span v-if="activeValues.length == 0">Réseaux</span>
-                  <span v-else>
+                  <span v-else class="text-jva-blue-500">
                     {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
                   </span>
                 </Badge>
@@ -110,21 +108,21 @@
             </FacetFilter>
             <FacetFilter facet-name="department_name" :facets="facetResults('department_name')">
               <template #button="{ activeValues, firstValueSelected }">
-                <Badge plain color="gray-light">
+                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500': ''">
                   <span v-if="activeValues.length == 0">Départements</span>
-                  <span v-else>
+                  <span v-else class="text-jva-blue-500">
                     {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
                   </span>
                 </Badge>
               </template>
             </FacetFilter>
           </div>
-        </div>
 
-        <div>
-          <Button v-if="hasActiveFilters" class="my-2" size="xs" variant="white" @click.native="deleteAllFilters()">
-            Effacer les filtres
-          </Button>
+          <div class="mt-2 flex items-center justify-center">
+            <Link v-if="hasActiveFilters" class="my-2 underline text-sm" @click.native="deleteAllFilters()">
+              Effacer les filtres
+            </Link>
+          </div>
         </div>
 
         <div class="flex gap-10 flex-wrap mx-20 justify-center">
