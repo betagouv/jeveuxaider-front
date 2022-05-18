@@ -155,7 +155,7 @@ export default {
     return {
       searchResult: {},
       searchFacetResults: [],
-      indexName: 'local_jeremy_covid_missions',
+      indexName: this.$config.algolia.missionsIndex,
       availableFacets: ['type', 'activity.name', 'structure.name', 'department_name', 'domaines', 'structure.reseaux.name'],
       availableNumericFilters: ['commitment__total']
     }

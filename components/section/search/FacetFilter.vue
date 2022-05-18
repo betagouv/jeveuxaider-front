@@ -7,6 +7,12 @@
     </div>
     <div v-if="isOpen" v-click-outside="() => isOpen = false">
       <div class="absolute z-40 bg-white border shadow rounded">
+        <Input
+          name="query-facet"
+          placeholder="Recherche"
+          clearable
+          @input="handleChangeSearchFacetValues"
+        />
         <div class="max-h-[320px] overflow-y-auto space-y-2 px-3 py-4">
           <div v-for="facet in activeValues" :key="facet.value" class="text-jva-blue-500 cursor-pointer" @click="deleteFilter(facetName, facet.value, true)">
             {{ facet.value }} ({{ facet.count }})
@@ -78,6 +84,10 @@ export default {
         query: { ...this.$route.query, [this.facetName]: undefined, page: undefined }
       })
       this.isOpen = false
+    },
+    async handleChangeSearchFacetValues (facetQuery) {
+      // index.searchForFacetValues(this.facetName, facetQuery)
+      // await this.$algolia.multipleQueries(queries)
     }
   }
 }

@@ -137,7 +137,8 @@ export default {
     algolia: {
       appId: process.env.ALGOLIA_APP_ID,
       searchKey: process.env.ALGOLIA_SEARCH_KEY,
-      termsIndex: process.env.ALGOLIA_TERMS_INDEX
+      termsIndex: process.env.ALGOLIA_TERMS_INDEX,
+      missionsIndex: process.env.ALGOLIA_MISSIONS_INDEX
     },
     flare: {
       projectKey: process.env.FLARE_KEY
