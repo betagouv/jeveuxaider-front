@@ -4,7 +4,7 @@
       :items="[{ label: 'Missions de bénévolat', link: '/missions-benevolat' }]"
       class="container border-b-0"
     />
-    <div class="container">
+    <div v-if="searchResult" class="container">
       <div class="flex justify-between">
         <div>
           <h1 class="text-xl sm:text-2xl lg:text-3xl font-black">
@@ -153,7 +153,7 @@ export default {
   mixins: [AlgoliaQueryBuilder],
   data () {
     return {
-      searchResult: {},
+      searchResult: null,
       searchFacetResults: [],
       indexName: this.$config.algolia.missionsIndex,
       availableFacets: ['type', 'activity.name', 'structure.name', 'department_name', 'domaines', 'structure.reseaux.name'],
@@ -238,7 +238,7 @@ export default {
         return searchFacetResult.facets[facetName]
       }
 
-      if (this.searchResult.facets[facetName]) {
+      if (this.searchResult?.facets[facetName]) {
         return this.searchResult.facets[facetName]
       }
 
