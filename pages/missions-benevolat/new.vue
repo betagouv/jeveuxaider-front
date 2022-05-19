@@ -51,14 +51,20 @@
                 <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
               </div>
             </div>
-            <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
+            <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6">
               <div class="text-gray-500 mb-1">
                 Localisation
               </div>
-              <LocalisationFilter label="Saisissez votre localisation" :ip-lat-lng="searchResult.aroundLatLng" />
+              <div class="">
+                <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Saisissez votre localisation" :ip-lat-lng="searchResult.aroundLatLng" />
+                <div v-else>
+                  À distance
+                </div>
+              </div>
             </div>
+
             <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
-              <div class="text-gray-500 mb-1">
+              <div class="text-gray-500">
                 Activités
               </div>
               <FacetFilter facet-name="activity.name" label="Activités" :facets="facetResults('activity.name')" class="group">
@@ -74,7 +80,7 @@
               </FacetFilter>
             </div>
             <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
-              <div class="text-gray-500 mb-1">
+              <div class="text-gray-500">
                 Disponibilités
               </div>
               <CommitmentFilter class="group">
@@ -112,10 +118,10 @@
                 </BadgeFilter>
               </template>
             </FacetFilter>
-            <FacetFilter facet-name="domaines" label="Domaines" :facets="facetResults('domaines')">
+            <FacetFilter facet-name="publics_beneficiaires" label="Publics aidés" :facets="facetResults('publics_beneficiaires')">
               <template #button="{ firstValueSelected, activeValuesCount }">
                 <BadgeFilter :is-active="activeValuesCount">
-                  <span v-if="!firstValueSelected">Domaines</span>
+                  <span v-if="!firstValueSelected">Publics aidés</span>
                   <div v-else class="text-jva-blue-500 flex">
                     <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                     <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
@@ -123,28 +129,50 @@
                 </BadgeFilter>
               </template>
             </FacetFilter>
-            <FacetFilter facet-name="structure.reseaux.name" label="Réseaux" :facets="facetResults('structure.reseaux.name')">
-              <template #button="{ firstValueSelected, activeValuesCount }">
-                <BadgeFilter :is-active="activeValuesCount">
-                  <span v-if="!firstValueSelected">Réseaux</span>
-                  <div v-else class="text-jva-blue-500 flex">
-                    <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
-                    <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                  </div>
-                </BadgeFilter>
-              </template>
-            </FacetFilter>
-            <FacetFilter facet-name="department_name" label="Départements" :facets="facetResults('department_name')">
-              <template #button="{ firstValueSelected, activeValuesCount }">
-                <BadgeFilter :is-active="activeValuesCount">
-                  <span v-if="!firstValueSelected">Départements</span>
-                  <div v-else class="text-jva-blue-500 flex">
-                    <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
-                    <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                  </div>
-                </BadgeFilter>
-              </template>
-            </FacetFilter>
+
+            <div
+              class="rounded-full border text-sm flex items-center justify-center h-[34px] w-[34px]"
+              :class="[{'text-gray-300 border-gray-300': showMoreFilters}, {'text-gray-600 hover:bg-gray-200 border-gray-500 cursor-pointer': !showMoreFilters}]"
+              @click="showMoreFilters = true"
+            >
+              <PlusIcon />
+            </div>
+
+            <template v-if="showMoreFilters">
+              <FacetFilter facet-name="domaines" label="Domaines" :facets="facetResults('domaines')">
+                <template #button="{ firstValueSelected, activeValuesCount }">
+                  <BadgeFilter :is-active="activeValuesCount">
+                    <span v-if="!firstValueSelected">Domaines</span>
+                    <div v-else class="text-jva-blue-500 flex">
+                      <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                      <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                    </div>
+                  </BadgeFilter>
+                </template>
+              </FacetFilter>
+              <FacetFilter facet-name="structure.reseaux.name" label="Réseaux" :facets="facetResults('structure.reseaux.name')">
+                <template #button="{ firstValueSelected, activeValuesCount }">
+                  <BadgeFilter :is-active="activeValuesCount">
+                    <span v-if="!firstValueSelected">Réseaux</span>
+                    <div v-else class="text-jva-blue-500 flex">
+                      <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                      <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                    </div>
+                  </BadgeFilter>
+                </template>
+              </FacetFilter>
+              <FacetFilter facet-name="department_name" label="Départements" :facets="facetResults('department_name')">
+                <template #button="{ firstValueSelected, activeValuesCount }">
+                  <BadgeFilter :is-active="activeValuesCount">
+                    <span v-if="!firstValueSelected">Départements</span>
+                    <div v-else class="text-jva-blue-500 flex">
+                      <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                      <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                    </div>
+                  </BadgeFilter>
+                </template>
+              </FacetFilter>
+            </template>
           </div>
 
           <div class="mt-2 flex items-center justify-center">
@@ -205,6 +233,11 @@ export default {
     LocalisationFilter
   },
   mixins: [AlgoliaQueryBuilder],
+  data () {
+    return {
+      showMoreFilters: false
+    }
+  },
   async fetch () {
     await this.search()
     console.log('result new', this.searchResult)
