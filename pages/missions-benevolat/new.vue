@@ -40,13 +40,13 @@
               <div class="text-gray-500 mb-1">
                 Activités
               </div>
-              <FacetFilter facet-name="activity.name" :facets="facetResults('activity.name')">
-                <template #button="{ activeValues, firstValueSelected }">
+              <FacetFilter facet-name="activity.name" label="Activités" :facets="facetResults('activity.name')">
+                <template #button="{ firstValueSelected, activeValuesCount }">
                   <div class="flex space-x-2 items-center">
                     <HandSolidIcon class="text-gray-500 h-4 w-4" />
-                    <span v-if="activeValues.length == 0" class="text-gray-900">Toutes</span>
+                    <span v-if="!firstValueSelected" class="text-gray-900">Toutes</span>
                     <span v-else class="text-gray-900">
-                      {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
+                      {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
                     </span>
                   </div>
                 </template>
@@ -78,42 +78,42 @@
           </div>
 
           <div class="my-4 flex items-center justify-center gap-3">
-            <FacetFilter facet-name="structure.name" :facets="facetResults('structure.name')">
-              <template #button="{ activeValues, firstValueSelected }">
-                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
-                  <span v-if="activeValues.length == 0">Organisations</span>
+            <FacetFilter facet-name="structure.name" label="Organisations" :facets="facetResults('structure.name')">
+              <template #button="{ firstValueSelected, activeValuesCount }">
+                <Badge plain color="gray-light" size="sm" :extra-class="activeValuesCount ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
+                  <span v-if="!firstValueSelected">Organisations</span>
                   <span v-else class="text-jva-blue-500">
-                    {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
+                    {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
                   </span>
                 </Badge>
               </template>
             </FacetFilter>
-            <FacetFilter facet-name="domaines" :facets="facetResults('domaines')">
-              <template #button="{ activeValues, firstValueSelected }">
-                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
-                  <span v-if="activeValues.length == 0">Domaines</span>
+            <FacetFilter facet-name="domaines" label="Domaines" :facets="facetResults('domaines')">
+              <template #button="{ firstValueSelected, activeValuesCount }">
+                <Badge plain color="gray-light" size="sm" :extra-class="activeValuesCount ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
+                  <span v-if="!firstValueSelected">Domaines</span>
                   <span v-else class="text-jva-blue-500">
-                    {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
+                    {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
                   </span>
                 </Badge>
               </template>
             </FacetFilter>
-            <FacetFilter facet-name="structure.reseaux.name" :facets="facetResults('structure.reseaux.name')">
-              <template #button="{ activeValues, firstValueSelected }">
-                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
-                  <span v-if="activeValues.length == 0">Réseaux</span>
+            <FacetFilter facet-name="structure.reseaux.name" label="Réseaux" :facets="facetResults('structure.reseaux.name')">
+              <template #button="{ firstValueSelected, activeValuesCount }">
+                <Badge plain color="gray-light" size="sm" :extra-class="activeValuesCount ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
+                  <span v-if="!firstValueSelected">Réseaux</span>
                   <span v-else class="text-jva-blue-500">
-                    {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
+                    {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
                   </span>
                 </Badge>
               </template>
             </FacetFilter>
-            <FacetFilter facet-name="department_name" :facets="facetResults('department_name')">
-              <template #button="{ activeValues, firstValueSelected }">
-                <Badge plain color="gray-light" size="sm" :extra-class="activeValues.length ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
-                  <span v-if="activeValues.length == 0">Départements</span>
+            <FacetFilter facet-name="department_name" label="Départements" :facets="facetResults('department_name')">
+              <template #button="{ firstValueSelected, activeValuesCount }">
+                <Badge plain color="gray-light" size="sm" :extra-class="activeValuesCount ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
+                  <span v-if="!firstValueSelected">Départements</span>
                   <span v-else class="text-jva-blue-500">
-                    {{ firstValueSelected }}<span v-if="activeValues.length > 1">, +{{ activeValues.length - 1 }}</span>
+                    {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
                   </span>
                 </Badge>
               </template>

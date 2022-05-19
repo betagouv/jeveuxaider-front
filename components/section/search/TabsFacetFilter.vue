@@ -18,8 +18,8 @@
           aria-hidden="true"
         />
         <span
-          class="font-bold"
-          :class="[isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-gray-700': 'text-gray-400']"
+          class=""
+          :class="[isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-gray-700 font-bold': 'text-gray-400 font-normal']"
         >
           {{ tab.label || tab.filterValue }}
         </span>
