@@ -16,29 +16,28 @@
           </div>
           <div class="flex space-x-1 items-center bg-gray-50 px-4 py-2">
             <SearchIcon class="text-gray-500 h-5 w-5" />
-            <input v-model="searchValue" type="text" placeholder="Votre ville" class="border-0 w-full bg-transparent">
+            <input :value="searchValue" type="text" placeholder="Votre ville" class="border-0 w-full bg-transparent" @input="handleInput">
             <XIcon v-if="searchValue" class="text-gray-500 h-5 w-5" @click="reset" />
           </div>
-          <div class="p-4 flex flex-col space-y-1">
-            <div v-for="suggestion,i in suggestions" :key="i" class="p-2 text-gray-600 hover:bg-gray-50 cursor-pointer">
-              {{ suggestion.name }}
+          <div class="py-4 flex flex-col space-y-1">
+            <div v-for="suggestion,i in suggestions" :key="i" class="px-4 py-1 text-gray-600 hover:bg-gray-50 cursor-pointer flex justify-between truncate flex-1">
+              <div class="truncate">
+                {{ suggestion.name }}
+              </div>
+              <div class="text-gray-600 ml-1 font-light">
+                {{ suggestion.postcode }}
+              </div>
             </div>
           </div>
         </div>
-        <!-- <div class="border-t px-6 py-4 flex justify-between">
-          <div v-if="activeValues.length > 0" class="text-gray-600 cursor-pointer" @click="deleteFacet()">
-            Effacer
-          </div>
-          <div class="ml-auto text-jva-blue-500 cursor-pointer" @click="isOpen = false">
-            Valider
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { debounce } from 'lodash'
+
 export default {
   props: {
     label: {
@@ -89,11 +88,36 @@ export default {
     },
     onClickOutside () {
       this.isOpen = false
+    },
+    async fetchGeoSuggestions () {
+      const { data } = await this.$axios.get('https://api-adresse.data.gouv.fr/search', {
+        params: {
+          q: this.searchValue,
+          limit: 5,
+          type: 'municipality'
+        }
+      })
+
+      const formatOptions = data.features.map((option) => {
+        return {
+          ...option.properties,
+          coordinates: option.geometry.coordinates,
+          typeLabel: this.$options.filters.label(option.properties.type, 'geoType')
+        }
+      })
+      this.fetchSuggestions = formatOptions
+    },
+    handleInput (evt) {
+      this.searchValue = evt.target.value
+      this.showOptions = true
+      if (this.timeout) {
+        this.timeout.cancel()
+      }
+      this.timeout = debounce(() => {
+        this.fetchGeoSuggestions()
+      }, 275)
+      this.timeout()
     }
   }
 }
 </script>
-
-<style>
-
-</style>
