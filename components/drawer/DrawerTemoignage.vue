@@ -14,6 +14,12 @@
             Modifier
           </Button>
         </nuxt-link>
+        <Button v-if="!temoignage.is_published && temoignage.grade >= 4" variant="white" size="sm" icon="CheckIcon" @click.native="handlePublishing">
+          Publier
+        </Button>
+        <Button v-if="temoignage.is_published" variant="white" size="sm" icon="XIcon" @click.native="handleUnpublishing">
+          Dépublier
+        </Button>
       </div>
       <div class="border-t -mx-6 mt-8" />
       <div v-if="temoignage" class="flex flex-col gap-8 mt-8">
@@ -73,7 +79,16 @@ export default {
     temoignageId: '$fetch'
   },
   methods: {
-
+    async handlePublishing () {
+      await this.$axios.put(`/temoignages/${this.temoignageId}/publish`, this.temoignage)
+      this.$emit('close')
+      this.$emit('refetch')
+    },
+    async handleUnpublishing () {
+      await this.$axios.put(`/temoignages/${this.temoignageId}/unpublish`, this.temoignage)
+      this.$emit('close')
+      this.$emit('refetch')
+    }
   }
 }
 </script>
