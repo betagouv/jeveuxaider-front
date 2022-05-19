@@ -8,9 +8,17 @@
     <div v-if="isOpen" v-click-outside="onClickOutside">
       <div class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-[15px] max-w-[275px] w-full">
         <div class="p-4 space-y-3">
-          <div class="font-medium">
-            {{ label }}
+          <div class="relative">
+            <div class="font-medium">
+              {{ label }}
+            </div>
+            <XIcon
+              class=" text-gray-400 hover:text-gray-500 cursor-pointer absolute right-0 top-0 -m-1"
+              width="20"
+              @click="isOpen = false"
+            />
           </div>
+
           <Input
             v-model="facetQuery"
             name="query-facet"
@@ -28,20 +36,31 @@
             <div ref="scrollContainer" class="max-h-[250px] overflow-y-auto overscroll-contain">
               <div class="mr-2 space-y-2 text-sm">
                 <div
-                  v-for="facet in [...activeValues, ...inactiveValues]"
+                  v-for="(facet, key) in [...activeValues, ...inactiveValues]"
                   :key="facet.value"
                   :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
-                  class="cursor-pointer"
-                  @click="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
+                  class="cursor-pointer flex items-center"
                 >
-                  <div class="flex justify-between">
+                  <input
+                    :id="`${facetName}_${key}`"
+                    :name="`${facetName}_${key}`"
+                    :value="isActiveFilter(facetName, facet.value)"
+                    type="checkbox"
+                    :checked="isActiveFilter(facetName, facet.value)"
+                    class="rounded"
+                    @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
+                  >
+                  <label
+                    :for="`${facetName}_${key}`"
+                    class="ml-2 flex justify-between truncate flex-1"
+                  >
                     <div class="truncate">
                       {{ facet.value }}
                     </div>
                     <div class="text-gray-600 ml-1 font-light">
                       {{ facet.count }}
                     </div>
-                  </div>
+                  </label>
                 </div>
               </div>
             </div>

@@ -41,7 +41,7 @@
               </div>
             </div>
             <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
-              <div class="text-gray-500 mb-1">
+              <div class="text-gray-500">
                 Activités
               </div>
               <FacetFilter facet-name="activity.name" label="Activités" :facets="facetResults('activity.name')">
@@ -57,7 +57,7 @@
               </FacetFilter>
             </div>
             <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
-              <div class="text-gray-500 mb-1">
+              <div class="text-gray-500">
                 Disponibilités
               </div>
               <CommitmentFilter>
