@@ -6,7 +6,7 @@
       </slot>
     </div>
     <div v-if="isOpen" v-click-outside="onClickOutside">
-      <div class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-[15px] max-w-[275px] w-full">
+      <div class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-[15px] max-w-[375px] w-full">
         <div class="p-4 space-y-3">
           <div class="relative">
             <div class="font-medium">
@@ -34,12 +34,12 @@
             />
 
             <div ref="scrollContainer" class="max-h-[250px] overflow-y-auto overscroll-contain">
-              <div class="mr-2 space-y-2 text-sm">
+              <div class="py-1 mr-2 space-y-2 text-sm">
                 <div
                   v-for="(facet, key) in [...activeValues, ...inactiveValues]"
                   :key="facet.value"
                   :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
-                  class="cursor-pointer flex items-center"
+                  class="cursor-pointer flex items-center px-1"
                 >
                   <input
                     :id="`${facetName}_${key}`"
@@ -47,7 +47,7 @@
                     :value="isActiveFilter(facetName, facet.value)"
                     type="checkbox"
                     :checked="isActiveFilter(facetName, facet.value)"
-                    class="rounded"
+                    class="rounded text-jva-blue-500 focus:ring-jva-blue-500"
                     @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
                   >
                   <label
