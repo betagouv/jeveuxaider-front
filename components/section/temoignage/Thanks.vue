@@ -39,15 +39,16 @@
             Trouvez dès maintenant votre prochaine mission
           </div>
 
-          <Button
-            id="search"
-            size="xl"
-            rounded
-            variant="green"
-            @click="$store.commit('toggleSearchOverlay')"
-          >
-            Trouver une mission
-          </button>
+          <nuxt-link to="/missions-benevolat">
+            <Button
+              id="search"
+              size="xl"
+              rounded
+              variant="green"
+            >
+              Trouver une mission
+            </button>
+          </nuxt-link>
         </div>
       </div>
     </div>
