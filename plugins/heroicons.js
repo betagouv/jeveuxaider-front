@@ -38,7 +38,8 @@ import {
   AdjustmentsIcon,
   VideoCameraIcon,
   LockClosedIcon,
-  DesktopComputerIcon
+  DesktopComputerIcon,
+  HandIcon
 } from '@vue-hero-icons/outline'
 import {
   InformationCircleIcon,
@@ -58,6 +59,7 @@ import {
 } from '@vue-hero-icons/solid'
 
 const components = {
+  HandIcon,
   LocationMarkerSolidIcon,
   DesktopComputerIcon,
   CalendarSolidIcon,

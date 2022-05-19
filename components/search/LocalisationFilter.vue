@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="group flex justify-between items-center cursor-pointer" @click="isOpen = !isOpen">
-      <div class="text-gray-900">
+      <div class="flex space-x-2 items-center text-gray-900">
+        <LocationMarkerIcon class="h-5 w-5" />
         <div v-if="ipLatLng">
           Près de chez moi <span v-if="ipCity">({{ ipCity }})</span>
         </div>

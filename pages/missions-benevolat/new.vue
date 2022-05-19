@@ -52,30 +52,36 @@
             </div>
 
             <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
-              <div class="text-gray-500">
+              <div class="text-gray-500 mb-1">
                 Activités
               </div>
               <FacetFilter facet-name="activity.name" label="Activités" :facets="facetResults('activity.name')" class="group">
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <div class="flex space-x-2 items-center justify-between">
-                    <span v-if="!firstValueSelected" class="text-gray-900">Toutes</span>
-                    <span v-else class="text-gray-900">
-                      {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                    </span>
+                    <div class="flex space-x-2 items-center">
+                      <HandIcon class="h-5 w-5" />
+                      <span v-if="!firstValueSelected" class="text-gray-900">Toutes</span>
+                      <span v-else class="text-gray-900">
+                        {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                      </span>
+                    </div>
                     <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
                   </div>
                 </template>
               </FacetFilter>
             </div>
             <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
-              <div class="text-gray-500">
+              <div class="text-gray-500 mb-1">
                 Disponibilités
               </div>
               <CommitmentFilter class="group">
                 <template #button="{ activeValue }">
                   <div class="flex space-x-2 items-center justify-between">
-                    <div class="text-gray-900">
-                      {{ activeValue || 'Toutes' }}
+                    <div class="flex space-x-2 items-center truncate">
+                      <ClockIcon class="h-5 w-5" />
+                      <div class="text-gray-900 truncate">
+                        {{ activeValue || 'Toutes' }}
+                      </div>
                     </div>
                     <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
                   </div>
@@ -83,17 +89,10 @@
               </CommitmentFilter>
             </div>
             <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
-              <div class="text-gray-500">
+              <div class="text-gray-500 mb-1">
                 Mots-clés
               </div>
-              <Input
-                icon="SearchIcon"
-                :value="$route.query.search"
-                name="search"
-                placeholder="Recherche... @TODO SearchFilter"
-                clearable
-                @input="handleChangeQuery"
-              />
+              <SearchFilter />
             </div>
           </div>
 
@@ -211,6 +210,7 @@ import BadgeFilter from '~/components/search/BadgeFilter.vue'
 import LocalisationFilter from '~/components/search/LocalisationFilter.vue'
 import CommitmentFilter from '~/components/section/search/CommitmentFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
+import SearchFilter from '@/components/search/SearchFilter'
 
 export default {
   components: {
@@ -219,7 +219,8 @@ export default {
     CommitmentFilter,
     TabsFacetFilter,
     BadgeFilter,
-    LocalisationFilter
+    LocalisationFilter,
+    SearchFilter
   },
   mixins: [AlgoliaQueryBuilder],
   data () {
@@ -234,9 +235,6 @@ export default {
     $route: '$fetch'
   },
   methods: {
-    handleChangeQuery (value) {
-      this.addFilter('search', value)
-    },
     handleChangePage (page) {
       this.$router.push({
         path: this.$route.path,
