@@ -101,6 +101,17 @@
                 </BadgeFilter>
               </template>
             </FacetFilter>
+            <FacetFilter facet-name="publics_beneficiaires" label="Publics aidés" :facets="facetResults('publics_beneficiaires')">
+              <template #button="{ firstValueSelected, activeValuesCount }">
+                <BadgeFilter :is-active="activeValuesCount">
+                  <span v-if="!firstValueSelected">Publics aidés</span>
+                  <div v-else class="text-jva-blue-500 flex">
+                    <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                    <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                  </div>
+                </BadgeFilter>
+              </template>
+            </FacetFilter>
             <FacetFilter facet-name="domaines" label="Domaines" :facets="facetResults('domaines')">
               <template #button="{ firstValueSelected, activeValuesCount }">
                 <BadgeFilter :is-active="activeValuesCount">
