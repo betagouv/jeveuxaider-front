@@ -53,10 +53,12 @@ import {
   UserIcon as UserSolidIcon,
   ClockIcon as ClockSolidIcon,
   HandIcon as HandSolidIcon,
-  CalendarIcon as CalendarSolidIcon
+  CalendarIcon as CalendarSolidIcon,
+  LocationMarkerIcon as LocationMarkerSolidIcon
 } from '@vue-hero-icons/solid'
 
 const components = {
+  LocationMarkerSolidIcon,
   DesktopComputerIcon,
   CalendarSolidIcon,
   HandSolidIcon,

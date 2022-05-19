@@ -40,26 +40,35 @@
         <div class="flex flex-col">
           <div class="bg-white px-6 sm:py-6 shadow-xl rounded-xl grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:!divide-x">
             <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6">
-              <div class="text-gray-500">
+              <div class="text-gray-500 mb-1">
                 Localisation
               </div>
-              <GeoFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" :ip-lat-lng="searchResult.aroundLatLng" />
-              <div v-else>
-                Todo à distance
+              <div class="flex space-x-2 items-center justify-between">
+                <GeoFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" :ip-lat-lng="searchResult.aroundLatLng" />
+                <div v-else>
+                  À distance
+                </div>
+                <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
               </div>
+            </div>
+            <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
+              <div class="text-gray-500 mb-1">
+                Localisation
+              </div>
+              <LocalisationFilter label="Saisissez votre localisation" :ip-lat-lng="searchResult.aroundLatLng" />
             </div>
             <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
               <div class="text-gray-500 mb-1">
                 Activités
               </div>
-              <FacetFilter facet-name="activity.name" label="Activités" :facets="facetResults('activity.name')">
+              <FacetFilter facet-name="activity.name" label="Activités" :facets="facetResults('activity.name')" class="group">
                 <template #button="{ firstValueSelected, activeValuesCount }">
-                  <div class="flex space-x-2 items-center">
-                    <HandSolidIcon class="text-gray-500 h-4 w-4" />
+                  <div class="flex space-x-2 items-center justify-between">
                     <span v-if="!firstValueSelected" class="text-gray-900">Toutes</span>
                     <span v-else class="text-gray-900">
                       {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
                     </span>
+                    <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
                   </div>
                 </template>
               </FacetFilter>
@@ -68,16 +77,18 @@
               <div class="text-gray-500 mb-1">
                 Disponibilités
               </div>
-              <CommitmentFilter>
+              <CommitmentFilter class="group">
                 <template #button="{ activeValue }">
-                  <div class="flex space-x-2 items-center">
-                    <CalendarSolidIcon class="text-gray-500 h-4 w-4" />
-                    <span class="text-gray-900">{{ activeValue || 'Toutes' }}</span>
+                  <div class="flex space-x-2 items-center justify-between">
+                    <div class="text-gray-900">
+                      {{ activeValue || 'Toutes' }}
+                    </div>
+                    <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
                   </div>
                 </template>
               </CommitmentFilter>
             </div>
-            <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
+            <!-- <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
               <Input
                 icon="SearchIcon"
                 :value="$route.query.search"
@@ -86,7 +97,7 @@
                 clearable
                 @input="handleChangeQuery"
               />
-            </div>
+            </div> -->
           </div>
 
           <div class="my-4 flex flex-wrap items-center justify-center gap-3">
@@ -178,6 +189,7 @@ import CardMission from '@/components/card/CardMission.vue'
 import FacetFilter from '~/components/section/search/FacetFilter.vue'
 import TabsFacetFilter from '~/components/section/search/TabsFacetFilter.vue'
 import BadgeFilter from '~/components/search/BadgeFilter.vue'
+import LocalisationFilter from '~/components/search/LocalisationFilter.vue'
 import CommitmentFilter from '~/components/section/search/CommitmentFilter.vue'
 import GeoFilter from '~/components/section/search/GeoFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
@@ -189,7 +201,8 @@ export default {
     CommitmentFilter,
     TabsFacetFilter,
     GeoFilter,
-    BadgeFilter
+    BadgeFilter,
+    LocalisationFilter
   },
   mixins: [AlgoliaQueryBuilder],
   async fetch () {

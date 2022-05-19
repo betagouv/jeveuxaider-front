@@ -6,7 +6,7 @@
       </slot>
     </div>
     <div v-if="isOpen" v-click-outside="() => isOpen = false">
-      <div class="absolute z-40 bg-white border shadow rounded">
+      <div class="mt-2 absolute z-40 bg-white border shadow rounded">
         <div class="px-3 py-4">
           <div class="grid grid-cols-2 gap-4">
             <FormControl
