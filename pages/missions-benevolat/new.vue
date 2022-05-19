@@ -5,10 +5,10 @@
       class="container border-b-0"
     />
     <div v-if="searchResult" class="container mt-6 mb-12">
-      <div class="flex flex-col space-y-12">
+      <div class="flex flex-col space-y-6 sm:space-y-12">
         <SectionHeading title="Trouver une mission de bénévolat" :secondary-title-bottom="`${searchResult.nbHits} missions disponibles`">
           <template #action>
-            <div>
+            <div class="flex-none">
               <TabsFacetFilter
                 filter-name="type"
                 :tabs="[
@@ -30,8 +30,8 @@
         </Sectionheading>
 
         <div class="flex flex-col">
-          <div class="bg-white px-6 py-6 shadow-xl rounded-xl grid grid-cols-4 my-4 divide-x">
-            <div class="px-6">
+          <div class="bg-white px-6 sm:py-6 shadow-xl rounded-xl grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:!divide-x">
+            <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6">
               <div class="text-gray-500">
                 Localisation
               </div>
@@ -40,7 +40,7 @@
                 Todo à distance
               </div>
             </div>
-            <div class="px-6">
+            <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
               <div class="text-gray-500 mb-1">
                 Activités
               </div>
@@ -56,7 +56,7 @@
                 </template>
               </FacetFilter>
             </div>
-            <div class="px-6">
+            <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
               <div class="text-gray-500 mb-1">
                 Disponibilités
               </div>
@@ -69,7 +69,7 @@
                 </template>
               </CommitmentFilter>
             </div>
-            <div class="px-6">
+            <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
               <Input
                 icon="SearchIcon"
                 :value="$route.query.search"
@@ -81,14 +81,15 @@
             </div>
           </div>
 
-          <div class="my-4 flex items-center justify-center gap-3">
+          <div class="my-4 flex flex-wrap items-center justify-center gap-3">
             <FacetFilter facet-name="structure.name" label="Organisations" :facets="facetResults('structure.name')">
               <template #button="{ firstValueSelected, activeValuesCount }">
                 <Badge plain color="gray-light" size="sm" :extra-class="activeValuesCount ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
                   <span v-if="!firstValueSelected">Organisations</span>
-                  <span v-else class="text-jva-blue-500">
-                    {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                  </span>
+                  <div v-else class="text-jva-blue-500 flex">
+                    <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                    <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                  </div>
                 </Badge>
               </template>
             </FacetFilter>
@@ -96,9 +97,10 @@
               <template #button="{ firstValueSelected, activeValuesCount }">
                 <Badge plain color="gray-light" size="sm" :extra-class="activeValuesCount ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
                   <span v-if="!firstValueSelected">Domaines</span>
-                  <span v-else class="text-jva-blue-500">
-                    {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                  </span>
+                  <div v-else class="text-jva-blue-500 flex">
+                    <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                    <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                  </div>
                 </Badge>
               </template>
             </FacetFilter>
@@ -106,9 +108,10 @@
               <template #button="{ firstValueSelected, activeValuesCount }">
                 <Badge plain color="gray-light" size="sm" :extra-class="activeValuesCount ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
                   <span v-if="!firstValueSelected">Réseaux</span>
-                  <span v-else class="text-jva-blue-500">
-                    {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                  </span>
+                  <div v-else class="text-jva-blue-500 flex">
+                    <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                    <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                  </div>
                 </Badge>
               </template>
             </FacetFilter>
@@ -116,9 +119,10 @@
               <template #button="{ firstValueSelected, activeValuesCount }">
                 <Badge plain color="gray-light" size="sm" :extra-class="activeValuesCount ? '!border-jva-blue-500 hover:bg-[#D8E2FD]': 'hover:bg-[#F4F4F4]'">
                   <span v-if="!firstValueSelected">Départements</span>
-                  <span v-else class="text-jva-blue-500">
-                    {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                  </span>
+                  <div v-else class="text-jva-blue-500 flex">
+                    <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                    <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                  </div>
                 </Badge>
               </template>
             </FacetFilter>
@@ -131,7 +135,7 @@
           </div>
         </div>
 
-        <div class="flex gap-10 flex-wrap mx-20 justify-center">
+        <div class="flex gap-8 flex-wrap justify-center">
           <nuxt-link
             v-for="item in searchResult.hits"
             :key="item.id"
