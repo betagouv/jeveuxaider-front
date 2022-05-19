@@ -91,10 +91,7 @@ export default {
   },
   methods: {
     deleteFacet () {
-      this.$router.push({
-        path: this.$route.path,
-        query: { ...this.$route.query, [this.facetName]: undefined, page: undefined }
-      })
+      this.deleteFilter(this.facetName)
       this.isOpen = false
     },
     async handleChangeSearchFacetValues (facetQuery) {
