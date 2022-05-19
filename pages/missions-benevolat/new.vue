@@ -150,6 +150,16 @@
             <CardMission :mission="item" />
           </nuxt-link>
         </div>
+
+        <div>
+          <Pagination
+            :current-page="searchResult.page + 1"
+            :total-rows="searchResult.nbHits"
+            :per-page="20"
+            :max-pages="10"
+            @page-change="handleChangePage"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -182,6 +192,12 @@ export default {
   methods: {
     handleChangeQuery (value) {
       this.addFilter('search', value)
+    },
+    handleChangePage (page) {
+      this.$router.push({
+        path: this.$route.path,
+        query: { ...this.$route.query, page }
+      })
     },
     handleClickCard () {
       // window.plausible &&
