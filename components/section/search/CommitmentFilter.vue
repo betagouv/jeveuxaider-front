@@ -109,13 +109,21 @@ export default {
       return $hours * $multiplier
     }
   },
+  watch: {
+    '$route.query.duration' (newVal) {
+      this.commitment__duration = newVal
+    },
+    '$route.query.time_period' (newVal) {
+      this.commitment__time_period = newVal
+    }
+  },
   methods: {
     handleChange () {
       this.$router.push({
         path: this.$route.path,
         query: {
           ...this.$route.query,
-          commitment__total: `<${this.commitmentTotal}`,
+          commitment__total: `<=${this.commitmentTotal}`,
           time_period: this.commitment__time_period,
           duration: this.commitment__duration,
           page: undefined
