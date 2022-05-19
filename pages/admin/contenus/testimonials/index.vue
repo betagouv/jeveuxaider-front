@@ -69,7 +69,7 @@
       </template>
     </SearchFilters>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
       <CardTemoignage
         v-for="temoignage in queryResult.data"
         :key="temoignage.id"

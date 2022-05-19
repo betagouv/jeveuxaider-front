@@ -27,7 +27,7 @@
             </div>
           </div>
         </div>
-        <div class="">
+        <div class="flex flex-col items-center">
           <StarRating
             :rating="temoignage.grade"
             :show-rating="false"
@@ -36,18 +36,23 @@
             :read-only="true"
             :star-size="22"
           />
+          <OnlineIndicator v-if="['admin', 'referent', 'referent_regional'].includes($store.getters.contextRole)" :published="temoignage.is_published" class="mt-2" />
         </div>
       </div>
       <div class="mt-8">
-        <TextFormatted v-if="temoignage.testimony" :max-lines="4" :text="`“${temoignage.testimony}“`" class="text-gray-500 max-w-lg" />
+        <TextFormatted v-if="temoignage.testimony" :max-lines="4" :text="`“${temoignage.testimony}“`" class="text-gray-500" />
       </div>
     </div>
   </Box>
 </template>
 
 <script>
+import OnlineIndicator from '@/components/custom/OnlineIndicator'
 
 export default {
+  components: {
+    OnlineIndicator
+  },
   props: {
     temoignage: {
       type: Object,
