@@ -1,5 +1,5 @@
 <template>
-  <section v-if="testimonials" class="pt-12 pb-24 bg-gray-50 overflow-hidden relative">
+  <section v-if="testimonials.length" class="pt-12 pb-24 bg-gray-50 overflow-hidden relative">
     <img
       src="/images/homepage/deco_2.svg"
       alt="Décorations"
@@ -76,7 +76,7 @@ export default {
   data () {
     return {
       loading: true,
-      testimonials: null,
+      testimonials: [],
       settings: {
         arrows: true,
         dots: true,
