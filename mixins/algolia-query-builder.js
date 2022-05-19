@@ -33,6 +33,10 @@ export default {
         })
       })
 
+      if (!this.$route.query.type) {
+        activeFacets.push(['type:Mission en présentiel'])
+      }
+
       return activeFacets
     },
     activeNumericFilters () {
@@ -47,10 +51,6 @@ export default {
   },
   methods: {
     async search () {
-      if (!this.$route.query.type) {
-        this.activeFacets.push(['type:Mission en présentiel'])
-      }
-
       // Recherche principale
       const queries = [{
         indexName: this.indexName,
