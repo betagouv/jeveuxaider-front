@@ -7,7 +7,7 @@
             'flex justify-center items-center px-8 py-6 cursor-pointer space-x-2',
             isActiveFilter(filterName, tab.filterValue) || tab.current ? 'bg-white' : 'shadow-inner-xl'
           ]"
-          @click="addFilter(filterName, tab.filterValue)"
+          @click="handleClickTab(tab)"
         >
           <component
             :is="tab.icon"
@@ -36,6 +36,18 @@ export default {
     tabs: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    handleClickTab (tab) {
+      if (tab.filterValue == 'Mission à distance') {
+        this.$router.push({
+          path: this.$route.path,
+          query: { ...this.$route.query, [this.filterName]: tab.filterValue, page: undefined, city: undefined, aroundLatLng: undefined }
+        })
+      } else {
+        this.addFilter(this.filterName, tab.filterValue)
+      }
     }
   }
 }

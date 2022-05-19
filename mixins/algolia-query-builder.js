@@ -12,7 +12,7 @@ export default {
   computed: {
     searchParameters () {
       return {
-        aroundLatLngViaIP: Boolean(!this.$route.query.aroundLatLng),
+        aroundLatLngViaIP: this.$route.query.type != 'Mission à distance' && !this.$route.query.aroundLatLng,
         aroundLatLng: this.$route.query.aroundLatLng || '',
         query: this.$route.query.search || '',
         facetFilters: this.activeFacets,
