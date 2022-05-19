@@ -51,12 +51,12 @@
             </h2>
           </div>
 
-          <div v-if="showSearch" class="flex-none bg-transparent rounded-2xl w-full sm:w-auto shadow-lg lg:shadow-none">
+          <div v-if="showSearch" class="flex-none bg-transparent rounded-2xl w-full sm:w-auto shadow-lg lg:shadow-none lg:min-w-[450px] max-w-[550px]">
             <div class="bg-white rounded-t-2xl px-8 sm:px-20 py-6">
               <p
                 class="font-extrabold text-[1.75rem] text-center leading-tight tracking-[-1px]"
               >
-                Toutes les missions<br>de bénévolat {{ activity.name }}
+                Toutes les missions <br>de bénévolat
               </p>
             </div>
 
