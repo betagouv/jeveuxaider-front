@@ -66,9 +66,9 @@ export default {
         return null
       }
       if (this.commitment__duration && !this.commitment__time_period) {
-        return this.commitment__duration
+        return this.$options.filters.label(this.commitment__duration, 'duration')
       }
-      return `${this.commitment__duration} par ${this.commitment__time_period}`
+      return `${this.$options.filters.label(this.commitment__duration, 'duration')} par ${this.$options.filters.label(this.commitment__time_period, 'time_period')}`
     },
     commitmentTotal () {
       let $hours = 1
