@@ -6,7 +6,7 @@
       </slot>
     </div>
     <div v-if="isOpen" v-click-outside="onClickOutside">
-      <div class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-[15px] max-w-[375px] w-full">
+      <div class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-[15px] max-w-[350px] w-full">
         <div class="p-4 space-y-3">
           <div class="relative">
             <div class="font-medium">

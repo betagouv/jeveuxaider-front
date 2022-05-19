@@ -56,7 +56,7 @@
                 Localisation
               </div>
               <div class="">
-                <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Saisissez votre localisation" :ip-lat-lng="searchResult.aroundLatLng" />
+                <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Saisissez votre ville" :ip-lat-lng="searchResult.aroundLatLng" />
                 <div v-else>
                   À distance
                 </div>
