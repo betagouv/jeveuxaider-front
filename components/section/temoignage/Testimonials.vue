@@ -1,5 +1,5 @@
 <template>
-  <section v-if="testimonials" class="py-16 bg-gray-50 overflow-hidden relative mt-12">
+  <section v-if="testimonials" class="pt-12 pb-24 bg-gray-50 overflow-hidden relative">
     <img
       src="/images/homepage/deco_2.svg"
       alt="Décorations"

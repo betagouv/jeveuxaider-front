@@ -54,6 +54,7 @@ module.exports = {
       },
       colors: {
         'jva-blue': {
+          50: '#E9EFFF',
           400: '#5B71B9',
           500: '#070191',
           600: '#0A04A7'

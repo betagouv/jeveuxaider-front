@@ -45,10 +45,14 @@
             Paramètres
           </Heading>
           <div class="space-y-12">
+            <Alert>
+              Seuls ceux avec une note <span class="font-semibold">supérieure ou égale à 4</span> peuvent être visibles des utilisateurs
+            </Alert>
             <Toggle
+              v-if="form.grade >= 4"
               v-model="form.is_published"
               :label="form.is_published ? 'En ligne' : 'Hors ligne'"
-              description="Pour publier le témoignage"
+              description="Pour rendre le témoignage visible"
             />
           </div>
         </Box>
