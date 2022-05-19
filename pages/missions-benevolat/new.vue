@@ -43,18 +43,6 @@
               <div class="text-gray-500 mb-1">
                 Localisation
               </div>
-              <div class="flex space-x-2 items-center justify-between">
-                <GeoFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" :ip-lat-lng="searchResult.aroundLatLng" />
-                <div v-else>
-                  À distance
-                </div>
-                <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
-              </div>
-            </div>
-            <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6">
-              <div class="text-gray-500 mb-1">
-                Localisation
-              </div>
               <div class="">
                 <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Saisissez votre ville" :ip-lat-lng="searchResult.aroundLatLng" />
                 <div v-else>
@@ -94,16 +82,19 @@
                 </template>
               </CommitmentFilter>
             </div>
-            <!-- <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
+            <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
+              <div class="text-gray-500">
+                Mots-clés
+              </div>
               <Input
                 icon="SearchIcon"
                 :value="$route.query.search"
                 name="search"
-                placeholder="Mots clés..."
+                placeholder="Recherche... @TODO SearchFilter"
                 clearable
                 @input="handleChangeQuery"
               />
-            </div> -->
+            </div>
           </div>
 
           <div class="my-4 flex flex-wrap items-center justify-center gap-3">
@@ -219,7 +210,6 @@ import TabsFacetFilter from '~/components/section/search/TabsFacetFilter.vue'
 import BadgeFilter from '~/components/search/BadgeFilter.vue'
 import LocalisationFilter from '~/components/search/LocalisationFilter.vue'
 import CommitmentFilter from '~/components/section/search/CommitmentFilter.vue'
-import GeoFilter from '~/components/section/search/GeoFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 
 export default {
@@ -228,7 +218,6 @@ export default {
     FacetFilter,
     CommitmentFilter,
     TabsFacetFilter,
-    GeoFilter,
     BadgeFilter,
     LocalisationFilter
   },
@@ -240,7 +229,6 @@ export default {
   },
   async fetch () {
     await this.search()
-    console.log('result new', this.searchResult)
   },
   watch: {
     $route: '$fetch'
