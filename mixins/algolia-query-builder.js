@@ -15,6 +15,7 @@ export default {
         aroundLatLngViaIP: this.$route.query.type != 'Mission à distance' && !this.$route.query.aroundLatLng,
         aroundLatLng: this.$route.query.aroundLatLng || '',
         query: this.$route.query.search || '',
+        page: this.$route.query.page ? (this.$route.query.page - 1) : 0,
         facetFilters: this.activeFacets,
         facets: ['*'],
         numericFilters: this.activeNumericFilters

@@ -190,10 +190,9 @@ export default {
       this.addFilter('search', value)
     },
     handleChangePage (page) {
-      console.log(page)
       this.$router.push({
         path: this.$route.path,
-        query: { ...this.$route.query, page: page - 1 }
+        query: { ...this.$route.query, page }
       })
     },
     handleClickCard () {
