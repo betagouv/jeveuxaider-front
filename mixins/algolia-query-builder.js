@@ -31,17 +31,11 @@ export default {
     activeFacets () {
       let activeFacets = this.availableFacets.filter(facetName => this.$route.query[facetName])
 
-      const hasFacetTypeActive = activeFacets.includes('type')
-
       activeFacets = activeFacets.map((facetName) => {
         return this.$route.query[facetName].split('|').map((facetValue) => {
           return `${facetName}:${facetValue}`
         })
       })
-
-      if (!hasFacetTypeActive) {
-        activeFacets.push(['type:Mission en présentiel'])
-      }
 
       return activeFacets
     },
@@ -57,6 +51,10 @@ export default {
   },
   methods: {
     async search () {
+      if (!this.$route.query.type) {
+        this.activeFacets.push(['type:Mission en présentiel'])
+      }
+
       // Recherche principale
       const queries = [{
         indexName: this.indexName,
