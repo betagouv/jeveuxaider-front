@@ -1,12 +1,12 @@
 <template>
-  <div class="flex">
-    <div v-for="tab,i in tabs" :key="i" class="">
+  <div class="flex flex-col sm:flex-row">
+    <div v-for="tab,i in tabs" :key="i" class="flex-none">
       <div
         :class="[
-          'flex justify-center items-center px-8 py-6 cursor-pointer space-x-2',
+          'flex justify-center items-center px-4 py-3 sm:px-8 sm:py-6 cursor-pointer space-x-2',
           isActiveFilter(filterName, tab.filterValue) || tab.current ? 'bg-white shadow-xl' : 'shadow-inner-xl',
-          {'rounded-l-xl': i == 0},
-          {'rounded-r-xl': i == 1},
+          {'rounded-t-xl sm:rounded-t-none sm:rounded-l-xl': i == 0},
+          {'rounded-b-xl sm:rounded-b-none sm:rounded-r-xl': i == tabs.length - 1},
         ]"
         @click="handleClickTab(tab)"
       >
