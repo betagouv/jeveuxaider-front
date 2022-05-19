@@ -35,6 +35,10 @@
               <div class="text-gray-500">
                 Localisation
               </div>
+              <GeoFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" :ip-lat-lng="searchResult.aroundLatLng" />
+              <div v-else>
+                Todo à distance
+              </div>
             </div>
             <div class="px-6">
               <div class="text-gray-500 mb-1">
@@ -152,6 +156,7 @@ import CardMission from '@/components/card/CardMission.vue'
 import FacetFilter from '~/components/section/search/FacetFilter.vue'
 import TabsFacetFilter from '~/components/section/search/TabsFacetFilter.vue'
 import CommitmentFilter from '~/components/section/search/CommitmentFilter.vue'
+import GeoFilter from '~/components/section/search/GeoFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 
 export default {
@@ -159,12 +164,26 @@ export default {
     CardMission,
     FacetFilter,
     CommitmentFilter,
-    TabsFacetFilter
+    TabsFacetFilter,
+    GeoFilter
   },
   mixins: [AlgoliaQueryBuilder],
+  async fetch () {
+    await this.search()
+    console.log('result new', this.searchResult)
+  },
+  watch: {
+    $route: '$fetch'
+  },
   methods: {
     handleChangeQuery (value) {
       this.addFilter('search', value)
+    },
+    handleClickCard () {
+      // window.plausible &&
+      //   window.plausible('Click Card Missions - Liste résultat', {
+      //     props: { isLogged: this.$store.getters.isLogged }
+      //   })
     }
   }
 }

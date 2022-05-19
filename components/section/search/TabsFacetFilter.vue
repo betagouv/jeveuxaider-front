@@ -8,7 +8,7 @@
           {'rounded-l-xl': i == 0},
           {'rounded-r-xl': i == 1},
         ]"
-        @click="addFilter(filterName, tab.filterValue)"
+        @click="handleClickTab(tab)"
       >
         <component
           :is="tab.icon"
@@ -41,6 +41,18 @@ export default {
     tabs: {
       type: Array,
       required: true
+    }
+  },
+  methods: {
+    handleClickTab (tab) {
+      if (tab.filterValue == 'Mission à distance') {
+        this.$router.push({
+          path: this.$route.path,
+          query: { ...this.$route.query, [this.filterName]: tab.filterValue, page: undefined, city: undefined, aroundLatLng: undefined }
+        })
+      } else {
+        this.addFilter(this.filterName, tab.filterValue)
+      }
     }
   }
 }

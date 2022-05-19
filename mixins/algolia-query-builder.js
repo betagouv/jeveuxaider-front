@@ -9,15 +9,11 @@ export default {
       availableNumericFilters: ['commitment__total']
     }
   },
-  async fetch () {
-    await this.search()
-  },
-  watch: {
-    $route: '$fetch'
-  },
   computed: {
     searchParameters () {
       return {
+        aroundLatLngViaIP: this.$route.query.type != 'Mission à distance' && !this.$route.query.aroundLatLng,
+        aroundLatLng: this.$route.query.aroundLatLng || '',
         query: this.$route.query.search || '',
         facetFilters: this.activeFacets,
         facets: ['*'],
@@ -85,7 +81,7 @@ export default {
       this.searchResult = results[0]
       this.searchFacetResults = results.slice(1)
     },
-    addFilter (filterName, filterValue, multiple) {
+    addFilter (filterName, filterValue, multiple = false) {
       let filterQueryValues = this.$route.query[filterName] ? this.$route.query[filterName].split('|') : []
       if (multiple) {
         filterQueryValues.push(filterValue)
@@ -98,7 +94,7 @@ export default {
         query: { ...this.$route.query, [filterName]: filterQueryValues.join('|'), page: undefined }
       })
     },
-    deleteFilter (filterName, filterValue, multiple) {
+    deleteFilter (filterName, filterValue = null, multiple = false) {
       let filterQueryValues = this.$route.query[filterName] ? this.$route.query[filterName].split('|') : []
 
       if (multiple) {
