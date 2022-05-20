@@ -39,7 +39,8 @@ import {
   VideoCameraIcon,
   LockClosedIcon,
   DesktopComputerIcon,
-  HandIcon
+  HandIcon,
+  XCircleIcon
 } from '@vue-hero-icons/outline'
 import {
   InformationCircleIcon,
@@ -112,7 +113,8 @@ const components = {
   ArchiveIcon,
   MailIcon,
   ChevronUpIcon,
-  AdjustmentsIcon
+  AdjustmentsIcon,
+  XCircleIcon
 }
 
 Object.entries(components).forEach(([name, component]) => {
