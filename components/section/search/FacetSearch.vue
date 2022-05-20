@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex items-center relative w-full pb-1 group border-b focus-within:border-jva-blue-500">
+    <div class="flex items-center relative w-full pb-1 group border-b border-transparent focus-within:border-jva-blue-500">
       <SearchIcon
         class="text-gray-400 group-focus-within:text-jva-blue-500"
         width="20"
