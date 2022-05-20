@@ -19,6 +19,7 @@
 
         <FacetMobileFilter show-more facet-name="activity.name" label="Activités" :limit-options="3" :facets="facetResults('activity.name')" />
         <FacetMobileFilter show-more facet-name="structure.name" label="Organisations" :limit-options="3" :facets="facetResults('structure.name')" />
+
         <template #footer>
           <div
             :class="[
@@ -65,15 +66,16 @@
             }
           ]"
         />
+        <LocalisationSuggestions
+          v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'"
+          :ip-lat-lng="searchResult.aroundLatLng"
+          @updated="isLocationDrawerFiltersOpen = false"
+        />
 
-        <template v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'">
-          <LocalisationSuggestions :ip-lat-lng="searchResult.aroundLatLng" @updated="isLocationDrawerFiltersOpen = false" />
-        </template>
-        <template v-else>
-          <div class="text-gray-700">
-            Vous pouvez réalisez des missions à distance, depuis chez vous ou le lieu de votre choix. Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quo consequuntur, minima voluptatem odit vel inventore maiores illo explicabo rem vitae ducimus at itaque ad dolorem aperiam odio, fugit fugiat.
-          </div>
-        </template>
+        <div v-else class="text-gray-700">
+          Vous pouvez réalisez des missions à distance, depuis chez vous ou le lieu de votre choix. Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quo consequuntur, minima voluptatem odit vel inventore maiores illo explicabo rem vitae ducimus at itaque ad dolorem aperiam odio, fugit fugiat.
+        </div>
+
         <template #footer>
           <div
             :class="[

@@ -19,7 +19,7 @@
             {{ label }}
           </div>
 
-          <FacetSearch ref="facetSearch" v-model="searchValue" @input="handleInput" />
+          <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Nom ou code postal" @input="handleInput" />
         </div>
 
         <div class="text-sm">

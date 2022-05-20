@@ -107,7 +107,6 @@ export default {
   },
   computed: {
     allValues () {
-      console.log('this.facets', this.facets)
       if (this.facetHits) {
         return this.facetHits.map((facetHit) => {
           return {

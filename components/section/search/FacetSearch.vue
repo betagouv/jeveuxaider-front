@@ -10,7 +10,7 @@
         ref="input"
         v-model="inputValue"
         type="text"
-        placeholder="Recherche"
+        :placeholder="placeholder"
         class="border-0 p-0 pl-3 text-sm outline-none focus:ring-0 w-full"
         autocomplete="off"
       >
@@ -30,7 +30,8 @@
 export default {
   props: {
     value: { type: [String, Number], default: null },
-    alwaysShowClear: { type: Boolean, default: false }
+    alwaysShowClear: { type: Boolean, default: false },
+    placeholder: { type: String, default: 'Rechercher' }
   },
   data () {
     return {}
