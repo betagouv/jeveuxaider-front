@@ -19,7 +19,12 @@
       <FacetMobileFilter show-more facet-name="activity.name" label="Activités" :limit-options="3" :facets="facetResults('activity.name')" />
       <FacetMobileFilter show-more facet-name="structure.name" label="Organisations" :limit-options="3" :facets="facetResults('structure.name')" />
       <template #footer>
-        <div class="flex-shrink-0 px-4 py-4 flex justify-between items-center space-x-3">
+        <div
+          :class="[
+            'p-4 flex items-center space-x-3',
+            hasActiveFilters ? 'justify-between' : 'justify-end'
+          ]"
+        >
           <Link v-if="hasActiveFilters" class="text-gray-500 underline text-sm" @click.native="deleteAllFilters()">
             Effacer les filtres
           </Link>
