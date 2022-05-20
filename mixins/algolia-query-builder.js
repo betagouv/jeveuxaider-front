@@ -14,6 +14,7 @@ export default {
       return {
         aroundLatLngViaIP: this.$route.query.type != 'Mission à distance' && !this.$route.query.aroundLatLng,
         aroundLatLng: this.$route.query.aroundLatLng || '',
+        aroundRadius: this.$route.query.aroundLatLng ? 50000 : 'all',
         query: this.$route.query.search || '',
         page: this.$route.query.page ? (this.$route.query.page - 1) : 0,
         facetFilters: this.activeFacets,
