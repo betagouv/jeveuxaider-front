@@ -8,7 +8,7 @@
         {{ title }}
       </Heading>
       <slot name="tags" />
-      <div v-if="secondaryTitleBottom" class="text-gray-600 mt-2 text-xl">
+      <div v-if="secondaryTitleBottom" class="text-gray-600 mt-2 text-lg lg:text-xl">
         {{ secondaryTitleBottom }}
       </div>
     </div>

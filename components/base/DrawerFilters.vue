@@ -27,12 +27,13 @@
               </div>
             </div>
             <div
-              class="overflow-y-auto overscroll-contain p-4"
+              class="flex-1 overflow-y-auto overscroll-contain p-4"
             >
               <div class="space-y-4">
                 <slot />
               </div>
             </div>
+            <slot name="footer" />
           </div>
         </div>
       </div>
@@ -53,7 +54,7 @@ export default {
     },
     submitLabel: {
       type: String,
-      default: 'Enregister'
+      default: 'Voir les résultats'
     }
   },
   data () {

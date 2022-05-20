@@ -5,15 +5,37 @@
       class="container border-b-0"
     />
 
-    <MobileFilters v-if="searchResult" :is-open="isMobileFiltersOpen" @close="isMobileFiltersOpen = false">
+    <DrawerFilters
+      v-if="searchResult"
+      :is-open="isMobileFiltersOpen"
+      @close="isMobileFiltersOpen = false"
+    >
       <template #title>
-        {{ searchResult.nbHits|formatNumber }} missions disponibles
+        <div class="font-bold">
+          Filtre de recherche
+        </div>
       </template>
+
       <FacetMobileFilter show-more facet-name="activity.name" label="Activités" :limit-options="3" :facets="facetResults('activity.name')" />
       <FacetMobileFilter show-more facet-name="structure.name" label="Organisations" :limit-options="3" :facets="facetResults('structure.name')" />
-    </MobileFilters>
+      <template #footer>
+        <div
+          :class="[
+            'p-4 flex items-center space-x-3',
+            hasActiveFilters ? 'justify-between' : 'justify-end'
+          ]"
+        >
+          <Link v-if="hasActiveFilters" class="text-gray-500 underline text-sm" @click.native="deleteAllFilters()">
+            Effacer
+          </Link>
+          <Button @click.native="isMobileFiltersOpen = false">
+            Voir les {{ searchResult.nbHits }} résultats
+          </Button>
+        </div>
+      </template>
+    </DrawerFilters>
 
-    <div v-if="searchResult" class="container mt-6 mb-12">
+    <div v-if="searchResult" class="container lg:mt-6 mb-12">
       <div class="flex flex-col space-y-6 sm:space-y-12">
         <SectionHeading
           title="Trouver une mission de bénévolat"
@@ -46,11 +68,7 @@
           </template>
         </Sectionheading>
 
-        <Button class="sm:hidden" @click.native="isMobileFiltersOpen = true">
-          Open mobile filters
-        </Button>
-
-        <div class="hidden sm:flex sm:flex-col">
+        <div class="flex flex-col">
           <div class="bg-white px-6 sm:py-6 shadow-xl rounded-xl grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:!divide-x">
             <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6">
               <div class="text-gray-500 mb-1">
@@ -66,8 +84,7 @@
                 </div>
               </div>
             </div>
-
-            <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
+            <div class="hidden sm:block py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
               <div class="text-gray-500 mb-1">
                 Activités
               </div>
@@ -86,7 +103,7 @@
                 </template>
               </FacetFilter>
             </div>
-            <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
+            <div class="hidden sm:block py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
               <div class="text-gray-500 mb-1">
                 Disponibilités
               </div>
@@ -104,7 +121,7 @@
                 </template>
               </CommitmentFilter>
             </div>
-            <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
+            <div class="hidden sm:block py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
               <div class="text-gray-500 mb-1">
                 Mots-clés
               </div>
@@ -112,7 +129,13 @@
             </div>
           </div>
 
-          <div class="my-4 flex flex-wrap items-center justify-center gap-3">
+          <div class="flex justify-center sm:hidden mt-4">
+            <BadgeFilter @click.native="isMobileFiltersOpen = true">
+              Plus de filtres
+            </BadgeFilter>
+          </div>
+
+          <div class="hidden sm:flex my-4 flex-wrap items-center justify-center gap-3">
             <FacetFilter facet-name="structure.name" label="Organisations" :facets="facetResults('structure.name')">
               <template #button="{ firstValueSelected, activeValuesCount }">
                 <BadgeFilter :is-active="!!activeValuesCount">
@@ -182,7 +205,7 @@
             </div>
           </div>
 
-          <div class="mt-2 flex items-center justify-center">
+          <div class="hidden mt-2 lg:flex lg:items-center lg:justify-center">
             <Link v-if="hasActiveFilters" class="my-2 underline text-sm" @click.native="deleteAllFilters()">
               Effacer les filtres
             </Link>
@@ -228,7 +251,6 @@ import LocalisationFilter from '~/components/search/LocalisationFilter.vue'
 import CommitmentFilter from '~/components/section/search/CommitmentFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import SearchFilter from '@/components/search/SearchFilter'
-import MobileFilters from '@/components/search/MobileFilters'
 import FacetMobileFilter from '@/components/section/search/FacetMobileFilter'
 
 export default {
@@ -240,7 +262,6 @@ export default {
     BadgeFilter,
     LocalisationFilter,
     SearchFilter,
-    MobileFilters,
     FacetMobileFilter
   },
   mixins: [AlgoliaQueryBuilder],
