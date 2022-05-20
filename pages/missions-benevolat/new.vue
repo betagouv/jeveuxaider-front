@@ -129,7 +129,7 @@
               :class="[{'text-gray-300 border-gray-300': showMoreFilters}, {'text-gray-600 hover:bg-gray-200 border-gray-500 cursor-pointer': !showMoreFilters}]"
               @click="showMoreFilters = true"
             >
-              <PlusIcon />
+              <PlusIcon width="20" />
             </div>
 
             <template v-if="showMoreFilters">

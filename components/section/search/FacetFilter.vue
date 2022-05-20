@@ -20,18 +20,6 @@
             /> -->
           </div>
 
-          <!-- <Input
-            v-model="facetQuery"
-            name="query-facet"
-            placeholder="Recherche"
-            variant="facet"
-            clearable
-            input-class="!border-0 !pl-6 !pr-0 !rounded-none focus:ring-0"
-            icon-class="!left-0"
-            icon="SearchIcon"
-            @input="handleChangeSearchFacetValues"
-          /> -->
-
           <FacetSearch v-model="facetQuery" @input="handleChangeSearchFacetValues" />
 
           <div class="relative overflow-hidden">
