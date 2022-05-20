@@ -27,7 +27,7 @@
             ]"
           >
             <Link v-if="hasActiveFilters" class="text-gray-500 underline text-sm" @click.native="deleteAllFilters()">
-              Effacer
+              Réinitialiser
             </Link>
             <Button @click.native="isMobileFiltersOpen = false">
               Voir les {{ searchResult.nbHits }} résultats
@@ -261,7 +261,7 @@
               :link-class="[{'pointer-events-none opacity-0': !hasActiveFilters}]"
               @click.native="deleteAllFilters()"
             >
-              Effacer les filtres
+              Réinitialiser les filtres
             </Link>
           </div>
         </div>
