@@ -1,57 +1,63 @@
 <template>
-  <div class="">
+  <div>
     <div class="space-y-3">
-      <div class="relative">
-        <div class="font-medium">
-          {{ label }}
+      <div class="relative font-medium text-[15px]">
+        <div v-if="!showSearch" class="h-[29px]">
+          <span>{{ label }}</span>
+          <SearchIcon
+            class=" text-gray-400 hover:text-gray-500 cursor-pointer absolute right-0 top-0"
+            width="20"
+            @click="toggleSearch"
+          />
         </div>
-        <SearchIcon
-          class=" text-gray-400 hover:text-gray-500 cursor-pointer absolute right-0 top-0 -m-1"
-          width="20"
-          @click="showSearch = true"
+
+        <FacetSearch
+          v-else
+          ref="facetSearch"
+          v-model="facetQuery"
+          always-show-clear
+          @input="handleChangeSearchFacetValues"
+          @clear="showSearch = false"
         />
       </div>
 
-      <Input
-        v-model="facetQuery"
-        name="query-facet"
-        placeholder="Recherche"
-        variant="facet"
-        clearable
-        @input="handleChangeSearchFacetValues"
-      />
+      <div class="text-sm space-y-2">
+        <div v-if="[...activeValues, ...inactiveValues].length == 0" class="text-gray-400">
+          Aucun résultat avec les filtres actuels.
+        </div>
 
-      <div
-        v-for="(facet, key) in [...activeValues, ...inactiveValues]"
-        :key="facet.value"
-        :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
-        class="cursor-pointer flex items-center px-1"
-      >
-        <input
-          :id="`${facetName}_${key}`"
-          :name="`${facetName}_${key}`"
-          :value="isActiveFilter(facetName, facet.value)"
-          type="checkbox"
-          :checked="isActiveFilter(facetName, facet.value)"
-          class="rounded text-jva-blue-500 focus:ring-jva-blue-500"
-          @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
+        <div
+          v-for="(facet) in [...activeValues, ...inactiveValues]"
+          :key="facet.value"
+          :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
+          class="cursor-pointer flex items-center px-1"
         >
-        <label
-          :for="`${facetName}_${key}`"
-          class="ml-2 flex justify-between truncate flex-1"
-        >
-          <div class="truncate">
-            {{ facet.value }}
-          </div>
-          <div class="text-gray-600 ml-1 font-light">
-            {{ facet.count }}
-          </div>
-        </label>
-      </div>
+          <input
+            :id="`${facetName}_${facet.value}`"
+            :name="`${facetName}_${facet.value}`"
+            :value="isActiveFilter(facetName, facet.value)"
+            type="checkbox"
+            :checked="isActiveFilter(facetName, facet.value)"
+            class="rounded text-jva-blue-500 focus:ring-jva-blue-500"
+            @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
+          >
+          <label
+            :for="`${facetName}_${facet.value}`"
+            class="ml-2 flex justify-between truncate flex-1"
+          >
+            <div class="truncate">
+              {{ facet.value }}
+            </div>
+            <div class="text-gray-600 ml-1 font-light">
+              {{ facet.count }}
+            </div>
+          </label>
+        </div>
 
-      <div v-if="showMore && allValues.length > showMoreLimit" class="">
-        <div class="" @click="showAllValues = !showAllValues">
-          {{ showAllValues ? 'Moins' : 'Plus' }}
+        <div v-if="showMore && allValues.length > showMoreLimit" class="">
+          <div class="" @click="showAllValues = !showAllValues">
+            {{ showAllValues ? 'Moins' : 'Plus' }}
+          </div>
         </div>
       </div>
     </div>
@@ -60,8 +66,12 @@
 
 <script>
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
+import FacetSearch from '@/components/section/search/FacetSearch.vue'
 
 export default {
+  components: {
+    FacetSearch
+  },
   mixins: [AlgoliaQueryBuilder],
   props: {
     facetName: {
@@ -144,6 +154,13 @@ export default {
       }
       const res = await this.searchForFacetValues(this.facetName, facetQuery)
       this.facetHits = res.facetHits
+    },
+    async toggleSearch () {
+      this.showSearch = !this.showSearch
+      if (this.showSearch) {
+        await this.$nextTick()
+        this.$refs.facetSearch.$refs.input?.focus()
+      }
     }
   }
 }

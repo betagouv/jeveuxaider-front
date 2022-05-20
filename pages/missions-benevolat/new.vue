@@ -26,7 +26,7 @@
           ]"
         >
           <Link v-if="hasActiveFilters" class="text-gray-500 underline text-sm" @click.native="deleteAllFilters()">
-            Effacer
+            Réinitialiser
           </Link>
           <Button @click.native="isMobileFiltersOpen = false">
             Voir les {{ searchResult.nbHits }} résultats
@@ -135,7 +135,7 @@
             </BadgeFilter>
           </div>
 
-          <div class="hidden sm:flex my-4 flex-wrap items-center justify-center gap-3">
+          <div class="hidden sm:flex mt-8 flex-wrap items-center justify-center gap-3">
             <FacetFilter facet-name="structure.name" label="Organisations" :facets="facetResults('structure.name')">
               <template #button="{ firstValueSelected, activeValuesCount }">
                 <BadgeFilter :is-active="!!activeValuesCount">
@@ -205,8 +205,12 @@
             </div>
           </div>
 
-          <div class="hidden mt-2 lg:flex lg:items-center lg:justify-center">
-            <Link v-if="hasActiveFilters" class="my-2 underline text-sm" @click.native="deleteAllFilters()">
+          <div class="hidden lg:flex lg:items-center lg:justify-center">
+            <Link
+              class="underline text-sm mt-4"
+              :link-class="[{'pointer-events-none opacity-0': !hasActiveFilters}]"
+              @click.native="deleteAllFilters()"
+            >
               Effacer les filtres
             </Link>
           </div>
@@ -228,15 +232,13 @@
           </nuxt-link>
         </div>
 
-        <div>
-          <Pagination
-            :current-page="searchResult.page + 1"
-            :total-rows="searchResult.nbHits"
-            :per-page="20"
-            :max-pages="10"
-            @page-change="handleChangePage"
-          />
-        </div>
+        <Pagination
+          :current-page="searchResult.page + 1"
+          :total-rows="searchResult.nbHits"
+          :per-page="20"
+          :max-pages="10"
+          @page-change="handleChangePage"
+        />
       </div>
     </div>
   </div>

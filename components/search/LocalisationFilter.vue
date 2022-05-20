@@ -13,18 +13,18 @@
       <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
     </div>
     <div v-if="isOpen" v-click-outside="onClickOutside">
-      <div class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-sm max-w-[375px] w-full">
-        <div class="">
-          <div class="p-4 pb-0 space-y-3">
-            <div class="font-medium">
-              {{ label }}
-            </div>
-
-            <FacetSearch ref="facetSearch" v-model="searchValue" @input="handleInput" />
+      <div class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-[15px] max-w-[350px] w-full">
+        <div class="p-4 pb-0 space-y-3">
+          <div class="font-medium">
+            {{ label }}
           </div>
 
+          <FacetSearch ref="facetSearch" v-model="searchValue" @input="handleInput" />
+        </div>
+
+        <div class="text-sm">
           <div class="flex flex-col py-2">
-            <div v-for="suggestion,i in suggestions" :key="i" class="px-4 py-1 text-gray-600 hover:bg-gray-50 cursor-pointer flex justify-between truncate flex-1" @click="handleSelectedAdress(suggestion)">
+            <div v-for="suggestion in suggestions" :key="suggestion.id" class="px-4 py-1 text-gray-600 hover:bg-gray-50 cursor-pointer flex justify-between truncate flex-1" @click="handleSelectedAdress(suggestion)">
               <div class="truncate">
                 {{ suggestion.city }}
               </div>
@@ -36,7 +36,6 @@
 
           <div class="border-t px-6 py-3 flex justify-end">
             <div
-              class="text-sm"
               :class="[
                 {'text-gray-400 pointer-events-none': !$route.query.city},
                 {'text-jva-blue-500 cursor-pointer': $route.query.city}
@@ -80,14 +79,17 @@ export default {
       fetchSuggestions: [],
       initialSuggestions: [
         {
+          id: 'initial_1',
           city: 'Paris',
           coordinates: ['2.347', '48.859']
         },
         {
+          id: 'initial_2',
           city: 'Lyon',
           coordinates: ['4.835', '45.758']
         },
         {
+          id: 'initial_3',
           city: 'Marseille',
           coordinates: ['5.405', '43.282']
         }

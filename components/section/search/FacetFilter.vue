@@ -30,15 +30,19 @@
 
             <div ref="scrollContainer" class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray">
               <div class="py-1 mr-2 space-y-2 text-sm">
+                <div v-if="[...activeValues, ...inactiveValues].length == 0" class="text-gray-400">
+                  Aucun résultat avec les filtres actuels.
+                </div>
+
                 <div
-                  v-for="(facet, key) in [...activeValues, ...inactiveValues]"
+                  v-for="(facet) in [...activeValues, ...inactiveValues]"
                   :key="facet.value"
                   :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
                   class="cursor-pointer flex items-center px-1"
                 >
                   <input
-                    :id="`${facetName}_${key}`"
-                    :name="`${facetName}_${key}`"
+                    :id="`${facetName}_${facet.value}`"
+                    :name="`${facetName}_${facet.value}`"
                     :value="isActiveFilter(facetName, facet.value)"
                     type="checkbox"
                     :checked="isActiveFilter(facetName, facet.value)"
@@ -46,7 +50,7 @@
                     @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
                   >
                   <label
-                    :for="`${facetName}_${key}`"
+                    :for="`${facetName}_${facet.value}`"
                     class="ml-2 flex justify-between truncate flex-1"
                   >
                     <div class="truncate">

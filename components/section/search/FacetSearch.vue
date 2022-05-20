@@ -13,14 +13,13 @@
         placeholder="Recherche"
         class="border-0 p-0 pl-3 text-sm outline-none focus:ring-0 w-full"
         autocomplete="off"
-        @blur="handleBlur"
       >
 
       <XIcon
-        v-if="inputValue"
+        v-if="inputValue || alwaysShowClear"
         class="text-gray-300 hover:text-jva-blue-500 cursor-pointer absolute -right-1 p-1"
         width="24"
-        @click="reset()"
+        @click="clear()"
       />
     </div>
   </div>
@@ -30,7 +29,8 @@
 
 export default {
   props: {
-    value: { type: [String, Number], default: null }
+    value: { type: [String, Number], default: null },
+    alwaysShowClear: { type: Boolean, default: false }
   },
   data () {
     return {}
@@ -46,14 +46,9 @@ export default {
     }
   },
   methods: {
-    reset () {
+    clear () {
+      this.$emit('clear')
       this.inputValue = ''
-      this.$emit('input', null)
-    },
-    handleBlur () {
-      if (this.inputValue !== null) {
-        this.$emit('blur')
-      }
     }
   }
 }
