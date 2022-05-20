@@ -33,6 +33,7 @@
                 <slot />
               </div>
             </div>
+            <slot name="footer" />
           </div>
         </div>
       </div>
@@ -53,7 +54,7 @@ export default {
     },
     submitLabel: {
       type: String,
-      default: 'Enregister'
+      default: 'Voir les résultats'
     }
   },
   data () {
