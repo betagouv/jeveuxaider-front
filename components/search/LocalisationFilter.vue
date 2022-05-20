@@ -13,19 +13,17 @@
       <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
     </div>
     <div v-if="isOpen" v-click-outside="onClickOutside">
-      <div class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-[15px] max-w-[375px] w-full">
-        <div class="divide-y">
-          <div class="p-4">
+      <div class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-sm max-w-[375px] w-full">
+        <div class="">
+          <div class="p-4 pb-0 space-y-3">
             <div class="font-medium">
               {{ label }}
             </div>
+
+            <FacetSearch ref="facetSearch" v-model="searchValue" @input="handleInput" />
           </div>
-          <div class="flex space-x-1 items-center bg-gray-50 px-4 py-2">
-            <SearchIcon class="text-gray-500 h-5 w-5" />
-            <input :value="searchValue" type="text" placeholder="Votre ville" class="border-0 w-full bg-transparent" @input="handleInput">
-            <XIcon v-if="searchValue" class="text-gray-500 h-5 w-5" @click="reset" />
-          </div>
-          <div class="py-4 flex flex-col space-y-1">
+
+          <div class="flex flex-col py-2">
             <div v-for="suggestion,i in suggestions" :key="i" class="px-4 py-1 text-gray-600 hover:bg-gray-50 cursor-pointer flex justify-between truncate flex-1" @click="handleSelectedAdress(suggestion)">
               <div class="truncate">
                 {{ suggestion.city }}
@@ -35,12 +33,17 @@
               </div>
             </div>
           </div>
-          <div class="border-t px-6 py-4 flex justify-between">
-            <div v-if="$route.query.city" class="text-gray-600 cursor-pointer" @click="handleSelectedAdress(null)">
+
+          <div class="border-t px-6 py-3 flex justify-end">
+            <div
+              class="text-sm"
+              :class="[
+                {'text-gray-400 pointer-events-none': !$route.query.city},
+                {'text-jva-blue-500 cursor-pointer': $route.query.city}
+              ]"
+              @click="handleSelectedAdress(null)"
+            >
               Effacer
-            </div>
-            <div class="ml-auto text-jva-blue-500 cursor-pointer" @click="isOpen = false">
-              Valider
             </div>
           </div>
         </div>
@@ -52,8 +55,12 @@
 <script>
 import { debounce } from 'lodash'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
+import FacetSearch from '@/components/section/search/FacetSearch.vue'
 
 export default {
+  components: {
+    FacetSearch
+  },
   mixins: [AlgoliaQueryBuilder],
   props: {
     label: {
@@ -95,6 +102,12 @@ export default {
   watch: {
     '$route.query.city' (newVal) {
       this.searchValue = newVal
+    },
+    async isOpen (isOpen) {
+      if (isOpen) {
+        await this.$nextTick()
+        this.$refs.facetSearch.$refs?.input?.focus()
+      }
     }
   },
   async mounted () {
@@ -129,9 +142,12 @@ export default {
       })
       this.fetchSuggestions = formatOptions
     },
-    handleInput (evt) {
-      this.searchValue = evt.target.value
-      this.showOptions = true
+    handleInput (payload) {
+      this.searchValue = payload
+      if (!this.searchValue) {
+        return
+      }
+
       if (this.timeout) {
         this.timeout.cancel()
       }

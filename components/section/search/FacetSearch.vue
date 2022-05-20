@@ -7,6 +7,7 @@
       />
 
       <input
+        ref="input"
         v-model="inputValue"
         type="text"
         placeholder="Recherche"
