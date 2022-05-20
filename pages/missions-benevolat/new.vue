@@ -124,6 +124,7 @@
                 </BadgeFilter>
               </template>
             </FacetFilter>
+
             <FacetFilter facet-name="publics_beneficiaires" label="Publics aidés" :facets="facetResults('publics_beneficiaires')">
               <template #button="{ firstValueSelected, activeValuesCount }">
                 <BadgeFilter :is-active="!!activeValuesCount">
@@ -136,50 +137,49 @@
               </template>
             </FacetFilter>
 
+            <FacetFilter v-if="isShowMoreFilters || $route.query['domaines']" facet-name="domaines" label="Domaines" :facets="facetResults('domaines')">
+              <template #button="{ firstValueSelected, activeValuesCount }">
+                <BadgeFilter :is-active="!!activeValuesCount">
+                  <span v-if="!firstValueSelected">Domaines</span>
+                  <div v-else class="text-jva-blue-500 flex">
+                    <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                    <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                  </div>
+                </BadgeFilter>
+              </template>
+            </FacetFilter>
+
+            <FacetFilter v-if="isShowMoreFilters || $route.query['structure.reseaux.name']" facet-name="structure.reseaux.name" label="Réseaux" :facets="facetResults('structure.reseaux.name')">
+              <template #button="{ firstValueSelected, activeValuesCount }">
+                <BadgeFilter :is-active="!!activeValuesCount">
+                  <span v-if="!firstValueSelected">Réseaux</span>
+                  <div v-else class="text-jva-blue-500 flex">
+                    <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                    <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                  </div>
+                </BadgeFilter>
+              </template>
+            </FacetFilter>
+
+            <FacetFilter v-if="isShowMoreFilters || $route.query['department_name']" facet-name="department_name" label="Départements" :facets="facetResults('department_name')">
+              <template #button="{ firstValueSelected, activeValuesCount }">
+                <BadgeFilter :is-active="!!activeValuesCount">
+                  <span v-if="!firstValueSelected">Départements</span>
+                  <div v-else class="text-jva-blue-500 flex">
+                    <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                    <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                  </div>
+                </BadgeFilter>
+              </template>
+            </FacetFilter>
+
             <div
-              v-if="!showMoreFilters"
-              class="rounded-full border text-sm flex items-center justify-center h-[34px] w-[34px]"
-              :class="[{'text-gray-300 border-gray-300': showMoreFilters}, {'text-gray-600 hover:bg-gray-200 border-gray-500 cursor-pointer': !showMoreFilters}]"
-              @click="showMoreFilters = true"
+              v-if="!isShowMoreFilters && !allShowMoreFiltersActive"
+              class="rounded-full border text-sm flex items-center justify-center h-[34px] w-[34px] text-gray-600 hover:bg-gray-200 border-gray-500 cursor-pointer"
+              @click="isShowMoreFilters = true"
             >
               <PlusIcon width="20" />
             </div>
-
-            <template v-if="showMoreFilters">
-              <FacetFilter facet-name="domaines" label="Domaines" :facets="facetResults('domaines')">
-                <template #button="{ firstValueSelected, activeValuesCount }">
-                  <BadgeFilter :is-active="!!activeValuesCount">
-                    <span v-if="!firstValueSelected">Domaines</span>
-                    <div v-else class="text-jva-blue-500 flex">
-                      <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
-                      <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                    </div>
-                  </BadgeFilter>
-                </template>
-              </FacetFilter>
-              <FacetFilter facet-name="structure.reseaux.name" label="Réseaux" :facets="facetResults('structure.reseaux.name')">
-                <template #button="{ firstValueSelected, activeValuesCount }">
-                  <BadgeFilter :is-active="!!activeValuesCount">
-                    <span v-if="!firstValueSelected">Réseaux</span>
-                    <div v-else class="text-jva-blue-500 flex">
-                      <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
-                      <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                    </div>
-                  </BadgeFilter>
-                </template>
-              </FacetFilter>
-              <FacetFilter facet-name="department_name" label="Départements" :facets="facetResults('department_name')">
-                <template #button="{ firstValueSelected, activeValuesCount }">
-                  <BadgeFilter :is-active="!!activeValuesCount">
-                    <span v-if="!firstValueSelected">Départements</span>
-                    <div v-else class="text-jva-blue-500 flex">
-                      <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
-                      <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                    </div>
-                  </BadgeFilter>
-                </template>
-              </FacetFilter>
-            </template>
           </div>
 
           <div class="mt-2 flex items-center justify-center">
@@ -246,12 +246,18 @@ export default {
   mixins: [AlgoliaQueryBuilder],
   data () {
     return {
-      showMoreFilters: false,
+      showMoreFilters: ['domaines', 'structure.reseaux.name', 'department_name'],
+      isShowMoreFilters: false,
       isMobileFiltersOpen: false
     }
   },
   async fetch () {
     await this.search()
+  },
+  computed: {
+    allShowMoreFiltersActive () {
+      return this.showMoreFilters.every(facetName => this.$route.query[facetName])
+    }
   },
   watch: {
     $route: '$fetch'
