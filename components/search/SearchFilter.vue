@@ -1,8 +1,8 @@
 <template>
   <div class="flex space-x-2 items-center">
     <SearchIcon class="text-gray-900 h-5 w-5" />
-    <input :value="searchValue" type="text" placeholder="Recherche..." class="flex-1 border-0 w-full bg-transparent py-0" @input="handleInput">
-    <XIcon v-if="searchValue" class="text-gray-500 h-5 w-5" @click="reset" />
+    <input :value="searchValue" type="text" placeholder="Recherche..." class="pl-0 flex-1 border-0 w-full bg-transparent py-0 focus:ring-0" @input="handleInput">
+    <XIcon v-if="searchValue" class="text-gray-500 h-5 w-5 cursor-pointer hover:text-gray-900" @click="reset" />
   </div>
 </template>
 
