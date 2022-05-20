@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex items-center relative w-full">
-      <div v-if="icon" class="absolute left-4">
+      <div v-if="icon" :class="['absolute left-4', iconClass]">
         <component
           :is="icon"
           class="h-4 w-4 text-gray-400"
@@ -27,6 +27,7 @@
           {'bg-white': variant == 'transparent' && value},
           {'px-6 py-3 rounded-xl': variant != 'facet'},
           {'px-3 py-2 rounded-md': variant == 'facet'},
+          inputClass,
         ]"
         autocomplete="off"
         @blur="handleBlur"
@@ -81,7 +82,9 @@ export default {
       default: 'text',
       validator: s =>
         ['text', 'email', 'password', 'date', 'number', 'datetime-local', 'tel'].includes(s)
-    }
+    },
+    inputClass: { type: String, default: '' },
+    iconClass: { type: String, default: '' }
   },
   data () {
     return {

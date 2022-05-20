@@ -12,28 +12,35 @@
             <div class="font-medium">
               {{ label }}
             </div>
-            <XIcon
-              class=" text-gray-400 hover:text-gray-500 cursor-pointer absolute right-0 top-0 -m-1"
+
+            <!-- <XIcon
+              class=" text-gray-500 hover:text-black cursor-pointer absolute right-0 top-0 -mr-1"
               width="20"
               @click="isOpen = false"
-            />
+            /> -->
           </div>
 
-          <Input
+          <!-- <Input
             v-model="facetQuery"
             name="query-facet"
             placeholder="Recherche"
             variant="facet"
             clearable
+            input-class="!border-0 !pl-6 !pr-0 !rounded-none focus:ring-0"
+            icon-class="!left-0"
+            icon="SearchIcon"
             @input="handleChangeSearchFacetValues"
-          />
+          /> -->
+
+          <FacetSearch v-model="facetQuery" @input="handleChangeSearchFacetValues" />
+
           <div class="relative overflow-hidden">
             <div
               class="absolute custom-gradient bottom-0 w-full pointer-events-none transition duration-500"
               :class="[{'h-0': isScrollAtBottom}, {'h-12': !isScrollAtBottom}]"
             />
 
-            <div ref="scrollContainer" class="max-h-[250px] overflow-y-auto overscroll-contain">
+            <div ref="scrollContainer" class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray">
               <div class="py-1 mr-2 space-y-2 text-sm">
                 <div
                   v-for="(facet, key) in [...activeValues, ...inactiveValues]"
@@ -67,12 +74,16 @@
           </div>
         </div>
 
-        <div class="border-t px-6 py-4 flex justify-between">
-          <div v-if="activeValues.length > 0" class="text-gray-600 cursor-pointer" @click="deleteFacet()">
+        <div class="border-t px-6 py-3 flex justify-end">
+          <div
+            class="text-sm"
+            :class="[
+              {'text-gray-400 pointer-events-none': !activeValuesCount},
+              {'text-jva-blue-500 cursor-pointer': activeValuesCount}
+            ]"
+            @click="deleteFacet()"
+          >
             Effacer
-          </div>
-          <div class="ml-auto text-jva-blue-500 cursor-pointer" @click="isOpen = false">
-            Valider
           </div>
         </div>
       </div>
@@ -82,8 +93,12 @@
 
 <script>
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
+import FacetSearch from '@/components/section/search/FacetSearch.vue'
 
 export default {
+  components: {
+    FacetSearch
+  },
   mixins: [AlgoliaQueryBuilder],
   props: {
     facetName: {
@@ -110,7 +125,6 @@ export default {
   computed: {
     allValues () {
       if (this.facetHits) {
-        console.log('values', this.facetHits)
         return this.facetHits.map((facetHit) => {
           return {
             value: facetHit.value,
@@ -152,7 +166,8 @@ export default {
         this.$refs.scrollContainer.removeEventListener('scroll', this.handleScroll)
       }
     },
-    facetQuery () {
+    async facetHits () {
+      await this.$nextTick()
       this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
     }
   },
