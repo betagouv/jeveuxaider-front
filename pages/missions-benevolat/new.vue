@@ -4,6 +4,15 @@
       :items="[{ label: 'Missions de bénévolat', link: '/missions-benevolat' }]"
       class="container border-b-0"
     />
+
+    <MobileFilters v-if="searchResult" :is-open="isMobileFiltersOpen" @close="isMobileFiltersOpen = false">
+      <template #title>
+        {{ searchResult.nbHits|formatNumber }} missions disponibles
+      </template>
+      <FacetMobileFilter show-more facet-name="activity.name" label="Activités" :limit-options="3" :facets="facetResults('activity.name')" />
+      <FacetMobileFilter show-more facet-name="structure.name" label="Organisations" :limit-options="3" :facets="facetResults('structure.name')" />
+    </MobileFilters>
+
     <div v-if="searchResult" class="container mt-6 mb-12">
       <div class="flex flex-col space-y-6 sm:space-y-12">
         <SectionHeading
@@ -16,7 +25,7 @@
           )}`"
         >
           <template #action>
-            <div class="flex-none">
+            <div class="hidden sm:block flex-none">
               <TabsFacetFilter
                 filter-name="type"
                 :tabs="[
@@ -37,7 +46,11 @@
           </template>
         </Sectionheading>
 
-        <div class="flex flex-col">
+        <Button class="sm:hidden" @click.native="isMobileFiltersOpen = true">
+          Open mobile filters
+        </Button>
+
+        <div class="hidden sm:flex sm:flex-col">
           <div class="bg-white px-6 sm:py-6 shadow-xl rounded-xl grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:!divide-x">
             <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6">
               <div class="text-gray-500 mb-1">
@@ -102,7 +115,7 @@
           <div class="my-4 flex flex-wrap items-center justify-center gap-3">
             <FacetFilter facet-name="structure.name" label="Organisations" :facets="facetResults('structure.name')">
               <template #button="{ firstValueSelected, activeValuesCount }">
-                <BadgeFilter :is-active="activeValuesCount">
+                <BadgeFilter :is-active="activeValuesCount > 1">
                   <span v-if="!firstValueSelected">Organisations</span>
                   <div v-else class="text-jva-blue-500 flex">
                     <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
@@ -113,7 +126,7 @@
             </FacetFilter>
             <FacetFilter facet-name="publics_beneficiaires" label="Publics aidés" :facets="facetResults('publics_beneficiaires')">
               <template #button="{ firstValueSelected, activeValuesCount }">
-                <BadgeFilter :is-active="activeValuesCount">
+                <BadgeFilter :is-active="activeValuesCount > 1">
                   <span v-if="!firstValueSelected">Publics aidés</span>
                   <div v-else class="text-jva-blue-500 flex">
                     <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
@@ -134,7 +147,7 @@
             <template v-if="showMoreFilters">
               <FacetFilter facet-name="domaines" label="Domaines" :facets="facetResults('domaines')">
                 <template #button="{ firstValueSelected, activeValuesCount }">
-                  <BadgeFilter :is-active="activeValuesCount">
+                  <BadgeFilter :is-active="activeValuesCount > 1">
                     <span v-if="!firstValueSelected">Domaines</span>
                     <div v-else class="text-jva-blue-500 flex">
                       <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
@@ -145,7 +158,7 @@
               </FacetFilter>
               <FacetFilter facet-name="structure.reseaux.name" label="Réseaux" :facets="facetResults('structure.reseaux.name')">
                 <template #button="{ firstValueSelected, activeValuesCount }">
-                  <BadgeFilter :is-active="activeValuesCount">
+                  <BadgeFilter :is-active="activeValuesCount > 1">
                     <span v-if="!firstValueSelected">Réseaux</span>
                     <div v-else class="text-jva-blue-500 flex">
                       <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
@@ -156,7 +169,7 @@
               </FacetFilter>
               <FacetFilter facet-name="department_name" label="Départements" :facets="facetResults('department_name')">
                 <template #button="{ firstValueSelected, activeValuesCount }">
-                  <BadgeFilter :is-active="activeValuesCount">
+                  <BadgeFilter :is-active="activeValuesCount > 1">
                     <span v-if="!firstValueSelected">Départements</span>
                     <div v-else class="text-jva-blue-500 flex">
                       <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
@@ -214,6 +227,8 @@ import LocalisationFilter from '~/components/search/LocalisationFilter.vue'
 import CommitmentFilter from '~/components/section/search/CommitmentFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import SearchFilter from '@/components/search/SearchFilter'
+import MobileFilters from '@/components/search/MobileFilters'
+import FacetMobileFilter from '@/components/section/search/FacetMobileFilter'
 
 export default {
   components: {
@@ -223,12 +238,15 @@ export default {
     TabsFacetFilter,
     BadgeFilter,
     LocalisationFilter,
-    SearchFilter
+    SearchFilter,
+    MobileFilters,
+    FacetMobileFilter
   },
   mixins: [AlgoliaQueryBuilder],
   data () {
     return {
-      showMoreFilters: false
+      showMoreFilters: false,
+      isMobileFiltersOpen: false
     }
   },
   async fetch () {

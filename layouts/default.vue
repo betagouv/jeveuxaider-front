@@ -3,6 +3,7 @@
     <HeaderBanner />
     <portal-target name="header-top" multiple />
     <Header />
+    <portal-target name="mobile-filters" class="relative z-30" multiple />
     <Nuxt />
     <portal-target name="drawer" class="relative z-20" multiple />
     <Footer />
