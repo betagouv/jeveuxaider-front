@@ -26,7 +26,7 @@
           ]"
         >
           <Link v-if="hasActiveFilters" class="text-gray-500 underline text-sm" @click.native="deleteAllFilters()">
-            Effacer les filtres
+            Effacer
           </Link>
           <Button @click.native="isMobileFiltersOpen = false">
             Voir les {{ searchResult.nbHits }} résultats
@@ -84,58 +84,55 @@
                 </div>
               </div>
             </div>
-
-            <div class="hidden sm:block">
-              <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
-                <div class="text-gray-500 mb-1">
-                  Activités
-                </div>
-                <FacetFilter facet-name="activity.name" label="Activités" :facets="facetResults('activity.name')" class="group">
-                  <template #button="{ firstValueSelected, activeValuesCount }">
-                    <div class="flex space-x-2 items-center justify-between">
-                      <div class="flex space-x-2 items-center">
-                        <HandIcon class="h-5 w-5" />
-                        <span v-if="!firstValueSelected" class="text-gray-900">Toutes</span>
-                        <span v-else class="text-gray-900">
-                          {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                        </span>
-                      </div>
-                      <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
+            <div class="hidden sm:block py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
+              <div class="text-gray-500 mb-1">
+                Activités
+              </div>
+              <FacetFilter facet-name="activity.name" label="Activités" :facets="facetResults('activity.name')" class="group">
+                <template #button="{ firstValueSelected, activeValuesCount }">
+                  <div class="flex space-x-2 items-center justify-between">
+                    <div class="flex space-x-2 items-center">
+                      <HandIcon class="h-5 w-5" />
+                      <span v-if="!firstValueSelected" class="text-gray-900">Toutes</span>
+                      <span v-else class="text-gray-900">
+                        {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+                      </span>
                     </div>
-                  </template>
-                </FacetFilter>
+                    <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
+                  </div>
+                </template>
+              </FacetFilter>
+            </div>
+            <div class="hidden sm:block py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
+              <div class="text-gray-500 mb-1">
+                Disponibilités
               </div>
-              <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
-                <div class="text-gray-500 mb-1">
-                  Disponibilités
-                </div>
-                <CommitmentFilter class="group">
-                  <template #button="{ activeValue }">
-                    <div class="flex space-x-2 items-center justify-between">
-                      <div class="flex space-x-2 items-center truncate">
-                        <ClockIcon class="h-5 w-5" />
-                        <div class="text-gray-900 truncate">
-                          {{ activeValue || 'Toutes' }}
-                        </div>
+              <CommitmentFilter class="group">
+                <template #button="{ activeValue }">
+                  <div class="flex space-x-2 items-center justify-between">
+                    <div class="flex space-x-2 items-center truncate">
+                      <ClockIcon class="h-5 w-5" />
+                      <div class="text-gray-900 truncate">
+                        {{ activeValue || 'Toutes' }}
                       </div>
-                      <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
                     </div>
-                  </template>
-                </CommitmentFilter>
+                    <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
+                  </div>
+                </template>
+              </CommitmentFilter>
+            </div>
+            <div class="hidden sm:block py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
+              <div class="text-gray-500 mb-1">
+                Mots-clés
               </div>
-              <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
-                <div class="text-gray-500 mb-1">
-                  Mots-clés
-                </div>
-                <SearchFilter />
-              </div>
+              <SearchFilter />
             </div>
           </div>
 
-          <div class="flex justify-center sm:hidden">
-            <Link class="mt-2" @click.native="isMobileFiltersOpen = true">
+          <div class="flex justify-center sm:hidden mt-4">
+            <BadgeFilter @click.native="isMobileFiltersOpen = true">
               Plus de filtres
-            </Link>
+            </BadgeFilter>
           </div>
 
           <div class="hidden sm:flex my-4 flex-wrap items-center justify-center gap-3">

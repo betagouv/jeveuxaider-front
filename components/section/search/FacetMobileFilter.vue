@@ -49,9 +49,9 @@
         </label>
       </div>
 
-      <div v-if="showMore && allValues.length > limitedFacets" class="">
-        <div class="">
-          Plus
+      <div v-if="showMore && allValues.length > showMoreLimit" class="">
+        <div class="" @click="showAllValues = !showAllValues">
+          {{ showAllValues ? 'Moins' : 'Plus' }}
         </div>
       </div>
     </div>
@@ -76,7 +76,7 @@ export default {
       type: String,
       required: true
     },
-    limitedFacets: {
+    showMoreLimit: {
       type: Number,
       default: 3
     },
@@ -90,13 +90,14 @@ export default {
       isOpen: false,
       facetHits: null,
       facetQuery: null,
-      showSearch: false
+      showSearch: false,
+      showAllValues: false
     }
   },
   computed: {
     allValues () {
+      console.log('this.facets', this.facets)
       if (this.facetHits) {
-        console.log('values', this.facetHits)
         return this.facetHits.map((facetHit) => {
           return {
             value: facetHit.value,
@@ -111,13 +112,16 @@ export default {
         }
       })
     },
+    limitedValues () {
+      return this.showMore && !this.showAllValues ? this.allValues.slice(0, this.showMoreLimit) : this.allValues
+    },
     activeValues () {
-      return this.allValues.filter((facet) => {
+      return this.limitedValues.filter((facet) => {
         return this.$route.query[this.facetName]?.split('|').includes(facet.value)
       })
     },
     inactiveValues () {
-      return this.allValues.filter((facet) => {
+      return this.limitedValues.filter((facet) => {
         return !this.$route.query[this.facetName]?.split('|').includes(facet.value)
       })
     },
