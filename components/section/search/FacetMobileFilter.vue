@@ -11,6 +11,7 @@
           />
         </div>
 
+        <!-- TODO: placeholder Rechercher une activité ... -->
         <FacetSearch
           v-else
           ref="facetSearch"

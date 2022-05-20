@@ -13,7 +13,7 @@
       >
         <template #title>
           <div class="font-bold">
-            Filtre de recherche
+            Filtres de recherche
           </div>
         </template>
 
@@ -42,9 +42,12 @@
       >
         <template #title>
           <div class="font-bold">
-            Filtre de recherche et localisation
+            Filtres de localisation
           </div>
         </template>
+        <div class="font-medium text-[15px]">
+          Je cherche une mission à faire…
+        </div>
         <TabsFacetFilter
           filter-name="type"
           class="w-full"
@@ -62,11 +65,12 @@
             }
           ]"
         />
+
         <template v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'">
           <LocalisationSuggestions :ip-lat-lng="searchResult.aroundLatLng" @updated="isLocationDrawerFiltersOpen = false" />
         </template>
         <template v-else>
-          <div class="">
+          <div class="text-gray-700">
             Vous pouvez réalisez des missions à distance, depuis chez vous ou le lieu de votre choix. Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quo consequuntur, minima voluptatem odit vel inventore maiores illo explicabo rem vitae ducimus at itaque ad dolorem aperiam odio, fugit fugiat.
           </div>
         </template>
@@ -80,7 +84,7 @@
             <Link v-if="hasActiveFilters" class="text-gray-500 underline text-sm" @click.native="deleteAllFilters()">
               Réinitialiser
             </Link>
-            <Button @click.native="isMobileFiltersOpen = false">
+            <Button @click.native="isLocationDrawerFiltersOpen = false">
               Voir les {{ searchResult.nbHits }} résultats
             </Button>
           </div>

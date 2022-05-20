@@ -9,7 +9,7 @@
       leave-to-class="-translate-x-full"
     >
       <div v-if="isOpen" role="dialog" aria-modal="true" class="fixed inset-y-0 left-0" :style="drawerStyle">
-        <div aria-hidden="true" class="w-screen max-w-md h-full">
+        <div aria-hidden="true" class="w-screen h-full">
           <div class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl">
             <div class="p-4">
               <div class="flex items-start justify-between">

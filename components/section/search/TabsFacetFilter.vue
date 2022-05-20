@@ -1,31 +1,31 @@
 <template>
-  <div class="flex">
-    <div v-for="tab,i in tabs" :key="i" class="flex-none">
-      <div
+  <div class="flex items-center">
+    <div
+      v-for="tab,i in tabs"
+      :key="i"
+      :class="[
+        'flex-grow flex flex-col sm:flex-row justify-center items-center px-4 py-3 sm:px-8 sm:py-6 cursor-pointer sm:space-x-2',
+        isActiveFilter(filterName, tab.filterValue) || tab.current ? 'bg-white shadow-xl' : 'shadow-inner-xl',
+        {'rounded-l-xl': i == 0},
+        {'rounded-r-xl': i == tabs.length - 1},
+      ]"
+      @click="handleClickTab(tab)"
+    >
+      <component
+        :is="tab.icon"
+        v-if="tab.icon"
         :class="[
-          'flex flex-col sm-flex-row justify-center items-center px-4 py-6 sm:px-8 sm:py-6 cursor-pointer space-x-2',
-          isActiveFilter(filterName, tab.filterValue) || tab.current ? 'bg-white shadow-xl' : 'shadow-inner-xl',
-          {'rounded-l-xl sm:rounded-t-none sm:rounded-l-xl': i == 0},
-          {'rounded-r-xl sm:rounded-b-none sm:rounded-r-xl': i == tabs.length - 1},
+          isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-jva-green-500' : 'text-gray-400',
+          'h-7 w-7 sm:h-5 sm:w-5 mb-2 sm:mb-0'
         ]"
-        @click="handleClickTab(tab)"
+        aria-hidden="true"
+      />
+      <span
+        class="text-center sm:text-left"
+        :class="[isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-gray-700 font-bold': 'text-gray-400 font-normal']"
       >
-        <component
-          :is="tab.icon"
-          v-if="tab.icon"
-          :class="[
-            isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-jva-green-500' : 'text-gray-400 group-hover:text-gray-500',
-            'h-8 w-8 mb-4 sm:mb-0 sm:h-5 sm:w-5'
-          ]"
-          aria-hidden="true"
-        />
-        <span
-          class=""
-          :class="[isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-gray-700 font-bold': 'text-gray-400 font-normal']"
-        >
-          {{ tab.label || tab.filterValue }}
-        </span>
-      </div>
+        {{ tab.label || tab.filterValue }}
+      </span>
     </div>
   </div>
 </template>

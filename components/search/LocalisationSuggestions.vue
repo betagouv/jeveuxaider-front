@@ -1,27 +1,26 @@
 <template>
   <div>
-    <div class="text-sm -full">
-      <div class="">
-        <div class="p-4 pb-0 space-y-3">
-          MA POSITION: xxxxx
-        </div>
+    <div class="space-y-3">
+      <div class="font-medium text-[15px]">
+        Ma ville est…
       </div>
-      <div class="">
-        <div class="p-4 pb-0 space-y-3">
-          <div class="font-medium">
-            Saisissez votre ville
+      <FacetSearch ref="facetSearch" v-model="searchValue" @input="handleInput" />
+    </div>
+    <div class="flex flex-col py-2 text-sm">
+      <div v-for="suggestion in suggestions" :key="suggestion.id" class="py-1 cursor-pointer flex justify-between truncate flex-1 group" @click="handleSelectedAdress(suggestion)">
+        <div class="flex items-center">
+          <LocationMarkerIcon
+            class="flex-none mr-2 transition text-gray-400"
+            width="16"
+            height="16"
+          />
+          <div class="truncate">
+            {{ suggestion.city }}
           </div>
-          <FacetSearch ref="facetSearch" v-model="searchValue" @input="handleInput" />
         </div>
-        <div class="flex flex-col py-2">
-          <div v-for="suggestion,i in suggestions" :key="i" class="px-4 py-1 text-gray-600 hover:bg-gray-50 cursor-pointer flex justify-between truncate flex-1" @click="handleSelectedAdress(suggestion)">
-            <div class="truncate">
-              {{ suggestion.city }}
-            </div>
-            <div class="text-gray-600 ml-1 font-light">
-              {{ suggestion.postcode }}
-            </div>
-          </div>
+
+        <div class="text-gray-600 ml-1 font-light">
+          {{ suggestion.postcode }}
         </div>
       </div>
     </div>

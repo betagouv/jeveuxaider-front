@@ -24,10 +24,14 @@
 
         <div class="text-sm">
           <div class="flex flex-col py-2">
-            <div v-for="suggestion in suggestions" :key="suggestion.id" class="px-4 py-1 text-gray-600 hover:bg-gray-50 cursor-pointer flex justify-between truncate flex-1" @click="handleSelectedAdress(suggestion)">
-              <div class="truncate">
-                {{ suggestion.city }}
+            <div v-for="suggestion in suggestions" :key="suggestion.id" class="px-4 py-1 cursor-pointer flex justify-between truncate flex-1 group" @click="handleSelectedAdress(suggestion)">
+              <div class="flex items-center">
+                <LocationMarkerIcon class="flex-none mr-2 transition text-gray-400 group-hover:text-jva-blue-500 group-hover:scale-110" width="16" height="16" />
+                <div class="truncate">
+                  {{ suggestion.city }}
+                </div>
               </div>
+
               <div class="text-gray-600 ml-1 font-light">
                 {{ suggestion.postcode }}
               </div>
