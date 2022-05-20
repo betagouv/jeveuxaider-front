@@ -5,35 +5,88 @@
       class="container border-b-0"
     />
 
-    <DrawerFilters
-      v-if="searchResult"
-      :is-open="isMobileFiltersOpen"
-      @close="isMobileFiltersOpen = false"
-    >
-      <template #title>
-        <div class="font-bold">
-          Filtre de recherche
-        </div>
-      </template>
+    <!-- MOBILE FILTERS -->
+    <template v-if="searchResult">
+      <DrawerFilters
+        :is-open="isMobileFiltersOpen"
+        @close="isMobileFiltersOpen = false"
+      >
+        <template #title>
+          <div class="font-bold">
+            Filtre de recherche
+          </div>
+        </template>
 
-      <FacetMobileFilter show-more facet-name="activity.name" label="Activités" :limit-options="3" :facets="facetResults('activity.name')" />
-      <FacetMobileFilter show-more facet-name="structure.name" label="Organisations" :limit-options="3" :facets="facetResults('structure.name')" />
-      <template #footer>
-        <div
-          :class="[
-            'p-4 flex items-center space-x-3',
-            hasActiveFilters ? 'justify-between' : 'justify-end'
+        <FacetMobileFilter show-more facet-name="activity.name" label="Activités" :limit-options="3" :facets="facetResults('activity.name')" />
+        <FacetMobileFilter show-more facet-name="structure.name" label="Organisations" :limit-options="3" :facets="facetResults('structure.name')" />
+        <template #footer>
+          <div
+            :class="[
+              'p-4 flex items-center space-x-3',
+              hasActiveFilters ? 'justify-between' : 'justify-end'
+            ]"
+          >
+            <Link v-if="hasActiveFilters" class="text-gray-500 underline text-sm" @click.native="deleteAllFilters()">
+              Effacer
+            </Link>
+            <Button @click.native="isMobileFiltersOpen = false">
+              Voir les {{ searchResult.nbHits }} résultats
+            </Button>
+          </div>
+        </template>
+      </DrawerFilters>
+
+      <DrawerFilters
+        :is-open="isLocationDrawerFiltersOpen"
+        @close="isLocationDrawerFiltersOpen = false"
+      >
+        <template #title>
+          <div class="font-bold">
+            Filtre de recherche et localisation
+          </div>
+        </template>
+        <TabsFacetFilter
+          filter-name="type"
+          class="w-full"
+          :tabs="[
+            {
+              icon: 'LocationMarkerIcon',
+              filterValue: 'Mission en présentiel',
+              current: !$route.query['type'],
+              label: 'Près de chez moi'
+            },
+            {
+              icon: 'DesktopComputerIcon',
+              filterValue: 'Mission à distance',
+              label: 'Depuis chez moi'
+            }
           ]"
-        >
-          <Link v-if="hasActiveFilters" class="text-gray-500 underline text-sm" @click.native="deleteAllFilters()">
-            Effacer
-          </Link>
-          <Button @click.native="isMobileFiltersOpen = false">
-            Voir les {{ searchResult.nbHits }} résultats
-          </Button>
-        </div>
-      </template>
-    </DrawerFilters>
+        />
+        <template v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'">
+          <LocalisationSuggestions :ip-lat-lng="searchResult.aroundLatLng" @updated="isLocationDrawerFiltersOpen = false" />
+        </template>
+        <template v-else>
+          <div class="">
+            Vous pouvez réalisez des missions à distance, depuis chez vous ou le lieu de votre choix. Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quo consequuntur, minima voluptatem odit vel inventore maiores illo explicabo rem vitae ducimus at itaque ad dolorem aperiam odio, fugit fugiat.
+          </div>
+        </template>
+        <template #footer>
+          <div
+            :class="[
+              'p-4 flex items-center space-x-3',
+              hasActiveFilters ? 'justify-between' : 'justify-end'
+            ]"
+          >
+            <Link v-if="hasActiveFilters" class="text-gray-500 underline text-sm" @click.native="deleteAllFilters()">
+              Réinitialiser
+            </Link>
+            <Button @click.native="isMobileFiltersOpen = false">
+              Voir les {{ searchResult.nbHits }} résultats
+            </Button>
+          </div>
+        </template>
+      </DrawerFilters>
+    </template>
 
     <div v-if="searchResult" class="container lg:mt-6 mb-12">
       <div class="flex flex-col space-y-6 sm:space-y-12">
@@ -68,7 +121,7 @@
           </template>
         </Sectionheading>
 
-        <div class="flex flex-col">
+        <div class="hidden sm:flex sm:flex-col">
           <div class="bg-white px-6 sm:py-6 shadow-xl rounded-xl grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:!divide-x">
             <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6">
               <div class="text-gray-500 mb-1">
@@ -84,7 +137,7 @@
                 </div>
               </div>
             </div>
-            <div class="hidden sm:block py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
+            <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
               <div class="text-gray-500 mb-1">
                 Activités
               </div>
@@ -103,7 +156,7 @@
                 </template>
               </FacetFilter>
             </div>
-            <div class="hidden sm:block py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
+            <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
               <div class="text-gray-500 mb-1">
                 Disponibilités
               </div>
@@ -121,20 +174,13 @@
                 </template>
               </CommitmentFilter>
             </div>
-            <div class="hidden sm:block py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
+            <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
               <div class="text-gray-500 mb-1">
                 Mots-clés
               </div>
               <SearchFilter />
             </div>
           </div>
-
-          <div class="flex justify-center sm:hidden mt-4">
-            <BadgeFilter @click.native="isMobileFiltersOpen = true">
-              Plus de filtres
-            </BadgeFilter>
-          </div>
-
           <div class="hidden sm:flex my-4 flex-wrap items-center justify-center gap-3">
             <FacetFilter facet-name="structure.name" label="Organisations" :facets="facetResults('structure.name')">
               <template #button="{ firstValueSelected, activeValuesCount }">
@@ -212,6 +258,20 @@
           </div>
         </div>
 
+        <div class="sm:hidden">
+          <div class="bg-white p-6 shadow-xl rounded-xl">
+            <LocalisationMobileFilter
+              :ip-lat-lng="searchResult.aroundLatLng"
+              @open="isLocationDrawerFiltersOpen = true"
+            />
+          </div>
+          <div class="flex justify-center mt-4">
+            <BadgeFilter @click.native="isMobileFiltersOpen = true">
+              Plus de filtres
+            </BadgeFilter>
+          </div>
+        </div>
+
         <div class="flex gap-8 flex-wrap justify-center">
           <nuxt-link
             v-for="item in searchResult.hits"
@@ -248,10 +308,12 @@ import FacetFilter from '~/components/section/search/FacetFilter.vue'
 import TabsFacetFilter from '~/components/section/search/TabsFacetFilter.vue'
 import BadgeFilter from '~/components/search/BadgeFilter.vue'
 import LocalisationFilter from '~/components/search/LocalisationFilter.vue'
+import LocalisationMobileFilter from '~/components/search/LocalisationMobileFilter.vue'
 import CommitmentFilter from '~/components/section/search/CommitmentFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import SearchFilter from '@/components/search/SearchFilter'
 import FacetMobileFilter from '@/components/section/search/FacetMobileFilter'
+import LocalisationSuggestions from '@/components/search/LocalisationSuggestions'
 
 export default {
   components: {
@@ -261,15 +323,18 @@ export default {
     TabsFacetFilter,
     BadgeFilter,
     LocalisationFilter,
+    LocalisationMobileFilter,
     SearchFilter,
-    FacetMobileFilter
+    FacetMobileFilter,
+    LocalisationSuggestions
   },
   mixins: [AlgoliaQueryBuilder],
   data () {
     return {
       showMoreFilters: ['domaines', 'structure.reseaux.name', 'department_name'],
       isShowMoreFilters: false,
-      isMobileFiltersOpen: false
+      isMobileFiltersOpen: false,
+      isLocationDrawerFiltersOpen: false
     }
   },
   async fetch () {
