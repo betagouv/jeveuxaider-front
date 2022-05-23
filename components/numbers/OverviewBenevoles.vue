@@ -3,6 +3,12 @@
     <BoxHeadingStatistics title="Bénévoles ›" link="/admin/statistics/utilisateurs" class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
+        :value="statistics.utilisateurs"
+        :title="`${$options.filters.pluralize(statistics.utilisateurs, 'Utilisateur', 'Utilisateurs', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.utilisateurs, 'inscrit', 'inscrits', false)}`"
+        link="/admin/statistics/utilisateurs"
+      />
+      <CardStatistic
         :value="statistics.benevoles"
         :title="`${$options.filters.pluralize(statistics.benevoles, 'Bénévole', 'Bénévoles', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.benevoles, 'inscrit', 'inscrits', false)}`"
