@@ -5,81 +5,84 @@
         Toggle facet
       </slot>
     </div>
-    <div v-if="isOpen" v-click-outside="onClickOutside">
-      <div class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-[15px] max-w-[350px] w-full">
-        <div class="p-4 space-y-3">
-          <div class="relative">
-            <div class="font-medium">
-              {{ label }}
-            </div>
+
+    <transition name="fade-in">
+      <div v-if="isOpen">
+        <div v-click-outside="onClickOutside" class="mt-2 absolute z-50 bg-white border shadow-xl rounded-xl text-[15px] max-w-[350px] w-full">
+          <div class="p-4 space-y-3">
+            <div class="relative">
+              <div class="font-medium">
+                {{ label }}
+              </div>
 
             <!-- <XIcon
               class=" text-gray-500 hover:text-black cursor-pointer absolute right-0 top-0 -mr-1"
               width="20"
               @click="isOpen = false"
             /> -->
-          </div>
+            </div>
 
-          <FacetSearch v-model="facetQuery" @input="handleChangeSearchFacetValues" />
+            <FacetSearch v-model="facetQuery" @input="handleChangeSearchFacetValues" />
 
-          <div class="relative overflow-hidden">
-            <div
-              class="absolute custom-gradient bottom-0 w-full pointer-events-none transition duration-500"
-              :class="[{'h-0': isScrollAtBottom}, {'h-12': !isScrollAtBottom}]"
-            />
+            <div class="relative overflow-hidden">
+              <div
+                class="absolute custom-gradient bottom-0 w-full pointer-events-none transition duration-500"
+                :class="[{'h-0': isScrollAtBottom}, {'h-12': !isScrollAtBottom}]"
+              />
 
-            <div ref="scrollContainer" class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray">
-              <div class="py-1 mr-2 space-y-2 text-sm">
-                <div v-if="[...activeValues, ...inactiveValues].length == 0" class="text-gray-400">
-                  Aucun résultat avec les filtres actuels.
-                </div>
+              <div ref="scrollContainer" class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray">
+                <div class="py-1 mr-2 space-y-2 text-sm">
+                  <div v-if="[...activeValues, ...inactiveValues].length == 0" class="text-gray-400">
+                    Aucun résultat avec les filtres actuels.
+                  </div>
 
-                <div
-                  v-for="(facet) in [...activeValues, ...inactiveValues]"
-                  :key="facet.value"
-                  :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
-                  class="cursor-pointer flex items-center px-1 group"
-                >
-                  <input
-                    :id="`${facetName}_${facet.value}`"
-                    :name="`${facetName}_${facet.value}`"
-                    :value="isActiveFilter(facetName, facet.value)"
-                    type="checkbox"
-                    :checked="isActiveFilter(facetName, facet.value)"
-                    class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500"
-                    @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
+                  <div
+                    v-for="(facet) in [...activeValues, ...inactiveValues]"
+                    :key="facet.value"
+                    :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
+                    class="cursor-pointer flex items-center px-1 group"
                   >
-                  <label
-                    :for="`${facetName}_${facet.value}`"
-                    class="ml-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500"
-                  >
-                    <div class="truncate">
-                      {{ facet.value }}
-                    </div>
-                    <div class="text-gray-600 ml-1 font-light">
-                      {{ facet.count }}
-                    </div>
-                  </label>
+                    <input
+                      :id="`${facetName}_${facet.value}`"
+                      :name="`${facetName}_${facet.value}`"
+                      :value="isActiveFilter(facetName, facet.value)"
+                      type="checkbox"
+                      :checked="isActiveFilter(facetName, facet.value)"
+                      class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500"
+                      @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
+                    >
+                    <label
+                      :for="`${facetName}_${facet.value}`"
+                      class="ml-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500"
+                    >
+                      <div class="truncate">
+                        {{ facet.value }}
+                      </div>
+                      <div class="text-gray-600 ml-1 font-light">
+                        {{ facet.count }}
+                      </div>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="border-t px-6 py-3 flex justify-end">
-          <div
-            class="text-sm"
-            :class="[
-              {'text-gray-400 pointer-events-none': !activeValuesCount},
-              {'text-jva-blue-500 cursor-pointer': activeValuesCount}
-            ]"
-            @click="deleteFacet()"
-          >
-            Effacer
+          <div class="border-t px-6 py-3 flex justify-end">
+            <div
+              class="text-sm"
+              :class="[
+                {'text-gray-400 pointer-events-none': !activeValuesCount},
+                {'text-jva-blue-500 cursor-pointer': activeValuesCount}
+              ]"
+              @click="deleteFacet()"
+            >
+              Effacer
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -180,6 +183,7 @@ export default {
       this.isScrollAtBottom = (scrollTop + clientHeight >= scrollHeight)
     },
     onClickOutside () {
+      console.log('Click outside')
       this.isOpen = false
     }
   }
