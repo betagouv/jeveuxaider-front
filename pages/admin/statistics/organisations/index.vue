@@ -30,6 +30,7 @@
         <div class="space-y-12 w-1/2">
           <OrganisationsByStates ref="organisationsByStates" />
           <OrganisationsByTypes ref="organisationsByTypes" />
+          <ParticipationsRefusedByResponsables ref="participationsRefusedByResponsables" />
         </div>
         <div class="space-y-12 w-1/2">
           <OrganisationsByDomaines ref="organisationsByDomaines" />
@@ -48,6 +49,7 @@ import OrganisationsByStates from '@/components/numbers/OrganisationsByStates.vu
 import OrganisationsByTypes from '@/components/numbers/OrganisationsByTypes.vue'
 import OrganisationsByDomaines from '@/components/numbers/OrganisationsByDomaines.vue'
 import OrganisationsByReseaux from '@/components/numbers/OrganisationsByReseaux.vue'
+import ParticipationsRefusedByResponsables from '@/components/numbers/ParticipationsRefusedByResponsables.vue'
 
 export default {
   components: {
@@ -57,7 +59,8 @@ export default {
     OrganisationsByStates,
     OrganisationsByTypes,
     OrganisationsByDomaines,
-    OrganisationsByReseaux
+    OrganisationsByReseaux,
+    ParticipationsRefusedByResponsables
   },
   layout: 'statistics',
   middleware: 'admin',
@@ -69,6 +72,7 @@ export default {
       this.$refs.organisationsStatistics.$fetch()
       this.$refs.organisationsByStates.$fetch()
       this.$refs.organisationsByTypes.$fetch()
+      this.$refs.participationsRefusedByResponsables.$fetch()
       this.$refs.organisationsByDomaines.$fetch()
       this.$refs.organisationsByReseaux.$fetch()
     }
