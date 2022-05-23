@@ -270,11 +270,6 @@ export default {
     }
     const { data: organisation } = await $axios.get(`/structures/${store.getters.currentRole.contextable_id}`)
 
-    // @todo attendre décision sur le sujet
-    // if (organisation.statut_juridique === 'Collectivité') {
-    //   organisation.domaines = $labels.domaines.map((domaine) => { return { id: domaine.key } })
-    // }
-
     return {
       form: organisation
     }
