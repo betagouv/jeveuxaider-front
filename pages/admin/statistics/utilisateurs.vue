@@ -20,13 +20,20 @@
       </template>
     </SectionHeading>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+    <div class="space-y-12">
       <UtilisateursStatistics ref="utilisateursStatistics" class="lg:col-span-2" />
       <Heading as="h2" :level="2">
         Les utilisateurs en détail
       </Heading>
       <UtilisateursByDate ref="utilisateursByDate" class="lg:col-span-2" />
-      <UtilisateursByDomaines ref="utilisateursByDomaines" />
+      <div class="flex flex-col lg:flex-row gap-12">
+        <div class="space-y-12 w-1/2">
+          <UtilisateursByDomaines ref="utilisateursByDomaines" />
+        </div>
+        <div class="space-y-12 w-1/2">
+          <UtilisateursWithParticipations ref="utilisateursWithParticipations" />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -36,13 +43,15 @@ import FiltersStatistics from '@/components/custom/FiltersStatistics'
 import UtilisateursStatistics from '@/components/numbers/UtilisateursStatistics.vue'
 import UtilisateursByDate from '@/components/numbers/UtilisateursByDate.vue'
 import UtilisateursByDomaines from '@/components/numbers/UtilisateursByDomaines.vue'
+import UtilisateursWithParticipations from '@/components/numbers/UtilisateursWithParticipations.vue'
 
 export default {
   components: {
     FiltersStatistics,
     UtilisateursStatistics,
     UtilisateursByDate,
-    UtilisateursByDomaines
+    UtilisateursByDomaines,
+    UtilisateursWithParticipations
   },
   layout: 'statistics',
   middleware: 'admin',
@@ -53,6 +62,7 @@ export default {
     refetch () {
       this.$refs.utilisateursStatistics.$fetch()
       this.$refs.utilisateursByDomaines.$fetch()
+      this.$refs.utilisateursWithParticipations.$fetch()
     }
   }
 }

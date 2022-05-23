@@ -18,6 +18,12 @@
         :subtitle="`par bénévole actif`"
         link="/admin/utilisateurs"
       />
+      <CardStatistic
+        :value="`${$options.filters.formatNumber(statistics.avg_time_between_inscription_and_participation)} min`"
+        title="Délai moyen"
+        subtitle="entre inscription et 1ère participation"
+        link="/admin/utilisateurs"
+      />
     </div>
   </Box>
 </template>
