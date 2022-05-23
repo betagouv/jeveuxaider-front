@@ -1,10 +1,11 @@
 <template>
   <span
-    class="inline-flex items-center rounded-full font-semibold max-w-full"
+    class="inline-flex items-center rounded-full max-w-full"
     :class="[
+      extraClass,
       {'px-2 py-0.5 text-xs': size == 'xxs'},
       {'px-3 py-1 text-xs': size == 'xs'},
-      {'px-4 py-2 text-sm': size == 'sm'},
+      {'px-4 py-1.5 text-sm': size == 'sm'},
 
       // GRAY
       {'text-white bg-gray-600': ['gray'].includes(color) && !plain},
@@ -12,7 +13,7 @@
 
       // GRAY LIGHT
       {'bg-gray-200 text-gray-900': ['gray-light','draft','Brouillon','Désinscrite'].includes(color) && !plain},
-      { 'border text-gray-600 border-gray-600': ['gray-light', 'draft','Brouillon','Désinscrite'].includes(color) && plain},
+      { 'border text-gray-600 border-gray-500': ['gray-light', 'draft','Brouillon','Désinscrite'].includes(color) && plain},
 
       // BLUE
       {'text-white bg-jva-blue-500': ['blue', 'Terminée'].includes(color) && !plain},
@@ -92,6 +93,10 @@ export default {
     color: {
       type: [String, Number],
       default: 'gray'
+    },
+    extraClass: {
+      type: String,
+      default: 'font-semibold'
     }
   },
   computed: {

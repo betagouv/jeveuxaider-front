@@ -58,7 +58,7 @@ html {
 }
 
 .fade-in-enter-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.25s;
 }
 .fade-in-enter,
 .fade-in-leave-to {
@@ -267,6 +267,20 @@ body.full-height-layout {
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
     @apply bg-jva-blue-500;
+  }
+}
+
+.custom-scrollbar-gray {
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    @apply bg-gray-100;
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    @apply bg-gray-300;
   }
 }
 

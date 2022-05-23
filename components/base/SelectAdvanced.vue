@@ -12,13 +12,14 @@
         :name="name"
         :tabindex="!disabled && '0'"
         class="cursor-pointer text-sm rounded-xl block w-full focus:outline-none border border-gray-300 focus:ring-1 bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate"
-        :class=" [
+        :class="[
           { 'pl-10': icon},
           {'!cursor-not-allowed !bg-gray-100': disabled},
           {'bg-transparent': variant == 'transparent' && !value},
           {'bg-white': variant == 'transparent' && value},
           {'px-6 py-3 pr-10': theme === 'default'},
-          {'px-2 py-1 pr-7': theme === 'filter'}
+          {'px-2 py-1 pr-7': theme === 'filter'},
+          selectClass
         ]"
         autocomplete="off"
         @keydown="onKeydown"
@@ -62,7 +63,8 @@
     </div>
     <div
       v-show="showOptions"
-      class="absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-1 overscroll-contain min-w-[200px]"
+      class="absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-2 overscroll-contain min-w-[200px]"
+      :class="[{'right-0': optionsPosition == 'right'}]"
       @focusout="showOptions = false"
     >
       <ul
@@ -107,7 +109,9 @@ export default {
     clearable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     theme: { type: String, default: 'default' },
-    prefixLabel: { type: String, default: null }
+    prefixLabel: { type: String, default: null },
+    selectClass: { type: String, default: '' },
+    optionsPosition: { type: String, default: 'left' } // left, right
   },
   data () {
     return {

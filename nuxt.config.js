@@ -61,6 +61,7 @@ export default {
     { src: '~/plugins/vue-libraries.js', mode: 'client' },
     '~/plugins/numeral.js',
     '~/plugins/marked.js',
+    '~/plugins/algolia.js',
     '~/plugins/api-algolia.js',
     '~/plugins/plausible.client.js',
     '~/plugins/apiengagement.client.js',
@@ -134,7 +135,10 @@ export default {
       token: process.env.PLAUSIBLE_TOKEN
     },
     algolia: {
-      termsIndex: process.env.ALGOLIA_TERMS_INDEX
+      appId: process.env.ALGOLIA_APP_ID,
+      searchKey: process.env.ALGOLIA_SEARCH_KEY,
+      termsIndex: process.env.ALGOLIA_TERMS_INDEX,
+      missionsIndex: process.env.ALGOLIA_MISSIONS_INDEX
     },
     flare: {
       projectKey: process.env.FLARE_KEY
