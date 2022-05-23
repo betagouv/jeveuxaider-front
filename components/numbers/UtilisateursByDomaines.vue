@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Répartition des utilisateurs par domaines d’action" show-period class="mb-6" />
+    <BoxHeadingStatistics title="Répartition des domaines d’action sélectionnés par les utilisateurs" show-period class="mb-6" />
     <div v-if="items" class="flex flex-col gap-2">
       <ListItemCount v-for="item in items" :key="item.id" :color="item.id ? item.id : 'gray-light'" :label="item.name ? item.name : 'Sans domaine'" :count="item.count" />
     </div>

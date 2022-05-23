@@ -4,8 +4,15 @@
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.utilisateurs"
-        :title="`${$options.filters.pluralize(statistics.utilisateurs, 'Nouvel utilisateur', 'Nouveaux utilisiteurs', false)}`"
-        link="/admin/utilisateurs"
+        :title="`${$options.filters.pluralize(statistics.utilisateurs, 'Utilisateur', 'Utilisateurs', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.utilisateurs, 'inscrit', 'inscrits', false)}`"
+        link="/admin/statistics/utilisateurs"
+      />
+      <CardStatistic
+        :value="statistics.benevoles"
+        :title="`${$options.filters.pluralize(statistics.benevoles, 'Bénévole', 'Bénévoles', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.benevoles, 'inscrit', 'inscrits', false)}`"
+        link="/admin/statistics/utilisateurs"
       />
       <CardStatistic
         :value="statistics.utilisateurs_with_participations"
@@ -17,6 +24,18 @@
         :title="`${$options.filters.pluralize(statistics.participations_avg, 'Participation', 'Participations', false)}`"
         :subtitle="`par bénévole actif`"
         link="/admin/utilisateurs"
+      />
+      <CardStatistic
+        :value="statistics.benevoles_visibles_marketplace"
+        :title="`${$options.filters.pluralize(statistics.benevoles_visibles_marketplace, 'Bénévole visible', 'Bénévoles visibles', false)}`"
+        subtitle="sur la marketplace"
+        link="/admin/statistics/utilisateurs"
+      />
+      <CardStatistic
+        :value="statistics.benevoles_notifications_martketplace"
+        :title="`${$options.filters.pluralize(statistics.benevoles_notifications_martketplace, 'Demande', 'Demandes', false)}`"
+        subtitle="via la marketplace"
+        link="/admin/statistics/utilisateurs"
       />
     </div>
   </Box>
