@@ -202,7 +202,7 @@
               required
               :error="errors.start_date"
             >
-              <InputDate v-model="form.start_date" name="start_date" />
+              <InputDate v-model="form.start_date" required name="start_date" />
               <!-- <Input
                 v-model="form.start_date"
                 name="start_date"
