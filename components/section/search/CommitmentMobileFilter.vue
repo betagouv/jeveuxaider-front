@@ -1,64 +1,32 @@
 <template>
   <div>
-    <div class="cursor-pointer" @click="isOpen = !isOpen">
-      <slot name="button" :isOpen="isOpen" :activeValue="activeValue">
-        Toggle facet
-      </slot>
+    <div class="flex space-x-4">
+      <FormControl
+        html-for="commitment__duration"
+        class="flex-1"
+      >
+        <SelectAdvanced
+          v-model="commitment__duration"
+          name="commitment__duration"
+          placeholder="1 heure"
+          :options="$labels.duration"
+          @changed="handleChange()"
+        />
+      </FormControl>
+      <FormControl
+        html-for="commitment__time_period"
+        class="min-w-[120px]"
+      >
+        <SelectAdvanced
+          v-model="commitment__time_period"
+          name="commitment__time_period"
+          placeholder="par an"
+          options-position="right"
+          :options="$labels.time_period"
+          @changed="handleChange()"
+        />
+      </FormControl>
     </div>
-
-    <transition name="fade-in">
-      <div v-if="isOpen" v-click-outside="() => isOpen = false">
-        <div class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-[15px] max-w-[350px] w-full">
-          <div class="p-4 space-y-3">
-            <div class="relative">
-              <div class="font-medium">
-                Disponibilités
-              </div>
-              <XIcon
-                class=" text-gray-400 hover:text-gray-500 cursor-pointer absolute right-0 top-0 -m-1"
-                width="20"
-                @click="isOpen = false"
-              />
-            </div>
-            <div class="flex space-x-4">
-              <FormControl
-                html-for="commitment__duration"
-                class="flex-1"
-              >
-                <SelectAdvanced
-                  v-model="commitment__duration"
-                  name="commitment__duration"
-                  placeholder="1 heure"
-                  :options="$labels.duration"
-                  @changed="handleChange()"
-                />
-              </FormControl>
-              <FormControl
-                html-for="commitment__time_period"
-                class="min-w-[120px]"
-              >
-                <SelectAdvanced
-                  v-model="commitment__time_period"
-                  name="commitment__time_period"
-                  placeholder="par an"
-                  options-position="right"
-                  :options="$labels.time_period"
-                  @changed="handleChange()"
-                />
-              </FormControl>
-            </div>
-          </div>
-          <div class="border-t px-3 py-4 flex justify-between">
-            <div v-if="activeValue" class="text-gray-600 cursor-pointer" @click="handleClickEffacer()">
-              Effacer
-            </div>
-            <div class="ml-auto text-jva-blue-500 cursor-pointer" @click="isOpen = false">
-              Valider
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition>
   </div>
 </template>
 

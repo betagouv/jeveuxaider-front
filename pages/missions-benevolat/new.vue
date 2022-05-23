@@ -17,6 +17,20 @@
           </div>
         </template>
 
+        <div class="space-y-2">
+          <div class="relative font-medium text-[15px]">
+            Mots-clés
+          </div>
+          <SearchFilter />
+        </div>
+
+        <div class="space-y-2">
+          <div class="relative font-medium text-[15px]">
+            Disponibilités
+          </div>
+          <CommitmentMobileFilter />
+        </div>
+
         <FacetMobileFilter show-more facet-name="publics_beneficiaires" label="Publics aidés" :limit-options="3" :facets="facetResults('publics_beneficiaires')" />
         <FacetMobileFilter show-more facet-name="activity.name" label="Activités" :limit-options="3" :facets="facetResults('activity.name')" />
         <FacetMobileFilter show-more facet-name="structure.name" label="Organisations" :limit-options="3" :facets="facetResults('structure.name')" />
@@ -192,7 +206,7 @@
             </div>
           </div>
 
-          <div class="lg:flex justify-between items-center my-8">
+          <div class="lg:flex justify-between items-center mt-8 lg:mb-8">
             <div class="hidden sm:flex flex-wrap items-center justify-start gap-3">
               <FacetFilter facet-name="structure.name" label="Organisations" :facets="facetResults('structure.name')">
                 <template #button="{ firstValueSelected, activeValuesCount }">
@@ -289,11 +303,12 @@
           </div>
         </div>
 
+        <!-- grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8 -->
         <div class="flex gap-8 flex-wrap justify-center">
           <nuxt-link
             v-for="item in searchResult.hits"
             :key="item.id"
-            class="flex w-[300px] hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px]"
+            class="w-[300px] flex hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px] overflow-hidden"
             :to="
               item.provider == 'api_engagement'
                 ? `/missions-benevolat/${item.id}`
@@ -325,6 +340,7 @@ import BadgeFilter from '~/components/search/BadgeFilter.vue'
 import LocalisationFilter from '~/components/search/LocalisationFilter.vue'
 import LocalisationMobileFilter from '~/components/search/LocalisationMobileFilter.vue'
 import CommitmentFilter from '~/components/section/search/CommitmentFilter.vue'
+import CommitmentMobileFilter from '~/components/section/search/CommitmentMobileFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import SearchFilter from '@/components/search/SearchFilter'
 import FacetMobileFilter from '@/components/section/search/FacetMobileFilter'
@@ -335,6 +351,7 @@ export default {
     CardMission,
     FacetFilter,
     CommitmentFilter,
+    CommitmentMobileFilter,
     TabsFacetFilter,
     BadgeFilter,
     LocalisationFilter,

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="group flex justify-between items-center cursor-pointer" @click="$emit('open')">
+    <div class="group flex justify-between items-end cursor-pointer" @click="$emit('open')">
       <div>
         <div class="text-gray-500 mb-1">
           Localisation
@@ -21,7 +21,7 @@
           </template>
         </div>
       </div>
-      <PencilIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
+      <PencilIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900 mb-1" />
     </div>
   </div>
 </template>

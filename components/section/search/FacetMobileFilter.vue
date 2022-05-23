@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="space-y-3">
+    <div class="space-y-2">
       <div class="relative font-medium text-[15px]">
         <div v-if="!showSearch" class="h-[29px]">
           <span>{{ label }}</span>
@@ -11,7 +11,6 @@
           />
         </div>
 
-        <!-- TODO: placeholder Rechercher une activité ... -->
         <FacetSearch
           v-else
           ref="facetSearch"
@@ -31,7 +30,7 @@
           v-for="(facet) in limitedValues"
           :key="facet.value"
           :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
-          class="cursor-pointer flex items-center px-1"
+          class="cursor-pointer flex items-center"
         >
           <input
             :id="`${facetName}_${facet.value}`"
