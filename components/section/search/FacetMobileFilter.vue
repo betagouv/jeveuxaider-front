@@ -28,7 +28,7 @@
         </div>
 
         <div
-          v-for="(facet) in [...activeValues, ...inactiveValues]"
+          v-for="(facet) in limitedValues"
           :key="facet.value"
           :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
           class="cursor-pointer flex items-center px-1"
@@ -123,15 +123,15 @@ export default {
       })
     },
     limitedValues () {
-      return this.showMore && !this.showAllValues ? this.allValues.slice(0, this.showMoreLimit) : this.allValues
+      return this.showMore && !this.showAllValues ? [...this.activeValues, ...this.inactiveValues].slice(0, this.showMoreLimit) : [...this.activeValues, ...this.inactiveValues]
     },
     activeValues () {
-      return this.limitedValues.filter((facet) => {
+      return this.allValues.filter((facet) => {
         return this.$route.query[this.facetName]?.split('|').includes(facet.value)
       })
     },
     inactiveValues () {
-      return this.limitedValues.filter((facet) => {
+      return this.allValues.filter((facet) => {
         return !this.$route.query[this.facetName]?.split('|').includes(facet.value)
       })
     },

@@ -17,8 +17,12 @@
           </div>
         </template>
 
+        <FacetMobileFilter show-more facet-name="publics_beneficiaires" label="Publics aidés" :limit-options="3" :facets="facetResults('publics_beneficiaires')" />
         <FacetMobileFilter show-more facet-name="activity.name" label="Activités" :limit-options="3" :facets="facetResults('activity.name')" />
         <FacetMobileFilter show-more facet-name="structure.name" label="Organisations" :limit-options="3" :facets="facetResults('structure.name')" />
+        <FacetMobileFilter show-more facet-name="domaines" label="Domaines" :limit-options="3" :facets="facetResults('domaines')" />
+        <FacetMobileFilter show-more facet-name="structure.reseaux.name" label="Réseaux" :limit-options="3" :facets="facetResults('structure.reseaux.name')" />
+        <FacetMobileFilter show-more facet-name="department_name" label="Départements" :limit-options="3" :facets="facetResults('department_name')" />
 
         <template #footer>
           <div
