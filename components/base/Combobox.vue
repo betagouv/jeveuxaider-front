@@ -86,7 +86,7 @@ export default {
   },
   data () {
     return {
-      search: this.value ? this.options.find(item => item[this.attributeKey] == this.value)[this.attributeLabel] : null,
+      search: this.value ? this.options.find(item => item[this.attributeKey] == this.value)?.[this.attributeLabel] : null,
       showOptions: false,
       highlightIndex: null
     }
