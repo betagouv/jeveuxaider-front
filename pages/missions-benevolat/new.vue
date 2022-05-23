@@ -2,7 +2,7 @@
   <div>
     <Breadcrumb
       :items="[{ label: 'Missions de bénévolat', link: '/missions-benevolat' }]"
-      class="container border-b-0"
+      class="container md:px-8 border-b-0"
     />
 
     <!-- MOBILE FILTERS -->
@@ -112,7 +112,7 @@
       </DrawerFilters>
     </template>
 
-    <div v-if="searchResult" class="container lg:mt-6 mb-12">
+    <div v-if="searchResult" class="container md:px-8 lg:mt-6 mb-12">
       <div class="flex flex-col space-y-6 sm:space-y-12">
         <SectionHeading
           title="Trouver une mission de bénévolat"
@@ -144,6 +144,20 @@
             </div>
           </template>
         </Sectionheading>
+
+        <div class="sm:hidden">
+          <div class="bg-white p-6 shadow-xl rounded-xl">
+            <LocalisationMobileFilter
+              :ip-lat-lng="searchResult.aroundLatLng"
+              @open="isLocationDrawerFiltersOpen = true"
+            />
+          </div>
+          <div class="flex justify-center mt-4">
+            <BadgeFilter @click.native="isMobileFiltersOpen = true">
+              Plus de filtres
+            </BadgeFilter>
+          </div>
+        </div>
 
         <div class="hidden sm:flex sm:flex-col relative z-10">
           <div class="bg-white px-6 sm:py-6 shadow-xl rounded-xl grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:!divide-x">
@@ -289,26 +303,11 @@
           </div>
         </div>
 
-        <div class="sm:hidden">
-          <div class="bg-white p-6 shadow-xl rounded-xl">
-            <LocalisationMobileFilter
-              :ip-lat-lng="searchResult.aroundLatLng"
-              @open="isLocationDrawerFiltersOpen = true"
-            />
-          </div>
-          <div class="flex justify-center mt-4">
-            <BadgeFilter @click.native="isMobileFiltersOpen = true">
-              Plus de filtres
-            </BadgeFilter>
-          </div>
-        </div>
-
-        <!-- grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8 -->
-        <div class="flex gap-8 flex-wrap justify-center">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8 xl:gap-6">
           <nuxt-link
             v-for="item in searchResult.hits"
             :key="item.id"
-            class="w-[300px] flex hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px] overflow-hidden"
+            class="w-full flex hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px] overflow-hidden"
             :to="
               item.provider == 'api_engagement'
                 ? `/missions-benevolat/${item.id}`
