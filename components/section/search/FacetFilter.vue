@@ -40,11 +40,11 @@
                     v-for="(facet) in [...activeValues, ...inactiveValues]"
                     :key="facet.value"
                     :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
-                    class="cursor-pointer flex items-center px-1 group"
+                    class="cursor-pointer flex items-center pl-1 group"
                   >
                     <input
-                      :id="`${facetName}_${facet.value}`"
-                      :name="`${facetName}_${facet.value}`"
+                      :id="`facetFilter__${facetName}_${facet.value}`"
+                      :name="`facetFilter__${facetName}_${facet.value}`"
                       :value="isActiveFilter(facetName, facet.value)"
                       type="checkbox"
                       :checked="isActiveFilter(facetName, facet.value)"
@@ -52,7 +52,7 @@
                       @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
                     >
                     <label
-                      :for="`${facetName}_${facet.value}`"
+                      :for="`facetFilter__${facetName}_${facet.value}`"
                       class="ml-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500"
                     >
                       <div class="truncate">
@@ -182,8 +182,8 @@ export default {
     handleScroll ({ target: { scrollTop, clientHeight, scrollHeight } }) {
       this.isScrollAtBottom = (scrollTop + clientHeight >= scrollHeight)
     },
-    onClickOutside () {
-      console.log('Click outside')
+    onClickOutside (e) {
+      console.log('Click outside', e)
       this.isOpen = false
     }
   }

@@ -33,8 +33,8 @@
           class="cursor-pointer flex items-center"
         >
           <input
-            :id="`${facetName}_${facet.value}`"
-            :name="`${facetName}_${facet.value}`"
+            :id="`facetMobileFilter__${facetName}_${facet.value}`"
+            :name="`facetMobileFilter__${facetName}_${facet.value}`"
             :value="isActiveFilter(facetName, facet.value)"
             type="checkbox"
             :checked="isActiveFilter(facetName, facet.value)"
@@ -42,7 +42,7 @@
             @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
           >
           <label
-            :for="`${facetName}_${facet.value}`"
+            :for="`facetMobileFilter__${facetName}_${facet.value}`"
             class="ml-2 flex justify-between truncate flex-1"
           >
             <div class="truncate">
