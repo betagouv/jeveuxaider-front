@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <v-date-picker v-model="date" is-required :model-config="modelConfig">
+    <v-date-picker v-model="date" :is-required="required" :model-config="modelConfig">
       <template #default="data">
         <div class="flex items-center relative w-full">
           <input
@@ -30,6 +30,10 @@ export default {
     name: {
       type: String,
       required: true
+    },
+    required: {
+      type: Boolean,
+      default: false
     }
   },
   data () {

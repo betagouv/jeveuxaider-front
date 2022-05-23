@@ -7,12 +7,12 @@
         {'h-[30px] w-[30px]': size == 'xs'},
         {'h-[30px] w-[30px]': size == 'sm'},
 
-        {'bg-gray-600': ['gray','canceled','finished','Terminée','unsubscribed'].includes(color)},
-        {'bg-gray-200': ['gray-light','draft','Brouillon','Désinscrite'].includes(color)},
-        {'bg-jva-blue-500': ['blue', 'Terminée'].includes(color)},
-        {'bg-jva-orange-500': ['orange', 'En attente de validation', 'En cours de traitement', 'waiting','in_progress'].includes(color)},
+        {'bg-gray-600': ['gray','canceled','finished','Terminée','unsubscribed', 'no_response'].includes(color)},
+        {'bg-gray-200': ['gray-light','draft','Brouillon','Désinscrite','other'].includes(color)},
+        {'bg-jva-blue-500': ['blue', 'Terminée','mission_terminated'].includes(color)},
+        {'bg-jva-orange-500': ['orange', 'En attente de validation', 'En cours de traitement', 'waiting','in_progress','requirements_not_fulfilled'].includes(color)},
         {'bg-jva-green-500': ['green', 'Validée', 'validated'].includes(color)},
-        {'bg-jva-red-500': ['red', 'Signalée', 'Annulée', 'Refusée', 'refused','signaled'].includes(color)},
+        {'bg-jva-red-500': ['red', 'Signalée', 'Annulée', 'Refusée', 'refused','signaled','not_available','change_mind'].includes(color)},
 
         {'bg-domaine-solidarite': [7,'solidarite','solidarite-et-insertion'].includes(color)},
         {'bg-domaine-nature': [10,'nature'].includes(color)},
@@ -24,9 +24,10 @@
         {'bg-domaine-memoire': [8,'memoire'].includes(color)},
         {'bg-domaine-cooperation': [6,'cooperation'].includes(color)},
         {'bg-domaine-culture': [3,'culture','art'].includes(color)},
+        color
       ]"
     />
-    <div class="text-gray-500">
+    <div class="text-gray-500 truncate flex-1">
       {{ label }}
     </div>
     <div class="font-medium">

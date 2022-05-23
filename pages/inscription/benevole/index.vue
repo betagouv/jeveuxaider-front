@@ -245,7 +245,7 @@
                         required
                         :error="errors.birthday"
                       >
-                        <InputDate v-model="form.birthday" name="birthday" />
+                        <InputDate v-model="form.birthday" required name="birthday" />
                       </FormControl>
                       <FormControl
                         label="Mot de passe"

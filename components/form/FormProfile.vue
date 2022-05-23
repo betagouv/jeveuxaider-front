@@ -102,7 +102,7 @@
               required
               :error="errors.birthday"
             >
-              <InputDate v-model="form.birthday" name="birthday" />
+              <InputDate v-model="form.birthday" required name="birthday" />
             </FormControl>
             <FormControl label="Profession" html-for="type" required :error="errors.type">
               <SelectAdvanced

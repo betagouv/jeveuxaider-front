@@ -19,6 +19,11 @@
         :subtitle="`${$options.filters.pluralize(statistics.missions_snu, 'créée', 'créées', false)}`"
         link="/admin/missions"
       />
+      <CardStatistic
+        :value="statistics.missions_snu_participations_max_sum"
+        :title="`${$options.filters.pluralize(statistics.missions_snu_participations_max_sum, 'Place SNU-MIG', 'Places SNU-MIG', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.missions_snu_participations_max_sum, 'proposée', 'proposées', false)}`"
+      />
     </div>
   </Box>
 </template>

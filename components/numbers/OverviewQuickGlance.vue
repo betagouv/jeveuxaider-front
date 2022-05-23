@@ -17,7 +17,7 @@
       />
       <CardStatistic
         :value="statistics.participations"
-        :title="`${$options.filters.pluralize(statistics.participations, 'Participation', 'Participations', false)}`"
+        :title="`${$options.filters.pluralize(statistics.participations, 'Candidature', 'Candidatures', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.participations, 'proposée', 'proposées', false)}`"
         link="/admin/statistics/participations"
       />
