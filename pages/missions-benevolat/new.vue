@@ -307,7 +307,7 @@
           <nuxt-link
             v-for="item in searchResult.hits"
             :key="item.id"
-            class="w-full flex hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px] overflow-hidden"
+            class="flex min-w-0 hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px]"
             :to="
               item.provider == 'api_engagement'
                 ? `/missions-benevolat/${item.id}`
