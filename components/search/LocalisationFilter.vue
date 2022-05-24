@@ -85,24 +85,39 @@ export default {
         {
           id: 'initial_1',
           city: 'Paris',
-          coordinates: ['2.347', '48.859']
+          aroundLatLng: '2.347,48.859'
         },
         {
           id: 'initial_2',
-          city: 'Lyon',
-          coordinates: ['4.835', '45.758']
+          city: 'Marseille',
+          aroundLatLng: '5.405,43.282'
         },
         {
           id: 'initial_3',
-          city: 'Marseille',
-          coordinates: ['5.405', '43.282']
+          city: 'Lyon',
+          aroundLatLng: '4.835,45.758'
+        },
+        {
+          id: 'initial_4',
+          city: 'Toulouse',
+          aroundLatLng: '43.603746,1.434497'
+        },
+        {
+          id: 'initial_5',
+          city: 'Bordeaux',
+          aroundLatLng: '44.851895,-0.587877'
         }
       ]
     }
   },
   computed: {
     suggestions () {
-      return this.fetchSuggestions.length ? this.fetchSuggestions : this.initialSuggestions
+      return this.fetchSuggestions.length
+        ? this.fetchSuggestions
+        : [
+            ...this.$cookies.get('localisation-history') ?? [],
+            ...this.initialSuggestions
+          ].reduce((unique, item) => (unique.find(i => i.aroundLatLng == item.aroundLatLng) ? unique : [...unique, item]), []).slice(0, 5)
     }
   },
   watch: {
@@ -135,7 +150,7 @@ export default {
       const formatOptions = data.features.map((option) => {
         return {
           ...option.properties,
-          coordinates: option.geometry.coordinates,
+          aroundLatLng: `${option.geometry.coordinates[1]},${option.geometry.coordinates[0]}`,
           typeLabel: this.$options.filters.label(option.properties.type, 'geoType')
         }
       })
@@ -156,18 +171,32 @@ export default {
       this.timeout()
     },
     handleSelectedAdress (suggestion) {
-      if (suggestion === null) {
-        this.$router.push({
-          path: this.$route.path,
-          query: { ...this.$route.query, aroundLatLng: undefined, city: undefined, page: undefined }
-        })
-      } else {
-        this.$router.push({
-          path: this.$route.path,
-          query: { ...this.$route.query, aroundLatLng: `${suggestion.coordinates[1]},${suggestion.coordinates[0]}`, city: suggestion.city, page: undefined }
-        })
-      }
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.$route.query,
+          aroundLatLng: suggestion?.aroundLatLng,
+          city: suggestion?.city,
+          page: undefined
+        }
+      })
       this.isOpen = false
+      this.fetchSuggestions = []
+
+      if (suggestion) {
+        this.setHistory(suggestion)
+      }
+    },
+    setHistory (suggestion) {
+      const history = [
+        {
+          aroundLatLng: suggestion.aroundLatLng,
+          city: suggestion.city,
+          postcode: suggestion.postcode
+        },
+        ...this.$cookies.get('localisation-history') ?? []
+      ].reduce((unique, item) => (unique.find(i => i.aroundLatLng == item.aroundLatLng) ? unique : [...unique, item]), []).slice(0, 5)
+      this.$cookies.set('localisation-history', history)
     }
   }
 }
