@@ -60,6 +60,10 @@ export default {
     }
   },
   async fetch () {
+    if (!this.$labels.departments.find(dep => dep.key == this.department)) {
+      return
+    }
+
     this.loading = true
     const { data: referents } = await this.$axios.get('/profiles', {
       params: {
