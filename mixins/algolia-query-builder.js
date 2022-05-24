@@ -5,7 +5,7 @@ export default {
       searchResult: null,
       searchFacetResults: [],
       indexName: this.$config.algolia.missionsIndex,
-      availableFacets: ['type', 'activity.name', 'structure.name', 'department_name', 'domaines', 'structure.reseaux.name'],
+      availableFacets: ['type', 'activity.name', 'structure.name', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires'],
       availableNumericFilters: ['commitment__total']
     }
   },
