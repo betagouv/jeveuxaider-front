@@ -48,8 +48,9 @@ export default {
   },
   methods: {
     clear () {
-      this.$emit('clear')
       this.inputValue = ''
+      this.$refs.input.focus()
+      this.$emit('clear')
     }
   }
 }

@@ -28,6 +28,8 @@
 </template>
 
 <script>
+// @todo: refactoriser avec le desktop
+
 import { debounce } from 'lodash'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
@@ -51,27 +53,32 @@ export default {
         {
           id: 'initial_1',
           city: 'Paris',
-          aroundLatLng: '2.347,48.859'
+          aroundLatLng: '48.859,2.347',
+          postcode: '75001'
         },
         {
           id: 'initial_2',
           city: 'Marseille',
-          aroundLatLng: '5.405,43.282'
+          aroundLatLng: '43.282,5.405',
+          postcode: '13001'
         },
         {
           id: 'initial_3',
           city: 'Lyon',
-          aroundLatLng: '4.835,45.758'
+          aroundLatLng: '45.758,4.835',
+          postcode: '69001'
         },
         {
           id: 'initial_4',
           city: 'Toulouse',
-          aroundLatLng: '43.603746,1.434497'
+          aroundLatLng: '43.603746,1.434497',
+          postcode: '31000'
         },
         {
           id: 'initial_5',
           city: 'Bordeaux',
-          aroundLatLng: '44.851895,-0.587877'
+          aroundLatLng: '44.851895,-0.587877',
+          postcode: '33200'
         }
       ]
     }
