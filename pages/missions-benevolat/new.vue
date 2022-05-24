@@ -306,7 +306,7 @@
                 </template>
               </FacetFilter>
 
-              <FacetFilter facet-name="department_name" label="Départements" :facets="facetResults('department_name')" options-class="right-0 lg:left-0">
+              <FacetFilter v-if="$route.query.type != 'Mission à distance'" facet-name="department_name" label="Départements" :facets="facetResults('department_name')" options-class="right-0 lg:left-0">
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <BadgeFilter :is-active="!!activeValuesCount">
                     <span v-if="!firstValueSelected">Départements</span>
