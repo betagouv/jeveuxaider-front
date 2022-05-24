@@ -30,7 +30,7 @@
               v-scroll-lock="isOpen"
               class="flex-1 overflow-y-auto overscroll-contain p-4"
             >
-              <div class="space-y-6">
+              <div class="space-y-8">
                 <slot />
               </div>
             </div>

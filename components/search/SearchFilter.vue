@@ -1,10 +1,10 @@
 <template>
-  <div class="flex space-x-2 items-center">
-    <SearchIcon class="text-gray-900 h-5 w-5" />
+  <div class="flex space-x-2 items-center group">
+    <SearchIcon class="text-gray-900 h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
     <input
       type="text"
-      placeholder="Recherche..."
-      class="pl-0 flex-1 border-0 w-full bg-transparent py-0 focus:ring-0"
+      placeholder="Mots-clés"
+      :class="['pl-0 flex-1 border-0 w-full bg-transparent py-0 focus:ring-0', {'font-bold': searchValue}]"
       :value="searchValue"
       @input="handleInput"
     >

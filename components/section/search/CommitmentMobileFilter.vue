@@ -21,7 +21,7 @@
           v-model="commitment__time_period"
           name="commitment__time_period"
           placeholder="par an"
-          options-position="right"
+          options-class="right-0"
           :options="$labels.time_period"
           @changed="handleChange()"
         />

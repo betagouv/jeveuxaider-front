@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div class="relative">
     <div class="group flex justify-between items-center cursor-pointer" @click="isOpen = !isOpen">
       <div class="flex space-x-2 items-center text-gray-900 truncate">
-        <LocationMarkerIcon class="h-5 w-5 flex-none" />
+        <LocationMarkerIcon class="h-5 w-5 flex-none transition-opacity opacity-50 group-hover:opacity-100" />
         <div v-if="ipLatLng" class="truncate">
-          Près de chez moi <span v-if="ipCity">({{ ipCity }})</span>
+          Autour de moi
         </div>
-        <div v-else>
+        <div v-else class="font-bold">
           {{ $route.query.city }}
         </div>
       </div>
@@ -14,42 +14,40 @@
     </div>
 
     <transition name="fade-in">
-      <div v-if="isOpen" v-click-outside="onClickOutside">
-        <div class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-[15px] max-w-[350px] w-full">
-          <div class="p-4 pb-0 space-y-3">
-            <div class="font-medium">
-              {{ label }}
-            </div>
-
-            <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Nom ou code postal" @input="handleInput" />
+      <div v-if="isOpen" v-click-outside="onClickOutside" class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-[15px] w-[350px]">
+        <div class="p-4 pb-0 space-y-3">
+          <div class="font-medium">
+            {{ label }}
           </div>
 
-          <div class="text-sm">
-            <div class="flex flex-col py-2">
-              <div v-for="suggestion in suggestions" :key="suggestion.id" class="px-4 py-1 cursor-pointer flex justify-between truncate flex-1 group" @click="handleSelectedAdress(suggestion)">
-                <div class="flex items-center">
-                  <LocationMarkerIcon class="flex-none mr-2 transition text-gray-400 group-hover:text-jva-blue-500 group-hover:scale-110" width="16" height="16" />
-                  <div class="truncate">
-                    {{ suggestion.city }}
-                  </div>
-                </div>
+          <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Nom ou code postal" @input="handleInput" />
+        </div>
 
-                <div class="text-gray-600 ml-1 font-light">
-                  {{ suggestion.postcode }}
+        <div class="text-sm">
+          <div class="flex flex-col py-2">
+            <div v-for="suggestion in suggestions" :key="suggestion.id" class="px-4 py-2 cursor-pointer flex justify-between truncate flex-1 group" @click="handleSelectedAdress(suggestion)">
+              <div class="flex items-center">
+                <LocationMarkerIcon class="flex-none mr-2 transition text-gray-400 group-hover:text-jva-blue-500 group-hover:scale-110" width="16" height="16" />
+                <div class="truncate">
+                  {{ suggestion.city }}
                 </div>
+              </div>
+
+              <div class="text-gray-600 ml-1 font-light">
+                {{ suggestion.postcode }}
               </div>
             </div>
+          </div>
 
-            <div class="border-t px-6 py-3 flex justify-end">
-              <div
-                :class="[
-                  {'text-gray-400 pointer-events-none': !$route.query.city},
-                  {'text-jva-blue-500 cursor-pointer': $route.query.city}
-                ]"
-                @click="handleSelectedAdress(null)"
-              >
-                Effacer
-              </div>
+          <div class="border-t px-6 py-3 flex justify-end">
+            <div
+              :class="[
+                {'text-gray-400 pointer-events-none': !$route.query.city},
+                {'text-jva-blue-500 cursor-pointer': $route.query.city}
+              ]"
+              @click="handleSelectedAdress(null)"
+            >
+              Effacer
             </div>
           </div>
         </div>
@@ -81,7 +79,6 @@ export default {
   data () {
     return {
       isOpen: false,
-      ipCity: null,
       searchValue: this.$route.query.city,
       fetchSuggestions: [],
       initialSuggestions: [
@@ -117,16 +114,6 @@ export default {
         await this.$nextTick()
         this.$refs.facetSearch.$refs?.input?.focus()
       }
-    },
-    ipLatLng: {
-      async handler (newVal) {
-        if (newVal) {
-          const [lat, lng] = newVal.split(',')
-          const res = await this.$axios.get(`https://api-adresse.data.gouv.fr/reverse/?lon=${lng}&lat=${lat}`)
-          this.ipCity = res.data?.features[0]?.properties?.city
-        }
-      },
-      immediate: true
     }
   },
   methods: {

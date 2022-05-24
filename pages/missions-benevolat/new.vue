@@ -31,12 +31,48 @@
           <CommitmentMobileFilter />
         </div>
 
-        <FacetMobileFilter show-more facet-name="publics_beneficiaires" label="Publics aidés" :limit-options="3" :facets="facetResults('publics_beneficiaires')" />
-        <FacetMobileFilter show-more facet-name="activity.name" label="Activités" :limit-options="3" :facets="facetResults('activity.name')" />
-        <FacetMobileFilter show-more facet-name="structure.name" label="Organisations" :limit-options="3" :facets="facetResults('structure.name')" />
-        <FacetMobileFilter show-more facet-name="domaines" label="Domaines" :limit-options="3" :facets="facetResults('domaines')" />
-        <FacetMobileFilter show-more facet-name="structure.reseaux.name" label="Réseaux" :limit-options="3" :facets="facetResults('structure.reseaux.name')" />
-        <FacetMobileFilter show-more facet-name="department_name" label="Départements" :limit-options="3" :facets="facetResults('department_name')" />
+        <FacetMobileFilter
+          show-more
+          facet-name="publics_beneficiaires"
+          label="Publics aidés"
+          :limit-options="3"
+          :facets="facetResults('publics_beneficiaires')"
+        />
+        <FacetMobileFilter
+          show-more
+          facet-name="activity.name"
+          label="Activités"
+          :limit-options="3"
+          :facets="facetResults('activity.name')"
+        />
+        <FacetMobileFilter
+          show-more
+          facet-name="structure.name"
+          label="Organisations"
+          :limit-options="3"
+          :facets="facetResults('structure.name')"
+        />
+        <FacetMobileFilter
+          show-more
+          facet-name="domaines"
+          label="Domaines"
+          :limit-options="3"
+          :facets="facetResults('domaines')"
+        />
+        <FacetMobileFilter
+          show-more
+          facet-name="structure.reseaux.name"
+          label="Réseaux"
+          :limit-options="3"
+          :facets="facetResults('structure.reseaux.name')"
+        />
+        <FacetMobileFilter
+          show-more
+          facet-name="department_name"
+          label="Départements"
+          :limit-options="3"
+          :facets="facetResults('department_name')"
+        />
 
         <template #footer>
           <div
@@ -169,8 +205,8 @@
                 <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Saisissez votre ville" :ip-lat-lng="searchResult.aroundLatLng" />
                 <div v-else>
                   <div class="flex space-x-2 items-center">
-                    <DesktopComputerIcon class="h-5 w-5" />
-                    <span class="text-gray-500">Depuis chez moi</span>
+                    <DesktopComputerIcon class="h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
+                    <span class="font-bold">Depuis chez moi</span>
                   </div>
                 </div>
               </div>
@@ -183,9 +219,9 @@
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <div class="flex space-x-2 items-center justify-between group">
                     <div class="flex space-x-2 items-center">
-                      <HandIcon class="h-5 w-5" />
-                      <span v-if="!firstValueSelected" class="text-gray-900">Toutes</span>
-                      <span v-else class="text-gray-900">
+                      <HandIcon class="h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
+                      <span v-if="!firstValueSelected">Toutes</span>
+                      <span v-else class="font-bold">
                         {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
                       </span>
                     </div>
@@ -202,8 +238,8 @@
                 <template #button="{ activeValue }">
                   <div class="flex space-x-2 items-center justify-between group">
                     <div class="flex space-x-2 items-center truncate">
-                      <ClockIcon class="h-5 w-5" />
-                      <div class="text-gray-900 truncate">
+                      <ClockIcon class="h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
+                      <div :class="['truncate', {'font-bold': activeValue }]">
                         {{ activeValue || 'Toutes' }}
                       </div>
                     </div>
@@ -214,14 +250,14 @@
             </div>
             <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
               <div class="text-gray-500 mb-1">
-                Mots-clés
+                Recherche
               </div>
               <SearchFilter />
             </div>
           </div>
 
-          <div class="lg:flex justify-between items-center mt-8 lg:mb-8">
-            <div class="hidden sm:flex flex-wrap items-center justify-start gap-3">
+          <div class="lg:flex justify-between items-center mt-8 lg:mb-4">
+            <div class="hidden sm:flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
               <FacetFilter facet-name="structure.name" label="Organisations" :facets="facetResults('structure.name')">
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <BadgeFilter :is-active="!!activeValuesCount">
@@ -246,7 +282,7 @@
                 </template>
               </FacetFilter>
 
-              <FacetFilter v-if="isShowMoreFilters || $route.query['domaines']" facet-name="domaines" label="Domaines" :facets="facetResults('domaines')">
+              <FacetFilter facet-name="domaines" label="Domaines" :facets="facetResults('domaines')">
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <BadgeFilter :is-active="!!activeValuesCount">
                     <span v-if="!firstValueSelected">Domaines</span>
@@ -258,7 +294,7 @@
                 </template>
               </FacetFilter>
 
-              <FacetFilter v-if="isShowMoreFilters || $route.query['structure.reseaux.name']" facet-name="structure.reseaux.name" label="Réseaux" :facets="facetResults('structure.reseaux.name')">
+              <FacetFilter facet-name="structure.reseaux.name" label="Réseaux" :facets="facetResults('structure.reseaux.name')" options-class="right-0 md:left-0">
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <BadgeFilter :is-active="!!activeValuesCount">
                     <span v-if="!firstValueSelected">Réseaux</span>
@@ -270,7 +306,7 @@
                 </template>
               </FacetFilter>
 
-              <FacetFilter v-if="isShowMoreFilters || $route.query['department_name']" facet-name="department_name" label="Départements" :facets="facetResults('department_name')">
+              <FacetFilter facet-name="department_name" label="Départements" :facets="facetResults('department_name')" options-class="right-0 lg:left-0">
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <BadgeFilter :is-active="!!activeValuesCount">
                     <span v-if="!firstValueSelected">Départements</span>
@@ -281,29 +317,21 @@
                   </BadgeFilter>
                 </template>
               </FacetFilter>
-
-              <div
-                v-if="!isShowMoreFilters && !allShowMoreFiltersActive"
-                class="rounded-full border text-sm flex items-center justify-center h-[34px] w-[34px] text-gray-600 hover:bg-gray-200 border-gray-500 cursor-pointer"
-                @click="isShowMoreFilters = true"
-              >
-                <PlusIcon width="20" />
-              </div>
             </div>
 
-            <div class="hidden sm:flex lg:items-center lg:justify-center mt-4 lg:mt-0">
+            <div class="hidden sm:flex lg:items-center lg:justify-center mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
               <Link
-                class="underline text-sm"
+                class="uppercase hover:underline text-sm"
                 :link-class="[{'pointer-events-none opacity-0': !hasActiveFilters}]"
                 @click.native="deleteAllFilters()"
               >
-                Réinitialiser les filtres
+                Réinitialiser
               </Link>
             </div>
           </div>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8 xl:gap-6">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto">
           <nuxt-link
             v-for="item in searchResult.hits"
             :key="item.id"
@@ -362,19 +390,12 @@ export default {
   mixins: [AlgoliaQueryBuilder],
   data () {
     return {
-      showMoreFilters: ['domaines', 'structure.reseaux.name', 'department_name'],
-      isShowMoreFilters: false,
       isMobileFiltersOpen: false,
       isLocationDrawerFiltersOpen: false
     }
   },
   async fetch () {
     await this.search()
-  },
-  computed: {
-    allShowMoreFiltersActive () {
-      return this.showMoreFilters.every(facetName => this.$route.query[facetName])
-    }
   },
   watch: {
     $route: '$fetch'

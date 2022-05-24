@@ -21,7 +21,7 @@
         />
       </div>
 
-      <div class="text-sm space-y-2">
+      <div class="text-sm space-y-4">
         <div v-if="[...activeValues, ...inactiveValues].length == 0" class="text-gray-400">
           Aucun résultat avec les filtres actuels.
         </div>

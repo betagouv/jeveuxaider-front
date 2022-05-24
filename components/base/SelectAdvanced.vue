@@ -64,7 +64,7 @@
     <div
       v-show="showOptions"
       class="absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-2 overscroll-contain min-w-[200px]"
-      :class="[{'right-0': optionsPosition == 'right'}]"
+      :class="['absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-2 overscroll-contain min-w-[200px]', optionsClass]"
       @focusout="showOptions = false"
     >
       <ul
@@ -111,7 +111,7 @@ export default {
     theme: { type: String, default: 'default' },
     prefixLabel: { type: String, default: null },
     selectClass: { type: String, default: '' },
-    optionsPosition: { type: String, default: 'left' } // left, right
+    optionsClass: { type: String, default: '' }
   },
   data () {
     return {
