@@ -9,7 +9,7 @@
           <template v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'">
             <LocationMarkerIcon class="h-5 w-5" />
             <div v-if="ipLatLng">
-              Près de chez moi <span v-if="ipCity">({{ ipCity }})</span>
+              Autour de moi
             </div>
             <div v-else>
               {{ $route.query.city }}
@@ -38,25 +38,7 @@ export default {
     }
   },
   data () {
-    return {
-      ipCity: null
-    }
-  },
-  computed: {
-
-  },
-  watch: {
-
-  },
-  async mounted () {
-    if (this.ipLatLng) {
-      const [lat, lng] = this.ipLatLng.split(',')
-      const res = await this.$axios.get(`https://api-adresse.data.gouv.fr/reverse/?lon=${lng}&lat=${lat}`)
-      this.ipCity = res.data?.features[0]?.properties?.city
-    }
-  },
-  methods: {
-
+    return {}
   }
 }
 </script>
