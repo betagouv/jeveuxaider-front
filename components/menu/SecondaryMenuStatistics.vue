@@ -53,7 +53,8 @@ export default {
             { label: 'Organisations', to: '/admin/statistics/organisations' },
             { label: 'Missions', to: '/admin/statistics/missions' },
             { label: 'Participations', to: '/admin/statistics/participations' },
-            { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' }
+            { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
+            { label: 'Places', to: '/admin/statistics/places' }
           ]
         },
         {

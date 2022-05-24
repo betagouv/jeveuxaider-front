@@ -49,7 +49,7 @@ export default {
     }).then((response) => {
       this.loading = false
       this.chartData = {
-        labels: ['Actif', 'Inactif'],
+        labels: ['Avec participation', 'Sans participation'],
         datasets: [
           {
             data: Object.values(response.data),

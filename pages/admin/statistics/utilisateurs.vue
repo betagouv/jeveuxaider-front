@@ -21,11 +21,11 @@
     </SectionHeading>
 
     <div class="space-y-12">
-      <UtilisateursStatistics ref="utilisateursStatistics" class="lg:col-span-2" />
+      <UtilisateursStatistics ref="utilisateursStatistics" />
       <Heading as="h2" :level="2">
         Les utilisateurs en détail
       </Heading>
-      <UtilisateursByDate ref="utilisateursByDate" class="lg:col-span-2" />
+      <UtilisateursByDate ref="utilisateursByDate" />
       <div class="flex flex-col lg:flex-row gap-12">
         <div class="space-y-12 w-1/2">
           <ParticipationsCanceledByBenevoles ref="participationsCanceledByBenevoles" />
