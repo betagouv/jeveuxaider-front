@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des activités...">
-    <BoxHeadingStatistics title="Activités avec le plus de places" class="mb-6" />
+    <BoxHeadingStatistics title="Activités avec le plus de places" no-period class="mb-6" />
     <StackedList v-if="items" :divided="false">
       <StackedListItem
         v-for="item, i in items"

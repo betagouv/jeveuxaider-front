@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Delai entre inscription et 1ère participation" show-period class="mb-6" />
+    <BoxHeadingStatistics title="Delai entre inscription et 1ère participation" class="mb-6" />
     <div v-if="statistics" class="flex flex-col gap-2">
       <ListItemCount color="bg-green-900" label="Moins de une minute" :count="statistics.LESS_THAN_1_MIN" />
       <ListItemCount color="bg-green-700" label="Moins de 5 minutes" :count="statistics.LESS_THAN_5_MIN" />

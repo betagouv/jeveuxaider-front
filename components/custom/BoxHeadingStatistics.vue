@@ -10,13 +10,8 @@
         {{ title }}
       </template>
     </Heading>
-    <div v-if="subtitle || showPeriod" class="text-gray-400 font-semibold">
-      <template v-if="showPeriod">
-        {{ periodLabel }}
-      </template>
-      <template v-else>
-        {{ subtitle }}
-      </template>
+    <div v-if="contextLabels.length" class="text-gray-400 font-semibold">
+      {{ contextLabels.join(' · ') }}
     </div>
   </div>
 </template>
@@ -32,7 +27,7 @@ export default {
       type: String,
       default: null
     },
-    showPeriod: {
+    noPeriod: {
       type: Boolean,
       default: false
     },
@@ -42,6 +37,21 @@ export default {
     }
   },
   computed: {
+    contextLabels () {
+      const contextLabels = []
+      if (this.subtitle) {
+        return [this.subtitle]
+      }
+      if (!this.noPeriod) {
+        if (this.$store.state.statistics.params.period) {
+          contextLabels.push(this.periodLabel)
+        }
+      }
+      if (this.$store.state.statistics.params.department) {
+        contextLabels.push(`${this.$store.state.statistics.params.department} ${this.$options.filters.label(this.$store.state.statistics.params.department, 'departments')}`)
+      }
+      return contextLabels
+    },
     periodLabel () {
       switch (this.$store.state.statistics.params.period) {
         case 'current_year':

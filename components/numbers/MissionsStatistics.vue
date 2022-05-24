@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
-    <BoxHeadingStatistics title="L’activité relative aux missions en un coup d’oeil" show-period class="mb-6" />
+    <BoxHeadingStatistics title="L’activité relative aux missions en un coup d’oeil" class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.missions"

@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des organisations...">
-    <BoxHeadingStatistics title="Organisations les plus actives" show-period class="mb-6" />
+    <BoxHeadingStatistics title="Organisations les plus actives" class="mb-6" />
     <StackedList v-if="items" :divided="false">
       <StackedListItem
         v-for="item, i in items"

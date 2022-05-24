@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Missions ›" link="/admin/statistics/missions" class="mb-6" />
+    <BoxHeadingStatistics title="Missions ›" link="/admin/statistics/missions" no-period class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.missions_available"
@@ -42,7 +42,7 @@ export default {
     this.loading = true
 
     await this.$axios.get('/statistics/overview-missions', {
-      // params: this.$store.state.statistics.params
+      params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
       this.statistics = response.data

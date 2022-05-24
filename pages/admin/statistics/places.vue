@@ -12,7 +12,13 @@
 
     <SectionHeading
       title="Places disponibles"
-    />
+    >
+      <template #action>
+        <div class="hidden lg:block space-x-2 flex-shrink-0">
+          <FiltersStatistics @refetch="refetch()" />
+        </div>
+      </template>
+    </SectionHeading>
 
     <div class="space-y-12">
       <OverviewPlaces ref="overviewPlaces" />
@@ -41,9 +47,11 @@ import PlacesByMissions from '@/components/numbers/PlacesByMissions.vue'
 import PlacesByDomaines from '@/components/numbers/PlacesByDomaines.vue'
 import PlacesByActivities from '@/components/numbers/PlacesByActivities.vue'
 import OverviewPlaces from '@/components/numbers/OverviewPlaces'
+import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
 export default {
   components: {
+    FiltersStatistics,
     PlacesByReseaux,
     PlacesByOrganisations,
     PlacesByMissions,

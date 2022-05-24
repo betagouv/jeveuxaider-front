@@ -110,7 +110,6 @@
                 name="type"
                 placeholder="Sélectionnez votre profession"
                 :options="$labels.profile_type"
-
                 @blur="validate('type')"
               />
             </FormControl>

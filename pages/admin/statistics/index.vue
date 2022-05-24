@@ -53,6 +53,9 @@ export default {
   methods: {
     refetch () {
       this.$refs.overviewQuickGlance.$fetch()
+      this.$refs.overviewBenevoles.$fetch()
+      this.$refs.overviewMissions.$fetch()
+      this.$refs.overviewOrganisations.$fetch()
     }
   }
 }

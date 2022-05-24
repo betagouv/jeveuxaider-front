@@ -97,8 +97,7 @@ export default {
         return this.value ? this.options.find(item => item[this.attributeKey] == this.value) : null
       },
       set (newItem) {
-        this.$emit('changed', newItem)
-        // this.handleSelectOption(newItem)
+        this.$emit('input', newItem ? newItem[this.attributeKey] : null)
       }
     },
     filteredOptions () {
@@ -116,18 +115,15 @@ export default {
       this.selectedOption = null
       this.showOptions = false
       this.search = null
-      this.$emit('input', null)
     },
     clickedOutside () {
       this.showOptions = false
     },
     handleSelectOption (item) {
       if (item && this.selectedOption && this.selectedOption[this.attributeKey] === item[this.attributeKey]) {
-        this.$emit('input', null)
         this.selectedOption = null
         this.search = null
       } else if (item) {
-        this.$emit('input', item[this.attributeKey])
         this.selectedOption = item
         this.search = item[this.attributeLabel]
       }

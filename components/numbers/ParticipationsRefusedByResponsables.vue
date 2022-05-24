@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Motifs des participations refusées par les responsables" show-period class="mb-6" />
+    <BoxHeadingStatistics title="Motifs des participations refusées par les responsables" class="mb-6" />
     <div v-if="statistics" class="flex flex-col gap-2">
       <ListItemCount color="no_response" label="Le bénévole ne répond pas" :count="statistics.no_response" />
       <ListItemCount color="requirements_not_fulfilled" label="Le bénévole ne correspond pas aux besoins" :count="statistics.requirements_not_fulfilled" />
