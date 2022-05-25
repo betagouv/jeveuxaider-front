@@ -8,14 +8,9 @@ export const mutations = {
   setFacetsResults: (state, payload) => { state.facetsResults = payload }
 }
 
-export const actions = {
-  deleteAllFilters () {
-    this.$router.push({ path: this.$router.currentRoute.path })
-  }
-}
-
 export const getters = {
   facetResults: state => (facetName) => {
-    return state.facetsResults.find(facetResults => !!facetResults.facets.facetName) ?? state.results?.facets[facetName] ?? {}
+    return state.facetsResults.find(facetResults => !!facetResults.facets[facetName])?.facets[facetName] ??
+    state.results?.facets[facetName] ?? {}
   }
 }

@@ -44,7 +44,7 @@
                     type="checkbox"
                     :checked="isActiveFilter(facetName, facet.value)"
                     class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500 cursor-pointer"
-                    @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
+                    @change="handleFacetToggle(facetName, facet.value)"
                   >
                   <label
                     :for="`facetFilter__${facetName}_${facet.value}`"
@@ -93,7 +93,6 @@ export default {
   mixins: [AlgoliaQueryBuilder],
   props: {
     facetName: { type: String, required: true },
-    facets: { type: Object, required: true },
     label: { type: String, required: true },
     optionsClass: { type: String, default: '' }
   },
@@ -115,10 +114,14 @@ export default {
           }
         })
       }
-      return Object.keys(this.facets).map((value) => {
+
+      // @todo: logique avec currentRoute pour déterminer quel store utiliser
+      // (quand on aura le store algoliaSearchOrganisation)
+      const facet = this.$store.getters['algoliaSearchMissions/facetResults'](this.facetName)
+      return Object.keys(facet).map((value) => {
         return {
           value,
-          count: this.facets[value]
+          count: facet[value]
         }
       })
     },
@@ -173,6 +176,11 @@ export default {
     onClickOutside (e) {
       console.log('Click outside', e)
       this.isOpen = false
+    },
+    async handleFacetToggle (facetName, facetValue) {
+      this.isActiveFilter(facetName, facetValue)
+        ? await this.deleteFilter(facetName, facetValue, true)
+        : await this.addFilter(facetName, facetValue, true)
     }
   }
 }

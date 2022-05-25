@@ -6,14 +6,16 @@
     />
 
     <!-- Drawers for mobile -->
-    <DrawerLeftSearchMissionsFilters
-      :is-open="isDrawerLeftSearchMissionsFilters"
-      @close="isDrawerLeftSearchMissionsFilters = false"
-    />
-    <DrawerLeftSearchMissionsLocalisation
-      :is-open="isDrawerLeftSearchMissionsLocalisation"
-      @close="isDrawerLeftSearchMissionsLocalisation = false"
-    />
+    <template v-if="$store.state.algoliaSearchMissions.results">
+      <DrawerLeftSearchMissionsFilters
+        :is-open="isDrawerLeftSearchMissionsFilters"
+        @close="isDrawerLeftSearchMissionsFilters = false"
+      />
+      <DrawerLeftSearchMissionsLocalisation
+        :is-open="isDrawerLeftSearchMissionsLocalisation"
+        @close="isDrawerLeftSearchMissionsLocalisation = false"
+      />
+    </template>
 
     <div v-if="$store.state.algoliaSearchMissions.results" class="container md:px-8 lg:mt-6 mb-12">
       <div class="flex flex-col space-y-6 sm:space-y-12">
@@ -49,12 +51,7 @@
         </Sectionheading>
 
         <div class="sm:hidden">
-          <div class="bg-white p-6 shadow-xl rounded-xl">
-            <LocalisationMobileFilter
-              :ip-lat-lng="$store.state.algoliaSearchMissions.results.aroundLatLng"
-              @open="isDrawerLeftSearchMissionsLocalisation = true"
-            />
-          </div>
+          <ToggleDrawerLeftSearchMissionsLocalisation @click.native="isDrawerLeftSearchMissionsLocalisation = true" />
           <div class="flex justify-center mt-4">
             <BadgeFilter @click.native="isDrawerLeftSearchMissionsFilters = true">
               Plus de filtres
@@ -63,139 +60,8 @@
         </div>
 
         <div class="hidden sm:flex sm:flex-col relative z-10">
-          <div class="bg-white px-6 sm:py-6 shadow-xl rounded-xl grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:!divide-x">
-            <div class="py-6 sm:py-0 sm:pb-6 sm:pr-6 lg:pb-0 xl:px-6">
-              <div class="text-gray-500 mb-1">
-                Localisation
-              </div>
-              <div class="">
-                <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Saisissez votre ville" :ip-lat-lng="$store.state.algoliaSearchMissions.results.aroundLatLng" />
-                <div v-else>
-                  <div class="flex space-x-2 items-center">
-                    <DesktopComputerIcon class="h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
-                    <span class="font-bold">Depuis chez moi</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
-              <div class="text-gray-500 mb-1">
-                Activités
-              </div>
-              <FacetFilterToggle facet-name="activity.name" label="Activités" :facets="facetResults('activity.name')">
-                <template #button="{ firstValueSelected, activeValuesCount }">
-                  <div class="flex space-x-2 items-center justify-between group">
-                    <div class="flex space-x-2 items-center">
-                      <HandIcon class="h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
-                      <span v-if="!firstValueSelected">Toutes</span>
-                      <span v-else class="font-bold">
-                        {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                      </span>
-                    </div>
-                    <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
-                  </div>
-                </template>
-              </FacetFilterToggle>
-            </div>
-            <div class="py-6 sm:py-0 sm:pt-6 sm:pr-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
-              <div class="text-gray-500 mb-1">
-                Disponibilités
-              </div>
-              <CommitmentFilter>
-                <template #button="{ activeValue }">
-                  <div class="flex space-x-2 items-center justify-between group">
-                    <div class="flex space-x-2 items-center truncate">
-                      <ClockIcon class="h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
-                      <div :class="['truncate', {'font-bold': activeValue }]">
-                        {{ activeValue || 'Toutes' }}
-                      </div>
-                    </div>
-                    <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
-                  </div>
-                </template>
-              </CommitmentFilter>
-            </div>
-            <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
-              <div class="text-gray-500 mb-1">
-                Recherche
-              </div>
-              <SearchFilter />
-            </div>
-          </div>
-
-          <div class="lg:flex justify-between items-center mt-8 lg:mb-4">
-            <div class="hidden sm:flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
-              <FacetFilterToggle facet-name="structure.name" label="Organisations" :facets="facetResults('structure.name')">
-                <template #button="{ firstValueSelected, activeValuesCount }">
-                  <BadgeFilter :is-active="!!activeValuesCount">
-                    <span v-if="!firstValueSelected">Organisations</span>
-                    <div v-else class="text-jva-blue-500 flex">
-                      <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
-                      <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                    </div>
-                  </BadgeFilter>
-                </template>
-              </FacetFilterToggle>
-
-              <FacetFilterToggle facet-name="publics_beneficiaires" label="Publics aidés" :facets="facetResults('publics_beneficiaires')">
-                <template #button="{ firstValueSelected, activeValuesCount }">
-                  <BadgeFilter :is-active="!!activeValuesCount">
-                    <span v-if="!firstValueSelected">Publics aidés</span>
-                    <div v-else class="text-jva-blue-500 flex">
-                      <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
-                      <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                    </div>
-                  </BadgeFilter>
-                </template>
-              </FacetFilterToggle>
-
-              <FacetFilterToggle facet-name="domaines" label="Domaines" :facets="facetResults('domaines')">
-                <template #button="{ firstValueSelected, activeValuesCount }">
-                  <BadgeFilter :is-active="!!activeValuesCount">
-                    <span v-if="!firstValueSelected">Domaines</span>
-                    <div v-else class="text-jva-blue-500 flex">
-                      <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
-                      <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                    </div>
-                  </BadgeFilter>
-                </template>
-              </FacetFilterToggle>
-
-              <FacetFilterToggle facet-name="structure.reseaux.name" label="Réseaux" :facets="facetResults('structure.reseaux.name')" options-class="right-0 md:left-0">
-                <template #button="{ firstValueSelected, activeValuesCount }">
-                  <BadgeFilter :is-active="!!activeValuesCount">
-                    <span v-if="!firstValueSelected">Réseaux</span>
-                    <div v-else class="text-jva-blue-500 flex">
-                      <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
-                      <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                    </div>
-                  </BadgeFilter>
-                </template>
-              </FacetFilterToggle>
-
-              <FacetFilterToggle v-if="$route.query.type != 'Mission à distance'" facet-name="department_name" label="Départements" :facets="facetResults('department_name')" options-class="right-0 lg:left-0">
-                <template #button="{ firstValueSelected, activeValuesCount }">
-                  <BadgeFilter :is-active="!!activeValuesCount">
-                    <span v-if="!firstValueSelected">Départements</span>
-                    <div v-else class="text-jva-blue-500 flex">
-                      <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
-                      <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
-                    </div>
-                  </BadgeFilter>
-                </template>
-              </FacetFilterToggle>
-            </div>
-
-            <div class="hidden sm:flex lg:items-center lg:justify-center mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
-              <Link
-                class="uppercase hover:underline text-sm"
-                :link-class="[{'pointer-events-none opacity-0': !hasActiveFilters}]"
-                @click.native="deleteAllFilters()"
-              >
-                Réinitialiser
-              </Link>
-            </div>
-          </div>
+          <PrimaryFilters />
+          <SecondaryFilters />
         </div>
 
         <div v-if="$store.state.algoliaSearchMissions.results.nbHits == 0" class="text-center">
@@ -238,29 +104,25 @@
 
 <script>
 import CardMission from '@/components/card/CardMission.vue'
-import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue'
 import TabsFacetFilter from '~/components/section/search/TabsFacetFilter.vue'
 import BadgeFilter from '~/components/search/BadgeFilter.vue'
-import LocalisationFilter from '~/components/search/LocalisationFilter.vue'
-import LocalisationMobileFilter from '~/components/search/LocalisationMobileFilter.vue'
-import CommitmentFilter from '~/components/section/search/CommitmentFilter.vue'
+import ToggleDrawerLeftSearchMissionsLocalisation from '~/components/search/ToggleDrawerLeftSearchMissionsLocalisation.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
-import SearchFilter from '@/components/search/SearchFilter.vue'
 import DrawerLeftSearchMissionsFilters from '@/components/drawer/DrawerLeftSearchMissionsFilters.vue'
 import DrawerLeftSearchMissionsLocalisation from '@/components/drawer/DrawerLeftSearchMissionsLocalisation.vue'
+import PrimaryFilters from '~/components/section/search/missions/PrimaryFilters.vue'
+import SecondaryFilters from '~/components/section/search/missions/SecondaryFilters.vue'
 
 export default {
   components: {
     CardMission,
-    FacetFilterToggle,
-    CommitmentFilter,
     TabsFacetFilter,
     BadgeFilter,
-    LocalisationFilter,
-    LocalisationMobileFilter,
-    SearchFilter,
+    ToggleDrawerLeftSearchMissionsLocalisation,
     DrawerLeftSearchMissionsFilters,
-    DrawerLeftSearchMissionsLocalisation
+    DrawerLeftSearchMissionsLocalisation,
+    PrimaryFilters,
+    SecondaryFilters
   },
   mixins: [AlgoliaQueryBuilder],
   data () {
