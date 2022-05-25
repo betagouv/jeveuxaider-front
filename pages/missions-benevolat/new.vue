@@ -5,155 +5,22 @@
       class="container md:px-8 border-b-0"
     />
 
-    <!-- MOBILE FILTERS -->
-    <template v-if="searchResult">
-      <DrawerFilters
-        :is-open="isMobileFiltersOpen"
-        @close="isMobileFiltersOpen = false"
-      >
-        <template #title>
-          <div class="font-bold">
-            Filtres de recherche
-          </div>
-        </template>
+    <!-- Drawers for mobile -->
+    <DrawerLeftSearchMissionsFilters
+      :is-open="isDrawerLeftSearchMissionsFilters"
+      @close="isDrawerLeftSearchMissionsFilters = false"
+    />
+    <DrawerLeftSearchMissionsLocalisation
+      :is-open="isDrawerLeftSearchMissionsLocalisation"
+      @close="isDrawerLeftSearchMissionsLocalisation = false"
+    />
 
-        <div class="space-y-2">
-          <div class="relative font-medium text-[15px]">
-            Mots-clés
-          </div>
-          <SearchFilter />
-        </div>
-
-        <div class="space-y-2">
-          <div class="relative font-medium text-[15px]">
-            Disponibilités
-          </div>
-          <CommitmentMobileFilter />
-        </div>
-
-        <FacetMobileFilter
-          show-more
-          facet-name="publics_beneficiaires"
-          label="Publics aidés"
-          :limit-options="3"
-          :facets="facetResults('publics_beneficiaires')"
-        />
-        <FacetMobileFilter
-          show-more
-          facet-name="activity.name"
-          label="Activités"
-          :limit-options="3"
-          :facets="facetResults('activity.name')"
-        />
-        <FacetMobileFilter
-          show-more
-          facet-name="structure.name"
-          label="Organisations"
-          :limit-options="3"
-          :facets="facetResults('structure.name')"
-        />
-        <FacetMobileFilter
-          show-more
-          facet-name="domaines"
-          label="Domaines"
-          :limit-options="3"
-          :facets="facetResults('domaines')"
-        />
-        <FacetMobileFilter
-          show-more
-          facet-name="structure.reseaux.name"
-          label="Réseaux"
-          :limit-options="3"
-          :facets="facetResults('structure.reseaux.name')"
-        />
-        <FacetMobileFilter
-          show-more
-          facet-name="department_name"
-          label="Départements"
-          :limit-options="3"
-          :facets="facetResults('department_name')"
-        />
-
-        <template #footer>
-          <div
-            :class="[
-              'p-4 flex items-center space-x-3',
-              hasActiveFilters ? 'justify-between' : 'justify-end'
-            ]"
-          >
-            <Link v-if="hasActiveFilters" class="text-gray-500 underline text-sm" @click.native="deleteAllFilters()">
-              Réinitialiser
-            </Link>
-            <Button @click.native="isMobileFiltersOpen = false">
-              Voir les {{ searchResult.nbHits }} résultats
-            </Button>
-          </div>
-        </template>
-      </DrawerFilters>
-
-      <DrawerFilters
-        :is-open="isLocationDrawerFiltersOpen"
-        @close="isLocationDrawerFiltersOpen = false"
-      >
-        <template #title>
-          <div class="font-bold">
-            Filtres de localisation
-          </div>
-        </template>
-        <div class="font-medium text-[15px]">
-          Je cherche une mission à faire…
-        </div>
-        <TabsFacetFilter
-          filter-name="type"
-          class="w-full"
-          :tabs="[
-            {
-              icon: 'LocationMarkerIcon',
-              filterValue: 'Mission en présentiel',
-              current: !$route.query['type'],
-              label: 'Près de chez moi'
-            },
-            {
-              icon: 'DesktopComputerIcon',
-              filterValue: 'Mission à distance',
-              label: 'Depuis chez moi'
-            }
-          ]"
-        />
-        <LocalisationSuggestions
-          v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'"
-          :ip-lat-lng="searchResult.aroundLatLng"
-          @updated="isLocationDrawerFiltersOpen = false"
-        />
-
-        <div v-else class="text-gray-700">
-          Vous pouvez réalisez des missions à distance, depuis chez vous ou le lieu de votre choix. Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti quo consequuntur, minima voluptatem odit vel inventore maiores illo explicabo rem vitae ducimus at itaque ad dolorem aperiam odio, fugit fugiat.
-        </div>
-
-        <template #footer>
-          <div
-            :class="[
-              'p-4 flex items-center space-x-3',
-              hasActiveFilters ? 'justify-between' : 'justify-end'
-            ]"
-          >
-            <Link v-if="hasActiveFilters" class="text-gray-500 underline text-sm" @click.native="deleteAllFilters()">
-              Réinitialiser
-            </Link>
-            <Button @click.native="isLocationDrawerFiltersOpen = false">
-              Voir les {{ searchResult.nbHits }} résultats
-            </Button>
-          </div>
-        </template>
-      </DrawerFilters>
-    </template>
-
-    <div v-if="searchResult" class="container md:px-8 lg:mt-6 mb-12">
+    <div v-if="$store.state.algoliaSearchMissions.results" class="container md:px-8 lg:mt-6 mb-12">
       <div class="flex flex-col space-y-6 sm:space-y-12">
         <SectionHeading
           title="Trouver une mission de bénévolat"
-          :secondary-title-bottom="`${$options.filters.formatNumber(searchResult.nbHits)} ${$options.filters.pluralize(
-            searchResult.nbHits,
+          :secondary-title-bottom="`${$options.filters.formatNumber($store.state.algoliaSearchMissions.results.nbHits)} ${$options.filters.pluralize(
+            $store.state.algoliaSearchMissions.results.nbHits,
             'mission disponible',
             'missions disponibles',
             false
@@ -184,12 +51,12 @@
         <div class="sm:hidden">
           <div class="bg-white p-6 shadow-xl rounded-xl">
             <LocalisationMobileFilter
-              :ip-lat-lng="searchResult.aroundLatLng"
-              @open="isLocationDrawerFiltersOpen = true"
+              :ip-lat-lng="$store.state.algoliaSearchMissions.results.aroundLatLng"
+              @open="isDrawerLeftSearchMissionsLocalisation = true"
             />
           </div>
           <div class="flex justify-center mt-4">
-            <BadgeFilter @click.native="isMobileFiltersOpen = true">
+            <BadgeFilter @click.native="isDrawerLeftSearchMissionsFilters = true">
               Plus de filtres
             </BadgeFilter>
           </div>
@@ -202,7 +69,7 @@
                 Localisation
               </div>
               <div class="">
-                <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Saisissez votre ville" :ip-lat-lng="searchResult.aroundLatLng" />
+                <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Saisissez votre ville" :ip-lat-lng="$store.state.algoliaSearchMissions.results.aroundLatLng" />
                 <div v-else>
                   <div class="flex space-x-2 items-center">
                     <DesktopComputerIcon class="h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
@@ -215,7 +82,7 @@
               <div class="text-gray-500 mb-1">
                 Activités
               </div>
-              <FacetFilter facet-name="activity.name" label="Activités" :facets="facetResults('activity.name')">
+              <FacetFilterToggle facet-name="activity.name" label="Activités" :facets="facetResults('activity.name')">
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <div class="flex space-x-2 items-center justify-between group">
                     <div class="flex space-x-2 items-center">
@@ -228,7 +95,7 @@
                     <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
                   </div>
                 </template>
-              </FacetFilter>
+              </FacetFilterToggle>
             </div>
             <div class="py-6 sm:py-0 sm:pt-6 sm:pr-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
               <div class="text-gray-500 mb-1">
@@ -258,7 +125,7 @@
 
           <div class="lg:flex justify-between items-center mt-8 lg:mb-4">
             <div class="hidden sm:flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
-              <FacetFilter facet-name="structure.name" label="Organisations" :facets="facetResults('structure.name')">
+              <FacetFilterToggle facet-name="structure.name" label="Organisations" :facets="facetResults('structure.name')">
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <BadgeFilter :is-active="!!activeValuesCount">
                     <span v-if="!firstValueSelected">Organisations</span>
@@ -268,9 +135,9 @@
                     </div>
                   </BadgeFilter>
                 </template>
-              </FacetFilter>
+              </FacetFilterToggle>
 
-              <FacetFilter facet-name="publics_beneficiaires" label="Publics aidés" :facets="facetResults('publics_beneficiaires')">
+              <FacetFilterToggle facet-name="publics_beneficiaires" label="Publics aidés" :facets="facetResults('publics_beneficiaires')">
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <BadgeFilter :is-active="!!activeValuesCount">
                     <span v-if="!firstValueSelected">Publics aidés</span>
@@ -280,9 +147,9 @@
                     </div>
                   </BadgeFilter>
                 </template>
-              </FacetFilter>
+              </FacetFilterToggle>
 
-              <FacetFilter facet-name="domaines" label="Domaines" :facets="facetResults('domaines')">
+              <FacetFilterToggle facet-name="domaines" label="Domaines" :facets="facetResults('domaines')">
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <BadgeFilter :is-active="!!activeValuesCount">
                     <span v-if="!firstValueSelected">Domaines</span>
@@ -292,9 +159,9 @@
                     </div>
                   </BadgeFilter>
                 </template>
-              </FacetFilter>
+              </FacetFilterToggle>
 
-              <FacetFilter facet-name="structure.reseaux.name" label="Réseaux" :facets="facetResults('structure.reseaux.name')" options-class="right-0 md:left-0">
+              <FacetFilterToggle facet-name="structure.reseaux.name" label="Réseaux" :facets="facetResults('structure.reseaux.name')" options-class="right-0 md:left-0">
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <BadgeFilter :is-active="!!activeValuesCount">
                     <span v-if="!firstValueSelected">Réseaux</span>
@@ -304,9 +171,9 @@
                     </div>
                   </BadgeFilter>
                 </template>
-              </FacetFilter>
+              </FacetFilterToggle>
 
-              <FacetFilter v-if="$route.query.type != 'Mission à distance'" facet-name="department_name" label="Départements" :facets="facetResults('department_name')" options-class="right-0 lg:left-0">
+              <FacetFilterToggle v-if="$route.query.type != 'Mission à distance'" facet-name="department_name" label="Départements" :facets="facetResults('department_name')" options-class="right-0 lg:left-0">
                 <template #button="{ firstValueSelected, activeValuesCount }">
                   <BadgeFilter :is-active="!!activeValuesCount">
                     <span v-if="!firstValueSelected">Départements</span>
@@ -316,7 +183,7 @@
                     </div>
                   </BadgeFilter>
                 </template>
-              </FacetFilter>
+              </FacetFilterToggle>
             </div>
 
             <div class="hidden sm:flex lg:items-center lg:justify-center mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
@@ -331,9 +198,19 @@
           </div>
         </div>
 
+        <div v-if="$store.state.algoliaSearchMissions.results.nbHits == 0" class="text-center">
+          Il n'y a aucun résultat avec les filtres actuels.<br>
+          <Link
+            link-class="justify-center hover:underline"
+            @click.native="deleteAllFilters()"
+          >
+            Réinitialiser les filtres
+          </Link>
+        </div>
+
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto">
           <nuxt-link
-            v-for="item in searchResult.hits"
+            v-for="item in $store.state.algoliaSearchMissions.results.hits"
             :key="item.id"
             class="flex min-w-0 hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px]"
             :to="
@@ -348,8 +225,8 @@
         </div>
 
         <Pagination
-          :current-page="searchResult.page + 1"
-          :total-rows="searchResult.nbHits"
+          :current-page="$store.state.algoliaSearchMissions.results.page + 1"
+          :total-rows="$store.state.algoliaSearchMissions.results.nbHits"
           :per-page="20"
           :max-pages="10"
           @page-change="handleChangePage"
@@ -361,37 +238,35 @@
 
 <script>
 import CardMission from '@/components/card/CardMission.vue'
-import FacetFilter from '~/components/section/search/FacetFilter.vue'
+import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue'
 import TabsFacetFilter from '~/components/section/search/TabsFacetFilter.vue'
 import BadgeFilter from '~/components/search/BadgeFilter.vue'
 import LocalisationFilter from '~/components/search/LocalisationFilter.vue'
 import LocalisationMobileFilter from '~/components/search/LocalisationMobileFilter.vue'
 import CommitmentFilter from '~/components/section/search/CommitmentFilter.vue'
-import CommitmentMobileFilter from '~/components/section/search/CommitmentMobileFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
-import SearchFilter from '@/components/search/SearchFilter'
-import FacetMobileFilter from '@/components/section/search/FacetMobileFilter'
-import LocalisationSuggestions from '@/components/search/LocalisationSuggestions'
+import SearchFilter from '@/components/search/SearchFilter.vue'
+import DrawerLeftSearchMissionsFilters from '@/components/drawer/DrawerLeftSearchMissionsFilters.vue'
+import DrawerLeftSearchMissionsLocalisation from '@/components/drawer/DrawerLeftSearchMissionsLocalisation.vue'
 
 export default {
   components: {
     CardMission,
-    FacetFilter,
+    FacetFilterToggle,
     CommitmentFilter,
-    CommitmentMobileFilter,
     TabsFacetFilter,
     BadgeFilter,
     LocalisationFilter,
     LocalisationMobileFilter,
     SearchFilter,
-    FacetMobileFilter,
-    LocalisationSuggestions
+    DrawerLeftSearchMissionsFilters,
+    DrawerLeftSearchMissionsLocalisation
   },
   mixins: [AlgoliaQueryBuilder],
   data () {
     return {
-      isMobileFiltersOpen: false,
-      isLocationDrawerFiltersOpen: false
+      isDrawerLeftSearchMissionsFilters: false,
+      isDrawerLeftSearchMissionsLocalisation: false
     }
   },
   async fetch () {

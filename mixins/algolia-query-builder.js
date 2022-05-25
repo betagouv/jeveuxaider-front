@@ -2,8 +2,8 @@
 export default {
   data () {
     return {
-      searchResult: null,
-      searchFacetResults: [],
+      searchResult: null, // @todo delete
+      searchFacetResults: [], // @todo delete
       indexName: this.$config.algolia.missionsIndex,
       availableFacets: ['type', 'activity.name', 'structure.name', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires'],
       availableNumericFilters: ['commitment__total']
@@ -80,8 +80,11 @@ export default {
 
       const { results } = await this.$algolia.multipleQueries(queries)
 
-      this.searchResult = results[0]
-      this.searchFacetResults = results.slice(1)
+      this.searchResult = results[0] // @todo delete
+      this.searchFacetResults = results.slice(1) // @todo delete
+
+      this.$store.commit('algoliaSearchMissions/setResults', results[0])
+      this.$store.commit('algoliaSearchMissions/setFacetsResults', results.slice(1))
     },
     addFilter (filterName, filterValue, multiple = false) {
       let filterQueryValues = this.$route.query[filterName] ? this.$route.query[filterName].split('|') : []
@@ -119,6 +122,7 @@ export default {
     isActiveFilter (name, value) {
       return this.$route.query[name] && this.$route.query[name].split('|').includes(value)
     },
+    // @todo delete
     facetResults (facetName) {
       const searchFacetResult = this.searchFacetResults.filter((searchFacetResult) => {
         return Object.keys(searchFacetResult.facets).includes(facetName)

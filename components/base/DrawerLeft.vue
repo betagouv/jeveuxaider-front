@@ -8,7 +8,7 @@
       leave-class="translate-x-0"
       leave-to-class="-translate-x-full"
     >
-      <div v-show="isOpen" role="dialog" aria-modal="true" class="fixed inset-y-0 left-0" :style="drawerStyle">
+      <div v-show="isOpen" role="dialog" aria-modal="true" class="fixed inset-y-0 left-0">
         <div aria-hidden="true" class="w-screen h-full">
           <div class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl">
             <div class="p-4">
@@ -57,26 +57,6 @@ export default {
       type: String,
       default: 'Voir les résultats'
     }
-  },
-  data () {
-    return {
-      drawerStyle: ''
-    }
   }
-  // mounted () {
-  //   this.handleDrawerStyle()
-  //   window.addEventListener('scroll', this.handleDrawerStyle)
-  // },
-  // destroyed () {
-  //   window.removeEventListener('scroll', this.handleDrawerStyle)
-  // },
-  // methods: {
-  //   handleDrawerStyle (event) {
-  //     const headerheight = document.getElementById('header')?.offsetHeight ?? 0
-  //     const headerBannerheight = document.getElementById('header-banner')?.offsetHeight ?? 0
-  //     const offset = (headerheight + headerBannerheight) >= window.scrollY ? headerheight + headerBannerheight - window.scrollY : 0
-  //     this.drawerStyle = `height: calc(100vh - ${offset}px); top: ${offset}px`
-  //   }
-  // }
 }
 </script>

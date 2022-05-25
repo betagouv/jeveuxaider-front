@@ -1,84 +1,66 @@
 <template>
-  <div class="relative">
-    <div class="cursor-pointer" @click="isOpen = !isOpen">
-      <slot name="button" :isOpen="isOpen" :activeValuesCount="activeValuesCount" :firstValueSelected="firstValueSelected">
-        Toggle facet
-      </slot>
-    </div>
-
-    <transition name="fade-in">
-      <div
-        v-if="isOpen"
-        v-click-outside="onClickOutside"
-        :class="['mt-2 absolute z-20 bg-white border shadow-xl rounded-xl text-[15px] w-[350px]', optionsClass]"
-      >
-        <div class="p-4 space-y-3">
-          <div class="font-medium">
-            {{ label }}
-          </div>
-
-          <FacetSearch v-model="facetQuery" @input="handleChangeSearchFacetValues" />
-
-          <div class="relative overflow-hidden">
-            <div
-              class="absolute custom-gradient bottom-0 w-full pointer-events-none transition duration-500"
-              :class="[{'h-0': isScrollAtBottom}, {'h-12': !isScrollAtBottom}]"
-            />
-
-            <div ref="scrollContainer" class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray">
-              <div class="py-1 mr-2 space-y-4 text-sm">
-                <div v-if="[...activeValues, ...inactiveValues].length == 0" class="text-gray-400">
-                  Aucun résultat avec les filtres actuels.
-                </div>
-
-                <div
-                  v-for="(facet) in [...activeValues, ...inactiveValues]"
-                  :key="facet.value"
-                  :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
-                  class="flex items-center pl-1 group"
-                >
-                  <input
-                    :id="`facetFilter__${facetName}_${facet.value}`"
-                    :name="`facetFilter__${facetName}_${facet.value}`"
-                    :value="isActiveFilter(facetName, facet.value)"
-                    type="checkbox"
-                    :checked="isActiveFilter(facetName, facet.value)"
-                    class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500 cursor-pointer"
-                    @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
-                  >
-                  <label
-                    :for="`facetFilter__${facetName}_${facet.value}`"
-                    class="pl-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500 cursor-pointer"
-                  >
-                    <div class="truncate">
-                      {{ facet.value }}
-                    </div>
-                    <div class="text-gray-600 ml-1 font-light">
-                      {{ facet.count }}
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
+  <div>
+    <div class="space-y-2">
+      <div class="relative font-medium text-[15px]">
+        <div v-if="!showSearch" class="h-[29px]">
+          <span>{{ label }}</span>
+          <SearchIcon
+            class=" text-gray-400 hover:text-gray-500 cursor-pointer absolute right-0 top-0"
+            width="20"
+            @click="toggleSearch"
+          />
         </div>
 
-        <div class="border-t px-6 py-3 flex justify-end">
-          <div
-            class="text-sm"
-            :class="[
-              {'text-gray-400 pointer-events-none': !activeValuesCount},
-              {'text-jva-blue-500 cursor-pointer hover:underline': activeValuesCount}
-            ]"
-            @click="deleteFacet()"
+        <FacetSearch
+          v-else
+          ref="facetSearch"
+          v-model="facetQuery"
+          always-show-clear
+          @input="handleChangeSearchFacetValues"
+          @clear="showSearch = false"
+        />
+      </div>
+
+      <div class="text-sm space-y-4">
+        <div v-if="[...activeValues, ...inactiveValues].length == 0" class="text-gray-400">
+          Aucun résultat avec les filtres actuels.
+        </div>
+
+        <div
+          v-for="(facet) in limitedValues"
+          :key="facet.value"
+          :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
+          class="cursor-pointer flex items-center"
+        >
+          <input
+            :id="`facetMobileFilter__${facetName}_${facet.value}`"
+            :name="`facetMobileFilter__${facetName}_${facet.value}`"
+            :value="isActiveFilter(facetName, facet.value)"
+            type="checkbox"
+            :checked="isActiveFilter(facetName, facet.value)"
+            class="rounded text-jva-blue-500 focus:ring-jva-blue-500"
+            @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
           >
-            Effacer
+          <label
+            :for="`facetMobileFilter__${facetName}_${facet.value}`"
+            class="ml-2 flex justify-between truncate flex-1"
+          >
+            <div class="truncate">
+              {{ facet.value }}
+            </div>
+            <div class="text-gray-600 ml-1 font-light">
+              {{ facet.count }}
+            </div>
+          </label>
+        </div>
+
+        <div v-if="showMore && allValues.length > showMoreLimit" class="">
+          <div class="" @click="showAllValues = !showAllValues">
+            {{ showAllValues ? 'Moins' : 'Plus' }}
           </div>
         </div>
       </div>
-    </transition>
-  </div>
-  </transition>
+    </div>
   </div>
 </template>
 
@@ -92,17 +74,34 @@ export default {
   },
   mixins: [AlgoliaQueryBuilder],
   props: {
-    facetName: { type: String, required: true },
-    facets: { type: Object, required: true },
-    label: { type: String, required: true },
-    optionsClass: { type: String, default: '' }
+    facetName: {
+      type: String,
+      required: true
+    },
+    facets: {
+      type: Object,
+      required: true
+    },
+    label: {
+      type: String,
+      required: true
+    },
+    showMoreLimit: {
+      type: Number,
+      default: 3
+    },
+    showMore: {
+      type: Boolean,
+      default: false
+    }
   },
   data () {
     return {
       isOpen: false,
       facetHits: null,
       facetQuery: null,
-      isScrollAtBottom: false
+      showSearch: false,
+      showAllValues: false
     }
   },
   computed: {
@@ -122,6 +121,9 @@ export default {
         }
       })
     },
+    limitedValues () {
+      return this.showMore && !this.showAllValues ? [...this.activeValues, ...this.inactiveValues].slice(0, this.showMoreLimit) : [...this.activeValues, ...this.inactiveValues]
+    },
     activeValues () {
       return this.allValues.filter((facet) => {
         return this.$route.query[this.facetName]?.split('|').includes(facet.value)
@@ -139,21 +141,6 @@ export default {
       return this.$route.query[this.facetName]?.split('|').length
     }
   },
-  watch: {
-    async isOpen (newVal) {
-      if (newVal) {
-        await this.$nextTick()
-        this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
-        this.$refs.scrollContainer.addEventListener('scroll', this.handleScroll)
-      } else {
-        this.$refs.scrollContainer.removeEventListener('scroll', this.handleScroll)
-      }
-    },
-    async facetHits () {
-      await this.$nextTick()
-      this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
-    }
-  },
   methods: {
     deleteFacet () {
       this.deleteFilter(this.facetName)
@@ -167,19 +154,13 @@ export default {
       const res = await this.searchForFacetValues(this.facetName, facetQuery)
       this.facetHits = res.facetHits
     },
-    handleScroll ({ target: { scrollTop, clientHeight, scrollHeight } }) {
-      this.isScrollAtBottom = (scrollTop + clientHeight >= scrollHeight)
-    },
-    onClickOutside (e) {
-      console.log('Click outside', e)
-      this.isOpen = false
+    async toggleSearch () {
+      this.showSearch = !this.showSearch
+      if (this.showSearch) {
+        await this.$nextTick()
+        this.$refs.facetSearch.$refs.input?.focus()
+      }
     }
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-.custom-gradient {
-  background-image: linear-gradient(180deg,hsla(0,0%,100%,0),#fff);
-}
-</style>
