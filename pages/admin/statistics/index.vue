@@ -25,7 +25,7 @@
       L’activité sur JeVeuxAider.gouv.fr en détail
     </Heading>
     <OverviewMissions ref="overviewMissions" />
-    <OverviewBenevoles ref="overviewBenevoles" />
+    <OverviewUtilisateurs ref="overviewUtilisateurs" />
     <OverviewOrganisations ref="overviewOrganisations" />
   </div>
 </template>
@@ -34,7 +34,7 @@
 import OverviewOrganisations from '@/components/numbers/OverviewOrganisations'
 import OverviewMissions from '@/components/numbers/OverviewMissions'
 import OverviewQuickGlance from '@/components/numbers/OverviewQuickGlance'
-import OverviewBenevoles from '@/components/numbers/OverviewBenevoles'
+import OverviewUtilisateurs from '@/components/numbers/OverviewUtilisateurs'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
 export default {
@@ -43,7 +43,7 @@ export default {
     OverviewQuickGlance,
     OverviewOrganisations,
     OverviewMissions,
-    OverviewBenevoles
+    OverviewUtilisateurs
   },
   layout: 'statistics',
   middleware: 'admin',
@@ -53,7 +53,7 @@ export default {
   methods: {
     refetch () {
       this.$refs.overviewQuickGlance.$fetch()
-      this.$refs.overviewBenevoles.$fetch()
+      this.$refs.overviewUtilisateurs.$fetch()
       this.$refs.overviewMissions.$fetch()
       this.$refs.overviewOrganisations.$fetch()
     }

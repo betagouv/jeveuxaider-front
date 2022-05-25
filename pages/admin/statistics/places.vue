@@ -15,7 +15,7 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics @refetch="refetch()" />
+          <FiltersStatistics no-period @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>

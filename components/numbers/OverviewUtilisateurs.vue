@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Bénévoles ›" link="/admin/statistics/utilisateurs" no-period class="mb-6" />
+    <BoxHeadingStatistics title="Utilisateurs ›" link="/admin/statistics/utilisateurs" no-period class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.utilisateurs"
@@ -48,7 +48,7 @@ export default {
   async fetch () {
     this.loading = true
 
-    await this.$axios.get('/statistics/overview-benevoles', {
+    await this.$axios.get('/statistics/overview-utilisateurs', {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
