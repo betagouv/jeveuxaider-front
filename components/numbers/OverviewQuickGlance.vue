@@ -8,24 +8,28 @@
         :title="`${$options.filters.pluralize(statistics.organisations, 'Organisation', 'Organisations', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.organisations, 'inscrite', 'inscrites', false)}`"
         link="/admin/statistics/organisations"
+        infos-bulle="Nombre de nouvelles organisations inscrites sur la période"
       />
       <CardStatistic
         :value="statistics.missions"
         :title="`${$options.filters.pluralize(statistics.missions, 'Mission', 'Missions', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.missions, 'créée', 'créées', false)}`"
         link="/admin/statistics/missions"
+        infos-bulle="Nombre de nouvelles missions créées sur la période"
       />
       <CardStatistic
         :value="statistics.participations"
         :title="`${$options.filters.pluralize(statistics.participations, 'Candidature', 'Candidatures', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.participations, 'proposée', 'proposées', false)}`"
         link="/admin/statistics/participations"
+        infos-bulle="Nombre de candidatures proposées sur la période"
       />
       <CardStatistic
         :value="statistics.utilisateurs"
         :title="`${$options.filters.pluralize(statistics.utilisateurs, 'Utilisateur', 'Utilisateurs', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.utilisateurs, 'inscrit', 'inscrits', false)}`"
         link="/admin/statistics/utilisateurs"
+        infos-bulle="Nombre d'utilisateurs inscrits sur la période"
       />
     </div>
   </Box>

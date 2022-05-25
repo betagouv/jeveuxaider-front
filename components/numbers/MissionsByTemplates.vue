@@ -1,7 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des activités...">
-    <BoxHeadingStatistics title="Modèles de missions les plus utilisés" class="mb-6" />
-
+    <BoxHeadingStatistics title="Modèles de missions les plus utilisés" class="mb-6" infos-bulle="Liste des modèles de mission les plus utilisés sur la période" />
     <StackedList v-if="items" :divided="false">
       <StackedListItem
         v-for="item, i in items"

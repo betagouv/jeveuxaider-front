@@ -72,7 +72,7 @@
               v-if="['Association', 'Collectivité'].includes($route.query.orga_type)"
               class="mb-8 py-4 px-6 border border-gray-400 text-gray-500 rounded-2xl md:flex md:space-x-4"
             >
-              <InformationCircleIcon class="h-5 w-5 inline text-gray-400 translate-y-[-2px] md:translate-y-0 flex-none" />
+              <InformationCircleSolidIcon class="h-5 w-5 inline text-gray-400 translate-y-[-2px] md:translate-y-0 flex-none" />
               <span class="text-sm md:text-base">
                 <template v-if="$route.query.orga_type === 'Association'">Vous êtes une association indépendante ou une association antenne d’un réseau associatif. Vous êtes reconnue association loi 1901 ou bien association de droit local.</template>
                 <template v-else-if="$route.query.orga_type === 'Collectivité'">Une collectivité territoriale est une autorité publique distincte de l'État. Il peut s’agir d’une commune, d’un CCAS, d’un département ou bien d’une région.</template>

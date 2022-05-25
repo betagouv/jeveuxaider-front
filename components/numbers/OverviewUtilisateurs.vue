@@ -7,24 +7,28 @@
         :title="`${$options.filters.pluralize(statistics.utilisateurs, 'Utilisateur', 'Utilisateurs', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.utilisateurs, 'inscrit', 'inscrits', false)}`"
         link="/admin/statistics/utilisateurs"
+        infos-bulle="Nombre de tous les utilisateurs inscrits depuis le début"
       />
       <CardStatistic
         :value="statistics.benevoles"
         :title="`${$options.filters.pluralize(statistics.benevoles, 'Bénévole', 'Bénévoles', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.benevoles, 'inscrit', 'inscrits', false)}`"
         link="/admin/statistics/utilisateurs"
+        infos-bulle="Nombre de tous les bénévoles inscrits depuis le début"
       />
       <CardStatistic
         :value="statistics.benevoles_actifs"
         :title="`${$options.filters.pluralize(statistics.benevoles_actifs, 'Bénévole', 'Bénévoles', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.benevoles_actifs, 'actif', 'actifs', false)}`"
         link="/admin/statistics/utilisateurs"
+        infos-bulle="Nombre de bénévoles ayant fait au moins une demande de candidature depuis le début"
       />
       <CardStatistic
         :value="statistics.participations_validated"
         :title="`${$options.filters.pluralize(statistics.participations_validated, 'Participation', 'Participations', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.participations_validated, 'validée', 'validées', false)}`"
         link="/admin/statistics/participations"
+        infos-bulle="Nombre de participations validées depuis le début"
       />
     </div>
   </Box>

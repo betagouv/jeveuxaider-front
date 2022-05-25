@@ -37,10 +37,11 @@ import {
   DotsVerticalIcon,
   AdjustmentsIcon,
   VideoCameraIcon,
-  LockClosedIcon
+  LockClosedIcon,
+  InformationCircleIcon
 } from '@vue-hero-icons/outline'
 import {
-  InformationCircleIcon,
+  InformationCircleIcon as InformationCircleSolidIcon,
   UsersIcon,
   HomeIcon,
   ChevronDownIcon as ChevronDownSolidIcon,
@@ -54,6 +55,7 @@ import {
 } from '@vue-hero-icons/solid'
 
 const components = {
+  InformationCircleSolidIcon,
   LockClosedIcon,
   ClockSolidIcon,
   CheckCircleSolidIcon,

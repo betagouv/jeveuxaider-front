@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Répartition des organisations par statut juridique" class="mb-6" />
+    <BoxHeadingStatistics title="Répartition des organisations par statut juridique" class="mb-6" infos-bulle="Répartition des organisations inscrites sur la période par statut juridique" />
     <div class="w-full">
       <DoughnutChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
     </div>

@@ -24,7 +24,7 @@
         <div
           v-if="form.reason == 'mission_terminated'"
         >
-          <InformationCircleIcon width="16" height="16" class="mb-1 inline mr-1 text-jva-blue-500" />
+          <InformationCircleSolidIcon width="16" height="16" class="mb-1 inline mr-1 text-jva-blue-500" />
           <span class="text-sm text-gray-600">
             En validant ce choix, le statut de la mission sera automatiquement
             mis à jour. Le recrutement de nouveaux bénévoles sera clos.

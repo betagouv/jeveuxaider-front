@@ -35,7 +35,7 @@
         <client-only>
           <Tabs
             :tabs="[
-              { name: 'Informations', to: '', icon: 'InformationCircleIcon', current: $route.hash === '' },
+              { name: 'Informations', to: '', icon: 'InformationCircleSolidIcon', current: $route.hash === '' },
               { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash === '#historique' }
             ]"
           />

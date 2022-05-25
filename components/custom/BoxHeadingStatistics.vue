@@ -1,6 +1,23 @@
 <template>
-  <div>
-    <Heading as="h2" :level="3">
+  <div class="relative">
+    <div
+      v-if="infosBulle"
+      v-tooltip="{
+        content: infosBulle,
+        hideOnTargetClick: true,
+        placement: 'top',
+      }"
+      class="hidden sm:block p-2 cursor-help absolute top-0 -right-2 group"
+    >
+      <InformationCircleIcon class="h-4 w-4 text-gray-400 group-hover:text-gray-900" />
+    </div>
+    <Heading
+      as="h2"
+      :level="3"
+      :class="[
+        { 'sm:pr-6': infosBulle}
+      ]"
+    >
       <template v-if="link">
         <router-link :to="link" class="hover:text-jva-blue-500">
           {{ title }}
@@ -32,6 +49,10 @@ export default {
       default: false
     },
     link: {
+      type: String,
+      default: null
+    },
+    infosBulle: {
       type: String,
       default: null
     }

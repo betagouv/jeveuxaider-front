@@ -7,24 +7,28 @@
         :title="`${$options.filters.pluralize(statistics.organisations, 'Organisation', 'Organisations', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.organisations, 'inscrite', 'inscrites', false)}`"
         link="/admin/statistics/organisations"
+        infos-bulle="Nombre d'organisations inscrites depuis le début"
       />
       <CardStatistic
         :value="statistics.organisations_actives"
         :title="`${$options.filters.pluralize(statistics.organisations_actives, 'Organisation', 'Organisations', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.organisations, 'active', 'actives', false)}`"
         link="/admin/statistics/organisations"
+        infos-bulle="Nombre d'organisations avec une mission en ligne en ce moment"
       />
       <CardStatistic
         :value="statistics.territoires"
         :title="`${$options.filters.pluralize(statistics.territoires, 'Territoire', 'Territoires', false)}`"
         subtitle="en ligne"
         link="/admin/statistics/organisations"
+        infos-bulle="Nombre de territoires en ligne en ce moment"
       />
       <CardStatistic
         :value="statistics.reseaux"
         :title="`${$options.filters.pluralize(statistics.reseaux, 'Réseau', 'Réseaux', false)}`"
         subtitle="en ligne"
         link="/admin/statistics/organisations"
+        infos-bulle="Nombre de territoires en ligne en ce moment"
       />
     </div>
   </Box>

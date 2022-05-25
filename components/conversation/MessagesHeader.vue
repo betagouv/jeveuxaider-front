@@ -62,7 +62,7 @@
           ]"
           @click="$emit('toggle-panel-right')"
         >
-          <InformationCircleIcon
+          <InformationCircleSolidIcon
             class="h-4 w-4"
             :class="[
               $store.getters['messaging/showPanelRight']
