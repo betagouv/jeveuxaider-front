@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Engagement des utilisateurs" class="mb-6" />
+    <BoxHeadingStatistics title="Engagement des utilisateurs" class="mb-6" infos-bulle="Répartition des utilisateurs inscrits sur la période avec et sans participation" />
     <div class="w-full">
       <DoughnutChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
     </div>
