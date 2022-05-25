@@ -67,6 +67,7 @@ export default {
   methods: {
     refetch () {
       this.$refs.utilisateursStatistics.$fetch()
+      this.$refs.utilisateursByDate.$fetch()
       this.$refs.participationsCanceledByBenevoles.$fetch()
       this.$refs.utilisateursByDomaines.$fetch()
       this.$refs.utilisateursWithParticipations.$fetch()

@@ -30,7 +30,6 @@
         <div class="space-y-12 w-1/2">
           <ParticipationsByStates ref="participationsByStates" />
           <ParticipationsByActivities ref="participationsByActivities" />
-
           <ParticipationsByReseaux ref="participationsByReseaux" />
         </div>
         <div class="space-y-12 w-1/2">
@@ -70,6 +69,7 @@ export default {
   },
   methods: {
     refetch () {
+      this.$refs.participationsByDate.$fetch()
       this.$refs.participationsStatistics.$fetch()
       this.$refs.participationsByStates.$fetch()
       this.$refs.participationsByDomaines.$fetch()
