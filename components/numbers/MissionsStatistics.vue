@@ -20,13 +20,13 @@
         :title="`${$options.filters.pluralize(statistics.missions_snu, 'Mission SNU-MIG', 'Missions SNU-MIG', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.missions_snu, 'créée', 'créées', false)}`"
         link="/admin/missions"
-        infos-bulle="Nombre de missions compatibles SNU-MIG créées sur la période"
+        infos-bulle="Nombre de missions proposées sur le SNU via JeVeuxAider.gouv.fr, parmi les missions créées sur la période"
       />
       <CardStatistic
         :value="statistics.missions_snu_participations_max_sum"
         :title="`${$options.filters.pluralize(statistics.missions_snu_participations_max_sum, 'Place SNU-MIG', 'Places SNU-MIG', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.missions_snu_participations_max_sum, 'proposée', 'proposées', false)}`"
-        infos-bulle="Total de places proposées des missions compatibles SNU-MIG créées sur la période"
+        infos-bulle="Total des places proposées sur le SNU via JeVeuxAider.gouv.fr, parmi les missions créées sur la période"
       />
     </div>
   </Box>

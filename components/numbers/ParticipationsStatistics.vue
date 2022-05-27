@@ -6,13 +6,13 @@
         :value="statistics.participations"
         :title="`${$options.filters.pluralize(statistics.participations, 'Nouvelle candidature', 'Nouvelles candidatures', false)}`"
         link="/admin/statistics/participations"
-        infos-bulle="Total de demandes de candidature sur la période"
+        infos-bulle="Total du nombre de participations proposées sur la période sélectionnée"
       />
       <CardStatistic
         :value="statistics.participations_validated"
         :title="`${$options.filters.pluralize(statistics.participations_validated, 'Participation validée', 'Participations validées', false)}`"
         link="/admin/statistics/participations"
-        infos-bulle="Nombre de participations validées sur les candidatures créées sur la période"
+        infos-bulle="Nombre de participations validées parmi les candidatures reçues sur la période"
       />
     </div>
   </Box>

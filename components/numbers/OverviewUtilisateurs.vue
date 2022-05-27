@@ -7,21 +7,21 @@
         :title="`${$options.filters.pluralize(statistics.utilisateurs, 'Utilisateur', 'Utilisateurs', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.utilisateurs, 'inscrit', 'inscrits', false)}`"
         link="/admin/statistics/utilisateurs"
-        infos-bulle="Nombre de tous les utilisateurs inscrits depuis le début"
+        infos-bulle="Nombre total d’utilisateurs inscrits sur JeVeuxAider.gouv.fr"
       />
       <CardStatistic
         :value="statistics.benevoles"
         :title="`${$options.filters.pluralize(statistics.benevoles, 'Bénévole', 'Bénévoles', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.benevoles, 'inscrit', 'inscrits', false)}`"
         link="/admin/statistics/utilisateurs"
-        infos-bulle="Nombre de tous les bénévoles inscrits depuis le début"
+        infos-bulle="Nombre total d’utilisateurs inscrits en tant que “bénévoles” sur JeVeuxAider.gouv.fr"
       />
       <CardStatistic
         :value="statistics.benevoles_actifs"
         :title="`${$options.filters.pluralize(statistics.benevoles_actifs, 'Bénévole', 'Bénévoles', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.benevoles_actifs, 'actif', 'actifs', false)}`"
         link="/admin/statistics/utilisateurs"
-        infos-bulle="Nombre de bénévoles ayant fait au moins une demande de candidature depuis le début"
+        infos-bulle="Nombre de bénévoles ayant réalisé au moins une demande de participation à une mission"
       />
       <CardStatistic
         :value="statistics.participations_validated"
