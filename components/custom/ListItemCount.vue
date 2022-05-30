@@ -24,6 +24,7 @@
         {'bg-domaine-memoire': [8,'memoire'].includes(color)},
         {'bg-domaine-cooperation': [6,'cooperation'].includes(color)},
         {'bg-domaine-culture': [3,'culture','art'].includes(color)},
+        {'bg-domaine-benevolat-competences': [11,'benevolat-competences','benevolat'].includes(color)},
         color
       ]"
     />

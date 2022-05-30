@@ -94,8 +94,8 @@ module.exports = {
           sport: '#FF732C',
           culture: '#AA8625',
           memoire: '#175AB6',
-          cooperation: '#5B8397'
-
+          cooperation: '#5B8397',
+          'benevolat-competences': '#006A6F'
         },
         'cool-gray': { ...colors.coolGray, 500: '#777E90' },
         blue: colors.blue,
