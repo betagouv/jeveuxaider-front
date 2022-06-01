@@ -12,10 +12,10 @@
 
       <div
         :class="[
-          $options.filters.label(domaine.id, 'domaines', 'bg'),
+          'bg-black',
           'absolute',
           'inset-0',
-          { 'opacity-75': domaine.banner },
+          { 'opacity-50': domaine.banner },
         ]"
       />
 
@@ -111,7 +111,7 @@
       </div>
     </div>
 
-    <div class="bg-white z-10">
+    <div class="hidden sm:block bg-white z-10">
       <div>
         <div class="grid grid-cols-2 gap-0 md:grid-cols-6 lg:grid-cols-6">
           <div
@@ -182,7 +182,7 @@
     <AlgoliaSearch
       :initial-filters="`domaines:&quot;${domaine.name}&quot;`"
       :secondary-filters="['structure.name','publics_beneficiaires', 'structure.reseaux.name', 'department_name', 'template_subtitle',]"
-      class="my-24"
+      class="my-8 sm:my-16 lg:my-24"
     />
 
     <div class="bg-gray-50 border-b border-gray-200 py-12 lg:py-16">

@@ -135,7 +135,6 @@ export default {
       return error({ statusCode: 404 })
     }
 
-    // @TODO: Utiliser plutôt $algoliaApi.getMissions
     const { data: missions } = await $axios.get(`/structures/${organisation.id}/available-missions`, {
       append: 'domaines',
       pagination: 6,

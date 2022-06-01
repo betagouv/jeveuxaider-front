@@ -1,16 +1,6 @@
 <template>
   <div>
     <!-- Drawers for mobile -->
-    <template v-if="$store.state.algoliaSearchMissions.results">
-      <DrawerLeftSearchMissionsFilters
-        :is-open="isDrawerLeftSearchMissionsFilters"
-        @close="isDrawerLeftSearchMissionsFilters = false"
-      />
-      <DrawerLeftSearchMissionsLocalisation
-        :is-open="isDrawerLeftSearchMissionsLocalisation"
-        @close="isDrawerLeftSearchMissionsLocalisation = false"
-      />
-    </template>
 
     <div v-if="$store.state.algoliaSearchMissions.results" class="container md:px-8 lg:mt-6 mb-12">
       <div class="flex flex-col space-y-6 sm:space-y-12">
@@ -46,17 +36,8 @@
         </Sectionheading>
 
         <div class="sm:hidden">
-          <ToggleDrawerLeftSearchMissionsLocalisation @click.native="isDrawerLeftSearchMissionsLocalisation = true" />
-          <div class="flex justify-center mt-4">
-            <BadgeFilter :is-active="activeFacets.length > 1" @click.native="isDrawerLeftSearchMissionsFilters = true">
-              <template v-if="activeFacets.length > 1">
-                <span class="text-jva-blue-500">{{ $options.filters.pluralize(activeFacets.length - 1, 'filtre actif', 'filtres actifs',) }}</span>
-              </template>
-              <template v-else>
-                Plus de filtres
-              </template>
-            </BadgeFilter>
-          </div>
+          <PrimaryMobileFilters />
+          <SecondaryMobileFilters />
         </div>
 
         <div class="hidden sm:flex sm:flex-col relative z-10">
@@ -109,26 +90,22 @@
 
 import CardMission from '@/components/card/CardMission.vue'
 import TabsFacetFilter from '~/components/section/search/TabsFacetFilter.vue'
-import BadgeFilter from '~/components/search/BadgeFilter.vue'
-import ToggleDrawerLeftSearchMissionsLocalisation from '~/components/search/ToggleDrawerLeftSearchMissionsLocalisation.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
-import DrawerLeftSearchMissionsFilters from '@/components/drawer/DrawerLeftSearchMissionsFilters.vue'
-import DrawerLeftSearchMissionsLocalisation from '@/components/drawer/DrawerLeftSearchMissionsLocalisation.vue'
 import PrimaryFilters from '~/components/section/search/missions/PrimaryFilters.vue'
 import SecondaryFilters from '~/components/section/search/missions/SecondaryFilters.vue'
+import PrimaryMobileFilters from '~/components/section/search/missions/PrimaryMobileFilters.vue'
+import SecondaryMobileFilters from '~/components/section/search/missions/SecondaryMobileFilters.vue'
 import PromoteMissionDistance from '~/components/section/search/PromoteMissionDistance.vue'
 
 export default {
   components: {
     CardMission,
     TabsFacetFilter,
-    BadgeFilter,
-    ToggleDrawerLeftSearchMissionsLocalisation,
-    DrawerLeftSearchMissionsFilters,
-    DrawerLeftSearchMissionsLocalisation,
+    PrimaryMobileFilters,
     PrimaryFilters,
     SecondaryFilters,
-    PromoteMissionDistance
+    PromoteMissionDistance,
+    SecondaryMobileFilters
   },
   mixins: [AlgoliaQueryBuilder],
   props: {
@@ -147,8 +124,8 @@ export default {
   },
   data () {
     return {
-      isDrawerLeftSearchMissionsFilters: false,
-      isDrawerLeftSearchMissionsLocalisation: false
+      isSearchMissionsFiltersOpen: false,
+      isSearchMissionsLocalisationOpen: false
     }
   },
   async fetch () {

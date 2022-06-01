@@ -188,7 +188,7 @@ export default {
     CardMission
   },
   layout: 'default-without-header',
-  async asyncData ({ $axios, params, error, $algoliaApi, store }) {
+  async asyncData ({ $axios, params, error, store }) {
     const { data: reseau } = await $axios.get(`/reseaux/${params.slug}`)
     if (!reseau) {
       return error({ statusCode: 404 })
