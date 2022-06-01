@@ -4,7 +4,7 @@
       <div class="font-medium text-[15px]">
         Ma ville est…
       </div>
-      <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Nom ou code postal" @input="handleInput" />
+      <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Nom ou code postal" @input="handleInput" @clear="handleSelectedAdress(null)" />
     </div>
     <div class="flex flex-col py-2 text-sm">
       <div v-for="suggestion in suggestions" :key="suggestion.id" class="py-1 cursor-pointer flex justify-between truncate flex-1 group" @click="handleSelectedAdress(suggestion)">

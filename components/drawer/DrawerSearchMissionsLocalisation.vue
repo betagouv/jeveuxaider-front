@@ -38,13 +38,9 @@
     <template #footer>
       <div
         :class="[
-          'p-4 flex items-center space-x-3',
-          hasActiveFilters ? 'justify-between' : 'justify-end'
+          'p-4 flex items-center space-x-3 justify-end',
         ]"
       >
-        <Link v-if="hasActiveFilters" class="text-gray-500 underline text-sm" @click.native="deleteAllFilters()">
-          Réinitialiser
-        </Link>
         <Button @click.native="$emit('close')">
           <template v-if="$store.state.algoliaSearchMissions.results.nbHits == 0">
             Aucun résultat
