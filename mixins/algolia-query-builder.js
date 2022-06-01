@@ -17,6 +17,7 @@ export default {
         page: this.$route.query.page ? (this.$route.query.page - 1) : 0,
         facetFilters: this.activeFacets,
         facets: ['*'],
+        filters: this.getInitialFilters(),
         numericFilters: this.activeNumericFilters,
         hitsPerPage: this.$route.query.type === 'Mission à distance' ? 18 : 17
       }
@@ -51,6 +52,9 @@ export default {
     }
   },
   methods: {
+    getInitialFilters () {
+      return ''
+    },
     async search () {
       // Recherche principale
       const queries = [{

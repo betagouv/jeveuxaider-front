@@ -179,17 +179,10 @@
       </div>
     </div>
 
-    <SearchMissions
-      id="search-wrapper"
-      :facets="[
-        'template_title',
-        'department_name',
-        'structure.name',
-        'is_priority',
-      ]"
-      :filters="`domaines:&quot;${domaine.name}&quot;`"
-      :domaine="domaine"
-      :title-tag="'h2'"
+    <AlgoliaSearch
+      :initial-filters="`domaines:&quot;${domaine.name}&quot;`"
+      :secondary-filters="['structure.name','publics_beneficiaires', 'structure.reseaux.name', 'department_name', 'template_subtitle',]"
+      class="my-24"
     />
 
     <div class="bg-gray-50 border-b border-gray-200 py-12 lg:py-16">
@@ -248,11 +241,12 @@
 </template>
 
 <script>
-import SearchMissions from '~/components/section/SearchMissions.vue'
+// import SearchMissions from '~/components/section/SearchMissions.vue'
+import AlgoliaSearch from '~/components/section/search/missions/AlgoliaSearch.vue'
 
 export default {
   components: {
-    SearchMissions
+    AlgoliaSearch
   },
   async asyncData ({ params, error, $axios, store }) {
     const { data: domaine } = await $axios.get(`/domaines/${params.slug}`)
