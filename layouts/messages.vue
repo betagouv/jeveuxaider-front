@@ -117,10 +117,12 @@
               Inscrivez-vous sur votre première mission en quelques secondes.
             </p>
             <div class="mt-6">
-              <Button @click.native="$store.commit('toggleSearchOverlay')">
-                <SearchIcon class="-ml-1 mr-2 h-5 w-5" />
-                Trouver une mission
-              </Button>
+              <nuxt-link to="/missions-benevolat">
+                <Button>
+                  <SearchIcon class="-ml-1 mr-2 h-5 w-5" />
+                  Trouver une mission
+                </Button>
+              </nuxt-link>
             </div>
           </div>
           <Nuxt v-else />

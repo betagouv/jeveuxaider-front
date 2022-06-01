@@ -9,9 +9,11 @@
       <SectionHeading title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
         <template #action>
           <div>
-            <Button size="xl" icon="SearchIcon" @click.native="$store.commit('toggleSearchOverlay')">
-              Trouver une mission
-            </Button>
+            <nuxt-link to="/missions-benevolat">
+              <Button size="xl" icon="SearchIcon">
+                Trouver une mission
+              </Button>
+            </nuxt-link>
           </div>
         </template>
       </Sectionheading>

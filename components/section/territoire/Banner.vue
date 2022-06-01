@@ -70,6 +70,7 @@
                 v-model="domaine"
                 class="mb-4"
                 name="domaine"
+                placeholder="Tous les domaines d'action"
                 :options="$labels.domaines"
               />
 
@@ -109,7 +110,7 @@ export default {
   },
   data () {
     return {
-      domaine: 6 // Solidarite et insertion
+      domaine: null // Solidarite et insertion
     }
   },
 
@@ -126,7 +127,7 @@ export default {
             departmentName !== this.territoire.name
               ? `Bénévolat ${departmentName}`
               : `Bénévolat département ${departmentName}`,
-          link: `/departements/${slugify(departmentName)}`
+          link: `/departements/${slugify(departmentName, { lower: true })}`
         })
       }
 
@@ -150,14 +151,15 @@ export default {
       let link = null
       switch (type) {
         case 'department':
-          link = `refinementList[department_name][0]=${this.$options.filters.label(this.territoire.department, 'departments')}`
+          link = `department_name=${this.territoire.department} - ${this.$options.filters.label(this.territoire.department, 'departments')}`
           break
         case 'city':
-          link = `refinementList[type][0]=Mission en présentiel&aroundLatLng=${this.territoire.latitude},${this.territoire.longitude}&place=${this.territoire.zips[0]}&aroundRadius=35000`
+          link = `type=Mission en présentiel&aroundLatLng=${this.territoire.latitude},${this.territoire.longitude}&city=${this.territoire.name}&aroundRadius=35000`
           break
       }
-      return withDomaine
-        ? `/missions-benevolat?refinementList[domaines][0]=${this.domaineName}&${link}`
+
+      return withDomaine && this.domaineName
+        ? `/missions-benevolat?domaines=${this.domaineName}&${link}`
         : `/missions-benevolat?${link}`
     },
     onClick () {

@@ -20,25 +20,15 @@
         <TemoignageSteps />
       </div>
     </div>
-
-    <transition name="fade">
-      <LazySearchOverlay
-        v-if="$store.getters.searchOverlay"
-        @submitted="$store.commit('toggleSearchOverlay')"
-        @closed="$store.commit('toggleSearchOverlay')"
-      />
-    </transition>
   </div>
 </template>
 
 <script>
 import TemoignageSteps from '@/components/section/temoignage/Steps.vue'
-import LazySearchOverlay from '@/components/section/SearchOverlay.vue'
 
 export default {
   name: 'TemoignageLayout',
   components: {
-    LazySearchOverlay,
     TemoignageSteps
   }
 }

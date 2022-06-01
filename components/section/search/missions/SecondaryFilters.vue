@@ -65,6 +65,18 @@
           </BadgeFilter>
         </template>
       </FacetFilterToggle>
+
+      <FacetFilterToggle facet-name="template_subtitle" label="Types de mission" options-class="right-0 md:left-0">
+        <template #button="{ firstValueSelected, activeValuesCount }">
+          <BadgeFilter :is-active="!!activeValuesCount">
+            <span v-if="!firstValueSelected">Types de mission</span>
+            <div v-else class="text-jva-blue-500 flex">
+              <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+              <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+            </div>
+          </BadgeFilter>
+        </template>
+      </FacetFilterToggle>
     </div>
 
     <div class="hidden sm:flex lg:items-center lg:justify-center mt-4 lg:mt-0 lg:mr-6 xl:mr-12">

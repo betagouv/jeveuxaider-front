@@ -59,7 +59,7 @@
 
             <nuxt-link
               class="rounded-full text-white bg-jva-green-500 hover:scale-105 !outline-none focus:scale-105 transition px-8 py-3 transform will-change-transform shadow-xl font-bold inline-flex mt-8"
-              to="/missions-benevolat?refinementList[type][0]=Mission à distance"
+              to="/missions-benevolat?type=Mission à distance"
             >
               <span>Découvrir le télébénévolat</span>
             </nuxt-link>

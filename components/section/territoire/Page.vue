@@ -33,7 +33,7 @@
 
     <Search :territoire="territoire" />
 
-    <Promote :territoire="territoire" />
+    <Promote :territoire="territoire" class="mb-24" />
 
     <Cities
       v-if="territoire.type == 'city'"

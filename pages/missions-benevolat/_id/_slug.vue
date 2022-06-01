@@ -30,7 +30,7 @@
         { label: 'Missions de bénévolat', link: '/missions-benevolat' },
         {
           label: domainName,
-          link: `/missions-benevolat?refinementList[domaines][0]=${domainName}`,
+          link: `/missions-benevolat?domaines=${domainName}`,
         },
         {
           label:
@@ -278,7 +278,7 @@
 
           <div v-if="mission.domaine" class="text-center">
             <nuxt-link
-              :to="`/missions-benevolat?refinementList[domaines][0]=${mission.domaine.name}`"
+              :to="`/missions-benevolat?domaines=${mission.domaine.name}`"
               class="inline-block border-2 border-gray-500 rounded-full text-white hover:border-white !outline-none focus:ring transition font-bold text-sm px-4 py-2 mt-6"
             >
               Plus de missions

@@ -1,13 +1,7 @@
 
-export const state = () => ({
-  showSearchOverlay: false
-})
+export const state = () => ({})
 
-export const mutations = {
-  toggleSearchOverlay: (state) => {
-    state.showSearchOverlay = !state.showSearchOverlay
-  }
-}
+export const mutations = {}
 
 export const actions = {
   async nuxtServerInit ({ commit }, { store, req }) {

@@ -132,9 +132,9 @@ export default {
   methods: {
     link () {
       if (this.department) {
-        return `/missions-benevolat?refinementList[activity.name][0]=${this.activity.name}&refinementList[department_name][0]=${this.departmentName}`
+        return `/missions-benevolat?activity.name=${this.activity.name}&department_name=${this.departmentName}`
       }
-      return `/missions-benevolat?refinementList[activity.name][0]=${this.activity.name}`
+      return `/missions-benevolat?activity.name=${this.activity.name}`
     },
     onClick () {
       this.$router.push(this.link())

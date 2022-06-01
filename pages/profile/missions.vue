@@ -15,9 +15,11 @@
       >
         <template #action>
           <div>
-            <Button size="xl" icon="SearchIcon" @click.native="$store.commit('toggleSearchOverlay')">
-              Trouver une mission
-            </Button>
+            <nuxt-link to="/missions-benevolat">
+              <Button size="xl" icon="SearchIcon">
+                Trouver une mission
+              </Button>
+            </nuxt-link>
           </div>
         </template>
       </SectionHeading>

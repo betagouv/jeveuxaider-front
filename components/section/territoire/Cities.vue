@@ -1,7 +1,7 @@
 <template>
   <section class="section-cities bg-[#fafaff]">
     <div
-      class="container px-4 mx-auto py-24"
+      class="container px-4 mx-auto pb-24"
       :class="[{ 'pb-0': !cities.length }]"
     >
       <template v-if="cities.length">
@@ -18,7 +18,7 @@
             v-for="city in cities"
             :key="city.zipcode"
             class="leading-none truncate px-8 py-4 rounded-full text-sm shadow-md font-extrabold tracking-wide uppercase bg-white text-gray-800 transform transition will-change-transform hover:scale-105"
-            :to="`/missions-benevolat?refinementList[type][0]=Mission en présentiel&aroundLatLng=${city.coordonates}&place=${city.zipcode} ${city.name}&aroundRadius=35000`"
+            :to="`/missions-benevolat?type=Mission en présentiel&aroundLatLng=${city.coordonates}&city=${city.name}&aroundRadius=35000`"
           >
             {{ city.name }}
           </nuxt-link>

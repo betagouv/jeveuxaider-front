@@ -79,7 +79,7 @@
 
           <nuxt-link
             v-if="reseau.structures_count - 5 > 0"
-            :to="`/missions-benevolat?refinementList[structure.reseaux.name][0]=${reseau.name}`"
+            :to="`/missions-benevolat?structure.reseaux.name=${reseau.name}`"
             class="text-[#696974] leading-none truncate px-[18px] h-[40px] flex items-center rounded-full text-[13px] shadow-md font-extrabold tracking-wide uppercase bg-white transform transition will-change-transform hover:scale-105"
           >
             + {{ reseau.structures_count - 5 }} antennes
@@ -110,7 +110,7 @@
               </h3>
 
               <nuxt-link
-                :to="`/missions-benevolat?refinementList[structure.name][0]=${antenne.name}`"
+                :to="`/missions-benevolat?structure.name=${antenne.name}`"
                 class="flex-none text-[#696974] text-lg hover:underline ml-auto"
               >
                 {{ missionsFrom(antenne.id).missionCount | formatNumber }}

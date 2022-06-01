@@ -62,6 +62,13 @@
       :limit-options="3"
       :facets="$store.getters['algoliaSearchMissions/facetResults']('department_name')"
     />
+    <FacetFilter
+      show-more
+      facet-name="template_subtitle"
+      label="Types de mission"
+      :limit-options="3"
+      :facets="$store.getters['algoliaSearchMissions/facetResults']('template_subtitle')"
+    />
 
     <template #footer>
       <div

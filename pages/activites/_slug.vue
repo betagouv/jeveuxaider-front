@@ -18,7 +18,7 @@
     </client-only>
     <ActivityBanner :activity="activity" />
     <Search :activity="activity" />
-    <Promote :activity="activity" class="-mb-32" />
+    <Promote :activity="activity" class="mb-24" />
     <Associations :activity="activity" />
     <Engagement :activity="activity" />
     <Subscribe :activity="activity" />

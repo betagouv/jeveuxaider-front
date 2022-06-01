@@ -3,7 +3,7 @@ export default {
   data () {
     return {
       indexName: this.$config.algolia.missionsIndex,
-      availableFacets: ['type', 'activity.name', 'structure.name', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires'],
+      availableFacets: ['type', 'activity.name', 'structure.name', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires', 'template_subtitle'],
       availableNumericFilters: ['commitment__total']
     }
   },
@@ -12,12 +12,13 @@ export default {
       return {
         aroundLatLngViaIP: this.$route.query.type != 'Mission à distance' && !this.$route.query.aroundLatLng,
         aroundLatLng: this.$route.query.aroundLatLng || '',
-        aroundRadius: this.$route.query.aroundLatLng ? 50000 : 'all',
+        aroundRadius: this.$route.query.aroundLatLng ? 35000 : 'all',
         query: this.$route.query.search || '',
         page: this.$route.query.page ? (this.$route.query.page - 1) : 0,
         facetFilters: this.activeFacets,
         facets: ['*'],
-        numericFilters: this.activeNumericFilters
+        numericFilters: this.activeNumericFilters,
+        hitsPerPage: this.$route.query.type === 'Mission à distance' ? 18 : 17
       }
     },
     hasActiveFilters () {

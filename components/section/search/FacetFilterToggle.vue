@@ -174,7 +174,6 @@ export default {
       this.isScrollAtBottom = (scrollTop + clientHeight >= scrollHeight)
     },
     onClickOutside (e) {
-      console.log('Click outside', e)
       this.isOpen = false
     },
     async handleFacetToggle (facetName, facetValue) {

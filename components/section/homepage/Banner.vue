@@ -101,7 +101,7 @@ export default {
         window.plausible('Click CTA - Homepage', {
           props: { isLogged: this.$store.getters.isLogged }
         })
-      this.$store.commit('toggleSearchOverlay')
+      this.$router.push('/missions-benevolat')
     }
   }
 }

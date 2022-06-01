@@ -23,9 +23,9 @@
         </nuxt-link>
       </div>
       <div class="flex lg:hidden space-x-2 pr-4 text-jva-blue-500">
-        <button @click="$store.commit('toggleSearchOverlay')">
+        <nuxt-link to="/missions-benevolat">
           <SearchIcon />
-        </button>
+        </nuxt-link>
         <button
           type="button"
 
@@ -301,7 +301,6 @@
     <client-only>
       <portal to="body-end">
         <transition name="fade">
-          <LazySearchOverlay v-if="$store.state.showSearchOverlay" />
           <LazySoftGateOverlay v-if="$store.state.softGate.showOverlay" />
           <LazyMissionShareOverlay v-if="$store.state.missionShare.showOverlay" />
         </transition>
@@ -313,14 +312,12 @@
 <script>
 import { CalendarIcon, SearchIcon, UserIcon, ChatAltIcon } from '@vue-hero-icons/outline'
 import DropdownUser from '@/components/custom/DropdownUser'
-import LazySearchOverlay from '@/components/section/SearchOverlay'
 import LazySoftGateOverlay from '@/components/section/SoftGateOverlay'
 import LazyMissionShareOverlay from '@/components/section/MissionShareOverlay'
 
 export default {
   components: {
     DropdownUser,
-    LazySearchOverlay,
     LazySoftGateOverlay,
     LazyMissionShareOverlay
   },
@@ -340,13 +337,13 @@ export default {
     navigation () {
       if (!this.$store.getters.isLogged) {
         return [
-          { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
+          { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' },
           { name: 'Publier une mission', to: '/inscription/responsable', icon: CalendarIcon },
           { name: 'Devenir bénévole', to: '/inscription/benevole', icon: UserIcon }
         ]
       }
       return [
-        { name: 'Trouver une mission', icon: SearchIcon, click: () => this.$store.commit('toggleSearchOverlay') },
+        { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' },
         { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessages'] }
       ]
     },

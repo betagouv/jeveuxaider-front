@@ -76,7 +76,7 @@
 
         <div class="text-center mt-6">
           <nuxt-link
-            :to="`/missions-benevolat?refinementList[structure.name][0]=${organisation.name}`"
+            :to="`/missions-benevolat?structure.name=${organisation.name}`"
           >
             <button
               class="uppercase shadow-lg text-sm font-bold rounded-full text-gray-500 bg-white py-3 px-8 hover:scale-105 transform transition"

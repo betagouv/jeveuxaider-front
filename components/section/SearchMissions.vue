@@ -236,7 +236,7 @@
                     >
                       <nuxt-link
                         v-if="item.isBannerRemoteMissions"
-                        to="/missions-benevolat?refinementList[type][0]=Mission à distance"
+                        to="/missions-benevolat?type=Mission à distance"
                         class="banner-remote relative h-auto flex flex-col flex-1 bg-white rounded-lg overflow-hidden cursor-pointer group"
                       >
                         <img

@@ -16,7 +16,7 @@
           { label: 'Missions de bénévolat', link: '/missions-benevolat' },
           {
             label: mission.domaine_name,
-            link: `/missions-benevolat?refinementList[domaines][0]=${mission.domaine_name}`,
+            link: `/missions-benevolat?domaines=${mission.domaine_name}`,
           },
           {
             label: breadcrumbTitle,

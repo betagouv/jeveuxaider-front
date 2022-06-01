@@ -20,8 +20,7 @@
     <hr class="opacity-25">
 
     <div
-      class="pb-12 bg-[#fafaff]"
-      :class="[{ 'pb-44': territoire.type != 'city' }]"
+      class="pb-24 bg-[#fafaff]"
     >
       <SearchMissions
         :facets="[]"
@@ -48,8 +47,6 @@
         </div>
       </div>
     </div>
-
-    <hr v-if="territoire.type != 'city'" class="opacity-25">
   </section>
 </template>
 
@@ -74,10 +71,10 @@ export default {
       let link = null
       switch (this.territoire.type) {
         case 'department':
-          link = `/missions-benevolat?refinementList[department_name][0]=${this.departmentName}`
+          link = `/missions-benevolat?department_name=${this.departmentName}`
           break
         case 'city':
-          link = `/missions-benevolat?refinementList[type][0]=Mission en présentiel&aroundLatLng=${this.territoire.latitude},${this.territoire.longitude}&place=${this.territoire.zips[0]}&aroundRadius=35000`
+          link = `/missions-benevolat?type=Mission en présentiel&aroundLatLng=${this.territoire.latitude},${this.territoire.longitude}&city=${this.territoire.name}&aroundRadius=35000`
           break
       }
       return link
