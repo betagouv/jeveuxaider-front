@@ -22,12 +22,13 @@
           {'bg-white': variant == 'transparent' && value}
         ]"
         autocomplete="off"
+        :disabled="disabled"
         @keydown="onKeydown"
         @click="!disabled ? showOptions = true : null"
       >
       <div class="absolute right-3">
         <XIcon
-          v-if="selectedOption"
+          v-if="selectedOption && !disabled"
           class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
           @click="reset()"
         />
