@@ -17,6 +17,7 @@ export default {
   components: {
     AlgoliaSearch
   },
+  middleware: 'search',
   data () {
     return {
     }
