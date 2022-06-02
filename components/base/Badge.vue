@@ -69,7 +69,11 @@
 
       // DOMAINE: Culture
       {'text-white bg-domaine-culture': [3,'culture'].includes(color) && !plain},
-      { 'border text-domaine-culture border-domaine-culture': [3,'culture'].includes(color) && plain}
+      { 'border text-domaine-culture border-domaine-culture': [3,'culture'].includes(color) && plain},
+
+      // DOMAINE: Benevolat competences
+      {'text-white bg-domaine-benevolat-competences': [11,'benevolat-competences'].includes(color) && !plain},
+      { 'border text-domaine-benevolat-competences border-domaine-benevolat-competences': [3,'benevolat-competences'].includes(color) && plain}
     ]"
   >
     <span class="truncate">

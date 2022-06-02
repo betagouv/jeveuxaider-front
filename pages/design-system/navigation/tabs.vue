@@ -21,7 +21,7 @@
       <div class="flex flex-wrap gap-2 items-end">
         <Tabs
           :tabs="[
-            { name: 'Informations', to: '#', icon: 'InformationCircleIcon', current: false },
+            { name: 'Informations', to: '#', icon: 'InformationCircleSolidIcon', current: false },
             { name: 'Participations', to: '#', icon: 'UsersIcon', current: false },
             { name: 'Historique', to: '#', icon: 'ClockIcon', current: true }
           ]"

@@ -1,10 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics
-      title="Répartition des participations par domaine d’action"
-      class="mb-6"
-      infos-bulle="Répartition des participations sur la période par domaine d'action"
-    />
+    <BoxHeadingStatistics title="Domaines d’action avec le plus de places" no-period class="mb-6" infos-bulle="Liste des domaines d'action avec le plus de places disponibles en ce moment" />
     <div v-if="items" class="flex flex-col gap-2">
       <ListItemCount v-for="item in items" :key="item.id" :color="item.id ? item.id : 'gray-light'" :label="item.name ? item.name : 'Sans domaine'" :count="item.count" />
     </div>
@@ -28,7 +24,7 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/statistics/participations-by-domaines', {
+    await this.$axios.get('/statistics/places-by-domaines', {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false

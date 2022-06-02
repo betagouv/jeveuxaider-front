@@ -12,7 +12,13 @@
 
     <SectionHeading
       title="Départements"
-    />
+    >
+      <template #action>
+        <div class="hidden lg:block space-x-2 flex-shrink-0">
+          <FiltersStatistics no-period @refetch="refetch()" />
+        </div>
+      </template>
+    </SectionHeading>
 
     <Tabs
       :tabs="[
@@ -30,9 +36,11 @@
 
 <script>
 import MissionsOutdatedByDepartments from '@/components/numbers/MissionsOutdatedByDepartments.vue'
+import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
 export default {
   components: {
+    FiltersStatistics,
     MissionsOutdatedByDepartments
   },
   layout: 'statistics',

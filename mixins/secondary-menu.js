@@ -19,7 +19,12 @@ export default {
   },
   methods: {
     handleChangeItem (item) {
-      this.$router.push(item.to)
+      if (item.to) {
+        this.$router.push(item.to)
+      }
+      if (item.href) {
+        window.location.href = item.href
+      }
     }
   }
 }

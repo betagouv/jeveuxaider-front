@@ -40,10 +40,11 @@ import {
   LockClosedIcon,
   DesktopComputerIcon,
   HandIcon,
-  XCircleIcon
+  XCircleIcon,
+  InformationCircleIcon
 } from '@vue-hero-icons/outline'
 import {
-  InformationCircleIcon,
+  InformationCircleIcon as InformationCircleSolidIcon,
   UsersIcon,
   HomeIcon,
   ChevronDownIcon as ChevronDownSolidIcon,
@@ -65,6 +66,7 @@ const components = {
   DesktopComputerIcon,
   CalendarSolidIcon,
   HandSolidIcon,
+  InformationCircleSolidIcon,
   LockClosedIcon,
   ClockSolidIcon,
   CheckCircleSolidIcon,

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Box padding="sm" :loading="loading" loading-text="Récupération des participations...">
-      <BoxHeadingStatistics title="Participations en cours de traitement" subtitle="Classées par organisations" class="mb-6" />
+      <BoxHeadingStatistics title="Participations en cours de traitement" no-period class="mb-6" />
       <StackedList v-if="items" :divided="false">
         <StackedListItem
           v-for="item, i in items"
@@ -36,7 +36,7 @@ export default {
   async fetch () {
     this.loading = true
     await this.$axios.get('/statistics/participations-in-progress-by-organisations', {
-      // params: this.$store.state.statistics.params
+      params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
       this.items = response.data

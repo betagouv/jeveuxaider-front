@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des réseaux...">
-    <BoxHeadingStatistics title="Réseaux les plus actifs" class="mb-6" infos-bulle="Liste des réseaux ayant créé le plus de missions sur la période sélectionnée" />
+    <BoxHeadingStatistics title="Réseaux avec le plus de places" no-period class="mb-6" infos-bulle="Liste des réseaux avec le plus de places disponibles en ce moment" />
     <StackedList v-if="items" :divided="false">
       <StackedListItem
         v-for="item, i in items"
@@ -11,7 +11,7 @@
       >
         <div class="text-gray-900 font-semibold" v-html="item.name" />
         <div class="text-gray-500 text-sm">
-          {{ $options.filters.pluralize(item.count, 'mission crée', 'missions crées') }}
+          {{ $options.filters.pluralize(item.count, 'place disponible', 'places disponibles') }}
         </div>
       </StackedListItem>
     </StackedList>
@@ -33,7 +33,7 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/statistics/missions-by-reseaux', {
+    await this.$axios.get('/statistics/places-by-reseaux', {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false

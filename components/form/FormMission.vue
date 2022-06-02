@@ -56,25 +56,23 @@
               />
             </FormControl>
           </div>
-          <template v-if="['admin'].includes($store.getters.contextRole)">
-            <FormControl
-              v-if="activities.length"
-              label="Activité"
-              html-for="activity_id"
-            >
-              <Combobox
-                v-model="form.activity_id"
-                :value="form.activity_id"
-                name="activity_id"
-                placeholder="Sélectionner une activité"
-                :options="activities"
-                clearable
-                attribute-key="id"
-                attribute-label="name"
-                :disabled="Boolean(mission.template)"
-              />
-            </FormControl>
-          </template>
+          <FormControl
+            v-if="activities.length"
+            label="Activité"
+            html-for="activity_id"
+          >
+            <Combobox
+              v-model="form.activity_id"
+              :value="form.activity_id"
+              name="activity_id"
+              placeholder="Sélectionner une activité"
+              :options="activities"
+              clearable
+              attribute-key="id"
+              attribute-label="name"
+              :disabled="Boolean(mission.template)"
+            />
+          </FormControl>
           <FormControl
             label="Publics aidés"
             html-for="publics_beneficiaires"
@@ -559,7 +557,7 @@ export default {
   },
   fetchOnServer: false,
   async fetch () {
-    const { data: activities } = await this.$axios.get('/activities?pagination=0')
+    const { data: activities } = await this.$axios.get('/activities?pagination=999')
     this.activities = activities.data.filter(item => item.is_published || item.id === this.mission.activity_id)
   },
   computed: {

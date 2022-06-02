@@ -69,6 +69,7 @@ export default {
   },
   methods: {
     refetch () {
+      this.$refs.organisationsByDate.$fetch()
       this.$refs.organisationsStatistics.$fetch()
       this.$refs.organisationsByStates.$fetch()
       this.$refs.organisationsByTypes.$fetch()
