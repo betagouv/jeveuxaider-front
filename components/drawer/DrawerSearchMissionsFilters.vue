@@ -5,28 +5,18 @@
         Filtres de recherche
       </div>
     </template>
-
     <div class="space-y-2">
       <div class="relative font-medium text-[15px]">
         Mots-clés
       </div>
       <SearchFilter />
     </div>
-
     <div class="space-y-2">
       <div class="relative font-medium text-[15px]">
         Disponibilités
       </div>
       <CommitmentMobileFilter />
     </div>
-
-    <FacetFilter
-      show-more
-      facet-name="publics_beneficiaires"
-      label="Publics aidés"
-      :limit-options="3"
-      :facets="$store.getters['algoliaSearchMissions/facetResults']('publics_beneficiaires')"
-    />
     <FacetFilter
       show-more
       facet-name="activity.name"
@@ -40,6 +30,13 @@
       label="Organisations"
       :limit-options="3"
       :facets="$store.getters['algoliaSearchMissions/facetResults']('structure.name')"
+    />
+    <FacetFilter
+      show-more
+      facet-name="publics_beneficiaires"
+      label="Publics aidés"
+      :limit-options="3"
+      :facets="$store.getters['algoliaSearchMissions/facetResults']('publics_beneficiaires')"
     />
     <FacetFilter
       show-more

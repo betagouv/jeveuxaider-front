@@ -28,8 +28,6 @@
 </template>
 
 <script>
-// @todo: refactoriser avec le desktop
-
 import { debounce } from 'lodash'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
