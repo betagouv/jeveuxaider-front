@@ -118,23 +118,11 @@ export default {
   },
   methods: {
     deleteAllFiltersExceptLocalisation () {
+      const filteredQueries = (({ city, type, aroundLatLng }) => ({ city, type, aroundLatLng }))(this.$route.query)
+
       this.$router.push({
         path: this.$route.path,
-        query: {
-          ...this.$route.query,
-          search: undefined,
-          template_subtitle: undefined,
-          department_name: undefined,
-          'activity.name': undefined,
-          'structure.name': undefined,
-          'structure.reseaux.name': undefined,
-          publics_beneficiaires: undefined,
-          domaines: undefined,
-          commitment__total: undefined,
-          duration: undefined,
-          time_period: undefined,
-          page: undefined
-        }
+        query: filteredQueries
       })
     }
   }
