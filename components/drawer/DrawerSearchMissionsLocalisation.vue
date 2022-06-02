@@ -28,7 +28,6 @@
     <LocalisationSuggestions
       v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'"
       :ip-lat-lng="$store.state.algoliaSearchMissions.results.aroundLatLng"
-      @updated="$emit('close')"
     />
 
     <div v-else class="text-gray-700">

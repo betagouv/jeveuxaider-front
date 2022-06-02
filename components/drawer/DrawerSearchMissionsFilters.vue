@@ -80,7 +80,7 @@
         <Link
           v-if="hasActiveFilters"
           class="text-gray-500 underline text-sm"
-          @click.native="deleteAllFilters()"
+          @click.native="deleteAllFiltersExceptLocalisation()"
         >
           Réinitialiser
         </Link>
@@ -115,6 +115,28 @@ export default {
   mixins: [AlgoliaQueryBuilder],
   props: {
     isOpen: { type: Boolean, default: false }
+  },
+  methods: {
+    deleteAllFiltersExceptLocalisation () {
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.$route.query,
+          search: undefined,
+          template_subtitle: undefined,
+          department_name: undefined,
+          'activity.name': undefined,
+          'structure.name': undefined,
+          'structure.reseaux.name': undefined,
+          publics_beneficiaires: undefined,
+          domaines: undefined,
+          commitment__total: undefined,
+          duration: undefined,
+          time_period: undefined,
+          page: undefined
+        }
+      })
+    }
   }
 }
 </script>
