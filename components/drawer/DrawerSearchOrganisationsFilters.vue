@@ -38,11 +38,11 @@
       <div
         :class="[
           'p-4 flex items-center space-x-3',
-          hasActiveFilters ? 'justify-between' : 'justify-end'
+          activeMoreFacets.length ? 'justify-between' : 'justify-end'
         ]"
       >
         <Link
-          v-if="hasActiveFilters"
+          v-if="activeMoreFacets.length"
           class="text-gray-500 underline text-sm"
           @click.native="deleteAllFiltersExceptLocalisation()"
         >
@@ -65,14 +65,14 @@
 </template>
 
 <script>
-import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
+import AlgoliaOrganisationsQueryBuilder from '@/mixins/algolia-organisations-query-builder'
 import FacetFilter from '~/components/section/search/FacetFilter.vue'
 
 export default {
   components: {
     FacetFilter
   },
-  mixins: [AlgoliaQueryBuilder],
+  mixins: [AlgoliaOrganisationsQueryBuilder],
   props: {
     isOpen: { type: Boolean, default: false }
   },

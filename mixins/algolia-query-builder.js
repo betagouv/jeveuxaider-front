@@ -19,24 +19,6 @@ export default {
       Object.keys(this.$route.query).forEach(key => this.$route.query[key] === undefined ? delete this.$route.query[key] : {})
       return Object.keys(this.$route.query).length !== 0
     },
-    isMoreFiltersActive () {
-      return !!this.activeFacets.length
-    },
-    // activeFacets () {
-    //   let activeFacets = this.availableFacets.filter(facetName => this.$route.query[facetName])
-
-    //   activeFacets = activeFacets.map((facetName) => {
-    //     return this.$route.query[facetName].split('|').map((facetValue) => {
-    //       return `${facetName}:${facetValue}`
-    //     })
-    //   })
-
-    //   // if (!this.$route.query.type) {
-    //   //   activeFacets.push(['type:Mission en présentiel'])
-    //   // }
-
-    //   return activeFacets
-    // },
     activeNumericFilters () {
       let activeNumericFilters = this.availableNumericFilters.filter(filterName => this.$route.query[filterName])
 

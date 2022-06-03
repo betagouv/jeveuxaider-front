@@ -71,11 +71,11 @@
       <div
         :class="[
           'p-4 flex items-center space-x-3',
-          hasActiveFilters ? 'justify-between' : 'justify-end'
+          activeMoreFacets.length ? 'justify-between' : 'justify-end'
         ]"
       >
         <Link
-          v-if="hasActiveFilters"
+          v-if="activeMoreFacets.length"
           class="text-gray-500 underline text-sm"
           @click.native="deleteAllFiltersExceptLocalisation()"
         >
@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
+import AlgoliaMissionsQueryBuilder from '@/mixins/algolia-missions-query-builder'
 import FacetFilter from '~/components/section/search/FacetFilter.vue'
 import SearchFilter from '@/components/search/SearchFilter.vue'
 import CommitmentMobileFilter from '~/components/section/search/CommitmentMobileFilter.vue'
@@ -109,7 +109,7 @@ export default {
     SearchFilter,
     CommitmentMobileFilter
   },
-  mixins: [AlgoliaQueryBuilder],
+  mixins: [AlgoliaMissionsQueryBuilder],
   props: {
     isOpen: { type: Boolean, default: false }
   },

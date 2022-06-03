@@ -36,6 +36,9 @@ export default {
       }
 
       return activeFacets
+    },
+    activeMoreFacets () {
+      return this.availableFacets.filter(facetName => this.$route.query[facetName] && !['type'].includes(facetName))
     }
   },
   methods: {

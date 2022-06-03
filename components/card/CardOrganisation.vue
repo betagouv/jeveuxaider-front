@@ -61,34 +61,51 @@
         {{ organisation.name }}
       </h3>
 
-      <div v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole)" class="mt-4 text-[13px] text-gray-500">
-        Complétion: <span class="font-semibold">{{ organisation.completion_rate }}%</span>
-      </div>
-
-      <div class="mt-4 flex items-center justify-center">
-        <Badge :color="organisation.state" plain>
-          {{ organisation.state }}
-        </Badge>
-        <div v-if="['admin'].includes($store.getters.contextRole)" class="text-gray-500 text-xs flex-shrink-0 ml-2">
-          ID <span class="font-semibold">{{ organisation.id }}</span>
+      <template v-if="showState">
+        <div v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole)" class="mt-4 text-[13px] text-gray-500">
+          Complétion: <span class="font-semibold">{{ organisation.completion_rate }}%</span>
         </div>
-      </div>
+
+        <div class="mt-4 flex items-center justify-center">
+          <Badge :color="organisation.state" plain>
+            {{ organisation.state }}
+          </Badge>
+          <div v-if="['admin'].includes($store.getters.contextRole)" class="text-gray-500 text-xs flex-shrink-0 ml-2">
+            ID <span class="font-semibold">{{ organisation.id }}</span>
+          </div>
+        </div>
+      </template>
     </div>
 
     <div
       class="border-t p-4 text-center flex items-center justify-center space-x-2"
     >
-      <span
-        class="text-sm font-bold"
-        :class="[
-          organisation.state === 'Validée' ? 'text-gray-900' : 'text-gray-400'
-        ]"
-      >
-        {{
-          organisation.places_left
-            | pluralize('bénévole recherché', 'bénévoles recherchés')
-        }}
-      </span>
+      <template v-if="footerKey === 'places_left'">
+        <span
+          class="text-sm font-bold"
+          :class="[
+            organisation.state === 'Validée' ? 'text-gray-900' : 'text-gray-400'
+          ]"
+        >
+          {{
+            organisation.places_left
+              | pluralize('bénévole recherché', 'bénévoles recherchés')
+          }}
+        </span>
+      </template>
+      <template v-if="footerKey === 'missions_available_count'">
+        <span
+          class="text-sm font-bold"
+          :class="[
+            organisation.missions_available_count > 0 ? 'text-gray-900' : 'text-gray-400'
+          ]"
+        >
+          {{
+            organisation.missions_available_count
+              | pluralize('mission disponible', 'missions disponibles')
+          }}
+        </span>
+      </template>
     </div>
   </div>
 </template>
@@ -102,6 +119,14 @@ export default {
     organisation: {
       type: Object,
       default: null
+    },
+    showState: {
+      type: Boolean,
+      default: false
+    },
+    footerKey: {
+      type: String,
+      default: 'places_left'
     }
   },
   computed: {

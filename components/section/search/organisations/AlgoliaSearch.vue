@@ -6,10 +6,10 @@
           title="Trouver une association"
           :secondary-title-bottom="`${$options.filters.formatNumber($store.state.algoliaSearchOrganisations.results.nbHits)} ${$options.filters.pluralize(
             $store.state.algoliaSearchOrganisations.results.nbHits,
-            'association',
-            'associations',
+            'résultat',
+            'résultats',
             false
-          )} proposant des missions de bénévolat`"
+          )}`"
         />
 
         <div class="sm:hidden">
@@ -40,7 +40,7 @@
               :to="`/organisations/${item.slug}`"
               @click.native="handleClickCard"
             >
-              <CardOrganisation :organisation="item" />
+              <CardOrganisation :organisation="item" footer-key="missions_available_count" />
             </nuxt-link>
           </template>
         </div>

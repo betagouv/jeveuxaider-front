@@ -26,8 +26,8 @@
           </div>
         </div>
       </BadgeFilter>
-      <BadgeFilter :is-active="activeFacets.length >= 1" @click.native="isSearchMissionsFiltersOpen = true">
-        <template v-if="activeFacets.length >= 1">
+      <BadgeFilter :is-active="activeMoreFacets.length > 0" @click.native="isSearchMissionsFiltersOpen = true">
+        <template v-if="activeMoreFacets.length">
           <span class="text-jva-blue-500">+{{ $options.filters.pluralize(activeFacets.length, 'filtre', 'filtres',) }}</span>
         </template>
         <template v-else>
