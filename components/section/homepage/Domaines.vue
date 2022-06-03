@@ -126,6 +126,15 @@ export default {
           bottom: true
         },
         {
+          id: 11,
+          name: 'Bénévolat de compétences',
+          slug: 'benevolat-de-competences',
+          description: 'Mettez vos savoir-faire au service des autres',
+          image:
+            '/images/domaines/card_domaine_benevolat_competences.webp, /images/domaines/card_domaine_benevolat_competences@2x.webp 2x, /images/domaines/card_domaine_benevolat_competences.jpg, /images/domaines/card_domaine_benevolat_competences@2x.jpg 2x',
+          bottom: true
+        },
+        {
           id: 5,
           name: 'Mobilisation Covid-19',
           slug: 'mobilisation-covid-19',

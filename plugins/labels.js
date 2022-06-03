@@ -224,7 +224,7 @@ const labels = {
     { key: 8, label: 'Mémoire et citoyenneté', icon: '/images/icons/domaine-memoire-citoyennete.svg', color: 'text-domaine-memoire', bg: 'bg-domaine-memoire', emoji: '📯' },
     { key: 6, label: 'Coopération internationale', icon: '/images/icons/domaine-cooperation-internationale.svg', color: 'text-domaine-cooperation', bg: 'bg-domaine-cooperation', emoji: '🌍' },
     { key: 3, label: 'Art et Culture pour tous', icon: '/images/icons/domaine-art-culture-pour-tous.svg', color: 'text-domaine-culture', bg: 'bg-domaine-culture', emoji: '🎨' },
-    { key: 11, label: 'Bénévolat de compétences', icon: '/images/icons/domaine-art-culture-pour-tous.svg', color: 'text-domaine-benevolat-competences', bg: 'bg-domaine-benevolat-competences', emoji: '💼' }
+    { key: 11, label: 'Bénévolat de compétences', icon: '/images/icons/domaine-benevolat-de-competences.svg', color: 'text-domaine-benevolat-competences', bg: 'bg-domaine-benevolat-competences', emoji: '💼' }
   ],
   role: [
     { key: 'volontaire', label: 'Bénévole', espace: 'Mon espace bénévole' },
