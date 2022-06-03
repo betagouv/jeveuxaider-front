@@ -14,17 +14,17 @@
     />
     <FacetFilter
       show-more
-      facet-name="domaines"
+      facet-name="domaines.name"
       label="Domaines"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchOrganisations/facetResults']('domaines')"
+      :facets="$store.getters['algoliaSearchOrganisations/facetResults']('domaines.name')"
     />
     <FacetFilter
       show-more
       facet-name="reseaux.name"
       label="Réseaux"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchOrganisations/facetResults']('structure.reseaux.name')"
+      :facets="$store.getters['algoliaSearchOrganisations/facetResults']('reseaux.name')"
     />
     <FacetFilter
       show-more

@@ -14,7 +14,7 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'domaines'" :key="i" facet-name="domaines" label="Domaines">
+        <FacetFilterToggle v-if="filter === 'domaines.name'" :key="i" facet-name="domaines.name" label="Domaines">
           <template #button="{ firstValueSelected, activeValuesCount }">
             <BadgeFilter :is-active="!!activeValuesCount">
               <span v-if="!firstValueSelected">Domaines</span>
