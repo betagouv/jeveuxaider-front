@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- Drawers for mobile -->
-
     <div v-if="$store.state.algoliaSearchMissions.results" class="container md:px-8 lg:mt-6 mb-12">
       <div class="flex flex-col space-y-6 sm:space-y-12">
         <SectionHeading
@@ -90,7 +88,7 @@
 
 import CardMission from '@/components/card/CardMission.vue'
 import TabsFacetFilter from '~/components/section/search/TabsFacetFilter.vue'
-import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
+import AlgoliaMissionsQueryBuilder from '@/mixins/algolia-missions-query-builder'
 import PrimaryFilters from '~/components/section/search/missions/PrimaryFilters.vue'
 import SecondaryFilters from '~/components/section/search/missions/SecondaryFilters.vue'
 import PrimaryMobileFilters from '~/components/section/search/missions/PrimaryMobileFilters.vue'
@@ -101,13 +99,13 @@ export default {
   components: {
     CardMission,
     TabsFacetFilter,
-    PrimaryMobileFilters,
     PrimaryFilters,
     SecondaryFilters,
     PromoteMissionDistance,
+    PrimaryMobileFilters,
     SecondaryMobileFilters
   },
-  mixins: [AlgoliaQueryBuilder],
+  mixins: [AlgoliaMissionsQueryBuilder],
   props: {
     initialFilters: {
       type: String,
@@ -124,8 +122,7 @@ export default {
   },
   data () {
     return {
-      isSearchMissionsFiltersOpen: false,
-      isSearchMissionsLocalisationOpen: false
+
     }
   },
   async fetch () {

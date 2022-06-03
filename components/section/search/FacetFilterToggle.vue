@@ -78,8 +78,6 @@
       </div>
     </transition>
   </div>
-  </transition>
-  </div>
 </template>
 
 <script>
@@ -105,6 +103,13 @@ export default {
     }
   },
   computed: {
+    currentStoreFacetResults () {
+      if (this.$route.path === '/associations') {
+        return 'algoliaSearchOrganisations/facetResults'
+      } else {
+        return 'algoliaSearchMissions/facetResults'
+      }
+    },
     allValues () {
       if (this.facetHits) {
         return this.facetHits.map((facetHit) => {
@@ -115,9 +120,7 @@ export default {
         })
       }
 
-      // @todo: logique avec currentRoute pour déterminer quel store utiliser
-      // (quand on aura le store algoliaSearchOrganisation)
-      const facet = this.$store.getters['algoliaSearchMissions/facetResults'](this.facetName)
+      const facet = this.$store.getters[this.currentStoreFacetResults](this.facetName)
       return Object.keys(facet).map((value) => {
         return {
           value,

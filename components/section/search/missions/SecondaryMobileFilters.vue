@@ -42,7 +42,7 @@
 import DrawerSearchMissionsFilters from '@/components/drawer/DrawerSearchMissionsFilters.vue'
 import DrawerSearchMissionsLocalisation from '@/components/drawer/DrawerSearchMissionsLocalisation.vue'
 import BadgeFilter from '~/components/search/BadgeFilter.vue'
-import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
+import AlgoliaMissionsQueryBuilder from '@/mixins/algolia-missions-query-builder'
 
 export default {
   components: {
@@ -50,7 +50,7 @@ export default {
     DrawerSearchMissionsLocalisation,
     BadgeFilter
   },
-  mixins: [AlgoliaQueryBuilder],
+  mixins: [AlgoliaMissionsQueryBuilder],
   data () {
     return {
       isSearchMissionsFiltersOpen: false,

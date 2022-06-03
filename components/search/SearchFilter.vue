@@ -1,9 +1,9 @@
 <template>
-  <div class="flex space-x-2 items-center group">
+  <div class="flex-1 flex space-x-2 items-center group">
     <SearchIcon class="text-gray-900 h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
     <input
       type="text"
-      placeholder="Mots-clés"
+      :placeholder="placeholder"
       :class="['pl-0 flex-1 border-0 w-full bg-transparent py-0 focus:ring-0', {'font-bold': searchValue}]"
       :value="searchValue"
       @input="handleInput"
@@ -22,6 +22,12 @@ import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 
 export default {
   mixins: [AlgoliaQueryBuilder],
+  props: {
+    placeholder: {
+      type: String,
+      default: 'Mots clés'
+    }
+  },
   data () {
     return {
       searchValue: this.$route.query.search
