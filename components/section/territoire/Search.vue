@@ -22,7 +22,7 @@
     <div
       class="pb-24 bg-[#fafaff]"
     >
-      <SearchMissions
+      <AisSearchMissions
         :facets="[]"
         :filters="filters"
         :title-tag="'h2'"
@@ -51,11 +51,11 @@
 </template>
 
 <script>
-import SearchMissions from '~/components/section/SearchMissions.vue'
+import AisSearchMissions from '~/components/section/AisSearchMissions.vue'
 
 export default {
   components: {
-    SearchMissions
+    AisSearchMissions
   },
   props: {
     territoire: {

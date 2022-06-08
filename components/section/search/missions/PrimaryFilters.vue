@@ -5,7 +5,7 @@
         Localisation
       </div>
       <div class="">
-        <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Saisissez votre ville" :ip-lat-lng="$store.state.algoliaSearchMissions.results.aroundLatLng" />
+        <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Saisissez votre ville" :ip-lat-lng="$store.state.algoliaSearch.results.aroundLatLng" />
         <div v-else>
           <div class="flex space-x-2 items-center">
             <DesktopComputerIcon class="h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
@@ -18,7 +18,7 @@
       <div class="text-gray-500 mb-1">
         Activités
       </div>
-      <FacetFilterToggle facet-name="activity.name" label="Activités" :facets="$store.getters['algoliaSearchMissions/facetResults']('activity.name')">
+      <FacetFilterToggle facet-name="activity.name" label="Activités" :facets="$store.getters['algoliaSearch/facetResults']('activity.name')">
         <template #button="{ firstValueSelected, activeValuesCount }">
           <div class="flex space-x-2 items-center justify-between group">
             <div class="flex space-x-2 items-center">

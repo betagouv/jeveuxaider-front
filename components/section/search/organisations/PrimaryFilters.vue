@@ -5,14 +5,14 @@
         Localisation
       </div>
       <div class="">
-        <LocalisationFilter label="Saisissez votre ville" :ip-lat-lng="$store.state.algoliaSearchOrganisations.results.aroundLatLng" />
+        <LocalisationFilter label="Saisissez votre ville" :ip-lat-lng="$store.state.algoliaSearch.results.aroundLatLng" />
       </div>
     </div>
     <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
       <div class="text-gray-500 mb-1">
         Activités
       </div>
-      <FacetFilterToggle facet-name="activity.name" label="Activités" :facets="$store.getters['algoliaSearchOrganisations/facetResults']('activity.name')">
+      <FacetFilterToggle facet-name="activities.name" label="Activités" :facets="$store.getters['algoliaSearch/facetResults']('activities.name')">
         <template #button="{ firstValueSelected, activeValuesCount }">
           <div class="flex space-x-2 items-center justify-between group">
             <div class="flex space-x-2 items-center">
@@ -31,7 +31,7 @@
       <div class="text-gray-500 mb-1">
         Publics aidés
       </div>
-      <FacetFilterToggle facet-name="publics_beneficiaires" label="Publics aidés" :facets="$store.getters['algoliaSearchOrganisations/facetResults']('publics_beneficiaires')">
+      <FacetFilterToggle facet-name="publics_beneficiaires" label="Publics aidés" :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')">
         <template #button="{ firstValueSelected, activeValuesCount }">
           <div class="flex space-x-2 items-center justify-between group">
             <div class="flex space-x-2 items-center">

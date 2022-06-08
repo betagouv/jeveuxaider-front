@@ -10,7 +10,7 @@
     </div>
 
     <LocalisationSuggestions
-      :ip-lat-lng="$store.state.algoliaSearchOrganisations.results.aroundLatLng"
+      :ip-lat-lng="$store.state.algoliaSearch.results.aroundLatLng"
     />
 
     <template #footer>
@@ -20,14 +20,14 @@
         ]"
       >
         <Button @click.native="$emit('close')">
-          <template v-if="$store.state.algoliaSearchOrganisations.results.nbHits == 0">
+          <template v-if="$store.state.algoliaSearch.results.nbHits == 0">
             Aucun résultat
           </template>
-          <template v-else-if="$store.state.algoliaSearchOrganisations.results.nbHits == 1">
+          <template v-else-if="$store.state.algoliaSearch.results.nbHits == 1">
             Voir les résultats
           </template>
           <template v-else>
-            Voir les {{ $store.state.algoliaSearchOrganisations.results.nbHits }} résultats
+            Voir les {{ $store.state.algoliaSearch.results.nbHits }} résultats
           </template>
         </Button>
       </div>

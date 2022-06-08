@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div v-if="$store.state.algoliaSearchMissions.results" class="container md:px-8 lg:mt-6 mb-12">
+    <div v-if="$store.state.algoliaSearch.results" class="container md:px-8 lg:mt-6 mb-12">
       <div class="flex flex-col space-y-6 sm:space-y-12">
         <SectionHeading
           title="Trouver une mission de bénévolat"
-          :secondary-title-bottom="`${$options.filters.formatNumber($store.state.algoliaSearchMissions.results.nbHits)} ${$options.filters.pluralize(
-            $store.state.algoliaSearchMissions.results.nbHits,
+          :secondary-title-bottom="`${$options.filters.formatNumber($store.state.algoliaSearch.results.nbHits)} ${$options.filters.pluralize(
+            $store.state.algoliaSearch.results.nbHits,
             'mission disponible',
             'missions disponibles',
             false
@@ -43,7 +43,7 @@
           <SecondaryFilters :filters-name="secondaryFilters" />
         </div>
 
-        <div v-if="$store.state.algoliaSearchMissions.results.nbHits == 0" class="text-center">
+        <div v-if="$store.state.algoliaSearch.results.nbHits == 0" class="text-center">
           Il n'y a aucun résultat avec les filtres actuels.<br>
           <Link
             link-class="justify-center hover:underline"
@@ -54,7 +54,7 @@
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto">
-          <template v-for="item, i in $store.state.algoliaSearchMissions.results.hits">
+          <template v-for="item, i in $store.state.algoliaSearch.results.hits">
             <nuxt-link
               :key="item.id"
               class="flex min-w-0 hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px]"
@@ -73,8 +73,8 @@
         </div>
 
         <Pagination
-          :current-page="$store.state.algoliaSearchMissions.results.page + 1"
-          :total-rows="$store.state.algoliaSearchMissions.results.nbHits"
+          :current-page="$store.state.algoliaSearch.results.page + 1"
+          :total-rows="$store.state.algoliaSearch.results.nbHits"
           :per-page="20"
           :max-pages="10"
           @page-change="handleChangePage"
@@ -85,7 +85,6 @@
 </template>
 
 <script>
-
 import CardMission from '@/components/card/CardMission.vue'
 import TabsFacetFilter from '~/components/section/search/TabsFacetFilter.vue'
 import AlgoliaMissionsQueryBuilder from '@/mixins/algolia-missions-query-builder'
@@ -120,16 +119,15 @@ export default {
       }
     }
   },
-  data () {
-    return {
-
-    }
-  },
   async fetch () {
     await this.search()
   },
   watch: {
     $route: '$fetch'
+  },
+  created () {
+    this.$store.commit('algoliaSearch/setIndexKey', 'missionsIndex')
+    this.$store.commit('algoliaSearch/setIndexName', this.$config.algolia.missionsIndex)
   },
   methods: {
     getInitialFilters () {

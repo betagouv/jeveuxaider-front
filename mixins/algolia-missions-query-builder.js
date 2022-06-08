@@ -3,10 +3,6 @@ import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 
 export default {
   mixins: [AlgoliaQueryBuilder],
-  data () {
-    return {
-    }
-  },
   computed: {
     searchParameters () {
       return {
@@ -42,9 +38,6 @@ export default {
     }
   },
   methods: {
-    getIndexName () {
-      return this.$config.algolia.missionsIndex
-    },
     getAvailableFacets () {
       return ['type', 'activity.name', 'structure.name', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires', 'template_subtitle']
     },
@@ -53,16 +46,16 @@ export default {
     },
     getAvailableNumericFilters () {
       return ['commitment__total']
-    },
-    onFetchAlgoliaResults (results) {
-      this.$store.commit('algoliaSearchMissions/setResults', results[0])
-      this.$store.commit('algoliaSearchMissions/setFacetsResults', results.slice(1))
-    },
-    async searchForFacetValues (facetName, facetQuery) {
-      return await this.$algolia.missionsIndex.searchForFacetValues(facetName, facetQuery, {
-        ...this.searchParameters,
-        facetFilters: this.activeFacets.filter(facetFilter => facetFilter[0].split(':')[0] != facetName)
-      })
     }
+    // onFetchAlgoliaResults (results) {
+    //   this.$store.commit('algoliaSearchMissions/setResults', results[0])
+    //   this.$store.commit('algoliaSearchMissions/setFacetsResults', results.slice(1))
+    // }
+    // async searchForFacetValues (facetName, facetQuery) {
+    //   return await this.$algolia.missionsIndex.searchForFacetValues(facetName, facetQuery, {
+    //     ...this.searchParameters,
+    //     facetFilters: this.activeFacets.filter(facetFilter => facetFilter[0].split(':')[0] != facetName)
+    //   })
+    // }
   }
 }

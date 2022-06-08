@@ -181,7 +181,7 @@
 
     <AlgoliaSearch
       :initial-filters="`domaines:&quot;${domaine.name}&quot;`"
-      :secondary-filters="['structure.name','publics_beneficiaires', 'structure.reseaux.name', 'department_name', 'template_subtitle',]"
+      :secondary-filters="['structure.name','publics_beneficiaires', 'structure.reseaux.name', 'department_name', 'template_subtitle']"
       class="my-8 sm:my-16 lg:my-24"
     />
 
@@ -241,7 +241,6 @@
 </template>
 
 <script>
-// import SearchMissions from '~/components/section/SearchMissions.vue'
 import AlgoliaSearch from '~/components/section/search/missions/AlgoliaSearch.vue'
 
 export default {

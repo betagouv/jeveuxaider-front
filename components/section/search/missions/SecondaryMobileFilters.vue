@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="$store.state.algoliaSearchMissions.results">
+    <template v-if="$store.state.algoliaSearch.results">
       <DrawerSearchMissionsFilters
         :is-open="isSearchMissionsFiltersOpen"
         @close="isSearchMissionsFiltersOpen = false"
@@ -18,7 +18,7 @@
       >
         <div class="flex items-center space-x-2 text-jva-blue-500">
           <LocationMarkerIcon class="h-4 w-4" />
-          <div v-if="$store.state.algoliaSearchMissions.results.aroundLatLng">
+          <div v-if="$store.state.algoliaSearch.results.aroundLatLng">
             Autour de moi
           </div>
           <div v-else>

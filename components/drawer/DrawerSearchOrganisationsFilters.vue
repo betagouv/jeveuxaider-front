@@ -10,28 +10,28 @@
       facet-name="publics_beneficiaires"
       label="Publics aidés"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchOrganisations/facetResults']('publics_beneficiaires')"
+      :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')"
     />
     <FacetFilter
       show-more
       facet-name="domaines.name"
       label="Domaines"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchOrganisations/facetResults']('domaines.name')"
+      :facets="$store.getters['algoliaSearch/facetResults']('domaines.name')"
     />
     <FacetFilter
       show-more
       facet-name="reseaux.name"
       label="Réseaux"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchOrganisations/facetResults']('reseaux.name')"
+      :facets="$store.getters['algoliaSearch/facetResults']('reseaux.name')"
     />
     <FacetFilter
       show-more
       facet-name="department_name"
       label="Départements"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchOrganisations/facetResults']('department_name')"
+      :facets="$store.getters['algoliaSearch/facetResults']('department_name')"
     />
 
     <template #footer>
@@ -49,14 +49,14 @@
           Réinitialiser
         </Link>
         <Button @click.native="$emit('close')">
-          <template v-if="$store.state.algoliaSearchOrganisations.results.nbHits == 0">
+          <template v-if="$store.state.algoliaSearch.results.nbHits == 0">
             Aucun résultat
           </template>
-          <template v-else-if="$store.state.algoliaSearchOrganisations.results.nbHits == 1">
+          <template v-else-if="$store.state.algoliaSearch.results.nbHits == 1">
             Voir les résultats
           </template>
           <template v-else>
-            Voir les {{ $store.state.algoliaSearchOrganisations.results.nbHits }} résultats
+            Voir les {{ $store.state.algoliaSearch.results.nbHits }} résultats
           </template>
         </Button>
       </div>

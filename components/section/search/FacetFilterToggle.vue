@@ -103,13 +103,6 @@ export default {
     }
   },
   computed: {
-    currentStoreFacetResults () {
-      if (this.$route.path === '/associations') {
-        return 'algoliaSearchOrganisations/facetResults'
-      } else {
-        return 'algoliaSearchMissions/facetResults'
-      }
-    },
     allValues () {
       if (this.facetHits) {
         return this.facetHits.map((facetHit) => {
@@ -120,7 +113,7 @@ export default {
         })
       }
 
-      const facet = this.$store.getters[this.currentStoreFacetResults](this.facetName)
+      const facet = this.$store.getters['algoliaSearch/facetResults'](this.facetName)
       return Object.keys(facet).map((value) => {
         return {
           value,

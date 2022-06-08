@@ -1,14 +1,6 @@
 
 export default {
-  data () {
-    return {
-
-    }
-  },
   computed: {
-    indexName () {
-      return this.getIndexName()
-    },
     availableFacets () {
       return this.getAvailableFacets()
     },
@@ -27,12 +19,20 @@ export default {
       })
 
       return activeNumericFilters
+    },
+    activeFacets () {
+      let activeFacets = this.availableFacets.filter(facetName => this.$route.query[facetName])
+
+      activeFacets = activeFacets.map((facetName) => {
+        return this.$route.query[facetName].split('|').map((facetValue) => {
+          return `${facetName}:${facetValue}`
+        })
+      })
+
+      return activeFacets
     }
   },
   methods: {
-    getIndexName () {
-      return ''
-    },
     getInitialFilters () {
       return ''
     },
@@ -42,19 +42,16 @@ export default {
     getAvailableNumericFilters () {
       return []
     },
-    onFetchAlgoliaResults (results) {
-      // WHAT TO DO WITH RESULTS
-    },
     async search () {
       const queries = [{
-        indexName: this.indexName,
+        indexName: this.$store.state.algoliaSearch.indexName,
         params: this.searchParameters
       }]
 
       this.activeFacets.forEach((facetFilter) => {
         const facetName = facetFilter[0].split(':')[0]
         queries.push({
-          indexName: this.indexName,
+          indexName: this.$store.state.algoliaSearch.indexName,
           params: {
             ...this.searchParameters,
             facetFilters: this.activeFacets.filter(facetFilter => facetFilter[0].split(':')[0] != facetName),
@@ -71,7 +68,14 @@ export default {
 
       const { results } = await this.$algolia.multipleQueries(queries)
 
-      this.onFetchAlgoliaResults(results)
+      this.$store.commit('algoliaSearch/setResults', results[0])
+      this.$store.commit('algoliaSearch/setFacetsResults', results.slice(1))
+    },
+    async searchForFacetValues (facetName, facetQuery) {
+      return await this.$algolia[this.$store.state.algoliaSearch.indexKey].searchForFacetValues(facetName, facetQuery, {
+        ...this.searchParameters,
+        facetFilters: this.activeFacets.filter(facetFilter => facetFilter[0].split(':')[0] != facetName)
+      })
     },
     addFilter (filterName, filterValue, multiple = false) {
       let filterQueryValues = this.$route.query[filterName] ? this.$route.query[filterName].split('|') : []

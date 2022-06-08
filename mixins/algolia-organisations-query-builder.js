@@ -17,17 +17,6 @@ export default {
         hitsPerPage: 18
       }
     },
-    activeFacets () {
-      let activeFacets = this.availableFacets.filter(facetName => this.$route.query[facetName])
-
-      activeFacets = activeFacets.map((facetName) => {
-        return this.$route.query[facetName].split('|').map((facetValue) => {
-          return `${facetName}:${facetValue}`
-        })
-      })
-
-      return activeFacets
-    },
     activeMoreFacets () {
       return this.availableFacets.filter(facetName => this.$route.query[facetName] && !['search'].includes(facetName))
     }
@@ -37,20 +26,10 @@ export default {
       return this.$config.algolia.organisationsIndex
     },
     getAvailableFacets () {
-      return ['department_name', 'domaines', 'reseaux.name', 'publics_beneficiaires']
+      return ['department_name', 'domaines.name', 'reseaux.name', 'publics_beneficiaires', 'activities.name']
     },
     getInitialFilters () {
       return ''
-    },
-    onFetchAlgoliaResults (results) {
-      this.$store.commit('algoliaSearchOrganisations/setResults', results[0])
-      this.$store.commit('algoliaSearchOrganisations/setFacetsResults', results.slice(1))
-    },
-    async searchForFacetValues (facetName, facetQuery) {
-      return await this.$algolia.organisationsIndex.searchForFacetValues(facetName, facetQuery, {
-        ...this.searchParameters,
-        facetFilters: this.activeFacets.filter(facetFilter => facetFilter[0].split(':')[0] != facetName)
-      })
     }
   }
 }

@@ -22,49 +22,49 @@
       facet-name="activity.name"
       label="Activités"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchMissions/facetResults']('activity.name')"
+      :facets="$store.getters['algoliaSearch/facetResults']('activity.name')"
     />
     <FacetFilter
       show-more
       facet-name="structure.name"
       label="Organisations"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchMissions/facetResults']('structure.name')"
+      :facets="$store.getters['algoliaSearch/facetResults']('structure.name')"
     />
     <FacetFilter
       show-more
       facet-name="publics_beneficiaires"
       label="Publics aidés"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchMissions/facetResults']('publics_beneficiaires')"
+      :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')"
     />
     <FacetFilter
       show-more
       facet-name="domaines"
       label="Domaines"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchMissions/facetResults']('domaines')"
+      :facets="$store.getters['algoliaSearch/facetResults']('domaines')"
     />
     <FacetFilter
       show-more
       facet-name="structure.reseaux.name"
       label="Réseaux"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchMissions/facetResults']('structure.reseaux.name')"
+      :facets="$store.getters['algoliaSearch/facetResults']('structure.reseaux.name')"
     />
     <FacetFilter
       show-more
       facet-name="department_name"
       label="Départements"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchMissions/facetResults']('department_name')"
+      :facets="$store.getters['algoliaSearch/facetResults']('department_name')"
     />
     <FacetFilter
       show-more
       facet-name="template_subtitle"
       label="Types de mission"
       :limit-options="3"
-      :facets="$store.getters['algoliaSearchMissions/facetResults']('template_subtitle')"
+      :facets="$store.getters['algoliaSearch/facetResults']('template_subtitle')"
     />
 
     <template #footer>
@@ -82,14 +82,14 @@
           Réinitialiser
         </Link>
         <Button @click.native="$emit('close')">
-          <template v-if="$store.state.algoliaSearchMissions.results.nbHits == 0">
+          <template v-if="$store.state.algoliaSearch.results.nbHits == 0">
             Aucun résultat
           </template>
-          <template v-else-if="$store.state.algoliaSearchMissions.results.nbHits == 1">
+          <template v-else-if="$store.state.algoliaSearch.results.nbHits == 1">
             Voir les résultats
           </template>
           <template v-else>
-            Voir les {{ $store.state.algoliaSearchMissions.results.nbHits }} résultats
+            Voir les {{ $store.state.algoliaSearch.results.nbHits }} résultats
           </template>
         </Button>
       </div>
