@@ -3,6 +3,7 @@
     <div v-if="$store.state.algoliaSearch.results" class="container md:px-8 lg:mt-6 mb-12">
       <div class="flex flex-col space-y-6 sm:space-y-12">
         <SectionHeading
+          v-if="!noHeader"
           title="Trouver une mission de bénévolat"
           :secondary-title-bottom="`${$options.filters.formatNumber($store.state.algoliaSearch.results.nbHits)} ${$options.filters.pluralize(
             $store.state.algoliaSearch.results.nbHits,
@@ -33,15 +34,17 @@
           </template>
         </Sectionheading>
 
-        <div class="sm:hidden">
-          <PrimaryMobileFilters />
-          <SecondaryMobileFilters />
-        </div>
+        <template v-if="!noFilters">
+          <div class="sm:hidden">
+            <PrimaryMobileFilters />
+            <SecondaryMobileFilters />
+          </div>
 
-        <div class="hidden sm:flex sm:flex-col relative z-10">
-          <PrimaryFilters />
-          <SecondaryFilters :filters-name="secondaryFilters" />
-        </div>
+          <div class="hidden sm:flex sm:flex-col relative z-10">
+            <PrimaryFilters />
+            <SecondaryFilters :filters-name="secondaryFilters" />
+          </div>
+        </template>
 
         <div v-if="$store.state.algoliaSearch.results.nbHits == 0" class="text-center">
           Il n'y a aucun résultat avec les filtres actuels.<br>
@@ -73,6 +76,7 @@
         </div>
 
         <Pagination
+          v-if="!noPagination"
           :current-page="$store.state.algoliaSearch.results.page + 1"
           :total-rows="$store.state.algoliaSearch.results.nbHits"
           :per-page="20"
@@ -117,6 +121,26 @@ export default {
           'department_name'
         ]
       }
+    },
+    initialHitsPerPage: {
+      type: Number,
+      default: null
+    },
+    initialAroundLatLng: {
+      type: String,
+      default: null
+    },
+    noHeader: {
+      type: Boolean,
+      default: false
+    },
+    noFilters: {
+      type: Boolean,
+      default: false
+    },
+    noPagination: {
+      type: Boolean,
+      default: false
     }
   },
   async fetch () {
@@ -129,6 +153,12 @@ export default {
     this.$store.commit('algoliaSearch/setIndexKey', 'missionsIndex')
     this.$store.commit('algoliaSearch/setIndexName', this.$config.algolia.missionsIndex)
     this.$store.commit('algoliaSearch/setInitialFilters', this.initialFilters)
+    if (this.initialHitsPerPage) {
+      this.$store.commit('algoliaSearch/setHitsPerPage', this.initialHitsPerPage)
+    }
+    if (this.initialAroundLatLng) {
+      this.$store.commit('algoliaSearch/setAroundLatLng', this.initialAroundLatLng)
+    }
   },
   beforeDestroy () {
     this.$store.dispatch('algoliaSearch/reset')

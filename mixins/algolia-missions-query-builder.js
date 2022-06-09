@@ -4,10 +4,24 @@ import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 export default {
   mixins: [AlgoliaQueryBuilder],
   computed: {
+    hitsPerPage () {
+      if (this.$store.state.algoliaSearch.hitsPerPage) {
+        return this.$store.state.algoliaSearch.hitsPerPage
+      } else {
+        return this.$route.query.type === 'Mission à distance' ? 18 : 17
+      }
+    },
+    aroundLatLng () {
+      if (this.$store.state.algoliaSearch.aroundLatLng) {
+        return this.$store.state.algoliaSearch.aroundLatLng
+      } else {
+        return this.$route.query.aroundLatLng || ''
+      }
+    },
     searchParameters () {
       return {
         aroundLatLngViaIP: this.$route.query.type != 'Mission à distance' && !this.$route.query.aroundLatLng,
-        aroundLatLng: this.$route.query.aroundLatLng || '',
+        aroundLatLng: this.aroundLatLng,
         aroundRadius: this.$route.query.aroundLatLng ? 35000 : 'all',
         query: this.$route.query.search || '',
         page: this.$route.query.page ? (this.$route.query.page - 1) : 0,
@@ -15,7 +29,7 @@ export default {
         facets: ['*'],
         filters: this.$store.state.algoliaSearch.initialFilters,
         numericFilters: this.activeNumericFilters,
-        hitsPerPage: this.$route.query.type === 'Mission à distance' ? 18 : 17
+        hitsPerPage: this.hitsPerPage
       }
     },
     activeFacets () {
@@ -44,15 +58,5 @@ export default {
     getAvailableNumericFilters () {
       return ['commitment__total']
     }
-    // onFetchAlgoliaResults (results) {
-    //   this.$store.commit('algoliaSearchMissions/setResults', results[0])
-    //   this.$store.commit('algoliaSearchMissions/setFacetsResults', results.slice(1))
-    // }
-    // async searchForFacetValues (facetName, facetQuery) {
-    //   return await this.$algolia.missionsIndex.searchForFacetValues(facetName, facetQuery, {
-    //     ...this.searchParameters,
-    //     facetFilters: this.activeFacets.filter(facetFilter => facetFilter[0].split(':')[0] != facetName)
-    //   })
-    // }
   }
 }

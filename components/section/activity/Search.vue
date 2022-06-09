@@ -22,17 +22,14 @@
     <div
       class="pb-12 bg-[#fafaff]"
     >
-      <AisSearchMissions
-        :facets="[]"
-        :filters="filters"
-        :title-tag="'h2'"
-        :hits-per-page="6"
+      <AlgoliaSearch
+        :initial-filters="`activity.name:&quot;${activity.name}&quot;`"
+        :initial-hits-per-page="6"
         no-header
         no-filters
         no-pagination
-        class="flex flex-wrap justify-center transform -translate-y-24 -mb-24"
+        class="transform -translate-y-24 -mb-24"
       />
-
       <div class="container mx-auto px-4">
         <div v-if="moreLink" class="text-center mt-6">
           <nuxt-link :to="moreLink">
@@ -49,11 +46,11 @@
 </template>
 
 <script>
-import AisSearchMissions from '~/components/section/AisSearchMissions.vue'
+import AlgoliaSearch from '~/components/section/search/missions/AlgoliaSearch.vue'
 
 export default {
   components: {
-    AisSearchMissions
+    AlgoliaSearch
   },
   props: {
     activity: {

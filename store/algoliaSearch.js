@@ -3,7 +3,9 @@ export const state = () => ({
   indexName: null,
   results: null,
   facetsResults: [],
-  initialFilters: ''
+  initialFilters: '',
+  hitsPerPage: null,
+  aroundLatLng: null
 })
 
 export const mutations = {
@@ -11,7 +13,9 @@ export const mutations = {
   setIndexName: (state, payload) => { state.indexName = payload },
   setResults: (state, payload) => { state.results = payload },
   setFacetsResults: (state, payload) => { state.facetsResults = payload },
-  setInitialFilters: (state, payload) => { state.initialFilters = payload }
+  setInitialFilters: (state, payload) => { state.initialFilters = payload },
+  setHitsPerPage: (state, payload) => { state.hitsPerPage = payload },
+  setAroundLatLng: (state, payload) => { state.aroundLatLng = payload }
 }
 
 export const actions = {
@@ -21,6 +25,8 @@ export const actions = {
     commit('setResults', null)
     commit('setFacetsResults', [])
     commit('setInitialFilters', '')
+    commit('setHitsPerPage', null)
+    commit('setAroundLatLng', null)
   }
 }
 

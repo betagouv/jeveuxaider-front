@@ -22,17 +22,14 @@
     <div
       class="pb-24 bg-[#fafaff]"
     >
-      <AisSearchMissions
-        :facets="[]"
-        :filters="filters"
-        :title-tag="'h2'"
-        :hits-per-page="6"
-        :default-radius="35000"
-        :initial-geo-search="geoSearch"
+      <AlgoliaSearch
+        :initial-filters="filters"
+        :initial-hits-per-page="6"
+        :initial-around-lat-lng="geoSearch ? geoSearch.aroundLatLng : null"
         no-header
         no-filters
         no-pagination
-        class="flex flex-wrap justify-center transform -translate-y-24 -mb-24"
+        class="transform -translate-y-24 -mb-24"
       />
 
       <div class="container mx-auto px-4">
@@ -51,11 +48,11 @@
 </template>
 
 <script>
-import AisSearchMissions from '~/components/section/AisSearchMissions.vue'
+import AlgoliaSearch from '~/components/section/search/missions/AlgoliaSearch.vue'
 
 export default {
   components: {
-    AisSearchMissions
+    AlgoliaSearch
   },
   props: {
     territoire: {
@@ -74,7 +71,7 @@ export default {
           link = `/missions-benevolat?department_name=${this.departmentName}`
           break
         case 'city':
-          link = `/missions-benevolat?type=Mission en présentiel&aroundLatLng=${this.territoire.latitude},${this.territoire.longitude}&city=${this.territoire.name}&aroundRadius=35000`
+          link = `/missions-benevolat?type=Mission en présentiel&aroundLatLng=${this.territoire.latitude},${this.territoire.longitude}&city=${this.territoire.name}`
           break
       }
       return link
