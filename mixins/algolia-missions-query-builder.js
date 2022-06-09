@@ -41,7 +41,7 @@ export default {
         })
       })
 
-      if (!this.$route.query.type) {
+      if (!this.$route.query.type && this.$route.name === 'missions-benevolat') {
         activeFacets.push(['type:Mission en présentiel'])
       }
 
