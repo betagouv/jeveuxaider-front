@@ -15,7 +15,13 @@ export const mutations = {
 }
 
 export const actions = {
-
+  reset ({ commit }) {
+    commit('setIndexKey', null)
+    commit('setIndexName', null)
+    commit('setResults', null)
+    commit('setFacetsResults', [])
+    commit('setInitialFilters', '')
+  }
 }
 
 export const getters = {

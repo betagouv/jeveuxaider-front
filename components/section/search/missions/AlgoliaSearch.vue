@@ -130,6 +130,9 @@ export default {
     this.$store.commit('algoliaSearch/setIndexName', this.$config.algolia.missionsIndex)
     this.$store.commit('algoliaSearch/setInitialFilters', this.initialFilters)
   },
+  beforeDestroy () {
+    this.$store.dispatch('algoliaSearch/reset')
+  },
   methods: {
     handleChangePage (page) {
       this.$router.push({
