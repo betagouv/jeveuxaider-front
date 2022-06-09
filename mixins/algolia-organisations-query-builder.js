@@ -13,7 +13,7 @@ export default {
         page: this.$route.query.page ? (this.$route.query.page - 1) : 0,
         facetFilters: this.activeFacets,
         facets: ['*'],
-        filters: this.getInitialFilters(),
+        filters: this.$store.state.algoliaSearch.initialFilters,
         hitsPerPage: 18
       }
     },
@@ -27,9 +27,6 @@ export default {
     },
     getAvailableFacets () {
       return ['department_name', 'domaines.name', 'reseaux.name', 'publics_beneficiaires', 'activities.name']
-    },
-    getInitialFilters () {
-      return ''
     }
   }
 }

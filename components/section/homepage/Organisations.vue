@@ -45,13 +45,12 @@
             Plus de <strong>10 000 missions de bénévolat</strong> sont
             disponibles chez les petits et grands acteurs de l'engagement.
           </p>
-          <a
-            href="https://www.jeveuxaider.gouv.fr/engagement/organisations/"
+          <nuxt-link
+            to="/associations"
             class="text-lg text-jva-blue-500 hover:underline"
-            target="_blank"
           >
             Consulter toutes les organisations ›
-          </a>
+          </nuxt-link>
         </div>
       </div>
     </div>

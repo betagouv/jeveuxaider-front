@@ -98,11 +98,9 @@ export default {
   created () {
     this.$store.commit('algoliaSearch/setIndexKey', 'organisationsIndex')
     this.$store.commit('algoliaSearch/setIndexName', this.$config.algolia.organisationsIndex)
+    this.$store.commit('algoliaSearch/setInitialFilters', this.initialFilters)
   },
   methods: {
-    getInitialFilters () {
-      return this.initialFilters
-    },
     handleChangePage (page) {
       this.$router.push({
         path: this.$route.path,

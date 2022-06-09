@@ -13,7 +13,7 @@ export default {
         page: this.$route.query.page ? (this.$route.query.page - 1) : 0,
         facetFilters: this.activeFacets,
         facets: ['*'],
-        filters: this.getInitialFilters(),
+        filters: this.$store.state.algoliaSearch.initialFilters,
         numericFilters: this.activeNumericFilters,
         hitsPerPage: this.$route.query.type === 'Mission à distance' ? 18 : 17
       }
@@ -40,9 +40,6 @@ export default {
   methods: {
     getAvailableFacets () {
       return ['type', 'activity.name', 'structure.name', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires', 'template_subtitle']
-    },
-    getInitialFilters () {
-      return ''
     },
     getAvailableNumericFilters () {
       return ['commitment__total']

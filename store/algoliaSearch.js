@@ -2,14 +2,16 @@ export const state = () => ({
   setIndexKey: null,
   indexName: null,
   results: null,
-  facetsResults: []
+  facetsResults: [],
+  initialFilters: ''
 })
 
 export const mutations = {
   setIndexKey: (state, payload) => { state.indexKey = payload },
   setIndexName: (state, payload) => { state.indexName = payload },
   setResults: (state, payload) => { state.results = payload },
-  setFacetsResults: (state, payload) => { state.facetsResults = payload }
+  setFacetsResults: (state, payload) => { state.facetsResults = payload },
+  setInitialFilters: (state, payload) => { state.initialFilters = payload }
 }
 
 export const actions = {

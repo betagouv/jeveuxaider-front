@@ -33,9 +33,6 @@ export default {
     }
   },
   methods: {
-    getInitialFilters () {
-      return ''
-    },
     getAvailableFacets () {
       return []
     },
@@ -56,6 +53,7 @@ export default {
             ...this.searchParameters,
             facetFilters: this.activeFacets.filter(facetFilter => facetFilter[0].split(':')[0] != facetName),
             facets: [facetName],
+            filters: this.$store.state.algoliaSearch.initialFilters,
             hitsPerPage: 1,
             attributesToRetrieve: [],
             attributesToSnippet: [],

@@ -44,7 +44,7 @@
         <Link
           v-if="activeMoreFacets.length"
           class="text-gray-500 underline text-sm"
-          @click.native="deleteAllFiltersExceptLocalisation()"
+          @click.native="deleteFilters()"
         >
           Réinitialiser
         </Link>
@@ -77,8 +77,8 @@ export default {
     isOpen: { type: Boolean, default: false }
   },
   methods: {
-    deleteAllFiltersExceptLocalisation () {
-      const filteredQueries = (({ city, aroundLatLng }) => ({ city, aroundLatLng }))(this.$route.query)
+    deleteFilters () {
+      const filteredQueries = (({ city, aroundLatLng, search }) => ({ city, aroundLatLng, search }))(this.$route.query)
 
       this.$router.push({
         path: this.$route.path,
