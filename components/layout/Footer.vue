@@ -49,10 +49,11 @@
               class="flex flex-col space-y-8 items-center justify-center sm:flex-row sm:space-x-8 sm:space-y-0 lg:space-x-4 lg:justify-start xl:space-x-8"
             >
               <img
-                src="@/assets/images/ministere-education-nationale-jeunesse.svg"
-                alt="Ministère de l'Éducation Nationale et de la Jeunesse"
+                src="@/assets/images/republique-francaise-logo.svg"
+                alt="République Française"
                 width="167"
                 height="151"
+                class="ml-[-19px]"
               >
 
               <img
