@@ -176,6 +176,14 @@ export default {
           return 'Sous-titre'
         case 'from_id':
           return "Depuis l'ID"
+        case 'places_left':
+          return 'Places restantes'
+        case 'activity_id':
+          return 'Activité'
+        case 'domaine_id':
+          return 'Domaine principal'
+        case 'domaine_secondary_id':
+          return 'Domaine secondaire'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },
