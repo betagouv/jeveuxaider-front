@@ -184,6 +184,12 @@ export default {
           return 'Domaine principal'
         case 'domaine_secondary_id':
           return 'Domaine secondaire'
+        case 'is_published':
+          return 'En ligne'
+        case 'slug':
+          return 'Alias URL'
+        case 'website':
+          return 'Site internet'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },
