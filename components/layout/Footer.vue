@@ -46,14 +46,13 @@
           <div class="lg:flex">
             <nuxt-link
               to="/"
-              class="inline-flex flex-col space-y-8 items-center justify-start sm:flex-row sm:space-x-8 sm:space-y-0 lg:space-x-4 xl:space-x-8"
+              class="flex flex-col space-y-8 items-center justify-center sm:flex-row sm:space-x-8 sm:space-y-0 lg:space-x-4 lg:justify-start xl:space-x-8"
             >
               <img
-                src="@/assets/images/republique-francaise-logo.svg"
-                alt="République Française"
+                src="@/assets/images/ministere-education-nationale-jeunesse.svg"
+                alt="Ministère de l'Éducation Nationale et de la Jeunesse"
                 width="167"
                 height="151"
-                class="ml-[-19px]"
               >
 
               <img

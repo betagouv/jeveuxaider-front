@@ -1,11 +1,11 @@
 <template>
   <header id="header" ref="header" class="relative bg-white shadow-lg z-30">
-    <div class="flex justify-between items-center relative lg:p-2" :class="{'lg:max-w-7xl lg:mx-auto': !fullWidth}">
+    <div class="flex justify-between items-center relative lg:p-4" :class="{'lg:max-w-7xl lg:mx-auto': !fullWidth}">
       <div class="lg:flex lg:space-x-6 lg:items-center">
         <img
-          src="@/assets/images/republique-francaise-logo.svg"
-          alt="République Française"
-          class="w-20 lg:w-24"
+          src="@/assets/images/ministere-education-nationale-jeunesse.svg"
+          alt="Ministère de l'Éducation Nationale et de la Jeunesse"
+          class="w-20 p-2 lg:p-0 lg:w-28"
           width="166"
           height="150"
           data-not-lazy

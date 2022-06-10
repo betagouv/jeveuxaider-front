@@ -62,7 +62,12 @@
       </h3>
 
       <div v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole)" class="mt-4 text-[13px] text-gray-500">
-        Complétion: <span class="font-semibold">{{ organisation.completion_rate }}%</span>
+        <div class="">
+          Complétion: <span class="font-semibold">{{ organisation.completion_rate }}%</span>
+        </div>
+        <div v-if="organisation.reseaux.length" class="">
+          Réseau: <span class="font-semibold">{{ organisation.reseaux.map(reseau => reseau.name).join(', ') }}</span>
+        </div>
       </div>
 
       <div class="mt-4 flex items-center justify-center">

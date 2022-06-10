@@ -9,6 +9,17 @@
     <template #sidebar>
       <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
       <div class="flex flex-col gap-y-4 sticky top-8">
+        <InputAutocomplete
+          v-if="['admin'].includes($store.getters.contextRole)"
+          :value="$route.query['filter[reseaux.name]']"
+          icon="SearchIcon"
+          name="autocomplete"
+          placeholder="Réseau"
+          :options="autocompleteOptionsReseaux"
+          variant="transparent"
+          @fetch-suggestions="onFetchSuggestionsReseaux"
+          @selected="changeFilter('filter[reseaux.name]', $event ? $event.name : undefined)"
+        />
         <SelectAdvanced
           name="statut_juridique"
           placeholder="Statut juridique"
@@ -166,13 +177,22 @@ export default {
       exportEndpoint: '/export/structures',
       queryParams: {
         append: ['places_left', 'completion_rate'],
-        include: 'domaines,illustrations,overrideImage1'
+        include: 'domaines,reseaux,illustrations,overrideImage1'
       },
-      drawerOrganisationId: null
+      drawerOrganisationId: null,
+      autocompleteOptionsReseaux: []
     }
   },
   methods: {
-
+    async onFetchSuggestionsReseaux (value) {
+      const res = await this.$axios.get('/reseaux', {
+        params: {
+          'filter[search]': value,
+          pagination: 20
+        }
+      })
+      this.autocompleteOptionsReseaux = res.data.data
+    }
   }
 }
 </script>
