@@ -213,15 +213,65 @@ export default {
     enabled: true
   },
 
-  sitemap: () => {
-    return {
-      hostname: 'https://www.jeveuxaider.gouv.fr',
-      gzip: true,
-      exclude: ['/**'],
-      routes: async () => {
-        const { data } = await axios.get(`${process.env.API_URL}/api/sitemap`)
-        return data
+  sitemap: {
+    hostname: 'https://www.jeveuxaider.gouv.fr',
+    sitemaps: [
+      {
+        exclude: ['/**'],
+        path: '/pages.xml',
+        routes: async () => {
+          const { data } = await axios.get(`${process.env.API_URL}/api/sitemap`)
+          return data
+        }
+      },
+      {
+        exclude: ['/**'],
+        path: '/missions.xml',
+        routes: async () => {
+          const { data } = await axios.get(`${process.env.API_URL}/api/sitemap?type=mission`)
+          return data
+        }
+      },
+      {
+        exclude: ['/**'],
+        path: '/organisations.xml',
+        routes: async () => {
+          const { data } = await axios.get(`${process.env.API_URL}/api/sitemap?type=organization`)
+          return data
+        }
+      },
+      {
+        exclude: ['/**'],
+        path: '/villes.xml',
+        routes: async () => {
+          const { data } = await axios.get(`${process.env.API_URL}/api/sitemap?type=city`)
+          return data
+        }
+      },
+      {
+        exclude: ['/**'],
+        path: '/departements.xml',
+        routes: async () => {
+          const { data } = await axios.get(`${process.env.API_URL}/api/sitemap?type=department`)
+          return data
+        }
+      },
+      {
+        exclude: ['/**'],
+        path: '/reseaux.xml',
+        routes: async () => {
+          const { data } = await axios.get(`${process.env.API_URL}/api/sitemap?type=reseau`)
+          return data
+        }
+      },
+      {
+        exclude: ['/**'],
+        path: '/activites.xml',
+        routes: async () => {
+          const { data } = await axios.get(`${process.env.API_URL}/api/sitemap?type=activity`)
+          return data
+        }
       }
-    }
+    ]
   }
 }
