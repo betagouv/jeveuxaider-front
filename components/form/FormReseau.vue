@@ -232,13 +232,12 @@
             <FormControl
               label="Adresse"
               html-for="address"
-              required
             >
               <Input
                 v-model="form.address"
                 name="address"
                 disabled
-                placeholder="Ex: 14 rue de Rivoli"
+                placeholder="..."
               />
             </FormControl>
             <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
@@ -246,11 +245,12 @@
                 label="Code postal"
                 html-for="zip"
                 required
+                :error="errors.zip"
               >
                 <Input
                   v-model="form.zip"
                   name="zip"
-                  placeholder="Ex: 75001"
+                  placeholder="..."
                   disabled
                 />
               </FormControl>
@@ -258,12 +258,13 @@
                 label="Ville"
                 html-for="city"
                 required
+                :error="errors.city"
               >
                 <Input
                   v-model="form.city"
                   name="city"
                   disabled
-                  placeholder="Ex: Paris"
+                  placeholder="..."
                 />
               </FormControl>
             </div>
@@ -381,7 +382,9 @@ export default {
       formSchema: object({
         name: string().min(3, 'Le nom est trop court').required('Le nom est requis'),
         department: string().nullable().required('Un département est requis'),
-        address: string().nullable().required('Une adresse est requise'),
+        address: string().nullable(),
+        zip: string().nullable().required('Le code postal est requis'),
+        city: string().nullable().required('La ville est requise'),
         domaines: array().min(1, 'Au moins 1 domaine d\'action'),
         publics_beneficiaires: array().min(1, 'Au moins 1 public bénéficiaire'),
         description: string().nullable().min(200, 'La description doit contenir au moins 200 caractères').required('Une description est requise'),

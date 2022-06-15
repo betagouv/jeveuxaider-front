@@ -316,14 +316,12 @@
             <FormControl
               label="Adresse"
               html-for="address"
-              required
             >
               <Input
                 v-model="form.address"
                 name="address"
                 :disabled="!['admin'].includes($store.getters.contextRole)"
-
-                placeholder="Ex: 14 rue de Rivoli"
+                placeholder="..."
               />
             </FormControl>
             <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
@@ -331,11 +329,12 @@
                 label="Code postal"
                 html-for="zip"
                 required
+                :error="errors.zip"
               >
                 <Input
                   v-model="form.zip"
                   name="zip"
-                  placeholder="Ex: 75001"
+                  placeholder="..."
                   :disabled="!['admin'].includes($store.getters.contextRole)"
                 />
               </FormControl>
@@ -343,13 +342,14 @@
                 label="Ville"
                 html-for="city"
                 required
+                :error="errors.city"
               >
                 <Input
                   v-model="form.city"
                   name="city"
                   :disabled="!['admin'].includes($store.getters.contextRole)"
 
-                  placeholder="Ex: Paris"
+                  placeholder="..."
                 />
               </FormControl>
               <template v-if="['admin'].includes($store.getters.contextRole)">
@@ -557,7 +557,9 @@ export default {
         name: string().required('Un nom est requis'),
         statut_juridique: string().required('Un statut juridique est requis'),
         department: string().nullable().required('Un département est requis'),
-        address: string().nullable().required('Une adresse est requise'),
+        address: string().nullable(),
+        zip: string().nullable().required('Le code postal est requis'),
+        city: string().nullable().required('La ville est requise'),
         email: string().nullable().email("Le format de l'email public est incorrect"),
         website: string().nullable().url(),
         facebook: string().nullable().url(),

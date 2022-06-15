@@ -299,6 +299,7 @@
               :options="autocompleteOptions"
               attribute-key="id"
               attribute-label="label"
+              attribute-right-label="typeLabel"
               @selected="handleSelectedGeo"
               @fetch-suggestions="onFetchGeoSuggestions"
             />
@@ -322,6 +323,7 @@
             <FormControl
               label="Code postal"
               html-for="zip"
+              required
               :error="errors.zip"
             >
               <Input
@@ -334,6 +336,7 @@
             <FormControl
               label="Ville"
               html-for="city"
+              required
               :error="errors.city"
             >
               <Input
@@ -576,14 +579,6 @@ export default {
     isGeoFieldsDisabled () {
       if (['admin'].includes(this.$store.getters.contextRole)) {
         return false
-      }
-
-      // Hack - Dom Tom (Nouvelle Calédonie & Polynésie française)
-      if (['responsable'].includes(this.$store.getters.contextRole)) {
-        const organisation = this.$store.getters.profile?.structures.find(structure => structure.id == this.$store.getters.contextableId)
-        if (['987', '988'].includes(organisation?.department)) {
-          return false
-        }
       }
 
       return true

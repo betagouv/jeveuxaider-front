@@ -149,9 +149,8 @@ export default {
     return {
       loading: false,
       formSchema: object({
-        name: string().required(),
-        department: string().required(),
-        // suffix_title: string().required(),
+        name: string().required('Le nom est requis'),
+        department: string().nullable().required('Un département est requis'),
         zips: array().min(1, 'Merci de renseigner au moins 1 code postal')
       }),
       inputGeoType: 'municipality'
