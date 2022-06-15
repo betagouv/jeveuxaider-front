@@ -83,7 +83,7 @@
               <ApiEngagementAssociationsSearch
                 v-if="$route.query.orga_type === 'Association'"
                 v-model="form.structure.name"
-                placeholder="Retrouvez votre association depuis notre base RNA"
+                placeholder="Renseignez le nom de votre association"
                 :show-add-button="!orgaExist"
                 :loading-add-button="loading"
                 @selected="onStructureApiSelected"
@@ -96,8 +96,8 @@
                 name="name"
                 :placeholder="
                   $route.query.orga_type === 'Collectivité'
-                    ? 'Nom de votre collectivité territoriale'
-                    : 'Nom de votre organisation'
+                    ? 'Renseignez le nom de votre collectivité territoriale'
+                    : 'Renseignez le nom de votre organisation'
                 "
               />
             </FormControl>
