@@ -35,13 +35,6 @@ export default {
       this.$set(this.form, 'city', null)
       this.$set(this.form, 'latitude', null)
       this.$set(this.form, 'longitude', null)
-      // this.$set(this.form, 'department', null)
-      // this.form.address = ''
-      // this.form.zip = ''
-      // this.form.city = ''
-      // this.form.latitude = ''
-      // this.form.longitude = ''
-      // this.form.department = ''
     },
     handleSelectedGeo (item) {
       if (!item) {
