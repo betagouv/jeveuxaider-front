@@ -394,8 +394,7 @@ export default {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
           { name: 'Mon Réseau', to: `/admin/contenus/reseaux/${this.$store.getters.profile.tete_de_reseau_id}`, isActive: this.isActiveLink('/admin/contenus/reseaux/*') },
-          { name: 'Antennes', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
-          { name: 'Modèles de missions', to: '/admin/contenus/modeles-mission', isActive: this.isActiveLink('/admin/contenus/modeles-mission/*') },
+          { name: 'Membres du réseau', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
           { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
         ]

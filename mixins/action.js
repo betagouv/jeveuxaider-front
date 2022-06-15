@@ -61,7 +61,7 @@ export default {
           }
         case 'mission_template_waiting_validation':
           return {
-            icon: '✊',
+            icon: '🗂',
             iconVariant: 'warning',
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'modèle de mission', 'modèles de mission', false)}</b> en attente de validation`,
             subtitle: 'Des responsables de réseau souhaitent mettre en ligne des modèles de mission.',
@@ -114,6 +114,22 @@ export default {
             title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'mission', 'missions', false)}</b> dont la date de fin est passée`,
             subtitle: 'N\'oubliez pas de mettre à jour les dates de vos missions.',
             link: '/admin/missions?filter[date]=over&filter[state]=Validée'
+          }
+        case 'mission_template_new':
+          return {
+            icon: '🗂',
+            iconVariant: 'warning',
+            title: 'Publiez votre premier modèle de mission',
+            subtitle: 'Notre équipe se tient à votre disposition pour vous accompagner dans vos premiers pas !',
+            link: '/admin/contenus/modeles-mission/add'
+          }
+        case 'mission_template_manage':
+          return {
+            icon: '🗂',
+            iconVariant: 'info',
+            title: 'Gérez vos modèles de mission',
+            subtitle: 'Notre équipe se tient à votre disposition pour vous accompagner !',
+            link: '/admin/contenus/modeles-mission'
           }
         case 'mission_new':
           return {
