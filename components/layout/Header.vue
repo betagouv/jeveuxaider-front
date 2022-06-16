@@ -146,13 +146,13 @@
         </NavItem>
 
         <NavItem
-          key="election-2022"
-          href="https://www.jeveuxaider.gouv.fr/engagement/devenir-assesseur/"
+          key="canicule"
+          href="https://www.jeveuxaider.gouv.fr/engagement/canicule/"
           target="_blank"
           class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1"
         >
-          <span>✉️ </span>
-          <span>Élections 2022</span>
+          <span>☀️ </span>
+          <span>Canicule</span>
         </NavItem>
 
         <NavItem
@@ -270,13 +270,13 @@
                 </NavItem>
 
                 <NavItem
-                  key="election-2022"
-                  href="https://www.jeveuxaider.gouv.fr/engagement/devenir-assesseur/"
+                  key="canicule"
+                  href="https://www.jeveuxaider.gouv.fr/engagement/canicule/"
                   target="_blank"
                   class="flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600"
                 >
-                  <span>✉️ </span>
-                  <span>Élections 2022</span>
+                  <span>☀️ </span>
+                  <span>Canicule</span>
                 </NavItem>
               </div>
             </div>
