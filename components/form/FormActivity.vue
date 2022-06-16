@@ -136,6 +136,19 @@
             />
           </div>
         </Box>
+
+        <Box v-if="$store.getters.contextRole === 'admin'" padding="sm">
+          <Heading :level="3" class="mb-8">
+            Metadonnées
+          </Heading>
+          <Metatags
+            :metas="form.metatags"
+            :placeholders="{
+              title: `Bénévolat ${form.name || '[Nom de l\'activité]'} | JeVeuxAider.gouv.fr`,
+              description: `Trouvez une mission de bénévolat ${form.name || '[Nom de l\'activité]'} parmi les missions actuellement disponibles et faites vivre l'engagement de chacun pour tous`
+            }"
+          />
+        </Box>
       </div>
     </div>
 
@@ -154,9 +167,14 @@ import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import FormParagraphs from '@/mixins/form/paragraphs'
+import FormMetatags from '@/mixins/form/metatags'
+import Metatags from '@/components/custom/Metatags.vue'
 
 export default {
-  mixins: [FormErrors, FormUploads, FormParagraphs],
+  components: {
+    Metatags
+  },
+  mixins: [FormErrors, FormUploads, FormParagraphs, FormMetatags],
   middleware: 'admin',
   props: {
     activity: {
@@ -192,7 +210,10 @@ export default {
             const { data: activity } = await this.$axios.post('/activities', this.form)
             this.form.id = activity.id
           }
+
           await this.uploadFiles('activity', this.form.id)
+          await this.handleMetatags('activity', this.form.id)
+
           this.$router.push(`/admin/contenus/activites/${this.form.id}`)
         })
         .catch((errors) => {
