@@ -45,7 +45,12 @@
           <Heading as="h1" :level="1">
             {{ organisation.name }}
           </Heading>
-          <TextFormatted v-if="organisation.description && organisation.statut_juridique != 'Collectivité'" :max-lines="2" :text="organisation.description" class="text-cool-gray-500 text-lg mt-4" />
+          <TextFormatted
+            v-if="organisation.description && !['Collectivité', 'Organisation publique'].includes(organisation.statut_juridique)"
+            :text="organisation.description"
+            :max-lines="2"
+            class="text-cool-gray-500 text-lg mt-4"
+          />
         </Box>
         <BoxInformations class="mb-8" :organisation="organisation" :show-title="false" box-variant="shadow" box-padding="lg" />
         <Box :style="`background-color: ${organisation.color ? organisation.color : '#B91C1C'}`" class="text-white">
