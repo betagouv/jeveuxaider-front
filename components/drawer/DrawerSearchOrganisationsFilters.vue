@@ -22,7 +22,7 @@
     <FacetFilter
       show-more
       facet-name="statut_juridique"
-      label="Statuts juridiques"
+      label="Types d’organisation"
       :show-more-limit="5"
       :facets="$store.getters['algoliaSearch/facetResults']('statut_juridique')"
     />

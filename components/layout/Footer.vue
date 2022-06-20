@@ -317,10 +317,11 @@ export default {
           name: 'Plan du site',
           url: '/sitemap.xml'
         },
-        // {
-        //   name: `Accessibilité`,
-        //   url: `/accessibilite`,
-        // },
+        {
+          name: 'Partenaires',
+          url: 'https://www.jeveuxaider.gouv.fr/engagement/organisations/',
+          external: true
+        },
         {
           name: 'Centre d\'aide',
           url: 'https://reserve-civique.crisp.help/fr/',
