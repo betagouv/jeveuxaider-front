@@ -8,7 +8,7 @@
     class="
             px-6
             py-6
-            text-md
+            text-sm
             appearance-none
             rounded-xl
             block

@@ -3,7 +3,7 @@
     <AlertDialog
       theme="danger"
       title="Supprimer l'invitation"
-      :text="`L'invitation pour ${invitationSelected.email}  sera supprimée.`"
+      :text="`L'invitation pour ${invitationSelected.email} sera supprimée.`"
       :is-open="showAlertDeleted"
       @confirm="handleConfirmDeleteInvitation"
       @cancel="showAlertDeleted = false"
@@ -19,25 +19,22 @@
         </div>
       </template>
       <div class="divide-y divide-gray-200 mt-4">
-        <div v-for="invitation in invitations" :key="invitation.id" class="grid grid-cols-12 gap-2 text-sm py-4">
-          <div class="col-span-5 text-gray-900 font-semibold truncate items-center">
-            <div>
-              {{ invitation.email }}
+        <div v-for="invitation in invitations" :key="invitation.id" class="py-4">
+          <div class="flex justify-between items-center space-x-4">
+            <div class="text-sm truncate">
+              <div class="font-semibold truncate text-gray-900">
+                Envoyée à {{ invitation.email }}
+              </div>
+              <div v-if="invitation.properties && invitation.properties.antenne_name" class="text-gray-500 truncate">
+                {{ invitation.properties.antenne_name }}
+              </div>
+              <div class="text-gray-400 text-xs italic">
+                Le {{ $dayjs(invitation.last_sent_at).format('D MMM YYYY') }}
+              </div>
             </div>
-            <div v-if="invitation.properties && invitation.properties.antenne_name" class="text-gray-500 font-medium">
-              {{ invitation.properties.antenne_name }}
-            </div>
-          </div>
-          <div class="col-span-7 flex items-center justify-end">
-            <div class="text-gray-500 mr-4">
-              envoyée le {{ $dayjs(invitation.last_sent_at).format('D MMM YYYY') }}
-            </div>
-
             <Dropdown :ref="`dropdown-${invitation.id}`">
               <template #button>
-                <Button size="xs" variant="white">
-                  Action
-                </Button>
+                <Button size="xs" variant="white" icon="CogIcon" />
               </template>
               <template #items>
                 <div class="w-56 divide-y">

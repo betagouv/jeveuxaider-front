@@ -13,9 +13,52 @@ export default {
       )
     },
     thumbnail () {
-      return this.mission.template?.photo?.urls?.card ??
+      return this.mission.provider == 'api_engagement'
+        ? this.thumbnailApi
+        : this.mission.template?.photo?.urls?.card ??
         this.mission.illustrations?.[0]?.urls?.card ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+    },
+    thumbnailApi () {
+      let filename
+      switch (this.mission.domaine.id) {
+        case 1:
+          filename = 'api__sante_pour_tous'
+          break
+        case 2:
+          filename = 'api__prevention_protection'
+          break
+        case 3:
+          filename = 'api__art_culture'
+          break
+        case 4:
+          filename = 'api__sport_pour_tous'
+          break
+        case 5:
+          filename = 'api__covid19'
+          break
+        case 6:
+          filename = 'api__cooperation_internationale'
+          break
+        case 7:
+          filename = 'api__solidarite_insertion'
+          break
+        case 8:
+          filename = 'api__memoire_citoyennete'
+          break
+        case 9:
+          filename = 'api__education_pour_tous'
+          break
+        case 10:
+          filename = 'api__protection_nature'
+          break
+
+        default:
+          return '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+      }
+
+      const filepath = `/images/missions/api_engagement/${filename}`
+      return `${filepath}.webp, ${filepath}@2x.webp 2x, ${filepath}.jpg, ${filepath}@2x.jpg 2x`
     },
     hasPageOnline () {
       if (!this.mission.structure) {

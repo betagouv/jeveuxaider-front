@@ -46,13 +46,14 @@
 
           <Box class="overflow-hidden mt-6 lg:w-96 lg:mt-0 z-20 flex-shrink-0 sticky top-6 lg:text-center" :padding="false">
             <img
-              srcset="/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x"
+              :srcset="thumbnailApi"
               sizes="(min-width: 1024px) 384px, 100vw"
               alt="Organisation"
               class="w-full object-cover object-top"
               width="630"
               height="300"
               data-not-lazy
+              @error="onImgError"
             >
 
             <div class="px-6 py-12">
@@ -85,6 +86,7 @@
 import Presentation from '@/components/section/mission/Presentation.vue'
 import PresentielOrDistance from '@/components/section/mission/PresentielOrDistance.vue'
 import ButtonJeProposeMonAideApiEngagement from '@/components/custom/ButtonJeProposeMonAideApiEngagement.vue'
+import MixinMission from '@/mixins/mission'
 
 export default {
   components: {
@@ -92,6 +94,7 @@ export default {
     PresentielOrDistance,
     ButtonJeProposeMonAideApiEngagement
   },
+  mixins: [MixinMission],
   props: {
     mission: {
       type: Object,
@@ -160,6 +163,11 @@ export default {
       return this.mission.city
         ? `Bénévolat ${this.mission.structure.name} à ${this.mission.city}`
         : `Bénévolat ${this.mission.structure.name}`
+    }
+  },
+  methods: {
+    onImgError ($event) {
+      $event.target.srcset = '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     }
   }
 }

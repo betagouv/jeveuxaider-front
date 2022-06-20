@@ -9,15 +9,14 @@ export default function ({ $axios, redirect, app, store, error, $message, $toast
     }
     if (!config.headers.Authorization) {
       const ACCESS_TOKEN = app.$cookies.get('access-token')
-      let ACCESS_TOKEN_IMPERSONATE = app.$cookies.get(
-        'access-token-impersonate'
-      )
+      let ACCESS_TOKEN_IMPERSONATE = app.$cookies.get('access-token-impersonate')
       if (ACCESS_TOKEN_IMPERSONATE && !ACCESS_TOKEN) {
         app.$cookies.remove('access-token-impersonate')
         ACCESS_TOKEN_IMPERSONATE = null
       }
       if (ACCESS_TOKEN_IMPERSONATE) {
         config.headers.Authorization = `Bearer ${ACCESS_TOKEN_IMPERSONATE}`
+        config.headers.Impersonating = true
       } else if (ACCESS_TOKEN) {
         config.headers.Authorization = `Bearer ${ACCESS_TOKEN}`
       }

@@ -20,6 +20,9 @@ const renderer = {
   },
   list (body, ordered, start) {
     return `<ul class="ml-4 text-gray-600">${body}</ul>`
+  },
+  listitem (text, task, checked) {
+    return `<li class="">${text}</li>`
   }
 }
 

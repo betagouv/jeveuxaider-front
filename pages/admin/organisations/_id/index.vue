@@ -45,7 +45,12 @@
           <Heading as="h1" :level="1">
             {{ organisation.name }}
           </Heading>
-          <TextFormatted v-if="organisation.description && organisation.statut_juridique != 'Collectivité'" :max-lines="2" :text="organisation.description" class="text-cool-gray-500 text-lg mt-4" />
+          <TextFormatted
+            v-if="organisation.description && !['Collectivité', 'Organisation publique'].includes(organisation.statut_juridique)"
+            :text="organisation.description"
+            :max-lines="2"
+            class="text-cool-gray-500 text-lg mt-4"
+          />
         </Box>
         <BoxInformations class="mb-8" :organisation="organisation" :show-title="false" box-variant="shadow" box-padding="lg" />
         <Box :style="`background-color: ${organisation.color ? organisation.color : '#B91C1C'}`" class="text-white">
@@ -178,20 +183,24 @@
               />
 
               <Box v-for="responsable in organisation.members" :key="responsable.id" variant="flat" padding="xs">
-                <div class="flex justify-between items-start">
-                  <DescriptionList v-if="responsable">
-                    <DescriptionListItem term="Nom" :description="responsable.full_name" :term-size="90" />
-                    <DescriptionListItem term="E-mail" :description="responsable.email" :term-size="90" />
-                    <DescriptionListItem term="Mobile" :description="responsable.mobile" :term-size="90" />
-                    <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" :term-size="90" />
-                  </DescriptionList>
-                  <div v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex mt-2 items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
-                    <div class="group-hover:block hidden">
-                      Supprimer
+                <template #header>
+                  <div class="flex justify-between items-center mb-4">
+                    <Heading as="h3" :level="5">
+                      {{ responsable.full_name }}
+                    </Heading>
+                    <div v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                      <div class="group-hover:block hidden">
+                        Supprimer
+                      </div>
+                      <div><TrashIcon class="ml-2 h-5 w-5" /></div>
                     </div>
-                    <div><TrashIcon class="ml-2 h-5 w-5" /></div>
                   </div>
-                </div>
+                </template>
+                <DescriptionList v-if="responsable">
+                  <DescriptionListItem term="E-mail" :description="responsable.email" />
+                  <DescriptionListItem term="Mobile" :description="responsable.mobile" />
+                  <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
+                </DescriptionList>
               </Box>
               <Button variant="white" @click.native="showDrawerInvitation = true">
                 <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre

@@ -9,6 +9,7 @@
       'px-4 py-4 xl:py-4 xl:px-6': padding == 'xs',
     }]"
   >
+    <slot name="header" />
     <template v-if="loading">
       <LoadingIndicator> {{ loadingText }}</LoadingIndicator>
     </template>

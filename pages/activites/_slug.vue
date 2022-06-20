@@ -59,8 +59,9 @@ export default {
     }
   },
   head () {
+    const title = this.activity.metatags?.properties?.title ?? `Bénévolat ${this.activity.name}`
     return {
-      title: `Bénévolat ${this.activity.name} | JeVeuxAider.gouv.fr`,
+      title: `${title} | JeVeuxAider.gouv.fr`,
       link: [
         {
           rel: 'canonical',
@@ -71,7 +72,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: `Trouvez une mission de bénévolat ${this.activity.name} parmi les missions actuellement disponibles et faites vivre l'engagement de chacun pour tous`
+          content: this.activity.metatags?.properties?.description ?? `Trouvez une mission de bénévolat ${this.activity.name} parmi les missions actuellement disponibles et faites vivre l'engagement de chacun pour tous`
         },
         {
           hid: 'og:image',

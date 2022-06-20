@@ -46,7 +46,7 @@
           <div class="lg:flex">
             <nuxt-link
               to="/"
-              class="inline-flex flex-col space-y-8 items-center justify-start sm:flex-row sm:space-x-8 sm:space-y-0 lg:space-x-4 xl:space-x-8"
+              class="flex flex-col space-y-8 items-center justify-center sm:flex-row sm:space-x-8 sm:space-y-0 lg:space-x-4 lg:justify-start xl:space-x-8"
             >
               <img
                 src="@/assets/images/republique-francaise-logo.svg"
@@ -346,10 +346,6 @@ export default {
         {
           name: 'Charte',
           url: '/charte-reserve-civique'
-        },
-        {
-          name: 'Règles de sécurité',
-          url: '/regles-de-securite'
         },
         {
           name: 'Statistiques',

@@ -175,7 +175,7 @@
               v-model="form.address"
               name="address"
               disabled
-              placeholder="Ex: 14 rue de Rivoli"
+              placeholder="..."
             />
           </FormControl>
           <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
@@ -183,11 +183,12 @@
               label="Code postal"
               html-for="zip"
               required
+              :error="errors.zip"
             >
               <Input
                 v-model="form.zip"
                 name="zip"
-                placeholder="Ex: 75001"
+                placeholder="..."
                 disabled
               />
             </FormControl>
@@ -195,12 +196,13 @@
               label="Ville"
               html-for="city"
               required
+              :error="errors.city"
             >
               <Input
                 v-model="form.city"
                 name="city"
                 disabled
-                placeholder="Ex: Paris"
+                placeholder="..."
               />
             </FormControl>
           </div>
@@ -317,7 +319,9 @@ export default {
         name: string().required('Un nom est requis'),
         statut_juridique: string().required('Un statut juridique est requis'),
         department: string().nullable().required('Un département est requis'),
-        address: string().nullable().required('Une adresse est requise'),
+        address: string().nullable(),
+        zip: string().nullable().required('Le code postal est requis'),
+        city: string().nullable().required('La ville est requise'),
         // @todo attendre décision sur le sujet
         domaines: array().min(1, 'Au moins 1 domaine d\'action')
       })
@@ -332,18 +336,6 @@ export default {
     }
   },
   methods: {
-    handleSelectedGeo (item) {
-      if (!item) {
-        this.clearAddress()
-        return
-      }
-      this.form.address = item.name
-      this.form.zip = item.postcode
-      this.form.city = item.city
-      this.form.longitude = item.coordinates[0]
-      this.form.latitude = item.coordinates[1]
-      this.validate('address')
-    },
     async onFetchReseauxSuggestions (value) {
       const res = await this.$axios.get('/reseaux', {
         params: {

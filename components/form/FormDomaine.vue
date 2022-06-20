@@ -60,7 +60,7 @@
               upload-variant="compact"
               :upload-max-size="2000000"
               disable-delete
-              @add="addFiles({ files: [$event], collection: 'illustrations_organisation' })"
+              @add="addFiles({ files: [$event], collection: 'domaine__illustrations_organisation' })"
               @delete="deleteFile($event)"
               @crop="onManipulationsChange($event)"
             />
@@ -80,7 +80,7 @@
               variant="compact"
               upload-variant="compact"
               disable-delete
-              @add="addFiles({ files: [$event], collection: 'illustrations_mission' })"
+              @add="addFiles({ files: [$event], collection: 'domaine__illustrations_mission' })"
               @delete="deleteFile($event)"
               @crop="onManipulationsChange($event)"
             />

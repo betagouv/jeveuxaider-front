@@ -146,13 +146,13 @@
         </NavItem>
 
         <NavItem
-          key="election-2022"
-          href="https://www.jeveuxaider.gouv.fr/engagement/devenir-assesseur/"
+          key="canicule"
+          href="https://www.jeveuxaider.gouv.fr/engagement/canicule/"
           target="_blank"
           class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1"
         >
-          <span>✉️ </span>
-          <span>Élections 2022</span>
+          <span>☀️ </span>
+          <span>Canicule</span>
         </NavItem>
 
         <NavItem
@@ -270,13 +270,13 @@
                 </NavItem>
 
                 <NavItem
-                  key="election-2022"
-                  href="https://www.jeveuxaider.gouv.fr/engagement/devenir-assesseur/"
+                  key="canicule"
+                  href="https://www.jeveuxaider.gouv.fr/engagement/canicule/"
                   target="_blank"
                   class="flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600"
                 >
-                  <span>✉️ </span>
-                  <span>Élections 2022</span>
+                  <span>☀️ </span>
+                  <span>Canicule</span>
                 </NavItem>
               </div>
             </div>
@@ -394,8 +394,7 @@ export default {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
           { name: 'Mon Réseau', to: `/admin/contenus/reseaux/${this.$store.getters.profile.tete_de_reseau_id}`, isActive: this.isActiveLink('/admin/contenus/reseaux/*') },
-          { name: 'Antennes', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
-          { name: 'Modèles de missions', to: '/admin/contenus/modeles-mission', isActive: this.isActiveLink('/admin/contenus/modeles-mission/*') },
+          { name: 'Membres du réseau', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
           { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
         ]
