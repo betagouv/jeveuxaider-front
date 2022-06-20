@@ -56,10 +56,10 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'statut_juridique'" :key="i" facet-name="statut_juridique" label="Statut juridique" options-class="right-0 md:left-0">
+        <FacetFilterToggle v-if="filter === 'statut_juridique'" :key="i" facet-name="statut_juridique" label="Statuts juridiques" options-class="right-0 md:left-0">
           <template #button="{ firstValueSelected, activeValuesCount }">
             <BadgeFilter :is-active="!!activeValuesCount">
-              <span v-if="!firstValueSelected">Statut juridique</span>
+              <span v-if="!firstValueSelected">Statuts juridiques</span>
               <div v-else class="text-jva-blue-500 flex">
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
