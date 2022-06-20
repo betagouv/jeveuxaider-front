@@ -9,28 +9,35 @@
       show-more
       facet-name="publics_beneficiaires"
       label="Publics aidés"
-      :limit-options="3"
+      :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')"
     />
     <FacetFilter
       show-more
       facet-name="domaines.name"
       label="Domaines"
-      :limit-options="3"
+      :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('domaines.name')"
+    />
+    <FacetFilter
+      show-more
+      facet-name="statut_juridique"
+      label="Statuts juridiques"
+      :show-more-limit="5"
+      :facets="$store.getters['algoliaSearch/facetResults']('statut_juridique')"
     />
     <FacetFilter
       show-more
       facet-name="reseaux.name"
       label="Réseaux"
-      :limit-options="3"
+      :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('reseaux.name')"
     />
     <FacetFilter
       show-more
       facet-name="department_name"
       label="Départements"
-      :limit-options="3"
+      :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('department_name')"
     />
 

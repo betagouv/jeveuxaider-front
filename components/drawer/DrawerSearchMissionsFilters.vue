@@ -21,49 +21,49 @@
       show-more
       facet-name="activity.name"
       label="Activités"
-      :limit-options="3"
+      :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('activity.name')"
     />
     <FacetFilter
       show-more
       facet-name="structure.name"
       label="Organisations"
-      :limit-options="3"
+      :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('structure.name')"
     />
     <FacetFilter
       show-more
       facet-name="publics_beneficiaires"
       label="Publics aidés"
-      :limit-options="3"
+      :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')"
     />
     <FacetFilter
       show-more
       facet-name="domaines"
       label="Domaines"
-      :limit-options="3"
+      :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('domaines')"
     />
     <FacetFilter
       show-more
       facet-name="structure.reseaux.name"
       label="Réseaux"
-      :limit-options="3"
+      :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('structure.reseaux.name')"
     />
     <FacetFilter
       show-more
       facet-name="department_name"
       label="Départements"
-      :limit-options="3"
+      :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('department_name')"
     />
     <FacetFilter
       show-more
       facet-name="template_subtitle"
       label="Types de mission"
-      :limit-options="3"
+      :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('template_subtitle')"
     />
 
