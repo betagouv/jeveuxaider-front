@@ -61,34 +61,23 @@
         {{ organisation.name }}
       </h3>
 
-      <template v-if="showState">
-        <div v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole)" class="mt-4 text-[13px] text-gray-500">
-          <div class="">
-            Complétion: <span class="font-semibold">{{ organisation.completion_rate }}%</span>
-          </div>
-          <div v-if="organisation.reseaux.length" class="">
-            Réseau: <span class="font-semibold">{{ organisation.reseaux.map(reseau => reseau.name).join(', ') }}</span>
-          </div>
+      <div v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole) && showInfos" class="mt-4 text-[13px] text-gray-500">
+        <div class="">
+          Complétion: <span class="font-semibold">{{ organisation.completion_rate }}%</span>
         </div>
-
-        <div class="mt-4 flex items-center justify-center">
-          <Badge :color="organisation.state" plain>
-            {{ organisation.state }}
-          </Badge>
-          <div v-if="['admin'].includes($store.getters.contextRole)" class="text-gray-500 text-xs flex-shrink-0 ml-2">
-            ID <span class="font-semibold">{{ organisation.id }}</span>
-          </div>
-
-          <div class="mt-4 flex items-center justify-center">
-            <Badge :color="organisation.state" plain>
-              {{ organisation.state }}
-            </Badge>
-            <div v-if="['admin'].includes($store.getters.contextRole)" class="text-gray-500 text-xs flex-shrink-0 ml-2">
-              ID <span class="font-semibold">{{ organisation.id }}</span>
-            </div>
-          </div>
+        <div v-if="organisation.reseaux.length" class="">
+          Réseau: <span class="font-semibold">{{ organisation.reseaux.map(reseau => reseau.name).join(', ') }}</span>
         </div>
-      </template>
+      </div>
+
+      <div v-if="showState" class="mt-4 flex items-center justify-center">
+        <Badge :color="organisation.state" plain>
+          {{ organisation.state }}
+        </Badge>
+        <div v-if="['admin'].includes($store.getters.contextRole)" class="text-gray-500 text-xs flex-shrink-0 ml-2">
+          ID <span class="font-semibold">{{ organisation.id }}</span>
+        </div>
+      </div>
     </div>
 
     <div
@@ -133,6 +122,10 @@ export default {
     organisation: {
       type: Object,
       default: null
+    },
+    showInfos: {
+      type: Boolean,
+      default: false
     },
     showState: {
       type: Boolean,

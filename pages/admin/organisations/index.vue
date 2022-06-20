@@ -130,6 +130,8 @@
           :key="organisation.id"
           class="cursor-pointer"
           :organisation="organisation"
+          show-infos
+          show-state
           @click.native="drawerOrganisationId = organisation.id"
         />
       </div>
