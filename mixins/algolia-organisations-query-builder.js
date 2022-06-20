@@ -26,7 +26,7 @@ export default {
       return this.$config.algolia.organisationsIndex
     },
     getAvailableFacets () {
-      return ['department_name', 'domaines.name', 'reseaux.name', 'publics_beneficiaires', 'activities.name']
+      return ['department_name', 'domaines.name', 'reseaux.name', 'publics_beneficiaires', 'activities.name', 'statut_juridique']
     }
   }
 }

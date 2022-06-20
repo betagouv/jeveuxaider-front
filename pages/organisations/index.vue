@@ -1,11 +1,11 @@
 <template>
   <div>
     <Breadcrumb
-      :items="[{ label: 'Associations', link: '/associations' }]"
+      :items="[{ label: 'Organisations', link: '/organisations' }]"
       class="container md:px-8 border-b-0"
     />
     <AlgoliaSearch
-      :secondary-filters="['domaines.name', 'reseaux.name', 'department_name']"
+      :secondary-filters="['domaines.name', 'reseaux.name', 'department_name', 'statut_juridique']"
     />
   </div>
 </template>

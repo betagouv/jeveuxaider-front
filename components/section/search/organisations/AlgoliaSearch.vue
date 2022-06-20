@@ -33,16 +33,17 @@
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto">
-          <template v-for="item in $store.state.algoliaSearch.results.hits">
-            <nuxt-link
-              :key="item.id"
-              class="flex min-w-0 hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px]"
-              :to="`/organisations/${item.slug}`"
-              @click.native="handleClickCard"
-            >
-              <CardOrganisation :organisation="item" footer-key="missions_available_count" />
-            </nuxt-link>
-          </template>
+          <div
+            v-for="item in $store.state.algoliaSearch.results.hits"
+            :key="item.id"
+            class="flex min-w-0 hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px] cursor-pointer"
+          >
+            <CardOrganisation
+              :organisation="item"
+              footer-key="missions_available_count"
+              @click.native="handleClickCard(item)"
+            />
+          </div>
         </div>
 
         <Pagination
@@ -110,11 +111,17 @@ export default {
         query: { ...this.$route.query, page }
       })
     },
-    handleClickCard () {
+    handleClickCard (organisation) {
       window.plausible &&
         window.plausible('Click Card Organisations - Liste résultat', {
           props: { isLogged: this.$store.getters.isLogged }
         })
+
+      if (organisation.statut_juridique === 'Association') {
+        this.$router.push(`/organisations/${organisation.slug}`)
+      } else {
+        this.$router.push(`/missions-benevolat?structure.name=${organisation.name}`)
+      }
     }
   }
 }

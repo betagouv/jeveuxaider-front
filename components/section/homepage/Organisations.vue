@@ -46,7 +46,7 @@
             disponibles chez les petits et grands acteurs de l'engagement.
           </p>
           <nuxt-link
-            to="/associations"
+            to="/organisations"
             class="text-lg text-jva-blue-500 hover:underline"
           >
             Consulter toutes les organisations ›

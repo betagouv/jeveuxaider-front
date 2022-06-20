@@ -364,7 +364,7 @@ export default {
     secondNavigation () {
       if (!this.$store.getters.isLogged) {
         return [
-          { name: 'Organisations', to: '/associations', isActive: this.isActiveLink('/associations') },
+          { name: 'Organisations', to: '/organisations', isActive: this.isActiveLink('/organisations') },
           { name: 'Territoires', to: '/territoires', isActive: this.isActiveLink('/territoires') },
           { name: 'Écoles et universités', href: 'https://www.jeveuxaider.gouv.fr/engagement/ecoles-et-universites/', target: '_blank' },
           { name: 'Actualités', href: 'https://www.jeveuxaider.gouv.fr/engagement/actualites/', target: '_blank' },
