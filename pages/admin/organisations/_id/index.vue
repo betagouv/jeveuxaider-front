@@ -293,8 +293,9 @@ export default {
   },
   methods: {
     async handleChangeState (event) {
-      this.organisation.state = event.key
-      await this.$axios.put(`/structures/${this.organisation.id}`, this.organisation)
+      await this.$axios.put(`/structures/${this.organisation.id}`, this.organisation).then(() => {
+        this.organisation.state = event.key
+      }).catch(() => {})
     },
     handleSubmitInvitation () {
       this.showDrawerInvitation = false

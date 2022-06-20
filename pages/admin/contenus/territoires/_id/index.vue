@@ -71,6 +71,7 @@
             ]"
           />
           <div v-if="$route.hash === ''" class="space-y-8">
+            <SelectTerritoireState v-if="canEditStatut" :value="territoire.state" class="mt-4" @selected="handleChangeState($event)" />
             <BoxInformations :territoire="territoire" />
             <BoxMission :territoire="territoire" :stats="stats" />
             <BoxParticipation :territoire="territoire" :stats="stats" />
@@ -122,6 +123,7 @@ import Engagement from '@/components/section/territoire/Engagement'
 import BoxInvitations from '@/components/section/BoxInvitations'
 import FormInvitation from '@/components/form/FormInvitation'
 import MixinTerritoire from '@/mixins/territoire'
+import SelectTerritoireState from '@/components/custom/SelectTerritoireState'
 
 export default {
   components: {
@@ -134,7 +136,8 @@ export default {
     Associations,
     Engagement,
     BoxInvitations,
-    FormInvitation
+    FormInvitation,
+    SelectTerritoireState
   },
   mixins: [MixinTerritoire],
   middleware: 'authenticated',
@@ -177,6 +180,14 @@ export default {
     this.queryInvitations = queryInvitations
   },
   methods: {
+    async handleChangeState (option) {
+      await this.$axios.put(`/territoires/${this.territoire.id}`, {
+        ...this.territoire,
+        state: option.key
+      }).then(() => {
+        this.territoire.state = option.key
+      }).catch(() => {})
+    },
     handleSubmitInvitation () {
       this.showDrawerInvitation = false
       this.$fetch()
