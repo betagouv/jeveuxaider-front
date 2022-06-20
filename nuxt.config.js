@@ -94,6 +94,7 @@ export default {
     'cookie-universal-nuxt',
     'vue-toastification/nuxt',
     'portal-vue/nuxt',
+    'vue-scrollto/nuxt',
     '@nuxtjs/gtm'
   ],
 
