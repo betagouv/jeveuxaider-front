@@ -3,11 +3,11 @@
     <div v-if="$store.state.algoliaSearch.results" class="container md:px-8 lg:mt-6 mb-12">
       <div class="flex flex-col space-y-6 sm:space-y-12">
         <SectionHeading
-          title="Trouver une association"
+          title="Trouver une organisation près de chez vous"
           :secondary-title-bottom="`${$options.filters.formatNumber($store.state.algoliaSearch.results.nbHits)} ${$options.filters.pluralize(
             $store.state.algoliaSearch.results.nbHits,
-            'résultat',
-            'résultats',
+            'organisation est inscrite sur JeVeuxAider.gouv.fr',
+            'organisations sont inscrites sur JeVeuxAider.gouv.fr',
             false
           )}`"
         />

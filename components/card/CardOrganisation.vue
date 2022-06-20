@@ -44,7 +44,7 @@
       </div>
     </div>
 
-    <div class="mx-8 my-6 flex-1 flex flex-col items-start">
+    <div class="mx-8 my-6 flex-1 flex flex-col items-start min-h-[110px]">
       <div class="mb-4 flex flex-wrap gap-2">
         <Badge v-if="domaines[0]" :color="domaines[0].id" class="uppercase">
           {{ $options.filters.label(domaines[0].id, 'domaines') }}
@@ -100,7 +100,8 @@
         <span
           class="text-sm font-bold"
           :class="[
-            organisation.missions_available_count > 0 ? 'text-gray-900' : 'text-gray-400'
+            domainColor,
+            { 'opacity-25': organisation.missions_available_count <= 0 }
           ]"
         >
           {{
@@ -157,6 +158,15 @@ export default {
         .sort((a, b) => {
           return b.id - a.id
         })
+    },
+    domainColor () {
+      if (this.organisation.domaines.length) {
+        return this.$labels.domaines.find(
+          domaine => domaine.key == this.organisation.domaines[0].id
+        )?.color
+      } else {
+        return 'text-gray-900'
+      }
     }
   },
   methods: {
