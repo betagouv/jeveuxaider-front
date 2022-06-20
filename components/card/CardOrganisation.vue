@@ -87,7 +87,8 @@
         <span
           class="text-sm font-bold"
           :class="[
-            organisation.state === 'Validée' ? 'text-gray-900' : 'text-gray-400'
+            domainColor,
+            { 'opacity-25':organisation.state !== 'Validée' }
           ]"
         >
           {{
@@ -160,9 +161,9 @@ export default {
         })
     },
     domainColor () {
-      if (this.organisation.domaines.length) {
+      if (this.domaines.length) {
         return this.$labels.domaines.find(
-          domaine => domaine.key == this.organisation.domaines[0].id
+          domaine => domaine.key == this.domaines[0].id
         )?.color
       } else {
         return 'text-gray-900'
