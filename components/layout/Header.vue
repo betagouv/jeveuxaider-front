@@ -381,7 +381,7 @@ export default {
       } else if (this.$store.getters.currentRole?.key === 'responsable') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Organisation', to: `/admin/organisations/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/organisations/*(?!.*missions/add)') },
+          { name: 'Mon organisation', to: `/admin/organisations/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/organisations/*(?!.*missions/add)') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*|missions/add') },
           { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
         ]
@@ -393,7 +393,7 @@ export default {
       } else if (this.$store.getters.currentRole?.key === 'tete_de_reseau') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Mon Réseau', to: `/admin/contenus/reseaux/${this.$store.getters.profile.tete_de_reseau_id}`, isActive: this.isActiveLink('/admin/contenus/reseaux/*') },
+          { name: 'Mon réseau', to: `/admin/contenus/reseaux/${this.$store.getters.profile.tete_de_reseau_id}`, isActive: this.isActiveLink('/admin/contenus/reseaux/*') },
           { name: 'Membres du réseau', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
           { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
@@ -419,9 +419,9 @@ export default {
         ]
       }
       return [
-        { name: 'Mon Profil', to: '/profile', isActive: this.isActiveLink('/profile', true) },
-        { name: 'Mes missions', href: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
-        { name: 'Aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', target: '_blank' }
+        { name: 'Mon profil', to: '/profile', isActive: this.isActiveLink('/profile', true) },
+        { name: 'Mes missions', to: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
+        { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', target: '_blank' }
       ]
     }
   },
