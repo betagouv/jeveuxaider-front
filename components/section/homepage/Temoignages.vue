@@ -201,21 +201,6 @@ Je me suis désormais active dans la Banque Alimentaire près de chez moi deux m
               x2: null
             }
           }
-        },
-        {
-          content: 'Très belle expérience! J\'ai fait le plein de bonnes ondes grâce à cette matinée de collecte.“',
-          author: {
-            name: 'Jennifer'
-          },
-          organization: {
-            name: 'Banque Alimentaire de l\'Hérault',
-            logo: {
-              default: '/images/temoignages/organisations/banques_alimentaires.png',
-              x2: '/images/temoignages/organisations/banques_alimentaires@2x.png',
-              width: 150,
-              height: 34
-            }
-          }
         }
       ],
       settings: {
