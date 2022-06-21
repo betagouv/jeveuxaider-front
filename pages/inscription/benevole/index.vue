@@ -511,6 +511,7 @@ export default {
       isLoadingFranceConnect: false,
       form: {
         email: this.$route.query.email ? this.$route.query.email : '',
+        zip: this.$route.query.zip ? this.$route.query.zip : '',
         password: '',
         utm_source: this.$cookies.get('utm_source')
       },
