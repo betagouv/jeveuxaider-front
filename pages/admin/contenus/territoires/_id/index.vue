@@ -15,6 +15,18 @@
       @confirm="handleConfirmDeleteMember"
       @cancel="showAlertMemberDeleted = false"
     />
+    <Drawer :is-open="showDrawerAddResponsable" form-id="form-add-responsable" submit-label="Ajouter ce responsable" @close="showDrawerAddResponsable = false">
+      <template #title>
+        <Heading :level="3">
+          Ajouter un responsable
+        </Heading>
+      </template>
+      <FormAddResponsable
+        class="mt-8"
+        :endpoint="`/territoires/${territoire.id}/responsables`"
+        @submited="handleSubmitAddResponsable"
+      />
+    </Drawer>
     <Drawer :is-open="showDrawerInvitation" form-id="form-invitation" submit-label="Envoyer l'invitation" @close="showDrawerInvitation = false">
       <template #title>
         <Heading :level="3">
@@ -24,8 +36,8 @@
       <FormInvitation
         class="mt-8"
         role="responsable_territoire"
-        :invitable-id="territoire.id"
-        invitable-type="App\Models\Territoire"
+        :model-id="territoire.id"
+        model-type="App\Models\Territoire"
         @submited="handleSubmitInvitation"
       />
     </Drawer>
@@ -102,6 +114,9 @@
               <Button v-if="canManageTerritoire" variant="white" @click.native="showDrawerInvitation = true">
                 <UsersIcon class="h-4 w-4 mr-2" /> Inviter un responsable
               </Button>
+              <Button v-if="['admin'].includes($store.getters.contextRole)" variant="white" @click.native="showDrawerAddResponsable = true">
+                <PlusIcon class="h-4 w-4 mr-2" /> Ajouter un responsable
+              </Button>
             </div>
           </template>
           <History v-if="$route.hash === '#historique'" :model-id="territoire.id" model-type="territoire" />
@@ -122,6 +137,7 @@ import Associations from '@/components/section/territoire/Associations'
 import Engagement from '@/components/section/territoire/Engagement'
 import BoxInvitations from '@/components/section/BoxInvitations'
 import FormInvitation from '@/components/form/FormInvitation'
+import FormAddResponsable from '@/components/form/FormAddResponsable'
 import MixinTerritoire from '@/mixins/territoire'
 import SelectTerritoireState from '@/components/custom/SelectTerritoireState'
 
@@ -137,6 +153,7 @@ export default {
     Engagement,
     BoxInvitations,
     FormInvitation,
+    FormAddResponsable,
     SelectTerritoireState
   },
   mixins: [MixinTerritoire],
@@ -165,6 +182,7 @@ export default {
   data () {
     return {
       showDrawerInvitation: false,
+      showDrawerAddResponsable: false,
       queryInvitations: null,
       memberSelected: {},
       showAlertMemberDeleted: false
@@ -188,9 +206,17 @@ export default {
         this.territoire.state = option.key
       }).catch(() => {})
     },
+    async refetch () {
+      const { data: territoire } = await this.$axios.get(`/territoires/${this.territoire.id}`)
+      this.territoire = territoire
+    },
     handleSubmitInvitation () {
       this.showDrawerInvitation = false
       this.$fetch()
+    },
+    handleSubmitAddResponsable () {
+      this.showDrawerAddResponsable = false
+      this.refetch()
     },
     handleDeleteMember (member) {
       this.memberSelected = member
@@ -198,8 +224,7 @@ export default {
     },
     async handleConfirmDeleteMember () {
       await this.$axios.delete(`/territoires/${this.territoire.id}/responsables/${this.memberSelected.id}`)
-      const { data: territoire } = await this.$axios.get(`/territoires/${this.territoire.id}`)
-      this.territoire = territoire
+      this.refetch()
       this.memberSelected = {}
       this.showAlertMemberDeleted = false
     }

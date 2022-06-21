@@ -18,6 +18,18 @@
       @confirm="handleConfirmDeleteMember"
       @cancel="showAlertMemberDeleted = false"
     />
+    <Drawer :is-open="showDrawerAddResponsable" form-id="form-add-responsable" submit-label="Ajouter ce membre" @close="showDrawerAddResponsable = false">
+      <template #title>
+        <Heading :level="3">
+          Ajouter un membre
+        </Heading>
+      </template>
+      <FormAddResponsable
+        class="mt-8"
+        :endpoint="`/structures/${organisation.id}/responsables`"
+        @submited="handleSubmitAddResponsable"
+      />
+    </Drawer>
     <Drawer :is-open="showDrawerInvitation" form-id="form-invitation" submit-label="Envoyer l'invitation" @close="showDrawerInvitation = false">
       <template #title>
         <Heading :level="3">
@@ -205,6 +217,9 @@
               <Button variant="white" @click.native="showDrawerInvitation = true">
                 <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
               </Button>
+              <Button v-if="['admin'].includes($store.getters.contextRole)" variant="white" @click.native="showDrawerAddResponsable = true">
+                <PlusIcon class="h-4 w-4 mr-2" /> Ajouter un membre
+              </Button>
             </div>
           </template>
           <History v-if="$route.hash === '#historique'" :model-id="organisation.id" model-type="structure" />
@@ -222,6 +237,7 @@ import BoxInformations from '@/components/section/organisation/BoxInformations'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
 import CardStatistic from '@/components/card/CardStatistic'
 import FormInvitation from '@/components/form/FormInvitation'
+import FormAddResponsable from '@/components/form/FormAddResponsable'
 import BoxInvitations from '@/components/section/BoxInvitations'
 import SelectOrganisationState from '@/components/custom/SelectOrganisationState'
 import BoxReferents from '@/components/section/BoxReferents'
@@ -235,6 +251,7 @@ export default {
     BoxInformations,
     CardStatistic,
     FormInvitation,
+    FormAddResponsable,
     BoxInvitations,
     SelectOrganisationState,
     BoxReferents,
@@ -274,6 +291,7 @@ export default {
     return {
       organisationStats: null,
       showDrawerInvitation: false,
+      showDrawerAddResponsable: false,
       queryInvitations: null,
       memberSelected: {},
       showAlertMemberDeleted: false
@@ -292,6 +310,10 @@ export default {
     this.queryInvitations = queryInvitations
   },
   methods: {
+    async refetch () {
+      const { data: organisation } = await this.$axios.get(`/structures/${this.organisation.id}`)
+      this.organisation = organisation
+    },
     async handleChangeState (event) {
       await this.$axios.put(`/structures/${this.organisation.id}`, this.organisation).then(() => {
         this.organisation.state = event.key
@@ -307,10 +329,13 @@ export default {
     },
     async handleConfirmDeleteMember () {
       await this.$axios.delete(`/structures/${this.organisation.id}/members/${this.memberSelected.id}`)
-      const { data: organisation } = await this.$axios.get(`/structures/${this.organisation.id}`)
-      this.organisation = organisation
+      this.refetch()
       this.memberSelected = {}
       this.showAlertMemberDeleted = false
+    },
+    handleSubmitAddResponsable () {
+      this.showDrawerAddResponsable = false
+      this.refetch()
     }
   }
 }

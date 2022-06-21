@@ -15,6 +15,18 @@
       @confirm="handleConfirmDeleteMember"
       @cancel="showAlertMemberDeleted = false"
     />
+    <Drawer :is-open="showDrawerAddResponsable" form-id="form-add-responsable" submit-label="Ajouter ce responsable" @close="showDrawerAddResponsable = false">
+      <template #title>
+        <Heading :level="3">
+          Ajouter un responsables
+        </Heading>
+      </template>
+      <FormAddResponsable
+        class="mt-8"
+        :endpoint="`/reseaux/${reseau.id}/responsables`"
+        @submited="handleSubmitAddResponsable"
+      />
+    </Drawer>
     <Drawer :is-open="showDrawerInvitation" form-id="form-invitation" submit-label="Envoyer l'invitation" @close="showDrawerInvitation = false">
       <template #title>
         <Heading :level="3">
@@ -156,6 +168,9 @@
               <Button variant="white" @click.native="showDrawerInvitation = true">
                 <UsersIcon class="h-4 w-4 mr-2" /> Inviter un responsable
               </Button>
+              <Button v-if="['admin'].includes($store.getters.contextRole)" variant="white" @click.native="showDrawerAddResponsable = true">
+                <PlusIcon class="h-4 w-4 mr-2" /> Ajouter un responsable
+              </Button>
             </div>
           </template>
         </client-only>
@@ -169,6 +184,7 @@ import MixinReseau from '@/mixins/reseau'
 import History from '@/components/section/History'
 import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks'
 import FormInvitation from '@/components/form/FormInvitation'
+import FormAddResponsable from '@/components/form/FormAddResponsable'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
 import BoxInvitations from '@/components/section/BoxInvitations'
 import CardStatistic from '@/components/card/CardStatistic'
@@ -180,6 +196,7 @@ export default {
     DomainsPublicsLinks,
     OnlineIndicator,
     FormInvitation,
+    FormAddResponsable,
     BoxInvitations,
     CardStatistic,
     BoxAntenne
@@ -209,6 +226,7 @@ export default {
     return {
       stats: null,
       showDrawerInvitation: false,
+      showDrawerAddResponsable: false,
       queryInvitations: null,
       queryInvitationsAntennes: null,
       memberSelected: {},
@@ -236,6 +254,10 @@ export default {
     this.queryInvitationsAntennes = queryInvitationsAntennes
   },
   methods: {
+    async refetch () {
+      const { data: reseau } = await this.$axios.get(`/reseaux/${this.reseau.id}`)
+      this.reseau = reseau
+    },
     handleSubmitInvitation () {
       this.showDrawerInvitation = false
       this.$fetch()
@@ -246,10 +268,13 @@ export default {
     },
     async handleConfirmDeleteMember () {
       await this.$axios.delete(`/reseaux/${this.reseau.id}/responsables/${this.memberSelected.id}`)
-      const { data: reseau } = await this.$axios.get(`/reseaux/${this.reseau.id}`)
-      this.reseau = reseau
+      this.refetch()
       this.memberSelected = {}
       this.showAlertMemberDeleted = false
+    },
+    handleSubmitAddResponsable () {
+      this.showDrawerAddResponsable = false
+      this.refetch()
     }
   }
 }
