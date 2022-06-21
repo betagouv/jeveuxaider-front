@@ -131,7 +131,10 @@ Je me suis désormais active dans la Banque Alimentaire près de chez moi deux m
         {
           content: 'Superbe et enrichissante. En tant que bénévole arbitre j’ai rencontré des joueurs tolérants passionnés qui ont la passion au dessus de l’enjeu. Une expérience sans pareil.',
           author: {
-            name: 'Romaric'
+            name: 'Romaric',
+            image: {
+              default: '/images/temoignages/portraits/romaric.webp'
+            }
           },
           organization: {
             name: 'Comité Départemental du Sport Adapté Drôme - Ardèche',
@@ -144,7 +147,10 @@ Je me suis désormais active dans la Banque Alimentaire près de chez moi deux m
         {
           content: 'Très belle expérience, une magnifique équipe, de beaux moments passés, beau spectacle.',
           author: {
-            name: 'Ange'
+            name: 'Ange',
+            image: {
+              default: '/images/temoignages/portraits/ange.webp'
+            }
           },
           organization: {
             name: 'Le Temps des Rues',
@@ -170,7 +176,10 @@ Je me suis désormais active dans la Banque Alimentaire près de chez moi deux m
         {
           content: 'J’ai adoré cette expérience. L’équipe est formidable et les bénévoles sont tellement admirables. Pour une première, j’ai adoré. Un grand merci 🙏🏽',
           author: {
-            name: 'Kevin'
+            name: 'Kevin',
+            image: {
+              default: '/images/temoignages/portraits/kevin.webp'
+            }
           },
           organization: {
             name: 'TRIATHL\'AIX',
