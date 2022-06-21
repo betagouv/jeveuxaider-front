@@ -64,7 +64,7 @@ export default {
             icon: '⛔',
             iconVariant: 'danger',
             title: 'Votre organisation <b>a été signalée</b> par le référent de votre département. <b>',
-            subtitle: 'L’activité de votre organisation n’entre pas dans le cadre défini par la Charte de la Réserve Civique',
+            subtitle: 'L’activité de votre organisation n’entre pas dans le cadre défini par la Charte de la Réserve Civique : vous ne pouvez donc pas publier de mission sur JeVeuxAider.gouv.fr',
             href: action.href
           }
         case 'mission_template_waiting_validation':
