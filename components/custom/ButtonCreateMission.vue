@@ -41,7 +41,7 @@ export default {
     tooltipCantCreateMission () {
       if (this.$store.getters.currentOrganisation.state === 'Brouillon') {
         return {
-          content: 'Vous ne pouvez pas créer de mission tant que votre organisation est incomplète.',
+          content: 'Votre organisation est incomplète - Complétez les informations de votre organisation afin de pouvoir publier une mission',
           hideOnTargetClick: true,
           placement: 'top'
         }
