@@ -137,7 +137,7 @@
               Exporter
             </Button>
             <ButtonCreateMission
-              v-if="$store.getters.contextRole === 'responsable'"
+              v-if="$store.getters.contextRole === 'responsable' && $store.getters.currentOrganisation"
               size="lg"
             />
           </div>

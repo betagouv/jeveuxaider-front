@@ -9,7 +9,7 @@
       <SectionHeading title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
         <template #action>
           <ButtonCreateMission
-            v-if="$store.getters.contextRole === 'responsable'"
+            v-if="$store.getters.contextRole === 'responsable' && $store.getters.currentOrganisation"
           />
         </template>
       </Sectionheading>
