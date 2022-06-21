@@ -143,6 +143,12 @@ export default {
     }
     const { data: structure } = await $axios.get(`/structures/${params.id}`)
 
+    if (store.getters.contextRole == 'responsable') {
+      if (structure.state === 'Signalée') {
+        return error({ statusCode: 403 })
+      }
+    }
+
     return {
       structure
     }

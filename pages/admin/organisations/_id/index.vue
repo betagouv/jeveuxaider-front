@@ -315,7 +315,10 @@ export default {
       this.organisation = organisation
     },
     async handleChangeState (event) {
-      await this.$axios.put(`/structures/${this.organisation.id}`, this.organisation).then(() => {
+      await this.$axios.put(`/structures/${this.organisation.id}`, {
+        ...this.organisation,
+        state: event.key
+      }).then(() => {
         this.organisation.state = event.key
       }).catch(() => {})
     },

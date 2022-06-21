@@ -59,6 +59,14 @@ export default {
             subtitle: 'Elles n\'attendent que vous pour pouvoir publier leurs missions !',
             link: '/admin/organisations?filter[state]=En cours de traitement'
           }
+        case 'organisation_signaled':
+          return {
+            icon: '⛔',
+            iconVariant: 'danger',
+            title: 'Votre organisation <b>a été signalée</b> par le référent de votre département. <b>',
+            subtitle: 'L’activité de votre organisation n’entre pas dans le cadre défini par la Charte de la Réserve Civique',
+            href: action.href
+          }
         case 'mission_template_waiting_validation':
           return {
             icon: '🗂',
