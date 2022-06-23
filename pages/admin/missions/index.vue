@@ -279,6 +279,10 @@ export default {
       return error({ statusCode: 403 })
     }
 
+    if (store.getters.contextRole === 'responsable') {
+      await store.dispatch('auth/fetchOrganisation')
+    }
+
     const { data: activities } = await $axios.get('/activities', {
       params: {
         pagination: 999,

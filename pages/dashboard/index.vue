@@ -163,13 +163,17 @@ export default {
   },
   mixins: [MixinAction],
   middleware: 'authenticated',
-  asyncData ({ store, error, $axios }) {
+  async asyncData ({ store, error, $axios }) {
     if (
       !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'analyste', 'responsable', 'responsable_territoire'].includes(
         store.getters.contextRole
       )
     ) {
       return error({ statusCode: 403 })
+    }
+
+    if (store.getters.contextRole === 'responsable') {
+      await store.dispatch('auth/fetchOrganisation')
     }
   },
   data () {
