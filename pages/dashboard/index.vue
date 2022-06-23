@@ -8,9 +8,7 @@
     <template #header>
       <SectionHeading title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
         <template #action>
-          <ButtonCreateMission
-            v-if="$store.getters.contextRole === 'responsable' && $store.getters.currentOrganisation"
-          />
+          <ButtonCreateMission v-if="$store.getters.contextRole === 'responsable'" />
         </template>
       </Sectionheading>
     </template>
@@ -163,17 +161,13 @@ export default {
   },
   mixins: [MixinAction],
   middleware: 'authenticated',
-  async asyncData ({ store, error, $axios }) {
+  asyncData ({ store, error }) {
     if (
       !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'analyste', 'responsable', 'responsable_territoire'].includes(
         store.getters.contextRole
       )
     ) {
       return error({ statusCode: 403 })
-    }
-
-    if (store.getters.contextRole === 'responsable') {
-      await store.dispatch('auth/fetchOrganisation')
     }
   },
   data () {

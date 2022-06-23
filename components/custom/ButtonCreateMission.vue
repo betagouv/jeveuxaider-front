@@ -7,7 +7,7 @@
       <Button
         icon="PlusIcon"
         :size="size"
-        :disabled="true"
+        :disabled="structure"
       >
         Publier une mission
       </Button>
@@ -34,33 +34,41 @@ export default {
       default: 'xl'
     }
   },
+  data () {
+    return {
+      structure: null
+    }
+  },
+  async fetch () {
+    const { data: structure } = await this.$axios.get(`/structures/${this.$store.state.auth.user.contextable_id}`)
+    this.structure = structure
+  },
   computed: {
     canCreateMission () {
-      return !['Brouillon', 'Signalée'].includes(this.$store.getters.currentOrganisation.state)
+      return !!this.structure?.state && !['Brouillon', 'Signalée', 'Désinscrite'].includes(this.structure.state)
     },
     tooltipCantCreateMission () {
-      if (this.$store.getters.currentOrganisation.state === 'Brouillon') {
-        return {
-          content: 'Votre organisation est incomplète - Complétez les informations de votre organisation afin de pouvoir publier une mission',
-          hideOnTargetClick: true,
-          placement: 'top'
-        }
+      let content
+      switch (this.structure?.state) {
+        case 'Désinscrite':
+          content = 'Vous ne pouvez pas créer de mission car votre organisation est désinscrite.'
+          break
+        case 'Signalée':
+          content = 'Vous ne pouvez pas créer de mission tant que votre organisation est signalée.'
+          break
+        case 'Brouillon':
+          content = 'Votre organisation est incomplète - Complétez les informations de votre organisation afin de pouvoir publier une mission'
+          break
+        default:
+          return null
       }
 
-      if (this.$store.getters.currentOrganisation.state === 'Signalée') {
-        return {
-          content: 'Vous ne pouvez pas créer de mission tant que votre organisation est signalée.',
-          hideOnTargetClick: true,
-          placement: 'top'
-        }
+      return {
+        content,
+        hideOnTargetClick: true,
+        placement: 'top'
       }
-
-      return null
     }
   }
 }
 </script>
-
-<style>
-
-</style>

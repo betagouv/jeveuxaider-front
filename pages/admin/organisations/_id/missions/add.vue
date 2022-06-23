@@ -136,15 +136,17 @@ export default {
   },
   middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {
-    if (
-      !store.getters.currentRole || store.getters.currentRole.contextable_type !== 'structure'
-    ) {
+    if (!store.getters.currentRole || store.getters.currentRole.contextable_type !== 'structure') {
       return error({ statusCode: 403 })
     }
+
     const { data: structure } = await $axios.get(`/structures/${params.id}`)
+    if (!structure) {
+      return error({ statusCode: 403 })
+    }
 
     if (store.getters.contextRole == 'responsable') {
-      if (structure.state === 'Signalée') {
+      if (['Désinscrite', 'Signalée', 'Brouillon'].includes(structure.state)) {
         return error({ statusCode: 403 })
       }
     }

@@ -137,7 +137,7 @@
               Exporter
             </Button>
             <ButtonCreateMission
-              v-if="$store.getters.contextRole === 'responsable' && $store.getters.currentOrganisation"
+              v-if="$store.getters.contextRole === 'responsable'"
               size="lg"
             />
           </div>
@@ -277,10 +277,6 @@ export default {
       )
     ) {
       return error({ statusCode: 403 })
-    }
-
-    if (store.getters.contextRole === 'responsable') {
-      await store.dispatch('auth/fetchOrganisation')
     }
 
     const { data: activities } = await $axios.get('/activities', {

@@ -1,15 +1,11 @@
 export const state = () => ({
   user: null,
-  organisation: null,
   isImpersonate: false
 })
 
 export const mutations = {
   setUser (state, user) {
     state.user = user
-  },
-  setOrganisation (state, organisation) {
-    state.organisation = organisation
   },
   setIsImpersonate (state, isImpersonate) {
     state.isImpersonate = isImpersonate
@@ -27,18 +23,6 @@ export const actions = {
     if (res?.data) {
       commit('setUser', res.data)
       await dispatch('messaging/fetchUnreadMessages', null, { root: true })
-    }
-  },
-  async fetchOrganisation ({ commit, state }) {
-    if (state.user.contextable_type === 'structure') {
-      const res = await this.$axios
-        .get(`/structures/${state.user.contextable_id}`)
-        .catch(() => {
-          commit('setOrganisation', null)
-        })
-      if (res?.data) {
-        commit('setOrganisation', res.data)
-      }
     }
   },
   async login ({ commit, dispatch }, form) {
