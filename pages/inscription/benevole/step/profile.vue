@@ -24,7 +24,7 @@
     </div>
     <div class="max-w-xl mx-auto">
       <div
-        class="px-8 pt-6 pb-20 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
+        class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
       >
         Complétez votre profil
       </div>
@@ -67,18 +67,6 @@
               @blur="validate('phone')"
             />
           </FormControl>
-          <FormControl label="Choisissez vos domaines de prédilection" html-for="domaines" required :error="errors.domaines">
-            <CheckboxGroup
-              v-model="form.domaines"
-              name="domaines"
-              variant="button"
-              :options="$labels.domaines"
-              is-model
-            />
-          </FormControl>
-          <FormControl label="Décrivez vos motivations" html-for="description">
-            <Textarea v-model="form.description" name="description" placeholder="Vos motivations en quelques mots..." />
-          </FormControl>
           <div class="flex space-x-8">
             <img
               src="@/assets/images/service-civique-logo.png"
@@ -111,8 +99,8 @@
 </template>
 
 <script>
-import { string, object, array } from 'yup'
-import _ from 'lodash'
+import { string, object } from 'yup'
+import { cloneDeep } from 'lodash'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 
@@ -133,6 +121,10 @@ export default {
           status: 'current'
         },
         {
+          name: 'Vos préférences',
+          status: 'upcoming'
+        },
+        {
           name: 'Vos disponibilités',
           status: 'upcoming'
         },
@@ -141,13 +133,12 @@ export default {
           status: 'upcoming'
         }
       ],
-      form: _.cloneDeep(this.$store.state.auth.user.profile),
+      form: cloneDeep(this.$store.state.auth.user.profile),
       formSchema: object({
         type: string().nullable().required('Une profession est requise'),
         mobile: string().min(10, 'Le mobile doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un mobile est requis'),
         phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v),
-        zip: string().min(5, 'Le format du code postal est incorrect').required('Un code postal est requis'),
-        domaines: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action')
+        zip: string().min(5, 'Le format du code postal est incorrect').required('Un code postal est requis')
       })
     }
   },
@@ -167,7 +158,7 @@ export default {
           })
           window.plausible &&
             window.plausible('Inscription bénévole - Étape 2 - Profil')
-          this.$router.push('/inscription/benevole/step/disponibilites')
+          this.$router.push('/inscription/benevole/step/preferences')
         })
         .catch((errors) => {
           this.setErrors(errors)
