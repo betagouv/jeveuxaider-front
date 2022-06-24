@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import { cloneDeep } from 'lodash'
 import FormProfile from '@/components/form/FormProfile.vue'
 
 export default {
@@ -43,7 +43,7 @@ export default {
   data () {
     return {
       loading: false,
-      form: _.cloneDeep(this.$store.state.auth.user.profile)
+      form: cloneDeep(this.$store.state.auth.user.profile)
     }
   },
   methods: {

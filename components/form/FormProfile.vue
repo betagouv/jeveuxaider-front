@@ -295,7 +295,7 @@
 
 <script>
 import { string, object, array, date } from 'yup'
-import _ from 'lodash'
+import { cloneDeep } from 'lodash'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
@@ -314,7 +314,7 @@ export default {
   data () {
     return {
       loading: false,
-      form: _.cloneDeep(this.profile),
+      form: cloneDeep(this.profile),
       formSchema: object({
         first_name: string().min(3).required('Un prénom est requis'),
         last_name: string().min(2).required('Un nom est requis'),

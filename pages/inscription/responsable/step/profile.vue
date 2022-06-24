@@ -102,7 +102,7 @@
 
 <script>
 import { string, object } from 'yup'
-import _ from 'lodash'
+import { cloneDeep } from 'lodash'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 
@@ -112,7 +112,7 @@ export default {
   data () {
     return {
       loading: false,
-      form: _.cloneDeep(this.$store.state.auth.user.profile),
+      form: cloneDeep(this.$store.state.auth.user.profile),
       formSchema: object({
         type: string().nullable().required('Une profession est requise'),
         mobile: string().min(10, 'Le mobile doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un mobile est requis'),

@@ -22,7 +22,7 @@
     </div>
     <div class="max-w-xl mx-auto">
       <div
-        class="px-8 pt-6 pb-6 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
+        class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
       >
         Renseignez vos compétences
       </div>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import _ from 'lodash'
+import { cloneDeep } from 'lodash'
 import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 
@@ -96,6 +96,11 @@ export default {
           href: '/inscription/benevole/step/profile'
         },
         {
+          name: 'Vos préférences',
+          status: 'complete',
+          href: '/inscription/benevole/step/preferences'
+        },
+        {
           name: 'Vos disponibilités',
           status: 'complete',
           href: '/inscription/benevole/step/disponibilites'
@@ -105,7 +110,7 @@ export default {
           status: 'current'
         }
       ],
-      form: _.cloneDeep(this.$store.state.auth.user.profile)
+      form: cloneDeep(this.$store.state.auth.user.profile)
     }
   },
   methods: {
