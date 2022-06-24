@@ -113,16 +113,6 @@
                 @blur="validate('type')"
               />
             </FormControl>
-
-            <!-- <FormControl label="Choisissez vos domaines de prédilection" html-for="domaines" required :error="errors.domaines" class="md:col-span-2">
-              <CheckboxGroup
-                v-model="form.domaines"
-                name="domaines"
-                variant="button"
-                :options="$labels.domaines"
-                is-model
-              />
-            </FormControl> -->
             <FormControl label="Décrivez vos motivations" html-for="description" class="md:col-span-2">
               <Textarea v-model="form.description" name="description" placeholder="Vos motivations en quelques mots..." />
             </FormControl>
@@ -215,7 +205,7 @@
           <div v-if="form.activities.length" class="mt-6">
             <div class="flex flex-wrap gap-2">
               <TagFormItem
-                v-for="item in form.activities"
+                v-for="item in activitiesOptions2.filter(activityOption => { return form.activities.find(e => e.id == activityOption.id)} )"
                 :key="item.id"
                 :tag="item"
                 @removed="onRemovedActivityItem"
@@ -279,7 +269,7 @@
               </FormControl>
             </form>
           </Drawer>
-          <Button size="sm" class="mt-6" variant="white" @click.native="showDrawerActivity = true">
+          <Button size="sm" :class="[{'mt-6': form.activities.length > 0}]" variant="white" @click.native="showDrawerActivity = true">
             <PlusIcon class="mr-2" />Ajouter une activité
           </Button>
         </Box>
@@ -400,11 +390,11 @@ export default {
         mobile: string().nullable().min(10, 'Le mobile doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un mobile est requis'),
         phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v),
         zip: string().nullable().min(5, 'Le format du code postal est incorrect').required('Un code postal est requis'),
-        // domaines: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action'),
         disponibilities: array().transform(v => (!v ? [] : v)).min(1, 'Merci de sélectionner au moins 1 disponibilité').required('df')
       }),
       autocompleteReseauxOptions: [],
       activitiesOptions,
+      activitiesOptions2: activitiesOptions.map((activity) => { return { id: activity.key, name: activity.label } }),
       showDrawerActivity: false,
       domainsOptions: ['Bénévolat de compétences', 'Solidarité et insertion', 'Éducation pour tous', 'Protection de la nature', 'Art et culture pour tous', 'Sport pour tous', 'Prévention et protection', 'Mémoire et citoyenneté']
     }
@@ -417,7 +407,6 @@ export default {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
     },
     onRemovedActivityItem (item) {
-      console.log('onRemovedActivityItem')
       this.form.activities = this.form.activities.filter(activity => activity.id !== item.id)
     },
     async handleSubmit () {
