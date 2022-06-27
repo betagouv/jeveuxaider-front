@@ -338,7 +338,7 @@ export default {
       autocompleteOptions: [],
       formSchema: object({
         first_name: string().min(3).required('Un prénom est requis'),
-        last_name: string().min(2).required('Un nom est requis'),
+        last_name: string().required('Un nom est requis'),
         mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required('Un téléphone mobile est requis'),
         zip: string().min(5).required('Un code postal est requis'),
         birthday: date().required('Le format de la date est incorrect').nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
