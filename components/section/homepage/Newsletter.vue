@@ -66,7 +66,7 @@
     <img
       src="/images/homepage/newsletter.svg"
       alt="Newsletter"
-      class="hidden md:flex absolute top-[58px] right-0 transform translate-x-[101px] md:top-[72px] md:translate-x-[47px] md:w-[175px] lg:top-[80px] lg:translate-x-[-15px] xl:w-auto xl:top-[44px] xl:translate-x-[-5px]"
+      class="hidden md:flex absolute top-[58px] right-0 transform translate-x-[101px] md:top-[72px] md:translate-x-[47px] md:w-[175px] lg:top-[80px] lg:translate-x-[-15px] xl:w-auto xl:top-[44px] xl:translate-x-[20px]"
       width="200"
       height="153"
     >
