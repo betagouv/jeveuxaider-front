@@ -47,7 +47,7 @@
 
       <nuxt-link
         to="/inscription/responsable?orga_type=Collectivité"
-        class="w-full lg:w-auto flex items-center justify-center px-12 py-3 font-bold rounded-full text-jva-green-500 bg-white hover:scale-105 transform transition mt-auto lg:mx-auto"
+        class="w-full lg:w-auto flex items-center justify-center text-center px-12 py-3 font-bold rounded-full text-jva-green-500 bg-white hover:scale-105 transform transition mt-auto lg:mx-auto"
       >
         Inscrire ma collectivité territoriale
       </nuxt-link>

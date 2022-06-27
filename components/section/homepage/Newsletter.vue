@@ -2,16 +2,16 @@
   <div
     class="px-6 pt-10 pb-12 lg:px-8 lg:py-12 xl:px-16 xl:py-12 bg-[#D0E2FF] rounded-[10px] shadow-xl relative overflow-hidden"
   >
-    <div class="flex flex-col text-center md:text-left">
+    <div class="flex flex-col text-center md:text-left h-full relative z-10">
       <h2
-        class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight mb-6 max-w-[442px]"
+        class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight mb-6 lg:mb-0 max-w-[442px] self-center md:self-auto"
       >
         <span>Un</span>
         <strong class="font-extrabold">e-mail par mois</strong>
         <span>pour plus d'engagement</span>
       </h2>
 
-      <div id="newsletter-headline" class="text-[#696974] text-xl mb-7">
+      <div id="newsletter-headline" class="text-[#696974] text-xl mb-7 lg:my-auto">
         Chaque mois, nous vous proposons de nouvelles missions de
         bénévolat à distance ou près de chez vous.
       </div>
@@ -66,7 +66,7 @@
     <img
       src="/images/homepage/newsletter.svg"
       alt="Newsletter"
-      class="hidden md:flex absolute top-[58px] lg:top-0 right-0 transform translate-x-[101px] xl:translate-x-[40px]"
+      class="hidden md:flex absolute top-[58px] right-0 transform translate-x-[101px] md:top-[72px] md:translate-x-[47px] md:w-[175px] lg:top-[80px] lg:translate-x-[-15px] xl:w-auto xl:top-[44px] xl:translate-x-[-5px]"
       width="200"
       height="153"
     >

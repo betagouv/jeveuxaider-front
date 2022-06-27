@@ -14,7 +14,7 @@
     </div>
   </Box>
 
-  <Box v-else class="relative" :padding="false">
+  <Box v-else class="relative overflow-hidden" :padding="false">
     <img
       src="/images/missions/mission_a_distance.jpg"
       srcset="/images/missions/mission_a_distance@2x.jpg 2x"
@@ -24,7 +24,7 @@
 
     <div class="absolute inset-0 custom-gradient" />
 
-    <div class="text-white relative px-6 xl:px-16 py-8">
+    <div class="text-white relative px-6 xl:px-16 py-8 drop-shadow">
       <div class="font-extrabold text-2xl mb-2">
         Mission à distance
       </div>
