@@ -21,9 +21,11 @@
     </SectionHeading>
 
     <OverviewQuickGlance ref="overviewQuickGlance" />
+
     <Heading as="h2" :level="2">
       L’activité sur JeVeuxAider.gouv.fr en détail
     </Heading>
+
     <OverviewMissions ref="overviewMissions" />
     <OverviewUtilisateurs ref="overviewUtilisateurs" />
     <OverviewOrganisations ref="overviewOrganisations" />
