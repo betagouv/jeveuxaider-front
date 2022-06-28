@@ -26,6 +26,9 @@
         Les participations en détail
       </Heading>
       <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" />
+      <client-only>
+        <ParticipationsConversionByDate ref="participationsConversionByDate" class="lg:col-span-2" />
+      </client-only>
       <div class="flex flex-col lg:flex-row gap-12">
         <div class="space-y-12 w-1/2">
           <ParticipationsByStates ref="participationsByStates" />
@@ -50,6 +53,7 @@ import ParticipationsByOrganisations from '@/components/numbers/ParticipationsBy
 import ParticipationsByDomaines from '@/components/numbers/ParticipationsByDomaines.vue'
 import ParticipationsByReseaux from '@/components/numbers/ParticipationsByReseaux.vue'
 import ParticipationsByActivities from '@/components/numbers/ParticipationsByActivities.vue'
+import ParticipationsConversionByDate from '~/components/numbers/ParticipationsConversionByDate.vue'
 
 export default {
   components: {
@@ -60,7 +64,8 @@ export default {
     ParticipationsByOrganisations,
     ParticipationsByDomaines,
     ParticipationsByReseaux,
-    ParticipationsByActivities
+    ParticipationsByActivities,
+    ParticipationsConversionByDate
   },
   layout: 'statistics',
   middleware: 'admin',
@@ -70,6 +75,7 @@ export default {
   methods: {
     refetch () {
       this.$refs.participationsByDate.$fetch()
+      this.$refs.participationsConversionByDate.$fetch()
       this.$refs.participationsStatistics.$fetch()
       this.$refs.participationsByStates.$fetch()
       this.$refs.participationsByDomaines.$fetch()

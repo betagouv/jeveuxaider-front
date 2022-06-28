@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Types des missions" class="mb-6" infos-bulle="Répartition des missions créées sur la période par type" />
+    <BoxHeadingStatistics title="Types des missions" class="mb-6" infos-bulle="Répartition des missions validées ou terminées, créées sur la période par type" />
     <div class="w-full">
       <DoughnutChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
     </div>
