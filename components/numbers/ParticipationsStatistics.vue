@@ -14,6 +14,12 @@
         link="/admin/statistics/participations"
         infos-bulle="Nombre de participations validées parmi les candidatures reçues sur la période"
       />
+      <CardStatistic
+        :value="`${statistics.participations_conversion_rate}%`"
+        title="Taux de conversion"
+        :gauge-percentage="statistics.participations_conversion_rate"
+        infos-bulle="Correspond au ratio entre le nombre de candidatures proposées et le nombre de participations validées sur la période"
+      />
     </div>
   </Box>
 </template>
