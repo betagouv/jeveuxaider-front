@@ -23,7 +23,8 @@
     <Tabs
       :tabs="[
         { name: 'Participations à valider', to: '/admin/statistics/organisations/participations-a-valider'},
-        { name: 'Missions périmées', to: '/admin/statistics/organisations/missions-perimees', current: true }
+        { name: 'Missions périmées', to: '/admin/statistics/organisations/missions-perimees', current: true },
+        { name: 'Participations refusées / annulées', to: '/admin/statistics/organisations/participations-refusees-annulees'}
       ]"
     />
 
