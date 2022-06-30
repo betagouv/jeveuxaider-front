@@ -6,30 +6,30 @@
       <CardStatistic
         :value="statistics.organisations"
         :title="`${$options.filters.pluralize(statistics.organisations, 'Organisation', 'Organisations', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.organisations, 'inscrite', 'inscrites', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.organisations, 'validée', 'validées', false)}`"
         link="/admin/statistics/organisations"
-        infos-bulle="Nombre de nouvelles organisations inscrites sur la période"
+        infos-bulle="Correspond au nombre d’organisations inscrites et validées sur la période"
       />
       <CardStatistic
         :value="statistics.missions"
         :title="`${$options.filters.pluralize(statistics.missions, 'Mission', 'Missions', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.missions, 'créée', 'créées', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.missions, 'validée ou terminée', 'validées ou terminées', false)}`"
         link="/admin/statistics/missions"
-        infos-bulle="Nombre de nouvelles missions créées sur la période"
+        infos-bulle="Correspond aux missions créées sur la période, qui sont validées ou bien terminées"
       />
       <CardStatistic
         :value="statistics.participations"
-        :title="`${$options.filters.pluralize(statistics.participations, 'Candidature', 'Candidatures', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.participations, 'proposée', 'proposées', false)}`"
+        :title="`${$options.filters.pluralize(statistics.participations, 'Participation', 'Participations', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.participations, 'validée', 'validées', false)}`"
         link="/admin/statistics/participations"
-        infos-bulle="Nombre de candidatures proposées sur la période"
+        infos-bulle="Correspond au nombre de participations validées sur la période"
       />
       <CardStatistic
         :value="statistics.utilisateurs"
         :title="`${$options.filters.pluralize(statistics.utilisateurs, 'Utilisateur', 'Utilisateurs', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.utilisateurs, 'inscrit', 'inscrits', false)}`"
         link="/admin/statistics/utilisateurs"
-        infos-bulle="Nombre d'utilisateurs inscrits sur la période"
+        infos-bulle="Correspond au nombre d’utilisateurs inscrits sur la période"
       />
     </div>
   </Box>

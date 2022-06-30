@@ -4,7 +4,7 @@ export const state = () => ({})
 export const mutations = {}
 
 export const actions = {
-  async nuxtServerInit ({ commit }, { store, req }) {
+  async nuxtServerInit ({ commit, getters }, { store, req }) {
     if (this.$cookies.get('access-token')) {
       await store.dispatch('auth/fetchUser')
     }

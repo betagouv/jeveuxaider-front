@@ -5,8 +5,13 @@
     :limit="limit"
     :preview-conversion="previewConversion"
     :preview-sizes="previewSizes"
+    :hide-pencil="hidePencil"
     @change="$emit('change', $event)"
-  />
+  >
+    <template #empty>
+      <slot name="empty" />
+    </template>
+  </MediaPicker>
 </template>
 
 <script>
@@ -29,7 +34,8 @@ export default {
       default: 1
     },
     previewConversion: { type: String, default: 'formPreview' },
-    previewSizes: { type: String, default: undefined }
+    previewSizes: { type: String, default: undefined },
+    hidePencil: { type: Boolean, default: false }
   },
   data () {
     return {

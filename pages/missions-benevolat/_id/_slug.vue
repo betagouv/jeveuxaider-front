@@ -101,10 +101,10 @@
             :src="illustrationSrc"
             sizes="(min-width: 1024px) 384px, 100vw"
             alt=""
-            class="w-full object-cover object-top"
-            width="630"
-            height="300"
-            @error="$event.target.srcset = '/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x'"
+            class="w-full object-cover object-top h-[184px]"
+            width="761"
+            height="363"
+            @error="$event.target.srcset = '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'"
           >
 
           <component
@@ -431,12 +431,12 @@ export default {
     illustrationSrcset () {
       return this.mission.template?.photo?.urls?.large ??
         this.mission.illustrations?.[0]?.urls?.large ??
-        '/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x'
+        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     },
     illustrationSrc () {
       return this.mission.template?.photo?.urls?.original ??
         this.mission.illustrations?.[0]?.urls?.original ??
-        '/images/missions/mission-default.jpg, /images/missions/mission-default@2x.jpg 2x'
+        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     }
   }
 }

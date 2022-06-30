@@ -15,36 +15,36 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics no-period @refetch="refetch()" />
+          <FiltersStatistics @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>
 
     <Tabs
       :tabs="[
-        { name: 'Participations à valider', to: '/admin/statistics/organisations/participations-a-valider', current: true},
+        { name: 'Participations à valider', to: '/admin/statistics/organisations/participations-a-valider'},
         { name: 'Missions périmées', to: '/admin/statistics/organisations/missions-perimees' },
-        { name: 'Participations refusées / annulées', to: '/admin/statistics/organisations/participations-refusees-annulees' }
+        { name: 'Participations refusées / annulées', to: '/admin/statistics/organisations/participations-refusees-annulees', current: true }
       ]"
     />
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <ParticipationsWaitingByOrganisations ref="participationsWaitingByOrganisations" />
-      <ParticipationsInProgressByOrganisations ref="participationsInProgressByOrganisations" />
+      <ParticipationsRefusedByOrganisations ref="participationsRefusedByOrganisations" />
+      <ParticipationsCanceledByOrganisations ref="participationsCanceledByOrganisations" />
     </div>
   </div>
 </template>
 
 <script>
-import ParticipationsWaitingByOrganisations from '~/components/numbers/ParticipationsWaitingByOrganisations.vue'
-import ParticipationsInProgressByOrganisations from '~/components/numbers/ParticipationsInProgressByOrganisations.vue'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import ParticipationsRefusedByOrganisations from '@/components/numbers/ParticipationsRefusedByOrganisations.vue'
+import ParticipationsCanceledByOrganisations from '@/components/numbers/ParticipationsCanceledByOrganisations.vue'
 
 export default {
   components: {
     FiltersStatistics,
-    ParticipationsWaitingByOrganisations,
-    ParticipationsInProgressByOrganisations
+    ParticipationsRefusedByOrganisations,
+    ParticipationsCanceledByOrganisations
   },
   layout: 'statistics',
   middleware: 'admin',
@@ -53,8 +53,8 @@ export default {
   },
   methods: {
     refetch () {
-      this.$refs.participationsWaitingByOrganisations.$fetch()
-      this.$refs.participationsInProgressByOrganisations.$fetch()
+      this.$refs.participationsRefusedByOrganisations.$fetch()
+      this.$refs.participationsCanceledByOrganisations.$fetch()
     }
   }
 }

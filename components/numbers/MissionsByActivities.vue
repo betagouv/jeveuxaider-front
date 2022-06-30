@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des activités...">
-    <BoxHeadingStatistics title="Répartition des mission par activités" class="mb-6" infos-bulle="Liste des activités les plus utilisées dans les missions créées sur la période" />
+    <BoxHeadingStatistics title="Répartition des mission par activités" class="mb-6" infos-bulle="Liste des activités les plus utilisées dans les missions validées ou terminées sur la période" />
     <StackedList v-if="items" :divided="false">
       <StackedListItem
         v-for="item, i in items"
@@ -11,7 +11,7 @@
       >
         <div class="text-gray-900 font-semibold" v-html="item.name" />
         <div class="text-gray-500 text-sm">
-          {{ $options.filters.pluralize(item.count, 'mission', 'missions') }}
+          {{ $options.filters.pluralize(item.count, 'mission validée / terminée', 'missions validées / terminées') }}
         </div>
       </StackedListItem>
     </StackedList>

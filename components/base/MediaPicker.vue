@@ -3,7 +3,7 @@
     <div
       v-for="(i, index) in limit"
       :key="index"
-      class="relative inline-flex flex-col mb-auto group rounded-lg cursor-pointer"
+      class="relative inline-flex flex-col mb-auto group rounded-lg cursor-pointer w-full"
       @click.prevent="openModal = index"
     >
       <template v-if="defaults[index]">
@@ -19,16 +19,18 @@
         />
       </template>
 
-      <div
-        v-else
-        class="w-full h-full min-h-[120px] rounded-lg cursor-pointer border-dashed border-2 transition hover:border-jva-blue-500 flex items-center justify-center"
-      >
-        <div class="text-xs text-center text-jva-blue-500">
-          Selectionnez<br>un visuel
+      <slot v-else name="empty">
+        <div
+          class="w-full h-full min-h-[120px] rounded-lg cursor-pointer border-dashed border-2 transition hover:border-jva-blue-500 flex items-center justify-center"
+        >
+          <div class="text-xs text-center text-jva-blue-500">
+            Selectionnez<br>un visuel
+          </div>
         </div>
-      </div>
+      </slot>
 
       <div
+        v-if="!hidePencil"
         class="absolute z-20 flex justify-center items-center w-8 h-8 text-[#070191] bg-white rounded-full opacity-75 group-hover:opacity-100 pointer-events-none transition"
         style="right: 12px; bottom: 12px"
       >
@@ -85,7 +87,8 @@ export default {
       default: 1
     },
     previewConversion: { type: String, default: 'formPreview' },
-    previewSizes: { type: String, default: undefined }
+    previewSizes: { type: String, default: undefined },
+    hidePencil: { type: Boolean, default: false }
   },
   data () {
     return {

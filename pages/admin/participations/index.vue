@@ -254,7 +254,7 @@ export default {
       : null
 
     const responsablesResponse = store.getters.contextRole === 'responsable' && store.getters.contextableId
-      ? await $axios.post(`/structures/${store.getters.contextableId}/responsables`)
+      ? await $axios.get(`/structures/${store.getters.contextableId}/responsables`)
       : null
 
     return {

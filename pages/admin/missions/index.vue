@@ -136,19 +136,10 @@
             <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
               Exporter
             </Button>
-            <nuxt-link
+            <ButtonCreateMission
               v-if="$store.getters.contextRole === 'responsable'"
-              v-tooltip="organisation.state == 'Brouillon' && {
-                content: 'Vous ne pouvez pas créer de mission tant que votre organisation est incomplète.',
-                hideOnTargetClick: true,
-                placement: 'top',
-              }"
-              :to="`/admin/organisations/${$store.getters.currentRole.contextable_id}/missions/add`"
-            >
-              <Button icon="PlusIcon" size="lg" :disabled="organisation.state == 'Brouillon'">
-                Publier une mission
-              </Button>
-            </nuxt-link>
+              size="lg"
+            />
           </div>
         </template>
       </Sectionheading>
@@ -267,13 +258,15 @@ import DrawerMission from '@/components/drawer/DrawerMission.vue'
 import MixinExport from '@/mixins/export'
 import BoxContext from '@/components/section/BoxContext.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
+import ButtonCreateMission from '@/components/custom/ButtonCreateMission'
 
 export default {
   components: {
     CardMission,
     DrawerMission,
     BoxContext,
-    SearchFilters
+    SearchFilters,
+    ButtonCreateMission
   },
   mixins: [QueryBuilder, MixinExport],
   middleware: 'authenticated',
@@ -292,14 +285,6 @@ export default {
         'filter[is_published]': 1
       }
     })
-
-    if (store.getters.contextRole == 'responsable') {
-      const { data: organisation } = await $axios.get(`/structures/${store.getters.currentRole.contextable_id}`)
-      return {
-        organisation,
-        activities: activities.data
-      }
-    }
 
     return {
       activities: activities.data

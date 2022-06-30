@@ -383,7 +383,7 @@ export default {
       form: cloneDeep(this.profile),
       formSchema: object({
         first_name: string().min(3).required('Un prénom est requis'),
-        last_name: string().min(2).required('Un nom est requis'),
+        last_name: string().required('Un nom est requis'),
         birthday: date().required("Une date d'anniversaire est requise").nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
         type: string().nullable().required('Une profession est requise'),

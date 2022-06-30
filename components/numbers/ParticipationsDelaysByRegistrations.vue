@@ -6,7 +6,7 @@
       <ListItemCount color="bg-green-700" label="Moins de 5 minutes" :count="statistics.LESS_THAN_5_MIN" />
       <ListItemCount color="bg-green-500" label="Moins de une heure" :count="statistics.LESS_THAN_1_HOUR" />
       <ListItemCount color="bg-green-300" label="Moins de un jour" :count="statistics.LESS_THAN_1_DAY" />
-      <ListItemCount color="bg-green-100" label="Plus de cinq jours" :count="statistics.LESS_THAN_5_DAYS" />
+      <ListItemCount color="bg-green-100" label="Moins de 5 jours" :count="statistics.LESS_THAN_5_DAYS" />
       <ListItemCount color="bg-green-50" label="Plus de 5 jours" :count="statistics.OTHER" />
     </div>
   </Box>

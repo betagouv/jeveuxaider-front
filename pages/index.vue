@@ -16,7 +16,7 @@
       <div class="container mx-auto px-4 xl:max-w-[1412px]">
         <div class="grid gap-5 md:grid-cols-2">
           <Newsletter />
-          <Facebook />
+          <Communaute />
         </div>
       </div>
     </section>
@@ -51,7 +51,7 @@ import Blog from '@/components/section/homepage/Blog'
 import Temoignages from '@/components/section/homepage/Temoignages'
 import Faq from '@/components/section/homepage/Faq'
 import Newsletter from '@/components/section/homepage/Newsletter'
-import Facebook from '@/components/section/homepage/Facebook'
+import Communaute from '@/components/section/homepage/Communaute'
 import FacilitezRecrutement from '@/components/section/homepage/FacilitezRecrutement'
 import EncouragezEngagementLocal from '@/components/section/homepage/EncouragezEngagementLocal'
 
@@ -66,7 +66,7 @@ export default {
     Temoignages,
     Faq,
     Newsletter,
-    Facebook,
+    Communaute,
     FacilitezRecrutement,
     EncouragezEngagementLocal
   },

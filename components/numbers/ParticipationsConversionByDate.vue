@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Nouvelles organisations inscrites et validées" subtitle="" no-period class="mb-6" />
+    <BoxHeadingStatistics title="Participations effectives par rapport aux candidatures" class="mb-6" />
     <div class="w-full">
       <BarChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
     </div>
@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import pattern from 'patternomaly'
 import BarChart from '@/components/chart/BarChart'
 import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics'
 
@@ -21,30 +22,50 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
+        scales: {
+          x: {
+            stacked: true
+          },
+          y: {
+            stacked: true
+          }
+        },
         plugins: {
           legend: {
+            display: false,
             position: 'bottom'
           },
           datalabels: {
-            display: false
+            color: 'white',
+            font: {
+              weight: 'bold'
+            },
+            formatter (value, ctx) {
+              const datasets = ctx.chart.data.datasets
+              if (datasets[ctx.datasetIndex] != null) {
+                const barTotal = datasets.map(function (x) { return x.data[ctx.dataIndex] }).reduce((a, b) => a + b, 0)
+                return datasets.indexOf(ctx.dataset) === 0 ? (value * 100 / barTotal).toFixed(0) + '%' : ''
+              }
+            }
           }
         }
       }
     }
   },
+  fetchOnServer: false,
   async fetch () {
     this.loading = true
-    await this.$axios.get('/charts/organisations-by-date', {
+    await this.$axios.get('/charts/participations-conversion-by-date', {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
-      const colors = ['#fb7185', '#e879f9', '#a78bfa', '#818cf8', '#138bdf8']
+      const colors = ['#FF9A7B', pattern.draw('weave', '#FFBDA9')]
       this.chartDatasets = []
+
       Object.entries(response.data).forEach(([key, dataset], index) => this.chartDatasets.push({
         label: key,
         data: dataset,
-        backgroundColor: colors[index],
-        hidden: ![this.$dayjs().subtract(1, 'year').year().toString(), this.$dayjs().year().toString()].includes(key)
+        backgroundColor: colors[index]
       }))
 
       this.chartDatasets.push()

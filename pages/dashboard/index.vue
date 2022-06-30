@@ -8,26 +8,7 @@
     <template #header>
       <SectionHeading title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
         <template #action>
-          <nuxt-link
-            v-if="$store.getters.contextRole === 'responsable'"
-            :to="`/admin/organisations/${$store.getters.currentRole.contextable_id}/missions/add`"
-          >
-            <div
-              v-tooltip="isOrgaIncomplete && {
-                content: 'Vous ne pouvez pas créer de mission tant que votre organisation est incomplète.',
-                hideOnTargetClick: true,
-                placement: 'top',
-              }"
-            >
-              <Button
-                icon="PlusIcon"
-                size="xl"
-                :disabled="isOrgaIncomplete"
-              >
-                Publier une mission
-              </Button>
-            </div>
-          </nuxt-link>
+          <ButtonCreateMission v-if="$store.getters.contextRole === 'responsable'" />
         </template>
       </Sectionheading>
     </template>
@@ -167,6 +148,7 @@ import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import CardStatistic from '@/components/card/CardStatistic'
 import CardTemoignage from '@/components/card/CardTemoignage'
+import ButtonCreateMission from '@/components/custom/ButtonCreateMission'
 
 export default {
   components: {
@@ -174,7 +156,8 @@ export default {
     LePetitMot,
     CardStatistic,
     MoreNumbers,
-    CardTemoignage
+    CardTemoignage,
+    ButtonCreateMission
   },
   mixins: [MixinAction],
   middleware: 'authenticated',
@@ -215,9 +198,6 @@ export default {
       return [
         { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
       ]
-    },
-    isOrgaIncomplete () {
-      return this.actions.filter(action => action.type == 'organisation_brouillon_incomplete').length > 0
     }
   },
   async created () {

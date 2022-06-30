@@ -27,6 +27,10 @@
             :description="referent.email"
           />
           <DescriptionListItem
+            term="Mobile"
+            :description="referent.mobile"
+          />
+          <DescriptionListItem
             term="Der. connexion"
             :description="referent.user.last_online_at ? $dayjs(referent.user.last_online_at).fromNow() : '-'"
           />
