@@ -138,6 +138,18 @@
             />
           </div>
         </Box>
+        <Box v-if="$store.getters.contextRole === 'admin'">
+          <Heading :level="3" class="mb-8">
+            Tags
+          </Heading>
+          <CheckboxGroup
+            v-model="form.tags"
+            name="tags"
+            variant="button"
+            is-model
+            :options="tags"
+          />
+        </Box>
       </div>
       <div class="md:col-span-2 space-y-12">
         <Box>
@@ -396,8 +408,13 @@ export default {
       activitiesOptions,
       activitiesOptions2: activitiesOptions.map((activity) => { return { id: activity.key, name: activity.label } }),
       showDrawerActivity: false,
-      domainsOptions: ['Bénévolat de compétences', 'Solidarité et insertion', 'Éducation pour tous', 'Protection de la nature', 'Art et culture pour tous', 'Sport pour tous', 'Prévention et protection', 'Mémoire et citoyenneté']
+      domainsOptions: ['Bénévolat de compétences', 'Solidarité et insertion', 'Éducation pour tous', 'Protection de la nature', 'Art et culture pour tous', 'Sport pour tous', 'Prévention et protection', 'Mémoire et citoyenneté'],
+      tags: []
     }
+  },
+  async mounted () {
+    const { data } = await this.$axios.get('/vocabularies/profiles/terms', { params: { pagination: 50 } })
+    this.tags = data.data.map((tag) => { return { key: tag.id, label: tag.name } })
   },
   methods: {
     handleSelectItems (item) {
@@ -434,7 +451,7 @@ export default {
         })
         .catch((errors) => {
           this.setErrors(errors)
-          // throw new Error('error')
+        // throw new Error('error')
         })
         .finally(() => {
           this.loading = false

@@ -129,6 +129,8 @@ export default {
       switch (this.$route.params.slug) {
         case 'skills':
           return 'compétence'
+        case 'profiles':
+          return 'tags utilisateurs'
         case 'tags':
           return 'tag'
         default:

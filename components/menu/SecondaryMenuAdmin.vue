@@ -54,10 +54,10 @@ export default {
         },
         {
           key: 'taxonomies',
-          label: 'Taxonomies',
+          label: 'Tags',
           childrens: [
             { label: 'Compétences', to: '/admin/taxonomies/skills' },
-            { label: 'Tags', to: '/admin/taxonomies/tags' }
+            { label: 'Utilisateurs', to: '/admin/taxonomies/profiles' }
           ]
         },
         {
