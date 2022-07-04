@@ -18,10 +18,22 @@
           v-else
           :key="referent.id"
         >
-          <DescriptionListItem
-            term="Nom"
-            :description="referent.full_name"
-          />
+          <div class="py-2 sm:gap-4 sm:flex">
+            <dt class="text-sm text-gray-500 flex-none" style="width: calc(33.3333%);">
+              Nom
+            </dt>
+            <dd class="mt-1 text-sm text-gray-900 font-semibold sm:mt-0 flex-1" style="word-break: break-word;">
+              {{ referent.full_name }}
+              <div
+                v-if="$store.getters.contextRole == 'admin' && referent.tags"
+                class="mt-1 flex flex-wrap gap-1"
+              >
+                <Badge v-for="tag in referent.tags" :key="tag.id" size="xxs" color="gray-light">
+                  {{ tag.name }}
+                </Badge>
+              </div>
+            </dd>
+          </div>
           <DescriptionListItem
             term="Email"
             :description="referent.email"
@@ -74,7 +86,7 @@ export default {
         pagination: 999,
         'filter[role]': 'referent',
         'filter[referent_department]': this.department,
-        include: 'user'
+        include: ['user', 'tags']
       }
     })
     this.referents = referents.data

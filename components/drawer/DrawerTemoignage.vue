@@ -33,7 +33,7 @@
           </template>
         </BoxInformationsMission>
         <BoxOrganisation :organisation="temoignage.participation.mission.structure" />
-        <BoxResponsable :profile="temoignage.participation.mission.responsable" />
+        <BoxResponsable :responsable="temoignage.participation.mission.responsable" />
       </div>
     </div>
   </Drawer>
@@ -42,7 +42,7 @@
 <script>
 import BoxInformationsProfile from '@/components/section/profile/BoxInformations'
 import BoxInformationsMission from '@/components/section/mission/BoxInformations'
-import BoxResponsable from '@/components/section/mission/BoxResponsable'
+import BoxResponsable from '@/components/section/BoxResponsable'
 import BoxOrganisation from '@/components/section/mission/BoxOrganisation'
 import BoxInformations from '@/components/section/temoignage/BoxInformations'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
