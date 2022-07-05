@@ -292,16 +292,25 @@
             <FormHelperText v-if="isPresentiel" class="mt-4">
               Recruter au plus près du lieu de mission et des bénéficiaires permet de faciliter l'engagement des bénévoles. Vous avez la possibilité de dupliquer cette mission sur plusieurs lieux.
             </FormHelperText>
+            <template v-else>
+              <div class="text-sm text-gray-600 leading-relaxed mt-4">
+                <p><strong>Les missions à distance sont visibles par les bénévoles de toute la France, quelque soit leur situation géographique.</strong></p>
+              </div>
+              <FormHelperText class="mt-4">
+                <p>Le département de rattachement est dans ce cas là le même que celui de l'organisation pour permettre à un <strong>référent départemental de valider la mission.</strong></p>
+              </FormHelperText>
+            </template>
           </div>
 
           <Toggle
             v-if="isPresentiel"
             v-model="form.is_autonomy"
             label="Mission à réaliser en autonomie"
-            description="Le bénévole réalise cette mission de son côté sans avoir à se rendre à un lieu de rassemblement précis."
+            description="Le bénévole réalise cette mission de son côté sans avoir à se rendre sur un lieu de rassemblement précis."
           />
 
           <FormControl
+            v-if="isPresentiel"
             label="Département"
             html-for="department"
             required
@@ -350,9 +359,17 @@
             </FormControl>
 
             <FormControl
+              label="Précisions sur la zone d'intervention (villes, lieux, etc.)"
               html-for="autonomy_precisions"
+              :error="errors.autonomy_precisions"
+              required
             >
-              @todo autonomy_precisions
+              <RichEditor
+                v-model="form.autonomy_precisions"
+                placeholder="Précisez en quelques mots les zones d'intervention du bénévole en autonomie"
+                :disabled="Boolean(mission.template)"
+                class="autonomy_precisions_wrapper"
+              />
             </FormControl>
           </template>
 
@@ -617,7 +634,7 @@ export default {
           is: true,
           then: schema => schema.min(1, 'Le nombre de volontaire(s) recherché(s) est incorrect (minimum: 1)').required('Le nombre de volontaire(s) recherché(s) est requis')
         }),
-        autonomy_zips: array().max(20, '20 codes postaux maximum')
+        autonomy_zips: array().nullable().max(20, '20 codes postaux maximum')
       }),
       activities: []
     }
@@ -729,3 +746,12 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.autonomy_precisions_wrapper {
+  ::v-deep .ck-editor__editable {
+    min-height: 80px;
+  }
+}
+
+</style>
