@@ -58,7 +58,7 @@
         <div class="grid grid-cols-4 gap-6">
           <Card
             title="Personnalisez votre mission"
-            description="L'intégralité des champs sont éditables. Votre mission sera publiée dans un délai de 2 à 5 jours, après modération par un référent départemental."
+            description="L'intégralité des champs sont éditables. Votre mission sera publiée dans un délai de 5 à 7 jours, après modération par un référent départemental."
             image-srcset="/images/missions/card-add.png"
             state-text="Validation par un référent"
             state-style="warning"
