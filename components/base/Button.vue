@@ -10,6 +10,7 @@
         'text-cool-gray-700 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-cool-gray-500': variant == 'white',
         'text-jva-blue-400 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-blue-400': variant == 'white-blue',
         'text-jva-green-500 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-green-500': variant == 'white-green',
+        'text-jva-red-500 bg-white hover:bg-cool-gray-50 border border-cool-gray-300 focus:ring-white focus:ring-offset-jva-red-500': variant == 'white-red',
         'text-white bg-jva-red-500 hover:bg-jva-red-600 border-transparent focus:ring-jva-red-500': variant == 'red',
         'px-2 py-1 text-xs': size == 'xxs',
         'px-2.5 py-1.5 text-xs': size == 'xs',
@@ -64,7 +65,7 @@ export default {
     variant: {
       type: String,
       default: 'primary',
-      validator: s => ['primary', 'green', 'secondary', 'white', 'white-green', 'white-blue', 'red'].includes(s)
+      validator: s => ['primary', 'green', 'secondary', 'white', 'white-green', 'white-blue', 'red', 'white-red'].includes(s)
     },
     size: {
       type: String,
