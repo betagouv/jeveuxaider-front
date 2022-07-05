@@ -21,8 +21,12 @@
         <div class="truncate">
           <span>📍</span>
 
+          <template v-if="mission.is_autonomy">
+            Mission en autonomie
+          </template>
+
           <template
-            v-if="mission.city && mission.type == 'Mission en présentiel'"
+            v-else-if="mission.city && mission.type == 'Mission en présentiel'"
           >
             <template v-if="mission.zip">
               <span class="font-bold">{{ missionCity }}</span>
