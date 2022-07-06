@@ -5,7 +5,20 @@
       class="mb-6"
       :infos-bulle="`Correspond au nombre de participations effectuées selon le domaine d'action de la mission`"
     />
-    <div v-if="items" class="flex flex-wrap gap-4">
+    <StackedList v-if="items" :divided="false" class="grid grid-cols-3">
+      <StackedListItem
+        v-for="item, i in items"
+        :key="i"
+        :icon="`${(i+1)}.`"
+        icon-class="text-xl font-semibold text-gray-500"
+      >
+        <div class="text-gray-900 font-semibold" v-html="item.name" />
+        <div class="text-gray-500 text-sm">
+          {{ $options.filters.pluralize(item.count, 'participation', 'participations') }}
+        </div>
+      </StackedListItem>
+    </StackedList>
+    <!-- <div v-if="items" class="flex flex-wrap gap-4">
       <div
         v-for="item in items"
         :key="item.id"
@@ -38,7 +51,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </Box>
 </template>
 

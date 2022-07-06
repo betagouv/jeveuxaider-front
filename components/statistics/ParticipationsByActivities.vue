@@ -5,13 +5,12 @@
       class="mb-6"
       :infos-bulle="`Correspond au nombre de participations effectuées selon l'activité de la mission`"
     />
-    <StackedList v-if="items" :divided="false">
+    <StackedList v-if="items" :divided="false" class="grid grid-cols-3">
       <StackedListItem
         v-for="item, i in items"
         :key="i"
         :icon="`${(i+1)}.`"
         icon-class="text-xl font-semibold text-gray-500"
-        :link="`/admin/participations?filter[ofActivity]=${item.id}`"
       >
         <div class="text-gray-900 font-semibold" v-html="item.name" />
         <div class="text-gray-500 text-sm">
