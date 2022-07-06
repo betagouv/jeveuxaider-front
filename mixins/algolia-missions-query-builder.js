@@ -1,4 +1,3 @@
-
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 
 export default {
