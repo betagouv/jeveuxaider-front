@@ -1,5 +1,5 @@
 <template>
-  <Box class="space-y-6 lg:space-y-10">
+  <Box class="space-y-10">
     <div>
       <Heading as="div" :level="3" class="mb-2">
         Présentation de la mission
