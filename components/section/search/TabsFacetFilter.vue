@@ -52,7 +52,7 @@ export default {
       if (tab.filterValue == 'Mission à distance') {
         this.$router.push({
           path: this.$route.path,
-          query: { ...this.$route.query, [this.filterName]: tab.filterValue, page: undefined, city: undefined, aroundLatLng: undefined, department_name: undefined }
+          query: { ...this.$route.query, [this.filterName]: tab.filterValue, page: undefined, city: undefined, aroundLatLng: undefined, department_name: undefined, is_autonomy: undefined }
         })
       } else {
         this.addFilter(this.filterName, tab.filterValue)
