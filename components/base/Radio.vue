@@ -1,5 +1,5 @@
 <template>
-  <label class="flex items-center space-x-2 cursor-pointer">
+  <label class="flex items-center cursor-pointer" :class="[{'space-x-2': variant !== 'tabs'}]">
     <input
       type="radio"
       name="option"

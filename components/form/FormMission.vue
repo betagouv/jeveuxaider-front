@@ -241,7 +241,7 @@
               /> -->
             </FormControl>
           </div>
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid xl:grid-cols-2 gap-4">
             <FormControl
               label="Durée d'engagement min."
               html-for="commitment__duration"
@@ -292,8 +292,25 @@
             <FormHelperText v-if="isPresentiel" class="mt-4">
               Recruter au plus près du lieu de mission et des bénéficiaires permet de faciliter l'engagement des bénévoles. Vous avez la possibilité de dupliquer cette mission sur plusieurs lieux.
             </FormHelperText>
+            <template v-else>
+              <div class="text-sm text-gray-600 leading-relaxed mt-4">
+                <p><strong>Les missions à distance sont visibles par les bénévoles de toute la France, quelque soit leur situation géographique.</strong></p>
+              </div>
+              <FormHelperText class="mt-4">
+                <p>Le département de rattachement est dans ce cas là le même que celui de l'organisation pour permettre à un <strong>référent départemental de valider la mission.</strong></p>
+              </FormHelperText>
+            </template>
           </div>
+
+          <Toggle
+            v-if="isPresentiel"
+            v-model="form.is_autonomy"
+            label="Mission à réaliser en autonomie"
+            description="Le bénévole réalise cette mission de son côté sans avoir à se rendre sur un lieu de rassemblement précis."
+          />
+
           <FormControl
+            v-if="isPresentiel"
             label="Département"
             html-for="department"
             required
@@ -306,8 +323,58 @@
               :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
             />
           </FormControl>
+
+          <template v-if="isPresentiel && isAutonomy">
+            <FormControl
+              label="Codes postaux de la zone d'intervention (jusqu'à 20)"
+              html-for="autonomy_zips"
+              :error="errors.autonomy_zips"
+            >
+              <InputAutocomplete
+                key="input_autocomplete_autonomy"
+                icon="LocationMarkerIcon"
+                name="autocomplete"
+                label="Autocomplete"
+                placeholder="Recherche par ville ou code postal"
+                :options="autocompleteOptions"
+                attribute-key="id"
+                attribute-label="label"
+                attribute-right-label="typeLabel"
+                @selected="handleSelectedAutonomyZip"
+                @keyup.enter="onEnter"
+                @fetch-suggestions="onFetchGeoSuggestions"
+              />
+              <div v-if="form.autonomy_zips">
+                <div class="flex flex-wrap gap-2 mt-4">
+                  <TagFormItem
+                    v-for="item in form.autonomy_zips"
+                    :key="item.zip"
+                    :tag="item"
+                    @removed="onRemovedTagItem"
+                  >
+                    {{ item.zip }}
+                  </TagFormItem>
+                </div>
+              </div>
+            </FormControl>
+
+            <FormControl
+              label="Précisions sur la zone d'intervention (villes, lieux, etc.)"
+              html-for="autonomy_precisions"
+              :error="errors.autonomy_precisions"
+              required
+            >
+              <RichEditor
+                v-model="form.autonomy_precisions"
+                placeholder="Précisez en quelques mots les zones d'intervention du bénévole en autonomie"
+                :disabled="Boolean(mission.template)"
+                class="autonomy_precisions_wrapper"
+              />
+            </FormControl>
+          </template>
+
           <FormControl
-            v-if="isPresentiel"
+            v-if="isPresentiel && !isAutonomy"
             label="Rechercher l'adresse du lieu de la mission"
             html-for="adress"
             required
@@ -326,7 +393,7 @@
             />
           </FormControl>
 
-          <div v-if="isPresentiel" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div v-if="isPresentiel && !isAutonomy" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <FormControl
               class="lg:col-span-2"
               label="Adresse"
@@ -550,13 +617,15 @@ export default {
         participations_max: number().min(1, 'Le nombre de bénévole(s) recherché(s) doit être supérieur à 0').required('Le nombre de bénévole(s) recherché(s) est requis'),
         department: string().nullable().required('Le département est requis'),
         address: string().nullable(),
-        zip: string().nullable().when('type', {
-          is: 'Mission en présentiel',
+        zip: string().nullable().when(['type', 'is_autonomy'], {
+          // eslint-disable-next-line camelcase
+          is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
           then: schema => schema.required('Le code postal est requis'),
           otherwise: schema => schema.nullable()
         }),
-        city: string().nullable().when('type', {
-          is: 'Mission en présentiel',
+        city: string().nullable().when(['type', 'is_autonomy'], {
+          // eslint-disable-next-line camelcase
+          is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
           then: schema => schema.required('La ville est requise'),
           otherwise: schema => schema.nullable()
         }),
@@ -564,17 +633,8 @@ export default {
         snu_mig_places: number().nullable().when('is_snu_mig_compatible', {
           is: true,
           then: schema => schema.min(1, 'Le nombre de volontaire(s) recherché(s) est incorrect (minimum: 1)').required('Le nombre de volontaire(s) recherché(s) est requis')
-        })
-        // latitude: string().nullable().when(['state', 'type'], {
-        //   is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
-        //   then: schema => schema.required('La latitude est obligatoire'),
-        //   otherwise: schema => schema.nullable()
-        // }),
-        // longitude: string().nullable().when(['state', 'type'], {
-        //   is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
-        //   then: schema => schema.required('La longitude est obligatoire'),
-        //   otherwise: schema => schema.nullable()
-        // })
+        }),
+        autonomy_zips: array().nullable().max(20, '20 codes postaux maximum')
       }),
       activities: []
     }
@@ -594,6 +654,9 @@ export default {
     isPresentiel () {
       return this.form.type == 'Mission en présentiel'
     },
+    isAutonomy () {
+      return this.form.is_autonomy
+    },
     mediaPickerDomaineIds () {
       return [this.form.domaine_id]
     },
@@ -603,6 +666,14 @@ export default {
       }
 
       return true
+    },
+    inputGeoType () {
+      return this.isAutonomy ? 'municipality' : undefined
+    }
+  },
+  watch: {
+    isAutonomy (val) {
+      this.autocompleteOptions = []
     }
   },
   methods: {
@@ -652,7 +723,35 @@ export default {
     },
     onMediaPickerChange (payload, field) {
       this.form[field].splice(payload.index, 1, payload.media)
+    },
+    handleSelectedAutonomyZip (selectedItem) {
+      if (!this.form.autonomy_zips) {
+        this.form.autonomy_zips = []
+      }
+      if (selectedItem && !this.form.autonomy_zips.find(item => item.zip == selectedItem.postcode)) {
+        this.form.autonomy_zips.push({
+          zip: selectedItem.postcode,
+          latitude: selectedItem.coordinates[1],
+          longitude: selectedItem.coordinates[0],
+          city: selectedItem.city
+        })
+      }
+    },
+    onRemovedTagItem (value) {
+      this.form.autonomy_zips = this.form.autonomy_zips.filter(item => item.zip !== value.zip)
+      if (this.form.autonomy_zips.length == 0) {
+        this.form.autonomy_zips = null
+      }
     }
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.autonomy_precisions_wrapper {
+  ::v-deep .ck-editor__editable {
+    min-height: 80px;
+  }
+}
+
+</style>

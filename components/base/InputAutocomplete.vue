@@ -71,7 +71,7 @@
         <li
           v-for="(item, index) in options"
           :key="index"
-          class="flex justify-between items-center text-sm px-4 sm:px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
+          class="flex justify-between items-center text-sm px-4 sm:px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500 gap-2"
           :class="[
             {'bg-gray-50 text-jva-blue-500': highlightIndex == index},
             {'bg-gray-50 text-jva-blue-500': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
@@ -83,10 +83,10 @@
             {{ item[attributeLabel] }}
           </span>
           <div class="space-x-4 flex">
-            <span v-if="attributeRightLabel" class="text-cool-gray-400 text-sm font-semibold">
+            <span v-if="attributeRightLabel" class="text-cool-gray-400 text-sm font-semibold flex-none">
               {{ item[attributeRightLabel] }}
             </span>
-            <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="" />
+            <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="flex-none" />
           </div>
         </li>
         <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
