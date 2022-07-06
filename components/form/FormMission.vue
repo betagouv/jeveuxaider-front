@@ -362,12 +362,10 @@
               label="Précisions sur la zone d'intervention (villes, lieux, etc.)"
               html-for="autonomy_precisions"
               :error="errors.autonomy_precisions"
-              required
             >
               <RichEditor
                 v-model="form.autonomy_precisions"
                 placeholder="Précisez en quelques mots les zones d'intervention du bénévole en autonomie"
-                :disabled="Boolean(mission.template)"
                 class="autonomy_precisions_wrapper"
               />
             </FormControl>
@@ -595,7 +593,8 @@ export default {
         activity_id: this.mission.template?.activity_id || this.mission.activity_id,
         objectif: this.mission.template?.objectif || this.mission.objectif,
         description: this.mission.template?.description || this.mission.description,
-        illustrations: this.mission.illustrations || []
+        illustrations: this.mission.illustrations || [],
+        autonomy_zips: this.mission.autonomy_zips || null
       },
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),

@@ -19,13 +19,11 @@ Vue.use(VScrollLock, {
 })
 
 Vue.use(VTooltip, {
-  themes: {
-    tooltip: {
-      placement: 'right',
-      delay: { show: 700, hide: 100 }
-    }
-  }
+  defaultPlacement: 'right',
+  defaultClass: 'theme-black'
+  // defaultDelay: { show: 200, hide: 9999999 }
 })
+
 Vue.use(TextareaAutosize)
 
 Vue.use(VueDragscroll)

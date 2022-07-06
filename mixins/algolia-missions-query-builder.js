@@ -47,8 +47,14 @@ export default {
 
       return activeFacets
     },
-    activeMoreFacets () {
-      return this.availableFacets.filter(facetName => this.$route.query[facetName] && !['type'].includes(facetName))
+    nbMobileSecondaryFilters () {
+      const nbFacets = this.availableFacets.filter(facetName => this.$route.query[facetName] && !['type'].includes(facetName)).length
+      const nbNumericFilters = this.activeNumericFilters.length
+      let nbSecondaryFilters = nbFacets + nbNumericFilters
+      if (this.searchParameters?.query) {
+        nbSecondaryFilters++
+      }
+      return nbSecondaryFilters
     }
   },
   methods: {
@@ -56,7 +62,7 @@ export default {
       return ['type', 'activity.name', 'structure.name', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires', 'template_subtitle']
     },
     getAvailableNumericFilters () {
-      return ['commitment__total']
+      return ['commitment__total', 'is_autonomy']
     }
   }
 }
