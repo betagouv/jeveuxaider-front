@@ -24,7 +24,7 @@
       <CardStatistic
         :value="statistics.missions"
         :title="`${$options.filters.pluralize(statistics.missions, 'Mission', 'Missions', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.missions, 'en cours', 'en cours', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.missions, 'mis en ligne', 'mises en ligne', false)}`"
         :infos-bulle="`Correspond aux missions créées en ${$route.params.year}, qui sont validées ou bien terminées`"
       />
     </div>
@@ -50,9 +50,7 @@ export default {
     this.loading = true
 
     await this.$axios.get('/statistics/public/overview', {
-      params: {
-        year: this.$route.params.year
-      }
+      params: { ...this.$store.state.statistics.params }
     }).then((response) => {
       this.loading = false
       this.statistics = response.data

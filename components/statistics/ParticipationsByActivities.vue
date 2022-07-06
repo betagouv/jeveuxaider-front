@@ -1,38 +1,24 @@
 <template>
-  <Box padding="sm" :loading="loading" loading-text="Générations des données...">
+  <Box padding="sm" :loading="loading" loading-text="Récupération des activités...">
     <BoxHeadingStatistics
-      title="Participations par activités"
+      title="Répartition des participations par activité"
       class="mb-6"
-      no-period
-      :infos-bulle="`Correspond au nombre de participations effectuées en ${$route.params.year} selon le domaine d'action de la mission`"
+      :infos-bulle="`Correspond au nombre de participations effectuées selon l'activité de la mission`"
     />
-    <div v-if="items" class="flex flex-wrap gap-4">
-      <div
-        v-for="item in items"
-        :key="item.id"
-        :class="[
-          'flex space-x-6 px-6 py-4 text-white rounded-xl items-center',
-          $options.filters.label(item.id, 'domaines', 'bg')
-        ]"
+    <StackedList v-if="items" :divided="false">
+      <StackedListItem
+        v-for="item, i in items"
+        :key="i"
+        :icon="`${(i+1)}.`"
+        icon-class="text-xl font-semibold text-gray-500"
+        :link="`/admin/participations?filter[ofActivity]=${item.id}`"
       >
-        <div class="flex-none w-8 h-8">
-          <img
-            :src="$options.filters.label(item.id, 'domaines', 'icon')"
-            :alt="$options.filters.label(item.id, 'domaines')"
-            width="30"
-            height="30"
-          >
+        <div class="text-gray-900 font-semibold" v-html="item.name" />
+        <div class="text-gray-500 text-sm">
+          {{ $options.filters.pluralize(item.count, 'participation', 'participations') }}
         </div>
-        <div>
-          <div class="">
-            {{ item.name }}
-          </div>
-          <div class="text-lg font-semibold">
-            {{ item.count }}
-          </div>
-        </div>
-      </div>
-    </div>
+      </StackedListItem>
+    </StackedList>
   </Box>
 </template>
 
@@ -52,9 +38,7 @@ export default {
   async fetch () {
     this.loading = true
     await this.$axios.get('/statistics/public/participations-by-activities', {
-      params: {
-        year: this.$route.params.year
-      }
+      params: { ...this.$store.state.statistics.params }
     }).then((response) => {
       this.loading = false
       this.items = response.data

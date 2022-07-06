@@ -46,11 +46,21 @@ export default {
     return {
       items: [
         {
-          key: 'periods',
-          label: 'Périodes',
+          key: 'sections',
+          label: 'Statistiques',
           childrens: [
-            { label: '2022', to: '/statistiques/2022' },
-            { label: '2021', to: '/statistiques/2021' }
+            { label: 'Vue d\'ensemble', to: '/statistiques' },
+            { label: 'Participations', to: '/statistiques/participations' },
+            { label: 'Utilisateurs', to: '/statistiques/utilisateurs' },
+            { label: 'Places disponibles', to: '/statistiques/places' }
+          ]
+        },
+        {
+          key: 'api',
+          label: 'API Engagement',
+          childrens: [
+            { label: 'Trafic sortant', to: '/statistiques/api-engagement/trafic-sortant' },
+            { label: 'Trafic entrant', to: '/statistiques/api-engagement/trafic-entrant' }
           ]
         }
       ]

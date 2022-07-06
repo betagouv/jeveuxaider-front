@@ -350,7 +350,7 @@ export default {
         },
         {
           name: 'Statistiques',
-          url: '/statistiques/2022'
+          url: '/statistiques'
         },
         {
           name: 'Presse',
