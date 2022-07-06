@@ -8,6 +8,9 @@ export default {
     htmlAttrs: {
       lang: 'fr'
     },
+    bodyAttrs: {
+      class: 'text-base'
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
