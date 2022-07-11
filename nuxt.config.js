@@ -133,6 +133,7 @@ export default {
     },
     plausible: {
       site_id: process.env.PLAUSIBLE_SITE_ID,
+      shared_link: process.env.PLAUSIBLE_SHARED_LINK,
       token: process.env.PLAUSIBLE_TOKEN
     },
     algolia: {
