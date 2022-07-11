@@ -294,19 +294,20 @@
             </FormHelperText>
             <template v-else>
               <div class="text-sm text-gray-600 leading-relaxed mt-4">
-                <p><strong>Les missions à distance sont visibles par les bénévoles de toute la France, quelque soit leur situation géographique.</strong></p>
+                <p><strong>Les missions à distance sont visibles par les bénévoles de toute la France, quelle que soit leur position géographique.</strong></p>
               </div>
               <FormHelperText class="mt-4">
-                <p>Le département de rattachement est dans ce cas là le même que celui de l'organisation pour permettre à un <strong>référent départemental de valider la mission.</strong></p>
+                <p>Si votre mission porte sur un territoire spécifique, nous vous recommandons de proposer votre mission en présentiel et de cocher la case “En autonomie”.</p>
               </FormHelperText>
             </template>
           </div>
 
+          <!-- <a class='text-jva-blue-500 hover:underline' href='/'>En savoir plus</a> -->
           <Toggle
             v-if="isPresentiel"
             v-model="form.is_autonomy"
             label="Mission à réaliser en autonomie"
-            description="Le bénévole réalise cette mission de son côté sans avoir à se rendre sur un lieu de rassemblement précis."
+            description="Le bénévole peut réaliser la mission sans l’encadrement du responsable."
           />
 
           <FormControl
@@ -322,6 +323,10 @@
               placeholder="Sélectionnez un département"
               :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
             />
+
+            <FormHelperText v-if="isAutonomy" class="mt-4">
+              <p>Pour une mission donnée, les zones d’intervention doivent se situer sur le même département. Si votre mission a lieu sur plusieurs départements, il vous faut créer une mission par département.</p>
+            </FormHelperText>
           </FormControl>
 
           <template v-if="isPresentiel && isAutonomy">
@@ -340,11 +345,12 @@
                 attribute-key="id"
                 attribute-label="label"
                 attribute-right-label="typeLabel"
+                :reset-value-on-select="true"
                 @selected="handleSelectedAutonomyZip"
                 @keyup.enter="onEnter"
                 @fetch-suggestions="onFetchGeoSuggestions"
               />
-              <div v-if="form.autonomy_zips">
+              <div v-if="form.autonomy_zips && form.autonomy_zips.length">
                 <div class="flex flex-wrap gap-2 mt-4">
                   <TagFormItem
                     v-for="item in form.autonomy_zips"
@@ -633,7 +639,17 @@ export default {
           is: true,
           then: schema => schema.min(1, 'Le nombre de volontaire(s) recherché(s) est incorrect (minimum: 1)').required('Le nombre de volontaire(s) recherché(s) est requis')
         }),
-        autonomy_zips: array().nullable().max(20, '20 codes postaux maximum')
+        autonomy_zips: array().min(1, 'Au moins un code postal requis').max(20, '20 codes postaux maximum')
+          .test(
+            'test-zips',
+            'Les codes postaux et le département ne correspondent pas',
+            // eslint-disable-next-line camelcase
+            (autonomy_zips) => {
+              const zips = autonomy_zips.map(i => i.zip)
+              const department = ['2A', '2B'].includes(this.form.department) ? '20' : this.form.department
+              return zips.every(zip => zip.startsWith(department))
+            }
+          )
       }),
       activities: []
     }
@@ -738,9 +754,6 @@ export default {
     },
     onRemovedTagItem (value) {
       this.form.autonomy_zips = this.form.autonomy_zips.filter(item => item.zip !== value.zip)
-      if (this.form.autonomy_zips.length == 0) {
-        this.form.autonomy_zips = null
-      }
     }
   }
 }
