@@ -134,7 +134,9 @@ const labels = {
     { key: '2_hours', label: '2 heures' },
     { key: 'half_day', label: 'Une demi-journée' },
     { key: 'day', label: '1 jour' },
+    { key: '2_days', label: '2 jours' },
     { key: '3_days', label: '3 jours' },
+    { key: '4_days', label: '4 jours' },
     { key: '5_days', label: '5 jours' }
   ],
   geoType: [
@@ -210,6 +212,7 @@ const labels = {
     { key: 'Refusée', label: 'Refusée', to: ['Refusée', 'Validée'], roles: ['admin', 'responsable'], description: 'Le profil du bénévole ne correspond pas à la mission.' }
   ],
   time_period: [
+    { key: 'day', label: 'jour' },
     { key: 'week', label: 'semaine' },
     { key: 'month', label: 'mois' },
     { key: 'year', label: 'an' }
