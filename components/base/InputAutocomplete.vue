@@ -123,7 +123,8 @@ export default {
     clearAfterSelected: { type: Boolean, default: false },
     showKeyInOptions: { type: Boolean, default: false },
     theme: { type: String, default: 'default' },
-    authorizeAdd: { type: Boolean, default: false }
+    authorizeAdd: { type: Boolean, default: false },
+    resetValueOnSelect: { type: Boolean, default: false }
   },
   data () {
     return {
@@ -156,7 +157,7 @@ export default {
       this.timeout()
     },
     handleClick (item) {
-      this.searchTerm = item[this.attributeLabel]
+      this.searchTerm = this.resetValueOnSelect ? null : item[this.attributeLabel]
       this.$emit('selected', item)
       this.selectedOption = item
       this.showOptions = false
