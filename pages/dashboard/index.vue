@@ -77,7 +77,7 @@
           <CardStatistic
             :value="statistics.places_left"
             :title="`${$options.filters.pluralize(statistics.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
-            :subtitle="statistics.places_left_waiting ? `+${$options.filters.formatNumber(statistics.places_left_waiting)} en cours de validation` : null"
+            :subtitle="statistics.places_left_waiting ? `+${$options.filters.formatNumber(statistics.places_left_waiting)} places à venir` : null"
           />
           <CardStatistic :value="`${statistics.places_occupation_rate}%`" title="Taux de remplissage" :gauge-percentage="statistics.places_occupation_rate" />
           <CardStatistic
