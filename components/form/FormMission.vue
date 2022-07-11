@@ -289,10 +289,7 @@
         <div class="space-y-8">
           <div>
             <RadioGroup v-model="form.type" :options="$labels.mission_types" variant="tabs" @updated="handleTypeChange" />
-            <FormHelperText v-if="isPresentiel" class="mt-4">
-              Recruter au plus près du lieu de mission et des bénéficiaires permet de faciliter l'engagement des bénévoles. Vous avez la possibilité de dupliquer cette mission sur plusieurs lieux.
-            </FormHelperText>
-            <template v-else>
+            <template v-if="isDistance">
               <div class="text-sm text-gray-600 leading-relaxed mt-4">
                 <p><strong>Les missions à distance sont visibles par les bénévoles de toute la France, quelle que soit leur position géographique.</strong></p>
               </div>
@@ -665,6 +662,9 @@ export default {
     },
     isAdding () {
       return !this.mission.id
+    },
+    isDistance () {
+      return this.form.type == 'Mission à distance'
     },
     isPresentiel () {
       return this.form.type == 'Mission en présentiel'
