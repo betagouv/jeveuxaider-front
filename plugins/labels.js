@@ -165,6 +165,7 @@ const labels = {
     { key: 'Autre', label: 'Autre', label2: "l'organisation" }
   ],
   association_types: [
+    { key: "Reconnue d'utilité publique", label: "Reconnue d'utilité publique" },
     { key: 'Agrément jeunesse et éducation populaire', label: 'Agrément jeunesse et éducation populaire' },
     { key: 'Agrément service civique', label: 'Agrément service civique' },
     { key: "Association complémentaire de l'enseignement public", label: "Association complémentaire de l'enseignement public" },
