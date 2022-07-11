@@ -28,16 +28,18 @@
           </div>
         </div>
         <div class="flex">
-          <DescriptionList class="max-w-lg">
-            <DescriptionListItem term="Bénévoles recherchés" :description="`${$options.filters.pluralize(mission.places_left, 'place disponible', 'places disponibles')}`" />
-            <DescriptionListItem term="Type" :description="mission.type" />
-            <DescriptionListItem term="Domaine" :description="domaine && domaine.name" />
+          <DescriptionList class="max-w-xl">
+            <DescriptionListItem term-size="160" term="Bénévoles recherchés" :description="`${$options.filters.pluralize(mission.places_left, 'place disponible', 'places disponibles')}`" />
+            <DescriptionListItem term-size="160" term="Type" :description="missionType" />
+            <DescriptionListItem term-size="160" term="Domaine" :description="domaine && domaine.name" />
             <DescriptionListItem
               v-if="mission.publics_beneficiaires"
+              term-size="160"
               term="Publics bénéf."
               :description="mission.publics_beneficiaires.map((item) => $options.filters.label(item, 'mission_publics_beneficiaires')).join(', ')"
             />
-            <DescriptionListItem v-if="mission.department" term="Département" :description="`${mission.department} - ${$options.filters.label(mission.department, 'departments')}`" />
+            <DescriptionListItem v-if="mission.department" term-size="160" term="Département" :description="`${mission.department} - ${$options.filters.label(mission.department, 'departments')}`" />
+            <DescriptionListItem v-if="autonomyCities" term-size="160" term="Villes" :description="autonomyCities" />
           </DescriptionList>
         </div>
       </Box>
@@ -177,6 +179,17 @@ export default {
       drawerProfileId: null,
       notifications: [],
       drawerProfile: null
+    }
+  },
+  computed: {
+    missionType () {
+      return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
+    },
+    autonomyCities () {
+      if (this.mission.is_autonomy && this.mission.autonomy_zips?.length) {
+        return this.mission.autonomy_zips.map(item => `${item.city} (${item.zip})`).join(', ')
+      }
+      return null
     }
   },
   created () {

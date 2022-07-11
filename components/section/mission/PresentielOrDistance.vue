@@ -13,7 +13,7 @@
         <span v-if="mission.is_autonomy">Mission en autonomie</span>
         <span v-else>Mission sur le terrain</span>
       </div>
-      <p v-if="mission.is_autonomy" class="text-gray-500 mt-1 mb-2">
+      <p v-if="mission.is_autonomy" class="text-gray-500 mt-1 mb-1">
         Cette mission peut être réalisée sans l’encadrement du responsable de mission. Elle est proposée sur plusieurs lieux.
       </p>
       <div class="text-gray-500 truncate">

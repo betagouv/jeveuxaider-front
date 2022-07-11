@@ -23,6 +23,10 @@
             </template>
           </template>
 
+          <template v-else-if="participation.mission.is_autonomy">
+            En autonomie
+          </template>
+
           <template v-else>
             À distance
           </template>
