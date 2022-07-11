@@ -597,7 +597,7 @@ export default {
         objectif: this.mission.template?.objectif || this.mission.objectif,
         description: this.mission.template?.description || this.mission.description,
         illustrations: this.mission.illustrations || [],
-        autonomy_zips: this.mission.autonomy_zips || null
+        autonomy_zips: this.mission.autonomy_zips || []
       },
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
@@ -617,14 +617,29 @@ export default {
         ),
         commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
         participations_max: number().min(1, 'Le nombre de bénévole(s) recherché(s) doit être supérieur à 0').required('Le nombre de bénévole(s) recherché(s) est requis'),
-        department: string().nullable().required('Le département est requis'),
-        address: string().nullable(),
-        zip: string().nullable().when(['type', 'is_autonomy'], {
-          // eslint-disable-next-line camelcase
-          is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
-          then: schema => schema.required('Le code postal est requis'),
-          otherwise: schema => schema.nullable()
+        department: string().nullable().when(['type'], {
+          is: type => type == 'Mission en présentiel',
+          then: schema => schema.required('Le département est requis')
         }),
+        address: string().nullable(),
+        zip: string()
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy && this.form.zip && this.form.department,
+            then: schema => schema.test(
+              'test-zip',
+              'Le code postal et le département ne correspondent pas',
+              () => {
+                const department = ['2A', '2B'].includes(this.form.department) ? '20' : this.form.department
+                return this.form.zip && this.form.zip.startsWith(department)
+              })
+          })
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
+            then: schema => schema.nullable().required('Le code postal est requis'),
+            otherwise: schema => schema.nullable()
+          }),
         city: string().nullable().when(['type', 'is_autonomy'], {
           // eslint-disable-next-line camelcase
           is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
@@ -636,17 +651,33 @@ export default {
           is: true,
           then: schema => schema.min(1, 'Le nombre de volontaire(s) recherché(s) est incorrect (minimum: 1)').required('Le nombre de volontaire(s) recherché(s) est requis')
         }),
-        autonomy_zips: array().min(1, 'Au moins un code postal requis').max(20, '20 codes postaux maximum')
-          .test(
-            'test-zips',
-            'Les codes postaux et le département ne correspondent pas',
+        autonomy_zips: array()
+          .when(['type', 'is_autonomy'], {
             // eslint-disable-next-line camelcase
-            (autonomy_zips) => {
-              const zips = autonomy_zips.map(i => i.zip)
-              const department = ['2A', '2B'].includes(this.form.department) ? '20' : this.form.department
-              return zips.every(zip => zip.startsWith(department))
-            }
-          )
+            is: (type, is_autonomy) => !is_autonomy || type !== 'Mission en présentiel',
+            then: schema => schema.nullable()
+          })
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => type == 'Mission en présentiel' && is_autonomy,
+            then: schema => schema.min(1, 'Au moins un code postal requis').max(20, '20 codes postaux maximum')
+          })
+          .when(['type', 'is_autonomy', 'department'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy, department) => type == 'Mission en présentiel' && is_autonomy && department,
+            then: schema => schema.test(
+              'test-zips',
+              'Les codes postaux et le département ne correspondent pas',
+              // eslint-disable-next-line camelcase
+              (autonomy_zips) => {
+                const zips = autonomy_zips.map(i => i.zip)
+                const department = ['2A', '2B'].includes(this.form.department) ? '20' : this.form.department
+                return zips.every(zip => zip.startsWith(department))
+              }
+            ),
+            otherwise: schema => schema.nullable()
+          })
+
       }),
       activities: []
     }
