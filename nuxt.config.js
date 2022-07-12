@@ -222,6 +222,7 @@ export default {
 
   sitemap: {
     hostname: 'https://www.jeveuxaider.gouv.fr',
+    path: '/sitemap.xml',
     sitemaps: [
       {
         exclude: ['/**'],
