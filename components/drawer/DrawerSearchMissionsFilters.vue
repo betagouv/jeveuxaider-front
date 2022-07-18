@@ -17,6 +17,12 @@
       </div>
       <CommitmentMobileFilter />
     </div>
+    <div class="space-y-2">
+      <div class="relative font-medium text-[15px]">
+        En autonomie
+      </div>
+      <AutonomyMobileFilter />
+    </div>
     <FacetFilter
       show-more
       facet-name="activity.name"
@@ -71,11 +77,11 @@
       <div
         :class="[
           'p-4 flex items-center space-x-3',
-          activeMoreFacets.length ? 'justify-between' : 'justify-end'
+          nbMobileSecondaryFilters > 0 ? 'justify-between' : 'justify-end'
         ]"
       >
         <Link
-          v-if="activeMoreFacets.length"
+          v-if="nbMobileSecondaryFilters > 0"
           class="text-gray-500 underline text-sm"
           @click.native="deleteAllFiltersExceptLocalisation()"
         >
@@ -102,12 +108,14 @@ import AlgoliaMissionsQueryBuilder from '@/mixins/algolia-missions-query-builder
 import FacetFilter from '~/components/section/search/FacetFilter.vue'
 import SearchFilter from '@/components/search/SearchFilter.vue'
 import CommitmentMobileFilter from '~/components/section/search/CommitmentMobileFilter.vue'
+import AutonomyMobileFilter from '~/components/section/search/AutonomyMobileFilter.vue'
 
 export default {
   components: {
     FacetFilter,
     SearchFilter,
-    CommitmentMobileFilter
+    CommitmentMobileFilter,
+    AutonomyMobileFilter
   },
   mixins: [AlgoliaMissionsQueryBuilder],
   props: {

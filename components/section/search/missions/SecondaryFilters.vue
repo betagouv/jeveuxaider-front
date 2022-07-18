@@ -2,6 +2,8 @@
   <div class="lg:flex justify-between items-center mt-8 lg:mb-4">
     <div class="hidden sm:flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
       <template v-for="filter,i in filtersName">
+        <AutonomyFilter v-if="filter === 'is_autonomy'" :key="i" />
+
         <FacetFilterToggle v-if="filter === 'structure.name'" :key="i" facet-name="structure.name" label="Organisations">
           <template #button="{ firstValueSelected, activeValuesCount }">
             <BadgeFilter :is-active="!!activeValuesCount">
@@ -98,11 +100,13 @@
 import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue'
 import BadgeFilter from '~/components/search/BadgeFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
+import AutonomyFilter from '~/components/section/search/AutonomyFilter.vue'
 
 export default {
   components: {
     FacetFilterToggle,
-    BadgeFilter
+    BadgeFilter,
+    AutonomyFilter
   },
   mixins: [AlgoliaQueryBuilder],
   props: {

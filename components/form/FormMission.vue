@@ -241,7 +241,7 @@
               /> -->
             </FormControl>
           </div>
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid xl:grid-cols-2 gap-4">
             <FormControl
               label="Durée d'engagement min."
               html-for="commitment__duration"
@@ -289,11 +289,26 @@
         <div class="space-y-8">
           <div>
             <RadioGroup v-model="form.type" :options="$labels.mission_types" variant="tabs" @updated="handleTypeChange" />
-            <FormHelperText v-if="isPresentiel" class="mt-4">
-              Recruter au plus près du lieu de mission et des bénéficiaires permet de faciliter l'engagement des bénévoles. Vous avez la possibilité de dupliquer cette mission sur plusieurs lieux.
-            </FormHelperText>
+            <template v-if="isDistance">
+              <div class="text-sm text-gray-600 leading-relaxed mt-4">
+                <p><strong>Les missions à distance sont visibles par les bénévoles de toute la France, quelle que soit leur position géographique.</strong></p>
+              </div>
+              <FormHelperText class="mt-4">
+                <p>Si votre mission porte sur un territoire spécifique, nous vous recommandons de proposer votre mission en présentiel et de cocher la case “En autonomie”.</p>
+              </FormHelperText>
+            </template>
           </div>
+
+          <!-- <a class='text-jva-blue-500 hover:underline' href='/'>En savoir plus</a> -->
+          <Toggle
+            v-if="isPresentiel"
+            v-model="form.is_autonomy"
+            label="Mission à réaliser en autonomie"
+            description="Le bénévole peut réaliser la mission sans l’encadrement du responsable."
+          />
+
           <FormControl
+            v-if="isPresentiel"
             label="Département"
             html-for="department"
             required
@@ -305,9 +320,62 @@
               placeholder="Sélectionnez un département"
               :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
             />
+
+            <FormHelperText v-if="isAutonomy" class="mt-4">
+              <p>Pour une mission donnée, les zones d’intervention doivent se situer sur le même département. Si votre mission a lieu sur plusieurs départements, il vous faut créer une mission par département.</p>
+            </FormHelperText>
           </FormControl>
+
+          <template v-if="isPresentiel && isAutonomy">
+            <FormControl
+              label="Codes postaux de la zone d'intervention (jusqu'à 20)"
+              html-for="autonomy_zips"
+              :error="errors.autonomy_zips"
+            >
+              <InputAutocomplete
+                key="input_autocomplete_autonomy"
+                icon="LocationMarkerIcon"
+                name="autocomplete"
+                label="Autocomplete"
+                placeholder="Recherche par ville ou code postal"
+                :options="autocompleteOptions"
+                attribute-key="id"
+                attribute-label="label"
+                attribute-right-label="typeLabel"
+                :reset-value-on-select="true"
+                @selected="handleSelectedAutonomyZip"
+                @keyup.enter="onEnter"
+                @fetch-suggestions="onFetchGeoSuggestions"
+              />
+              <div v-if="form.autonomy_zips && form.autonomy_zips.length">
+                <div class="flex flex-wrap gap-2 mt-4">
+                  <TagFormItem
+                    v-for="item in form.autonomy_zips"
+                    :key="item.zip"
+                    :tag="item"
+                    @removed="onRemovedTagItem"
+                  >
+                    {{ item.zip }}
+                  </TagFormItem>
+                </div>
+              </div>
+            </FormControl>
+
+            <FormControl
+              label="Précisions sur la zone d'intervention (villes, lieux, etc.)"
+              html-for="autonomy_precisions"
+              :error="errors.autonomy_precisions"
+            >
+              <RichEditor
+                v-model="form.autonomy_precisions"
+                placeholder="Précisez en quelques mots les zones d'intervention du bénévole en autonomie"
+                class="autonomy_precisions_wrapper"
+              />
+            </FormControl>
+          </template>
+
           <FormControl
-            v-if="isPresentiel"
+            v-if="isPresentiel && !isAutonomy"
             label="Rechercher l'adresse du lieu de la mission"
             html-for="adress"
             required
@@ -326,7 +394,7 @@
             />
           </FormControl>
 
-          <div v-if="isPresentiel" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div v-if="isPresentiel && !isAutonomy" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <FormControl
               class="lg:col-span-2"
               label="Adresse"
@@ -528,7 +596,8 @@ export default {
         activity_id: this.mission.template?.activity_id || this.mission.activity_id,
         objectif: this.mission.template?.objectif || this.mission.objectif,
         description: this.mission.template?.description || this.mission.description,
-        illustrations: this.mission.illustrations || []
+        illustrations: this.mission.illustrations || [],
+        autonomy_zips: this.mission.autonomy_zips || []
       },
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
@@ -548,15 +617,32 @@ export default {
         ),
         commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
         participations_max: number().min(1, 'Le nombre de bénévole(s) recherché(s) doit être supérieur à 0').required('Le nombre de bénévole(s) recherché(s) est requis'),
-        department: string().nullable().required('Le département est requis'),
-        address: string().nullable(),
-        zip: string().nullable().when('type', {
-          is: 'Mission en présentiel',
-          then: schema => schema.required('Le code postal est requis'),
-          otherwise: schema => schema.nullable()
+        department: string().nullable().when(['type'], {
+          is: type => type == 'Mission en présentiel',
+          then: schema => schema.required('Le département est requis')
         }),
-        city: string().nullable().when('type', {
-          is: 'Mission en présentiel',
+        address: string().nullable(),
+        zip: string()
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy && this.form.zip && this.form.department,
+            then: schema => schema.test(
+              'test-zip',
+              'Le code postal et le département ne correspondent pas',
+              () => {
+                const department = ['2A', '2B'].includes(this.form.department) ? '20' : this.form.department
+                return this.form.zip && this.form.zip.startsWith(department)
+              })
+          })
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
+            then: schema => schema.nullable().required('Le code postal est requis'),
+            otherwise: schema => schema.nullable()
+          }),
+        city: string().nullable().when(['type', 'is_autonomy'], {
+          // eslint-disable-next-line camelcase
+          is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
           then: schema => schema.required('La ville est requise'),
           otherwise: schema => schema.nullable()
         }),
@@ -564,17 +650,34 @@ export default {
         snu_mig_places: number().nullable().when('is_snu_mig_compatible', {
           is: true,
           then: schema => schema.min(1, 'Le nombre de volontaire(s) recherché(s) est incorrect (minimum: 1)').required('Le nombre de volontaire(s) recherché(s) est requis')
-        })
-        // latitude: string().nullable().when(['state', 'type'], {
-        //   is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
-        //   then: schema => schema.required('La latitude est obligatoire'),
-        //   otherwise: schema => schema.nullable()
-        // }),
-        // longitude: string().nullable().when(['state', 'type'], {
-        //   is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
-        //   then: schema => schema.required('La longitude est obligatoire'),
-        //   otherwise: schema => schema.nullable()
-        // })
+        }),
+        autonomy_zips: array()
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => !is_autonomy || type !== 'Mission en présentiel',
+            then: schema => schema.nullable()
+          })
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => type == 'Mission en présentiel' && is_autonomy,
+            then: schema => schema.min(1, 'Au moins un code postal requis').max(20, '20 codes postaux maximum')
+          })
+          .when(['type', 'is_autonomy', 'department'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy, department) => type == 'Mission en présentiel' && is_autonomy && department,
+            then: schema => schema.test(
+              'test-zips',
+              'Les codes postaux et le département ne correspondent pas',
+              // eslint-disable-next-line camelcase
+              (autonomy_zips) => {
+                const zips = autonomy_zips.map(i => i.zip)
+                const department = ['2A', '2B'].includes(this.form.department) ? '20' : this.form.department
+                return zips.every(zip => zip.startsWith(department))
+              }
+            ),
+            otherwise: schema => schema.nullable()
+          })
+
       }),
       activities: []
     }
@@ -591,8 +694,14 @@ export default {
     isAdding () {
       return !this.mission.id
     },
+    isDistance () {
+      return this.form.type == 'Mission à distance'
+    },
     isPresentiel () {
       return this.form.type == 'Mission en présentiel'
+    },
+    isAutonomy () {
+      return this.form.is_autonomy
     },
     mediaPickerDomaineIds () {
       return [this.form.domaine_id]
@@ -603,6 +712,14 @@ export default {
       }
 
       return true
+    },
+    inputGeoType () {
+      return this.isAutonomy ? 'municipality' : undefined
+    }
+  },
+  watch: {
+    isAutonomy (val) {
+      this.autocompleteOptions = []
     }
   },
   methods: {
@@ -652,7 +769,32 @@ export default {
     },
     onMediaPickerChange (payload, field) {
       this.form[field].splice(payload.index, 1, payload.media)
+    },
+    handleSelectedAutonomyZip (selectedItem) {
+      if (!this.form.autonomy_zips) {
+        this.form.autonomy_zips = []
+      }
+      if (selectedItem && !this.form.autonomy_zips.find(item => item.zip == selectedItem.postcode)) {
+        this.form.autonomy_zips.push({
+          zip: selectedItem.postcode,
+          latitude: selectedItem.coordinates[1],
+          longitude: selectedItem.coordinates[0],
+          city: selectedItem.city
+        })
+      }
+    },
+    onRemovedTagItem (value) {
+      this.form.autonomy_zips = this.form.autonomy_zips.filter(item => item.zip !== value.zip)
     }
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.autonomy_precisions_wrapper {
+  ::v-deep .ck-editor__editable {
+    min-height: 80px;
+  }
+}
+
+</style>

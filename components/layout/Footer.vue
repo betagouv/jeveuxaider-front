@@ -315,7 +315,8 @@ export default {
       links2: [
         {
           name: 'Plan du site',
-          url: '/sitemap.xml'
+          url: 'https://www.jeveuxaider.gouv.fr/sitemap.xml',
+          external: true
         },
         {
           name: 'Partenaires',

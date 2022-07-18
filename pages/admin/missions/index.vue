@@ -62,7 +62,7 @@
           :value="$route.query['filter[ofActivity]']"
           @input="changeFilter('filter[ofActivity]', $event)"
         />
-        <div class="flex space-x-4 mb-2">
+        <div class="flex flex-wrap mb-2 gap-4">
           <Checkbox
             :key="`type-1-${$route.fullPath}`"
             :option="{key:'presentiel', label: 'Présentiel'}"
@@ -78,6 +78,14 @@
             transparent
             variant="button"
             @change="changeFilter('filter[type]', 'Mission à distance', true)"
+          />
+          <Checkbox
+            :key="`type-3-${$route.fullPath}`"
+            :option="{key:'autonomy', label: 'En autonomie'}"
+            :is-checked="$route.query['filter[is_autonomy]'] && $route.query['filter[is_autonomy]'].includes('true')"
+            transparent
+            variant="button"
+            @change="changeFilter('filter[is_autonomy]', 'true', true)"
           />
         </div>
         <SelectAdvanced

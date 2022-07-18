@@ -5,7 +5,7 @@
       class="container md:px-8 border-b-0"
     />
     <AlgoliaSearch
-      :secondary-filters="['structure.name','publics_beneficiaires', 'domaines', 'structure.reseaux.name', 'department_name', 'template_subtitle']"
+      :secondary-filters="['is_autonomy','structure.name','publics_beneficiaires', 'domaines', 'structure.reseaux.name', 'department_name', 'template_subtitle']"
     />
   </div>
 </template>
