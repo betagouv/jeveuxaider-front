@@ -51,7 +51,7 @@
             </nuxt-link>.
           </p>
           <p class="text-gray-600 text-center">
-            Si votre organisation n'a pas encore de personnalité morale, vous pouvez facilement créer une association en ligne.
+            Si votre organisation n'a pas encore de personnalité morale, vous pouvez facilement <a class="underline text-jva-blue-500" href="https://www.service-public.fr/particuliers/vosdroits/R1757" target="_blank">créer une association en ligne</a>.
           </p>
           <p class="text-gray-600 text-center mt-3">
             Si votre organisation a une <span class="font-bold">dimension lucrative</span> ou bien est une <span class="font-bold">organisation politique, culturelle</span> ou bien <span class="font-bold">syndicale</span>, vous pouvez proposer à vos associations partenaires de mettre en ligne des missions sur notre plateforme.
