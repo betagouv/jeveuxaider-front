@@ -1,5 +1,69 @@
 <template>
   <div class="relative bg-[#081992]">
+    <portal to="body-end">
+      <Modal
+        v-scroll-lock="showModalConfirmOrga"
+        :is-open="showModalConfirmOrga"
+        :prevent-click-outside="true"
+        :overflow-hidden="false"
+        background-overlay="bg-jva-blue-500"
+        width-class="sm:max-w-xl"
+        hide-footer
+        @close="showModalConfirmOrga = false"
+      >
+        <div v-if="modalConfirmOrgaStep == 1" class="flex flex-col justify-center items-center">
+          <div class="text-5xl text-center">
+            ☝
+          </div>
+          <p class="text-lg font-semibold text-center my-6 leading-7">
+            Vous êtes sur le point d'inscrire une nouvelle organisation.<br>
+            Merci de confirmer que votre organisation
+          </p>
+          <ul class="text-gray-600 space-y-3">
+            <li class="flex items-center">
+              <CheckCircleSolidIcon class="inline-block w-auto h-5 text-jva-green-500 mr-2" />dispose d'une personnalité morale
+            </li>
+            <li class="flex items-center">
+              <CheckCircleSolidIcon class="inline-block w-auto h-5 text-jva-green-500 mr-2" />n'est pas à but lucratif
+            </li>
+            <li class="flex items-center">
+              <CheckCircleSolidIcon class="inline-block w-auto h-5 text-jva-green-500 mr-2" />n'est pas politique, culturelle ou syndicale.
+            </li>
+          </ul>
+          <div class="mt-8 space-y-3">
+            <Button full size="lg" @click.native="handleConfirmChoixOrga">
+              Je confirme ces éléments
+            </Button>
+            <Button variant="white" full size="lg" @click.native="modalConfirmOrgaStep = 2">
+              Mon organisation ne remplit pas ces conditions
+            </Button>
+          </div>
+        </div>
+        <div v-else-if="modalConfirmOrgaStep == 2" class="flex flex-col justify-center items-center">
+          <div class="text-5xl text-center">
+            😕
+          </div>
+          <p class="text-lg font-semibold text-center my-6 leading-7">
+            Votre organisation ne répond malheureusement pas aux<br>
+            conditions énoncées dans la
+            <nuxt-link to="/charte-reserve-civique" class="text-jva-blue-500 underline">
+              Charte de la Réserve Civique
+            </nuxt-link>.
+          </p>
+          <p class="text-gray-600 text-center">
+            Si votre organisation n'a pas encore de personnalité morale, vous pouvez facilement créer une association en ligne.
+          </p>
+          <p class="text-gray-600 text-center mt-3">
+            Si votre organisation a une <span class="font-bold">dimension lucrative</span> ou bien est une <span class="font-bold">organisation politique, culturelle</span> ou bien <span class="font-bold">syndicale</span>, vous pouvez proposer à vos associations partenaires de mettre en ligne des missions sur notre plateforme.
+          </p>
+          <div class="mt-6 w-full">
+            <Button variant="white" full size="lg" @click.native="handleDeniedChoixOrga">
+              Fermer
+            </Button>
+          </div>
+        </div>
+      </Modal>
+    </portal>
     <img
       class="z-1 object-cover absolute h-screen lg:h-auto w-full max-h-full object-top"
       alt="JeVeuxAider.gouv.fr"
@@ -335,7 +399,10 @@ export default {
         structure: {}
       },
       orgaExist: null,
+      showModalConfirmOrga: false,
+      modalConfirmOrgaStep: 1, // 1 or 2
       autocompleteOptions: [],
+      orgaTypeChosen: '',
       formSchema: object({
         first_name: string().min(3).required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
@@ -438,11 +505,21 @@ export default {
           : 'choix_orga_type'
     },
     handleChooseOrgaType (orgaType) {
+      this.orgaTypeChosen = orgaType
       if (orgaType === 'Crisp') {
         window.open('https://go.crisp.chat/chat/embed/?website_id=4b843a95-8a0b-4274-bfd5-e81cbdc188ac', '_blank')
+      } else if (['Association', 'Collectivité', 'Organisation publique', 'Organisation privée'].includes(orgaType)) {
+        this.showModalConfirmOrga = true
       } else {
         this.$router.push(`/inscription/responsable?orga_type=${orgaType}`)
       }
+    },
+    handleConfirmChoixOrga () {
+      this.showModalConfirmOrga = false
+      this.$router.push(`/inscription/responsable?orga_type=${this.orgaTypeChosen}`)
+    },
+    handleDeniedChoixOrga () {
+      this.$router.push('/')
     },
     async onStructureApiSelected (structure) {
       const res = await this.$axios.get(`/structures/${structure._id}/exist`)
