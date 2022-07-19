@@ -229,7 +229,7 @@
               /> -->
             </FormControl>
             <FormControl
-              label="Fin de la mission"
+              label="Fin de la mission (facultatif)"
               html-for="end_date"
               :error="errors.end_date"
             >
