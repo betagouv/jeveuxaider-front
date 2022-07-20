@@ -72,7 +72,7 @@ export default {
       return null
     },
     googleQuery () {
-      return this.mission.is_autonomy ? `${this.mission.department} ${this.$options.filters.label(this.mission.department, 'departments')}` : this.mission.address
+      return this.mission.is_autonomy ? `${this.mission.department} ${this.$options.filters.label(this.mission.department, 'departments')}` : this.address
     }
   }
 }
