@@ -17,7 +17,7 @@
     </nav>
     <div v-if="form.date_type == 'ponctual'" class="space-y-6">
       <Alert>
-        Une mission ponctuelle est une mission courte qui fait appel à des bénévoles sur des dates précises.
+        Le bénévole choisit un des créneaux proposés.
       </Alert>
       <FormControl
         label="Nombre de bénévoles recherchés"
@@ -112,7 +112,7 @@
     </div>
     <div v-else-if="form.date_type == 'recurring'" class="space-y-6">
       <Alert>
-        Une mission récurrente est une mission longue qui fait appel à des bénévoles réguliers sur plusieurs mois.
+        Le bénévole doit être présent sur plusieurs créneaux.
       </Alert>
       <FormControl
         label="Nombre de bénévoles recherchés"
