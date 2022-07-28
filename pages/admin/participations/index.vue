@@ -119,19 +119,21 @@
       >
         <template #action>
           <div class="flex space-x-2">
-            <Button variant="white" icon="DownloadIcon" size="lg" :loading="exportLoading" @click.native="handleExport">
+            <Button
+              v-if="!bulkOperationIsActive"
+              variant="white"
+              icon="DownloadIcon"
+              size="lg"
+              :loading="exportLoading"
+              @click.native="handleExport"
+            >
               Exporter
             </Button>
-            <ButtonMassValidation
-              v-if="$store.getters.contextRole === 'responsable' && waitingParticipationsCount"
-              :structure-id="$store.getters.contextableId"
-              :count="waitingParticipationsCount"
-              @mass-validated="onDrawerUpdated()"
-            />
           </div>
         </template>
       </Sectionheading>
       <Input
+        v-if="!bulkOperationIsActive"
         class="mt-8"
         name="search"
         placeholder="Recherche par prénom, nom ou e-mail"
@@ -141,7 +143,7 @@
         clearable
         @input="changeFilter('filter[search]', $event)"
       />
-      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
+      <div v-if="!bulkOperationIsActive" class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
         <Checkbox
           :key="`tous-${$route.fullPath}`"
           :option="{key: 'tous', label:'Tous'}"
@@ -197,13 +199,47 @@
           @change="changeFilter('filter[state]', 'Refusée')"
         />
       </div>
+      <div v-if="bulkOperationIsActive" class="flex justify-end items-center leading-none my-6">
+        <div class="text-gray-600">
+          {{ operationsId.length | pluralize('sélectionnée') }}
+        </div>
+        <div class="text-jva-blue-500 font-medium ml-2 pl-2 border-l border-gray-600 cursor-pointer hover:text-gray-900" @click="operationsId = []">
+          Désélectionner
+        </div>
+        <Dropdown class="ml-6">
+          <template #button>
+            <Button size="lg" variant="white" icon="ChevronDownIcon">
+              Actions
+            </Button>
+          </template>
+          <template #items>
+            <DropdownOptionsItem @click.native="handleAction('validate')">
+              Valider les participations
+            </DropdownOptionsItem>
+            <DropdownOptionsItem @click.native="handleAction('cancel')">
+              Annuler les participations
+            </DropdownOptionsItem>
+          </template>
+        </Dropdown>
+      </div>
       <div class="my-6 space-y-4">
-        <CardParticipation
+        <div
           v-for="participation in queryResult.data"
           :key="participation.id"
-          :participation="participation"
-          @click.native="drawerParticipationId = participation.id"
-        />
+          class="flex items-center space-x-4"
+        >
+          <input
+            :id="participation.id"
+            v-model="operationsId"
+            :value="participation.id"
+            type="checkbox"
+            class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-700 border border-gray-300 rounded"
+          >
+          <CardParticipation
+            :participation="participation"
+            @click.native="drawerParticipationId = participation.id"
+          />
+        </div>
       </div>
 
       <Pagination
@@ -221,14 +257,12 @@ import QueryBuilder from '@/mixins/query-builder'
 import CardParticipation from '@/components/card/CardParticipation.vue'
 import DrawerParticipation from '@/components/drawer/DrawerParticipation.vue'
 import MixinExport from '@/mixins/export'
-import ButtonMassValidation from '@/components/custom/ButtonMassValidation'
 import BoxContext from '@/components/section/BoxContext.vue'
 
 export default {
   components: {
     CardParticipation,
     DrawerParticipation,
-    ButtonMassValidation,
     BoxContext
   },
   mixins: [QueryBuilder, MixinExport],
@@ -273,7 +307,13 @@ export default {
       },
       drawerParticipationId: null,
       autocompleteOptionsOrga: [],
-      autocompleteOptionsMission: []
+      autocompleteOptionsMission: [],
+      operationsId: []
+    }
+  },
+  computed: {
+    bulkOperationIsActive () {
+      return this.operationsId.length > 0
     }
   },
   methods: {
@@ -304,6 +344,9 @@ export default {
         }
       })
       this.autocompleteOptionsMission = res.data.data
+    },
+    handleAction (action) {
+      console.log(action)
     }
   }
 }
