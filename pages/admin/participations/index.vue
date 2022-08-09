@@ -201,9 +201,9 @@
       </div>
       <div v-if="bulkOperationIsActive" class="flex justify-end items-center leading-none my-6">
         <div class="text-gray-600">
-          {{ operationsId.length | pluralize('sélectionnée') }}
+          {{ operationIds.length | pluralize('sélectionnée') }}
         </div>
-        <div class="text-jva-blue-500 font-medium ml-2 pl-2 border-l border-gray-600 cursor-pointer hover:text-gray-900" @click="operationsId = []">
+        <div class="text-jva-blue-500 font-medium ml-2 pl-2 border-l border-gray-600 cursor-pointer hover:text-gray-900" @click="operationIds = []">
           Désélectionner
         </div>
         <Dropdown class="ml-6">
@@ -213,7 +213,7 @@
             </Button>
           </template>
           <template #items>
-            <DropdownOptionsItem @click.native="handleAction('validate')">
+            <DropdownOptionsItem @click.native="handleAction('bulk-operation/participations/validate')">
               Valider les participations
             </DropdownOptionsItem>
             <DropdownOptionsItem @click.native="handleAction('cancel')">
@@ -230,7 +230,7 @@
         >
           <input
             :id="participation.id"
-            v-model="operationsId"
+            v-model="operationIds"
             :value="participation.id"
             type="checkbox"
             class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-700 border border-gray-300 rounded"
@@ -308,12 +308,12 @@ export default {
       drawerParticipationId: null,
       autocompleteOptionsOrga: [],
       autocompleteOptionsMission: [],
-      operationsId: []
+      operationIds: []
     }
   },
   computed: {
     bulkOperationIsActive () {
-      return this.operationsId.length > 0
+      return this.operationIds.length > 0
     }
   },
   methods: {
@@ -345,8 +345,12 @@ export default {
       })
       this.autocompleteOptionsMission = res.data.data
     },
-    handleAction (action) {
-      console.log(action)
+    async handleAction (endpoint) {
+      const res = await this.$axios.post(endpoint, {
+        ids: this.operationIds
+      })
+
+      console.log(endpoint, res)
     }
   }
 }
