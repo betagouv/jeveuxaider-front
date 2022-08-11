@@ -201,9 +201,9 @@
       </div>
       <div v-if="bulkOperationIsActive" class="flex justify-end items-center leading-none my-6">
         <div class="text-gray-600">
-          {{ operationIds.length | pluralize('sélectionnée') }}
+          {{ operations.length | pluralize('sélectionnée') }}
         </div>
-        <div class="text-jva-blue-500 font-medium ml-2 pl-2 border-l border-gray-600 cursor-pointer hover:text-gray-900" @click="operationIds = []">
+        <div class="text-jva-blue-500 font-medium ml-2 pl-2 border-l border-gray-600 cursor-pointer hover:text-gray-900" @click="operations = []">
           Désélectionner
         </div>
         <Dropdown class="ml-6">
@@ -213,12 +213,12 @@
             </Button>
           </template>
           <template #items>
-            <DropdownOptionsItem @click.native="handleAction('bulk-operation/participations/validate')">
+            <DropdownOptionsItem @click.native="showModalBulkParticipationsValidate = true">
               Valider les participations
             </DropdownOptionsItem>
-            <DropdownOptionsItem @click.native="handleAction('cancel')">
+            <!-- <DropdownOptionsItem @click.native="handleAction('cancel')">
               Annuler les participations
-            </DropdownOptionsItem>
+            </DropdownOptionsItem> -->
           </template>
         </Dropdown>
       </div>
@@ -229,9 +229,8 @@
           class="flex items-center space-x-4"
         >
           <input
-            :id="participation.id"
-            v-model="operationIds"
-            :value="participation.id"
+            v-model="operations"
+            :value="participation"
             type="checkbox"
             class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-700 border border-gray-300 rounded"
           >
@@ -249,6 +248,13 @@
         @page-change="changePage"
       />
     </div>
+
+    <ModalBulkParticipationsValidate
+      :is-open="showModalBulkParticipationsValidate"
+      :participations="operations"
+      @close="showModalBulkParticipationsValidate = false"
+      @processed="onBulkOperationProcessed"
+    />
   </ContainerRightSidebar>
 </template>
 
@@ -257,15 +263,18 @@ import QueryBuilder from '@/mixins/query-builder'
 import CardParticipation from '@/components/card/CardParticipation.vue'
 import DrawerParticipation from '@/components/drawer/DrawerParticipation.vue'
 import MixinExport from '@/mixins/export'
+import MixinBulkOperations from '@/mixins/bulk-operations'
 import BoxContext from '@/components/section/BoxContext.vue'
+import ModalBulkParticipationsValidate from '@/components/modal/ModalBulkParticipationsValidate.vue'
 
 export default {
   components: {
     CardParticipation,
     DrawerParticipation,
-    BoxContext
+    BoxContext,
+    ModalBulkParticipationsValidate
   },
-  mixins: [QueryBuilder, MixinExport],
+  mixins: [QueryBuilder, MixinExport, MixinBulkOperations],
   middleware: 'authenticated',
   async asyncData ({ $axios, store, error }) {
     if (
@@ -308,12 +317,7 @@ export default {
       drawerParticipationId: null,
       autocompleteOptionsOrga: [],
       autocompleteOptionsMission: [],
-      operationIds: []
-    }
-  },
-  computed: {
-    bulkOperationIsActive () {
-      return this.operationIds.length > 0
+      showModalBulkParticipationsValidate: false
     }
   },
   methods: {
@@ -345,12 +349,10 @@ export default {
       })
       this.autocompleteOptionsMission = res.data.data
     },
-    async handleAction (endpoint) {
-      const res = await this.$axios.post(endpoint, {
-        ids: this.operationIds
-      })
-
-      console.log(endpoint, res)
+    onBulkOperationProcessed () {
+      this.drawerParticipationId = null // Force closing drawer
+      this.operations = []
+      this.$fetch()
     }
   }
 }

@@ -38,7 +38,7 @@
               :class="[{'rounded-b-lg': hideFooter}]"
             >
               <div class="hidden sm:block absolute top-0 right-0 p-4 sm:p-6">
-                <button type="button" class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cool-gray-500" @click="$emit('close')">
+                <button v-if="!hideClose" type="button" class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cool-gray-500" @click="$emit('close')">
                   <span class="sr-only">Close</span>
                   <XIcon />
                 </button>
@@ -68,12 +68,23 @@
                   <ExclamationIcon v-else-if="theme == 'warning'" class="h-6 w-6 text-jva-orange-500" />
                   <ExclamationIcon v-else-if="theme == 'danger'" class="h-6 w-6 text-jva-red-500" />
                 </div>
-                <div class="mt-3 text-center sm:mt-0 sm:text-left min-w-0" :class="{'sm:ml-4': theme || icon}">
-                  <h3 id="modal-title" class="text-lg leading-6 font-medium text-gray-900" v-html="title" />
-
-                  <div class="mt-4">
-                    <slot />
-                  </div>
+                <div
+                  :class="[
+                    {'sm:ml-4': theme || icon},
+                    'mt-3 text-center sm:mt-0 sm:text-left min-w-0 w-full'
+                  ]"
+                >
+                  <h3
+                    v-if="title"
+                    id="modal-title"
+                    :class="[
+                      'text-lg leading-6 font-medium text-gray-900',
+                      { 'mt-2': icon || theme },
+                      { 'mb-4': $slots.default }
+                    ]"
+                    v-html="title"
+                  />
+                  <slot />
                 </div>
               </div>
             </div>
@@ -127,6 +138,10 @@ export default {
       default: 'sm:max-w-lg'
     },
     hideFooter: {
+      type: Boolean,
+      default: false
+    },
+    hideClose: {
       type: Boolean,
       default: false
     }
