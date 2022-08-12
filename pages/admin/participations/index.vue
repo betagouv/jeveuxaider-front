@@ -216,9 +216,9 @@
             <DropdownOptionsItem @click.native="showModalBulkParticipationsValidate = true">
               Valider les participations
             </DropdownOptionsItem>
-            <!-- <DropdownOptionsItem @click.native="handleAction('cancel')">
-              Annuler les participations
-            </DropdownOptionsItem> -->
+            <DropdownOptionsItem @click.native="showModalBulkParticipationsDecline = true">
+              Refuser les participations
+            </DropdownOptionsItem>
           </template>
         </Dropdown>
       </div>
@@ -251,8 +251,14 @@
 
     <ModalBulkParticipationsValidate
       :is-open="showModalBulkParticipationsValidate"
-      :participations="operations"
+      :models="operations"
       @close="showModalBulkParticipationsValidate = false"
+      @processed="onBulkOperationProcessed"
+    />
+    <ModalBulkParticipationsDecline
+      :is-open="showModalBulkParticipationsDecline"
+      :models="operations"
+      @close="showModalBulkParticipationsDecline = false"
       @processed="onBulkOperationProcessed"
     />
   </ContainerRightSidebar>
@@ -266,13 +272,15 @@ import MixinExport from '@/mixins/export'
 import MixinBulkOperations from '@/mixins/bulk-operations'
 import BoxContext from '@/components/section/BoxContext.vue'
 import ModalBulkParticipationsValidate from '@/components/modal/ModalBulkParticipationsValidate.vue'
+import ModalBulkParticipationsDecline from '@/components/modal/ModalBulkParticipationsDecline.vue'
 
 export default {
   components: {
     CardParticipation,
     DrawerParticipation,
     BoxContext,
-    ModalBulkParticipationsValidate
+    ModalBulkParticipationsValidate,
+    ModalBulkParticipationsDecline
   },
   mixins: [QueryBuilder, MixinExport, MixinBulkOperations],
   middleware: 'authenticated',
@@ -317,7 +325,8 @@ export default {
       drawerParticipationId: null,
       autocompleteOptionsOrga: [],
       autocompleteOptionsMission: [],
-      showModalBulkParticipationsValidate: false
+      showModalBulkParticipationsValidate: false,
+      showModalBulkParticipationsDecline: false
     }
   },
   methods: {

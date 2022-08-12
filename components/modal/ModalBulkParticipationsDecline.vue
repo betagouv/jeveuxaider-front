@@ -1,6 +1,6 @@
 <template>
   <ModalBulkOperations
-    endpoint="bulk-operation/participations/validate"
+    endpoint="bulk-operation/participations/decline"
     :models="models"
     :modal-title="modalTitle"
     :is-open="isOpen"
@@ -8,20 +8,29 @@
     @close="$emit('close')"
     @processed="$emit('processed')"
   >
-    <template #initialState>
+    <template #initialState="{ handleSubmit, endpoint }">
       <p class="text-gray-600">
         {{ participationNames }}
       </p>
+      <FormParticipationDecline class="mt-4" @confirm="onFormConfirm($event, handleSubmit, endpoint)" />
+    </template>
+
+    <template #submit>
+      <Button type="submit" form="form-participation-decline">
+        Confirmer
+      </Button>
     </template>
   </ModalBulkOperations>
 </template>
 
 <script>
 import ModalBulkOperations from '@/components/modal/ModalBulkOperations.vue'
+import FormParticipationDecline from '@/components/form/FormParticipationDecline.vue'
 
 export default {
   components: {
-    ModalBulkOperations
+    ModalBulkOperations,
+    FormParticipationDecline
   },
   props: {
     models: {
@@ -50,12 +59,17 @@ export default {
         case 'processed':
           return this.$options.filters.pluralize(
             this.models.length,
-            'participation a été validée',
-            'participations ont été validées'
+            'participation a été refusée',
+            'participations ont été refusées'
           )
         default:
-          return `Vous êtes sur le point de valider ${this.$options.filters.pluralize(this.models.length, 'participation')} :`
+          return `Vous êtes sur le point de refuser ${this.$options.filters.pluralize(this.models.length, 'participation')}&nbsp;:`
       }
+    }
+  },
+  methods: {
+    onFormConfirm (form, handleSubmit, endpoint) {
+      handleSubmit(endpoint, form)
     }
   }
 }
