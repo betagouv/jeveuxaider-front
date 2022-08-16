@@ -200,8 +200,21 @@
         />
       </div>
       <div v-if="bulkOperationIsActive" class="flex justify-end items-center leading-none my-6">
+        <div class="mr-auto">
+          <input
+            id="bulk-select-all"
+            type="checkbox"
+            class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-700 border border-gray-300 rounded"
+            name="bulk-select-all"
+            :checked="isBulkAll"
+            @change="toggleBulkAll"
+          >
+          <label for="bulk-select-all" class="text-jva-blue-500 font-medium pl-2 cursor-pointer hover:text-gray-900">
+            Tout séléctionner
+          </label>
+        </div>
         <div class="text-gray-600">
-          {{ operations.length | pluralize('sélectionnée') }}
+          {{ nbOperations }}
         </div>
         <div class="text-jva-blue-500 font-medium ml-2 pl-2 border-l border-gray-600 cursor-pointer hover:text-gray-900" @click="operations = []">
           Désélectionner
@@ -233,6 +246,7 @@
             :value="participation"
             type="checkbox"
             class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-700 border border-gray-300 rounded"
+            @change="isBulkAll = false"
           >
           <CardParticipation
             :participation="participation"
@@ -252,12 +266,16 @@
     <ModalBulkParticipationsValidate
       :is-open="showModalBulkParticipationsValidate"
       :models="operations"
+      :is-bulk-all="isBulkAll"
+      :query-result="queryResult"
       @close="showModalBulkParticipationsValidate = false"
       @processed="onBulkOperationProcessed"
     />
     <ModalBulkParticipationsDecline
       :is-open="showModalBulkParticipationsDecline"
       :models="operations"
+      :is-bulk-all="isBulkAll"
+      :query-result="queryResult"
       @close="showModalBulkParticipationsDecline = false"
       @processed="onBulkOperationProcessed"
     />
