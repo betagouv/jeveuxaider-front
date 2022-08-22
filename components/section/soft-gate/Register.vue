@@ -115,6 +115,43 @@
             @blur="validate('password_confirmation')"
           />
         </FormControl>
+
+        <div class="lg:col-span-2 space-y-6">
+          <div class="flex lg:space-x-4">
+            <img
+              src="/images/cej.png"
+              srcset="/images/cej.png, /images/cej@2x.png 2x"
+              alt="Contrat d'Engagement Jeune"
+              title="Contrat d'Engagement Jeune"
+              class="hidden lg:block flex-none w-[45px] object-contain object-left"
+              data-not-lazy
+            >
+            <Toggle
+              v-model="form.cej"
+              class="flex-1"
+              label="Etes-vous engagé Contrat d'Engagement Jeune ?"
+              :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
+            />
+          </div>
+          <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser">
+            <template #afterLabel>
+              <span
+                v-tooltip="{
+                  content: 'Vous pouvez facilement la retrouver sur votre application Contrat d’Engagement Jeune',
+                }"
+                class="p-1 cursor-help group"
+              >
+                <InformationCircleIcon class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]" />
+              </span>
+            </template>
+            <Input
+              v-model="form.cej_email_adviser"
+              name="cej_email_adviser"
+              placeholder="jean.dupont@gmail.com"
+              @blur="validate('cej_email_adviser')"
+            />
+          </FormControl>
+        </div>
       </form>
 
       <Button
@@ -180,8 +217,16 @@ export default {
         birthday: date().required("Une date d'anniversaire est requise").nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
         password: string().min(8).required('Un mot de passe est requis'),
-        password_confirmation: string().required('Une confirmation de mot de passe est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
+        password_confirmation: string().required('Une confirmation de mot de passe est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique'),
+        cej_email_adviser: string().nullable().email("Le format de l'email est incorrect")
       })
+    }
+  },
+  watch: {
+    'form.cej' (val) {
+      if (!val) {
+        this.form.cej_email_adviser = null
+      }
     }
   },
   created () {},

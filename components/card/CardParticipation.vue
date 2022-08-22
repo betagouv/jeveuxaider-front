@@ -41,10 +41,14 @@
           {{ participation.mission.structure.name }}
         </div>
       </div>
-      <div class="hidden lg:flex pt-4 border-t border-dashed">
+      <div class="hidden lg:block pt-4 border-t border-dashed">
         <div class="flex space-x-1 text-sm truncate max-w-full text-gray-600">
           <span class="">Responsable :</span>
           <span v-if="participation.mission.responsable" class="font-bold truncate">{{ participation.mission.responsable.full_name }}</span>
+        </div>
+        <div v-if="participation.profile.cej_email_adviser" class="flex space-x-1 text-sm truncate max-w-full text-gray-600">
+          <span class="">Conseiller CEJ :</span>
+          <span class="font-bold truncate">{{ participation.profile.cej_email_adviser }}</span>
         </div>
       </div>
     </div>
