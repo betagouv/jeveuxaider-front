@@ -89,7 +89,7 @@
             html-for="service_civique_completion_date"
             :error="errors.service_civique_completion_date"
           >
-            <InputDate v-model="form.service_civique_completion_date" active-picker="MONTH" required name="service_civique_completion_date" />
+            <InputDate v-model="form.service_civique_completion_date" required name="service_civique_completion_date" />
           </FormControl>
           <div class="flex lg:space-x-8">
             <img
