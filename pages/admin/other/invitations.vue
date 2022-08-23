@@ -71,7 +71,7 @@
               {{ roleLabel(invitation.role) }}
             </div>
           </TableRowCell>
-          <TableRowCell center>
+          <TableRowCell>
             <div class="text-gray-500">
               {{ roleContext(invitation) }}
             </div>
@@ -136,7 +136,7 @@ export default {
       invitationSelected: {},
       showAlertDeleted: false,
       queryParams: {
-        'filter[role]': 'referent_departemental,referent_regional'
+        'filter[role]': 'referent_departemental,referent_regional,responsable_antenne'
       }
     }
   },
@@ -155,6 +155,9 @@ export default {
       }
       if (invitation.role == 'referent_departemental') {
         return invitation.properties.referent_departemental + ' - ' + this.$options.filters.label(invitation.properties.referent_departemental, 'departments')
+      }
+      if (invitation.role == 'responsable_antenne') {
+        return invitation.properties.antenne_name
       }
     }
   }

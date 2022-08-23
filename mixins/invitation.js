@@ -37,6 +37,8 @@ export default {
           return 'Référent régional'
         case 'referent_departemental':
           return 'Référent départemental'
+        case 'responsable_antenne':
+          return 'Antenne d\'un réseau'
         default:
           return role
       }
