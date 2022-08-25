@@ -19,19 +19,6 @@
       <Alert>
         Le bénévole choisit un des créneaux proposés.
       </Alert>
-      <FormControl
-        label="Nombre de bénévoles recherchés"
-        html-for="participations_max"
-        required
-        :error="errors.participations_max"
-      >
-        <Input
-          v-model="form.participations_max"
-          name="participations_max"
-          type="number"
-          suffix="bénévoles"
-        />
-      </FormControl>
       <div class="p-4 border rounded-lg">
         <Toggle
           v-model="form.showCalendar"
@@ -95,38 +82,11 @@
           <InputDate v-model="form.end_date" name="end_date" />
         </FormControl>
       </div>
-      <FormControl
-        v-if="!form.showCalendar"
-        label="Durée d'engagement"
-        html-for="commitment__duration"
-        required
-        :error="errors.commitment__duration"
-      >
-        <SelectAdvanced
-          v-model="form.commitment__duration"
-          name="commitment__duration"
-          placeholder="Durée"
-          :options="$labels.duration"
-        />
-      </FormControl>
     </div>
     <div v-else-if="form.date_type == 'recurring'" class="space-y-6">
       <Alert>
         Le bénévole doit être présent sur plusieurs créneaux.
       </Alert>
-      <FormControl
-        label="Nombre de bénévoles recherchés"
-        html-for="participations_max"
-        required
-        :error="errors.participations_max"
-      >
-        <Input
-          v-model="form.participations_max"
-          name="participations_max"
-          type="number"
-          suffix="bénévoles"
-        />
-      </FormControl>
       <div class="grid grid-cols-2 gap-4">
         <FormControl
           label="Début de la mission"
