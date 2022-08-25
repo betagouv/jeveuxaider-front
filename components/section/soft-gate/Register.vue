@@ -116,42 +116,44 @@
           />
         </FormControl>
 
-        <div class="lg:col-span-2 space-y-6">
-          <div class="flex lg:space-x-4">
-            <img
-              src="/images/cej.png"
-              srcset="/images/cej.png, /images/cej@2x.png 2x"
-              alt="Contrat d'Engagement Jeune"
-              title="Contrat d'Engagement Jeune"
-              class="hidden lg:block flex-none w-[45px] object-contain object-left"
-              data-not-lazy
-            >
-            <Toggle
-              v-model="form.cej"
-              class="flex-1"
-              label="Etes-vous engagé Contrat d'Engagement Jeune ?"
-              :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
-            />
-          </div>
-          <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser">
-            <template #afterLabel>
-              <span
-                v-tooltip="{
-                  content: 'Vous pouvez facilement la retrouver sur votre application Contrat d’Engagement Jeune',
-                }"
-                class="p-1 cursor-help group"
+        <transition name="fade">
+          <div v-if="canViewScAndCej" class="lg:col-span-2 space-y-6">
+            <div class="flex lg:space-x-4">
+              <img
+                src="/images/cej.png"
+                srcset="/images/cej.png, /images/cej@2x.png 2x"
+                alt="Contrat d'Engagement Jeune"
+                title="Contrat d'Engagement Jeune"
+                class="hidden lg:block flex-none w-[45px] object-contain object-left"
+                data-not-lazy
               >
-                <InformationCircleIcon class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]" />
-              </span>
-            </template>
-            <Input
-              v-model="form.cej_email_adviser"
-              name="cej_email_adviser"
-              placeholder="jean.dupont@gmail.com"
-              @blur="validate('cej_email_adviser')"
-            />
-          </FormControl>
-        </div>
+              <Toggle
+                v-model="form.cej"
+                class="flex-1"
+                label="Etes-vous engagé Contrat d'Engagement Jeune ?"
+                :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
+              />
+            </div>
+            <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser">
+              <template #afterLabel>
+                <span
+                  v-tooltip="{
+                    content: 'Vous pouvez facilement la retrouver sur votre application Contrat d’Engagement Jeune',
+                  }"
+                  class="p-1 cursor-help group"
+                >
+                  <InformationCircleIcon class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]" />
+                </span>
+              </template>
+              <Input
+                v-model="form.cej_email_adviser"
+                name="cej_email_adviser"
+                placeholder="jean.dupont@gmail.com"
+                @blur="validate('cej_email_adviser')"
+              />
+            </FormControl>
+          </div>
+        </transition>
       </form>
 
       <Button
@@ -222,6 +224,15 @@ export default {
       })
     }
   },
+  computed: {
+    canViewScAndCej () {
+      if (this.form.birthday) {
+        const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+        return userAge >= 16 && userAge <= 30
+      }
+      return false
+    }
+  },
   watch: {
     'form.cej' (val) {
       if (!val) {
@@ -229,7 +240,6 @@ export default {
       }
     }
   },
-  created () {},
   methods: {
     onSubmit () {
       if (this.loading) {

@@ -67,64 +67,67 @@
               @blur="validate('phone')"
             />
           </FormControl>
-          <div class="flex lg:space-x-8">
-            <img
-              src="/images/service_civique.png"
-              srcset="/images/service_civique.png, /images/service_civique@2x.png 2x"
-              alt="Service Civique"
-              title="Service Civique"
-              class="hidden lg:block h-10 flex-none w-[75px] object-contain object-left"
-              data-not-lazy
-            >
-            <Toggle
-              v-model="form.service_civique"
-              class="flex-1"
-              label="Etes-vous volontaire en Service Civique ?"
-              :description="form.service_civique ? 'Oui, je suis volontaire' : 'Non, je ne suis pas volontaire'"
-            />
-          </div>
-          <FormControl
-            v-if="form.service_civique"
-            label="Date de réalisation de votre Service Civique"
-            html-for="service_civique_completion_date"
-            :error="errors.service_civique_completion_date"
-          >
-            <InputDate v-model="form.service_civique_completion_date" required name="service_civique_completion_date" />
-          </FormControl>
-          <div class="flex lg:space-x-8">
-            <img
-              src="/images/cej.png"
-              srcset="/images/cej.png, /images/cej@2x.png 2x"
-              alt="Contrat d'Engagement Jeune"
-              title="Contrat d'Engagement Jeune"
-              class="hidden lg:block h-10 flex-none w-[75px] object-contain object-left"
-              data-not-lazy
-            >
-            <Toggle
-              v-model="form.cej"
-              class="flex-1"
-              label="Etes-vous engagé Contrat d'Engagement Jeune ?"
-              :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
-            />
-          </div>
-          <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser">
-            <template #afterLabel>
-              <span
-                v-tooltip="{
-                  content: 'Vous pouvez facilement la retrouver sur votre application Contrat d’Engagement Jeune',
-                }"
-                class="p-1 cursor-help group"
+
+          <template v-if="canViewScAndCej">
+            <div class="flex lg:space-x-8">
+              <img
+                src="/images/service_civique.png"
+                srcset="/images/service_civique.png, /images/service_civique@2x.png 2x"
+                alt="Service Civique"
+                title="Service Civique"
+                class="hidden lg:block h-10 flex-none w-[75px] object-contain object-left"
+                data-not-lazy
               >
-                <InformationCircleIcon class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]" />
-              </span>
-            </template>
-            <Input
-              v-model="form.cej_email_adviser"
-              name="cej_email_adviser"
-              placeholder="jean.dupont@gmail.com"
-              @blur="validate('cej_email_adviser')"
-            />
-          </FormControl>
+              <Toggle
+                v-model="form.service_civique"
+                class="flex-1"
+                label="Etes-vous volontaire en Service Civique ?"
+                :description="form.service_civique ? 'Oui, je suis volontaire' : 'Non, je ne suis pas volontaire'"
+              />
+            </div>
+            <FormControl
+              v-if="form.service_civique"
+              label="Date de réalisation de votre Service Civique"
+              html-for="service_civique_completion_date"
+              :error="errors.service_civique_completion_date"
+            >
+              <InputDate v-model="form.service_civique_completion_date" required name="service_civique_completion_date" />
+            </FormControl>
+            <div class="flex lg:space-x-8">
+              <img
+                src="/images/cej.png"
+                srcset="/images/cej.png, /images/cej@2x.png 2x"
+                alt="Contrat d'Engagement Jeune"
+                title="Contrat d'Engagement Jeune"
+                class="hidden lg:block h-10 flex-none w-[75px] object-contain object-left"
+                data-not-lazy
+              >
+              <Toggle
+                v-model="form.cej"
+                class="flex-1"
+                label="Etes-vous engagé Contrat d'Engagement Jeune ?"
+                :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
+              />
+            </div>
+            <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser">
+              <template #afterLabel>
+                <span
+                  v-tooltip="{
+                    content: 'Vous pouvez facilement la retrouver sur votre application Contrat d’Engagement Jeune',
+                  }"
+                  class="p-1 cursor-help group"
+                >
+                  <InformationCircleIcon class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]" />
+                </span>
+              </template>
+              <Input
+                v-model="form.cej_email_adviser"
+                name="cej_email_adviser"
+                placeholder="jean.dupont@gmail.com"
+                @blur="validate('cej_email_adviser')"
+              />
+            </FormControl>
+          </template>
 
           <Button
             type="submit"
@@ -188,6 +191,15 @@ export default {
       })
     }
   },
+  computed: {
+    canViewScAndCej () {
+      if (this.form.birthday) {
+        const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+        return userAge >= 16 && userAge <= 30
+      }
+      return false
+    }
+  },
   watch: {
     'form.cej' (val) {
       if (!val) {
@@ -224,7 +236,3 @@ export default {
 
 }
 </script>
-
-<style>
-
-</style>
