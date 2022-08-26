@@ -138,7 +138,7 @@
               <template #afterLabel>
                 <span
                   v-tooltip="{
-                    content: 'Vous pouvez facilement la retrouver sur votre application Contrat d’Engagement Jeune',
+                    content: 'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
                   }"
                   class="p-1 cursor-help group"
                 >
