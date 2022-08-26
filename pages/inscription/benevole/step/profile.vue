@@ -87,7 +87,7 @@
             </div>
             <FormControl
               v-if="form.service_civique"
-              label="Date de réalisation de votre Service Civique"
+              label="Date de début de votre Service Civique"
               html-for="service_civique_completion_date"
               :error="errors.service_civique_completion_date"
             >
