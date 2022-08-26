@@ -69,7 +69,9 @@ export default {
             { key: 'benevole_participation_temoignage', label: 'Participation terminée, demande de témoignage', description: 'Notification envoyée au bénévole lorsque sa participation est terminée' },
             { key: 'benevole_participation_refused', label: 'Votre participation a été déclinée', description: 'Notification envoyée au bénévole lorsque sa participation est refusée' },
             { key: 'benevole_participation_canceled', label: 'Votre participation a été annulée', description: 'Notification envoyée au bénévole lorsque sa participation est annulée' },
-            { key: 'benevole_marketplace_mission', label: 'XXX vous propose une mission de bénévolat', description: 'Notification envoyée via la marketplace inversée' }
+            { key: 'benevole_marketplace_mission', label: 'XXX vous propose une mission de bénévolat', description: 'Notification envoyée via la marketplace inversée' },
+            { key: 'register_user_volontaire_cej', label: 'XXX, avec le Contrat d’Engagement Jeune, réalisez des missions de bénévolat !', description: "Notification envoyée au bénévole lorsqu'il s'inscrit et qu'il est engagé CEJ" },
+            { key: 'benevole_cej_no_participation', label: 'XXX, votre première mission de bénévolat vous attend sur JeVeuxAider.gouv.fr', description: "Notification envoyée au bénévole engagé CEJ s'il n'a toujours pas de participation 10 jours après son inscription" }
           ]
         },
         {
@@ -116,7 +118,9 @@ export default {
             { key: 'invitation_sent', label: 'Invitation en attente', description: "Lorsqu'une inviation est envoyée. Le wording dépend du type d'invitation." },
             { key: 'mission_template_created', label: 'XXX : Nouveau modèle de mission en attente de validation', description: "Lorsqu'un réseau créé un nouveau template de mission" },
             { key: 'reset_password', label: 'Réinitialiser mon mot de passe', description: "Lorsqu'un utilisateur réinialise son mot de passe" },
-            { key: 'user_anonymize', label: 'Suppression de votre compte sur JeVeuxAider.gouv.fr', description: "Lorsqu'un utilisateur supprime son compte" }
+            { key: 'user_anonymize', label: 'Suppression de votre compte sur JeVeuxAider.gouv.fr', description: "Lorsqu'un utilisateur supprime son compte" },
+            { key: 'register_user_volontaire_cej_adviser', label: 'XXX s’est inscrit sur JeVeuxAider.gouv.fr', description: "Envoyé au conseiller CEJ lorqu'un bénévole s'inscrit sur la plateforme" },
+            { key: 'participation_validated_cej_adviser', label: 'XXX s’est inscrit sur une mission de bénévolat', description: "Envoyé au conseiller CEJ lorqu'un bénévole s'inscrit à une mission" }
             // { key: 'moderateur_daily_todo', label: 'Arf on a perdu des référents', description: "Envoyée à Giulietta quand des référents ont trop d'actions en attente sous les 3 derniers jours" }
           ]
         }
