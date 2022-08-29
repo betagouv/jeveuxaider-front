@@ -46,10 +46,6 @@
           <span class="">Responsable :</span>
           <span v-if="participation.mission.responsable" class="font-bold truncate">{{ participation.mission.responsable.full_name }}</span>
         </div>
-        <div v-if="participation.profile.cej_email_adviser" class="flex space-x-1 text-sm truncate max-w-full text-gray-600">
-          <span class="">Conseiller CEJ :</span>
-          <span class="font-bold truncate">{{ participation.profile.cej_email_adviser }}</span>
-        </div>
       </div>
     </div>
     <div v-else>
@@ -68,6 +64,18 @@
           <div>
             <div class="font-bold">
               {{ profile.full_name }}
+              <div v-if="display == 'benevole' && participation.profile.cej" class="inline-flex font-normal text-gray-600 text-sm ">
+                <span class="ml-1 mr-2">•</span>
+                <a
+                  class=" inline-flex items-center hover:underline hover:text-jva-blue-500"
+                  href="https://travail-emploi.gouv.fr/emploi-et-insertion/mesures-jeunes/contrat-engagement-jeune/article/qu-est-ce-que-le-contrat-d-engagement-jeune-cej"
+                  target="_blank"
+                  @click.stop
+                >
+                  <span>Jeune en CEJ</span>
+                  <ExternalLinkIcon class="ml-1 h-3 w-3 inline-block" />
+                </a>
+              </div>
             </div>
             <div class="text-sm text-gray-600 first-letter:uppercase">
               {{ $dayjs(participation.created_at).fromNow() }}
