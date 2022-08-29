@@ -105,80 +105,23 @@
         </FormControl>
       </div>
       <FormControl
-        label="Fréquence"
-        html-for="commitment__parameters_frequency"
-        :error="errors.commitment__parameters"
+        label="Précisez la récurence demandée aux bénévoles"
+        html-for="recurrent_description"
+        :error="errors.recurrent_description"
         required
       >
-        <RadioGroup
-          v-model="form.commitment__parameters.frequency"
-          name="commitment__parameters_frequency"
-          class="text-sm"
-          :options="[
-            {key: 'weekly', label: 'Toutes les semaines'},
-            {key: 'monthly', label: 'Tous les mois'}
-          ]"
-        />
-      </FormControl>
-      <FormControl
-        v-if="form.commitment__parameters.frequency == 'weekly'"
-        label="Jours de la semaine"
-        html-for="commitment__parameters_weekdays"
-        :error="errors.commitment__parameters"
-        required
-      >
-        <CheckboxGroup
-          v-model="form.commitment__parameters.weekdays"
-          name="commitment__parameters_weekdays"
-          variant="button"
-          :options="[
-            {key: 'monday', label: 'Lundi'},
-            {key: 'tuesday', label: 'Mardi'},
-            {key: 'wednesday', label: 'Mercredi'},
-            {key: 'thursday', label: 'Jeudi'},
-            {key: 'friday', label: 'Vendredi'},
-            {key: 'saturday', label: 'Samedi'},
-            {key: 'sunday', label: 'Dimanche'}
-          ]"
-        />
-      </FormControl>
-      <FormControl
-        v-if="form.commitment__parameters.frequency == 'monthly'"
-        label="Nombre de jours par mois"
-        html-for="commitment__parameters_days_by_month"
-        required
-        :error="errors.commitment__parameters"
-      >
-        <SelectAdvanced
-          v-model="form.commitment__parameters.day_by_month"
-          name="commitment__parameters_days_by_month"
-          placeholder="1 jour"
-          :options="[
-            {key: '1', label: '1 jour'},
-            {key: '2', label: '2 jours'},
-            {key: '3', label: '3 jours'},
-            {key: '4', label: '4 jours'},
-            {key: '5', label: '5 jours'},
-          ]"
-        />
-      </FormControl>
-      <FormControl
-        v-if="form.commitment__parameters.frequency"
-        label="Durée d'engagement par jour"
-        html-for="commitment__parameters_duration_per_day"
-        required
-        :error="errors.commitment__parameters"
-      >
-        <SelectAdvanced
-          v-model="form.commitment__parameters.duration_per_day"
-          name="commitment__parameters_duration_per_day"
-          placeholder="Durée"
-          :options="[
-            {key: '1_hour', label: '1 heure'},
-            {key: '2_hours', label: '2 heures'},
-            {key: '1/2_day', label: 'Une demi-journée'},
-            {key: '1_day', label: 'La journée'},
-          ]"
+        <template #description>
+          <div class="text-sm  text-gray-800 mt-1">
+            <div class="text-gray-600">Exemple:</div>
+            <div class="italic">1 heure par semaine</div>
+            <div class="italic">1 jour par mois, le samedi</div>
+            <div class="italic">Tout les samedis matins</div>
+          </div>
+        </template>
+        <Input
+          v-model="form.recurrent_description"
+          name="recurrent_description"
+          placeholder="1 heure par semaine"
         />
       </FormControl>
     </div>
@@ -214,7 +157,7 @@ export default {
         date_type: this.initialForm.date_type || 'ponctual',
         showCalendar: !!this.initialForm.dates,
         dates: this.initialForm.dates || [],
-        commitment__parameters: this.initialForm.commitment__parameters || {}
+        recurrent_description: this.initialForm.recurrent_description || ''
       }
     }
   },
