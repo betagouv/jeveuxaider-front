@@ -147,8 +147,8 @@ export default {
   data () {
     return {
       tabs: [
-        { key: 'ponctual', name: 'Mission ponctuelle', icon: 'CalendarPonctuelIcon' },
-        { key: 'recurring', name: 'Mission récurrente', icon: 'CalendarRecurentIcon' }
+        { key: 'ponctual', name: 'Engagement ponctuel', icon: 'CalendarPonctuelIcon' },
+        { key: 'recurring', name: 'Engagement récurrent', icon: 'CalendarRecurentIcon' }
       ],
       currentDay: null,
       currentSlot: null,
