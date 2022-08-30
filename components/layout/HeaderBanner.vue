@@ -53,6 +53,7 @@ export default {
   },
   computed: {
     isPreprod () {
+      console.log(this.$config)
       return this.$config.apiUrl == 'https://jeveuxaider-preprod-back.osc-secnum-fr1.scalingo.io'
     },
     isImpersonate () {
