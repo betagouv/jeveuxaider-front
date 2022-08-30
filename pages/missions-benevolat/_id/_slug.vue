@@ -163,7 +163,7 @@
                     alt=""
                     :class="[{ '-ml-1': index !== 0 }]"
                     class="portrait rounded-full"
-                    style="width: 34px"
+                    style="width: 36px"
                   >
                   <div
                     v-if="participationsCount - 3 > 0"
