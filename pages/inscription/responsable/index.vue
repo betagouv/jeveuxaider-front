@@ -27,7 +27,7 @@
               <CheckCircleSolidIcon class="inline-block w-auto h-5 text-jva-green-500 mr-2" />n'est pas à but lucratif
             </li>
             <li class="flex items-center">
-              <CheckCircleSolidIcon class="inline-block w-auto h-5 text-jva-green-500 mr-2" />n'est pas politique, culturelle ou syndicale.
+              <CheckCircleSolidIcon class="inline-block w-auto h-5 text-jva-green-500 mr-2" />n'est pas politique, cultuelle ou syndicale.
             </li>
           </ul>
           <div class="mt-8 space-y-3">
