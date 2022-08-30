@@ -71,7 +71,8 @@ export default {
             { key: 'benevole_participation_canceled', label: 'Votre participation a été annulée', description: 'Notification envoyée au bénévole lorsque sa participation est annulée' },
             { key: 'benevole_marketplace_mission', label: 'XXX vous propose une mission de bénévolat', description: 'Notification envoyée via la marketplace inversée' },
             { key: 'register_user_volontaire_cej', label: 'XXX, avec le Contrat d’Engagement Jeune, réalisez des missions de bénévolat !', description: "Notification envoyée au bénévole lorsqu'il s'inscrit et qu'il est engagé CEJ" },
-            { key: 'benevole_cej_no_participation', label: 'XXX, votre première mission de bénévolat vous attend sur JeVeuxAider.gouv.fr', description: "Notification envoyée au bénévole engagé CEJ s'il n'a toujours pas de participation 10 jours après son inscription" }
+            { key: 'benevole_cej_no_participation', label: 'XXX, votre première mission de bénévolat vous attend sur JeVeuxAider.gouv.fr', description: "Notification envoyée au bénévole engagé CEJ s'il n'a toujours pas de participation 10 jours après son inscription" },
+            { key: 'benevole_cej_six_months_after', label: 'XXX, êtes-vous toujours en Contrat d’Engagement Jeune ?', description: 'Notification envoyée au bénévole engagé CEJ 6 mois et 1 an après ajout de la mention CEJ sur le profil' }
           ]
         },
         {
