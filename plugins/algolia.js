@@ -5,6 +5,7 @@ export default function (context, inject) {
   if (process.server) {
     const req = context.req
     const headers = (req && req.headers) ? Object.assign({}, req.headers) : {}
+    console.log('xForwardedFor', headers['x-forwarded-for'])
     if (headers['x-forwarded-for']) {
       xForwardedFor = headers['x-forwarded-for'].split(', ')[0]
     }
