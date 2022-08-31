@@ -22,12 +22,22 @@
           </div>
         </div>
       </div>
-      <div class="border-t -mx-6 mt-6 mb-4" />
-      <div class="flex justify-center text-sm">
-        <Link :to="`/admin/missions/${mission.id}/trouver-des-benevoles`">
-          Trouver des bénévoles
-        </Link>
-      </div>
+      <template v-if="mission.places_left > 0">
+        <div class="border-t -mx-6 mt-6 mb-4" />
+        <div class="flex justify-center text-sm">
+          <Link :to="`/admin/missions/${mission.id}/trouver-des-benevoles`">
+            Trouver des bénévoles
+          </Link>
+        </div>
+      </template>
+      <template v-if="mission.places_left > 0">
+        <div class="border-t -mx-6 mt-4 mb-4" />
+        <div class="flex justify-center text-sm">
+          <Link @click.native="handleMarkComplete()">
+            Marquer la mission comme complète
+          </Link>
+        </div>
+      </template>
     </Box>
   </div>
 </template>
@@ -38,6 +48,16 @@ export default {
     mission: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    async handleMarkComplete () {
+      let participationsMax = this.mission.participations_max - this.mission.places_left
+      if (participationsMax < 1) {
+        participationsMax = 1
+      }
+      const { data: mission } = await this.$axios.put(`/missions/${this.mission.id}`, { ...this.mission, participations_max: participationsMax }).catch(() => {})
+      this.$emit('updated', mission)
     }
   }
 }

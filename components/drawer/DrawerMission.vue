@@ -55,7 +55,7 @@
       </div>
       <div class="border-t -mx-6 my-6" />
       <BoxDates class="mb-8" :mission="mission" />
-      <BoxPlace class="mb-8" :mission="mission" />
+      <BoxPlace class="mb-8" :mission="mission" @updated="$fetch" />
       <BoxInformations class="mb-8" :mission="mission" />
       <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" :key="mission.department" :department="mission.department" class="mb-8" />
       <BoxResponsable class="mb-8" :responsable="mission.responsable" />
