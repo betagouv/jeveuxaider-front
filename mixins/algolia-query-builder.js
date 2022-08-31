@@ -66,6 +66,7 @@ export default {
 
       let params = {}
       if (this.$algolia.xForwardedFor) {
+        console.log('search algolia xForwardedFor', this.$algolia.xForwardedFor)
         params = {
           headers: {
             'X-Forwarded-For': this.$algolia.xForwardedFor
