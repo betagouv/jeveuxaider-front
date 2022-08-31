@@ -11,7 +11,7 @@
           data-not-lazy
         >
       </div>
-      <div class="flex space-x-1 items-center lg:flex-1 lg:ml-6">
+      <div class="flex items-center lg:flex-1 lg:pl-6">
         <nuxt-link to="/">
           <img
             src="@/assets/images/jeveuxaider-logo.svg"
