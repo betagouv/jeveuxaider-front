@@ -147,7 +147,7 @@
               <ApiEngagementAssociationsSearch
                 v-if="$route.query.orga_type === 'Association'"
                 v-model="form.structure.name"
-                placeholder="Renseignez le nom de votre association"
+                placeholder="Indiquez le nom en minuscules - Ex : La Fourmilière"
                 :show-add-button="!orgaExist"
                 :loading-add-button="loading"
                 @selected="onStructureApiSelected"
@@ -160,7 +160,7 @@
                 name="name"
                 :placeholder="
                   $route.query.orga_type === 'Collectivité'
-                    ? 'Renseignez le nom de votre collectivité territoriale'
+                    ? 'Indiquer le nom en minuscules - Ex : Mairie de Lyon'
                     : 'Renseignez le nom de votre organisation'
                 "
               />
