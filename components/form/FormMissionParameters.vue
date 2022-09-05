@@ -1,7 +1,7 @@
 <template>
   <Box padding="sm">
     <Heading :level="3" class="mb-8">
-      Dates de la mission
+      Paramètres
     </Heading>
     <nav v-dragscroll class="grid grid-cols-2 mb-6">
       <div
@@ -15,16 +15,61 @@
         <span>{{ tab.name }}</span>
       </div>
     </nav>
-    <div v-if="form.date_type == 'ponctual'" class="space-y-6">
-      <Alert>
-        Le bénévole choisit un des créneaux proposés.
+    <div class="space-y-6 mb-6">
+      <Alert v-if="form.date_type == 'ponctual'">
+        La mission se déroule sur une période limitée dans le temps : la présence du bénévole est ponctuelle.
       </Alert>
+      <Alert v-else>
+        L’engagement du bénévole se fait sur le long<br> terme : il doit pouvoir se rendre en mission de façon régulière.
+      </Alert>
+      <FormControl
+        label="Nombre de bénévoles recherchés"
+        html-for="participations_max"
+        required
+        :error="errors.participations_max"
+      >
+        <Input
+          v-model="form.participations_max"
+          name="participations_max"
+          type="number"
+          suffix="bénévoles"
+        />
+      </FormControl>
+      <div class="grid gap-4" :class="[form.date_type == 'recurring' ? ' xl:grid-cols-2' : 'xl:grid-cols-1']">
+        <FormControl
+          label="Durée d'engagement min."
+          html-for="commitment__duration"
+          required
+          :error="errors.commitment__duration"
+        >
+          <SelectAdvanced
+            v-model="form.commitment__duration"
+            name="commitment__duration"
+            placeholder="Durée"
+            :options="$labels.duration"
+          />
+        </FormControl>
+        <FormControl
+          v-if="form.date_type == 'recurring'"
+          label="Fréquence"
+          html-for="commitment__time_period"
+        >
+          <SelectAdvanced
+            v-model="form.commitment__time_period"
+            name="commitment__time_period"
+            placeholder="Fréquence"
+            :options="$labels.time_period"
+          />
+        </FormControl>
+      </div>
+    </div>
+    <div v-if="form.date_type == 'ponctual'" class="space-y-6">
       <div class="p-4 border rounded-lg">
         <Toggle
           v-model="form.showCalendar"
           label="<div class='font-medium text-base mb-2'>Configurer le calendrier de la mission</div>"
           position="right"
-          description="Affichez les créneaux de disponibilité pour améliorer la qualité des candidatures de bénévoles."
+          description="Paramétrez les horaires de réalisation de la mission pour permettre aux bénévoles de choisir des créneaux sur lesquels ils souhaitent s’engager."
         />
         <div v-if="form.showCalendar">
           <v-calendar is-expanded :attributes="attrs" @dayclick="handleDayClick" />
@@ -84,9 +129,6 @@
       </div>
     </div>
     <div v-else-if="form.date_type == 'recurring'" class="space-y-6">
-      <Alert>
-        Le bénévole doit être présent sur plusieurs créneaux.
-      </Alert>
       <div class="grid grid-cols-2 gap-4">
         <FormControl
           label="Début de la mission"
@@ -112,10 +154,18 @@
       >
         <template #description>
           <div class="text-sm  text-gray-800 mt-1">
-            <div class="text-gray-600">Exemple:</div>
-            <div class="italic">1 heure par semaine</div>
-            <div class="italic">1 jour par mois, le samedi</div>
-            <div class="italic">Tout les samedis matins</div>
+            <div class="text-gray-600">
+              Exemple:
+            </div>
+            <div class="italic">
+              1 heure par semaine
+            </div>
+            <div class="italic">
+              1 jour par mois, le samedi
+            </div>
+            <div class="italic">
+              Tout les samedis matins
+            </div>
           </div>
         </template>
         <Input
@@ -179,6 +229,9 @@ export default {
     form: {
       deep: true,
       handler () {
+        if (this.form.date_type == 'ponctual') {
+          this.form.commitment__time_period = null
+        }
         if (this.form.showCalendar) {
           // Autofill start_date and end_date
           if (this.form.dates.length == 1) {
