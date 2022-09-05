@@ -213,7 +213,7 @@
                   <div
                     class="mt-6 uppercase text-[#777E90] text-xs font-bold"
                   >
-                    Engagement minimum
+                    Durée de la mission
                   </div>
                   <div class="font-bold">
                     <template v-if="mission.commitment__duration">
@@ -226,6 +226,9 @@
                     <template v-else>
                       Non spécifié
                     </template>
+                  </div>
+                  <div v-if="mission.recurrent_description">
+                    {{ mission.recurrent_description }}
                   </div>
                 </div>
               </div>
