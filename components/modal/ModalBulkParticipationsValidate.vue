@@ -3,8 +3,6 @@
     endpoint="bulk-operation/participations/validate"
     :models="models"
     :modal-title="modalTitle"
-    :is-bulk-all="isBulkAll"
-    :query-result="queryResult"
     :is-open="isOpen"
     @state-changed="state = $event"
     @close="$emit('close')"
@@ -33,14 +31,6 @@ export default {
     isOpen: {
       type: Boolean,
       default: false
-    },
-    isBulkAll: {
-      type: Boolean,
-      default: false
-    },
-    queryResult: {
-      type: Object,
-      required: true
     }
   },
   data () {
@@ -51,7 +41,7 @@ export default {
   computed: {
     participationNames () {
       const names = this.models.slice(0, 5).map(participation => participation.profile?.full_name).join(', ')
-      return this.nbOperations > 5 ? `${names}... (+${this.nbOperations - 5})` : names
+      return this.models.length > 5 ? `${names}... (+${this.models.length - 5})` : names
     },
     modalTitle () {
       switch (this.state) {
@@ -59,16 +49,13 @@ export default {
           return 'En cours de traitement'
         case 'processed':
           return this.$options.filters.pluralize(
-            this.nbOperations,
+            this.models.length,
             'participation a été validée',
             'participations ont été validées'
           )
         default:
-          return `Vous êtes sur le point de valider ${this.$options.filters.pluralize(this.nbOperations, 'participation')}&nbsp;:`
+          return `Vous êtes sur le point de valider ${this.$options.filters.pluralize(this.models.length, 'participation')}&nbsp;:`
       }
-    },
-    nbOperations () {
-      return this.isBulkAll ? this.queryResult.total : this.models.length
     }
   }
 }

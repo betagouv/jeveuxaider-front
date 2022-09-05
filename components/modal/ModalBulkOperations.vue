@@ -61,14 +61,6 @@ export default {
     modalTitle: {
       type: String,
       default: 'Opérations de masse'
-    },
-    isBulkAll: {
-      type: Boolean,
-      default: false
-    },
-    queryResult: {
-      type: Object,
-      required: true
     }
   },
   data () {
@@ -115,7 +107,7 @@ export default {
   methods: {
     async handleSubmit (endpoint, payload = {}) {
       this.state = 'processing'
-      const { data: batchId } = await this.$axios.post(endpoint, { ...payload, ids: this.modelIds, isBulkAll: this.isBulkAll, query: this.$route.query })
+      const { data: batchId } = await this.$axios.post(endpoint, { ...payload, ids: this.modelIds })
       this.interval = setInterval(() => this.refreshBatchProgress(batchId), 1500)
     },
     async refreshBatchProgress (batchId) {
