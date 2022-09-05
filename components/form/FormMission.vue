@@ -210,53 +210,7 @@
       </Box>
     </div>
     <div class="lg:col-span-2 space-y-8 flex flex-col">
-      <Box padding="sm">
-        <Heading :level="3" class="mb-8">
-          Disponibilité
-        </Heading>
-        <div class="space-y-8">
-          <FormControl
-            label="Nombre de bénévoles recherchés"
-            html-for="participations_max"
-            required
-            :error="errors.participations_max"
-          >
-            <Input
-              v-model="form.participations_max"
-              name="participations_max"
-              type="number"
-              suffix="bénévoles"
-            />
-          </FormControl>
-          <div class="grid xl:grid-cols-2 gap-4">
-            <FormControl
-              label="Durée d'engagement min."
-              html-for="commitment__duration"
-              required
-              :error="errors.commitment__duration"
-            >
-              <SelectAdvanced
-                v-model="form.commitment__duration"
-                name="commitment__duration"
-                placeholder="Durée"
-                :options="$labels.duration"
-              />
-            </FormControl>
-            <FormControl
-              label="Fréquence"
-              html-for="commitment__time_period"
-            >
-              <SelectAdvanced
-                v-model="form.commitment__time_period"
-                name="commitment__time_period"
-                placeholder="Fréquence"
-                :options="$labels.time_period"
-              />
-            </FormControl>
-          </div>
-        </div>
-      </Box>
-      <FormMissionDates :initial-form="form" :errors="errors" @change="handleDatesChanged" />
+      <FormMissionParameters :initial-form="form" :errors="errors" @change="handleParametersChanged" />
       <Box padding="sm">
         <Heading :level="3" class="mb-8">
           Lieu de la mission
@@ -540,11 +494,11 @@ import { string, object, number, date, array, ref } from 'yup'
 import inputGeo from '@/mixins/input-geo'
 import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
-import FormMissionDates from '~/components/form/FormMissionDates.vue'
+import FormMissionParameters from '~/components/form/FormMissionParameters.vue'
 
 export default {
   components: {
-    FormMissionDates,
+    FormMissionParameters,
     AlgoliaSkillsInput
   },
   mixins: [inputGeo, FormErrors],
@@ -829,7 +783,7 @@ export default {
           this.loading = false
         })
     },
-    handleDatesChanged (formDates) {
+    handleParametersChanged (formDates) {
       this.form = { ...this.form, ...formDates }
     },
     onMediaPickerChange (payload, field) {
