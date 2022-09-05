@@ -13,8 +13,7 @@
     >
       <InformationCircleSolidIcon width="16" height="16" class="mb-1 inline mr-1 text-jva-blue-500" />
       <span class="text-sm text-gray-600">
-        En validant ce choix, le statut de la mission sera automatiquement
-        mis à jour. Le recrutement de nouveaux bénévoles sera clos.
+        Nous vous invitons dans un second temps à passer la ou les missions concernées en "Terminée" afin de clore le recrutement de nouveaux bénévoles.
       </span>
     </div>
 
