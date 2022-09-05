@@ -147,7 +147,7 @@
         </FormControl>
       </div>
       <FormControl
-        label="Précisez la récurence demandée aux bénévoles"
+        label="Précisez les créneaux horaires"
         html-for="recurrent_description"
         :error="errors.recurrent_description"
         required
@@ -158,20 +158,20 @@
               Exemple:
             </div>
             <div class="italic">
-              1 heure par semaine
+              le samedi matin
             </div>
             <div class="italic">
-              1 jour par mois, le samedi
+              en soirée du lundi au vendredi
             </div>
             <div class="italic">
-              Tout les samedis matins
+              de 7h à 9h les mardis
             </div>
           </div>
         </template>
         <Input
           v-model="form.recurrent_description"
           name="recurrent_description"
-          placeholder="1 heure par semaine"
+          placeholder="les mardis ou jeudis"
         />
       </FormControl>
     </div>
@@ -207,7 +207,9 @@ export default {
         date_type: this.initialForm.date_type || 'ponctual',
         showCalendar: !!this.initialForm.dates,
         dates: this.initialForm.dates || [],
-        recurrent_description: this.initialForm.recurrent_description || ''
+        recurrent_description: this.initialForm.recurrent_description || '',
+        commitment__duration: this.initialForm.commitment__duration || null,
+        commitment__time_period: this.initialForm.commitment__time_period || null
       }
     }
   },
@@ -241,7 +243,7 @@ export default {
             this.form.start_date = this.form.dates[0].id
             this.form.end_date = this.form.dates[this.form.dates.length - 1].id
           }
-          this.$emit('change', { ...this.form, commitment__duration: null })
+          this.$emit('change', this.form)
         } else {
           this.$emit('change', { ...this.form, dates: null })
         }
