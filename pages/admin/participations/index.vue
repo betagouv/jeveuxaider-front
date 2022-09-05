@@ -213,10 +213,10 @@
             </Button>
           </template>
           <template #items>
-            <DropdownOptionsItem @click.native="showModalBulkParticipationsValidate = true">
+            <DropdownOptionsItem v-if="canBulkValidate" @click.native="showModalBulkParticipationsValidate = true">
               Valider les participations
             </DropdownOptionsItem>
-            <DropdownOptionsItem @click.native="showModalBulkParticipationsDecline = true">
+            <DropdownOptionsItem v-if="canBulkDecline" @click.native="showModalBulkParticipationsDecline = true">
               Refuser les participations
             </DropdownOptionsItem>
           </template>
@@ -229,6 +229,7 @@
           class="flex items-center space-x-4"
         >
           <input
+            v-if="canUseBulkOperation"
             v-model="operations"
             :value="participation"
             type="checkbox"
@@ -250,12 +251,14 @@
     </div>
 
     <ModalBulkParticipationsValidate
+      v-if="canBulkValidate"
       :is-open="showModalBulkParticipationsValidate"
       :models="operations"
       @close="showModalBulkParticipationsValidate = false"
       @processed="onBulkOperationProcessed"
     />
     <ModalBulkParticipationsDecline
+      v-if="canBulkDecline"
       :is-open="showModalBulkParticipationsDecline"
       :models="operations"
       @close="showModalBulkParticipationsDecline = false"
@@ -327,6 +330,17 @@ export default {
       autocompleteOptionsMission: [],
       showModalBulkParticipationsValidate: false,
       showModalBulkParticipationsDecline: false
+    }
+  },
+  computed: {
+    canUseBulkOperation () {
+      return ['admin', 'responsable'].includes(this.$store.getters.contextRole)
+    },
+    canBulkValidate () {
+      return this.$labels.participation_workflow_states.find(state => state.key === 'Validée')?.roles?.includes(this.$store.getters.contextRole)
+    },
+    canBulkDecline () {
+      return this.$labels.participation_workflow_states.find(state => state.key === 'Refusée')?.roles?.includes(this.$store.getters.contextRole)
     }
   },
   methods: {
