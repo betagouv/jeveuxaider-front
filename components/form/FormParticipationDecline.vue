@@ -13,7 +13,12 @@
     >
       <InformationCircleSolidIcon width="16" height="16" class="mb-1 inline mr-1 text-jva-blue-500" />
       <span class="text-sm text-gray-600">
-        Nous vous invitons dans un second temps à passer la ou les missions concernées en "Terminée" afin de clore le recrutement de nouveaux bénévoles.
+        <template v-if="isBulkOperation">
+          Attention, ces missions sont actives !<br>Après avoir refusé ces participations, nous vous invitons à passer les missions au statut “Terminé” afin de clore le recrutement de nouveaux bénévoles.
+        </template>
+        <template v-else>
+          Attention, cette mission est active !<br>Après avoir refusé cette participation, nous vous invitons à passer la mission au statut “Terminé” afin de clore le recrutement de nouveaux bénévoles.
+        </template>
       </span>
     </div>
 
@@ -32,6 +37,12 @@ import FormErrors from '@/mixins/form/errors'
 
 export default {
   mixins: [FormErrors],
+  props: {
+    isBulkOperation: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       loading: false,

@@ -12,7 +12,7 @@
       <p class="text-gray-600">
         {{ participationNames }}
       </p>
-      <FormParticipationDecline class="mt-4" @confirm="onFormConfirm($event, handleSubmit, endpoint)" />
+      <FormParticipationDecline class="mt-4" :is-bulk-operation="true" @confirm="onFormConfirm($event, handleSubmit, endpoint)" />
     </template>
 
     <template #submit>
