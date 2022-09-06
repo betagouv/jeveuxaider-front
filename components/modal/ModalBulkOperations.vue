@@ -54,7 +54,7 @@ export default {
       type: Boolean,
       default: false
     },
-    models: {
+    operations: {
       type: Array,
       required: true
     },
@@ -76,7 +76,7 @@ export default {
       return this.state == 'initial' ? 'warning' : this.state == 'processed' ? 'success' : null
     },
     modelIds () {
-      return this.models.map(model => model.id)
+      return this.operations.map(model => model.id)
     }
   },
   watch: {

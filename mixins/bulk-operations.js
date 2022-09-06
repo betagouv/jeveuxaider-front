@@ -1,4 +1,11 @@
+import BulkOperationActions from '~/components/bulk-operation/BulkOperationActions.vue'
+import BulkOperationCheckbox from '~/components/bulk-operation/BulkOperationCheckbox.vue'
+
 export default {
+  components: {
+    BulkOperationActions,
+    BulkOperationCheckbox
+  },
   data () {
     return {
       operations: []
@@ -7,9 +14,6 @@ export default {
   computed: {
     bulkOperationIsActive () {
       return this.operations.length > 0
-    },
-    nbOperations () {
-      return this.$options.filters.pluralize(this.operations.length, 'sélectionnée')
     }
   }
 }

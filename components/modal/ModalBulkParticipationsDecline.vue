@@ -1,7 +1,7 @@
 <template>
   <ModalBulkOperations
     endpoint="bulk-operation/participations/decline"
-    :models="models"
+    :operations="operations"
     :modal-title="modalTitle"
     :is-open="isOpen"
     @state-changed="state = $event"
@@ -33,7 +33,7 @@ export default {
     FormParticipationDecline
   },
   props: {
-    models: {
+    operations: {
       type: Array,
       required: true
     },
@@ -49,8 +49,8 @@ export default {
   },
   computed: {
     participationNames () {
-      const names = this.models.slice(0, 5).map(participation => participation.profile?.full_name).join(', ')
-      return this.models.length > 5 ? `${names}... (+${this.models.length - 5})` : names
+      const names = this.operations.slice(0, 5).map(participation => participation.profile?.full_name).join(', ')
+      return this.operations.length > 5 ? `${names}... (+${this.operations.length - 5})` : names
     },
     modalTitle () {
       switch (this.state) {
@@ -58,12 +58,12 @@ export default {
           return 'En cours de traitement'
         case 'processed':
           return this.$options.filters.pluralize(
-            this.models.length,
+            this.operations.length,
             'participation a été refusée',
             'participations ont été refusées'
           )
         default:
-          return `Vous êtes sur le point de refuser ${this.$options.filters.pluralize(this.models.length, 'participation')}&nbsp;:`
+          return `Vous êtes sur le point de refuser ${this.$options.filters.pluralize(this.operations.length, 'participation')}&nbsp;:`
       }
     }
   },

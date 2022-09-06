@@ -143,7 +143,7 @@
         clearable
         @input="changeFilter('filter[search]', $event)"
       />
-      <div v-if="!bulkOperationIsActive" class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
+      <div v-if="!bulkOperationIsActive" class="hidden lg:flex gap-x-4 gap-y-4 mt-4 text-sm flex-wrap">
         <Checkbox
           :key="`tous-${$route.fullPath}`"
           :option="{key: 'tous', label:'Tous'}"
@@ -199,42 +199,41 @@
           @change="changeFilter('filter[state]', 'Refusée')"
         />
       </div>
-      <div v-if="bulkOperationIsActive" class="flex justify-end items-center leading-none my-6">
-        <div class="text-gray-600">
-          {{ nbOperations }}
-        </div>
-        <div class="text-jva-blue-500 font-medium ml-2 pl-2 border-l border-gray-600 cursor-pointer hover:text-gray-900" @click="operations = []">
-          Désélectionner
-        </div>
-        <Dropdown class="ml-6">
-          <template #button>
-            <Button size="lg" variant="white" icon="ChevronDownIcon">
-              Actions
-            </Button>
-          </template>
-          <template #items>
-            <DropdownOptionsItem v-if="canBulkValidate" @click.native="showModalBulkParticipationsValidate = true">
-              Valider les participations
-            </DropdownOptionsItem>
-            <DropdownOptionsItem v-if="canBulkDecline" @click.native="showModalBulkParticipationsDecline = true">
-              Refuser les participations
-            </DropdownOptionsItem>
-          </template>
-        </Dropdown>
-      </div>
+
+      <BulkOperationActions v-if="bulkOperationIsActive" :operations="operations" @unselectAll="operations = []">
+        <DropdownOptionsItem v-if="canBulkValidate" @click.native="showModalBulkParticipationsValidate = true">
+          Valider les participations
+        </DropdownOptionsItem>
+        <DropdownOptionsItem v-if="canBulkDecline" @click.native="showModalBulkParticipationsDecline = true">
+          Refuser les participations
+        </DropdownOptionsItem>
+      </BulkOperationActions>
+      <ModalBulkParticipationsValidate
+        v-if="canBulkValidate"
+        :is-open="showModalBulkParticipationsValidate"
+        :operations="operations"
+        @close="showModalBulkParticipationsValidate = false"
+        @processed="onBulkOperationProcessed"
+      />
+      <ModalBulkParticipationsDecline
+        v-if="canBulkDecline"
+        :is-open="showModalBulkParticipationsDecline"
+        :operations="operations"
+        @close="showModalBulkParticipationsDecline = false"
+        @processed="onBulkOperationProcessed"
+      />
+
       <div class="my-6 space-y-4">
         <div
           v-for="participation in queryResult.data"
           :key="participation.id"
-          class="flex items-center space-x-4"
+          class="flex items-center"
         >
-          <input
+          <BulkOperationCheckbox
             v-if="canUseBulkOperation"
             v-model="operations"
-            :value="participation"
-            type="checkbox"
-            class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-700 border border-gray-300 rounded"
-          >
+            :model="participation"
+          />
           <CardParticipation
             :participation="participation"
             @click.native="drawerParticipationId = participation.id"
@@ -249,21 +248,6 @@
         @page-change="onPageChange"
       />
     </div>
-
-    <ModalBulkParticipationsValidate
-      v-if="canBulkValidate"
-      :is-open="showModalBulkParticipationsValidate"
-      :models="operations"
-      @close="showModalBulkParticipationsValidate = false"
-      @processed="onBulkOperationProcessed"
-    />
-    <ModalBulkParticipationsDecline
-      v-if="canBulkDecline"
-      :is-open="showModalBulkParticipationsDecline"
-      :models="operations"
-      @close="showModalBulkParticipationsDecline = false"
-      @processed="onBulkOperationProcessed"
-    />
   </ContainerRightSidebar>
 </template>
 
