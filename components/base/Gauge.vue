@@ -1,11 +1,12 @@
 <template>
   <div
-    v-tooltip="tooltip ? tooltip : null"
-    class="w-full bg-gray-200 bg bg-blue bg-jva-blu"
+    v-tooltip="tooltip"
+    class="w-full bg-gray-200 overflow-hidden"
     :class="[
       { 'h-1': size === 'xs'},
       { 'h-2': size === 'sm'},
       { 'h-3': size === 'lg'},
+      { 'h-4': size === 'xl'},
     ]"
   >
     <div
@@ -14,6 +15,8 @@
         { 'h-1': size === 'xs'},
         { 'h-2': size === 'sm'},
         { 'h-3': size === 'lg'},
+        { 'h-4': size === 'xl'},
+        'transition-all duration-500'
       ]"
       :style="`width:${percentage}%`"
     />
@@ -34,7 +37,7 @@ export default {
     size: {
       type: String,
       default: 'sm',
-      validator: s => ['xs', 'sm', 'lg'].includes(s)
+      validator: s => ['xs', 'sm', 'lg', 'xl'].includes(s)
     },
     color: {
       type: String,

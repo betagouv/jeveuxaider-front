@@ -119,19 +119,21 @@
       >
         <template #action>
           <div class="flex space-x-2">
-            <Button variant="white" icon="DownloadIcon" size="lg" :loading="exportLoading" @click.native="handleExport">
+            <Button
+              v-if="!bulkOperationIsActive"
+              variant="white"
+              icon="DownloadIcon"
+              size="lg"
+              :loading="exportLoading"
+              @click.native="handleExport"
+            >
               Exporter
             </Button>
-            <ButtonMassValidation
-              v-if="$store.getters.contextRole === 'responsable' && waitingParticipationsCount"
-              :structure-id="$store.getters.contextableId"
-              :count="waitingParticipationsCount"
-              @mass-validated="onDrawerUpdated()"
-            />
           </div>
         </template>
       </Sectionheading>
       <Input
+        v-if="!bulkOperationIsActive"
         class="mt-8"
         name="search"
         placeholder="Recherche par prénom, nom ou e-mail"
@@ -141,7 +143,7 @@
         clearable
         @input="changeFilter('filter[search]', $event)"
       />
-      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
+      <div v-if="!bulkOperationIsActive" class="hidden lg:flex gap-x-4 gap-y-4 mt-4 text-sm flex-wrap">
         <Checkbox
           :key="`tous-${$route.fullPath}`"
           :option="{key: 'tous', label:'Tous'}"
@@ -197,20 +199,53 @@
           @change="changeFilter('filter[state]', 'Refusée')"
         />
       </div>
+
+      <BulkOperationActions v-if="bulkOperationIsActive" :operations="operations" @unselectAll="operations = []">
+        <DropdownOptionsItem v-if="canBulkValidate" @click.native="showModalBulkParticipationsValidate = true">
+          Valider les participations
+        </DropdownOptionsItem>
+        <DropdownOptionsItem v-if="canBulkDecline" @click.native="showModalBulkParticipationsDecline = true">
+          Refuser les participations
+        </DropdownOptionsItem>
+      </BulkOperationActions>
+      <ModalBulkParticipationsValidate
+        v-if="canBulkValidate"
+        :is-open="showModalBulkParticipationsValidate"
+        :operations="operations"
+        @close="showModalBulkParticipationsValidate = false"
+        @processed="onBulkOperationProcessed"
+      />
+      <ModalBulkParticipationsDecline
+        v-if="canBulkDecline"
+        :is-open="showModalBulkParticipationsDecline"
+        :operations="operations"
+        @close="showModalBulkParticipationsDecline = false"
+        @processed="onBulkOperationProcessed"
+      />
+
       <div class="my-6 space-y-4">
-        <CardParticipation
+        <div
           v-for="participation in queryResult.data"
           :key="participation.id"
-          :participation="participation"
-          @click.native="drawerParticipationId = participation.id"
-        />
+          class="flex items-center"
+        >
+          <BulkOperationCheckbox
+            v-if="canUseBulkOperation"
+            v-model="operations"
+            :model="participation"
+          />
+          <CardParticipation
+            :participation="participation"
+            @click.native="drawerParticipationId = participation.id"
+          />
+        </div>
       </div>
 
       <Pagination
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
-        @page-change="changePage"
+        @page-change="onPageChange"
       />
     </div>
   </ContainerRightSidebar>
@@ -221,17 +256,20 @@ import QueryBuilder from '@/mixins/query-builder'
 import CardParticipation from '@/components/card/CardParticipation.vue'
 import DrawerParticipation from '@/components/drawer/DrawerParticipation.vue'
 import MixinExport from '@/mixins/export'
-import ButtonMassValidation from '@/components/custom/ButtonMassValidation'
+import MixinBulkOperations from '@/mixins/bulk-operations'
 import BoxContext from '@/components/section/BoxContext.vue'
+import ModalBulkParticipationsValidate from '@/components/modal/ModalBulkParticipationsValidate.vue'
+import ModalBulkParticipationsDecline from '@/components/modal/ModalBulkParticipationsDecline.vue'
 
 export default {
   components: {
     CardParticipation,
     DrawerParticipation,
-    ButtonMassValidation,
-    BoxContext
+    BoxContext,
+    ModalBulkParticipationsValidate,
+    ModalBulkParticipationsDecline
   },
-  mixins: [QueryBuilder, MixinExport],
+  mixins: [QueryBuilder, MixinExport, MixinBulkOperations],
   middleware: 'authenticated',
   async asyncData ({ $axios, store, error }) {
     if (
@@ -273,7 +311,20 @@ export default {
       },
       drawerParticipationId: null,
       autocompleteOptionsOrga: [],
-      autocompleteOptionsMission: []
+      autocompleteOptionsMission: [],
+      showModalBulkParticipationsValidate: false,
+      showModalBulkParticipationsDecline: false
+    }
+  },
+  computed: {
+    canUseBulkOperation () {
+      return ['admin', 'responsable'].includes(this.$store.getters.contextRole)
+    },
+    canBulkValidate () {
+      return this.$labels.participation_workflow_states.find(state => state.key === 'Validée')?.roles?.includes(this.$store.getters.contextRole)
+    },
+    canBulkDecline () {
+      return this.$labels.participation_workflow_states.find(state => state.key === 'Refusée')?.roles?.includes(this.$store.getters.contextRole)
     }
   },
   methods: {
@@ -304,6 +355,15 @@ export default {
         }
       })
       this.autocompleteOptionsMission = res.data.data
+    },
+    onBulkOperationProcessed () {
+      this.drawerParticipationId = null // Force closing drawer
+      this.operations = []
+      this.$fetch()
+    },
+    onPageChange (page) {
+      this.operations = []
+      this.changePage(page)
     }
   }
 }

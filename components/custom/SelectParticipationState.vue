@@ -1,6 +1,11 @@
 <template>
   <div>
-    <SelectWithDescription :size="size" :options="statesAvailable" :value="value" @selected="handleSelected($event)" />
+    <SelectWithDescription
+      :size="size"
+      :options="$labels.participation_workflow_states"
+      :value="value"
+      @selected="handleSelected($event)"
+    />
 
     <ModalParticipationDecline
       :participation="participation"
@@ -36,15 +41,6 @@ export default {
   data () {
     return {
       showModalDecline: false
-    }
-  },
-  computed: {
-    statesAvailable () {
-      if (this.$store.getters.contextRole === 'admin') {
-        return this.$labels.participation_workflow_states
-      }
-      const toStates = this.$options.filters.label(this.value, 'participation_workflow_states', 'to')
-      return this.$labels.participation_workflow_states.filter(state => toStates.includes(state.key))
     }
   },
   methods: {

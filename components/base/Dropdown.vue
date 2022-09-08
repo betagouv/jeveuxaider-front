@@ -24,7 +24,7 @@
         aria-labelledby="menu-button"
         tabindex="-1"
       >
-        <div class="py-1" role="none">
+        <div class="py-1" role="none" @click="show = false">
           <slot name="items" />
         </div>
       </div>
