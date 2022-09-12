@@ -42,7 +42,8 @@ import {
   DesktopComputerIcon,
   HandIcon,
   XCircleIcon,
-  InformationCircleIcon
+  InformationCircleIcon,
+  TagIcon
 } from '@vue-hero-icons/outline'
 import {
   InformationCircleIcon as InformationCircleSolidIcon,
@@ -118,7 +119,8 @@ const components = {
   MailIcon,
   ChevronUpIcon,
   AdjustmentsIcon,
-  XCircleIcon
+  XCircleIcon,
+  TagIcon
 }
 
 Object.entries(components).forEach(([name, component]) => {

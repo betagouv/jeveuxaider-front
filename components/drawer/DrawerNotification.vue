@@ -1,5 +1,5 @@
 <template>
-  <Drawer :is-open="Boolean(notificationKey)" @close="$emit('close')">
+  <Drawer :is-open="Boolean(notificationKey)" width="lg" @close="$emit('close')">
     <template #title>
       <Heading :level="3">
         {{ notificationLabel }}
@@ -8,6 +8,9 @@
     <template v-if="notification">
       <div class="text-gray-500 text-sm py-6">
         {{ notificationDescription }}
+        <div v-if="notificationTags" class="mt-2">
+          <TagIcon class="w-4 h-4 inline" /> {{ notificationTags.join(', ') }}
+        </div>
       </div>
       <div class="max-w-full" v-html="notification" />
     </template>
@@ -28,6 +31,10 @@ export default {
     },
     notificationDescription: {
       type: String,
+      default: null
+    },
+    notificationTags: {
+      type: [Array, null],
       default: null
     }
   },

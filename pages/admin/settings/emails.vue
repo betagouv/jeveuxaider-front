@@ -4,6 +4,8 @@
       :notification-key="drawerNotificationKey"
       :notification-label="drawerNotification && drawerNotification.label"
       :notification-description="drawerNotification && drawerNotification.description"
+      :notification-tags="drawerNotification && drawerNotification.tags"
+      class="drawer-notification"
       @close="drawerNotificationKey = null"
     />
     <portal to="breadcrumb">
@@ -63,13 +65,14 @@ export default {
           key: 'benevole',
           label: '🙋‍♀️ Emails envoyés aux bénévoles',
           notifications: [
-            { key: 'benevole_register', label: '💪 Une dernière étape pour s’engager XXX !', description: "Notification envoyée au bénévole lorsqu'il s'inscrit" },
+            { key: 'benevole_register', label: '💪 Une dernière étape pour s’engager XXX !', description: "Notification envoyée au bénévole lorsqu'il s'inscrit", tags: ['app-benevole-inscription'] },
             { key: 'benevole_participation_being_processed', label: 'Votre demande de participation est en cours de traitement', description: 'Notification envoyée au bénévole lorsque le responsable passe la participation en cours de traitement' },
-            { key: 'benevole_participation_validated', label: 'Bravo ! Votre demande de participation vient d’être acceptée', description: 'Notification envoyée au bénévole lorsque sa participation est validée' },
+            { key: 'benevole_participation_validated', label: 'Bravo ! Votre demande de participation vient d’être acceptée', description: 'Notification envoyée au bénévole lorsque sa participation est validée', tags: ['app-benevole-participation-validee'] },
             { key: 'benevole_participation_temoignage', label: 'Participation terminée, demande de témoignage', description: 'Notification envoyée au bénévole lorsque sa participation est terminée' },
             { key: 'benevole_participation_refused', label: 'Votre participation a été déclinée', description: 'Notification envoyée au bénévole lorsque sa participation est refusée' },
             { key: 'benevole_participation_canceled', label: 'Votre participation a été annulée', description: 'Notification envoyée au bénévole lorsque sa participation est annulée' },
-            { key: 'benevole_marketplace_mission', label: 'XXX vous propose une mission de bénévolat', description: 'Notification envoyée via la marketplace inversée' }
+            { key: 'benevole_marketplace_mission', label: 'XXX vous propose une mission de bénévolat', description: 'Notification envoyée via la marketplace inversée' },
+            { key: 'new_message', label: 'Nouveau message de la part de XXX ([organisation])', description: "Lorsque le bénévole reçoit un nouveau message dans l'une de ses conversations", tags: ['app-benevole-nouveau-message'] }
           ]
         },
         {
@@ -80,7 +83,7 @@ export default {
             { key: 'responsable_still_in_draft', label: 'Finalisez votre inscription sur JeVeuxAider.gouv.fr', description: "Notification envoyée au responsable d'organisation lorsque son organisation est toujours en Brouillon. (J+1, J+7, J+15)" },
             { key: 'responsable_organisation_being_processed', label: 'Organisation en cours de traitement', description: 'Notification envoyée au responsable lorsque son organisation est en cours de traitement' },
             { key: 'responsable_organisation_validated', label: 'Votre organisation a été validée', description: 'Notification envoyée au responsable lorsque son organisation est validée' },
-            { key: 'responsable_association_validated', label: 'Bienvenue sur JeVeuxAider.gouv.fr', description: 'Notification envoyée au responsable lorsque son organisation de type association est validée' },
+            { key: 'responsable_association_validated', label: 'Bienvenue sur JeVeuxAider.gouv.fr', description: 'Notification envoyée au responsable lorsque son organisation de type association est validée', tags: ['app-organisation-validee'] },
             { key: 'responsable_collectivite_validated', label: 'Organisation de type collectivité territoriale validée', description: 'Notification envoyée au responsable lorsque son organisation de type collectivité territoriale est validée' },
             { key: 'responsable_organisation_signaled', label: 'Votre organisation a été signalée', description: 'Notification envoyée au responsable lorsque son organisation est signalée' },
             { key: 'responsable_mission_created', label: 'Votre mission a bien été déposée', description: "Notification envoyée au responsable lorsqu'une mission est postée" },
@@ -89,11 +92,12 @@ export default {
             { key: 'responsable_mission_outdated', label: 'Votre mission XXX a-t-elle pris fin ?', description: 'Notification envoyée au responsable lorsque sa mission a une date de fin périmée de plus de 15 jours' },
             { key: 'responsable_mission_almost_full', label: 'Votre mission XXX est bientôt complète ?', description: "Notification envoyée au responsable lorsque sa mission n'a plus qu'une seule place restante" },
             { key: 'responsable_mission_signaled', label: 'Votre mission a été signalée', description: 'Notification envoyée au responsable lorsque sa mission est signalée' },
-            { key: 'responsable_participation_created', label: 'Vous avez une nouvelle demande de participation', description: "Notification envoyée au responsable lorsqu'un bénévole souhaite participer à une mission" },
+            { key: 'responsable_participation_created', label: 'Vous avez une nouvelle demande de participation', description: "Notification envoyée au responsable lorsqu'un bénévole souhaite participer à une mission", tags: ['app-organisation-participation-en-attente-de-validation'] },
             { key: 'responsable_participation_canceled', label: 'Une participation a été annulée', description: "Notification envoyée au responsable lorsqu'une participation est annulée par le bénévole" },
             { key: 'responsable_missin_in_draft', label: 'Votre mission XXX est restée au statut « Brouillon »', description: 'Notification envoyée au responsable si une mission est restée au statut brouillon 7 jours' },
             { key: 'responsable_no_new_mission', label: 'Publiez une nouvelle mission sur JeVeuxAider.gouv.fr', description: "Notification envoyée au responsable si aucune mission n'est postée en 3 mois" },
-            { key: 'responsable_waiting_actions', label: 'Des bénévoles attendent votre réponse !', description: 'Notification envoyée au responsable si des participations sont en attente de validation' }
+            { key: 'responsable_waiting_actions', label: 'Des bénévoles attendent votre réponse !', description: 'Rappel envoyé au responsable si des participations sont toujours en attente de validation', tags: ['app-organisation-rappel-participations-en-attente-de-validation'] },
+            { key: 'new_message', label: 'Nouveau message de la part de XXX', description: "Lorsque le responsable reçoit un nouveau message dans l'une de ses conversations", tags: ['app-organisation-nouveau-message'] }
           ]
         },
         {
@@ -109,7 +113,6 @@ export default {
           key: 'other',
           label: '🤷🏽‍♀️ Les autres emails',
           notifications: [
-            { key: 'new_message', label: 'Nouveau message de la part de XXX', description: "Lorsqu'un nouveau message est postée dans une conversation" },
             { key: 'admin_reseau_new_lead', label: 'Nouveau Lead Tête de réseau !', description: "Lorsqu'une demande de création de réseau est soumise" },
             { key: 'admin_document_submitted', label: 'Une nouvelle ressource est accessible dans votre espace', description: "Notification envoyée aux référents et/ou responsable lorsqu'un nouveau document est postée" },
             { key: 'export_ready', label: 'Votre export est prêt', description: "Lorsqu'un export est prêt à être téléchargé" },
