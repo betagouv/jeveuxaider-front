@@ -54,10 +54,14 @@ export default {
   name: 'SoftGateParticipate',
   mixins: [FormErrors],
   data () {
+    let message = `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
+    if (this.$store.state.softGate.selectedMission.dateSelected) {
+      message = `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide le ${this.$store.state.softGate.selectedMission?.dateSelected.ariaLabel} (${this.$store.state.softGate.selectedMission?.slotSelected.map(slot => this.$options.filters.label(slot, 'slots')).join(', ').toLowerCase()}). \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
+    }
     return {
       loading: false,
       form: {
-        content: `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
+        content: message
       },
       formSchema: object({
         content: string().min(10, 'Votre message est trop court').required('Un message est requis')

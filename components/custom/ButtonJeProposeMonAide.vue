@@ -8,6 +8,14 @@
       </nuxt-link> -->
 
     <Button
+      v-if="variant == 'small'"
+      :disabled="disabled"
+      @click.native="onClick"
+    >
+      Je propose mon aide
+    </Button>
+    <Button
+      v-else
       size="xl"
       variant="green"
       full
@@ -26,6 +34,14 @@ export default {
     mission: {
       type: Object,
       required: true
+    },
+    variant: {
+      type: String,
+      default: 'normal' // "small"
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data () {

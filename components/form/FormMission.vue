@@ -545,10 +545,14 @@ export default {
             then: schema => schema.transform(v => (v instanceof Date && !isNaN(v) ? v : null)).min(ref('start_date'), 'La date de fin doit être supérieur à la date de début')
           }
         ),
-        commitment__duration: string().nullable().when(['showCalendar', 'date_type'], {
-          is: (showCalendar, dateType) => dateType == 'ponctual' && showCalendar == false,
-          then: schema => schema.required("La durée minimum d'engagement est requise"),
-          otherwise: schema => schema.min(0)
+        commitment__duration: string().nullable().required("La durée d'engagement est requise"),
+        commitment__time_period: string().nullable().when(['date_type'], {
+          is: dateType => dateType == 'recurring',
+          then: schema => schema.required('La fréquence est requise')
+        }),
+        recurrent_description: string().nullable().when(['date_type'], {
+          is: dateType => dateType == 'recurring',
+          then: schema => schema.required('Précisez les créneaux horaires pour le bénévole')
         }),
         participations_max: number().min(1, 'Le nombre de bénévole(s) recherché(s) doit être supérieur à 0').required('Le nombre de bénévole(s) recherché(s) est requis'),
         department: string().nullable().when(['type'], {

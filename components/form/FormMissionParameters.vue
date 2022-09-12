@@ -35,9 +35,18 @@
           suffix="bénévoles"
         />
       </FormControl>
+      <FormControl
+        v-if="form.date_type == 'recurring'"
+        label="Début de la mission"
+        html-for="start_date"
+        required
+        :error="errors.start_date"
+      >
+        <InputDate v-model="form.start_date" required name="start_date" />
+      </FormControl>
       <div class="grid gap-4" :class="[form.date_type == 'recurring' ? ' xl:grid-cols-2' : 'xl:grid-cols-1']">
         <FormControl
-          label="Durée d'engagement min."
+          label="Durée d'engagement"
           html-for="commitment__duration"
           required
           :error="errors.commitment__duration"
@@ -53,12 +62,17 @@
           v-if="form.date_type == 'recurring'"
           label="Fréquence"
           html-for="commitment__time_period"
+          :error="errors.commitment__time_period"
+          required
         >
           <SelectAdvanced
             v-model="form.commitment__time_period"
             name="commitment__time_period"
             placeholder="Fréquence"
-            :options="$labels.time_period"
+            :options="[
+              { key: 'week', label: 'par semaine' },
+              { key: 'month', label: 'par mois' },
+            ]"
           />
         </FormControl>
       </div>
@@ -129,23 +143,6 @@
       </div>
     </div>
     <div v-else-if="form.date_type == 'recurring'" class="space-y-6">
-      <div class="grid grid-cols-2 gap-4">
-        <FormControl
-          label="Début de la mission"
-          html-for="start_date"
-          required
-          :error="errors.start_date"
-        >
-          <InputDate v-model="form.start_date" required name="start_date" />
-        </FormControl>
-        <FormControl
-          label="Fin de la mission"
-          html-for="end_date"
-          :error="errors.end_date"
-        >
-          <InputDate v-model="form.end_date" name="end_date" />
-        </FormControl>
-      </div>
       <FormControl
         label="Précisez les créneaux horaires"
         html-for="recurrent_description"
@@ -153,17 +150,17 @@
         required
       >
         <template #description>
-          <div class="text-sm  text-gray-800 mt-1">
-            <div class="text-gray-600">
-              Exemple:
+          <div class="text-sm  text-gray-600 mt-1">
+            <div class="text-gray-700">
+              En une ligne, par exemple :
             </div>
-            <div class="italic">
+            <div>
               le samedi matin
             </div>
-            <div class="italic">
+            <div>
               en soirée du lundi au vendredi
             </div>
-            <div class="italic">
+            <div>
               de 7h à 9h les mardis
             </div>
           </div>
@@ -204,12 +201,12 @@ export default {
       currentSlot: null,
       form: {
         ...this.initialForm,
-        date_type: this.initialForm.date_type || 'ponctual',
+        date_type: this.initialForm.date_type || (this.initialForm.commitment__time_period ? 'recurring' : 'ponctual'),
         showCalendar: !!this.initialForm.dates,
         dates: this.initialForm.dates || [],
-        recurrent_description: this.initialForm.recurrent_description || '',
-        commitment__duration: this.initialForm.commitment__duration || null,
-        commitment__time_period: this.initialForm.commitment__time_period || null
+        commitment__duration: this.initialForm.commitment__duration || '',
+        commitment__time_period: this.initialForm.commitment__time_period || '',
+        recurrent_description: this.initialForm.recurrent_description || ''
       }
     }
   },
@@ -231,9 +228,6 @@ export default {
     form: {
       deep: true,
       handler () {
-        if (this.form.date_type == 'ponctual') {
-          this.form.commitment__time_period = null
-        }
         if (this.form.showCalendar) {
           // Autofill start_date and end_date
           if (this.form.dates.length == 1) {

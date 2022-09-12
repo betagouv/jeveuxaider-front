@@ -535,7 +535,6 @@ export default {
       }
     },
     async onSubmitChooseName () {
-      // console.log('onSubmitChooseName', this.form)
       if (!this.form.structure.name || this.form.structure.name.trim() === '') {
         this.$toast.error("Merci de saisir un nom d'organisation")
         return
