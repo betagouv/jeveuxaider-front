@@ -175,7 +175,7 @@
               </template>
             </div>
 
-            <div v-if="dates.length" class="px-8 sm:px-32 lg:px-8 mt-4 sm:mt-8">
+            <div v-if="dates.length && !mission.dates" class="px-8 sm:px-32 lg:px-8 mt-4 sm:mt-8">
               <div
                 class="grid sm:divide-x border-b pb-3 sm:pb-0"
                 :class="[{ 'sm:grid-cols-2': dates.length == 2 }]"
@@ -233,11 +233,49 @@
                 </div>
               </div>
 
-              <div class="mx-8 sm:mx-12">
-                <ButtonJeProposeMonAide
-                  v-if="canRegister"
-                  :mission="mission"
-                />
+              <div class="mx-8 sm:mx-10">
+                <template v-if="canRegister">
+                  <div v-if="mission.dates">
+                    <div
+                      class="mb-2 uppercase text-[#777E90] text-xs font-bold text-center"
+                    >
+                      Choisissez votre créneau
+                    </div>
+                    <v-calendar
+                      v-if="!dateSelected"
+                      :attributes="calendarAttrs"
+                      :min-date="new Date()"
+                      is-expanded
+                      @dayclick="handleDayClick"
+                    />
+                    <div v-else-if="dateSelected" class="relative mt-4">
+                      <div class="left-0 top-0.5 absolute cursor-pointer group" @click="handlePreviousStepClick">
+                        <ChevronLeftIcon class="text-gray-600 h-5 w-5 group-hover:text-black" />
+                      </div>
+                      <div class="text-center font-bold">
+                        {{ $dayjs(dateSelected.id).format('dddd D MMMM') }}
+                      </div>
+
+                      <CheckboxGroup
+                        v-model="slotSelected"
+                        class="mt-6"
+                        name="slots"
+                        variant="button"
+                        :options="$labels.slots.filter(slot => dateSelected.slots.includes(slot.key))"
+                      />
+                      <div class="flex items-center justify-center mt-6">
+                        <ButtonJeProposeMonAide
+                          :disabled="!slotSelected || slotSelected.length == 0"
+                          :mission="{...mission, dateSelected, slotSelected}"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <ButtonJeProposeMonAide
+                    v-else
+                    :mission="mission"
+                  />
+                </template>
                 <template v-else>
                   <Button size="xl" rounded full variant="white" plain>
                     Inscription fermée
@@ -341,6 +379,8 @@ export default {
   },
   data () {
     return {
+      dateSelected: null,
+      slotSelected: null,
       similarMissions: []
     }
   },
@@ -391,7 +431,7 @@ export default {
         })
       }
 
-      if (endDate) {
+      if (endDate && endDate != startDate) {
         dates.push({
           date: this.$dayjs(endDate).format('D MMMM YYYY'),
           label: "JUSQU'AU"
@@ -445,6 +485,35 @@ export default {
     },
     missionType () {
       return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
+    },
+    calendarAttrs () {
+      const highlight = {
+        class: 'bg-jva-blue-500',
+        contentClass: 'text-white',
+        contentStyle: {
+          fontWeight: 800
+        }
+      }
+
+      return [
+        {
+          key: 'creneaux',
+          highlight,
+          dates: this.mission.dates.map(day => day.date)
+        }
+      ]
+    }
+  },
+  methods: {
+    handlePreviousStepClick () {
+      this.dateSelected = null
+      this.slotSelected = null
+    },
+    handleDayClick (dateSelected) {
+      const dateFound = this.mission.dates.find(date => date.id == dateSelected.id)
+      if (dateFound) {
+        this.dateSelected = dateFound
+      }
     }
   }
 }
@@ -474,5 +543,14 @@ export default {
         @apply translate-x-[104px];
       }
     }
-}
+  }
+
+  ::v-deep .vc-title {
+    @apply mb-3 pb-2 text-black font-bold;
+    font-size: 16px;
+  }
+
+  ::v-deep .vc-container {
+    border: none;
+  }
 </style>
