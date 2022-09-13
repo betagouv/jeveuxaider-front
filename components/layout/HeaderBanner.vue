@@ -29,6 +29,10 @@
         </nuxt-link>
       </template>
     </Banner>
+
+    <Banner v-if="isPreprod" icon="ExclamationIcon" class="!bg-jva-orange-500">
+      Vous êtes actuellement sur la version test de JeVeuxAider.gouv.fr Les actions que vous réalisez ne seront pas prises en compte sur la plateforme.
+    </Banner>
   </div>
 </template>
 
@@ -48,6 +52,9 @@ export default {
     }
   },
   computed: {
+    isPreprod () {
+      return this.$config.apiUrl == 'https://jeveuxaider-preprod-back.osc-secnum-fr1.scalingo.io'
+    },
     isImpersonate () {
       return this.$cookies.get('access-token-impersonate')
     },

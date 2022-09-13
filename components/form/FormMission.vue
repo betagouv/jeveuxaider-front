@@ -6,6 +6,9 @@
           Description de la mission
         </Heading>
         <div class="space-y-10">
+          <Alert>
+            Consultez <a class="font-semibold underline">cet article</a> <ExternalLinkIcon class="h-3 w-3 inline" /> pour découvrir nos astuces pour rédiger une mission impactante.
+          </Alert>
           <FormControl
             html-for="name"
             :label="Boolean(mission.template) ? 'ℹ️   Information' : 'Titre de la mission'"
@@ -21,7 +24,7 @@
             <Input
               v-model="form.name"
               name="name"
-              placeholder="Décrivez l'action du bénévole en une phrase"
+              placeholder="Merci de rédiger le titre de votre mission à la première personne du singulier"
               :disabled="Boolean(mission.template)"
             />
           </FormControl>
