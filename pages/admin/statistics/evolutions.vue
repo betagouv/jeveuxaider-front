@@ -12,28 +12,23 @@
 
     <SectionHeading
       title="Évolutions des indicateurs clés"
-      secondary-title-bottom="Tableau des indicateurs avec leurs variations sur le mois précédent"
-    >
-      <!-- <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics @refetch="refetch()" />
-        </div>
-      </template> -->
-    </SectionHeading>
+      secondary-title-bottom="Indicateurs avec leurs variations par rapport à l'année précédente"
+    />
 
     <div class="space-y-12">
+      <EvolutionsByYear ref="evolutionsByYear" />
       <EvolutionsByMonth ref="evolutionsByMonth" />
     </div>
   </div>
 </template>
 
 <script>
-// import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import EvolutionsByYear from '@/components/numbers/EvolutionsByYear.vue'
 import EvolutionsByMonth from '@/components/numbers/EvolutionsByMonth.vue'
 
 export default {
   components: {
-    // FiltersStatistics,
+    EvolutionsByYear,
     EvolutionsByMonth
   },
   layout: 'statistics',
@@ -43,6 +38,7 @@ export default {
   },
   methods: {
     refetch () {
+      this.$refs.evolutionsByYear.$fetch()
       this.$refs.evolutionsByMonth.$fetch()
     }
   }

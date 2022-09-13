@@ -88,7 +88,7 @@ export default {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          apiKey: '73b5c238_2b8b_4cb5_8851_94e1cac58123'
+          apikey: this.$config.apiEngagement.key
         }
       }
     ).then(response => response.json())

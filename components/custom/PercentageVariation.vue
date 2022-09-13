@@ -8,7 +8,8 @@
       }
     ]"
   >
-    {{ value|formatNumber }}%
+    <template v-if="value > 0">+{{ value|formatNumber }}%</template>
+    <template v-else>{{ value|formatNumber }}%</template>
   </span>
 </template>
 
