@@ -4,15 +4,15 @@
       <Breadcrumb
         :items="[
           { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Plus de chiffres', link: '/admin/numbers' },
-          { label: 'Évolutions' },
+          { label: 'Statistiques', link: '/admin/statistics' },
+          { label: 'Indicateurs clés' },
         ]"
       />
     </portal>
 
     <SectionHeading
-      title="Évolutions des indicateurs clés"
-      secondary-title-bottom="Indicateurs avec leurs variations par rapport à l'année précédente"
+      title="Indicateurs clés"
+      secondary-title-bottom="Évolution des indicateurs avec leurs variations par rapport à l'année précédente"
     />
 
     <div class="space-y-12">

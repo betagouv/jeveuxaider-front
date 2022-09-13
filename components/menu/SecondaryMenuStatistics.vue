@@ -50,7 +50,7 @@ export default {
           label: 'Statistiques',
           childrens: [
             { label: 'Vue d\'ensemble', to: '/admin/statistics' },
-            { label: 'Évolutions', to: '/admin/statistics/evolutions' },
+            { label: 'Indicateurs clés', to: '/admin/statistics/indicateurs-cles' },
             { label: 'Organisations', to: '/admin/statistics/organisations' },
             { label: 'Missions', to: '/admin/statistics/missions' },
             { label: 'Participations', to: '/admin/statistics/participations' },
@@ -62,7 +62,8 @@ export default {
           key: 'api',
           label: 'API Engagement',
           childrens: [
-            { label: 'Missions', to: '/admin/statistics/api-engagement/missions' }
+            { label: 'Trafic & candidatures', to: '/admin/statistics/api-engagement/trafic-candidatures' },
+            { label: 'Partenaires', to: '/admin/statistics/api-engagement/partenaires' }
           ]
         },
         {

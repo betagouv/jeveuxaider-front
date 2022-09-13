@@ -73,6 +73,8 @@ export default {
           key: 'other',
           label: 'Autre',
           childrens: [
+            { label: 'Statistiques', to: '/admin/statistics' },
+            { label: 'Indicateurs clés', to: '/admin/statistics/indicateurs-cles' },
             { label: 'Invitations', to: '/admin/other/invitations' }
           ]
         },
