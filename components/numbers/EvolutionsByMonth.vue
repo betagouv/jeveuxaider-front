@@ -13,16 +13,20 @@
           <TableHeadCell>Mises en relation</TableHeadCell>
           <TableHeadCell>Participations effectives</TableHeadCell>
           <TableHeadCell>Taux de conversion</TableHeadCell>
+          <TableHeadCell />
         </TableHead>
         <TableBody>
-          <TableRow v-for="item,y in results.filter(item => item.year == year)" :key="y">
+          <TableRow v-for="item,y in resultsFilteredByYear(year)" :key="y">
             <TableRowCell>
               <span class="capitalize text-gray-600 font-semibold">
                 {{ $dayjs(item.created_at).format('MMMM') }}
               </span>
             </TableRowCell>
             <TableRowCell>
-              --
+              <div class="flex space-x-2 items-center">
+                <span>{{ item.profiles_total|formatNumber }}</span>
+                <PercentageVariation v-if="item.profiles_total_variation" :value="item.profiles_total_variation" />
+              </div>
             </TableRowCell>
             <TableRowCell>
               <div class="flex space-x-2 items-center">
@@ -54,6 +58,10 @@
               </span>
               <span v-else>--</span>
             </TableRowCell>
+            <TableRowCell>
+              <MinusCircleIcon v-if="selectedMonth" class="h-4 cursor-pointer hover:text-jva-blue-500" @click="toggleMonth(item.month)" />
+              <PlusCircleIcon v-else class="h-4 cursor-pointer hover:text-jva-blue-500" @click="toggleMonth(item.month)" />
+            </TableRowCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -74,7 +82,9 @@ export default {
       loading: true,
       missions: null,
       participations: null,
-      structures: null
+      users: null,
+      structures: null,
+      selectedMonth: null
     }
   },
   async fetch () {
@@ -83,6 +93,7 @@ export default {
     await Promise.all([
       this.fetchStructuresByMonth(),
       this.fetchMissionsByMonth(),
+      this.fetchUsersByMonth(),
       this.fetchParticipationsByMonth()
     ]).finally(() => {
       this.loading = false
@@ -100,12 +111,25 @@ export default {
       return Object.values(_.merge(
         _.keyBy(this.missions, 'created_at'),
         _.keyBy(this.structures, 'created_at'),
-        _.keyBy(this.participations, 'created_at')
+        _.keyBy(this.participations, 'created_at'),
+        _.keyBy(this.users, 'created_at')
       ))
-      // return Object.keys(groupByYearValues).sort().reverse().map(key => ({ ...groupByYearValues[key], key }))
     }
   },
   methods: {
+    resultsFilteredByYear (year) {
+      if (this.selectedMonth) {
+        return this.results.filter(item => item.year == year && item.month == this.selectedMonth)
+      }
+      return this.results.filter(item => item.year == year)
+    },
+    toggleMonth (month) {
+      if (!this.selectedMonth) {
+        this.selectedMonth = month
+      } else {
+        this.selectedMonth = null
+      }
+    },
     async fetchStructuresByMonth () {
       await this.$axios.get('/statistics/public/structures-by-month', {
         params: this.$store.state.statistics.params
@@ -118,6 +142,13 @@ export default {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.missions = response.data
+      })
+    },
+    async fetchUsersByMonth () {
+      await this.$axios.get('/statistics/public/users-by-month', {
+        params: this.$store.state.statistics.params
+      }).then((response) => {
+        this.users = response.data
       })
     },
     async fetchParticipationsByMonth () {
