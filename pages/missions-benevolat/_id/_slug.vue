@@ -263,12 +263,10 @@
                         variant="button"
                         :options="$labels.slots.filter(slot => dateSelected.slots.includes(slot.key))"
                       />
-                      <div class="flex items-center justify-center">
+                      <div class="flex items-center justify-center mt-6">
                         <ButtonJeProposeMonAide
                           :disabled="!slotSelected || slotSelected.length == 0"
-                          class="mt-6"
                           :mission="{...mission, dateSelected, slotSelected}"
-                          variant="small"
                         />
                       </div>
                     </div>

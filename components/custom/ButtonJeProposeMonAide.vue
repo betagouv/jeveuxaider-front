@@ -8,18 +8,11 @@
       </nuxt-link> -->
 
     <Button
-      v-if="variant == 'small'"
+      :size="size"
+      :variant="variant"
+      :full="full"
+      :rounded="rounded"
       :disabled="disabled"
-      @click.native="onClick"
-    >
-      Je propose mon aide
-    </Button>
-    <Button
-      v-else
-      size="xl"
-      variant="green"
-      full
-      rounded
       @click.native="onClick"
     >
       Je propose mon aide
@@ -37,11 +30,23 @@ export default {
     },
     variant: {
       type: String,
-      default: 'normal' // "small"
+      default: 'green'
+    },
+    rounded: {
+      type: Boolean,
+      default: true
+    },
+    full: {
+      type: Boolean,
+      default: true
     },
     disabled: {
       type: Boolean,
       default: false
+    },
+    size: {
+      type: String,
+      default: 'xl'
     }
   },
   data () {
