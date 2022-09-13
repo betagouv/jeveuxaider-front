@@ -1,7 +1,48 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
     <BoxHeadingStatistics title="todo" class="mb-6" />
-    <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+
+    <div>
+      <div>
+        <Table>
+          <TableHead>
+            <TableHeadCell>Période</TableHeadCell>
+            <TableHeadCell>Trafic entrant</TableHeadCell>
+            <TableHeadCell>Trafic sortant</TableHeadCell>
+            <TableHeadCell>Candidatures entrantes</TableHeadCell>
+            <TableHeadCell>Candidatures sortantes</TableHeadCell>
+            <TableHeadCell>Performance</TableHeadCell>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              <TableRowCell>Septembre 2022</TableRowCell>
+              <TableRowCell>1111</TableRowCell>
+              <TableRowCell>222</TableRowCell>
+              <TableRowCell>1234</TableRowCell>
+              <TableRowCell>454</TableRowCell>
+              <TableRowCell>4.64%</TableRowCell>
+            </TableRow>
+            <TableRow>
+              <TableRowCell>Aout 2022</TableRowCell>
+              <TableRowCell>1111</TableRowCell>
+              <TableRowCell>222</TableRowCell>
+              <TableRowCell>1234</TableRowCell>
+              <TableRowCell>454</TableRowCell>
+              <TableRowCell>4.64%</TableRowCell>
+            </TableRow>
+            <TableRow>
+              <TableRowCell>Juillet 2022</TableRowCell>
+              <TableRowCell>1111</TableRowCell>
+              <TableRowCell>222</TableRowCell>
+              <TableRowCell>1234</TableRowCell>
+              <TableRowCell>454</TableRowCell>
+              <TableRowCell>4.64%</TableRowCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+    <!-- <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.missions"
         :title="`${$options.filters.pluralize(statistics.missions, 'Mission', 'Missions', false)}`"
@@ -42,17 +83,17 @@
         :subtitle="`${$options.filters.pluralize(statistics.missions_snu_participations_max_sum, 'proposée', 'proposées', false)}`"
         infos-bulle="Correspond aux places proposées en MIG sur la période, pour des missions validées ou bien terminées"
       />
-    </div>
+    </div> -->
   </Box>
 </template>
 
 <script>
-import CardStatistic from '@/components/card/CardStatistic'
+// import CardStatistic from '@/components/card/CardStatistic'
 import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
 export default {
   components: {
-    CardStatistic,
+    // CardStatistic,
     BoxHeadingStatistics
   },
   data () {
@@ -67,6 +108,7 @@ export default {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
+      console.log('/statistics/api-engagement/missions', response.data)
       this.statistics = response.data
     })
   }

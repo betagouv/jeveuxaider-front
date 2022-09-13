@@ -50,6 +50,7 @@ export default {
           label: 'Statistiques',
           childrens: [
             { label: 'Vue d\'ensemble', to: '/admin/statistics' },
+            { label: 'Évolutions', to: '/admin/statistics/evolutions' },
             { label: 'Organisations', to: '/admin/statistics/organisations' },
             { label: 'Missions', to: '/admin/statistics/missions' },
             { label: 'Participations', to: '/admin/statistics/participations' },
