@@ -69,7 +69,7 @@ import SelectOrganisationState from '@/components/custom/SelectOrganisationState
 import BoxMission from '@/components/section/organisation/BoxMission'
 import BoxParticipation from '@/components/section/organisation/BoxParticipation'
 import BoxInformations from '@/components/section/organisation/BoxInformations'
-import BoxResponsable from '@/components/section/organisation/BoxResponsable'
+import BoxResponsable from '@/components/section/BoxResponsable'
 import BoxReseau from '@/components/section/organisation/BoxReseau'
 import BoxReferents from '@/components/section/BoxReferents'
 import LoadingIndicator from '@/components/custom/LoadingIndicator'

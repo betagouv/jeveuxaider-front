@@ -6,6 +6,9 @@
           Description de la mission
         </Heading>
         <div class="space-y-10">
+          <Alert>
+            Consultez <a class="font-semibold underline">cet article</a> <ExternalLinkIcon class="h-3 w-3 inline" /> pour découvrir nos astuces pour rédiger une mission impactante.
+          </Alert>
           <FormControl
             html-for="name"
             :label="Boolean(mission.template) ? 'ℹ️   Information' : 'Titre de la mission'"
@@ -21,7 +24,7 @@
             <Input
               v-model="form.name"
               name="name"
-              placeholder="Décrivez l'action du bénévole en une phrase"
+              placeholder="Merci de rédiger le titre de votre mission à la première personne du singulier"
               :disabled="Boolean(mission.template)"
             />
           </FormControl>
@@ -113,6 +116,7 @@
           <FormControl
             label="Quelques mots pour motiver les bénévoles à participer"
             html-for="information"
+            :error="errors.information"
           >
             <RichEditor
               v-model="form.information"
@@ -229,7 +233,7 @@
               /> -->
             </FormControl>
             <FormControl
-              label="Fin de la mission"
+              label="Fin de la mission (facultatif)"
               html-for="end_date"
               :error="errors.end_date"
             >
@@ -241,7 +245,7 @@
               /> -->
             </FormControl>
           </div>
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid xl:grid-cols-2 gap-4">
             <FormControl
               label="Durée d'engagement min."
               html-for="commitment__duration"
@@ -289,11 +293,26 @@
         <div class="space-y-8">
           <div>
             <RadioGroup v-model="form.type" :options="$labels.mission_types" variant="tabs" @updated="handleTypeChange" />
-            <FormHelperText v-if="isPresentiel" class="mt-4">
-              Recruter au plus près du lieu de mission et des bénéficiaires permet de faciliter l'engagement des bénévoles. Vous avez la possibilité de dupliquer cette mission sur plusieurs lieux.
-            </FormHelperText>
+            <template v-if="isDistance">
+              <div class="text-sm text-gray-600 leading-relaxed mt-4">
+                <p><strong>Les missions à distance sont visibles par les bénévoles de toute la France, quelle que soit leur position géographique.</strong></p>
+              </div>
+              <FormHelperText class="mt-4">
+                <p>Si votre mission porte sur un territoire spécifique, nous vous recommandons de proposer votre mission en présentiel et de cocher la case “En autonomie”.</p>
+              </FormHelperText>
+            </template>
           </div>
+
+          <!-- <a class='text-jva-blue-500 hover:underline' href='/'>En savoir plus</a> -->
+          <Toggle
+            v-if="isPresentiel"
+            v-model="form.is_autonomy"
+            label="Mission à réaliser en autonomie"
+            description="Le bénévole peut réaliser la mission sans l’encadrement du responsable."
+          />
+
           <FormControl
+            v-if="isPresentiel"
             label="Département"
             html-for="department"
             required
@@ -305,9 +324,62 @@
               placeholder="Sélectionnez un département"
               :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
             />
+
+            <FormHelperText v-if="isAutonomy" class="mt-4">
+              <p>Pour une mission donnée, les zones d’intervention doivent se situer sur le même département. Si votre mission a lieu sur plusieurs départements, il vous faut créer une mission par département.</p>
+            </FormHelperText>
           </FormControl>
+
+          <template v-if="isPresentiel && isAutonomy">
+            <FormControl
+              label="Codes postaux de la zone d'intervention (jusqu'à 20)"
+              html-for="autonomy_zips"
+              :error="errors.autonomy_zips"
+            >
+              <InputAutocomplete
+                key="input_autocomplete_autonomy"
+                icon="LocationMarkerIcon"
+                name="autocomplete"
+                label="Autocomplete"
+                placeholder="Recherche par ville ou code postal"
+                :options="autocompleteOptions"
+                attribute-key="id"
+                attribute-label="label"
+                attribute-right-label="typeLabel"
+                :reset-value-on-select="true"
+                @selected="handleSelectedAutonomyZip"
+                @keyup.enter="onEnter"
+                @fetch-suggestions="onFetchGeoSuggestions"
+              />
+              <div v-if="form.autonomy_zips && form.autonomy_zips.length">
+                <div class="flex flex-wrap gap-2 mt-4">
+                  <TagFormItem
+                    v-for="item in form.autonomy_zips"
+                    :key="item.zip"
+                    :tag="item"
+                    @removed="onRemovedTagItem"
+                  >
+                    {{ item.zip }}
+                  </TagFormItem>
+                </div>
+              </div>
+            </FormControl>
+
+            <FormControl
+              label="Précisions sur la zone d'intervention (villes, lieux, etc.)"
+              html-for="autonomy_precisions"
+              :error="errors.autonomy_precisions"
+            >
+              <RichEditor
+                v-model="form.autonomy_precisions"
+                placeholder="Précisez en quelques mots les zones d'intervention du bénévole en autonomie"
+                class="autonomy_precisions_wrapper"
+              />
+            </FormControl>
+          </template>
+
           <FormControl
-            v-if="isPresentiel"
+            v-if="isPresentiel && !isAutonomy"
             label="Rechercher l'adresse du lieu de la mission"
             html-for="adress"
             required
@@ -326,7 +398,7 @@
             />
           </FormControl>
 
-          <div v-if="isPresentiel" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div v-if="isPresentiel && !isAutonomy" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <FormControl
               class="lg:col-span-2"
               label="Adresse"
@@ -528,13 +600,95 @@ export default {
         activity_id: this.mission.template?.activity_id || this.mission.activity_id,
         objectif: this.mission.template?.objectif || this.mission.objectif,
         description: this.mission.template?.description || this.mission.description,
-        illustrations: this.mission.illustrations || []
+        illustrations: this.mission.illustrations || [],
+        autonomy_zips: this.mission.autonomy_zips || []
       },
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
         domaine_id: number().nullable().required('Le domaine principal est requis'),
-        objectif: string().required("L'objectif est requis"),
-        description: string().required('La description est requise'),
+        objectif: string().required('La présentation est requise')
+          .test(
+            'test-contains-email',
+            'La présentation ne doit pas contenir d\'email',
+            (objectif) => {
+              return !this.stringContainsEmail(objectif)
+            }
+          ).test(
+            'test-contains-url',
+            'La présentation ne doit pas contenir de liens.',
+            (objectif) => {
+              return !this.stringContainsUrl(objectif)
+            }
+          ).test(
+            'test-contains-phone',
+            'La présentation ne doit pas contenir de téléphone.',
+            (objectif) => {
+              return !this.stringContainsPhone(objectif)
+            }
+          ),
+        description: string().required('Les précisions sont requises')
+          .test(
+            'test-contains-email',
+            'Les précisions ne doivent pas contenir d\'email',
+            (description) => {
+              return !this.stringContainsEmail(description)
+            }
+          ).test(
+            'test-contains-url',
+            'Les précisions ne doivent pas contenir de liens.',
+            (description) => {
+              return !this.stringContainsUrl(description)
+            }
+          ).test(
+            'test-contains-phone',
+            'Les précisions ne doivent pas contenir de téléphone.',
+            (description) => {
+              return !this.stringContainsPhone(description)
+            }
+          ),
+        information: string().nullable()
+          .test(
+            'test-contains-email',
+            'Ce champ ne doit pas contenir d\'email',
+            (information) => {
+              return !this.stringContainsEmail(information)
+            }
+          ).test(
+            'test-contains-url',
+            'Ce champ ne doit pas contenir de liens',
+            (information) => {
+              return !this.stringContainsUrl(information)
+            }
+          ).test(
+            'test-contains-phone',
+            'Ce champ ne doit pas contenir de téléphone',
+            (information) => {
+              return !this.stringContainsPhone(information)
+            }
+          ),
+        autonomy_precisions: string().nullable()
+          .test(
+            'test-contains-email',
+            'Les précisions sur la zone d\'intervention ne doivent pas contenir d\'email',
+            // eslint-disable-next-line camelcase
+            (autonomy_precisions) => {
+              return !this.stringContainsEmail(autonomy_precisions)
+            }
+          ).test(
+            'test-contains-url',
+            'Les précisions sur la zone d\'intervention ne doivent pas contenir de liens',
+            // eslint-disable-next-line camelcase
+            (autonomy_precisions) => {
+              return !this.stringContainsUrl(autonomy_precisions)
+            }
+          ).test(
+            'test-contains-phone',
+            'Les précisions sur la zone d\'intervention ne doivent pas contenir de téléphone',
+            // eslint-disable-next-line camelcase
+            (autonomy_precisions) => {
+              return !this.stringContainsPhone(autonomy_precisions)
+            }
+          ),
         publics_beneficiaires: array().transform(v => (!v ? [] : v)).min(1, 'Sélectionnez au moins 1 public bénéficiaire').required('Sélectionnez au moins 1 public bénéficiaire'),
         start_date: date()
           .required('La date de début est requise')
@@ -548,15 +702,32 @@ export default {
         ),
         commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
         participations_max: number().min(1, 'Le nombre de bénévole(s) recherché(s) doit être supérieur à 0').required('Le nombre de bénévole(s) recherché(s) est requis'),
-        department: string().nullable().required('Le département est requis'),
-        address: string().nullable(),
-        zip: string().nullable().when('type', {
-          is: 'Mission en présentiel',
-          then: schema => schema.required('Le code postal est requis'),
-          otherwise: schema => schema.nullable()
+        department: string().nullable().when(['type'], {
+          is: type => type == 'Mission en présentiel',
+          then: schema => schema.required('Le département est requis')
         }),
-        city: string().nullable().when('type', {
-          is: 'Mission en présentiel',
+        address: string().nullable(),
+        zip: string()
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy && this.form.zip && this.form.department,
+            then: schema => schema.test(
+              'test-zip',
+              'Le code postal et le département ne correspondent pas',
+              () => {
+                const department = ['2A', '2B'].includes(this.form.department) ? '20' : this.form.department
+                return this.form.zip && this.form.zip.startsWith(department)
+              })
+          })
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
+            then: schema => schema.nullable().required('Le code postal est requis'),
+            otherwise: schema => schema.nullable()
+          }),
+        city: string().nullable().when(['type', 'is_autonomy'], {
+          // eslint-disable-next-line camelcase
+          is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
           then: schema => schema.required('La ville est requise'),
           otherwise: schema => schema.nullable()
         }),
@@ -564,17 +735,34 @@ export default {
         snu_mig_places: number().nullable().when('is_snu_mig_compatible', {
           is: true,
           then: schema => schema.min(1, 'Le nombre de volontaire(s) recherché(s) est incorrect (minimum: 1)').required('Le nombre de volontaire(s) recherché(s) est requis')
-        })
-        // latitude: string().nullable().when(['state', 'type'], {
-        //   is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
-        //   then: schema => schema.required('La latitude est obligatoire'),
-        //   otherwise: schema => schema.nullable()
-        // }),
-        // longitude: string().nullable().when(['state', 'type'], {
-        //   is: (state, type) => state == 'Validée' && type == 'Mission en présentiel',
-        //   then: schema => schema.required('La longitude est obligatoire'),
-        //   otherwise: schema => schema.nullable()
-        // })
+        }),
+        autonomy_zips: array()
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => !is_autonomy || type !== 'Mission en présentiel',
+            then: schema => schema.nullable()
+          })
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => type == 'Mission en présentiel' && is_autonomy,
+            then: schema => schema.min(1, 'Au moins un code postal requis').max(20, '20 codes postaux maximum')
+          })
+          .when(['type', 'is_autonomy', 'department'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy, department) => type == 'Mission en présentiel' && is_autonomy && department,
+            then: schema => schema.test(
+              'test-zips',
+              'Les codes postaux et le département ne correspondent pas',
+              // eslint-disable-next-line camelcase
+              (autonomy_zips) => {
+                const zips = autonomy_zips.map(i => i.zip)
+                const department = ['2A', '2B'].includes(this.form.department) ? '20' : this.form.department
+                return zips.every(zip => zip.startsWith(department))
+              }
+            ),
+            otherwise: schema => schema.nullable()
+          })
+
       }),
       activities: []
     }
@@ -591,8 +779,14 @@ export default {
     isAdding () {
       return !this.mission.id
     },
+    isDistance () {
+      return this.form.type == 'Mission à distance'
+    },
     isPresentiel () {
       return this.form.type == 'Mission en présentiel'
+    },
+    isAutonomy () {
+      return this.form.is_autonomy
     },
     mediaPickerDomaineIds () {
       return [this.form.domaine_id]
@@ -603,6 +797,14 @@ export default {
       }
 
       return true
+    },
+    inputGeoType () {
+      return this.isAutonomy ? 'municipality' : undefined
+    }
+  },
+  watch: {
+    isAutonomy (val) {
+      this.autocompleteOptions = []
     }
   },
   methods: {
@@ -652,7 +854,41 @@ export default {
     },
     onMediaPickerChange (payload, field) {
       this.form[field].splice(payload.index, 1, payload.media)
+    },
+    handleSelectedAutonomyZip (selectedItem) {
+      if (!this.form.autonomy_zips) {
+        this.form.autonomy_zips = []
+      }
+      if (selectedItem && !this.form.autonomy_zips.find(item => item.zip == selectedItem.postcode)) {
+        this.form.autonomy_zips.push({
+          zip: selectedItem.postcode,
+          latitude: selectedItem.coordinates[1],
+          longitude: selectedItem.coordinates[0],
+          city: selectedItem.city
+        })
+      }
+    },
+    onRemovedTagItem (value) {
+      this.form.autonomy_zips = this.form.autonomy_zips.filter(item => item.zip !== value.zip)
+    },
+    stringContainsEmail (string) {
+      return (/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/si).test(string)
+    },
+    stringContainsUrl (string) {
+      return (/(http|ftp|mailto|www)/).test(string)
+    },
+    stringContainsPhone (string) {
+      return (/(?:(?:(?:\+|00)33[ ]?(?:\(0\)[ ]?)?)|0){1}[1-9]{1}([ .-]?)(?:\d{2}\1?){3}\d{2}/).test(string)
     }
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.autonomy_precisions_wrapper {
+  ::v-deep .ck-editor__editable {
+    min-height: 80px;
+  }
+}
+
+</style>

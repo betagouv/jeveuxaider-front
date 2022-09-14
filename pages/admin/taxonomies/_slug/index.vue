@@ -21,7 +21,7 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/add`">
+          <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/add?redirect=/admin/taxonomies/${$route.params.slug}`">
             <Button size="lg" icon="PlusIcon">
               Nouveau
             </Button>
@@ -129,6 +129,8 @@ export default {
       switch (this.$route.params.slug) {
         case 'skills':
           return 'compétence'
+        case 'profiles':
+          return 'tags utilisateurs'
         case 'tags':
           return 'tag'
         default:

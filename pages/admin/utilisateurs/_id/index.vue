@@ -10,9 +10,19 @@
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="relative z-10">
-          <Heading as="h1" :level="1" class="mb-2">
-            {{ profile.full_name }}
-          </Heading>
+          <div class="sm:flex justify-between items-center">
+            <Heading as="h1" :level="1" class="mb-2">
+              {{ profile.full_name }}
+            </Heading>
+            <div
+              v-if="$store.getters.contextRole == 'admin' && profile.tags"
+              class="mt-2 mb-4 flex flex-wrap gap-1"
+            >
+              <Badge v-for="tag in profile.tags" :key="tag.id" size="xxs" color="gray-light">
+                {{ tag.name }}
+              </Badge>
+            </div>
+          </div>
           <div v-if="profile.user.last_online_at" class="text-cool-gray-500 font-semibold">
             Dernière connexion le {{ $dayjs(profile.user.last_online_at).format('D MMMM YYYY à HH:mm') }}
           </div>
@@ -87,7 +97,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="border-t -mx-6 mt-6 mb-4" />
+                <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
                 <div class="flex justify-center text-sm">
                   <Link :to="`/admin/participations?filter[profile.id]=${profile.id}&full_name=${profile.full_name}`">
                     Voir les participations

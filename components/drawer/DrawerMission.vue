@@ -55,10 +55,10 @@
       </div>
       <div class="border-t -mx-6 my-6" />
       <BoxDates class="mb-8" :mission="mission" />
-      <BoxPlace class="mb-8" :mission="mission" />
+      <BoxPlace class="mb-8" :mission="mission" @updated="$fetch" />
       <BoxInformations class="mb-8" :mission="mission" />
       <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" :key="mission.department" :department="mission.department" class="mb-8" />
-      <BoxResponsable class="mb-8" :profile="mission.responsable" />
+      <BoxResponsable class="mb-8" :responsable="mission.responsable" />
       <BoxOrganisation class="mb-8" :organisation="mission.structure" />
 
       <div class="flex justify-center mb-10">
@@ -74,7 +74,7 @@
 import SelectMissionState from '@/components/custom/SelectMissionState'
 import BoxDates from '@/components/section/mission/BoxDates'
 import BoxPlace from '@/components/section/mission/BoxPlace'
-import BoxResponsable from '@/components/section/mission/BoxResponsable'
+import BoxResponsable from '@/components/section/BoxResponsable'
 import BoxOrganisation from '@/components/section/mission/BoxOrganisation'
 import BoxInformations from '@/components/section/mission/BoxInformations'
 import MixinMission from '@/mixins/mission'

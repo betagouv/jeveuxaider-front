@@ -86,7 +86,7 @@
       </div>
 
       <div
-        v-if="participation.mission.type == 'Mission en présentiel'"
+        v-if="missionType == 'Mission en présentiel'"
         class="mb-6"
       >
         <div class="text-sm text-gray-500 mb-4 font-light">
@@ -98,13 +98,33 @@
         </div>
       </div>
 
+      <div
+        v-if="missionType == 'Mission en autonomie' && autonomyCities"
+        class="mb-6"
+      >
+        <div class="text-sm text-gray-500 mb-4 font-light">
+          Ville(s)
+        </div>
+        <div class="font-light" v-html="autonomyCities" />
+      </div>
+
+      <div
+        v-if="missionType == 'Mission en autonomie' && participation.mission.autonomy_precisions"
+        class="mb-6"
+      >
+        <div class="text-sm text-gray-500 mb-4 font-light">
+          Précisions sur la zone d'intervention
+        </div>
+        <div class="font-light" v-html="participation.mission.autonomy_precisions" />
+      </div>
+
       <div class="mb-6">
         <div class="-m-2">
           <div
-            v-if="participation.mission.type"
+            v-if="missionType"
             class="px-4 py-1 m-2 shadow-md inline-flex text-sm font-semibold rounded-full bg-gray-100 text-gray-500"
           >
-            {{ participation.mission.type }}
+            {{ missionType }}
           </div>
         </div>
       </div>
@@ -192,6 +212,15 @@ export default {
       return (
         this.participation.profile_id == this.$store.getters.profile.id
       )
+    },
+    missionType () {
+      return this.participation.mission.is_autonomy ? 'Mission en autonomie' : this.participation.mission.type
+    },
+    autonomyCities () {
+      if (this.participation.mission.is_autonomy && this.participation.mission.autonomy_zips?.length) {
+        return this.participation.mission.autonomy_zips.map(item => `${item.city} (${item.zip})`).join(', ')
+      }
+      return null
     }
   },
   methods: {

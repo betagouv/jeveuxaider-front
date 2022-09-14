@@ -131,7 +131,7 @@
                   <CardStatistic
                     :value="organisationStats.places_left"
                     :title="`${$options.filters.pluralize(organisationStats.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
-                    :subtitle="organisationStats.places_left_waiting ? `+${$options.filters.formatNumber(organisationStats.places_left_waiting)} en cours de validation` : null"
+                    :subtitle="organisationStats.places_left_waiting ? `+${$options.filters.formatNumber(organisationStats.places_left_waiting)} places à venir` : null"
                   />
                   <CardStatistic
                     :value="`${organisationStats.places_occupation_rate}%`"
@@ -176,7 +176,7 @@
                       :value="`${organisationStats.score_response_time}/100`"
                       title="Score de réactivité"
                     />
-                    <div class="text-xs text-gray-700 font-medium text-center px-12 -mt-3 mb-4">
+                    <div class="text-xs text-gray-700 font-medium text-center px-12 mb-4 relative -mt-3">
                       🏆 Améliorez votre visibilité sur la plateforme<br> en améliorant votre réactivité ›
                     </div>
                   </div>

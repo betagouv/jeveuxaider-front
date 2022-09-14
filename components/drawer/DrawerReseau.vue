@@ -53,7 +53,7 @@ import BoxInformations from '@/components/section/reseau/BoxInformations'
 import BoxMission from '@/components/section/reseau/BoxMission'
 import BoxAntenne from '@/components/section/reseau/BoxAntenne'
 import BoxParticipation from '@/components/section/reseau/BoxParticipation'
-import BoxResponsable from '@/components/section/reseau/BoxResponsable'
+import BoxResponsable from '@/components/section/BoxResponsable'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
 
 export default {

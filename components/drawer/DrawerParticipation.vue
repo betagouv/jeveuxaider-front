@@ -26,7 +26,7 @@
           </Link>
         </template>
       </BoxInformationsMission>
-      <BoxResponsable :profile="participation.mission.responsable" />
+      <BoxResponsable :responsable="participation.mission.responsable" />
     </template>
   </Drawer>
 </template>
@@ -36,7 +36,7 @@ import SelectParticipationState from '@/components/custom/SelectParticipationSta
 import MixinParticipation from '@/mixins/participation'
 import BoxInformationsProfile from '@/components/section/profile/BoxInformations'
 import BoxInformationsMission from '@/components/section/mission/BoxInformations'
-import BoxResponsable from '@/components/section/mission/BoxResponsable'
+import BoxResponsable from '@/components/section/BoxResponsable'
 
 export default {
   components: {

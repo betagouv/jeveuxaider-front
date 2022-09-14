@@ -2,7 +2,7 @@
   <Drawer :is-open="Boolean(termId)" @close="$emit('close')">
     <template #title>
       <Heading v-if="term" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/${termId}/edit`" class="hover:underline">
+        <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/${termId}/edit?redirect=/admin/taxonomies/${$route.params.slug}`" class="hover:underline">
           {{ term.name }}
         </nuxt-link>
       </Heading>
@@ -10,11 +10,29 @@
     <template v-if="term">
       <OnlineIndicator :published="term.is_published" class="mt-2" />
       <div class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/${term.id}/edit`" class="inline-flex">
+        <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/${term.id}/edit?redirect=/admin/taxonomies/${$route.params.slug}`" class="inline-flex">
           <Button variant="white" size="sm" icon="PencilIcon">
             Modifier
           </Button>
         </nuxt-link>
+        <div
+          v-tooltip="{
+            content:
+              term.related_count > 0
+                ? `Ce tag a ${term.related_count} liaisons . Il ne peut pas être supprimé.`
+                : false,
+            hideOnTargetClick: true,
+          }"
+        >
+          <Button
+            variant="white-red"
+            size="sm"
+            icon="TrashIcon"
+            @click.native="handleDelete()"
+          >
+            Supprimer
+          </Button>
+        </div>
       </div>
 
       <div class="border-t -mx-6 my-6" />
@@ -58,7 +76,10 @@ export default {
     termId: '$fetch'
   },
   methods: {
-
+    async handleDelete () {
+      await this.$axios.delete(`/terms/${this.termId}`).catch(err => console.log(err))
+      this.$router.go()
+    }
   }
 }
 </script>

@@ -47,12 +47,12 @@
               @selected="handleChangeState($event)"
             />
             <BoxDates :mission="mission" />
-            <BoxPlace :mission="mission" />
+            <BoxPlace :mission="mission" @updated="handleChangePlace($event)" />
             <BoxEnChiffre :mission="mission" />
             <BoxInformations :mission="mission" />
             <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="mission.department" />
 
-            <BoxResponsable v-if="mission.responsable" :profile="mission.responsable" />
+            <BoxResponsable v-if="mission.responsable" :responsable="mission.responsable" />
             <BoxOrganisation :organisation="mission.structure" />
           </div>
           <History v-if="$route.hash === '#historique'" :model-id="mission.id" model-type="mission" />
@@ -67,7 +67,7 @@ import PresentielOrDistance from '@/components/section/mission/PresentielOrDista
 import Presentation from '@/components/section/mission/Presentation.vue'
 import Details from '@/components/section/mission/Details.vue'
 import BoxPlace from '@/components/section/mission/BoxPlace.vue'
-import BoxResponsable from '@/components/section/mission/BoxResponsable.vue'
+import BoxResponsable from '@/components/section/BoxResponsable.vue'
 import BoxInformations from '@/components/section/mission/BoxInformations.vue'
 import BoxEnChiffre from '@/components/section/mission/BoxEnChiffre.vue'
 import BoxDates from '@/components/section/mission/BoxDates.vue'
@@ -131,6 +131,10 @@ export default {
     async handleChangeState (event) {
       this.mission.state = event.key
       await this.$axios.put(`/missions/${this.mission.id}`, this.mission)
+    },
+    handleChangePlace (mission) {
+      this.mission.participations_max = mission.participations_max
+      this.mission.places_left = mission.places_left
     }
   }
 }

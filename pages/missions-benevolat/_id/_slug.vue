@@ -34,9 +34,11 @@
         },
         {
           label:
-            mission.type == 'Mission en présentiel'
-              ? `Bénévolat ${mission.structure.name} à ${mission.city}`
-              : `Bénévolat ${mission.structure.name} à distance`,
+            missionType == 'Mission en autonomie'
+              ? `Bénévolat ${mission.structure.name} en autonomie`
+              : missionType == 'Mission en présentiel'
+                ? `Bénévolat ${mission.structure.name} à ${mission.city}`
+                : `Bénévolat ${mission.structure.name} à distance`,
           h1: true,
         },
       ]"
@@ -161,7 +163,7 @@
                     alt=""
                     :class="[{ '-ml-1': index !== 0 }]"
                     class="portrait rounded-full"
-                    style="width: 34px"
+                    style="width: 36px"
                   >
                   <div
                     v-if="participationsCount - 3 > 0"
@@ -437,6 +439,9 @@ export default {
       return this.mission.template?.photo?.urls?.original ??
         this.mission.illustrations?.[0]?.urls?.original ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+    },
+    missionType () {
+      return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
     }
   }
 }

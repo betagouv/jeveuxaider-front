@@ -20,7 +20,7 @@
     </div>
     <div class="max-w-xl mx-auto">
       <div
-        class="px-8 pt-6 pb-6 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
+        class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
       >
         Sélectionnez vos disponibilités
       </div>
@@ -100,7 +100,7 @@
 
 <script>
 import { object, array } from 'yup'
-import _ from 'lodash'
+import { cloneDeep } from 'lodash'
 import FormErrors from '@/mixins/form/errors'
 
 export default {
@@ -122,6 +122,11 @@ export default {
           href: '/inscription/benevole/step/profile'
         },
         {
+          name: 'Vos préférences',
+          status: 'complete',
+          href: '/inscription/benevole/step/preferences'
+        },
+        {
           name: 'Vos disponibilités',
           status: 'current'
         },
@@ -130,7 +135,7 @@ export default {
           status: 'upcoming'
         }
       ],
-      form: _.cloneDeep(this.$store.getters.profile),
+      form: cloneDeep(this.$store.getters.profile),
       formSchema: object({
         disponibilities: array().min(1, 'Merci de sélectionner au moins 1 disponibilité')
       })

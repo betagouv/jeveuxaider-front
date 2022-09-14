@@ -98,6 +98,7 @@ export default {
             await this.$axios.post(`/vocabularies/${this.vocabulary}/terms`, this.form)
           }
           this.$emit('submitted')
+          this.$router.push(this.$route.query.redirect)
           this.$toast.success(`${this.form.name} a bien été enregistré !`)
         })
         .catch((errors) => {

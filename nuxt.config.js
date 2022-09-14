@@ -8,6 +8,9 @@ export default {
     htmlAttrs: {
       lang: 'fr'
     },
+    bodyAttrs: {
+      class: 'text-base leading-normal'
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -133,6 +136,7 @@ export default {
     },
     plausible: {
       site_id: process.env.PLAUSIBLE_SITE_ID,
+      shared_link: process.env.PLAUSIBLE_SHARED_LINK,
       token: process.env.PLAUSIBLE_TOKEN
     },
     algolia: {
@@ -218,6 +222,7 @@ export default {
 
   sitemap: {
     hostname: 'https://www.jeveuxaider.gouv.fr',
+    path: '/sitemap.xml',
     sitemaps: [
       {
         exclude: ['/**'],

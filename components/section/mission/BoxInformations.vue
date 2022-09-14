@@ -11,15 +11,16 @@
       <DescriptionList>
         <DescriptionListItem term="Crée le" :description="$dayjs(mission.created_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Modifié le" :description="$dayjs(mission.updated_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Type" :description="mission.type" />
+        <DescriptionListItem term="Type" :description="missionType" />
         <DescriptionListItem term="Domaine" :description="mission.domaine && mission.domaine.name" />
         <DescriptionListItem
           v-if="mission.publics_beneficiaires"
           term="Publics bénéf."
           :description="mission.publics_beneficiaires.map((item) => $options.filters.label(item, 'mission_publics_beneficiaires')).join(', ')"
         />
-        <DescriptionListItem v-if="mission.full_address.trim()" term="Adresse" :description="mission.full_address" />
+        <DescriptionListItem v-if="!mission.is_autonomy && mission.full_address.trim()" term="Adresse" :description="mission.full_address" />
         <DescriptionListItem v-if="mission.department" term="Département" :description="`${mission.department} - ${$options.filters.label(mission.department, 'departments')}`" />
+        <DescriptionListItem v-if="autonomyCities" term="Villes" :description="autonomyCities" />
       </DescriptionList>
     </Box>
   </div>
@@ -35,6 +36,17 @@ export default {
     title: {
       type: String,
       default: 'Informations'
+    }
+  },
+  computed: {
+    missionType () {
+      return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
+    },
+    autonomyCities () {
+      if (this.mission.is_autonomy && this.mission.autonomy_zips?.length) {
+        return this.mission.autonomy_zips.map(item => `${item.city} (${item.zip})`).join(', ')
+      }
+      return null
     }
   }
 }

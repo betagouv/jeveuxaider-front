@@ -113,16 +113,6 @@
                 @blur="validate('type')"
               />
             </FormControl>
-
-            <FormControl label="Choisissez vos domaines de prédilection" html-for="domaines" required :error="errors.domaines" class="md:col-span-2">
-              <CheckboxGroup
-                v-model="form.domaines"
-                name="domaines"
-                variant="button"
-                :options="$labels.domaines"
-                is-model
-              />
-            </FormControl>
             <FormControl label="Décrivez vos motivations" html-for="description" class="md:col-span-2">
               <Textarea v-model="form.description" name="description" placeholder="Vos motivations en quelques mots..." />
             </FormControl>
@@ -147,6 +137,18 @@
               :description="form.service_civique ? 'Oui, je suis volontaire' : 'Non, je ne suis pas volontaire'"
             />
           </div>
+        </Box>
+        <Box v-if="$store.getters.contextRole === 'admin'">
+          <Heading :level="3" class="mb-8">
+            Tags
+          </Heading>
+          <CheckboxGroup
+            v-model="form.tags"
+            name="tags"
+            variant="button"
+            is-model
+            :options="tags"
+          />
         </Box>
       </div>
       <div class="md:col-span-2 space-y-12">
@@ -207,6 +209,81 @@
               </div>
             </div>
           </form>
+        </Box>
+        <Box>
+          <Heading :level="3" class="mb-8">
+            Activités
+          </Heading>
+          <div v-if="form.activities.length" class="mt-6">
+            <div class="flex flex-wrap gap-2">
+              <TagFormItem
+                v-for="item in activitiesOptions2.filter(activityOption => { return form.activities.find(e => e.id == activityOption.id)} )"
+                :key="item.id"
+                :tag="item"
+                @removed="onRemovedActivityItem"
+              >
+                {{ item.name }}
+              </TagFormItem>
+            </div>
+          </div>
+          <Drawer :is-open="showDrawerActivity" form-id="form-activities" submit-label="Enregistrer" @close="showDrawerActivity = false">
+            <template #title>
+              <Heading :level="3">
+                Ajouter une activité
+              </Heading>
+            </template>
+            <form id="form-activities" class="mt-8" @submit.prevent="handleSubmit">
+              <FormControl label="Renseignez les activités qui vous intéressent" html-for="activites">
+                <div class="bg-white border rounded-md">
+                  <Disclosure :default-open="true" class="py-4 border-b px-4">
+                    <template #button="{ isOpen }">
+                      <div class="flex font-semibold text-sm items-center justify-between group">
+                        <div class="flex-shrink-0 group-hover:text-gray-600">
+                          Activités les plus populaires
+                        </div>
+                        <MinusIcon v-if="isOpen" class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5" />
+                        <PlusIcon v-else class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5" />
+                      </div>
+                    </template>
+                    <div class="mt-3 space-y-3">
+                      <CheckboxGroup
+                        :key="'popular-' + form.activities.join(',')"
+                        v-model="form.activities"
+                        name="activites"
+                        variant="button"
+                        :options="activitiesOptions.filter(activity => activity.popular)"
+                        is-model
+                      />
+                    </div>
+                  </Disclosure>
+                  <Disclosure v-for="(domain, i) in domainsOptions" :key="domain" class="py-4 px-4" :class="[{'border-b': i < domainsOptions.length - 1}]">
+                    <template #button="{ isOpen }">
+                      <div class="flex font-semibold text-sm items-center justify-between group">
+                        <div class="flex-shrink-0 group-hover:text-gray-600">
+                          {{ domain }}
+                        </div>
+                        <MinusIcon v-if="isOpen" class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5" />
+                        <PlusIcon v-else class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5" />
+                      </div>
+                    </template>
+                    <div class="mt-3 space-y-3">
+                      <CheckboxGroup
+                        :key="domain + form.activities.join(',')"
+                        v-model="form.activities"
+                        name="activites"
+                        variant="button"
+                        :options="activitiesOptions.filter(activity => activity.domain.includes(domain))"
+                        is-model
+                      />
+                    </div>
+                  </Disclosure>
+                </div>
+              </FormControl>
+            </form>
+          </Drawer>
+          <Button size="sm" :class="[{'mt-6': form.activities.length > 0}]" variant="white" @click.native="showDrawerActivity = true">
+            <PlusIcon class="mr-2" />Ajouter une activité
+          </Button>
         </Box>
         <Box>
           <Heading :level="3" class="mb-8">
@@ -295,10 +372,11 @@
 
 <script>
 import { string, object, array, date } from 'yup'
-import _ from 'lodash'
+import { cloneDeep } from 'lodash'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
+import activitiesOptions from '@/assets/activities.json'
 
 export default {
   components: {
@@ -314,7 +392,7 @@ export default {
   data () {
     return {
       loading: false,
-      form: _.cloneDeep(this.profile),
+      form: cloneDeep(this.profile),
       formSchema: object({
         first_name: string().min(3).required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
@@ -324,11 +402,19 @@ export default {
         mobile: string().nullable().min(10, 'Le mobile doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un mobile est requis'),
         phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v),
         zip: string().nullable().min(5, 'Le format du code postal est incorrect').required('Un code postal est requis'),
-        domaines: array().min(1, 'Merci de sélectionner au moins 1 domaine d\'action'),
         disponibilities: array().transform(v => (!v ? [] : v)).min(1, 'Merci de sélectionner au moins 1 disponibilité').required('df')
       }),
-      autocompleteReseauxOptions: []
+      autocompleteReseauxOptions: [],
+      activitiesOptions,
+      activitiesOptions2: activitiesOptions.map((activity) => { return { id: activity.key, name: activity.label } }),
+      showDrawerActivity: false,
+      domainsOptions: ['Bénévolat de compétences', 'Solidarité et insertion', 'Éducation pour tous', 'Protection de la nature', 'Art et culture pour tous', 'Sport pour tous', 'Prévention et protection', 'Mémoire et citoyenneté'],
+      tags: []
     }
+  },
+  async mounted () {
+    const { data } = await this.$axios.get('/vocabularies/profiles/terms', { params: { pagination: 50 } })
+    this.tags = data.data.map((tag) => { return { key: tag.id, label: tag.name } })
   },
   methods: {
     handleSelectItems (item) {
@@ -336,6 +422,9 @@ export default {
     },
     onRemovedTagItem (item) {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
+    },
+    onRemovedActivityItem (item) {
+      this.form.activities = this.form.activities.filter(activity => activity.id !== item.id)
     },
     async handleSubmit () {
       if (this.loading) {
@@ -362,7 +451,7 @@ export default {
         })
         .catch((errors) => {
           this.setErrors(errors)
-          // throw new Error('error')
+        // throw new Error('error')
         })
         .finally(() => {
           this.loading = false

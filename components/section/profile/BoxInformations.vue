@@ -27,9 +27,9 @@
         <DescriptionListItem term="Téléphone" :description="profile.phone" />
         <DescriptionListItem term="Date de naissance" :description="profile.birthday" />
         <DescriptionListItem
-          v-if="profile.domaines"
-          term="Domaines"
-          :description="profile.domaines.map((item) => $options.filters.label(item.id, 'domaines')).join(', ')"
+          v-if="profile.activities"
+          term="Activités"
+          :description="profile.activities.map((item) => item.name).join(', ')"
         />
         <DescriptionListItem
           v-if="profile.skills"

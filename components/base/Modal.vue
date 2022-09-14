@@ -9,7 +9,11 @@
   >
     <div v-show="isOpen" class="fixed z-50 inset-0 overflow-y-auto overscroll-contain" aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true" />
+        <div
+          class="fixed inset-0 bg-opacity-75 transition-opacity"
+          aria-hidden="true"
+          :class="[backgroundOverlay]"
+        />
         <!-- This element is to trick the browser into centering the modal contents. -->
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
         <transition
@@ -24,11 +28,15 @@
             v-if="isOpen"
             v-click-outside="handleClickOutside"
             :class="[
-              {'overflow-hidden' : overflowHidden}
+              {'overflow-hidden' : overflowHidden},
+              widthClass
             ]"
             class="inline-block align-bottom bg-white rounded-lg text-left shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
           >
-            <div class="bg-white rounded-t-lg p-4 sm:p-6">
+            <div
+              class="bg-white rounded-t-lg p-4 sm:p-6"
+              :class="[{'rounded-b-lg': hideFooter}]"
+            >
               <div class="hidden sm:block absolute top-0 right-0 p-4 sm:p-6">
                 <button type="button" class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cool-gray-500" @click="$emit('close')">
                   <span class="sr-only">Close</span>
@@ -69,7 +77,7 @@
                 </div>
               </div>
             </div>
-            <div class="bg-gray-50 rounded-b-lg px-4 py-3 sm:px-6 flex justify-center lg:justify-end">
+            <div v-if="!hideFooter" class="bg-gray-50 rounded-b-lg px-4 py-3 sm:px-6 flex justify-center lg:justify-end">
               <slot name="footer">
                 <Button variant="white" @click.native="$emit('close')">
                   Fermer
@@ -92,7 +100,7 @@ export default {
     },
     title: {
       type: String,
-      required: true
+      default: ''
     },
     theme: {
       type: String,
@@ -109,6 +117,18 @@ export default {
     overflowHidden: {
       type: Boolean,
       default: true
+    },
+    backgroundOverlay: {
+      type: String,
+      default: 'bg-gray-500'
+    },
+    widthClass: {
+      type: String,
+      default: 'sm:max-w-lg'
+    },
+    hideFooter: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {

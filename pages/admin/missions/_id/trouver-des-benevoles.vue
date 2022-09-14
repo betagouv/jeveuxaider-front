@@ -28,16 +28,18 @@
           </div>
         </div>
         <div class="flex">
-          <DescriptionList class="max-w-lg">
-            <DescriptionListItem term="Bénévoles recherchés" :description="`${$options.filters.pluralize(mission.places_left, 'place disponible', 'places disponibles')}`" />
-            <DescriptionListItem term="Type" :description="mission.type" />
-            <DescriptionListItem term="Domaine" :description="domaine && domaine.name" />
+          <DescriptionList class="max-w-xl">
+            <DescriptionListItem :term-size="160" term="Bénévoles recherchés" :description="`${$options.filters.pluralize(mission.places_left, 'place disponible', 'places disponibles')}`" />
+            <DescriptionListItem :term-size="160" term="Type" :description="missionType" />
+            <DescriptionListItem :term-size="160" term="Domaine" :description="domaine && domaine.name" />
             <DescriptionListItem
               v-if="mission.publics_beneficiaires"
+              :term-size="160"
               term="Publics bénéf."
               :description="mission.publics_beneficiaires.map((item) => $options.filters.label(item, 'mission_publics_beneficiaires')).join(', ')"
             />
-            <DescriptionListItem v-if="mission.department" term="Département" :description="`${mission.department} - ${$options.filters.label(mission.department, 'departments')}`" />
+            <DescriptionListItem v-if="mission.department" :term-size="160" term="Département" :description="`${mission.department} - ${$options.filters.label(mission.department, 'departments')}`" />
+            <DescriptionListItem v-if="autonomyCities" :term-size="160" term="Villes" :description="autonomyCities" />
           </DescriptionList>
         </div>
       </Box>
@@ -112,9 +114,7 @@
           :key="profile.id"
           class="cursor-pointer hover:shadow-xl"
           :profile="profile"
-          :notifications="notifications.data.filter(
-            (notification) => notification.profile_id == profile.id
-          )"
+          :mission-id="mission.id"
           @click.native="drawerProfile = profile"
           @clickedProposerMission="handleProposerMission($event)"
         />
@@ -172,11 +172,22 @@ export default {
     return {
       endpoint: `/missions/${this.$route.params.id}/benevoles`,
       queryParams: {
-        include: 'user,participationsValidatedCount,avatar'
+        include: 'user,participationsValidatedCount,avatar,notificationsBenevoles'
       },
       drawerProfileId: null,
       notifications: [],
       drawerProfile: null
+    }
+  },
+  computed: {
+    missionType () {
+      return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
+    },
+    autonomyCities () {
+      if (this.mission.is_autonomy && this.mission.autonomy_zips?.length) {
+        return this.mission.autonomy_zips.map(item => `${item.city} (${item.zip})`).join(', ')
+      }
+      return null
     }
   },
   created () {
@@ -207,6 +218,7 @@ export default {
       }).then(() => {
         this.$toast.success(`Un e-mail a été envoyé à ${profile.first_name} ${profile.last_name[0]}.`)
         this.fetchNotificationsBenevoles()
+        this.$fetch()
       }).catch(() => {})
     }
   }

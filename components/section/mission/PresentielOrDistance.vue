@@ -6,11 +6,22 @@
       style="border: 0; min-height: 190px"
       loading="lazy"
       allowfullscreen
-      :src="`https://www.google.com/maps/embed/v1/place?key=${$config.google.places}&q=${address}`"
+      :src="`https://www.google.com/maps/embed/v1/place?key=${$config.google.places}&q=${googleQuery}`"
     />
     <div class="text-sm px-6 py-4">
-      <span class="font-bold text-gray-800 uppercase">Mission sur le terrain</span> <br>
-      📍 <span class="text-gray-500">{{ address }}</span>
+      <div class="font-bold text-gray-800 uppercase">
+        <span v-if="mission.is_autonomy">Mission en autonomie</span>
+        <span v-else>Mission sur le terrain</span>
+      </div>
+      <p v-if="mission.is_autonomy" class="text-gray-500 mt-1 mb-1">
+        Cette mission peut être réalisée sans l’encadrement du responsable de mission.
+        <span v-if="mission.autonomy_zips.length > 1">Elle est proposée sur plusieurs lieux.</span>
+      </p>
+      <div class="text-gray-500 truncate">
+        <span>📍</span>
+        <span v-if="mission.is_autonomy">{{ autonomyCities }}</span>
+        <span v-else>{{ address }}</span>
+      </div>
     </div>
   </Box>
 
@@ -30,8 +41,7 @@
       </div>
       <div>
         Réalisez cette mission de bénévolat<br>
-        <strong>depuis chez vous</strong> ou
-        <strong>en autonomie</strong>
+        <strong>depuis chez vous</strong>
       </div>
     </div>
   </Box>
@@ -54,6 +64,15 @@ export default {
         return this.mission.zip
       }
       return null
+    },
+    autonomyCities () {
+      if (this.mission.is_autonomy && this.mission.autonomy_zips.length) {
+        return this.mission.autonomy_zips.map(item => `${item.city} (${item.zip})`).join(', ')
+      }
+      return null
+    },
+    googleQuery () {
+      return this.mission.is_autonomy ? `${this.mission.department} ${this.$options.filters.label(this.mission.department, 'departments')}` : this.address
     }
   }
 }

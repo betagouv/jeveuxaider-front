@@ -39,10 +39,14 @@
         html-for="antenne_name"
         required
       >
+        <Alert>
+          Indiquer en minuscules le nom du réseau suivi de la localisation de votre antenne. <br>Ex : Banque Alimentaire du Nord
+        </Alert>
         <Input
           v-model="form.properties.antenne_name"
+          class="!mt-2"
           name="antenne_name"
-          placeholder="Ex : Vacances et Familles - Occitanie"
+          placeholder="Ex : Banque Alimentaire du Nord"
           required
         />
       </FormControl>

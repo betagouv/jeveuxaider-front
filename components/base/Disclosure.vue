@@ -24,9 +24,15 @@
 
 <script>
 export default {
+  props: {
+    defaultOpen: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
-      isOpen: false
+      isOpen: this.defaultOpen
     }
   }
 }

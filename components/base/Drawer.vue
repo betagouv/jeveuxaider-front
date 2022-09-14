@@ -9,7 +9,15 @@
       leave-to-class="translate-x-full"
     >
       <div v-if="isOpen" role="dialog" aria-modal="true" class="fixed inset-y-0 right-0" :style="drawerStyle">
-        <div aria-hidden="true" class="w-screen max-w-md h-full">
+        <div
+          aria-hidden="true"
+          class="w-screen h-full"
+          :class="[
+            {'max-w-md': width === 'md'},
+            {'max-w-lg': width === 'lg'},
+            {'max-w-xl': width === 'xl'},
+          ]"
+        >
           <div class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl">
             <div class="min-h-0 flex-1 flex flex-col py-6 overflow-y-scroll overscroll-contain">
               <div class="px-4 sm:px-6">
@@ -64,6 +72,10 @@ export default {
     submitLabel: {
       type: String,
       default: 'Enregister'
+    },
+    width: {
+      type: String,
+      default: 'md'
     }
   },
   data () {

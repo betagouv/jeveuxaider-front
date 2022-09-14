@@ -70,20 +70,12 @@ html {
   z-index: 10000;
   font-size: 12px;
   max-width: 276px;
-  .tooltip-inner:not(.popover-inner) {
-    color: white;
-    text-align: center;
-    border-radius: 16px;
-    padding: 12px;
-    @apply bg-black shadow;
-  }
   .tooltip-arrow {
     width: 0;
     height: 0;
     border-style: solid;
     position: absolute;
     margin: 5px;
-    border-color: black;
     z-index: 1;
   }
   &[aria-hidden='true'] {
@@ -148,38 +140,73 @@ html {
       margin-right: 0;
     }
   }
-  &.bo-style {
+  &.theme-black {
     .tooltip-inner {
-      border-radius: 4px;
-      padding: 6px;
-      @apply bg-gray-800;
-    }
-  }
-  &.popover {
-    &[x-placement^='top'] {
-      margin-bottom: 15px;
-    }
-    &[x-placement^='bottom'] {
-      margin-top: 15px;
-    }
-    &[x-placement^='left'] {
-      margin-right: 15px;
-    }
-    &[x-placement^='right'] {
-      margin-left: 15px;
-    }
-  }
-  &.popover-theme-1 {
-    font-size: 14px;
-    .tooltip-content {
+      color: white;
+      text-align: center;
       border-radius: 16px;
-      padding: 16px 24px;
-      @apply bg-[#514DB2] text-white;
+      padding: 12px;
+      @apply bg-black shadow;
     }
     .tooltip-arrow {
-      display: none;
+      border-color: black;
     }
   }
+  &.theme-white {
+    @apply drop-shadow-lg;
+
+    max-width: 228px;
+    .tooltip-inner {
+      @apply bg-white text-gray-600 rounded-lg p-3 flex;
+      &::before {
+        content: "";
+        width: 18px;
+        position: relative;
+        display: block;
+        flex: none;
+        margin-right: 8px;
+        // URL-encoded format
+        background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%23ACB9DB%22%3E%0A%20%20%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M18%2010a8%208%200%2011-16%200%208%208%200%200116%200zm-7-4a1%201%200%2011-2%200%201%201%200%20012%200zM9%209a1%201%200%20000%202v3a1%201%200%20001%201h1a1%201%200%20100-2v-3a1%201%200%2000-1-1H9z%22%20clip-rule%3D%22evenodd%22%20%2F%3E%0A%3C%2Fsvg%3E");
+        background-position: 0px 1px;
+        background-repeat: no-repeat;
+      }
+    }
+    .tooltip-arrow {
+      border-color: white;
+    }
+  }
+  // &.bo-style {
+  //   .tooltip-inner {
+  //     border-radius: 4px;
+  //     padding: 6px;
+  //     @apply bg-gray-800;
+  //   }
+  // }
+  // &.popover {
+  //   &[x-placement^='top'] {
+  //     margin-bottom: 15px;
+  //   }
+  //   &[x-placement^='bottom'] {
+  //     margin-top: 15px;
+  //   }
+  //   &[x-placement^='left'] {
+  //     margin-right: 15px;
+  //   }
+  //   &[x-placement^='right'] {
+  //     margin-left: 15px;
+  //   }
+  // }
+  // &.popover-theme-1 {
+  //   font-size: 14px;
+  //   .tooltip-content {
+  //     border-radius: 16px;
+  //     padding: 16px 24px;
+  //     @apply bg-[#514DB2] text-white;
+  //   }
+  //   .tooltip-arrow {
+  //     display: none;
+  //   }
+  // }
 }
 
 .algolia-facet {

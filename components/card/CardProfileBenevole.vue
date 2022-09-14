@@ -35,14 +35,10 @@
     <div v-if="profile.disponibilities" class="px-4 my-4 text-sm text-cool-gray-500">
       {{ profile.disponibilities.map((item) => $options.filters.label(item,'disponibilities')).join(' • ') }}
     </div>
-    <div class="text-center text-jva-blue-500 font-bold text-sm border-t mt-4 py-3 bg-cool-gray-100 mt-auto">
-      <template
-        v-if="
-          notifications.filter(
-            (notification) => notification.profile_id == profile.id
-          ).length == 0
-        "
-      >
+    <div class="text-center text-jva-blue-500 font-bold text-sm border-t py-3 bg-cool-gray-100 mt-auto">
+      <span v-if="hasAlreadyBeenNotified" class="text-jva-green-500 font-semibold">E-mail envoyé !</span>
+      <span v-else-if="hasBeenFlooded" class="font-medium text-gray-600">Non disponible</span>
+      <template v-else>
         <button class="cursor-pointer hover:underline" @click.stop="showAlert = true">
           Proposer la mission
         </button>
@@ -55,7 +51,6 @@
           @cancel="showAlert = false"
         />
       </template>
-      <span v-else class="text-jva-green-500 font-semibold">E-mail envoyé !</span>
     </div>
   </div>
 </template>
@@ -64,18 +59,34 @@
 
 export default {
   props: {
+    missionId: {
+      type: Number,
+      required: true
+    },
     profile: {
       type: Object,
       required: true
-    },
-    notifications: {
-      type: Array,
-      default: () => []
     }
   },
   data () {
     return {
       showAlert: false
+    }
+  },
+  computed: {
+    hasAlreadyBeenNotified () {
+      return this.profile.notifications_benevoles.filter(
+        notification => notification.mission_id == this.missionId
+      ).length > 0
+    },
+    hasBeenFlooded () {
+      // Si plus de 2 notifations dans le mois passé
+      return this.profile.notifications_benevoles.filter(
+        (notification) => {
+          const minusOneMonth = this.$dayjs().subtract(1, 'month')
+          return this.$dayjs(notification.created_at).isAfter(minusOneMonth)
+        }
+      ).length >= 2
     }
   }
 }

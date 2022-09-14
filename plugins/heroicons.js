@@ -22,6 +22,7 @@ import {
   ArrowNarrowRightIcon,
   DuplicateIcon,
   PlusIcon,
+  MinusIcon,
   ExclamationIcon,
   PhotographIcon,
   DownloadIcon,
@@ -43,7 +44,8 @@ import {
   XCircleIcon,
   InformationCircleIcon,
   PlusCircleIcon,
-  MinusCircleIcon
+  MinusCircleIcon,
+  TagIcon
 } from '@vue-hero-icons/outline'
 import {
   InformationCircleIcon as InformationCircleSolidIcon,
@@ -103,6 +105,7 @@ const components = {
   HomeIcon,
   DuplicateIcon,
   PlusIcon,
+  MinusIcon,
   PlusCircleIcon,
   MinusCircleIcon,
   ExclamationIcon,
@@ -120,7 +123,8 @@ const components = {
   AdjustmentsIcon,
   XCircleIcon,
   PlusCircleSolidIcon,
-  MinusCircleSolidIcon
+  MinusCircleSolidIcon,
+  TagIcon
 }
 
 Object.entries(components).forEach(([name, component]) => {
