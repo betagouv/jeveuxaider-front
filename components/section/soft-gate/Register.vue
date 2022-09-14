@@ -134,7 +134,7 @@
                 :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
               />
             </div>
-            <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser">
+            <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser" required>
               <template #afterLabel>
                 <span
                   v-tooltip="{
@@ -220,7 +220,10 @@ export default {
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
         password: string().min(8).required('Un mot de passe est requis'),
         password_confirmation: string().required('Une confirmation de mot de passe est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique'),
-        cej_email_adviser: string().nullable().email("Le format de l'email est incorrect")
+        cej_email_adviser: string().nullable().email("Le format de l'email est incorrect").when('cej', {
+          is: true,
+          then: schema => schema.required("L'email de votre conseiller CEJ est obligatoire")
+        })
       })
     }
   },

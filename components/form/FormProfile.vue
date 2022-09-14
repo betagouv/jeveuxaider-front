@@ -163,7 +163,7 @@
                 :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
               />
             </div>
-            <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser">
+            <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser" required>
               <template #afterLabel>
                 <span
                   v-tooltip="{
@@ -448,7 +448,10 @@ export default {
         phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v),
         zip: string().nullable().min(5, 'Le format du code postal est incorrect').required('Un code postal est requis'),
         disponibilities: array().transform(v => (!v ? [] : v)).min(1, 'Merci de sélectionner au moins 1 disponibilité').required('df'),
-        cej_email_adviser: string().nullable().email("Le format de l'email est incorrect"),
+        cej_email_adviser: string().nullable().email("Le format de l'email est incorrect").when('cej', {
+          is: true,
+          then: schema => schema.required("L'email de votre conseiller CEJ est obligatoire")
+        }),
         service_civique_completion_date: date().nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null))
       }),
       autocompleteReseauxOptions: [],
