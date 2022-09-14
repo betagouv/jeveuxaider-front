@@ -24,7 +24,7 @@
           </div>
         </div>
         <template v-if="organisationStats.missions_state['En attente de validation'] > 0">
-          <div class="border-t -mx-6 mt-6 mb-4" />
+          <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
           <nuxt-link :to="`/admin/missions?filter[structure.id]=${organisation.id}&filter[state]=En attente de validation`" class="flex justify-center items-center text-sm text-jva-orange-500 font-medium hover:underline">
             {{ organisationStats.missions_state['En attente de validation']| pluralize('mission') }} en attente de validation <ChevronRightIcon class="h-3 w-3 ml-2" />
           </nuxt-link>
