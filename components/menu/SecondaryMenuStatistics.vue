@@ -72,8 +72,7 @@ export default {
           label: 'Services tiers',
           childrens: [
             { label: 'Metabase', href: 'https://reserve-civique-metabase.osc-secnum-fr1.scalingo.io/' },
-            { label: 'Plausible', href: 'https://plausible.io/share/jeveuxaider.gouv.fr?auth=A12tLW-fKeo1v_e2SheBy' },
-            { label: 'API Engagement', href: 'https://api-engagement.beta.gouv.fr/' }
+            { label: 'Plausible', href: 'https://plausible.io/share/jeveuxaider.gouv.fr?auth=A12tLW-fKeo1v_e2SheBy' }
           ]
         }
       ]

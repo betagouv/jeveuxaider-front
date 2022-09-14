@@ -110,28 +110,28 @@ export default {
   },
   methods: {
     async fetchStructuresByYear () {
-      await this.$axios.get('/statistics/public/structures-by-year', {
+      await this.$axios.get('/statistics/structures-by-year', {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.structures = response.data
       })
     },
     async fetchMissionsByYear () {
-      await this.$axios.get('/statistics/public/missions-by-year', {
+      await this.$axios.get('/statistics/missions-by-year', {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.missions = response.data
       })
     },
     async fetchUsersByYear () {
-      await this.$axios.get('/statistics/public/users-by-year', {
+      await this.$axios.get('/statistics/users-by-year', {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.users = response.data
       })
     },
     async fetchParticipationsByYear () {
-      await this.$axios.get('/statistics/public/participations-by-year', {
+      await this.$axios.get('/statistics/participations-by-year', {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.participations = response.data

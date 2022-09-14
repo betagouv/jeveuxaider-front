@@ -131,28 +131,28 @@ export default {
       }
     },
     async fetchStructuresByMonth () {
-      await this.$axios.get('/statistics/public/structures-by-month', {
+      await this.$axios.get('/statistics/structures-by-month', {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.structures = response.data
       })
     },
     async fetchMissionsByMonth () {
-      await this.$axios.get('/statistics/public/missions-by-month', {
+      await this.$axios.get('/statistics/missions-by-month', {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.missions = response.data
       })
     },
     async fetchUsersByMonth () {
-      await this.$axios.get('/statistics/public/users-by-month', {
+      await this.$axios.get('/statistics/users-by-month', {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.users = response.data
       })
     },
     async fetchParticipationsByMonth () {
-      await this.$axios.get('/statistics/public/participations-by-month', {
+      await this.$axios.get('/statistics/participations-by-month', {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.participations = response.data
