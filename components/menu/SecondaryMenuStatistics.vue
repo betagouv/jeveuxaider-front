@@ -55,15 +55,8 @@ export default {
             { label: 'Missions', to: '/admin/statistics/missions' },
             { label: 'Participations', to: '/admin/statistics/participations' },
             { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
-            { label: 'Places', to: '/admin/statistics/places' }
-          ]
-        },
-        {
-          key: 'api',
-          label: 'API Engagement',
-          childrens: [
-            { label: 'Trafic & candidatures', to: '/admin/statistics/api-engagement/trafic-candidatures' },
-            { label: 'Partenaires', to: '/admin/statistics/api-engagement/partenaires' }
+            { label: 'Places', to: '/admin/statistics/places' },
+            { label: 'API Engagement', to: '/admin/statistics/api-engagement' }
           ]
         },
         {

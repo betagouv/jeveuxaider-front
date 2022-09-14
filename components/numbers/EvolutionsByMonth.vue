@@ -59,8 +59,8 @@
               <span v-else>--</span>
             </TableRowCell>
             <TableRowCell>
-              <MinusCircleIcon v-if="selectedMonth" class="h-4 cursor-pointer hover:text-jva-blue-500" @click="toggleMonth(item.month)" />
-              <PlusCircleIcon v-else class="h-4 cursor-pointer hover:text-jva-blue-500" @click="toggleMonth(item.month)" />
+              <XIcon v-if="selectedMonth" class="h-4 cursor-pointer hover:text-jva-blue-500" @click="toggleMonth(item.month)" />
+              <SearchIcon v-else class="h-4 cursor-pointer hover:text-jva-blue-500" @click="toggleMonth(item.month)" />
             </TableRowCell>
           </TableRow>
         </TableBody>

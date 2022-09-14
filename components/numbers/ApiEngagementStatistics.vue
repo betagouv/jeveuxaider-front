@@ -1,44 +1,92 @@
 <template>
   <div class="space-y-12">
     <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
-      <BoxHeadingStatistics title="Trafic & candidatures" class="mb-6" />
+      <BoxHeadingStatistics title="Depuis nos partenaires" class="mb-6" />
       <div class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
         <CardStatistic
-          :value="statistics.outgoingTrafic"
-          title="Trafic sortant"
-          subtitle="vers les partenaires"
-          infos-bulle="Trafic sortant de Je veux aider vers les partenaires"
-        />
-        <CardStatistic
-          :value="statistics.incomingTrafic"
+          :value="incomingTrafic"
           title="Trafic entrant"
           subtitle="vers JVA"
           infos-bulle="Trafic entrant vers Je veux aider depuis les partenaires"
         />
+
         <CardStatistic
-          :value="statistics.outgoingApplies"
-          title="Candidatures générées"
-          subtitle="chez les partenaires"
-          infos-bulle="Candidatures générées chez les partenaires suite à une redirection depuis Je veux aider"
-        />
-        <CardStatistic
-          :value="statistics.incomingApplies"
+          :value="incomingApplies"
           title="Candidatures générées"
           subtitle="chez JVA"
           infos-bulle="Candidatures générées par le trafic provenant des partenaires"
+        />
+        <CardStatistic
+          :value="`${incomingConversionRate}%`"
+          title="Taux de conversion"
+          subtitle="chez JVA"
+          infos-bulle="Rapport des candidatures générées sur les redirections"
         />
       </div>
     </Box>
 
     <Box padding="sm" :loading="loading" loading-text="Récupération des partenaires..." class="lg:col-span-2">
-      <BoxHeadingStatistics title="Partenaires" class="mb-6" />
+      <BoxHeadingStatistics title="Redirections des partenaires vers JVA" class="mb-6" />
       <Table>
         <TableHead>
           <TableHeadCell>Nom</TableHeadCell>
-          <TableHeadCell>Trafic sortant</TableHeadCell>
-          <TableHeadCell>Trafic entrant</TableHeadCell>
-          <TableHeadCell>Candidatures partenaires</TableHeadCell>
-          <TableHeadCell>Candidatures JVA</TableHeadCell>
+          <TableHeadCell>Redirections</TableHeadCell>
+          <TableHeadCell>Candidatures générées</TableHeadCell>
+          <TableHeadCell>Taux de conversion</TableHeadCell>
+        </TableHead>
+        <TableBody>
+          <TableRow v-for="item,y in partners" :key="y">
+            <TableRowCell>
+              <span class="capitalize text-gray-600 font-semibold">
+                {{ item.name }}
+              </span>
+            </TableRowCell>
+            <TableRowCell>
+              {{ item.incoming_trafic|formatNumber }}
+            </TableRowCell>
+            <TableRowCell>
+              {{ item.incoming_applies|formatNumber }}
+            </TableRowCell>
+            <TableRowCell>
+              {{ calculateConversionRate(item.incoming_applies, item.incoming_trafic ) }}%
+            </TableRowCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </Box>
+
+    <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
+      <BoxHeadingStatistics title="Vers nos partenaires" class="mb-6" />
+      <div class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+        <CardStatistic
+          :value="outgoingTrafic"
+          title="Trafic sortant"
+          subtitle="vers les partenaires"
+          infos-bulle="Trafic sortant de Je veux aider vers les partenaires"
+        />
+        <CardStatistic
+          :value="outgoingApplies"
+          title="Candidatures générées"
+          subtitle="chez les partenaires"
+          infos-bulle="Candidatures générées chez les partenaires suite à une redirection depuis Je veux aider"
+        />
+        <CardStatistic
+          :value="`${outgoingConversionRate}%`"
+          title="Taux de conversion"
+          subtitle="chez les partenaires"
+          infos-bulle="Rapport des candidatures générées sur les redirections"
+        />
+      </div>
+    </Box>
+
+    <Box padding="sm" :loading="loading" loading-text="Récupération des partenaires..." class="lg:col-span-2">
+      <BoxHeadingStatistics title="Redirections de JVA vers les partenaires" class="mb-6" />
+      <Table>
+        <TableHead>
+          <TableHeadCell>Nom</TableHeadCell>
+          <TableHeadCell>Redirections</TableHeadCell>
+          <TableHeadCell>Candidatures générées</TableHeadCell>
+          <TableHeadCell>Taux de conversion</TableHeadCell>
         </TableHead>
         <TableBody>
           <TableRow v-for="item,y in partners" :key="y">
@@ -51,13 +99,10 @@
               {{ item.outgoing_trafic|formatNumber }}
             </TableRowCell>
             <TableRowCell>
-              {{ item.incoming_trafic|formatNumber }}
-            </TableRowCell>
-            <TableRowCell>
               {{ item.outgoing_applies|formatNumber }}
             </TableRowCell>
             <TableRowCell>
-              {{ item.incoming_applies|formatNumber }}
+              {{ calculateConversionRate(item.outgoing_applies, item.outgoing_trafic) }}%
             </TableRowCell>
           </TableRow>
         </TableBody>
@@ -80,9 +125,13 @@ export default {
     return {
       loading: true,
       statistics: {},
+      outgoingTrafic: 0,
       outgoingTraficFacets: null,
+      incomingTrafic: 0,
       incomingTraficFacets: null,
+      outgoingApplies: 0,
       outgoingAppliesFacets: null,
+      incomingApplies: 0,
       incomingAppliesFacets: null
     }
   },
@@ -105,15 +154,24 @@ export default {
         _.keyBy(this.outgoingAppliesFacets, 'name'),
         _.keyBy(this.incomingAppliesFacets, 'name')
       ))
+    },
+    incomingConversionRate () {
+      return this.incomingTrafic ? ((this.incomingApplies / this.incomingTrafic) * 100).toFixed(2) : 0
+    },
+    outgoingConversionRate () {
+      return this.outgoingTrafic ? ((this.outgoingApplies / this.outgoingTrafic) * 100).toFixed(2) : 0
     }
   },
   methods: {
+    calculateConversionRate (value1, value2) {
+      return value2 ? ((value1 / value2) * 100).toFixed(2) : 0
+    },
     async fetchOutgoingTrafic () {
       await this.$axios.get('/statistics/api-engagement/outgoing-trafic', {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.outgoingTraficFacets = response.data.partners
-        this.statistics.outgoingTrafic = response.data.total
+        this.outgoingTrafic = response.data.total
       })
     },
     async fetchIncomingTrafic () {
@@ -121,7 +179,7 @@ export default {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.incomingTraficFacets = response.data.partners
-        this.statistics.incomingTrafic = response.data.total
+        this.incomingTrafic = response.data.total
       })
     },
     async fetchOutgoingApplies () {
@@ -129,7 +187,7 @@ export default {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.outgoingAppliesFacets = response.data.partners
-        this.statistics.outgoingApplies = response.data.total
+        this.outgoingApplies = response.data.total
       })
     },
     async fetchIncomingApplies () {
@@ -137,7 +195,7 @@ export default {
         params: this.$store.state.statistics.params
       }).then((response) => {
         this.incomingAppliesFacets = response.data.partners
-        this.statistics.incomingApplies = response.data.total
+        this.incomingApplies = response.data.total
       })
     }
 

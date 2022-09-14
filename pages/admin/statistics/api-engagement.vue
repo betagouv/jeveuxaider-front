@@ -5,8 +5,7 @@
         :items="[
           { label: 'Tableau de bord', link: '/dashboard' },
           { label: 'Plus de chiffres', link: '/admin/statistics' },
-          { label: 'API Engagement' },
-          { label: 'Trafic & candidatures' },
+          { label: 'API Engagement' }
         ]"
       />
     </portal>
