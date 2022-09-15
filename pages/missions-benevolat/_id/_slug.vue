@@ -383,7 +383,7 @@ export default {
 
       if (startDate) {
         dates.push({
-          date: this.$dayjs(startDate).format('D MMM YYYY'),
+          date: `Le ${this.$dayjs(startDate).format('D MMM YYYY')}`,
           label: endDate && this.$dayjs(startDate).isSame(this.$dayjs(endDate)) ? null : 'À PARTIR DU'
         })
       }
