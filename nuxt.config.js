@@ -206,8 +206,7 @@ export default {
     defaultLocale: 'fr',
     plugins: [
       'relativeTime',
-      'customParseFormat',
-      'IsSameOrAfter.js'
+      'customParseFormat'
     ]
   },
 
