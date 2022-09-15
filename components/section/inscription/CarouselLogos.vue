@@ -25,36 +25,36 @@ export default {
       settings: {
         arrows: false,
         dots: true,
-        speed: 1000,
+        speed: 750,
         edgeFriction: 0,
         touchThreshold: 100,
         swipeToSlide: true,
         infinite: true,
         variableWidth: true,
         slidesToShow: 5,
-        slidesToScroll: 5,
+        slidesToScroll: 1,
         autoplay: true,
         centerMode: false,
         responsive: [
           {
             breakpoint: 1280,
             settings: {
-              slidesToScroll: 4,
-              slidesToShow: 4
+              slidesToScroll: 1,
+              slidesToShow: 1
             }
           },
           {
             breakpoint: 1024,
             settings: {
-              slidesToScroll: 3,
-              slidesToShow: 3
+              slidesToScroll: 1,
+              slidesToShow: 1
             }
           },
           {
             breakpoint: 768,
             settings: {
-              slidesToScroll: 2,
-              slidesToShow: 2,
+              slidesToScroll: 1,
+              slidesToShow: 1,
               speed: 750
             }
           },
@@ -105,7 +105,7 @@ export default {
     }
 
     .slick-dots {
-      @apply text-center mr-0 mt-4 space-x-0;
+      @apply !text-center mr-0 mt-4 space-x-0;
       > * {
         @apply !mx-2;
       }
