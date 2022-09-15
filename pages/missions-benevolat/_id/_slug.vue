@@ -510,9 +510,11 @@ export default {
   },
   mounted () {
     // get next date calendar
-    const nextDates = this.mission.dates.filter(date => this.$dayjs(date.date).isSameOrAfter(this.$dayjs(), 'day'))
-    if (nextDates.length > 0) {
-      this.$refs.calendar.move(new Date(nextDates[0].date))
+    if (this.mission.dates) {
+      const nextDates = this.mission.dates.filter(date => this.$dayjs(date.date).isSameOrAfter(this.$dayjs(), 'day'))
+      if (nextDates.length > 0) {
+        this.$refs.calendar.move(new Date(nextDates[0].date))
+      }
     }
   },
   methods: {
