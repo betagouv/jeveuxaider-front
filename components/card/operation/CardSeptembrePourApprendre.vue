@@ -6,7 +6,7 @@
       <img
         srcset="/images/operations/septembre-pour-apprendre.webp, /images/operations/septembre-pour-apprendre@2x.webp 2x"
         alt="Mobilisons-nous avec Septembre pour apprendre"
-        class="w-full object-cover object-center absolute min-h-[398px]"
+        class="w-full object-cover object-center absolute min-h-[398px] h-full"
         width="323"
         height="398"
       >
