@@ -133,31 +133,15 @@ export default {
         return null
       }
 
-      if (
-        this.$dayjs(startDate).format('D MMMM YYYY') ==
-        this.$dayjs(endDate).format('D MMMM YYYY')
-      ) {
-        return `Le <b>${this.$dayjs(startDate).format(
-          'D MMMM YYYY'
-        )}</b>`
+      if (this.$dayjs(startDate).isSame(this.$dayjs(endDate))) {
+        return `Le <b>${this.$dayjs(startDate).format('D MMMM YYYY')}</b>`
       }
 
-      if (
-        this.$dayjs(startDate).format('YYYY') !=
-        this.$dayjs(endDate).format('YYYY')
-      ) {
-        return `Du <b>${this.$dayjs(startDate).format(
-          'D MMMM YYYY'
-        )}</b> au <b>${this.$dayjs(endDate).format(
-          'D MMMM YYYY'
-        )}</b>`
-      } else {
-        return `Du <b>${this.$dayjs(startDate).format(
-          'D MMMM'
-        )}</b> au <b>${this.$dayjs(endDate).format(
-          'D MMMM YYYY'
-        )}</b>`
+      if (this.$dayjs(startDate).isSame(this.$dayjs(endDate), 'year')) {
+        return `Du <b>${this.$dayjs(startDate).format('D MMMM')}</b> au <b>${this.$dayjs(endDate).format('D MMMM YYYY')}</b>`
       }
+
+      return `Du <b>${this.$dayjs(startDate).format('D MMMM YYYY')}</b> au <b>${this.$dayjs(endDate).format('D MMMM YYYY')}</b>`
     },
     breadcrumbTitle () {
       return this.mission.city

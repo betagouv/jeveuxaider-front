@@ -95,6 +95,9 @@ export default {
         return
       }
       if (startDate && endDate) {
+        if (this.$dayjs(startDate).isSame(this.$dayjs(endDate))) {
+          return `Le ${this.$dayjs(startDate).format('D MMMM YYYY')}`
+        }
         return `Du ${this.$dayjs(startDate).format('D MMMM YYYY')} au ${this.$dayjs(endDate).format('D MMMM YYYY')}`
       }
 
