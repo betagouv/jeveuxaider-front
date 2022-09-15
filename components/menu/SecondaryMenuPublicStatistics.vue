@@ -46,33 +46,21 @@ export default {
     return {
       items: [
         {
-          key: 'statistics',
+          key: 'sections',
           label: 'Statistiques',
           childrens: [
-            { label: 'Vue d\'ensemble', to: '/admin/statistics' },
-            { label: 'Indicateurs clés', to: '/admin/statistics/indicateurs-cles' },
-            { label: 'Organisations', to: '/admin/statistics/organisations' },
-            { label: 'Missions', to: '/admin/statistics/missions' },
-            { label: 'Participations', to: '/admin/statistics/participations' },
-            { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
-            { label: 'Places', to: '/admin/statistics/places' },
-            { label: 'API Engagement', to: '/admin/statistics/api-engagement' }
+            { label: 'Vue d\'ensemble', to: '/statistiques' },
+            { label: 'Participations', to: '/statistiques/participations' },
+            { label: 'Utilisateurs', to: '/statistiques/utilisateurs' },
+            { label: 'Places disponibles', to: '/statistiques/places' }
           ]
         },
         {
-          key: 'actions',
-          label: 'Actions en attente',
+          key: 'api',
+          label: 'API Engagement',
           childrens: [
-            { label: 'Organisations', to: '/admin/statistics/organisations/participations-a-valider' },
-            { label: 'Départements', to: '/admin/statistics/departements/organisations-a-valider' }
-          ]
-        },
-        {
-          key: 'services',
-          label: 'Services tiers',
-          childrens: [
-            { label: 'Metabase', href: 'https://reserve-civique-metabase.osc-secnum-fr1.scalingo.io/' },
-            { label: 'Plausible', href: this.$config.plausible.shared_link }
+            { label: 'Trafic sortant', to: '/statistiques/api-engagement/trafic-sortant' },
+            { label: 'Trafic entrant', to: '/statistiques/api-engagement/trafic-entrant' }
           ]
         }
       ]
