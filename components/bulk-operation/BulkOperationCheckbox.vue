@@ -1,8 +1,8 @@
 <template>
-  <label class="p-4 -ml-4">
+  <label class="p-4 -ml-4 cursor-pointer">
     <input
       type="checkbox"
-      class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-700 border border-gray-300 rounded"
+      class="focus:ring-jva-blue-500 cursor-pointer h-4 w-4 text-jva-blue-500 border border-gray-500 rounded hover:scale-[1.2] transition-transform"
       :checked="value.find(item => item.id === model.id)"
       @change="onChange"
     >
