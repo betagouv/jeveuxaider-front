@@ -80,7 +80,9 @@ export default {
           await this.$axios.post('/participations', {
             mission_id: this.$store.state.softGate.selectedMission.id,
             profile_id: this.$store.state.auth.user.profile.id,
-            content: this.form.content
+            content: this.form.content,
+            date: this.$store.state.softGate.selectedMission.dateSelected.id,
+            slots: this.$store.state.softGate.selectedMission.slotSelected
           })
 
           window.apieng && window.apieng('trackApplication')
