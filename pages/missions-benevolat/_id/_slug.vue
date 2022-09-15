@@ -502,7 +502,7 @@ export default {
           key: 'creneaux',
           highlight,
           dates: this.mission.dates
-            .filter(date => this.$dayjs(date.date).isSameOrAfter(this.$dayjs(), 'day'))
+            .filter(date => this.$dayjs(date.date).isAfter(this.$dayjs(), 'day') || this.$dayjs(date.date).isSame(this.$dayjs(), 'day'))
             .map(day => day.date)
         }
       ]
@@ -511,7 +511,7 @@ export default {
   mounted () {
     // get next date calendar
     if (this.mission.dates) {
-      const nextDates = this.mission.dates.filter(date => this.$dayjs(date.date).isSameOrAfter(this.$dayjs(), 'day'))
+      const nextDates = this.mission.dates.filter(date => this.$dayjs(date.date).isAfter(this.$dayjs(), 'day') || this.$dayjs(date.date).isSame(this.$dayjs(), 'day'))
       if (nextDates.length > 0) {
         this.$refs.calendar.move(new Date(nextDates[0].date))
       }
@@ -524,7 +524,7 @@ export default {
     },
     handleDayClick (dateSelected) {
       const dateFound = this.mission.dates.find(date => date.id == dateSelected.id)
-      if (dateFound && this.$dayjs(dateFound.date).isSameOrAfter(this.$dayjs(), 'day')) {
+      if (dateFound && (this.$dayjs(dateFound.date).isAfter(this.$dayjs(), 'day') || this.$dayjs(dateFound.date).isSame(this.$dayjs(), 'day'))) {
         this.dateSelected = dateFound
       }
     },
