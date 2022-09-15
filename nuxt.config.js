@@ -207,7 +207,8 @@ export default {
     plugins: [
       'relativeTime',
       'customParseFormat',
-      'IsSameOrAfter'
+      'IsSameOrAfter',
+      'IsSameOrAfter.js'
     ]
   },
 
