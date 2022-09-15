@@ -4,7 +4,7 @@
       <Breadcrumb
         :items="[
           { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Plus de chiffres', link: '/admin/numbers' },
+          { label: 'Plus de chiffres', link: '/admin/statistics' },
           { label: 'Participations' },
         ]"
       />

@@ -26,7 +26,7 @@
         @click="!disabled ? showOptions = !showOptions : null"
       >
         <div class="flex gap-4">
-          <span v-if="prefixLabel" class="text-gray-400 font-semibold">Période:</span>
+          <span v-if="prefixLabel" class="text-gray-400 font-semibold">{{ prefixLabel }}</span>
           <template v-if="selectedOption">
             {{ selectedOption[attributeLabel] }}
           </template>
