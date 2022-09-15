@@ -82,7 +82,15 @@ export default {
       }
     },
     canRegister () {
-      if (this.mission.has_places_left && this.mission.state === 'Validée' && this.mission.structure.state === 'Validée') {
+      if (!this.mission.has_places_left) {
+        return false
+      }
+
+      if (this.mission.end_date && this.$dayjs(this.mission.end_date).isBefore(this.$dayjs())) {
+        return false
+      }
+
+      if (this.mission.state === 'Validée' && this.mission.structure.state === 'Validée') {
         return true
       }
 

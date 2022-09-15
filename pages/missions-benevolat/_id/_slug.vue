@@ -103,7 +103,7 @@
             :src="illustrationSrc"
             sizes="(min-width: 1024px) 384px, 100vw"
             alt=""
-            class="w-full object-cover object-top h-[184px]"
+            class="w-full object-cover object-top h-[130px]"
             width="761"
             height="363"
             @error="$event.target.srcset = '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'"
@@ -127,7 +127,7 @@
             >
           </component>
 
-          <div class="bg-white py-12">
+          <div class="bg-white pb-4 pt-6">
             <div class="px-4 text-center">
               <div class="font-extrabold text-xl">
                 <template v-if="!mission.has_places_left">
@@ -184,7 +184,7 @@
                   v-for="(date, i) in dates"
                   :key="i"
                   class="mx-auto sm:mx-0 sm:pb-3"
-                  :class="[{ 'sm:pr-3': i == 0 }, { 'sm:pl-3': i == 1 }]"
+                  :class="[{ 'sm:pr-3': i == 0 && dates.length > 1 }, { 'sm:pl-3': i == 1 && dates.length > 1 }]"
                 >
                   <div
                     class="flex items-center flex-col sm:flex-row gap-2"
@@ -195,7 +195,7 @@
                     <div
                       class="font-bold text-center sm:text-left flex gap-2 items-baseline sm:block"
                     >
-                      <div class="text-[#777E90]" style="font-size: 11px">
+                      <div class="text-cool-gray-500" style="font-size: 11px">
                         {{ date.label }}
                       </div>
                       <div class="text-black">
@@ -207,11 +207,11 @@
               </div>
             </div>
 
-            <div class="flex flex-col gap-8">
+            <div class="flex flex-col">
               <div class="mx-8 sm:mx-12">
                 <div class="text-center">
                   <div
-                    class="mt-6 uppercase text-[#777E90] text-xs font-bold"
+                    class="mt-4 uppercase text-cool-gray-500 text-xs font-bold"
                   >
                     Durée de la mission
                   </div>
@@ -227,38 +227,39 @@
                       Non spécifié
                     </template>
                   </div>
-                  <div v-if="mission.recurrent_description">
+                  <div v-if="mission.recurrent_description" class="text-cool-gray-500 mt-1">
                     {{ mission.recurrent_description }}
                   </div>
                 </div>
               </div>
 
-              <div class="mx-8 sm:mx-10">
+              <div class="mt-4 mx-6">
                 <template v-if="canRegister">
-                  <div v-if="mission.dates">
-                    <div
-                      class="mb-2 uppercase text-[#777E90] text-xs font-bold text-center"
-                    >
-                      Choisissez votre créneau
+                  <template v-if="mission.dates">
+                    <div v-if="!dateSelected" class="flex justify-center">
+                      <v-calendar
+
+                        ref="calendar"
+                        :attributes="calendarAttrs"
+                        :min-date="new Date()"
+                        trim-weeks
+                        @dayclick="handleDayClick"
+                        @transition-end="addHighlightClasses"
+                        @hook:mounted="addHighlightClasses"
+                      />
                     </div>
-                    <v-calendar
-                      v-if="!dateSelected"
-                      :attributes="calendarAttrs"
-                      :min-date="new Date()"
-                      is-expanded
-                      @dayclick="handleDayClick"
-                    />
-                    <div v-else-if="dateSelected" class="relative mt-4">
-                      <div class="left-0 top-0.5 absolute cursor-pointer group" @click="handlePreviousStepClick">
-                        <ChevronLeftIcon class="text-gray-600 h-5 w-5 group-hover:text-black" />
+                    <div v-else-if="dateSelected" class="mt-3 relative mx-6">
+                      <div class="left-0 top--0.5 absolute cursor-pointer group p-1 hover:bg-[#edf2f7] rounded-sm" @click="handlePreviousStepClick">
+                        <ChevronLeftIcon class="text-[#718096] h-5 w-5" />
                       </div>
-                      <div class="text-center font-bold">
+                      <div class="text-center font-bold capitalize">
                         {{ $dayjs(dateSelected.id).format('dddd D MMMM') }}
                       </div>
 
                       <CheckboxGroup
                         v-model="slotSelected"
                         class="mt-6"
+                        class-checkbox="justify-center"
                         name="slots"
                         variant="button"
                         :options="$labels.slots.filter(slot => dateSelected.slots.includes(slot.key))"
@@ -270,9 +271,10 @@
                         />
                       </div>
                     </div>
-                  </div>
+                  </template>
                   <ButtonJeProposeMonAide
                     v-else
+                    class="mt-4"
                     :mission="mission"
                   />
                 </template>
@@ -488,10 +490,10 @@ export default {
     },
     calendarAttrs () {
       const highlight = {
-        class: 'bg-jva-blue-500',
-        contentClass: 'text-white',
+        class: 'bg-jva-blue-100',
+        contentClass: 'text-jva-blue-600',
         contentStyle: {
-          fontWeight: 800
+          fontWeight: 600
         }
       }
 
@@ -499,9 +501,18 @@ export default {
         {
           key: 'creneaux',
           highlight,
-          dates: this.mission.dates.map(day => day.date)
+          dates: this.mission.dates
+            .filter(date => this.$dayjs(date.date).isSameOrAfter(this.$dayjs(), 'day'))
+            .map(day => day.date)
         }
       ]
+    }
+  },
+  mounted () {
+    // get next date calendar
+    const nextDates = this.mission.dates.filter(date => this.$dayjs(date.date).isSameOrAfter(this.$dayjs(), 'day'))
+    if (nextDates.length > 0) {
+      this.$refs.calendar.move(new Date(nextDates[0].date))
     }
   },
   methods: {
@@ -511,9 +522,14 @@ export default {
     },
     handleDayClick (dateSelected) {
       const dateFound = this.mission.dates.find(date => date.id == dateSelected.id)
-      if (dateFound) {
+      if (dateFound && this.$dayjs(dateFound.date).isSameOrAfter(this.$dayjs(), 'day')) {
         this.dateSelected = dateFound
       }
+    },
+    addHighlightClasses () {
+      this.mission.dates.forEach((date) => {
+        this.$refs.calendar.$el.querySelector(`.id-${date.id}`)?.classList.add('has-highlight')
+      })
     }
   }
 }
@@ -546,11 +562,43 @@ export default {
   }
 
   ::v-deep .vc-title {
-    @apply mb-3 pb-2 text-black font-bold;
+    @apply text-black font-bold;
     font-size: 16px;
+    text-transform: capitalize;
   }
 
   ::v-deep .vc-container {
     border: none;
+  }
+
+  ::v-deep .vc-container div {
+    @apply font-sans
+  }
+
+  ::v-deep .vc-day .vc-day-content {
+    font-size: 15px;
+    width: 43px;
+    height: 42px;
+    line-height: 42px;
+  }
+
+  ::v-deep .vc-day .vc-highlight {
+    border-radius: 0 !important;
+    height: 38px;
+    width: 38px;
+  }
+  ::v-deep .vc-weekday {
+    @apply hidden;
+  }
+
+  ::v-deep .vc-day-content:hover {
+    @apply hover:bg-transparent
+  }
+
+  ::v-deep .vc-day.has-highlight:hover .vc-highlight {
+    @apply bg-jva-blue-600 text-white
+  }
+  ::v-deep .vc-day.has-highlight:hover .vc-day-content {
+    @apply text-white
   }
 </style>
