@@ -13,7 +13,13 @@
     <SectionHeading
       title="Indicateurs clés"
       secondary-title-bottom="Évolution des indicateurs avec leurs variations par rapport à l'année précédente"
-    />
+    >
+      <template #action>
+        <div class="hidden lg:block space-x-2 flex-shrink-0">
+          <FiltersStatistics :filters="['department']" @refetch="refetch()" />
+        </div>
+      </template>
+    </SectionHeading>
 
     <div class="space-y-12">
       <EvolutionsByYear ref="evolutionsByYear" />
@@ -25,11 +31,13 @@
 <script>
 import EvolutionsByYear from '@/components/numbers/EvolutionsByYear.vue'
 import EvolutionsByMonth from '@/components/numbers/EvolutionsByMonth.vue'
+import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
 export default {
   components: {
     EvolutionsByYear,
-    EvolutionsByMonth
+    EvolutionsByMonth,
+    FiltersStatistics
   },
   layout: 'statistics',
   middleware: 'admin',
