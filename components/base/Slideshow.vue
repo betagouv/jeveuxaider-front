@@ -148,7 +148,7 @@ export default {
         }
       }
     },
-    onBeforeChange () {
+    onBeforeChange (event, slick, currentSlide, nextSlide) {
       if (this.$refs.vueSlickCarousel.autoplay) {
         this.$refs.vueSlickCarousel.pause()
       }
@@ -204,6 +204,9 @@ export default {
       @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8;
       > li {
         @apply w-auto h-auto my-0 mx-2;
+        > div {
+          @apply transition;
+        }
         &.slick-active > div {
           color: #696974;
         }
