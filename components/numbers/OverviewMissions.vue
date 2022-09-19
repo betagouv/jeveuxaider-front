@@ -10,22 +10,18 @@
         infos-bulle="Nombre de missions en ligne à l’instant T"
       />
       <CardStatistic
-        :value="statistics.places"
-        :title="`${$options.filters.pluralize(statistics.places, 'Place', 'Places', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.places, 'proposée', 'proposées', false)}`"
-        infos-bulle="Nombre de places proposées à l’instant T"
+        :value="statistics.missions_validated_and_over"
+        :title="`${$options.filters.pluralize(statistics.missions_validated_and_over, 'Mission', 'Missions', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.missions_validated_and_over, 'validée ou terminée', 'validées ou terminées', false)}`"
+        link="/admin/missions"
+        infos-bulle="Correspond aux missions créées, qui sont validées ou bien terminées"
       />
       <CardStatistic
-        :value="statistics.places_left"
-        :title="`${$options.filters.pluralize(statistics.places_left, 'Place', 'Places', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.places_left, 'disponible', 'disponibles', false)}`"
-        infos-bulle="Nombre de places vacantes à l’instant T"
-      />
-      <CardStatistic
-        :value="`${statistics.places_occupation_rate}%`"
-        title="Taux de remplissage"
-        :gauge-percentage="statistics.places_occupation_rate"
-        infos-bulle="Correspond au ratio entre le nombre de places disponibles et le nombre de places proposées, à l’instant T"
+        :value="statistics.missions_snu"
+        :title="`${$options.filters.pluralize(statistics.missions_snu, 'Mission SNU-MIG', 'Missions SNU-MIG', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.missions_snu, 'validée ou terminée', 'validée ou terminées', false)}`"
+        link="/admin/missions"
+        infos-bulle="Correspond aux missions proposées en MIG, qui sont validées ou bien terminées"
       />
     </div>
   </Box>

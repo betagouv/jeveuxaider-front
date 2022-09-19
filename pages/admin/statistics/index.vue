@@ -27,6 +27,8 @@
     </Heading>
 
     <OverviewMissions ref="overviewMissions" />
+    <OverviewPlaces ref="overviewPlaces" />
+    <OverviewParticipations ref="overviewParticipations" />
     <OverviewUtilisateurs ref="overviewUtilisateurs" />
     <OverviewOrganisations ref="overviewOrganisations" />
   </div>
@@ -35,8 +37,10 @@
 <script>
 import OverviewOrganisations from '@/components/numbers/OverviewOrganisations'
 import OverviewMissions from '@/components/numbers/OverviewMissions'
+import OverviewParticipations from '@/components/numbers/OverviewParticipations'
 import OverviewQuickGlance from '@/components/numbers/OverviewQuickGlance'
 import OverviewUtilisateurs from '@/components/numbers/OverviewUtilisateurs'
+import OverviewPlaces from '@/components/numbers/OverviewPlaces'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
 export default {
@@ -44,8 +48,10 @@ export default {
     FiltersStatistics,
     OverviewQuickGlance,
     OverviewOrganisations,
+    OverviewParticipations,
     OverviewMissions,
-    OverviewUtilisateurs
+    OverviewUtilisateurs,
+    OverviewPlaces
   },
   layout: 'statistics',
   middleware: 'admin',
@@ -58,6 +64,8 @@ export default {
       this.$refs.overviewUtilisateurs.$fetch()
       this.$refs.overviewMissions.$fetch()
       this.$refs.overviewOrganisations.$fetch()
+      this.$refs.overviewParticipations.$fetch()
+      this.$refs.overviewPlaces.$fetch()
     }
   }
 }

@@ -25,13 +25,13 @@
             <div class="text-gray-500 mb-4 font-semibold">
               À partir de <span class="text-gray-800">{{ $dayjs(form.startDate).format('DD/MM/YYYY') }}</span>
             </div>
-            <v-date-picker ref="calendarStart" v-model="form.startDate" :attributes="attributes" mode="date" />
+            <v-date-picker ref="calendarStart" v-model="form.startDate" :attributes="attributesStartDate" />
           </div>
           <div>
             <div class="text-gray-500 mb-4 font-semibold">
               Jusqu'au <span class="text-gray-800">{{ $dayjs(form.endDate).format('DD/MM/YYYY') }}</span>
             </div>
-            <v-date-picker ref="calendarEnd" v-model="form.endDate" :attributes="attributes" mode="date" />
+            <v-date-picker ref="calendarEnd" v-model="form.endDate" :attributes="attributesEndDate" />
           </div>
         </div>
         <div class="flex justify-end">
@@ -49,11 +49,6 @@
 export default {
   data () {
     return {
-      attributes: [
-        {
-          highlight: 'red'
-        }
-      ],
       filters: [
         { key: 'current_year', label: 'Cette année' },
         { key: 'last_year', label: 'L\'année dernière' },
@@ -67,7 +62,30 @@ export default {
         startDate: this.$dayjs(this.$store.state.statistics.params.startDate).toDate(),
         endDate: this.$dayjs(this.$store.state.statistics.params.endDate).toDate()
       }
-
+    }
+  },
+  computed: {
+    attributesStartDate () {
+      return [
+        {
+          highlight: {
+            fillMode: 'solid',
+            contentClass: '!bg-jva-blue-500 focus:!bg-jva-blue-500'
+          },
+          dates: this.form.startDate
+        }
+      ]
+    },
+    attributesEndDate () {
+      return [
+        {
+          highlight: {
+            fillMode: 'solid',
+            contentClass: '!bg-jva-blue-500 focus:!bg-jva-blue-500'
+          },
+          dates: this.form.endDate
+        }
+      ]
     }
   },
   methods: {
@@ -131,6 +149,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="postcss" scoped>
+::v-deep .vc-highlight {
+  background: #090391!important;
+}
 </style>

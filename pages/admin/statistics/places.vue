@@ -21,7 +21,7 @@
     </SectionHeading>
 
     <div class="space-y-12">
-      <OverviewPlaces ref="overviewPlaces" />
+      <PlacesStatistics ref="placesStatistics" />
       <Heading as="h2" :level="2">
         L'offre actuel en détail
       </Heading>
@@ -46,7 +46,7 @@ import PlacesByOrganisations from '@/components/numbers/PlacesByOrganisations.vu
 import PlacesByMissions from '@/components/numbers/PlacesByMissions.vue'
 import PlacesByDomaines from '@/components/numbers/PlacesByDomaines.vue'
 import PlacesByActivities from '@/components/numbers/PlacesByActivities.vue'
-import OverviewPlaces from '@/components/numbers/OverviewPlaces'
+import PlacesStatistics from '@/components/numbers/PlacesStatistics'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
 export default {
@@ -57,7 +57,7 @@ export default {
     PlacesByMissions,
     PlacesByDomaines,
     PlacesByActivities,
-    OverviewPlaces
+    PlacesStatistics
   },
   layout: 'statistics',
   middleware: 'admin',
@@ -71,7 +71,7 @@ export default {
       this.$refs.placesByReseaux.$fetch()
       this.$refs.placesByMissions.$fetch()
       this.$refs.placesByOrganisations.$fetch()
-      this.$refs.overviewPlaces.$fetch()
+      this.$refs.placesStatistics.$fetch()
     }
   }
 }
