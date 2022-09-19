@@ -26,11 +26,12 @@
       L’activité sur JeVeuxAider.gouv.fr en détail
     </Heading>
 
-    <OverviewMissions ref="overviewMissions" />
-    <OverviewPlaces ref="overviewPlaces" />
     <OverviewParticipations ref="overviewParticipations" />
     <OverviewUtilisateurs ref="overviewUtilisateurs" />
     <OverviewOrganisations ref="overviewOrganisations" />
+    <OverviewMissions ref="overviewMissions" />
+    <OverviewPlaces ref="overviewPlaces" />
+    <OverviewAPIEngagement ref="overviewAPIEngagement" />
   </div>
 </template>
 
@@ -41,6 +42,7 @@ import OverviewParticipations from '@/components/numbers/OverviewParticipations'
 import OverviewQuickGlance from '@/components/numbers/OverviewQuickGlance'
 import OverviewUtilisateurs from '@/components/numbers/OverviewUtilisateurs'
 import OverviewPlaces from '@/components/numbers/OverviewPlaces'
+import OverviewAPIEngagement from '@/components/numbers/OverviewAPIEngagement'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
 export default {
@@ -51,7 +53,8 @@ export default {
     OverviewParticipations,
     OverviewMissions,
     OverviewUtilisateurs,
-    OverviewPlaces
+    OverviewPlaces,
+    OverviewAPIEngagement
   },
   layout: 'statistics',
   middleware: 'admin',
@@ -61,11 +64,6 @@ export default {
   methods: {
     refetch () {
       this.$refs.overviewQuickGlance.$fetch()
-      this.$refs.overviewUtilisateurs.$fetch()
-      this.$refs.overviewMissions.$fetch()
-      this.$refs.overviewOrganisations.$fetch()
-      this.$refs.overviewParticipations.$fetch()
-      this.$refs.overviewPlaces.$fetch()
     }
   }
 }
