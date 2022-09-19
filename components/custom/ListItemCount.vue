@@ -32,11 +32,16 @@
       {{ label }}
     </div>
     <div class="font-medium">
-      <template v-if="count">
-        {{ count | formatNumber }}
+      <template v-if="display === 'count'">
+        <template v-if="value">
+          {{ value | formatNumber }}
+        </template>
+        <template v-else>
+          -
+        </template>
       </template>
-      <template v-else>
-        -
+      <template v-if="display === 'percent'">
+        {{ value | formatNumber("0.[0]") }} <span class="text-xs text-gray-600">%</span>
       </template>
     </div>
   </div>
@@ -58,9 +63,25 @@ export default {
       type: String,
       required: true
     },
+    display: {
+      type: String,
+      default: 'count'
+    },
     count: {
       type: [String, Number],
-      required: true
+      default: 0
+    },
+    total: {
+      type: [Number],
+      default: null
+    }
+  },
+  computed: {
+    value () {
+      if (this.display === 'percent') {
+        return this.total ? (this.count / this.total) * 100 : 0
+      }
+      return this.count
     }
   }
 }

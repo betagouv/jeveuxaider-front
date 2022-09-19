@@ -27,8 +27,8 @@
           }"
           :slides-count="missions.length + 1"
         >
-          <div key="canicule" href="" class="card--mission--wrapper">
-            <CardCanicule class="!h-full" />
+          <div key="septembre-pour-apprendre" href="" class="card--mission--wrapper">
+            <CardSeptembrePourApprendre class="!h-full" />
           </div>
 
           <nuxt-link
@@ -47,12 +47,12 @@
 
 <script>
 import CardMission from '@/components/card/CardMission'
-import CardCanicule from '@/components/card/CardCanicule'
+import CardSeptembrePourApprendre from '@/components/card/operation/CardSeptembrePourApprendre'
 
 export default {
   components: {
     CardMission,
-    CardCanicule
+    CardSeptembrePourApprendre
   },
   data () {
     return {

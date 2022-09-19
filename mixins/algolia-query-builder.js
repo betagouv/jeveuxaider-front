@@ -64,7 +64,15 @@ export default {
         })
       })
 
-      const { results } = await this.$algolia.multipleQueries(queries)
+      let params = {}
+      if (this.$algolia.xForwardedFor) {
+        params = {
+          headers: {
+            'X-Forwarded-For': this.$algolia.xForwardedFor
+          }
+        }
+      }
+      const { results } = await this.$algolia.multipleQueries(queries, params)
 
       this.$store.commit('algoliaSearch/setResults', results[0])
       this.$store.commit('algoliaSearch/setFacetsResults', results.slice(1))

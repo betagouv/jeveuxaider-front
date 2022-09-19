@@ -6,6 +6,9 @@
           Description de la mission
         </Heading>
         <div class="space-y-10">
+          <Alert>
+            Consultez <a class="font-semibold underline">cet article</a> <ExternalLinkIcon class="h-3 w-3 inline" /> pour découvrir nos astuces pour rédiger une mission impactante.
+          </Alert>
           <FormControl
             html-for="name"
             :label="Boolean(mission.template) ? 'ℹ️   Information' : 'Titre de la mission'"
@@ -21,7 +24,7 @@
             <Input
               v-model="form.name"
               name="name"
-              placeholder="Décrivez l'action du bénévole en une phrase"
+              placeholder="Merci de rédiger le titre de votre mission à la première personne du singulier"
               :disabled="Boolean(mission.template)"
             />
           </FormControl>
@@ -113,6 +116,7 @@
           <FormControl
             label="Quelques mots pour motiver les bénévoles à participer"
             html-for="information"
+            :error="errors.information"
           >
             <RichEditor
               v-model="form.information"
@@ -602,8 +606,89 @@ export default {
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
         domaine_id: number().nullable().required('Le domaine principal est requis'),
-        objectif: string().required("L'objectif est requis"),
-        description: string().required('La description est requise'),
+        objectif: string().required('La présentation est requise')
+          .test(
+            'test-contains-email',
+            'La présentation ne doit pas contenir d\'email',
+            (objectif) => {
+              return !this.stringContainsEmail(objectif)
+            }
+          ).test(
+            'test-contains-url',
+            'La présentation ne doit pas contenir de liens.',
+            (objectif) => {
+              return !this.stringContainsUrl(objectif)
+            }
+          ).test(
+            'test-contains-phone',
+            'La présentation ne doit pas contenir de téléphone.',
+            (objectif) => {
+              return !this.stringContainsPhone(objectif)
+            }
+          ),
+        description: string().required('Les précisions sont requises')
+          .test(
+            'test-contains-email',
+            'Les précisions ne doivent pas contenir d\'email',
+            (description) => {
+              return !this.stringContainsEmail(description)
+            }
+          ).test(
+            'test-contains-url',
+            'Les précisions ne doivent pas contenir de liens.',
+            (description) => {
+              return !this.stringContainsUrl(description)
+            }
+          ).test(
+            'test-contains-phone',
+            'Les précisions ne doivent pas contenir de téléphone.',
+            (description) => {
+              return !this.stringContainsPhone(description)
+            }
+          ),
+        information: string().nullable()
+          .test(
+            'test-contains-email',
+            'Ce champ ne doit pas contenir d\'email',
+            (information) => {
+              return !this.stringContainsEmail(information)
+            }
+          ).test(
+            'test-contains-url',
+            'Ce champ ne doit pas contenir de liens',
+            (information) => {
+              return !this.stringContainsUrl(information)
+            }
+          ).test(
+            'test-contains-phone',
+            'Ce champ ne doit pas contenir de téléphone',
+            (information) => {
+              return !this.stringContainsPhone(information)
+            }
+          ),
+        autonomy_precisions: string().nullable()
+          .test(
+            'test-contains-email',
+            'Les précisions sur la zone d\'intervention ne doivent pas contenir d\'email',
+            // eslint-disable-next-line camelcase
+            (autonomy_precisions) => {
+              return !this.stringContainsEmail(autonomy_precisions)
+            }
+          ).test(
+            'test-contains-url',
+            'Les précisions sur la zone d\'intervention ne doivent pas contenir de liens',
+            // eslint-disable-next-line camelcase
+            (autonomy_precisions) => {
+              return !this.stringContainsUrl(autonomy_precisions)
+            }
+          ).test(
+            'test-contains-phone',
+            'Les précisions sur la zone d\'intervention ne doivent pas contenir de téléphone',
+            // eslint-disable-next-line camelcase
+            (autonomy_precisions) => {
+              return !this.stringContainsPhone(autonomy_precisions)
+            }
+          ),
         publics_beneficiaires: array().transform(v => (!v ? [] : v)).min(1, 'Sélectionnez au moins 1 public bénéficiaire').required('Sélectionnez au moins 1 public bénéficiaire'),
         start_date: date()
           .required('La date de début est requise')
@@ -785,6 +870,15 @@ export default {
     },
     onRemovedTagItem (value) {
       this.form.autonomy_zips = this.form.autonomy_zips.filter(item => item.zip !== value.zip)
+    },
+    stringContainsEmail (string) {
+      return (/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/si).test(string)
+    },
+    stringContainsUrl (string) {
+      return (/(http|ftp|mailto|www)/).test(string)
+    },
+    stringContainsPhone (string) {
+      return (/(?:(?:(?:\+|00)33[ ]?(?:\(0\)[ ]?)?)|0){1}[1-9]{1}([ .-]?)(?:\d{2}\1?){3}\d{2}/).test(string)
     }
   }
 }

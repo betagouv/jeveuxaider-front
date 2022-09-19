@@ -1,6 +1,11 @@
 <template>
   <div>
-    <VueSlickCarousel ref="vueSlickCarousel" v-bind="settings">
+    <VueSlickCarousel
+      ref="vueSlickCarousel"
+      v-bind="settings"
+      @beforeChange="onBeforeChange"
+      @afterChange="onAfterChange"
+    >
       <slot />
 
       <template #prevArrow="arrowOption">
@@ -79,6 +84,10 @@ export default {
       type: Number,
       required: true
     },
+    addDotsWrapper: {
+      type: Boolean,
+      default: true
+    },
     settings: {
       type: Object,
       default () {
@@ -99,7 +108,9 @@ export default {
     if (this.slidesAreLinks) {
       this.handleSlidesAccessibility()
     }
-    this.handleDotsWrapper()
+    if (this.addDotsWrapper) {
+      this.handleDotsWrapper()
+    }
   },
   methods: {
     handleSlidesAccessibility () {
@@ -135,6 +146,16 @@ export default {
         if (moreLinkEl) {
           wrapper.appendChild(moreLinkEl)
         }
+      }
+    },
+    onBeforeChange (event, slick, currentSlide, nextSlide) {
+      if (this.$refs.vueSlickCarousel.autoplay) {
+        this.$refs.vueSlickCarousel.pause()
+      }
+    },
+    onAfterChange () {
+      if (this.$refs.vueSlickCarousel.autoplay) {
+        this.$refs.vueSlickCarousel.play()
       }
     }
   }
@@ -180,9 +201,12 @@ export default {
 
     .slick-dots {
       position: inherit;
-      @apply !space-x-3 text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8;
+      @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8;
       > li {
-        @apply w-auto h-auto m-0;
+        @apply w-auto h-auto my-0 mx-2;
+        > div {
+          @apply transition;
+        }
         &.slick-active > div {
           color: #696974;
         }

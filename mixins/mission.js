@@ -68,7 +68,7 @@ export default {
     },
     canEditStatut () {
       const rolesWhoCanEdit = this.$options.filters.label(this.mission.state, 'mission_workflow_states', 'roles')
-      return !!rolesWhoCanEdit.includes(this.$store.getters.contextRole)
+      return !!rolesWhoCanEdit?.includes(this.$store.getters.contextRole)
     },
     missionCity () {
       if (this.mission.city?.startsWith('Paris ')) {
@@ -95,6 +95,9 @@ export default {
         return
       }
       if (startDate && endDate) {
+        if (this.$dayjs(startDate).isSame(this.$dayjs(endDate))) {
+          return `Le ${this.$dayjs(startDate).format('D MMMM YYYY')}`
+        }
         return `Du ${this.$dayjs(startDate).format('D MMMM YYYY')} au ${this.$dayjs(endDate).format('D MMMM YYYY')}`
       }
 

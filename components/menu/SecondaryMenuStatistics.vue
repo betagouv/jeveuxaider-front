@@ -50,11 +50,13 @@ export default {
           label: 'Statistiques',
           childrens: [
             { label: 'Vue d\'ensemble', to: '/admin/statistics' },
+            { label: 'Indicateurs clés', to: '/admin/statistics/indicateurs-cles' },
             { label: 'Organisations', to: '/admin/statistics/organisations' },
             { label: 'Missions', to: '/admin/statistics/missions' },
             { label: 'Participations', to: '/admin/statistics/participations' },
             { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
-            { label: 'Places', to: '/admin/statistics/places' }
+            { label: 'Places', to: '/admin/statistics/places' },
+            { label: 'API Engagement', to: '/admin/statistics/api-engagement' }
           ]
         },
         {
@@ -70,8 +72,7 @@ export default {
           label: 'Services tiers',
           childrens: [
             { label: 'Metabase', href: 'https://reserve-civique-metabase.osc-secnum-fr1.scalingo.io/' },
-            { label: 'Plausible', href: this.$config.plausible.shared_link },
-            { label: 'API Engagement', href: 'https://api-engagement.beta.gouv.fr/' }
+            { label: 'Plausible', href: this.$config.plausible.shared_link }
           ]
         }
       ]

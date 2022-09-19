@@ -163,7 +163,7 @@
                     alt=""
                     :class="[{ '-ml-1': index !== 0 }]"
                     class="portrait rounded-full"
-                    style="width: 34px"
+                    style="width: 36px"
                   >
                   <div
                     v-if="participationsCount - 3 > 0"
@@ -177,8 +177,8 @@
 
             <div v-if="dates.length" class="px-8 sm:px-32 lg:px-8 mt-4 sm:mt-8">
               <div
-                class="grid sm:divide-x border-b pb-3 sm:pb-0"
-                :class="[{ 'sm:grid-cols-2': dates.length == 2 }]"
+                class="grid pb-3 sm:pb-0"
+                :class="[{ 'sm:grid-cols-2 sm:divide-x border-b': dates.length == 2 }]"
               >
                 <div
                   v-for="(date, i) in dates"
@@ -373,24 +373,24 @@ export default {
   computed: {
     dates () {
       const dates = []
-      const startDate = this.mission.start_date?.substring(0, 10)
-      const endDate = this.mission.end_date?.substring(0, 10)
+      const startDate = this.mission.start_date
+      const endDate = this.mission.end_date
 
-      // Si date de départ dépassée et pas de date de fin, masquer les dates
+      // Si date de début dépassée et pas de date de fin, masquer les dates
       if (this.$dayjs(startDate).isBefore(this.$dayjs()) && !endDate) {
         return dates
       }
 
       if (startDate) {
         dates.push({
-          date: this.$dayjs(startDate).format('D MMMM YYYY'),
-          label: 'À PARTIR DU'
+          date: `Le ${this.$dayjs(startDate).format('D MMM YYYY')}`,
+          label: endDate && this.$dayjs(startDate).isSame(this.$dayjs(endDate)) ? null : 'À PARTIR DU'
         })
       }
 
-      if (endDate) {
+      if (endDate && !this.$dayjs(startDate).isSame(this.$dayjs(endDate))) {
         dates.push({
-          date: this.$dayjs(endDate).format('D MMMM YYYY'),
+          date: this.$dayjs(endDate).format('D MMM YYYY'),
           label: "JUSQU'AU"
         })
       }
