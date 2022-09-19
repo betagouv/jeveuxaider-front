@@ -69,7 +69,7 @@ export default {
     },
     count: {
       type: [String, Number],
-      required: true
+      default: 0
     },
     total: {
       type: [Number],
