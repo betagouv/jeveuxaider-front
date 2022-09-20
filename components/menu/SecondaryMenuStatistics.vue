@@ -51,10 +51,10 @@ export default {
           childrens: [
             { label: 'Vue d\'ensemble', to: '/admin/statistics' },
             { label: 'Indicateurs clés', to: '/admin/statistics/indicateurs-cles' },
-            { label: 'Organisations', to: '/admin/statistics/organisations' },
-            { label: 'Missions', to: '/admin/statistics/missions' },
             { label: 'Participations', to: '/admin/statistics/participations' },
             { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
+            { label: 'Organisations', to: '/admin/statistics/organisations' },
+            { label: 'Missions', to: '/admin/statistics/missions' },
             { label: 'Places', to: '/admin/statistics/places' },
             { label: 'API Engagement', to: '/admin/statistics/api-engagement' }
           ]

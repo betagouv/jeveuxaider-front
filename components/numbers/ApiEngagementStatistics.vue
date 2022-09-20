@@ -35,7 +35,7 @@
           <TableHeadCell>Taux de conversion</TableHeadCell>
         </TableHead>
         <TableBody>
-          <TableRow v-for="item,y in partners" :key="y">
+          <TableRow v-for="item,y in incomingPartners" :key="y">
             <TableRowCell>
               <span class="capitalize text-gray-600 font-semibold">
                 {{ item.name }}
@@ -48,7 +48,12 @@
               {{ item.incoming_applies|formatNumber }}
             </TableRowCell>
             <TableRowCell>
-              {{ calculateConversionRate(item.incoming_applies, item.incoming_trafic ) }}%
+              <template v-if="item.incoming_applies && item.incoming_trafic">
+                {{ calculateConversionRate(item.incoming_applies, item.incoming_trafic ) }}%
+              </template>
+              <template v-else>
+                -
+              </template>
             </TableRowCell>
           </TableRow>
         </TableBody>
@@ -89,7 +94,7 @@
           <TableHeadCell>Taux de conversion</TableHeadCell>
         </TableHead>
         <TableBody>
-          <TableRow v-for="item,y in partners" :key="y">
+          <TableRow v-for="item,y in outcomingPartners" :key="y">
             <TableRowCell>
               <span class="capitalize text-gray-600 font-semibold">
                 {{ item.name }}
@@ -102,7 +107,12 @@
               {{ item.outgoing_applies|formatNumber }}
             </TableRowCell>
             <TableRowCell>
-              {{ calculateConversionRate(item.outgoing_applies, item.outgoing_trafic) }}%
+              <template v-if="item.outgoing_applies && item.outgoing_trafic">
+                {{ calculateConversionRate(item.outgoing_applies, item.outgoing_trafic) }}%
+              </template>
+              <template v-else>
+                -
+              </template>
             </TableRowCell>
           </TableRow>
         </TableBody>
@@ -147,12 +157,16 @@ export default {
     })
   },
   computed: {
-    partners () {
+    incomingPartners () {
+      return Object.values(_.merge(
+        _.keyBy(this.incomingTraficFacets, 'name'),
+        _.keyBy(this.incomingAppliesFacets, 'name')
+      ))
+    },
+    outcomingPartners () {
       return Object.values(_.merge(
         _.keyBy(this.outgoingTraficFacets, 'name'),
-        _.keyBy(this.incomingTraficFacets, 'name'),
-        _.keyBy(this.outgoingAppliesFacets, 'name'),
-        _.keyBy(this.incomingAppliesFacets, 'name')
+        _.keyBy(this.outgoingAppliesFacets, 'name')
       ))
     },
     incomingConversionRate () {
