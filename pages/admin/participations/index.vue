@@ -260,6 +260,7 @@ import MixinBulkOperations from '@/mixins/bulk-operations'
 import BoxContext from '@/components/section/BoxContext.vue'
 import ModalBulkParticipationsValidate from '@/components/modal/ModalBulkParticipationsValidate.vue'
 import ModalBulkParticipationsDecline from '@/components/modal/ModalBulkParticipationsDecline.vue'
+import MixinUsetiful from '@/mixins/usetiful.client.js'
 
 export default {
   components: {
@@ -269,8 +270,8 @@ export default {
     ModalBulkParticipationsValidate,
     ModalBulkParticipationsDecline
   },
-  mixins: [QueryBuilder, MixinExport, MixinBulkOperations],
-  middleware: 'authenticated',
+  mixins: [QueryBuilder, MixinExport, MixinBulkOperations, MixinUsetiful],
+  middleware: ['authenticated'],
   async asyncData ({ $axios, store, error }) {
     if (
       !['admin', 'referent', 'referent_regional', 'responsable', 'tete_de_reseau'].includes(

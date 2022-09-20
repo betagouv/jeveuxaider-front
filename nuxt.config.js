@@ -148,6 +148,10 @@ export default {
     },
     flare: {
       projectKey: process.env.FLARE_KEY
+    },
+    usetiful: {
+      enabled: process.env.USETIFUL_ENABLED,
+      token: process.env.USETIFUL_TOKEN
     }
   },
 

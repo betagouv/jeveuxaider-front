@@ -317,3 +317,52 @@ body.full-height-layout {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: masonry;
 }
+
+.uf-slideout-inner,
+.uf-bubble,
+.uf-modal-inner {
+  @apply hidden sm:block border border-gray-200 shadow-2xl rounded-2xl #{!important};
+  .uf-free-badge {
+    display: none !important;
+  }
+  .uf-actions,
+  .uf-content {
+    padding: 24px !important;
+  }
+  .uf-title {
+    padding: 24px 24px 0 !important;
+  }
+  .uf-close-button {
+    top: 15px !important;
+    svg {
+      margin-left: 8px;
+    }
+  }
+  .uf-button {
+    @apply inline-flex items-center border shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 hover:shadow-lg hover:scale-105 transform transition disabled:opacity-25 disabled:cursor-not-allowed text-cool-gray-700 bg-white hover:bg-cool-gray-50 border-cool-gray-300 focus:ring-cool-gray-500 px-4 py-2 rounded-md;
+  }
+  .uf-button-primary {
+    @apply text-white bg-jva-blue-500 hover:bg-jva-blue-500 border-transparent focus:ring-jva-blue-500;
+  }
+  ol {
+    list-style: decimal;
+    padding-left: 24px;
+    margin-bottom: 24px;
+  }
+  ul {
+    list-style: disc;
+    padding-left: 24px;
+    margin-bottom: 24px;
+  }
+  * {
+    @apply font-sans #{!important};
+  }
+}
+.uf-slideout {
+  padding: 32px !important;
+}
+.uf-bubble {
+  .pointer::before {
+    @apply shadow-sm border-0 #{!important};
+  }
+}
