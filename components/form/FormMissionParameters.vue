@@ -81,7 +81,7 @@
       <div class="p-4 border rounded-lg">
         <Toggle
           v-model="form.showCalendar"
-          label="<div class='font-medium text-base mb-2'>Configurer le calendrier de la mission</div>"
+          label="<div class='font-medium text-base mb-2'>Proposer des créneaux spécifiques</div>"
           position="right"
           description="Paramétrez les horaires de réalisation de la mission pour permettre aux bénévoles de choisir des créneaux sur lesquels ils souhaitent s’engager."
         />
@@ -150,19 +150,8 @@
         required
       >
         <template #description>
-          <div class="text-sm  text-gray-600 mt-1">
-            <div class="text-gray-700">
-              En une ligne, par exemple :
-            </div>
-            <div>
-              le samedi matin
-            </div>
-            <div>
-              en soirée du lundi au vendredi
-            </div>
-            <div>
-              de 7h à 9h les mardis
-            </div>
+          <div class="text-sm text-gray-500 mt-2">
+            Précisez en une ligne la disponibilité attendue. Par exemple “Le samedi matin”, “En soirée, le lundi et le jeudi”
           </div>
         </template>
         <Input
@@ -212,13 +201,18 @@ export default {
   },
   computed: {
     attrs () {
+      const highlight = {
+        class: 'bg-jva-blue-100',
+        contentClass: 'text-jva-blue-600',
+        contentStyle: {
+          fontWeight: 600
+        }
+      }
+
       return [
         {
           key: 'dates',
-          highlight: {
-            fillMode: 'solid',
-            contentClass: 'bg-jva-blue-500 focus:!bg-jva-blue-500'
-          },
+          highlight,
           dates: this.form.dates.map(day => day.date)
         }
       ]
@@ -281,5 +275,44 @@ export default {
 <style scoped>
 .vc-container {
   border: none;
+}
+
+::v-deep .vc-title {
+  @apply text-black font-bold;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+::v-deep .vc-container {
+  border: none;
+}
+
+::v-deep .vc-container div {
+  @apply font-sans
+}
+
+::v-deep .vc-day .vc-day-content {
+  font-size: 15px;
+  width: 43px;
+  height: 42px;
+  line-height: 42px;
+}
+
+::v-deep .vc-day .vc-highlight {
+  border-radius: 0 !important;
+  height: 38px;
+  width: 38px;
+}
+
+::v-deep .vc-weekday {
+  @apply hidden;
+}
+
+::v-deep .vc-day-content:focus {
+  @apply !bg-jva-blue-500 !text-white;
+}
+
+::v-deep .vc-day-content:hover {
+  @apply hover:bg-transparent
 }
 </style>
