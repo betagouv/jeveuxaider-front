@@ -22,7 +22,7 @@
           <span>📍</span>
 
           <template v-if="mission.is_autonomy">
-            Mission en autonomie
+            {{ autonomyCities }}
           </template>
 
           <template
@@ -145,6 +145,14 @@ export default {
     }
   },
   computed: {
+    autonomyCities () {
+      if (this.mission.is_autonomy && this.mission.autonomy_zips.length) {
+        return this.mission.autonomy_zips.map((item) => {
+          return item.city.includes(' Arrondissement') ? `${item.city.replace(' Arrondissement', '')}` : `${item.city} (${item.zip})`
+        }).sort((a, b) => a.localeCompare(b, 'fr', { numeric: true })).join(', ')
+      }
+      return null
+    },
     placesLeftText () {
       if (
         this.mission.publisher_name &&
