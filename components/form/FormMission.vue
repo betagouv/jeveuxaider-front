@@ -484,6 +484,7 @@
             <Toggle
               v-model="form.is_snu_mig_compatible"
               label="Accueillir des <strong>bénévoles de 15 à 18 ans</strong> pour cette mission"
+              @checked="onSNUChecked"
             />
             <FormControl
               v-if="form.is_snu_mig_compatible"
@@ -561,6 +562,25 @@
         </div>
       </Box>
     </div>
+    <AlertDialog
+      :is-open="showSNUModal"
+      title="Point de vigilance"
+      button-label="Je confirme"
+      cancel-label="Je ne propose pas ma mission pour le SNU"
+      theme="warning"
+      @cancel="handleSNUCancel"
+      @confirm="handleSNUConfirm"
+    >
+      <div class="text-sm text-gray-500 pr-4">
+        <p class="mb-2">
+          Avant de proposer votre mission sur la plateforme du Service National Universel (SNU), merci de vous assurer que :
+        </p>
+        <ul class="">
+          <li>- Votre mission est adaptée pour l’accueil de volontaires de 15 à 18 ans</li>
+          <li>- Un tuteur sera présent durant la mission pour accompagner les volontaires du SNU</li>
+        </ul>
+      </div>
+    </AlertDialog>
   </div>
 </template>
 
@@ -764,7 +784,8 @@ export default {
           })
 
       }),
-      activities: []
+      activities: [],
+      showSNUModal: false
     }
   },
   fetchOnServer: false,
@@ -820,6 +841,22 @@ export default {
     },
     onRemovedSkill (item) {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
+    },
+    onSNUChecked () {
+      this.showSNUModal = true
+    },
+    handleSNUCancel () {
+      this.form.is_snu_mig_compatible = false
+      this.form.snu_mig_places = null
+      this.showSNUModal = false
+    },
+    handleSNUConfirm () {
+      this.showSNUModal = false
+      if (!this.form.publics_volontaires) {
+        this.form.publics_volontaires = ['Mineurs']
+      } else if (!this.form.publics_volontaires.includes('Mineurs')) {
+        this.form.publics_volontaires.push('Mineurs')
+      }
     },
     async handleSubmit (attributes) {
       if (this.loading) {

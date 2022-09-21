@@ -9,9 +9,10 @@
       @close="$emit('cancel')"
     >
       <div class="text-sm text-gray-500" v-html="text" />
+      <slot />
       <template #footer>
         <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
-          Annuler
+          {{ cancelLabel }}
         </Button>
         <Button :variant="confirmButtonVariant" @click.native="$emit('confirm')">
           {{ confirmLabel }}
@@ -43,6 +44,10 @@ export default {
     buttonLabel: {
       type: String,
       default: null
+    },
+    cancelLabel: {
+      type: String,
+      default: 'Annuler'
     }
   },
   computed: {

@@ -72,6 +72,11 @@ export default {
       checked: this.isChecked
     }
   },
+  watch: {
+    isChecked (newVal) {
+      this.checked = newVal
+    }
+  },
   methods: {
     toggleChecked () {
       this.checked = !this.checked
