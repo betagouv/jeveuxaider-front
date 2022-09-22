@@ -1,11 +1,11 @@
 export const state = () => ({
-  general: null
+  general: null,
+  theme: 'light' // light, dark
 })
 
 export const mutations = {
-  setGeneral (state, form) {
-    state.general = form
-  }
+  setGeneral: (state, form) => { state.general = form },
+  setTheme: (state, payload) => { state.theme = payload }
 }
 
 export const actions = {
