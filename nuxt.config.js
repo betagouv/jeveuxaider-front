@@ -68,7 +68,8 @@ export default {
     '~/plugins/api-algolia.js',
     '~/plugins/plausible.client.js',
     '~/plugins/apiengagement.client.js',
-    { src: '~/plugins/vue-chart.js', mode: 'client' }
+    { src: '~/plugins/vue-chart.js', mode: 'client' },
+    '~/plugins/vue-remix-icons.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
