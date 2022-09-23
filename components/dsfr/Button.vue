@@ -17,9 +17,9 @@
   >
     <component
       :is="icon"
-      v-if="icon"
+      v-if="icon && iconPosition === 'left'"
       :class="[
-        'fill-current mr-2',
+        'fill-current flex-none mr-2',
         {'ml-[0.125rem]': ['sm', 'md'].includes(size)},
         {'ml-[-0.1875rem]': ['lg'].includes(size)},
 
@@ -27,7 +27,21 @@
         {'w-6 h-6': size === 'lg'},
       ]"
     />
+
     <slot />
+
+    <component
+      :is="icon"
+      v-if="icon && iconPosition === 'right'"
+      :class="[
+        'fill-current flex-none ml-2',
+        {'mr-[0.125rem]': ['sm', 'md'].includes(size)},
+        {'mr-[-0.1875rem]': ['lg'].includes(size)},
+
+        {'w-4 h-4': ['sm', 'md'].includes(size) },
+        {'w-6 h-6': size === 'lg'},
+      ]"
+    />
   </button>
 </template>
 
@@ -48,6 +62,11 @@ export default {
       // See vue-remix-icons.js
       type: [String, null],
       default: null
+    },
+    iconPosition: {
+      type: String,
+      default: 'left',
+      validator: i => ['left', 'right'].includes(i)
     }
   }
 }

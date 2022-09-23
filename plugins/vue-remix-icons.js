@@ -5,10 +5,12 @@
 import Vue from 'vue'
 import RiSearchLine from 'vue-remix-icons/icons/RiSearchLine.vue'
 import RiArrowRightLine from 'vue-remix-icons/icons/RiArrowRightLine.vue'
+import RiAddLine from 'vue-remix-icons/icons/RiAddLine.vue'
 
 const components = {
   RiSearchLine,
-  RiArrowRightLine
+  RiArrowRightLine,
+  RiAddLine
 }
 
 Object.entries(components).forEach(([name, component]) => {

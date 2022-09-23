@@ -23,11 +23,11 @@ module.exports = {
     },
     fontSize: {
       xxs: ['0.60rem', { lineHeight: '1rem', letterSpacing: '-0.025em' }],
-      xs: ['0.75rem', { lineHeight: '1rem', letterSpacing: '-0.025em' }],
-      sm: ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '-0.025em' }],
+      xs: ['0.75rem', { lineHeight: '1.25rem', letterSpacing: '-0.025em' }],
+      sm: ['0.875rem', { lineHeight: '1.5rem', letterSpacing: '-0.025em' }],
       base: ['1rem', { lineHeight: '1.5rem', letterSpacing: '-0.025em' }],
-      lg: ['1.125rem', { lineHeight: '1.5rem', letterSpacing: '-0.025em' }],
-      xl: ['1.25rem', { lineHeight: '1.75rem', letterSpacing: '-0.025em' }],
+      lg: ['1.125rem', { lineHeight: '1.75rem', letterSpacing: '-0.025em' }],
+      xl: ['1.25rem', { lineHeight: '2rem', letterSpacing: '-0.025em' }],
       '2xl': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.025em' }],
       '3xl': ['1.875rem', { lineHeight: '2.25rem', letterSpacing: '-0.025em' }],
       '4xl': ['2.25rem', { lineHeight: '2.75rem', letterSpacing: '-0.025em' }],
@@ -56,8 +56,10 @@ module.exports = {
         'jva-blue': {
           50: '#E9EFFF',
           400: '#5B71B9',
-          500: '#070191',
-          600: '#0A04A7'
+          500: '#000091',
+          600: '#0A04A7',
+          800: '#1212ff',
+          900: '#2323ff'
         },
         'jva-green': {
           400: '#C9F2EA',
