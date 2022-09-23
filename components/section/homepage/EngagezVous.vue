@@ -2,67 +2,47 @@
   <section class="py-16 bg-gray-50 overflow-hidden">
     <div class="container mx-auto px-4 relative xl:max-w-[1412px]">
       <div class="mx-auto max-w-6xl">
-        <h2
-          class="text-4xl lg:text-[50px] lg:leading-[42px] tracking-tight text-center lg:text-left"
-        >
-          Engagez-vous
-          <strong class="font-extrabold">près de chez vous</strong>
-        </h2>
+        <Heading as="h2" size="2xl" class="mb-12">
+          Engagez-vous près de chez vous
+        </Heading>
 
         <div
-          class="mt-12 max-w-3xl lg:max-w-[500px] mx-auto lg:ml-0 flex flex-wrap gap-4 items-center justify-center lg:justify-start"
+          class="max-w-3xl lg:max-w-[500px] mx-auto lg:ml-0 flex flex-wrap gap-4 items-center justify-center lg:justify-start"
         >
           <nuxt-link
             v-for="(city, index) in cities"
-            :key="city.name"
-            class="text-[#696974] leading-none truncate px-[18px] h-[40px] flex items-center rounded-full text-[13px] shadow-md font-extrabold tracking-wide uppercase bg-white transform transition will-change-transform hover:scale-110"
-            :class="[
-              {
-                'w-[40px] h-[40px] !p-0 flex items-center justify-center text-[26px] font-normal':
-                  index == cities.length - 1,
-              },
-            ]"
+            :key="index"
             :to="city.url"
           >
-            <template v-if="index != cities.length - 1">
-              {{ city.name }}
-            </template>
-
-            <img
-              v-else
-              src="/images/icons/more.svg"
-              alt="Voir plus de villes"
-              width="13"
-              height="13"
-              data-not-lazy
+            <Tag
+              context="clickable"
+              size="md"
+              :icon="index === cities.length - 1 ? 'RiAddLine' : null"
+              :icon-only="index === cities.length - 1 ? true : false"
             >
+              {{ city.name }}
+            </Tag>
           </nuxt-link>
         </div>
       </div>
 
       <div
-        class="bg-white mt-16 text-center md:text-left rounded-[10px] overflow-hidden lg:max-w-[660px] xl:ml-[56px]"
-        style="box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05)"
+        class="bg-white mt-16 text-center md:text-left overflow-hidden lg:max-w-[660px] xl:ml-[56px] shadow-lg"
       >
         <div class="flex flex-col items-center md:flex-row md:items-end">
           <div class="px-6 pt-8 md:pt-0 md:pb-12 md:pl-12 md:pr-0">
-            <h2
-              class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight"
-            >
-              Ou <strong class="font-extrabold">à distance</strong>
-            </h2>
+            <Heading as="h2" size="2xl">
+              Ou à distance
+            </Heading>
 
             <div class="mt-4 text-xl text-[#696974]">
               Plus de 1 000 missions de bénévolat sont réalisables en
               autonomie
             </div>
 
-            <nuxt-link
-              class="rounded-full text-white bg-jva-green-500 hover:scale-105 !outline-none focus:scale-105 transition px-8 py-3 transform will-change-transform shadow-xl font-bold inline-flex mt-8"
-              to="/missions-benevolat?type=Mission à distance"
-            >
-              <span>Découvrir le télébénévolat</span>
-            </nuxt-link>
+            <Button size="lg" class="mt-8" @click="$router.push('/missions-benevolat?type=Mission à distance')">
+              Découvrir le télébénévolat
+            </Button>
           </div>
 
           <img
@@ -89,7 +69,16 @@
 </template>
 
 <script>
+import Tag from '@/components/dsfr/Tag.vue'
+import Heading from '@/components/dsfr/Heading.vue'
+import Button from '@/components/dsfr/Button.vue'
+
 export default {
+  components: {
+    Tag,
+    Heading,
+    Button
+  },
   data () {
     return {
       cities: [

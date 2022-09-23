@@ -1,5 +1,5 @@
 <template>
-  <section class="relative overflow-hidden md:h-[500px] md:flex items-center">
+  <section class="relative overflow-hidden md:h-[525px] md:flex items-center">
     <img
       src="/images/homepage/deco_1.svg"
       alt="Décorations"
@@ -37,12 +37,12 @@
           class="max-w-[440px] mx-auto md:ml-0 px-4 xl:px-0 text-center md:text-left"
         >
           <h2
-            class="font-extrabold text-4xl lg:text-[50px] lg:leading-[52px] tracking-tighter mb-6"
+            class="font-bold text-4xl lg:text-5xl tracking-tight mb-6"
           >
             Chacun pour tous
           </h2>
-          <p class="text-[#696974] text-2xl mb-6">
-            Plus de <strong>10 000 missions de bénévolat</strong> sont
+          <p class="text-[#696974] text-xl mb-6">
+            Plus de 10 000 missions de bénévolat sont
             disponibles chez les petits et grands acteurs de l'engagement.
           </p>
           <nuxt-link

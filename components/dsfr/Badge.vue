@@ -3,6 +3,7 @@
     :class="[
       'inline-flex items-center justify-center max-w-full truncate uppercase rounded font-bold',
 
+      {'px-[6px] text-[11px]': size == 'xs'},
       {'px-[6px] text-xs': size == 'sm'},
       {'px-2 text-sm': size == 'md'},
 
@@ -18,9 +19,9 @@
       :is="icon"
       v-if="icon"
       :class="[
-        'fill-current flex-none mr-1',
+        'fill-current flex-none mr-1 object-contain',
 
-        {'w-3 h-3': size === 'sm'},
+        {'w-3 h-3': ['xs', 'sm'].includes(size)},
         {'w-4 h-4': size === 'md'},
 
         {'ml-[-2px]': size === 'sm'},
@@ -52,7 +53,7 @@ export default {
     size: {
       type: String,
       default: 'md',
-      validator: s => ['sm', 'md'].includes(s)
+      validator: s => ['xs', 'sm', 'md'].includes(s)
     },
     type: {
       type: String,

@@ -1,10 +1,14 @@
 <template>
-  <div class="card--ukraine relative">
+  <a
+    class="card--septembre relative group"
+    href="https://www.jeveuxaider.gouv.fr/engagement/septembre-pour-apprendre/"
+    target="_blank"
+  >
     <div
-      class="relative rounded-[10px] overflow-hidden safari-fix-scale h-full flex flex-col"
+      class="relative overflow-hidden safari-fix-scale h-full flex flex-col"
     >
       <img
-        srcset="/images/operations/septembre-pour-apprendre.webp, /images/operations/septembre-pour-apprendre@2x.webp 2x"
+        srcset="/images/operations/septembre_pour_apprendre.webp, /images/operations/septembre_pour_apprendre@2x.webp 2x"
         alt="Mobilisons-nous avec Septembre pour apprendre"
         class="w-full object-cover object-center absolute min-h-[398px] h-full"
         width="323"
@@ -14,45 +18,38 @@
       <div
         class="relative mt-auto p-6 sm:p-8 flex flex-col items-center text-center"
       >
-        <div class="text-[48px] sm:text-[60px] font-extrabold">
+        <div class="text-[48px]">
           📚
         </div>
 
         <h3
-          class="text-white font-extrabold text-shadow mb-6 leading-none text-3xl"
+          class="text-white font-bold text-shadow mb-6 leading-none text-3xl"
         >
           Septembre pour apprendre
         </h3>
 
         <div
-          class="text-white text-shadow font-bold max-w-[272px] text-xl leading-[22px] mb-6"
+          class="text-white text-shadow max-w-[272px] text-xl leading-tight mb-6"
         >
           Des missions sont disponibles partout en France
         </div>
 
-        <a
-          class="rounded-full bg-[#21AB8E] text-white hover:scale-105 !outline-none focus:scale-105 transition px-8 py-3 transform shadow-xl inline-flex font-extrabold text-sm sm:text-base"
-          href="https://www.jeveuxaider.gouv.fr/engagement/septembre-pour-apprendre/"
-          target="_blank"
+        <div
+          class="text-white"
         >
           <span>Je trouve une mission</span>
-        </a>
+          <RiArrowRightLine class="fill-current inline w-4 h-4 transition group-hover:translate-x-1" />
+        </div>
       </div>
     </div>
-  </div>
+  </a>
 </template>
 
-<script>
-export default {
-  props: {}
-}
-</script>
-
 <style lang="postcss" scoped>
-.card--ukraine {
-  filter: drop-shadow(0px 20px 40px rgba(0, 0, 0, 0.1));
+.card--septembre {
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
   img.object-cover {
-    transition: all 0.4s ease-in-out;
+    transition: all 0.25s ease-in-out;
   }
   @screen sm {
     &:hover {

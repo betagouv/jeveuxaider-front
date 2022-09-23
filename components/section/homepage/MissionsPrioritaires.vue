@@ -5,13 +5,10 @@
   >
     <div class="container mx-auto px-8 sm:px-4 xl:max-w-[1412px]">
       <div class="mx-auto max-w-6xl">
-        <div class="flex justify-between items-baseline mb-6">
-          <h2
-            class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight text-center md:text-left"
-          >
-            Les missions de bénévolat
-            <strong class="font-extrabold">prioritaires</strong>
-          </h2>
+        <div class="flex justify-between items-baseline mb-12">
+          <Heading as="h2" size="2xl" class="text-center md:text-left">
+            Les missions de bénévolat prioritaires
+          </Heading>
           <span
             class="hidden lg:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0] font-light"
           >
@@ -48,11 +45,13 @@
 <script>
 import CardMission from '@/components/card/CardMission'
 import CardSeptembrePourApprendre from '@/components/card/operation/CardSeptembrePourApprendre'
+import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
     CardMission,
-    CardSeptembrePourApprendre
+    CardSeptembrePourApprendre,
+    Heading
   },
   data () {
     return {

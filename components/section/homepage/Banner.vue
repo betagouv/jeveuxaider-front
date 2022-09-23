@@ -39,33 +39,29 @@
 
     <div class="relative z-10 h-full">
       <div
-        class="container xl:max-w-[1412px] mx-auto px-4 text-center text-white h-full"
+        class="container xl:max-w-[1412px] mx-auto px-4 h-full"
       >
         <div
-          class="flex flex-col justify-center items-center h-full text-shadow"
+          class="flex flex-col justify-center items-start h-full "
         >
-          <div
-            class="text-[50px] leading-none lg:text-7xl font-extrabold mb-4 tracking-tighter"
-          >
-            Envie de bénévolat&nbsp;?
+          <div class="bg-white px-9 py-7 lg:px-[72px] lg:py-14">
+            <Heading as="div" size="alt-sm" class="mb-4">
+              Envie de bénévolat&nbsp;?
+            </Heading>
+
+            <Heading as="h1" size="md" class="mb-8" :bold="false" light-color="text-[#666666]">
+              <strong>Devenez bénévole</strong>
+              <span>et trouvez des missions de bénévolat</span>
+              <br class="hidden md:block">
+              <strong>près de chez vous</strong>
+              <span>ou</span>
+              <strong>à distance</strong>
+            </Heading>
+
+            <Button size="lg" icon="RiSearchLine" @click="handleClickCTA()">
+              Trouver une mission
+            </Button>
           </div>
-
-          <h1 class="text-2xl lg:text-[28px] lg:leading-[34px] mb-8">
-            <strong>Devenez bénévole</strong>
-            <span>et trouvez des missions de bénévolat</span>
-            <br class="hidden md:block">
-            <strong>près de chez vous</strong>
-            <span>ou</span>
-            <strong>à distance</strong>
-          </h1>
-
-          <button
-            class="flex items-center justify-center rounded-full text-white bg-jva-green-500 hover:scale-105 !outline-none focus:scale-105 transition px-8 py-4 transform will-change-transform shadow-xl font-bold text-xl"
-            @click="handleClickCTA()"
-          >
-            <SearchSvg width="16" height="16" class="flex-none" />
-            <span class="ml-2">Trouver une mission</span>
-          </button>
         </div>
       </div>
     </div>
@@ -74,11 +70,13 @@
 
 <script>
 import inViewport from 'vue-in-viewport-mixin'
-import SearchSvg from '@/static/images/icons/search.svg?inline'
+import Heading from '@/components/dsfr/Heading.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
-    SearchSvg
+    Heading,
+    Button
   },
   mixins: [inViewport],
   watch: {

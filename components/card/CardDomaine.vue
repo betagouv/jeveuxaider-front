@@ -1,12 +1,12 @@
 <template>
   <div class="card--domaine relative">
     <div
-      class="h-[200px] w-full rounded-[10px] absolute my-4"
+      class="h-[200px] w-full absolute my-4 custom-shadow"
       :class="[$options.filters.label(domaine.id, 'domaines', 'bg'), { 'bottom-0': domaine.bottom }]"
     />
 
     <div class="px-4">
-      <div class="relative rounded-[10px] overflow-hidden safari-fix-scale">
+      <div class="relative overflow-hidden safari-fix-scale custom-shadow">
         <img
           :srcset="domaine.image"
           :alt="domaine.name"
@@ -28,12 +28,12 @@
             { 'top-0': !domaine.bottom },
           ]"
         >
-          <Badge :color="domaine.id" class="uppercase mb-4">
+          <Tag class="mb-2">
             {{ domaine.name }}
-          </Badge>
+          </Tag>
 
           <h3
-            class="text-white font-extrabold text-2xl leading-[28px] text-shadow"
+            class="text-white font-bold text-2xl leading-[28px] text-shadow"
           >
             {{ domaine.description }}
           </h3>
@@ -44,8 +44,12 @@
 </template>
 
 <script>
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
+  components: {
+    Tag
+  },
   props: {
     domaine: {
       type: Object,
@@ -56,8 +60,11 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
+.custom-shadow {
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
+}
+
 .card--domaine {
-  filter: drop-shadow(0px 20px 40px rgba(0, 0, 0, 0.1));
   img {
     transition: all 0.25s;
   }
@@ -73,24 +80,16 @@ export default {
 .gradient {
   background: linear-gradient(
     7deg,
-    rgba(0, 0, 0, 0) 66.74%,
-    rgba(0, 0, 0, 0.7) 102.8%
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.7) 100%
   );
   &.inverted {
     background: linear-gradient(
       183.3deg,
-      rgba(0, 0, 0, 0) 66.74%,
-      rgba(0, 0, 0, 0.7) 102.8%
+      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 0.7) 100%
     );
   }
-}
-
-.pill-2 {
-  border-radius: 35px;
-  font-size: 11px;
-  letter-spacing: 0.01em;
-  color: white;
-  @apply font-bold uppercase py-1 px-3 inline-flex;
 }
 
 .text-shadow {

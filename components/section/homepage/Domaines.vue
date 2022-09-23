@@ -2,13 +2,10 @@
   <section class="py-16 bg-white overflow-hidden">
     <div class="container mx-auto px-8 sm:px-4 xl:max-w-[1412px]">
       <div class="mx-auto max-w-6xl">
-        <div class="flex justify-between items-baseline mb-6">
-          <h2
-            class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight text-center md:text-left"
-          >
-            Trouvez votre
-            <strong class="font-extrabold">domaine d'action</strong>
-          </h2>
+        <div class="flex justify-between items-baseline mb-12">
+          <Heading as="h2" size="2xl" class="text-center md:text-left">
+            Trouvez votre domaine d'action
+          </Heading>
           <span
             class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0] font-light"
           >
@@ -33,10 +30,12 @@
 
 <script>
 import CardDomaine from '@/components/card/CardDomaine'
+import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
-    CardDomaine
+    CardDomaine,
+    Heading
   },
   data () {
     return {
