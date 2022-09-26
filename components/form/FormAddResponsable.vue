@@ -46,7 +46,6 @@ export default {
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          console.log('OK CALL', this.endpoint)
           await this.$axios.post(this.endpoint, this.form).then((res) => {
             this.$toast.success('Le responsable a bien été ajouté')
             this.$emit('submited', res.data)

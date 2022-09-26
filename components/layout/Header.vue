@@ -1,7 +1,7 @@
 <template>
   <header id="header" ref="header" class="relative bg-white shadow-lg z-30">
-    <div class="flex justify-between items-center relative lg:p-2" :class="{'lg:max-w-7xl lg:mx-auto': !fullWidth}">
-      <div class="lg:flex lg:space-x-6 lg:items-center">
+    <div class="flex justify-between lg:justify-start items-center space-x-2 relative lg:p-2" :class="{'lg:max-w-7xl lg:mx-auto': !fullWidth}">
+      <div class="flex space-x-6 items-center">
         <img
           src="@/assets/images/republique-francaise-logo.svg"
           alt="République Française"
@@ -10,17 +10,30 @@
           height="150"
           data-not-lazy
         >
+      </div>
+      <div class="flex space-x-1 items-center lg:flex-1 lg:ml-6">
         <nuxt-link to="/">
           <img
             src="@/assets/images/jeveuxaider-logo.svg"
             alt="Bénévolat je veux aider"
             title="Bénévolat association"
-            class="h-8 lg:h-9 absolute inset-x-0 mx-auto top-5 lg:relative lg:w-auto lg:top-auto"
-            width="251"
+            class="h-[34px] w-[161px] lg:h-[41px] lg:w-[256px]"
+            width="256"
             height="41"
             data-not-lazy
           >
         </nuxt-link>
+        <a href="https://www.jeveuxaider.gouv.fr/engagement/septembre-pour-apprendre/" target="_blank">
+          <img
+            src="@/assets/images/operations/logo-septembre-pour-apprendre.svg"
+            alt="Bénévolat je veux aider"
+            title="Bénévolat association"
+            class="h-10 lg:h-[60px] w-auto transition hover:scale-105 ml-1 lg:ml-4"
+            width="60"
+            height="60"
+            data-not-lazy
+          >
+        </a>
       </div>
       <div class="flex lg:hidden space-x-2 pr-4 text-jva-blue-500">
         <nuxt-link to="/missions-benevolat">
@@ -132,7 +145,7 @@
           key="ukraine"
           href="https://www.jeveuxaider.gouv.fr/engagement/benevolat-ukraine/"
           target="_blank"
-          class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1"
+          class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
         >
           <img
             src="/images/flag-ukraine.svg"
@@ -146,13 +159,13 @@
         </NavItem>
 
         <NavItem
-          key="canicule"
-          href="https://www.jeveuxaider.gouv.fr/engagement/canicule/"
+          key="septembre-pour-apprendre"
+          href="https://www.jeveuxaider.gouv.fr/engagement/septembre-pour-apprendre/"
           target="_blank"
-          class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1"
+          class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
         >
-          <span>☀️ </span>
-          <span>Canicule</span>
+          <span>📚 </span>
+          <span>Septembre pour apprendre</span>
         </NavItem>
 
         <NavItem
@@ -160,7 +173,7 @@
           to="/admin/contenus/missions-prioritaires"
           :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500 ml-auto flex items-center', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/admin/(settings|contenus|scripts)/*')}]"
         >
-          <CogIcon class="h-4 w-4 mr-2" />
+          <CogIcon class="h-4 w-4 mr-2 flex-none" />
           Administration
         </NavItem>
       </div>
@@ -270,13 +283,13 @@
                 </NavItem>
 
                 <NavItem
-                  key="canicule"
-                  href="https://www.jeveuxaider.gouv.fr/engagement/canicule/"
+                  key="septembre-pour-apprendre"
+                  href="https://www.jeveuxaider.gouv.fr/engagement/septembre-pour-apprendre/"
                   target="_blank"
                   class="flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600"
                 >
-                  <span>☀️ </span>
-                  <span>Canicule</span>
+                  <span>📚 </span>
+                  <span>Septembre pour apprendre</span>
                 </NavItem>
               </div>
             </div>

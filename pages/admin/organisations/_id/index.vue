@@ -176,7 +176,7 @@
                       :value="`${organisationStats.score_response_time}/100`"
                       title="Score de réactivité"
                     />
-                    <div class="text-xs text-gray-700 font-medium text-center px-12 -mt-3 mb-4">
+                    <div class="text-xs text-gray-700 font-medium text-center px-12 mb-4 relative -mt-3">
                       🏆 Améliorez votre visibilité sur la plateforme<br> en améliorant votre réactivité ›
                     </div>
                   </div>

@@ -15,7 +15,7 @@
           :to="`/missions-benevolat/${participation.mission.id}/${participation.mission.slug}`"
           class="rounded-full border py-1 px-3 text-sm font-bold text-gray-900 hover:shadow-md hover:border-black transition"
         >
-          Consulter la fiche
+          Consulter la mission
         </nuxt-link>
       </div>
     </section>
@@ -35,6 +35,24 @@
       <h3 class="text-xl leading-8 font-bold text-gray-900 mb-4">
         {{ participation.mission.name }}
       </h3>
+
+      <div v-if="participation.date" class="mt-2 mb-4">
+        <div class="text-gray-600 font-semibold text-sm">
+          Les disponiblités de {{ participation.profile.first_name }}
+        </div>
+        <div
+          class="flex items-center space-x-3 border p-2 mt-1"
+        >
+          <div class="font-medium text-sm first-letter:uppercase">
+            {{ $dayjs(participation.date).format('dddd D MMMM') }}
+          </div>
+          <div class="flex space-x-3">
+            <div v-for="slot in participation.slots" :key="slot" class="p-2 bg-jva-blue-100 text-jva-blue-500 text-sm">
+              {{ slot | label('slots') }}
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div class="font-light">
         La participation est

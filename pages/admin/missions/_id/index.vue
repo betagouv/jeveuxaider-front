@@ -47,7 +47,7 @@
               @selected="handleChangeState($event)"
             />
             <BoxDates :mission="mission" />
-            <BoxPlace :mission="mission" />
+            <BoxPlace :mission="mission" @updated="handleChangePlace($event)" />
             <BoxEnChiffre :mission="mission" />
             <BoxInformations :mission="mission" />
             <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="mission.department" />
@@ -131,6 +131,10 @@ export default {
     async handleChangeState (event) {
       this.mission.state = event.key
       await this.$axios.put(`/missions/${this.mission.id}`, this.mission)
+    },
+    handleChangePlace (mission) {
+      this.mission.participations_max = mission.participations_max
+      this.mission.places_left = mission.places_left
     }
   }
 }

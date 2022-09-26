@@ -27,7 +27,7 @@
               <CheckCircleSolidIcon class="inline-block w-auto h-5 text-jva-green-500 mr-2" />n'est pas à but lucratif
             </li>
             <li class="flex items-center">
-              <CheckCircleSolidIcon class="inline-block w-auto h-5 text-jva-green-500 mr-2" />n'est pas politique, culturelle ou syndicale.
+              <CheckCircleSolidIcon class="inline-block w-auto h-5 text-jva-green-500 mr-2" />n'est pas politique, cultuelle ou syndicale.
             </li>
           </ul>
           <div class="mt-8 space-y-3">
@@ -535,7 +535,6 @@ export default {
       }
     },
     async onSubmitChooseName () {
-      // console.log('onSubmitChooseName', this.form)
       if (!this.form.structure.name || this.form.structure.name.trim() === '') {
         this.$toast.error("Merci de saisir un nom d'organisation")
         return

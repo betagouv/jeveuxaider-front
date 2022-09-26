@@ -171,7 +171,6 @@ export default {
     },
     onSubmit (e) {
       e.preventDefault()
-      // console.log('onSubmit', this.form)
     }
   }
 }
