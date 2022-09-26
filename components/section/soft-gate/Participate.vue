@@ -58,6 +58,7 @@ export default {
       loading: false,
       form: {
         content: `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
+
       },
       formSchema: object({
         content: string().min(10, 'Votre message est trop court').required('Un message est requis')
@@ -76,7 +77,10 @@ export default {
           await this.$axios.post('/participations', {
             mission_id: this.$store.state.softGate.selectedMission.id,
             profile_id: this.$store.state.auth.user.profile.id,
-            content: this.form.content
+            content: this.form.content,
+            utm_source: this.$cookies.get('utm_source'),
+            utm_campaign: this.$cookies.get('utm_campaign'),
+            utm_medium: this.$cookies.get('utm_medium')
           })
 
           window.apieng && window.apieng('trackApplication')

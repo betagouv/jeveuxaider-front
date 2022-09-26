@@ -210,7 +210,12 @@ export default {
   data () {
     return {
       loading: false,
-      form: { ...this.datas, utm_source: this.$cookies.get('utm_source') },
+      form: {
+        ...this.datas,
+        utm_source: this.$cookies.get('utm_source'),
+        utm_campaign: this.$cookies.get('utm_campaign'),
+        utm_medium: this.$cookies.get('utm_medium')
+      },
       formSchema: object({
         first_name: string().min(3).required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
