@@ -1,8 +1,8 @@
 export default function ({ redirect, route, store, app }) {
   const cookiesOptions = {
     path: '/',
-    maxAge: 60 * 60 * 24 * 10, // 10 jours
-    domain: '.jeveuxaider.gouv.fr'
+    maxAge: 60 * 60 * 24 * 10 // 10 jours
+    // domain: '.jeveuxaider.gouv.fr'
   }
 
   const extractCookieValue = (value) => {
