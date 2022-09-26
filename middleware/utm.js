@@ -1,4 +1,4 @@
-export default function ({ redirect, route, store, app }) {
+export default async function ({ redirect, route, store, app }) {
   const cookiesOptions = {
     path: '/',
     secure: true,
@@ -13,13 +13,15 @@ export default function ({ redirect, route, store, app }) {
     return value
   }
 
+  console.log('route.query', route.query)
+
   if (route.query.utm_source) {
-    app.$cookies.set('utm_source', extractCookieValue(route.query.utm_source), cookiesOptions)
+    await app.$cookies.set('utm_source', extractCookieValue(route.query.utm_source), cookiesOptions)
   }
   if (route.query.utm_campaign) {
-    app.$cookies.set('utm_campaign', extractCookieValue(route.query.utm_campaign), cookiesOptions)
+    await app.$cookies.set('utm_campaign', extractCookieValue(route.query.utm_campaign), cookiesOptions)
   }
   if (route.query.utm_medium) {
-    app.$cookies.set('utm_medium', extractCookieValue(route.query.utm_medium), cookiesOptions)
+    await app.$cookies.set('utm_medium', extractCookieValue(route.query.utm_medium), cookiesOptions)
   }
 }
