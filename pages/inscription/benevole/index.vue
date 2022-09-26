@@ -383,7 +383,9 @@ export default {
         email: this.$route.query.email ? this.$route.query.email : '',
         zip: this.$route.query.zip ? this.$route.query.zip : '',
         password: '',
-        utm_source: this.$cookies.get('utm_source')
+        utm_source: this.$cookies.get('utm_source'),
+        utm_campaign: this.$cookies.get('utm_campaign'),
+        utm_medium: this.$cookies.get('utm_medium')
       },
       formSchema: object({
         first_name: string().min(3).required('Un prénom est requis'),
