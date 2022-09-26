@@ -205,11 +205,11 @@ const labels = {
     { key: 'Désinscrite', to: ['Désinscrite'], roles: ['admin'], label: 'Désinscrite', description: "L'organisation s'est désinscrite. Sa page est hors ligne ainsi que ses missions." }
   ],
   participation_workflow_states: [
-    { key: 'En attente de validation', to: ['En attente de validation', 'En cours de traitement', 'Validée', 'Refusée'], roles: ['admin', 'responsable'], label: 'En attente de validation', description: 'Le bénévole vient de candidater. Il est en attente de validation par le responsable de la mission.' },
-    { key: 'En cours de traitement', to: ['En cours de traitement', 'Validée', 'Refusée'], roles: ['admin', 'responsable'], label: 'En cours de traitement', from: ['En attente de validation'], description: 'Le responsable vérifie des informations avant de valider la participation.' },
-    { key: 'Validée', label: 'Validée', to: ['Validée', 'Annulée'], roles: ['admin', 'responsable'], description: 'La participation est validée, elle va avoir lieu ou a déjà été faite.' },
-    { key: 'Annulée', label: 'Annulée', to: ['Annulée'], roles: ['admin', 'responsable'], description: 'La participation est annulée si la mission a été annulée.' },
-    { key: 'Refusée', label: 'Refusée', to: ['Refusée', 'Validée'], roles: ['admin', 'responsable'], description: 'Le profil du bénévole ne correspond pas à la mission.' }
+    { key: 'En attente de validation', roles: ['admin', 'responsable'], label: 'En attente de validation', description: 'Le bénévole vient de candidater. Il est en attente de validation par le responsable de la mission.' },
+    { key: 'En cours de traitement', roles: ['admin', 'responsable'], label: 'En cours de traitement', from: ['En attente de validation'], description: 'Le responsable vérifie des informations avant de valider la participation.' },
+    { key: 'Validée', label: 'Validée', roles: ['admin', 'responsable'], description: 'La participation est validée, elle va avoir lieu ou a déjà été faite.' },
+    { key: 'Annulée', label: 'Annulée', roles: ['admin', 'responsable'], description: 'La participation est annulée si la mission a été annulée.' },
+    { key: 'Refusée', label: 'Refusée', roles: ['admin', 'responsable'], description: 'Le profil du bénévole ne correspond pas à la mission.' }
   ],
   time_period: [
     { key: 'day', label: 'jour' },

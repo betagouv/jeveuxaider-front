@@ -7,7 +7,7 @@
           :aria-describedby="`${option.key}-description`"
           :name="option.key"
           type="checkbox"
-          class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-700 border border-gray-300 rounded"
+          class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-500 border border-gray-500 rounded"
           :checked="checked"
           @change="toggleChecked()"
         >
