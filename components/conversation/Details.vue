@@ -65,23 +65,23 @@
           <div class="text-sm text-gray-500 mb-4 font-light">
             Début
           </div>
-          <div class="font-light">
+          <div class="font-medium">
             {{ $dayjs(participation.mission.start_date).format('ddd D MMM') }}
           </div>
-          <div class="text-2xl">
+          <!-- <div class="text-2xl">
             {{ $dayjs(participation.mission.start_date).format('HH[h]mm') }}
-          </div>
+          </div> -->
         </div>
         <div v-if="participation.mission.end_date" class="w-1/2 ml-4">
           <div class="text-sm text-gray-500 mb-4 font-light">
             Fin
           </div>
-          <div class="font-light">
+          <div class="font-medium">
             {{ $dayjs(participation.mission.end_date).format('ddd D MMM') }}
           </div>
-          <div class="text-2xl">
+          <!-- <div class="text-2xl">
             {{ $dayjs(participation.mission.end_date).format('HH[h]mm') }}
-          </div>
+          </div> -->
         </div>
       </div>
 
