@@ -64,6 +64,11 @@ export default {
   methods: {
     refetch () {
       this.$refs.overviewQuickGlance.$fetch()
+      this.$refs.overviewParticipations.$fetch()
+      this.$refs.overviewUtilisateurs.$fetch()
+      this.$refs.overviewOrganisations.$fetch()
+      this.$refs.overviewMissions.$fetch()
+      this.$refs.overviewPlaces.$fetch()
     }
   }
 }

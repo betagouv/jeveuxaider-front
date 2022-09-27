@@ -479,14 +479,24 @@
           </Heading>
           <div class="grid col-span-1 gap-8">
             <FormControl
-              label="# RNA"
+              label="Numéro RNA"
               html-for="rna"
             >
+              <FormHelperText>
+                Consultez le <a class="font-medium underline" href="https://www.journal-officiel.gouv.fr/pages/associations-recherche/?reinitrefine=1&sort=cronosort&disjunctive.source" target="blank">répertoire national des associations</a> <ExternalLinkIcon class="h-3 w-3 inline" /> sur la plateforme ouverte des données publiques data.gouv.fr pour retrouver votre numéro RNA.
+              </FormHelperText>
               <Input
                 v-model="form.rna"
                 name="rna"
-                placeholder="Numéro RNA"
+                placeholder="W123456789"
               />
+              <CheckboxBoolean
+                v-model="form.is_alsace_moselle"
+                name="is_alsace_moselle"
+                size="xs"
+              >
+                Je n’ai pas de numéro RNA car je suis une association de droit local (Alsace-Moselle)
+              </CheckboxBoolean>
             </FormControl>
             <FormControl
               v-if="['admin'].includes($store.getters.contextRole)"
