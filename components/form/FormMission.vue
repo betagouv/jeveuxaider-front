@@ -7,7 +7,7 @@
         </Heading>
         <div class="space-y-10">
           <Alert>
-            Consultez <a class="font-semibold underline">cet article</a> <ExternalLinkIcon class="h-3 w-3 inline" /> pour découvrir nos astuces pour rédiger une mission impactante.
+            Consultez <a class="font-semibold underline" href="https://reserve-civique.crisp.help/fr/article/comment-bien-rediger-une-mission-1dizodt/" target="_blank">cet article</a> <ExternalLinkIcon class="h-3 w-3 inline" /> pour découvrir nos astuces pour rédiger une mission impactante.
           </Alert>
           <FormControl
             html-for="name"
