@@ -81,6 +81,8 @@
             </BadgeFilter>
           </template>
         </FacetFilterToggle>
+
+        <MinorsFilter v-if="filter === 'is_minors'" :key="i" />
       </template>
     </div>
 
@@ -101,12 +103,14 @@ import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue
 import BadgeFilter from '~/components/search/BadgeFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import AutonomyFilter from '~/components/section/search/AutonomyFilter.vue'
+import MinorsFilter from '~/components/section/search/MinorsFilter.vue'
 
 export default {
   components: {
     FacetFilterToggle,
     BadgeFilter,
-    AutonomyFilter
+    AutonomyFilter,
+    MinorsFilter
   },
   mixins: [AlgoliaQueryBuilder],
   props: {
