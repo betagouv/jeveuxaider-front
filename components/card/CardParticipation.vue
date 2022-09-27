@@ -1,5 +1,5 @@
 <template>
-  <Box padding="xs" class="!shadow-sm hover:!shadow-md cursor-pointer grid grid-cols-1 lg:grid-cols-3">
+  <Box padding="xs" class="!shadow-sm hover:!shadow-md cursor-pointer grid grid-cols-1 lg:grid-cols-3 w-full">
     <div v-if="participation.mission" class="col-span-1 pr-4 py-2 flex flex-col justify-between gap-4">
       <div>
         <div class="truncate text-sm text-gray-600">
