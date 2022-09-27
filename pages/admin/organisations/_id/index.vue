@@ -211,6 +211,7 @@
                 <DescriptionList v-if="responsable">
                   <DescriptionListItem term="E-mail" :description="responsable.email" />
                   <DescriptionListItem term="Mobile" :description="responsable.mobile" />
+                  <DescriptionListItem v-if="responsable.pivot.fonction" term="Rôle" :description="responsable.pivot.fonction" />
                   <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
                 </DescriptionList>
               </Box>

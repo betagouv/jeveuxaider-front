@@ -65,6 +65,19 @@
             />
           </FormControl>
           <FormControl
+            v-if="['Association', 'Collectivité', 'Organisation publique'].includes(form.statut_juridique)"
+            label="Quel est votre rôle au sein de l'organisation ?"
+            html-for="responsable_fonction"
+          >
+            <SelectAdvanced
+              v-model="form.responsable_fonction"
+              name="responsable_fonction"
+              placeholder="Sélectionnez votre rôle"
+              :options="$labels.responsable_fonction.filter(role => role.statut_juridique == form.statut_juridique)"
+              clearable
+            />
+          </FormControl>
+          <FormControl
             v-if="form.statut_juridique == 'Organisation publique'"
             label="Type de votre organisation publique"
             html-for="structure_publique_type"
@@ -273,7 +286,10 @@ export default {
     const { data: organisation } = await $axios.get(`/structures/${store.getters.currentRole.contextable_id}`)
 
     return {
-      form: organisation
+      form: {
+        ...organisation,
+        responsable_fonction: organisation.members[0].pivot.fonction
+      }
     }
   },
   data () {
