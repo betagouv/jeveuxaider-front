@@ -65,7 +65,7 @@
             <Input
               v-model="form.rna"
               name="rna"
-              :placeholder="form.is_alsace_moselle ? 'Non appliquable' : 'W123456789'"
+              :placeholder="form.is_alsace_moselle ? 'Non applicable' : 'W123456789'"
               :disabled="form.is_alsace_moselle"
             />
             <CheckboxBoolean
