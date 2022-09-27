@@ -27,7 +27,7 @@
         {{ title }}
       </template>
     </Heading>
-    <div v-if="contextLabels.length" class="text-gray-400 font-semibold">
+    <div v-if="contextLabels.length && !noParams" class="text-gray-400 font-semibold">
       {{ contextLabels.join(' · ') }}
     </div>
   </div>
@@ -45,6 +45,10 @@ export default {
       default: null
     },
     noPeriod: {
+      type: Boolean,
+      default: false
+    },
+    noParams: {
       type: Boolean,
       default: false
     },
