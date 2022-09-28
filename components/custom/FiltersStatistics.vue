@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     onChangedDaterange (payload) {
-      this.$store.commit('statistics/setParams', { ...payload })
+      this.$store.commit('statistics/setParams', { ...this.form, ...payload })
       this.$emit('refetch')
     },
     onChanged () {
