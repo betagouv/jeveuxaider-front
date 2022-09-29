@@ -229,12 +229,15 @@
           :key="participation.id"
           class="flex items-center"
         >
-          <BulkOperationCheckbox
-            v-if="canUseBulkOperation"
-            v-model="operations"
-            :model="participation"
-            :class="`bulk-operation-checkbox--${index}`"
-          />
+          <div v-if="canUseBulkOperation" class="min-w-[48px]">
+            <BulkOperationCheckbox
+              v-if="canEditStatut(participation)"
+              v-model="operations"
+              :model="participation"
+              :class="`bulk-operation-checkbox--${index}`"
+            />
+          </div>
+
           <CardParticipation
             :participation="participation"
             @click.native="drawerParticipationId = participation.id"
@@ -366,6 +369,16 @@ export default {
     onPageChange (page) {
       this.operations = []
       this.changePage(page)
+    },
+    canEditStatut (participation) {
+      if (this.$store.getters.contextRole === 'admin') {
+        return true
+      }
+      if (this.$store.getters.contextRole === 'responsable') {
+        return participation.mission.responsable_id === this.$store.getters.profile.id
+      }
+
+      return false
     }
   }
 }
