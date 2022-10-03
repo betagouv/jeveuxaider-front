@@ -89,6 +89,23 @@
         </div>
       </div>
       <TextFormatted v-if="participation.conversation && participation.conversation.latest_message" :max-lines="4" :text="participation.conversation.latest_message.content" class="text-gray-600 mt-3" />
+      <div v-if="participation.date" class="mt-2">
+        <div class="text-gray-600 font-semibold text-sm">
+          Les disponiblités de {{ participation.profile.first_name }}
+        </div>
+        <div
+          class="flex items-center space-x-3 border p-2 mt-1"
+        >
+          <div class="font-medium text-sm first-letter:uppercase">
+            {{ $dayjs(participation.date).format('dddd D MMMM') }}
+          </div>
+          <div class="flex space-x-3">
+            <div v-for="slot in participation.slots" :key="slot" class="p-2 bg-jva-blue-100 text-jva-blue-500 text-sm">
+              {{ slot | label('slots') }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </Box>
 </template>

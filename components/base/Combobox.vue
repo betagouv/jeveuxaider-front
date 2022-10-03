@@ -140,7 +140,6 @@ export default {
       this.showOptions = true
 
       const keyValue = e.which
-      // console.log('keyValue', keyValue)
 
       // enter key
       if (keyValue === 9) {
