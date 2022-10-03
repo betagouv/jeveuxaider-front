@@ -420,6 +420,7 @@ export default {
       const dates = []
       const startDate = this.mission.start_date
       const endDate = this.mission.end_date
+      const sameStartAndEnd = this.$dayjs(startDate).isSame(this.$dayjs(endDate))
 
       // Si date de début dépassée et pas de date de fin, masquer les dates
       if (this.$dayjs(startDate).isBefore(this.$dayjs()) && !endDate) {
@@ -428,12 +429,12 @@ export default {
 
       if (startDate) {
         dates.push({
-          date: `Le ${this.$dayjs(startDate).format('D MMM YYYY')}`,
-          label: endDate && this.$dayjs(startDate).isSame(this.$dayjs(endDate)) ? null : 'À PARTIR DU'
+          date: endDate && sameStartAndEnd ? `Le ${this.$dayjs(startDate).format('D MMM YYYY')}` : this.$dayjs(startDate).format('D MMM YYYY'),
+          label: endDate && sameStartAndEnd ? null : 'À PARTIR DU'
         })
       }
 
-      if (endDate && !this.$dayjs(startDate).isSame(this.$dayjs(endDate))) {
+      if (endDate && !sameStartAndEnd) {
         dates.push({
           date: this.$dayjs(endDate).format('D MMM YYYY'),
           label: "JUSQU'AU"
