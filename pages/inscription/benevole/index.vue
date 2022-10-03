@@ -433,6 +433,7 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           await this.$store.dispatch('auth/registerVolontaire', this.form)
+          window.plausible && window.plausible('Inscription bénévole - Étape 1 - Création de compte')
           this.$router.push('/inscription/benevole/step/profile')
         })
         .catch((errors) => {
