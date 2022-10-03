@@ -379,5 +379,13 @@ const labels = {
     { key: 'Recrutement bénévoles', label: 'Recrutement bénévoles', statut_juridique: 'Association' },
     { key: 'Vie associative', label: 'Vie associative', statut_juridique: 'Association' },
     { key: 'Gestion de projets', label: 'Gestion de projets', statut_juridique: 'Association' }
+  ],
+  slots: [
+    { key: 'day', label: 'Toute la journée' },
+    { key: 'morning', label: 'Matinée' },
+    { key: 'midday', label: 'Le midi' },
+    { key: 'afternoon', label: 'Après-midi' },
+    { key: 'evening', label: 'En soirée' },
+    { key: 'night', label: 'La nuit' }
   ]
 }

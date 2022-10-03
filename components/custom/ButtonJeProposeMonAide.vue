@@ -8,10 +8,11 @@
       </nuxt-link> -->
 
     <Button
-      size="xl"
-      variant="green"
-      full
-      rounded
+      :size="size"
+      :variant="variant"
+      :full="full"
+      :rounded="rounded"
+      :disabled="disabled"
       @click.native="onClick"
     >
       Je propose mon aide
@@ -26,6 +27,26 @@ export default {
     mission: {
       type: Object,
       required: true
+    },
+    variant: {
+      type: String,
+      default: 'green'
+    },
+    rounded: {
+      type: Boolean,
+      default: true
+    },
+    full: {
+      type: Boolean,
+      default: true
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    size: {
+      type: String,
+      default: 'xl'
     }
   },
   data () {

@@ -54,6 +54,10 @@ export default {
   name: 'SoftGateParticipate',
   mixins: [FormErrors],
   data () {
+    let message = `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
+    if (this.$store.state.softGate.selectedMission.dateSelected) {
+      message = `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide le ${this.$store.state.softGate.selectedMission?.dateSelected.ariaLabel} (${this.$store.state.softGate.selectedMission?.slotSelected.map(slot => this.$options.filters.label(slot, 'slots')).join(', ').toLowerCase()}). \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
+    }
     return {
       loading: false,
       form: {
@@ -80,7 +84,9 @@ export default {
             content: this.form.content,
             utm_source: this.$cookies.get('utm_source'),
             utm_campaign: this.$cookies.get('utm_campaign'),
-            utm_medium: this.$cookies.get('utm_medium')
+            utm_medium: this.$cookies.get('utm_medium'),
+            date: this.$store.state.softGate.selectedMission.dateSelected.id,
+            slots: this.$store.state.softGate.selectedMission.slotSelected
           })
 
           window.apieng && window.apieng('trackApplication')

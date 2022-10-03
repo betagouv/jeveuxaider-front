@@ -5,6 +5,7 @@
       :class="[
         {'flex-col space-y-2': variant == 'checkbox'},
         {'flex-wrap -m-1': variant == 'button'},
+        classCheckbox
       ]"
     >
       <Checkbox
@@ -35,7 +36,8 @@ export default {
       validator: s =>
         ['checkbox', 'button'].includes(s)
     },
-    isModel: { type: Boolean, default: false }
+    isModel: { type: Boolean, default: false },
+    classCheckbox: { type: String, default: '' }
   },
   // computed: {
   //   modelValue: {
