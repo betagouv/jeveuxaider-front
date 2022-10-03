@@ -61,8 +61,7 @@ export default {
     return {
       loading: false,
       form: {
-        content: `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
-
+        content: message
       },
       formSchema: object({
         content: string().min(10, 'Votre message est trop court').required('Un message est requis')
@@ -85,7 +84,7 @@ export default {
             utm_source: this.$cookies.get('utm_source'),
             utm_campaign: this.$cookies.get('utm_campaign'),
             utm_medium: this.$cookies.get('utm_medium'),
-            date: this.$store.state.softGate.selectedMission.dateSelected.id,
+            date: this.$store.state.softGate.selectedMission.dateSelected?.id,
             slots: this.$store.state.softGate.selectedMission.slotSelected
           })
 
@@ -100,6 +99,7 @@ export default {
           this.$emit('next')
         })
         .catch((errors) => {
+          console.log(errors)
           this.setErrors(errors)
         })
         .finally(() => {
