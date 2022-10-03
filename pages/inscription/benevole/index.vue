@@ -275,7 +275,6 @@
                           @blur="validate('password_confirmation')"
                         />
                       </FormControl>
-                      </formcontrol>
                     </form>
 
                     <Button
