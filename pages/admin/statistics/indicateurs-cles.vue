@@ -40,7 +40,15 @@ export default {
     FiltersStatistics
   },
   layout: 'statistics',
-  middleware: 'admin',
+  asyncData ({ store, error }) {
+    if (
+      !['admin', 'referent'].includes(
+        store.getters.contextRole
+      )
+    ) {
+      return error({ statusCode: 403 })
+    }
+  },
   data () {
     return {}
   },

@@ -51,7 +51,7 @@
           @input="changeFilter('filter[ofDomaine]', $event)"
         />
         <Combobox
-          v-if="activities.length && ['admin'].includes($store.getters.contextRole)"
+          v-if="activities.length && ['admin','referent'].includes($store.getters.contextRole)"
           name="activity_id"
           placeholder="Activité"
           :options="activities"

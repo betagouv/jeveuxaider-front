@@ -118,7 +118,7 @@
           />
         </div>
       </Box>
-      <MoreNumbers v-if="['admin'].includes($store.getters.contextRole)" />
+      <MoreNumbers v-if="['admin','referent'].includes($store.getters.contextRole)" />
       <Box>
         <Heading as="h2" :level="2" class="mb-8 font-extrabold">
           {{ $store.getters.contextRole === 'admin' ? 'Liens utiles' : 'Suivez le guide' }}

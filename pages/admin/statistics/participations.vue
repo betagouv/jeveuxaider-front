@@ -27,7 +27,7 @@
       </Heading>
       <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" />
       <client-only>
-        <ParticipationsConversionByDate ref="participationsConversionByDate" class="lg:col-span-2" />
+        <ParticipationsConversionByDate v-if="['admin'].includes($store.getters.contextRole)" ref="participationsConversionByDate" class="lg:col-span-2" />
       </client-only>
       <div class="flex flex-col lg:flex-row gap-12">
         <div class="space-y-12 w-1/2">
@@ -68,7 +68,16 @@ export default {
     ParticipationsConversionByDate
   },
   layout: 'statistics',
-  middleware: 'admin',
+  middleware: 'authenticated',
+  asyncData ({ store, error }) {
+    if (
+      !['admin', 'referent'].includes(
+        store.getters.contextRole
+      )
+    ) {
+      return error({ statusCode: 403 })
+    }
+  },
   data () {
     return {}
   },
