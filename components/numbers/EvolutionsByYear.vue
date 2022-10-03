@@ -11,7 +11,9 @@
         <TableHeadCell>Missions postées</TableHeadCell>
         <TableHeadCell>Mises en relation</TableHeadCell>
         <TableHeadCell>Participations effectives</TableHeadCell>
-        <TableHeadCell>Taux de conversion</TableHeadCell>
+        <TableHeadCell v-if="['admin'].includes($store.getters.contextRole)">
+          Taux de conversion
+        </TableHeadCell>
       </TableHead>
       <TableBody>
         <TableRow v-for="item,y in results" :key="y">
@@ -50,7 +52,7 @@
               <PercentageVariation v-if="item.participations_validated_variation" :value="item.participations_validated_variation" />
             </div>
           </TableRowCell>
-          <TableRowCell>
+          <TableRowCell v-if="['admin'].includes($store.getters.contextRole)">
             <span v-if="item.participations_conversion" class="text-gray-600 font-semibold">
               {{ item.participations_conversion|formatNumber }}%
             </span>

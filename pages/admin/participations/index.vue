@@ -16,7 +16,7 @@
       <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
       <div class="flex flex-col gap-y-4 sticky top-8">
         <Combobox
-          v-if="activities.length && ['admin'].includes($store.getters.contextRole)"
+          v-if="activities.length && ['admin','referent'].includes($store.getters.contextRole)"
           name="activity_id"
           placeholder="Activité"
           :options="activities"

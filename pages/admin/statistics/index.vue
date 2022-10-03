@@ -31,7 +31,7 @@
     <OverviewOrganisations ref="overviewOrganisations" />
     <OverviewMissions ref="overviewMissions" />
     <OverviewPlaces ref="overviewPlaces" />
-    <OverviewAPIEngagement ref="overviewAPIEngagement" />
+    <OverviewAPIEngagement v-if="['admin'].includes($store.getters.contextRole)" ref="overviewAPIEngagement" />
   </div>
 </template>
 
@@ -57,7 +57,16 @@ export default {
     OverviewAPIEngagement
   },
   layout: 'statistics',
-  middleware: 'admin',
+  middleware: 'authenticated',
+  asyncData ({ store, error }) {
+    if (
+      !['admin', 'referent'].includes(
+        store.getters.contextRole
+      )
+    ) {
+      return error({ statusCode: 403 })
+    }
+  },
   data () {
     return {}
   },

@@ -2,7 +2,7 @@
   <div>
     <div class="flex gap-4">
       <Combobox
-        v-if="filters.includes('department')"
+        v-if="filters.includes('department') && !['referent'].includes($store.getters.contextRole)"
         v-model="form.department"
         name="department"
         placeholder="Tous les départements"
