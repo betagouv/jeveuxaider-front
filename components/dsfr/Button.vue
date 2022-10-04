@@ -12,6 +12,10 @@
       {'text-jva-blue-500 border-jva-blue-500 bg-transparent hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'secondary'},
       {'text-jva-blue-500 border-[#DDDDDD] bg-transparent hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'tertiary'},
       {'text-jva-blue-500 border-transparent bg-transparent hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'tertiary-no-outline'},
+
+      {'cursor-not-allowed !bg-[#E5E5E5] text-[#929292]': disabled && type === 'primary'},
+      {'cursor-not-allowed !border-[#E5E5E5] text-[#929292]': disabled && ['secondary', 'tertiary'].includes(type)},
+      {'cursor-not-allowed text-[#929292]': disabled && type === 'tertiary-no-outline'},
     ]"
     @click="$emit('click')"
   >
@@ -67,6 +71,10 @@ export default {
       type: String,
       default: 'left',
       validator: i => ['left', 'right'].includes(i)
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   }
 }

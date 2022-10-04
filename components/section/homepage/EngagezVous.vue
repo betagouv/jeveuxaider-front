@@ -27,10 +27,10 @@
       </div>
 
       <div
-        class="bg-white mt-16 text-center md:text-left overflow-hidden lg:max-w-[660px] xl:ml-[56px] shadow-lg"
+        class="bg-white mt-16 text-center md:text-left overflow-hidden lg:max-w-[660px] xl:ml-[56px] border border-[#E5E5E5]"
       >
         <div class="flex flex-col items-center md:flex-row md:items-end">
-          <div class="px-6 pt-8 md:pt-0 md:pb-12 md:pl-12 md:pr-0">
+          <div class="px-6 pt-8 md:pt-0 md:pb-12 md:pl-12 md:pr-0 z-10">
             <Heading as="h2" size="2xl">
               Ou à distance
             </Heading>
@@ -48,7 +48,7 @@
           <img
             src="/images/homepage/telebenevolat.svg"
             alt="Télébénévolat"
-            class="-mt-16 md:mt-0 md:mr-[-97px]"
+            class="-mt-16 md:mt-0 md:mr-[-97px] z-0"
             width="379"
             height="292"
             data-not-lazy

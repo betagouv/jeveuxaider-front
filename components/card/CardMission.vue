@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card--mission h-auto flex flex-col flex-1 bg-white overflow-hidden safari-fix-scale"
+    class="card--mission h-auto flex flex-col flex-1 bg-white overflow-hidden safari-fix-scale border border-[#E5E5E5]"
   >
     <div class="thumbnail--wrapper relative">
       <img
@@ -256,14 +256,14 @@ export default {
 
 <style lang="postcss" scoped>
 .card--mission {
-  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
+  /* box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05); */
   @apply transition;
   @screen sm {
     &:hover {
       .thumbnail--wrapper img {
         transform: scale(1.05);
       }
-      @apply shadow-xl;
+      /* @apply shadow-xl; */
     }
   }
 }

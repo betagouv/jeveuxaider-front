@@ -1,5 +1,5 @@
 <template>
-  <section class="py-16 bg-gray-50 overflow-hidden relative">
+  <section class="py-16 bg-[#ECECFE] overflow-hidden relative">
     <img
       src="/images/homepage/deco_2.svg"
       alt="Décorations"
@@ -15,66 +15,47 @@
     >
 
     <div class="container mx-auto px-4 xl:max-w-[1412px]">
-      <h2
-        class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight text-center text-[#AFAFAE]"
-      >
-        Paroles de
-        <strong class="font-extrabold">bénévoles</strong>
-      </h2>
+      <Heading as="h2" size="2xl" class="text-center">
+        Paroles de bénévoles
+      </Heading>
 
       <Slideshow :slides-count="testimonies.length" :settings="settings" class="mt-12">
         <div v-for="testimony,index in testimonies" :key="index">
           <div
-            class="testimony--wrapper flex flex-col items-center space-y-6 text-center max-w-[768px] mx-auto"
+            class="testimony--wrapper flex flex-col items-center space-y-6 text-center max-w-[768px] mx-auto lg:flex-row lg:text-left lg:space-y-0"
           >
-            <img
-              :src="testimony.organization.logo.default"
-              :srcset="
-                testimony.organization.logo.x2
-                  ? `${testimony.organization.logo.x2} 2x`
-                  : false
-              "
-              :alt="testimony.organization.name"
-              class="max-w-[150px] max-h-[60px] object-contain w-full h-full"
-              :width="testimony.organization.logo.width"
-              :height="testimony.organization.logo.height"
-              data-not-lazy
-            >
-
-            <div class="text-xl lg:text-2xl leading-relaxed">
-              "{{ testimony.content | decodeHTMLEntities }}"
-            </div>
-
-            <div class="flex items-center space-x-4">
+            <div class="flex-none rounded-full bg-white w-[184px] h-[184px] flex items-center justify-center">
               <img
-                v-if="testimony.author.image"
-                :src="testimony.author.image.default"
+                :src="testimony.organization.logo.default"
                 :srcset="
-                  testimony.author.image.x2
-                    ? `${testimony.author.image.x2} 2x`
+                  testimony.organization.logo.x2
+                    ? `${testimony.organization.logo.x2} 2x`
                     : false
                 "
-                :alt="testimony.author.name"
-                width="40"
-                height="40"
-                class="flex-none rounded-full overflow-hidden"
+                :alt="testimony.organization.name"
+                class="flex-none max-w-[120px] max-h-[60px] object-contain w-full h-full"
+                :width="testimony.organization.logo.width"
+                :height="testimony.organization.logo.height"
+                data-not-lazy
               >
+            </div>
 
-              <div
-                class="text-left flex flex-col md:flex-row md:flex-wrap md:items-center"
-              >
-                <span class="font-bold text-[#111827]">
+            <div class="hidden lg:flex flex-none self-stretch w-[1px] bg-[#C1C1FB] mx-8" />
+
+            <div>
+              <RiDoubleQuotesL class="text-[#8B8BF6] fill-current w-6 h-6 mb-4 hidden lg:block" />
+
+              <div class="text-[#161616] text-xl font-bold">
+                « {{ testimony.content | decodeHTMLEntities }} »
+              </div>
+
+              <div class="text-center lg:text-left mt-4">
+                <div class="font-bold text-[#3A3A3A]">
                   {{ testimony.author.name }}
-                </span>
-                <span
-                  class="text-[#A7A7B0] font-bold mx-2 text-lg hidden md:inline-block"
-                >/</span>
-                <span class="text-[#A7A7B0]">
-                  Bénévole chez
-                  <span class="uppercase font-bold">
-                    {{ testimony.organization.name }}
-                  </span>
-                </span>
+                </div>
+                <div class="text-[#666666] text-xs mt-1">
+                  Bénévole chez <span class="uppercase"> {{ testimony.organization.name }} </span>
+                </div>
               </div>
             </div>
           </div>
@@ -85,7 +66,12 @@
 </template>
 
 <script>
+import Heading from '@/components/dsfr/Heading.vue'
+
 export default {
+  components: {
+    Heading
+  },
   data () {
     return {
       testimonies: [

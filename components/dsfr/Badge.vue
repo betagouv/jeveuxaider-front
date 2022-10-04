@@ -35,19 +35,19 @@
 </template>
 
 <script>
-import iconSuccess from '@/static/images/icons/dsfr/badge/success.svg?inline'
-import iconError from '@/static/images/icons/dsfr/badge/error.svg?inline'
-import iconWarning from '@/static/images/icons/dsfr/badge/warning.svg?inline'
-import iconNew from '@/static/images/icons/dsfr/badge/new.svg?inline'
-import iconInfo from '@/static/images/icons/dsfr/badge/info.svg?inline'
+import IconSuccess from '@/static/images/icons/dsfr/badge/success.svg?inline'
+import IconError from '@/static/images/icons/dsfr/badge/error.svg?inline'
+import IconWarning from '@/static/images/icons/dsfr/badge/warning.svg?inline'
+import IconNew from '@/static/images/icons/dsfr/badge/new.svg?inline'
+import IconInfo from '@/static/images/icons/dsfr/badge/info.svg?inline'
 
 export default {
   components: {
-    iconSuccess,
-    iconError,
-    iconWarning,
-    iconNew,
-    iconInfo
+    IconSuccess,
+    IconError,
+    IconWarning,
+    IconNew,
+    IconInfo
   },
   props: {
     size: {
@@ -69,15 +69,15 @@ export default {
     icon () {
       switch (this.type) {
         case 'success':
-          return iconSuccess
+          return IconSuccess
         case 'error':
-          return iconError
+          return IconError
         case 'info':
-          return iconInfo
+          return IconInfo
         case 'warning':
-          return iconWarning
+          return IconWarning
         case 'new':
-          return iconNew
+          return IconNew
         default:
           return null
       }

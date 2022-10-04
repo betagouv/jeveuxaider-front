@@ -12,11 +12,12 @@
     <Blog v-if="$store.state.settings.general.blog_active" />
     <Temoignages />
 
-    <section>
+    <section class="py-16 bg-[#ECECFE] border-t border-[#C1C1FB]">
       <div class="container mx-auto px-4 xl:max-w-[1412px]">
-        <div class="grid gap-5 md:grid-cols-2">
-          <Newsletter />
-          <Communaute />
+        <div class="lg:flex w-full">
+          <Newsletter class="w-full max-w-[690px] flex-grow" />
+          <div class="hidden lg:flex flex-none self-stretch w-[1px] bg-[#C1C1FB] mx-16 xl:mx-24" />
+          <Communaute class="min-w-[300px] mt-16 lg:mt-0" />
         </div>
       </div>
     </section>

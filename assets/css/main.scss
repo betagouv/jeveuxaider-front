@@ -317,3 +317,8 @@ body.full-height-layout {
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: masonry;
 }
+
+::placeholder {
+  font-style: italic;
+  color: #666666 !important;
+}

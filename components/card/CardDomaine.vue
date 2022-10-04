@@ -1,12 +1,12 @@
 <template>
   <div class="card--domaine relative">
     <div
-      class="h-[200px] w-full absolute my-4 custom-shadow"
+      class="h-[200px] w-full absolute my-4"
       :class="[$options.filters.label(domaine.id, 'domaines', 'bg'), { 'bottom-0': domaine.bottom }]"
     />
 
     <div class="px-4">
-      <div class="relative overflow-hidden safari-fix-scale custom-shadow">
+      <div class="relative overflow-hidden safari-fix-scale">
         <img
           :srcset="domaine.image"
           :alt="domaine.name"
@@ -60,9 +60,9 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.custom-shadow {
+/* .custom-shadow {
   box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
-}
+} */
 
 .card--domaine {
   img {
