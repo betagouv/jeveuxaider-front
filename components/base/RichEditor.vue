@@ -116,7 +116,7 @@ export default {
 
 <style lang="postcss" scoped>
 .wrapper {
-  ::v-deep .ck-content {
+  :deep(.ck-content) {
     padding: 6px 1.5rem !important;
     @apply text-sm;
     a {

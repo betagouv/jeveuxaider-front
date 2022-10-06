@@ -132,7 +132,7 @@ export default {
   }
   .panel--container {
     @apply flex-col-reverse flex-1 px-6;
-    ::v-deep .panel--content {
+    :deep(.panel--content) {
       max-width: 550px;
       @apply mx-auto mb-auto w-full pt-4;
     }

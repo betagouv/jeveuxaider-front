@@ -86,7 +86,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-::v-deep .section-associations {
+:deep(.section-associations) {
   @apply pt-40;
 }
 

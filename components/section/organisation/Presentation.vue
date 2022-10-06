@@ -99,7 +99,7 @@ export default {
 <style lang="postcss" scoped>
 .breadcrumb {
   border-bottom: 0 !important;
-  ::v-deep ol {
+  :deep(ol) {
     @apply px-0 !important;
   }
 }

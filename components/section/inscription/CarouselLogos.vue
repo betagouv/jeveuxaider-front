@@ -144,25 +144,22 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-::v-deep {
-  .slick-slider {
-    .slick-track {
-      @apply !space-x-0 justify-center;
-    }
+:deep(.slick-slider) {
+  .slick-track {
+    @apply !space-x-0 justify-center;
+  }
 
-    .slick-dots {
-      @apply !text-center mr-0 mt-4 space-x-0;
-      > * {
-        @apply !mx-[6px];
-      }
-      @screen xl {
-        display: block !important;
-      }
-      li > div {
-        @apply !text-xxs;
-      }
+  .slick-dots {
+    @apply !text-center mr-0 mt-4 space-x-0;
+    > * {
+      @apply !mx-[6px];
     }
-
+    @screen xl {
+      display: block !important;
+    }
+    li > div {
+      @apply !text-xxs;
+    }
   }
 
 }

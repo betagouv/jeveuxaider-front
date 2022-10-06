@@ -864,7 +864,7 @@ export default {
 
 <style lang="postcss" scoped>
 .autonomy_precisions_wrapper {
-  ::v-deep .ck-editor__editable {
+  :deep(.ck-editor__editable) {
     min-height: 80px;
   }
 }

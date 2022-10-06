@@ -271,7 +271,7 @@ export default {
 }
 
 section,
-::v-deep section {
+:deep(section) {
   @apply bg-white p-6;
   &:not(:last-of-type) {
     @apply mb-1;

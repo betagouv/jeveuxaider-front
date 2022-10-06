@@ -72,7 +72,7 @@ export default {
 
 <style lang="postcss" scoped>
 .read-more--content {
-  ::v-deep p:last-child {
+  :deep(p:last-child) {
     display: inline;
   }
 }

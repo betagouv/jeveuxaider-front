@@ -196,7 +196,7 @@ export default {
 
 <style lang="postcss" scoped>
 .public-wrapper {
-  ::v-deep svg {
+  :deep(svg) {
     @apply w-full h-full;
   }
 }
