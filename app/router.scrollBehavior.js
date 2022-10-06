@@ -17,6 +17,10 @@ export default async function (to, from, savedPosition) {
     return { x: 0, y: 0 }
   }
 
+  if (from.path != to.path) {
+    return { x: 0, y: 0 }
+  }
+
   if (to.hash) {
     const el = await findEl(to.hash)
     if (!el) {
