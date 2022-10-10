@@ -30,16 +30,47 @@
         <DescriptionListItem term="Mobile" :description="responsable.mobile" />
         <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
       </DescriptionList>
+      <div v-if="conversableId" class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
+      <div v-if="conversableId" class="flex justify-center text-sm">
+        <Link @click.native="showModalSendMessage = true">
+          <ChatAltIcon class="h-4 w-4 mr-2" /> Envoyer un message
+        </Link>
+        <ModalSendMessage
+          :is-open="showModalSendMessage"
+          :to-user="responsable"
+          :conversable-id="conversableId"
+          :conversable-type="conversableType"
+          @cancel="showModalSendMessage = false"
+        />
+      </div>
     </Box>
   </div>
 </template>
 
 <script>
+import ModalSendMessage from '@/components/modal/ModalSendMessage.vue'
+
 export default {
+  components: {
+    ModalSendMessage
+  },
   props: {
     responsable: {
       type: Object,
       required: true
+    },
+    conversableId: {
+      type: Number,
+      default: null
+    },
+    conversableType: {
+      type: String,
+      default: null
+    }
+  },
+  data () {
+    return {
+      showModalSendMessage: false
     }
   }
 }

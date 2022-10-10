@@ -387,5 +387,10 @@ const labels = {
     { key: 'afternoon', label: 'Après-midi' },
     { key: 'evening', label: 'En soirée' },
     { key: 'night', label: 'La nuit' }
+  ],
+  models: [
+    { key: 'App\\Models\\Structure', label: 'Organisation' },
+    { key: 'App\\Models\\Participation', label: 'Participation' },
+    { key: 'App\\Models\\Mission', label: 'Mission' }
   ]
 }

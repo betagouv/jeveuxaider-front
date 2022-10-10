@@ -50,7 +50,14 @@
         <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="organisation.department" />
         <BoxMission class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
         <BoxParticipation class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
-        <BoxResponsable v-for="responsable in organisation.members" :key="responsable.id" class="mb-8" :responsable="responsable" />
+        <BoxResponsable
+          v-for="responsable in organisation.members"
+          :key="responsable.id"
+          class="mb-8"
+          :responsable="responsable"
+          :conversable-id="organisation.id"
+          conversable-type="Structure"
+        />
         <BoxReseau v-for="reseau in organisation.reseaux" :key="reseau.id" class="mb-8" :reseau="reseau" />
 
         <div class="flex justify-center mb-10">

@@ -51,6 +51,7 @@
                     {'bg-green-100': theme == 'success'},
                     {'bg-orange-100': theme == 'warning'},
                     {'bg-red-100': theme == 'danger'},
+                    {'bg-blue-100': theme == 'message'},
                     {'bg-gray-100': !theme},
                   ]"
                 >
@@ -62,11 +63,13 @@
                       {'text-jva-green-500': theme == 'success'},
                       {'text-jva-orange-500': theme == 'warning'},
                       {'text-jva-red-500': theme == 'danger'},
+                      {'text-jva-blue-500': theme == 'message'},
                     ]"
                   />
                   <CheckIcon v-else-if="theme == 'success'" class="h-6 w-6 text-jva-green-500" />
                   <ExclamationIcon v-else-if="theme == 'warning'" class="h-6 w-6 text-jva-orange-500" />
                   <ExclamationIcon v-else-if="theme == 'danger'" class="h-6 w-6 text-jva-red-500" />
+                  <ChatAltIcon v-else-if="theme == 'message'" class="h-6 w-6 text-jva-blue-500" />
                 </div>
                 <div
                   :class="[
