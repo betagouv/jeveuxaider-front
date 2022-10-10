@@ -47,7 +47,7 @@
               <Button variant="white" @click.native="$emit('close')">
                 Annuler
               </Button>
-              <Button type="submit" :form="formId">
+              <Button type="submit" :form="formId" @click.native="$emit('submit')">
                 {{ submitLabel }}
               </Button>
             </div>

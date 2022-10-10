@@ -12,6 +12,11 @@
         <Presentation :mission="mission" />
         <PresentielOrDistance :mission="mission" />
         <Details :mission="mission" />
+        <BoxNotes
+          v-if="['admin','referent'].includes($store.getters.contextRole)"
+          notable-type="missions"
+          :notable-id="mission.id"
+        />
       </div>
       <div class="lg:col-span-2 space-y-8">
         <div class="flex items-start justify-between">
@@ -35,11 +40,11 @@
         <client-only>
           <Tabs
             :tabs="[
-              { name: 'Informations', to: '', icon: 'InformationCircleSolidIcon', current: $route.hash === '' },
+              { name: 'Informations', to: '', icon: 'InformationCircleSolidIcon', current: !['#historique'].includes($route.hash) },
               { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash === '#historique' }
             ]"
           />
-          <div v-if="$route.hash === ''" class="space-y-8">
+          <div v-if="!['#historique'].includes($route.hash)" class="space-y-8">
             <SelectMissionState
               v-if="canEditStatut"
               :value="mission.state"
@@ -77,6 +82,7 @@ import MixinMission from '@/mixins/mission'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
 import SelectMissionState from '@/components/custom/SelectMissionState'
 import BoxReferents from '@/components/section/BoxReferents'
+import BoxNotes from '@/components/custom/BoxNotes'
 
 export default {
   components: {
@@ -92,7 +98,8 @@ export default {
     History,
     OnlineIndicator,
     SelectMissionState,
-    BoxReferents
+    BoxReferents,
+    BoxNotes
   },
   mixins: [MixinMission],
   middleware: 'authenticated',
