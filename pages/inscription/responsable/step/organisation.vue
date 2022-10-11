@@ -51,6 +51,33 @@
               @blur="validate('statut_juridique')"
             />
           </FormControl>
+
+          <FormControl
+            v-if="form.statut_juridique == 'Association'"
+            label="Renseignez votre numéro RNA"
+            html-for="rna"
+            :error="errors.rna"
+            required
+          >
+            <FormHelperText>
+              Consultez le <a class="font-medium underline" href="https://www.journal-officiel.gouv.fr/pages/associations-recherche/?reinitrefine=1&sort=cronosort&disjunctive.source" target="blank">répertoire national des associations</a> <ExternalLinkIcon class="h-3 w-3 inline" /> sur la plateforme ouverte des données publiques data.gouv.fr pour retrouver votre numéro RNA.
+            </FormHelperText>
+            <Input
+              v-model="form.rna"
+              name="rna"
+              :placeholder="form.is_alsace_moselle ? 'Non applicable' : 'W123456789'"
+              :disabled="form.is_alsace_moselle"
+            />
+            <CheckboxBoolean
+              v-model="form.is_alsace_moselle"
+              name="is_alsace_moselle"
+              size="xs"
+              @checked="form.rna = null"
+            >
+              Je n’ai pas de numéro RNA car je suis une association de droit local (Alsace-Moselle)
+            </CheckboxBoolean>
+          </FormControl>
+
           <FormControl
             v-if="form.statut_juridique == 'Association'"
             label="Disposez vous d'agréments ?"
@@ -61,6 +88,19 @@
               name="association_types"
               placeholder="Sélectionnez vos agréments"
               :options="$labels.association_types"
+              clearable
+            />
+          </FormControl>
+          <FormControl
+            v-if="['Association', 'Collectivité', 'Organisation publique'].includes(form.statut_juridique)"
+            label="Quel est votre rôle au sein de l'organisation ?"
+            html-for="responsable_fonction"
+          >
+            <SelectAdvanced
+              v-model="form.responsable_fonction"
+              name="responsable_fonction"
+              placeholder="Sélectionnez votre rôle"
+              :options="$labels.responsable_fonction.filter(role => role.statut_juridique == form.statut_juridique)"
               clearable
             />
           </FormControl>
@@ -273,7 +313,10 @@ export default {
     const { data: organisation } = await $axios.get(`/structures/${store.getters.currentRole.contextable_id}`)
 
     return {
-      form: organisation
+      form: {
+        ...organisation,
+        responsable_fonction: organisation.members[0].pivot.fonction
+      }
     }
   },
   data () {
@@ -322,8 +365,12 @@ export default {
         address: string().nullable(),
         zip: string().nullable().required('Le code postal est requis'),
         city: string().nullable().required('La ville est requise'),
-        // @todo attendre décision sur le sujet
-        domaines: array().min(1, 'Au moins 1 domaine d\'action')
+        domaines: array().min(1, 'Au moins 1 domaine d\'action'),
+        rna: string().when(['statut_juridique', 'is_alsace_moselle'], {
+          is: (statutJuridique, isAlsaceMoselle) => statutJuridique === 'Association' && !isAlsaceMoselle, // alternatively: (val) => val == true
+          then: schema => schema.nullable().required('Un numéro RNA est requis'),
+          otherwise: schema => schema.nullable()
+        })
       })
 
       if (this.form.statut_juridique !== 'Collectivité') {

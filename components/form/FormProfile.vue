@@ -118,26 +118,71 @@
             </FormControl>
           </div>
         </Box>
-        <Box>
-          <Heading :level="3" class="mb-8">
-            Service Civique
-          </Heading>
-          <div class="flex space-x-8">
-            <img
-              src="@/assets/images/service-civique-logo.png"
-              alt="Service Civique"
-              title="Service Civique"
-              class="hidden lg:block h-10"
-              data-not-lazy
+        <transition name="fade">
+          <Box v-if="canViewScAndCej" class="space-y-8">
+            <Heading :level="3" class="mb-8">
+              Service Civique & Contrat d'Engagement Jeune
+            </Heading>
+            <div class="flex lg:space-x-8">
+              <img
+                src="/images/service_civique.png"
+                srcset="/images/service_civique.png, /images/service_civique@2x.png 2x"
+                alt="Service Civique"
+                title="Service Civique"
+                class="hidden lg:block h-10 flex-none w-[75px] object-contain object-left"
+                data-not-lazy
+              >
+              <Toggle
+                v-model="form.service_civique"
+                class="flex-1"
+                label="Etes-vous volontaire en Service Civique ?"
+                :description="form.service_civique ? 'Oui, je suis volontaire' : 'Non, je ne suis pas volontaire'"
+              />
+            </div>
+            <FormControl
+              v-if="form.service_civique"
+              label="Date de début de votre Service Civique"
+              html-for="service_civique_completion_date"
+              :error="errors.service_civique_completion_date"
             >
-            <Toggle
-              v-model="form.service_civique"
-              class="flex-1"
-              label="Etes-vous volontaire en Service Civique ?"
-              :description="form.service_civique ? 'Oui, je suis volontaire' : 'Non, je ne suis pas volontaire'"
-            />
-          </div>
-        </Box>
+              <InputDate v-model="form.service_civique_completion_date" active-picker="MONTH" required name="service_civique_completion_date" />
+            </FormControl>
+            <div class="flex lg:space-x-8">
+              <img
+                src="/images/cej.png"
+                srcset="/images/cej.png, /images/cej@2x.png 2x"
+                alt="Contrat d'Engagement Jeune"
+                title="Contrat d'Engagement Jeune"
+                class="hidden lg:block h-10 flex-none w-[75px] object-contain object-left"
+                data-not-lazy
+              >
+              <Toggle
+                v-model="form.cej"
+                class="flex-1"
+                label="Etes-vous engagé Contrat d'Engagement Jeune ?"
+                :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
+              />
+            </div>
+            <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser" required>
+              <template #afterLabel>
+                <span
+                  v-tooltip="{
+                    content: 'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
+                  }"
+                  class="p-1 cursor-help group"
+                >
+                  <InformationCircleIcon class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]" />
+                </span>
+              </template>
+              <Input
+                v-model="form.cej_email_adviser"
+                name="cej_email_adviser"
+                placeholder="jean.dupont@gmail.com"
+                @blur="validate('cej_email_adviser')"
+              />
+            </FormControl>
+          </Box>
+        </transition>
         <Box v-if="$store.getters.contextRole === 'admin'">
           <Heading :level="3" class="mb-8">
             Tags
@@ -402,14 +447,44 @@ export default {
         mobile: string().nullable().min(10, 'Le mobile doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un mobile est requis'),
         phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v),
         zip: string().nullable().min(5, 'Le format du code postal est incorrect').required('Un code postal est requis'),
-        disponibilities: array().transform(v => (!v ? [] : v)).min(1, 'Merci de sélectionner au moins 1 disponibilité').required('df')
+        disponibilities: array().transform(v => (!v ? [] : v)).min(1, 'Merci de sélectionner au moins 1 disponibilité').required('df'),
+        cej_email_adviser: string().nullable().email("Le format de l'email est incorrect").when('cej', {
+          is: true,
+          then: schema => schema.required("L'email de votre conseiller CEJ est obligatoire")
+        }),
+        service_civique_completion_date: date().nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null))
       }),
       autocompleteReseauxOptions: [],
       activitiesOptions,
       activitiesOptions2: activitiesOptions.map((activity) => { return { id: activity.key, name: activity.label } }),
       showDrawerActivity: false,
-      domainsOptions: ['Bénévolat de compétences', 'Solidarité et insertion', 'Éducation pour tous', 'Protection de la nature', 'Art et culture pour tous', 'Sport pour tous', 'Prévention et protection', 'Mémoire et citoyenneté'],
+      domainsOptions: [
+        'Art et culture pour tous',
+        'Bénévolat de compétences',
+        'Éducation pour tous',
+        'Mémoire et citoyenneté',
+        'Prévention et protection',
+        'Protection de la nature',
+        'Solidarité et insertion',
+        'Sport pour tous'
+      ],
       tags: []
+    }
+  },
+  computed: {
+    canViewScAndCej () {
+      if (this.form.birthday) {
+        const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+        return userAge >= 16 && userAge <= 30
+      }
+      return false
+    }
+  },
+  watch: {
+    'form.cej' (val) {
+      if (!val) {
+        this.form.cej_email_adviser = null
+      }
     }
   },
   async mounted () {

@@ -13,7 +13,7 @@
       type="button"
       class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 "
       :class="[
-        value ?'bg-jva-green-600 focus:ring-jva-green-500': 'bg-gray-200 focus:ring-gray-200'
+        selected ?'bg-jva-green-600 focus:ring-jva-green-500': 'bg-gray-200 focus:ring-gray-200'
       ]"
       role="switch"
       aria-checked="false"
@@ -25,10 +25,10 @@
         aria-hidden="true"
         class="pointer-events-none inline-flex items-center justify-center h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"
         :class="[
-          value ? 'translate-x-5': 'translate-x-0'
+          selected ? 'translate-x-5': 'translate-x-0'
         ]"
       >
-        <CheckIcon v-if="value" class="h-3 text-jva-green-500" />
+        <CheckIcon v-if="selected" class="h-3 text-jva-green-500" />
         <XIcon v-else class="h-3 text-gray-400" />
       </span>
     </button>
@@ -55,10 +55,25 @@ export default {
       default: 'left'
     }
   },
-
+  data () {
+    return {
+      selected: this.value
+    }
+  },
+  watch: {
+    value (newVal) {
+      this.selected = newVal
+    }
+  },
   methods: {
     onToggleSwitch () {
-      this.$emit('input', !this.value)
+      this.selected = !this.selected
+      this.$emit('input', this.selected)
+      if (this.selected) {
+        this.$emit('checked')
+      } else {
+        this.$emit('unchecked')
+      }
     }
   }
 }

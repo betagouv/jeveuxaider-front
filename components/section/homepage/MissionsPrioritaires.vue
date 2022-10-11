@@ -73,7 +73,7 @@ export default {
   @apply w-full;
 }
 
-::v-deep .slick-slider {
+:deep(.slick-slider) {
   .slick-arrow {
     &.slick-prev {
       @apply translate-x-[-104px];

@@ -1,7 +1,10 @@
+const dayjs = require('dayjs')
+
 export const state = () => ({
   params: {
-    period: 'current_year',
-    department: null
+    department: null,
+    startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
+    endDate: dayjs().format('YYYY-MM-DD')
   }
 })
 

@@ -17,13 +17,6 @@
         infos-bulle="Correspond aux missions créées sur la période, qui sont validées ou bien terminées"
       />
       <CardStatistic
-        :value="`${statistics.missions_conversion_rate}%`"
-        title="Taux de conversion"
-        :gauge-percentage="statistics.missions_conversion_rate"
-        infos-bulle="Correspond au ratio entre le nombre de missions créées et le nombre de missions validées ou terminées sur la période"
-      />
-      <CardStatistic
-        class="col-start-1"
         :value="statistics.missions_participations_max_sum"
         :title="`${$options.filters.pluralize(statistics.missions_participations_max_sum, 'Place', 'Places', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.missions_participations_max_sum, 'proposée', 'proposées', false)}`"

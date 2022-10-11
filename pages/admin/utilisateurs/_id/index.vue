@@ -97,7 +97,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="border-t -mx-6 mt-6 mb-4" />
+                <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
                 <div class="flex justify-center text-sm">
                   <Link :to="`/admin/participations?filter[profile.id]=${profile.id}&full_name=${profile.full_name}`">
                     Voir les participations
@@ -108,6 +108,7 @@
             <BoxOrganisations v-if="profile.structures" :structures="profile.structures" />
             <BoxTerritoires v-if="profile.territoires" :territoires="profile.territoires" />
             <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" />
+            <BoxUtm v-if="$store.getters.contextRole === 'admin'" :model="profile.user" />
           </div>
           <History v-if="$route.hash === '#historique'" :model-id="profile.id" model-type="profile" />
         </client-only>
@@ -123,6 +124,7 @@ import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
 import BoxReseau from '@/components/section/profile/BoxReseau'
 import BoxTerritoires from '@/components/section/profile/BoxTerritoires'
 import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
+import BoxUtm from '@/components/section/BoxUtm'
 
 export default {
   components: {
@@ -131,7 +133,8 @@ export default {
     BoxDisponibilities,
     BoxReseau,
     BoxTerritoires,
-    BoxOrganisations
+    BoxOrganisations,
+    BoxUtm
   },
   async asyncData ({ $axios, params, error, store }) {
     if (

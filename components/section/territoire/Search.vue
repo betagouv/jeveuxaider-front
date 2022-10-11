@@ -105,29 +105,28 @@ export default {
 .component--search-missions {
   background-color: unset;
 
-  ::v-deep {
-    .ais-Hits-item {
-      @screen sm {
-        width: 292px;
-      }
-      @screen md {
-        width: 330px;
-      }
-      @screen lg {
-        width: 308px;
-      }
-      @screen xl {
-        width: 330px;
-      }
+  :deep(.ais-Hits-item) {
+    @screen sm {
+      width: 292px;
     }
-
-    .ais-Hits-list {
-      justify-content: center;
+    @screen md {
+      width: 330px;
     }
-
-    .ais-StateResults {
-      @apply mb-4;
+    @screen lg {
+      width: 308px;
+    }
+    @screen xl {
+      width: 330px;
     }
   }
+
+  :deep(.ais-Hits-list) {
+    justify-content: center;
+  }
+
+  :deep(.ais-StateResults) {
+    @apply mb-4;
+  }
+
 }
 </style>

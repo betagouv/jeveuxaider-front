@@ -2,6 +2,7 @@
   <div class="space-y-1">
     <FormLabel v-if="label" :html-for="htmlFor" :suffix="labelSuffix" :required="required">
       {{ label }}
+      <slot name="afterLabel" />
     </FormLabel>
     <slot />
     <FormError v-if="error">

@@ -17,7 +17,7 @@
         Cette mission peut être réalisée sans l’encadrement du responsable de mission.
         <span v-if="mission.autonomy_zips.length > 1">Elle est proposée sur plusieurs lieux.</span>
       </p>
-      <div class="text-gray-500 truncate">
+      <div class="text-gray-500 line-clamp-1">
         <span>📍</span>
         <span v-if="mission.is_autonomy">{{ autonomyCities }}</span>
         <span v-else>{{ address }}</span>
@@ -67,7 +67,9 @@ export default {
     },
     autonomyCities () {
       if (this.mission.is_autonomy && this.mission.autonomy_zips.length) {
-        return this.mission.autonomy_zips.map(item => `${item.city} (${item.zip})`).join(', ')
+        return this.mission.autonomy_zips.map((item) => {
+          return item.city.includes(' Arrondissement') ? `${item.city.replace(' Arrondissement', '')}` : `${item.city} (${item.zip})`
+        }).sort((a, b) => a.localeCompare(b, 'fr', { numeric: true })).join(', ')
       }
       return null
     },

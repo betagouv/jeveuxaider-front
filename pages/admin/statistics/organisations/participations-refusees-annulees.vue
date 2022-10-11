@@ -4,7 +4,7 @@
       <Breadcrumb
         :items="[
           { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Plus de chiffres', link: '/admin/numbers' },
+          { label: 'Plus de chiffres', link: '/admin/statistics' },
           { label: 'Organisations' },
         ]"
       />
@@ -47,7 +47,16 @@ export default {
     ParticipationsCanceledByOrganisations
   },
   layout: 'statistics',
-  middleware: 'admin',
+  middleware: 'authenticated',
+  asyncData ({ store, error }) {
+    if (
+      !['admin', 'referent'].includes(
+        store.getters.contextRole
+      )
+    ) {
+      return error({ statusCode: 403 })
+    }
+  },
   data () {
     return {}
   },

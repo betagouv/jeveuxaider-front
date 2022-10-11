@@ -27,7 +27,7 @@
         {{ title }}
       </template>
     </Heading>
-    <div v-if="contextLabels.length" class="text-gray-400 font-semibold">
+    <div v-if="contextLabels.length && !noParams" class="text-gray-400 font-semibold">
       {{ contextLabels.join(' · ') }}
     </div>
   </div>
@@ -48,6 +48,10 @@ export default {
       type: Boolean,
       default: false
     },
+    noParams: {
+      type: Boolean,
+      default: false
+    },
     link: {
       type: String,
       default: null
@@ -64,9 +68,7 @@ export default {
         return [this.subtitle]
       }
       if (!this.noPeriod) {
-        if (this.$store.state.statistics.params.period) {
-          contextLabels.push(this.periodLabel)
-        }
+        contextLabels.push(this.periodLabel)
       }
       if (this.$store.state.statistics.params.department) {
         contextLabels.push(`${this.$store.state.statistics.params.department} ${this.$options.filters.label(this.$store.state.statistics.params.department, 'departments')}`)
@@ -74,18 +76,7 @@ export default {
       return contextLabels
     },
     periodLabel () {
-      switch (this.$store.state.statistics.params.period) {
-        case 'current_year':
-          return `En ${this.$dayjs().year()}`
-        case 'last_year':
-          return `En ${this.$dayjs().subtract(1, 'year').year()}`
-        case 'current_month':
-          return `En ${this.$dayjs().format('MMMM YYYY')}`
-        case 'last_month':
-          return `En : ${this.$dayjs().subtract(1, 'month').format('MMMM YYYY')}`
-        default:
-          return this.$options.filters.label(this.$store.state.statistics.params.period, 'statistics_period')
-      }
+      return `Du ${this.$dayjs(this.$store.state.statistics.params.startDate).format('DD/MM/YYYY')} jusqu'au ${this.$dayjs(this.$store.state.statistics.params.endDate).format('DD/MM/YYYY')}`
     }
   }
 }

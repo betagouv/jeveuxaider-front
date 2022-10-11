@@ -4,7 +4,7 @@
       <Breadcrumb
         :items="[
           { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Plus de chiffres', link: '/admin/numbers' },
+          { label: 'Plus de chiffres', link: '/admin/statistics' },
           { label: 'Organisations' },
         ]"
       />
@@ -15,7 +15,7 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics no-period @refetch="refetch()" />
+          <FiltersStatistics :filters="['department']" @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>
@@ -47,7 +47,16 @@ export default {
     ParticipationsInProgressByOrganisations
   },
   layout: 'statistics',
-  middleware: 'admin',
+  middleware: 'authenticated',
+  asyncData ({ store, error }) {
+    if (
+      !['admin', 'referent'].includes(
+        store.getters.contextRole
+      )
+    ) {
+      return error({ statusCode: 403 })
+    }
+  },
   data () {
     return {}
   },

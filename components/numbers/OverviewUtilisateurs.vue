@@ -24,11 +24,11 @@
         infos-bulle="Nombre de bénévoles ayant réalisé au moins une demande de participation à une mission"
       />
       <CardStatistic
-        :value="statistics.participations_validated"
-        :title="`${$options.filters.pluralize(statistics.participations_validated, 'Participation', 'Participations', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.participations_validated, 'validée', 'validées', false)}`"
-        link="/admin/statistics/participations"
-        infos-bulle="Nombre de participations validées depuis le début"
+        :value="statistics.benevoles_visibles_marketplace"
+        :title="`${$options.filters.pluralize(statistics.benevoles_visibles_marketplace, 'Bénévole visible', 'Bénévoles visibles', false)}`"
+        subtitle="sur la marketplace"
+        link="/admin/statistics/utilisateurs"
+        infos-bulle="Nombre de bénévoles visibles sur la marketplace"
       />
     </div>
   </Box>

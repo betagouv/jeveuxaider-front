@@ -158,13 +158,13 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-  ::v-deep #autocomplete-place {
+  :deep(#autocomplete-place) {
     border: none;
     @apply border-none py-0 px-0 ring-0 outline-none h-8 font-bold text-base;
   }
 
   #code_postal {
-    ::v-deep .options-wrapper {
+    :deep(.options-wrapper) {
       width: calc(100vw - 2rem);
       left: -57px;
       @screen md {

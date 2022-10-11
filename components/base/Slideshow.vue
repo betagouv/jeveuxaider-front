@@ -1,6 +1,11 @@
 <template>
   <div>
-    <VueSlickCarousel ref="vueSlickCarousel" v-bind="settings">
+    <VueSlickCarousel
+      ref="vueSlickCarousel"
+      v-bind="settings"
+      @beforeChange="onBeforeChange"
+      @afterChange="onAfterChange"
+    >
       <slot />
 
       <template #prevArrow="arrowOption">
@@ -79,6 +84,10 @@ export default {
       type: Number,
       required: true
     },
+    addDotsWrapper: {
+      type: Boolean,
+      default: true
+    },
     settings: {
       type: Object,
       default () {
@@ -99,7 +108,9 @@ export default {
     if (this.slidesAreLinks) {
       this.handleSlidesAccessibility()
     }
-    this.handleDotsWrapper()
+    if (this.addDotsWrapper) {
+      this.handleDotsWrapper()
+    }
   },
   methods: {
     handleSlidesAccessibility () {
@@ -136,6 +147,16 @@ export default {
           wrapper.appendChild(moreLinkEl)
         }
       }
+    },
+    onBeforeChange (event, slick, currentSlide, nextSlide) {
+      if (this.$refs.vueSlickCarousel.autoplay) {
+        this.$refs.vueSlickCarousel.pause()
+      }
+    },
+    onAfterChange () {
+      if (this.$refs.vueSlickCarousel.autoplay) {
+        this.$refs.vueSlickCarousel.play()
+      }
     }
   }
 }
@@ -143,23 +164,22 @@ export default {
 
 <style lang="postcss" scoped>
 .slick-slider {
-  ::v-deep {
-    .slick-slide {
+    :deep(.slick-slide) {
       height: auto !important;
     }
 
-    .slick-list {
+    :deep(.slick-list) {
       overflow: visible;
     }
 
-    .slick-track {
+    :deep(.slick-track) {
       @apply space-x-[16px] sm:space-x-[30px] flex items-stretch;
       > div > div {
         height: 100%;
       }
     }
 
-    .slick-arrow {
+    :deep(.slick-arrow) {
       box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
       display: none;
       @screen sm {
@@ -178,11 +198,14 @@ export default {
       }
     }
 
-    .slick-dots {
+    :deep(.slick-dots) {
       position: inherit;
-      @apply !space-x-3 text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8;
+      @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8;
       > li {
-        @apply w-auto h-auto m-0;
+        @apply w-auto h-auto my-0 mx-2;
+        > div {
+          @apply transition;
+        }
         &.slick-active > div {
           color: #696974;
         }
@@ -191,6 +214,6 @@ export default {
         display: none !important;
       }
     }
-  }
+
 }
 </style>

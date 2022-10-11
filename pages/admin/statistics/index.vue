@@ -26,17 +26,23 @@
       L’activité sur JeVeuxAider.gouv.fr en détail
     </Heading>
 
-    <OverviewMissions ref="overviewMissions" />
+    <OverviewParticipations ref="overviewParticipations" />
     <OverviewUtilisateurs ref="overviewUtilisateurs" />
     <OverviewOrganisations ref="overviewOrganisations" />
+    <OverviewMissions ref="overviewMissions" />
+    <OverviewPlaces ref="overviewPlaces" />
+    <OverviewAPIEngagement v-if="['admin'].includes($store.getters.contextRole)" ref="overviewAPIEngagement" />
   </div>
 </template>
 
 <script>
 import OverviewOrganisations from '@/components/numbers/OverviewOrganisations'
 import OverviewMissions from '@/components/numbers/OverviewMissions'
+import OverviewParticipations from '@/components/numbers/OverviewParticipations'
 import OverviewQuickGlance from '@/components/numbers/OverviewQuickGlance'
 import OverviewUtilisateurs from '@/components/numbers/OverviewUtilisateurs'
+import OverviewPlaces from '@/components/numbers/OverviewPlaces'
+import OverviewAPIEngagement from '@/components/numbers/OverviewAPIEngagement'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
 export default {
@@ -44,20 +50,34 @@ export default {
     FiltersStatistics,
     OverviewQuickGlance,
     OverviewOrganisations,
+    OverviewParticipations,
     OverviewMissions,
-    OverviewUtilisateurs
+    OverviewUtilisateurs,
+    OverviewPlaces,
+    OverviewAPIEngagement
   },
   layout: 'statistics',
-  middleware: 'admin',
+  middleware: 'authenticated',
+  asyncData ({ store, error }) {
+    if (
+      !['admin', 'referent'].includes(
+        store.getters.contextRole
+      )
+    ) {
+      return error({ statusCode: 403 })
+    }
+  },
   data () {
     return {}
   },
   methods: {
     refetch () {
       this.$refs.overviewQuickGlance.$fetch()
+      this.$refs.overviewParticipations.$fetch()
       this.$refs.overviewUtilisateurs.$fetch()
-      this.$refs.overviewMissions.$fetch()
       this.$refs.overviewOrganisations.$fetch()
+      this.$refs.overviewMissions.$fetch()
+      this.$refs.overviewPlaces.$fetch()
     }
   }
 }

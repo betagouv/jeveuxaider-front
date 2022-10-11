@@ -115,6 +115,45 @@
             @blur="validate('password_confirmation')"
           />
         </FormControl>
+
+        <transition name="fade">
+          <div v-if="canViewScAndCej" class="lg:col-span-2 space-y-6">
+            <div class="flex lg:space-x-4">
+              <img
+                src="/images/cej.png"
+                srcset="/images/cej.png, /images/cej@2x.png 2x"
+                alt="Contrat d'Engagement Jeune"
+                title="Contrat d'Engagement Jeune"
+                class="hidden lg:block flex-none w-[45px] object-contain object-left"
+                data-not-lazy
+              >
+              <Toggle
+                v-model="form.cej"
+                class="flex-1"
+                label="Etes-vous engagé Contrat d'Engagement Jeune ?"
+                :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
+              />
+            </div>
+            <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser" required>
+              <template #afterLabel>
+                <span
+                  v-tooltip="{
+                    content: 'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
+                  }"
+                  class="p-1 cursor-help group"
+                >
+                  <InformationCircleIcon class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]" />
+                </span>
+              </template>
+              <Input
+                v-model="form.cej_email_adviser"
+                name="cej_email_adviser"
+                placeholder="jean.dupont@gmail.com"
+                @blur="validate('cej_email_adviser')"
+              />
+            </FormControl>
+          </div>
+        </transition>
       </form>
 
       <Button
@@ -171,7 +210,12 @@ export default {
   data () {
     return {
       loading: false,
-      form: { ...this.datas, utm_source: this.$cookies.get('utm_source') },
+      form: {
+        ...this.datas,
+        utm_source: this.$cookies.get('utm_source'),
+        utm_campaign: this.$cookies.get('utm_campaign'),
+        utm_medium: this.$cookies.get('utm_medium')
+      },
       formSchema: object({
         first_name: string().min(3).required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
@@ -180,11 +224,30 @@ export default {
         birthday: date().required("Une date d'anniversaire est requise").nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
         password: string().min(8).required('Un mot de passe est requis'),
-        password_confirmation: string().required('Une confirmation de mot de passe est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
+        password_confirmation: string().required('Une confirmation de mot de passe est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique'),
+        cej_email_adviser: string().nullable().email("Le format de l'email est incorrect").when('cej', {
+          is: true,
+          then: schema => schema.required("L'email de votre conseiller CEJ est obligatoire")
+        })
       })
     }
   },
-  created () {},
+  computed: {
+    canViewScAndCej () {
+      if (this.form.birthday) {
+        const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+        return userAge >= 16 && userAge <= 30
+      }
+      return false
+    }
+  },
+  watch: {
+    'form.cej' (val) {
+      if (!val) {
+        this.form.cej_email_adviser = null
+      }
+    }
+  },
   methods: {
     onSubmit () {
       if (this.loading) {

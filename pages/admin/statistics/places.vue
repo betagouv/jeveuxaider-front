@@ -4,7 +4,7 @@
       <Breadcrumb
         :items="[
           { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Plus de chiffres', link: '/admin/numbers' },
+          { label: 'Plus de chiffres', link: '/admin/statistics' },
           { label: 'Places' },
         ]"
       />
@@ -15,13 +15,13 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics no-period @refetch="refetch()" />
+          <FiltersStatistics :filters="['department']" @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>
 
     <div class="space-y-12">
-      <OverviewPlaces ref="overviewPlaces" />
+      <PlacesStatistics ref="placesStatistics" />
       <Heading as="h2" :level="2">
         L'offre actuel en détail
       </Heading>
@@ -46,7 +46,7 @@ import PlacesByOrganisations from '@/components/numbers/PlacesByOrganisations.vu
 import PlacesByMissions from '@/components/numbers/PlacesByMissions.vue'
 import PlacesByDomaines from '@/components/numbers/PlacesByDomaines.vue'
 import PlacesByActivities from '@/components/numbers/PlacesByActivities.vue'
-import OverviewPlaces from '@/components/numbers/OverviewPlaces'
+import PlacesStatistics from '@/components/numbers/PlacesStatistics'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
 export default {
@@ -57,10 +57,19 @@ export default {
     PlacesByMissions,
     PlacesByDomaines,
     PlacesByActivities,
-    OverviewPlaces
+    PlacesStatistics
   },
   layout: 'statistics',
-  middleware: 'admin',
+  middleware: 'authenticated',
+  asyncData ({ store, error }) {
+    if (
+      !['admin', 'referent'].includes(
+        store.getters.contextRole
+      )
+    ) {
+      return error({ statusCode: 403 })
+    }
+  },
   data () {
     return {}
   },
@@ -71,7 +80,7 @@ export default {
       this.$refs.placesByReseaux.$fetch()
       this.$refs.placesByMissions.$fetch()
       this.$refs.placesByOrganisations.$fetch()
-      this.$refs.overviewPlaces.$fetch()
+      this.$refs.placesStatistics.$fetch()
     }
   }
 }

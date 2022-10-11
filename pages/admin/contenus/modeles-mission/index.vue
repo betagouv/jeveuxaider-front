@@ -50,6 +50,36 @@
           transparent
           @change="deleteAllFilters()"
         />
+        <Checkbox
+          :key="`published-${$route.fullPath}`"
+          :option="{key: 'true', label:'En ligne'}"
+          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 'true'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[published]', 'true')"
+        />
+        <Checkbox
+          :key="`unpublished-${$route.fullPath}`"
+          :option="{key: 'false', label: 'Hors ligne'}"
+          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 'false'"
+          variant="button"
+          size="xs"
+          transparent
+          @change="changeFilter('filter[published]', 'false')"
+        />
+
+        <template v-if="$store.getters.contextRole === 'admin'">
+          <Checkbox
+            :key="`from-reseau-${$route.fullPath}`"
+            :option="{key: 'ok', label: 'Réseaux'}"
+            :is-checked="$route.query['filter[with_reseau]'] && $route.query['filter[with_reseau]'] == 'yes'"
+            variant="button"
+            size="xs"
+            transparent
+            @change="changeFilter('filter[with_reseau]', 'yes')"
+          />
+        </template>
         <SelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
@@ -72,24 +102,20 @@
           clearable
           @input="changeFilter('filter[domaine.id]', $event)"
         />
-        <Checkbox
-          :key="`published-${$route.fullPath}`"
-          :option="{key: 'true', label:'En ligne'}"
-          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 'true'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[published]', 'true')"
-        />
-        <Checkbox
-          :key="`unpublished-${$route.fullPath}`"
-          :option="{key: 'false', label: 'Hors ligne'}"
-          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 'false'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[published]', 'false')"
-        />
+
+        <template v-if="$store.getters.contextRole === 'admin'">
+          <InputAutocomplete
+            :value="$route.query['filter[reseau.name]']"
+            icon="SearchIcon"
+            name="autocomplete"
+            placeholder="Tous les réseaux"
+            theme="filter"
+            :options="autocompleteOptionsReseau"
+            variant="transparent"
+            @fetch-suggestions="onFetchSuggestionsReseau"
+            @selected="changeFilter('filter[reseau.name]', $event ? $event.name : undefined)"
+          />
+        </template>
       </template>
     </SearchFilters>
 
@@ -170,7 +196,20 @@ export default {
         include: 'photo,reseau',
         append: 'places_left'
       },
-      drawerMissionTemplateId: null
+      drawerMissionTemplateId: null,
+      autocompleteOptionsReseau: []
+
+    }
+  },
+  methods: {
+    async onFetchSuggestionsReseau (value) {
+      const res = await this.$axios.get('/reseaux', {
+        params: {
+          'filter[search]': value,
+          pagination: 6
+        }
+      })
+      this.autocompleteOptionsReseau = res.data.data
     }
   }
 }

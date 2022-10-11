@@ -16,7 +16,7 @@
       <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
       <div class="flex flex-col gap-y-4 sticky top-8">
         <Combobox
-          v-if="activities.length && ['admin'].includes($store.getters.contextRole)"
+          v-if="activities.length && ['admin','referent'].includes($store.getters.contextRole)"
           name="activity_id"
           placeholder="Activité"
           :options="activities"
@@ -225,15 +225,19 @@
 
       <div class="my-6 space-y-4">
         <div
-          v-for="participation in queryResult.data"
+          v-for="(participation, index) in queryResult.data"
           :key="participation.id"
           class="flex items-center"
         >
-          <BulkOperationCheckbox
-            v-if="canUseBulkOperation"
-            v-model="operations"
-            :model="participation"
-          />
+          <div v-if="canUseBulkOperation" class="min-w-[48px]">
+            <BulkOperationCheckbox
+              v-if="canEditStatut(participation)"
+              v-model="operations"
+              :model="participation"
+              :class="`bulk-operation-checkbox--${index}`"
+            />
+          </div>
+
           <CardParticipation
             :participation="participation"
             @click.native="drawerParticipationId = participation.id"
@@ -365,6 +369,16 @@ export default {
     onPageChange (page) {
       this.operations = []
       this.changePage(page)
+    },
+    canEditStatut (participation) {
+      if (this.$store.getters.contextRole === 'admin') {
+        return true
+      }
+      if (this.$store.getters.contextRole === 'responsable') {
+        return participation.mission.responsable_id === this.$store.getters.profile.id
+      }
+
+      return false
     }
   }
 }

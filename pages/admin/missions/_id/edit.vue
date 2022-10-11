@@ -51,12 +51,14 @@
 <script>
 import FormMission from '@/components/form/FormMission.vue'
 import ButtonsSubmitFormMission from '@/components/custom/ButtonsSubmitFormMission.vue'
+import MixinUsetiful from '@/mixins/usetiful.client.js'
 
 export default {
   components: {
     FormMission,
     ButtonsSubmitFormMission
   },
+  mixins: [MixinUsetiful],
   middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {
     if (

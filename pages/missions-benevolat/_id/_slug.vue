@@ -177,8 +177,8 @@
 
             <div v-if="dates.length && !mission.dates" class="px-8 sm:px-32 lg:px-8 mt-4 sm:mt-8">
               <div
-                class="grid sm:divide-x border-b pb-3 sm:pb-0"
-                :class="[{ 'sm:grid-cols-2': dates.length == 2 }]"
+                class="grid pb-3 sm:pb-0"
+                :class="[{ 'sm:grid-cols-2 sm:divide-x border-b': dates.length == 2 }]"
               >
                 <div
                   v-for="(date, i) in dates"
@@ -418,24 +418,25 @@ export default {
   computed: {
     dates () {
       const dates = []
-      const startDate = this.mission.start_date?.substring(0, 10)
-      const endDate = this.mission.end_date?.substring(0, 10)
+      const startDate = this.mission.start_date
+      const endDate = this.mission.end_date
+      const sameStartAndEnd = this.$dayjs(startDate).isSame(this.$dayjs(endDate))
 
-      // Si date de départ dépassée et pas de date de fin, masquer les dates
+      // Si date de début dépassée et pas de date de fin, masquer les dates
       if (this.$dayjs(startDate).isBefore(this.$dayjs()) && !endDate) {
         return dates
       }
 
       if (startDate) {
         dates.push({
-          date: this.$dayjs(startDate).format('D MMMM YYYY'),
-          label: 'À PARTIR DU'
+          date: endDate && sameStartAndEnd ? `Le ${this.$dayjs(startDate).format('D MMM YYYY')}` : this.$dayjs(startDate).format('D MMM YYYY'),
+          label: endDate && sameStartAndEnd ? null : 'À PARTIR DU'
         })
       }
 
-      if (endDate && endDate != startDate) {
+      if (endDate && !sameStartAndEnd) {
         dates.push({
-          date: this.$dayjs(endDate).format('D MMMM YYYY'),
+          date: this.$dayjs(endDate).format('D MMM YYYY'),
           label: "JUSQU'AU"
         })
       }
@@ -552,7 +553,7 @@ export default {
     @apply w-full;
   }
 
-  ::v-deep .slick-slider {
+  :deep(.slick-slider) {
     .slick-arrow {
       &.slick-prev {
         @apply translate-x-[-104px];
@@ -563,44 +564,44 @@ export default {
     }
   }
 
-::v-deep .vc-title {
+:deep(.vc-title) {
   @apply text-black font-bold;
   font-size: 16px;
   text-transform: capitalize;
 }
 
-::v-deep .vc-container {
+:deep(.vc-container) {
   border: none;
 }
 
-::v-deep .vc-container div {
+:deep(.vc-container div) {
   @apply font-sans
 }
 
-::v-deep .vc-day .vc-day-content {
+:deep(.vc-day .vc-day-content) {
   font-size: 15px;
   width: 43px;
   height: 42px;
   line-height: 42px;
 }
 
-::v-deep .vc-day .vc-highlight {
+:deep(.vc-day .vc-highlight) {
   border-radius: 0 !important;
   height: 38px;
   width: 38px;
 }
-::v-deep .vc-weekday {
+:deep(.vc-weekday) {
   @apply hidden;
 }
 
-::v-deep .vc-day-content:hover {
+:deep(.vc-day-content:hover) {
   @apply hover:bg-transparent
 }
 
-::v-deep .vc-day.has-highlight:hover .vc-highlight {
+:deep(.vc-day.has-highlight:hover .vc-highlight) {
   @apply bg-jva-blue-600 text-white
 }
-::v-deep .vc-day.has-highlight:hover .vc-day-content {
+:deep(.vc-day.has-highlight:hover .vc-day-content) {
   @apply text-white
 }
 </style>

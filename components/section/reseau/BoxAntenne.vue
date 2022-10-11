@@ -38,7 +38,7 @@
           </div>
         </div>
       </template>
-      <div class="border-t -mx-6 mt-6 mb-4" />
+      <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
       <div class="flex justify-center items-center text-sm text-jva-blue-500 font-medium hover:underline cursor-pointer" @click="showDrawerInvitation = true">
         Inviter une nouvelle antenne
       </div>

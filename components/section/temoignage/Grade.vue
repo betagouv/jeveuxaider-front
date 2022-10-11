@@ -60,7 +60,7 @@ export default {
 
 <style lang="postcss" scoped>
 .vue-star-rating {
-  ::v-deep span.vue-star-rating-star {
+  :deep(span.vue-star-rating-star) {
     @apply !mr-2 sm:!mr-[50px];
     &:last-of-type {
       @apply !mr-0;
@@ -69,7 +69,7 @@ export default {
       @apply transition hover:scale-125;
     }
   }
-  ::v-deep svg.vue-star-rating-star {
+  :deep(svg.vue-star-rating-star) {
     filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.05));
     @apply !w-[50px] !h-[50px] sm:!w-[77px] sm:!h-[77px];
   }

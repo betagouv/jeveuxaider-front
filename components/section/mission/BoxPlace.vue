@@ -23,7 +23,7 @@
         </div>
       </div>
       <template v-if="mission.places_left > 0">
-        <div class="border-t -mx-6 mt-6 mb-4" />
+        <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
         <div class="flex justify-center text-sm">
           <Link :to="`/admin/missions/${mission.id}/trouver-des-benevoles`">
             Trouver des bénévoles
@@ -31,7 +31,7 @@
         </div>
       </template>
       <template v-if="mission.places_left > 0">
-        <div class="border-t -mx-6 mt-4 mb-4" />
+        <div class="border-t -mx-4 xl:-mx-6 mt-4 mb-4" />
         <div class="flex justify-center text-sm">
           <Link @click.native="handleMarkComplete()">
             Marquer la mission comme complète

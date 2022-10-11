@@ -6,6 +6,9 @@
           Description de la mission
         </Heading>
         <div class="space-y-10">
+          <Alert>
+            Consultez <a class="font-semibold underline" href="https://reserve-civique.crisp.help/fr/article/comment-bien-rediger-une-mission-1dizodt/" target="_blank">cet article</a> <ExternalLinkIcon class="h-3 w-3 inline" /> pour découvrir nos astuces pour rédiger une mission impactante.
+          </Alert>
           <FormControl
             html-for="name"
             :label="Boolean(mission.template) ? 'ℹ️   Information' : 'Titre de la mission'"
@@ -21,7 +24,7 @@
             <Input
               v-model="form.name"
               name="name"
-              placeholder="Décrivez l'action du bénévole en une phrase"
+              placeholder="Merci de rédiger le titre de votre mission à la première personne du singulier"
               :disabled="Boolean(mission.template)"
             />
             <Toggle
@@ -409,6 +412,7 @@
             <Toggle
               v-model="form.is_snu_mig_compatible"
               label="Accueillir des <strong>bénévoles de 15 à 18 ans</strong> pour cette mission"
+              @checked="onSNUChecked"
             />
             <FormControl
               v-if="form.is_snu_mig_compatible"
@@ -486,6 +490,25 @@
         </div>
       </Box>
     </div>
+    <AlertDialog
+      :is-open="showSNUModal"
+      title="Point de vigilance"
+      button-label="Je confirme"
+      cancel-label="Je ne propose pas ma mission pour le SNU"
+      theme="warning"
+      @cancel="handleSNUCancel"
+      @confirm="handleSNUConfirm"
+    >
+      <div class="text-sm text-gray-500 pr-4">
+        <p class="mb-2">
+          Avant de proposer votre mission sur la plateforme du Service National Universel (SNU), merci de vous assurer que :
+        </p>
+        <ul class="">
+          <li>- Votre mission est adaptée pour l’accueil de volontaires de 15 à 18 ans</li>
+          <li>- Un tuteur sera présent durant la mission pour accompagner les volontaires du SNU</li>
+        </ul>
+      </div>
+    </AlertDialog>
   </div>
 </template>
 
@@ -699,7 +722,8 @@ export default {
           })
 
       }),
-      activities: []
+      activities: [],
+      showSNUModal: false
     }
   },
   fetchOnServer: false,
@@ -755,6 +779,22 @@ export default {
     },
     onRemovedSkill (item) {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
+    },
+    onSNUChecked () {
+      this.showSNUModal = true
+    },
+    handleSNUCancel () {
+      this.form.is_snu_mig_compatible = false
+      this.form.snu_mig_places = null
+      this.showSNUModal = false
+    },
+    handleSNUConfirm () {
+      this.showSNUModal = false
+      if (!this.form.publics_volontaires) {
+        this.form.publics_volontaires = ['Mineurs']
+      } else if (!this.form.publics_volontaires.includes('Mineurs')) {
+        this.form.publics_volontaires.push('Mineurs')
+      }
     },
     async handleSubmit (attributes) {
       if (this.loading) {
@@ -824,7 +864,7 @@ export default {
 
 <style lang="postcss" scoped>
 .autonomy_precisions_wrapper {
-  ::v-deep .ck-editor__editable {
+  :deep(.ck-editor__editable) {
     min-height: 80px;
   }
 }

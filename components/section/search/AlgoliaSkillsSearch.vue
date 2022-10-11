@@ -160,7 +160,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-::v-deep #autosuggest {
+:deep(#autosuggest) {
   input {
     @apply w-full pl-4 pr-12 py-3 rounded-lg border border-gray-200 text-sm transition;
     &:hover {
@@ -169,12 +169,12 @@ export default {
   }
 }
 
-::v-deep .ais-Highlight-highlighted {
+:deep(.ais-Highlight-highlighted) {
   background: transparent;
   @apply text-jva-blue-500 font-semibold;
 }
 
-::v-deep .autosuggest__results-container {
+:deep(.autosuggest__results-container) {
   .autosuggest__results {
     max-width: 448px;
     @apply w-full rounded-lg absolute z-50 bg-white mt-1 overflow-hidden border border-gray-200;

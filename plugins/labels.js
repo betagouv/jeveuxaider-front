@@ -218,17 +218,17 @@ const labels = {
     { key: 'year', label: 'an' }
   ],
   domaines: [
-    { key: 5, label: 'Mobilisation covid-19', icon: '/images/icons/domaine-covid.svg', color: 'text-domaine-covid', bg: 'bg-domaine-covid', emoji: '😷' },
-    { key: 9, label: 'Éducation pour tous', icon: '/images/icons/domaine-education-pour-tous.svg', color: 'text-domaine-education', bg: 'bg-domaine-education', emoji: '📚' },
-    { key: 1, label: 'Santé pour tous', icon: '/images/icons/domaine-sante-pour-tous.svg', color: 'text-domaine-sante', bg: 'bg-domaine-sante', emoji: '💊' },
-    { key: 10, label: 'Protection de la nature', icon: '/images/icons/domaine-protection-nature.svg', color: 'text-domaine-nature', bg: 'bg-domaine-nature', emoji: '🌿' },
-    { key: 7, label: 'Solidarité et Insertion', icon: '/images/icons/domaine-solidarite-insertion.svg', color: 'text-domaine-solidarite', bg: 'bg-domaine-solidarite', emoji: '🍲' },
-    { key: 4, label: 'Sport pour tous', icon: '/images/icons/domaine-sport-pour-tous.svg', color: 'text-domaine-sport', bg: 'bg-domaine-sport', emoji: '🏀' },
-    { key: 2, label: 'Prévention et protection', icon: '/images/icons/domaine-prevention-protection.svg', color: 'text-domaine-prevention', bg: 'bg-domaine-prevention', emoji: '🚨' },
-    { key: 8, label: 'Mémoire et citoyenneté', icon: '/images/icons/domaine-memoire-citoyennete.svg', color: 'text-domaine-memoire', bg: 'bg-domaine-memoire', emoji: '📯' },
-    { key: 6, label: 'Coopération internationale', icon: '/images/icons/domaine-cooperation-internationale.svg', color: 'text-domaine-cooperation', bg: 'bg-domaine-cooperation', emoji: '🌍' },
     { key: 3, label: 'Art et Culture pour tous', icon: '/images/icons/domaine-art-culture-pour-tous.svg', color: 'text-domaine-culture', bg: 'bg-domaine-culture', emoji: '🎨' },
-    { key: 11, label: 'Bénévolat de compétences', icon: '/images/icons/domaine-benevolat-de-competences.svg', color: 'text-domaine-benevolat-competences', bg: 'bg-domaine-benevolat-competences', emoji: '💼' }
+    { key: 11, label: 'Bénévolat de compétences', icon: '/images/icons/domaine-benevolat-de-competences.svg', color: 'text-domaine-benevolat-competences', bg: 'bg-domaine-benevolat-competences', emoji: '💼' },
+    { key: 6, label: 'Coopération internationale', icon: '/images/icons/domaine-cooperation-internationale.svg', color: 'text-domaine-cooperation', bg: 'bg-domaine-cooperation', emoji: '🌍' },
+    { key: 9, label: 'Éducation pour tous', icon: '/images/icons/domaine-education-pour-tous.svg', color: 'text-domaine-education', bg: 'bg-domaine-education', emoji: '📚' },
+    { key: 8, label: 'Mémoire et citoyenneté', icon: '/images/icons/domaine-memoire-citoyennete.svg', color: 'text-domaine-memoire', bg: 'bg-domaine-memoire', emoji: '📯' },
+    { key: 5, label: 'Mobilisation covid-19', icon: '/images/icons/domaine-covid.svg', color: 'text-domaine-covid', bg: 'bg-domaine-covid', emoji: '😷' },
+    { key: 2, label: 'Prévention et protection', icon: '/images/icons/domaine-prevention-protection.svg', color: 'text-domaine-prevention', bg: 'bg-domaine-prevention', emoji: '🚨' },
+    { key: 10, label: 'Protection de la nature', icon: '/images/icons/domaine-protection-nature.svg', color: 'text-domaine-nature', bg: 'bg-domaine-nature', emoji: '🌿' },
+    { key: 1, label: 'Santé pour tous', icon: '/images/icons/domaine-sante-pour-tous.svg', color: 'text-domaine-sante', bg: 'bg-domaine-sante', emoji: '💊' },
+    { key: 7, label: 'Solidarité et Insertion', icon: '/images/icons/domaine-solidarite-insertion.svg', color: 'text-domaine-solidarite', bg: 'bg-domaine-solidarite', emoji: '🍲' },
+    { key: 4, label: 'Sport pour tous', icon: '/images/icons/domaine-sport-pour-tous.svg', color: 'text-domaine-sport', bg: 'bg-domaine-sport', emoji: '🏀' }
   ],
   role: [
     { key: 'volontaire', label: 'Bénévole', espace: 'Mon espace bénévole' },
@@ -360,6 +360,26 @@ const labels = {
     { key: 'last_week', label: 'La semaine dernière' },
     { key: 'all', label: 'Depuis le début' }
   ],
+  responsable_fonction: [
+    { key: 'Vie citoyenne / associative', label: 'Vie citoyenne / associative', statut_juridique: 'Collectivité' },
+    { key: 'Éducation / Jeunesse', label: 'Éducation / Jeunesse', statut_juridique: 'Collectivité' },
+    { key: 'Solidarité / Action sociale', label: 'Solidarité / Action sociale', statut_juridique: 'Collectivité' },
+    { key: 'Direction de la communication', label: 'Direction de la communication', statut_juridique: 'Collectivité' },
+    { key: 'Service des élections', label: 'Service des élections', statut_juridique: 'Collectivité' },
+    { key: 'Service des Sports', label: 'Service des Sports', statut_juridique: 'Collectivité' },
+    { key: 'Élu ou membre du cabinet', label: 'Élu ou membre du cabinet', statut_juridique: 'Collectivité' },
+    { key: 'Autre direction thématique', label: 'Autre direction thématique', statut_juridique: 'Collectivité' },
+    { key: 'Directeur de service', label: 'Directeur de service', statut_juridique: 'Organisation publique' },
+    { key: 'Chef d’unité', label: 'Chef d’unité', statut_juridique: 'Organisation publique' },
+    { key: 'Autre', label: 'Autre', statut_juridique: 'Organisation publique' },
+    { key: 'Membre du bureau (président, SG, trésorier, …)', label: 'Membre du bureau (président, SG, trésorier, …)', statut_juridique: 'Association' },
+    { key: 'Administrateur', label: 'Administrateur', statut_juridique: 'Association' },
+    { key: 'Communication', label: 'Communication', statut_juridique: 'Association' },
+    { key: 'Ressources humaines', label: 'Ressources humaines', statut_juridique: 'Association' },
+    { key: 'Recrutement bénévoles', label: 'Recrutement bénévoles', statut_juridique: 'Association' },
+    { key: 'Vie associative', label: 'Vie associative', statut_juridique: 'Association' },
+    { key: 'Gestion de projets', label: 'Gestion de projets', statut_juridique: 'Association' }
+  ],
   slots: [
     { key: 'day', label: 'Toute la journée' },
     { key: 'morning', label: 'Matinée' },
@@ -367,5 +387,10 @@ const labels = {
     { key: 'afternoon', label: 'Après-midi' },
     { key: 'evening', label: 'En soirée' },
     { key: 'night', label: 'La nuit' }
+  ],
+  models: [
+    { key: 'App\\Models\\Structure', label: 'Organisation' },
+    { key: 'App\\Models\\Participation', label: 'Participation' },
+    { key: 'App\\Models\\Mission', label: 'Mission' }
   ]
 }

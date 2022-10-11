@@ -22,7 +22,7 @@
           <span>📍</span>
 
           <template v-if="mission.is_autonomy">
-            Mission en autonomie
+            {{ autonomyCities }}
           </template>
 
           <template
@@ -145,6 +145,14 @@ export default {
     }
   },
   computed: {
+    autonomyCities () {
+      if (this.mission.is_autonomy && this.mission.autonomy_zips.length) {
+        return this.mission.autonomy_zips.map((item) => {
+          return item.city.includes(' Arrondissement') ? `${item.city.replace(' Arrondissement', '')}` : `${item.city} (${item.zip})`
+        }).sort((a, b) => a.localeCompare(b, 'fr', { numeric: true })).join(', ')
+      }
+      return null
+    },
     placesLeftText () {
       if (
         this.mission.publisher_name &&
@@ -168,11 +176,13 @@ export default {
     },
     formattedDate () {
       const startDate = this.mission.start_date
+      const endDate = this.mission.end_date
+      const now = this.$dayjs()
+
       if (!startDate) {
         return
       }
 
-      const now = this.$dayjs()
       const startDateObject =
         Number.isInteger(startDate) && this.$dayjs.unix(startDate).isValid()
           ? this.$dayjs.unix(startDate)
@@ -182,9 +192,26 @@ export default {
               ? this.$dayjs(startDate)
               : null
 
-      return startDateObject && startDateObject.isAfter(now)
-        ? `À partir du ${startDateObject.format('D MMMM YYYY')}`
-        : null
+      if (!startDateObject || startDateObject.isBefore(now)) {
+        return null
+      }
+
+      if (endDate) {
+        const endDateObject =
+        Number.isInteger(endDate) && this.$dayjs.unix(endDate).isValid()
+          ? this.$dayjs.unix(endDate)
+          : this.$dayjs(endDate, 'YYYY-MM-DD HH:mm:ss', 'fr', true).isValid()
+            ? this.$dayjs(endDate, 'YYYY-MM-DD HH:mm:ss')
+            : this.$dayjs(endDate).isValid()
+              ? this.$dayjs(endDate)
+              : null
+
+        if (endDateObject && this.$dayjs(startDateObject).isSame(this.$dayjs(endDateObject))) {
+          return `Le ${this.$dayjs(startDateObject).format('D MMMM YYYY')}`
+        }
+      }
+
+      return `À partir du ${startDateObject.format('D MMMM YYYY')}`
     },
     domainColor () {
       return this.$labels.domaines.find(

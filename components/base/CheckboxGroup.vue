@@ -39,14 +39,24 @@ export default {
     isModel: { type: Boolean, default: false },
     classCheckbox: { type: String, default: '' }
   },
-  computed: {
-    modelValue: {
-      get () {
-        return this.value || []
-      },
-      set (newValue) {
-        // this.$emit('input', newValue) ( ne marche pas dans un edit )
-      }
+  // computed: {
+  //   modelValue: {
+  //     get () {
+  //       return this.value || []
+  //     },
+  //     set (newValue) {
+  //       // this.$emit('input', newValue) ( ne marche pas dans un edit )
+  //     }
+  //   }
+  // },
+  data () {
+    return {
+      modelValue: this.value || []
+    }
+  },
+  watch: {
+    value (newVal) {
+      this.modelValue = newVal
     }
   },
   methods: {

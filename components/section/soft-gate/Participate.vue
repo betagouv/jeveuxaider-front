@@ -81,7 +81,10 @@ export default {
             mission_id: this.$store.state.softGate.selectedMission.id,
             profile_id: this.$store.state.auth.user.profile.id,
             content: this.form.content,
-            date: this.$store.state.softGate.selectedMission.dateSelected.id,
+            utm_source: this.$cookies.get('utm_source'),
+            utm_campaign: this.$cookies.get('utm_campaign'),
+            utm_medium: this.$cookies.get('utm_medium'),
+            date: this.$store.state.softGate.selectedMission.dateSelected?.id,
             slots: this.$store.state.softGate.selectedMission.slotSelected
           })
 
@@ -96,6 +99,7 @@ export default {
           this.$emit('next')
         })
         .catch((errors) => {
+          console.log(errors)
           this.setErrors(errors)
         })
         .finally(() => {

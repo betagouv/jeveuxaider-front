@@ -20,6 +20,13 @@
         :gauge-percentage="statistics.participations_conversion_rate"
         infos-bulle="Correspond au ratio entre le nombre de candidatures proposées et le nombre de participations validées sur la période"
       />
+      <CardStatistic
+        :value="statistics.participations_in_progress"
+        :title="`${$options.filters.pluralize(statistics.participations_validated, 'Participation', 'Participations', false)}`"
+        link="/admin/statistics/participations"
+        subtitle="à traiter"
+        infos-bulle="Nombre de participations en attente de validation ou en cours de traitement parmi les candidatures reçues sur la période"
+      />
     </div>
   </Box>
 </template>

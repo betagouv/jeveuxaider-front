@@ -179,7 +179,8 @@ export default {
             ? this.structure.reseaux.map(reseau => reseau.id).join(',')
             : 'empty',
           pagination: 99,
-          include: 'photo,reseau'
+          include: 'photo,reseau',
+          sort: 'reseau_id'
         }
       })
       this.templates = templates.data.data

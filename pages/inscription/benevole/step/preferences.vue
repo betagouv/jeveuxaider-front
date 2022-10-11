@@ -136,7 +136,16 @@ export default {
       formSchema: object({
       }),
       activitiesOptions,
-      domainsOptions: ['Bénévolat de compétences', 'Solidarité et insertion', 'Éducation pour tous', 'Protection de la nature', 'Art et culture pour tous', 'Sport pour tous', 'Prévention et protection', 'Mémoire et citoyenneté']
+      domainsOptions: [
+        'Art et culture pour tous',
+        'Bénévolat de compétences',
+        'Éducation pour tous',
+        'Mémoire et citoyenneté',
+        'Prévention et protection',
+        'Protection de la nature',
+        'Solidarité et insertion',
+        'Sport pour tous'
+      ]
     }
   },
   methods: {

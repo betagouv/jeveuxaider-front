@@ -50,7 +50,7 @@
           class="text-xs font-light"
           :class="classParticipationStatus(conversation.conversable.state)"
         >
-          <span class="text-cool-gray-500 font-normal"> Participation : </span>
+          <span class="text-cool-gray-500 font-normal"> {{ conversation.conversable_type | label('models') }} : </span>
           <span class="font-semibold">
             {{ conversation.conversable.state }}
           </span>
@@ -75,9 +75,9 @@ export default {
       })
     },
     participant () {
-      return this.conversation.users.find((user) => {
-        return user.profile.id == this.conversation.conversable.profile_id
-      })
+      return this.conversation.users.filter((user) => {
+        return user.id != this.$store.getters.profile.user_id
+      })[0]
     },
     responsable () {
       return this.conversation.users.find((user) => {
@@ -120,7 +120,13 @@ export default {
       return false
     },
     nametype () {
-      return this.conversation.conversable.mission?.structure.name
+      switch (this.conversation.conversable_type) {
+        case 'App\\Models\\Participation':
+          return this.conversation.conversable.mission.structure.name
+        case 'App\\Models\\Structure':
+          return this.conversation.conversable.name
+      }
+      return null
     }
   },
   methods: {

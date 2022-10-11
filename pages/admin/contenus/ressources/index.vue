@@ -88,8 +88,8 @@
           class="cursor-pointer"
           @click.native="drawerRessourceId = ressource.id"
         >
-          <TableRowCell>
-            <div class="font-medium text-gray-900">
+          <TableRowCell class="max-w-xl">
+            <div class="font-medium text-gray-900 truncate">
               {{ ressource.title }}
             </div>
             <div class="text-gray-500">

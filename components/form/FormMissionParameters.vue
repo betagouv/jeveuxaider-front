@@ -277,42 +277,42 @@ export default {
   border: none;
 }
 
-::v-deep .vc-title {
+:deep(.vc-title) {
   @apply text-black font-bold;
   font-size: 16px;
   text-transform: capitalize;
 }
 
-::v-deep .vc-container {
+:deep(.vc-container) {
   border: none;
 }
 
-::v-deep .vc-container div {
+:deep(.vc-container div) {
   @apply font-sans
 }
 
-::v-deep .vc-day .vc-day-content {
+:deep(.vc-day .vc-day-content) {
   font-size: 15px;
   width: 43px;
   height: 42px;
   line-height: 42px;
 }
 
-::v-deep .vc-day .vc-highlight {
+:deep(.vc-day .vc-highlight) {
   border-radius: 0 !important;
   height: 38px;
   width: 38px;
 }
 
-::v-deep .vc-weekday {
+:deep(.vc-weekday) {
   @apply hidden;
 }
 
-::v-deep .vc-day-content:focus {
+:deep(.vc-day-content:focus) {
   @apply !bg-jva-blue-500 !text-white;
 }
 
-::v-deep .vc-day-content:hover {
+:deep(.vc-day-content:hover) {
   @apply hover:bg-transparent
 }
 </style>
