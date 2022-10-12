@@ -193,43 +193,13 @@
                 :invitations="queryInvitations.data"
                 @updated="$fetch()"
               />
-
-              <Box v-for="responsable in organisation.members" :key="responsable.id" variant="flat" padding="xs">
-                <template #header>
-                  <div class="flex justify-between items-center mb-4">
-                    <Heading as="h3" :level="5">
-                      {{ responsable.full_name }}
-                    </Heading>
-                    <div v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
-                      <div class="group-hover:block hidden">
-                        Supprimer
-                      </div>
-                      <div><TrashIcon class="ml-2 h-5 w-5" /></div>
-                    </div>
-                  </div>
-                </template>
-                <DescriptionList v-if="responsable">
-                  <DescriptionListItem term="E-mail" :description="responsable.email" />
-                  <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-                  <DescriptionListItem v-if="responsable.pivot.fonction" term="Rôle" :description="responsable.pivot.fonction" />
-                  <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
-                </DescriptionList>
-                <template v-if="['admin', 'referent'].includes($store.getters.contextRole)">
-                  <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
-                  <div class="flex justify-center text-sm">
-                    <Link @click.native="showModalSendMessage = true">
-                      <ChatAltIcon class="h-4 w-4 mr-2" /> Envoyer un message
-                    </Link>
-                    <ModalSendMessage
-                      :is-open="showModalSendMessage"
-                      :to-user="responsable"
-                      :conversable-id="organisation.id"
-                      conversable-type="Structure"
-                      @cancel="showModalSendMessage = false"
-                    />
-                  </div>
-                </template>
-              </Box>
+              <BoxMember
+                v-for="responsable in organisation.members"
+                :key="responsable.id"
+                :responsable="responsable"
+                :organisation="organisation"
+                @clickDelete="handleDeleteMember"
+              />
               <Button variant="white" @click.native="showDrawerInvitation = true">
                 <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
               </Button>
@@ -258,7 +228,7 @@ import BoxInvitations from '@/components/section/BoxInvitations'
 import SelectOrganisationState from '@/components/custom/SelectOrganisationState'
 import BoxReferents from '@/components/section/BoxReferents'
 import BoxReseau from '@/components/section/organisation/BoxReseau'
-import ModalSendMessage from '@/components/modal/ModalSendMessage.vue'
+import BoxMember from '@/components/section/BoxMember'
 
 export default {
   components: {
@@ -273,7 +243,7 @@ export default {
     SelectOrganisationState,
     BoxReferents,
     BoxReseau,
-    ModalSendMessage
+    BoxMember
   },
   mixins: [MixinOrganisation],
   middleware: 'authenticated',
@@ -312,8 +282,7 @@ export default {
       showDrawerAddResponsable: false,
       queryInvitations: null,
       memberSelected: {},
-      showAlertMemberDeleted: false,
-      showModalSendMessage: false
+      showAlertMemberDeleted: false
     }
   },
   async fetch () {

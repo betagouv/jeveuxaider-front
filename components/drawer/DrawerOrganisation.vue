@@ -56,7 +56,7 @@
           class="mb-8"
           :responsable="responsable"
           :conversable-id="organisation.id"
-          conversable-type="Structure"
+          conversable-type="App\Models\Structure"
         />
         <BoxReseau v-for="reseau in organisation.reseaux" :key="reseau.id" class="mb-8" :reseau="reseau" />
 
