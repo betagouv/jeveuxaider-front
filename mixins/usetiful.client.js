@@ -1,7 +1,7 @@
 /* eslint-disable */
 export default {
   mounted() {
-    if (this.$config.usetiful.enabled !== 'true') {
+    if (this.$config.usetiful?.enabled !== 'true') {
       return;
     }
 
