@@ -99,7 +99,7 @@
         <div class="container px-4 md:px-8 mx-auto">
           <div class="max-w-5xl mx-auto">
             <span class="font-bold uppercase text-[#696974] ml-[2px]">
-              Antenne
+              Antenne {{ antenne.name }}
             </span>
             <div class="lg:flex items-baseline mb-12">
               <h3
@@ -156,7 +156,7 @@
                 :to="antenne.full_url"
                 class="hover:underline truncate block"
               >
-                {{ antenne.city }}
+                {{ antenne.name }}
               </nuxt-link>
             </li>
           </ul>
