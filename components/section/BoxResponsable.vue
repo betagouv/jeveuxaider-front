@@ -32,7 +32,7 @@
       </DescriptionList>
       <div v-if="conversableId" class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
       <div v-if="conversableId" class="flex justify-center text-sm">
-        <Link @click.native="showModalSendMessage = true">
+        <Link @click.native="handleClickSendMessage">
           <ChatAltIcon class="h-4 w-4 mr-2" /> Envoyer un message
         </Link>
         <ModalSendMessage
@@ -70,7 +70,27 @@ export default {
   },
   data () {
     return {
-      showModalSendMessage: false
+      showModalSendMessage: false,
+      conversationCurrentUserAndResponsable: null
+    }
+  },
+  async fetch () {
+    const { data } = await this.$axios.get('/conversations', {
+      params: {
+        'filter[conversable_id]': this.conversableId,
+        'filter[conversable_type]': this.conversableType,
+        'filter[with_users]': `${this.responsable.user_id},${this.$store.getters.profile.user_id}`
+      }
+    })
+    this.conversationCurrentUserAndResponsable = data.total > 0 && data.data[0]
+  },
+  methods: {
+    handleClickSendMessage () {
+      if (this.conversationCurrentUserAndResponsable) {
+        this.$router.push(`/messages/${this.conversationCurrentUserAndResponsable.id}`)
+      } else {
+        this.showModalSendMessage = true
+      }
     }
   }
 }
