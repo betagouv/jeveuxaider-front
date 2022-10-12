@@ -82,7 +82,7 @@ export default {
   background-repeat: no-repeat;
 }
 
-#petit-mot .content ::v-deep a {
+#petit-mot .content :deep(a) {
   text-decoration: underline !important;
 }
 </style>

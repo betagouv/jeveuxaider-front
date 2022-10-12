@@ -164,23 +164,22 @@ export default {
 
 <style lang="postcss" scoped>
 .slick-slider {
-  ::v-deep {
-    .slick-slide {
+    :deep(.slick-slide) {
       height: auto !important;
     }
 
-    .slick-list {
+    :deep(.slick-list) {
       overflow: visible;
     }
 
-    .slick-track {
+    :deep(.slick-track) {
       @apply space-x-[16px] sm:space-x-[30px] flex items-stretch;
       > div > div {
         height: 100%;
       }
     }
 
-    .slick-arrow {
+    :deep(.slick-arrow) {
       box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
       display: none;
       @screen sm {
@@ -199,7 +198,7 @@ export default {
       }
     }
 
-    .slick-dots {
+    :deep(.slick-dots) {
       position: inherit;
       @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8;
       > li {
@@ -215,6 +214,6 @@ export default {
         display: none !important;
       }
     }
-  }
+
 }
 </style>

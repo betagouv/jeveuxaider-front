@@ -23,17 +23,6 @@
             data-not-lazy
           >
         </nuxt-link>
-        <a href="https://www.jeveuxaider.gouv.fr/engagement/septembre-pour-apprendre/" target="_blank">
-          <img
-            src="@/assets/images/operations/logo-septembre-pour-apprendre.svg"
-            alt="Bénévolat je veux aider"
-            title="Bénévolat association"
-            class="h-10 lg:h-[60px] w-auto transition hover:scale-105 ml-1 lg:ml-4"
-            width="60"
-            height="60"
-            data-not-lazy
-          >
-        </a>
       </div>
       <div class="flex lg:hidden space-x-2 pr-4 text-jva-blue-500">
         <nuxt-link to="/missions-benevolat">
@@ -159,16 +148,6 @@
         </NavItem>
 
         <NavItem
-          key="septembre-pour-apprendre"
-          href="https://www.jeveuxaider.gouv.fr/engagement/septembre-pour-apprendre/"
-          target="_blank"
-          class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
-        >
-          <span>📚 </span>
-          <span>Septembre pour apprendre</span>
-        </NavItem>
-
-        <NavItem
           v-if="$store.getters.contextRole == 'admin'"
           to="/admin/contenus/missions-prioritaires"
           :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500 ml-auto flex items-center', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/admin/(settings|contenus|scripts)/*')}]"
@@ -280,16 +259,6 @@
                     data-not-lazy
                   >
                   <span>Ukraine</span>
-                </NavItem>
-
-                <NavItem
-                  key="septembre-pour-apprendre"
-                  href="https://www.jeveuxaider.gouv.fr/engagement/septembre-pour-apprendre/"
-                  target="_blank"
-                  class="flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600"
-                >
-                  <span>📚 </span>
-                  <span>Septembre pour apprendre</span>
                 </NavItem>
               </div>
             </div>

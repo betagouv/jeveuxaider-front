@@ -68,6 +68,7 @@ export default {
     '~/plugins/api-algolia.js',
     '~/plugins/plausible.client.js',
     '~/plugins/apiengagement.client.js',
+    { src: '~/plugins/utm.js', mode: 'client' },
     { src: '~/plugins/vue-chart.js', mode: 'client' },
     '~/plugins/vue-remix-icons.js'
   ],
@@ -149,6 +150,10 @@ export default {
     },
     flare: {
       projectKey: process.env.FLARE_KEY
+    },
+    usetiful: {
+      enabled: process.env.USETIFUL_ENABLED,
+      token: process.env.USETIFUL_TOKEN
     }
   },
 

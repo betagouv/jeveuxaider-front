@@ -34,6 +34,7 @@
       <div class="border-t -mx-6 my-6" />
       <BoxDisponibilities class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
       <BoxInformations class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
+      <BoxUtm v-if="$store.getters.contextRole === 'admin'" class="mb-8" :model="profile.user" />
       <BoxOrganisations v-if="profile.structures" :structures="profile.structures" class="mb-8" />
       <BoxTerritoires v-if="profile.territoires" :territoires="profile.territoires" class="mb-8" />
       <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" class="mb-8" />
@@ -52,6 +53,7 @@ import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
 import BoxReseau from '@/components/section/profile/BoxReseau'
 import BoxTerritoires from '@/components/section/profile/BoxTerritoires'
 import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
+import BoxUtm from '@/components/section/BoxUtm'
 
 export default {
   components: {
@@ -59,7 +61,8 @@ export default {
     BoxDisponibilities,
     BoxReseau,
     BoxTerritoires,
-    BoxOrganisations
+    BoxOrganisations,
+    BoxUtm
   },
   props: {
     profileId: {

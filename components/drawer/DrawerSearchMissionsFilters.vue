@@ -23,6 +23,12 @@
       </div>
       <AutonomyMobileFilter />
     </div>
+    <div class="space-y-2">
+      <div class="relative font-medium text-[15px]">
+        Mineurs
+      </div>
+      <MinorsMobileFilter />
+    </div>
     <FacetFilter
       show-more
       facet-name="activity.name"
@@ -109,13 +115,15 @@ import FacetFilter from '~/components/section/search/FacetFilter.vue'
 import SearchFilter from '@/components/search/SearchFilter.vue'
 import CommitmentMobileFilter from '~/components/section/search/CommitmentMobileFilter.vue'
 import AutonomyMobileFilter from '~/components/section/search/AutonomyMobileFilter.vue'
+import MinorsMobileFilter from '~/components/section/search/MinorsMobileFilter.vue'
 
 export default {
   components: {
     FacetFilter,
     SearchFilter,
     CommitmentMobileFilter,
-    AutonomyMobileFilter
+    AutonomyMobileFilter,
+    MinorsMobileFilter
   },
   mixins: [AlgoliaMissionsQueryBuilder],
   props: {

@@ -58,22 +58,22 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-::v-deep table {
+:deep(table) {
   &.inner-body, &.content, &.subcopy {
     width: 100% !important;
   }
 }
-::v-deep table p,
-::v-deep table ul {
+:deep(table p),
+:deep(table ul) {
   margin-bottom: 15px !important;
 }
 
-::v-deep table ul {
+:deep(table ul) {
   list-style: disc;
   padding-left: 15px;
 }
 
-::v-deep a {
+:deep(a) {
   pointer-events: none !important;
   word-break: break-word !important;
 }

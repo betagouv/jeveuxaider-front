@@ -150,7 +150,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-::v-deep .vc-highlight {
+:deep(.vc-highlight) {
   background: #090391!important;
 }
 </style>

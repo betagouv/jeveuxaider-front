@@ -220,7 +220,7 @@ Je me suis désormais active dans la Banque Alimentaire près de chez moi deux m
   }
 }
 
-::v-deep .slick-slider {
+:deep(.slick-slider) {
   .wrapper--slick-dots {
     display: block !important;
   }

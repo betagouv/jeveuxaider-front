@@ -50,14 +50,14 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-::v-deep p:not(:last-child) {
+:deep(p:not(:last-child)) {
   @apply mb-4
 }
-::v-deep ol {
+:deep(ol) {
     list-style: decimal;
     @apply mb-4 pl-4
 }
-::v-deep ul {
+:deep(ul) {
     list-style: disc;
     @apply mb-4 pl-4 space-y-4
 }

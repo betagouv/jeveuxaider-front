@@ -2,7 +2,7 @@
   <div>
     <div class="flex gap-4">
       <Combobox
-        v-if="filters.includes('department')"
+        v-if="filters.includes('department') && !['referent'].includes($store.getters.contextRole)"
         v-model="form.department"
         name="department"
         placeholder="Tous les départements"
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     onChangedDaterange (payload) {
-      this.$store.commit('statistics/setParams', { ...payload })
+      this.$store.commit('statistics/setParams', { ...this.form, ...payload })
       this.$emit('refetch')
     },
     onChanged () {

@@ -19,6 +19,7 @@
       </template>
       <div class="border-t -mx-6 my-6" />
       <BoxInformationsProfile class="mb-8" :profile="participation.profile" title="Bénévole" :show-action="false" />
+      <BoxUtm v-if="$store.getters.contextRole === 'admin'" class="mb-8" :model="participation" />
       <BoxInformationsMission class="mb-8" :mission="participation.mission" title="Mission">
         <template #action>
           <Link :to="`/admin/missions/${participation.mission.id}`" icon="ChevronRightIcon">
@@ -37,13 +38,15 @@ import MixinParticipation from '@/mixins/participation'
 import BoxInformationsProfile from '@/components/section/profile/BoxInformations'
 import BoxInformationsMission from '@/components/section/mission/BoxInformations'
 import BoxResponsable from '@/components/section/BoxResponsable'
+import BoxUtm from '@/components/section/BoxUtm'
 
 export default {
   components: {
     SelectParticipationState,
     BoxInformationsProfile,
     BoxInformationsMission,
-    BoxResponsable
+    BoxResponsable,
+    BoxUtm
   },
   mixins: [MixinParticipation],
   props: {

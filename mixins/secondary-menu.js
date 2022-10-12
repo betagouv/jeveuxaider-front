@@ -8,9 +8,11 @@ export default {
     mobileItems () {
       const items = []
       this.items.forEach((item) => {
-        if (item.childrens) {
+        if (item && item.childrens) {
           item.childrens.forEach((item) => {
-            items.push(item)
+            if (item) {
+              items.push(item)
+            }
           })
         }
       })

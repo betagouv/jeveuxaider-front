@@ -7,7 +7,7 @@
         </Heading>
         <div class="space-y-10">
           <Alert>
-            Consultez <a class="font-semibold underline">cet article</a> <ExternalLinkIcon class="h-3 w-3 inline" /> pour découvrir nos astuces pour rédiger une mission impactante.
+            Consultez <a class="font-semibold underline" href="https://reserve-civique.crisp.help/fr/article/comment-bien-rediger-une-mission-1dizodt/" target="_blank">cet article</a> <ExternalLinkIcon class="h-3 w-3 inline" /> pour découvrir nos astuces pour rédiger une mission impactante.
           </Alert>
           <FormControl
             html-for="name"
@@ -26,6 +26,12 @@
               name="name"
               placeholder="Merci de rédiger le titre de votre mission à la première personne du singulier"
               :disabled="Boolean(mission.template)"
+            />
+            <Toggle
+              v-if="$store.getters.contextRole === 'admin'"
+              v-model="form.is_priority"
+              :label="form.is_priority ? 'Prioritaire' : 'Non prioritaire'"
+              description="Pour rendre la mission prioritaire"
             />
           </FormControl>
           <div class="grid grid-cols-2 gap-4">
@@ -207,85 +213,7 @@
       </Box>
     </div>
     <div class="lg:col-span-2 space-y-8 flex flex-col">
-      <Box padding="sm">
-        <Heading :level="3" class="mb-8">
-          Paramètres
-        </Heading>
-        <div class="space-y-12">
-          <Toggle
-            v-if="$store.getters.contextRole === 'admin'"
-            v-model="form.is_priority"
-            :label="form.is_priority ? 'Prioritaire' : 'Non prioritaire'"
-            description="Pour rendre la mission prioritaire"
-          />
-          <div class="grid grid-cols-2 gap-4">
-            <FormControl
-              label="Début de la mission"
-              html-for="start_date"
-              required
-              :error="errors.start_date"
-            >
-              <InputDate v-model="form.start_date" required name="start_date" />
-              <!-- <Input
-                v-model="form.start_date"
-                name="start_date"
-                type="datetime-local"
-              /> -->
-            </FormControl>
-            <FormControl
-              label="Fin de la mission (facultatif)"
-              html-for="end_date"
-              :error="errors.end_date"
-            >
-              <InputDate v-model="form.end_date" name="end_date" />
-              <!-- <Input
-                v-model="form.end_date"
-                name="end_date"
-                type="datetime-local"
-              /> -->
-            </FormControl>
-          </div>
-          <div class="grid xl:grid-cols-2 gap-4">
-            <FormControl
-              label="Durée d'engagement min."
-              html-for="commitment__duration"
-              required
-              :error="errors.commitment__duration"
-            >
-              <SelectAdvanced
-                v-model="form.commitment__duration"
-                name="commitment__duration"
-                placeholder="Durée"
-                :options="$labels.duration"
-              />
-            </FormControl>
-            <FormControl
-              label="Fréquence"
-              html-for="commitment__time_period"
-            >
-              <SelectAdvanced
-                v-model="form.commitment__time_period"
-                name="commitment__time_period"
-                placeholder="Fréquence"
-                :options="$labels.time_period"
-              />
-            </FormControl>
-          </div>
-          <FormControl
-            label="Nombre de bénévoles recherchés"
-            html-for="participations_max"
-            required
-            :error="errors.participations_max"
-          >
-            <Input
-              v-model="form.participations_max"
-              name="participations_max"
-              type="number"
-              suffix="bénévoles"
-            />
-          </FormControl>
-        </div>
-      </Box>
+      <FormMissionParameters :initial-form="form" :errors="errors" @change="handleParametersChanged" />
       <Box padding="sm">
         <Heading :level="3" class="mb-8">
           Lieu de la mission
@@ -589,9 +517,11 @@ import { string, object, number, date, array, ref } from 'yup'
 import inputGeo from '@/mixins/input-geo'
 import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
+import FormMissionParameters from '~/components/form/FormMissionParameters.vue'
 
 export default {
   components: {
+    FormMissionParameters,
     AlgoliaSkillsInput
   },
   mixins: [inputGeo, FormErrors],
@@ -720,7 +650,15 @@ export default {
             then: schema => schema.transform(v => (v instanceof Date && !isNaN(v) ? v : null)).min(ref('start_date'), 'La date de fin doit être supérieur à la date de début')
           }
         ),
-        commitment__duration: string().nullable().required("La durée minimum d'engagement est requise"),
+        commitment__duration: string().nullable().required("La durée d'engagement est requise"),
+        commitment__time_period: string().nullable().when(['date_type'], {
+          is: dateType => dateType == 'recurring',
+          then: schema => schema.required('La fréquence est requise')
+        }),
+        recurrent_description: string().nullable().when(['date_type'], {
+          is: dateType => dateType == 'recurring',
+          then: schema => schema.required('Précisez les créneaux horaires pour le bénévole')
+        }),
         participations_max: number().min(1, 'Le nombre de bénévole(s) recherché(s) doit être supérieur à 0').required('Le nombre de bénévole(s) recherché(s) est requis'),
         department: string().nullable().when(['type'], {
           is: type => type == 'Mission en présentiel',
@@ -889,6 +827,9 @@ export default {
           this.loading = false
         })
     },
+    handleParametersChanged (formDates) {
+      this.form = { ...this.form, ...formDates }
+    },
     onMediaPickerChange (payload, field) {
       this.form[field].splice(payload.index, 1, payload.media)
     },
@@ -923,7 +864,7 @@ export default {
 
 <style lang="postcss" scoped>
 .autonomy_precisions_wrapper {
-  ::v-deep .ck-editor__editable {
+  :deep(.ck-editor__editable) {
     min-height: 80px;
   }
 }

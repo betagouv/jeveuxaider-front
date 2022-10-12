@@ -275,7 +275,6 @@
                           @blur="validate('password_confirmation')"
                         />
                       </FormControl>
-                      </formcontrol>
                     </form>
 
                     <Button
@@ -383,7 +382,9 @@ export default {
         email: this.$route.query.email ? this.$route.query.email : '',
         zip: this.$route.query.zip ? this.$route.query.zip : '',
         password: '',
-        utm_source: this.$cookies.get('utm_source')
+        utm_source: this.$cookies.get('utm_source'),
+        utm_campaign: this.$cookies.get('utm_campaign'),
+        utm_medium: this.$cookies.get('utm_medium')
       },
       formSchema: object({
         first_name: string().min(3).required('Un prénom est requis'),
@@ -431,6 +432,7 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           await this.$store.dispatch('auth/registerVolontaire', this.form)
+          window.plausible && window.plausible('Inscription bénévole - Étape 1 - Création de compte')
           this.$router.push('/inscription/benevole/step/profile')
         })
         .catch((errors) => {

@@ -125,7 +125,7 @@ export default {
   }
 }
 
-::v-deep .slick-slider {
+:deep(.slick-slider) {
   .wrapper--slick-dots {
     display: block !important;
   }
