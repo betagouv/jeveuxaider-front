@@ -372,3 +372,13 @@ body.full-height-layout {
     @apply shadow-sm border-0 #{!important};
   }
 }
+
+a {
+  outline: none;
+  &:focus-visible {
+    outline-style: solid;
+    outline-color: #0a76f6;
+    outline-width: 2px;
+    outline-offset: 2px;
+  }
+}

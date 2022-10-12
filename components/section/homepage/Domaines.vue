@@ -1,13 +1,13 @@
 <template>
   <section class="py-16 bg-white overflow-hidden">
-    <div class="container mx-auto px-8 sm:px-4 xl:max-w-[1412px]">
+    <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
           <Heading as="h2" size="2xl" class="text-center md:text-left">
             Trouvez votre domaine d'action
           </Heading>
           <span
-            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0] font-light"
+            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
           >
             #jeveuxaider
           </span>
@@ -154,7 +154,7 @@ export default {
   max-width: 360px;
 }
 
-::v-deep .slick-slider {
+:deep(.slick-slider) {
   .slick-arrow {
     &.slick-prev {
       @apply translate-x-[-104px];

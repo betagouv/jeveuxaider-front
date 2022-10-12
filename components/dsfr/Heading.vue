@@ -17,7 +17,7 @@
       {'text-[64px] leading-[72px] lg:text-[72px] lg:leading-[80px]': size === 'alt-lg'},
       {'text-[72px] leading-[80px] lg:text-[80px] lg:leading-[88px]': size === 'alt-xl'},
 
-      $store.state.settings.theme === 'light' ? lightColor : darkColor
+      color ?? ($store.state.settings.theme === 'light' ? lightColor : darkColor)
     ]"
   >
     <slot />
@@ -47,6 +47,10 @@ export default {
     darkColor: {
       type: String,
       default: 'text-white'
+    },
+    color: {
+      type: String,
+      default: null
     }
   }
 }

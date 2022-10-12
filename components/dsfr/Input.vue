@@ -46,4 +46,15 @@ export default {
     box-shadow: inset 0 -2px 0 0 #18753C;
   }
 }
+
+input {
+  outline: none;
+  &:focus-visible {
+    outline-style: solid;
+    outline-color: #0a76f6;
+    outline-width: 2px;
+    outline-offset: 2px;
+  }
+}
+
 </style>

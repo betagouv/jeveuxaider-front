@@ -9,9 +9,9 @@
       {'px-6 py-2 text-lg min-h-[3rem]': size === 'lg'},
 
       {'text-white bg-jva-blue-500 hover:bg-jva-blue-800 active:bg-jva-blue-900 border-transparent': type === 'primary'},
-      {'text-jva-blue-500 border-jva-blue-500 bg-transparent hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'secondary'},
-      {'text-jva-blue-500 border-[#DDDDDD] bg-transparent hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'tertiary'},
-      {'text-jva-blue-500 border-transparent bg-transparent hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'tertiary-no-outline'},
+      {'text-jva-blue-500 border-jva-blue-500 bg-white hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'secondary'},
+      {'text-jva-blue-500 border-[#DDDDDD] bg-white hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'tertiary'},
+      {'text-jva-blue-500 border-transparent bg-white hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'tertiary-no-outline'},
 
       {'cursor-not-allowed !bg-[#E5E5E5] text-[#929292]': disabled && type === 'primary'},
       {'cursor-not-allowed !border-[#E5E5E5] text-[#929292]': disabled && ['secondary', 'tertiary'].includes(type)},
@@ -79,3 +79,15 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+button {
+  outline: none;
+  &:focus-visible {
+    outline-style: solid;
+    outline-color: #0a76f6;
+    outline-width: 2px;
+    outline-offset: 2px;
+  }
+}
+</style>

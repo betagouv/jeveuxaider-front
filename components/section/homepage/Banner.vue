@@ -39,7 +39,7 @@
 
     <div class="relative z-10 h-full">
       <div
-        class="container xl:max-w-[1412px] mx-auto px-4 h-full"
+        class="container mx-auto px-4 h-full"
       >
         <div
           class="flex flex-col justify-center items-start h-full "

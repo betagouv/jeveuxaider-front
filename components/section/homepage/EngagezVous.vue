@@ -1,6 +1,6 @@
 <template>
   <section class="py-16 bg-gray-50 overflow-hidden">
-    <div class="container mx-auto px-4 relative xl:max-w-[1412px]">
+    <div class="container mx-auto px-4 relative ">
       <div class="mx-auto max-w-6xl">
         <Heading as="h2" size="2xl" class="mb-12">
           Engagez-vous près de chez vous
@@ -13,6 +13,7 @@
             v-for="(city, index) in cities"
             :key="index"
             :to="city.url"
+            class="rounded-full"
           >
             <Tag
               context="clickable"

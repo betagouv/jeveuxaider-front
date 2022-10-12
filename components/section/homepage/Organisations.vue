@@ -7,7 +7,7 @@
       data-not-lazy
     >
 
-    <div class="md:container md:mx-auto xl:max-w-[1412px]">
+    <div class="md:container md:mx-auto ">
       <div class="mx-auto max-w-6xl">
         <img
           srcset="

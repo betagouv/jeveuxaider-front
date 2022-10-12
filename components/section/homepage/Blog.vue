@@ -1,6 +1,6 @@
 <template>
   <section v-if="articles.length > 0" class="py-16 bg-white overflow-hidden">
-    <div class="container mx-auto px-8 sm:px-4 xl:max-w-[1412px]">
+    <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
           <Heading as="h2" size="2xl">
@@ -8,7 +8,7 @@
           </Heading>
 
           <span
-            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0] font-light"
+            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
           >
             #blog
           </span>
@@ -77,7 +77,7 @@ export default {
 
 <style lang="postcss" scoped>
 .card--article--wrapper {
-  @apply !flex flex-col h-full max-w-[325px] transition rounded-[10px];
+  @apply !flex flex-col h-full max-w-[325px] transition;
   width: calc(100vw - 64px) !important;
   @apply w-full;
 }

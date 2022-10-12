@@ -548,7 +548,7 @@ export default {
   }
 
   .card--mission--wrapper {
-    @apply !flex flex-col h-full max-w-[323px] rounded-[10px] transition;
+    @apply !flex flex-col h-full max-w-[323px] transition;
     width: calc(100vw - 64px) !important;
     @apply w-full;
   }

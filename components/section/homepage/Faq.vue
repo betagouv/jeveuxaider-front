@@ -1,16 +1,13 @@
 <template>
   <section class="py-16 bg-white">
-    <div class="container mx-auto px-4 xl:max-w-[1412px]">
+    <div class="container mx-auto px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
-          <h2
-            class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight text-center md:text-left"
-          >
-            Toutes les réponses à
-            <strong class="font-extrabold">vos questions</strong>
-          </h2>
+          <Heading as="h2" size="2xl" class="text-center md:text-left">
+            Toutes les réponses à vos questions
+          </Heading>
           <span
-            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0] font-light"
+            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
           >
             #faq
           </span>
@@ -46,8 +43,12 @@
 </template>
 
 <script>
+import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
+  components: {
+    Heading
+  },
   data () {
     return {
       faq: {
@@ -141,7 +142,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

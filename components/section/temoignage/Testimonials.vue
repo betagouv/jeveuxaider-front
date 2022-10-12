@@ -14,7 +14,7 @@
       data-not-lazy
     >
 
-    <div class="container mx-auto px-4 xl:max-w-[1412px]">
+    <div class="container mx-auto px-4 ">
       <h2
         class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight text-center text-gray-900"
       >

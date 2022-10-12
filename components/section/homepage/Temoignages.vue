@@ -14,7 +14,7 @@
       data-not-lazy
     >
 
-    <div class="container mx-auto px-4 xl:max-w-[1412px]">
+    <div class="container mx-auto px-4 ">
       <Heading as="h2" size="2xl" class="text-center">
         Paroles de bénévoles
       </Heading>

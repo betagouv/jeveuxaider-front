@@ -13,16 +13,16 @@
         :success="success"
         html-for="email"
       >
-        <div class="flex w-full rounded-t overflow-hidden">
+        <div class="flex w-full">
           <Input
             v-model="form.email"
             :error="!!error"
             :success="!!success"
             type="email"
             aria-label="Adresse email"
-            class="w-full !rounded-none"
+            class="w-full !rounded-none !rounded-tl"
           />
-          <Button :disabled="loading" class="flex-none" @click.native.prevent="onSubmit()">
+          <Button :disabled="loading" class="flex-none !rounded-none !rounded-tr" @click.native.prevent="onSubmit()">
             S'abonner
           </Button>
         </div>
