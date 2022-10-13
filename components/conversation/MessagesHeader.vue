@@ -15,14 +15,7 @@
           {{ recipient.profile.first_name }} {{ recipient.profile.last_name }}
         </h1>
 
-        <div v-if="isRecipientReferent" class="text-jva-red-500 font-bold text-sm truncate">
-          🧑‍💻<span class="ml-2">Référent {{ recipient.roles.filter(role => role.key == 'referent')[0].label | label('departments') }}</span>
-        </div>
-        <div v-if="isRecipientAdmin" class="text-jva-red-500 font-bold text-sm truncate">
-          🧑‍💻<span class="ml-2">Modérateur</span>
-        </div>
-
-        <div v-if="conversation.conversable_type == 'App\\Models\\Participation'" class="text-sm text-gray-500 font-light sm:truncate">
+        <div class="text-sm text-gray-500 font-light sm:truncate">
           {{ conversation.conversable.mission.city }}
 
           <span v-if="conversation.conversable.mission.start_date">
@@ -31,10 +24,7 @@
         </div>
       </div>
 
-      <div
-        v-if="conversation.conversable_type == 'App\\Models\\Participation'"
-        class="order-3 space-x-2 justify-center flex items-center m-2"
-      >
+      <div class="order-3 space-x-2 justify-center flex items-center m-2">
         <SelectParticipationState
           v-if="
             $store.getters.contextRole == 'responsable' &&
@@ -124,12 +114,6 @@ export default {
       return this.conversation.users.filter((user) => {
         return user.id != this.$store.getters.profile.user_id
       })[0]
-    },
-    isRecipientReferent () {
-      return this.recipient.roles.filter(role => role.key == 'referent').length > 0
-    },
-    isRecipientAdmin () {
-      return this.recipient.roles.filter(role => role.key == 'admin').length > 0
     },
     currentUser () {
       return this.conversation.users.find((user) => {

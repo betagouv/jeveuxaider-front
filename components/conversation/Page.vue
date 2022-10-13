@@ -52,11 +52,8 @@
 
       <div ref="participationContainer" class="panel--container">
         <div class="panel--content">
-          <ConversationDetailsParticipation
-            v-if="$store.getters['messaging/conversation'].conversable_type == 'App\\Models\\Participation'"
-          />
-          <ConversationDetailsOrganisation
-            v-if="$store.getters['messaging/conversation'].conversable_type == 'App\\Models\\Structure'"
+          <ConversationDetails
+            v-if="$store.getters['messaging/conversation']"
           />
         </div>
       </div>
@@ -66,13 +63,12 @@
 
 <script>
 import ConversationMessages from '@/components/conversation/Messages.vue'
-import ConversationDetailsParticipation from '~/components/conversation/DetailsParticipation.vue'
-import ConversationDetailsOrganisation from '~/components/conversation/DetailsOrganisation.vue'
+import ConversationDetails from '@/components/conversation/Details.vue'
 import ConversationMessagesHeader from '@/components/conversation/MessagesHeader.vue'
 
 export default {
   components: {
-    ConversationMessages, ConversationDetailsParticipation, ConversationDetailsOrganisation, ConversationMessagesHeader
+    ConversationMessages, ConversationDetails, ConversationMessagesHeader
   },
   methods: {
     onPanelRightToggle () {
