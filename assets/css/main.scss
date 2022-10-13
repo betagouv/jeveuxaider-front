@@ -382,3 +382,25 @@ a {
     outline-offset: 2px;
   }
 }
+
+.formatted-text {
+  > *:not(:last-child) {
+    @apply mb-6;
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
+  }
+
+  ul, ol {
+    @apply pl-6;
+
+    li {
+      @apply pl-2;
+    }
+  }
+}

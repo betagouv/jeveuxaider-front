@@ -83,7 +83,7 @@ export default {
       const isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > video.HAVE_CURRENT_DATA
       if (!visible && isPlaying) {
         video.pause()
-      } else {
+      } else if (visible) {
         const playPromise = video.play()
         if (playPromise !== null) {
           playPromise.catch(() => { /* discard runtime error */ })

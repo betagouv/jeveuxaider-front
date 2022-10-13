@@ -26,43 +26,66 @@
                 <template slot="title">
                   Qui peut s'inscrire sur JeVeuxAider.gouv.fr ?
                 </template>
-                <p>
-                  Bonjour et merci pour votre engagement !
-                  <br><br>
-                  L'activité de réserviste répond à des conditions précises.
-                  <br><br>
-                  Ainsi, tout citoyen ou résident régulier de plus de 16 ans souhaitant s’engager dans son temps libre dans le cadre des missions prioritaires pour la continuité de la Nation peut se rendre sur la plateforme JeVeuxAider.gouv.fr de la Réserve Civique et proposer son aide aux associations référencées.
-                  <br><br>
-                  <a class="text-jva-blue-500 hover:underline" href="https://reserve-civique.crisp.help/fr/article/qui-peut-realiser-une-mission-sur-jeveuxaidergouvfr-i15md9/" target="_blank">En lire plus ›</a>
-                </p>
+
+                <div class="formatted-text">
+                  <p>Bonjour et merci pour votre engagement !</p>
+                  <p>L'activité de réserviste répond à des conditions précises.</p>
+                  <p>
+                    Ainsi, tout citoyen ou résident régulier de plus de 16 ans souhaitant s’engager dans son temps libre dans le cadre des missions prioritaires pour la continuité de la Nation peut se rendre sur la plateforme JeVeuxAider.gouv.fr de la Réserve Civique et proposer son aide aux associations référencées.
+                  </p>
+                  <Link
+                    to="https://reserve-civique.crisp.help/fr/article/qui-peut-realiser-une-mission-sur-jeveuxaidergouvfr-i15md9/"
+                    :is-external="true"
+                    class="text-jva-blue-500"
+                  >
+                    En lire plus
+                  </Link>
+                </div>
               </Accordion>
+
               <Accordion>
                 <template slot="title">
                   Comment trouver une mission ?
                 </template>
-                <p>
-                  Bonjour et merci pour votre engagement !
-                  <br><br>
-                  La plateforme JeVeuxAider.gouv.fr est alimentée par les propositions de missions émanant d'organisations telles que des associations ou des collectivités territoriales. Vous pouvez facilement voir les missions disponibles.
-                  <br><br>
-                  <a class="text-jva-blue-500 hover:underline" href="https://reserve-civique.crisp.help/fr/article/comment-trouver-une-missison-sur-jeveuxaidergouvfr-a1fbnf/" target="_blank">En lire plus ›</a>
-                </p>
+
+                <div class="formatted-text">
+                  <p>Bonjour et merci pour votre engagement !</p>
+                  <p>
+                    La plateforme JeVeuxAider.gouv.fr est alimentée par les propositions de missions émanant d'organisations telles que des associations ou des collectivités territoriales. Vous pouvez facilement voir les missions disponibles.
+                  </p>
+                  <Link
+                    to="https://reserve-civique.crisp.help/fr/article/comment-trouver-une-missison-sur-jeveuxaidergouvfr-a1fbnf/"
+                    :is-external="true"
+                    class="text-jva-blue-500"
+                  >
+                    En lire plus
+                  </Link>
+                  </p>
+                </div>
               </Accordion>
+
               <Accordion>
                 <template slot="title">
                   Comment candidater à une mission ?
                 </template>
-                <p>
-                  Bonjour,
-                  <br><br>
-                  Après avoir identifié la mission qui vous convenait et avoir bien pris connaissance du descriptif, vous pouvez candidater.
-                  <br><br>
-                  <ul class="list-disc pl-4">
+
+                <div class="formatted-text">
+                  <p>Bonjour,</p>
+                  <p>
+                    Après avoir identifié la mission qui vous convenait et avoir bien pris connaissance du descriptif, vous pouvez candidater.
+                  </p>
+                  <ul>
                     <li>Cliquer sur le bouton vert situé à droite de l’écran « Je propose mon aide »</li>
                   </ul>
-                  <br>
-                  <a class="text-jva-blue-500 hover:underline" href="https://reserve-civique.crisp.help/fr/article/comment-candidater-a-une-mission-sur-jeveuxaidergouvfr-1cdiioe/" target="_blank">En lire plus ›</a>
-                </p>
+                  <Link
+                    to="https://reserve-civique.crisp.help/fr/article/comment-candidater-a-une-mission-sur-jeveuxaidergouvfr-1cdiioe/"
+                    :is-external="true"
+                    class="text-jva-blue-500"
+                  >
+                    En lire plus
+                  </Link>
+                  </p>
+                </div>
               </Accordion>
             </AccordionsGroup>
           </div>
@@ -73,35 +96,51 @@
                 <template slot="title">
                   Comment s’inscrire sur JeVeuxAider.gouv.fr ?
                 </template>
-                <p>
-                  Bonjour et merci pour votre engagement !
-                  <br><br>
-                  <ul class="list-decimal pl-6">
-                    <li class="pl-2">
+
+                <div class="formatted-text">
+                  <p>
+                    Bonjour et merci pour votre engagement !
+                  </p>
+                  <ol>
+                    <li>
                       Une fois sur JeVeuxAider.gouv.fr, cliquez sur le bouton " Inscription " en haut à droite de l'écran.
                     </li>
-                    <li class="pl-2">
+                    <li>
                       Sélectionnez " Je veux publier des missions " afin de créer un compte organisation.
                     </li>
-                  </ul>
-                  <br>
-                  <a class="text-jva-blue-500 hover:underline" href="https://reserve-civique.crisp.help/fr/article/comment-inscrire-mon-organisation-sur-jeveuxaidergouvfr-rku0gq/" target="_blank">En lire plus ›</a>
-                </p>
+                  </ol>
+                  <Link
+                    to="https://reserve-civique.crisp.help/fr/article/comment-inscrire-mon-organisation-sur-jeveuxaidergouvfr-rku0gq/"
+                    :is-external="true"
+                    class="text-jva-blue-500"
+                  >
+                    En lire plus
+                  </Link>
+                  </p>
+                </div>
               </Accordion>
+
               <Accordion>
                 <template slot="title">
                   Qui peut s’inscrire sur JeVeuxAider.gouv.fr ?
                 </template>
-                <p>
-                  Bonjour,
-                  <br><br>
-                  Peuvent déposer des missions relevant des 10 domaines d’action rappelés <a class="text-jva-blue-500 hover:underline" href="https://reserve-civique.crisp.help/fr/article/quelles-sont-les-missions-que-lon-peut-proposer-a8ahqy/" target="_blank">ici</a>:
-                  <br><br>
-                  <ul class="list-disc pl-4">
+
+                <div class="formatted-text">
+                  <p>Bonjour,</p>
+                  <p>
+                    Peuvent déposer des missions relevant des
+                    <Link
+                      to="https://reserve-civique.crisp.help/fr/article/quelles-sont-les-missions-que-lon-peut-proposer-a8ahqy/"
+                      :is-external="true"
+                    >
+                      10 domaines d’action rappelés ici
+                    </Link> :
+                  </p>
+                  <ul>
                     <li>les organismes sans but lucratif</li>
                     <li>
                       les structures publiques telles que :
-                      <ul class="list-disc pl-4">
+                      <ul>
                         <li>les établissements scolaires</li>
                         <li>les établissements publics de santé</li>
                         <li>les collectivités territoriales</li>
@@ -109,42 +148,58 @@
                       </ul>
                     </li>
                   </ul>
-                  <br>
-                  <a class="text-jva-blue-500 hover:underline" href="https://reserve-civique.crisp.help/fr/article/quest-ce-quune-organisation-1m7331c/" target="_blank">En lire plus ›</a>
-                </p>
+                  <Link
+                    to="https://reserve-civique.crisp.help/fr/article/quest-ce-quune-organisation-1m7331c/"
+                    :is-external="true"
+                    class="text-jva-blue-500"
+                  >
+                    En lire plus
+                  </Link>
+                  </p>
+                </div>
               </Accordion>
+
               <Accordion>
                 <template slot="title">
                   Comment publier une mission ?
                 </template>
-                <p>
-                  Bonjour,
-                  <br><br>
-                  Une fois votre organisation créée sur JeVeuxAider.gouv.fr, il vous est possible de mettre en ligne des missions.
-                  <br><br>
-                  <ul class="list-decimal pl-6">
-                    <li class="pl-2">
+
+                <div class="formatted-text">
+                  <p>Bonjour,</p>
+                  <p>
+                    Une fois votre organisation créée sur JeVeuxAider.gouv.fr, il vous est possible de mettre en ligne des missions.
+                  </p>
+                  <ul>
+                    <li>
                       Cliquez sur votre prénom puis sur le nom de votre organisation en haut à droite de votre écran. Vous arrivez alors sur votre espace responsable.
                     </li>
-                    <li class="pl-2">
+                    <li>
                       Cliquez sur l'onglet "Mes Missions" à gauche de votre écran.
                     </li>
                   </ul>
-                  <br>
-                  <a class="text-jva-blue-500 hover:underline" href="https://reserve-civique.crisp.help/fr/article/comment-publier-une-mission-sur-la-plateforme-16n8nk6/" target="_blank">En lire plus ›</a>
-                </p>
+                  <Link
+                    to="https://reserve-civique.crisp.help/fr/article/comment-publier-une-mission-sur-la-plateforme-16n8nk6/"
+                    :is-external="true"
+                    class="text-jva-blue-500"
+                  >
+                    En lire plus
+                  </Link>
+                  </p>
+                </div>
               </Accordion>
             </AccordionsGroup>
           </div>
         </Tabs>
 
-        <a
-          href="https://reserve-civique.crisp.help/fr/"
-          class="text-lg text-jva-blue-500 hover:underline inline-flex mt-8"
-          target="_blank"
-        >
-          Toutes les réponses à vos questions ›
-        </a>
+        <div class="mt-8">
+          <Link
+            to="https://reserve-civique.crisp.help/fr/"
+            :is-external="true"
+            class="text-jva-blue-500"
+          >
+            Toutes les réponses à vos questions
+          </Link>
+        </div>
       </div>
     </div>
   </section>
@@ -155,13 +210,15 @@ import Heading from '@/components/dsfr/Heading.vue'
 import Tabs from '@/components/dsfr/Tabs.vue'
 import Accordion from '~/components/dsfr/Accordion.vue'
 import AccordionsGroup from '~/components/dsfr/AccordionsGroup.vue'
+import Link from '~/components/dsfr/Link.vue'
 
 export default {
   components: {
     Heading,
     Tabs,
     Accordion,
-    AccordionsGroup
+    AccordionsGroup,
+    Link
   },
   data () {
     return {}
