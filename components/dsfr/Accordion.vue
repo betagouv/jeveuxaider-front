@@ -41,16 +41,12 @@ export default {
 <style lang="postcss" scoped>
 .fr-collapse {
   overflow: hidden;
-  transition: all 0.3s;
+  transition: all .3s;
   max-height: 0;
 }
 
 .fr-collapse:not(.fr-collapse--expanded) {
   visibility: hidden;
-}
-
-.fr-collapse:not(.fr-collapse--expanded)::before {
-  margin-top: -99999px;
 }
 
 .fr-collapse--expanded {

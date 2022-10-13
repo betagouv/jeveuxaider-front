@@ -42,26 +42,24 @@
         class="container mx-auto px-4 h-full"
       >
         <div
-          class="flex flex-col justify-center items-start h-full "
+          class="flex flex-col justify-center items-center h-full text-shadow text-center"
         >
-          <div class="bg-white px-9 py-7 lg:px-[72px] lg:py-14">
-            <Heading as="div" size="alt-sm" class="mb-4">
-              Envie de bénévolat&nbsp;?
-            </Heading>
+          <Heading as="div" size="alt-sm" class="mb-4" color="text-white">
+            Envie de bénévolat&nbsp;?
+          </Heading>
 
-            <Heading as="h1" size="md" class="mb-8" :bold="false" light-color="text-[#666666]">
-              <strong>Devenez bénévole</strong>
-              <span>et trouvez des missions de bénévolat</span>
-              <br class="hidden md:block">
-              <strong>près de chez vous</strong>
-              <span>ou</span>
-              <strong>à distance</strong>
-            </Heading>
+          <Heading as="h1" size="md" class="mb-8" :bold="false" color="text-white">
+            <strong>Devenez bénévole</strong>
+            <span>et trouvez des missions de bénévolat</span>
+            <br class="hidden md:block">
+            <strong>près de chez vous</strong>
+            <span>ou</span>
+            <strong>à distance</strong>
+          </Heading>
 
-            <Button size="lg" icon="RiSearchLine" @click="handleClickCTA()">
-              Trouver une mission
-            </Button>
-          </div>
+          <Button size="lg" type="tertiary-no-outline" icon="RiSearchLine" @click="handleClickCTA()">
+            Trouver une mission
+          </Button>
         </div>
       </div>
     </div>
