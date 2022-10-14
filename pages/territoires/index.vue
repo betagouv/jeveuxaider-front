@@ -16,17 +16,13 @@
         >
 
         <div class="relative">
-          <h1
-            class="text-center text-3xl md:text-5xl lg:text-6xl leading-none font-bold tracking-tight text-gray-900"
-          >
+          <Heading as="h1" size="2xl" class="text-center">
             Rejoignez JeVeuxAider.gouv.fr
-            <br>
+            <br class="hidden md:block">
             dans votre territoire
-          </h1>
+          </Heading>
 
-          <p
-            class="mt-4 text-center max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto"
-          >
+          <p class="mt-4 text-center max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
             Sur l'ensemble du territoire français, des milliers de bénévoles,
             de structures et d'association ont déjà rejoint
             <b>JeVeuxAider.gouv.fr</b>.
@@ -126,7 +122,12 @@
 </template>
 
 <script>
+import Heading from '@/components/dsfr/Heading.vue'
+
 export default {
+  components: {
+    Heading
+  },
   async asyncData ({ $axios }) {
     const { data: cities } = await $axios.get('/territoires', {
       params: {

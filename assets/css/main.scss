@@ -137,38 +137,6 @@ html {
       border-color: white;
     }
   }
-  // &.bo-style {
-  //   .tooltip-inner {
-  //     border-radius: 4px;
-  //     padding: 6px;
-  //     @apply bg-gray-800;
-  //   }
-  // }
-  // &.popover {
-  //   &[x-placement^='top'] {
-  //     margin-bottom: 15px;
-  //   }
-  //   &[x-placement^='bottom'] {
-  //     margin-top: 15px;
-  //   }
-  //   &[x-placement^='left'] {
-  //     margin-right: 15px;
-  //   }
-  //   &[x-placement^='right'] {
-  //     margin-left: 15px;
-  //   }
-  // }
-  // &.popover-theme-1 {
-  //   font-size: 14px;
-  //   .tooltip-content {
-  //     border-radius: 16px;
-  //     padding: 16px 24px;
-  //     @apply bg-[#514DB2] text-white;
-  //   }
-  //   .tooltip-arrow {
-  //     display: none;
-  //   }
-  // }
 }
 
 .algolia-facet {

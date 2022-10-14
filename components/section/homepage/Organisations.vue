@@ -34,13 +34,11 @@
         >
 
         <div
-          class="max-w-[440px] mx-auto md:ml-0 px-4 xl:px-0 text-center md:text-left"
+          class="max-w-[440px] mx-auto md:ml-0 px-4 lg:px-0 text-center md:text-left"
         >
-          <h2
-            class="font-bold text-4xl lg:text-5xl tracking-tight mb-6"
-          >
+          <Heading as="h2" size="alt-xs" class="mb-6">
             Chacun pour tous
-          </h2>
+          </Heading>
           <p class="text-[#696974] text-xl mb-6">
             Plus de 10 000 missions de bénévolat sont
             disponibles chez les petits et grands acteurs de l'engagement.
@@ -56,10 +54,12 @@
 
 <script>
 import Link from '@/components/dsfr/Link.vue'
+import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
-    Link
+    Link,
+    Heading
   }
 }
 </script>
