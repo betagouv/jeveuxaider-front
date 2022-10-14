@@ -74,13 +74,15 @@ export default {
 
 <style lang="postcss" scoped>
 [href] {
-  border-bottom: 1px solid;
-  padding-bottom: 2px;
+  text-rendering: optimizeLegibility;
+  background-image: linear-gradient(0deg,currentColor,currentColor),linear-gradient(0deg,currentColor,currentColor);
+  background-position: 0 100%, 0 calc(100% - 0.0625em);
+  background-repeat: no-repeat,no-repeat;
+  background-size: 0 0.125em,100% 0.0625em;
 }
 
 a[href]:hover {
-  background-color: transparent;
-  border-bottom: 2px solid;
+  background-size: 100% 0.125em,100% 0.0625em;
 }
 
 a[href]:active {

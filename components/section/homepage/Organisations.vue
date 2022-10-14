@@ -45,12 +45,9 @@
             Plus de 10 000 missions de bénévolat sont
             disponibles chez les petits et grands acteurs de l'engagement.
           </p>
-          <nuxt-link
-            to="/organisations"
-            class="text-lg text-jva-blue-500 hover:underline"
-          >
+          <Link to="/organisations" icon-position="right" class="text-lg text-jva-blue-500">
             Consulter toutes les organisations ›
-          </nuxt-link>
+          </Link>
         </div>
       </div>
     </div>
@@ -58,8 +55,12 @@
 </template>
 
 <script>
-export default {
+import Link from '@/components/dsfr/Link.vue'
 
+export default {
+  components: {
+    Link
+  }
 }
 </script>
 

@@ -49,18 +49,9 @@
       </template>
     </VueSlickCarousel>
 
-    <template v-if="moreLink">
-      <component
-        :is="moreLink.isExternal ? 'a' : 'nuxt-link'"
-        ref="moreLink"
-        :to="moreLink.isExternal ? false : moreLink.link"
-        :href="moreLink.isExternal ? moreLink.link : false"
-        :target="moreLink.isExternal ? '_blank' : false"
-        class="text-[#696974] hover:underline cursor-pointer"
-      >
-        {{ moreLink.label }}
-      </component>
-    </template>
+    <Link v-if="moreLink" ref="moreLink" :to="moreLink.link" class="text-[#696974]">
+      {{ moreLink.label }}
+    </Link>
   </div>
 </template>
 
@@ -68,9 +59,10 @@
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
-  components: { VueSlickCarousel },
+  components: { VueSlickCarousel, Link },
   props: {
     slidesAreLinks: {
       type: Boolean,
