@@ -20,7 +20,8 @@
             :success="!!success"
             type="email"
             aria-label="Adresse email"
-            class="w-full !rounded-none !rounded-tl"
+            input-class="!rounded-none !rounded-tl"
+            placeholder="Votre adresse électronique (ex. : nom@domaine.fr)"
           />
           <Button :disabled="loading" class="flex-none !rounded-none !rounded-tr" @click.native.prevent="onSubmit()">
             S'abonner

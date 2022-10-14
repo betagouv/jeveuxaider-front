@@ -5,7 +5,7 @@
         :items="[{ label: 'Territoires engagés', link: '/territoires' }]"
       />
     </div>
-    <div class="bg-cool-gray-50 px-4 max-w-3xl mx-auto lg:max-w-7xl">
+    <div class="overflow-hidden">
       <div class="pt-8 md:pt-12 lg:pt-20 relative">
         <img
           class="hidden lg:block absolute transform translate-y-1 opacity-50"
@@ -15,14 +15,14 @@
           alt=""
         >
 
-        <div class="relative">
+        <div class="container mx-auto px-4 relative">
           <Heading as="h1" size="2xl" class="text-center">
             Rejoignez JeVeuxAider.gouv.fr
             <br class="hidden md:block">
             dans votre territoire
           </Heading>
 
-          <p class="mt-4 text-center max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto">
+          <p class="mt-4 text-center max-w-2xl text-xl leading-7 text-[#696974] lg:mx-auto">
             Sur l'ensemble du territoire français, des milliers de bénévoles,
             de structures et d'association ont déjà rejoint
             <b>JeVeuxAider.gouv.fr</b>.
@@ -30,34 +30,26 @@
         </div>
 
         <!-- Search bar -->
-        <div class="flex-1 flex justify-between lg:mx-auto mt-10">
-          <div class="flex-1 flex bg-white z-10 shadow-md rounded-lg">
-            <form class="w-full flex md:ml-0 mb-0" action="#" method="GET">
-              <label for="search_field" class="sr-only">Recherche</label>
-              <div
-                class="relative w-full text-cool-gray-400 focus-within:text-cool-gray-600"
-              >
-                <div
-                  class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
-                >
-                  <SearchIcon class="h-5 w-5 ml-3 sm:ml-6 text-gray-900" />
-                </div>
+        <div class="container mx-auto px-4">
+          <form action="#" method="GET" class="relative mt-10">
+            <label for="search_field" class="sr-only">Recherche</label>
 
-                <input
-                  id="search_field"
-                  v-model="query"
-                  class="block w-full h-full pl-10 pr-4 py-4 sm:px-16 sm:py-6 rounded-md text-cool-gray-900 placeholder-cool-gray-500 focus:placeholder-cool-gray-400 !outline-none focus:ring transition truncate text-md sm:text-lg md:text-xl border-none"
-                  placeholder="Trouvez votre ville ou département"
-                  type="search"
-                >
-              </div>
-            </form>
-          </div>
+            <div class="shadow-lg">
+              <Input
+                id="search_field"
+                v-model="query"
+                placeholder="Trouvez votre ville ou département"
+                type="search"
+                size="xl"
+                icon="RiSearchLine"
+              />
+            </div>
+          </form>
         </div>
       </div>
 
       <!-- Tabs -->
-      <div class="relative my-8">
+      <div class="container mx-auto px-4 relative my-8">
         <nav
           class="flex overflow-scroll sm:overflow-visible pt-1 pb-3 sm:py-0 sm:justify-center sm:gap-4"
         >
@@ -79,7 +71,7 @@
                   types[index].slug == types[types.length - 1].slug,
               },
             ]"
-            class="px-3 text-center lg:px-5 py-3 lg:py-4 shadow cursor-pointer font-medium text-md lg:text-xl leading-6 rounded-md focus:ring transition sm:w-full lg:w-auto flex-none sm:flex-initial ml-4 sm:ml-0 !outline-none"
+            class="px-3 text-center lg:px-5 py-3 lg:py-4 shadow cursor-pointer font-medium text-md lg:text-xl leading-6 focus:ring transition sm:w-full lg:w-auto flex-none sm:flex-initial ml-4 sm:ml-0 !outline-none"
             @click="activeType = type.slug"
           >
             {{ type.label }} ({{ typeCount(type.slug) }})
@@ -88,7 +80,7 @@
       </div>
 
       <!-- Tab content -->
-      <div class="relative mb-12">
+      <div class="container mx-auto px-4 relative mb-12">
         <div class="mx-auto">
           <div v-for="(group, index) in groups[activeType]" :key="index">
             <div
@@ -101,13 +93,13 @@
               </span>
 
               <div
-                class="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+                class="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
               >
                 <nuxt-link
                   v-for="territory in territoriesByGroup(group)"
                   :key="territory.id"
                   :to="territory.full_url"
-                  class="col-span-1 flex justify-center items-center text-center px-4 py-2 bg-white shadow-md rounded-lg border-jva-blue-500 border-b-2 text-gray-800 hover:shadow-lg hover:text-gray-900 !outline-none focus:ring transition"
+                  class="col-span-1 flex justify-center items-center text-center px-4 py-2 bg-white shadow-md border-jva-blue-500 border-b-2 text-gray-800 hover:shadow-lg hover:text-gray-900 !outline-none focus:ring transition"
                   style="min-height: 80px"
                 >
                   <span class="font-semibold">{{ territory.name }}</span>
@@ -123,10 +115,12 @@
 
 <script>
 import Heading from '@/components/dsfr/Heading.vue'
+import Input from '@/components/dsfr/Input.vue'
 
 export default {
   components: {
-    Heading
+    Heading,
+    Input
   },
   async asyncData ({ $axios }) {
     const { data: cities } = await $axios.get('/territoires', {
