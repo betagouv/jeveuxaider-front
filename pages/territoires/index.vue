@@ -71,7 +71,7 @@
                   types[index].slug == types[types.length - 1].slug,
               },
             ]"
-            class="px-3 text-center lg:px-5 py-3 lg:py-4 shadow cursor-pointer font-medium text-md lg:text-xl leading-6 focus:ring transition sm:w-full lg:w-auto flex-none sm:flex-initial ml-4 sm:ml-0 !outline-none"
+            class="px-3 text-center lg:px-5 py-3 lg:py-4 shadow cursor-pointer font-medium text-md lg:text-xl leading-6 sm:w-full lg:w-auto flex-none sm:flex-initial ml-4 sm:ml-0"
             @click="activeType = type.slug"
           >
             {{ type.label }} ({{ typeCount(type.slug) }})
@@ -99,7 +99,7 @@
                   v-for="territory in territoriesByGroup(group)"
                   :key="territory.id"
                   :to="territory.full_url"
-                  class="col-span-1 flex justify-center items-center text-center px-4 py-2 bg-white shadow-md border-jva-blue-500 border-b-2 text-gray-800 hover:shadow-lg hover:text-gray-900 !outline-none focus:ring transition"
+                  class="col-span-1 flex justify-center items-center text-center px-4 py-2 bg-white shadow-md border-jva-blue-500 border-b-2 text-gray-800 hover:shadow-lg hover:text-gray-900 transition"
                   style="min-height: 80px"
                 >
                   <span class="font-semibold">{{ territory.name }}</span>
