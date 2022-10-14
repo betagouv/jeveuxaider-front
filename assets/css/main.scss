@@ -346,6 +346,8 @@ a {
 }
 
 .formatted-text {
+  color: #3A3A3A;
+
   > *:not(:last-child) {
     @apply mb-6;
   }
@@ -364,5 +366,64 @@ a {
     li {
       @apply pl-2;
     }
+  }
+
+  h2, h3, h4, h5, h6 {
+    @apply text-[#161616] font-bold;
+    &:not(:first-child) {
+      @apply mt-12;
+    }
+  }
+
+  h2 {
+    @apply text-[28px] leading-9 lg:text-[32px] lg:leading-10;
+  }
+
+  h3 {
+    @apply text-2xl lg:text-[28px] lg:leading-9;
+  }
+
+  h4 {
+    @apply text-[22px] leading-7 lg:text-2xl lg:leading-8;
+  }
+
+  h5 {
+    @apply text-xl leading-7 lg:text-[22px] lg:leading-7;
+  }
+
+  h6 {
+    @apply text-lg leading-6 lg:text-xl lg:leading-7;
+  }
+
+  [href] {
+    text-rendering: optimizeLegibility;
+    background-image: linear-gradient(0deg,currentColor,currentColor),linear-gradient(0deg,currentColor,currentColor);
+    background-position: 0 100%, 0 calc(100% - 0.0625em);
+    background-repeat: no-repeat,no-repeat;
+    background-size: 0 0.125em,100% 0.0625em;
+  }
+
+  a[href]:hover {
+    background-size: 100% 0.125em,100% 0.0625em;
+  }
+
+  a[href]:active {
+    background-color: #EDEDED;
+  }
+
+  [target=_blank]::after {
+    flex: 0 0 auto;
+    display: inline-block;
+    vertical-align: calc((0.75em - 1rem) * 0.5);
+    background-color: currentColor;
+    width: 1rem;
+    height: 1rem;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    --icon-size: 1rem;
+    -webkit-mask-image: url("@/node_modules/@gouvfr/dsfr/dist/icons/system/external-link-line.svg");
+    mask-image: url("@/node_modules/@gouvfr/dsfr/dist/icons/system/external-link-line.svg");
+    content: "";
+    margin-left: 0.25rem;
   }
 }
