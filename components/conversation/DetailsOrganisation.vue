@@ -1,5 +1,30 @@
 <template>
   <div v-if="organisation" class="p-6">
+    <template v-if="($store.getters['messaging/isRecipientAdmin'] || $store.getters['messaging/isRecipientReferent']) && $store.getters.contextRole == 'responsable'">
+      <div class="flex items-center space-x-2">
+        <div class="text-lg leading-8 font-bold text-gray-900 sm:truncate">
+          {{ $store.getters['messaging/recipient'].profile.first_name }} {{ $store.getters['messaging/recipient'].profile.last_name }}
+        </div>
+        <div v-if="$store.getters['messaging/isRecipientAdmin']" class="text-jva-red-500 font-bold text-sm truncate">
+          🧑‍💻<span class="ml-2">Modérateur</span>
+        </div>
+        <div v-else-if="$store.getters['messaging/isRecipientReferent']" class="text-jva-red-500 font-bold text-sm truncate">
+          🧑‍💻<span class="ml-2">Référent {{ $store.getters['messaging/recipient'].roles.filter(role => role.key == 'referent')[0].label | label('departments') }}</span>
+        </div>
+      </div>
+      <div class=" text-gray-600 mt-2">
+        <template v-if="$store.getters['messaging/isRecipientReferent']">
+          {{ descriptionReferent }}
+        </template>
+        <template v-if="$store.getters['messaging/isRecipientAdmin']">
+          {{ descriptionAdmin }}
+        </template>
+        <span class="font-bold text-black">
+          il est essentiel de lui répondre.
+        </span>
+      </div>
+      <div class="border-t -mx-6 my-6" />
+    </template>
     <Heading v-if="organisation" :level="3" class="text-jva-blue-500 mb-4">
       <nuxt-link :to="`/admin/organisations/${organisationId}`" class="hover:underline">
         {{ organisation.name }}
@@ -31,6 +56,7 @@
     <div class="border-t -mx-6 my-6" />
     <BoxInformations class="mb-8" :organisation="organisation" />
   </div>
+  </div>
 </template>
 
 <script>
@@ -49,7 +75,9 @@ export default {
   data () {
     return {
       organisation: null,
-      loading: false
+      loading: false,
+      descriptionReferent: 'Le référent départemental assure le bon fonctionnement de la plateforme JeVeuxAider.gouv.fr au niveau local. Il est notamment en charge de modérer les organisations et missions mises en ligne. Le référent peut ainsi vous solliciter afin d’obtenir des informations complémentaires sur l’activité de votre structure :',
+      descriptionAdmin: 'Le modérateur assure le bon fonctionnement de la plateforme JeVeuxAider.gouv.fr. Il est notamment en charge de modérer les organisations et missions mises en ligne. Le modérateur peut ainsi vous solliciter afin d’obtenir des informations complémentaires sur l’activité de votre structure :'
     }
   },
   async fetch () {

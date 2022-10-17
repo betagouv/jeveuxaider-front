@@ -22,7 +22,18 @@ export const getters = {
   showPanelLeft: state => state.showPanelLeft,
   showPanelCenter: state => state.showPanelCenter,
   showPanelRight: state => state.showPanelRight,
-  unreadMessages: state => state.unreadMessages
+  unreadMessages: state => state.unreadMessages,
+  recipient (state, getters, root) {
+    return state.conversation.users.filter((user) => {
+      return user.id != root.auth.user.id
+    })[0]
+  },
+  isRecipientReferent (state, getters) {
+    return getters.recipient.roles.filter(role => role.key == 'referent').length > 0
+  },
+  isRecipientAdmin (state, getters) {
+    return getters.recipient.roles.filter(role => role.key == 'admin').length > 0
+  }
 }
 
 export const mutations = {

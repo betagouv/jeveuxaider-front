@@ -12,14 +12,14 @@
 
       <div class="order-4 w-full sm:w-auto sm:order-2 sm:truncate m-2">
         <h1 class="text-lg leading-8 font-bold text-gray-900 sm:truncate">
-          {{ recipient.profile.first_name }} {{ recipient.profile.last_name }}
+          {{ $store.getters['messaging/recipient'].profile.first_name }} {{ $store.getters['messaging/recipient'].profile.last_name }}
         </h1>
 
-        <div v-if="isRecipientReferent" class="text-jva-red-500 font-bold text-sm truncate">
-          🧑‍💻<span class="ml-2">Référent {{ recipient.roles.filter(role => role.key == 'referent')[0].label | label('departments') }}</span>
-        </div>
-        <div v-if="isRecipientAdmin" class="text-jva-red-500 font-bold text-sm truncate">
+        <div v-if="$store.getters['messaging/isRecipientAdmin']" class="text-jva-red-500 font-bold text-sm truncate">
           🧑‍💻<span class="ml-2">Modérateur</span>
+        </div>
+        <div v-else-if="$store.getters['messaging/isRecipientReferent']" class="text-jva-red-500 font-bold text-sm truncate">
+          🧑‍💻<span class="ml-2">Référent {{ $store.getters['messaging/recipient'].roles.filter(role => role.key == 'referent')[0].label | label('departments') }}</span>
         </div>
 
         <div v-if="conversation.conversable_type == 'App\\Models\\Participation'" class="text-sm text-gray-500 font-light sm:truncate">
@@ -119,17 +119,6 @@ export default {
       }
 
       return end ? `${start} - ${end}` : `À partir du ${start}`
-    },
-    recipient () {
-      return this.conversation.users.filter((user) => {
-        return user.id != this.$store.getters.profile.user_id
-      })[0]
-    },
-    isRecipientReferent () {
-      return this.recipient.roles.filter(role => role.key == 'referent').length > 0
-    },
-    isRecipientAdmin () {
-      return this.recipient.roles.filter(role => role.key == 'admin').length > 0
     },
     currentUser () {
       return this.conversation.users.find((user) => {
