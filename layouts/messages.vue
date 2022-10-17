@@ -36,6 +36,12 @@
                     <DropdownOptionsItem size="sm" @click.native="onStatusChange(0)">
                       Conversations archivées
                     </DropdownOptionsItem>
+                    <DropdownOptionsItem size="sm" @click.native="onAllConversations(false)">
+                      Mes conversations
+                    </DropdownOptionsItem>
+                    <DropdownOptionsItem size="sm" @click.native="onAllConversations(true)">
+                      Toutes les conversations
+                    </DropdownOptionsItem>
                   </div>
                 </template>
               </Dropdown>
@@ -317,6 +323,11 @@ export default {
         this.conversationFilters['filter[status]'] = status
         this.debouncedFetch()
       }
+    },
+    onAllConversations (value) {
+      this.loading = true
+      this.conversationFilters.allMessages = value
+      this.debouncedFetch()
     }
   }
 }
