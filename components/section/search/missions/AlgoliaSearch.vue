@@ -78,9 +78,11 @@
         <Pagination
           v-if="!noPagination"
           :current-page="$store.state.algoliaSearch.results.page + 1"
-          :total-rows="$store.state.algoliaSearch.results.nbHits"
-          :per-page="20"
+          :total-rows="$store.state.algoliaSearch.results.nbHits > 1000 ? 1000 : $store.state.algoliaSearch.results.nbHits"
+          :per-page="$route.query.type === 'Mission à distance' ? 18 : 17"
           :max-pages="10"
+          :with-first-page="false"
+          :with-last-page="false"
           @page-change="handleChangePage"
         />
       </div>

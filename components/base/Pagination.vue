@@ -11,6 +11,21 @@
       </button>
     </div>
     <div class="hidden md:-mt-px md:flex">
+      <template v-if="withFirstPage && showFirstPage">
+        <button
+          :class="[
+            'border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium',
+            'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+          ]"
+          @click="$emit('page-change', 1)"
+        >
+          1
+        </button>
+        <div class="pt-[12px] px-4 text-gray-500">
+          ...
+        </div>
+      </template>
+
       <button
         v-for="page in pages"
         :key="page"
@@ -22,6 +37,21 @@
       >
         {{ page }}
       </button>
+
+      <template v-if="withLastPage && showLastPage">
+        <div class="pt-[12px] px-4 text-gray-500">
+          ...
+        </div>
+        <button
+          :class="[
+            'border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium',
+            'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+          ]"
+          @click="$emit('page-change', totalPages)"
+        >
+          {{ totalPages }}
+        </button>
+      </template>
     </div>
     <div class="-mt-px w-0 flex-1 flex justify-end">
       <button
@@ -54,6 +84,14 @@ export default {
     maxPages: {
       default: 5,
       type: Number
+    },
+    withFirstPage: {
+      type: Boolean,
+      default: true
+    },
+    withLastPage: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -95,6 +133,12 @@ export default {
     },
     pages () {
       return Array.from(Array((this.endPage + 1) - this.startPage).keys()).map(i => this.startPage + i)
+    },
+    showFirstPage () {
+      return this.maxPages - this.endPage < 0
+    },
+    showLastPage () {
+      return this.endPage - this.totalPages < 0
     }
   }
 }
