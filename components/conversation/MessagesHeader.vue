@@ -32,12 +32,13 @@
       </div>
 
       <div
-        v-if="conversation.conversable_type == 'App\\Models\\Participation'"
+
         class="order-3 space-x-2 justify-center flex items-center m-2"
       >
         <SelectParticipationState
           v-if="
-            $store.getters.contextRole == 'responsable' &&
+            conversation.conversable_type == 'App\\Models\\Participation' &&
+              $store.getters.contextRole == 'responsable' &&
               $store.getters.contextableId == conversation.conversable.mission.structure_id &&
               canEditState
           "
