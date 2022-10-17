@@ -491,8 +491,8 @@ export default {
     },
     calendarAttrs () {
       const highlight = {
-        class: 'bg-jva-blue-100',
-        contentClass: 'text-jva-blue-600',
+        class: 'bg-jva-blue-600',
+        contentClass: 'text-white',
         contentStyle: {
           fontWeight: 600
         }
@@ -599,9 +599,9 @@ export default {
 }
 
 :deep(.vc-day.has-highlight:hover .vc-highlight) {
-  @apply bg-jva-blue-600 text-white
+  @apply bg-jva-blue-300 text-white
 }
 :deep(.vc-day.has-highlight:hover .vc-day-content) {
-  @apply text-white
+  @apply  text-white
 }
 </style>
