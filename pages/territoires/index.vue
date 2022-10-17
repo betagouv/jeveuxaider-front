@@ -37,11 +37,12 @@
             <div class="shadow-lg">
               <Input
                 id="search_field"
-                v-model="query"
+                :value="query"
                 placeholder="Trouvez votre ville ou département"
                 type="search"
                 size="xl"
                 icon="RiSearchLine"
+                @input="handleInput"
               />
             </div>
           </form>
@@ -53,9 +54,10 @@
         <nav
           class="flex overflow-scroll sm:overflow-visible pt-1 pb-3 sm:py-0 sm:justify-center sm:gap-4"
         >
-          <span
+          <button
             v-for="(type, index) in types"
             :key="type.slug"
+            :disabled="typeCount(type.slug) === 0"
             tabindex="0"
             :class="[
               {
@@ -70,12 +72,13 @@
                 'mr-4 sm:mr-0':
                   types[index].slug == types[types.length - 1].slug,
               },
+              { 'cursor-not-allowed hover:!text-gray-500': typeCount(type.slug) === 0}
             ]"
             class="px-3 text-center lg:px-5 py-3 lg:py-4 shadow cursor-pointer font-medium text-md lg:text-xl leading-6 sm:w-full lg:w-auto flex-none sm:flex-initial ml-4 sm:ml-0"
             @click="activeType = type.slug"
           >
             {{ type.label }} ({{ typeCount(type.slug) }})
-          </span>
+          </button>
         </nav>
       </div>
 
@@ -114,6 +117,7 @@
 </template>
 
 <script>
+import { debounce } from 'lodash'
 import Heading from '@/components/dsfr/Heading.vue'
 import Input from '@/components/dsfr/Input.vue'
 
@@ -211,6 +215,15 @@ export default {
     }
   },
   methods: {
+    handleInput (payload) {
+      if (this.timeout) {
+        this.timeout.cancel()
+      }
+      this.timeout = debounce(() => {
+        this.query = payload
+      }, 275)
+      this.timeout()
+    },
     typeCount (type) {
       return this[type].filter(item =>
         this.slugify(item.name).includes(this.slugify(this.query))
