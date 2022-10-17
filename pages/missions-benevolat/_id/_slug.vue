@@ -23,26 +23,28 @@
         class="object-cover w-full h-full"
       >
     </div>
-    <Breadcrumb
-      theme="transparent"
-      class="relative z-10 px-4 xl:container !max-w-7xl"
-      :items="[
-        { label: 'Missions de bénévolat', link: '/missions-benevolat' },
-        {
-          label: domainName,
-          link: `/missions-benevolat?domaines=${domainName}`,
-        },
-        {
-          label:
-            missionType == 'Mission en autonomie'
-              ? `Bénévolat ${mission.structure.name} en autonomie`
-              : missionType == 'Mission en présentiel'
-                ? `Bénévolat ${mission.structure.name} à ${mission.city}`
-                : `Bénévolat ${mission.structure.name} à distance`,
-          h1: true,
-        },
-      ]"
-    />
+    <div class="mx-auto px-4 lg:container lg:max-w-7xl">
+      <Breadcrumb
+        theme="white"
+        class="relative z-10 px-4 xl:container !max-w-7xl"
+        :links="[
+          { text: 'Missions de bénévolat', to: '/missions-benevolat' },
+          {
+            text: domainName,
+            to: `/missions-benevolat?domaines=${domainName}`,
+          },
+          {
+            text:
+              missionType == 'Mission en autonomie'
+                ? `Bénévolat ${mission.structure.name} en autonomie`
+                : missionType == 'Mission en présentiel'
+                  ? `Bénévolat ${mission.structure.name} à ${mission.city}`
+                  : `Bénévolat ${mission.structure.name} à distance`,
+            is: 'h1',
+          },
+        ]"
+      />
+    </div>
     <div class="px-4 pb-12 max-w-3xl mx-auto lg:max-w-7xl">
       <div class="lg:flex lg:items-start lg:gap-6">
         <div class="space-y-6 flex-1">
@@ -343,6 +345,7 @@ import Details from '@/components/section/mission/Details.vue'
 import ButtonJeProposeMonAide from '@/components/custom/ButtonJeProposeMonAide.vue'
 import MixinMission from '@/mixins/mission'
 import Testimonials from '@/components/section/temoignage/Testimonials'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -351,7 +354,8 @@ export default {
     Presentation,
     Details,
     ButtonJeProposeMonAide,
-    Testimonials
+    Testimonials,
+    Breadcrumb
   },
   mixins: [MixinMission],
   async asyncData ({ $axios, params, error, store }) {

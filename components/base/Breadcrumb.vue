@@ -4,7 +4,7 @@
     aria-label="Breadcrumb"
     :class="[
       { 'bg-jva-blue-500 border-[#3934a7] border-b': theme == 'dark' },
-      { ' border-gray-200 border-b': theme == 'light' },
+      { 'border-gray-200 border-b': theme == 'light' },
     ]"
   >
     <ol
@@ -13,9 +13,9 @@
       <li>
         <nuxt-link to="/">
           <HomeIcon
-            class="w-4 h-4"
+            class="w-3 h-3"
             :class="[
-              { 'text-gray-500 hover:text-gray-700': theme == 'light' },
+              { 'text-[#666666] hover:text-gray-700': theme == 'light' },
               { 'text-white hover:text-gray-200': theme == 'dark' },
               { 'text-white hover:text-gray-200': theme == 'transparent' },
             ]"
@@ -25,9 +25,9 @@
       <li v-for="(item, index) in items" :key="index" class="flex">
         <div
           v-if="item"
-          class="flex items-center text-xxs uppercase font-semibold"
+          class="flex items-center text-xs"
           :class="[
-            { 'text-gray-500 hover:text-gray-700': theme == 'light' },
+            { 'text-[#666666] hover:text-gray-700': theme == 'light' },
             { 'text-white hover:text-gray-200': theme == 'dark' },
             { 'text-white hover:text-gray-200': theme == 'transparent' },
           ]"
@@ -35,7 +35,7 @@
           <ChevronRightIcon
             class="h-3"
             :class="[
-              { 'text-gray-500 hover:text-gray-700': theme == 'light' },
+              { 'text-[#666666] hover:text-gray-700': theme == 'light' },
               { 'text-white hover:text-gray-200': theme == 'dark' },
               { 'text-white hover:text-gray-200': theme == 'transparent' },
             ]"
@@ -49,13 +49,13 @@
             <span class="truncate max-w-xs">{{ item.label }}</span>
           </nuxt-link>
 
-          <h1 v-else-if="item.h1" class="inline-flex">
+          <component
+            :is="item.h1 ? 'h1' : 'div'"
+            v-else
+            class="inline-flex"
+          >
             <span class="truncate max-w-xs">{{ item.label }}</span>
-          </h1>
-
-          <div v-else class="inline-flex">
-            <span class="truncate max-w-xs">{{ item.label }}</span>
-          </div>
+          </component>
         </div>
       </li>
     </ol>

@@ -1,7 +1,11 @@
 <template>
-  <div class="py-12">
+  <div class="pb-12">
+    <div class="container">
+      <Breadcrumb class="max-w-4xl !mx-auto" :links="[{text: page.attributes.name}]" />
+    </div>
+
     <div v-if="page" class="container">
-      <div class="max-w-4xl mx-auto">
+      <div class="max-w-4xl !mx-auto">
         <Heading as="h1" size="2xl">
           {{ page.attributes.name }}
         </Heading>
@@ -27,10 +31,12 @@
 
 <script>
 import Heading from '@/components/dsfr/Heading.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    Heading
+    Heading,
+    Breadcrumb
   },
   props: {
     page: {

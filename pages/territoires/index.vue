@@ -1,14 +1,13 @@
 <template>
   <div>
     <div class="container">
-      <Breadcrumb
-        :items="[{ label: 'Territoires engagés', link: '/territoires' }]"
-      />
+      <Breadcrumb :links="[{text: 'Territoires engagés'}]" />
     </div>
+
     <div class="overflow-hidden">
-      <div class="pt-8 md:pt-12 lg:pt-20 relative">
+      <div class="relative">
         <img
-          class="hidden lg:block absolute transform translate-y-1 opacity-50"
+          class="hidden sm:block absolute transform translate-y-1 opacity-50"
           style="left: 100%; transform: translateX(-75%)"
           src="/images/territoires/france.svg"
           width="904"
@@ -16,13 +15,13 @@
         >
 
         <div class="container mx-auto px-4 relative">
-          <Heading as="h1" size="2xl" class="text-center">
+          <Heading as="h1" size="2xl" class="lg:text-center">
             Rejoignez JeVeuxAider.gouv.fr
-            <br class="hidden md:block">
+            <br class="hidden lg:block">
             dans votre territoire
           </Heading>
 
-          <p class="mt-4 text-center max-w-2xl text-xl leading-7 text-[#696974] lg:mx-auto">
+          <p class="mt-4 lg:text-center max-w-2xl text-xl leading-7 text-[#696974] lg:mx-auto">
             Sur l'ensemble du territoire français, des milliers de bénévoles,
             de structures et d'association ont déjà rejoint
             <b>JeVeuxAider.gouv.fr</b>.
@@ -34,7 +33,7 @@
           <form action="#" method="GET" class="relative mt-10">
             <label for="search_field" class="sr-only">Recherche</label>
 
-            <div class="shadow-lg">
+            <div class="shadow-lg max-w-3xl mx-auto">
               <Input
                 id="search_field"
                 :value="query"
@@ -52,10 +51,10 @@
       <!-- Tabs -->
       <div class="container mx-auto px-4 relative my-8">
         <nav
-          class="flex overflow-scroll sm:overflow-visible pt-1 pb-3 sm:py-0 sm:justify-center sm:gap-4"
+          class="flex pt-1 pb-3 sm:py-0 sm:justify-center gap-4"
         >
           <button
-            v-for="(type, index) in types"
+            v-for="type in types"
             :key="type.slug"
             :disabled="typeCount(type.slug) === 0"
             tabindex="0"
@@ -68,13 +67,9 @@
                 'text-gray-500 hover:text-jva-blue-500 bg-white':
                   activeType != type.slug,
               },
-              {
-                'mr-4 sm:mr-0':
-                  types[index].slug == types[types.length - 1].slug,
-              },
-              { 'cursor-not-allowed hover:!text-gray-500': typeCount(type.slug) === 0}
+              { 'cursor-not-allowed hover:!text-gray-500': typeCount(type.slug) === 0},
             ]"
-            class="px-3 text-center lg:px-5 py-3 lg:py-4 shadow cursor-pointer font-medium text-md lg:text-xl leading-6 sm:w-full lg:w-auto flex-none sm:flex-initial ml-4 sm:ml-0"
+            class="px-3 text-center lg:px-5 py-3 lg:py-4 shadow cursor-pointer font-medium lg:text-xl leading-6 sm:w-full lg:w-auto truncate"
             @click="activeType = type.slug"
           >
             {{ type.label }} ({{ typeCount(type.slug) }})
@@ -120,11 +115,13 @@
 import { debounce } from 'lodash'
 import Heading from '@/components/dsfr/Heading.vue'
 import Input from '@/components/dsfr/Input.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     Heading,
-    Input
+    Input,
+    Breadcrumb
   },
   async asyncData ({ $axios }) {
     const { data: cities } = await $axios.get('/territoires', {
