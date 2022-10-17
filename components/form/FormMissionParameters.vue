@@ -189,7 +189,9 @@ export default {
       currentDay: null,
       currentSlot: null,
       form: {
-        ...this.initialForm,
+        start_date: this.initialForm.start_date || null,
+        end_date: this.initialForm.end_date || null,
+        participations_max: this.initialForm.participations_max || 1,
         date_type: this.initialForm.date_type || (this.initialForm.commitment__time_period ? 'recurring' : 'ponctual'),
         showCalendar: !!this.initialForm.dates,
         dates: this.initialForm.dates || [],
