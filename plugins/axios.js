@@ -34,44 +34,45 @@ export default function ({ $axios, redirect, app, store, error, $message, $toast
     // console.log(err.response.status)
     // console.log(err.response.data)
 
-    switch (err.response.status) {
-      case 401:
-        app.$toast.error({
-          component: Toast,
-          props: {
-            message: err.response.data.message || err.response.data.error
+    if (err.response && err.response.status) {
+      switch (err.response.status) {
+        case 401:
+          app.$toast.error({
+            component: Toast,
+            props: {
+              message: err.response.data.message || err.response.data.error
+            }
+          })
+          break
+        case 403:
+          return error({
+            statusCode: 403,
+            message: err.message || err.response.data
+          })
+        case 404:
+          return error({
+            statusCode: 404,
+            message: err.response.data.message || err.message || err.response.data
+          })
+        case 422:
+          if (err.response.data.message && !err.response.data.errors) {
+            app.$toast.error({
+              component: Toast,
+              props: {
+                message: err.response.data.message
+              }
+            })
+          } else {
+            app.$toast.error({
+              component: Toast,
+              props: {
+                message: 'Merci de corriger les éléments suivants',
+                errors: err.response.data.errors
+              }
+            })
           }
-        })
-        break
-      case 403:
-        return error({
-          statusCode: 403,
-          message: err.message || err.response.data
-        })
-      case 404:
-        return error({
-          statusCode: 404,
-          message: err.response.data.message || err.message || err.response.data
-        })
-      case 422:
-        if (err.response.data.message && !err.response.data.errors) {
-          app.$toast.error({
-            component: Toast,
-            props: {
-              message: err.response.data.message
-            }
-          })
-        } else {
-          app.$toast.error({
-            component: Toast,
-            props: {
-              message: 'Merci de corriger les éléments suivants',
-              errors: err.response.data.errors
-            }
-          })
-        }
-
-        break
+          break
+      }
     }
   })
 }

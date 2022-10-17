@@ -36,7 +36,7 @@ export default {
       default: false
     }
   },
-  async created () {
+  async mounted () {
     if (this.$route.query.state && this.$route.query.code) {
       this.$emit('loading', true)
       const response = await this.$axios.get('/franceconnect/login-callback', {

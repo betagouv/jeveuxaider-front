@@ -189,7 +189,7 @@ export default {
       form: {},
       formSchema: object({
         name: string().min(3).required(),
-        first_name: string().min(3).required(),
+        first_name: string().required(),
         last_name: string().required(),
         phone: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required(),
         email: string().required().email(),

@@ -404,7 +404,7 @@ export default {
       autocompleteOptions: [],
       orgaTypeChosen: '',
       formSchema: object({
-        first_name: string().min(3).required('Un prénom est requis'),
+        first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
         mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Ce format est incorrect').required('Un téléphone mobile est requis'),
         zip: string().min(5).required('Un code postal est requis'),
