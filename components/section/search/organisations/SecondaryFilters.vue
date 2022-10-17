@@ -71,11 +71,7 @@
     </div>
 
     <div class="hidden sm:flex lg:items-center lg:justify-center mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
-      <Link
-        class="uppercase hover:underline text-sm"
-        :link-class="[{'pointer-events-none opacity-0': !hasActiveFilters}]"
-        @click.native="deleteAllFilters()"
-      >
+      <Link @click.native="deleteAllFilters()">
         Réinitialiser
       </Link>
     </div>
@@ -86,11 +82,13 @@
 import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue'
 import BadgeFilter from '~/components/search/BadgeFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
     FacetFilterToggle,
-    BadgeFilter
+    BadgeFilter,
+    Link
   },
   mixins: [AlgoliaQueryBuilder],
   props: {

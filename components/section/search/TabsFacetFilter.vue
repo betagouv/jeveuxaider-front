@@ -1,13 +1,11 @@
 <template>
   <div class="flex items-center">
-    <div
+    <button
       v-for="tab,i in tabs"
       :key="i"
       :class="[
         'flex-grow flex flex-col sm:flex-row justify-center items-center px-4 py-3 sm:px-8 sm:py-6 sm:space-x-2 group',
-        isActiveFilter(filterName, tab.filterValue) || tab.current ? 'bg-white shadow-xl cursor-default' : 'shadow-inner-xl cursor-pointer',
-        {'rounded-l-xl': i == 0},
-        {'rounded-r-xl': i == tabs.length - 1},
+        isActiveFilter(filterName, tab.filterValue) || tab.current ? 'bg-white shadow-xl cursor-default' : 'shadow-inner-xl cursor-pointer'
       ]"
       @click="handleClickTab(tab)"
     >
@@ -28,7 +26,7 @@
       >
         {{ tab.label || tab.filterValue }}
       </span>
-    </div>
+    </button>
   </div>
 </template>
 

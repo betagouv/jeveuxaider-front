@@ -6,13 +6,18 @@
 
         <FacetFilterToggle v-if="filter === 'structure.name'" :key="i" facet-name="structure.name" label="Organisations">
           <template #button="{ firstValueSelected, activeValuesCount }">
-            <BadgeFilter :is-active="!!activeValuesCount">
+            <Tag
+              context="clickable"
+              :is-active="!!activeValuesCount"
+              size="md"
+              as="button"
+            >
               <span v-if="!firstValueSelected">Organisations</span>
-              <div v-else class="text-jva-blue-500 flex">
+              <div v-else>
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </div>
-            </BadgeFilter>
+            </Tag>
           </template>
         </FacetFilterToggle>
 
@@ -96,8 +101,7 @@
 
     <div class="hidden sm:flex lg:items-center lg:justify-center mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
       <Link
-        class="uppercase hover:underline text-sm"
-        :link-class="[{'pointer-events-none opacity-0': !hasActiveFilters}]"
+        :class="['text-jva-blue-500', {'pointer-events-none opacity-0': !hasActiveFilters}]"
         @click.native="deleteAllFilters()"
       >
         Réinitialiser
@@ -112,13 +116,17 @@ import BadgeFilter from '~/components/search/BadgeFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import AutonomyFilter from '~/components/section/search/AutonomyFilter.vue'
 import MinorsFilter from '~/components/section/search/MinorsFilter.vue'
+import Link from '@/components/dsfr/Link.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
     FacetFilterToggle,
     BadgeFilter,
     AutonomyFilter,
-    MinorsFilter
+    MinorsFilter,
+    Link,
+    Tag
   },
   mixins: [AlgoliaQueryBuilder],
   props: {

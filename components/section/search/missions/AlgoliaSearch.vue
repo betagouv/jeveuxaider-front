@@ -60,7 +60,7 @@
           <template v-for="item, i in $store.state.algoliaSearch.results.hits">
             <nuxt-link
               :key="item.id"
-              class="flex min-w-0 hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px]"
+              class="flex min-w-0 hover:bg-gray-50 focus:bg-gray-50 transition"
               :to="
                 item.provider == 'api_engagement'
                   ? `/missions-benevolat/${item.id}`

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <Breadcrumb
-      :items="[{ label: 'Missions de bénévolat', link: '/missions-benevolat' }]"
-      class="container md:px-8 border-b-0"
-    />
+    <div class="container md:px-8">
+      <Breadcrumb :links="[{ text: 'Missions de bénévolat' }]" />
+    </div>
+
     <AlgoliaSearch
       :secondary-filters="['is_autonomy', 'publics_beneficiaires', 'is_minors', 'structure.name', 'domaines', 'structure.reseaux.name', 'department_name', 'template_subtitle']"
     />
@@ -12,10 +12,12 @@
 
 <script>
 import AlgoliaSearch from '~/components/section/search/missions/AlgoliaSearch.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    AlgoliaSearch
+    AlgoliaSearch,
+    Breadcrumb
   },
   middleware: 'search',
   data () {

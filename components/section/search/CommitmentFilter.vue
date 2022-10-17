@@ -1,16 +1,17 @@
 <template>
   <div class="relative">
-    <div class="cursor-pointer" @click="isOpen = !isOpen">
+    <button class="cursor-pointer w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
       <slot name="button" :isOpen="isOpen" :activeValue="activeValue">
         Toggle facet
       </slot>
-    </div>
+    </button>
 
     <transition name="fade-in">
       <div
         v-if="isOpen"
         v-click-outside="() => isOpen = false"
-        class="mt-2 absolute z-20 bg-white border shadow-xl rounded-xl text-[15px] w-[350px]"
+        class="mt-2 absolute z-20 bg-white border shadow-xl text-[15px] w-[350px]"
+        @keydown.esc="isOpen = false"
       >
         <div class="p-4 space-y-3">
           <div class="font-medium">
@@ -46,7 +47,7 @@
         </div>
 
         <div class="border-t px-6 py-3 flex justify-end">
-          <div
+          <button
             class="text-sm"
             :class="[
               {'text-gray-400 pointer-events-none': !activeValue},
@@ -55,7 +56,7 @@
             @click="handleClickEffacer()"
           >
             Effacer
-          </div>
+          </button>
         </div>
       </div>
     </transition>

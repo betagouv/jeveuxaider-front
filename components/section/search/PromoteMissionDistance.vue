@@ -1,17 +1,17 @@
 <template>
   <nuxt-link
     to="/missions-benevolat?type=Mission à distance"
-    class="banner-remote relative h-auto flex flex-col flex-1 bg-white rounded-lg overflow-hidden cursor-pointer group"
+    class="banner-remote relative h-auto flex flex-col flex-1 bg-white overflow-hidden cursor-pointer group text-shadow"
   >
     <img
       src="/images/missions/banner_a_distance.jpg"
       srcset="/images/missions/banner_a_distance@2x.jpg 2x"
       alt="Engagez-vous à distance"
-      class="background absolute object-cover w-full h-full transition duration-300 ease-in-out"
+      class="background absolute object-cover w-full h-full transition duration-300 ease-in-out group-hover:scale-105"
     >
 
     <div
-      class="foreground text-white relative flex flex-col h-full items-center text-center px-4 py-8"
+      class="foreground text-white relative flex flex-col h-full items-center text-center justify-between px-4 py-12"
     >
       <img
         src="/images/icons/computer.svg"
@@ -19,30 +19,34 @@
         class="my-4"
       >
       <div
-        class="text-3xl font-extrabold leading-none mb-4"
+        class="text-3xl font-bold mb-4"
       >
         Engagez-vous<br>à distance
       </div>
-      <div class="text-xl font-bold mt-auto">
+      <div class="text-xl">
         Près de 1000 missions de télébénévolat disponibles
       </div>
 
-      <div
-        class="text-center px-4 py-2 rounded-full text-white shadow-md cursor-pointer bg-jva-green group-hover:bg-[#0e9f6e] transition mt-6 font-extrabold inline-flex justify-center items-center"
-        style="width: 212px; height: 45px"
-      >
+      <Button type="tertiary-no-outline" class="mt-4">
         Missions à distance
-      </div>
+      </Button>
     </div>
   </nuxt-link>
 </template>
 
 <script>
-export default {
+import Button from '@/components/dsfr/Button.vue'
 
+export default {
+  components: {
+    Button
+  }
 }
 </script>
 
-<style>
-
+<style lang="postcss" scoped>
+.text-shadow {
+  text-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25),
+    0px 4px 30px rgba(0, 0, 0, 0.85);
+}
 </style>

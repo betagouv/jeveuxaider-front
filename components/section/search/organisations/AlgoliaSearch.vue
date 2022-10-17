@@ -36,7 +36,7 @@
           <div
             v-for="item in $store.state.algoliaSearch.results.hits"
             :key="item.id"
-            class="flex min-w-0 hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px] cursor-pointer"
+            class="flex min-w-0 hover:bg-gray-50 focus:bg-gray-50 transition cursor-pointer"
           >
             <CardOrganisation
               :organisation="item"

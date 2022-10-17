@@ -1,5 +1,5 @@
 <template>
-  <BadgeFilter
+  <Tag
     v-if="isPresentiel"
     v-tooltip="{
       content: 'Mission à réaliser de votre côté sans présence obligatoire.',
@@ -8,21 +8,24 @@
       placement: 'bottom',
       offset: 8
     }"
-    :is-active="isAutonomy"
-    class="cursor-pointer"
+    as="button"
+    size="md"
+    context="selectable"
+    :is-selected="isAutonomy"
+    is-selected-class="border-gray-50 bg-gray-50"
     @click.native="handleToggle"
   >
-    <span :class="[{'text-jva-blue-500': isAutonomy}]">En autonomie</span>
-  </BadgeFilter>
+    En autonomie
+  </Tag>
 </template>
 
 <script>
-import BadgeFilter from '~/components/search/BadgeFilter.vue'
 import MixinAutonomyFilter from '@/mixins/search/mission/autonomy-filter'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
-    BadgeFilter
+    Tag
   },
   mixins: [MixinAutonomyFilter]
 }

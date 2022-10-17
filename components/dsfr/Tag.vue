@@ -1,7 +1,8 @@
 <template>
-  <span
+  <component
+    :is="as"
     :class="[
-      'inline-flex items-center justify-center rounded-full max-w-full truncate',
+      'tag inline-flex items-center justify-center rounded-full max-w-full relative transition',
 
       {'px-2 py-0.5 text-xs h-6': size == 'sm'},
       {'px-3 py-1 text-sm h-8': size == 'md'},
@@ -9,8 +10,13 @@
       {'text-[#161616] bg-[#EEEEEE]': $store.state.settings.theme === 'light' && !context},
       {'text-white bg-[#242424]': $store.state.settings.theme === 'dark' && !context},
 
-      {'text-jva-blue-500 bg-[#E3E3FD] hover:bg-[#C1C1FB] active:bg-[#ADADF9]': context === 'clickable'}
+      {'text-jva-blue-500 bg-[#E3E3FD] hover:bg-[#C1C1FB] active:bg-[#ADADF9]': (context === 'clickable' && !isActive) || (context === 'selectable' && !isSelected)},
+
+      {'selected': isSelected},
+
+      {'bg-jva-blue-500 text-white hover:bg-[#1212FF] active:bg-[#2323FF]': (isSelected || isActive)}
     ]"
+    :aria-pressed="isSelected"
   >
     <component
       :is="icon"
@@ -27,6 +33,7 @@
         {'mr-[-0.125rem]': size === 'md' && iconOnly},
       ]"
     />
+
     <span
       v-if="!iconOnly"
       :class="[
@@ -36,12 +43,24 @@
     >
       <slot />
     </span>
-  </span>
+
+    <RiCheckboxCircleLine
+      v-if="isSelected"
+      :class="[
+        'absolute top-[-6px] right-[-6px] w-[18px] h-[18px] fill-current border-2 rounded-full text-jva-blue-500',
+        isSelectedClass
+      ]"
+    />
+  </component>
 </template>
 
 <script>
 export default {
   props: {
+    as: {
+      type: String,
+      default: 'span'
+    },
     size: {
       type: String,
       default: 'sm',
@@ -58,6 +77,18 @@ export default {
       default: null
     },
     iconOnly: {
+      type: Boolean,
+      default: false
+    },
+    isSelected: {
+      type: Boolean,
+      default: false
+    },
+    isSelectedClass: {
+      type: String,
+      default: 'border-white bg-white'
+    },
+    isActive: {
       type: Boolean,
       default: false
     }
