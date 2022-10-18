@@ -86,6 +86,11 @@
             </div>
           </div>
         </Box>
+        <BoxNotes
+          v-if="['admin','referent'].includes($store.getters.contextRole)"
+          notable-type="structures"
+          :notable-id="organisation.id"
+        />
       </div>
       <div class="lg:col-span-2 space-y-8">
         <div class="flex items-start justify-between">
@@ -110,12 +115,12 @@
         <client-only>
           <Tabs
             :tabs="[
-              { name: 'Informations', to: '', icon: 'InformationCircleSolidIcon', current: $route.hash === '' },
+              { name: 'Informations', to: '', icon: 'InformationCircleSolidIcon', current: !['#membres','#historique'].includes($route.hash) },
               { name: 'Membres', to: '#membres', icon: 'UsersIcon', current: $route.hash === '#membres', count: organisation.members.length },
               { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash === '#historique' }
             ]"
           />
-          <div v-if="$route.hash === ''" class="space-y-8">
+          <div v-if="!['#membres','#historique'].includes($route.hash)" class="space-y-8">
             <SelectOrganisationState
               v-if="canEditStatut"
               :value="organisation.state"
@@ -243,6 +248,7 @@ import BoxInvitations from '@/components/section/BoxInvitations'
 import SelectOrganisationState from '@/components/custom/SelectOrganisationState'
 import BoxReferents from '@/components/section/BoxReferents'
 import BoxReseau from '@/components/section/organisation/BoxReseau'
+import BoxNotes from '@/components/custom/BoxNotes'
 
 export default {
   components: {
@@ -256,7 +262,8 @@ export default {
     BoxInvitations,
     SelectOrganisationState,
     BoxReferents,
-    BoxReseau
+    BoxReseau,
+    BoxNotes
   },
   mixins: [MixinOrganisation],
   middleware: 'authenticated',
