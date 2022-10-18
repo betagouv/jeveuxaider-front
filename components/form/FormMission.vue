@@ -547,6 +547,7 @@ export default {
         name: this.mission.template?.title || this.mission.name,
         template_id: this.mission.template?.id,
         domaine_id: this.mission.template?.domaine_id || this.mission.domaine_id,
+        domaine_secondary_id: this.mission.template?.domaine_secondary_id || this.mission.domaine_secondary_id,
         activity_id: this.mission.template?.activity_id || this.mission.activity_id,
         objectif: this.mission.template?.objectif || this.mission.objectif,
         description: this.mission.template?.description || this.mission.description,
