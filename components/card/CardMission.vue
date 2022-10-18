@@ -64,7 +64,7 @@
         <Badge :color="domainId" class="uppercase">
           {{ $options.filters.label(domainId, 'domaines') }}
         </Badge>
-        <Badge v-if="mission.domaine_secondary_id" color="gray-light">
+        <Badge v-if="(mission.template && mission.template.domaine_secondary_id) || mission.domaine_secondary_id" color="gray-light">
           +1
         </Badge>
       </div>

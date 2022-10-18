@@ -9,13 +9,22 @@
         >
           {{ domaine.name }}
         </Badge>
-        <Badge
-          v-if="mission.domaine_secondary"
-          class="uppercase"
-          color="gray-light"
-        >
-          {{ mission.domaine_secondary.name }}
-        </Badge>
+        <template v-if="mission.template && mission.template.domaine_secondary">
+          <Badge
+            class="uppercase"
+            color="gray-light"
+          >
+            {{ mission.template.domaine_secondary.name }}
+          </Badge>
+        </template>
+        <template v-if="!mission.template && mission.domaine_secondary">
+          <Badge
+            class="uppercase"
+            color="gray-light"
+          >
+            {{ mission.domaine_secondary.name }}
+          </Badge>
+        </template>
       </div>
       <div
         class="absolute sm:static bg-white flex-none rounded-full h-8 w-8 flex items-center justify-center p-2 border-2 transform will-change-transform hover:scale-110 focus:scale-110 !outline-none transition cursor-pointer"
