@@ -121,6 +121,7 @@
       </div>
 
       <Pagination
+        class="mt-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
@@ -135,9 +136,10 @@ import QueryBuilder from '@/mixins/query-builder'
 import CardProfileBenevole from '@/components/card/CardProfileBenevole.vue'
 import DrawerBenevole from '@/components/drawer/DrawerBenevole.vue'
 import MixinMission from '@/mixins/mission'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
-  components: { CardProfileBenevole, DrawerBenevole },
+  components: { CardProfileBenevole, DrawerBenevole, Pagination },
   mixins: [QueryBuilder, MixinMission],
   middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {

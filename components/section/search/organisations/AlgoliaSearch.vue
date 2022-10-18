@@ -74,6 +74,7 @@ import SecondaryFilters from '~/components/section/search/organisations/Secondar
 import PrimaryMobileFilters from '~/components/section/search/organisations/PrimaryMobileFilters.vue'
 import SecondaryMobileFilters from '~/components/section/search/organisations/SecondaryMobileFilters.vue'
 import Link from '@/components/dsfr/Link.vue'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
@@ -82,7 +83,8 @@ export default {
     SecondaryFilters,
     PrimaryMobileFilters,
     SecondaryMobileFilters,
-    Link
+    Link,
+    Pagination
   },
   mixins: [AlgoliaOrganisationsQueryBuilder],
   props: {

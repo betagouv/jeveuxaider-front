@@ -108,6 +108,7 @@
     </Table>
 
     <Pagination
+      class="mt-6"
       :current-page="queryResult.current_page"
       :total-rows="queryResult.total"
       :per-page="queryResult.per_page"
@@ -120,10 +121,12 @@
 import QueryBuilder from '@/mixins/query-builder'
 import MixinInvitation from '@/mixins/invitation'
 import FormInvitation from '@/components/form/FormInvitation'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
-    FormInvitation
+    FormInvitation,
+    Pagination
   },
   mixins: [MixinInvitation, QueryBuilder],
   layout: 'admin-with-sidebar-menu',

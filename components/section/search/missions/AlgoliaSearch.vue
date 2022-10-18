@@ -99,6 +99,7 @@ import SecondaryFilters from '~/components/section/search/missions/SecondaryFilt
 import PrimaryMobileFilters from '~/components/section/search/missions/PrimaryMobileFilters.vue'
 import SecondaryMobileFilters from '~/components/section/search/missions/SecondaryMobileFilters.vue'
 import PromoteMissionDistance from '~/components/section/search/PromoteMissionDistance.vue'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
@@ -108,7 +109,8 @@ export default {
     SecondaryFilters,
     PromoteMissionDistance,
     PrimaryMobileFilters,
-    SecondaryMobileFilters
+    SecondaryMobileFilters,
+    Pagination
   },
   mixins: [AlgoliaMissionsQueryBuilder],
   props: {

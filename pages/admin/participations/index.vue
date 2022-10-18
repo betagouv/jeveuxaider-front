@@ -246,6 +246,7 @@
       </div>
 
       <Pagination
+        class="mt-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
@@ -265,6 +266,7 @@ import BoxContext from '@/components/section/BoxContext.vue'
 import ModalBulkParticipationsValidate from '@/components/modal/ModalBulkParticipationsValidate.vue'
 import ModalBulkParticipationsDecline from '@/components/modal/ModalBulkParticipationsDecline.vue'
 import MixinUsetiful from '@/mixins/usetiful.client.js'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
@@ -272,7 +274,8 @@ export default {
     DrawerParticipation,
     BoxContext,
     ModalBulkParticipationsValidate,
-    ModalBulkParticipationsDecline
+    ModalBulkParticipationsDecline,
+    Pagination
   },
   mixins: [QueryBuilder, MixinExport, MixinBulkOperations, MixinUsetiful],
   middleware: ['authenticated'],

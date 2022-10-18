@@ -154,6 +154,7 @@
     </div>
 
     <Pagination
+      class="mt-6"
       :current-page="queryResult.current_page"
       :total-rows="queryResult.total"
       :per-page="queryResult.per_page"
@@ -168,12 +169,14 @@ import Card from '@/components/card/Card'
 import DrawerTerritoire from '@/components/drawer/DrawerTerritoire'
 import MixinExport from '@/mixins/export'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
     Card,
     DrawerTerritoire,
-    SearchFilters
+    SearchFilters,
+    Pagination
   },
   mixins: [QueryBuilder, MixinExport],
   layout: 'admin-with-sidebar-menu',

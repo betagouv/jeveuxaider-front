@@ -56,6 +56,7 @@
         </StackedList>
 
         <Pagination
+          class="mt-8"
           :current-page="queryResult.current_page"
           :total-rows="queryResult.total"
           :per-page="queryResult.per_page"
@@ -72,10 +73,12 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
-    HelpCenter
+    HelpCenter,
+    Pagination
   },
   mixins: [QueryBuilder],
   middleware: 'authenticated',

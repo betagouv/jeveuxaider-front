@@ -250,6 +250,7 @@
       </div>
 
       <Pagination
+        class="mt-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
@@ -267,6 +268,7 @@ import MixinExport from '@/mixins/export'
 import BoxContext from '@/components/section/BoxContext.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import ButtonCreateMission from '@/components/custom/ButtonCreateMission'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
@@ -274,7 +276,8 @@ export default {
     DrawerMission,
     BoxContext,
     SearchFilters,
-    ButtonCreateMission
+    ButtonCreateMission,
+    Pagination
   },
   mixins: [QueryBuilder, MixinExport],
   middleware: 'authenticated',

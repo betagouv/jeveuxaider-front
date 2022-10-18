@@ -80,6 +80,7 @@
     </div>
 
     <Pagination
+      class="mt-6"
       :current-page="queryResult.current_page"
       :total-rows="queryResult.total"
       :per-page="queryResult.per_page"
@@ -93,12 +94,14 @@ import QueryBuilder from '@/mixins/query-builder'
 import CardTemoignage from '@/components/card/CardTemoignage.vue'
 import DrawerTemoignage from '@/components/drawer/DrawerTemoignage.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
     CardTemoignage,
     DrawerTemoignage,
-    SearchFilters
+    SearchFilters,
+    Pagination
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',

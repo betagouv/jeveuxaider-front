@@ -137,6 +137,7 @@
       </div>
 
       <Pagination
+        class="mt-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
@@ -153,13 +154,15 @@ import DrawerOrganisation from '@/components/drawer/DrawerOrganisation.vue'
 import MixinExport from '@/mixins/export'
 import BoxContext from '@/components/section/BoxContext.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
     CardOrganisation,
     DrawerOrganisation,
     BoxContext,
-    SearchFilters
+    SearchFilters,
+    Pagination
   },
   mixins: [QueryBuilder, MixinExport],
   middleware: 'authenticated',

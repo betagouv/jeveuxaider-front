@@ -52,6 +52,7 @@
       </div>
 
       <Pagination
+        class="mt-6"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
@@ -65,11 +66,13 @@
 import DrawerMission from '@/components/drawer/DrawerMission'
 import CardMission from '@/components/card/CardMission'
 import QueryBuilder from '@/mixins/query-builder'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
     CardMission,
-    DrawerMission
+    DrawerMission,
+    Pagination
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',
