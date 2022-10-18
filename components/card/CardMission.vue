@@ -28,7 +28,7 @@
         <Tag>
           {{ $options.filters.label(domainId, 'domaines') }}
         </Tag>
-        <Tag v-if="mission.domaine_secondary_id">
+        <Tag v-if="(mission.template && mission.template.domaine_secondary_id) || mission.domaine_secondary_id">
           +1
         </Tag>
       </div>
