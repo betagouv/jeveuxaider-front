@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="$store.state.algoliaSearch.results" class="container md:px-8 lg:mt-6 mb-12">
-      <div class="flex flex-col space-y-6 sm:space-y-12">
+    <div v-if="$store.state.algoliaSearch.results" class="container md:px-8 mb-12">
+      <div class="flex flex-col space-y-8 sm:space-y-12">
         <SectionHeading
           v-if="!noHeader"
           title="Trouver une mission de bénévolat"

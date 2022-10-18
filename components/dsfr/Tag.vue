@@ -22,7 +22,9 @@
       :is="icon"
       v-if="icon"
       :class="[
-        'fill-current flex-none',
+        'flex-none',
+
+        {'fill-current': iconFillCurrent},
 
         {'w-3 h-3': size === 'sm'},
         {'w-4 h-4': size === 'md'},
@@ -79,6 +81,10 @@ export default {
     iconOnly: {
       type: Boolean,
       default: false
+    },
+    iconFillCurrent: {
+      type: Boolean,
+      default: true
     },
     isSelected: {
       type: Boolean,

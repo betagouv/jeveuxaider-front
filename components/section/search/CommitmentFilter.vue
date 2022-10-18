@@ -53,6 +53,7 @@
               {'text-gray-400 pointer-events-none': !activeValue},
               {'text-jva-blue-500 cursor-pointer hover:underline': activeValue}
             ]"
+            :disabled="!activeValue"
             @click="handleClickEffacer()"
           >
             Effacer

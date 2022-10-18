@@ -111,8 +111,11 @@ a[href]:active {
 }
 
 .fr-breadcrumb {
-  padding: 3rem 0 2.5rem;
+  padding: 2rem 0 2.5rem;
   margin: 0;
+  @screen md {
+    padding: 3rem 0 2.5rem;
+  }
 }
 
 @media (min-width: 48em) {

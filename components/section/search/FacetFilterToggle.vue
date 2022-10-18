@@ -71,6 +71,7 @@
               {'text-gray-400 pointer-events-none': !activeValuesCount},
               {'text-jva-blue-500 cursor-pointer hover:underline': activeValuesCount}
             ]"
+            :disabled="!activeValuesCount"
             @click="deleteFacet()"
           >
             Effacer

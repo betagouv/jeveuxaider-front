@@ -33,7 +33,7 @@
             <button
               v-for="suggestion in suggestions"
               :key="suggestion.id"
-              class="px-4 py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#e9eafb]"
+              class="px-4 py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD]"
               tabindex="0"
               @click="handleSelectedAdress(suggestion)"
             >
@@ -56,6 +56,7 @@
                 {'text-gray-400 pointer-events-none': !$route.query.city},
                 {'text-jva-blue-500 cursor-pointer': $route.query.city}
               ]"
+              :disabled="!$route.query.city"
               @click="handleSelectedAdress(null)"
             >
               Effacer
