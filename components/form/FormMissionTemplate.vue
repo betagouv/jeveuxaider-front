@@ -35,19 +35,35 @@
                 name="subtitle"
               />
             </FormControl>
-            <FormControl
-              label="Domaine"
-              html-for="domaine_id"
-              :error="errors.domaine_id"
-              required
-            >
-              <SelectAdvanced
-                v-model="form.domaine_id"
-                name="domaine"
-                placeholder="Sélectionner un domaine"
-                :options="$labels.domaines"
-              />
-            </FormControl>
+            <div class="grid grid-cols-2 gap-4">
+              <FormControl
+                label="Domaine d'action principal"
+                html-for="domaine_id"
+                :error="errors.domaine_id"
+                required
+              >
+                <SelectAdvanced
+                  v-model="form.domaine_id"
+                  name="domaine"
+                  placeholder="Sélectionner un domaine"
+                  :options="$labels.domaines"
+                />
+              </FormControl>
+              <FormControl
+                label="Domaine d'action secondaire"
+                html-for="domaine_secondary_id"
+              >
+                <SelectAdvanced
+                  v-model="form.domaine_secondary_id"
+                  name="domaine"
+                  placeholder="Sélectionner un domaine"
+                  :options="$labels.domaines.filter(
+                    (domaine) => domaine.key != form.domaine_id
+                  )"
+                  clearable
+                />
+              </FormControl>
+            </div>
             <FormControl
               v-if="activities.length"
               label="Activité"

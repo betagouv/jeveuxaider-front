@@ -13,6 +13,12 @@
         <DescriptionListItem term="Modifié le" :description="$dayjs(mission.updated_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Type" :description="missionType" />
         <DescriptionListItem term="Domaine" :description="mission.domaine && mission.domaine.name" />
+        <template v-if="mission.template && mission.template.domaine_secondary">
+          <DescriptionListItem term="Domaine secondaire" :description="mission.template.domaine_secondary.name" />
+        </template>
+        <template v-if="!mission.template && mission.domaine_secondary">
+          <DescriptionListItem term="Domaine secondaire" :description="mission.domaine_secondary.name" />
+        </template>
         <DescriptionListItem
           v-if="mission.publics_beneficiaires"
           term="Publics bénéf."
