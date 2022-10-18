@@ -18,13 +18,13 @@
                 filter-name="type"
                 :tabs="[
                   {
-                    icon: 'LocationMarkerIcon',
+                    icon: 'RiMapPinFill',
                     filterValue: 'Mission en présentiel',
                     current: !$route.query['type'],
                     label: 'Près de chez moi'
                   },
                   {
-                    icon: 'DesktopComputerIcon',
+                    icon: 'RiComputerFill',
                     filterValue: 'Mission à distance',
                     label: 'Depuis chez moi'
                   }

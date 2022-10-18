@@ -16,11 +16,13 @@ import RiLinkedinBoxFill from 'vue-remix-icons/icons/RiLinkedinBoxFill.vue'
 import RiInstagramFill from 'vue-remix-icons/icons/RiInstagramFill.vue'
 import RiYoutubeFill from 'vue-remix-icons/icons/RiYoutubeFill.vue'
 import RiMapPin2Fill from 'vue-remix-icons/icons/RiMapPin2Fill.vue'
+import RiMapPinFill from 'vue-remix-icons/icons/RiMapPinFill.vue'
 import RiBookmark3Fill from 'vue-remix-icons/icons/RiBookmark3Fill.vue'
 import RiTimeFill from 'vue-remix-icons/icons/RiTimeFill.vue'
 import RiCloseFill from 'vue-remix-icons/icons/RiCloseFill.vue'
 import RiCheckboxCircleLine from 'vue-remix-icons/icons/RiCheckboxCircleLine.vue'
 import RiUserHeartFill from 'vue-remix-icons/icons/RiUserHeartFill.vue'
+import RiComputerFill from 'vue-remix-icons/icons/RiComputerFill.vue'
 
 const components = {
   RiSearchLine,
@@ -35,12 +37,14 @@ const components = {
   RiLinkedinBoxFill,
   RiInstagramFill,
   RiYoutubeFill,
+  RiMapPinFill,
   RiMapPin2Fill,
   RiBookmark3Fill,
   RiTimeFill,
   RiCloseFill,
   RiCheckboxCircleLine,
-  RiUserHeartFill
+  RiUserHeartFill,
+  RiComputerFill
 }
 
 Object.entries(components).forEach(([name, component]) => {

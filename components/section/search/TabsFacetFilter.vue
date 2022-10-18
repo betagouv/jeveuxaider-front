@@ -13,8 +13,8 @@
         :is="tab.icon"
         v-if="tab.icon"
         :class="[
-          'h-7 w-7 sm:h-5 sm:w-5 mb-2 sm:mb-0 transition-colors',
-          isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-jva-green-500' : 'text-gray-400 lg:group-hover:text-gray-900',
+          'fill-current h-7 w-7 sm:h-5 sm:w-5 mb-2 sm:mb-0 transition-colors',
+          isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-jva-blue-500' : 'text-gray-400 lg:group-hover:text-gray-900',
         ]"
         aria-hidden="true"
       />
