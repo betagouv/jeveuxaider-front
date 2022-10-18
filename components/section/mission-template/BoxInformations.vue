@@ -10,6 +10,7 @@
         <DescriptionListItem term="Titre" :description="missionTemplate.title" />
         <DescriptionListItem term="Sous titre" :description="missionTemplate.subtitle" />
         <DescriptionListItem term="Domaine" :description="missionTemplate.domaine.name" />
+        <DescriptionListItem v-if="missionTemplate.domaine_secondary" term="Domaine secondaire" :description="missionTemplate.domaine_secondary.name" />
       </DescriptionList>
     </Box>
   </div>
