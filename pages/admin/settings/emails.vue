@@ -124,8 +124,8 @@ export default {
             { key: 'reset_password', label: 'Réinitialiser mon mot de passe', description: "Lorsqu'un utilisateur réinialise son mot de passe" },
             { key: 'user_anonymize', label: 'Suppression de votre compte sur JeVeuxAider.gouv.fr', description: "Lorsqu'un utilisateur supprime son compte" },
             { key: 'register_user_volontaire_cej_adviser', label: 'XXX s’est inscrit sur JeVeuxAider.gouv.fr', description: "Envoyé au conseiller CEJ lorqu'un bénévole s'inscrit sur la plateforme" },
-            { key: 'participation_validated_cej_adviser', label: 'XXX s’est inscrit sur une mission de bénévolat', description: "Envoyé au conseiller CEJ lorqu'un bénévole s'inscrit à une mission" }
-            // { key: 'moderateur_daily_todo', label: 'Arf on a perdu des référents', description: "Envoyée à Giulietta quand des référents ont trop d'actions en attente sous les 3 derniers jours" }
+            { key: 'participation_validated_cej_adviser', label: 'XXX s’est inscrit sur une mission de bénévolat', description: "Envoyé au conseiller CEJ lorqu'un bénévole s'inscrit à une mission" },
+            { key: 'notes_created', label: 'Nouvelle note postée par XXX', description: "Lorsqu'une note est postée par un référent" }
           ]
         }
       ]
