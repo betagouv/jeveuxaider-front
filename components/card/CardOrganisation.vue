@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card--organisation h-auto flex flex-col flex-1 bg-white rounded-xl overflow-hidden safari-fix-scale"
+    class="card--organisation h-auto flex flex-col flex-1 bg-white overflow-hidden safari-fix-scale border border-[#E5E5E5]"
   >
     <div class="thumbnail--wrapper relative">
       <img
@@ -13,112 +13,81 @@
       >
 
       <div class="custom-gradient absolute inset-0" />
-      <div
-        class="absolute top-0 flex justify-center inset-x-0"
-      >
-        <div class="pill !rounded-t-none">
-          {{ organisation.statut_juridique | label('structure_legal_status') }}
-        </div>
-      </div>
 
-      <div
-        class="absolute px-8 mb-2 bottom-0 left-0 text-white w-full"
-      >
-        <div v-if="organisationCity" class="truncate">
-          <span>📍</span>
-
-          <template v-if="organisation.zip">
-            <span class="font-bold">{{ organisationCity }}</span>
-            <span>({{ organisation.zip }})</span>
-          </template>
-
-          <template v-else-if="organisation.department">
-            <span class="font-bold">{{ organisationCity }}</span>
-            <span>({{ organisation.department }})</span>
-          </template>
-
-          <template v-else>
-            <span class="font-bold">{{ organisationCity }}</span>
-          </template>
-        </div>
-      </div>
+      <DsfrBadge class="absolute top-3 left-3">
+        {{ organisation.statut_juridique | label('structure_legal_status') }}
+      </DsfrBadge>
     </div>
 
     <div class="mx-8 my-6 flex-1 flex flex-col items-start min-h-[110px]">
-      <div class="mb-4 flex flex-wrap gap-2">
-        <Badge v-if="domaines[0]" :color="domaines[0].id" class="uppercase">
+      <div v-if="domaines[0]" class="mb-4 flex flex-wrap gap-2">
+        <Tag>
           {{ $options.filters.label(domaines[0].id, 'domaines') }}
-        </Badge>
-        <Badge v-if="domaines.length > 1" color="gray-light">
+        </Tag>
+        <Tag v-if="domaines.length > 1">
           +{{ domaines.length - 1 }}
-        </Badge>
+        </Tag>
       </div>
 
-      <h3
-        :title="organisation.name"
-        class="font-black text-black text-lg relative mb-auto line-clamp-3"
-      >
-        {{ organisation.name }}
-      </h3>
-
-      <div v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole) && showInfos" class="mt-4 text-[13px] text-gray-500">
-        <div class="">
-          Complétion: <span class="font-semibold">{{ organisation.completion_rate }}%</span>
+      <div class="mb-3">
+        <Heading as="h3" size="xs" class="line-clamp-3">
+          {{ organisation.name }}
+        </Heading>
+        <div v-if="showState" class="mt-1">
+          <DsfrBadge
+            size="xs"
+            :type="badgeTypeOrganisationSate"
+            class="mb-4"
+          >
+            {{ organisation.state }}
+          </DsfrBadge>
+          <div v-if="['admin'].includes($store.getters.contextRole)" class="text-[#666666] text-xs">
+            ID <span class="font-bold">{{ organisation.id }}</span>
+          </div>
         </div>
-        <div v-if="organisation.reseaux.length" class="">
-          Réseau: <span class="font-semibold">{{ organisation.reseaux.map(reseau => reseau.name).join(', ') }}</span>
+        <div v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole) && showInfos" class="text-[#666666] text-xs">
+          <div>
+            Complétion: <span class="font-bold">{{ organisation.completion_rate }}%</span>
+          </div>
+          <div v-if="organisation.reseaux.length">
+            Réseau: <span class="font-bold">{{ organisation.reseaux.map(reseau => reseau.name).join(', ') }}</span>
+          </div>
         </div>
       </div>
 
-      <div v-if="showState" class="mt-4 flex items-center justify-center">
-        <Badge :color="organisation.state" plain>
-          {{ organisation.state }}
-        </Badge>
-        <div v-if="['admin'].includes($store.getters.contextRole)" class="text-gray-500 text-xs flex-shrink-0 ml-2">
-          ID <span class="font-semibold">{{ organisation.id }}</span>
+      <div class="truncate text-[#3A3A3A] text-sm max-w-full">
+        <div v-if="organisationCity" class="truncate">
+          <span v-if="organisation.zip">{{ organisationCity }} ({{ organisation.zip }})</span>
+          <span v-else-if="organisation.department">{{ organisationCity }} ({{ organisation.department }})</span>
+          <span v-else>{{ organisationCity }}</span>
         </div>
       </div>
-    </div>
 
-    <div
-      class="border-t p-4 text-center flex items-center justify-center space-x-2"
-    >
-      <template v-if="footerKey === 'places_left'">
-        <span
-          class="text-sm font-bold"
-          :class="[
-            domainColor,
-            { 'opacity-25':organisation.state !== 'Validée' }
-          ]"
-        >
-          {{
-            organisation.places_left
-              | pluralize('bénévole recherché', 'bénévoles recherchés')
-          }}
+      <div class="flex items-end justify-between space-x-1 text-xs text-[#666666] pt-8 mt-auto w-full">
+        <span v-if="footerKey === 'places_left'">
+          {{ organisation.places_left | pluralize('bénévole recherché', 'bénévoles recherchés') }}
         </span>
-      </template>
-      <template v-if="footerKey === 'missions_available_count'">
-        <span
-          class="text-sm font-bold"
-          :class="[
-            domainColor,
-            { 'opacity-25': organisation.missions_available_count <= 0 }
-          ]"
-        >
-          {{
-            organisation.missions_available_count
-              | pluralize('mission disponible', 'missions disponibles')
-          }}
+        <span v-if="footerKey === 'missions_available_count'">
+          {{ organisation.missions_available_count | pluralize('mission disponible', 'missions disponibles') }}
         </span>
-      </template>
+        <RiArrowRightLine class="flex-none ml-auto w-8 h-8 text-jva-blue-500 fill-current" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import MixinOrganisation from '@/mixins/organisation'
+import DsfrBadge from '@/components/dsfr/Badge.vue'
+import Tag from '@/components/dsfr/Tag.vue'
+import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
+  components: {
+    DsfrBadge,
+    Tag,
+    Heading
+  },
   mixins: [MixinOrganisation],
   props: {
     organisation: {
@@ -160,13 +129,19 @@ export default {
           return b.id - a.id
         })
     },
-    domainColor () {
-      if (this.domaines.length) {
-        return this.$labels.domaines.find(
-          domaine => domaine.key == this.domaines[0].id
-        )?.color
-      } else {
-        return 'text-gray-900'
+    badgeTypeOrganisationSate () {
+      switch (this.organisation.state) {
+        case 'Validée':
+          return 'success'
+        case 'Signalée':
+        case 'Annulée':
+        case 'Désinscrite':
+          return 'error'
+        case 'En attente de validation':
+        case 'En cours de traitement':
+          return 'warning'
+        default:
+          return 'info'
       }
     }
   },

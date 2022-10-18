@@ -20,6 +20,7 @@ import RiBookmark3Fill from 'vue-remix-icons/icons/RiBookmark3Fill.vue'
 import RiTimeFill from 'vue-remix-icons/icons/RiTimeFill.vue'
 import RiCloseFill from 'vue-remix-icons/icons/RiCloseFill.vue'
 import RiCheckboxCircleLine from 'vue-remix-icons/icons/RiCheckboxCircleLine.vue'
+import RiUserHeartFill from 'vue-remix-icons/icons/RiUserHeartFill.vue'
 
 const components = {
   RiSearchLine,
@@ -38,7 +39,8 @@ const components = {
   RiBookmark3Fill,
   RiTimeFill,
   RiCloseFill,
-  RiCheckboxCircleLine
+  RiCheckboxCircleLine,
+  RiUserHeartFill
 }
 
 Object.entries(components).forEach(([name, component]) => {

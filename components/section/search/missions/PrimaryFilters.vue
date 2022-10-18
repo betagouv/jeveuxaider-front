@@ -39,7 +39,7 @@
       </div>
       <CommitmentFilter>
         <template #button="{ activeValue }">
-          <div class="flex space-x-2 items-center justify-between group">
+          <div class="flex space-x-2 items-center justify-between group w-full">
             <div class="flex space-x-2 items-center truncate">
               <RiTimeFill class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none" />
               <div :class="['truncate', {'font-bold': activeValue }]">

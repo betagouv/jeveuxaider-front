@@ -212,11 +212,6 @@ export default {
 
       return `À partir du ${startDateObject.format(format)}`
     },
-    domainColor () {
-      return this.$labels.domaines.find(
-        domaine => domaine.key == this.domainId
-      )?.color
-    },
     iconOrganizationState () {
       switch (this.mission.structure.state) {
         case 'Validée':

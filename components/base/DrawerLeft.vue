@@ -8,7 +8,7 @@
       leave-class="translate-x-0"
       leave-to-class="-translate-x-full"
     >
-      <div v-show="isOpen" role="dialog" aria-modal="true" class="fixed inset-y-0 left-0">
+      <div v-show="isOpen" v-scroll-lock="isOpen" role="dialog" aria-modal="true" class="fixed inset-y-0 left-0">
         <div aria-hidden="true" class="w-screen h-full">
           <div class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl">
             <div class="p-4">
@@ -17,7 +17,7 @@
                 <div class="ml-3 h-7 flex items-center">
                   <button
                     type="button"
-                    class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500"
+                    class="bg-white text-gray-400 hover:text-gray-500"
                     @click="$emit('close')"
                   >
                     <span class="sr-only">Close panel</span>

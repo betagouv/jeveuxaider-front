@@ -88,7 +88,6 @@
       >
         <Link
           v-if="nbMobileSecondaryFilters > 0"
-          class="text-gray-500 underline text-sm"
           @click.native="deleteAllFiltersExceptLocalisation()"
         >
           Réinitialiser
@@ -116,6 +115,8 @@ import SearchFilter from '@/components/search/SearchFilter.vue'
 import CommitmentMobileFilter from '~/components/section/search/CommitmentMobileFilter.vue'
 import AutonomyMobileFilter from '~/components/section/search/AutonomyMobileFilter.vue'
 import MinorsMobileFilter from '~/components/section/search/MinorsMobileFilter.vue'
+import Link from '@/components/dsfr/Link.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
@@ -123,7 +124,9 @@ export default {
     SearchFilter,
     CommitmentMobileFilter,
     AutonomyMobileFilter,
-    MinorsMobileFilter
+    MinorsMobileFilter,
+    Link,
+    Button
   },
   mixins: [AlgoliaMissionsQueryBuilder],
   props: {

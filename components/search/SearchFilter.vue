@@ -8,11 +8,9 @@
       :value="searchValue"
       @input="handleInput"
     >
-    <XIcon
-      v-if="searchValue"
-      class="text-gray-500 h-5 w-5 cursor-pointer hover:text-gray-900"
-      @click="reset"
-    />
+    <button v-if="searchValue" @click="reset">
+      <RiCloseFill class="text-gray-500 fill-current h-5 w-5 cursor-pointer hover:text-gray-900" />
+    </button>
   </div>
 </template>
 

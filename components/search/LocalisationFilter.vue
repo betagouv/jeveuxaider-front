@@ -34,7 +34,6 @@
               v-for="suggestion in suggestions"
               :key="suggestion.id"
               class="px-4 py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD]"
-              tabindex="0"
               @click="handleSelectedAdress(suggestion)"
             >
               <div class="flex items-center">

@@ -60,11 +60,13 @@
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import TabsFacetFilter from '@/components/section/search/TabsFacetFilter.vue'
 import LocalisationSuggestions from '@/components/search/LocalisationSuggestions.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
     TabsFacetFilter,
-    LocalisationSuggestions
+    LocalisationSuggestions,
+    Button
   },
   mixins: [AlgoliaQueryBuilder],
   props: {

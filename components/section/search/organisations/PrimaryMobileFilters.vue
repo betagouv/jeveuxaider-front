@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-white p-6 shadow-xl rounded-xl">
+    <div class="bg-white p-6 shadow-xl">
       <div class="group flex justify-between items-end cursor-pointer">
         <SearchFilter placeholder="Recherche par mots clés" />
       </div>
