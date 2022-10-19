@@ -136,8 +136,8 @@
           target="_blank"
           class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
         >
+          <span>Notre impact</span>
           <span>🎯</span>
-          <span>Mesure d'impact</span>
         </NavItem>
 
         <NavItem
@@ -243,8 +243,8 @@
                   target="_blank"
                   :class="['flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600']"
                 >
+                  <span>Notre impact</span>
                   <span>🎯</span>
-                  <span>Mesure d'impact</span>
                 </NavItem>
               </div>
             </div>
