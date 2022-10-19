@@ -5,12 +5,12 @@ export default function (context, inject) {
   if (process.server) {
     const req = context.req
     const headers = (req && req.headers) ? Object.assign({}, req.headers) : {}
-    console.log('debug headers', headers)
+    // console.log('debug headers', headers)
     if (headers['x-forwarded-for']) {
       xForwardedFor = headers['x-forwarded-for'].split(', ')[0]
     }
   }
-  console.log('debug xForwardedFor', xForwardedFor)
+  // console.log('debug xForwardedFor', xForwardedFor)
   const $config = context.$config
   const client = algoliasearch($config.algolia.appId, $config.algolia.searchKey)
 
