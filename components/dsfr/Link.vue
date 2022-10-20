@@ -3,11 +3,11 @@
     :is="to ? (isExternal ? 'a' : 'nuxt-link') : 'button'"
     :target="isExternal ? '_blank' : '_self'"
     :class="[
-      'link inline no-underline cursor-pointer'
+      'dsfr-link inline no-underline cursor-pointer'
     ]"
     :href="to"
     :to="to"
-    :title="$slots.default?.[0]?.text.trim()"
+    :title="title || $slots.default?.[0]?.text?.trim()"
   >
     <component
       :is="icon"
@@ -67,15 +67,12 @@ export default {
     iconClass () {
       return 'inline-block fill-current align-baseline translate-y-[.15rem]'
     }
-  },
-  mounted () {
-    console.log(this.$slots.default?.[0]?.text.trim())
   }
 }
 </script>
 
 <style lang="postcss" scoped>
-.link {
+.dsfr-link {
   text-rendering: optimizeLegibility;
   background-image: linear-gradient(0deg,currentColor,currentColor),linear-gradient(0deg,currentColor,currentColor);
   background-position: 0 100%, 0 calc(100% - 0.0625em);
@@ -83,11 +80,11 @@ export default {
   background-size: 0 0.125em,100% 0.0625em;
 }
 
-.link:hover {
+.dsfr-link:hover {
   background-size: 100% 0.125em,100% 0.0625em;
 }
 
-.link:active {
+.dsfr-link:active {
   background-color: #EDEDED;
 }
 </style>

@@ -3,14 +3,16 @@
     <client-only>
       <portal v-if="!hasPageOnline" to="header-top">
         <transition name="fade">
-          <Banner icon="ExclamationIcon">
-            La mission n'est pas visible car elle est au statut «{{ mission.state }}» et l'organisation est «{{ mission.structure.state }}»
+          <Banner>
+            La mission n'est pas visible car elle est au statut « {{ mission.state }} » et l'organisation est « {{ mission.structure.state }} »
             <template #action>
-              <nuxt-link :to="`/admin/missions?filter[id]=${mission.id}`">
-                <Button variant="white">
-                  Gérer
-                </Button>
-              </nuxt-link>
+              <Link
+                icon="RiArrowRightLine"
+                icon-position="right"
+                :to="`/admin/missions?filter[id]=${mission.id}`"
+              >
+                Gérer
+              </Link>
             </template>
           </Banner>
         </transition>
@@ -46,8 +48,8 @@
       />
     </div>
     <div class="px-4 pb-12 max-w-3xl mx-auto lg:max-w-7xl">
-      <div class="lg:flex lg:items-start lg:gap-6">
-        <div class="space-y-6 flex-1">
+      <div class="lg:flex lg:items-start lg:gap-8">
+        <div class="space-y-8 flex-1">
           <Presentation :mission="mission" />
           <PresentielOrDistance :mission="mission" />
           <Details :mission="mission" />
@@ -346,6 +348,7 @@ import ButtonJeProposeMonAide from '@/components/custom/ButtonJeProposeMonAide.v
 import MixinMission from '@/mixins/mission'
 import Testimonials from '@/components/section/temoignage/Testimonials'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
@@ -355,7 +358,8 @@ export default {
     Details,
     ButtonJeProposeMonAide,
     Testimonials,
-    Breadcrumb
+    Breadcrumb,
+    Link
   },
   mixins: [MixinMission],
   async asyncData ({ $axios, params, error, store }) {

@@ -2,42 +2,34 @@
   <Box class="relative z-10">
     <div class="flex justify-between mb-6">
       <div class="flex flex-wrap gap-2">
-        <Badge
-          v-if="domaine"
-          class="uppercase"
-          :color="domaine.id"
-        >
+        <Tag v-if="domaine" size="md">
           {{ domaine.name }}
-        </Badge>
-        <template v-if="mission.template && mission.template.domaine_secondary">
-          <Badge
-            class="uppercase"
-            color="gray-light"
-          >
-            {{ mission.template.domaine_secondary.name }}
-          </Badge>
-        </template>
-        <template v-if="!mission.template && mission.domaine_secondary">
-          <Badge
-            class="uppercase"
-            color="gray-light"
-          >
-            {{ mission.domaine_secondary.name }}
-          </Badge>
-        </template>
+        </Tag>
+        <Tag v-if="mission.template?.domaine_secondary" size="md">
+          {{ mission.template.domaine_secondary.name }}
+        </Tag>
+        <Tag v-else-if="!mission.template && mission.domaine_secondary" size="md">
+          {{ mission.domaine_secondary.name }}
+        </Tag>
       </div>
-      <div
-        class="absolute sm:static bg-white flex-none rounded-full h-8 w-8 flex items-center justify-center p-2 border-2 transform will-change-transform hover:scale-110 focus:scale-110 !outline-none transition cursor-pointer"
-        style="right: -8px; top: -46px"
-        @click="handleClickShare"
-      >
-        <ShareIcon class="text-gray-500 h-10 w-10" />
-      </div>
+
+      <Tag
+        :icon-only="true"
+        size="md"
+        icon="RiShareFill"
+        context="clickable"
+        class="absolute sm:static flex-none w-8 h-8"
+        style="right: 0; top: -48px"
+        as="button"
+        @click.native="handleClickShare"
+      />
     </div>
-    <Heading as="h1" :level="1" class="line-clamp-4">
+
+    <Heading as="h2" size="xl" class="line-clamp-4">
       {{ mission.name }}
     </Heading>
-    <div v-if="mission.responsable" class="my-6 text-cool-gray-500 font-medium">
+
+    <div v-if="mission.responsable" class="mt-8 text-[#666666]">
       <span>Publié par </span>
       <img
         v-if="mission.responsable.image"
@@ -49,61 +41,76 @@
         :alt="mission.responsable.full_name"
         class="inline-flex w-7 h-7 rounded-full border-2 border-gray-200"
       >
-      <span class="text-gray-900">{{ mission.responsable.full_name }} </span>
-      <span class="lowercase">de {{ mission.structure.statut_juridique|label('structure_legal_status')|prefix }}</span>
-      <component
-        :is="mission.structure.statut_juridique == 'Association' && mission.structure.state == 'Validée'
-          ? 'nuxt-link'
-          : 'span'
-        "
+      <span class="text-black"> {{ mission.responsable.full_name }} </span>
+      <span class="lowercase"> de {{ mission.structure.statut_juridique|label('structure_legal_status')|prefix }} </span>
+
+      <Link
+        v-if="mission.structure.statut_juridique == 'Association' && mission.structure.state == 'Validée'"
+        :is-external="true"
         :to="`/organisations/${mission.structure.slug}`"
-        target="_blank"
-        class="font-bold uppercase text-jva-blue-500"
+        :title="mission.structure.name"
+        class="font-bold text-jva-blue-500"
       >
-        <h2 class="inline">
+        <h3 class="inline">
           {{ mission.structure.name }}
-        </h2>
-      </component>
+        </h3>
+      </Link>
+
+      <span v-else class="font-bold text-jva-blue-500">
+        <h3 class="inline">
+          {{ mission.structure.name }}
+        </h3>
+      </span>
     </div>
-    <div v-if="mission.publics_beneficiaires && mission.publics_beneficiaires.length" class="flex items-center gap-4 mb-4">
-      <div
-        class="flex-none font-bold text-xs uppercase text-gray-500"
-      >
+
+    <div v-if="mission.publics_beneficiaires?.length" class="mt-10">
+      <HrTitle>
         Publics aidés
+      </HrTitle>
+      <div class="flex flex-wrap gap-2">
+        <Badge
+          v-for="(publicBeneficiaire, key) in mission.publics_beneficiaires"
+          :key="key"
+          :no-icon="true"
+          type="info"
+          size="sm"
+        >
+          {{ publicBeneficiaire|label('mission_publics_beneficiaires') }}
+        </Badge>
       </div>
-      <hr class="text-gray-200 w-full">
     </div>
-    <div class="flex flex-wrap gap-2">
-      <Badge
-        v-for="(
-          publicBeneficiaire, key
-        ) in mission.publics_beneficiaires"
-        :key="key"
-        class="uppercase"
-      >
-        {{ publicBeneficiaire|label('mission_publics_beneficiaires') }}
+
+    <div v-if="mission.activity?.name" class="mt-10">
+      <HrTitle>
+        Activité
+      </HrTitle>
+      <Badge size="sm">
+        {{ mission.activity.name }}
       </Badge>
     </div>
-    <template v-if="mission.skills && mission.skills.length">
-      <div class="flex items-center gap-4 mt-8 mb-4">
-        <div
-          class="flex-none font-bold text-xs uppercase text-gray-500"
+
+    <div v-if="mission.skills?.length" class="mt-10">
+      <HrTitle>
+        Compétences recherchées
+      </HrTitle>
+      <div class="flex flex-wrap gap-2">
+        <Badge
+          v-for="(skill, key) in mission.skills"
+          :key="key"
+          :no-icon="true"
+          type="new"
+          size="sm"
         >
-          Compétences recherchées
-        </div>
-        <hr class="text-gray-200 w-full">
+          {{ skill.name }}
+        </Badge>
       </div>
-      <div
-        class="text-cool-gray-500"
-        v-html="mission.skills.map((skill) => skill.name).join(`<span class='mx-2'>•</span>`)"
-      />
-    </template>
+    </div>
 
     <template v-if="mission.isFromApi">
       <hr class="border-gray-200 my-8">
 
       <div>
-        <h2 class="text-lg font-medium">
+        <h2 class="text-lg">
           <span>L'organisation</span>
           <b class="text-[#070191]">
             {{ mission.structure.name }}
@@ -115,7 +122,7 @@
         <span class="font-bold text-black">
           {{ mission.publisher_name }}
         </span>
-        <div class="text-gray-600 text-base">
+        <div class="text-[#666666]">
           Vous serez redirigé vers {{ mission.publisher_url }}
         </div>
       </div>
@@ -125,8 +132,18 @@
 
 <script>
 import MixinMission from '@/mixins/mission'
+import Tag from '@/components/dsfr/Tag.vue'
+import Heading from '@/components/dsfr/Heading.vue'
+import Link from '@/components/dsfr/Link.vue'
+import Badge from '@/components/dsfr/Badge.vue'
 
 export default {
+  components: {
+    Tag,
+    Heading,
+    Link,
+    Badge
+  },
   mixins: [MixinMission],
   props: {
     mission: {

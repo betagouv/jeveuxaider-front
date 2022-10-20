@@ -10,6 +10,8 @@
       {'text-[#161616] bg-[#EEEEEE]': $store.state.settings.theme === 'light' && !context},
       {'text-white bg-[#242424]': $store.state.settings.theme === 'dark' && !context},
 
+      {'cursor-pointer': ['clickable', 'selectable', 'deletable'].includes(context)},
+
       {'text-jva-blue-500 bg-[#E3E3FD] hover:bg-[#C1C1FB] active:bg-[#ADADF9]': (context === 'clickable' && !isActive) || (context === 'selectable' && !isSelected)},
 
       {'selected': isSelected},
@@ -71,7 +73,7 @@ export default {
     context: {
       type: [String, null],
       default: null,
-      validator: c => ['clickable', 'selectable', 'deletable'].includes(c) // @todo selectable, deletable
+      validator: c => ['clickable', 'selectable', 'deletable'].includes(c) // @todo deletable
     },
     icon: {
       // See vue-remix-icons.js

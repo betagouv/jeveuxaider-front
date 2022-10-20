@@ -4,20 +4,24 @@
       class="break-word whitespace-pre-line"
       v-html="isExpanded ? text : textHtml"
     />
-    <div
+    <Link
       v-if="needClip && !isExpanded"
-      class="uppercase text-black text-sm font-semibold cursor-pointer"
-      @click="readMore()"
+      class="text-jva-blue-500 mt-4"
+      @click.native="readMore()"
     >
       Lire plus
-    </div>
+    </Link>
   </div>
 </template>
 
 <script>
 import clip from 'text-clipper'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
+  components: {
+    Link
+  },
   props: {
     text: {
       type: String,

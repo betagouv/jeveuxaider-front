@@ -3,14 +3,16 @@
     <client-only>
       <portal v-if="!territoire.is_published || territoire.state !== 'validated'" to="header-top">
         <transition name="fade">
-          <Banner icon="ExclamationIcon">
-            La page n'est pas visible car elle est {{ territoire.is_published ? 'en ligne' : 'hors ligne' }} et a le statut «{{ territoire.state | label('territoire_workflow_states') }}»
+          <Banner>
+            La page n'est pas visible car elle est {{ territoire.is_published ? 'en ligne' : 'hors ligne' }} et a le statut « {{ territoire.state | label('territoire_workflow_states') }} »
             <template #action>
-              <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}/edit`">
-                <Button variant="white">
-                  Gérer
-                </Button>
-              </nuxt-link>
+              <Link
+                icon="RiArrowRightLine"
+                icon-position="right"
+                :to="`/admin/contenus/territoires/${territoire.id}/edit`"
+              >
+                Gérer
+              </Link>
             </template>
           </Banner>
         </transition>
@@ -57,10 +59,11 @@ import Cities from '@/components/section/territoire/Cities'
 import Associations from '@/components/section/territoire/Associations'
 import Engagement from '@/components/section/territoire/Engagement'
 import Subscribe from '@/components/section/territoire/Subscribe'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
-    TerritoireBanner, Promote, Cities, Associations, Engagement, Subscribe, Search
+    TerritoireBanner, Promote, Cities, Associations, Engagement, Subscribe, Search, Link
   },
   props: {
     territoire: {

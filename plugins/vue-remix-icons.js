@@ -23,6 +23,12 @@ import RiCloseFill from 'vue-remix-icons/icons/RiCloseFill.vue'
 import RiCheckboxCircleLine from 'vue-remix-icons/icons/RiCheckboxCircleLine.vue'
 import RiUserHeartFill from 'vue-remix-icons/icons/RiUserHeartFill.vue'
 import RiComputerFill from 'vue-remix-icons/icons/RiComputerFill.vue'
+import RiShareFill from 'vue-remix-icons/icons/RiShareFill.vue'
+import RiErrorWarningLine from 'vue-remix-icons/icons/RiErrorWarningLine.vue'
+import RiProfileLine from 'vue-remix-icons/icons/RiProfileLine.vue'
+import RiInformationLine from 'vue-remix-icons/icons/RiInformationLine.vue'
+import RiAlertLine from 'vue-remix-icons/icons/RiAlertLine.vue'
+import RiSettings4Line from 'vue-remix-icons/icons/RiSettings4Line.vue'
 
 const components = {
   RiSearchLine,
@@ -44,7 +50,13 @@ const components = {
   RiCloseFill,
   RiCheckboxCircleLine,
   RiUserHeartFill,
-  RiComputerFill
+  RiComputerFill,
+  RiShareFill,
+  RiErrorWarningLine,
+  RiProfileLine,
+  RiInformationLine,
+  RiAlertLine,
+  RiSettings4Line
 }
 
 Object.entries(components).forEach(([name, component]) => {

@@ -67,6 +67,9 @@ export default {
   },
   computed: {
     icon () {
+      if (this.noIcon) {
+        return null
+      }
       switch (this.type) {
         case 'success':
           return IconSuccess
