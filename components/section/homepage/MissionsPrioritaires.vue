@@ -25,12 +25,8 @@
             link: '/missions-benevolat?toggle[is_priority]=true',
             label: 'Plus de missions ›',
           }"
-          :slides-count="missions.length + 1"
+          :slides-count="missions.length"
         >
-          <div key="septembre-pour-apprendre" href="" class="card--mission--wrapper">
-            <CardSeptembrePourApprendre class="!h-full" />
-          </div>
-
           <nuxt-link
             v-for="mission in missions"
             :key="mission.id"
@@ -47,12 +43,10 @@
 
 <script>
 import CardMission from '@/components/card/CardMission'
-import CardSeptembrePourApprendre from '@/components/card/operation/CardSeptembrePourApprendre'
 
 export default {
   components: {
-    CardMission,
-    CardSeptembrePourApprendre
+    CardMission
   },
   data () {
     return {
