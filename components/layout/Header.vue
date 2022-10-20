@@ -131,20 +131,13 @@
         </NavItem>
 
         <NavItem
-          key="ukraine"
-          href="https://www.jeveuxaider.gouv.fr/engagement/benevolat-ukraine/"
+          key="mesure-impact"
+          href="https://www.jeveuxaider.gouv.fr/engagement/mesure-dimpact/"
           target="_blank"
           class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
         >
-          <img
-            src="/images/flag-ukraine.svg"
-            alt="Drapeau ukrainien"
-            width="16"
-            height="20"
-            class="w-4"
-            data-not-lazy
-          >
-          <span>Ukraine</span>
+          <span>Notre impact</span>
+          <span>🎯</span>
         </NavItem>
 
         <NavItem
@@ -245,20 +238,13 @@
                 </NavItem>
 
                 <NavItem
-                  key="ukraine"
-                  href="https://www.jeveuxaider.gouv.fr/engagement/benevolat-ukraine/"
+                  key="mesure-impact"
+                  href="https://www.jeveuxaider.gouv.fr/engagement/mesure-dimpact/"
                   target="_blank"
                   :class="['flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600']"
                 >
-                  <img
-                    src="/images/flag-ukraine.svg"
-                    alt="Drapeau ukrainien"
-                    width="16"
-                    height="20"
-                    class="w-4"
-                    data-not-lazy
-                  >
-                  <span>Ukraine</span>
+                  <span>Notre impact</span>
+                  <span>🎯</span>
                 </NavItem>
               </div>
             </div>
