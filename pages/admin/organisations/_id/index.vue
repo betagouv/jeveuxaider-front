@@ -203,9 +203,9 @@
                 <template #header>
                   <div class="flex justify-between items-center mb-4">
                     <Heading as="h3" :level="5">
-                      {{ responsable.full_name }}
+                      {{ responsable.profile.full_name }}
                     </Heading>
-                    <div v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                    <div v-if="responsable.profile.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
                       <div class="group-hover:block hidden">
                         Supprimer
                       </div>
@@ -214,8 +214,8 @@
                   </div>
                 </template>
                 <DescriptionList v-if="responsable">
-                  <DescriptionListItem term="E-mail" :description="responsable.email" />
-                  <DescriptionListItem term="Mobile" :description="responsable.mobile" />
+                  <DescriptionListItem term="E-mail" :description="responsable.profile.email" />
+                  <DescriptionListItem term="Mobile" :description="responsable.profile.mobile" />
                   <DescriptionListItem v-if="responsable.pivot.fonction" term="Rôle" :description="responsable.pivot.fonction" />
                   <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
                 </DescriptionList>

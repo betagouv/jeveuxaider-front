@@ -302,7 +302,7 @@ export default {
 
     return {
       activities: activities.data,
-      responsables: responsablesResponse ? responsablesResponse.data : [],
+      responsables: responsablesResponse ? responsablesResponse.data.map(user => user.profile) : [],
       waitingParticipationsCount: waitingParticipationsCountResponse ? waitingParticipationsCountResponse.data : null
     }
   },
