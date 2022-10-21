@@ -33,6 +33,8 @@ import RiSettings4Line from 'vue-remix-icons/icons/RiSettings4Line.vue'
 import RiCalendarEventFill from 'vue-remix-icons/icons/RiCalendarEventFill.vue'
 import RiLoader5Line from 'vue-remix-icons/icons/RiLoader5Line.vue'
 import RiCalendarLine from 'vue-remix-icons/icons/RiCalendarLine.vue'
+import RiEyeFill from 'vue-remix-icons/icons/RiEyeFill.vue'
+import RiEyeOffFill from 'vue-remix-icons/icons/RiEyeOffFill.vue'
 
 const components = {
   RiSearchLine,
@@ -64,7 +66,9 @@ const components = {
   RiSettings4Line,
   RiCalendarEventFill,
   RiLoader5Line,
-  RiCalendarLine
+  RiCalendarLine,
+  RiEyeFill,
+  RiEyeOffFill
 }
 
 Object.entries(components).forEach(([name, component]) => {

@@ -33,15 +33,15 @@
         @blur="handleBlur"
       >
       <div v-if="type == 'password' && inputValue" class="absolute right-3">
-        <EyeIcon
+        <RiEyeFill
           v-if="typeValue == 'password'"
-          class="h-5 text-gray-400 hover:gray-text-500 cursor-pointer"
-          @click="typeValue = 'text'"
+          class="h-4 text-gray-400 hover:gray-text-500 cursor-pointer fill-current"
+          @click.native="typeValue = 'text'"
         />
-        <EyeOffIcon
+        <RiEyeOffFill
           v-if="typeValue == 'text'"
-          class="h-5 text-gray-400 hover:gray-text-500 cursor-pointer"
-          @click="typeValue = 'password'"
+          class="h-4 text-gray-400 hover:gray-text-500 cursor-pointer fill-current"
+          @click.native="typeValue = 'password'"
         />
       </div>
       <div v-if="clearable" class="absolute right-3">

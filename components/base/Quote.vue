@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-6 md:p-8 xl:p-12 rounded-xl custom-gradient relative min-h-[120px]"
+    class="p-6 md:p-8 xl:p-12 custom-gradient relative min-h-[120px]"
   >
     <img
       class="absolute right-0 bottom-0 p-6"
