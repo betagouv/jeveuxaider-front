@@ -58,7 +58,7 @@
               <div class="mx-8">
                 <ButtonJeProposeMonAideApiEngagement
                   :url="mission.application_url"
-                  class="mt-8"
+                  class="mt-8 w-full"
                 />
               </div>
             </div>

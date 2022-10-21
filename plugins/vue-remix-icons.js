@@ -27,10 +27,12 @@ import RiShareFill from 'vue-remix-icons/icons/RiShareFill.vue'
 import RiErrorWarningLine from 'vue-remix-icons/icons/RiErrorWarningLine.vue'
 import RiProfileLine from 'vue-remix-icons/icons/RiProfileLine.vue'
 import RiInformationLine from 'vue-remix-icons/icons/RiInformationLine.vue'
+import RiInformationFill from 'vue-remix-icons/icons/RiInformationFill.vue'
 import RiAlertLine from 'vue-remix-icons/icons/RiAlertLine.vue'
 import RiSettings4Line from 'vue-remix-icons/icons/RiSettings4Line.vue'
 import RiCalendarEventFill from 'vue-remix-icons/icons/RiCalendarEventFill.vue'
 import RiLoader5Line from 'vue-remix-icons/icons/RiLoader5Line.vue'
+import RiCalendarLine from 'vue-remix-icons/icons/RiCalendarLine.vue'
 
 const components = {
   RiSearchLine,
@@ -57,10 +59,12 @@ const components = {
   RiErrorWarningLine,
   RiProfileLine,
   RiInformationLine,
+  RiInformationFill,
   RiAlertLine,
   RiSettings4Line,
   RiCalendarEventFill,
-  RiLoader5Line
+  RiLoader5Line,
+  RiCalendarLine
 }
 
 Object.entries(components).forEach(([name, component]) => {

@@ -1,12 +1,10 @@
 <template>
   <div>
     <div class="text-center mb-6">
-      <div
-        class="text-gray-900 font-extrabold text-2xl lg:text-3xl leading-8 mb-2 lg:mb-3"
-      >
+      <Heading as="div" size="lg" class="mb-2 lg:mb-3">
         {{ form.first_name }}, ravi de vous retrouver !
-      </div>
-      <div class="text-gray-500 font-semibold text-lg lg:text-xl">
+      </Heading>
+      <div class="text-cool-gray-500 text-lg lg:text-xl">
         Renseignez votre mot de passe
       </div>
     </div>
@@ -29,22 +27,22 @@
             @blur="validate('password')"
           />
           <template #description>
-            <a
-              href="/password-reset"
-              class="text-sm font-medium mt-2 text-jva-blue-500 hover:text-jva-blue-600"
-            >
-              Mot de passe perdu ?
-            </a>
+            <div class="mt-2">
+              <Link
+                to="/password-reset"
+                class="text-sm text-jva-blue-500"
+                @click.native="onPaswordResetClick"
+              >
+                Mot de passe perdu ?
+              </Link>
+            </div>
           </template>
         </FormControl>
         <Button
-          type="submit"
-          size="xl"
-          variant="green"
-          full
-          rounded
           :loading="loading"
-          @click="onSubmit"
+          size="lg"
+          class="w-full"
+          @click.native.prevent="onSubmit"
         >
           Connexion
         </Button>
@@ -56,9 +54,17 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Heading from '@/components/dsfr/Heading.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   name: 'SoftGateLogin',
+  components: {
+    Heading,
+    Button,
+    Link
+  },
   mixins: [FormErrors],
   props: {
     datas: {
@@ -87,9 +93,7 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           await this.$store.dispatch('auth/login', this.form)
-          if (
-            this.$store.state.auth.user.statistics.new_participations_today >= 3
-          ) {
+          if (this.$store.state.auth.user.statistics.new_participations_today >= 3) {
             this.$emit('anti-flood')
           } else {
             this.$emit('next')
@@ -102,6 +106,9 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    onPaswordResetClick () {
+      this.$emit('close')
     }
   }
 }

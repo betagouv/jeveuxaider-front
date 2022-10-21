@@ -1,22 +1,17 @@
 <template>
   <div>
     <div class="text-center mb-6">
-      <div
-        class="text-gray-900 font-extrabold text-2xl lg:text-3xl leading-8 mb-2 lg:mb-3"
-      >
+      <Heading as="div" size="lg" class="mb-2 lg:mb-3">
         Proposez votre aide
-      </div>
+      </Heading>
       <div
         v-if="$store.state.softGate.selectedMission"
-        class="text-gray-500 font-semibold text-lg lg:text-xl max-w-md mx-auto"
+        class="text-cool-gray-500 text-lg lg:text-xl max-w-md mx-auto"
       >
         Vous allez être mis en relation avec
-        <span class="font-extrabold">{{
-          $store.state.softGate.selectedMission.responsable.first_name
-        }}</span>, responsable de la mission chez
-        <span class="font-extrabold">{{
-          $store.state.softGate.selectedMission.structure.name
-        }}</span>.
+        <span class="font-bold">{{ $store.state.softGate.selectedMission.responsable.first_name }}</span>,
+        responsable de la mission chez
+        <span class="font-bold">{{ $store.state.softGate.selectedMission.structure.name }}</span>.
       </div>
     </div>
     <div class="mx-auto max-w-sm">
@@ -31,13 +26,10 @@
         </FormControl>
 
         <Button
-          type="submit"
-          size="xl"
-          variant="green"
-          rounded
-          full
           :loading="loading"
-          @click="onSubmit"
+          size="lg"
+          class="w-full"
+          @click.native.prevent="onSubmit"
         >
           Envoyer
         </Button>
@@ -49,9 +41,15 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Heading from '@/components/dsfr/Heading.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   name: 'SoftGateParticipate',
+  components: {
+    Heading,
+    Button
+  },
   mixins: [FormErrors],
   data () {
     let message = `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`

@@ -9,7 +9,7 @@
           class="p-4 -mr-4 lg:m-0 lg:p-8 cursor-pointer ml-auto lg:absolute lg:right-0"
           @click="onClose"
         >
-          <XIcon class="text-white h-10 w-10" />
+          <RiCloseFill class="text-white h-10 w-10 fill-current" />
         </button>
 
         <div
@@ -20,7 +20,7 @@
             <div class="text-center text-white text-lg">
               #ChacunPourTous
             </div>
-            <div class="title text-center text-white font-extrabold mb-4">
+            <div class="title text-center text-white font-bold mb-4">
               <template
                 v-if="step != 'share'"
               >
@@ -31,7 +31,7 @@
               </template>
             </div>
             <div
-              class="bg-gray-100 rounded-lg max-w-full lg:max-w-xl mx-auto p-6 lg:p-10"
+              class="bg-gray-100 max-w-full lg:max-w-xl mx-auto p-6 lg:p-10"
             >
               <SoftGateEmail
                 v-if="step == 'email'"
@@ -43,12 +43,12 @@
                 :datas="datas"
                 @next="step = 'participate'"
                 @anti-flood="step = 'anti-flood'"
+                @close="onClose"
               />
               <SoftGateRegister
                 v-if="step == 'register'"
                 :datas="datas"
                 @next="step = 'participate'"
-                @anti-flood="step = 'anti-flood'"
               />
 
               <SoftGateAntiFlood

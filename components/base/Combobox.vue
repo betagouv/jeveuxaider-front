@@ -14,7 +14,7 @@
         type="input"
         :tabindex="!disabled && '0'"
         :placeholder="placeholder"
-        class="cursor-pointer px-6 py-3 pr-10 text-sm rounded-xl block w-full focus:outline-none border border-gray-300 focus:ring-1 bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate"
+        class="cursor-pointer px-6 py-3 pr-10 text-sm block w-full focus:outline-none border border-gray-300 focus:ring-1 bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate"
         :class=" [
           { 'pl-10': icon},
           {'!cursor-not-allowed !bg-gray-100': disabled},
@@ -40,7 +40,7 @@
     </div>
     <div
       v-show="showOptions"
-      class="absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-1 overscroll-contain min-w-[200px]"
+      class="absolute w-full z-50 bg-white border border-gray-200 shadow-md max-h-60 overflow-auto mt-1 overscroll-contain min-w-[200px]"
       @focusout="showOptions = false"
     >
       <ul

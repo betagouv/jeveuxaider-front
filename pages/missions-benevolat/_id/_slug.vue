@@ -272,11 +272,11 @@
                   </template>
 
                   <div v-else class="relative text-center mt-4">
-                    <ButtonJeProposeMonAide :mission="mission" />
+                    <ButtonJeProposeMonAide :mission="mission" class="w-full" />
                   </div>
                 </template>
                 <div v-else class="text-center">
-                  <DsfrButton disabled size="lg">
+                  <DsfrButton disabled size="lg" class="w-full">
                     Inscription fermée
                   </DsfrButton>
                 </div>

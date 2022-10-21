@@ -81,7 +81,7 @@
               <Toggle
                 v-model="form.service_civique"
                 class="flex-1"
-                label="Etes-vous volontaire en Service Civique ?"
+                label="Êtes-vous volontaire en Service Civique ?"
                 :description="form.service_civique ? 'Oui, je suis volontaire' : 'Non, je ne suis pas volontaire'"
               />
             </div>
@@ -105,7 +105,7 @@
               <Toggle
                 v-model="form.cej"
                 class="flex-1"
-                label="Etes-vous engagé Contrat d'Engagement Jeune ?"
+                label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
                 :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
               />
             </div>
