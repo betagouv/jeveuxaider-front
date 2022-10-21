@@ -1,15 +1,7 @@
 <template>
   <Container2Cols>
     <template #breadcrumb>
-      <AlertDialog
-        theme="danger"
-        title="Supprimer mon compte"
-        text="Attention, cette action est irréversible et toutes vos données de la plateforme JeVeuxAider.gouv.fr seront anonymisées."
-        :is-open="showAlert"
-        @confirm="handleConfirmDeleteUser()"
-        @cancel="showAlert = false"
-      />
-
+      <ModalUnregisterUser :is-open="showAlert" @cancel="showAlert = false" @close="showAlert = false" />
       <Breadcrumb
         :items="[
           { label: 'Mon profil', link: '/profile' },
@@ -48,10 +40,12 @@
 
 <script>
 import FormPassword from '@/components/form/FormPassword.vue'
+import ModalUnregisterUser from '~/components/modal/ModalUnregisterUser.vue'
 
 export default {
   components: {
-    FormPassword
+    FormPassword,
+    ModalUnregisterUser
   },
   middleware: 'authenticated',
   data () {
