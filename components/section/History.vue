@@ -1,5 +1,5 @@
 <template>
-  <div v-if="queryActivityLogs && queryActivityLogs.total > 0" class="text-sm space-y-2">
+  <div v-if="queryActivityLogs && queryActivityLogs.total > 0" ref="history" class="text-sm space-y-2">
     <Box v-for="activity in queryActivityLogs.data" :key="activity.id" variant="flat" padding="xs">
       <div class="font-medium">
         {{ activity.data.full_name }}
@@ -40,6 +40,12 @@
         </Disclosure>
       </div>
     </Box>
+    <Pagination
+      :current-page="queryActivityLogs.current_page"
+      :total-rows="queryActivityLogs.total"
+      :per-page="queryActivityLogs.per_page"
+      @page-change="handleChangePage"
+    />
   </div>
   <div v-else>
     <Box variant="flat" padding="xs" class="text-sm">
@@ -62,6 +68,7 @@ export default {
   },
   data () {
     return {
+      page: 1,
       queryActivityLogs: null
     }
   },
@@ -69,7 +76,9 @@ export default {
     const { data: queryActivityLogs } = await this.$axios.get('/activity-logs', {
       params: {
         'filter[subject_id]': this.modelId,
-        'filter[subject_type]': this.modelType
+        'filter[subject_type]': this.modelType,
+        pagination: 10,
+        page: this.page
       }
     })
     this.queryActivityLogs = queryActivityLogs
@@ -80,6 +89,13 @@ export default {
     }
   },
   methods: {
+    handleChangePage (page) {
+      this.page = page
+      this.$fetch()
+      this.$scrollTo(this.$refs.history, {
+        offset: -90
+      })
+    },
     formatActionLabel (activity) {
       let label = 'Crée le '
       if (activity.description == 'updated') {
@@ -190,6 +206,16 @@ export default {
           return 'Alias URL'
         case 'website':
           return 'Site internet'
+        case 'autonomy_zips':
+          return 'Autonomie - Codes postaux'
+        case 'autonomy_precisions':
+          return 'Autonomie - Précisions'
+        case 'date_type':
+          return 'Type de dates'
+        case 'recurrent_description':
+          return 'Récurrent - Description'
+        case 'is_autonomy':
+          return 'Autonomie'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },
