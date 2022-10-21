@@ -2,7 +2,7 @@
   <div :class="['relative z-30', bgColor]">
     <div class="container py-3">
       <div class="flex items-center justify-between flex-wrap">
-        <div class="w-0 flex-1 flex items-center">
+        <div class="w-full flex-1 flex items-center">
           <component
             :is="icon ?? iconFromType"
             v-if="!noIcon"
