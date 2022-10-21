@@ -73,7 +73,6 @@
           :key="key"
           :no-icon="true"
           type="info"
-          size="sm"
         >
           {{ publicBeneficiaire|label('mission_publics_beneficiaires') }}
         </Badge>
@@ -84,7 +83,7 @@
       <HrTitle>
         Activité
       </HrTitle>
-      <Badge size="sm">
+      <Badge>
         {{ mission.activity.name }}
       </Badge>
     </div>
@@ -99,7 +98,6 @@
           :key="key"
           :no-icon="true"
           type="new"
-          size="sm"
         >
           {{ skill.name }}
         </Badge>

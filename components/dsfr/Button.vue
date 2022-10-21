@@ -17,6 +17,7 @@
       {'cursor-not-allowed !border-[#E5E5E5] text-[#929292]': disabled && ['secondary', 'tertiary'].includes(type)},
       {'cursor-not-allowed text-[#929292]': disabled && type === 'tertiary-no-outline'},
     ]"
+    :disabled="disabled"
     @click="$emit('click')"
   >
     <component

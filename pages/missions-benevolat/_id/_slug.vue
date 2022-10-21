@@ -18,17 +18,26 @@
         </transition>
       </portal>
     </client-only>
-    <div class="absolute w-full" style="height: 360px">
+
+    <div class="absolute bg-gradient-to-b from-[#ECECFE] to-transparent w-full overflow-hidden" style="height: 777px">
       <img
-        src="/images/missions/bg_header_mission.jpg"
-        alt="Mission bénévolat"
-        class="object-cover w-full h-full"
+        src="/images/homepage/deco_2.svg"
+        alt="Décorations"
+        class="deco--2 absolute hidden lg:block pointer-events-none"
+        data-not-lazy
+      >
+
+      <img
+        src="/images/homepage/deco_3.svg"
+        alt="Décorations"
+        class="deco--3 absolute hidden lg:block pointer-events-none"
+        data-not-lazy
       >
     </div>
+
     <div class="mx-auto px-4 lg:container lg:max-w-7xl">
       <Breadcrumb
-        theme="white"
-        class="relative z-10 px-4 xl:container !max-w-7xl"
+        class="relative z-10 px-4 xl:container !max-w-7xl text-shadow"
         :links="[
           { text: 'Missions de bénévolat', to: '/missions-benevolat' },
           {
@@ -58,56 +67,43 @@
             class="flex flex-col sm:flex-row gap-6 xl:gap-8 text-center sm:text-left"
           >
             <img
-              v-if="
-                mission.structure.logo &&
-                  (mission.structure.logo.thumb || mission.structure.logo.original)
-              "
-              :src="
-                mission.structure.logo.thumb
-                  ? mission.structure.logo.thumb
-                  : mission.structure.logo.original
-              "
+              v-if="mission.structure.logo && (mission.structure.logo.thumb || mission.structure.logo.original)"
+              :src="mission.structure.logo.thumb ? mission.structure.logo.thumb : mission.structure.logo.original"
               :alt="mission.structure.name"
               class="mx-auto lg:mx-0 my-auto h-20 object-contain"
               style="max-width: 150px"
             >
 
             <div>
-              <h2 class="font-bold text-2xl tracking-[-1px] mb-4">
-                Découvrez <span class="lowercase">{{ mission.structure.statut_juridique|label('structure_legal_status')|prefix }}</span>
-                <component
-                  :is="
-                    mission.structure.statut_juridique == 'Association' && mission.structure.state == 'Validée' ? 'nuxt-link' : 'span'
-                  "
-                  target="_blank"
-                  :to="`/organisations/${mission.structure.slug}`"
-                  class="font-extrabold uppercase"
-                >
-                  {{ mission.structure.name }}
-                </component>
-              </h2>
+              <div class="text-lg mb-4 text-gray-800">
+                Découvrez
+                <span class="lowercase">{{ mission.structure.statut_juridique|label('structure_legal_status')|prefix }}</span>
+                {{ mission.structure.name }}
+              </div>
+
               <div class="text-cool-gray-500 line-clamp-3 break-word">
                 {{ mission.structure.description }}
               </div>
 
-              <Button v-if="mission.structure.statut_juridique == 'Association' && mission.structure.state == 'Validée'" variant="white" rounded class="mt-4">
-                <nuxt-link
-                  :to="`/organisations/${mission.structure.slug}`"
-                >
+              <nuxt-link
+                v-if="mission.structure.statut_juridique == 'Association' && mission.structure.state == 'Validée'"
+                :to="`/organisations/${mission.structure.slug}`"
+              >
+                <DsfrButton type="secondary" class="mt-8">
                   En savoir plus
-                </nuxt-link>
-              </Button>
+                </DsfrButton>
+              </nuxt-link>
             </div>
           </Box>
         </div>
 
-        <Box class="overflow-hidden mt-6 lg:w-96 lg:mt-0 z-20 flex-shrink-0 sticky top-6" :padding="false">
+        <Box class="overflow-hidden mt-8 lg:w-96 lg:mt-0 z-20 flex-shrink-0 sticky top-6" :padding="false">
           <img
             :srcset="illustrationSrcset"
             :src="illustrationSrc"
             sizes="(min-width: 1024px) 384px, 100vw"
             alt=""
-            class="w-full object-cover object-top h-[130px]"
+            class="w-full object-cover object-top h-[180px] lg:h-[130px]"
             width="761"
             height="363"
             @error="$event.target.srcset = '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'"
@@ -118,7 +114,7 @@
             v-if="mission.structure.logo"
             target="_blank"
             :to="`/organisations/${mission.structure.slug}`"
-            class="left-1/2 absolute -translate-x-1/2 -translate-y-2/3 bg-white shadow-lg rounded-xl p-3 h-[72px] flex"
+            class="left-1/2 absolute -translate-x-1/2 -translate-y-2/3 bg-white shadow-lg p-3 h-[64px] flex"
           >
             <img
               sizes="120px"
@@ -131,30 +127,26 @@
             >
           </component>
 
-          <div class="bg-white pb-4 pt-6">
+          <div class="bg-white pb-8 pt-10">
             <div class="px-4 text-center">
-              <div class="font-extrabold text-xl">
+              <div class="text-xl font-bold">
                 <template v-if="!mission.has_places_left">
                   La mission est désormais complète
                 </template>
-
                 <template v-else>
-                  <template
-                    v-if="['Terminée', 'Annulée'].includes(mission.state)"
-                  >
+                  <template v-if="['Terminée', 'Annulée'].includes(mission.state)">
                     Ils recherchaient
                   </template>
                   <template v-else>
                     Ils recherchent
                   </template>
-
                   {{ mission.participations_max|pluralize('bénévole', 'bénévoles') }}
                 </template>
               </div>
 
               <template v-if="participationsCount">
                 <div
-                  class="mt-2 uppercase text-cool-gray-500 text-xs font-bold"
+                  class="uppercase text-cool-gray-500 text-xs"
                 >
                   {{ participationsCount|pluralize('personne déjà inscrite','personnes déjà inscrites') }}
                 </div>
@@ -192,17 +184,17 @@
                 >
                   <div
                     class="flex items-center flex-col sm:flex-row gap-2"
-                    :class="[{ 'justify-center': dates.length == 1 }]"
+                    :class="[{ 'justify-center': dates.length === 1 }]"
                   >
-                    <CalendarIcon class="hidden sm:block  text-cool-gray-400" />
-
                     <div
-                      class="font-bold text-center sm:text-left flex gap-2 items-baseline sm:block"
+                      class="text-center flex gap-2 items-baseline sm:block"
+                      :class="[{'sm:text-right ml-auto': i === 0 && dates.length > 1}, {'sm:text-left': i === 1 && dates.length > 1}]"
                     >
-                      <div class="text-cool-gray-500" style="font-size: 11px">
+                      <!-- <RiCalendarEventFill class="hidden sm:inline text-cool-gray-400 fill-current w-4 h-4" /> -->
+                      <div class="text-cool-gray-500 space-x-2 text-[11px]">
                         {{ date.label }}
                       </div>
-                      <div class="text-black">
+                      <div class="text-black font-bold">
                         {{ date.date }}
                       </div>
                     </div>
@@ -212,11 +204,10 @@
             </div>
 
             <div class="flex flex-col">
+              <!-- Durée de la mission -->
               <div class="mx-8 sm:mx-12">
                 <div class="text-center">
-                  <div
-                    class="mt-4 uppercase text-cool-gray-500 text-xs font-bold"
-                  >
+                  <div class="mt-3 uppercase text-cool-gray-500 text-[11px]" :class="[dates.length && !mission.dates ? 'mt-3' : 'mt-5']">
                     Durée de la mission
                   </div>
                   <div class="font-bold">
@@ -241,52 +232,54 @@
                 <template v-if="canRegister">
                   <template v-if="mission.dates">
                     <div v-if="!dateSelected" class="flex justify-center">
-                      <v-calendar
-
-                        ref="calendar"
-                        :attributes="calendarAttrs"
-                        :min-date="new Date()"
-                        trim-weeks
-                        @dayclick="handleDayClick"
-                        @transition-end="addHighlightClasses"
-                        @hook:mounted="addHighlightClasses"
-                      />
+                      <client-only>
+                        <v-calendar
+                          ref="calendar"
+                          :attributes="calendarAttrs"
+                          :min-date="new Date()"
+                          trim-weeks
+                          @dayclick="handleDayClick"
+                          @transition-end="addHighlightClasses"
+                          @hook:mounted="addHighlightClasses"
+                        />
+                      </client-only>
                     </div>
                     <div v-else-if="dateSelected" class="mt-3 relative mx-6">
-                      <div class="left-0 top--0.5 absolute cursor-pointer group p-1 hover:bg-[#edf2f7] rounded-sm" @click="handlePreviousStepClick">
+                      <div class="left-0 top-[-3px] absolute cursor-pointer group p-1 hover:bg-[#edf2f7] rounded-sm" @click="handlePreviousStepClick">
                         <ChevronLeftIcon class="text-[#718096] h-5 w-5" />
                       </div>
                       <div class="text-center font-bold capitalize">
                         {{ $dayjs(dateSelected.id).format('dddd D MMMM') }}
                       </div>
 
-                      <CheckboxGroup
+                      <TagsGroup
                         v-model="slotSelected"
-                        class="mt-6"
-                        class-checkbox="justify-center"
-                        name="slots"
-                        variant="button"
                         :options="$labels.slots.filter(slot => dateSelected.slots.includes(slot.key))"
+                        class="mt-4"
+                        wrapper-class="justify-center"
                       />
+
                       <div class="flex items-center justify-center mt-6">
                         <ButtonJeProposeMonAide
                           :disabled="!slotSelected || slotSelected.length == 0"
                           :mission="{...mission, dateSelected, slotSelected}"
+                          label="Continuer"
+                          type="secondary"
+                          size="md"
                         />
                       </div>
                     </div>
                   </template>
-                  <ButtonJeProposeMonAide
-                    v-else
-                    class="mt-4"
-                    :mission="mission"
-                  />
+
+                  <div v-else class="relative text-center mt-4">
+                    <ButtonJeProposeMonAide :mission="mission" />
+                  </div>
                 </template>
-                <template v-else>
-                  <Button size="xl" rounded full variant="white" plain>
+                <div v-else class="text-center">
+                  <DsfrButton disabled size="lg">
                     Inscription fermée
-                  </Button>
-                </template>
+                  </DsfrButton>
+                </div>
               </div>
             </div>
           </div>
@@ -349,6 +342,9 @@ import MixinMission from '@/mixins/mission'
 import Testimonials from '@/components/section/temoignage/Testimonials'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import Link from '@/components/dsfr/Link.vue'
+import Heading from '@/components/dsfr/Heading.vue'
+import DsfrButton from '@/components/dsfr/Button.vue'
+import TagsGroup from '@/components/dsfr/TagsGroup.vue'
 
 export default {
   components: {
@@ -359,7 +355,10 @@ export default {
     ButtonJeProposeMonAide,
     Testimonials,
     Breadcrumb,
-    Link
+    Link,
+    Heading,
+    DsfrButton,
+    TagsGroup
   },
   mixins: [MixinMission],
   async asyncData ({ $axios, params, error, store }) {
@@ -583,33 +582,54 @@ export default {
 }
 
 :deep(.vc-container div) {
-  @apply font-sans
+  @apply font-sans;
 }
 
 :deep(.vc-day .vc-day-content) {
   font-size: 15px;
-  width: 43px;
-  height: 42px;
-  line-height: 42px;
+  width: 32px;
+  height: 32px;
+  @screen sm {
+    width: 40px;
+  }
 }
 
 :deep(.vc-day .vc-highlight) {
   border-radius: 0 !important;
-  height: 38px;
-  width: 38px;
+  height: 100%;
+  width: 100%;
 }
 :deep(.vc-weekday) {
   @apply hidden;
 }
 
 :deep(.vc-day-content:hover) {
-  @apply hover:bg-transparent
+  @apply hover:bg-transparent;
 }
 
 :deep(.vc-day.has-highlight:hover .vc-highlight) {
-  @apply bg-jva-blue-300 text-white
+  @apply bg-jva-blue-300 text-white;
 }
 :deep(.vc-day.has-highlight:hover .vc-day-content) {
-  @apply  text-white
+  @apply text-white;
+}
+
+:deep(.vc-header),
+:deep(.vc-arrows-container) {
+  padding-top: 0;
+}
+
+:deep(.vc-weeks) {
+  @apply gap-1;
+}
+
+.deco--2 {
+  left: calc(50% - 772px);
+  top: 150px;
+}
+
+.deco--3 {
+  right: calc(50% - 728px);
+  top: -12px;
 }
 </style>

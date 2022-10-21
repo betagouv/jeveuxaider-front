@@ -1,7 +1,7 @@
 <template>
-  <div class="overflow-hidden">
+  <div>
     <div
-      class="break-word whitespace-pre-line"
+      class="break-word whitespace-pre-line overflow-hidden formatted-text"
       v-html="isExpanded ? text : textHtml"
     />
     <Link
@@ -30,6 +30,10 @@ export default {
     maxLines: {
       type: [Number, Boolean],
       default: false
+    },
+    textColor: {
+      type: String,
+      default: 'text-[#3A3A3A]'
     }
   },
   data () {
@@ -54,7 +58,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-:deep(p:not(:last-child)) {
+/* :deep(p:not(:last-child)) {
   @apply mb-4
 }
 :deep(ol) {
@@ -64,5 +68,5 @@ export default {
 :deep(ul) {
     list-style: disc;
     @apply mb-4 pl-4 space-y-4
-}
+} */
 </style>
