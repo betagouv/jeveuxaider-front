@@ -1,6 +1,6 @@
 <template>
-  <div class="flex-1 flex space-x-2 items-center group">
-    <RiSearchEyeFill class="text-gray-900 h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100" />
+  <div class="flex-1 flex space-x-2 items-center group ">
+    <RiSearchEyeFill class="text-gray-900 h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 group-focus-within:opacity-100" />
     <input
       type="text"
       :placeholder="placeholder"
