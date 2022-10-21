@@ -8,7 +8,7 @@
         <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Saisissez votre ville" :ip-lat-lng="$store.state.algoliaSearch.results.aroundLatLng" />
         <div v-else>
           <div class="flex space-x-2 items-center">
-            <DesktopComputerIcon class="h-5 w-5 transition-opacity opacity-25 group-hover:opacity-100" />
+            <RiComputerFill class="h-4 w-4 flex-none transition-opacity opacity-25 group-hover:opacity-100" />
             <span class="font-bold">Depuis chez moi</span>
           </div>
         </div>

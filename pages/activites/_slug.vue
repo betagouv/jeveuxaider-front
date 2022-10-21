@@ -8,7 +8,6 @@
             <template #action>
               <Link
                 icon="RiArrowRightLine"
-                icon-position="right"
                 :to="`/admin/contenus/activites/${activity.id}/edit`"
               >
                 Gérer

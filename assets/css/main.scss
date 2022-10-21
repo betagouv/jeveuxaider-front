@@ -314,6 +314,16 @@ body.full-height-layout {
   }
 }
 
+// tailwind override
+[type='text']:focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus {
+  border-color: inherit;
+  box-shadow: none;
+  outline-style: solid;
+  outline-color: #0a76f6;
+  outline-width: 2px;
+  outline-offset: 2px;
+}
+
 .formatted-text {
 
   > *:not(:last-child) {

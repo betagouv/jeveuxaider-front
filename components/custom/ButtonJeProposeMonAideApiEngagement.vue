@@ -2,7 +2,6 @@
   <Button
     size="lg"
     icon="RiExternalLinkLine"
-    icon-position="right"
     @click.native="onClick"
   >
     Je propose mon aide

@@ -55,7 +55,7 @@ export default {
     },
     iconPosition: {
       type: String,
-      default: 'left',
+      default: 'right',
       validator: i => ['left', 'right'].includes(i)
     },
     iconSize: {

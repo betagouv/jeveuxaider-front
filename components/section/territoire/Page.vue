@@ -8,7 +8,6 @@
             <template #action>
               <Link
                 icon="RiArrowRightLine"
-                icon-position="right"
                 :to="`/admin/contenus/territoires/${territoire.id}/edit`"
               >
                 Gérer

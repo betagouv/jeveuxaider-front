@@ -5,7 +5,6 @@
       <template #action>
         <Link
           icon="RiArrowRightLine"
-          icon-position="right"
           @click.native="$store.dispatch('auth/stopImpersonate')"
         >
           Reprendre ma place
@@ -18,7 +17,6 @@
       <template #action>
         <Link
           icon="RiArrowRightLine"
-          icon-position="right"
           to="/admin/settings/general"
         >
           Gérer
@@ -31,7 +29,6 @@
       <template #action>
         <Link
           icon="RiArrowRightLine"
-          icon-position="right"
           :to="`/admin/participations?filter[state]=En attente de validation&filter[ofResponsable]=${$store.getters.profile.id}`"
         >
           Modérer les participations

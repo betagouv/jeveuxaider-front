@@ -21,8 +21,8 @@
     @click="$emit('click')"
   >
     <component
-      :is="icon"
-      v-if="icon && iconPosition === 'left'"
+      :is="iconOrLoading"
+      v-if="iconOrLoading && iconPosition === 'left'"
       :class="[
         'fill-current flex-none mr-2',
         {'ml-[0.125rem]': ['sm', 'md'].includes(size)},
@@ -30,14 +30,16 @@
 
         {'w-4 h-4': ['sm', 'md'].includes(size) },
         {'w-6 h-6': size === 'lg'},
+
+        {'animate-spin': loading }
       ]"
     />
 
     <slot />
 
     <component
-      :is="icon"
-      v-if="icon && iconPosition === 'right'"
+      :is="iconOrLoading"
+      v-if="iconOrLoading && iconPosition === 'right'"
       :class="[
         'fill-current flex-none ml-2',
         {'mr-[0.125rem]': ['sm', 'md'].includes(size)},
@@ -45,6 +47,8 @@
 
         {'w-4 h-4': ['sm', 'md'].includes(size) },
         {'w-6 h-6': size === 'lg'},
+
+        {'animate-spin': loading }
       ]"
     />
   </button>
@@ -70,12 +74,21 @@ export default {
     },
     iconPosition: {
       type: String,
-      default: 'left',
+      default: 'right',
       validator: i => ['left', 'right'].includes(i)
     },
     disabled: {
       type: Boolean,
       default: false
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    iconOrLoading () {
+      return this.loading ? 'RiLoader5Line' : this.icon
     }
   }
 }

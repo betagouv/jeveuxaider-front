@@ -30,6 +30,7 @@ import RiInformationLine from 'vue-remix-icons/icons/RiInformationLine.vue'
 import RiAlertLine from 'vue-remix-icons/icons/RiAlertLine.vue'
 import RiSettings4Line from 'vue-remix-icons/icons/RiSettings4Line.vue'
 import RiCalendarEventFill from 'vue-remix-icons/icons/RiCalendarEventFill.vue'
+import RiLoader5Line from 'vue-remix-icons/icons/RiLoader5Line.vue'
 
 const components = {
   RiSearchLine,
@@ -58,7 +59,8 @@ const components = {
   RiInformationLine,
   RiAlertLine,
   RiSettings4Line,
-  RiCalendarEventFill
+  RiCalendarEventFill,
+  RiLoader5Line
 }
 
 Object.entries(components).forEach(([name, component]) => {

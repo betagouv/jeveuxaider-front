@@ -12,7 +12,7 @@
         <transition name="fade">
           <div
             v-show="settings.infinite || arrowOption.currentSlide"
-            class="rounded-full !bg-white transition will-change-transform flex justify-center items-center !p-6 relative z-10"
+            class="rounded-full !bg-white transition flex justify-center items-center !p-6 relative z-10"
           >
             <img
               src="/images/icons/slideshow_chevron_left.svg"
@@ -30,7 +30,7 @@
             v-show="
               settings.infinite || arrowOption.currentSlide < slidesCount - 3
             "
-            class="rounded-full !bg-white transition will-change-transform flex justify-center items-center !p-6 relative z-10"
+            class="rounded-full !bg-white transition flex justify-center items-center !p-6 relative z-10"
           >
             <img
               src="/images/icons/slideshow_chevron_right.svg"

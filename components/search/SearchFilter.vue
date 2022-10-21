@@ -4,7 +4,7 @@
     <input
       type="text"
       :placeholder="placeholder"
-      :class="['pl-0 flex-1 border-0 w-full bg-transparent py-0 focus:ring-0', {'font-bold': searchValue}]"
+      :class="['pl-0 flex-1 border-0 w-full bg-transparent py-0 !outline-none', {'font-bold': searchValue}]"
       :value="searchValue"
       @input="handleInput"
     >

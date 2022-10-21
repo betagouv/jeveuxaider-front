@@ -8,7 +8,6 @@
             <template #action>
               <Link
                 icon="RiArrowRightLine"
-                icon-position="right"
                 :to="`/admin/missions?filter[id]=${mission.id}`"
               >
                 Gérer
@@ -233,6 +232,7 @@
                   <template v-if="mission.dates">
                     <div v-if="!dateSelected" class="flex justify-center">
                       <client-only>
+                        <!-- todo slot day-content pour accessibility button -->
                         <v-calendar
                           ref="calendar"
                           :attributes="calendarAttrs"
@@ -295,13 +295,13 @@
 
     <div
       v-if="similarMissions.length > 0"
-      class="bg-[#282562] border-t-8 border-jva-red-500 overflow-hidden"
+      class="bg-[#ECECFE] overflow-hidden mt-12"
     >
       <div class="container mx-auto px-8 sm:px-4">
         <div class="pt-16 pb-24">
-          <div class="text-white font-bold text-4xl text-center mb-8">
+          <Heading as="div" class="text-center mb-12">
             Vous pourriez aussi aimer&nbsp;…
-          </div>
+          </Heading>
 
           <Slideshow
             class="mb-6"
@@ -319,12 +319,13 @@
           </Slideshow>
 
           <div v-if="mission.domaine" class="text-center">
-            <nuxt-link
+            <Link
               :to="`/missions-benevolat?domaines=${mission.domaine.name}`"
-              class="inline-block border-2 border-gray-500 rounded-full text-white hover:border-white !outline-none focus:ring transition font-bold text-sm px-4 py-2 mt-6"
+              class="text-jva-blue-500"
+              icon="RiArrowRightLine"
             >
               Plus de missions
-            </nuxt-link>
+            </Link>
           </div>
         </div>
       </div>
@@ -589,9 +590,19 @@ export default {
   font-size: 15px;
   width: 32px;
   height: 32px;
+  outline: none;
+  border-radius: 0;
   @screen sm {
     width: 40px;
   }
+  &:focus-visible {
+    outline-style: solid;
+    outline-color: #0a76f6;
+    outline-width: 2px;
+    outline-offset: 2px;
+    background-color: transparent;
+  }
+
 }
 
 :deep(.vc-day .vc-highlight) {
