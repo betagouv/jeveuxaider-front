@@ -343,6 +343,7 @@ import Details from '@/components/section/mission/Details.vue'
 import ButtonJeProposeMonAide from '@/components/custom/ButtonJeProposeMonAide.vue'
 import MixinMission from '@/mixins/mission'
 import Testimonials from '@/components/section/temoignage/Testimonials'
+import MixinHotjar from '@/mixins/hotjar.client.js'
 
 export default {
   components: {
@@ -353,7 +354,7 @@ export default {
     ButtonJeProposeMonAide,
     Testimonials
   },
-  mixins: [MixinMission],
+  mixins: [MixinMission, MixinHotjar],
   async asyncData ({ $axios, params, error, store }) {
     const { data: mission } = await $axios.get(`/missions/${params.id}`).catch((err) => {
       return error({ statusCode: err.response.status, message: err.response.statusText })
