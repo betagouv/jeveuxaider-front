@@ -57,7 +57,7 @@
             <strong>à distance</strong>
           </Heading>
 
-          <Button size="lg" type="tertiary-no-outline" icon="RiSearchLine" @click="handleClickCTA()">
+          <Button size="lg" type="tertiary-no-outline" icon="RiSearchLine" icon-position="left" @click="handleClickCTA()">
             Trouver une mission
           </Button>
         </div>

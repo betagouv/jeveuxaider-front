@@ -4,8 +4,8 @@
       v-for="tab,i in tabs"
       :key="i"
       :class="[
-        'flex-grow flex flex-col sm:flex-row justify-center items-center px-4 py-3 sm:px-8 sm:py-6 sm:space-x-2 group',
-        isActiveFilter(filterName, tab.filterValue) || tab.current ? 'bg-white shadow-xl cursor-default' : 'shadow-inner-xl cursor-pointer'
+        'flex-grow flex flex-col sm:flex-row justify-center items-center px-4 py-3 sm:px-8 sm:py-6 sm:space-x-2 group transition',
+        isActiveFilter(filterName, tab.filterValue) || tab.current ? 'bg-white shadow-xl cursor-default' : 'shadow-inner-xl cursor-pointer bg-[#E3E3FD] hover:bg-[#C1C1FB] active:bg-[#ADADF9]'
       ]"
       @click="handleClickTab(tab)"
     >
@@ -14,14 +14,14 @@
         v-if="tab.icon"
         :class="[
           'fill-current h-7 w-7 sm:h-5 sm:w-5 mb-2 sm:mb-0 transition-colors',
-          isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-jva-blue-500' : 'text-gray-400 lg:group-hover:text-gray-900',
+          isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-jva-blue-500' : 'text-gray-900',
         ]"
         aria-hidden="true"
       />
       <span
         :class="[
           'text-center sm:text-left transition-colors',
-          isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-gray-700 font-bold': 'text-gray-400 font-normal lg:group-hover:text-gray-900',
+          isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-gray-700 font-bold': 'font-normal text-gray-900',
         ]"
       >
         {{ tab.label || tab.filterValue }}
