@@ -44,7 +44,7 @@
       </div>
 
       <div class="mb-3">
-        <Heading as="h3" size="xs" class="line-clamp-3">
+        <Heading as="h3" size="xs" class="line-clamp-3" :title="mission.name">
           {{ mission.name }}
         </Heading>
         <div v-if="showState" class="mt-1 mb-4 flex items-center justify-start">

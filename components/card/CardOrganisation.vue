@@ -30,7 +30,7 @@
       </div>
 
       <div class="mb-3">
-        <Heading as="h3" size="xs" class="line-clamp-3">
+        <Heading as="h3" size="xs" class="line-clamp-3" :title="organisation.name">
           {{ organisation.name }}
         </Heading>
         <div v-if="showState" class="mt-1">

@@ -23,7 +23,7 @@
         </Tag>
       </div>
 
-      <Heading as="h3" size="xs" class="line-clamp-3 mb-auto">
+      <Heading as="h3" size="xs" class="line-clamp-3 mb-auto" :title="$options.filters.decodeHTMLEntities(article.title.rendered)">
         {{ article.title.rendered | decodeHTMLEntities }}
       </Heading>
 
