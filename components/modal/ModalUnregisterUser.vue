@@ -1,8 +1,8 @@
 <template>
   <portal to="body-end">
-    <template v-if="overview">
+    <template v-if="status">
       <!-- RESPONSABLE -->
-      <template v-if="overview.structure">
+      <template v-if="status.structure">
         <template v-if="canUnregisterStructure">
           <!-- CASE 4 - ON GERE UNE STRUCTURE ET ON BASCULE NOTRE PERIMETRE DACTION A UN COLLEGUE -->
           <template v-if="needToSelectNewResponsable">
@@ -16,7 +16,7 @@
             >
               <div class="text-sm text-gray-500 space-y-4">
                 <p>
-                  Vous êtes responsable de XX missions dans l'organisation  <span class="text-gray-900 font-semibold">{{ overview.structure.name }}</span>.
+                  Vous êtes responsable de XX missions dans l'organisation  <span class="text-gray-900 font-semibold">{{ status.structure.name }}</span>.
                 </p>
                 <p>
                   Merci de choisir le responsable qui va récupérer la gestion de vos missions et des participations.
@@ -48,7 +48,7 @@
             >
               <div class="text-sm text-gray-500 space-y-4">
                 <p>
-                  Vous êtes sur le point de désinscrire  <span class="text-gray-900 font-semibold">{{ overview.structure.name }}</span> de la plateforme JeVeuxAider.gouv.fr.
+                  Vous êtes sur le point de désinscrire  <span class="text-gray-900 font-semibold">{{ status.structure.name }}</span> de la plateforme JeVeuxAider.gouv.fr.
                 </p>
                 <p>
                   Vous ne serez plus en mesure de publier de nouvelles missions de bénévolat ni de communiquer avec les bénévoles souhaitant s'investir au sein de votre organisation.
@@ -84,14 +84,14 @@
           >
             <div class="text-sm text-gray-500 space-y-4">
               <p>
-                Vous êtes sur le point de désinscrire  <span class="text-gray-900 font-semibold">{{ overview.structure.name }}</span> de la plateforme JeVeuxAider.gouv.fr.
+                Vous êtes sur le point de désinscrire  <span class="text-gray-900 font-semibold">{{ status.structure.name }}</span> de la plateforme JeVeuxAider.gouv.fr.
               </p>
               <p>
-                <template v-if="overview.structure_participations_i_m_responsable_count > 1">
-                  Vous êtes, <span class="text-gray-900 font-semibold">{{ overview.structure_participations_i_m_responsable_count }} participations</span> sont reliées à votre organisation.
+                <template v-if="status.structure_participations_i_m_responsable_count > 1">
+                  Vous êtes, <span class="text-gray-900 font-semibold">{{ status.structure_participations_i_m_responsable_count }} participations</span> sont reliées à votre organisation.
                 </template>
                 <template v-else>
-                  Cependant, <span class="text-gray-900 font-semibold">{{ overview.structure_participations_i_m_responsable_count }} participation</span> est reliée à votre organisation.
+                  Cependant, <span class="text-gray-900 font-semibold">{{ status.structure_participations_i_m_responsable_count }} participation</span> est reliée à votre organisation.
                 </template>
               </p>
               <p>Un modérateur de JeVeuxAider.gouv.fr va être notifié de <span class="text-gray-900 font-semibold">votre demande de désinscription</span> et vous serez contacté très prochainement.</p>
@@ -138,7 +138,7 @@ export default {
   data () {
     return {
       loading: false,
-      overview: null,
+      status: null,
       form: {},
       formSchema: object({
         responsable_id: string().nullable().required('Un responsable est requis')
@@ -146,15 +146,15 @@ export default {
     }
   },
   async fetch () {
-    const { data: overview } = await this.$axios.get('/user/overview')
-    this.overview = overview
+    const { data: status } = await this.$axios.get('/user/status')
+    this.status = status
   },
   computed: {
     canUnregisterStructure () {
-      return !(this.overview.structure_missions_where_i_m_responsable_count > 0)
+      return !(this.status.structure_missions_where_i_m_responsable_count > 0)
     },
     needToSelectNewResponsable () {
-      return !(this.overview.structure_participations_i_m_responsable_count > 0)
+      return !(this.status.structure_participations_i_m_responsable_count > 0)
     }
   },
   methods: {

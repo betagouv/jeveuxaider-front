@@ -28,7 +28,7 @@
 export default {
   props: {
     options: { type: Array, required: true },
-    value: { type: String, default: null },
+    value: { type: [String, Number], default: null },
     variant: { type: String, default: 'radios', validator: s => ['radios', 'tabs'].includes(s) }
   },
   computed: {

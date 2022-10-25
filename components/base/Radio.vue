@@ -8,7 +8,7 @@
       aria-labelledby="label"
       @input="$emit('input', option.key)"
     >
-    <span>{{ option.label }}</span>
+    <span class="text-sm text-gray-900">{{ option.label }}</span>
   </label>
 </template>
 

@@ -10,13 +10,16 @@
         { label: organisation && organisation.name },
       ]"
     />
-    <AlertDialog
-      theme="danger"
-      title="Supprimer un membre de votre organisation"
-      :text="`<strong>${memberSelected.full_name}</strong> ne fera plus partie de l'organisation <strong>${organisation.name}</strong>.<br /><br />Cette personne ne pourra plus gérer les missions proposées sur JeVeuxAider.gouv.fr.`"
+
+    <ModalRemoveResponsableFromOrganisation
+      v-if="memberSelected"
       :is-open="showAlertMemberDeleted"
-      @confirm="handleConfirmDeleteMember"
+      :responsable="memberSelected"
+      :organisation="organisation"
+      :responsables="responsables"
       @cancel="showAlertMemberDeleted = false"
+      @close="showAlertMemberDeleted = false"
+      @submitted="$fetch()"
     />
     <Drawer :is-open="showDrawerAddResponsable" form-id="form-add-responsable" submit-label="Ajouter ce membre" @close="showDrawerAddResponsable = false">
       <template #title>
@@ -199,13 +202,13 @@
                 @updated="$fetch()"
               />
 
-              <Box v-for="responsable in organisation.members" :key="responsable.id" variant="flat" padding="xs">
+              <Box v-for="responsable in responsables" :key="responsable.id" variant="flat" padding="xs">
                 <template #header>
                   <div class="flex justify-between items-center mb-4">
                     <Heading as="h3" :level="5">
                       {{ responsable.full_name }}
                     </Heading>
-                    <div v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                    <div v-if="responsables.length > 1" class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
                       <div class="group-hover:block hidden">
                         Supprimer
                       </div>
@@ -217,6 +220,7 @@
                   <DescriptionListItem term="E-mail" :description="responsable.email" />
                   <DescriptionListItem term="Mobile" :description="responsable.mobile" />
                   <DescriptionListItem v-if="responsable.pivot.fonction" term="Rôle" :description="responsable.pivot.fonction" />
+                  <DescriptionListItem term="Nb. missions" :description="responsable.missions_count" />
                   <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
                 </DescriptionList>
               </Box>
@@ -249,6 +253,7 @@ import SelectOrganisationState from '@/components/custom/SelectOrganisationState
 import BoxReferents from '@/components/section/BoxReferents'
 import BoxReseau from '@/components/section/organisation/BoxReseau'
 import BoxNotes from '@/components/custom/BoxNotes'
+import ModalRemoveResponsableFromOrganisation from '@/components/modal/ModalRemoveResponsableFromOrganisation.vue'
 
 export default {
   components: {
@@ -263,7 +268,8 @@ export default {
     SelectOrganisationState,
     BoxReferents,
     BoxReseau,
-    BoxNotes
+    BoxNotes,
+    ModalRemoveResponsableFromOrganisation
   },
   mixins: [MixinOrganisation],
   middleware: 'authenticated',
@@ -301,8 +307,9 @@ export default {
       showDrawerInvitation: false,
       showDrawerAddResponsable: false,
       queryInvitations: null,
-      memberSelected: {},
-      showAlertMemberDeleted: false
+      memberSelected: null,
+      showAlertMemberDeleted: false,
+      responsables: []
     }
   },
   async fetch () {
@@ -316,11 +323,16 @@ export default {
       }
     })
     this.queryInvitations = queryInvitations
+
+    const { data: responsables } = await this.$axios.get(`/structures/${this.organisation.id}/responsables`)
+    this.responsables = responsables
   },
   methods: {
     async refetch () {
       const { data: organisation } = await this.$axios.get(`/structures/${this.organisation.id}`)
       this.organisation = organisation
+      const { data: responsables } = await this.$axios.get(`/structures/${this.organisation.id}/responsables`)
+      this.responsables = responsables
     },
     async handleChangeState (event) {
       await this.$axios.put(`/structures/${this.organisation.id}`, {
@@ -337,12 +349,6 @@ export default {
     handleDeleteMember (member) {
       this.memberSelected = member
       this.showAlertMemberDeleted = true
-    },
-    async handleConfirmDeleteMember () {
-      await this.$axios.delete(`/structures/${this.organisation.id}/members/${this.memberSelected.id}`)
-      this.refetch()
-      this.memberSelected = {}
-      this.showAlertMemberDeleted = false
     },
     handleSubmitAddResponsable () {
       this.showDrawerAddResponsable = false

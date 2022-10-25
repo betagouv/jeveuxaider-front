@@ -1,6 +1,6 @@
 <template>
   <portal to="body-end">
-    <template v-if="overview">
+    <template v-if="status">
       <template v-if="canUnsubscribe">
         <Modal
           v-scroll-lock="isOpen"
@@ -49,11 +49,11 @@
               Vous êtes sur le point de désinscrire  <span class="text-gray-900 font-semibold">{{ structure.name }}</span> de la plateforme JeVeuxAider.gouv.fr.
             </p>
             <p>
-              <template v-if="overview.participations_count > 1">
-                Cependant, <span class="text-gray-900 font-semibold">{{ overview.participations_count }} participations</span> sont reliées à votre organisation.
+              <template v-if="status.participations_count > 1">
+                Cependant, <span class="text-gray-900 font-semibold">{{ status.participations_count }} participations</span> sont reliées à votre organisation.
               </template>
               <template v-else>
-                Cependant, <span class="text-gray-900 font-semibold">{{ overview.participations_count }} participation</span> est reliée à votre organisation.
+                Cependant, <span class="text-gray-900 font-semibold">{{ status.participations_count }} participation</span> est reliée à votre organisation.
               </template>
             </p>
             <p>Un modérateur de JeVeuxAider.gouv.fr va être notifié de <span class="text-gray-900 font-semibold">votre demande de désinscription</span> et vous serez contacté très prochainement.</p>
@@ -93,22 +93,22 @@ export default {
     return {
       loading: false,
       form: {},
-      overview: null,
+      status: null,
       formSchema: object({
         reason: string().nullable().required('La raison est requise')
       })
     }
   },
   async fetch () {
-    const { data: overview } = await this.$axios.get(`/structures/${this.structure.id}/overview`)
-    this.overview = overview
+    const { data: status } = await this.$axios.get(`/structures/${this.structure.id}/status`)
+    this.status = status
   },
   computed: {
     canUnsubscribe () {
       if (['admin'].includes(this.$store.getters.contextRole)) {
         return true
       }
-      return !(this.overview.participations_count > 0)
+      return !(this.status.participations_count > 0)
     }
   },
   methods: {
