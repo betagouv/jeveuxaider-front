@@ -63,6 +63,7 @@
             attribute-right-label="typeLabel"
             class-options="!mt-4 lg:w-96 lg:-left-16 text-gray-800 font-medium"
             style-input="width: calc(100% - 38px)"
+            :min-value-length="3"
             @selected="$emit('selected', $event)"
             @fetch-suggestions="onFetchGeoSuggestions"
             @mounted="onInitializedAutocomplete"

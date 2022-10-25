@@ -68,6 +68,7 @@
                 attribute-label="label"
                 attribute-right-label="typeLabel"
                 :authorize-add="true"
+                :min-value-length="3"
                 @selected="handleSelectedGeo"
                 @add="handleAdd"
                 @keyup.enter="onEnter"
