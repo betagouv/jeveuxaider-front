@@ -79,8 +79,10 @@
                 Cependant, vous êtes responsable de l'organisation <span class="text-gray-700 font-semibold">{{ status.structure.name }}</span> et des missions ({{ status.structure_missions_where_i_m_responsable_count }}) sont reliées à votre compte.
               </p>
             </div>
-
-            <form>
+            <form
+              id="form"
+              @submit.prevent="handleSetNewResponsableAndUnsubscribeUser"
+            >
               <FormControl
                 label="Merci de sélectionner le nouveau responsable"
                 class=""
@@ -101,7 +103,7 @@
             <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
               Retour
             </Button>
-            <Button :loading="loading" variant="red" @click.native="handleSetNewResponsableAndUnsubscribeUser">
+            <Button :loading="loading" variant="red" type="submit" @click.native="handleSetNewResponsableAndUnsubscribeUser">
               Supprimer mon compte
             </Button>
           </template>
@@ -146,8 +148,12 @@
 </template>
 
 <script>
-import { number, object } from 'yup'
+import { object, number } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+
+const formSchema = object({
+  responsable_id: number().nullable().required('Ce champ est requis')
+})
 
 export default {
   mixins: [FormErrors],
@@ -161,10 +167,7 @@ export default {
     return {
       loading: false,
       status: null,
-      form: {},
-      formSchema: object({
-        responsable_id: number().nullable().required('Ce champ est requis')
-      })
+      form: {}
     }
   },
   async fetch () {
@@ -183,7 +186,6 @@ export default {
         return 'select-new-responsable-and-unsubscribe-user'
       }
       if (this.status.structure_responsables.length === 1 && this.status.structure_participations_count > 0) {
-        console.log('contact-admin')
         return 'contact-admin'
       }
       return 'unsubscibe-organisation-and-user'
@@ -241,16 +243,16 @@ export default {
         return
       }
       this.loading = true
-      await this.formSchema
-        .validate(this.form, { abortEarly: false })
+      await formSchema.validate(this.form, { abortEarly: false })
         .then(async () => {
+          console.log('ok validate')
           await this.$axios.delete(`/structures/${this.status.structure.id}/members/${this.$store.profile.id}`, {
             params: {
               new_responsable_id: this.form.responsable_id
             }
           })
           this.loading = false
-          // await this.handleUnsubscribeUser()
+          await this.handleUnsubscribeUser()
         })
         .catch((errors) => {
           this.setErrors(errors)
@@ -264,7 +266,6 @@ export default {
         return
       }
       this.loading = true
-      console.log('handleUnsubscribeStructureAndUser')
       await this.$axios.post(`/structures/${this.status.structure.id}/unregister`)
         .then(async () => {
           this.loading = false

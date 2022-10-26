@@ -54,10 +54,7 @@ export default {
     }
   },
   methods: {
-    async handleConfirmDeleteUser () {
-      await this.$axios.post('/user/anonymize').catch(() => {})
-      this.$store.dispatch('auth/logout')
-    }
+
   }
 }
 </script>
