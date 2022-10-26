@@ -1,6 +1,6 @@
 <template>
   <portal to="body-end">
-    <template v-if="status">
+    <template v-if="isReady">
       <template v-if="modalToShow === 'unsubscibe-user'">
         <AlertDialog
           theme="danger"
@@ -27,7 +27,7 @@
               Vous êtes sur le point de vous désinscrire de la plateforme JeVeuxAider.gouv.fr.
             </p>
             <p>
-              Vous serez retiré de l'organisation <span class="text-gray-700 font-semibold">{{ status.structure.name }}</span>.
+              Vous serez retiré de l'organisation <span class="text-gray-700 font-semibold">{{ userStatus.structure.name }}</span>.
             </p>
             <p>Attention, cette action est irréversible et toutes vos données de la plateforme JeVeuxAider.gouv.fr seront anonymisées.</p>
           </div>
@@ -47,7 +47,7 @@
               Vous êtes sur le point de vous désinscrire de la plateforme JeVeuxAider.gouv.fr.
             </p>
             <p>
-              Cependant, vous êtes responsable de l'organisation <span class="text-gray-700 font-semibold">{{ status.structure.name }}</span> et des participations {{ status.structure_participations_i_m_responsable_count }} sont reliées à votre organisation.
+              Cependant, vous êtes responsable de l'organisation <span class="text-gray-700 font-semibold">{{ userStatus.structure.name }}</span> et des participations {{ userStatus.structure_participations_i_m_responsable_count }} sont reliées à votre organisation.
             </p>
             <p>Un modérateur de JeVeuxAider.gouv.fr va être notifié de <span class="text-gray-700 font-semibold">votre demande de désinscription</span> et vous serez contacté très prochainement.</p>
           </div>
@@ -76,7 +76,7 @@
                 Vous êtes sur le point de vous désinscrire de la plateforme JeVeuxAider.gouv.fr.
               </p>
               <p>
-                Cependant, vous êtes responsable de l'organisation <span class="text-gray-700 font-semibold">{{ status.structure.name }}</span> et des missions ({{ status.structure_missions_where_i_m_responsable_count }}) sont reliées à votre compte.
+                Cependant, vous êtes responsable de l'organisation <span class="text-gray-700 font-semibold">{{ userStatus.structure.name }}</span> et des missions ({{ userStatus.structure_missions_where_i_m_responsable_count }}) sont reliées à votre compte.
               </p>
             </div>
             <form
@@ -93,7 +93,7 @@
                 <RadioGroup
                   v-model="form.responsable_id"
                   name="responsable_id"
-                  :options="status.structure_responsables.filter((member) => member.id != $store.getters.profile.id).map((member) => {return {key: member.id, label: member.full_name}})"
+                  :options="userStatus.structure_responsables.filter((member) => member.id != $store.getters.profile.id).map((member) => {return {key: member.id, label: member.full_name}})"
                 />
               </FormControl>
             </form>
@@ -120,7 +120,7 @@
         >
           <div class="text-sm text-gray-500 space-y-4">
             <p>
-              Vous êtes sur le point de désinscrire  <span class="text-gray-700 font-semibold">{{ status.structure.name }}</span> de la plateforme JeVeuxAider.gouv.fr.
+              Vous êtes sur le point de désinscrire  <span class="text-gray-700 font-semibold">{{ userStatus.structure.name }}</span> de la plateforme JeVeuxAider.gouv.fr.
             </p>
             <p>
               Vous ne serez plus en mesure de publier de nouvelles missions de bénévolat ni de communiquer avec les bénévoles souhaitant s'investir au sein de votre organisation.
@@ -151,10 +151,6 @@
 import { object, number } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 
-const formSchema = object({
-  responsable_id: number().nullable().required('Ce champ est requis')
-})
-
 export default {
   mixins: [FormErrors],
   props: {
@@ -166,26 +162,32 @@ export default {
   data () {
     return {
       loading: false,
-      status: null,
-      form: {}
+      isReady: false,
+      userStatus: null,
+      form: {},
+      formSchema: object({
+        responsable_id: number().nullable().required('Ce champ est requis')
+      })
     }
   },
+  fetchOnServer: false,
   async fetch () {
-    const { data: status } = await this.$axios.get('/user/status')
-    this.status = status
+    const { data: userStatus } = await this.$axios.get('/user/status')
+    this.userStatus = userStatus
+    this.isReady = true
   },
   computed: {
     modalToShow () {
-      if (!this.status.structure) {
+      if (!this.userStatus.structure) {
         return 'unsubscibe-user'
       }
-      if (this.status.structure_missions_where_i_m_responsable_count === 0 && this.status.structure_responsables.length > 1) {
+      if (this.userStatus.structure_missions_where_i_m_responsable_count === 0 && this.userStatus.structure_responsables.length > 1) {
         return 'leave-structure-and-unsubscibe-user'
       }
-      if (this.status.structure_missions_where_i_m_responsable_count > 0 && this.status.structure_responsables.length > 1) {
+      if (this.userStatus.structure_missions_where_i_m_responsable_count > 0 && this.userStatus.structure_responsables.length > 1) {
         return 'select-new-responsable-and-unsubscribe-user'
       }
-      if (this.status.structure_responsables.length === 1 && this.status.structure_participations_count > 0) {
+      if (this.userStatus.structure_responsables.length === 1 && this.userStatus.structure_participations_count > 0) {
         return 'contact-admin'
       }
       return 'unsubscibe-organisation-and-user'
@@ -213,7 +215,7 @@ export default {
         return
       }
       this.loading = true
-      await this.$axios.post(`/structures/${this.status.structure.id}/ask-to-unregister`)
+      await this.$axios.post(`/structures/${this.userStatus.structure.id}/ask-to-unregister`)
         .then(() => {
           this.$emit('close')
           this.$toast.success('Une demande de désinscription a été soumise aux modérateurs')
@@ -228,7 +230,7 @@ export default {
         return
       }
       this.loading = true
-      await this.$axios.delete(`/structures/${this.status.structure.id}/members/${this.$store.profile.id}`)
+      await this.$axios.delete(`/structures/${this.userStatus.structure.id}/members/${this.$store.profile.id}`)
         .then(async () => {
           this.loading = false
           await this.handleUnsubscribeUser()
@@ -238,16 +240,15 @@ export default {
           this.loading = false
         })
     },
-    async handleSetNewResponsableAndUnsubscribeUser () {
+    handleSetNewResponsableAndUnsubscribeUser () {
       if (this.loading) {
         return
       }
       this.loading = true
-      await formSchema.validate(this.form, { abortEarly: false })
+      this.formSchema.validate(this.form, { abortEarly: false })
         .then(async () => {
-          console.log('ok validate')
-          await this.$axios.delete(`/structures/${this.status.structure.id}/members/${this.$store.profile.id}`, {
-            params: {
+          await this.$axios.delete(`/structures/${this.userStatus.structure.id}/members/${this.$store.getters.profile.id}`, {
+            data: {
               new_responsable_id: this.form.responsable_id
             }
           })
@@ -266,7 +267,7 @@ export default {
         return
       }
       this.loading = true
-      await this.$axios.post(`/structures/${this.status.structure.id}/unregister`)
+      await this.$axios.post(`/structures/${this.userStatus.structure.id}/unregister`)
         .then(async () => {
           this.loading = false
           await this.handleUnsubscribeUser()

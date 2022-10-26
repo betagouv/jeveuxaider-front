@@ -99,6 +99,7 @@ export default {
       })
     }
   },
+  fetchOnServer: false,
   async fetch () {
     const { data: status } = await this.$axios.get(`/structures/${this.structure.id}/status`)
     this.status = status

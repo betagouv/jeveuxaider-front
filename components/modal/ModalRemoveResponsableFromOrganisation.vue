@@ -115,7 +115,7 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           await this.$axios.delete(`/structures/${this.organisation.id}/members/${this.responsable.id}`, {
-            params: {
+            data: {
               new_responsable_id: this.form.responsable_id
             }
           })
