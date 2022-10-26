@@ -376,26 +376,6 @@
               />
             </FormControl>
 
-            <FormControl label="Référent départemental" html-for="referent_department">
-              <Combobox
-                v-model="form.referent_department"
-                name="referent_department"
-                placeholder="Sélectionnez un département"
-                :options="$labels.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
-                clearable
-              />
-            </FormControl>
-
-            <FormControl label="Référent régional" html-for="referent_region">
-              <Combobox
-                v-model="form.referent_region"
-                name="referent_region"
-                placeholder="Sélectionnez une région"
-                :options="$labels.regions"
-                clearable
-              />
-            </FormControl>
-
             <Toggle
               v-model="form.can_export_profiles"
               :description="form.can_export_profiles ? 'Oui' : 'Non'"
