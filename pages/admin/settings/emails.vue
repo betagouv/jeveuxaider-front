@@ -100,7 +100,8 @@ export default {
             { key: 'responsable_missin_in_draft', label: 'Votre mission XXX est restée au statut « Brouillon »', description: 'Notification envoyée au responsable si une mission est restée au statut brouillon 7 jours' },
             { key: 'responsable_no_new_mission', label: 'Publiez une nouvelle mission sur JeVeuxAider.gouv.fr', description: "Notification envoyée au responsable si aucune mission n'est postée en 3 mois" },
             { key: 'responsable_waiting_actions', label: 'Des bénévoles attendent votre réponse !', description: 'Rappel envoyé au responsable si des participations sont toujours en attente de validation', tags: ['app-organisation-rappel-participations-en-attente-de-validation'] },
-            { key: 'new_message', label: 'Nouveau message de la part de XXX', description: "Lorsque le responsable reçoit un nouveau message dans l'une de ses conversations", tags: ['app-organisation-nouveau-message'] }
+            { key: 'new_message', label: 'Nouveau message de la part de XXX', description: "Lorsque le responsable reçoit un nouveau message dans l'une de ses conversations", tags: ['app-organisation-nouveau-message'] },
+            { key: 'structure_switch_responsable', label: 'XXX vous a confié la gestion de nouvelles missions', description: "Lorsque'un responsable quitte l'organisation ou se désinscrit" }
           ]
         },
         {

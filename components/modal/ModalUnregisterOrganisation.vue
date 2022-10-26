@@ -63,7 +63,7 @@
             <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
               Retour
             </Button>
-            <Button variant="red" @click.native="handleSubmitAskUnregister">
+            <Button variant="red" @click.native="handleSubmitAskToUnregister">
               Je soumets ma demande
             </Button>
           </template>
@@ -117,25 +117,36 @@ export default {
         return
       }
       this.loading = true
-      console.log('handleSubmitUnregister')
-      await this.$axios.post(`/structures/${this.structure.id}/unregister`).catch(() => {})
-      if (!['admin'].includes(this.$store.getters.contextRole)) {
-        await this.$store.dispatch('auth/fetchUser')
-        this.$router.push('/')
-      }
-      this.loading = false
+      await this.$axios.post(`/structures/${this.structure.id}/unregister`)
+        .then(async () => {
+          if (!['admin'].includes(this.$store.getters.contextRole)) {
+            await this.$store.dispatch('auth/fetchUser')
+            this.$router.push('/')
+          } else {
+            this.$toast.success("L'organisation a été désinscrite !")
+            this.$router.push(`/admin/organisations/${this.structure.id}`)
+          }
+          this.$emit('close')
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.loading = false
+        })
     },
-    async handleSubmitAskUnregister () {
+    async handleSubmitAskToUnregister () {
       if (this.loading) {
         return
       }
       this.loading = true
-      console.log('handleSubmitAskUnregister')
-      await this.$axios.post(`/structures/${this.structure.id}/ask-unregister`).catch(() => {})
-      this.loading = false
-
-      this.$emit('close')
-      this.$toast.warning('Une demande de désinscription a été soumise aux modérateurs')
+      await this.$axios.post(`/structures/${this.structure.id}/ask-to-unregister`)
+        .then(() => {
+          this.$emit('close')
+          this.$toast.success('Une demande de désinscription a été soumise aux modérateurs')
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.loading = false
+        })
     }
   }
 }
