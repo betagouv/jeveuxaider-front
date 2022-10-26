@@ -124,7 +124,8 @@ export default {
     showKeyInOptions: { type: Boolean, default: false },
     theme: { type: String, default: 'default' },
     authorizeAdd: { type: Boolean, default: false },
-    resetValueOnSelect: { type: Boolean, default: false }
+    resetValueOnSelect: { type: Boolean, default: false },
+    minValueLength: { type: Number, default: null }
   },
   data () {
     return {
@@ -147,12 +148,16 @@ export default {
     },
     handleInput (evt) {
       this.searchTerm = evt.target.value
-      this.showOptions = true
       if (this.timeout) {
         this.timeout.cancel()
       }
       this.timeout = debounce(() => {
+        if (this.minValueLength && this.searchTerm.length < this.minValueLength) {
+          this.showOptions = false
+          return
+        }
         this.$emit('fetch-suggestions', this.searchTerm)
+        this.showOptions = true
       }, 275)
       this.timeout()
     },

@@ -95,6 +95,7 @@
             attribute-key="id"
             attribute-label="label"
             attribute-right-label="typeLabel"
+            :min-value-length="3"
             @selected="handleSelectedGeo"
             @fetch-suggestions="onFetchGeoSuggestions"
           />

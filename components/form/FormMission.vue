@@ -275,6 +275,7 @@
                 attribute-label="label"
                 attribute-right-label="typeLabel"
                 :reset-value-on-select="true"
+                :min-value-length="3"
                 @selected="handleSelectedAutonomyZip"
                 @keyup.enter="onEnter"
                 @fetch-suggestions="onFetchGeoSuggestions"
@@ -321,6 +322,7 @@
               attribute-key="id"
               attribute-label="label"
               attribute-right-label="typeLabel"
+              :min-value-length="3"
               @selected="handleSelectedGeo"
               @fetch-suggestions="onFetchGeoSuggestions"
             />
