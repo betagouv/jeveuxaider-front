@@ -230,7 +230,7 @@ export default {
         return
       }
       this.loading = true
-      await this.$axios.delete(`/structures/${this.userStatus.structure.id}/members/${this.$store.profile.id}`)
+      await this.$axios.delete(`/structures/${this.userStatus.structure.id}/members/${this.$store.getters.profile.id}`)
         .then(async () => {
           this.loading = false
           await this.handleUnsubscribeUser()
