@@ -21,7 +21,7 @@
               Votre organisation sera désinscrite de la plateforme et toutes les missions en cours seront annulées ainsi que toutes participations des bénévoles.
             </p>
             <p>
-              Si vous souhaitez ajouter un co-gestionnaire du compte de votre organisation avant de vous désinscrire, <a class="text-gray-900 font-semibold underline" href="https://reserve-civique.crisp.help/fr/article/comment-inviter-un-nouveau-gestionnaire-de-compte-responsable-1wm288q/" target="_blank"> c'est ici</a>.
+              Tous les membres de l'organisation seront supprimés.
             </p>
           </div>
 

@@ -5,7 +5,7 @@
         <AlertDialog
           theme="danger"
           title="Supprimer mon compte"
-          button-label="Supprimer mon comtpe"
+          button-label="Supprimer mon compte"
           text="Attention, cette action est irréversible et toutes vos données de la plateforme JeVeuxAider.gouv.fr seront anonymisées."
           :is-open="isOpen"
           @confirm="handleUnsubscribeUser()"
@@ -16,7 +16,7 @@
         <AlertDialog
           theme="danger"
           title="Supprimer mon compte"
-          button-label="Supprimer mon comtpe"
+          button-label="Supprimer mon compte"
           text=""
           :is-open="isOpen"
           @confirm="handleLeaveStructureAndUnsubscribeUser()"
