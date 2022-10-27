@@ -18,9 +18,17 @@
             {{ recipientNames }}
           </div>
 
-          <div v-if="$store.getters.contextRole != 'responsable'" class="text-cool-gray-500 text-sm truncate">
-            • {{ nametype }}
+          <div v-if="adminInRecipients" class="text-jva-red-500 font-bold text-sm truncate">
+            🧑‍💻<span class="ml-2">Modérateur</span>
           </div>
+          <div v-else-if="referentInRecipients" class="text-jva-red-500 font-bold text-sm truncate">
+            🧑‍💻<span class="ml-2">Référent {{ referentInRecipients.roles.filter(role => role.key == 'referent')[0].label | label('departments') }}</span>
+          </div>
+
+          <div v-else-if="$store.getters.contextRole != 'responsable'" class="text-cool-gray-500 text-sm truncate">
+            •<span class="ml-2">{{ nametype }}</span>
+          </div>
+
           <span
             v-if="!hasRead"
             class="flex-none w-2.5 h-2.5 mr-4 bg-jva-red-500 rounded-full"
