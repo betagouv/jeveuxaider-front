@@ -32,7 +32,6 @@
       </div>
 
       <div
-
         class="order-3 space-x-2 justify-center flex items-center m-2"
       >
         <SelectParticipationState

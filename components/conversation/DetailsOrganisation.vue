@@ -56,7 +56,6 @@
     <div class="border-t -mx-6 my-6" />
     <BoxInformations class="mb-8" :organisation="organisation" />
   </div>
-  </div>
 </template>
 
 <script>

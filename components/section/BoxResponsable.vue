@@ -30,16 +30,67 @@
         <DescriptionListItem term="Mobile" :description="responsable.mobile" />
         <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
       </DescriptionList>
+      <div v-if="conversableId" class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
+      <div v-if="conversableId" class="flex justify-center text-sm">
+        <Link @click.native="handleClickSendMessage">
+          <ChatAltIcon class="h-4 w-4 mr-2" /> Envoyer un message
+        </Link>
+        <ModalSendMessage
+          :is-open="showModalSendMessage"
+          :to-user="responsable"
+          :conversable-id="conversableId"
+          :conversable-type="conversableType"
+          @cancel="showModalSendMessage = false"
+        />
+      </div>
     </Box>
   </div>
 </template>
 
 <script>
+import ModalSendMessage from '@/components/modal/ModalSendMessage.vue'
+
 export default {
+  components: {
+    ModalSendMessage
+  },
   props: {
     responsable: {
       type: Object,
       required: true
+    },
+    conversableId: {
+      type: Number,
+      default: null
+    },
+    conversableType: {
+      type: String,
+      default: null
+    }
+  },
+  data () {
+    return {
+      showModalSendMessage: false,
+      conversationCurrentUserAndResponsable: null
+    }
+  },
+  async fetch () {
+    const { data } = await this.$axios.get('/conversations', {
+      params: {
+        'filter[conversable_id]': this.conversableId,
+        'filter[conversable_type]': this.conversableType,
+        'filter[with_users]': `${this.responsable.user_id},${this.$store.getters.profile.user_id}`
+      }
+    })
+    this.conversationCurrentUserAndResponsable = data.total > 0 && data.data[0]
+  },
+  methods: {
+    handleClickSendMessage () {
+      if (this.conversationCurrentUserAndResponsable) {
+        this.$router.push(`/messages/${this.conversationCurrentUserAndResponsable.id}`)
+      } else {
+        this.showModalSendMessage = true
+      }
     }
   }
 }
