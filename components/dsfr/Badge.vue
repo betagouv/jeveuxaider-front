@@ -3,8 +3,8 @@
     :class="[
       'inline-flex items-center justify-center max-w-full truncate uppercase rounded font-bold',
 
-      {'px-2 text-[11px]': size == 'xs'},
-      {'px-2 text-xs': size == 'sm'},
+      {'px-[6px] text-[11px]': size == 'xs'},
+      {'px-[6px] text-xs': size == 'sm'},
       {'px-2 text-sm': size == 'md'},
 
       {'text-[#18753C] bg-[#B8FEC9]': type === 'success'},
