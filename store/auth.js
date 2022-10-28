@@ -36,6 +36,7 @@ export const actions = {
         scope: '*'
       })
       .then(async (response) => {
+        // secure true does not work on http://localhost and safari
         await this.$cookies.set('access-token', response?.data?.access_token, {
           maxAge: response?.data?.expires_in,
           path: '/',
