@@ -13,19 +13,26 @@
         @error="onImgError"
       >
 
-      <div class="custom-gradient absolute inset-0" />
+      <template v-if="showState">
+        <div class="custom-gradient absolute inset-0" />
+        <DsfrBadge
+          size="sm"
+          :type="badgeTypeMissionSate"
+          class="absolute top-3 left-3 shadow-lg"
+        >
+          {{ mission.state }}
+        </DsfrBadge>
 
-      <DsfrBadge
-        v-if="formattedDate"
-        class="absolute top-3 left-3"
-      >
-        {{ formattedDate }}
-      </DsfrBadge>
+        <div class="custom-gradient-2 absolute inset-0" />
+        <div v-if="['admin'].includes($store.getters.contextRole)" class="text-white absolute bottom-1 right-2 text-xs text-shadow">
+          Id: {{ mission.id }}
+        </div>
+      </template>
     </div>
 
     <div class="m-8 flex-1 flex flex-col items-start">
       <div class="mb-4 flex flex-wrap gap-2">
-        <Tag>
+        <Tag :custom-theme="true" :class="`${domaineBackgroundColor(domainId)} text-white`">
           {{ $options.filters.label(domainId, 'domaines') }}
         </Tag>
         <Tag v-if="(mission.template && mission.template.domaine_secondary_id) || mission.domaine_secondary_id">
@@ -43,22 +50,9 @@
         <span class="truncate">{{ mission.structure.name }}</span>
       </div>
 
-      <div class="mb-3">
-        <Heading as="h3" size="xs" class="line-clamp-3" :title="mission.name">
-          {{ mission.name }}
-        </Heading>
-        <div v-if="showState" class="mt-1 mb-4 flex items-center justify-start">
-          <DsfrBadge
-            size="xs"
-            :type="badgeTypeMissionSate"
-          >
-            {{ mission.state }}
-          </DsfrBadge>
-          <div v-if="['admin'].includes($store.getters.contextRole)" class="text-[#666666] text-xs flex-shrink-0 ml-2">
-            ID <span class="font-semibold">{{ mission.id }}</span>
-          </div>
-        </div>
-      </div>
+      <Heading as="h3" size="xs" class="line-clamp-3 mb-3" :title="mission.name">
+        {{ mission.name }}
+      </Heading>
 
       <div class="truncate text-[#3A3A3A] text-sm max-w-full">
         <template v-if="mission.is_autonomy">
@@ -101,8 +95,19 @@
       </div>
 
       <div class="flex items-end justify-between space-x-1 text-xs text-[#666666] pt-8 mt-auto w-full">
-        <span>{{ placesLeftText }}</span>
-        <RiArrowRightLine class="flex-none ml-auto w-8 h-8 text-jva-blue-500 fill-current" />
+        <div>
+          <span>{{ placesLeftText }}</span>
+          <template v-if="formattedDate">
+            <br> {{ formattedDate }}
+          </template>
+        </div>
+
+        <RiArrowRightLine
+          :class="[
+            'flex-none ml-auto w-6 h-6 fill-current text-jva-blue-500',
+
+          ]"
+        />
       </div>
     </div>
   </div>
@@ -110,6 +115,7 @@
 
 <script>
 import MixinMission from '@/mixins/mission'
+import MixinDomaines from '@/mixins/domaines'
 import DsfrBadge from '@/components/dsfr/Badge.vue'
 import Tag from '@/components/dsfr/Tag.vue'
 import Heading from '@/components/dsfr/Heading.vue'
@@ -130,7 +136,7 @@ export default {
     iconNew,
     iconInfo
   },
-  mixins: [MixinMission],
+  mixins: [MixinMission, MixinDomaines],
   props: {
     mission: {
       type: Object,
@@ -206,11 +212,11 @@ export default {
               : null
 
         if (endDateObject && this.$dayjs(startDateObject).isSame(this.$dayjs(endDateObject))) {
-          return `Le ${this.$dayjs(startDateObject).format(format)}`
+          return `le ${this.$dayjs(startDateObject).format(format)}`
         }
       }
 
-      return `À partir du ${startDateObject.format(format)}`
+      return `à partir du ${startDateObject.format(format)}`
     },
     iconOrganizationState () {
       switch (this.mission.structure.state) {
@@ -284,10 +290,23 @@ export default {
 
 .custom-gradient {
   background: linear-gradient(
-    183.3deg,
-    rgba(0, 0, 0, 0) 66.74%,
-    rgba(0, 0, 0, 0.7) 102.8%
+    0deg,
+    rgba(0, 0, 0, 0) 70%,
+    rgba(0, 0, 0, 0.7) 150%
   );
+}
+
+.custom-gradient-2 {
+  background: linear-gradient(
+    165deg,
+    rgba(0, 0, 0, 0) 77%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+.text-shadow {
+  text-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25),
+    0px 4px 30px rgba(0, 0, 0, 0.85);
 }
 
 /* .fake-purge {

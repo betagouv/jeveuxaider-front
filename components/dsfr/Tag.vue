@@ -7,8 +7,8 @@
       {'px-2 py-0.5 text-xs h-6': size == 'sm'},
       {'px-3 py-1 text-sm h-8': size == 'md'},
 
-      {'text-[#161616] bg-[#EEEEEE]': $store.state.settings.theme === 'light' && !context},
-      {'text-white bg-[#242424]': $store.state.settings.theme === 'dark' && !context},
+      {'text-[#161616] bg-[#EEEEEE]': !customTheme && !context},
+      // {'text-white bg-[#242424]': theme === 'dark' && !context},
 
       {'cursor-pointer': ['clickable', 'selectable', 'deletable'].includes(context)},
 
@@ -97,6 +97,10 @@ export default {
       default: 'border-white bg-white'
     },
     isActive: {
+      type: Boolean,
+      default: false
+    },
+    customTheme: {
       type: Boolean,
       default: false
     }
