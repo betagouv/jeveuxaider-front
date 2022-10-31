@@ -221,7 +221,7 @@
                       Non spécifié
                     </template>
                   </div>
-                  <div v-if="mission.recurrent_description" class="text-cool-gray-500 mt-1">
+                  <div v-if="mission.recurrent_description" class="text-cool-gray-500 text-sm">
                     {{ mission.recurrent_description }}
                   </div>
                 </div>
