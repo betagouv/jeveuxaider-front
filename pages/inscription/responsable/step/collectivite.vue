@@ -84,6 +84,7 @@
               attribute-label="label"
               attribute-right-label="typeLabel"
               clear-after-selected
+              :min-value-length="3"
               @selected="handleSelectedGeo"
               @fetch-suggestions="onFetchGeoSuggestions"
             />

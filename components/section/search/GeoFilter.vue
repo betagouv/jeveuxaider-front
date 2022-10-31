@@ -19,6 +19,7 @@
       attribute-label="label"
       attribute-right-label="typeLabel"
       class-options="lg:w-96"
+      :min-value-length="3"
       @selected="handleSelectedAdress"
       @fetch-suggestions="onFetchGeoSuggestions"
       @mounted="onInitializedAutocomplete"

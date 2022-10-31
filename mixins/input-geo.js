@@ -6,7 +6,7 @@ export default {
   },
   methods: {
     async onFetchGeoSuggestions (value) {
-      if (!value) { return [] }
+      if (!value || value.length < 3) { return [] }
       const { data } = await this.$axios.get('https://api-adresse.data.gouv.fr/search', {
         params: {
           q: value,

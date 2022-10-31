@@ -11,7 +11,7 @@
           <TableHeadCell>Structures validées</TableHeadCell>
           <TableHeadCell>Missions postées</TableHeadCell>
           <TableHeadCell>Mises en relation</TableHeadCell>
-          <TableHeadCell>Participations effectives</TableHeadCell>
+          <TableHeadCell>Participations validées</TableHeadCell>
           <TableHeadCell v-if="['admin'].includes($store.getters.contextRole)">
             Taux de conversion
           </TableHeadCell>

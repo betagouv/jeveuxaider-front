@@ -346,6 +346,7 @@ import Link from '@/components/dsfr/Link.vue'
 import Heading from '@/components/dsfr/Heading.vue'
 import DsfrButton from '@/components/dsfr/Button.vue'
 import TagsGroup from '@/components/dsfr/TagsGroup.vue'
+import MixinHotjar from '@/mixins/hotjar.client.js'
 
 export default {
   components: {
@@ -361,7 +362,7 @@ export default {
     DsfrButton,
     TagsGroup
   },
-  mixins: [MixinMission],
+  mixins: [MixinMission, MixinHotjar],
   async asyncData ({ $axios, params, error, store }) {
     const { data: mission } = await $axios.get(`/missions/${params.id}`).catch((err) => {
       return error({ statusCode: err.response.status, message: err.response.statusText })

@@ -174,18 +174,17 @@ export default {
     },
     handleInput (payload) {
       this.searchValue = payload
-      if (this.searchValue?.length < 3) {
-        this.fetchSuggestions = []
-        return
-      }
-
       if (this.timeout) {
         this.timeout.cancel()
       }
       this.timeout = debounce(() => {
-        if (this.searchValue.length >= 3) {
-          this.fetchGeoSuggestions()
+        if (this.searchValue?.length < 3) {
+          if (!this.searchValue) {
+            this.fetchSuggestions = []
+          }
+          return
         }
+        this.fetchGeoSuggestions()
       }, 275)
       this.timeout()
     },
