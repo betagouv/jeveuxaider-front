@@ -3,8 +3,12 @@
     <VueSlickCarousel
       ref="vueSlickCarousel"
       v-bind="settings"
+      :class="[{ 'is-swipping': isSwiping }]"
       @beforeChange="onBeforeChange"
       @afterChange="onAfterChange"
+      @swipe="isSwiping = true"
+      @mouseup.native="isSwiping = false"
+      @touchend.native="isSwiping = false"
     >
       <slot />
 
@@ -104,6 +108,11 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      isSwiping: false
+    }
+  },
   mounted () {
     if (this.slidesAreLinks) {
       this.handleSlidesAccessibility()
@@ -164,56 +173,61 @@ export default {
 
 <style lang="postcss" scoped>
 .slick-slider {
-    :deep(.slick-slide) {
-      height: auto !important;
-    }
+  :deep(.slick-slide) {
+    height: auto !important;
+  }
 
-    :deep(.slick-list) {
-      overflow: visible;
-    }
+  :deep(.slick-list) {
+    overflow: visible;
+  }
 
-    :deep(.slick-track) {
-      @apply space-x-[16px] sm:space-x-[30px] flex items-stretch;
-      > div > div {
-        height: 100%;
-      }
+  :deep(.slick-track) {
+    @apply space-x-[16px] sm:space-x-[30px] flex items-stretch;
+    > div > div {
+      height: 100%;
     }
+  }
 
-    :deep(.slick-arrow) {
-      box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
-      display: none;
-      @screen sm {
-        display: block;
-      }
-      @apply transform hover:scale-125;
-      &.slick-prev {
-        @apply left-0;
-        top: calc(50% - 24px);
-        @apply -translate-y-1/2;
-      }
-      &.slick-next {
-        @apply right-0;
-        top: calc(50% - 24px);
-        @apply -translate-y-1/2;
-      }
+  :deep(.slick-arrow) {
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+    display: none;
+    @screen sm {
+      display: block;
     }
+    @apply transform hover:scale-125;
+    &.slick-prev {
+      @apply left-0;
+      top: calc(50% - 24px);
+      @apply -translate-y-1/2;
+    }
+    &.slick-next {
+      @apply right-0;
+      top: calc(50% - 24px);
+      @apply -translate-y-1/2;
+    }
+  }
 
-    :deep(.slick-dots) {
-      position: inherit;
-      @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8;
-      > li {
-        @apply w-auto h-auto my-0 mx-2;
-        > div {
-          @apply transition;
-        }
-        &.slick-active > div {
-          color: #696974;
-        }
+  :deep(.slick-dots) {
+    position: inherit;
+    @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8;
+    > li {
+      @apply w-auto h-auto my-0 mx-2;
+      > div {
+        @apply transition;
       }
-      @screen xl {
-        display: none !important;
+      &.slick-active > div {
+        color: #696974;
       }
     }
+    @screen xl {
+      display: none !important;
+    }
+  }
+}
 
+.is-swipping {
+  :deep(a) {
+    @apply pointer-events-none;
+  }
 }
 </style>
