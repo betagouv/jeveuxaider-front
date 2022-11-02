@@ -63,7 +63,15 @@ export default {
       }
 
       if ($event.key == 'Désinscrite') {
-        this.textAlert = 'Vous êtes sur le point de <b>désinscrire</b> cette organisation. Tous les responsables seront exclues de l\'organisation.'
+        this.textAlert = `
+          Vous êtes sur le point de <b>désinscrire</b> cette organisation.<br><br>
+          <ul>
+          <li>- Tous les responsables seront exclues de l'organisation.</li>
+          <li>- Les missions “En attente de validation” seront passées en “Annulée”.</li>
+          <li>- Les missions “Validée” dont la date de fin est passée bascule au statut “Terminée”</li>
+          <li>- Les missions “Validée” dont la date de fin n’est pas passée bascule au statut “Annulée”</li>
+          </ul>
+        `
       }
 
       this.selected = $event

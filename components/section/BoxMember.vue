@@ -5,7 +5,11 @@
         <Heading as="h3" :level="5">
           {{ responsable.full_name }}
         </Heading>
-        <div v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1" class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="$emit('clickDelete', responsable)">
+        <div
+          v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1"
+          class="text-sm flex items-center cursor-pointer group hover:text-red-500"
+          @click="handleDeleteMember(responsable)"
+        >
           <div class="group-hover:block hidden">
             Supprimer
           </div>
@@ -17,6 +21,7 @@
       <DescriptionListItem term="E-mail" :description="responsable.email" />
       <DescriptionListItem term="Mobile" :description="responsable.mobile" />
       <DescriptionListItem v-if="responsable.pivot.fonction" term="Rôle" :description="responsable.pivot.fonction" />
+      <DescriptionListItem term="Nb missions" :description="responsable.missions_count" />
       <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
     </DescriptionList>
     <template v-if="['admin', 'referent'].includes($store.getters.contextRole)">
@@ -32,6 +37,15 @@
           conversable-type="App\Models\Structure"
           @cancel="showModalSendMessage = false"
         />
+        <ModalRemoveResponsableFromOrganisation
+          v-if="memberSelected"
+          :is-open="showAlertMemberDeleted"
+          :responsable="memberSelected"
+          :organisation="organisation"
+          @cancel="showAlertMemberDeleted = false"
+          @close="showAlertMemberDeleted = false"
+          @submitted="$emit('removed')"
+        />
       </div>
     </template>
   </Box>
@@ -39,10 +53,12 @@
 
 <script>
 import ModalSendMessage from '@/components/modal/ModalSendMessage.vue'
+import ModalRemoveResponsableFromOrganisation from '@/components/modal/ModalRemoveResponsableFromOrganisation.vue'
 
 export default {
   components: {
-    ModalSendMessage
+    ModalSendMessage,
+    ModalRemoveResponsableFromOrganisation
   },
   props: {
     organisation: {
@@ -57,6 +73,8 @@ export default {
   data () {
     return {
       showModalSendMessage: false,
+      memberSelected: null,
+      showAlertMemberDeleted: false,
       conversationCurrentUserAndResponsable: null
     }
   },
@@ -68,7 +86,7 @@ export default {
         'filter[with_users]': `${this.responsable.user_id},${this.$store.getters.profile.user_id}`
       }
     })
-    console.log(data)
+    // console.log(data)
     this.conversationCurrentUserAndResponsable = data.total > 0 && data.data[0]
   },
   methods: {
@@ -78,6 +96,10 @@ export default {
       } else {
         this.showModalSendMessage = true
       }
+    },
+    handleDeleteMember (member) {
+      this.memberSelected = member
+      this.showAlertMemberDeleted = true
     }
   }
 }

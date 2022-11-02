@@ -1,14 +1,7 @@
 <template>
   <div>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
-      <AlertDialog
-        theme="danger"
-        title="Désinscrire l'organisation"
-        :text="`Attention, cette action est irréversible et vous ne serez plus en mesure de gérer les missions reliées à ${structure.name}.`"
-        :is-open="showAlert"
-        @confirm="handleConfirmUnregister()"
-        @cancel="showAlert = false"
-      />
+      <ModalUnregisterOrganisation :structure="structure" :is-open="showAlert" @cancel="showAlert = false" @close="showAlert = false" />
       <div class="lg:col-span-3 space-y-12">
         <Box>
           <Heading :level="3" class="mb-8">
@@ -543,8 +536,12 @@ import { string, object, array } from 'yup'
 import inputGeo from '@/mixins/input-geo'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
+import ModalUnregisterOrganisation from '~/components/modal/ModalUnregisterOrganisation.vue'
 
 export default {
+  components: {
+    ModalUnregisterOrganisation
+  },
   mixins: [inputGeo, FormErrors, FormUploads],
   props: {
     structure: {
@@ -639,11 +636,6 @@ export default {
     },
     onRemovedReseau (item) {
       this.form.reseaux = this.form.reseaux.filter(reseau => reseau.id !== item.id)
-    },
-    async handleConfirmUnregister () {
-      await this.$axios.post(`/structures/${this.structure.id}/unregister`).catch(() => {})
-      await this.$store.dispatch('auth/fetchUser')
-      this.$router.push('/')
     },
     onMediaPickerChange (payload, field) {
       this.form[field].splice(payload.index, 1, payload.media)
