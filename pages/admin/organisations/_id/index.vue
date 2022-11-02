@@ -10,14 +10,6 @@
         { label: organisation && organisation.name },
       ]"
     />
-    <AlertDialog
-      theme="danger"
-      title="Supprimer un membre de votre organisation"
-      :text="`<strong>${memberSelected.full_name}</strong> ne fera plus partie de l'organisation <strong>${organisation.name}</strong>.<br /><br />Cette personne ne pourra plus gérer les missions proposées sur JeVeuxAider.gouv.fr.`"
-      :is-open="showAlertMemberDeleted"
-      @confirm="handleConfirmDeleteMember"
-      @cancel="showAlertMemberDeleted = false"
-    />
     <Drawer :is-open="showDrawerAddResponsable" form-id="form-add-responsable" submit-label="Ajouter ce membre" @close="showDrawerAddResponsable = false">
       <template #title>
         <Heading :level="3">
@@ -199,11 +191,11 @@
                 @updated="$fetch()"
               />
               <BoxMember
-                v-for="responsable in organisation.members"
+                v-for="responsable in responsables"
                 :key="responsable.id"
                 :responsable="responsable"
                 :organisation="organisation"
-                @clickDelete="handleDeleteMember"
+                @removed="$fetch()"
               />
               <Button variant="white" @click.native="showDrawerInvitation = true">
                 <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
@@ -288,8 +280,7 @@ export default {
       showDrawerInvitation: false,
       showDrawerAddResponsable: false,
       queryInvitations: null,
-      memberSelected: {},
-      showAlertMemberDeleted: false
+      responsables: []
     }
   },
   async fetch () {
@@ -303,11 +294,16 @@ export default {
       }
     })
     this.queryInvitations = queryInvitations
+
+    const { data: responsables } = await this.$axios.get(`/structures/${this.organisation.id}/responsables`)
+    this.responsables = responsables
   },
   methods: {
     async refetch () {
       const { data: organisation } = await this.$axios.get(`/structures/${this.organisation.id}`)
       this.organisation = organisation
+      const { data: responsables } = await this.$axios.get(`/structures/${this.organisation.id}/responsables`)
+      this.responsables = responsables
     },
     async handleChangeState (event) {
       await this.$axios.put(`/structures/${this.organisation.id}`, {
@@ -320,16 +316,6 @@ export default {
     handleSubmitInvitation () {
       this.showDrawerInvitation = false
       this.$fetch()
-    },
-    handleDeleteMember (member) {
-      this.memberSelected = member
-      this.showAlertMemberDeleted = true
-    },
-    async handleConfirmDeleteMember () {
-      await this.$axios.delete(`/structures/${this.organisation.id}/members/${this.memberSelected.id}`)
-      this.refetch()
-      this.memberSelected = {}
-      this.showAlertMemberDeleted = false
     },
     handleSubmitAddResponsable () {
       this.showDrawerAddResponsable = false
