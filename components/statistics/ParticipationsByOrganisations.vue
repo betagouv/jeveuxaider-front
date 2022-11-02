@@ -1,6 +1,6 @@
 <template>
-  <Box padding="sm" :loading="loading" loading-text="Récupération des activités...">
-    <BoxHeadingStatistics title="Répartition des participations par activité" class="mb-6" infos-bulle="Répartition des participations validées sur la période par activité" />
+  <Box padding="sm" :loading="loading" loading-text="Récupération des organisations...">
+    <BoxHeadingStatistics title="Topito des organisations" class="mb-6" infos-bulle="Liste des organisations ayant reçu le plus de candidatures sur la période" />
     <StackedList v-if="items" :divided="false">
       <StackedListItem
         v-for="item, i in items"
@@ -32,7 +32,7 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/statistics/public/participations-by-activities', {
+    await this.$axios.get('/statistics/public/participations-by-organisations', {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
