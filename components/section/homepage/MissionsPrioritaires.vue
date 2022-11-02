@@ -27,6 +27,10 @@
           }"
           :slides-count="missions.length"
         >
+          <div key="ukraine" href="" class="card--mission--wrapper">
+            <CardBanquesAlimentaires class="!h-full" />
+          </div>
+
           <nuxt-link
             v-for="mission in missions"
             :key="mission.id"
@@ -43,10 +47,12 @@
 
 <script>
 import CardMission from '@/components/card/CardMission'
+import CardBanquesAlimentaires from '@/components/card/CardBanquesAlimentaires'
 
 export default {
   components: {
-    CardMission
+    CardMission,
+    CardBanquesAlimentaires
   },
   data () {
     return {
