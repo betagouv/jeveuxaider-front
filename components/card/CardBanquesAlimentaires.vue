@@ -25,7 +25,7 @@
         >
           Collecte nationale
           <div class="text-xl sm:text-2xl font-bold">
-            Banques alimentaires
+            Banques Alimentaires
           </div>
         </h3>
 
