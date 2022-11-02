@@ -36,7 +36,7 @@ export default {
     previewHeight: { type: Number, default: null },
     previewFit: { type: String, default: 'cover', validator: s => ['cover', 'contain'].includes(s) },
     previewClasses: { type: String, default: '' },
-    previewConversion: { type: String, default: '' },
+    previewConversion: { type: String, default: 'formPreview' },
     minWidth: { type: Number, default: 200 },
     minHeight: { type: Number, default: null },
     ratio: { type: Number, default: 1 },

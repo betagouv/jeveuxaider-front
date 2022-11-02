@@ -202,7 +202,7 @@ const labels = {
     { key: 'En cours de traitement', to: ['En cours de traitement', 'Validée', 'Signalée'], roles: ['admin', 'referent', 'referent_regional'], label: 'En cours de traitement', description: "Le référent vérifie des informations avant de valider l'organisation." },
     { key: 'Validée', to: ['Validée', 'Signalée'], roles: ['admin', 'referent', 'referent_regional'], label: 'Validée', description: "L'organisation peut poster des missions et a une page publique qu'elle peut éditer." },
     { key: 'Signalée', to: ['Signalée'], roles: ['admin'], label: 'Signalée', description: "L'organisation ne respecte pas la charte de JeVeuxAider.gouv.fr. La page de l'organisation est hors ligne, ainsi que que ses missions." },
-    { key: 'Désinscrite', to: ['Désinscrite'], roles: ['admin'], label: 'Désinscrite', description: "L'organisation s'est désinscrite. Sa page est hors ligne ainsi que ses missions." }
+    { key: 'Désinscrite', to: ['Désinscrite'], roles: ['admin'], label: 'Désinscrite', description: "L'organisation s'est désinscrite. Sa page est hors ligne ainsi que ses missions. Les participations en cours seront annulées." }
   ],
   participation_workflow_states: [
     { key: 'En attente de validation', roles: ['admin', 'responsable'], label: 'En attente de validation', description: 'Le bénévole vient de candidater. Il est en attente de validation par le responsable de la mission.' },
@@ -387,5 +387,10 @@ const labels = {
     { key: 'afternoon', label: 'Après-midi' },
     { key: 'evening', label: 'En soirée' },
     { key: 'night', label: 'La nuit' }
+  ],
+  models: [
+    { key: 'App\\Models\\Structure', label: 'Organisation' },
+    { key: 'App\\Models\\Participation', label: 'Participation' },
+    { key: 'App\\Models\\Mission', label: 'Mission' }
   ]
 }

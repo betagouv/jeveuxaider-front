@@ -18,9 +18,16 @@
             {{ recipientNames }}
           </div>
 
-          <div v-if="$store.getters.contextRole != 'responsable'" class="text-cool-gray-500 text-sm truncate">
-            • {{ nametype }}
+          <div v-if="referentInRecipients" class="text-jva-red-500 font-bold text-sm truncate">
+            🧑‍💻<span class="ml-2">Référent {{ referentInRecipients.roles.filter(role => role.key == 'referent')[0].label | label('departments') }}</span>
           </div>
+          <div v-else-if="adminInRecipients" class="text-jva-red-500 font-bold text-sm truncate">
+            🧑‍💻<span class="ml-2">Modérateur</span>
+          </div>
+          <div v-else-if="$store.getters.contextRole != 'responsable'" class="text-cool-gray-500 text-sm truncate">
+            •<span class="ml-2">{{ nametype }}</span>
+          </div>
+
           <span
             v-if="!hasRead"
             class="flex-none w-2.5 h-2.5 mr-4 bg-jva-red-500 rounded-full"
@@ -50,7 +57,7 @@
           class="text-xs font-light"
           :class="classParticipationStatus(conversation.conversable.state)"
         >
-          <span class="text-cool-gray-500 font-normal"> Participation : </span>
+          <span class="text-cool-gray-500 font-normal"> {{ conversation.conversable_type | label('models') }} : </span>
           <span class="font-semibold">
             {{ conversation.conversable.state }}
           </span>
@@ -75,17 +82,9 @@ export default {
       })
     },
     participant () {
-      return this.conversation.users.find((user) => {
-        return user.profile.id == this.conversation.conversable.profile_id
-      })
-    },
-    responsable () {
-      return this.conversation.users.find((user) => {
-        return (
-          user.profile.id ==
-          this.conversation.conversable.mission.responsable_id
-        )
-      })
+      return this.conversation.users.filter((user) => {
+        return user.id != this.$store.getters.profile.user_id
+      })[0]
     },
     recipients () {
       return this.participant.id == this.$store.getters.profile.user_id
@@ -98,6 +97,12 @@ export default {
       return this.recipients
         .map(recipient => recipient.profile.first_name)
         .join(', ')
+    },
+    referentInRecipients () {
+      return this.recipients.find(user => user.roles.filter(role => role.key == 'referent').length > 0)
+    },
+    adminInRecipients () {
+      return this.recipients.find(user => user.roles.filter(role => role.key == 'admin').length > 0)
     },
     hasRead () {
       // Si le current user n'est pas dans la conversation, on affiche les messages comme lus
@@ -120,7 +125,13 @@ export default {
       return false
     },
     nametype () {
-      return this.conversation.conversable.mission?.structure.name
+      switch (this.conversation.conversable_type) {
+        case 'App\\Models\\Participation':
+          return this.conversation.conversable.mission.structure.name
+        case 'App\\Models\\Structure':
+          return this.conversation.conversable.name
+      }
+      return null
     }
   },
   methods: {
