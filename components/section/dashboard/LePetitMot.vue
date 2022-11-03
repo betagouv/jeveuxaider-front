@@ -57,8 +57,6 @@ export default {
         return this.messages.referent_departemental
       } else if (this.$store.getters.currentRole?.key === 'referent_regional') {
         return this.messages.referent_regional
-      } else if (this.$store.getters.currentRole?.key === 'analyste') {
-        return this.messages.analyste
       } else if (this.$store.getters.currentRole?.key === 'admin') {
         return this.messages.admin
       } else {

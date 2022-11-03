@@ -381,10 +381,6 @@ export default {
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
           { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
         ]
-      } else if (this.$store.getters.currentRole?.key === 'analyste') {
-        return [
-          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') }
-        ]
       }
       return [
         { name: 'Mon profil', to: '/profile', isActive: this.isActiveLink('/profile', true) },

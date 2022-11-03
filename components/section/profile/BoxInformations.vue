@@ -14,7 +14,6 @@
       <DescriptionList>
         <DescriptionListItem v-if="profile.user.departments_as_referent.length > 0" term="Référent dep." :description="`${profile.user.departments_as_referent[0].number} - ${profile.user.departments_as_referent[0].name}`" />
         <DescriptionListItem v-if="profile.user.regions_as_referent.length > 0" term="Référent rég." :description="profile.user.regions_as_referent[0].name" />
-        <DescriptionListItem v-if="profile.is_analyste" term="Analyste" description="Oui" />
         <DescriptionListItem v-if="$store.getters.contextRole === 'admin'" term="User ID" :description="profile.user_id" />
         <DescriptionListItem term="Crée le" :description="$dayjs(profile.created_at).format('D MMMM YYYY à HH:mm')" />
         <!-- todo timeago il y a -->

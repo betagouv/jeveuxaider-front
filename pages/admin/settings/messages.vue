@@ -35,9 +35,6 @@
         <FormControl label="Le petit mot pour les référents régionaux" html-for="referent_regional" required :error="errors.referent_regional">
           <RichEditor v-model="form.referent_regional" :toolbar="['bold','link']" name="referent_regional" placeholder="Message que vous souhaitez afficher..." />
         </FormControl>
-        <FormControl label="Le petit mot pour les analystes" html-for="analyste" required :error="errors.analyste">
-          <RichEditor v-model="form.analyste" :toolbar="['bold','link']" name="analyste" placeholder="Message que vous souhaitez afficher..." />
-        </FormControl>
         <FormControl label="Le petit mot pour les modérateurs" html-for="admin" required :error="errors.admin">
           <RichEditor v-model="form.admin" :toolbar="['bold','link']" name="admin" placeholder="Message que vous souhaitez afficher..." />
         </FormControl>
@@ -77,7 +74,6 @@ export default {
         responsable_territoire: string().required(),
         referent_departemental: string().required(),
         referent_regional: string().required(),
-        analyste: string().required(),
         admin: string().required()
       })
     }
