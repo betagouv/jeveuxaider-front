@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des activités...">
-    <BoxHeadingStatistics title="Répartition des participations par activité" class="mb-6" infos-bulle="Répartition des participations validées sur la période par activité" />
+    <BoxHeadingStatistics title="Répartition des mission par activités" class="mb-6" infos-bulle="Liste des activités les plus utilisées dans les missions validées ou terminées sur la période" />
     <StackedList v-if="items" :divided="false">
       <StackedListItem
         v-for="item, i in items"
@@ -10,7 +10,7 @@
       >
         <div class="text-gray-900 font-semibold" v-html="item.name" />
         <div class="text-gray-500 text-sm">
-          {{ $options.filters.pluralize(item.count, 'participation', 'participations') }}
+          {{ $options.filters.pluralize(item.count, 'mission validée / terminée', 'missions validées / terminées') }}
         </div>
       </StackedListItem>
     </StackedList>
@@ -32,7 +32,7 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/statistics/public/participations-by-activities', {
+    await this.$axios.get('/statistics/public/missions-by-activities', {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false
