@@ -63,6 +63,7 @@ export default {
             { label: 'Organisations', to: '/statistiques/organisations' },
             { label: 'Missions', to: '/statistiques/missions' },
             { label: 'Places', to: '/statistiques/places' }
+            // { label: 'API Engagement', to: '/statistiques/api-engagement' }
           ]
         }
       ]

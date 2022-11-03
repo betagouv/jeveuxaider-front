@@ -27,11 +27,12 @@
       <UtilisateursByDate ref="utilisateursByDate" />
       <div class="flex flex-col lg:flex-row gap-12">
         <div class="space-y-12 w-1/2">
+          <UtilisateursByDomaines ref="utilisateursByDomaines" />
           <ParticipationsCanceledByBenevoles ref="participationsCanceledByBenevoles" />
-          <ParticipationsDelaysByRegistrations ref="participationsDelaysByRegistrations" />
         </div>
         <div class="space-y-12 w-1/2">
-          <UtilisateursByDomaines ref="utilisateursByDomaines" />
+          <TemoignagesByGrades ref="temoignagesByGrades" />
+          <ParticipationsDelaysByRegistrations ref="participationsDelaysByRegistrations" />
         </div>
       </div>
     </div>
@@ -45,6 +46,7 @@ import UtilisateursByDate from '@/components/statistics/UtilisateursByDate.vue'
 import UtilisateursByDomaines from '@/components/statistics/UtilisateursByDomaines.vue'
 import ParticipationsCanceledByBenevoles from '@/components/statistics/ParticipationsCanceledByBenevoles.vue'
 import ParticipationsDelaysByRegistrations from '@/components/statistics/ParticipationsDelaysByRegistrations.vue'
+import TemoignagesByGrades from '@/components/statistics/TemoignagesByGrades.vue'
 
 export default {
   components: {
@@ -53,7 +55,8 @@ export default {
     UtilisateursByDate,
     UtilisateursByDomaines,
     ParticipationsCanceledByBenevoles,
-    ParticipationsDelaysByRegistrations
+    ParticipationsDelaysByRegistrations,
+    TemoignagesByGrades
   },
   layout: 'statistics-public',
   data () {
@@ -66,6 +69,7 @@ export default {
       this.$refs.participationsCanceledByBenevoles.$fetch()
       this.$refs.utilisateursByDomaines.$fetch()
       this.$refs.participationsDelaysByRegistrations.$fetch()
+      this.$refs.temoignagesByGrades.$fetch()
     }
   }
 }

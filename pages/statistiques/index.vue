@@ -37,7 +37,7 @@
     <OverviewOrganisations ref="overviewOrganisations" />
     <OverviewMissions ref="overviewMissions" />
     <OverviewPlaces ref="overviewPlaces" />
-    <OverviewAPIEngagement ref="overviewAPIEngagement" />
+    <!-- <OverviewAPIEngagement ref="overviewAPIEngagement" /> -->
   </div>
 </template>
 
@@ -48,7 +48,7 @@ import OverviewParticipations from '@/components/statistics/OverviewParticipatio
 import OverviewQuickGlance from '@/components/statistics/OverviewQuickGlance'
 import OverviewUtilisateurs from '@/components/statistics/OverviewUtilisateurs'
 import OverviewPlaces from '@/components/statistics/OverviewPlaces'
-import OverviewAPIEngagement from '@/components/statistics/OverviewAPIEngagement'
+// import OverviewAPIEngagement from '@/components/statistics/OverviewAPIEngagement'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
 export default {
@@ -59,8 +59,8 @@ export default {
     OverviewParticipations,
     OverviewMissions,
     OverviewUtilisateurs,
-    OverviewPlaces,
-    OverviewAPIEngagement
+    OverviewPlaces
+    // OverviewAPIEngagement
   },
   layout: 'statistics-public',
   data () {
@@ -73,7 +73,7 @@ export default {
       this.$refs.overviewUtilisateurs.$fetch()
       this.$refs.overviewOrganisations.$fetch()
       this.$refs.overviewMissions.$fetch()
-      // this.$refs.overviewPlaces.$fetch()
+      this.$refs.overviewPlaces.$fetch()
     }
   }
 }
