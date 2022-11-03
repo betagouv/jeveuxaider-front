@@ -147,7 +147,7 @@
           target="_blank"
           class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
         >
-          <span>Collecte des Banques Alimentaires</span>
+          <span>Collecte Nationale</span>
           <span>🧡</span>
         </NavItem>
 
@@ -265,7 +265,7 @@
                   target="_blank"
                   :class="['flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600']"
                 >
-                  <span>Collecte des Banques Alimentaires</span>
+                  <span>Collecte Nationale</span>
                   <span>🧡</span>
                 </NavItem>
               </div>

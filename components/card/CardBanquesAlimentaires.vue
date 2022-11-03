@@ -32,7 +32,7 @@
         <div
           class="text-white text-shadow font-extrabold max-w-[272px] text-xl sm:text-2xl mb-6"
         >
-          2 heures pour aider<br> 2 millions de français
+          2 heures pour aider<br> 2 millions de personnes
         </div>
 
         <div
