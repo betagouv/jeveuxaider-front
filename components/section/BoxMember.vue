@@ -37,17 +37,17 @@
           conversable-type="App\Models\Structure"
           @cancel="showModalSendMessage = false"
         />
-        <ModalRemoveResponsableFromOrganisation
-          v-if="memberSelected"
-          :is-open="showAlertMemberDeleted"
-          :responsable="memberSelected"
-          :organisation="organisation"
-          @cancel="showAlertMemberDeleted = false"
-          @close="showAlertMemberDeleted = false"
-          @submitted="$emit('removed')"
-        />
       </div>
     </template>
+    <ModalRemoveResponsableFromOrganisation
+      v-if="memberSelected"
+      :is-open="showAlertMemberDeleted"
+      :responsable="memberSelected"
+      :organisation="organisation"
+      @cancel="showAlertMemberDeleted = false"
+      @close="showAlertMemberDeleted = false"
+      @submitted="$emit('removed')"
+    />
   </Box>
 </template>
 
