@@ -37,8 +37,7 @@ export default {
     Header,
     Footer,
     SecondaryMenuStatisticsPublic
-  },
-  middleware: 'authenticated'
+  }
 }
 </script>
 
