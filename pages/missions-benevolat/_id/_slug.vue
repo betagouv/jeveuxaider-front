@@ -228,7 +228,17 @@
               </div>
 
               <div class="mt-4 mx-6">
-                <template v-if="canRegister">
+                <LoadingIndicator v-if="loading" class="min-h-[66px]" />
+                <DsfrButton
+                  v-else-if="userParticipation"
+                  size="lg"
+                  class="w-full mt-6"
+                  type="secondary"
+                  @click.native="$router.push(userParticipationLink)"
+                >
+                  Suivre ma candidature
+                </DsfrButton>
+                <template v-else-if="canRegister">
                   <template v-if="mission.dates">
                     <div v-if="!dateSelected" class="flex justify-center">
                       <client-only>
@@ -275,11 +285,10 @@
                     <ButtonJeProposeMonAide :mission="mission" class="w-full" />
                   </div>
                 </template>
-                <div v-else class="text-center">
-                  <DsfrButton disabled size="lg" class="w-full">
-                    Inscription fermée
-                  </DsfrButton>
-                </div>
+
+                <DsfrButton v-else disabled size="lg" class="w-full mt-6">
+                  Inscription fermée
+                </DsfrButton>
               </div>
             </div>
           </div>
@@ -347,6 +356,7 @@ import Heading from '@/components/dsfr/Heading.vue'
 import DsfrButton from '@/components/dsfr/Button.vue'
 import TagsGroup from '@/components/dsfr/TagsGroup.vue'
 import MixinHotjar from '@/mixins/hotjar.client.js'
+import LoadingIndicator from '@/components/custom/LoadingIndicator'
 
 export default {
   components: {
@@ -360,7 +370,8 @@ export default {
     Link,
     Heading,
     DsfrButton,
-    TagsGroup
+    TagsGroup,
+    LoadingIndicator
   },
   mixins: [MixinMission, MixinHotjar],
   async asyncData ({ $axios, params, error, store }) {
@@ -392,10 +403,19 @@ export default {
     return {
       dateSelected: null,
       slotSelected: null,
-      similarMissions: []
+      similarMissions: [],
+      userParticipation: null,
+      loading: false
     }
   },
   async fetch () {
+    if (this.$store.getters.isLogged) {
+      this.loading = true
+      const { data: userParticipation } = await this.$axios.get(`/user/mission/${this.mission.id}/has-participation`)
+      this.userParticipation = userParticipation || null
+      this.loading = false
+    }
+
     const { data: missions } = await this.$axios.get(`/missions/${this.mission.id}/similar`)
     this.similarMissions = missions
   },
@@ -516,6 +536,11 @@ export default {
             .map(day => day.date)
         }
       ]
+    },
+    userParticipationLink () {
+      return !this.userParticipation
+        ? null
+        : this.userParticipation.conversation?.id ? `/messages/${this.userParticipation.conversation.id}` : '/profile/missions'
     }
   },
   mounted () {
