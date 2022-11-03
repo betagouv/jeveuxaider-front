@@ -36,8 +36,8 @@
               Ou à distance
             </Heading>
 
-            <div class="mt-4 text-xl text-[#696974]">
-              Plus de 1 000 missions de bénévolat sont réalisables en
+            <div class="mt-4 text-lg sm:text-xl text-[#696974]">
+              Plus de 1 000 missions de bénévolat <br class="hidden sm:block md:hidden"> sont réalisables en
               autonomie
             </div>
 
