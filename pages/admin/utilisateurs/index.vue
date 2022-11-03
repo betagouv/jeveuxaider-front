@@ -11,7 +11,7 @@
       <div class="flex flex-col gap-y-4 sticky top-8">
         <SelectAdvanced
           :key="`role-${$route.fullPath}`"
-          name="role"
+          name="user.role"
           placeholder="Rôle"
           :options="[
             { key:'responsable', label: 'Responsable' },
@@ -32,10 +32,10 @@
           name="referent-department"
           placeholder="Département du référent"
           :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
-          :value="$route.query['filter[referent_department]']"
+          :value="$route.query['filter[department]']"
           variant="transparent"
           clearable
-          @input="changeFilter('filter[referent_department]', $event)"
+          @input="changeFilter('filter[department]', $event)"
         />
         <SelectAdvanced
           v-if="$route.query['filter[user.role]'] === 'referent_regional'"

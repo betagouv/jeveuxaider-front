@@ -116,7 +116,6 @@ export default {
   },
   methods: {
     changePage (page) {
-      console.log('changePage', page)
       this.page = page
       this.$fetch()
     },

@@ -4,7 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         Référents
       </div>
-      <Link :to="`/admin/utilisateurs?filter[role]=referent&filter[referent_department]=${department}`" icon="ChevronRightIcon">
+      <Link :to="`/admin/utilisateurs?filter[user.role]=referent&filter[department]=${department}`" icon="ChevronRightIcon">
         Consulter
       </Link>
     </div>
@@ -84,8 +84,8 @@ export default {
     const { data: referents } = await this.$axios.get('/profiles', {
       params: {
         pagination: 999,
-        'filter[role]': 'referent',
-        'filter[referent_department]': this.department,
+        'filter[user.role]': 'referent',
+        'filter[department]': this.department,
         include: ['user', 'tags']
       }
     })
