@@ -280,15 +280,15 @@ export default {
       return error({ statusCode: 403 })
     }
 
+    if (store.getters.contextRole == 'responsable') {
+      if (store.getters.contextableId != params.id) {
+        return error({ statusCode: 403 })
+      }
+    }
+
     const { data: organisation } = await $axios.get(`/structures/${params.id}`)
     if (!organisation) {
       return error({ statusCode: 404 })
-    }
-
-    if (store.getters.contextRole == 'responsable') {
-      if (store.getters.contextableId != organisation.id) {
-        return error({ statusCode: 403 })
-      }
     }
 
     return {

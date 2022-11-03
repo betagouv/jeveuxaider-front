@@ -149,9 +149,9 @@
                 <template #header>
                   <div class="flex justify-between items-center mb-4">
                     <Heading as="h3" :level="5">
-                      {{ responsable.full_name }}
+                      {{ responsable.profile.full_name }}
                     </Heading>
-                    <div class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                    <div class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable.profile)">
                       <div class="group-hover:block hidden">
                         Supprimer
                       </div>
@@ -160,9 +160,9 @@
                   </div>
                 </template>
                 <DescriptionList v-if="responsable">
-                  <DescriptionListItem term="E-mail" :description="responsable.email" />
-                  <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-                  <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
+                  <DescriptionListItem term="E-mail" :description="responsable.profile.email" />
+                  <DescriptionListItem term="Mobile" :description="responsable.profile.mobile" />
+                  <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable.profile" />
                 </DescriptionList>
               </Box>
               <Button variant="white" @click.native="showDrawerInvitation = true">
@@ -207,15 +207,16 @@ export default {
     if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {
       return error({ statusCode: 403 })
     }
+
+    if (store.getters.contextRole == 'tete_de_reseau') {
+      if (store.getters.contextableId != params.id) {
+        return error({ statusCode: 403 })
+      }
+    }
+
     const { data: reseau } = await $axios.get(`/reseaux/${params.id}`)
     if (!reseau) {
       return error({ statusCode: 404 })
-    }
-
-    if (store.getters.contextRole === 'tete_de_reseau') {
-      if (store.state.auth.user.profile.tete_de_reseau_id !== reseau.id) {
-        return error({ statusCode: 403 })
-      }
     }
 
     return {

@@ -361,21 +361,6 @@
           </Heading>
 
           <div class="gap-8 grid grid-cols-1">
-            <FormControl
-              label="Tête de réseau"
-              html-for="reseau_id"
-            >
-              <InputAutocomplete
-                name="autocomplete"
-                label="Autocomplete"
-                placeholder="Choisissez un réseau"
-                :options="autocompleteReseauxOptions"
-                :value="form.reseau ? form.reseau.name : null"
-                @selected="handleSelectedReseau"
-                @fetch-suggestions="onFetchReseauxSuggestions"
-              />
-            </FormControl>
-
             <Toggle
               v-model="form.can_export_profiles"
               :description="form.can_export_profiles ? 'Oui' : 'Non'"
@@ -520,9 +505,6 @@ export default {
         }
       })
       this.autocompleteReseauxOptions = res.data.data
-    },
-    handleSelectedReseau (reseau) {
-      this.form.tete_de_reseau_id = reseau ? reseau.id : null
     }
   }
 }
