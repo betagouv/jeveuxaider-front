@@ -234,7 +234,24 @@
               </div>
 
               <div class="mt-4 mx-6">
-                <template v-if="canRegister">
+                <LoadingIndicator
+                  v-if="conversationId === null && $store.getters.isLogged"
+                  class="min-h-[66px]"
+                />
+
+                <Button
+                  v-else-if="conversationId"
+                  size="xl"
+                  rounded
+                  full
+                  variant="white"
+                  plain
+                  class="mt-4"
+                  @click.native="$router.push(`/messages/${conversationId}`)"
+                >
+                  Suivre ma candidature
+                </Button>
+                <template v-else-if="canRegister">
                   <template v-if="mission.dates">
                     <div v-if="!dateSelected" class="flex justify-center">
                       <v-calendar
@@ -278,11 +295,17 @@
                     :mission="mission"
                   />
                 </template>
-                <template v-else>
-                  <Button size="xl" rounded full variant="white" plain>
-                    Inscription fermée
-                  </Button>
-                </template>
+                <Button
+                  v-else
+                  size="xl"
+                  rounded
+                  full
+                  variant="white"
+                  plain
+                  class="mt-4"
+                >
+                  Inscription fermée
+                </Button>
               </div>
             </div>
           </div>
@@ -344,6 +367,7 @@ import ButtonJeProposeMonAide from '@/components/custom/ButtonJeProposeMonAide.v
 import MixinMission from '@/mixins/mission'
 import Testimonials from '@/components/section/temoignage/Testimonials'
 import MixinHotjar from '@/mixins/hotjar.client.js'
+import LoadingIndicator from '@/components/custom/LoadingIndicator'
 
 export default {
   components: {
@@ -352,7 +376,8 @@ export default {
     Presentation,
     Details,
     ButtonJeProposeMonAide,
-    Testimonials
+    Testimonials,
+    LoadingIndicator
   },
   mixins: [MixinMission, MixinHotjar],
   async asyncData ({ $axios, params, error, store }) {
@@ -384,12 +409,18 @@ export default {
     return {
       dateSelected: null,
       slotSelected: null,
-      similarMissions: []
+      similarMissions: [],
+      conversationId: null
     }
   },
   async fetch () {
     const { data: missions } = await this.$axios.get(`/missions/${this.mission.id}/similar`)
     this.similarMissions = missions
+
+    if (this.$store.getters.isLogged) {
+      const { data: conversationId } = await this.$axios.get(`/user/mission/${this.mission.id}/has-participation`)
+      this.conversationId = conversationId
+    }
   },
   head () {
     return {
