@@ -234,12 +234,12 @@
               </div>
 
               <div class="mt-4 mx-6">
-                <LoadingIndicator
+                <!-- <LoadingIndicator
                   v-if="conversationId === null && $store.getters.isLogged"
                   class="min-h-[66px]"
-                />
+                /> -->
 
-                <Button
+                <!-- <Button
                   v-else-if="conversationId"
                   size="xl"
                   rounded
@@ -250,8 +250,8 @@
                   @click.native="$router.push(`/messages/${conversationId}`)"
                 >
                   Suivre ma candidature
-                </Button>
-                <template v-else-if="canRegister">
+                </Button> -->
+                <template v-if="canRegister">
                   <template v-if="mission.dates">
                     <div v-if="!dateSelected" class="flex justify-center">
                       <v-calendar
@@ -417,10 +417,10 @@ export default {
     const { data: missions } = await this.$axios.get(`/missions/${this.mission.id}/similar`)
     this.similarMissions = missions
 
-    if (this.$store.getters.isLogged) {
-      const { data: conversationId } = await this.$axios.get(`/user/mission/${this.mission.id}/has-participation`)
-      this.conversationId = conversationId
-    }
+    // if (this.$store.getters.isLogged) {
+    //   const { data: conversationId } = await this.$axios.get(`/user/mission/${this.mission.id}/has-participation`)
+    //   this.conversationId = conversationId
+    // }
   },
   head () {
     return {
