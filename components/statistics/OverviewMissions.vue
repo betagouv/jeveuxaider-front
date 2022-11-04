@@ -11,13 +11,13 @@
       <CardStatistic
         :value="statistics.missions_validated_and_over"
         :title="`${$options.filters.pluralize(statistics.missions_validated_and_over, 'Mission', 'Missions', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.missions_validated_and_over, 'validée ou terminée', 'validées ou terminées', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.missions_validated_and_over, 'validée', 'validées', false)}`"
         infos-bulle="Correspond aux missions créées, qui sont validées ou bien terminées"
       />
       <CardStatistic
         :value="statistics.missions_snu"
         :title="`${$options.filters.pluralize(statistics.missions_snu, 'Mission SNU-MIG', 'Missions SNU-MIG', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.missions_snu, 'validée ou terminée', 'validée ou terminées', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.missions_snu, 'validée', 'validées', false)}`"
         infos-bulle="Correspond aux missions proposées en MIG, qui sont validées ou bien terminées"
       />
     </div>

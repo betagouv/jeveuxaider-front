@@ -12,14 +12,13 @@
       <CardStatistic
         :value="statistics.missions"
         :title="`${$options.filters.pluralize(statistics.missions, 'Mission', 'Missions', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.missions, 'validée ou terminée', 'validées ou terminées', false)}`"
-        infos-bulle="Correspond aux missions créées sur la période, qui sont validées ou bien terminées"
+        :subtitle="`${$options.filters.pluralize(statistics.missions, 'validée', 'validées', false)}`"
+        infos-bulle="Correspond aux missions validées créées sur la période"
       />
       <CardStatistic
         :value="statistics.participations"
-        :title="`${$options.filters.pluralize(statistics.participations, 'Candidature', 'Candidatures', false)}`"
-        subtitle="à des missions"
-        infos-bulle="Correspond au nombre de candiatures à des missions sur la période"
+        :title="`${$options.filters.pluralize(statistics.participations, 'Mise en relation', 'Mises en relation', false)}`"
+        infos-bulle="Correspond au nombre de mises en relation créées sur la période"
       />
       <CardStatistic
         :value="statistics.utilisateurs"

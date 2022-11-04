@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Nouvelles candidatures des bénévoles" no-period class="mb-6" />
+    <BoxHeadingStatistics title="Nouvelles mises en relation des bénévoles" no-period class="mb-6" />
     <div class="w-full">
       <BarChart v-if="chartData" :chart-data="chartData" :chart-options="chartOptions" :height="300" />
     </div>

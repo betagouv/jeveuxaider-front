@@ -1,13 +1,13 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="L'offre actuel de JeVeuxAider.gouv.fr en un coup d'oeil" no-period class="mb-6" />
+    <BoxHeadingStatistics title="L'offre actuelle de JeVeuxAider.gouv.fr en un coup d'oeil" no-period class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
-      <CardStatistic
+      <!-- <CardStatistic
         :value="statistics.missions_available"
         :title="`${$options.filters.pluralize(statistics.missions_available, 'Mission', 'Missions', false)}`"
         subtitle="en ligne"
         infos-bulle="Nombre de missions en ligne en ce moment"
-      />
+      /> -->
       <CardStatistic
         :value="statistics.places"
         :title="`${$options.filters.pluralize(statistics.places, 'Place', 'Places', false)}`"

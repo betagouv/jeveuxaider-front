@@ -26,13 +26,13 @@
       </Heading>
       <MissionsByDate ref="missionsByDate" />
       <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 w-1/2">
+        <div class="space-y-12 lg:w-1/2">
           <MissionsByStates ref="missionsByStates" />
           <MissionsByTypes ref="missionsByTypes" />
           <MissionsByActivities ref="missionsByActivities" />
           <MissionsByTemplates ref="missionsByTemplates" />
         </div>
-        <div class="space-y-12 w-1/2">
+        <div class="space-y-12 lg:w-1/2">
           <MissionsByDomaines ref="missionsByDomaines" />
           <MissionsByTemplateTypes ref="missionsByTemplateTypes" />
           <MissionsByOrganisations ref="missionsByOrganisations" />

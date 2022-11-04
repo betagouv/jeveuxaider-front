@@ -27,11 +27,11 @@
       <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" />
 
       <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 w-1/2">
+        <div class="space-y-12 lg:w-1/2">
           <ParticipationsByActivities ref="participationsByActivities" />
           <ParticipationsByReseaux ref="participationsByReseaux" />
         </div>
-        <div class="space-y-12 w-1/2">
+        <div class="space-y-12 lg:w-1/2">
           <ParticipationsByDomaines ref="participationsByDomaines" />
           <ParticipationsByOrganisations ref="participationsByOrganisations" />
         </div>

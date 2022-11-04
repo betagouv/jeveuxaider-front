@@ -18,18 +18,12 @@
         :value="`${statistics.organisations_conversion_rate}%`"
         title="Taux de conversion"
         :gauge-percentage="statistics.organisations_conversion_rate"
-        infos-bulle="Correspond au ratio entre le nombre d'organisations isncrites et le nombre de organisations validées sur la période"
+        infos-bulle="Correspond au ratio entre le nombre d'organisations inscrites et le nombre de organisations validées sur la période"
       />
       <CardStatistic
-        class="col-start-1"
         :value="`${Math.round((statistics.organisations_response_time_avg / (3600*24)) * 10) / 10} jours`"
         :title="`Temps de réponse`"
-        infos-bulle="Temps moyen de traitement aux demandes de participation reçues sur la période sélectionnée"
-      />
-      <CardStatistic
-        :value="`${statistics.organisations_response_ratio_avg}%`"
-        :title="`Taux de réponse`"
-        infos-bulle="Taux de réponse aux demandes de participations reçues sur la période sélectionnée"
+        infos-bulle="Temps moyen de traitement des mises en relation reçues sur la période sélectionnée"
       />
     </div>
   </Box>

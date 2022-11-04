@@ -12,15 +12,15 @@
 
         <CardStatistic
           :value="incomingApplies"
-          title="Candidatures générées"
+          title="Mises en relation générées"
           subtitle="chez JVA"
-          infos-bulle="Candidatures générées par le trafic provenant des partenaires"
+          infos-bulle="Mises en relation générées par le trafic provenant des partenaires"
         />
         <CardStatistic
           :value="`${incomingConversionRate}%`"
           title="Taux de conversion"
           subtitle="chez JVA"
-          infos-bulle="Rapport des candidatures générées sur les redirections"
+          infos-bulle="Rapport des mises en relation générées sur les redirections"
         />
       </div>
     </Box>
@@ -31,7 +31,7 @@
         <TableHead>
           <TableHeadCell>Nom</TableHeadCell>
           <TableHeadCell>Redirections</TableHeadCell>
-          <TableHeadCell>Candidatures générées</TableHeadCell>
+          <TableHeadCell>Mises en relation générées</TableHeadCell>
           <TableHeadCell>Taux de conversion</TableHeadCell>
         </TableHead>
         <TableBody>
@@ -71,15 +71,15 @@
         />
         <CardStatistic
           :value="outgoingApplies"
-          title="Candidatures générées"
+          title="Mises en relation générées"
           subtitle="chez les partenaires"
-          infos-bulle="Candidatures générées chez les partenaires suite à une redirection depuis Je veux aider"
+          infos-bulle="Mises en relation générées chez les partenaires suite à une redirection depuis Je veux aider"
         />
         <CardStatistic
           :value="`${outgoingConversionRate}%`"
           title="Taux de conversion"
           subtitle="chez les partenaires"
-          infos-bulle="Rapport des candidatures générées sur les redirections"
+          infos-bulle="Rapport des mises en relation générées sur les redirections"
         />
       </div>
     </Box>
@@ -90,7 +90,7 @@
         <TableHead>
           <TableHeadCell>Nom</TableHeadCell>
           <TableHeadCell>Redirections</TableHeadCell>
-          <TableHeadCell>Candidatures générées</TableHeadCell>
+          <TableHeadCell>Mises en relation générées</TableHeadCell>
           <TableHeadCell>Taux de conversion</TableHeadCell>
         </TableHead>
         <TableBody>

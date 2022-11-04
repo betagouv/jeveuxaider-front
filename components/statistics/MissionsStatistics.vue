@@ -12,9 +12,9 @@
       <CardStatistic
         :value="statistics.missions_validated_and_over"
         :title="`${$options.filters.pluralize(statistics.missions_validated_and_over, 'Mission', 'Missions', false)}`"
-        :subtitle="`${$options.filters.pluralize(statistics.missions_validated_and_over, 'validée ou terminée', 'validées ou terminées', false)}`"
+        :subtitle="`${$options.filters.pluralize(statistics.missions_validated_and_over, 'validée', 'validées', false)}`"
         link="/admin/missions"
-        infos-bulle="Correspond aux missions créées sur la période, qui sont validées ou bien terminées"
+        infos-bulle="Correspond aux missions validées et créées sur la période"
       />
       <CardStatistic
         :value="statistics.missions_participations_max_sum"
@@ -27,7 +27,7 @@
         :title="`${$options.filters.pluralize(statistics.missions_snu, 'Mission SNU-MIG', 'Missions SNU-MIG', false)}`"
         :subtitle="`${$options.filters.pluralize(statistics.missions_snu, 'créée', 'créées', false)}`"
         link="/admin/missions"
-        infos-bulle="Correspond aux missions proposées en MIG créées sur la période, qui sont validées ou bien terminées"
+        infos-bulle="Correspond aux missions proposées en MIG créées sur la période"
       />
       <CardStatistic
         :value="statistics.missions_snu_participations_max_sum"

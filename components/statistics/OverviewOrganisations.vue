@@ -23,8 +23,8 @@
       <CardStatistic
         :value="statistics.reseaux"
         :title="`${$options.filters.pluralize(statistics.reseaux, 'Réseau', 'Réseaux', false)}`"
-        subtitle="en ligne"
-        infos-bulle="Nombre de territoires en ligne en ce moment"
+        subtitle="inscrits"
+        infos-bulle="Nombre de réseaux inscrits en ce moment"
       />
     </div>
   </Box>

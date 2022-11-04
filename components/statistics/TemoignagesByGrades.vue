@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Évaluations des bénévoles de leurs missions" class="mb-6" infos-bulle="Évaluations des bénévoles de leurs missions sur la période" />
+    <BoxHeadingStatistics title="Retours des bénévoles sur leurs missions" class="mb-6" infos-bulle="Fonctionnalité mise en place au mois de septembre 2021" />
     <div v-if="items" class="flex flex-col gap-2">
       <div
         v-for="item, i in items"

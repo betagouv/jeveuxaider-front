@@ -18,13 +18,14 @@
         </div>
       </template>
     </SectionHeading>
-
-    <div class="text-sm space-y-2 text-gray-600 leading-6">
-      <p>JeVeuxAider.gouv.fr est la plateforme publique du bénévolat, proposée par la Réserve Civique. Elle met en relation des individus qui souhaitent agir pour l’intérêt général avec des associations et organisations publiques qui ont besoin de bénévoles.</p>
-      <p>JeVeuxAider.gouv.fr est ouvert à toute personne âgée de plus de 16 ans et résidant en France, souhaitant s’engager de façon bénévole et occasionnelle, sur tout le territoire. Fondée sur les valeurs de la République, JeVeuxAider.gouv.fr se mobilise pour construire une société plus résiliente et solidaire.</p>
-      <p>Afin de suivre l’impact et l’activité de JeVeuxAider.gouv.fr, nous mettons à disposition les données disponibles ci-dessous, qui couvrent la période allant de mars 2020 à aujourd’hui, sur toute la France. Pour plus de précisions, il est possible de filtrer en fonction du département et de la date souhaitée.</p>
-      <p>Vous avez une question ? L’équipe du Support Utilisateurs se tient à votre disposition pour y répondre !</p>
-    </div>
+    <Box>
+      <div class="space-y-2 text-gray-600 leading-6">
+        <p>JeVeuxAider.gouv.fr est la plateforme publique du bénévolat, proposée par la Réserve Civique. Elle met en relation des individus qui souhaitent agir pour l’intérêt général avec des associations et organisations publiques qui ont besoin de bénévoles.</p>
+        <p>JeVeuxAider.gouv.fr est ouvert à toute personne âgée de plus de 16 ans et résidant en France, souhaitant s’engager de façon bénévole et occasionnelle, sur tout le territoire. Fondée sur les valeurs de la République, JeVeuxAider.gouv.fr se mobilise pour construire une société plus résiliente et solidaire.</p>
+        <p>Afin de suivre l’impact et l’activité de JeVeuxAider.gouv.fr, nous mettons à disposition les données disponibles ci-dessous, qui couvrent la période allant de mars 2020 à aujourd’hui, sur toute la France. Pour plus de précisions, il est possible de filtrer en fonction du département et de la date souhaitée.</p>
+        <p>Vous avez une question ? L’équipe du Support Utilisateurs se tient à votre disposition pour y répondre !</p>
+      </div>
+    </Box>
 
     <OverviewQuickGlance ref="overviewQuickGlance" />
 

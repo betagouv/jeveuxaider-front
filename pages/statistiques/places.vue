@@ -22,15 +22,15 @@
     <div class="space-y-12">
       <PlacesStatistics ref="placesStatistics" />
       <Heading as="h2" :level="2">
-        L'offre actuel en détail
+        L'offre actuelle en détail
       </Heading>
       <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 w-1/2">
+        <div class="space-y-12 lg:w-1/2">
           <PlacesByActivities ref="placesByActivities" />
           <PlacesByOrganisations ref="placesByOrganisations" />
           <PlacesByReseaux ref="placesByReseaux" />
         </div>
-        <div class="space-y-12 w-1/2">
+        <div class="space-y-12 lg:w-1/2">
           <PlacesByDomaines ref="placesByDomaines" />
           <PlacesByMissions ref="placesByMissions" />
         </div>
