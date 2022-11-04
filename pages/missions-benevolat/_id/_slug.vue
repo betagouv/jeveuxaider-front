@@ -234,36 +234,33 @@
               </div>
 
               <div class="mt-4 mx-6">
-                <!-- <LoadingIndicator
-                  v-if="conversationId === null && $store.getters.isLogged"
-                  class="min-h-[66px]"
-                /> -->
-
-                <!-- <Button
-                  v-else-if="conversationId"
+                <LoadingIndicator v-if="loading" class="min-h-[66px]" />
+                <Button
+                  v-else-if="userParticipation"
                   size="xl"
                   rounded
                   full
                   variant="white"
                   plain
                   class="mt-4"
-                  @click.native="$router.push(`/messages/${conversationId}`)"
+                  @click.native="$router.push(userParticipationLink)"
                 >
                   Suivre ma candidature
-                </Button> -->
-                <template v-if="canRegister">
+                </Button>
+                <template v-else-if="canRegister">
                   <template v-if="mission.dates">
                     <div v-if="!dateSelected" class="flex justify-center">
-                      <v-calendar
-
-                        ref="calendar"
-                        :attributes="calendarAttrs"
-                        :min-date="new Date()"
-                        trim-weeks
-                        @dayclick="handleDayClick"
-                        @transition-end="addHighlightClasses"
-                        @hook:mounted="addHighlightClasses"
-                      />
+                      <client-only>
+                        <v-calendar
+                          ref="calendar"
+                          :attributes="calendarAttrs"
+                          :min-date="new Date()"
+                          trim-weeks
+                          @dayclick="handleDayClick"
+                          @transition-end="addHighlightClasses"
+                          @hook:mounted="addHighlightClasses"
+                        />
+                      </client-only>
                     </div>
                     <div v-else-if="dateSelected" class="mt-3 relative mx-6">
                       <div class="left-0 top--0.5 absolute cursor-pointer group p-1 hover:bg-[#edf2f7] rounded-sm" @click="handlePreviousStepClick">
@@ -410,17 +407,20 @@ export default {
       dateSelected: null,
       slotSelected: null,
       similarMissions: [],
-      conversationId: null
+      userParticipation: null,
+      loading: false
     }
   },
   async fetch () {
+    if (this.$store.getters.isLogged) {
+      this.loading = true
+      const { data: userParticipation } = await this.$axios.get(`/user/mission/${this.mission.id}/has-participation`)
+      this.userParticipation = userParticipation || null
+      this.loading = false
+    }
+
     const { data: missions } = await this.$axios.get(`/missions/${this.mission.id}/similar`)
     this.similarMissions = missions
-
-    // if (this.$store.getters.isLogged) {
-    //   const { data: conversationId } = await this.$axios.get(`/user/mission/${this.mission.id}/has-participation`)
-    //   this.conversationId = conversationId
-    // }
   },
   head () {
     return {
@@ -539,6 +539,11 @@ export default {
             .map(day => day.date)
         }
       ]
+    },
+    userParticipationLink () {
+      return !this.userParticipation
+        ? null
+        : this.userParticipation.conversation?.id ? `/messages/${this.userParticipation.conversation.id}` : '/profile/missions'
     }
   },
   mounted () {

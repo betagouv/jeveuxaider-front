@@ -13,9 +13,7 @@
 
       <div class="absolute inset-0 bg-[#F27830] opacity-80" />
 
-      <div
-        class="relative mt-auto p-6 sm:p-8 flex flex-col items-center text-center"
-      >
+      <div class="relative mt-auto p-6 sm:py-8 flex flex-col items-center text-center">
         <div class="text-5xl leading-none mb-1">
           🍞
         </div>
