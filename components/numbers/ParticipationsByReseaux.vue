@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Récupération des réseaux...">
-    <BoxHeadingStatistics title="Topito des réseaux" class="mb-6" infos-bulle="Liste des réseaux ayant reçu le plus de mises en relation sur la période" />
+    <BoxHeadingStatistics title="Réseaux les plus actifs" class="mb-6" infos-bulle="Liste des réseaux ayant reçu le plus de mises en relation sur la période" />
     <StackedList v-if="items" :divided="false">
       <StackedListItem
         v-for="item, i in items"
