@@ -4,13 +4,13 @@
       <Breadcrumb
         :items="[
           { label: 'Statistiques', link: '/statistiques' },
-          { label: 'Participations' },
+          { label: 'Mises en relation' },
         ]"
       />
     </portal>
 
     <SectionHeading
-      title="Participations"
+      title="Mises en relation"
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
@@ -22,7 +22,7 @@
     <div class="space-y-12">
       <ParticipationsStatistics ref="participationsStatistics" class="lg:col-span-2" />
       <Heading as="h2" :level="2">
-        Les participations en détail
+        Les mises en relation en détail
       </Heading>
       <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" />
 

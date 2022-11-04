@@ -58,7 +58,7 @@ export default {
           label: 'Statistiques',
           childrens: [
             { label: 'Vue d\'ensemble', to: '/statistiques' },
-            { label: 'Participations', to: '/statistiques/participations' },
+            { label: 'Mises en relation', to: '/statistiques/participations' },
             { label: 'Utilisateurs', to: '/statistiques/utilisateurs' },
             { label: 'Organisations', to: '/statistiques/organisations' },
             { label: 'Missions', to: '/statistiques/missions' },

@@ -1,10 +1,10 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Participations ›" link="/statistiques/participations" no-period class="mb-6" />
+    <BoxHeadingStatistics title="Mises en relation ›" link="/statistiques/participations" no-period class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.participations"
-        :title="`${$options.filters.pluralize(statistics.participations, 'Nouvelle mise en relation', 'Nouvelles mises en relation', false)}`"
+        :title="`${$options.filters.pluralize(statistics.participations, 'Mise en relation', 'Mises en relation', false)}`"
         infos-bulle="Total de mises en relation depuis le début"
       />
       <CardStatistic
