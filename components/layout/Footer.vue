@@ -351,13 +351,8 @@ export default {
         },
         {
           name: 'Statistiques',
-          url: 'https://reserve-civique-metabase.osc-secnum-fr1.scalingo.io/public/dashboard/c25b3d89-d800-4ab7-bdd1-c225328da9ce',
-          external: true
+          url: '/statistiques'
         },
-        // {
-        //   name: 'Statistiques',
-        //   url: '/statistiques'
-        // },
         {
           name: 'Presse',
           url: 'https://www.jeveuxaider.gouv.fr/engagement/presse/',
