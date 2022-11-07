@@ -385,11 +385,17 @@
             <div
               v-for="role in profile.user.roles"
               :key="role.id"
-              class="flex items-center justify-between group hover:cursor-pointer h-16"
+              class="flex items-center justify-between  h-16"
+              :class="[role.name != 'admin' && 'group hover:cursor-pointer']"
               @click="handleClickRole(role)"
             >
               <div class="text-gray-700 font-medium mr-4 truncate group-hover:underline">
-                <span v-if="role.pivot_model.number">{{ role.pivot_model.number }} -</span> {{ role.pivot_model.name }}
+                <template v-if="role.pivot_model">
+                  <span v-if="role.pivot_model.number">{{ role.pivot_model.number }} -</span> {{ role.pivot_model.name }}
+                </template>
+                <template v-else-if="role.name == 'admin'">
+                  Modérateur
+                </template>
               </div>
               <div class="group-hover:hidden">
                 <Badge color="gray-light" size="xxs">
@@ -401,7 +407,7 @@
               </div>
             </div>
           </div>
-          <Button size="sm" class="mb-8" variant="white" @click.native="showDrawerFormRole = true">
+          <Button size="sm" class="mb-8" :class="[profile.user?.roles.length > 0 ? 'mt-8' : '']" variant="white" @click.native="showDrawerFormRole = true">
             <PlusIcon class="mr-2" />Ajouter un rôle
           </Button>
           <div class="gap-8 grid grid-cols-1">

@@ -25,14 +25,14 @@
 
       <FormProfile
         ref="form"
-        :profile="form"
+        :profile="profile"
+        @role-changed="handleRoleChanged()"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { cloneDeep } from 'lodash'
 import FormProfile from '@/components/form/FormProfile.vue'
 
 export default {
@@ -40,10 +40,16 @@ export default {
     FormProfile
   },
   middleware: 'authenticated',
+  async asyncData ({ $axios, error, store }) {
+    const { data: profile } = await $axios.get(`/profiles/${store.state.auth.user.profile.id}`)
+
+    return {
+      profile
+    }
+  },
   data () {
     return {
-      loading: false,
-      form: cloneDeep(this.$store.state.auth.user.profile)
+      loading: false
     }
   },
   methods: {
@@ -54,16 +60,11 @@ export default {
       this.loading = true
       await this.$refs.form.handleSubmit()
       this.loading = false
+    },
+    async handleRoleChanged () {
+      const { data: profile } = await this.$axios.get(`/profiles/${this.profile.id}`)
+      this.profile = profile
     }
-    // async onSubmitted (profile) {
-    //   await this.$store.dispatch('auth/updateProfile', {
-    //     id: this.$store.getters.profile.id,
-    //     ...profile
-    //   })
-    //   // this.loading = false
-    //   this.$toast.success('Modifications enregistrées')
-    //   // this.$router.push('/profile')
-    // }
   }
 }
 </script>
