@@ -26,13 +26,13 @@
       </Heading>
       <UtilisateursByDate ref="utilisateursByDate" />
       <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 w-1/2">
-          <UtilisateursByDomaines ref="utilisateursByDomaines" />
-          <ParticipationsCanceledByBenevoles ref="participationsCanceledByBenevoles" />
-        </div>
-        <div class="space-y-12 w-1/2">
+        <div class="space-y-12 lg:w-1/2">
           <TemoignagesByGrades ref="temoignagesByGrades" />
           <ParticipationsDelaysByRegistrations ref="participationsDelaysByRegistrations" />
+        </div>
+        <div class="space-y-12 lg:w-1/2">
+          <UtilisateursByDomaines ref="utilisateursByDomaines" />
+          <!-- <ParticipationsCanceledByBenevoles ref="participationsCanceledByBenevoles" /> -->
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@ import FiltersStatistics from '@/components/custom/FiltersStatistics'
 import UtilisateursStatistics from '@/components/statistics/UtilisateursStatistics.vue'
 import UtilisateursByDate from '@/components/statistics/UtilisateursByDate.vue'
 import UtilisateursByDomaines from '@/components/statistics/UtilisateursByDomaines.vue'
-import ParticipationsCanceledByBenevoles from '@/components/statistics/ParticipationsCanceledByBenevoles.vue'
+// import ParticipationsCanceledByBenevoles from '@/components/statistics/ParticipationsCanceledByBenevoles.vue'
 import ParticipationsDelaysByRegistrations from '@/components/statistics/ParticipationsDelaysByRegistrations.vue'
 import TemoignagesByGrades from '@/components/statistics/TemoignagesByGrades.vue'
 
@@ -54,7 +54,7 @@ export default {
     UtilisateursStatistics,
     UtilisateursByDate,
     UtilisateursByDomaines,
-    ParticipationsCanceledByBenevoles,
+    // ParticipationsCanceledByBenevoles,
     ParticipationsDelaysByRegistrations,
     TemoignagesByGrades
   },
@@ -66,7 +66,7 @@ export default {
     refetch () {
       this.$refs.utilisateursStatistics.$fetch()
       this.$refs.utilisateursByDate.$fetch()
-      this.$refs.participationsCanceledByBenevoles.$fetch()
+      // this.$refs.participationsCanceledByBenevoles.$fetch()
       this.$refs.utilisateursByDomaines.$fetch()
       this.$refs.participationsDelaysByRegistrations.$fetch()
       this.$refs.temoignagesByGrades.$fetch()

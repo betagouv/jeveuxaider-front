@@ -11,9 +11,9 @@
 
       <CardStatistic
         :value="statistics.incomingApplies"
-        title="Candidatures générées"
+        title="Mises en relation générées"
         subtitle="chez JVA"
-        infos-bulle="Candidatures générées par le trafic provenant des partenaires"
+        infos-bulle="Mises en relation générées par le trafic provenant des partenaires"
       />
       <CardStatistic
         :value="statistics.outgoingTrafic"
@@ -23,9 +23,9 @@
       />
       <CardStatistic
         :value="statistics.outgoingApplies"
-        title="Candidatures générées"
+        title="Mises en relation générées"
         subtitle="chez les partenaires"
-        infos-bulle="Candidatures générées chez les partenaires suite à une redirection depuis Je veux aider"
+        infos-bulle="Mises en relation générées chez les partenaires suite à une redirection depuis Je veux aider"
       />
     </div>
   </Box>

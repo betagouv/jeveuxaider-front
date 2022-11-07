@@ -17,13 +17,13 @@
       <CardStatistic
         :value="statistics.benevoles_visibles_marketplace"
         :title="`${$options.filters.pluralize(statistics.benevoles_visibles_marketplace, 'Bénévole visible', 'Bénévoles visibles', false)}`"
-        subtitle="sur la mise en relation inversée"
-        infos-bulle="Nombre de bénévoles inscrits sur la période et visibles sur la mise en relation inversée"
+        subtitle="pour une mise en relation inversée"
+        infos-bulle="Nombre de bénévoles inscrits sur la période et visibles pour une mise en relation inversée"
       />
       <CardStatistic
         :value="statistics.benevoles_notifications_martketplace"
         :title="`${$options.filters.pluralize(statistics.benevoles_notifications_martketplace, 'Demande', 'Demandes', false)}`"
-        subtitle="via la mise en relation inversée"
+        subtitle="de mise en relation par les organisations"
         infos-bulle="Nombre de notifications envoyées aux bénévoles sur la période pour les inviter à participer à leurs missions"
       />
     </div>

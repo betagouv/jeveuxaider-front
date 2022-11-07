@@ -26,14 +26,14 @@
       </Heading>
       <OrganisationsByDate ref="organisationsByDate" class="" />
       <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 w-1/2">
+        <div class="space-y-12 lg:w-1/2">
           <OrganisationsByStates ref="organisationsByStates" />
-          <OrganisationsByTypes ref="organisationsByTypes" />
-          <ParticipationsRefusedByResponsables ref="participationsRefusedByResponsables" />
-        </div>
-        <div class="space-y-12 w-1/2">
-          <OrganisationsByDomaines ref="organisationsByDomaines" />
           <OrganisationsByReseaux ref="organisationsByReseaux" />
+          <!-- <ParticipationsRefusedByResponsables ref="participationsRefusedByResponsables" /> -->
+        </div>
+        <div class="space-y-12 lg:w-1/2">
+          <OrganisationsByTypes ref="organisationsByTypes" />
+          <OrganisationsByDomaines ref="organisationsByDomaines" />
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@ import OrganisationsByStates from '@/components/statistics/OrganisationsByStates
 import OrganisationsByTypes from '@/components/statistics/OrganisationsByTypes.vue'
 import OrganisationsByDomaines from '@/components/statistics/OrganisationsByDomaines.vue'
 import OrganisationsByReseaux from '@/components/statistics/OrganisationsByReseaux.vue'
-import ParticipationsRefusedByResponsables from '@/components/statistics/ParticipationsRefusedByResponsables.vue'
+// import ParticipationsRefusedByResponsables from '@/components/statistics/ParticipationsRefusedByResponsables.vue'
 
 export default {
   components: {
@@ -58,8 +58,8 @@ export default {
     OrganisationsByStates,
     OrganisationsByTypes,
     OrganisationsByDomaines,
-    OrganisationsByReseaux,
-    ParticipationsRefusedByResponsables
+    OrganisationsByReseaux
+    // ParticipationsRefusedByResponsables
   },
   layout: 'statistics-public',
   data () {
@@ -71,7 +71,7 @@ export default {
       this.$refs.organisationsStatistics.$fetch()
       this.$refs.organisationsByStates.$fetch()
       this.$refs.organisationsByTypes.$fetch()
-      this.$refs.participationsRefusedByResponsables.$fetch()
+      // this.$refs.participationsRefusedByResponsables.$fetch()
       this.$refs.organisationsByDomaines.$fetch()
       this.$refs.organisationsByReseaux.$fetch()
     }

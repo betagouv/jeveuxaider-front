@@ -20,7 +20,7 @@
         :value="statistics.utilisateurs_with_participations"
         :title="`${$options.filters.pluralize(statistics.utilisateurs_with_participations, 'Bénévole actif', 'Bénévoles actifs', false)}`"
         link="/admin/utilisateurs"
-        infos-bulle="Nombre de bénévoles isncrits sur la période ayant fait au moins une demande de candidature"
+        infos-bulle="Nombre de bénévoles isncrits sur la période ayant fait au moins une mise en relation"
       />
       <CardStatistic
         :value="statistics.participations_avg.toString()"

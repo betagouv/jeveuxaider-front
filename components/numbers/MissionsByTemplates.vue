@@ -11,7 +11,7 @@
       >
         <div class="text-gray-900 font-semibold" v-html="item.title" />
         <div class="text-gray-500 text-sm">
-          {{ $options.filters.pluralize(item.count, 'mission validée / terminée', 'missions / terminées') }}
+          {{ $options.filters.pluralize(item.count, 'mission validée', 'missions validées') }}
         </div>
       </StackedListItem>
     </StackedList>
