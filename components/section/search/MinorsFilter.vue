@@ -1,20 +1,23 @@
 <template>
-  <BadgeFilter
-    :is-active="isMinors"
-    class="cursor-pointer"
+  <Tag
+    as="button"
+    size="md"
+    context="selectable"
+    :is-selected="isMinors"
+    is-selected-class="border-gray-50 bg-gray-50"
     @click.native="handleToggle"
   >
-    <span :class="[{'text-jva-blue-500': isMinors}]">Ouverte aux mineurs</span>
-  </BadgeFilter>
+    Ouverte aux mineurs
+  </Tag>
 </template>
 
 <script>
-import BadgeFilter from '~/components/search/BadgeFilter.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 import MixinMinorsFilter from '@/mixins/search/mission/minors-filter'
 
 export default {
   components: {
-    BadgeFilter
+    Tag
   },
   mixins: [MixinMinorsFilter]
 }

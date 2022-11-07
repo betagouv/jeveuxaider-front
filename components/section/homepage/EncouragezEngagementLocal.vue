@@ -1,31 +1,29 @@
 <template>
   <div
-    class="px-6 pt-10 pb-12 lg:px-8 lg:py-12 xl:px-16 xl:py-12 bg-jva-green-500 rounded-[10px] shadow-xl relative overflow-hidden"
+    class="px-6 pt-10 pb-12 lg:px-8 lg:py-12 xl:px-14 xl:py-12 bg-[#6A6AF4] shadow-xl relative overflow-hidden"
   >
     <div
-      class="flex flex-col items-start text-center md:text-left h-full"
+      class="flex flex-col items-start text-center lg:text-left h-full"
     >
       <div
-        class="flex-none w-full font-bold text-white tracking-wide leading-[22px] mb-6 truncate"
+        class="flex-none w-full text-white text-lg mb-6 uppercase"
       >
-        COLLECTIVITÉS TERRITORIALES ET TERRITOIRES
+        Collectivités territoriales et territoires
       </div>
-      <h2
-        class="text-white justify-end text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight mb-8"
-      >
-        <span>Encouragez</span>
-        <strong class="font-extrabold"> l'engagement local </strong>
-        <span>de vos citoyens</span>
-      </h2>
+
+      <Heading as="h2" size="2xl" class="mb-8" color="text-white">
+        Encouragez l'engagement local de vos citoyens
+      </Heading>
+
       <img
         src="/images/homepage/collectivites_territoires.svg"
         alt="Collectivités territoriales et territoires"
         width="311"
         height="299"
-        class="mx-auto mb-8 md:h-full md:max-h-[170px] lg:max-h-[270px]"
+        class="mx-auto mb-8 lg:h-full lg:max-h-[170px] xl:max-h-[270px]"
       >
 
-      <ul class="text-left space-y-3 mb-8">
+      <ul class="text-left space-y-3 mb-8 mx-auto">
         <li
           v-for="(goal, index) in goals.collectivites"
           :key="index"
@@ -47,16 +45,25 @@
 
       <nuxt-link
         to="/inscription/responsable?orga_type=Collectivité"
-        class="w-full lg:w-auto flex items-center justify-center text-center px-12 py-3 font-bold rounded-full text-jva-green-500 bg-white hover:scale-105 transform transition mt-auto lg:mx-auto"
+        class="flex items-center justify-center mx-auto mt-auto"
       >
-        Inscrire ma collectivité territoriale
+        <Button size="lg" type="tertiary-no-outline" tabindex="-1">
+          Inscrire ma collectivité territoriale
+        </Button>
       </nuxt-link>
     </div>
   </div>
 </template>
 
 <script>
+import Heading from '@/components/dsfr/Heading.vue'
+import Button from '@/components/dsfr/Button.vue'
+
 export default {
+  components: {
+    Heading,
+    Button
+  },
   data () {
     return {
       goals: {

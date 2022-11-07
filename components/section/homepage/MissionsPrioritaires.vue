@@ -3,17 +3,14 @@
     v-if="missions.length > 0"
     class="overflow-hidden xl:mt-6 pb-16"
   >
-    <div class="container mx-auto px-8 sm:px-4 xl:max-w-[1412px]">
+    <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
-        <div class="flex justify-between items-baseline mb-6">
-          <h2
-            class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight text-center md:text-left"
-          >
-            Les missions de bénévolat
-            <strong class="font-extrabold">prioritaires</strong>
-          </h2>
+        <div class="flex justify-between items-baseline mb-12">
+          <Heading as="h2" size="2xl" class="text-center md:text-left">
+            Les missions de bénévolat prioritaires
+          </Heading>
           <span
-            class="hidden lg:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0] font-light"
+            class="hidden lg:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
           >
             #{{ $dayjs(Date.now()).format('MMMM') }}
           </span>
@@ -47,11 +44,13 @@
 
 <script>
 import CardMission from '@/components/card/CardMission'
+import Heading from '@/components/dsfr/Heading.vue'
 import CardBanquesAlimentaires from '@/components/card/CardBanquesAlimentaires'
 
 export default {
   components: {
     CardMission,
+    Heading,
     CardBanquesAlimentaires
   },
   data () {
@@ -68,7 +67,7 @@ export default {
 
 <style lang="postcss" scoped>
 .card--mission--wrapper {
-  @apply !flex flex-col h-full max-w-[323px] rounded-[10px] transition;
+  @apply !flex flex-col h-full max-w-[323px] transition;
   width: calc(100vw - 64px) !important;
   @apply w-full;
 }

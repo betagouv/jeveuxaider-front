@@ -1,9 +1,11 @@
 <template>
   <div>
-    <Breadcrumb
-      :items="[{ label: 'Organisations', link: '/organisations' }]"
-      class="container md:px-8 border-b-0"
-    />
+    <div class="container md:px-8">
+      <Breadcrumb
+        :links="[{ text: 'Organisations' }]"
+      />
+    </div>
+
     <AlgoliaSearch
       :secondary-filters="['domaines.name', 'reseaux.name', 'department_name', 'statut_juridique']"
     />
@@ -12,10 +14,12 @@
 
 <script>
 import AlgoliaSearch from '~/components/section/search/organisations/AlgoliaSearch.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    AlgoliaSearch
+    AlgoliaSearch,
+    Breadcrumb
   },
   middleware: 'search',
   data () {

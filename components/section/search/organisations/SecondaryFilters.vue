@@ -4,37 +4,52 @@
       <template v-for="filter,i in filtersName">
         <FacetFilterToggle v-if="filter === 'publics_beneficiaires'" :key="i" facet-name="publics_beneficiaires" label="Publics aidés">
           <template #button="{ firstValueSelected, activeValuesCount }">
-            <BadgeFilter :is-active="!!activeValuesCount">
+            <Tag
+              :is-active="!!activeValuesCount"
+              context="clickable"
+              size="md"
+              as="button"
+            >
               <span v-if="!firstValueSelected">Publics aidés</span>
-              <div v-else class="text-jva-blue-500 flex">
+              <div v-else>
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </div>
-            </BadgeFilter>
+            </Tag>
           </template>
         </FacetFilterToggle>
 
         <FacetFilterToggle v-if="filter === 'domaines.name'" :key="i" facet-name="domaines.name" label="Domaines">
           <template #button="{ firstValueSelected, activeValuesCount }">
-            <BadgeFilter :is-active="!!activeValuesCount">
+            <Tag
+              :is-active="!!activeValuesCount"
+              context="clickable"
+              size="md"
+              as="button"
+            >
               <span v-if="!firstValueSelected">Domaines</span>
-              <div v-else class="text-jva-blue-500 flex">
+              <div v-else>
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </div>
-            </BadgeFilter>
+            </Tag>
           </template>
         </FacetFilterToggle>
 
         <FacetFilterToggle v-if="filter === 'reseaux.name'" :key="i" facet-name="reseaux.name" label="Réseaux" options-class="right-0 md:left-0">
           <template #button="{ firstValueSelected, activeValuesCount }">
-            <BadgeFilter :is-active="!!activeValuesCount">
+            <Tag
+              :is-active="!!activeValuesCount"
+              context="clickable"
+              size="md"
+              as="button"
+            >
               <span v-if="!firstValueSelected">Réseaux</span>
-              <div v-else class="text-jva-blue-500 flex">
+              <div v-else>
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </div>
-            </BadgeFilter>
+            </Tag>
           </template>
         </FacetFilterToggle>
 
@@ -46,25 +61,35 @@
           options-class="right-0 lg:left-0"
         >
           <template #button="{ firstValueSelected, activeValuesCount }">
-            <BadgeFilter :is-active="!!activeValuesCount">
+            <Tag
+              :is-active="!!activeValuesCount"
+              context="clickable"
+              size="md"
+              as="button"
+            >
               <span v-if="!firstValueSelected">Départements</span>
-              <div v-else class="text-jva-blue-500 flex">
+              <div v-else>
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </div>
-            </BadgeFilter>
+            </Tag>
           </template>
         </FacetFilterToggle>
 
         <FacetFilterToggle v-if="filter === 'statut_juridique'" :key="i" facet-name="statut_juridique" label="Types d’organisation" options-class="right-0 md:left-0">
           <template #button="{ firstValueSelected, activeValuesCount }">
-            <BadgeFilter :is-active="!!activeValuesCount">
+            <Tag
+              :is-active="!!activeValuesCount"
+              context="clickable"
+              size="md"
+              as="button"
+            >
               <span v-if="!firstValueSelected">Types d’organisation</span>
-              <div v-else class="text-jva-blue-500 flex">
+              <div v-else>
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </div>
-            </BadgeFilter>
+            </Tag>
           </template>
         </FacetFilterToggle>
       </template>
@@ -72,8 +97,7 @@
 
     <div class="hidden sm:flex lg:items-center lg:justify-center mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
       <Link
-        class="uppercase hover:underline text-sm"
-        :link-class="[{'pointer-events-none opacity-0': !hasActiveFilters}]"
+        :class="['text-jva-blue-500', {'pointer-events-none opacity-0': !hasActiveFilters}]"
         @click.native="deleteAllFilters()"
       >
         Réinitialiser
@@ -84,13 +108,15 @@
 
 <script>
 import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue'
-import BadgeFilter from '~/components/search/BadgeFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
+import Link from '@/components/dsfr/Link.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
     FacetFilterToggle,
-    BadgeFilter
+    Link,
+    Tag
   },
   mixins: [AlgoliaQueryBuilder],
   props: {

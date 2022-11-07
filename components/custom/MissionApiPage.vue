@@ -1,46 +1,33 @@
 <template>
   <div>
-    <div class="absolute w-full" style="height: 360px">
-      <img
-        src="/images/missions/bg_header_mission.jpg"
-        alt="Mission bénévolat"
-        class="object-cover w-full h-full"
-      >
-    </div>
-
-    <div class="relative mb-12">
-      <Breadcrumb
-        theme="transparent"
-        class="relative z-10 px-4 xl:container !max-w-7xl"
-        :items="[
-          { label: 'Missions de bénévolat', link: '/missions-benevolat' },
-          {
-            label: mission.domaine_name,
-            link: `/missions-benevolat?domaines=${mission.domaine_name}`,
-          },
-          {
-            label: breadcrumbTitle,
-            h1: true,
-          },
-        ]"
-      />
+    <div class="mb-12">
+      <div class="px-4 max-w-3xl mx-auto lg:max-w-7xl">
+        <Breadcrumb
+          :links="[
+            { text: 'Missions de bénévolat', to: '/missions-benevolat' },
+            {
+              text: mission.domaine_name,
+              to: `/missions-benevolat?domaines=${mission.domaine_name}`,
+            },
+            {
+              text: breadcrumbTitle,
+              is: 'h1',
+            },
+          ]"
+        />
+      </div>
 
       <div class="px-4 pb-12 max-w-3xl mx-auto lg:max-w-7xl">
-        <div class="lg:flex lg:items-start lg:gap-6">
-          <div class="space-y-6 flex-1">
+        <div class="lg:flex lg:items-start lg:gap-8">
+          <div class="space-y-8 flex-1">
             <Presentation :mission="mission" />
             <PresentielOrDistance :mission="mission" />
             <Box>
-              <Heading as="div" :level="3" class="mb-4">
+              <div class="text-lg mb-4 text-gray-800">
                 Tout savoir sur cette mission
-              </Heading>
+              </div>
 
-              <TextFormatted :max-lines="7" :text="mission.description" class="text-cool-gray-500 whitespace-pre-line" />
-
-              <ButtonJeProposeMonAideApiEngagement
-                :url="mission.application_url"
-                class="mt-8"
-              />
+              <TextFormatted :max-lines="7" :text="mission.description" class="text-cool-gray-500" />
             </Box>
           </div>
 
@@ -71,7 +58,7 @@
               <div class="mx-8">
                 <ButtonJeProposeMonAideApiEngagement
                   :url="mission.application_url"
-                  class="mt-8"
+                  class="mt-8 w-full"
                 />
               </div>
             </div>
@@ -87,12 +74,14 @@ import Presentation from '@/components/section/mission/Presentation.vue'
 import PresentielOrDistance from '@/components/section/mission/PresentielOrDistance.vue'
 import ButtonJeProposeMonAideApiEngagement from '@/components/custom/ButtonJeProposeMonAideApiEngagement.vue'
 import MixinMission from '@/mixins/mission'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     Presentation,
     PresentielOrDistance,
-    ButtonJeProposeMonAideApiEngagement
+    ButtonJeProposeMonAideApiEngagement,
+    Breadcrumb
   },
   mixins: [MixinMission],
   props: {

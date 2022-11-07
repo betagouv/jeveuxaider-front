@@ -10,31 +10,38 @@
         @close="isSearchMissionsLocalisationOpen = false"
       />
     </template>
-    <div class="flex justify-center items-center gap-3 mt-4">
-      <BadgeFilter
+    <div class="flex justify-center items-center gap-3 mt-6">
+      <Tag
         v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'"
-        class="truncate"
         :is-active="true"
+        context="clickable"
+        size="md"
+        as="button"
+        icon="LocationMarkerIcon"
+        :icon-fill-current="false"
         @click.native="isSearchMissionsLocalisationOpen = true"
       >
-        <div class="flex items-center space-x-2 text-jva-blue-500">
-          <LocationMarkerIcon class="h-4 w-4 flex-none" />
-          <div v-if="$store.state.algoliaSearch.results.aroundLatLng">
-            Autour de moi
-          </div>
-          <div v-else class="truncate">
-            {{ $route.query.city }}
-          </div>
+        <div v-if="$store.state.algoliaSearch.results.aroundLatLng">
+          Autour de moi
         </div>
-      </BadgeFilter>
-      <BadgeFilter :is-active="nbMobileSecondaryFilters > 0" @click.native="isSearchMissionsFiltersOpen = true">
-        <template v-if="nbMobileSecondaryFilters > 0">
-          <span class="text-jva-blue-500">+{{ $options.filters.pluralize(nbMobileSecondaryFilters, 'filtre', 'filtres',) }}</span>
-        </template>
+        <div v-else class="truncate">
+          {{ $route.query.city }}
+        </div>
+      </Tag>
+      <Tag
+        :is-active="nbMobileSecondaryFilters > 0"
+        context="clickable"
+        size="md"
+        as="button"
+        @click.native="isSearchMissionsFiltersOpen = true"
+      >
+        <span v-if="nbMobileSecondaryFilters > 0">
+          +{{ $options.filters.pluralize(nbMobileSecondaryFilters, 'filtre', 'filtres',) }}
+        </span>
         <template v-else>
           Plus de filtres
         </template>
-      </BadgeFilter>
+      </Tag>
     </div>
   </div>
 </template>
@@ -42,14 +49,14 @@
 <script>
 import DrawerSearchMissionsFilters from '@/components/drawer/DrawerSearchMissionsFilters.vue'
 import DrawerSearchMissionsLocalisation from '@/components/drawer/DrawerSearchMissionsLocalisation.vue'
-import BadgeFilter from '~/components/search/BadgeFilter.vue'
 import AlgoliaMissionsQueryBuilder from '@/mixins/algolia-missions-query-builder'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
     DrawerSearchMissionsFilters,
     DrawerSearchMissionsLocalisation,
-    BadgeFilter
+    Tag
   },
   mixins: [AlgoliaMissionsQueryBuilder],
   data () {

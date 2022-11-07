@@ -12,25 +12,29 @@
     <Blog v-if="$store.state.settings.general.blog_active" />
     <Temoignages />
 
-    <section>
-      <div class="container mx-auto px-4 xl:max-w-[1412px]">
-        <div class="grid gap-5 md:grid-cols-2">
-          <Newsletter />
-          <Communaute />
+    <section class="py-16 bg-[#ECECFE] border-t border-[#C1C1FB]">
+      <div class="container mx-auto px-4 ">
+        <div class="lg:flex w-full">
+          <Newsletter class="w-full max-w-[690px] flex-grow" />
+          <div class="hidden lg:flex flex-none self-stretch w-[1px] bg-[#C1C1FB] mx-16 xl:mx-24" />
+          <Communaute class="sm:min-w-[300px] mt-16 lg:mt-0" />
         </div>
       </div>
     </section>
 
-    <section class="py-16">
-      <div class="container mx-auto px-4 xl:max-w-[1412px]">
-        <h2
-          class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight text-center text-[#AFAFAE] mb-16"
-        >
-          Acteurs de l'engagement,
-          <strong class="font-extrabold">rejoignez le mouvement !</strong>
-        </h2>
+    <section class="pt-16">
+      <div class="container mx-auto px-4 xl:!max-w-[1412px]">
+        <RejoindreLaCommunaute />
+      </div>
+    </section>
 
-        <div class="grid gap-5 md:grid-cols-2">
+    <section class="py-16">
+      <div class="container mx-auto px-4 xl:!max-w-[1412px]">
+        <Heading as="h2" size="2xl" class="mb-16 text-center">
+          Acteurs de l'engagement, <br class="hidden md:block xl:hidden">rejoignez le mouvement !
+        </Heading>
+
+        <div class="grid gap-5 lg:grid-cols-2">
           <FacilitezRecrutement />
           <EncouragezEngagementLocal />
         </div>
@@ -54,6 +58,8 @@ import Newsletter from '@/components/section/homepage/Newsletter'
 import Communaute from '@/components/section/homepage/Communaute'
 import FacilitezRecrutement from '@/components/section/homepage/FacilitezRecrutement'
 import EncouragezEngagementLocal from '@/components/section/homepage/EncouragezEngagementLocal'
+import Heading from '@/components/dsfr/Heading.vue'
+import RejoindreLaCommunaute from '@/components/section/homepage/RejoindreLaCommunaute'
 
 export default {
   components: {
@@ -68,7 +74,9 @@ export default {
     Newsletter,
     Communaute,
     FacilitezRecrutement,
-    EncouragezEngagementLocal
+    EncouragezEngagementLocal,
+    Heading,
+    RejoindreLaCommunaute
   },
   head () {
     return {

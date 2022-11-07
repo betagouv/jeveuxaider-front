@@ -38,10 +38,12 @@
 <script>
 import AlgoliaOrganisationsQueryBuilder from '@/mixins/algolia-organisations-query-builder'
 import LocalisationSuggestions from '@/components/search/LocalisationSuggestions.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
-    LocalisationSuggestions
+    LocalisationSuggestions,
+    Button
   },
   mixins: [AlgoliaOrganisationsQueryBuilder],
   props: {

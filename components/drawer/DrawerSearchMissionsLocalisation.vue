@@ -13,13 +13,13 @@
       class="w-full"
       :tabs="[
         {
-          icon: 'LocationMarkerIcon',
+          icon: 'RiMapPinFill',
           filterValue: 'Mission en présentiel',
           current: !$route.query['type'],
           label: 'Près de chez moi'
         },
         {
-          icon: 'DesktopComputerIcon',
+          icon: 'RiComputerFill',
           filterValue: 'Mission à distance',
           label: 'Depuis chez moi'
         }
@@ -60,11 +60,13 @@
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import TabsFacetFilter from '@/components/section/search/TabsFacetFilter.vue'
 import LocalisationSuggestions from '@/components/search/LocalisationSuggestions.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
     TabsFacetFilter,
-    LocalisationSuggestions
+    LocalisationSuggestions,
+    Button
   },
   mixins: [AlgoliaQueryBuilder],
   props: {

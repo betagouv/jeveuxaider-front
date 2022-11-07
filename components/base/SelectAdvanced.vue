@@ -11,7 +11,7 @@
         :id="name"
         :name="name"
         :tabindex="!disabled && '0'"
-        class="cursor-pointer text-sm rounded-xl block w-full focus:outline-none border border-gray-300 focus:ring-1 bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate"
+        class="cursor-pointer text-sm block w-full border border-gray-300 bg-white truncate"
         :class="[
           { 'pl-10': icon},
           {'!cursor-not-allowed !bg-gray-100': disabled},
@@ -24,6 +24,8 @@
         autocomplete="off"
         @keydown="onKeydown"
         @click="!disabled ? showOptions = !showOptions : null"
+        @keydown.tab="showOptions = false"
+        @keydown.esc="showOptions = false"
       >
         <div class="flex gap-4">
           <span v-if="prefixLabel" class="text-gray-400 font-semibold">{{ prefixLabel }}</span>
@@ -63,8 +65,8 @@
     </div>
     <div
       v-show="showOptions"
-      class="absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-2 overscroll-contain min-w-[200px]"
-      :class="['absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-2 overscroll-contain min-w-[200px]', optionsClass]"
+      class="absolute w-full z-50 bg-white border border-gray-200 shadow-md max-h-60 overflow-auto mt-2 overscroll-contain min-w-[200px]"
+      :class="['absolute w-full z-50 bg-white border border-gray-200 shadow-md max-h-60 overflow-auto mt-2 overscroll-contain min-w-[200px]', optionsClass]"
       @focusout="showOptions = false"
     >
       <ul
@@ -73,10 +75,11 @@
         <li
           v-for="(item, index) in options"
           :key="index"
-          class="relative flex justify-between items-center text-sm px-8 py-2 pr-10 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
+          :ref="`option_${index}`"
+          class="relative flex justify-between items-center text-sm px-8 py-2 pr-10 cursor-pointer hover:bg-[#E3E3FD] focus:bg-[#E3E3FD]"
           :class="[
-            {'bg-gray-50 text-jva-blue-500': highlightIndex == index},
-            {'bg-gray-50 text-jva-blue-500': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
+            {'bg-[#E3E3FD]': highlightIndex == index},
+            {'bg-[#E3E3FD]': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
           ]"
           @click="handleSelectOption(item)"
         >
@@ -169,6 +172,8 @@ export default {
         }
       }
       if (keyValue === 40 || keyValue === 38 || keyValue === 13) {
+        e.preventDefault()
+        e.stopPropagation()
         if (this.highlightIndex === null) {
           this.showOptions = true
           this.highlightIndex = 0
@@ -188,6 +193,9 @@ export default {
             this.highlightIndex -= 1
           }
         }
+        this.$refs[`option_${this.highlightIndex}`]?.[0].scrollIntoView({
+          block: 'nearest'
+        })
       }
     }
 

@@ -1,5 +1,5 @@
 <template>
-  <section class="relative overflow-hidden md:h-[500px] md:flex items-center">
+  <section class="relative overflow-hidden md:h-[525px] md:flex items-center">
     <img
       src="/images/homepage/deco_1.svg"
       alt="Décorations"
@@ -7,7 +7,7 @@
       data-not-lazy
     >
 
-    <div class="md:container md:mx-auto xl:max-w-[1412px]">
+    <div class="md:container md:mx-auto ">
       <div class="mx-auto max-w-6xl">
         <img
           srcset="
@@ -34,23 +34,18 @@
         >
 
         <div
-          class="max-w-[440px] mx-auto md:ml-0 px-4 xl:px-0 text-center md:text-left"
+          class="max-w-[440px] mx-auto md:ml-0 px-4 lg:px-0 text-center md:text-left"
         >
-          <h2
-            class="font-extrabold text-4xl lg:text-[50px] lg:leading-[52px] tracking-tighter mb-6"
-          >
+          <Heading as="h2" size="alt-xs" class="mb-6">
             Chacun pour tous
-          </h2>
-          <p class="text-[#696974] text-2xl mb-6">
-            Plus de <strong>10 000 missions de bénévolat</strong> sont
+          </Heading>
+          <p class="text-[#696974] text-xl mb-6">
+            Plus de 10 000 missions de bénévolat sont
             disponibles chez les petits et grands acteurs de l'engagement.
           </p>
-          <nuxt-link
-            to="/organisations"
-            class="text-lg text-jva-blue-500 hover:underline"
-          >
+          <Link to="/organisations" icon-position="right" class="text-lg text-jva-blue-500">
             Consulter toutes les organisations ›
-          </nuxt-link>
+          </Link>
         </div>
       </div>
     </div>
@@ -58,8 +53,14 @@
 </template>
 
 <script>
-export default {
+import Link from '@/components/dsfr/Link.vue'
+import Heading from '@/components/dsfr/Heading.vue'
 
+export default {
+  components: {
+    Link,
+    Heading
+  }
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card--article h-auto flex flex-col flex-1 bg-white rounded-xl overflow-hidden safari-fix-scale"
+    class="card--article h-auto flex flex-col flex-1 bg-white overflow-hidden safari-fix-scale border border-[#E5E5E5]"
   >
     <div class="thumbnail--wrapper relative">
       <img
@@ -16,21 +16,18 @@
       <div class="custom-gradient absolute inset-0" />
     </div>
 
-    <div class="mx-8 my-6 flex-1 flex flex-col items-start">
+    <div class="m-8 flex-1 flex flex-col items-start">
       <div v-if="article.categories.length" class="mb-4 flex flex-wrap gap-2">
-        <Badge v-for="categoryId in article.categories" :key="categoryId" color="gray" class="uppercase">
+        <Tag v-for="categoryId in article.categories" :key="categoryId">
           {{ category(categoryId) }}
-        </Badge>
+        </Tag>
       </div>
 
-      <h3
-        class="font-black text-black text-lg relative mb-auto line-clamp-3"
-        :title="article.title.rendered"
-      >
+      <Heading as="h3" size="xs" class="line-clamp-3 mb-auto" :title="$options.filters.decodeHTMLEntities(article.title.rendered)">
         {{ article.title.rendered | decodeHTMLEntities }}
-      </h3>
+      </Heading>
 
-      <div class="text-gray-500 text-sm mt-4 line-clamp-2">
+      <div class="text-gray-600 text-base mt-4 line-clamp-2">
         {{ article.excerpt.rendered | stripHTML | decodeHTMLEntities }}
       </div>
     </div>
@@ -38,7 +35,14 @@
 </template>
 
 <script>
+import Tag from '@/components/dsfr/Tag.vue'
+import Heading from '@/components/dsfr/Heading.vue'
+
 export default {
+  components: {
+    Tag,
+    Heading
+  },
   props: {
     article: {
       type: Object,
@@ -68,7 +72,7 @@ export default {
 
 <style lang="postcss" scoped>
 .card--article {
-  box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1); */
   @apply transition;
   @screen sm {
     &:hover {

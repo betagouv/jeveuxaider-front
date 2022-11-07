@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="$store.state.algoliaSearch.results" class="container md:px-8 lg:mt-6 mb-12">
-      <div class="flex flex-col space-y-6 sm:space-y-12">
+    <div v-if="$store.state.algoliaSearch.results" class="container md:px-8 mb-12">
+      <div class="flex flex-col space-y-8 sm:space-y-12">
         <SectionHeading
           v-if="!noHeader"
           title="Trouver une mission de bénévolat"
@@ -18,13 +18,13 @@
                 filter-name="type"
                 :tabs="[
                   {
-                    icon: 'LocationMarkerIcon',
+                    icon: 'RiMapPinFill',
                     filterValue: 'Mission en présentiel',
                     current: !$route.query['type'],
                     label: 'Près de chez moi'
                   },
                   {
-                    icon: 'DesktopComputerIcon',
+                    icon: 'RiComputerFill',
                     filterValue: 'Mission à distance',
                     label: 'Depuis chez moi'
                   }
@@ -60,7 +60,7 @@
           <template v-for="item, i in $store.state.algoliaSearch.results.hits">
             <nuxt-link
               :key="item.id"
-              class="flex min-w-0 hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px]"
+              class="flex min-w-0 transition"
               :to="
                 item.provider == 'api_engagement'
                   ? `/missions-benevolat/${item.id}`
@@ -99,6 +99,7 @@ import SecondaryFilters from '~/components/section/search/missions/SecondaryFilt
 import PrimaryMobileFilters from '~/components/section/search/missions/PrimaryMobileFilters.vue'
 import SecondaryMobileFilters from '~/components/section/search/missions/SecondaryMobileFilters.vue'
 import PromoteMissionDistance from '~/components/section/search/PromoteMissionDistance.vue'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
@@ -108,7 +109,8 @@ export default {
     SecondaryFilters,
     PromoteMissionDistance,
     PrimaryMobileFilters,
-    SecondaryMobileFilters
+    SecondaryMobileFilters,
+    Pagination
   },
   mixins: [AlgoliaMissionsQueryBuilder],
   props: {

@@ -111,6 +111,7 @@
     </Table>
 
     <Pagination
+      class="mt-6"
       :current-page="queryResult.current_page"
       :total-rows="queryResult.total"
       :per-page="queryResult.per_page"
@@ -123,11 +124,13 @@
 import QueryBuilder from '@/mixins/query-builder'
 import DrawerRessource from '@/components/drawer/DrawerRessource'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
     DrawerRessource,
-    SearchFilters
+    SearchFilters,
+    Pagination
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',

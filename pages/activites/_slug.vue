@@ -3,14 +3,15 @@
     <client-only>
       <portal v-if="!activity.is_published" to="header-top">
         <transition name="fade">
-          <Banner icon="ExclamationIcon">
+          <Banner>
             L'activité n'est pas visible car elle est non publiée
             <template #action>
-              <nuxt-link :to="`/admin/contenus/activites/${activity.id}/edit`">
-                <Button variant="white">
-                  Gérer
-                </Button>
-              </nuxt-link>
+              <Link
+                icon="RiArrowRightLine"
+                :to="`/admin/contenus/activites/${activity.id}/edit`"
+              >
+                Gérer
+              </Link>
             </template>
           </Banner>
         </transition>
@@ -32,6 +33,7 @@ import Promote from '@/components/section/activity/Promote'
 import Associations from '@/components/section/activity/Associations'
 import Engagement from '@/components/section/activity/Engagement'
 import Subscribe from '@/components/section/activity/Subscribe'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
@@ -40,7 +42,8 @@ export default {
     Promote,
     Associations,
     Engagement,
-    Subscribe
+    Subscribe,
+    Link
   },
   async asyncData ({ $axios, params, error, store }) {
     const { data: activity } = await $axios.get(`/activities/${params.slug}`)

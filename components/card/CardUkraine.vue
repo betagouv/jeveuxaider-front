@@ -1,7 +1,7 @@
 <template>
   <div class="card--ukraine relative">
     <div
-      class="relative rounded-[10px] overflow-hidden safari-fix-scale h-full flex flex-col"
+      class="relative overflow-hidden safari-fix-scale h-full flex flex-col"
     >
       <img
         srcset="/images/card_ukraine.webp, /images/card_ukraine@2x.webp 2x"

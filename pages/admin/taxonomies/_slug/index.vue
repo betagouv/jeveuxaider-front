@@ -99,6 +99,7 @@
     </Table>
 
     <Pagination
+      class="mt-6"
       :current-page="queryResult.current_page"
       :total-rows="queryResult.total"
       :per-page="queryResult.per_page"
@@ -110,10 +111,12 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import DrawerTerm from '@/components/drawer/DrawerTerm'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
-    DrawerTerm
+    DrawerTerm,
+    Pagination
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',

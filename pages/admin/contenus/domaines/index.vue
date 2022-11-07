@@ -100,6 +100,7 @@
     </div>
 
     <Pagination
+      class="mt-6"
       :current-page="queryResult.current_page"
       :total-rows="queryResult.total"
       :per-page="queryResult.per_page"
@@ -113,12 +114,14 @@ import QueryBuilder from '@/mixins/query-builder'
 import Card from '@/components/card/Card'
 import DrawerDomaine from '@/components/drawer/DrawerDomaine'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
     Card,
     DrawerDomaine,
-    SearchFilters
+    SearchFilters,
+    Pagination
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',

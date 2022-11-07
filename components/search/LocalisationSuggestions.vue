@@ -7,7 +7,12 @@
       <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Nom ou code postal" @input="handleInput" @clear="handleSelectedAdress(null)" />
     </div>
     <div class="flex flex-col py-2 text-sm">
-      <div v-for="suggestion in suggestions" :key="suggestion.id" class="py-1 cursor-pointer flex justify-between truncate flex-1 group" @click="handleSelectedAdress(suggestion)">
+      <button
+        v-for="suggestion in suggestions"
+        :key="suggestion.id"
+        class="py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD] -mx-4 px-4"
+        @click="handleSelectedAdress(suggestion)"
+      >
         <div class="flex items-center">
           <LocationMarkerIcon
             class="flex-none mr-2 transition text-gray-400"
@@ -22,7 +27,7 @@
         <div class="text-gray-600 ml-1 font-light">
           {{ suggestion.postcode }}
         </div>
-      </div>
+      </button>
     </div>
   </div>
 </template>

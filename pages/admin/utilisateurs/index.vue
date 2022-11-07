@@ -193,6 +193,7 @@
       </div>
 
       <Pagination
+        class="mt-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
@@ -209,13 +210,15 @@ import CardProfile from '@/components/card/CardProfile.vue'
 import DrawerProfile from '@/components/drawer/DrawerProfile.vue'
 import BoxContext from '@/components/section/BoxContext.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
     CardProfile,
     DrawerProfile,
     BoxContext,
-    SearchFilters
+    SearchFilters,
+    Pagination
   },
   mixins: [QueryBuilder, MixinExport],
   asyncData ({ store, error }) {

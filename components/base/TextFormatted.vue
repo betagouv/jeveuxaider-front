@@ -1,23 +1,27 @@
 <template>
-  <div class="overflow-hidden">
+  <div>
     <div
-      class="break-word whitespace-pre-line"
+      class="break-word whitespace-pre-line overflow-hidden formatted-text"
       v-html="isExpanded ? text : textHtml"
     />
-    <div
+    <Link
       v-if="needClip && !isExpanded"
-      class="uppercase text-black text-sm font-semibold cursor-pointer"
-      @click="readMore()"
+      class="text-jva-blue-500 mt-4"
+      @click.native="readMore()"
     >
       Lire plus
-    </div>
+    </Link>
   </div>
 </template>
 
 <script>
 import clip from 'text-clipper'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
+  components: {
+    Link
+  },
   props: {
     text: {
       type: String,
@@ -26,6 +30,10 @@ export default {
     maxLines: {
       type: [Number, Boolean],
       default: false
+    },
+    textColor: {
+      type: String,
+      default: 'text-[#3A3A3A]'
     }
   },
   data () {
@@ -50,7 +58,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-:deep(p:not(:last-child)) {
+/* :deep(p:not(:last-child)) {
   @apply mb-4
 }
 :deep(ol) {
@@ -60,5 +68,5 @@ export default {
 :deep(ul) {
     list-style: disc;
     @apply mb-4 pl-4 space-y-4
-}
+} */
 </style>

@@ -1,18 +1,16 @@
 <template>
-  <div class="flex-1 flex space-x-2 items-center group">
-    <SearchIcon class="text-gray-900 h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
+  <div class="flex-1 flex space-x-2 items-center group ">
+    <RiSearchEyeFill class="text-gray-900 h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 group-focus-within:opacity-100" />
     <input
       type="text"
       :placeholder="placeholder"
-      :class="['pl-0 flex-1 border-0 w-full bg-transparent py-0 focus:ring-0', {'font-bold': searchValue}]"
+      :class="['pl-0 flex-1 border-0 w-full bg-transparent py-0 !outline-none', {'font-bold': searchValue}]"
       :value="searchValue"
       @input="handleInput"
     >
-    <XIcon
-      v-if="searchValue"
-      class="text-gray-500 h-5 w-5 cursor-pointer hover:text-gray-900"
-      @click="reset"
-    />
+    <button v-if="searchValue" @click="reset">
+      <RiCloseFill class="text-gray-500 fill-current h-5 w-5 cursor-pointer hover:text-gray-900" />
+    </button>
   </div>
 </template>
 

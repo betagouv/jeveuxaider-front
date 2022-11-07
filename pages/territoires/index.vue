@@ -1,32 +1,27 @@
 <template>
   <div>
     <div class="container">
-      <Breadcrumb
-        :items="[{ label: 'Territoires engagés', link: '/territoires' }]"
-      />
+      <Breadcrumb :links="[{text: 'Territoires engagés'}]" />
     </div>
-    <div class="bg-cool-gray-50 px-4 max-w-3xl mx-auto lg:max-w-7xl">
-      <div class="pt-8 md:pt-12 lg:pt-20 relative">
+
+    <div class="overflow-hidden">
+      <div class="relative">
         <img
-          class="hidden lg:block absolute transform translate-y-1 opacity-50"
+          class="hidden sm:block absolute transform translate-y-1 opacity-50"
           style="left: 100%; transform: translateX(-75%)"
           src="/images/territoires/france.svg"
           width="904"
           alt=""
         >
 
-        <div class="relative">
-          <h1
-            class="text-center text-3xl md:text-5xl lg:text-6xl leading-none font-bold tracking-tight text-gray-900"
-          >
+        <div class="container mx-auto px-4 relative">
+          <Heading as="h1" size="2xl" class="lg:text-center">
             Rejoignez JeVeuxAider.gouv.fr
-            <br>
+            <br class="hidden lg:block">
             dans votre territoire
-          </h1>
+          </Heading>
 
-          <p
-            class="mt-4 text-center max-w-2xl text-xl leading-7 text-gray-500 lg:mx-auto"
-          >
+          <p class="mt-4 lg:text-center max-w-2xl text-xl leading-7 text-[#696974] lg:mx-auto">
             Sur l'ensemble du territoire français, des milliers de bénévoles,
             de structures et d'association ont déjà rejoint
             <b>JeVeuxAider.gouv.fr</b>.
@@ -34,40 +29,34 @@
         </div>
 
         <!-- Search bar -->
-        <div class="flex-1 flex justify-between lg:mx-auto mt-10">
-          <div class="flex-1 flex bg-white z-10 shadow-md rounded-lg">
-            <form class="w-full flex md:ml-0 mb-0" action="#" method="GET">
-              <label for="search_field" class="sr-only">Recherche</label>
-              <div
-                class="relative w-full text-cool-gray-400 focus-within:text-cool-gray-600"
-              >
-                <div
-                  class="absolute inset-y-0 left-0 flex items-center pointer-events-none"
-                >
-                  <SearchIcon class="h-5 w-5 ml-3 sm:ml-6 text-gray-900" />
-                </div>
+        <div class="container mx-auto px-4">
+          <form action="#" method="GET" class="relative mt-10">
+            <label for="search_field" class="sr-only">Recherche</label>
 
-                <input
-                  id="search_field"
-                  v-model="query"
-                  class="block w-full h-full pl-10 pr-4 py-4 sm:px-16 sm:py-6 rounded-md text-cool-gray-900 placeholder-cool-gray-500 focus:placeholder-cool-gray-400 !outline-none focus:ring transition truncate text-md sm:text-lg md:text-xl border-none"
-                  placeholder="Trouvez votre ville ou département"
-                  type="search"
-                >
-              </div>
-            </form>
-          </div>
+            <div class="shadow-lg max-w-3xl mx-auto">
+              <Input
+                id="search_field"
+                :value="query"
+                placeholder="Trouvez votre ville ou département"
+                type="search"
+                size="xl"
+                icon="RiSearchLine"
+                @input="handleInput"
+              />
+            </div>
+          </form>
         </div>
       </div>
 
       <!-- Tabs -->
-      <div class="relative my-8">
+      <div class="container mx-auto px-4 relative my-8">
         <nav
-          class="flex overflow-scroll sm:overflow-visible pt-1 pb-3 sm:py-0 sm:justify-center sm:gap-4"
+          class="flex pt-1 pb-3 sm:py-0 sm:justify-center gap-4"
         >
-          <span
-            v-for="(type, index) in types"
+          <button
+            v-for="type in types"
             :key="type.slug"
+            :disabled="typeCount(type.slug) === 0"
             tabindex="0"
             :class="[
               {
@@ -78,21 +67,18 @@
                 'text-gray-500 hover:text-jva-blue-500 bg-white':
                   activeType != type.slug,
               },
-              {
-                'mr-4 sm:mr-0':
-                  types[index].slug == types[types.length - 1].slug,
-              },
+              { 'cursor-not-allowed hover:!text-gray-500': typeCount(type.slug) === 0},
             ]"
-            class="px-3 text-center lg:px-5 py-3 lg:py-4 shadow cursor-pointer font-medium text-md lg:text-xl leading-6 rounded-md focus:ring transition sm:w-full lg:w-auto flex-none sm:flex-initial ml-4 sm:ml-0 !outline-none"
+            class="px-3 text-center lg:px-5 py-3 lg:py-4 shadow cursor-pointer font-medium lg:text-xl leading-6 sm:w-full lg:w-auto truncate"
             @click="activeType = type.slug"
           >
             {{ type.label }} ({{ typeCount(type.slug) }})
-          </span>
+          </button>
         </nav>
       </div>
 
       <!-- Tab content -->
-      <div class="relative mb-12">
+      <div class="container mx-auto px-4 relative mb-12">
         <div class="mx-auto">
           <div v-for="(group, index) in groups[activeType]" :key="index">
             <div
@@ -105,13 +91,13 @@
               </span>
 
               <div
-                class="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+                class="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
               >
                 <nuxt-link
                   v-for="territory in territoriesByGroup(group)"
                   :key="territory.id"
                   :to="territory.full_url"
-                  class="col-span-1 flex justify-center items-center text-center px-4 py-2 bg-white shadow-md rounded-lg border-jva-blue-500 border-b-2 text-gray-800 hover:shadow-lg hover:text-gray-900 !outline-none focus:ring transition"
+                  class="col-span-1 flex justify-center items-center text-center px-4 py-2 bg-white shadow-md border-jva-blue-500 border-b-2 text-gray-800 hover:shadow-lg hover:text-gray-900 transition"
                   style="min-height: 80px"
                 >
                   <span class="font-semibold">{{ territory.name }}</span>
@@ -126,7 +112,17 @@
 </template>
 
 <script>
+import { debounce } from 'lodash'
+import Heading from '@/components/dsfr/Heading.vue'
+import Input from '@/components/dsfr/Input.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+
 export default {
+  components: {
+    Heading,
+    Input,
+    Breadcrumb
+  },
   async asyncData ({ $axios }) {
     const { data: cities } = await $axios.get('/territoires', {
       params: {
@@ -216,6 +212,15 @@ export default {
     }
   },
   methods: {
+    handleInput (payload) {
+      if (this.timeout) {
+        this.timeout.cancel()
+      }
+      this.timeout = debounce(() => {
+        this.query = payload
+      }, 275)
+      this.timeout()
+    },
     typeCount (type) {
       return this[type].filter(item =>
         this.slugify(item.name).includes(this.slugify(this.query))
