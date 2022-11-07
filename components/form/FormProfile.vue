@@ -381,7 +381,7 @@
             Rôles
           </Heading>
 
-          <div v-if="profile.user.roles" class="grid grid-cols-1 divide-y -my-4">
+          <div v-if="profile.user?.roles" class="grid grid-cols-1 divide-y -my-4">
             <div
               v-for="role in profile.user.roles"
               :key="role.id"
@@ -401,7 +401,7 @@
               </div>
             </div>
           </div>
-          <Button size="sm" class="mt-6 mb-8" variant="white" @click.native="showDrawerFormRole = true">
+          <Button size="sm" class="mb-8" variant="white" @click.native="showDrawerFormRole = true">
             <PlusIcon class="mr-2" />Ajouter un rôle
           </Button>
           <div class="gap-8 grid grid-cols-1">
