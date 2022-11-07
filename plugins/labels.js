@@ -237,8 +237,7 @@ const labels = {
     { key: 'referent_regional', label: 'Régional', espace: 'Mon espace régional' },
     { key: 'tete_de_reseau', label: 'Tête de réseau', espace: 'Mon espace réseau' },
     { key: 'responsable', label: 'Responsable', espace: 'Mon espace organisation' },
-    { key: 'responsable_territoire', label: 'Responsable de territoire', espace: 'Mon espace territoire' },
-    { key: 'analyste', label: 'Analyste', espace: 'Mon espace analyste' }
+    { key: 'responsable_territoire', label: 'Responsable de territoire', espace: 'Mon espace territoire' }
   ],
   disponibilities: [
     { key: 'flexible', label: 'Flexible' },
@@ -392,5 +391,10 @@ const labels = {
     { key: 'App\\Models\\Structure', label: 'Organisation' },
     { key: 'App\\Models\\Participation', label: 'Participation' },
     { key: 'App\\Models\\Mission', label: 'Mission' }
+  ],
+  roles: [
+    { key: 'admin', label: 'Modérateur' },
+    { key: 'referent', label: 'Référent départemental' },
+    { key: 'referent_regional', label: 'Référent régionnal' }
   ]
 }

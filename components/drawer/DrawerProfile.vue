@@ -35,8 +35,8 @@
       <BoxDisponibilities class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
       <BoxInformations class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
       <BoxUtm v-if="$store.getters.contextRole === 'admin'" class="mb-8" :model="profile.user" />
-      <BoxOrganisations v-if="profile.structures" :structures="profile.structures" class="mb-8" />
-      <BoxTerritoires v-if="profile.territoires" :territoires="profile.territoires" class="mb-8" />
+      <BoxOrganisations v-if="profile.user.structures" :structures="profile.user.structures" class="mb-8" />
+      <BoxTerritoires v-if="profile.user.territoires" :territoires="profile.user.territoires" class="mb-8" />
       <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" class="mb-8" />
       <div class="flex justify-center mt-10 mb-10">
         <Link :to="`/admin/utilisateurs/${profile.id}`" class="uppercase font-semibold text-sm hover:underline">

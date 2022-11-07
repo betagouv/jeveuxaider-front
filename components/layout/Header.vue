@@ -91,12 +91,7 @@
                   :label="$options.filters.label(role.key, 'role', 'espace')"
                   @click.native="switchRole(role)"
                 >
-                  <template v-if="role.key == 'referent'">
-                    {{ $options.filters.label(role.label, 'departments') }}
-                  </template>
-                  <template v-else>
-                    {{ role.label }}
-                  </template>
+                  {{ role.label }}
                   <template #icon>
                     <template v-if="['responsable','responsable_territoire'].includes($store.getters.contextRole)">
                       <template v-if="$store.getters.contextRole === 'responsable'">
@@ -104,7 +99,7 @@
                         <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
                       </template>
                       <template v-if="$store.getters.contextRole === 'responsable_territoire'">
-                        <CheckIcon v-if="role.contextable_type === 'territoire' && role.contextable_id === $store.getters.contextableId " class="h-5 text-jva-green-500 " />
+                        <CheckIcon v-if="role.contextable_type === 'responsable_territoire' && role.contextable_id === $store.getters.contextableId " class="h-5 text-jva-green-500 " />
                         <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
                       </template>
                     </template>
@@ -383,7 +378,7 @@ export default {
       } else if (this.$store.getters.currentRole?.key === 'tete_de_reseau') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Mon réseau', to: `/admin/contenus/reseaux/${this.$store.getters.profile.tete_de_reseau_id}`, isActive: this.isActiveLink('/admin/contenus/reseaux/*') },
+          { name: 'Mon réseau', to: `/admin/contenus/reseaux/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/contenus/reseaux/*') },
           { name: 'Membres du réseau', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
           { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
@@ -402,10 +397,6 @@ export default {
           { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
           { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
-        ]
-      } else if (this.$store.getters.currentRole?.key === 'analyste') {
-        return [
-          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') }
         ]
       }
       return [
@@ -430,11 +421,11 @@ export default {
 
       this.$refs.switchRole.show = false
 
-      if (this.$router.history.current.path === '/dashboard') {
-        window.location.reload(true)
-      } else {
-        this.$router.push('/dashboard')
-      }
+      // if (this.$router.history.current.path === '/dashboard') {
+      //   window.location.reload(true)
+      // } else {
+      //   this.$router.push('/dashboard')
+      // }
     },
     isActiveLink (regex, exact = false) {
       return exact ? this.$route.path === regex : RegExp(regex).test(this.$route.path)

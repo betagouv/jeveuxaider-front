@@ -18,7 +18,7 @@
       <FormMissionTemplate
         ref="form"
         class="my-8"
-        :mission-template="{reseau_id: $store.getters.contextRole === 'tete_de_reseau' ? $store.getters.profile.tete_de_reseau_id: null}"
+        :mission-template="{reseau_id: $store.getters.contextRole === 'tete_de_reseau' ? $store.getters.contextableId: null}"
       />
     </div>
   </div>

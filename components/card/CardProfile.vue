@@ -36,7 +36,7 @@
     </div>
 
     <div class="border-t px-6 py-4 text-sm font-bold">
-      <span class="text-gray-400">Der. connexion : </span>
+      <span class="text-gray-400">Der. connexion : </span>
       <span class="font-bold">{{ profile.user.last_online_at ? $dayjs(profile.user.last_online_at).fromNow() : 'Jamais' }}</span>
     </div>
   </div>
@@ -49,18 +49,6 @@ export default {
     profile: {
       type: Object,
       required: true
-    }
-  },
-  computed: {
-    role () {
-      switch (this.profile.user.context_role) {
-        case 'referent':
-          return `${this.profile.referent_department} - ${this.$options.filters.label(this.profile.referent_department, 'departments')}`
-        case 'referent_regional':
-          return `${this.profile.referent_region}`
-        default:
-          return this.$options.filters.label(this.profile.user.context_role, 'role')
-      }
     }
   }
 }

@@ -191,9 +191,9 @@
                 @updated="$fetch()"
               />
               <BoxMember
-                v-for="responsable in responsables"
+                v-for="responsable in organisation.members"
                 :key="responsable.id"
-                :responsable="responsable"
+                :responsable="responsable.profile"
                 :organisation="organisation"
                 @removed="$fetch()"
               />
@@ -259,15 +259,15 @@ export default {
       return error({ statusCode: 403 })
     }
 
+    if (store.getters.contextRole == 'responsable') {
+      if (store.getters.contextableId != params.id) {
+        return error({ statusCode: 403 })
+      }
+    }
+
     const { data: organisation } = await $axios.get(`/structures/${params.id}`)
     if (!organisation) {
       return error({ statusCode: 404 })
-    }
-
-    if (store.getters.contextRole == 'responsable') {
-      if (store.getters.contextableId != organisation.id) {
-        return error({ statusCode: 403 })
-      }
     }
 
     return {

@@ -53,7 +53,7 @@ export default {
     }
 
     if (store.getters.contextRole === 'tete_de_reseau') {
-      if (missionTemplate.reseau_id != store.getters.profile.tete_de_reseau_id) {
+      if (missionTemplate.reseau_id != store.getters.contextableId) {
         return error({ statusCode: 403 })
       }
     }

@@ -28,6 +28,7 @@
       <FormProfile
         ref="form"
         :profile="profile"
+        @role-changed="handleRoleChanged()"
       />
     </div>
   </div>
@@ -69,12 +70,11 @@ export default {
       this.loading = true
       await this.$refs.form.handleSubmit()
       this.loading = false
+    },
+    async handleRoleChanged () {
+      const { data: profile } = await this.$axios.get(`/profiles/${this.profile.id}`)
+      this.profile = profile
     }
-    // async onSubmitted (profile) {
-    //   await this.$axios.put(`/profiles/${profile.id}`, profile)
-    //   this.$router.push(`/admin/utilisateurs/${profile.id}`)
-    //   this.loading = false
-    // }
   }
 }
 </script>

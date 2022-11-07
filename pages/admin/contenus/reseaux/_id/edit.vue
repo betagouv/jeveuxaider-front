@@ -49,7 +49,7 @@ export default {
     }
 
     if (store.getters.contextRole === 'tete_de_reseau') {
-      if (store.state.auth.user.profile.tete_de_reseau_id !== reseau.id) {
+      if (store.state.auth.user.contextableId !== reseau.id) {
         return error({ statusCode: 403 })
       }
     }

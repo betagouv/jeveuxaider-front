@@ -2,6 +2,27 @@
   <div>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
       <div class="lg:col-span-3 space-y-12">
+        <Drawer
+          :is-open="showDrawerFormRole"
+          form-id="form-roles"
+          submit-label="Ajouter le rôle"
+          @close="showDrawerFormRole = false"
+        >
+          <template #title>
+            <Heading :level="3">
+              Ajouter un rôle
+            </Heading>
+          </template>
+          <FormProfileRole :profile="profile" @submited="handleSubmitRole" />
+        </Drawer>
+        <AlertDialog
+          theme="danger"
+          title="Supprimer le rôle"
+          :text="`<strong>${profile.full_name}</strong> n'aura plus le rôle <strong>${$options.filters.label(roleSelected?.name, 'roles')} (${roleSelected?.pivot_model.name})</strong>`"
+          :is-open="showAlertRoleDeleted"
+          @confirm="handleConfirmDeleteRole"
+          @cancel="showAlertRoleDeleted = false"
+        />
         <Box>
           <Heading :level="3" class="mb-8">
             Informations personnelles
@@ -360,42 +381,30 @@
             Rôles
           </Heading>
 
-          <div class="gap-8 grid grid-cols-1">
-            <FormControl
-              label="Tête de réseau"
-              html-for="reseau_id"
+          <div v-if="profile.user.roles" class="grid grid-cols-1 divide-y -my-4">
+            <div
+              v-for="role in profile.user.roles"
+              :key="role.id"
+              class="flex items-center justify-between group hover:cursor-pointer h-16"
+              @click="handleClickRole(role)"
             >
-              <InputAutocomplete
-                name="autocomplete"
-                label="Autocomplete"
-                placeholder="Choisissez un réseau"
-                :options="autocompleteReseauxOptions"
-                :value="form.reseau ? form.reseau.name : null"
-                @selected="handleSelectedReseau"
-                @fetch-suggestions="onFetchReseauxSuggestions"
-              />
-            </FormControl>
-
-            <FormControl label="Référent départemental" html-for="referent_department">
-              <Combobox
-                v-model="form.referent_department"
-                name="referent_department"
-                placeholder="Sélectionnez un département"
-                :options="$labels.departments.map((item) => { return {key: item.key, label: `${item.key} - ${item.label}`}})"
-                clearable
-              />
-            </FormControl>
-
-            <FormControl label="Référent régional" html-for="referent_region">
-              <Combobox
-                v-model="form.referent_region"
-                name="referent_region"
-                placeholder="Sélectionnez une région"
-                :options="$labels.regions"
-                clearable
-              />
-            </FormControl>
-
+              <div class="text-gray-700 font-medium mr-4 truncate group-hover:underline">
+                <span v-if="role.pivot_model.number">{{ role.pivot_model.number }} -</span> {{ role.pivot_model.name }}
+              </div>
+              <div class="group-hover:hidden">
+                <Badge color="gray-light" size="xxs">
+                  {{ role.name | label('roles') }}
+                </Badge>
+              </div>
+              <div class="text-jva-red-500 text-sm font-medium group-hover:block hidden w-[140px] text-right">
+                Supprimer ?
+              </div>
+            </div>
+          </div>
+          <Button size="sm" class="mt-6 mb-8" variant="white" @click.native="showDrawerFormRole = true">
+            <PlusIcon class="mr-2" />Ajouter un rôle
+          </Button>
+          <div class="gap-8 grid grid-cols-1">
             <Toggle
               v-model="form.can_export_profiles"
               :description="form.can_export_profiles ? 'Oui' : 'Non'"
@@ -422,10 +431,12 @@ import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import activitiesOptions from '@/assets/activities.json'
+import FormProfileRole from '@/components/form/FormProfileRole'
 
 export default {
   components: {
-    AlgoliaSkillsInput
+    AlgoliaSkillsInput,
+    FormProfileRole
   },
   mixins: [FormErrors, FormUploads],
   props: {
@@ -458,6 +469,9 @@ export default {
       activitiesOptions,
       activitiesOptions2: activitiesOptions.map((activity) => { return { id: activity.key, name: activity.label } }),
       showDrawerActivity: false,
+      showDrawerFormRole: false,
+      showAlertRoleDeleted: false,
+      roleSelected: null,
       domainsOptions: [
         'Art et culture pour tous',
         'Bénévolat de compétences',
@@ -541,8 +555,32 @@ export default {
       })
       this.autocompleteReseauxOptions = res.data.data
     },
-    handleSelectedReseau (reseau) {
-      this.form.tete_de_reseau_id = reseau ? reseau.id : null
+    handleClickRole (role) {
+      switch (role.name) {
+        case 'responsable':
+          window.open(`${window.location.origin}/admin/organisations/${role.pivot.rolable_id}#membres`)
+          break
+        case 'responsable_territoire':
+          window.open(`${window.location.origin}/admin/contenus/territoires/${role.pivot.rolable_id}#responsables`)
+          break
+        case 'tete_de_reseau':
+          window.open(`${window.location.origin}/admin/contenus/reseaux/${role.pivot.rolable_id}#responsables`)
+          break
+        case 'referent':
+        case 'referent_regional':
+          this.roleSelected = role
+          this.showAlertRoleDeleted = true
+          break
+      }
+    },
+    async handleConfirmDeleteRole () {
+      await this.$axios.delete(`/users/${this.profile.user_id}/roles/${this.roleSelected.id}`)
+      this.$emit('role-changed')
+      this.showAlertRoleDeleted = false
+    },
+    handleSubmitRole () {
+      this.$emit('role-changed')
+      this.showDrawerFormRole = false
     }
   }
 }

@@ -36,8 +36,8 @@
       <FormInvitation
         class="mt-8"
         role="responsable_territoire"
-        :model-id="territoire.id"
-        model-type="App\Models\Territoire"
+        :invitable-id="territoire.id"
+        invitable-type="App\Models\Territoire"
         @submited="handleSubmitInvitation"
       />
     </Drawer>
@@ -95,9 +95,9 @@
                 <template #header>
                   <div class="flex justify-between items-center mb-4">
                     <Heading as="h3" :level="5">
-                      {{ responsable.full_name }}
+                      {{ responsable.profile.full_name }}
                     </Heading>
-                    <div class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                    <div class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable.profile)">
                       <div class="group-hover:block hidden">
                         Supprimer
                       </div>
@@ -106,9 +106,9 @@
                   </div>
                 </template>
                 <DescriptionList v-if="responsable">
-                  <DescriptionListItem term="E-mail" :description="responsable.email" />
-                  <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-                  <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
+                  <DescriptionListItem term="E-mail" :description="responsable.profile.email" />
+                  <DescriptionListItem term="Mobile" :description="responsable.profile.mobile" />
+                  <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable.profile" />
                 </DescriptionList>
               </Box>
               <Button v-if="canManageTerritoire" variant="white" @click.native="showDrawerInvitation = true">

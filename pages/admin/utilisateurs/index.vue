@@ -11,7 +11,7 @@
       <div class="flex flex-col gap-y-4 sticky top-8">
         <SelectAdvanced
           :key="`role-${$route.fullPath}`"
-          name="role"
+          name="user.role"
           placeholder="Rôle"
           :options="[
             { key:'responsable', label: 'Responsable' },
@@ -19,27 +19,26 @@
             { key:'tete_de_reseau', label: 'Tête de réseau' },
             { key:'referent', label: 'Référent départemental' },
             { key:'referent_regional', label: 'Référent régional' },
-            { key:'analyste', label: 'Analyste' },
             { key:'admin', label: 'Modérateur' }
           ]"
-          :value="$route.query['filter[role]']"
+          :value="$route.query['filter[user.role]']"
           variant="transparent"
           clearable
-          @input="changeFilter('filter[role]', $event)"
+          @input="changeFilter('filter[user.role]', $event)"
         />
         <SelectAdvanced
-          v-if="$route.query['filter[role]'] === 'referent'"
+          v-if="$route.query['filter[user.role]'] === 'referent'"
           :key="`referent-department-${$route.fullPath}`"
           name="referent-department"
           placeholder="Département du référent"
           :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
-          :value="$route.query['filter[referent_department]']"
+          :value="$route.query['filter[department]']"
           variant="transparent"
           clearable
-          @input="changeFilter('filter[referent_department]', $event)"
+          @input="changeFilter('filter[department]', $event)"
         />
         <SelectAdvanced
-          v-if="$route.query['filter[role]'] === 'referent_regional'"
+          v-if="$route.query['filter[user.role]'] === 'referent_regional'"
           :key="`referent-region-${$route.fullPath}`"
           name="referent-region"
           placeholder="Région du référent"
@@ -134,38 +133,38 @@
           <Checkbox
             :key="`role-referents-${$route.fullPath}`"
             :option="{key: 'referent', label:'Référents départementaux'}"
-            :is-checked="$route.query['filter[role]'] == 'referent'"
+            :is-checked="$route.query['filter[user.role]'] == 'referent'"
             variant="button"
             size="xs"
             transparent
-            @change="changeFilter('filter[role]', 'referent')"
+            @change="changeFilter('filter[user.role]', 'referent')"
           />
           <Checkbox
             :key="`role-responsable-${$route.fullPath}`"
             :option="{key: 'responsable', label:'Responsables d\'organisations'}"
-            :is-checked="$route.query['filter[role]'] == 'responsable'"
+            :is-checked="$route.query['filter[user.role]'] == 'responsable'"
             variant="button"
             size="xs"
             transparent
-            @change="changeFilter('filter[role]', 'responsable')"
+            @change="changeFilter('filter[user.role]', 'responsable')"
           />
           <Checkbox
             :key="`role-tete_de_reseau-${$route.fullPath}`"
             :option="{key: 'tete_de_reseau', label:'Têtes de réseau'}"
-            :is-checked="$route.query['filter[role]'] == 'tete_de_reseau'"
+            :is-checked="$route.query['filter[user.role]'] == 'tete_de_reseau'"
             variant="button"
             size="xs"
             transparent
-            @change="changeFilter('filter[role]', 'tete_de_reseau')"
+            @change="changeFilter('filter[user.role]', 'tete_de_reseau')"
           />
         <!-- <Checkbox
           :key="`role-responsable_territoire-${$route.fullPath}`"
           :option="{key: 'responsable_territoire', label:'Responsables territoriaux'}"
-          :is-checked="$route.query['filter[role]'] == 'responsable_territoire'"
+          :is-checked="$route.query['filter[user.role]'] == 'responsable_territoire'"
           variant="button"
           size="xs"
           transparent
-          @change="changeFilter('filter[role]', 'responsable_territoire')"
+          @change="changeFilter('filter[user.role]', 'responsable_territoire')"
         /> -->
         </template>
         <template #sorts>

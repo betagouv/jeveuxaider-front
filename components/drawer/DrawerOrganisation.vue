@@ -54,7 +54,7 @@
           v-for="responsable in organisation.members"
           :key="responsable.id"
           class="mb-8"
-          :responsable="responsable"
+          :responsable="responsable.profile"
           :conversable-id="organisation.id"
           conversable-type="App\Models\Structure"
         />

@@ -170,8 +170,6 @@ export default {
           return 'E-mail'
         case 'can_export_profiles':
           return 'Peut exporter les profils'
-        case 'tete_de_reseau_id':
-          return 'Tête de réseau'
         case 'referent_department':
           return 'Référent départemental'
         case 'referent_region':
