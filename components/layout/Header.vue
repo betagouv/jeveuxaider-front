@@ -91,12 +91,7 @@
                   :label="$options.filters.label(role.key, 'role', 'espace')"
                   @click.native="switchRole(role)"
                 >
-                  <template v-if="role.key == 'referent'">
-                    {{ $options.filters.label(role.label, 'departments') }}
-                  </template>
-                  <template v-else>
-                    {{ role.label }}
-                  </template>
+                  {{ role.label }}
                   <template #icon>
                     <template v-if="['responsable','responsable_territoire'].includes($store.getters.contextRole)">
                       <template v-if="$store.getters.contextRole === 'responsable'">
@@ -104,7 +99,7 @@
                         <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
                       </template>
                       <template v-if="$store.getters.contextRole === 'responsable_territoire'">
-                        <CheckIcon v-if="role.contextable_type === 'territoire' && role.contextable_id === $store.getters.contextableId " class="h-5 text-jva-green-500 " />
+                        <CheckIcon v-if="role.contextable_type === 'responsable_territoire' && role.contextable_id === $store.getters.contextableId " class="h-5 text-jva-green-500 " />
                         <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
                       </template>
                     </template>
@@ -404,11 +399,11 @@ export default {
 
       this.$refs.switchRole.show = false
 
-      if (this.$router.history.current.path === '/dashboard') {
-        window.location.reload(true)
-      } else {
-        this.$router.push('/dashboard')
-      }
+      // if (this.$router.history.current.path === '/dashboard') {
+      //   window.location.reload(true)
+      // } else {
+      //   this.$router.push('/dashboard')
+      // }
     },
     isActiveLink (regex, exact = false) {
       return exact ? this.$route.path === regex : RegExp(regex).test(this.$route.path)

@@ -386,5 +386,10 @@ const labels = {
     { key: 'afternoon', label: 'Après-midi' },
     { key: 'evening', label: 'En soirée' },
     { key: 'night', label: 'La nuit' }
+  ],
+  roles: [
+    { key: 'admin', label: 'Modérateur' },
+    { key: 'referent', label: 'Référent départemental' },
+    { key: 'referent_regional', label: 'Référent régionnal' }
   ]
 }

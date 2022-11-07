@@ -105,7 +105,7 @@
                 </div>
               </Box>
             </div>
-            <BoxOrganisations v-if="profile.structures" :structures="profile.structures" />
+            <BoxOrganisations v-if="profile.user.structures" :structures="profile.user.structures" />
             <BoxTerritoires v-if="profile.user.territoires" :territoires="profile.user.territoires" />
             <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" />
             <BoxUtm v-if="$store.getters.contextRole === 'admin'" :model="profile.user" />

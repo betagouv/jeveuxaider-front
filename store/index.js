@@ -63,7 +63,7 @@ export const getters = {
         case 'responsable_territoire':
           return {
             key: role.name,
-            contextable_type: 'reseau',
+            contextable_type: 'responsable_territoire',
             contextable_id: role.pivot.rolable_id,
             label: role.pivot_model.name
           }
