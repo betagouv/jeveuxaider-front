@@ -33,7 +33,7 @@
             {{ selectedOption[attributeLabel] }}
           </template>
           <template v-else>
-            <span class="text-gray-500">{{ placeholder }}</span>
+            <span class="placeholder">{{ placeholder }}</span>
           </template>
         </div>
       </div>
@@ -202,3 +202,10 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.placeholder {
+  font-style: italic;
+  color: #666666 !important;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <portal to="body-end">
-    <template v-if="responsable.missions_count > 0">
+    <template v-if="responsable.missions_as_responsable_count > 0">
       <Modal
         v-scroll-lock="isOpen"
         :is-open="isOpen"

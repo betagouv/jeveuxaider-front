@@ -1,10 +1,10 @@
 <template>
   <div class="relative">
-    <div class="inline-flex border border-cool-gray-300 rounded-md divide-x divide-gray-100">
-      <div class="relative z-0 inline-flex rounded-md divide-x divide-gray-100">
+    <div class="inline-flex border border-cool-gray-300 divide-x divide-gray-100">
+      <div class="relative z-0 inline-flex divide-x divide-gray-100">
         <div
           :class="[
-            'relative inline-flex items-center bg-white border border-transparent rounded-l-md text-white',
+            'relative inline-flex items-center bg-white border border-transparent text-white',
             { 'pl-2 pr-3' : size === 'sm'},
             { 'py-2 pl-3 pr-4' : size === 'md'}
           ]"
@@ -22,7 +22,7 @@
         </div>
         <button
           type="button"
-          class="relative inline-flex items-center bg-white p-2 rounded-l-none rounded-r-md text-sm font-medium text-white hover:bg-gray-100 focus:outline-none focus:z-10 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500"
+          class="relative inline-flex items-center bg-white p-2 text-sm font-medium text-white hover:bg-gray-100 focus:outline-none focus:z-10 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500"
           :class="[
             { 'p-1' : size === 'sm'},
             { 'p-2' : size === 'md'},
@@ -52,7 +52,7 @@
       <ul
         v-if="show"
         v-click-outside="() => show = false"
-        class="origin-top-left absolute z-10 left-0 mt-2 w-72 rounded-md shadow-lg overflow-hidden bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none"
+        class="origin-top-left absolute z-10 left-0 mt-2 w-72 shadow-lg overflow-hidden bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none"
         tabindex="-1"
         role="listbox"
         aria-labelledby="listbox-label"

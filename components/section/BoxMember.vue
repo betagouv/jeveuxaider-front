@@ -20,7 +20,7 @@
     <DescriptionList v-if="responsable">
       <DescriptionListItem term="E-mail" :description="responsable.email" />
       <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-      <DescriptionListItem v-if="responsable.pivot.fonction" term="Rôle" :description="responsable.pivot.fonction" />
+      <DescriptionListItem v-if="responsable.pivot?.fonction" term="Rôle" :description="responsable.pivot.fonction" />
       <DescriptionListItem term="Nb missions" :description="responsable.missions_count" />
       <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
     </DescriptionList>

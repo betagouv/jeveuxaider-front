@@ -4,8 +4,8 @@
       'font-medium border',
       'inline-flex items-center justify-center transition',
 
-      {'px-3 py-1 text-sm': size === 'sm'},
-      {'px-4 py-2 text-base': size === 'md'},
+      {'px-3 py-1 text-sm min-h-[34px]': size === 'sm'},
+      {'px-4 py-2 text-base min-h-[42px]': size === 'md'},
       {'px-6 py-2 text-lg min-h-[3rem]': size === 'lg'},
 
       {'text-white bg-jva-blue-500 hover:bg-jva-blue-800 active:bg-jva-blue-900 border-transparent': type === 'primary'},
@@ -24,9 +24,12 @@
       :is="iconOrLoading"
       v-if="iconOrLoading && iconPosition === 'left'"
       :class="[
-        'fill-current flex-none mr-2',
-        {'ml-[0.125rem]': ['sm', 'md'].includes(size)},
+        'fill-current flex-none',
+        {'ml-[-0.125rem]': ['sm', 'md'].includes(size)},
         {'ml-[-0.1875rem]': ['lg'].includes(size)},
+        {'mr-2': !iconOnly},
+        {'mr-[-0.125rem]': ['sm', 'md'].includes(size) && iconOnly},
+        {'mr-[-0.1875rem]': ['lg'].includes(size) && iconOnly},
 
         {'w-4 h-4': ['sm', 'md'].includes(size) },
         {'w-6 h-6': size === 'lg'},
@@ -41,9 +44,12 @@
       :is="iconOrLoading"
       v-if="iconOrLoading && iconPosition === 'right'"
       :class="[
-        'fill-current flex-none ml-2',
-        {'mr-[0.125rem]': ['sm', 'md'].includes(size)},
+        'fill-current flex-none',
+        {'mr-[-0.125rem]': ['sm', 'md'].includes(size)},
         {'mr-[-0.1875rem]': ['lg'].includes(size)},
+        {'ml-2': !iconOnly},
+        {'ml-[-0.125rem]': ['sm', 'md'].includes(size) && iconOnly},
+        {'ml-[-0.1875rem]': ['lg'].includes(size) && iconOnly},
 
         {'w-4 h-4': ['sm', 'md'].includes(size) },
         {'w-6 h-6': size === 'lg'},
@@ -74,8 +80,12 @@ export default {
     },
     iconPosition: {
       type: String,
-      default: 'right',
+      default: 'left',
       validator: i => ['left', 'right'].includes(i)
+    },
+    iconOnly: {
+      type: Boolean,
+      default: false
     },
     disabled: {
       type: Boolean,

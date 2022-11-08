@@ -13,7 +13,9 @@
           <div class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl">
             <div class="p-4">
               <div class="flex items-start justify-between">
-                <slot name="title" />
+                <div class="self-center">
+                  <slot name="title" />
+                </div>
                 <div class="ml-3 h-7 flex items-center">
                   <button
                     type="button"
@@ -21,7 +23,7 @@
                     @click="$emit('close')"
                   >
                     <span class="sr-only">Close panel</span>
-                    <XIcon class="h-6 w-6" />
+                    <RiCloseFill class="h-6 w-6 fill-current cursor-pointer" />
                   </button>
                 </div>
               </div>

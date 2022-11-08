@@ -20,7 +20,7 @@
         'px-6 py-3 text-lg': size == 'xl',
         'w-full justify-center' : full
       },
-      rounded ? 'rounded-full' : 'rounded-md'
+      rounded ? 'rounded-full' : null
     ]"
   >
     <SpinIcon

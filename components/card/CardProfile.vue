@@ -1,6 +1,6 @@
 <template>
   <div
-    class="shadow-xl bg-white rounded-xl overflow-hidden safari-fix-scale cursor-pointer hover:shadow-2xl"
+    class="shadow-xl bg-white overflow-hidden safari-fix-scale cursor-pointer hover:shadow-2xl"
   >
     <div class="relative bg-cover pt-9 pb-5 px-6 text-white" style="background-image: url('/images/profiles/bg-card-profile.jpg')">
       <div class="flex space-x-3 items-center">
@@ -29,7 +29,7 @@
       <div
         class="absolute top-0 flex justify-center inset-x-0"
       >
-        <div v-if="profile.user" class="pill !rounded-t-none">
+        <div v-if="profile.user" class="pill">
           {{ $options.filters.label(profile.user.context_role, 'role') }}
         </div>
       </div>
@@ -56,7 +56,6 @@ export default {
 
 <style lang="postcss" scoped>
 .pill {
-  border-radius: 5px;
   background-color: white;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   font-size: 11px;

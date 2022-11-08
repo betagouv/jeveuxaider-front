@@ -2,7 +2,7 @@
   <Container2Cols>
     <template #breadcrumb>
       <Breadcrumb
-        :items="[{ label: 'Tableau de bord' }]"
+        :links="[{ text: 'Tableau de bord'}]"
       />
     </template>
     <template #header>
@@ -73,7 +73,7 @@
         <Heading as="h2" :level="3" class="mb-8">
           Votre activité en chiffres
         </Heading>
-        <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+        <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px]">
           <CardStatistic
             :value="statistics.places_left"
             :title="`${$options.filters.pluralize(statistics.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
@@ -148,6 +148,7 @@ import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import CardStatistic from '@/components/card/CardStatistic'
 import CardTemoignage from '@/components/card/CardTemoignage'
 import ButtonCreateMission from '@/components/custom/ButtonCreateMission'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -156,7 +157,8 @@ export default {
     CardStatistic,
     MoreNumbers,
     CardTemoignage,
-    ButtonCreateMission
+    ButtonCreateMission,
+    Breadcrumb
   },
   mixins: [MixinAction],
   middleware: 'authenticated',

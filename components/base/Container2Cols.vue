@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <slot name="breadcrumb" />
-    <div class="flex flex-col gap-12 py-12">
+    <div class="flex flex-col gap-12 pb-12">
       <slot name="header" />
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
         <div class="lg:col-span-3 space-y-12">

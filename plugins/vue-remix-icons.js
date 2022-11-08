@@ -34,7 +34,13 @@ import RiCalendarEventFill from 'vue-remix-icons/icons/RiCalendarEventFill.vue'
 import RiLoader5Line from 'vue-remix-icons/icons/RiLoader5Line.vue'
 import RiCalendarLine from 'vue-remix-icons/icons/RiCalendarLine.vue'
 import RiEyeFill from 'vue-remix-icons/icons/RiEyeFill.vue'
+import RiEyeLine from 'vue-remix-icons/icons/RiEyeLine.vue'
 import RiEyeOffFill from 'vue-remix-icons/icons/RiEyeOffFill.vue'
+import RiDownloadLine from 'vue-remix-icons/icons/RiDownloadLine.vue'
+import RiDownload2Line from 'vue-remix-icons/icons/RiDownload2Line.vue'
+import RiPencilLine from 'vue-remix-icons/icons/RiPencilLine.vue'
+import RiDeleteBinLine from 'vue-remix-icons/icons/RiDeleteBinLine.vue'
+import RiFileCopyLine from 'vue-remix-icons/icons/RiFileCopyLine.vue'
 
 const components = {
   RiSearchLine,
@@ -68,7 +74,13 @@ const components = {
   RiLoader5Line,
   RiCalendarLine,
   RiEyeFill,
-  RiEyeOffFill
+  RiEyeOffFill,
+  RiDownloadLine,
+  RiDownload2Line,
+  RiEyeLine,
+  RiPencilLine,
+  RiDeleteBinLine,
+  RiFileCopyLine
 }
 
 Object.entries(components).forEach(([name, component]) => {
