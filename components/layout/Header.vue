@@ -72,11 +72,13 @@
           <template #button>
             <div class="flex items-center justify-between gap-4 border-r py-4 pr-2 pl-5 w-52">
               <div class="truncate">
-                <!-- <div class="text-gray-500 uppercase text-xs">
-                  {{ $options.filters.label($store.getters.currentRole.key, 'role', 'espace') }}
-                </div> -->
                 <div class="truncate mr-auto font-semibold">
-                  {{ $store.getters.currentRole.key == 'referent' ? $options.filters.label($store.getters.currentRole.label, 'departments') : $store.getters.currentRole.label }}
+                  <template v-if="$store.getters.currentRole">
+                    {{ $store.getters.currentRole.label }}
+                  </template>
+                  <template v-else>
+                    Bénévole
+                  </template>
                 </div>
               </div>
               <ChevronDownIcon class="h-3 flex-none" />
@@ -421,11 +423,11 @@ export default {
 
       this.$refs.switchRole.show = false
 
-      // if (this.$router.history.current.path === '/dashboard') {
-      //   window.location.reload(true)
-      // } else {
-      //   this.$router.push('/dashboard')
-      // }
+      if (this.$router.history.current.path === '/dashboard') {
+        window.location.reload(true)
+      } else {
+        this.$router.push('/dashboard')
+      }
     },
     isActiveLink (regex, exact = false) {
       return exact ? this.$route.path === regex : RegExp(regex).test(this.$route.path)
