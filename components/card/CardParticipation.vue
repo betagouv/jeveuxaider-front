@@ -82,8 +82,8 @@
             </div>
           </div>
         </div>
-        <div class="lg:ml-auto">
-          <Badge :color="participation.state">
+        <div class="lg:ml-auto lg:pl-2">
+          <Badge size="sm" :type="badgeTypeParticipationSate">
             {{ participation.state }}
           </Badge>
         </div>
@@ -112,8 +112,12 @@
 
 <script>
 import MixinMission from '@/mixins/mission'
+import Badge from '@/components/dsfr/Badge.vue'
 
 export default {
+  components: {
+    Badge
+  },
   mixins: [MixinMission],
   props: {
     participation: {
@@ -131,6 +135,20 @@ export default {
     },
     profile () {
       return this.display === 'benevole' ? this.participation.profile : this.participation.mission.responsable
+    },
+    badgeTypeParticipationSate () {
+      switch (this.participation.state) {
+        case 'Validée':
+          return 'success'
+        case 'Annulée':
+        case 'Refusée':
+          return 'error'
+        case 'En attente de validation':
+        case 'En cours de traitement':
+          return 'warning'
+        default:
+          return 'info'
+      }
     }
   }
 }

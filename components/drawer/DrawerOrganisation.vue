@@ -24,18 +24,33 @@
         <div class="mt-2">
           <OnlineIndicator v-if="organisation.statut_juridique === 'Association'" :published="hasPageOnline" :link="hasPageOnline ? `/organisations/${organisation.slug}` : null" />
         </div>
-        <div class="mt-4 space-x-2">
-          <nuxt-link :to="`/admin/organisations/${organisation.id}`">
-            <Button variant="white" size="sm" icon="EyeIcon">
-              Détails
-            </Button>
-          </nuxt-link>
-          <nuxt-link :to="`/admin/organisations/${organisation.id}/edit`">
-            <Button variant="white" size="sm" icon="PencilIcon">
-              Modifier
-            </Button>
-          </nuxt-link>
-          <Button v-if="['admin'].includes($store.getters.contextRole)" variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
+        <div class="mt-4 flex flex-wrap gap-1">
+          <Button
+            type="tertiary"
+            icon="RiEyeLine"
+            size="sm"
+            @click="$router.push(`/admin/organisations/${organisation.id}`)"
+          >
+            Détails
+          </Button>
+
+          <Button
+            type="tertiary"
+            icon="RiPencilLine"
+            size="sm"
+            @click="$router.push(`/admin/organisations/${organisation.id}/edit`)"
+          >
+            Modifier
+          </Button>
+
+          <Button
+            v-if="['admin'].includes($store.getters.contextRole)"
+            type="tertiary"
+            icon="RiDeleteBinLine"
+            :icon-only="true"
+            size="sm"
+            @click="() => showAlert = true"
+          />
         </div>
         <div class="border-t -mx-6 my-6" />
         <div class="text-sm  uppercase font-semibold text-gray-600">
@@ -81,6 +96,7 @@ import BoxReseau from '@/components/section/organisation/BoxReseau'
 import BoxReferents from '@/components/section/BoxReferents'
 import LoadingIndicator from '@/components/custom/LoadingIndicator'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
+import Button from '@/components/dsfr/Button'
 
 export default {
   components: {
@@ -92,7 +108,8 @@ export default {
     BoxReseau,
     LoadingIndicator,
     OnlineIndicator,
-    BoxReferents
+    BoxReferents,
+    Button
   },
   mixins: [MixinOrganisation],
   props: {

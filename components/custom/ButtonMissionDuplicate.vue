@@ -1,6 +1,12 @@
 <template>
   <div>
-    <Button variant="white" icon="DuplicateIcon" :loading="loading" @click.native="showDialog = true">
+    <Button
+      type="tertiary"
+      icon="RiFileCopyLine"
+      size="sm"
+      :loading="loading"
+      @click.native="showDialog = true"
+    >
       <slot />
     </Button>
     <AlertDialog
@@ -15,7 +21,12 @@
 </template>
 
 <script>
+import Button from '@/components/dsfr/Button.vue'
+
 export default {
+  components: {
+    Button
+  },
   props: {
     missionId: {
       type: Number,

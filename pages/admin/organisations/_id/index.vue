@@ -124,7 +124,7 @@
                 Votre activité en chiffres
               </div>
               <Box variant="flat" :padding="!Boolean(organisationStats) ? 'lg' : false" :loading="!Boolean(organisationStats)" loading-text="Récupération de l'activité ..." class="!border-none">
-                <div v-if="organisationStats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+                <div v-if="organisationStats" class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px]">
                   <CardStatistic
                     :value="organisationStats.places_left"
                     :title="`${$options.filters.pluralize(organisationStats.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
@@ -191,9 +191,9 @@
                 @updated="$fetch()"
               />
               <BoxMember
-                v-for="responsable in organisation.members"
+                v-for="responsable in responsables"
                 :key="responsable.id"
-                :responsable="responsable.profile"
+                :responsable="responsable"
                 :organisation="organisation"
                 @removed="$fetch()"
               />

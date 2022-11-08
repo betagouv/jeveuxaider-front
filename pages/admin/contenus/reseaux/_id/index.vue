@@ -111,7 +111,7 @@
                   Votre activité en chiffres
                 </div>
                 <Box variant="flat" :padding="!Boolean(stats) ? 'lg' : false" :loading="!Boolean(stats)" loading-text="Récupération de l'activité ..." class="!border-none">
-                  <div v-if="stats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+                  <div v-if="stats" class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px]">
                     <CardStatistic
                       :value="stats.places_left"
                       :title="`${$options.filters.pluralize(stats.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"

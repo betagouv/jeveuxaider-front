@@ -33,7 +33,7 @@
         >
         <label
           :for="option.key"
-          class="cursor-pointer text-sm border rounded-xl inline-flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500"
+          class="cursor-pointer text-sm border inline-flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500"
           :class="[checked ? 'text-jva-blue-500 border-jva-blue-500 font-bold' : 'text-gray-600 border-gray-300',
                    {
                      'px-2 py-1': size == 'xs',

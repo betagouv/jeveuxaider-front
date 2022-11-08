@@ -3,7 +3,7 @@
     <DrawerMission :mission-id="drawerMissionId" @close="drawerMissionId = null" @updated="$fetch()" />
     <template #breadcrumb>
       <Breadcrumb
-        :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Missions' }]"
+        :links="[{ text: 'Tableau de bord', to: '/dashboard' }, { text: 'Missions' }]"
       />
     </template>
     <template #sidebar>
@@ -141,12 +141,17 @@
       >
         <template #action>
           <div class="flex space-x-2">
-            <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
+            <Button
+              type="secondary"
+              icon="RiDownload2Line"
+              :loading="exportLoading"
+              @click.native="handleExport"
+            >
               Exporter
             </Button>
             <ButtonCreateMission
               v-if="$store.getters.contextRole === 'responsable'"
-              size="lg"
+              size="md"
             />
           </div>
         </template>
@@ -163,63 +168,80 @@
           @input="changeFilter('filter[search]', $event)"
         />
         <template #prefilters>
-          <Checkbox
+          <Tag
             :key="`toutes-${$route.fullPath}`"
-            :option="{key: 'toutes', label:'Toutes'}"
-            :is-checked="hasActiveFilters()"
-            variant="button"
-            size="xs"
-            transparent
-            @change="deleteAllFilters()"
-          />
-          <Checkbox
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="hasActiveFilters()"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="deleteAllFilters"
+          >
+            Toutes
+          </Tag>
+
+          <Tag
             v-if="['responsable'].includes($store.getters.contextRole)"
             :key="`responsable-id-${$route.fullPath}`"
-            :option="{key: 'mes-missions', label:'Mes missions'}"
-            :is-checked="$route.query['filter[responsable.id]'] && $route.query['filter[responsable.id]'] == $store.getters.profile.id"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[responsable.id]', $store.getters.profile.id)"
-          />
-          <Checkbox
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="$route.query['filter[responsable.id]'] && $route.query['filter[responsable.id]'] == $store.getters.profile.id"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="changeFilter('filter[responsable.id]', $store.getters.profile.id.toString())"
+          >
+            Mes missions
+          </Tag>
+
+          <Tag
             :key="`state-en-attente-validation-${$route.fullPath}`"
-            :option="{key: 'en-attente-validation', label:'En attente de validation'}"
-            :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En attente de validation'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[state]', 'En attente de validation')"
-          />
-          <Checkbox
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En attente de validation'"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="changeFilter('filter[state]', 'En attente de validation')"
+          >
+            En attente de validation
+          </Tag>
+
+          <Tag
             :key="`available-${$route.fullPath}`"
-            :option="{key: 'available', label:'En ligne'}"
-            :is-checked="$route.query['filter[available]'] && $route.query['filter[available]'] == 'available'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[available]', 'available')"
-          />
-          <Checkbox
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="$route.query['filter[available]'] && $route.query['filter[available]'] == 'available'"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="changeFilter('filter[available]', 'available')"
+          >
+            En ligne
+          </Tag>
+
+          <Tag
             v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
             :key="`snu-mig-${$route.fullPath}`"
-            :option="{key: 'true', label:'SNU/MIG'}"
-            :is-checked="$route.query['filter[is_snu_mig_compatible]'] && $route.query['filter[is_snu_mig_compatible]'] == 'true'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[is_snu_mig_compatible]', 'true')"
-          />
-          <Checkbox
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="$route.query['filter[is_snu_mig_compatible]'] && $route.query['filter[is_snu_mig_compatible]'] == 'true'"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="changeFilter('filter[is_snu_mig_compatible]', 'true')"
+          >
+            SNU/MIG
+          </Tag>
+
+          <Tag
             v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
             :key="`mineurs-${$route.fullPath}`"
-            :option="{key: 'mineurs', label:'Ouverte aux mineurs'}"
-            :is-checked="$route.query['filter[publics_volontaires]'] && $route.query['filter[publics_volontaires]'] == 'Mineurs'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[publics_volontaires]', 'Mineurs')"
-          />
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="$route.query['filter[publics_volontaires]'] && $route.query['filter[publics_volontaires]'] == 'Mineurs'"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="changeFilter('filter[publics_volontaires]', 'Mineurs')"
+          >
+            Ouverte aux mineurs
+          </Tag>
         </template>
         <template #sorts>
           <Sort
@@ -245,6 +267,7 @@
           class="cursor-pointer"
           :mission="mission"
           show-state
+          tabindex="0"
           @click.native="drawerMissionId = mission.id"
         />
       </div>
@@ -269,6 +292,9 @@ import BoxContext from '@/components/section/BoxContext.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import ButtonCreateMission from '@/components/custom/ButtonCreateMission'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Tag from '@/components/dsfr/Tag.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -277,7 +303,10 @@ export default {
     BoxContext,
     SearchFilters,
     ButtonCreateMission,
-    Pagination
+    Pagination,
+    Tag,
+    Button,
+    Breadcrumb
   },
   mixins: [QueryBuilder, MixinExport],
   middleware: 'authenticated',

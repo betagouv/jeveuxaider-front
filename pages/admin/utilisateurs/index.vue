@@ -3,7 +3,7 @@
     <DrawerProfile :profile-id="drawerProfileId" @close="drawerProfileId = null" />
     <template #breadcrumb>
       <Breadcrumb
-        :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Utilisateurs' }]"
+        :links="[{ text: 'Tableau de bord', to: '/dashboard' }, { text: 'Utilisateurs' }]"
       />
     </template>
     <template #sidebar>
@@ -104,7 +104,12 @@
       <SectionHeading :title="`${$options.filters.formatNumber(queryResult.total)} utilisateurs`">
         <template #action>
           <div v-if="$store.getters.profile.can_export_profiles" class="flex space-x-2">
-            <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
+            <Button
+              type="secondary"
+              icon="RiDownload2Line"
+              :loading="exportLoading"
+              @click.native="handleExport"
+            >
               Exporter
             </Button>
           </div>
@@ -121,42 +126,54 @@
           @input="changeFilter('filter[search]', $event)"
         />
         <template #prefilters>
-          <Checkbox
+          <Tag
             :key="`tous-${$route.fullPath}`"
-            :option="{key: 'tous', label:'Tous'}"
-            :is-checked="hasActiveFilters()"
-            variant="button"
-            size="xs"
-            transparent
-            @change="deleteAllFilters()"
-          />
-          <Checkbox
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="hasActiveFilters()"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="deleteAllFilters"
+          >
+            Tous
+          </Tag>
+
+          <Tag
             :key="`role-referents-${$route.fullPath}`"
-            :option="{key: 'referent', label:'Référents départementaux'}"
-            :is-checked="$route.query['filter[user.role]'] == 'referent'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[user.role]', 'referent')"
-          />
-          <Checkbox
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="$route.query['filter[user.role]'] == 'referent'"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="changeFilter('filter[user.role]', 'referent')"
+          >
+            Référents départementaux
+          </Tag>
+
+          <Tag
             :key="`role-responsable-${$route.fullPath}`"
-            :option="{key: 'responsable', label:'Responsables d\'organisations'}"
-            :is-checked="$route.query['filter[user.role]'] == 'responsable'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[user.role]', 'responsable')"
-          />
-          <Checkbox
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="$route.query['filter[user.role]'] == 'responsable'"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="changeFilter('filter[user.role]', 'responsable')"
+          >
+            Responsables d'organisations
+          </Tag>
+
+          <Tag
             :key="`role-tete_de_reseau-${$route.fullPath}`"
-            :option="{key: 'tete_de_reseau', label:'Têtes de réseau'}"
-            :is-checked="$route.query['filter[user.role]'] == 'tete_de_reseau'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[user.role]', 'tete_de_reseau')"
-          />
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="$route.query['filter[user.role]'] == 'tete_de_reseau'"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="changeFilter('filter[user.role]', 'tete_de_reseau')"
+          >
+            Têtes de réseau
+          </Tag>
+
         <!-- <Checkbox
           :key="`role-responsable_territoire-${$route.fullPath}`"
           :option="{key: 'responsable_territoire', label:'Responsables territoriaux'}"
@@ -210,6 +227,9 @@ import DrawerProfile from '@/components/drawer/DrawerProfile.vue'
 import BoxContext from '@/components/section/BoxContext.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Tag from '@/components/dsfr/Tag.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -217,7 +237,10 @@ export default {
     DrawerProfile,
     BoxContext,
     SearchFilters,
-    Pagination
+    Pagination,
+    Tag,
+    Button,
+    Breadcrumb
   },
   mixins: [QueryBuilder, MixinExport],
   asyncData ({ store, error }) {

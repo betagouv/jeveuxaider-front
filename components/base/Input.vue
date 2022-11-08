@@ -19,7 +19,7 @@
         :max="typeValue == 'number' && max"
         :required="required"
         :class="[
-          'text-sm appearance-none block w-full placeholder-gray-text-400 border border-gray-200 overflow-ellipsis',
+          'text-sm appearance-none block w-full placeholder-gray-text-400 border border-gray-300 overflow-ellipsis',
           {'pr-8': suffix , '!pr-2': suffix && type == 'number', 'pl-10': icon, 'bg-gray-100 cursor-not-allowed': disabled},
           {'!pr-3 !pl-4': ['date','datetime-local'].includes(typeValue), '!text-gray-400': ['date','datetime-local'].includes(typeValue) && !Boolean(inputValue)},
           {'hide-picker': hidePicker},

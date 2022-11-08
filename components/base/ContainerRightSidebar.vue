@@ -3,7 +3,7 @@
     <div class="relative flex">
       <main class="w-full">
         <slot name="breadcrumb" />
-        <div class="py-6 xl:pr-6">
+        <div class="pb-6 xl:pr-6">
           <slot />
         </div>
       </main>

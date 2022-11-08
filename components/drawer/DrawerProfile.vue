@@ -10,24 +10,38 @@
     <template v-if="profile">
       <div
         v-if="$store.getters.contextRole == 'admin' && profile.tags"
-        class="mt-2 mb-4 flex flex-wrap gap-1"
+        class="mt-2 mb-4 flex flex-wrap gap-2"
       >
-        <Badge v-for="tag in profile.tags" :key="tag.id" size="xxs" color="gray-light">
+        <Tag v-for="tag in profile.tags" :key="tag.id">
           {{ tag.name }}
-        </Badge>
+        </Tag>
       </div>
-      <div class="mt-2 space-x-2">
-        <nuxt-link :to="`/admin/utilisateurs/${profile.id}`">
-          <Button variant="white" size="sm" icon="EyeIcon">
-            Détails
-          </Button>
-        </nuxt-link>
-        <nuxt-link :to="`/admin/utilisateurs/${profile.id}/edit`">
-          <Button variant="white" size="sm" icon="PencilIcon">
-            Modifier
-          </Button>
-        </nuxt-link>
-        <Button v-if="['admin'].includes($store.getters.contextRole)" variant="white" size="sm" icon="IdentificationIcon" @click.native="handleImpersonate()">
+      <div class="mt-2 flex flex-wrap gap-1">
+        <Button
+          type="tertiary"
+          icon="RiEyeLine"
+          size="sm"
+          @click="$router.push(`/admin/utilisateurs/${profile.id}`)"
+        >
+          Détails
+        </Button>
+
+        <Button
+          type="tertiary"
+          icon="RiPencilLine"
+          size="sm"
+          @click="$router.push(`/admin/utilisateurs/${profile.id}/edit`)"
+        >
+          Modifier
+        </Button>
+
+        <Button
+          v-if="['admin'].includes($store.getters.contextRole)"
+          type="tertiary"
+          size="sm"
+          icon="RiProfileLine"
+          @click.native="handleImpersonate()"
+        >
           Prendre sa place
         </Button>
       </div>
@@ -54,6 +68,8 @@ import BoxReseau from '@/components/section/profile/BoxReseau'
 import BoxTerritoires from '@/components/section/profile/BoxTerritoires'
 import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
 import BoxUtm from '@/components/section/BoxUtm'
+import Tag from '@/components/dsfr/Tag'
+import Button from '@/components/dsfr/Button'
 
 export default {
   components: {
@@ -62,7 +78,9 @@ export default {
     BoxReseau,
     BoxTerritoires,
     BoxOrganisations,
-    BoxUtm
+    BoxUtm,
+    Tag,
+    Button
   },
   props: {
     profileId: {
