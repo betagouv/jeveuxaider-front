@@ -18,7 +18,7 @@
     <Drawer :is-open="showDrawerAddResponsable" form-id="form-add-responsable" submit-label="Ajouter ce responsable" @close="showDrawerAddResponsable = false">
       <template #title>
         <Heading :level="3">
-          Ajouter un responsables
+          Ajouter un responsable
         </Heading>
       </template>
       <FormAddResponsable
