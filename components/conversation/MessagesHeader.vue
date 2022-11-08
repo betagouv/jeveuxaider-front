@@ -23,9 +23,9 @@
         </div>
 
         <div v-if="conversation.conversable_type == 'App\\Models\\Participation'" class="text-sm text-gray-500 font-light sm:truncate">
-          {{ conversation.conversable.mission.city }}
+          {{ conversation.conversable?.mission?.city }}
 
-          <span v-if="conversation.conversable.mission.start_date">
+          <span v-if="conversation.conversable?.mission?.start_date">
             · {{ formattedDate }}
           </span>
         </div>
@@ -38,7 +38,7 @@
           v-if="
             conversation.conversable_type == 'App\\Models\\Participation' &&
               $store.getters.contextRole == 'responsable' &&
-              $store.getters.contextableId == conversation.conversable.mission.structure_id &&
+              $store.getters.contextableId == conversation.conversable?.mission?.structure_id &&
               canEditState
           "
           :value="conversation.conversable.state"

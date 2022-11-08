@@ -53,7 +53,7 @@
       <div ref="participationContainer" class="panel--container">
         <div class="panel--content">
           <ConversationDetailsParticipation
-            v-if="$store.getters['messaging/conversation'].conversable_type == 'App\\Models\\Participation'"
+            v-if="$store.getters['messaging/conversation'].conversable_type == 'App\\Models\\Participation' && $store.getters['messaging/conversation'].conversable.mission"
           />
           <ConversationDetailsOrganisation
             v-if="$store.getters['messaging/conversation'].conversable_type == 'App\\Models\\Structure'"

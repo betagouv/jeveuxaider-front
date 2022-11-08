@@ -193,7 +193,7 @@
               <BoxMember
                 v-for="responsable in responsables"
                 :key="responsable.id"
-                :responsable="responsable"
+                :responsable="responsable.profile"
                 :organisation="organisation"
                 @removed="$fetch()"
               />
