@@ -11,13 +11,13 @@
         :id="name"
         :name="name"
         tabindex="0"
-        class="cursor-pointer px-6 py-3 text-sm rounded-xl block w-full focus:outline-none border border-gray-200 focus:ring-1 bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500"
+        class="cursor-pointer px-6 py-3 text-sm block w-full focus:outline-none border border-gray-300 focus:ring-1 bg-white focus:ring-jva-blue-500 focus:border-jva-blue-500"
         :class=" [{ 'pl-10': icon, 'bg-transparent': variant == 'transparent', 'cursor-not-allowed bg-gray-100': disabled}]"
         autocomplete="off"
         @keydown="onKeydown"
         @click="handleClick"
       >
-        <span class="text-gray-500">{{ placeholder }}</span>
+        <span class="placeholder">{{ placeholder }}</span>
       </div>
       <div class="absolute right-3">
         <SelectorIcon
@@ -27,7 +27,7 @@
     </div>
     <div
       v-show="showOptions"
-      class="absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-auto mt-1 overscroll-contain"
+      class="absolute w-full z-50 bg-white border border-gray-300 shadow-md max-h-60 overflow-auto mt-1 overscroll-contain"
       @focusout="showOptions = false"
     >
       <ul
@@ -159,4 +159,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="postcss" scoped>
+.placeholder {
+  font-style: italic;
+  color: #666666 !important;
+}
+</style>

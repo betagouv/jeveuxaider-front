@@ -1,10 +1,10 @@
 <template>
   <div
-    class="max-w-[320px] rounded-lg overflow-hidden shadow-lg cursor-pointer group hover:scale-105 transition flex flex-col"
+    class="max-w-[320px] overflow-hidden shadow-lg cursor-pointer group transition flex flex-col"
   >
     <div
       v-if="stateText"
-      class="text-white px-3 py-1 inline-block mx-auto z-10 font-medium text-xs rounded-b"
+      class="text-white px-3 py-1 inline-block mx-auto z-10 font-medium text-xs"
       :class="{
         'bg-gray-500': ['draft'].includes(stateStyle),
         'bg-jva-red-500': ['error','refused'].includes(stateStyle),
@@ -14,7 +14,9 @@
     >
       {{ stateText }}
     </div>
-    <img class="object-cover h-36 w-full mt-[-24px]" :srcset="imageSrcset" :src="imageSrc" sizes="320px" @error="onImgError">
+    <div class="h-36 overflow-hidden mt-[-28px]">
+      <img class="object-cover h-full w-full group-hover:scale-105 transition" :srcset="imageSrcset" :src="imageSrc" sizes="320px" @error="onImgError">
+    </div>
     <div class="px-6 py-4 flex-1">
       <slot name="badges" />
       <div class="font-extrabold mb-2 tracking-tight text-lg line-clamp-4">

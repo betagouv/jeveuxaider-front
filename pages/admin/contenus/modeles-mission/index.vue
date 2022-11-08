@@ -4,10 +4,10 @@
     <DrawerMissionTemplate :mission-template-id="drawerMissionTemplateId" @close="drawerMissionTemplateId = null" @updated="$fetch()" @refetch="$fetch()" />
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Contenus' },
-          { label: 'Modèles de mission' }
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Contenus' },
+          { text: 'Modèles de mission' }
         ]"
       />
     </portal>
@@ -21,11 +21,9 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <nuxt-link :to="`/admin/contenus/modeles-mission/add`">
-            <Button size="lg" icon="PlusIcon">
-              Nouveau
-            </Button>
-          </nuxt-link>
+          <Button icon="RiAddLine" @click="$router.push(`/admin/contenus/modeles-mission/add`)">
+            Nouveau
+          </Button>
         </div>
       </template>
     </SectionHeading>
@@ -41,45 +39,55 @@
         @input="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Checkbox
-          :key="`toutes-${$route.fullPath}`"
-          :option="{key: 'toutes', label:'Toutes'}"
-          :is-checked="hasActiveFilters()"
-          variant="button"
-          size="xs"
-          transparent
-          @change="deleteAllFilters()"
-        />
-        <Checkbox
-          :key="`published-${$route.fullPath}`"
-          :option="{key: 'true', label:'En ligne'}"
-          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 'true'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[published]', 'true')"
-        />
-        <Checkbox
-          :key="`unpublished-${$route.fullPath}`"
-          :option="{key: 'false', label: 'Hors ligne'}"
-          :is-checked="$route.query['filter[published]'] && $route.query['filter[published]'] == 'false'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[published]', 'false')"
-        />
+        <Tag
+          :key="`tous-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="hasActiveFilters()"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="deleteAllFilters"
+        >
+          Tous
+        </Tag>
 
-        <template v-if="$store.getters.contextRole === 'admin'">
-          <Checkbox
-            :key="`from-reseau-${$route.fullPath}`"
-            :option="{key: 'ok', label: 'Réseaux'}"
-            :is-checked="$route.query['filter[with_reseau]'] && $route.query['filter[with_reseau]'] == 'yes'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[with_reseau]', 'yes')"
-          />
-        </template>
+        <Tag
+          :key="`published-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[published]'] && $route.query['filter[published]'] == 'true'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[published]', 'true')"
+        >
+          En ligne
+        </Tag>
+
+        <Tag
+          :key="`unpublished-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[published]'] && $route.query['filter[published]'] == 'false'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[published]', 'false')"
+        >
+          Hors ligne
+        </Tag>
+
+        <Tag
+          v-if="$store.getters.contextRole === 'admin'"
+          :key="`from-reseau-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[with_reseau]'] && $route.query['filter[with_reseau]'] == 'yes'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[with_reseau]', 'yes')"
+        >
+          Réseaux
+        </Tag>
+
         <SelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
@@ -173,13 +181,19 @@ import Card from '@/components/card/Card'
 import DrawerMissionTemplate from '@/components/drawer/DrawerMissionTemplate'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
     Card,
     DrawerMissionTemplate,
     SearchFilters,
-    Pagination
+    Pagination,
+    Tag,
+    Breadcrumb,
+    Button
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',

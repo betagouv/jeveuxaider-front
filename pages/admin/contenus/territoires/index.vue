@@ -3,10 +3,10 @@
     <DrawerTerritoire :territoire-id="drawerTerritoireId" @close="drawerTerritoireId = null" @refetch="$fetch" />
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Contenus' },
-          { label: 'Territoires' }
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Contenus' },
+          { text: 'Territoires' }
         ]"
       />
     </portal>
@@ -21,14 +21,13 @@
     >
       <template #action>
         <div class="flex space-x-2">
-          <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
+          <Button type="secondary" icon="RiDownload2Line" :loading="exportLoading" @click.native="handleExport">
             Exporter
           </Button>
-          <nuxt-link :to="`/admin/contenus/territoires/add`">
-            <Button size="lg" icon="PlusIcon">
-              Nouveau
-            </Button>
-          </nuxt-link>
+
+          <Button icon="RiAddLine" @click="$router.push(`/admin/contenus/territoires/add`)">
+            Nouveau
+          </Button>
         </div>
       </template>
     </SectionHeading>
@@ -44,15 +43,66 @@
         @input="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Checkbox
-          :key="`toutes-${$route.fullPath}`"
-          :option="{key: 'toutes', label:'Toutes'}"
-          :is-checked="hasActiveFilters()"
-          variant="button"
-          size="xs"
-          transparent
-          @change="deleteAllFilters()"
-        />
+        <Tag
+          :key="`tous-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="hasActiveFilters()"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="deleteAllFilters"
+        >
+          Tous
+        </Tag>
+
+        <Tag
+          :key="`type-dep-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'department'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[type]', 'department')"
+        >
+          Départements
+        </Tag>
+
+        <Tag
+          :key="`type-city-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'city'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[type]', 'city')"
+        >
+          Villes
+        </Tag>
+
+        <Tag
+          :key="`published-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[is_published]', 'true')"
+        >
+          En ligne
+        </Tag>
+
+        <Tag
+          :key="`unpublished-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[is_published]', 'false')"
+        >
+          Hors ligne
+        </Tag>
+
         <SelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
@@ -63,42 +113,6 @@
           variant="transparent"
           clearable
           @input="changeFilter('filter[state]', $event)"
-        />
-        <Checkbox
-          :key="`type-dep-${$route.fullPath}`"
-          :option="{key: 'department', label:'Départements'}"
-          :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'] == 'department'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[type]', 'department')"
-        />
-        <Checkbox
-          :key="`type-city-${$route.fullPath}`"
-          :option="{key: 'city', label:'Villes'}"
-          :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'] == 'city'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[type]', 'city')"
-        />
-        <Checkbox
-          :key="`published-${$route.fullPath}`"
-          :option="{key: 'true', label:'En ligne'}"
-          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[is_published]', 'true')"
-        />
-        <Checkbox
-          :key="`unpublished-${$route.fullPath}`"
-          :option="{key: 'false', label: 'Hors ligne'}"
-          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[is_published]', 'false')"
         />
       </template>
       <template #sorts>
@@ -170,13 +184,19 @@ import DrawerTerritoire from '@/components/drawer/DrawerTerritoire'
 import MixinExport from '@/mixins/export'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
     Card,
     DrawerTerritoire,
     SearchFilters,
-    Pagination
+    Pagination,
+    Breadcrumb,
+    Tag,
+    Button
   },
   mixins: [QueryBuilder, MixinExport],
   layout: 'admin-with-sidebar-menu',
