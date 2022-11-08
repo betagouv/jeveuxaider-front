@@ -421,11 +421,11 @@ export default {
 
       this.$refs.switchRole.show = false
 
-      // if (this.$router.history.current.path === '/dashboard') {
-      //   window.location.reload(true)
-      // } else {
-      //   this.$router.push('/dashboard')
-      // }
+      if (this.$router.history.current.path === '/dashboard') {
+        window.location.reload(true)
+      } else {
+        this.$router.push('/dashboard')
+      }
     },
     isActiveLink (regex, exact = false) {
       return exact ? this.$route.path === regex : RegExp(regex).test(this.$route.path)
