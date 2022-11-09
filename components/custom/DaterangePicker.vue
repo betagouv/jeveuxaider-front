@@ -1,7 +1,7 @@
 <template>
   <Dropdown ref="dropdown">
     <template #button>
-      <div class="bg-white border border-gray-300 rounded-lg px-4 py-3 text-sm text-gray-500">
+      <div class="bg-white border border-gray-300 px-4 py-3 text-sm text-gray-500">
         <span class="text-gray-900 font-medium">{{ $dayjs($store.state.statistics.params.startDate).format('DD/MM/YYYY') }}</span>
         -
         <span class="font-medium text-gray-900">{{ $dayjs($store.state.statistics.params.endDate).format('DD/MM/YYYY') }}</span>
