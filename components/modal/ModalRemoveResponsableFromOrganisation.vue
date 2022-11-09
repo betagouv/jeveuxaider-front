@@ -1,6 +1,6 @@
 <template>
   <portal to="body-end">
-    <template v-if="responsable.missions_as_responsable_count > 0">
+    <template v-if="responsable.missions_count > 0">
       <Modal
         v-scroll-lock="isOpen"
         :is-open="isOpen"
@@ -27,7 +27,7 @@
               <RadioGroup
                 v-model="form.responsable_id"
                 name="responsable_id"
-                :options="responsables.filter((member) => member.id != responsable.id).map((member) => {return {key: member.id, label: member.full_name}})"
+                :options="responsables.filter((user) => user.profile.id != responsable.id).map((user) => {return {key: user.profile.id, label: user.profile.full_name}})"
               />
             </FormControl>
           </form>
@@ -112,10 +112,11 @@ export default {
         return
       }
       this.loading = true
+      console.log('handleSubmitAndSetNewResponsable', this.responsable)
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await this.$axios.delete(`/structures/${this.organisation.id}/members/${this.responsable.id}`, {
+          await this.$axios.delete(`/structures/${this.organisation.id}/members/${this.responsable.user_id}`, {
             data: {
               new_responsable_id: this.form.responsable_id
             }
@@ -134,7 +135,7 @@ export default {
         return
       }
       this.loading = true
-      await this.$axios.delete(`/structures/${this.organisation.id}/members/${this.responsable.id}`)
+      await this.$axios.delete(`/structures/${this.organisation.id}/members/${this.responsable.user_id}`)
         .then(() => {
           this.afterSubmit()
         })

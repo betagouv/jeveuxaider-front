@@ -93,7 +93,7 @@
                 <RadioGroup
                   v-model="form.responsable_id"
                   name="responsable_id"
-                  :options="userStatus.structure_responsables.filter((member) => member.id != $store.getters.profile.id).map((member) => {return {key: member.id, label: member.full_name}})"
+                  :options="userStatus.structure_responsables.filter((user) => user.profile.id != $store.getters.profile.id).map((user) => {return {key: user.profile.id, label: user.profile.full_name}})"
                 />
               </FormControl>
             </form>
@@ -245,9 +245,10 @@ export default {
         return
       }
       this.loading = true
+      console.log('')
       this.formSchema.validate(this.form, { abortEarly: false })
         .then(async () => {
-          await this.$axios.delete(`/structures/${this.userStatus.structure.id}/members/${this.$store.getters.profile.id}`, {
+          await this.$axios.delete(`/structures/${this.userStatus.structure.id}/members/${this.$store.state.auth.user.id}`, {
             data: {
               new_responsable_id: this.form.responsable_id
             }
