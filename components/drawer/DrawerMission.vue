@@ -58,7 +58,12 @@
       <BoxPlace class="mb-8" :mission="mission" @updated="$fetch" />
       <BoxInformations class="mb-8" :mission="mission" />
       <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" :key="mission.department" :department="mission.department" class="mb-8" />
-      <BoxResponsable class="mb-8" :responsable="mission.responsable" />
+      <BoxResponsable
+        class="mb-8"
+        :responsable="mission.responsable"
+        :conversable-id="mission.id"
+        conversable-type="App\Models\Mission"
+      />
       <BoxOrganisation class="mb-8" :organisation="mission.structure" />
 
       <div class="flex justify-center mb-10">
