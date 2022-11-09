@@ -31,16 +31,13 @@
               {'overflow-hidden' : overflowHidden},
               widthClass
             ]"
-            class="inline-block align-bottom bg-white rounded-lg text-left shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            class="inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full"
           >
-            <div
-              class="bg-white rounded-t-lg p-4 sm:p-6"
-              :class="[{'rounded-b-lg': hideFooter}]"
-            >
-              <div class="hidden sm:block absolute top-0 right-0 p-4 sm:p-6">
-                <button v-if="!hideClose" type="button" class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cool-gray-500" @click="$emit('close')">
+            <div class="bg-white p-6 sm:p-8">
+              <div class="hidden sm:block absolute top-0 right-0 p-6 sm:p-8">
+                <button v-if="!hideClose" type="button" class="bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cool-gray-500" @click="$emit('close')">
                   <span class="sr-only">Close</span>
-                  <XIcon />
+                  <RiCloseFill class="h-6 w-6 fill-current cursor-pointer" />
                 </button>
               </div>
               <div class="sm:flex sm:items-start">
@@ -91,7 +88,7 @@
                 </div>
               </div>
             </div>
-            <div v-if="!hideFooter" class="bg-gray-50 rounded-b-lg px-4 py-3 sm:px-6 flex justify-center lg:justify-end">
+            <div v-if="!hideFooter" class="bg-gray-50 px-6 py-4 sm:px-8 flex justify-center lg:justify-end">
               <slot name="footer">
                 <Button variant="white" @click.native="$emit('close')">
                   Fermer

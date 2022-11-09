@@ -90,12 +90,7 @@
               class="max-w-2xl mx-auto lg:col-span-6 lg:px-0 lg:w-full"
             >
               <div class="rounded-lg shadow-xl">
-                <div
-                  class="bg-white px-6"
-                  :class="
-                    isLoadingFranceConnect ? 'rounded-lg' : 'rounded-t-lg'
-                  "
-                >
+                <div class="bg-white px-6">
                   <template v-if="$store.state.settings.general.france_connect_active">
                     <div class="pt-8">
                       <h2
@@ -140,7 +135,7 @@
                 </div>
                 <div
                   v-show="!isLoadingFranceConnect"
-                  class="border-t-2 border-gray-100 rounded-b-lg pt-10 pb-2 px-4 sm:px-12 bg-gray-50"
+                  class="border-t-2 border-gray-100 pt-10 pb-2 px-4 sm:px-12 bg-gray-50"
                 >
                   <template v-if="$store.state.settings.general.light_mode_active">
                     <div class="text-center space-y-6 pb-12">
@@ -157,11 +152,7 @@
                       </p>
                       <div>
                         <nuxt-link to="/missions-benevolat">
-                          <Button
-                            size="xl"
-                            variant="green"
-                            full
-                          >
+                          <Button size="lg" class="w-full">
                             Décrouvrir les missions
                           </Button>
                         </nuxt-link>
@@ -278,45 +269,38 @@
                     </form>
 
                     <Button
-                      type="submit"
-                      size="xl"
+                      size="lg"
                       form="inscription"
-                      variant="green"
-                      full
                       :loading="loading"
-                      @click="onSubmit"
+                      class="w-full"
+                      @click.prevent.native="onSubmit"
                     >
                       Je m'inscris en tant que bénévole
                     </Button>
 
                     <div class="mt-6 mb-3 bg-gray-50">
-                      <p class="text-xs leading-5 text-gray-500 text-center">
-                        <span>En m'inscrivant j'accepte la</span>
-                        <nuxt-link
+                      <p class="text-xs text-gray-600 text-center">
+                        En m'inscrivant j'accepte la
+                        <Link
                           to="/politique-de-confidentialite"
-                          target="_blank"
-                          class="font-medium text-gray-900 hover:underline"
+                          class="font-medium text-gray-900"
                         >
                           politique de confidentialité
-                        </nuxt-link>
+                        </Link>
                         <br>
-                        <span>et la</span>
-                        <nuxt-link
+                        et la
+                        <Link
                           to="/charte-reserve-civique"
-                          target="_blank"
-                          class="font-medium text-gray-900 hover:underline"
+                          class="font-medium text-gray-900"
                         >
-                          charte de JeVeuxAider.gouv.fr
-                        </nuxt-link>
-                        <br>
-                        <span>Déjà inscrit ? </span>
-                        <nuxt-link to="/login">
-                          <span
-                            class="text-xs leading-5 text-center font-medium text-gray-900 hover:underline"
-                          >
-                            Je me connecte
-                          </span>
-                        </nuxt-link>
+                          <span>charte</span>
+                        </Link>
+                        de JeVeuxAider.gouv.fr.
+                        <br><br>
+                        Déjà inscrit ?
+                        <Link to="/login" class="font-medium text-gray-900">
+                          Je me connecte
+                        </Link>
                       </p>
                     </div>
                   </template>
@@ -365,12 +349,16 @@ import FormErrors from '@/mixins/form/errors'
 import FranceConnect from '@/components/custom/FranceConnect'
 import Temoignages from '@/components/section/homepage/Temoignages'
 import CarouselLogos from '@/components/section/inscription/CarouselLogos'
+import Link from '@/components/dsfr/Link.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
     FranceConnect,
     Temoignages,
-    CarouselLogos
+    CarouselLogos,
+    Link,
+    Button
   },
   mixins: [FormErrors],
   middleware: 'guest',

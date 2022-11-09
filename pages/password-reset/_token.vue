@@ -20,7 +20,7 @@
         </p>
       </div>
       <div class="mt-12 sm:mx-auto sm:w-full sm:max-w-md text-left">
-        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <div class="bg-white py-8 px-4 shadow sm:px-10">
           <div class="relative">
             <div class="absolute inset-0 flex items-center">
               <div class="w-full border-t border-[#d2d6dc]" />
