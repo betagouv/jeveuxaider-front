@@ -125,7 +125,7 @@ export default {
       return false
     },
     nametype () {
-      console.log(this.conversation)
+      // console.log(this.conversation)
       switch (this.conversation.conversable_type) {
         case 'App\\Models\\Participation':
           return this.conversation.conversable.mission?.structure?.name

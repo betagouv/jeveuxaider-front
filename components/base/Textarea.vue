@@ -13,7 +13,7 @@
             block
             w-full
             placeholder-gray-text-400
-            border border-gray-200
+            border border-gray-300
           "
     :class="[{ 'border-jva-red-primary': error, 'cursor-not-allowed bg-gray-100': disabled }]"
     autocomplete="off"

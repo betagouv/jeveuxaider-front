@@ -4,7 +4,7 @@
       <template #default="data">
         <div class="flex items-center relative w-full">
           <input
-            class="px-6 py-3 text-sm appearance-none block w-full placeholder-gray-text-400 border border-gray-200 overflow-ellipsis"
+            class="px-6 py-3 text-sm appearance-none block w-full placeholder-gray-text-400 border border-gray-300 overflow-ellipsis"
             :value="data.inputValue"
             placeholder="jj/mm/aaaa"
             v-on="data.inputEvents"

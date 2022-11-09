@@ -23,7 +23,7 @@
         <div class="text-sm text-gray-600">
           <label
             :for="`inputfile--${_uid}`"
-            class="relative cursor-pointer rounded-md font-medium text-jva-blue-500 focus-within:outline-none"
+            class="relative cursor-pointer font-medium text-jva-blue-500 focus-within:outline-none"
             @click.stop
           >
             {{ cLabel }}
@@ -54,7 +54,7 @@
       <li
         v-for="(file, i) in files"
         :key="i"
-        class="py-3 flex items-center bg-gray-50 rounded-lg"
+        class="py-3 flex items-center bg-gray-50"
       >
         <p class="ml-2 text-sm font-medium text-gray-900 truncate mr-auto">
           {{ file.name }}

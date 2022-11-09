@@ -4,7 +4,7 @@
       <div
         v-for="(item, index) in items"
         :key="item.uuid || item.id"
-        class="bg-gray-50 py-4 px-4 mb-4 rounded-lg"
+        class="bg-gray-50 py-4 px-4 mb-4"
       >
         <ParagraphItem
           :schema="schema"
@@ -15,7 +15,7 @@
       </div>
     </template>
 
-    <div v-else class="bg-gray-50 py-4 px-4 mb-4 rounded-lg text-gray-500 text-sm">
+    <div v-else class="bg-gray-50 py-4 px-4 mb-4 text-gray-500 text-sm">
       Aucune entrée
     </div>
 

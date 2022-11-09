@@ -162,6 +162,6 @@ export default {
 <style lang="postcss" scoped>
 .placeholder {
   font-style: italic;
-  color: #666666 !important;
+  color: #888888 !important;
 }
 </style>

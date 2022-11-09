@@ -193,9 +193,9 @@ html {
 
 // CkEditor 5
 body {
-  --ck-border-radius: 10px;
-  --ck-color-base-border: rgb(232, 232, 232);
-  --ck-color-toolbar-border: rgb(232, 232, 232);
+  --ck-border-radius: 0px;
+  --ck-color-base-border: rgb(212, 212, 212);
+  --ck-color-toolbar-border: rgb(212, 212, 212);
   --ck-inner-shadow: none;
   --ck-color-base-active-focus: #070191;
   --ck-color-focus-border: #070191;
@@ -251,7 +251,7 @@ body.full-height-layout {
 
 ::placeholder {
   font-style: italic;
-  color: #666666 !important;
+  color: #888888 !important;
 }
 
 .uf-slideout-inner,

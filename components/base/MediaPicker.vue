@@ -3,7 +3,7 @@
     <div
       v-for="(i, index) in limit"
       :key="index"
-      class="relative inline-flex flex-col mb-auto group rounded-lg cursor-pointer w-full"
+      class="relative inline-flex flex-col mb-auto group cursor-pointer w-full"
       @click.prevent="openModal = index"
     >
       <template v-if="defaults[index]">
@@ -11,17 +11,17 @@
           :src="getSrc(defaults[index])"
           :srcset="getSrcset(defaults[index])"
           :sizes="previewSizes"
-          class="w-full h-auto rounded-lg shadow-xl"
+          class="w-full h-auto shadow-xl"
         >
         <div
-          class="absolute z-10 inset-0 rounded-lg"
+          class="absolute z-10 inset-0"
           style="background: linear-gradient(141deg, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.7) 120%)"
         />
       </template>
 
       <slot v-else name="empty">
         <div
-          class="w-full h-full min-h-[120px] rounded-lg cursor-pointer border-dashed border-2 transition hover:border-jva-blue-500 flex items-center justify-center"
+          class="w-full h-full min-h-[120px] cursor-pointer border-dashed border-2 transition hover:border-jva-blue-500 flex items-center justify-center"
         >
           <div class="text-xs text-center text-jva-blue-500">
             Selectionnez<br>un visuel
@@ -55,7 +55,7 @@
                   :key="media.id"
                   :srcset="media.urls[previewConversion]"
                   :alt="media.name"
-                  class="rounded-lg cursor-pointer transition ring-offset-4 hover:opacity-50"
+                  class="cursor-pointer transition ring-offset-4 hover:opacity-50"
                   :class="[
                     {'!opacity-100 ring-2 ring-jva-blue-500': defaults[index] && defaults[index].id == media.id},
                     {'opacity-25': defaults[index] && defaults[index].id != media.id}
