@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Mon profil', link: '/profile' },
-        { label: 'Modification' },
+      :links="[
+        { text: 'Mon profil', to: '/profile' },
+        { text: 'Modification' },
       ]"
     />
-    <div class="flex flex-col py-12 gap-12">
+    <div class="flex flex-col pb-12 gap-12">
       <SectionHeading :title="$store.state.auth.user.profile.full_name">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
@@ -34,10 +34,12 @@
 
 <script>
 import FormProfile from '@/components/form/FormProfile.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    FormProfile
+    FormProfile,
+    Breadcrumb
   },
   middleware: 'authenticated',
   async asyncData ({ $axios, error, store }) {

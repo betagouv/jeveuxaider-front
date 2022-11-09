@@ -2,9 +2,9 @@
   <Container2Cols>
     <template #breadcrumb>
       <Breadcrumb
-        :items="[
-          { label: 'Mon profil', link: '/profile' },
-          { label: 'Mes missions' },
+        :links="[
+          { text: 'Mon profil', to: '/profile' },
+          { text: 'Mes missions' },
         ]"
       />
     </template>
@@ -85,12 +85,14 @@ import QueryBuilder from '@/mixins/query-builder'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import CardParticipation from '@/components/card/CardParticipation.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     HelpCenter,
     CardParticipation,
-    Pagination
+    Pagination,
+    Breadcrumb
   },
   mixins: [QueryBuilder],
   middleware: 'authenticated',

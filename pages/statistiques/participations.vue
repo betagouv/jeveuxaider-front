@@ -2,9 +2,9 @@
   <div class="flex flex-col gap-12">
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Statistiques', link: '/statistiques' },
-          { label: 'Mises en relation' },
+        :links="[
+          { text: 'Statistiques', to: '/statistiques' },
+          { text: 'Mises en relation' },
         ]"
       />
     </portal>
@@ -48,6 +48,7 @@ import ParticipationsByOrganisations from '@/components/statistics/Participation
 import ParticipationsByDomaines from '@/components/statistics/ParticipationsByDomaines.vue'
 import ParticipationsByReseaux from '@/components/statistics/ParticipationsByReseaux.vue'
 import ParticipationsByActivities from '@/components/statistics/ParticipationsByActivities.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -57,7 +58,8 @@ export default {
     ParticipationsByOrganisations,
     ParticipationsByDomaines,
     ParticipationsByReseaux,
-    ParticipationsByActivities
+    ParticipationsByActivities,
+    Breadcrumb
   },
   layout: 'statistics-public',
   data () {

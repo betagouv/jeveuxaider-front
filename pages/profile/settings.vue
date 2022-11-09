@@ -3,9 +3,9 @@
     <template #breadcrumb>
       <ModalUnregisterUser :is-open="showAlert" @cancel="showAlert = false" @close="showAlert = false" />
       <Breadcrumb
-        :items="[
-          { label: 'Mon profil', link: '/profile' },
-          { label: 'Mes paramètres' },
+        :links="[
+          { text: 'Mon profil', to: '/profile' },
+          { text: 'Mes paramètres' },
         ]"
       />
     </template>
@@ -41,11 +41,13 @@
 <script>
 import FormPassword from '@/components/form/FormPassword.vue'
 import ModalUnregisterUser from '~/components/modal/ModalUnregisterUser.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     FormPassword,
-    ModalUnregisterUser
+    ModalUnregisterUser,
+    Breadcrumb
   },
   middleware: 'authenticated',
   data () {

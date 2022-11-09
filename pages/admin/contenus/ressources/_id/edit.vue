@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Contenus' },
-        { label: 'Ressources', link: `/admin/contenus/ressources` },
-        { label: ressource.title }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Contenus' },
+        { text: 'Ressources', to: `/admin/contenus/ressources` },
+        { text: ressource.title }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading :title="ressource.title">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
@@ -30,9 +30,10 @@
 
 <script>
 import FormRessource from '~/components/form/FormRessource.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { FormRessource },
+  components: { FormRessource, Breadcrumb },
   middleware: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     const { data: ressource } = await $axios.get(`/documents/${params.id}`)

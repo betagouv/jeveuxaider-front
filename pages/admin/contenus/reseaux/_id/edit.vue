@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Réseaux', link: $store.getters.contextRole === 'admin' ? `/admin/contenus/reseaux` : null },
-        { label: reseau.name, link: `/admin/contenus/reseaux/${reseau.id}` }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Réseaux', to: $store.getters.contextRole === 'admin' ? `/admin/contenus/reseaux` : null },
+        { text: reseau.name, to: `/admin/contenus/reseaux/${reseau.id}` }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading :title="reseau.name">
         <template #action>
           <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
@@ -29,9 +29,10 @@
 
 <script>
 import FormReseau from '~/components/form/FormReseau'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { FormReseau },
+  components: { FormReseau, Breadcrumb },
   middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {
     if (

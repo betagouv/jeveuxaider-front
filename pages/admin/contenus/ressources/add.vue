@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Contenus' },
-        { label: 'Ressources', link: `/admin/contenus/ressources` },
-        { label: 'Nouvelle ressource' }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Contenus' },
+        { text: 'Ressources', to: `/admin/contenus/ressources` },
+        { text: 'Nouvelle ressource' }
       ]"
     />
     <div class="py-6">
@@ -29,9 +29,10 @@
 
 <script>
 import FormRessource from '@/components/form/FormRessource'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { FormRessource },
+  components: { FormRessource, Breadcrumb },
   middleware: 'admin',
   data () {
     return {

@@ -3,14 +3,14 @@
     <DrawerBenevole :profile="drawerProfile" @close="drawerProfile = null" />
 
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Missions', link: '/admin/missions' },
-        { label: mission.name, link: `/admin/missions/${mission.id}` },
-        { label: 'Trouver des bénévoles' },
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Missions', to: '/admin/missions' },
+        { text: mission.name, to: `/admin/missions/${mission.id}` },
+        { text: 'Trouver des bénévoles' },
       ]"
     />
-    <div class="my-6">
+    <div class="mb-6">
       <Heading :level="1">
         Trouver des bénévoles
       </Heading>
@@ -137,9 +137,10 @@ import CardProfileBenevole from '@/components/card/CardProfileBenevole.vue'
 import DrawerBenevole from '@/components/drawer/DrawerBenevole.vue'
 import MixinMission from '@/mixins/mission'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { CardProfileBenevole, DrawerBenevole, Pagination },
+  components: { CardProfileBenevole, DrawerBenevole, Pagination, Breadcrumb },
   mixins: [QueryBuilder, MixinMission],
   middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {

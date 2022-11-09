@@ -1,28 +1,28 @@
 <template>
   <div>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
+      <Drawer
+        :is-open="showDrawerFormRole"
+        form-id="form-roles"
+        submit-label="Ajouter le rôle"
+        @close="showDrawerFormRole = false"
+      >
+        <template #title>
+          <Heading :level="3">
+            Ajouter un rôle
+          </Heading>
+        </template>
+        <FormProfileRole :profile="profile" @submited="handleSubmitRole" />
+      </Drawer>
+      <AlertDialog
+        theme="danger"
+        title="Supprimer le rôle"
+        :text="`<strong>${profile.full_name}</strong> n'aura plus le rôle <strong>${$options.filters.label(roleSelected?.name, 'roles')} (${roleSelected?.pivot_model.name})</strong>`"
+        :is-open="showAlertRoleDeleted"
+        @confirm="handleConfirmDeleteRole"
+        @cancel="showAlertRoleDeleted = false"
+      />
       <div class="lg:col-span-3 space-y-12">
-        <Drawer
-          :is-open="showDrawerFormRole"
-          form-id="form-roles"
-          submit-label="Ajouter le rôle"
-          @close="showDrawerFormRole = false"
-        >
-          <template #title>
-            <Heading :level="3">
-              Ajouter un rôle
-            </Heading>
-          </template>
-          <FormProfileRole :profile="profile" @submited="handleSubmitRole" />
-        </Drawer>
-        <AlertDialog
-          theme="danger"
-          title="Supprimer le rôle"
-          :text="`<strong>${profile.full_name}</strong> n'aura plus le rôle <strong>${$options.filters.label(roleSelected?.name, 'roles')} (${roleSelected?.pivot_model.name})</strong>`"
-          :is-open="showAlertRoleDeleted"
-          @confirm="handleConfirmDeleteRole"
-          @cancel="showAlertRoleDeleted = false"
-        />
         <Box>
           <Heading :level="3" class="mb-8">
             Informations personnelles

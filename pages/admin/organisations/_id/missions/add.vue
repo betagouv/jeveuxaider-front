@@ -1,13 +1,13 @@
 <template>
   <div class="container" style="scroll-behavior: smooth;">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Missions', link: '/admin/missions' },
-        { label: 'Publier une mission' }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Missions', to: '/admin/missions' },
+        { text: 'Publier une mission' }
       ]"
     />
-    <div class="py-6 mb-12">
+    <div class="pb-6 mb-12">
       <SectionHeading title="Publication d'une nouvelle mission" secondary-title-bottom="Choisissez le domaine d'action de cette mission">
         <template #action>
           <div v-if="step == 1" class="text-gray-500 text-sm lg:text-right">
@@ -30,7 +30,7 @@
         <div
           v-for="domaine in $labels.domaines"
           :key="domaine.key"
-          class="shadow-lg rounded-lg py-6 px-14 text-center flex flex-col items-center justify-center cursor-pointer"
+          class="shadow-lg py-6 px-14 text-center flex flex-col items-center justify-center cursor-pointer"
           :class="[
             domaine.key == $route.query.domaine
               ? 'text-white bg-jva-blue-500'
@@ -127,12 +127,14 @@
 import Card from '@/components/card/Card.vue'
 import FormMission from '@/components/form/FormMission.vue'
 import ButtonsSubmitFormMission from '@/components/custom/ButtonsSubmitFormMission.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     Card,
     FormMission,
-    ButtonsSubmitFormMission
+    ButtonsSubmitFormMission,
+    Breadcrumb
   },
   middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {

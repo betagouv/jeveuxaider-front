@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Activités', link: '/admin/contenus/activites' },
-        { label: activity.name },
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Activités', to: '/admin/contenus/activites' },
+        { text: activity.name },
       ]"
     />
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="overflow-hidden" :padding="false">
           <Banner :activity="activity" :show-breadcrumb="false" :show-search="false" />
@@ -65,6 +65,7 @@ import BoxParticipation from '@/components/section/activity/BoxParticipation'
 import Banner from '@/components/section/activity/Banner'
 import Associations from '@/components/section/activity/Associations'
 import Engagement from '@/components/section/activity/Engagement'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -75,7 +76,8 @@ export default {
     History,
     Banner,
     Associations,
-    Engagement
+    Engagement,
+    Breadcrumb
   },
   middleware: 'admin',
   async asyncData ({ $axios, params, error, store }) {

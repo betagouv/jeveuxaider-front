@@ -2,9 +2,9 @@
   <Container2Cols>
     <template #breadcrumb>
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Ressources' },
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Ressources' },
         ]"
       />
     </template>
@@ -74,11 +74,13 @@
 import QueryBuilder from '@/mixins/query-builder'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     HelpCenter,
-    Pagination
+    Pagination,
+    Breadcrumb
   },
   mixins: [QueryBuilder],
   middleware: 'authenticated',

@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Contenus' },
-        { label: 'Modèles de mission', link: `/admin/contenus/modeles-mission` },
-        { label: 'Nouveau modèle' }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Contenus' },
+        { text: 'Modèles de mission', to: `/admin/contenus/modeles-mission` },
+        { text: 'Nouveau modèle' }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading title="Création d'un nouveau modèle de mission">
         <template #action>
           <ButtonsSubmitFormMissionTemplate class="hidden lg:flex" :loading="loading" @submitted="handleSubmit($event)" />
@@ -27,9 +27,10 @@
 <script>
 import FormMissionTemplate from '~/components/form/FormMissionTemplate.vue'
 import ButtonsSubmitFormMissionTemplate from '@/components/custom/ButtonsSubmitFormMissionTemplate.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { FormMissionTemplate, ButtonsSubmitFormMissionTemplate },
+  components: { FormMissionTemplate, ButtonsSubmitFormMissionTemplate, Breadcrumb },
   middleware: 'authenticated',
   asyncData ({ $axios, params, error, store }) {
     if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {

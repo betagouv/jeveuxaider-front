@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Territoires', link: $store.getters.contextRole === 'admin' ? '/admin/contenus/territoires' : null },
-        { label: territoire.name }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Territoires', to: $store.getters.contextRole === 'admin' ? '/admin/contenus/territoires' : null },
+        { text: territoire.name }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading :title="territoire.name">
         <template #action>
           <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
@@ -29,9 +29,10 @@
 
 <script>
 import FormTerritoire from '@/components/form/FormTerritoire'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { FormTerritoire },
+  components: { FormTerritoire, Breadcrumb },
   middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {
     if (!['admin', 'responsable_territoire'].includes(store.getters.contextRole)) {

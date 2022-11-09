@@ -22,11 +22,11 @@
       <div class="relative pt-1 pb-12">
         <div class="container mx-auto px-4">
           <Breadcrumb
-            theme="transparent"
-            :items="[{ label: `Domaines d'action` }, { label: domaine.name }]"
+            theme="white"
+            :links="[{ text: `Domaines d'action` }, { text: domaine.name }]"
           />
 
-          <div class="py-8 text-center sm:text-left">
+          <div class="pb-8 text-center sm:text-left">
             <h1
               class="text-4xl max-w-4xl leading-none font-bold text-white sm:text-5xl md:text-6xl"
             >
@@ -242,10 +242,12 @@
 
 <script>
 import AlgoliaSearch from '~/components/section/search/missions/AlgoliaSearch.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    AlgoliaSearch
+    AlgoliaSearch,
+    Breadcrumb
   },
   async asyncData ({ params, error, $axios, store }) {
     const { data: domaine } = await $axios.get(`/domaines/${params.slug}`)

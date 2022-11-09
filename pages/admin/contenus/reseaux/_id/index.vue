@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Réseaux', link: $store.getters.contextRole === 'admin' ? '/admin/contenus/reseaux' : null },
-        { label: reseau.name },
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Réseaux', to: $store.getters.contextRole === 'admin' ? '/admin/contenus/reseaux' : null },
+        { text: reseau.name },
       ]"
     />
     <AlertDialog
@@ -41,7 +41,7 @@
         @submited="handleSubmitInvitation"
       />
     </Drawer>
-    <div v-if="reseau" class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
+    <div v-if="reseau" class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="relative z-10">
           <img
@@ -189,6 +189,7 @@ import OnlineIndicator from '@/components/custom/OnlineIndicator'
 import BoxInvitations from '@/components/section/BoxInvitations'
 import CardStatistic from '@/components/card/CardStatistic'
 import BoxAntenne from '@/components/section/reseau/BoxAntenne'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -199,7 +200,8 @@ export default {
     FormAddResponsable,
     BoxInvitations,
     CardStatistic,
-    BoxAntenne
+    BoxAntenne,
+    Breadcrumb
   },
   mixins: [MixinReseau],
   middleware: 'authenticated',

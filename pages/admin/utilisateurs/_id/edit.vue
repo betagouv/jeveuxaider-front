@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Utilisateurs', link: '/admin/utilisateurs' },
-        { label: profile.full_name, link: `/admin/utilisateurs/${profile.id}` },
-        { label: 'Modification' }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Utilisateurs', to: '/admin/utilisateurs' },
+        { text: profile.full_name, to: `/admin/utilisateurs/${profile.id}` },
+        { text: 'Modification' }
       ]"
     />
-    <div class="flex flex-col py-6 gap-6">
+    <div class="flex flex-col pb-6 gap-6">
       <SectionHeading :title="profile.full_name">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
@@ -36,10 +36,12 @@
 
 <script>
 import FormProfile from '@/components/form/FormProfile.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    FormProfile
+    FormProfile,
+    Breadcrumb
   },
   async asyncData ({ $axios, params, error, store }) {
     if (

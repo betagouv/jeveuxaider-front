@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Contenus' },
-        { label: 'Activités', link: `/admin/contenus/activites` },
-        { label: activity.name }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Contenus' },
+        { text: 'Activités', to: `/admin/contenus/activites` },
+        { text: activity.name }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading :title="activity.name">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
@@ -30,9 +30,10 @@
 
 <script>
 import FormActivity from '@/components/form/FormActivity'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { FormActivity },
+  components: { FormActivity, Breadcrumb },
   middleware: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     const { data: activity } = await $axios.get(`/activities/${params.id}`)

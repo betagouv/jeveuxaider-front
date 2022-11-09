@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Territoires', link: $store.getters.contextRole === 'admin' ? '/admin/contenus/territoires' : null },
-        { label: territoire.name },
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Territoires', to: $store.getters.contextRole === 'admin' ? '/admin/contenus/territoires' : null },
+        { text: territoire.name },
       ]"
     />
     <AlertDialog
@@ -41,7 +41,7 @@
         @submited="handleSubmitInvitation"
       />
     </Drawer>
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="overflow-hidden" :padding="false">
           <Banner :territoire="territoire" :show-breadcrumb="false" :show-search="false" />
@@ -140,6 +140,7 @@ import FormInvitation from '@/components/form/FormInvitation'
 import FormAddResponsable from '@/components/form/FormAddResponsable'
 import MixinTerritoire from '@/mixins/territoire'
 import SelectTerritoireState from '@/components/custom/SelectTerritoireState'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -154,7 +155,8 @@ export default {
     BoxInvitations,
     FormInvitation,
     FormAddResponsable,
-    SelectTerritoireState
+    SelectTerritoireState,
+    Breadcrumb
   },
   mixins: [MixinTerritoire],
   middleware: 'authenticated',

@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Missions', link: '/admin/missions' },
-        { label: mission.name, link: `/admin/missions/${mission.id}` },
-        { label: 'Modification' }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Missions', to: '/admin/missions' },
+        { text: mission.name, to: `/admin/missions/${mission.id}` },
+        { text: 'Modification' }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading :title="mission.name">
         <template #tags>
           <Badge :color="mission.state" class="mt-4">
@@ -52,11 +52,13 @@
 import FormMission from '@/components/form/FormMission.vue'
 import ButtonsSubmitFormMission from '@/components/custom/ButtonsSubmitFormMission.vue'
 import MixinUsetiful from '@/mixins/usetiful.client.js'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     FormMission,
-    ButtonsSubmitFormMission
+    ButtonsSubmitFormMission,
+    Breadcrumb
   },
   mixins: [MixinUsetiful],
   middleware: 'authenticated',
