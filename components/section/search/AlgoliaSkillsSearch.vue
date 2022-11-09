@@ -35,7 +35,7 @@
             <template slot-scope="{ suggestion }">
               <div>
                 <div
-                  class="ml-auto leading-6 text-sm font-medium text-gray-500 flex-none"
+                  class="ml-auto leading-6 text-sm text-gray-700 flex-none"
                 >
                   <div class="flex items-center space-x-2">
                     <div class="">
@@ -48,7 +48,7 @@
                       Ajoutée
                     </div>
                   </div>
-                  <div v-if="suggestion.item.group" class="text-xs italic">
+                  <div v-if="suggestion.item.group" class="text-xs italic text-gray-500">
                     {{ suggestion.item.group }}
                   </div>
                 </div>

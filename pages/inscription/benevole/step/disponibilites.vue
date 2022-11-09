@@ -70,7 +70,6 @@
               <div class="lg:w-1/2">
                 <SelectAdvanced
                   v-model="form.commitment__time_period"
-                  class="lg:w-1/2"
                   name="commitment__time_period"
                   placeholder="Sélectionnez une durée"
                   :options="$labels.time_period"
