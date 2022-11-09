@@ -10,10 +10,10 @@
     />
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Paramètres' },
-          { label: 'Emails' },
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Paramètres' },
+          { text: 'Emails' },
         ]"
       />
     </portal>
@@ -48,10 +48,12 @@
 
 <script>
 import DrawerNotification from '@/components/drawer/DrawerNotification'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    DrawerNotification
+    DrawerNotification,
+    Breadcrumb
   },
   layout: 'admin-with-sidebar-menu',
   middleware: 'admin',

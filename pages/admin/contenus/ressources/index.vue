@@ -3,10 +3,10 @@
     <DrawerRessource :ressource-id="drawerRessourceId" @close="drawerRessourceId = null" />
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Contenus' },
-          { label: 'Ressources' }
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Contenus' },
+          { text: 'Ressources' }
         ]"
       />
     </portal>
@@ -21,11 +21,9 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <nuxt-link :to="`/admin/contenus/ressources/add`">
-            <Button size="lg" icon="PlusIcon">
-              Nouveau
-            </Button>
-          </nuxt-link>
+          <Button icon="RiAddLine" @click="$router.push(`/admin/contenus/ressources/add`)">
+            Nouveau
+          </Button>
         </div>
       </template>
     </SectionHeading>
@@ -41,33 +39,41 @@
         @input="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Checkbox
+        <Tag
           :key="`toutes-${$route.fullPath}`"
-          :option="{key: 'toutes', label:'Toutes'}"
-          :is-checked="hasActiveFilters()"
-          variant="button"
-          size="xs"
-          transparent
-          @change="deleteAllFilters()"
-        />
-        <Checkbox
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="hasActiveFilters()"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="deleteAllFilters"
+        >
+          Toutes
+        </Tag>
+
+        <Tag
           :key="`published-${$route.fullPath}`"
-          :option="{key: 1, label:'En ligne'}"
-          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 1"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[is_published]', 1)"
-        />
-        <Checkbox
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 1"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[is_published]', 1)"
+        >
+          En ligne
+        </Tag>
+
+        <Tag
           :key="`unpublished-${$route.fullPath}`"
-          :option="{key: 0, label:'Hors ligne'}"
-          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 0"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[is_published]', 0)"
-        />
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 0"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[is_published]', 0)"
+        >
+          Hors ligne
+        </Tag>
       </template>
     </SearchFilters>
 
@@ -125,12 +131,18 @@ import QueryBuilder from '@/mixins/query-builder'
 import DrawerRessource from '@/components/drawer/DrawerRessource'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
     DrawerRessource,
     SearchFilters,
-    Pagination
+    Pagination,
+    Breadcrumb,
+    Button,
+    Tag
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',

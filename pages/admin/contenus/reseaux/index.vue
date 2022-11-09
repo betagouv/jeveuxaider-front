@@ -3,10 +3,10 @@
     <DrawerReseau :reseau-id="drawerReseauId" @close="drawerReseauId = null" @refetch="$fetch" />
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Contenus' },
-          { label: 'Réseaux' }
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Contenus' },
+          { text: 'Réseaux' }
         ]"
       />
     </portal>
@@ -21,14 +21,13 @@
     >
       <template #action>
         <div class="flex space-x-2">
-          <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
+          <Button type="secondary" icon="RiDownload2Line" :loading="exportLoading" @click.native="handleExport">
             Exporter
           </Button>
-          <nuxt-link :to="`/admin/contenus/reseaux/add`">
-            <Button size="lg" icon="PlusIcon">
-              Nouveau
-            </Button>
-          </nuxt-link>
+
+          <Button icon="RiAddLine" @click="$router.push(`/admin/contenus/reseaux/add`)">
+            Nouveau
+          </Button>
         </div>
       </template>
     </SectionHeading>
@@ -44,33 +43,41 @@
         @input="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Checkbox
-          :key="`toutes-${$route.fullPath}`"
-          :option="{key: 'toutes', label:'Toutes'}"
-          :is-checked="hasActiveFilters()"
-          variant="button"
-          size="xs"
-          transparent
-          @change="deleteAllFilters()"
-        />
-        <Checkbox
+        <Tag
+          :key="`tous-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="hasActiveFilters()"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="deleteAllFilters"
+        >
+          Tous
+        </Tag>
+
+        <Tag
           :key="`published-${$route.fullPath}`"
-          :option="{key: 'true', label:'En ligne'}"
-          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[is_published]', 'true')"
-        />
-        <Checkbox
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[is_published]', 'true')"
+        >
+          En ligne
+        </Tag>
+
+        <Tag
           :key="`unpublished-${$route.fullPath}`"
-          :option="{key: 'false', label: 'Hors ligne'}"
-          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[is_published]', 'false')"
-        />
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[is_published]', 'false')"
+        >
+          Hors ligne
+        </Tag>
       </template>
     </SearchFilters>
 
@@ -116,13 +123,19 @@ import DrawerReseau from '@/components/drawer/DrawerReseau'
 import MixinExport from '@/mixins/export'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
     Card,
     DrawerReseau,
     SearchFilters,
-    Pagination
+    Pagination,
+    Breadcrumb,
+    Button,
+    Tag
   },
   mixins: [QueryBuilder, MixinExport],
   layout: 'admin-with-sidebar-menu',

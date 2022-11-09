@@ -2,10 +2,10 @@
   <div class="flex flex-col gap-8">
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Paramètres' },
-          { label: 'Messages' },
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Paramètres' },
+          { text: 'Messages' },
         ]"
       />
     </portal>
@@ -51,9 +51,12 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: {},
+  components: {
+    Breadcrumb
+  },
   mixins: [FormErrors],
   layout: 'admin-with-sidebar-menu',
   middleware: 'admin',

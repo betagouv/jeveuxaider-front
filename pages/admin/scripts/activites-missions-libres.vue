@@ -46,10 +46,10 @@
 
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Scripts' },
-          { label: 'Activités des missions libres' }
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Scripts' },
+          { text: 'Activités des missions libres' }
         ]"
       />
     </portal>
@@ -180,13 +180,15 @@ import SearchFilters from '@/components/custom/SearchFilters.vue'
 import CardMission from '@/components/card/CardMission.vue'
 import DrawerMission from '@/components/drawer/DrawerMission.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     SearchFilters,
     CardMission,
     DrawerMission,
-    Pagination
+    Pagination,
+    Breadcrumb
   },
   mixins: [FormErrors, QueryBuilder],
   layout: 'admin-with-sidebar-menu',

@@ -3,9 +3,9 @@
     <DrawerTemoignage :temoignage-id="drawerTemoignageId" @close="drawerTemoignageId = null" @updated="$fetch()" @refetch="$fetch()" />
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Témoignages' },
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Témoignages' },
         ]"
       />
     </portal>
@@ -28,15 +28,42 @@
         @input="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Checkbox
-          :key="`toutes-${$route.fullPath}`"
-          :option="{key: 'toutes', label:'Toutes'}"
-          :is-checked="hasActiveFilters()"
-          variant="button"
-          size="xs"
-          transparent
-          @change="deleteAllFilters()"
-        />
+        <Tag
+          :key="`tous-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="hasActiveFilters()"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="deleteAllFilters"
+        >
+          Tous
+        </Tag>
+
+        <Tag
+          :key="`published-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[is_published]', 'true')"
+        >
+          En ligne
+        </Tag>
+
+        <Tag
+          :key="`unpublished-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[is_published]', 'false')"
+        >
+          Hors ligne
+        </Tag>
+
         <SelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
@@ -47,24 +74,6 @@
           variant="transparent"
           clearable
           @input="changeFilter('filter[grade]', $event)"
-        />
-        <Checkbox
-          :key="`published-${$route.fullPath}`"
-          :option="{key: 'true', label:'En ligne'}"
-          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[is_published]', 'true')"
-        />
-        <Checkbox
-          :key="`unpublished-${$route.fullPath}`"
-          :option="{key: 'false', label: 'Hors ligne'}"
-          :is-checked="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[is_published]', 'false')"
         />
       </template>
     </SearchFilters>
@@ -95,13 +104,17 @@ import CardTemoignage from '@/components/card/CardTemoignage.vue'
 import DrawerTemoignage from '@/components/drawer/DrawerTemoignage.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
     CardTemoignage,
     DrawerTemoignage,
     SearchFilters,
-    Pagination
+    Pagination,
+    Breadcrumb,
+    Tag
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',

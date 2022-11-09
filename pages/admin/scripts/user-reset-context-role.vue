@@ -13,10 +13,10 @@
 
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Scripts' },
-          { label: 'Réinitialisation du rôle d\'un utilisateur' }
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Scripts' },
+          { text: 'Réinitialisation du rôle d\'un utilisateur' }
         ]"
       />
     </portal>
@@ -81,8 +81,12 @@
 <script>
 import { object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
+  components: {
+    Breadcrumb
+  },
   mixins: [FormErrors],
   layout: 'admin-with-sidebar-menu',
   middleware: 'admin',

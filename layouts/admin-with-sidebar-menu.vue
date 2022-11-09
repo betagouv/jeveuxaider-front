@@ -3,7 +3,9 @@
     <HeaderBanner />
     <Header />
     <div class="container">
-      <portal-target name="breadcrumb" />
+      <div class="min-h-[92px] md:min-h-[116px]">
+        <portal-target name="breadcrumb" />
+      </div>
       <div class="grid lg:grid-cols-5 gap-6 lg:gap-12 pb-6 lg:pb-12">
         <aside class="relative lg:col-span-1">
           <div class="lg:block">
