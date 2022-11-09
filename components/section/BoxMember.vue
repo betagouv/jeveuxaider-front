@@ -6,7 +6,7 @@
           {{ responsable.full_name }}
         </Heading>
         <div
-          v-if="responsable.id !== $store.state.auth.user.profile.id && organisation.members.length > 1"
+          v-if="organisation.members.length > 1"
           class="text-sm flex items-center cursor-pointer group hover:text-red-500"
           @click="handleDeleteMember(responsable)"
         >
