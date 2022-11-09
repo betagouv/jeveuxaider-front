@@ -24,11 +24,11 @@
     </div>
     <div class="max-w-xl mx-auto">
       <div
-        class="px-8 pt-6 pb-20 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
+        class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center"
       >
         Complétez votre profil
       </div>
-      <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
+      <div class="p-8 bg-gray-50 border-t border-gray-200">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
           <FormControl label="Photo de profil" html-for="avatar">
             <ImageCrop

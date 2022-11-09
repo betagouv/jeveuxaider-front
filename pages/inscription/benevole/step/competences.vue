@@ -22,11 +22,11 @@
     </div>
     <div class="max-w-xl mx-auto">
       <div
-        class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
+        class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center"
       >
         Renseignez vos compétences
       </div>
-      <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
+      <div class="p-8 bg-gray-50 border-t border-gray-200">
         <div class="mb-8 text-md text-gray-500">
           Enrichissez votre profil avec les compétences que vous souhaitez mettre au service des organisations publiques ou associatives.
         </div>
@@ -54,14 +54,11 @@
         </div>
 
         <Button
-          class="mt-8"
-          type="submit"
-          size="xl"
+          size="lg"
           form="inscription"
-          variant="green"
-          full
           :loading="loading"
-          @click="onSubmit"
+          class="w-full mt-8"
+          @click.native.prevent="onSubmit"
         >
           Terminer
         </Button>
@@ -74,10 +71,12 @@
 import { cloneDeep } from 'lodash'
 import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
-    AlgoliaSkillsInput
+    AlgoliaSkillsInput,
+    Button
   },
   mixins: [FormErrors],
   layout: 'register-steps',

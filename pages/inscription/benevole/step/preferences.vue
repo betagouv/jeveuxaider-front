@@ -24,14 +24,14 @@
     </div>
     <div class="max-w-xl mx-auto">
       <div
-        class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
+        class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center"
       >
         Vos préférences
       </div>
-      <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
+      <div class="p-8 bg-gray-50 border-t border-gray-200">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
           <FormControl label="Quelles activités de bénévolat pourraient vous intéresser ?" html-for="activites">
-            <div class="bg-white border rounded-md">
+            <div class="bg-white border">
               <Disclosure :default-open="true" class="py-4 border-b px-4">
                 <template #button="{ isOpen }">
                   <div class="flex font-semibold text-sm items-center justify-between group">
@@ -80,12 +80,10 @@
             <Textarea v-model="form.description" name="description" placeholder="Vos motivations en quelques mots..." />
           </FormControl>
           <Button
-            type="submit"
-            size="xl"
-            variant="green"
-            full
+            size="lg"
             :loading="loading"
-            @click="onSubmit"
+            class="w-full"
+            @click.native.prevent="onSubmit"
           >
             Continuer
           </Button>
@@ -101,8 +99,12 @@ import { cloneDeep } from 'lodash'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import activitiesOptions from '@/assets/activities.json'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   mixins: [FormErrors, FormUploads],
   layout: 'register-steps',
   data () {

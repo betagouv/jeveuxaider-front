@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="max-w-xl mx-auto bg-gray-100 p-6 sm:p-12 rounded-2xl">
+    <div class="max-w-xl mx-auto bg-gray-100 p-6 sm:p-12">
       <div
-        class="mb-8 py-4 px-6 border border-gray-400 text-gray-500 rounded-2xl md:flex md:space-x-4"
+        class="mb-8 py-4 px-6 border border-gray-400 text-gray-500 md:flex md:space-x-4"
       >
         <InformationCircleSolidIcon class="h-5 w-5 inline text-gray-400 translate-y-[-2px] md:translate-y-0 flex-none" />
         <span class="text-sm md:text-base">

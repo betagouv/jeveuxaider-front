@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white w-72 text-center flex-col items-center space-y-2 justify-center px-4 py-10 transform cursor-pointer hover:scale-105 duration-150"
+    class="bg-white w-full md:w-72 text-center flex-col items-center space-y-2 justify-center px-4 py-10 transform cursor-pointer hover:scale-105 duration-150"
   >
     <div v-if="icon" class="text-4xl">
       {{ icon }}

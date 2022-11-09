@@ -20,11 +20,11 @@
     </div>
     <div class="max-w-xl mx-auto">
       <div
-        class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
+        class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center"
       >
         Sélectionnez vos disponibilités
       </div>
-      <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
+      <div class="p-8 bg-gray-50 border-t border-gray-200">
         <div class="mb-8 text-md text-gray-500">
           Un profil visible vous offre plus de chances de trouver une mission qui répond à votre envie d'engagement, en permettant à une organisation publique ou associative de vous contacter en fonction des domaines d'action que vous avez sélectionnés.
         </div>
@@ -82,12 +82,10 @@
           </div>
 
           <Button
-            type="submit"
-            size="xl"
-            variant="green"
-            full
+            size="lg"
             :loading="loading"
-            @click="onSubmit"
+            class="w-full"
+            @click.native.prevent="onSubmit"
           >
             Continuer
           </Button>
@@ -101,8 +99,12 @@
 import { object, array } from 'yup'
 import { cloneDeep } from 'lodash'
 import FormErrors from '@/mixins/form/errors'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   mixins: [FormErrors],
   layout: 'register-steps',
   data () {
