@@ -2,18 +2,18 @@
   <div>
     <div class="text-center mb-6">
       <div
-        class="text-gray-900 font-extrabold text-2xl lg:text-3xl leading-8 mb-2 lg:mb-3"
+        class="text-gray-900 font-bold text-2xl lg:text-3xl leading-8 mb-2 lg:mb-4"
       >
         Votre candidature est enregistrée
       </div>
       <div
-        class="text-gray-500 font-semibold text-lg lg:text-xl max-w-md mx-auto"
+        class="text-gray-500 text-lg lg:text-xl max-w-md mx-auto"
       >
         Et si vous invitiez vos proches à participer eux aussi à cette mission ?
       </div>
     </div>
     <div class="">
-      <div class="text-xl font-semibold text-center">
+      <div class="text-xl font-bold text-center">
         Partagez la mission autour de vous
       </div>
       <div class="flex justify-center space-x-3 my-10">
@@ -26,9 +26,11 @@
           :message="message"
         />
       </div>
-      <Button full size="xl" rounded variant="white" @click.native="$emit('next')">
-        Passer
-      </Button>
+      <div class="text-center">
+        <Link class="text-jva-blue-500" @click.native="$emit('next')">
+          Passer l'étape
+        </Link>
+      </div>
     </div>
   </div>
 </template>
@@ -38,6 +40,7 @@ import ShareFacebook from '@/components/share/Facebook.vue'
 import ShareTwitter from '@/components/share/Twitter.vue'
 import ShareLinkedin from '@/components/share/Linkedin.vue'
 import ShareMail from '@/components/share/Mail.vue'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   name: 'SoftGateShare',
@@ -45,7 +48,8 @@ export default {
     ShareFacebook,
     ShareTwitter,
     ShareLinkedin,
-    ShareMail
+    ShareMail,
+    Link
   },
   data () {
     return {

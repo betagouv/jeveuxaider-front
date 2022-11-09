@@ -8,13 +8,9 @@
     <template #header>
       <SectionHeading title="Ravi de vous retrouver 👋" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
         <template #action>
-          <div>
-            <nuxt-link to="/missions-benevolat">
-              <Button size="xl" icon="SearchIcon">
-                Trouver une mission
-              </Button>
-            </nuxt-link>
-          </div>
+          <Button size="lg" icon="RiSearchLine" @click.native="$router.push('/missions-benevolat')">
+            Trouver une mission
+          </Button>
         </template>
       </Sectionheading>
     </template>
@@ -55,6 +51,7 @@ import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
 import BoxInformations from '@/components/section/profile/BoxInformations'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
@@ -62,7 +59,8 @@ export default {
     LePetitMot,
     BoxDisponibilities,
     BoxInformations,
-    Breadcrumb
+    Breadcrumb,
+    Button
   },
   mixins: [MixinAction],
   middleware: 'authenticated',
