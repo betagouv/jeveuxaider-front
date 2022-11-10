@@ -1,8 +1,8 @@
 <template>
-  <span class="relative z-0 inline-flex shadow-sm rounded-md">
+  <span class="relative z-0 inline-flex shadow-sm">
     <button
       type="button"
-      class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-jva-blue-500 focus:border-jva-blue-500"
+      class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-jva-blue-500 focus:border-jva-blue-500"
       @click="buttonClick"
     >
       <slot name="buttonText" />
@@ -11,7 +11,7 @@
       <button
         id="option-menu-button"
         type="button"
-        class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-jva-blue-500 focus:border-jva-blue-500"
+        class="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-jva-blue-500 focus:border-jva-blue-500 h-full"
         aria-expanded="true"
         aria-haspopup="true"
         @click="show = !show"
@@ -30,7 +30,7 @@
       >
         <div
           v-if="show"
-          class="origin-top-right absolute right-0 mt-2 -mr-1 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          class="origin-top-right absolute right-0 mt-2 -mr-1 w-56 shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="option-menu-button"

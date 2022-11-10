@@ -12,7 +12,7 @@
         :id="name"
         :name="name"
         tabindex="0"
-        class="max-w-[250px] px-2 py-1 space-x-2 cursor-pointer text-sm border rounded-xl inline-flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500 text-gray-500 border-gray-300"
+        class="max-w-[250px] px-2 py-1 space-x-2 cursor-pointer text-sm border inline-flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500 text-gray-500 border-gray-300"
         autocomplete="off"
         @keydown="onKeydown"
         @click="!disabled ? showOptions = !showOptions : null"
@@ -29,13 +29,13 @@
           </template>
         </div>
         <ChevronDownSolidIcon
-          class="flex-none h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+          class="flex-none h-5 text-gray-400 hover:text-gray-500 cursor-pointer my-auto"
         />
       </div>
     </div>
     <div
       v-show="showOptions"
-      class="absolute right-0 w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md overflow-auto mt-2 overscroll-contain min-w-[300px]"
+      class="absolute right-0 w-full z-50 bg-white border border-gray-200 shadow-md overflow-auto mt-2 overscroll-contain min-w-[300px]"
       @focusout="showOptions = false"
     >
       <ul

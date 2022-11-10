@@ -1391,6 +1391,11 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
+"@gouvfr/dsfr@^1.7.2":
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/@gouvfr/dsfr/-/dsfr-1.7.2.tgz#c522fce21a14989a10e30583160118c39c9c05d1"
+  integrity sha512-hPNtz+gHcc8m7ZPANxSOFMz4Ap+M9FHOudqoMR/+Kjl5FCOqwA6u/aoYnMJ8KqedS1k5XThFMp7jiktr53qXYw==
+
 "@humanwhocodes/config-array@^0.5.0":
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.5.0.tgz#1407967d4c6eecd7388f83acf1eaf4d0c6e58ef9"
@@ -11229,6 +11234,11 @@ vue-no-ssr@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz#875f3be6fb0ae41568a837f3ac1a80eaa137b998"
   integrity sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==
+
+vue-remix-icons@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/vue-remix-icons/-/vue-remix-icons-2.0.3.tgz#999df20df666e326b2eb56f2a4288234a3324343"
+  integrity sha512-OKZaivb0aaygniOc7ne1ls/mc7Sw1aArEh3thAOSOY1//yAUBfQqYgFGR52tbdfUpA7gdudjLdxiQgUvUKzm3A==
 
 vue-resize@^1.0.1:
   version "1.0.1"

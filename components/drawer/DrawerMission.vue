@@ -18,17 +18,25 @@
     </template>
     <div v-if="mission">
       <OnlineIndicator :published="hasPageOnline" :link="`/missions-benevolat/${mission.id}/${mission.slug}`" class="mt-2" />
-      <div class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/missions/${mission.id}`" class="inline-flex">
-          <Button variant="white" size="sm" icon="EyeIcon">
-            Détails
-          </Button>
-        </nuxt-link>
-        <nuxt-link :to="`/admin/missions/${mission.id}/edit`" class="inline-flex">
-          <Button variant="white" size="sm" icon="PencilIcon">
-            Modifier
-          </Button>
-        </nuxt-link>
+      <div class="flex flex-wrap gap-1 mt-4">
+        <Button
+          type="tertiary"
+          icon="RiEyeLine"
+          size="sm"
+          @click="$router.push(`/admin/missions/${mission.id}`)"
+        >
+          Détails
+        </Button>
+
+        <Button
+          type="tertiary"
+          icon="RiPencilLine"
+          size="sm"
+          @click="$router.push(`/admin/missions/${mission.id}/edit`)"
+        >
+          Modifier
+        </Button>
+
         <ButtonMissionDuplicate
           v-if="$store.getters.contextRole === 'responsable'"
           :mission-id="mission.id"
@@ -37,7 +45,15 @@
         >
           Dupliquer
         </ButtonMissionDuplicate>
-        <Button v-if="['admin','responsable'].includes($store.getters.contextRole)" variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
+
+        <Button
+          v-if="['admin','responsable'].includes($store.getters.contextRole)"
+          type="tertiary"
+          icon="RiDeleteBinLine"
+          :icon-only="true"
+          size="sm"
+          @click="() => showAlert = true"
+        />
       </div>
       <div class="border-t -mx-6 my-6" />
       <div class="text-sm  uppercase font-semibold text-gray-600">
@@ -86,6 +102,7 @@ import MixinMission from '@/mixins/mission'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
 import ButtonMissionDuplicate from '@/components/custom/ButtonMissionDuplicate'
 import BoxReferents from '@/components/section/BoxReferents'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
@@ -97,7 +114,8 @@ export default {
     BoxInformations,
     OnlineIndicator,
     ButtonMissionDuplicate,
-    BoxReferents
+    BoxReferents,
+    Button
   },
   mixins: [MixinMission],
   props: {

@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Organisations', link: ['admin','referent','referent_regional','tete_de_reseau'].includes($store.getters.contextRole) ? '/admin/organisations' : null },
-        { label: structure.name, link: `/admin/organisations/${structure.id}` },
-        { label: 'Modification' }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Organisations', to: ['admin','referent','referent_regional','tete_de_reseau'].includes($store.getters.contextRole) ? '/admin/organisations' : null },
+        { text: structure.name, to: `/admin/organisations/${structure.id}` },
+        { text: 'Modification' }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading :title="structure.name">
         <template #action>
           <div class="hidden lg:block">
@@ -30,10 +30,12 @@
 
 <script>
 import FormOrganisation from '@/components/form/FormOrganisation.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    FormOrganisation
+    FormOrganisation,
+    Breadcrumb
   },
   middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {

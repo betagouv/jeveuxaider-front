@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-md bg-jva-blue-50 p-4">
+  <div class="bg-jva-blue-50 p-4">
     <div class="flex">
       <div class="flex-shrink-0">
         <InformationCircleSolidIcon class="h-5 w-5 text-jva-blue-500" aria-hidden="true" />

@@ -78,7 +78,7 @@
       </div>
     </div>
     <div v-if="form.date_type == 'ponctual'" class="space-y-6">
-      <div class="p-4 border rounded-lg">
+      <div class="p-4 border border-gray-300">
         <Toggle
           v-model="form.showCalendar"
           label="<div class='font-medium text-base mb-2'>Proposer des créneaux spécifiques</div>"

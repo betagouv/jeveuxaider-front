@@ -2,10 +2,10 @@
   <div class="flex flex-col gap-8">
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Autre' },
-          { label: 'Invitations' }
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Autre' },
+          { text: 'Invitations' }
         ]"
       />
     </portal>
@@ -33,9 +33,9 @@
     <SectionHeading :title="`${$options.filters.pluralize($options.filters.formatNumber(queryResult.total), 'invitation')} en attente`">
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <Button size="lg" :loading="loading" icon="PlusIcon" @click.native="showDrawerInvitation = true">
+          <DsfrButton :loading="loading" icon="RiAddLine" @click.native="showDrawerInvitation = true">
             Inviter un utilisateur
-          </Button>
+          </DsfrButton>
         </div>
       </template>
     </SectionHeading>
@@ -108,6 +108,7 @@
     </Table>
 
     <Pagination
+      class="mt-6"
       :current-page="queryResult.current_page"
       :total-rows="queryResult.total"
       :per-page="queryResult.per_page"
@@ -120,10 +121,16 @@
 import QueryBuilder from '@/mixins/query-builder'
 import MixinInvitation from '@/mixins/invitation'
 import FormInvitation from '@/components/form/FormInvitation'
+import Pagination from '@/components/dsfr/Pagination.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import DsfrButton from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
-    FormInvitation
+    FormInvitation,
+    Pagination,
+    Breadcrumb,
+    DsfrButton
   },
   mixins: [MixinInvitation, QueryBuilder],
   layout: 'admin-with-sidebar-menu',

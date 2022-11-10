@@ -4,9 +4,10 @@
       <div v-if="secondaryTitle" class="text-xl text-gray-600">
         {{ secondaryTitle }}
       </div>
-      <Heading as="h1" :level="1">
+      <Heading as="h1" size="2xl">
         {{ title }}
       </Heading>
+
       <slot name="tags" />
       <div v-if="secondaryTitleBottom" class="text-gray-600 mt-2 text-lg lg:text-xl">
         {{ secondaryTitleBottom }}
@@ -17,7 +18,12 @@
 </template>
 
 <script>
+import Heading from '@/components/dsfr/Heading.vue'
+
 export default {
+  components: {
+    Heading
+  },
   props: {
     title: {
       type: String,

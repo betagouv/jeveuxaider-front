@@ -9,15 +9,15 @@
       :src="`https://www.google.com/maps/embed/v1/place?key=${$config.google.places}&q=${googleQuery}`"
     />
     <div class="text-sm px-6 py-4">
-      <div class="font-bold text-gray-800 uppercase">
+      <div class="text-gray-800 uppercase">
         <span v-if="mission.is_autonomy">Mission en autonomie</span>
         <span v-else>Mission sur le terrain</span>
       </div>
-      <p v-if="mission.is_autonomy" class="text-gray-500 mt-1 mb-1">
+      <p v-if="mission.is_autonomy" class="text-[#666666] mt-1 mb-1">
         Cette mission peut être réalisée sans l’encadrement du responsable de mission.
         <span v-if="mission.autonomy_zips.length > 1">Elle est proposée sur plusieurs lieux.</span>
       </p>
-      <div class="text-gray-500 line-clamp-1">
+      <div class="line-clamp-1">
         <span>📍</span>
         <span v-if="mission.is_autonomy">{{ autonomyCities }}</span>
         <span v-else>{{ address }}</span>
@@ -35,7 +35,7 @@
 
     <div class="absolute inset-0 custom-gradient" />
 
-    <div class="text-white relative px-6 xl:px-16 py-8 drop-shadow">
+    <div class="text-white relative px-6 xl:px-16 py-12 text-shadow">
       <div class="font-extrabold text-2xl mb-2">
         Mission à distance
       </div>
@@ -79,3 +79,17 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.custom-gradient {
+  background: linear-gradient(
+    225deg,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+.text-shadow {
+  text-shadow: 0px 4px 14px rgb(0 0 0 / 25%), 0px 4px 30px rgb(0 0 0 / 40%);
+}
+</style>

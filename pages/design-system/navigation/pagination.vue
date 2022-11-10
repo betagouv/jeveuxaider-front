@@ -8,12 +8,12 @@
 </template>
 
 <script>
-export default {
-  layout: 'design-system',
-  data () {
-    return {
+import Pagination from '@/components/dsfr/Pagination.vue'
 
-    }
-  }
+export default {
+  components: {
+    Pagination
+  },
+  layout: 'design-system'
 }
 </script>

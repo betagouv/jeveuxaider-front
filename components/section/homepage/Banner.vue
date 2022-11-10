@@ -39,33 +39,27 @@
 
     <div class="relative z-10 h-full">
       <div
-        class="container xl:max-w-[1412px] mx-auto px-4 text-center text-white h-full"
+        class="container mx-auto px-4 h-full"
       >
         <div
-          class="flex flex-col justify-center items-center h-full text-shadow"
+          class="flex flex-col justify-center items-center h-full text-shadow text-center"
         >
-          <div
-            class="text-[50px] leading-none lg:text-7xl font-extrabold mb-4 tracking-tighter"
-          >
+          <Heading as="div" size="alt-sm" class="mb-4" color="text-white">
             Envie de bénévolat&nbsp;?
-          </div>
+          </Heading>
 
-          <h1 class="text-2xl lg:text-[28px] lg:leading-[34px] mb-8">
+          <Heading as="h1" size="md" class="mb-8" :bold="false" color="text-white">
             <strong>Devenez bénévole</strong>
             <span>et trouvez des missions de bénévolat</span>
             <br class="hidden md:block">
             <strong>près de chez vous</strong>
             <span>ou</span>
             <strong>à distance</strong>
-          </h1>
+          </Heading>
 
-          <button
-            class="flex items-center justify-center rounded-full text-white bg-jva-green-500 hover:scale-105 !outline-none focus:scale-105 transition px-8 py-4 transform will-change-transform shadow-xl font-bold text-xl"
-            @click="handleClickCTA()"
-          >
-            <SearchSvg width="16" height="16" class="flex-none" />
-            <span class="ml-2">Trouver une mission</span>
-          </button>
+          <Button size="lg" type="tertiary-no-outline" icon="RiSearchLine" @click="handleClickCTA()">
+            Trouver une mission
+          </Button>
         </div>
       </div>
     </div>
@@ -74,11 +68,13 @@
 
 <script>
 import inViewport from 'vue-in-viewport-mixin'
-import SearchSvg from '@/static/images/icons/search.svg?inline'
+import Heading from '@/components/dsfr/Heading.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
-    SearchSvg
+    Heading,
+    Button
   },
   mixins: [inViewport],
   watch: {
@@ -87,7 +83,7 @@ export default {
       const isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > video.HAVE_CURRENT_DATA
       if (!visible && isPlaying) {
         video.pause()
-      } else {
+      } else if (visible) {
         const playPromise = video.play()
         if (playPromise !== null) {
           playPromise.catch(() => { /* discard runtime error */ })

@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Territoires', link: $store.getters.contextRole === 'admin' ? '/admin/contenus/territoires' : null },
-        { label: territoire.name },
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Territoires', to: $store.getters.contextRole === 'admin' ? '/admin/contenus/territoires' : null },
+        { text: territoire.name },
       ]"
     />
     <AlertDialog
@@ -36,12 +36,12 @@
       <FormInvitation
         class="mt-8"
         role="responsable_territoire"
-        :model-id="territoire.id"
-        model-type="App\Models\Territoire"
+        :invitable-id="territoire.id"
+        invitable-type="App\Models\Territoire"
         @submited="handleSubmitInvitation"
       />
     </Drawer>
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="overflow-hidden" :padding="false">
           <Banner :territoire="territoire" :show-breadcrumb="false" :show-search="false" />
@@ -95,9 +95,9 @@
                 <template #header>
                   <div class="flex justify-between items-center mb-4">
                     <Heading as="h3" :level="5">
-                      {{ responsable.full_name }}
+                      {{ responsable.profile.full_name }}
                     </Heading>
-                    <div class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                    <div class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable.profile)">
                       <div class="group-hover:block hidden">
                         Supprimer
                       </div>
@@ -106,9 +106,9 @@
                   </div>
                 </template>
                 <DescriptionList v-if="responsable">
-                  <DescriptionListItem term="E-mail" :description="responsable.email" />
-                  <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-                  <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
+                  <DescriptionListItem term="E-mail" :description="responsable.profile.email" />
+                  <DescriptionListItem term="Mobile" :description="responsable.profile.mobile" />
+                  <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable.profile" />
                 </DescriptionList>
               </Box>
               <Button v-if="canManageTerritoire" variant="white" @click.native="showDrawerInvitation = true">
@@ -140,6 +140,7 @@ import FormInvitation from '@/components/form/FormInvitation'
 import FormAddResponsable from '@/components/form/FormAddResponsable'
 import MixinTerritoire from '@/mixins/territoire'
 import SelectTerritoireState from '@/components/custom/SelectTerritoireState'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -154,7 +155,8 @@ export default {
     BoxInvitations,
     FormInvitation,
     FormAddResponsable,
-    SelectTerritoireState
+    SelectTerritoireState,
+    Breadcrumb
   },
   mixins: [MixinTerritoire],
   middleware: 'authenticated',

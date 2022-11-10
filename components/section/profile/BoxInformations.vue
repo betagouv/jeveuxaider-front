@@ -12,9 +12,8 @@
     </div>
     <Box :variant="boxVariant" :padding="boxPadding">
       <DescriptionList>
-        <DescriptionListItem v-if="profile.referent_department" term="Référent dep." :description="`${profile.referent_department} - ${$options.filters.label(profile.referent_department, 'departments')}`" />
-        <DescriptionListItem v-if="profile.referent_region" term="Référent dep." :description="profile.referent_region" />
-        <DescriptionListItem v-if="profile.is_analyste" term="Analyste" description="Oui" />
+        <DescriptionListItem v-if="profile.user?.departments_as_referent && profile.user.departments_as_referent.length > 0" term="Référent dep." :description="`${profile.user.departments_as_referent[0].number} - ${profile.user.departments_as_referent[0].name}`" />
+        <DescriptionListItem v-if="profile.user?.regions_as_referent && profile.user.regions_as_referent.length > 0" term="Référent rég." :description="profile.user.regions_as_referent[0].name" />
         <DescriptionListItem v-if="$store.getters.contextRole === 'admin'" term="User ID" :description="profile.user_id" />
         <DescriptionListItem term="Crée le" :description="$dayjs(profile.created_at).format('D MMMM YYYY à HH:mm')" />
         <!-- todo timeago il y a -->

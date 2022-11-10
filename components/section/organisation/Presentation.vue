@@ -25,8 +25,8 @@
       <div class="max-w-3xl lg:ml-auto">
         <div class="px-4 pb-8 md:p-8 lg:pt-6 xl:p-16 xl:pt-8">
           <Breadcrumb
-            class="breadcrumb"
-            :items="[{ label: organisation.name }]"
+            class="md:!py-2"
+            :links="[{ text: organisation.name }]"
           />
 
           <img
@@ -69,7 +69,12 @@
 </template>
 
 <script>
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+
 export default {
+  components: {
+    Breadcrumb
+  },
   props: {
     organisation: {
       type: Object,
@@ -97,13 +102,6 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.breadcrumb {
-  border-bottom: 0 !important;
-  :deep(ol) {
-    @apply px-0 !important;
-  }
-}
-
 .footer--button {
   font-size: 10px;
   @apply font-bold uppercase py-6 outline-none transition-colors ease-in-out duration-200;

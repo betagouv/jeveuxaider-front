@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Taxonomies' },
-        { label: 'Tous les termes', link: `/admin/taxonomies/${$route.params.slug}` },
-        { label: term.name }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Taxonomies' },
+        { text: 'Tous les termes', to: `/admin/taxonomies/${$route.params.slug}` },
+        { text: term.name }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading :title="term.name">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
@@ -31,9 +31,10 @@
 
 <script>
 import FormTerm from '~/components/form/FormTerm.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { FormTerm },
+  components: { FormTerm, Breadcrumb },
   middleware: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     const { data: term } = await $axios.get(`/terms/${params.id}`)

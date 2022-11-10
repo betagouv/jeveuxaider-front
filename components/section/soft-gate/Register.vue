@@ -1,12 +1,10 @@
 <template>
   <div>
     <div class="text-center mb-6">
-      <div
-        class="text-gray-900 font-extrabold text-2xl lg:text-3xl leading-8 mb-2 lg:mb-3"
-      >
+      <Heading as="div" size="lg" class="mb-2 lg:mb-3">
         Rejoignez le mouvement&nbsp;!
-      </div>
-      <div class="text-gray-500 font-semibold text-lg lg:text-xl">
+      </Heading>
+      <div class="text-cool-gray-500 text-lg lg:text-xl">
         Créez rapidement votre compte Bénévole
       </div>
     </div>
@@ -130,7 +128,7 @@
               <Toggle
                 v-model="form.cej"
                 class="flex-1"
-                label="Etes-vous engagé Contrat d'Engagement Jeune ?"
+                label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
                 :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
               />
             </div>
@@ -142,7 +140,7 @@
                   }"
                   class="p-1 cursor-help group"
                 >
-                  <InformationCircleIcon class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]" />
+                  <RiInformationFill class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px] fill-current" />
                 </span>
               </template>
               <Input
@@ -157,37 +155,32 @@
       </form>
 
       <Button
-        type="submit"
-        size="xl"
-        form="inscription"
-        variant="green"
-        full
-        rounded
         :loading="loading"
-        @click="onSubmit"
+        size="lg"
+        class="w-full"
+        @click.native.prevent="onSubmit"
       >
         S'inscrire
       </Button>
 
       <div class="mt-6 mb-3">
-        <p class="text-xs leading-5 text-gray-500 text-center">
+        <p class="text-xs text-cool-gray-500 text-center">
           <span>En m'inscrivant j'accepte la</span>
-          <nuxt-link
+          <Link
             to="/politique-de-confidentialite"
-            target="_blank"
-            class="font-medium text-gray-900 hover:underline"
+            is-external="true"
           >
             politique de confidentialité
-          </nuxt-link>
-          <br>
+          </Link>
+          <br class="hidden sm:block">
           <span>et la</span>
-          <nuxt-link
+          <Link
             to="/charte-reserve-civique"
-            target="_blank"
-            class="font-medium text-gray-900 hover:underline"
+            is-external="true"
           >
-            charte de JeVeuxAider.gouv.fr
-          </nuxt-link>
+            charte
+          </Link>
+          <span>de JeVeuxAider.gouv.fr</span>
         </p>
       </div>
     </div>
@@ -197,9 +190,17 @@
 <script>
 import { string, object, ref, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Heading from '@/components/dsfr/Heading.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   name: 'SoftGateRegister',
+  components: {
+    Heading,
+    Button,
+    Link
+  },
   mixins: [FormErrors],
   props: {
     datas: {

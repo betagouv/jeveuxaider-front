@@ -1,5 +1,5 @@
 <template>
-  <div id="petit-mot" class="bg-[#FEF8F4] p-12 rounded-xl shadow-lg border-l-4 border-[#EADBD1] text-gray-800">
+  <div id="petit-mot" class="bg-[#FEF8F4] p-12 shadow-lg border-l-4 border-[#EADBD1] text-gray-800">
     <template v-if="loading">
       <LoadingIndicator> Récupération du petit mot</LoadingIndicator>
     </template>
@@ -57,8 +57,6 @@ export default {
         return this.messages.referent_departemental
       } else if (this.$store.getters.currentRole?.key === 'referent_regional') {
         return this.messages.referent_regional
-      } else if (this.$store.getters.currentRole?.key === 'analyste') {
-        return this.messages.analyste
       } else if (this.$store.getters.currentRole?.key === 'admin') {
         return this.messages.admin
       } else {

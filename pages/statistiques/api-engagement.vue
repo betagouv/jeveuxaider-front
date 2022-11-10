@@ -2,9 +2,9 @@
   <div class="flex flex-col gap-12">
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Statistiques', link: '/statistiques' },
-          { label: 'API Engagement' },
+        :links="[
+          { text: 'Statistiques', to: '/statistiques' },
+          { text: 'API Engagement' },
         ]"
       />
     </portal>
@@ -29,11 +29,13 @@
 <script>
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
 // import ApiEngagementStatistics from '@/components/statistics/ApiEngagementStatistics.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    FiltersStatistics
+    FiltersStatistics,
     // ApiEngagementStatistics
+    Breadcrumb
   },
   layout: 'statistics-public',
   data () {

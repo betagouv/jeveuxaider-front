@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Utilisateurs', link: '/admin/utilisateurs' },
-        { label: profile.full_name },
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Utilisateurs', to: '/admin/utilisateurs' },
+        { text: profile.full_name },
       ]"
     />
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="relative z-10">
           <div class="sm:flex justify-between items-center">
@@ -105,8 +105,8 @@
                 </div>
               </Box>
             </div>
-            <BoxOrganisations v-if="profile.structures" :structures="profile.structures" />
-            <BoxTerritoires v-if="profile.territoires" :territoires="profile.territoires" />
+            <BoxOrganisations v-if="profile.user.structures" :structures="profile.user.structures" />
+            <BoxTerritoires v-if="profile.user.territoires" :territoires="profile.user.territoires" />
             <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" />
             <BoxUtm v-if="$store.getters.contextRole === 'admin'" :model="profile.user" />
           </div>
@@ -125,6 +125,7 @@ import BoxReseau from '@/components/section/profile/BoxReseau'
 import BoxTerritoires from '@/components/section/profile/BoxTerritoires'
 import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
 import BoxUtm from '@/components/section/BoxUtm'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -134,7 +135,8 @@ export default {
     BoxReseau,
     BoxTerritoires,
     BoxOrganisations,
-    BoxUtm
+    BoxUtm,
+    Breadcrumb
   },
   async asyncData ({ $axios, params, error, store }) {
     if (

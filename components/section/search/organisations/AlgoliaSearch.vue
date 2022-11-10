@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div v-if="$store.state.algoliaSearch.results" class="container md:px-8 lg:mt-6 mb-12">
-      <div class="flex flex-col space-y-6 sm:space-y-12">
+    <div v-if="$store.state.algoliaSearch.results" class="container md:px-8 mb-12">
+      <div class="flex flex-col space-y-8 sm:space-y-12">
         <SectionHeading
           title="Trouver une organisation près de chez vous"
           :secondary-title-bottom="`${$options.filters.formatNumber($store.state.algoliaSearch.results.nbHits)} ${$options.filters.pluralize(
@@ -33,17 +33,22 @@
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto">
-          <div
+          <nuxt-link
             v-for="item in $store.state.algoliaSearch.results.hits"
             :key="item.id"
-            class="flex min-w-0 hover:bg-gray-50 focus:bg-gray-50 transition rounded-[10px] cursor-pointer"
+            class="flex min-w-0 transition"
+            :to="
+              item.statut_juridique === 'Association'
+                ? `/organisations/${item.slug}`
+                : `/missions-benevolat?structure.name=${item.name}`
+            "
+            @click.native="handleClickCard(item)"
           >
             <CardOrganisation
               :organisation="item"
               footer-key="missions_available_count"
-              @click.native="handleClickCard(item)"
             />
-          </div>
+          </nuxt-link>
         </div>
 
         <Pagination
@@ -68,6 +73,8 @@ import PrimaryFilters from '~/components/section/search/organisations/PrimaryFil
 import SecondaryFilters from '~/components/section/search/organisations/SecondaryFilters.vue'
 import PrimaryMobileFilters from '~/components/section/search/organisations/PrimaryMobileFilters.vue'
 import SecondaryMobileFilters from '~/components/section/search/organisations/SecondaryMobileFilters.vue'
+import Link from '@/components/dsfr/Link.vue'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
   components: {
@@ -75,7 +82,9 @@ export default {
     PrimaryFilters,
     SecondaryFilters,
     PrimaryMobileFilters,
-    SecondaryMobileFilters
+    SecondaryMobileFilters,
+    Link,
+    Pagination
   },
   mixins: [AlgoliaOrganisationsQueryBuilder],
   props: {
@@ -118,12 +127,6 @@ export default {
         window.plausible('Click Card Organisations - Liste résultat', {
           props: { isLogged: this.$store.getters.isLogged }
         })
-
-      if (organisation.statut_juridique === 'Association') {
-        this.$router.push(`/organisations/${organisation.slug}`)
-      } else {
-        this.$router.push(`/missions-benevolat?structure.name=${organisation.name}`)
-      }
     }
   }
 }

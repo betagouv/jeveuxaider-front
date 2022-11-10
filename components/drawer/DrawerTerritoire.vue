@@ -44,7 +44,7 @@
       <BoxInformations class="mb-8" :territoire="territoire" />
       <BoxMission class="mb-8" :territoire="territoire" :stats="stats" />
       <BoxParticipation class="mb-8" :territoire="territoire" :stats="stats" />
-      <BoxResponsable v-for="responsable in territoire.responsables" :key="responsable.id" class="mb-8" :responsable="responsable" />
+      <BoxResponsable v-for="responsable in territoire.responsables" :key="responsable.id" class="mb-8" :responsable="responsable.profile" />
 
       <div class="flex justify-center mb-10">
         <Link :to="`/admin/contenus/territoires/${territoire.id}`" class="uppercase font-semibold text-sm hover:underline">

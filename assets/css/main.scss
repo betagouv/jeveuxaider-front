@@ -1,44 +1,7 @@
-@font-face {
-  font-family: Marianne;
-  font-style: normal;
-  font-weight: 200;
-  src: url("../fonts/Marianne-Light.woff2") format("woff2");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: Marianne;
-  font-style: normal;
-  font-weight: normal;
-  src: url("@/assets/fonts/Marianne-Regular.woff2") format("woff2");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: Marianne;
-  font-style: normal;
-  font-weight: 500;
-  src: url("@/assets/fonts/Marianne-Medium.woff2") format("woff2");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: Marianne;
-  font-style: normal;
-  font-weight: 700;
-  src: url("@/assets/fonts/Marianne-Bold.woff2") format("woff2");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: Marianne;
-  font-style: normal;
-  font-weight: 800;
-  src: url("@/assets/fonts/Marianne-ExtraBold.woff2") format("woff2");
-  font-display: swap;
-}
+@import "fonts";
 
 html {
+  color: #3A3A3A;
   @apply antialiased bg-gray-50 h-full;
 }
 
@@ -175,38 +138,6 @@ html {
       border-color: white;
     }
   }
-  // &.bo-style {
-  //   .tooltip-inner {
-  //     border-radius: 4px;
-  //     padding: 6px;
-  //     @apply bg-gray-800;
-  //   }
-  // }
-  // &.popover {
-  //   &[x-placement^='top'] {
-  //     margin-bottom: 15px;
-  //   }
-  //   &[x-placement^='bottom'] {
-  //     margin-top: 15px;
-  //   }
-  //   &[x-placement^='left'] {
-  //     margin-right: 15px;
-  //   }
-  //   &[x-placement^='right'] {
-  //     margin-left: 15px;
-  //   }
-  // }
-  // &.popover-theme-1 {
-  //   font-size: 14px;
-  //   .tooltip-content {
-  //     border-radius: 16px;
-  //     padding: 16px 24px;
-  //     @apply bg-[#514DB2] text-white;
-  //   }
-  //   .tooltip-arrow {
-  //     display: none;
-  //   }
-  // }
 }
 
 .algolia-facet {
@@ -262,9 +193,9 @@ html {
 
 // CkEditor 5
 body {
-  --ck-border-radius: 10px;
-  --ck-color-base-border: rgb(232, 232, 232);
-  --ck-color-toolbar-border: rgb(232, 232, 232);
+  --ck-border-radius: 0px;
+  --ck-color-base-border: rgb(212, 212, 212);
+  --ck-color-toolbar-border: rgb(212, 212, 212);
   --ck-inner-shadow: none;
   --ck-color-base-active-focus: #070191;
   --ck-color-focus-border: #070191;
@@ -318,6 +249,11 @@ body.full-height-layout {
   grid-template-rows: masonry;
 }
 
+::placeholder {
+  font-style: italic;
+  color: #888888 !important;
+}
+
 .uf-slideout-inner,
 .uf-bubble,
 .uf-modal-inner {
@@ -365,5 +301,107 @@ body.full-height-layout {
 .uf-bubble {
   .pointer::before {
     @apply shadow-sm border-0 #{!important};
+  }
+}
+
+* {
+  outline: none;
+  &:focus-visible {
+    outline-style: solid;
+    outline-color: #0a76f6;
+    outline-width: 2px;
+    outline-offset: 2px;
+  }
+}
+
+// tailwind override
+[type='text']:focus, [type='email']:focus, [type='url']:focus, [type='password']:focus, [type='number']:focus, [type='date']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='week']:focus, [multiple]:focus, textarea:focus, select:focus {
+  border-color: inherit;
+  box-shadow: none;
+  outline-style: solid;
+  outline-color: #0a76f6;
+  outline-width: 2px;
+  outline-offset: 2px;
+}
+
+.formatted-text {
+
+  > *:not(:last-child) {
+    @apply mb-6;
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
+  }
+
+  ul, ol {
+    @apply pl-6;
+
+    li {
+      @apply pl-2;
+    }
+  }
+
+  h2, h3, h4, h5, h6 {
+    @apply text-[#161616] font-bold;
+    &:not(:first-child) {
+      @apply mt-12;
+    }
+  }
+
+  h2 {
+    @apply text-[28px] leading-9 lg:text-[32px] lg:leading-10;
+  }
+
+  h3 {
+    @apply text-2xl lg:text-[28px] lg:leading-9;
+  }
+
+  h4 {
+    @apply text-[22px] leading-7 lg:text-2xl lg:leading-8;
+  }
+
+  h5 {
+    @apply text-xl leading-7 lg:text-[22px] lg:leading-7;
+  }
+
+  h6 {
+    @apply text-lg leading-6 lg:text-xl lg:leading-7;
+  }
+
+  [href] {
+    text-rendering: optimizeLegibility;
+    background-image: linear-gradient(0deg,currentColor,currentColor),linear-gradient(0deg,currentColor,currentColor);
+    background-position: 0 100%, 0 calc(100% - 0.0625em);
+    background-repeat: no-repeat,no-repeat;
+    background-size: 0 0.125em,100% 0.0625em;
+  }
+
+  a[href]:hover {
+    background-size: 100% 0.125em,100% 0.0625em;
+  }
+
+  a[href]:active {
+    background-color: #EDEDED;
+  }
+
+  [target=_blank]::after {
+    flex: 0 0 auto;
+    display: inline-block;
+    vertical-align: calc((0.75em - 1rem) * 0.5);
+    background-color: currentColor;
+    width: 1rem;
+    height: 1rem;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    --icon-size: 1rem;
+    -webkit-mask-image: url("@/node_modules/@gouvfr/dsfr/dist/icons/system/external-link-line.svg");
+    mask-image: url("@/node_modules/@gouvfr/dsfr/dist/icons/system/external-link-line.svg");
+    content: "";
+    margin-left: 0.25rem;
   }
 }

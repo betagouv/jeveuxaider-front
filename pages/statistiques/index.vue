@@ -2,9 +2,9 @@
   <div class="flex flex-col gap-12">
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Statistiques', link: '/statistiques' },
-          { label: 'Vue d\'ensemble' },
+        :links="[
+          { text: 'Statistiques', to: '/statistiques' },
+          { text: 'Vue d\'ensemble' },
         ]"
       />
     </portal>
@@ -51,6 +51,7 @@ import OverviewUtilisateurs from '@/components/statistics/OverviewUtilisateurs'
 import OverviewPlaces from '@/components/statistics/OverviewPlaces'
 // import OverviewAPIEngagement from '@/components/statistics/OverviewAPIEngagement'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -60,8 +61,9 @@ export default {
     OverviewParticipations,
     OverviewMissions,
     OverviewUtilisateurs,
-    OverviewPlaces
-    // OverviewAPIEngagement
+    OverviewPlaces,
+    // OverviewAPIEngagement,
+    Breadcrumb
   },
   layout: 'statistics-public',
   data () {

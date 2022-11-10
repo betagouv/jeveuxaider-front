@@ -3,10 +3,10 @@
     <DrawerTerm :term-id="drawerTermId" @close="drawerTermId = null" />
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Taxonomies' },
-          { label: $route.params.slug }
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Taxonomies' },
+          { text: $route.params.slug }
         ]"
       />
     </portal>
@@ -21,15 +21,18 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <nuxt-link :to="`/admin/taxonomies/${$route.params.slug}/add?redirect=/admin/taxonomies/${$route.params.slug}`">
-            <Button size="lg" icon="PlusIcon">
-              Nouveau
-            </Button>
-          </nuxt-link>
+          <Button
+            icon="RiAddLine"
+            @click="$router.push(
+              `/admin/taxonomies/${$route.params.slug}/add?redirect=/admin/taxonomies/${$route.params.slug}`)
+            "
+          >
+            Nouveau
+          </Button>
         </div>
       </template>
     </SectionHeading>
-    <div>
+    <SearchFilters>
       <Input
         name="search"
         placeholder="Recherche par mots clés..."
@@ -40,36 +43,44 @@
         @input="changeFilter('filter[search]', $event)"
       />
 
-      <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
-        <Checkbox
+      <template #prefilters>
+        <Tag
           :key="`toutes-${$route.fullPath}`"
-          :option="{key: 'toutes', label:'Toutes'}"
-          :is-checked="hasActiveFilters()"
-          variant="button"
-          size="xs"
-          transparent
-          @change="deleteAllFilters()"
-        />
-        <Checkbox
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="hasActiveFilters()"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="deleteAllFilters"
+        >
+          Toutes
+        </Tag>
+
+        <Tag
           :key="`terms-with-related-${$route.fullPath}`"
-          :option="{key: 'yes', label:'Avec des liaisons'}"
-          :is-checked="$route.query['filter[has_related]'] && $route.query['filter[has_related]'] == 'yes'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[has_related]', 'yes')"
-        />
-        <Checkbox
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[has_related]'] && $route.query['filter[has_related]'] == 'yes'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[has_related]', 'yes')"
+        >
+          Avec des liaisons
+        </Tag>
+
+        <Tag
           :key="`terms-without-related-${$route.fullPath}`"
-          :option="{key: 'no', label:'Sans liaison'}"
-          :is-checked="$route.query['filter[has_related]'] && $route.query['filter[has_related]'] == 'no'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[has_related]', 'no')"
-        />
-      </div>
-    </div>
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[has_related]'] && $route.query['filter[has_related]'] == 'no'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[has_related]', 'no')"
+        >
+          Sans liaison
+        </Tag>
+      </template>
+    </SearchFilters>
 
     <Table v-if="queryResult.total">
       <TableHead>
@@ -99,6 +110,7 @@
     </Table>
 
     <Pagination
+      class="mt-6"
       :current-page="queryResult.current_page"
       :total-rows="queryResult.total"
       :per-page="queryResult.per_page"
@@ -110,10 +122,20 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import DrawerTerm from '@/components/drawer/DrawerTerm'
+import Pagination from '@/components/dsfr/Pagination.vue'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
-    DrawerTerm
+    DrawerTerm,
+    SearchFilters,
+    Pagination,
+    Breadcrumb,
+    Button,
+    Tag
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',

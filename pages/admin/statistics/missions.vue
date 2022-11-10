@@ -2,10 +2,10 @@
   <div class="flex flex-col gap-12">
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Plus de chiffres', link: '/admin/statistics' },
-          { label: 'Missions' },
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Plus de chiffres', to: '/admin/statistics' },
+          { text: 'Missions' },
         ]"
       />
     </portal>
@@ -56,6 +56,7 @@ import MissionsByDomaines from '@/components/numbers/MissionsByDomaines.vue'
 import MissionsByOrganisations from '@/components/numbers/MissionsByOrganisations.vue'
 import MissionsByReseaux from '@/components/numbers/MissionsByReseaux.vue'
 import MissionsByTemplateTypes from '@/components/numbers/MissionsByTemplateTypes.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -69,7 +70,8 @@ export default {
     MissionsByDomaines,
     MissionsByOrganisations,
     MissionsByReseaux,
-    MissionsByTemplateTypes
+    MissionsByTemplateTypes,
+    Breadcrumb
   },
   layout: 'statistics',
   middleware: 'authenticated',

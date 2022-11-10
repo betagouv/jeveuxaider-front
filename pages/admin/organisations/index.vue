@@ -3,7 +3,10 @@
     <DrawerOrganisation :organisation-id="drawerOrganisationId" @close="drawerOrganisationId = null" @updated="$fetch()" @refetch="$fetch()" />
     <template #breadcrumb>
       <Breadcrumb
-        :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Organisations' }]"
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Organisations' }
+        ]"
       />
     </template>
     <template #sidebar>
@@ -61,7 +64,12 @@
       >
         <template #action>
           <div class="">
-            <Button icon="DownloadIcon" variant="white" size="lg" :loading="exportLoading" @click.native="handleExport">
+            <Button
+              type="secondary"
+              icon="RiDownload2Line"
+              :loading="exportLoading"
+              @click.native="handleExport"
+            >
               Exporter
             </Button>
           </div>
@@ -78,33 +86,41 @@
           @input="changeFilter('filter[search]', $event)"
         />
         <template #prefilters>
-          <Checkbox
+          <Tag
             :key="`toutes-${$route.fullPath}`"
-            :option="{key: 'toutes', label:'Toutes'}"
-            :is-checked="hasActiveFilters()"
-            variant="button"
-            size="xs"
-            transparent
-            @change="deleteAllFilters()"
-          />
-          <Checkbox
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="hasActiveFilters()"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="deleteAllFilters"
+          >
+            Toutes
+          </Tag>
+
+          <Tag
             :key="`state-en-attente-validation-${$route.fullPath}`"
-            :option="{key: 'en-attente-validation', label:'En attente de validation'}"
-            :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En attente de validation'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[state]', 'En attente de validation')"
-          />
-          <Checkbox
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En attente de validation'"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="changeFilter('filter[state]', 'En attente de validation')"
+          >
+            En attente de validation
+          </Tag>
+
+          <Tag
             :key="`state-en-cours-traitement-${$route.fullPath}`"
-            :option="{key: 'en-cours-traitement', label:'En cours de traitement'}"
-            :is-checked="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En cours de traitement'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[state]', 'En cours de traitement')"
-          />
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="$route.query['filter[state]'] && $route.query['filter[state]'] == 'En cours de traitement'"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="changeFilter('filter[state]', 'En cours de traitement')"
+          >
+            En cours de traitement
+          </Tag>
         </template>
         <template #sorts>
           <Sort
@@ -132,11 +148,13 @@
           :organisation="organisation"
           show-infos
           show-state
+          tabindex="0"
           @click.native="drawerOrganisationId = organisation.id"
         />
       </div>
 
       <Pagination
+        class="mt-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
@@ -153,13 +171,21 @@ import DrawerOrganisation from '@/components/drawer/DrawerOrganisation.vue'
 import MixinExport from '@/mixins/export'
 import BoxContext from '@/components/section/BoxContext.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
+import Pagination from '@/components/dsfr/Pagination.vue'
+import Tag from '@/components/dsfr/Tag.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     CardOrganisation,
     DrawerOrganisation,
     BoxContext,
-    SearchFilters
+    SearchFilters,
+    Pagination,
+    Tag,
+    Button,
+    Breadcrumb
   },
   mixins: [QueryBuilder, MixinExport],
   middleware: 'authenticated',

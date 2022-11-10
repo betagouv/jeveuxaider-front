@@ -162,7 +162,7 @@ export default {
 <style lang="postcss" scoped>
 :deep(#autosuggest) {
   input {
-    @apply w-full pl-4 pr-12 py-3 rounded-lg border border-gray-200 text-sm transition;
+    @apply w-full pl-4 pr-12 py-3 border border-gray-300 text-sm transition;
     &:hover {
       @apply border-jva-blue-500;
     }
@@ -177,7 +177,7 @@ export default {
 :deep(.autosuggest__results-container) {
   .autosuggest__results {
     max-width: 448px;
-    @apply w-full rounded-lg absolute z-50 bg-white mt-1 overflow-hidden border border-gray-200;
+    @apply w-full absolute z-50 bg-white mt-1 overflow-hidden border border-gray-300;
   }
   .autosuggest__results-item {
     @apply px-4 py-2;

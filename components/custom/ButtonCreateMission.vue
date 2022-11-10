@@ -5,9 +5,9 @@
       v-tooltip="tooltipCantCreateMission"
     >
       <Button
-        icon="PlusIcon"
+        icon="RiAddLine"
         :size="size"
-        :disabled="structure"
+        :disabled="true"
       >
         Publier une mission
       </Button>
@@ -17,8 +17,9 @@
       :to="`/admin/organisations/${$store.getters.currentRole.contextable_id}/missions/add`"
     >
       <Button
-        icon="PlusIcon"
+        icon="RiAddLine"
         :size="size"
+        tabindex="-1"
       >
         Publier une mission
       </Button>
@@ -27,11 +28,16 @@
 </template>
 
 <script>
+import Button from '@/components/dsfr/Button.vue'
+
 export default {
+  components: {
+    Button
+  },
   props: {
     size: {
       type: String,
-      default: 'xl'
+      default: 'lg'
     }
   },
   data () {

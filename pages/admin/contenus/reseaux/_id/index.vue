@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Réseaux', link: $store.getters.contextRole === 'admin' ? '/admin/contenus/reseaux' : null },
-        { label: reseau.name },
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Réseaux', to: $store.getters.contextRole === 'admin' ? '/admin/contenus/reseaux' : null },
+        { text: reseau.name },
       ]"
     />
     <AlertDialog
@@ -18,7 +18,7 @@
     <Drawer :is-open="showDrawerAddResponsable" form-id="form-add-responsable" submit-label="Ajouter ce responsable" @close="showDrawerAddResponsable = false">
       <template #title>
         <Heading :level="3">
-          Ajouter un responsables
+          Ajouter un responsable
         </Heading>
       </template>
       <FormAddResponsable
@@ -41,7 +41,7 @@
         @submited="handleSubmitInvitation"
       />
     </Drawer>
-    <div v-if="reseau" class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
+    <div v-if="reseau" class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="relative z-10">
           <img
@@ -111,7 +111,7 @@
                   Votre activité en chiffres
                 </div>
                 <Box variant="flat" :padding="!Boolean(stats) ? 'lg' : false" :loading="!Boolean(stats)" loading-text="Récupération de l'activité ..." class="!border-none">
-                  <div v-if="stats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+                  <div v-if="stats" class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px]">
                     <CardStatistic
                       :value="stats.places_left"
                       :title="`${$options.filters.pluralize(stats.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
@@ -149,9 +149,9 @@
                 <template #header>
                   <div class="flex justify-between items-center mb-4">
                     <Heading as="h3" :level="5">
-                      {{ responsable.full_name }}
+                      {{ responsable.profile.full_name }}
                     </Heading>
-                    <div class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
+                    <div class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable.profile)">
                       <div class="group-hover:block hidden">
                         Supprimer
                       </div>
@@ -160,9 +160,9 @@
                   </div>
                 </template>
                 <DescriptionList v-if="responsable">
-                  <DescriptionListItem term="E-mail" :description="responsable.email" />
-                  <DescriptionListItem term="Mobile" :description="responsable.mobile" />
-                  <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
+                  <DescriptionListItem term="E-mail" :description="responsable.profile.email" />
+                  <DescriptionListItem term="Mobile" :description="responsable.profile.mobile" />
+                  <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable.profile" />
                 </DescriptionList>
               </Box>
               <Button variant="white" @click.native="showDrawerInvitation = true">
@@ -189,6 +189,7 @@ import OnlineIndicator from '@/components/custom/OnlineIndicator'
 import BoxInvitations from '@/components/section/BoxInvitations'
 import CardStatistic from '@/components/card/CardStatistic'
 import BoxAntenne from '@/components/section/reseau/BoxAntenne'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -199,7 +200,8 @@ export default {
     FormAddResponsable,
     BoxInvitations,
     CardStatistic,
-    BoxAntenne
+    BoxAntenne,
+    Breadcrumb
   },
   mixins: [MixinReseau],
   middleware: 'authenticated',
@@ -207,15 +209,16 @@ export default {
     if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {
       return error({ statusCode: 403 })
     }
+
+    if (store.getters.contextRole == 'tete_de_reseau') {
+      if (store.getters.contextableId != params.id) {
+        return error({ statusCode: 403 })
+      }
+    }
+
     const { data: reseau } = await $axios.get(`/reseaux/${params.id}`)
     if (!reseau) {
       return error({ statusCode: 404 })
-    }
-
-    if (store.getters.contextRole === 'tete_de_reseau') {
-      if (store.state.auth.user.profile.tete_de_reseau_id !== reseau.id) {
-        return error({ statusCode: 403 })
-      }
     }
 
     return {

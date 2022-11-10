@@ -2,9 +2,9 @@
   <Container2Cols>
     <template #breadcrumb>
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Ressources' },
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Ressources' },
         ]"
       />
     </template>
@@ -56,6 +56,7 @@
         </StackedList>
 
         <Pagination
+          class="mt-8"
           :current-page="queryResult.current_page"
           :total-rows="queryResult.total"
           :per-page="queryResult.per_page"
@@ -72,10 +73,14 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
+import Pagination from '@/components/dsfr/Pagination.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    HelpCenter
+    HelpCenter,
+    Pagination,
+    Breadcrumb
   },
   mixins: [QueryBuilder],
   middleware: 'authenticated',

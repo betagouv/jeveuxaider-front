@@ -3,10 +3,10 @@
     <DrawerMission :mission-id="drawerMissionId" @close="drawerMissionId = null" />
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Contenus' },
-          { label: 'Mission prioritaires' },
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Contenus' },
+          { text: 'Mission prioritaires' },
         ]"
       />
     </portal>
@@ -22,11 +22,9 @@
       >
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
-            <nuxt-link :to="`/admin/missions`">
-              <Button size="lg" icon="PlusIcon">
-                Prioriser une mission
-              </Button>
-            </nuxt-link>
+            <Button icon="RiAddLine" @click="$router.push(`/admin/missions`)">
+              Prioriser une mission
+            </Button>
           </div>
         </template>
       </Sectionheading>
@@ -47,11 +45,13 @@
           :key="mission.id"
           class="cursor-pointer"
           :mission="mission"
+          tabindex="0"
           @click.native="drawerMissionId = mission.id"
         />
       </div>
 
       <Pagination
+        class="mt-6"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
@@ -65,11 +65,17 @@
 import DrawerMission from '@/components/drawer/DrawerMission'
 import CardMission from '@/components/card/CardMission'
 import QueryBuilder from '@/mixins/query-builder'
+import Pagination from '@/components/dsfr/Pagination.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     CardMission,
-    DrawerMission
+    DrawerMission,
+    Pagination,
+    Button,
+    Breadcrumb
   },
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',

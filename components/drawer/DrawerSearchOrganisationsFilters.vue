@@ -50,7 +50,6 @@
       >
         <Link
           v-if="activeMoreFacets.length"
-          class="text-gray-500 underline text-sm"
           @click.native="deleteFilters()"
         >
           Réinitialiser
@@ -74,10 +73,14 @@
 <script>
 import AlgoliaOrganisationsQueryBuilder from '@/mixins/algolia-organisations-query-builder'
 import FacetFilter from '~/components/section/search/FacetFilter.vue'
+import Link from '@/components/dsfr/Link.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
-    FacetFilter
+    FacetFilter,
+    Link,
+    Button
   },
   mixins: [AlgoliaOrganisationsQueryBuilder],
   props: {

@@ -22,17 +22,17 @@ module.exports = {
       padding: '1rem'
     },
     fontSize: {
-      xxs: ['0.60rem', { lineHeight: '1rem', letterSpacing: '-0.025em' }],
-      xs: ['0.75rem', { lineHeight: '1rem', letterSpacing: '-0.025em' }],
-      sm: ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '-0.025em' }],
-      base: ['1rem', { lineHeight: '1.5rem', letterSpacing: '-0.025em' }],
-      lg: ['1.125rem', { lineHeight: '1.5rem', letterSpacing: '-0.025em' }],
-      xl: ['1.25rem', { lineHeight: '1.75rem', letterSpacing: '-0.025em' }],
-      '2xl': ['1.5rem', { lineHeight: '2rem', letterSpacing: '-0.025em' }],
-      '3xl': ['1.875rem', { lineHeight: '2.25rem', letterSpacing: '-0.025em' }],
-      '4xl': ['2.25rem', { lineHeight: '2.75rem', letterSpacing: '-0.025em' }],
-      '5xl': ['3rem', { lineHeight: '1', letterSpacing: '-0.025em' }],
-      '6xl': ['3.75rem', { lineHeight: '1', letterSpacing: '-0.025em' }]
+      xxs: ['0.60rem', { lineHeight: '1rem' }],
+      xs: ['0.75rem', { lineHeight: '1.25rem' }],
+      sm: ['0.875rem', { lineHeight: '1.5rem' }],
+      base: ['1rem', { lineHeight: '1.5rem' }],
+      lg: ['1.125rem', { lineHeight: '1.75rem' }],
+      xl: ['1.25rem', { lineHeight: '2rem' }],
+      '2xl': ['1.5rem', { lineHeight: '2rem' }],
+      '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+      '4xl': ['2.25rem', { lineHeight: '2.75rem' }],
+      '5xl': ['3rem', { lineHeight: '1' }],
+      '6xl': ['3.75rem', { lineHeight: '1' }]
     },
     extend: {
       fontFamily: {
@@ -58,8 +58,10 @@ module.exports = {
           100: '#F5F5FE',
           300: '#0F15F6',
           400: '#5B71B9',
-          500: '#070191',
-          600: '#000091'
+          500: '#000091',
+          600: '#0A04A7',
+          800: '#1212ff',
+          900: '#2323ff'
         },
         'jva-green': {
           400: '#C9F2EA',

@@ -1,28 +1,15 @@
 <template>
-  <div class="py-12">
-    <div v-if="page" class="container">
-      <div class="max-w-4xl mx-auto">
-        <Heading as="h1" :level="1">
-          {{ page.attributes.name }}
-        </Heading>
-        <div class="text-lg mt-12">
-          {{ page.attributes.subtitle }}
-        </div>
-        <Box class="mt-12">
-          <template v-for="component in page.attributes.zone">
-            <template v-if="component.__component === 'fields.rich-text'">
-              <TextFormatted :key="component.id" :text="$options.filters.marked(component.body)" />
-            </template>
-          </template>
-        </Box>
-      </div>
-    </div>
-  </div>
+  <StrapiPage :page="page" />
 </template>
 
 <script>
 import MixinStrapi from '@/mixins/strapi'
+import StrapiPage from '@/components/section/StrapiPage.vue'
+
 export default {
+  components: {
+    StrapiPage
+  },
   mixins: [MixinStrapi],
   async asyncData ({ $config, $strapi, error }) {
     $strapi.setToken($config.strapi.token)

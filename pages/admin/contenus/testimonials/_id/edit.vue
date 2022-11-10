@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Témoignages', link: $store.getters.contextRole === 'admin' ? '/admin/contenus/testimonials' : null },
-        { label: `Participation de ${temoignage.participation.profile.full_name}` }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Témoignages', to: $store.getters.contextRole === 'admin' ? '/admin/contenus/testimonials' : null },
+        { text: `Participation de ${temoignage.participation.profile.full_name}` }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading :title="`Participation de ${temoignage.participation.profile.full_name}`">
         <template #action>
           <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
@@ -29,9 +29,10 @@
 
 <script>
 import FormTemoignage from '@/components/form/FormTemoignage'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { FormTemoignage },
+  components: { FormTemoignage, Breadcrumb },
   middleware: 'admin',
   async asyncData ({ $axios, params, error, store }) {
     const { data: temoignage } = await $axios.get(`/temoignages/${params.id}`)

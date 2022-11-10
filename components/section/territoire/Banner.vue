@@ -119,7 +119,7 @@ export default {
       const breadcrumb = [
         { label: 'Missions de bénévolat', link: '/missions-benevolat' }
       ]
-      if (this.territoire.type !== 'department' && this.territoire.department) {
+      if (this.territoire.type !== 'department' && this.territoire.department && this.territoire.department != '75') {
         const departmentName = this.$options.filters.label(this.territoire.department, 'departments')
 
         breadcrumb.push({

@@ -2,7 +2,7 @@
   <div class="space-y-12">
     <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
       <BoxHeadingStatistics title="Depuis nos partenaires" class="mb-6" />
-      <div class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-4 border bg-gray-200 gap-[1px] overflow-hidden">
         <CardStatistic
           :value="incomingTrafic"
           title="Trafic entrant"
@@ -62,7 +62,7 @@
 
     <Box padding="sm" :loading="loading" loading-text="Récupération des statistiques..." class="lg:col-span-2">
       <BoxHeadingStatistics title="Vers nos partenaires" class="mb-6" />
-      <div class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-4 border bg-gray-200 gap-[1px] overflow-hidden">
         <CardStatistic
           :value="outgoingTrafic"
           title="Trafic sortant"

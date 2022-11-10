@@ -10,13 +10,10 @@
             py-6
             text-sm
             appearance-none
-            rounded-xl
             block
             w-full
             placeholder-gray-text-400
-            focus:outline-none
-            border border-gray-200
-            focus:ring-jva-blue-500 focus:border-jva-blue-500
+            border border-gray-300
           "
     :class="[{ 'border-jva-red-primary': error, 'cursor-not-allowed bg-gray-100': disabled }]"
     autocomplete="off"

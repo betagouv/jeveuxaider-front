@@ -2,7 +2,7 @@
   <Container2Cols>
     <template #breadcrumb>
       <Breadcrumb
-        :items="[{ label: 'Mon profil' }]"
+        :links="[{ text: 'Mon profil' }]"
       />
     </template>
     <template #header>
@@ -54,13 +54,15 @@ import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
 import BoxInformations from '@/components/section/profile/BoxInformations'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     HelpCenter,
     LePetitMot,
     BoxDisponibilities,
-    BoxInformations
+    BoxInformations,
+    Breadcrumb
   },
   mixins: [MixinAction],
   middleware: 'authenticated',

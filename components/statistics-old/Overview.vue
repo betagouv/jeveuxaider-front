@@ -2,7 +2,7 @@
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
     <BoxHeadingStatistics title="Vue d'ensemble" no-period class="mb-6" />
 
-    <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+    <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.benevoles"
         :title="`${$options.filters.pluralize(statistics.benevoles, 'Bénévole', 'Bénévoles', false)}`"

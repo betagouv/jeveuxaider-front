@@ -1,32 +1,29 @@
 <template>
   <div
-    class="px-6 pt-10 pb-12 lg:px-8 lg:py-12 xl:px-16 xl:py-12 bg-white rounded-[10px] shadow-xl relative overflow-hidden"
+    class="px-6 pt-10 pb-12 lg:px-8 lg:py-12 xl:px-14 xl:py-12 bg-white shadow-xl relative overflow-hidden"
   >
     <div
-      class="flex flex-col items-start text-center md:text-left h-full"
+      class="flex flex-col items-start text-center lg:text-left h-full"
     >
       <div
-        class="flex-none w-full font-bold text-jva-blue-500 tracking-wide leading-[22px] mb-6 truncate"
+        class="flex-none w-full text-[#161616] text-lg mb-6 uppercase"
       >
-        ASSOCIATIONS ET ORGANISATIONS PUBLIQUES
+        Associations et organisations publiques
       </div>
-      <h2
-        class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight mb-8"
-      >
-        <span>Facilitez-vous le</span>
-        <strong class="font-extrabold">
-          recrutement de vos bénévoles
-        </strong>
-      </h2>
+
+      <Heading as="h2" size="2xl" class="mb-8">
+        Facilitez-vous le recrutement de vos bénévoles
+      </Heading>
+
       <img
         src="/images/homepage/associations_organisations_publiques.svg"
         alt="Associations & organisations publiques"
         width="311"
         height="219"
-        class="mx-auto mb-8 md:h-full md:max-h-[170px] lg:max-h-[270px]"
+        class="mx-auto mb-8 lg:h-full lg:max-h-[170px] xl:max-h-[270px]"
       >
 
-      <ul class="text-left space-y-3 mb-8">
+      <ul class="text-left space-y-3 mb-8 mx-auto">
         <li
           v-for="(goal, index) in goals.associations"
           :key="index"
@@ -48,16 +45,25 @@
 
       <nuxt-link
         to="/inscription/responsable"
-        class="w-full lg:w-auto flex items-center justify-center px-12 py-3 font-bold rounded-full text-white bg-jva-blue-500 hover:scale-105 transform transition mt-auto lg:mx-auto"
+        class="flex items-center justify-center mx-auto mt-auto"
       >
-        Inscrire mon organisation
+        <Button size="lg" tabindex="-1">
+          Inscrire mon organisation
+        </Button>
       </nuxt-link>
     </div>
   </div>
 </template>
 
 <script>
+import Heading from '@/components/dsfr/Heading.vue'
+import Button from '@/components/dsfr/Button.vue'
+
 export default {
+  components: {
+    Heading,
+    Button
+  },
   data () {
     return {
       goals: {
@@ -71,7 +77,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

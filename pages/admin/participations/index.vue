@@ -9,7 +9,7 @@
 
     <template #breadcrumb>
       <Breadcrumb
-        :items="[{ label: 'Tableau de bord', link: '/dashboard' }, { label: 'Participations' }]"
+        :links="[{ text: 'Tableau de bord', to: '/dashboard' }, { text: 'Participations' }]"
       />
     </template>
     <template #sidebar>
@@ -121,9 +121,8 @@
           <div class="flex space-x-2">
             <Button
               v-if="!bulkOperationIsActive"
-              variant="white"
-              icon="DownloadIcon"
-              size="lg"
+              type="secondary"
+              icon="RiDownload2Line"
               :loading="exportLoading"
               @click.native="handleExport"
             >
@@ -143,61 +142,78 @@
         clearable
         @input="changeFilter('filter[search]', $event)"
       />
-      <div v-if="!bulkOperationIsActive" class="hidden lg:flex gap-x-4 gap-y-4 mt-4 text-sm flex-wrap">
-        <Checkbox
+      <div v-if="!bulkOperationIsActive" class="hidden lg:flex gap-3 mt-4 text-sm flex-wrap">
+        <Tag
           :key="`tous-${$route.fullPath}`"
-          :option="{key: 'tous', label:'Tous'}"
-          :is-checked="hasActiveFilters()"
-          variant="button"
-          size="xs"
-          transparent
-          @change="deleteAllFilters()"
-        />
-        <Checkbox
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="hasActiveFilters()"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="deleteAllFilters"
+        >
+          Toutes
+        </Tag>
+
+        <Tag
           :key="`state-encoursvalidation-${$route.fullPath}`"
-          :option="{key: 'En attente de validation', label:'En attente de validation'}"
-          :is-checked="$route.query['filter[state]'] == 'En attente de validation'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'En attente de validation')"
-        />
-        <Checkbox
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[state]'] == 'En attente de validation'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[state]', 'En attente de validation')"
+        >
+          En attente de validation
+        </Tag>
+
+        <Tag
           :key="`state-encourstraitement-${$route.fullPath}`"
-          :option="{key: 'En cours de traitement', label:'En cours de traitement'}"
-          :is-checked="$route.query['filter[state]'] == 'En cours de traitement'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'En cours de traitement')"
-        />
-        <Checkbox
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[state]'] == 'En cours de traitement'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[state]', 'En cours de traitement')"
+        >
+          En cours de traitement
+        </Tag>
+
+        <Tag
           :key="`state-validee-${$route.fullPath}`"
-          :option="{key: 'Validée', label:'Validée'}"
-          :is-checked="$route.query['filter[state]'] == 'Validée'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'Validée')"
-        />
-        <Checkbox
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[state]'] == 'Validée'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[state]', 'Validée')"
+        >
+          Validée
+        </Tag>
+
+        <Tag
           :key="`state-cancel-${$route.fullPath}`"
-          :option="{key: 'Annulée', label:'Annulée'}"
-          :is-checked="$route.query['filter[state]'] == 'Annulée'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'Annulée')"
-        />
-        <Checkbox
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[state]'] == 'Annulée'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[state]', 'Annulée')"
+        >
+          Annulée
+        </Tag>
+
+        <Tag
           :key="`state-refus-${$route.fullPath}`"
-          :option="{key: 'Refusée', label:'Refusée'}"
-          :is-checked="$route.query['filter[state]'] == 'Refusée'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[state]', 'Refusée')"
-        />
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[state]'] == 'Refusée'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[state]', 'Refusée')"
+        >
+          Refusée
+        </Tag>
       </div>
 
       <BulkOperationActions v-if="bulkOperationIsActive" :operations="operations" @unselectAll="operations = []">
@@ -246,6 +262,7 @@
       </div>
 
       <Pagination
+        class="mt-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
@@ -265,6 +282,10 @@ import BoxContext from '@/components/section/BoxContext.vue'
 import ModalBulkParticipationsValidate from '@/components/modal/ModalBulkParticipationsValidate.vue'
 import ModalBulkParticipationsDecline from '@/components/modal/ModalBulkParticipationsDecline.vue'
 import MixinUsetiful from '@/mixins/usetiful.client.js'
+import Pagination from '@/components/dsfr/Pagination.vue'
+import Tag from '@/components/dsfr/Tag.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -272,7 +293,11 @@ export default {
     DrawerParticipation,
     BoxContext,
     ModalBulkParticipationsValidate,
-    ModalBulkParticipationsDecline
+    ModalBulkParticipationsDecline,
+    Pagination,
+    Tag,
+    Button,
+    Breadcrumb
   },
   mixins: [QueryBuilder, MixinExport, MixinBulkOperations, MixinUsetiful],
   middleware: ['authenticated'],
@@ -302,7 +327,7 @@ export default {
 
     return {
       activities: activities.data,
-      responsables: responsablesResponse ? responsablesResponse.data : [],
+      responsables: responsablesResponse ? responsablesResponse.data.map(user => user.profile) : [],
       waitingParticipationsCount: waitingParticipationsCountResponse ? waitingParticipationsCountResponse.data : null
     }
   },

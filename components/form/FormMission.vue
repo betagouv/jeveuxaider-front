@@ -205,7 +205,7 @@
                 v-model="form.responsable_id"
                 name="contact_principal"
                 placeholder="Sélectionnez un responsable"
-                :options="structure.members.map((member) => {return {key: member.id, label: member.full_name}})"
+                :options="structure.members.map((member) => {return {key: member.profile.id, label: member.profile.full_name}})"
               />
             </FormControl>
           </div>

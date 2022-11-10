@@ -1,6 +1,6 @@
 <template>
   <div
-    class="card--mission h-auto flex flex-col flex-1 bg-white rounded-xl overflow-hidden safari-fix-scale"
+    class="card--mission h-auto flex flex-col flex-1 bg-white overflow-hidden safari-fix-scale border border-[#E5E5E5]"
   >
     <div class="thumbnail--wrapper relative">
       <img
@@ -13,99 +13,75 @@
         @error="onImgError"
       >
 
-      <div class="custom-gradient absolute inset-0" />
+      <template v-if="showState">
+        <div class="custom-gradient absolute inset-0" />
+        <DsfrBadge
+          size="sm"
+          :type="badgeTypeMissionSate"
+          class="absolute top-3 left-3 shadow-lg"
+        >
+          {{ mission.state }}
+        </DsfrBadge>
 
-      <div
-        class="absolute px-[30px] mb-2 bottom-0 left-0 text-white text-[15px] w-full"
-      >
-        <div class="truncate">
-          <span>📍</span>
-
-          <template v-if="mission.is_autonomy">
-            {{ autonomyCities }}
-          </template>
-
-          <template
-            v-else-if="mission.city && mission.type == 'Mission en présentiel'"
-          >
-            <template v-if="mission.zip">
-              <span class="font-bold">{{ missionCity }}</span>
-              <span>({{ mission.zip }})</span>
-            </template>
-
-            <template v-else-if="mission.department">
-              <span class="font-bold">{{ missionCity }}</span>
-              <span>({{ mission.department }})</span>
-            </template>
-
-            <template v-else>
-              <span class="font-bold">{{ missionCity }}</span>
-            </template>
-          </template>
-
-          <template v-else>
-            Mission à distance
-          </template>
+        <div class="custom-gradient-2 absolute inset-0" />
+        <div v-if="['admin'].includes($store.getters.contextRole)" class="text-white absolute bottom-1 right-2 text-xs text-shadow">
+          Id: {{ mission.id }}
         </div>
-      </div>
-
-      <div
-        v-if="formattedDate"
-        class="absolute top-0 flex justify-center inset-x-0"
-      >
-        <div class="pill !rounded-t-none">
-          {{ formattedDate }}
-        </div>
-      </div>
+      </template>
     </div>
 
-    <div class="mx-8 my-6 flex-1 flex flex-col items-start">
+    <div class="m-8 flex-1 flex flex-col items-start">
       <div class="mb-4 flex flex-wrap gap-2">
-        <Badge :color="domainId" class="uppercase">
+        <Tag :custom-theme="true" :class="`${domaineBackgroundColor(domainId)} text-white`">
           {{ $options.filters.label(domainId, 'domaines') }}
-        </Badge>
-        <Badge v-if="(mission.template && mission.template.domaine_secondary_id) || mission.domaine_secondary_id" color="gray-light">
+        </Tag>
+        <Tag v-if="(mission.template && mission.template.domaine_secondary_id) || mission.domaine_secondary_id">
           +1
-        </Badge>
+        </Tag>
       </div>
 
-      <h3
-        :title="mission.name"
-        class="font-black text-black text-lg relative mb-auto line-clamp-3"
-        style="word-break: break-word"
-      >
-        {{ mission.name }}
-      </h3>
-
-      <div class="flex items-center space-x-1 mt-2 truncate max-w-full">
-        <template v-if="['admin','referent'].includes($store.getters.contextRole) && showState">
-          <CheckCircleSolidIcon v-if="['Validée'].includes(mission.structure.state)" class="flex-none w-auto h-4 text-jva-green-500" />
-          <XCircleSolidIcon v-if="['Signalée', 'Désinscrite'].includes(mission.structure.state)" class="flex-none w-auto h-4 text-jva-red-500" />
-          <ClockSolidIcon v-if="['En attente de validation', 'En cours de traitement', 'Brouillon'].includes(mission.structure.state)" class="flex-none w-auto h-4 text-gray-500" />
-        </template>
-        <div
-          class="text-gray-500 text-sm truncate max-w-full"
-          v-text="mission.structure.name"
+      <div class="text-[#666666] text-xs flex items-center justify-start truncate mb-4 max-w-full">
+        <component
+          :is="iconOrganizationState"
+          v-if="['admin','referent'].includes($store.getters.contextRole) && showState"
+          class="w-4 h-4 mr-2 fill-current flex-none"
         />
+        <RiBuildingFill v-else class="fill-current w-4 h-4 flex-none mr-2" />
+        <span class="truncate">{{ mission.structure.name }}</span>
       </div>
 
-      <div v-if="showState" class="mt-4 flex items-center justify-center">
-        <Badge :color="mission.state" plain>
-          {{ mission.state }}
-        </Badge>
-        <div v-if="['admin'].includes($store.getters.contextRole)" class="text-gray-500 text-xs flex-shrink-0 ml-2">
-          ID <span class="font-semibold">{{ mission.id }}</span>
-        </div>
+      <Heading as="h3" size="xs" class="line-clamp-3 mb-3" :title="mission.name">
+        {{ mission.name }}
+      </Heading>
+
+      <div class="truncate text-[#3A3A3A] text-sm max-w-full">
+        <template v-if="mission.is_autonomy">
+          {{ autonomyCities }}
+        </template>
+
+        <template
+          v-else-if="mission.city && mission.type == 'Mission en présentiel'"
+        >
+          <span v-if="mission.zip">{{ missionCity }} ({{ mission.zip }})</span>
+          <span v-else-if="mission.department">{{ missionCity }} ({{ mission.department }})</span>
+          <span v-else>{{ missionCity }}</span>
+        </template>
+
+        <template v-else>
+          Mission à distance
+        </template>
       </div>
 
       <div
         v-if="mission.provider == 'api_engagement'"
-        class="text-gray-500 text-sm self-stretch mt-2"
+        class="text-[#666666] text-xs self-stretch mt-2"
       >
         <div class="flex items-center justify-between space-x-6">
           <div>
-            <div>Mission proposée par</div>
-            <div class="font-bold text-black">
+            <div class="leading-none">
+              Mission proposée par
+            </div>
+            <div class="font-bold">
               {{ mission.publisher_name }}
             </div>
           </div>
@@ -117,23 +93,50 @@
           >
         </div>
       </div>
-    </div>
 
-    <div class="border-t p-4 text-center flex items-center justify-center space-x-2" :class="[domainColor]">
-      <span class="text-sm font-bold">
-        {{ placesLeftText }}
-      </span>
+      <div class="flex items-end justify-between space-x-1 text-xs text-[#666666] pt-8 mt-auto w-full">
+        <div>
+          <span>{{ placesLeftText }}</span>
+          <template v-if="formattedDate && placesLeftText !== 'Complet'">
+            <br> {{ formattedDate }}
+          </template>
+        </div>
 
-      <ExternalLinkIcon v-if="mission.provider == 'api_engagement'" class="flex-none w-4" />
+        <RiArrowRightLine
+          :class="[
+            'flex-none ml-auto w-6 h-6 fill-current text-jva-blue-500',
+
+          ]"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import MixinMission from '@/mixins/mission'
+import MixinDomaines from '@/mixins/domaines'
+import DsfrBadge from '@/components/dsfr/Badge.vue'
+import Tag from '@/components/dsfr/Tag.vue'
+import Heading from '@/components/dsfr/Heading.vue'
+import iconSuccess from '@/static/images/icons/dsfr/badge/success.svg?inline'
+import iconError from '@/static/images/icons/dsfr/badge/error.svg?inline'
+import iconWarning from '@/static/images/icons/dsfr/badge/warning.svg?inline'
+import iconNew from '@/static/images/icons/dsfr/badge/new.svg?inline'
+import iconInfo from '@/static/images/icons/dsfr/badge/info.svg?inline'
 
 export default {
-  mixins: [MixinMission],
+  components: {
+    DsfrBadge,
+    Tag,
+    Heading,
+    iconSuccess,
+    iconError,
+    iconWarning,
+    iconNew,
+    iconInfo
+  },
+  mixins: [MixinMission, MixinDomaines],
   props: {
     mission: {
       type: Object,
@@ -196,6 +199,8 @@ export default {
         return null
       }
 
+      const format = now.isSame(startDateObject, 'year') ? 'D MMMM' : 'D MMMM YYYY'
+
       if (endDate) {
         const endDateObject =
         Number.isInteger(endDate) && this.$dayjs.unix(endDate).isValid()
@@ -207,16 +212,39 @@ export default {
               : null
 
         if (endDateObject && this.$dayjs(startDateObject).isSame(this.$dayjs(endDateObject))) {
-          return `Le ${this.$dayjs(startDateObject).format('D MMMM YYYY')}`
+          return `le ${this.$dayjs(startDateObject).format(format)}`
         }
       }
 
-      return `À partir du ${startDateObject.format('D MMMM YYYY')}`
+      return `à partir du ${startDateObject.format(format)}`
     },
-    domainColor () {
-      return this.$labels.domaines.find(
-        domaine => domaine.key == this.domainId
-      )?.color
+    iconOrganizationState () {
+      switch (this.mission.structure.state) {
+        case 'Validée':
+          return iconSuccess
+        case 'Signalée':
+        case 'Désinscrite':
+          return iconError
+        case 'En attente de validation':
+        case 'En cours de traitement':
+          return iconWarning
+        default:
+          return iconInfo
+      }
+    },
+    badgeTypeMissionSate () {
+      switch (this.mission.state) {
+        case 'Validée':
+          return 'success'
+        case 'Signalée':
+        case 'Annulée':
+          return 'error'
+        case 'En attente de validation':
+        case 'En cours de traitement':
+          return 'warning'
+        default:
+          return 'info'
+      }
     }
   },
   methods: {
@@ -229,14 +257,14 @@ export default {
 
 <style lang="postcss" scoped>
 .card--mission {
-  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05);
+  /* box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05); */
   @apply transition;
   @screen sm {
     &:hover {
       .thumbnail--wrapper img {
         transform: scale(1.05);
       }
-      @apply shadow-xl;
+      /* @apply shadow-xl; */
     }
   }
 }
@@ -262,10 +290,23 @@ export default {
 
 .custom-gradient {
   background: linear-gradient(
-    183.3deg,
-    rgba(0, 0, 0, 0) 66.74%,
-    rgba(0, 0, 0, 0.7) 102.8%
+    0deg,
+    rgba(0, 0, 0, 0) 70%,
+    rgba(0, 0, 0, 0.7) 150%
   );
+}
+
+.custom-gradient-2 {
+  background: linear-gradient(
+    165deg,
+    rgba(0, 0, 0, 0) 77%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+.text-shadow {
+  text-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25),
+    0px 4px 30px rgba(0, 0, 0, 0.85);
 }
 
 /* .fake-purge {

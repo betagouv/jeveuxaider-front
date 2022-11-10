@@ -38,7 +38,7 @@
             :value="isActiveFilter(facetName, facet.value)"
             type="checkbox"
             :checked="isActiveFilter(facetName, facet.value)"
-            class="rounded text-jva-blue-500 focus:ring-jva-blue-500"
+            class="rounded text-jva-blue-500"
             @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
           >
           <label

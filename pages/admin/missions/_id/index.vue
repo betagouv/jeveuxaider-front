@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Missions', link: '/admin/missions' },
-        { label: mission.name },
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Missions', to: '/admin/missions' },
+        { text: mission.name },
       ]"
     />
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
         <Presentation :mission="mission" />
         <PresentielOrDistance :mission="mission" />
@@ -88,6 +88,7 @@ import OnlineIndicator from '~/components/custom/OnlineIndicator'
 import SelectMissionState from '@/components/custom/SelectMissionState'
 import BoxReferents from '@/components/section/BoxReferents'
 import BoxNotes from '@/components/custom/BoxNotes'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -104,7 +105,8 @@ export default {
     OnlineIndicator,
     SelectMissionState,
     BoxReferents,
-    BoxNotes
+    BoxNotes,
+    Breadcrumb
   },
   mixins: [MixinMission],
   middleware: 'authenticated',

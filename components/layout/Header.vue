@@ -55,7 +55,7 @@
             :click="link.click"
             class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1 relative"
           >
-            <div v-if="link.count" class="absolute -top-1.5 -right-1 bg-[#e41e3f] px-1.5 py-0.5 rounded-full text-white font-bold text-xs min-w-[20px] inline-flex justify-center">
+            <div v-if="link.count" class="absolute -top-1.5 -right-1 bg-[#e41e3f] px-1.5 py-0.5 rounded-full text-white font-bold text-xxs min-w-[20px] inline-flex justify-center">
               {{ link.count > 99 ? "99+" : link.count }}
             </div>
             <component :is="link.icon" class="flex-shrink-0 mr-3 h-4 w-4" aria-hidden="true" />
@@ -72,11 +72,13 @@
           <template #button>
             <div class="flex items-center justify-between gap-4 border-r py-4 pr-2 pl-5 w-52">
               <div class="truncate">
-                <!-- <div class="text-gray-500 uppercase text-xs">
-                  {{ $options.filters.label($store.getters.currentRole.key, 'role', 'espace') }}
-                </div> -->
                 <div class="truncate mr-auto font-semibold">
-                  {{ $store.getters.currentRole.key == 'referent' ? $options.filters.label($store.getters.currentRole.label, 'departments') : $store.getters.currentRole.label }}
+                  <template v-if="$store.getters.currentRole">
+                    {{ $store.getters.currentRole.label }}
+                  </template>
+                  <template v-else>
+                    Bénévole
+                  </template>
                 </div>
               </div>
               <ChevronDownIcon class="h-3 flex-none" />
@@ -91,12 +93,7 @@
                   :label="$options.filters.label(role.key, 'role', 'espace')"
                   @click.native="switchRole(role)"
                 >
-                  <template v-if="role.key == 'referent'">
-                    {{ $options.filters.label(role.label, 'departments') }}
-                  </template>
-                  <template v-else>
-                    {{ role.label }}
-                  </template>
+                  {{ role.label }}
                   <template #icon>
                     <template v-if="['responsable','responsable_territoire'].includes($store.getters.contextRole)">
                       <template v-if="$store.getters.contextRole === 'responsable'">
@@ -104,7 +101,7 @@
                         <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
                       </template>
                       <template v-if="$store.getters.contextRole === 'responsable_territoire'">
-                        <CheckIcon v-if="role.contextable_type === 'territoire' && role.contextable_id === $store.getters.contextableId " class="h-5 text-jva-green-500 " />
+                        <CheckIcon v-if="role.contextable_type === 'responsable_territoire' && role.contextable_id === $store.getters.contextableId " class="h-5 text-jva-green-500 " />
                         <SwitchHorizontalIcon v-else class="h-5 text-gray-400 group-hover:scale-110" />
                       </template>
                     </template>
@@ -383,7 +380,7 @@ export default {
       } else if (this.$store.getters.currentRole?.key === 'tete_de_reseau') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Mon réseau', to: `/admin/contenus/reseaux/${this.$store.getters.profile.tete_de_reseau_id}`, isActive: this.isActiveLink('/admin/contenus/reseaux/*') },
+          { name: 'Mon réseau', to: `/admin/contenus/reseaux/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/contenus/reseaux/*') },
           { name: 'Membres du réseau', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
           { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
@@ -402,10 +399,6 @@ export default {
           { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
           { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
-        ]
-      } else if (this.$store.getters.currentRole?.key === 'analyste') {
-        return [
-          { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') }
         ]
       }
       return [

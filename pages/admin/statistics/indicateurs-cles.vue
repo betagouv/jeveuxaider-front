@@ -2,10 +2,10 @@
   <div class="flex flex-col gap-12">
     <portal to="breadcrumb">
       <Breadcrumb
-        :items="[
-          { label: 'Tableau de bord', link: '/dashboard' },
-          { label: 'Statistiques', link: '/admin/statistics' },
-          { label: 'Indicateurs clés' },
+        :links="[
+          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Statistiques', to: '/admin/statistics' },
+          { text: 'Indicateurs clés' },
         ]"
       />
     </portal>
@@ -32,12 +32,14 @@
 import EvolutionsByYear from '@/components/numbers/EvolutionsByYear.vue'
 import EvolutionsByMonth from '@/components/numbers/EvolutionsByMonth.vue'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     EvolutionsByYear,
     EvolutionsByMonth,
-    FiltersStatistics
+    FiltersStatistics,
+    Breadcrumb
   },
   layout: 'statistics',
   asyncData ({ store, error }) {

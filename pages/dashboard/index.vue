@@ -2,7 +2,7 @@
   <Container2Cols>
     <template #breadcrumb>
       <Breadcrumb
-        :items="[{ label: 'Tableau de bord' }]"
+        :links="[{ text: 'Tableau de bord'}]"
       />
     </template>
     <template #header>
@@ -48,7 +48,7 @@
       </Box>
       <LePetitMot />
 
-      <Box v-if="testimonials.length && !['responsable_territoire','analyste'].includes($store.getters.contextRole)" padding="sm" :loading="loadingTestimonials" loading-text="Récupération des témoignages ...">
+      <Box v-if="testimonials.length && !['responsable_territoire'].includes($store.getters.contextRole)" padding="sm" :loading="loadingTestimonials" loading-text="Récupération des témoignages ...">
         <Heading as="h2" :level="3">
           Retour d'expériences des bénévoles
         </Heading>
@@ -73,7 +73,7 @@
         <Heading as="h2" :level="3" class="mb-8">
           Votre activité en chiffres
         </Heading>
-        <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+        <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px]">
           <CardStatistic
             :value="statistics.places_left"
             :title="`${$options.filters.pluralize(statistics.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
@@ -81,40 +81,39 @@
           />
           <CardStatistic :value="`${statistics.places_occupation_rate}%`" title="Taux de remplissage" :gauge-percentage="statistics.places_occupation_rate" />
           <CardStatistic
-            v-if="['admin', 'referent','referent_regional','tete_de_reseau','analyste','responsable_territoire'].includes($store.getters.contextRole)"
+            v-if="['admin', 'referent','referent_regional','tete_de_reseau','responsable_territoire'].includes($store.getters.contextRole)"
             :value="statistics.organisations_actives"
             :title="`${$options.filters.pluralize(statistics.organisations_actives, 'Organisation active', 'Organisations actives', false)}`"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.organisations)} ${$options.filters.pluralize(statistics.organisations, 'organisations', 'organisations', false)}`"
             link="/admin/organisations"
             link-label="Organisations"
-            :link-hidden="['analyste','responsable_territoire'].includes($store.getters.contextRole)"
+            :link-hidden="['responsable_territoire'].includes($store.getters.contextRole)"
           />
           <CardStatistic
-            v-if="['admin', 'responsable', 'referent','referent_regional','tete_de_reseau','analyste','responsable_territoire'].includes($store.getters.contextRole)"
+            v-if="['admin', 'responsable', 'referent','referent_regional','tete_de_reseau','responsable_territoire'].includes($store.getters.contextRole)"
             :value="statistics.missions_actives"
             :title="`${$options.filters.pluralize(statistics.missions_actives, 'Mission en ligne', 'Missions en ligne', false)}`"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.missions)} ${$options.filters.pluralize(statistics.missions, 'mission', 'missions', false)}`"
             link="/admin/missions"
             link-label="Missions"
-            :link-hidden="['analyste','responsable_territoire'].includes($store.getters.contextRole)"
+            :link-hidden="['responsable_territoire'].includes($store.getters.contextRole)"
           />
           <CardStatistic
-            v-if="['admin', 'responsable', 'referent','referent_regional','tete_de_reseau','analyste','responsable_territoire'].includes($store.getters.contextRole)"
+            v-if="['admin', 'responsable', 'referent','referent_regional','tete_de_reseau','responsable_territoire'].includes($store.getters.contextRole)"
             :value="statistics.participations_validated"
             :title="`${$options.filters.pluralize(statistics.participations_validated, 'Participation validée', 'Participations validées', false)}`"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.participations)} ${$options.filters.pluralize(statistics.participations, 'candidature', 'candidatures', false)}`"
             link="/admin/participations"
             link-label="Participations"
-            :link-hidden="['analyste','responsable_territoire'].includes($store.getters.contextRole)"
+            :link-hidden="['responsable_territoire'].includes($store.getters.contextRole)"
           />
           <CardStatistic
-            v-if="['admin','analyste'].includes($store.getters.contextRole)"
+            v-if="['admin'].includes($store.getters.contextRole)"
             :value="statistics.users_benevoles"
             title="Bénévoles"
             :subtitle="`sur ${$options.filters.formatNumber(statistics.users)} utilisateurs`"
             link="/admin/utilisateurs"
             link-label="Utilisateurs"
-            :link-hidden="['analyste'].includes($store.getters.contextRole)"
           />
         </div>
       </Box>
@@ -149,6 +148,7 @@ import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import CardStatistic from '@/components/card/CardStatistic'
 import CardTemoignage from '@/components/card/CardTemoignage'
 import ButtonCreateMission from '@/components/custom/ButtonCreateMission'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -157,13 +157,14 @@ export default {
     CardStatistic,
     MoreNumbers,
     CardTemoignage,
-    ButtonCreateMission
+    ButtonCreateMission,
+    Breadcrumb
   },
   mixins: [MixinAction],
   middleware: 'authenticated',
   asyncData ({ store, error }) {
     if (
-      !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'analyste', 'responsable', 'responsable_territoire'].includes(
+      !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'responsable', 'responsable_territoire'].includes(
         store.getters.contextRole
       )
     ) {

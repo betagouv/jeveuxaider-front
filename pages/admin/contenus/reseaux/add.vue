@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Contenus' },
-        { label: 'Réseaux', link: `/admin/contenus/reseaux` },
-        { label: 'Nouveau réseau' }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Contenus' },
+        { text: 'Réseaux', to: `/admin/contenus/reseaux` },
+        { text: 'Nouveau réseau' }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading title="Création d'un nouveau réseau">
         <template #action>
           <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
@@ -29,9 +29,10 @@
 
 <script>
 import FormReseau from '~/components/form/FormReseau'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { FormReseau },
+  components: { FormReseau, Breadcrumb },
   middleware: 'admin',
   data () {
     return {

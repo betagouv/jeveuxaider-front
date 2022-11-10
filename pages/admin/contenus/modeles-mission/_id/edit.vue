@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Contenus' },
-        { label: 'Modèles de mission', link: `/admin/contenus/modeles-mission` },
-        { label: missionTemplate.title }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Contenus' },
+        { text: 'Modèles de mission', to: `/admin/contenus/modeles-mission` },
+        { text: missionTemplate.title }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading :title="missionTemplate.title">
         <template #tags>
           <Badge :color="missionTemplate.state" class="mt-4">
@@ -37,9 +37,10 @@
 <script>
 import FormMissionTemplate from '~/components/form/FormMissionTemplate.vue'
 import ButtonsSubmitFormMissionTemplate from '@/components/custom/ButtonsSubmitFormMissionTemplate.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { FormMissionTemplate, ButtonsSubmitFormMissionTemplate },
+  components: { FormMissionTemplate, ButtonsSubmitFormMissionTemplate, Breadcrumb },
   middleware: 'authenticated',
   async asyncData ({ $axios, params, error, store }) {
     if (!['admin', 'tete_de_reseau'].includes(store.getters.contextRole)) {
@@ -53,7 +54,7 @@ export default {
     }
 
     if (store.getters.contextRole === 'tete_de_reseau') {
-      if (missionTemplate.reseau_id != store.getters.profile.tete_de_reseau_id) {
+      if (missionTemplate.reseau_id != store.getters.contextableId) {
         return error({ statusCode: 403 })
       }
     }

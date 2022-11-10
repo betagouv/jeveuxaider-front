@@ -37,7 +37,7 @@
       <BoxAntenne class="mb-8" :reseau="reseau" :stats="stats" />
       <BoxMission class="mb-8" :reseau="reseau" :stats="stats" />
       <BoxParticipation class="mb-8" :reseau="reseau" :stats="stats" />
-      <BoxResponsable v-for="responsable in reseau.responsables" :key="responsable.id" class="mb-8" :responsable="responsable" />
+      <BoxResponsable v-for="responsable in reseau.responsables" :key="responsable.id" class="mb-8" :responsable="responsable.profile" />
 
       <div class="flex justify-center mb-10">
         <Link :to="`/admin/contenus/reseaux/${reseau.id}`" class="uppercase font-semibold text-sm hover:underline">

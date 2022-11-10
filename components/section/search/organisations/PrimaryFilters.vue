@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white px-6 sm:py-6 shadow-xl rounded-xl grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:!divide-x">
+  <div class="bg-white px-6 sm:py-6 shadow-xl grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:!divide-x">
     <div class="py-6 sm:py-0 sm:pb-6 sm:pr-6 lg:pb-0 xl:px-6">
       <div class="text-gray-500 mb-1">
         Localisation
@@ -14,16 +14,16 @@
       </div>
       <FacetFilterToggle facet-name="activities.name" label="Activités" :facets="$store.getters['algoliaSearch/facetResults']('activities.name')">
         <template #button="{ firstValueSelected, activeValuesCount }">
-          <div class="flex space-x-2 items-center justify-between group">
-            <div class="flex space-x-2 items-center">
-              <HandIcon class="h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
+          <button class="flex space-x-2 items-center justify-between group w-full">
+            <div class="flex space-x-2 items-center truncate">
+              <RiBookmark3Fill class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none" />
               <span v-if="!firstValueSelected">Toutes</span>
-              <span v-else class="font-bold">
+              <span v-else class="font-bold truncate">
                 {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </span>
             </div>
             <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
-          </div>
+          </button>
         </template>
       </FacetFilterToggle>
     </div>
@@ -33,16 +33,16 @@
       </div>
       <FacetFilterToggle facet-name="publics_beneficiaires" label="Publics aidés" :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')">
         <template #button="{ firstValueSelected, activeValuesCount }">
-          <div class="flex space-x-2 items-center justify-between group">
-            <div class="flex space-x-2 items-center">
-              <HandIcon class="h-5 w-5 transition-opacity opacity-50 group-hover:opacity-100" />
+          <button class="flex space-x-2 items-center justify-between group w-full">
+            <div class="flex space-x-2 items-center truncate">
+              <RiUserHeartFill class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none" />
               <span v-if="!firstValueSelected">Toutes</span>
-              <span v-else class="font-bold">
+              <span v-else class="font-bold truncate">
                 {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </span>
             </div>
             <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900" />
-          </div>
+          </button>
         </template>
       </FacetFilterToggle>
     </div>

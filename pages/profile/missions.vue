@@ -2,9 +2,9 @@
   <Container2Cols>
     <template #breadcrumb>
       <Breadcrumb
-        :items="[
-          { label: 'Mon profil', link: '/profile' },
-          { label: 'Mes missions' },
+        :links="[
+          { text: 'Mon profil', to: '/profile' },
+          { text: 'Mes missions' },
         ]"
       />
     </template>
@@ -66,6 +66,7 @@
         </div>
 
         <Pagination
+          class="mt-8"
           :current-page="queryResult.current_page"
           :total-rows="queryResult.total"
           :per-page="queryResult.per_page"
@@ -83,11 +84,15 @@
 import QueryBuilder from '@/mixins/query-builder'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import CardParticipation from '@/components/card/CardParticipation.vue'
+import Pagination from '@/components/dsfr/Pagination.vue'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     HelpCenter,
-    CardParticipation
+    CardParticipation,
+    Pagination,
+    Breadcrumb
   },
   mixins: [QueryBuilder],
   middleware: 'authenticated',

@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Contenus' },
-        { label: 'Territoires', link: `/admin/contenus/territoires` },
-        { label: 'Nouveau territoire' }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Contenus' },
+        { text: 'Territoires', to: `/admin/contenus/territoires` },
+        { text: 'Nouveau territoire' }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading title="Création d'un nouveau territoire">
         <template #action>
           <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
@@ -29,9 +29,10 @@
 
 <script>
 import FormTerritoire from '~/components/form/FormTerritoire'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { FormTerritoire },
+  components: { FormTerritoire, Breadcrumb },
   middleware: 'admin',
   data () {
     return {

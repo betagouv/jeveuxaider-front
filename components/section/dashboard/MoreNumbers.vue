@@ -1,5 +1,5 @@
 <template>
-  <div id="help-center" class="bg-jva-green-500 p-12 rounded-xl shadow-lg overflow-hidden">
+  <div id="help-center" class="bg-jva-green-500 p-12 shadow-lg overflow-hidden">
     <div class="space-y-4">
       <Heading as="h2" :level="2" class="text-white font-extrabold">
         Plus de chiffres

@@ -4,10 +4,10 @@
     class="container"
   >
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Organisations', link: ['admin','referent','referent_regional','tete_de_reseau'].includes($store.getters.contextRole) ? '/admin/organisations' : null },
-        { label: organisation && organisation.name },
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Organisations', to: ['admin','referent','referent_regional','tete_de_reseau'].includes($store.getters.contextRole) ? '/admin/organisations' : null },
+        { text: organisation && organisation.name },
       ]"
     />
     <Drawer :is-open="showDrawerAddResponsable" form-id="form-add-responsable" submit-label="Ajouter ce membre" @close="showDrawerAddResponsable = false">
@@ -36,7 +36,7 @@
         @submited="handleSubmitInvitation"
       />
     </Drawer>
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="relative z-10">
           <img
@@ -124,7 +124,7 @@
                 Votre activité en chiffres
               </div>
               <Box variant="flat" :padding="!Boolean(organisationStats) ? 'lg' : false" :loading="!Boolean(organisationStats)" loading-text="Récupération de l'activité ..." class="!border-none">
-                <div v-if="organisationStats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
+                <div v-if="organisationStats" class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px]">
                   <CardStatistic
                     :value="organisationStats.places_left"
                     :title="`${$options.filters.pluralize(organisationStats.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
@@ -193,7 +193,7 @@
               <BoxMember
                 v-for="responsable in responsables"
                 :key="responsable.id"
-                :responsable="responsable"
+                :responsable="responsable.profile"
                 :organisation="organisation"
                 @removed="$fetch()"
               />
@@ -227,6 +227,7 @@ import BoxReferents from '@/components/section/BoxReferents'
 import BoxReseau from '@/components/section/organisation/BoxReseau'
 import BoxNotes from '@/components/custom/BoxNotes'
 import BoxMember from '@/components/section/BoxMember'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
@@ -242,7 +243,8 @@ export default {
     BoxReferents,
     BoxReseau,
     BoxNotes,
-    BoxMember
+    BoxMember,
+    Breadcrumb
   },
   mixins: [MixinOrganisation],
   middleware: 'authenticated',
@@ -259,15 +261,15 @@ export default {
       return error({ statusCode: 403 })
     }
 
+    if (store.getters.contextRole == 'responsable') {
+      if (store.getters.contextableId != params.id) {
+        return error({ statusCode: 403 })
+      }
+    }
+
     const { data: organisation } = await $axios.get(`/structures/${params.id}`)
     if (!organisation) {
       return error({ statusCode: 404 })
-    }
-
-    if (store.getters.contextRole == 'responsable') {
-      if (store.getters.contextableId != organisation.id) {
-        return error({ statusCode: 403 })
-      }
     }
 
     return {

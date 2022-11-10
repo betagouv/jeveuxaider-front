@@ -23,7 +23,7 @@
       >
         <img
           alt="Preview"
-          class="preview rounded-lg shadow-xl object-center w-full h-full"
+          class="preview shadow-xl object-center w-full h-full"
           :class="[
             {'object-cover': previewFit == 'cover'},
             {'object-contain': previewFit == 'contain'},

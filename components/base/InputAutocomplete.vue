@@ -26,7 +26,7 @@
         type="text"
         :placeholder="placeholder"
         :class="[
-          'pr-6 text-sm appearance-none rounded-xl block w-full placeholder-gray-text-400 focus:outline-none border border-gray-300 focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate',
+          'pr-6 text-sm appearance-none block w-full placeholder-gray-text-400 focus:outline-none border border-gray-300 focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate',
           {'pl-10': icon && theme === 'default'},
           {'pl-7': icon && theme === 'filter'},
           {'bg-transparent': variant == 'transparent' && !value},

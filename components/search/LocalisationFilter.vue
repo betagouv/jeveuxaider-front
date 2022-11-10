@@ -1,20 +1,25 @@
 <template>
   <div class="relative">
-    <div class="group flex justify-between items-center cursor-pointer" @click="isOpen = !isOpen">
+    <button class="group flex justify-between items-center cursor-pointer w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
       <div class="flex space-x-2 items-center text-gray-900 truncate">
-        <LocationMarkerIcon class="h-5 w-5 flex-none transition-opacity opacity-50 group-hover:opacity-100" />
+        <RiMapPin2Fill class="h-4 w-4 flex-none transition-opacity opacity-25 group-hover:opacity-100" />
         <div v-if="ipLatLng" class="truncate">
           Autour de moi
         </div>
-        <div v-else class="font-bold">
+        <div v-else class="font-bold truncate">
           {{ $route.query.city }}
         </div>
       </div>
       <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900 flex-none" />
-    </div>
+    </button>
 
     <transition name="fade-in">
-      <div v-if="isOpen" v-click-outside="onClickOutside" class="mt-2 absolute z-40 bg-white border shadow-xl rounded-xl text-[15px] w-[350px]">
+      <div
+        v-if="isOpen"
+        v-click-outside="onClickOutside"
+        class="mt-2 absolute z-40 bg-white border shadow-xl text-[15px] w-[350px]"
+        @keydown.esc="isOpen = false"
+      >
         <div class="p-4 pb-0 space-y-3">
           <div class="font-medium">
             {{ label }}
@@ -25,7 +30,12 @@
 
         <div class="text-sm">
           <div class="flex flex-col py-2">
-            <div v-for="suggestion in suggestions" :key="suggestion.id" class="px-4 py-2 cursor-pointer flex justify-between truncate flex-1 group" @click="handleSelectedAdress(suggestion)">
+            <button
+              v-for="suggestion in suggestions"
+              :key="suggestion.id"
+              class="px-4 py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD]"
+              @click="handleSelectedAdress(suggestion)"
+            >
               <div class="flex items-center">
                 <LocationMarkerIcon class="flex-none mr-2 transition text-gray-400 group-hover:text-jva-blue-500 group-hover:scale-110" width="16" height="16" />
                 <div class="truncate">
@@ -36,19 +46,20 @@
               <div class="text-gray-600 ml-1 font-light">
                 {{ suggestion.postcode }}
               </div>
-            </div>
+            </button>
           </div>
 
           <div class="border-t px-6 py-3 flex justify-end">
-            <div
+            <button
               :class="[
                 {'text-gray-400 pointer-events-none': !$route.query.city},
                 {'text-jva-blue-500 cursor-pointer': $route.query.city}
               ]"
+              :disabled="!$route.query.city"
               @click="handleSelectedAdress(null)"
             >
               Effacer
-            </div>
+            </button>
           </div>
         </div>
       </div>

@@ -1,12 +1,10 @@
 <template>
   <div class="mx-auto max-w-sm">
     <div class="text-center mb-6">
-      <div
-        class="text-gray-900 font-extrabold text-2xl lg:text-3xl leading-8 mb-2 lg:mb-3"
-      >
+      <Heading as="div" size="lg" class="mb-2 lg:mb-3">
         Avant toute chose
-      </div>
-      <div class="text-gray-500 font-semibold text-lg lg:text-xl">
+      </Heading>
+      <div class="text-cool-gray-500 text-lg lg:text-xl">
         Renseignez votre e-mail
       </div>
     </div>
@@ -21,17 +19,16 @@
           />
         </FormControl>
 
-        <Button
-          type="submit"
-          size="xl"
-          variant="green"
-          rounded
-          full
-          :loading="loading"
-          @click="onSubmit"
-        >
-          Connexion
-        </Button>
+        <div class="text-center">
+          <Button
+            :loading="loading"
+            size="lg"
+            class="w-full"
+            @click.native.prevent="onSubmit"
+          >
+            Connexion
+          </Button>
+        </div>
       </form>
     </div>
   </div>
@@ -40,9 +37,15 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Heading from '@/components/dsfr/Heading.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   name: 'SoftGateEmail',
+  components: {
+    Heading,
+    Button
+  },
   mixins: [FormErrors],
   data () {
     return {

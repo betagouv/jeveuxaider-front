@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <Breadcrumb
-      :items="[
-        { label: 'Tableau de bord', link: '/dashboard' },
-        { label: 'Contenus' },
-        { label: 'Domaines', link: `/admin/contenus/domaines` },
-        { label: 'Nouveau domaine' }
+      :links="[
+        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Contenus' },
+        { text: 'Domaines', to: `/admin/contenus/domaines` },
+        { text: 'Nouveau domaine' }
       ]"
     />
-    <div class="py-6">
+    <div class="pb-6">
       <SectionHeading title="Création d'un nouveau domaine d'action">
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
@@ -29,9 +29,10 @@
 
 <script>
 import FormDomaine from '@/components/form/FormDomaine'
+import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
-  components: { FormDomaine },
+  components: { FormDomaine, Breadcrumb },
   middleware: 'admin',
   data () {
     return {
