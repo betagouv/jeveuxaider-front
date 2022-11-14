@@ -209,9 +209,9 @@
           </form>
 
           <div class="container mt-4 text-center">
-            <nuxt-link to="/inscription/responsable" class="text-sm text-white hover:underline">
+            <Link to="/inscription/responsable" class="text-sm text-white active:!bg-transparent">
               Retour
-            </nuxt-link>
+            </Link>
           </div>
         </template>
 
