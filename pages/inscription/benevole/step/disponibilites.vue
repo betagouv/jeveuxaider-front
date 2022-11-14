@@ -41,7 +41,7 @@
             required
             :error="errors.disponibilities"
           >
-            <CheckboxGroup
+            <TagsGroup
               v-model="form.disponibilities"
               name="disponibilities"
               variant="button"
@@ -100,10 +100,12 @@ import { object, array } from 'yup'
 import { cloneDeep } from 'lodash'
 import FormErrors from '@/mixins/form/errors'
 import Button from '@/components/dsfr/Button.vue'
+import TagsGroup from '@/components/dsfr/TagsGroup.vue'
 
 export default {
   components: {
-    Button
+    Button,
+    TagsGroup
   },
   mixins: [FormErrors],
   layout: 'register-steps',

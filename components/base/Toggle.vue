@@ -11,9 +11,9 @@
     </span>
     <button
       type="button"
-      class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 "
+      class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200"
       :class="[
-        selected ?'bg-jva-green-600 focus:ring-jva-green-500': 'bg-gray-200 focus:ring-gray-200'
+        selected ?'bg-jva-blue-500': 'bg-gray-200'
       ]"
       role="switch"
       aria-checked="false"
@@ -28,7 +28,7 @@
           selected ? 'translate-x-5': 'translate-x-0'
         ]"
       >
-        <CheckIcon v-if="selected" class="h-3 text-jva-green-500" />
+        <CheckIcon v-if="selected" class="h-3 text-jva-blue-500" />
         <XIcon v-else class="h-3 text-gray-400" />
       </span>
     </button>

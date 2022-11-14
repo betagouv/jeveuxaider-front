@@ -60,12 +60,10 @@
           </FormControl>
 
           <Button
-            type="submit"
-            size="xl"
-            variant="green"
-            full
+            size="lg"
+            class="w-full"
             :loading="loading"
-            @click="onSubmit"
+            @click.native.prevent="onSubmit"
           >
             Terminer
           </Button>
@@ -77,8 +75,12 @@
 
 <script>
 import FormUploads from '@/mixins/form/uploads'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   mixins: [FormUploads],
   layout: 'register-steps',
   async asyncData ({ $axios, store, error }) {

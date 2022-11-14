@@ -133,12 +133,10 @@
             />
           </FormControl>
           <Button
-            type="submit"
-            size="xl"
-            variant="green"
-            full
+            size="lg"
+            class="w-full"
             :loading="loading"
-            @click="onSubmit"
+            @click.native.prevent="onSubmit"
           >
             Continuer
           </Button>
@@ -151,8 +149,12 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   mixins: [FormErrors],
   layout: 'register-steps',
   async asyncData ({ $axios, store, error }) {

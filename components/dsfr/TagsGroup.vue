@@ -13,7 +13,7 @@
         context="selectable"
         size="md"
         :is-selected="isModel ? modelValue.some(item => item.id == option.key) : modelValue.includes(option.key)"
-        @click.native="onClick(option.key)"
+        @click.native.prevent="onClick(option.key)"
       >
         {{ option.label }}
       </Tag>
@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     onClick (toggleItemKey) {
-      console.log(toggleItemKey)
       if (this.isModel) {
         const index = this.modelValue.findIndex(item => item.id == toggleItemKey)
         if (index > -1) {

@@ -84,13 +84,11 @@
             />
           </FormControl>
           <Button
-            type="submit"
-            size="xl"
-            variant="green"
-            full
+            size="lg"
             :loading="loading"
             :disabled="loading"
-            @click="onSubmit"
+            class="w-full"
+            @click.native.prevent="onSubmit"
           >
             Continuer
           </Button>
@@ -105,8 +103,12 @@ import { string, object } from 'yup'
 import { cloneDeep } from 'lodash'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   mixins: [FormErrors, FormUploads],
   layout: 'register-steps',
   data () {
