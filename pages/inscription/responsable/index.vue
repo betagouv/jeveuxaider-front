@@ -178,16 +178,14 @@
             </FormControl>
 
             <template v-if="!orgaExist && $route.query.orga_type !== 'Association'">
-              <Button
-                class="mt-4"
-                variant="green"
+              <DsfrButton
+                class="mt-4 w-full"
                 form="inscription"
-                full
-                size="xl"
-                @click.native="onSubmitChooseName"
+                size="lg"
+                @click.native.prevent="onSubmitChooseName"
               >
                 Continuer
-              </Button>
+              </DsfrButton>
             </template>
             <div v-if="orgaExist" class="text-center mt-4">
               <p class="mb-0 font-bold">
@@ -222,15 +220,13 @@
             Vous êtes déjà responsable de l'organisation
             <span class="font-bold">{{ userHasRoleResponsable.label }}</span>
           </div>
-          <nuxt-link to="/inscription/responsable/step/profile">
-            <Button
-              size="xl"
-              full
-              variant="green"
-            >
-              Continuer
-            </Button>
-          </nuxt-link>
+          <DsfrButton
+            size="lg"
+            class="w-full"
+            @click="$router.push('/inscription/responsable/step/profile')"
+          >
+            Continuer
+          </DsfrButton>
         </div>
       </div>
 
@@ -344,14 +340,12 @@
             </FormControl>
           </form>
 
-          <Button
-            type="submit"
-            size="xl"
+          <DsfrButton
+            size="lg"
             form="inscription"
-            variant="green"
-            full
+            class="w-full"
             :loading="loading"
-            @click="onSubmitRegisterResponsableForm"
+            @click.native.prevent="onSubmitRegisterResponsableForm"
           >
             <template v-if="$route.query.orga_type === 'Collectivité'">
               J'inscris ma collectivité territoriale
@@ -362,26 +356,27 @@
             <template v-else>
               J'inscris mon organisation
             </template>
-          </Button>
+          </DsfrButton>
 
           <div class="mt-4 text-center text-gray-800 text-sm">
             En m'inscrivant j'accepte
-            <a
-              href="/politique-de-confidentialite"
-              target="_blank"
-              class="underline"
-            >
-              la politique de confidentialité
-            </a>
+            <!-- eslint-disable -->
+            <Link to="/politique-de-confidentialite"
+            >la politique de confidentialité</Link>
+            <!-- eslint-enable -->
             et
-            <a href="/charte-reserve-civique" target="_blank" class="underline">
-              la charte de JeVeuxAider.gouv.fr
-            </a>
+            <!-- eslint-disable -->
+            <Link to="/charte-reserve-civique"
+            >la charte de JeVeuxAider.gouv.fr</Link>
+            <!-- eslint-enable -->
           </div>
         </div>
       </div>
 
-      <div v-else-if="currentStep.key == 'form_reseau'" class="mt-4">
+      <div
+        v-else-if="currentStep.key == 'form_reseau'"
+        class="mt-4"
+      >
         <FormLeadReseau />
       </div>
     </div>

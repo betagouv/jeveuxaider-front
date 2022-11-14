@@ -43,11 +43,10 @@
                   </div>
                 </template>
                 <div class="mt-3 space-y-3">
-                  <CheckboxGroup
+                  <TagsGroup
                     :key="'popular-' + form.activities.join(',')"
                     v-model="form.activities"
                     name="activites"
-                    variant="button"
                     :options="activitiesOptions.filter(activity => activity.popular)"
                     is-model
                   />
@@ -64,11 +63,10 @@
                   </div>
                 </template>
                 <div class="mt-3 space-y-3">
-                  <CheckboxGroup
+                  <TagsGroup
                     :key="domain + form.activities.join(',')"
                     v-model="form.activities"
                     name="activites"
-                    variant="button"
                     :options="activitiesOptions.filter(activity => activity.domain.includes(domain))"
                     is-model
                   />
@@ -100,10 +98,12 @@ import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import activitiesOptions from '@/assets/activities.json'
 import Button from '@/components/dsfr/Button.vue'
+import TagsGroup from '@/components/dsfr/TagsGroup.vue'
 
 export default {
   components: {
-    Button
+    Button,
+    TagsGroup
   },
   mixins: [FormErrors, FormUploads],
   layout: 'register-steps',

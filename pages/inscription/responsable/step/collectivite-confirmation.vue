@@ -6,9 +6,9 @@
       srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
       data-not-lazy
     >
-    <div class="relative p-6 lg:p-12">
+    <div class="relative p-6 py-12 lg:p-12 lg:py-16">
       <div class="mb-6 lg:mb-12 text-center text-white">
-        <h1 class="text-4xl lg:text-5xl font-medium leading-12 mb-4">
+        <h1 class="text-4xl lg:text-5xl font-medium mb-8 max-w-4xl mx-auto">
           Félicitations <span class="font-bold">{{ $store.getters.profile.first_name }}</span> !<br>
           Votre collectivité territoriale est en cours de validation
         </h1>
@@ -20,8 +20,8 @@
       <div
         class="max-w-5xl mx-auto relative grid grid-cols-1 lg:grid-cols-2 gap-8"
       >
-        <div class="bg-white rounded-lg p-8">
-          <div class="text-black text-3xl font-extrabold leading-9 text-center">
+        <div class="bg-white p-8">
+          <div class="text-black text-3xl font-bold leading-9 text-center">
             Suivez le guide
           </div>
           <div class="text-center text-gray-500 my-6">
@@ -32,7 +32,14 @@
             target="_blank"
             href="https://app.livestorm.co/jeveuxaider/session-decouverte-collectivites-territoriales"
           >
-            <Button size="xl" full>
+            <Button
+              size="lg"
+              class="w-full"
+              type="secondary"
+              tabindex="-1"
+              icon="RiExternalLinkLine"
+              icon-position="right"
+            >
               <span
                 class="hidden lg:inline"
               >Participer à la session d'accueil
@@ -41,19 +48,17 @@
             </Button>
           </a>
         </div>
-        <div class="bg-white rounded-lg p-8">
-          <div class="text-black text-3xl font-extrabold leading-9 text-center">
+        <div class="bg-white p-8">
+          <div class="text-black text-3xl font-bold leading-9 text-center">
             Publiez votre 1ère mission
           </div>
           <div class="text-center text-gray-500 my-6">
             Proposez dès maintenant vos missions sur la plateforme et recrutez
             vos premiers bénévoles
           </div>
-          <router-link to="/dashboard">
-            <Button size="xl" full variant="green">
-              C'est parti !
-            </Button>
-          </router-link>
+          <Button size="lg" class="w-full" @click="$router.push('/dashboard')">
+            C'est parti !
+          </Button>
         </div>
       </div>
     </div>
@@ -61,8 +66,12 @@
 </template>
 
 <script>
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   async asyncData ({ $axios, store, error }) {
     if (
       !store.getters.currentRole || store.getters.currentRole.contextable_type !== 'structure'
