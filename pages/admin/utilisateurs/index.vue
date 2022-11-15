@@ -24,7 +24,7 @@
           :value="$route.query['filter[user.role]']"
           variant="transparent"
           clearable
-          @input="changeFilter('filter[user.role]', $event)"
+          @input="handleRoleChange"
         />
         <SelectAdvanced
           v-if="$route.query['filter[user.role]'] === 'referent'"
@@ -32,10 +32,10 @@
           name="referent-department"
           placeholder="Département du référent"
           :options="$labels.departments.map((option) => { return { key: option.key, label: `${option.key} - ${option.label}` } })"
-          :value="$route.query['filter[department]']"
+          :value="$route.query['filter[referent_department]']"
           variant="transparent"
           clearable
-          @input="changeFilter('filter[department]', $event)"
+          @input="changeFilter('filter[referent_department]', $event)"
         />
         <SelectAdvanced
           v-if="$route.query['filter[user.role]'] === 'referent_regional'"
@@ -269,7 +269,15 @@ export default {
     this.tags = data.data.map((tag) => { return { key: tag.id, label: tag.name } })
   },
   methods: {
-
+    handleRoleChange (role) {
+      if (this.$route.query?.['filter[referent_region]']) {
+        delete this.$route.query['filter[referent_region]']
+      }
+      if (this.$route.query?.['filter[referent_department]']) {
+        delete this.$route.query['filter[referent_department]']
+      }
+      this.changeFilter('filter[user.role]', role)
+    }
   }
 }
 </script>

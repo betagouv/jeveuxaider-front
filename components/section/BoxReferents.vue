@@ -93,7 +93,7 @@ export default {
       params: {
         pagination: 999,
         'filter[user.role]': 'referent',
-        'filter[department]': this.department,
+        'filter[referent_department]': this.department,
         include: ['user', 'tags']
       }
     })
