@@ -50,7 +50,7 @@
         </div>
 
         <div class="mt-2 sm:mx-auto sm:w-full sm:max-w-md text-left">
-          <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <div class="bg-white py-8 px-4 shadow sm:px-10">
             <div class="relative">
               <div class="absolute inset-0 flex items-center">
                 <div class="w-full border-t border-gray-200" />
@@ -80,24 +80,24 @@
                   @blur="validate('password')"
                 />
                 <template #description>
-                  <Link
-                    to="/password-reset"
-                    class="text-sm font-medium mt-2"
-                  >
-                    Mot de passe perdu ?
-                  </Link>
+                  <div class="mt-2">
+                    <Link
+                      to="/password-reset"
+                      class="text-sm font-medium  text-jva-blue-500"
+                    >
+                      Mot de passe perdu ?
+                    </Link>
+                  </div>
                 </template>
               </FormControl>
-              <Button
-                type="submit"
-                size="xl"
-                variant="green"
-                full
+              <DsfrButton
+                size="lg"
                 :loading="loading"
-                @click="onSubmit"
+                class="w-full"
+                @click.native.prevent="onSubmit"
               >
                 Connexion
-              </Button>
+              </DsfrButton>
             </form>
             <div class="mt-8">
               <div class="relative">
@@ -112,9 +112,14 @@
               </div>
 
               <div class="mt-6">
-                <Button size="xl" variant="white" full @click.native="$router.push('/inscription/benevole')">
+                <DsfrButton
+                  size="lg"
+                  type="secondary"
+                  class="w-full"
+                  @click.native="$router.push('/inscription/benevole')"
+                >
                   Créez votre espace bénévole
-                </Button>
+                </DsfrButton>
               </div>
             </div>
           </div>
@@ -123,7 +128,7 @@
       <div class="max-w-3xl mx-auto">
         <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div
-            class="border-[#1e429f] border overflow-hidden shadow rounded-lg"
+            class="border-[#1e429f] border overflow-hidden shadow"
           >
             <div class="px-4 py-5 sm:p-6">
               <dt class="text-base font-medium text-[#c3ddfd] truncate">
@@ -131,23 +136,21 @@
               </dt>
               <nuxt-link
                 to="/inscription/responsable"
-                class="mt-4 w-full flex justify-center py-3 px-4 rounded-lg text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white hover:scale-105 transform transition"
+                class="mt-4 w-full flex justify-center py-3 px-4 text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white transition"
               >
                 Publiez vos missions
               </nuxt-link>
             </div>
           </div>
 
-          <div
-            class="border-[#1e429f] border overflow-hidden shadow rounded-lg"
-          >
+          <div class="border-[#1e429f] border overflow-hidden shadow">
             <div class="px-4 py-5 sm:p-6">
               <dt class="text-base font-medium text-[#c3ddfd] truncate">
                 Vous êtes une collectivité territoriale ?
               </dt>
               <nuxt-link
                 to="/inscription/responsable?orga_type=Collectivité"
-                class="mt-4 w-full flex justify-center py-3 px-4 rounded-lg text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white hover:scale-105 transform transition"
+                class="mt-4 w-full flex justify-center py-3 px-4 text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white transition"
               >
                 Créez votre page
               </nuxt-link>
@@ -163,10 +166,14 @@
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FranceConnect from '@/components/custom/FranceConnect'
+import Link from '@/components/dsfr/Link.vue'
+import DsfrButton from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
-    FranceConnect
+    FranceConnect,
+    Link,
+    DsfrButton
   },
   mixins: [FormErrors],
   middleware: 'guest',

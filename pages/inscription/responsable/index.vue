@@ -19,24 +19,24 @@
             Vous êtes sur le point d'inscrire une nouvelle organisation.<br>
             Merci de confirmer que votre organisation
           </p>
-          <ul class="text-gray-600 space-y-3">
-            <li class="flex items-center">
-              <CheckCircleSolidIcon class="inline-block w-auto h-5 text-jva-green-500 mr-2" />dispose d'une personnalité morale
+          <ul class="text-gray-600 space-y-3 text-left">
+            <li class="flex items-start">
+              <CheckCircleSolidIcon class="flex-none inline-block w-auto h-5 text-jva-green-500 mr-2 mt-[2px]" />dispose d'une personnalité morale
             </li>
-            <li class="flex items-center">
-              <CheckCircleSolidIcon class="inline-block w-auto h-5 text-jva-green-500 mr-2" />n'est pas à but lucratif
+            <li class="flex items-start">
+              <CheckCircleSolidIcon class="flex-none inline-block w-auto h-5 text-jva-green-500 mr-2 mt-[2px]" />n'est pas à but lucratif
             </li>
-            <li class="flex items-center">
-              <CheckCircleSolidIcon class="inline-block w-auto h-5 text-jva-green-500 mr-2" />n'est pas politique, cultuelle ou syndicale.
+            <li class="flex items-start">
+              <CheckCircleSolidIcon class="flex-none inline-block w-auto h-5 text-jva-green-500 mr-2 mt-[2px]" />n'est pas politique, cultuelle ou syndicale.
             </li>
           </ul>
           <div class="mt-8 space-y-3">
-            <Button full size="lg" @click.native="handleConfirmChoixOrga">
+            <DsfrButton class="w-full" @click.native="handleConfirmChoixOrga">
               Je confirme ces éléments
-            </Button>
-            <Button variant="white" full size="lg" @click.native="modalConfirmOrgaStep = 2">
+            </DsfrButton>
+            <DsfrButton type="secondary" class="w-full" @click.native="modalConfirmOrgaStep = 2">
               Mon organisation ne remplit pas ces conditions
-            </Button>
+            </DsfrButton>
           </div>
         </div>
         <div v-else-if="modalConfirmOrgaStep == 2" class="flex flex-col justify-center items-center">
@@ -44,22 +44,27 @@
             😕
           </div>
           <p class="text-lg font-semibold text-center my-6 leading-7">
-            Votre organisation ne répond malheureusement pas aux<br>
-            conditions énoncées dans la
-            <nuxt-link to="/charte-reserve-civique" class="text-jva-blue-500 underline">
-              Charte de la Réserve Civique
-            </nuxt-link>.
+            Votre organisation ne répond malheureusement pas aux conditions énoncées dans la
+            <span class="whitespace-nowrap">
+              <Link
+                to="/charte-reserve-civique"
+                class="text-jva-blue-500"
+              >Charte de la Réserve Civique</Link>.
+            </span>
           </p>
           <p class="text-gray-600 text-center">
-            Si votre organisation n'a pas encore de personnalité morale, vous pouvez facilement <a class="underline text-jva-blue-500" href="https://www.service-public.fr/particuliers/vosdroits/R1757" target="_blank">créer une association en ligne</a>.
+            Si votre organisation n'a pas encore de personnalité morale, vous pouvez facilement
+            <Link to="https://www.service-public.fr/particuliers/vosdroits/R1757" class="text-jva-blue-500" :is-external="true">
+              créer une association en ligne
+            </Link>.
           </p>
-          <p class="text-gray-600 text-center mt-3">
+          <p class="text-gray-600 text-center mt-4">
             Si votre organisation a une <span class="font-bold">dimension lucrative</span> ou bien est une <span class="font-bold">organisation politique, culturelle</span> ou bien <span class="font-bold">syndicale</span>, vous pouvez proposer à vos associations partenaires de mettre en ligne des missions sur notre plateforme.
           </p>
           <div class="mt-6 w-full">
-            <Button variant="white" full size="lg" @click.native="handleDeniedChoixOrga">
+            <DsfrButton class="w-full" @click.native="handleDeniedChoixOrga">
               Fermer
-            </Button>
+            </DsfrButton>
           </div>
         </div>
       </Modal>
@@ -90,24 +95,28 @@
           icon="💪"
           title="Une<br><strong>association</strong>"
           subtitle="Trouver des bénévoles<br>pour vos missions"
+          class="md:h-[235px]"
           @click.native="handleChooseOrgaType('Association')"
         />
         <BoxItem
           icon="🏫️"
           title="Une <strong>collectivité territoriale</strong>"
           subtitle="Mairies, CCAS, EPCI et tout établissement public local"
+          class="md:h-[235px]"
           @click.native="handleChooseOrgaType('Collectivité')"
         />
         <BoxItem
           icon="🚀"
           title="Une<br><strong>tête de réseau</strong>"
           subtitle="Gérer vos différentes antennes, <br>délégations, associations locales ..."
+          class="md:h-[235px]"
           @click.native="handleChooseOrgaType('Tête de réseau')"
         />
         <BoxItem
           icon="🏢"
           title="Autre organisation<br><strong>publique</strong>"
           subtitle="Ehpad public, <br>services de l’Etat ..."
+          class="md:h-[235px]"
           @click.native="handleChooseOrgaType('Organisation publique')"
         />
         <BoxItem
@@ -115,12 +124,14 @@
           title="<strong>Organisation privée</strong> à but non lucratif"
           subtitle="Établissement de santé privé d'intérêt collectif, Ehpad privé,
             fondation, ESUS"
+          class="md:h-[235px]"
           @click.native="handleChooseOrgaType('Organisation privée')"
         />
         <BoxItem
           icon="🤔"
           title=" Vous êtes<br><strong>perdu ?</strong>"
           subtitle="Notre équipe se fera une joie<br>de vous guider :)"
+          class="md:h-[235px]"
           @click.native="handleChooseOrgaType('Crisp')"
         />
       </div>
@@ -129,12 +140,12 @@
         <template v-if="!userHasRoleResponsable">
           <form
             id="organisation"
-            class="max-w-2xl mx-auto bg-gray-100 p-6 sm:p-12 rounded-2xl"
+            class="max-w-2xl mx-auto bg-gray-100 p-6 sm:p-12"
             @submit.prevent="onSubmitChooseName"
           >
             <div
               v-if="['Association', 'Collectivité'].includes($route.query.orga_type)"
-              class="mb-8 py-4 px-6 border border-gray-400 text-gray-500 rounded-2xl md:flex md:space-x-4"
+              class="mb-8 py-4 px-6 border border-gray-400 text-gray-500 md:flex md:space-x-4"
             >
               <InformationCircleSolidIcon class="h-5 w-5 inline text-gray-400 translate-y-[-2px] md:translate-y-0 flex-none" />
               <span class="text-sm md:text-base">
@@ -167,16 +178,14 @@
             </FormControl>
 
             <template v-if="!orgaExist && $route.query.orga_type !== 'Association'">
-              <Button
-                class="mt-4"
-                variant="green"
+              <DsfrButton
+                class="mt-4 w-full"
                 form="inscription"
-                full
-                size="xl"
-                @click.native="onSubmitChooseName"
+                size="lg"
+                @click.native.prevent="onSubmitChooseName"
               >
                 Continuer
-              </Button>
+              </DsfrButton>
             </template>
             <div v-if="orgaExist" class="text-center mt-4">
               <p class="mb-0 font-bold">
@@ -200,9 +209,9 @@
           </form>
 
           <div class="container mt-4 text-center">
-            <nuxt-link to="/inscription/responsable" class="text-sm text-white hover:underline">
+            <Link to="/inscription/responsable" class="text-sm text-white active:!bg-transparent">
               Retour
-            </nuxt-link>
+            </Link>
           </div>
         </template>
 
@@ -211,20 +220,18 @@
             Vous êtes déjà responsable de l'organisation
             <span class="font-bold">{{ userHasRoleResponsable.label }}</span>
           </div>
-          <nuxt-link to="/inscription/responsable/step/profile">
-            <Button
-              size="xl"
-              full
-              variant="green"
-            >
-              Continuer
-            </Button>
-          </nuxt-link>
+          <DsfrButton
+            size="lg"
+            class="w-full"
+            @click="$router.push('/inscription/responsable/step/profile')"
+          >
+            Continuer
+          </DsfrButton>
         </div>
       </div>
 
       <div v-else-if="currentStep.key == 'form_utilisateur'" class="mt-4">
-        <div class="form-register-steps max-w-xl mx-auto bg-gray-100 p-6 sm:p-12 rounded-2xl">
+        <div class="form-register-steps max-w-xl mx-auto bg-gray-100 p-6 sm:p-12">
           <form id="inscription" class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2" @submit.prevent="onSubmitRegisterResponsableForm">
             <FormControl
               label="Prénom"
@@ -333,14 +340,12 @@
             </FormControl>
           </form>
 
-          <Button
-            type="submit"
-            size="xl"
+          <DsfrButton
+            size="lg"
             form="inscription"
-            variant="green"
-            full
+            class="w-full"
             :loading="loading"
-            @click="onSubmitRegisterResponsableForm"
+            @click.native.prevent="onSubmitRegisterResponsableForm"
           >
             <template v-if="$route.query.orga_type === 'Collectivité'">
               J'inscris ma collectivité territoriale
@@ -351,26 +356,27 @@
             <template v-else>
               J'inscris mon organisation
             </template>
-          </Button>
+          </DsfrButton>
 
           <div class="mt-4 text-center text-gray-800 text-sm">
             En m'inscrivant j'accepte
-            <a
-              href="/politique-de-confidentialite"
-              target="_blank"
-              class="underline"
-            >
-              la politique de confidentialité
-            </a>
+            <!-- eslint-disable -->
+            <Link to="/politique-de-confidentialite"
+            >la politique de confidentialité</Link>
+            <!-- eslint-enable -->
             et
-            <a href="/charte-reserve-civique" target="_blank" class="underline">
-              la charte de JeVeuxAider.gouv.fr
-            </a>
+            <!-- eslint-disable -->
+            <Link to="/charte-reserve-civique"
+            >la charte de JeVeuxAider.gouv.fr</Link>
+            <!-- eslint-enable -->
           </div>
         </div>
       </div>
 
-      <div v-else-if="currentStep.key == 'form_reseau'" class="mt-4">
+      <div
+        v-else-if="currentStep.key == 'form_reseau'"
+        class="mt-4"
+      >
         <FormLeadReseau />
       </div>
     </div>
@@ -383,12 +389,16 @@ import BoxItem from '@/components/section/inscription/BoxItem'
 import ApiEngagementAssociationsSearch from '@/components/section/search/ApiEngagementAssociationsSearch'
 import FormErrors from '@/mixins/form/errors'
 import FormLeadReseau from '@/components/form/FormLeadReseau'
+import DsfrButton from '@/components/dsfr/Button.vue'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
     BoxItem,
     ApiEngagementAssociationsSearch,
-    FormLeadReseau
+    FormLeadReseau,
+    DsfrButton,
+    Link
   },
   mixins: [FormErrors],
   data () {

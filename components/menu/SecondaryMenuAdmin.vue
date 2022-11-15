@@ -65,6 +65,7 @@ export default {
           key: 'taxonomies',
           label: 'Tags',
           childrens: [
+            { label: 'Missions', to: '/admin/taxonomies/missions' },
             { label: 'Compétences', to: '/admin/taxonomies/skills' },
             { label: 'Utilisateurs', to: '/admin/taxonomies/profiles' }
           ]

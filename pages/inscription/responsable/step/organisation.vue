@@ -21,11 +21,11 @@
     </div>
     <div class="max-w-xl mx-auto">
       <div
-        class="px-8 py-6 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
+        class="px-8 py-6 bg-white text-black text-3xl font-extrabold leading-9 text-center"
       >
         Complétez les informations suivantes liés à votre organisation
       </div>
-      <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
+      <div class="p-8 bg-gray-50 border-t border-gray-200">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
           <FormControl
             label="Nom de votre organisation"
@@ -160,10 +160,8 @@
             required
             :error="errors.domaines"
           >
-            <CheckboxGroup
+            <TagsGroup
               v-model="form.domaines"
-              name="domaines"
-              variant="button"
               :options="$labels.domaines"
               is-model
             />
@@ -175,10 +173,8 @@
             required
             :error="errors.publics_beneficiaires"
           >
-            <CheckboxGroup
+            <TagsGroup
               v-model="form.publics_beneficiaires"
-              name="publics_beneficiaires"
-              variant="button"
               :options="$labels.mission_publics_beneficiaires"
             />
           </FormControl>
@@ -282,12 +278,10 @@
           </FormControl>
 
           <Button
-            type="submit"
-            size="xl"
-            variant="green"
-            full
+            size="lg"
+            class="w-full"
             :loading="loading"
-            @click="onSubmit"
+            @click.native.prevent="onSubmit"
           >
             Continuer
           </Button>
@@ -301,8 +295,14 @@
 import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import MixinInputGeo from '@/mixins/input-geo'
+import Button from '@/components/dsfr/Button.vue'
+import TagsGroup from '@/components/dsfr/TagsGroup.vue'
 
 export default {
+  components: {
+    Button,
+    TagsGroup
+  },
   mixins: [FormErrors, MixinInputGeo],
   layout: 'register-steps',
   async asyncData ({ $axios, store, error, $labels }) {

@@ -6,7 +6,7 @@
       srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
       data-not-lazy
     >
-    <div class="relative z-10 py-12 lg:py-24">
+    <div class="relative z-10 py-12 lg:py-24 px-6">
       <div class=" text-center">
         <h2
           class="text-3xl md:text-5xl text-white font-light !leading-tight tracking-tight"
@@ -21,7 +21,7 @@
       <div
         class="flex flex-col space-y-4 items-center justify-center mt-12 mb-12 md:flex-row md:space-x-6 md:space-y-0"
       >
-        <nuxt-link to="/inscription/benevole">
+        <nuxt-link to="/inscription/benevole" class="w-full md:w-auto">
           <BoxItem
             icon="💪"
             title="Je veux devenir<br><strong>bénévole</strong>"
@@ -31,7 +31,7 @@
         <div class="text-white text-lg">
           ou
         </div>
-        <nuxt-link to="/inscription/responsable">
+        <nuxt-link to="/inscription/responsable" class="w-full md:w-auto">
           <BoxItem
             icon="📢"
             title="Je veux publier<br><strong>des missions</strong>"

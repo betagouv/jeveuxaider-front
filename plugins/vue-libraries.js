@@ -19,7 +19,7 @@ Vue.use(VScrollLock, {
 })
 
 Vue.use(VTooltip, {
-  defaultPlacement: 'right',
+  defaultPlacement: 'bottom',
   defaultClass: 'theme-black'
   // defaultDelay: { show: 200, hide: 9999999 }
 })

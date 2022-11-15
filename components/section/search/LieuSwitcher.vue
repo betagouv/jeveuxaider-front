@@ -9,8 +9,7 @@
         {'!py-2': item.value == radio && index == 0},
         {'text-jva-blue-400 ': (item.value != radio) && !thematique},
         {'text-white ': (item.value != radio) && thematique},
-        {'rounded-t-lg border-b-0 lg:border-b lg:rounded-tr-none lg:rounded-l-lg lg:border-r-0': index == 0},
-        {'rounded-b-lg lg:rounded-bl-none lg:rounded-r-lg': index == (radios.length - 1)},
+        {'border-b-0 lg:border-b lg:border-r-0': index == 0},
         thematique ? 'border-white' : 'border-jva-blue-400'
       ]"
       @click.prevent="onClickRadio(item.value)"

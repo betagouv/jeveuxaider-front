@@ -20,7 +20,7 @@
         </p>
       </div>
       <div class="mt-12 sm:mx-auto sm:w-full sm:max-w-md text-left">
-        <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        <div class="bg-white py-8 px-4 shadow sm:px-10">
           <div class="relative">
             <div class="absolute inset-0 flex items-center">
               <div class="w-full border-t border-[#d2d6dc]" />
@@ -41,7 +41,7 @@
                   @blur="validate('email')"
                 />
                 <template #description>
-                  <p class="text-sm text-gray-500">
+                  <p class="text-sm text-gray-600 mt-2">
                     Vous allez recevoir un email qui vous permettra de créer un
                     nouveau mot de passe.
                   </p>
@@ -49,12 +49,10 @@
               </FormControl>
 
               <Button
-                type="submit"
-                size="xl"
-                variant="green"
-                full
+                size="lg"
                 :loading="loading"
-                @click="onSubmit"
+                class="w-full"
+                @click.native.prevent="onSubmit"
               >
                 Réinitialiser mon mot de passe
               </Button>
@@ -81,8 +79,12 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   mixins: [FormErrors],
   middleware: 'guest',
   data () {

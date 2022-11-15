@@ -20,11 +20,11 @@
     </div>
     <div class="max-w-xl mx-auto">
       <div
-        class="px-8 py-6 bg-white text-black text-3xl font-extrabold leading-9 text-center rounded-t-lg"
+        class="px-8 py-6 bg-white text-black text-3xl font-extrabold leading-9 text-center"
       >
         Faites briller votre organisation
       </div>
-      <div class="p-8 bg-gray-50 border-t border-gray-200 rounded-b-lg">
+      <div class="p-8 bg-gray-50 border-t border-gray-200">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
           <FormControl label="Logo" html-for="logo">
             <ImageCrop
@@ -60,12 +60,10 @@
           </FormControl>
 
           <Button
-            type="submit"
-            size="xl"
-            variant="green"
-            full
+            size="lg"
+            class="w-full"
             :loading="loading"
-            @click="onSubmit"
+            @click.native.prevent="onSubmit"
           >
             Terminer
           </Button>
@@ -77,8 +75,12 @@
 
 <script>
 import FormUploads from '@/mixins/form/uploads'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   mixins: [FormUploads],
   layout: 'register-steps',
   async asyncData ({ $axios, store, error }) {

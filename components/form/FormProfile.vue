@@ -300,7 +300,7 @@
             </template>
             <form id="form-activities" class="mt-8" @submit.prevent="handleSubmit">
               <FormControl label="Renseignez les activités qui vous intéressent" html-for="activites">
-                <div class="bg-white border rounded-md">
+                <div class="bg-white border">
                   <Disclosure :default-open="true" class="py-4 border-b px-4">
                     <template #button="{ isOpen }">
                       <div class="flex font-semibold text-sm items-center justify-between group">

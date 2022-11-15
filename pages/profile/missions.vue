@@ -14,13 +14,9 @@
         :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`"
       >
         <template #action>
-          <div>
-            <nuxt-link to="/missions-benevolat">
-              <Button size="xl" icon="SearchIcon">
-                Trouver une mission
-              </Button>
-            </nuxt-link>
-          </div>
+          <Button size="lg" icon="RiSearchLine" @click.native="$router.push('/missions-benevolat')">
+            Trouver une mission
+          </Button>
         </template>
       </SectionHeading>
     </template>
@@ -35,27 +31,32 @@
           clearable
           @input="changeFilter('filter[search]', $event)"
         />
-        <div class="hidden lg:flex gap-x-4 gap-y-4 mt-2 text-sm flex-wrap">
-          <Checkbox
-            :key="`tous-${$route.fullPath}`"
-            :option="{key: 'tous', label:'Toutes'}"
-            :is-checked="hasActiveFilters()"
-            variant="button"
-            size="xs"
-            transparent
-            @change="deleteAllFilters()"
-          />
-          <Checkbox
+        <div class="hidden lg:flex gap-x-4 gap-y-4 mt-4 text-sm flex-wrap">
+          <Tag
+            :key="`toutes-${$route.fullPath}`"
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="hasActiveFilters()"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="deleteAllFilters"
+          >
+            Toutes
+          </Tag>
+
+          <Tag
             :key="`state-validee-${$route.fullPath}`"
-            :option="{key: 'Validée', label:'Validées'}"
-            :is-checked="$route.query['filter[state]'] == 'Validée'"
-            variant="button"
-            size="xs"
-            transparent
-            @change="changeFilter('filter[state]', 'Validée')"
-          />
+            as="button"
+            size="md"
+            context="selectable"
+            :is-selected="$route.query['filter[state]'] == 'Validée'"
+            is-selected-class="border-gray-50 bg-gray-50"
+            @click.native="changeFilter('filter[state]', 'Validée')"
+          >
+            Validées
+          </Tag>
         </div>
-        <div class="my-6 space-y-4">
+        <div class="my-8 space-y-4">
           <CardParticipation
             v-for="participation in queryResult.data"
             :key="participation.id"
@@ -86,13 +87,17 @@ import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import CardParticipation from '@/components/card/CardParticipation.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import Button from '@/components/dsfr/Button.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
     HelpCenter,
     CardParticipation,
     Pagination,
-    Breadcrumb
+    Breadcrumb,
+    Button,
+    Tag
   },
   mixins: [QueryBuilder],
   middleware: 'authenticated',

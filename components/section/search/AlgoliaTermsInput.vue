@@ -1,11 +1,11 @@
 <template>
   <ais-instant-search :search-client="searchClient" :index-name="indexName">
-    <ais-configure :hits-per-page.camel="5" filters="vocabulary_name:Skills" />
+    <ais-configure :hits-per-page.camel="5" :filters="`vocabulary_name:${vocabularyName}`" />
     <ais-autocomplete>
       <template slot-scope="{ indices, refine }">
         <div class="">
           <vue-autosuggest
-            ref="autocompleteskills"
+            :ref="refAutocompleteName"
             :suggestions="indicesToSuggestions(indices)"
             :get-suggestion-value="getSuggestionValue"
             :input-props="{
@@ -35,7 +35,7 @@
             <template slot-scope="{ suggestion }">
               <div>
                 <div
-                  class="ml-auto leading-6 text-sm text-gray-700 flex-none"
+                  class="ml-auto leading-6 text-sm font-medium text-gray-500 flex-none"
                 >
                   <div class="flex items-center space-x-2">
                     <div class="">
@@ -46,7 +46,7 @@
                       class="ml-2 text-xxs text-[#070191]"
                     />
                   </div>
-                  <div v-if="suggestion.item.group" class="text-xs italic text-gray-500">
+                  <div v-if="suggestion.item.group" class="text-xs italic">
                     {{ suggestion.item.group }}
                   </div>
                 </div>
@@ -96,6 +96,10 @@ export default {
     max: {
       type: Number,
       default: undefined
+    },
+    vocabularyName: {
+      type: String,
+      required: true
     }
   },
   data () {
@@ -107,6 +111,9 @@ export default {
     }
   },
   computed: {
+    refAutocompleteName () {
+      return `autocomplete-${this.vocabularyName}`
+    },
     limitReached () {
       return this.max ? this.items.length >= this.max : false
     }
@@ -136,7 +143,7 @@ export default {
       ).style.display = 'block'
     },
     onTab () {
-      this.$refs.autocompleteskills.listeners.selected(true)
+      this.$refs[this.refAutocompleteName].listeners.selected(true)
       document.getElementById(
         'autosuggest-autosuggest__results'
       ).style.display = 'none'

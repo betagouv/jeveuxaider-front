@@ -80,16 +80,13 @@
             class="text-gray-600 text-sm mt-6 sm:max-w-md md:max-w-lg lg:max-w-full"
           >
             En m'inscrivant j'accepte la
-            <nuxt-link to="/charte-reserve-civique" class="hover:underline">
+            <Link to="/charte-reserve-civique">
               <strong>politique de confidentialité</strong>
-            </nuxt-link>
+            </Link>
             et la
-            <nuxt-link
-              to="/politique-de-confidentialite"
-              class="hover:underline"
-            >
+            <Link to="/politique-de-confidentialite">
               <strong>charte</strong>
-            </nuxt-link>
+            </Link>
             de JeVeuxAider.gouv.fr
           </p>
         </div>
@@ -116,8 +113,12 @@
 
 <script>
 import * as yup from 'yup'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
+  components: {
+    Link
+  },
   props: {
     activity: {
       type: Object,

@@ -49,12 +49,12 @@
           </Heading>
 
           <Heading as="h1" size="md" class="mb-8" :bold="false" color="text-white">
-            <strong>Devenez bénévole</strong>
-            <span>et trouvez des missions de bénévolat</span>
+            <strong> Devenez bénévole </strong>
+            <span> et trouvez des missions de bénévolat </span>
             <br class="hidden md:block">
-            <strong>près de chez vous</strong>
-            <span>ou</span>
-            <strong>à distance</strong>
+            <strong> près de chez vous </strong>
+            <span> ou </span>
+            <strong> à distance </strong>
           </Heading>
 
           <Button size="lg" type="tertiary-no-outline" icon="RiSearchLine" @click="handleClickCTA()">
