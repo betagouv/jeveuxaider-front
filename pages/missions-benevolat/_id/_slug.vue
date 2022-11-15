@@ -213,7 +213,7 @@
                     <template v-if="mission.commitment__duration">
                       <span>{{ mission.commitment__duration|label('duration') }}</span>
                       <template v-if="mission.commitment__time_period">
-                        <span class="font-normal">par</span>
+                        <span class="font-normal"> par </span>
                         <span>{{ mission.commitment__time_period|label('time_period') }}</span>
                       </template>
                     </template>
