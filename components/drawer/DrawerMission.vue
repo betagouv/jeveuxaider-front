@@ -19,23 +19,27 @@
     <div v-if="mission">
       <OnlineIndicator :published="hasPageOnline" :link="`/missions-benevolat/${mission.id}/${mission.slug}`" class="mt-2" />
       <div class="flex flex-wrap gap-1 mt-4">
-        <Button
-          type="tertiary"
-          icon="RiEyeLine"
-          size="sm"
-          @click="$router.push(`/admin/missions/${mission.id}`)"
-        >
-          Détails
-        </Button>
+        <nuxt-link :to="`/admin/missions/${mission.id}`">
+          <Button
+            type="tertiary"
+            icon="RiEyeLine"
+            size="sm"
+            tabindex="-1"
+          >
+            Détails
+          </Button>
+        </nuxt-link>
 
-        <Button
-          type="tertiary"
-          icon="RiPencilLine"
-          size="sm"
-          @click="$router.push(`/admin/missions/${mission.id}/edit`)"
-        >
-          Modifier
-        </Button>
+        <nuxt-link :to="`/admin/missions/${mission.id}/edit`">
+          <Button
+            type="tertiary"
+            icon="RiPencilLine"
+            size="sm"
+            tabindex="-1"
+          >
+            Modifier
+          </Button>
+        </nuxt-link>
 
         <ButtonMissionDuplicate
           v-if="$store.getters.contextRole === 'responsable'"
