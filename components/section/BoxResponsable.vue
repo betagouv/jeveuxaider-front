@@ -30,19 +30,21 @@
         <DescriptionListItem term="Mobile" :description="responsable.mobile" />
         <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
       </DescriptionList>
-      <div v-if="conversableId" class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
-      <div v-if="conversableId" class="flex justify-center text-sm">
-        <Link @click.native="handleClickSendMessage">
-          <ChatAltIcon class="h-4 w-4 mr-2" /> Envoyer un message
-        </Link>
-        <ModalSendMessage
-          :is-open="showModalSendMessage"
-          :to-user="responsable"
-          :conversable-id="conversableId"
-          :conversable-type="conversableType"
-          @cancel="showModalSendMessage = false"
-        />
-      </div>
+      <template v-if="['admin', 'referent'].includes($store.getters.contextRole)">
+        <div v-if="conversableId" class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
+        <div v-if="conversableId" class="flex justify-center text-sm">
+          <Link @click.native="handleClickSendMessage">
+            <ChatAltIcon class="h-4 w-4 mr-2" /> Envoyer un message
+          </Link>
+          <ModalSendMessage
+            :is-open="showModalSendMessage"
+            :to-user="responsable"
+            :conversable-id="conversableId"
+            :conversable-type="conversableType"
+            @cancel="showModalSendMessage = false"
+          />
+        </div>
+      </template>
     </Box>
   </div>
 </template>
