@@ -117,12 +117,12 @@ export default {
     previewConversion: { type: String, default: 'formPreview' },
     minWidth: { type: Number, default: 200 },
     minHeight: { type: Number, default: null },
-    maxWidth: { type: Number, default: 4000 },
-    maxHeight: { type: Number, default: 4000 },
+    maxWidth: { type: Number, default: 8000 },
+    maxHeight: { type: Number, default: 8000 },
     ratio: { type: Number, default: 1 },
     variant: { type: String, default: 'default', validator: s => ['default', 'compact'].includes(s) },
     uploadVariant: { type: String, default: 'default' },
-    uploadMaxSize: { type: Number, default: 1000000 },
+    uploadMaxSize: { type: Number, default: 5000000 },
     disableDelete: { type: Boolean, default: false }, // @todo handle relations
     warningTitle: { type: String, default: null },
     warning: { type: String, default: null }
