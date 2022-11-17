@@ -60,7 +60,7 @@
         Aucune note pour le moment
       </div>
     </template>
-    <Drawer :is-open="showDrawer" form-id="form-note" submit-label="Enregsitrer la note" @close="showDrawer = false">
+    <Drawer :is-open="showDrawer" form-id="form-note" submit-label="Enregistrer la note" @close="showDrawer = false">
       <template #title>
         <Heading :level="3">
           Ajouter une note

@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     getAvailableFacets () {
-      return ['type', 'activity.name', 'structure.name', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires', 'template_subtitle', 'publics_volontaires']
+      return ['type', 'activity.name', 'structure.name', 'tags', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires', 'template_subtitle', 'publics_volontaires']
     },
     getAvailableNumericFilters () {
       return ['commitment__total', 'is_autonomy']
