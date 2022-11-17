@@ -37,6 +37,7 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Emailable from '@/mixins/emailable.client'
 import Heading from '@/components/dsfr/Heading.vue'
 import Button from '@/components/dsfr/Button.vue'
 
@@ -46,7 +47,7 @@ export default {
     Heading,
     Button
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, Emailable],
   data () {
     return {
       loading: false,
@@ -65,6 +66,11 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          const isEmailValid = await this.emailableValidation()
+          if (!isEmailValid) {
+            this.$toast.error("L'email semble invalide")
+            return
+          }
           const { data: profile } = await this.$axios.post('firstname', this.form)
           if (profile) {
             this.$emit('login', profile)

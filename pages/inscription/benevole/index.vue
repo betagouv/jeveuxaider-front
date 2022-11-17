@@ -346,6 +346,7 @@
 <script>
 import { string, object, ref, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Emailable from '@/mixins/emailable.client'
 import FranceConnect from '@/components/custom/FranceConnect'
 import Temoignages from '@/components/section/homepage/Temoignages'
 import CarouselLogos from '@/components/section/inscription/CarouselLogos'
@@ -360,7 +361,7 @@ export default {
     Link,
     Button
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, Emailable],
   middleware: 'guest',
   data () {
     return {
@@ -419,6 +420,11 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          const isEmailValid = await this.emailableValidation()
+          if (!isEmailValid) {
+            this.$toast.error("L'email semble invalide")
+            return
+          }
           await this.$store.dispatch('auth/registerVolontaire', this.form)
           window.plausible && window.plausible('Inscription bénévole - Étape 1 - Création de compte')
           this.$router.push('/inscription/benevole/step/profile')
