@@ -26,7 +26,7 @@
           <div class="flex-shrink-0 w-full sm:w-auto sm:ml-2">
             <Link
               icon="RiArrowRightLine"
-              to="/missions-benevolat?tags=Collecte%20nationale%20des%20Banques%20Alimentaires"
+              @click.native="onClickBACollecte"
             >
               Trouver une collecte
             </Link>
@@ -113,6 +113,15 @@ export default {
   watch: {
     '$store.state.auth.user.id' () {
       this.$fetch()
+    }
+  },
+  methods: {
+    onClickBACollecte () {
+      window.plausible &&
+        window.plausible('Click CTA - Collecte BA - Bandeau', {
+          props: { isLogged: this.$store.getters.isLogged }
+        })
+      this.$router.push('/missions-benevolat?tags=Collecte%20nationale%20des%20Banques%20Alimentaires')
     }
   }
 }

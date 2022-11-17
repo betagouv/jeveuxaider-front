@@ -40,9 +40,10 @@
         </div>
 
         <nuxt-link
-          to="/missions-benevolat?activity.name=Collecte de produits&structure.reseaux.name=Fédération Française des Banques Alimentaires"
+          to="/missions-benevolat?tags=Collecte%20nationale%20des%20Banques%20Alimentaires"
+          @click="onClickBACollecte"
         >
-          <Button type="tertiary-no-outline" tabindex="-1">
+          <Button type="tertiary-no-outline" tabindex="-1" @click="onClickBACollecte">
             Je trouve une mission
           </Button>
         </nuxt-link>
@@ -57,6 +58,14 @@ import Button from '@/components/dsfr/Button.vue'
 export default {
   components: {
     Button
+  },
+  methods: {
+    onClickBACollecte () {
+      window.plausible &&
+        window.plausible('Click CTA - Collecte BA - Card Missions Prioritaires', {
+          props: { isLogged: this.$store.getters.isLogged }
+        })
+    }
   }
 }
 </script>
