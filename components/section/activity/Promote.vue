@@ -55,7 +55,7 @@
                       class="p-4 md:px-8 lg:px-10 xl:px-16 xl:pb-8 sm:border-r flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
                     >
                       <div class="font-extrabold text-4xl">
-                        380 000
+                        400 000
                       </div>
                       <div class="text-lg">
                         bénévoles inscrits<br>depuis 2020
@@ -65,10 +65,10 @@
                       class="p-4 pb-8 md:px-8 lg:px-12 xl:px-16 flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
                     >
                       <div class="font-extrabold text-4xl">
-                        9300
+                        10 000
                       </div>
                       <div class="text-lg">
-                        organisations publiques<br>et associatives
+                        organisations<br>partenaires
                       </div>
                     </div>
                   </div>
