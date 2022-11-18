@@ -58,6 +58,9 @@
           <ConversationDetailsOrganisation
             v-if="$store.getters['messaging/conversation'].conversable_type == 'App\\Models\\Structure'"
           />
+          <ConversationDetailsMission
+            v-if="$store.getters['messaging/conversation'].conversable_type == 'App\\Models\\Mission'"
+          />
         </div>
       </div>
     </div>
@@ -68,11 +71,12 @@
 import ConversationMessages from '@/components/conversation/Messages.vue'
 import ConversationDetailsParticipation from '~/components/conversation/DetailsParticipation.vue'
 import ConversationDetailsOrganisation from '~/components/conversation/DetailsOrganisation.vue'
+import ConversationDetailsMission from '~/components/conversation/DetailsMission.vue'
 import ConversationMessagesHeader from '@/components/conversation/MessagesHeader.vue'
 
 export default {
   components: {
-    ConversationMessages, ConversationDetailsParticipation, ConversationDetailsOrganisation, ConversationMessagesHeader
+    ConversationMessages, ConversationDetailsParticipation, ConversationDetailsOrganisation, ConversationDetailsMission, ConversationMessagesHeader
   },
   methods: {
     onPanelRightToggle () {

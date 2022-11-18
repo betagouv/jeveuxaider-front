@@ -71,7 +71,11 @@ export default {
     },
     term: {
       type: Object,
-      default: () => {}
+      default: () => {
+        return {
+          is_published: false
+        }
+      }
     }
   },
   data () {

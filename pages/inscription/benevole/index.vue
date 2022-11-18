@@ -8,10 +8,10 @@
         data-not-lazy
       >
       <div class="max-w-[1280px] mx-auto py-12 relative w-full lg:inset-y-0 z-10">
-        <div class="px-4 lg:px-8 lg:grid lg:grid-cols-12 lg:gap-8 pb-10">
+        <div class="px-4 sm:px-8 lg:grid lg:grid-cols-12 lg:gap-8 pb-10">
           <div class="lg:col-span-6">
             <h1
-              class="mt-10 lg:mt-24 text-4xl tracking-tight leading-10 font-bold text-white sm:leading-none sm:text-6xl lg:text-5xl xl:text-6xl"
+              class="mt-10 lg:mt-32 text-3xl sm:text-4xl leading-10 font-bold text-white sm:leading-none md:text-6xl lg:text-4xl xl:text-5xl"
             >
               Devenez bénévole avec JeVeuxAider.gouv.fr
             </h1>
@@ -79,9 +79,9 @@
             </ul>
 
             <p
-              class="pt-10 pb-16 lg:pb-0 leading-10 text-4xl font-medium text-white sm:mt-5 tracking-tight"
+              class="pt-10 pb-16 lg:pb-0 leading-10 text-3xl sm:text-4xl font-medium text-white sm:mt-5"
             >
-              Plus de <b class="font-bold">380 000 bénévoles</b> <br>sont
+              Plus de <b class="font-bold">380 000 bénévoles</b> <br class="hidden sm:block">sont
               déjà inscrits.
             </p>
           </div>
@@ -314,7 +314,7 @@
     <div class="bg-white overflow-hidden">
       <div class="mx-auto max-w-6xl pt-14 pb-20 px-4 sm:px-6 lg:px-8">
         <h3
-          class="text-center leading-8 pb-8 text-gray-900 font-medium text-3xl tracking-tight px-4"
+          class="text-center leading-8 pb-8 text-gray-900 font-medium text-3xl px-4"
         >
           Plus de <b class="font-bold">9300 organisations</b> ont déjà rejoint
           JeVeuxAider.gouv.fr
@@ -325,15 +325,15 @@
 
     <Temoignages />
 
-    <div class="mb-16">
+    <div class="my-16">
       <div class="px-4">
         <img
-          class="h-10 mx-auto opacity-75 mb-4"
+          class="w-auto sm:h-10 mx-auto opacity-75 mb-4"
           src="/images/inscription/logo_jva_gris.png"
           alt=""
         >
         <img
-          class="h-12 sm:w-auto mx-auto opacity-50"
+          class="w-auto sm:h-12 mx-auto opacity-50"
           src="/images/inscription/logo_cpt_gris.png"
           style=""
           alt=""
@@ -346,6 +346,7 @@
 <script>
 import { string, object, ref, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Emailable from '@/mixins/emailable.client'
 import FranceConnect from '@/components/custom/FranceConnect'
 import Temoignages from '@/components/section/homepage/Temoignages'
 import CarouselLogos from '@/components/section/inscription/CarouselLogos'
@@ -360,7 +361,7 @@ export default {
     Link,
     Button
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, Emailable],
   middleware: 'guest',
   data () {
     return {
@@ -419,6 +420,11 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          const isEmailValid = await this.emailableValidation()
+          if (!isEmailValid) {
+            this.$toast.error("L'email semble invalide")
+            return
+          }
           await this.$store.dispatch('auth/registerVolontaire', this.form)
           window.plausible && window.plausible('Inscription bénévole - Étape 1 - Création de compte')
           this.$router.push('/inscription/benevole/step/profile')

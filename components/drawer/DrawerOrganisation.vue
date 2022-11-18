@@ -25,23 +25,27 @@
           <OnlineIndicator v-if="organisation.statut_juridique === 'Association'" :published="hasPageOnline" :link="hasPageOnline ? `/organisations/${organisation.slug}` : null" />
         </div>
         <div class="mt-4 flex flex-wrap gap-1">
-          <Button
-            type="tertiary"
-            icon="RiEyeLine"
-            size="sm"
-            @click="$router.push(`/admin/organisations/${organisation.id}`)"
-          >
-            Détails
-          </Button>
+          <nuxt-link :to="`/admin/organisations/${organisation.id}`">
+            <Button
+              type="tertiary"
+              icon="RiEyeLine"
+              size="sm"
+              tabindex="-1"
+            >
+              Détails
+            </Button>
+          </nuxt-link>
 
-          <Button
-            type="tertiary"
-            icon="RiPencilLine"
-            size="sm"
-            @click="$router.push(`/admin/organisations/${organisation.id}/edit`)"
-          >
-            Modifier
-          </Button>
+          <nuxt-link :to="`/admin/organisations/${organisation.id}/edit`">
+            <Button
+              type="tertiary"
+              icon="RiPencilLine"
+              size="sm"
+              tabindex="-1"
+            >
+              Modifier
+            </Button>
+          </nuxt-link>
 
           <Button
             v-if="['admin'].includes($store.getters.contextRole)"
@@ -96,7 +100,7 @@ import BoxReseau from '@/components/section/organisation/BoxReseau'
 import BoxReferents from '@/components/section/BoxReferents'
 import LoadingIndicator from '@/components/custom/LoadingIndicator'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
-import Button from '@/components/dsfr/Button'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {

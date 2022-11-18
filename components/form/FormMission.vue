@@ -491,6 +491,34 @@
           </FormControl>
         </div>
       </Box>
+      <Box v-if="$store.getters.contextRole === 'admin'" padding="sm">
+        <Heading :level="3" class="mb-8">
+          Tags
+        </Heading>
+        <div class="space-y-8">
+          <FormControl label="Ajouter les tags liés à cette mission" html-for="algolia-search-tags">
+            <AlgoliaTermsInput
+              :items="form.tags"
+              vocabulary-name="Missions"
+              @add-item="handleSelectedTag"
+            />
+            <div>
+              <div v-if="form.tags.length" class="mt-6">
+                <div class="flex flex-wrap gap-2">
+                  <TagFormItem
+                    v-for="item in form.tags"
+                    :key="item.id"
+                    :tag="item"
+                    @removed="onRemovedTag"
+                  >
+                    {{ item.name }}
+                  </TagFormItem>
+                </div>
+              </div>
+            </div>
+          </FormControl>
+        </div>
+      </Box>
     </div>
     <AlertDialog
       :is-open="showSNUModal"
@@ -519,12 +547,14 @@ import { string, object, number, date, array, ref } from 'yup'
 import inputGeo from '@/mixins/input-geo'
 import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
+import AlgoliaTermsInput from '@/components/section/search/AlgoliaTermsInput'
 import FormMissionParameters from '~/components/form/FormMissionParameters.vue'
 
 export default {
   components: {
     FormMissionParameters,
-    AlgoliaSkillsInput
+    AlgoliaSkillsInput,
+    AlgoliaTermsInput
   },
   mixins: [inputGeo, FormErrors],
   props: {
@@ -782,6 +812,12 @@ export default {
     },
     onRemovedSkill (item) {
       this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
+    },
+    handleSelectedTag (item) {
+      this.$set(this.form, 'tags', [...this.form.tags, item])
+    },
+    onRemovedTag (item) {
+      this.form.tags = this.form.tags.filter(skill => skill.id !== item.id)
     },
     onSNUChecked () {
       this.showSNUModal = true

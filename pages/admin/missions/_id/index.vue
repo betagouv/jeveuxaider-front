@@ -57,7 +57,12 @@
             <BoxInformations :mission="mission" />
             <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="mission.department" />
 
-            <BoxResponsable v-if="mission.responsable" :responsable="mission.responsable" />
+            <BoxResponsable
+              v-if="mission.responsable"
+              :responsable="mission.responsable"
+              :conversable-id="mission.id"
+              conversable-type="App\Models\Mission"
+            />
             <BoxOrganisation :organisation="mission.structure" />
           </div>
           <History v-if="$route.hash === '#historique'" :model-id="mission.id" model-type="mission" />

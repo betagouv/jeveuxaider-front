@@ -58,7 +58,7 @@ export default {
           this.setErrors(errors)
         })
         .finally(() => {
-          console.log('finally')
+          // console.log('finally')
           this.loading = false
         })
     }

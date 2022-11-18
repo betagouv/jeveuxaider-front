@@ -130,6 +130,7 @@ export default {
         case 'App\\Models\\Participation':
           return this.conversation.conversable.mission?.structure?.name
         case 'App\\Models\\Structure':
+        case 'App\\Models\\Mission':
           return this.conversation.conversable.name
       }
       return null

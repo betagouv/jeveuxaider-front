@@ -19,15 +19,18 @@
           v-tooltip="{
             content:
               term.related_count > 0
-                ? `Ce tag a ${term.related_count} liaisons . Il ne peut pas être supprimé.`
+                ? `Ce tag a ${term.related_count} liaison(s) . Il ne peut pas être supprimé.`
                 : false,
-            hideOnTargetClick: true,
+            classes: 'theme-white',
+            placement: 'bottom',
+            offset: 8
           }"
         >
           <Button
             variant="white-red"
             size="sm"
             icon="TrashIcon"
+            :disabled="term.related_count > 0 ? true : false"
             @click.native="handleDelete()"
           >
             Supprimer
@@ -37,20 +40,20 @@
 
       <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :term="term" />
-      <BoxLiaisons class="mb-8" :term="term" />
+      <!-- <BoxLiaisons class="mb-8" :term="term" /> -->
     </template>
   </Drawer>
 </template>
 
 <script>
 import BoxInformations from '@/components/section/term/BoxInformations'
-import BoxLiaisons from '@/components/section/term/BoxLiaisons'
+// import BoxLiaisons from '@/components/section/term/BoxLiaisons'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
 
 export default {
   components: {
     BoxInformations,
-    BoxLiaisons,
+    // BoxLiaisons,
     OnlineIndicator
   },
   props: {

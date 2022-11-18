@@ -1,21 +1,21 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <div v-if="vocabulary" class="flex flex-col gap-8">
     <DrawerTerm :term-id="drawerTermId" @close="drawerTermId = null" />
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[
           { text: 'Tableau de bord', to: '/dashboard' },
           { text: 'Taxonomies' },
-          { text: $route.params.slug }
+          { text: vocabulary.name }
         ]"
       />
     </portal>
 
     <SectionHeading
-      :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
+      :title="`${vocabulary.name} - ${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
         queryResult.total,
-        title,
-        `${title}s`,
+        'tag',
+        `tags`,
         false
       )}`"
     >
@@ -79,6 +79,29 @@
         >
           Sans liaison
         </Tag>
+        <Tag
+          :key="`published-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[is_published]', 'true')"
+        >
+          En ligne
+        </Tag>
+
+        <Tag
+          :key="`unpublished-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[is_published]', 'false')"
+        >
+          Hors ligne
+        </Tag>
       </template>
     </SearchFilters>
 
@@ -140,6 +163,12 @@ export default {
   mixins: [QueryBuilder],
   layout: 'admin-with-sidebar-menu',
   middleware: 'admin',
+  async asyncData ({ store, error, $axios, route }) {
+    const { data: vocabulary } = await $axios.get(`/vocabularies/${route.params.slug}`)
+    return {
+      vocabulary
+    }
+  },
   data () {
     return {
       endpoint: `/vocabularies/${this.$route.params.slug}/terms`,
@@ -147,18 +176,7 @@ export default {
     }
   },
   computed: {
-    title () {
-      switch (this.$route.params.slug) {
-        case 'skills':
-          return 'compétence'
-        case 'profiles':
-          return 'tags utilisateurs'
-        case 'tags':
-          return 'tag'
-        default:
-          return this.$route.params.slug
-      }
-    }
+
   },
   methods: {
     onSubmit () {

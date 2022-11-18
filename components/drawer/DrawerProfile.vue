@@ -17,23 +17,27 @@
         </Tag>
       </div>
       <div class="mt-2 flex flex-wrap gap-1">
-        <Button
-          type="tertiary"
-          icon="RiEyeLine"
-          size="sm"
-          @click="$router.push(`/admin/utilisateurs/${profile.id}`)"
-        >
-          Détails
-        </Button>
+        <nuxt-link :to="`/admin/utilisateurs/${profile.id}`">
+          <Button
+            type="tertiary"
+            icon="RiEyeLine"
+            size="sm"
+            tabindex="-1"
+          >
+            Détails
+          </Button>
+        </nuxt-link>
 
-        <Button
-          type="tertiary"
-          icon="RiPencilLine"
-          size="sm"
-          @click="$router.push(`/admin/utilisateurs/${profile.id}/edit`)"
-        >
-          Modifier
-        </Button>
+        <nuxt-link :to="`/admin/utilisateurs/${profile.id}/edit`">
+          <Button
+            type="tertiary"
+            icon="RiPencilLine"
+            size="sm"
+            tabindex="-1"
+          >
+            Modifier
+          </Button>
+        </nuxt-link>
 
         <Button
           v-if="['admin'].includes($store.getters.contextRole)"
@@ -69,7 +73,7 @@ import BoxTerritoires from '@/components/section/profile/BoxTerritoires'
 import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
 import BoxUtm from '@/components/section/BoxUtm'
 import Tag from '@/components/dsfr/Tag'
-import Button from '@/components/dsfr/Button'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {

@@ -128,6 +128,17 @@
           clearable
           @input="changeFilter('filter[publics_volontaires]', $event)"
         />
+        <SelectAdvanced
+          v-if="$store.getters.contextRole == 'admin'"
+          :key="`tags-${$route.fullPath}`"
+          name="tags"
+          placeholder="Tags"
+          :options="tags"
+          :value="$route.query['filter[tags]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[tags]', $event)"
+        />
       </div>
     </template>
     <div>
@@ -339,8 +350,13 @@ export default {
         include: 'template.photo,illustrations'
       },
       drawerMissionId: null,
-      autocompleteOptionsOrga: []
+      autocompleteOptionsOrga: [],
+      tags: []
     }
+  },
+  async mounted () {
+    const { data } = await this.$axios.get('/vocabularies/missions/terms', { params: { pagination: 50 } })
+    this.tags = data.data.map((tag) => { return { key: tag.id, label: tag.name } })
   },
   methods: {
     async onFetchSuggestionsOrga (value) {
