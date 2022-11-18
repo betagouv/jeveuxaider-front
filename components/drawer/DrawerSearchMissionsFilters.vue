@@ -45,6 +45,13 @@
     />
     <FacetFilter
       show-more
+      facet-name="tags"
+      label="Opérations nationales"
+      :show-more-limit="3"
+      :facets="$store.getters['algoliaSearch/facetResults']('tags')"
+    />
+    <FacetFilter
+      show-more
       facet-name="publics_beneficiaires"
       label="Publics aidés"
       :show-more-limit="3"

@@ -21,6 +21,23 @@
           </template>
         </FacetFilterToggle>
 
+        <FacetFilterToggle v-if="filter === 'tags'" :key="i" facet-name="tags" label="Opérations nationales">
+          <template #button="{ firstValueSelected, activeValuesCount }">
+            <Tag
+              :is-active="!!activeValuesCount"
+              context="clickable"
+              size="md"
+              as="button"
+            >
+              <span v-if="!firstValueSelected">Opérations nationales</span>
+              <div v-else>
+                <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+              </div>
+            </Tag>
+          </template>
+        </FacetFilterToggle>
+
         <FacetFilterToggle v-if="filter === 'publics_beneficiaires'" :key="i" facet-name="publics_beneficiaires" label="Publics aidés">
           <template #button="{ firstValueSelected, activeValuesCount }">
             <Tag
