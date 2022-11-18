@@ -126,3 +126,9 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+:deep(.dsfr-link) {
+  @apply active:!bg-transparent;
+}
+</style>
