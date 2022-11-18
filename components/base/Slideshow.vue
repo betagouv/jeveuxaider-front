@@ -53,9 +53,18 @@
       </template>
     </VueSlickCarousel>
 
-    <Link v-if="moreLink" ref="moreLink" :to="moreLink.link" class="text-[#696974]">
-      {{ moreLink.label }}
-    </Link>
+    <template v-if="moreLink">
+      <template v-if="moreLink.isExternal">
+        <Link ref="moreLink" :to="moreLink.link" :is-external="true" class="text-[#696974]">
+          {{ moreLink.label }}
+        </Link>
+      </template>
+      <template v-else>
+        <Link ref="moreLink" :to="moreLink.link" class="text-[#696974]">
+          {{ moreLink.label }}
+        </Link>
+      </template>
+    </template>
   </div>
 </template>
 
