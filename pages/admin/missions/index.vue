@@ -8,7 +8,7 @@
     </template>
     <template #sidebar>
       <BoxContext v-if="context" :key="`context-${$route.fullPath}`" :context="context" />
-      <div class="flex flex-col gap-y-4 sticky top-8 mb-24">
+      <div class="flex flex-col gap-y-4 mb-32">
         <InputAutocomplete
           v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
           :value="$route.query['filter[structure.name]']"
@@ -127,6 +127,16 @@
           variant="transparent"
           clearable
           @input="changeFilter('filter[publics_volontaires]', $event)"
+        />
+        <SelectAdvanced
+          :key="`publics_beneficiaires-${$route.fullPath}`"
+          name="publics_beneficiaires"
+          placeholder="Publics aidés"
+          :options="$labels.mission_publics_beneficiaires"
+          :value="$route.query['filter[publics_beneficiaires]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[publics_beneficiaires]', $event)"
         />
         <SelectAdvanced
           v-if="$store.getters.contextRole == 'admin'"
@@ -289,6 +299,7 @@
           class="cursor-pointer"
           :mission="mission"
           show-state
+          :show-tags="['admin'].includes($store.getters.contextRole)"
           tabindex="0"
           @click.native="drawerMissionId = mission.id"
         />
@@ -358,7 +369,7 @@ export default {
       endpoint: '/missions',
       exportEndpoint: '/export/missions',
       queryParams: {
-        include: 'template.photo,illustrations'
+        include: 'template.photo,illustrations,tags'
       },
       drawerMissionId: null,
       autocompleteOptionsOrga: [],

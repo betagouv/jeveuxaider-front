@@ -4,7 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         Référents
       </div>
-      <Link :to="`/admin/utilisateurs?filter[user.role]=referent&filter[department]=${department}`" icon="ChevronRightIcon">
+      <Link :to="`/admin/utilisateurs?filter[user.role]=referent&filter[referent_department]=${department}`" icon="ChevronRightIcon">
         Consulter
       </Link>
     </div>
