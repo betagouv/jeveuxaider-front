@@ -68,7 +68,8 @@ export default {
         .then(async () => {
           const isEmailValid = await this.emailableValidation()
           if (!isEmailValid) {
-            this.$toast.error("L'email semble invalide")
+            this.errors.email = 'Votre adresse mail comporte une erreur'
+            this.$toast.error('Votre adresse mail comporte une erreur')
             return
           }
           const { data: profile } = await this.$axios.post('firstname', this.form)
