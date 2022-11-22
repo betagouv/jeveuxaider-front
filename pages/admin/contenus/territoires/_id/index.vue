@@ -97,7 +97,7 @@
                     <Heading as="h3" :level="5">
                       {{ responsable.profile.full_name }}
                     </Heading>
-                    <div class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable.profile)">
+                    <div class="text-sm flex items-center cursor-pointer group hover:text-red-500" @click="handleDeleteMember(responsable)">
                       <div class="group-hover:block hidden">
                         Supprimer
                       </div>
