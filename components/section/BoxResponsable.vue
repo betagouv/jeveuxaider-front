@@ -28,6 +28,11 @@
         </div>
         <DescriptionListItem term="E-mail" :description="responsable.email" />
         <DescriptionListItem term="Mobile" :description="responsable.mobile" />
+        <DescriptionListItem
+          v-if="responsable.user"
+          term="Der. connexion"
+          :description="responsable.user.last_online_at ? $dayjs(responsable.user.last_online_at).fromNow() : '-'"
+        />
         <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
       </DescriptionList>
       <template v-if="['admin', 'referent'].includes($store.getters.contextRole)">
