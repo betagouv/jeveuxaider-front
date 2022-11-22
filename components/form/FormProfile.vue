@@ -533,7 +533,8 @@ export default {
           if (this.form.email !== this.profile.email) {
             const isEmailValid = await this.emailableValidation()
             if (!isEmailValid) {
-              this.$toast.error("L'email semble invalide")
+              this.errors.email = 'Votre adresse mail comporte une erreur'
+              this.$toast.error('Votre adresse mail comporte une erreur')
               return
             }
           }
