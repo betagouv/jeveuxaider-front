@@ -94,6 +94,19 @@
         </div>
       </div>
 
+      <template v-if="showTags && mission.tags">
+        <div class="mt-3 max-w-full">
+          <DsfrBadge
+            v-for="tag in mission.tags"
+            :key="tag.id"
+            size="sm"
+            class="truncate"
+          >
+            {{ tag.name }}
+          </DsfrBadge>
+        </div>
+      </template>
+
       <div class="flex items-end justify-between space-x-1 text-xs text-[#666666] pt-8 mt-auto w-full">
         <div>
           <span>{{ placesLeftText }}</span>
@@ -143,6 +156,10 @@ export default {
       default: null
     },
     showState: {
+      type: Boolean,
+      default: false
+    },
+    showTags: {
       type: Boolean,
       default: false
     }

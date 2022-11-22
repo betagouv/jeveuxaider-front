@@ -27,6 +27,11 @@
         <DescriptionListItem v-if="!mission.is_autonomy && mission.full_address.trim()" term="Adresse" :description="mission.full_address" />
         <DescriptionListItem v-if="mission.department" term="Département" :description="`${mission.department} - ${$options.filters.label(mission.department, 'departments')}`" />
         <DescriptionListItem v-if="autonomyCities" term="Villes" :description="autonomyCities" />
+        <DescriptionListItem
+          v-if="['admin'].includes($store.getters.contextRole) && mission.tags"
+          term="Tags"
+          :description="mission.tags.map((item) => item.name).join(', ')"
+        />
       </DescriptionList>
     </Box>
   </div>

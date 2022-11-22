@@ -30,7 +30,7 @@
         <div class="flex gap-4">
           <span v-if="prefixLabel" class="text-gray-400 font-semibold">{{ prefixLabel }}</span>
           <template v-if="selectedOption">
-            {{ selectedOption[attributeLabel] }}
+            <span class="truncate">{{ selectedOption[attributeLabel] }}</span>
           </template>
           <template v-else>
             <span class="placeholder">{{ placeholder }}</span>
