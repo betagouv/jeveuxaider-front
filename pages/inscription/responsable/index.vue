@@ -388,6 +388,7 @@ import { string, object, ref, date } from 'yup'
 import BoxItem from '@/components/section/inscription/BoxItem'
 import ApiEngagementAssociationsSearch from '@/components/section/search/ApiEngagementAssociationsSearch'
 import FormErrors from '@/mixins/form/errors'
+import Emailable from '@/mixins/emailable.client'
 import FormLeadReseau from '@/components/form/FormLeadReseau'
 import DsfrButton from '@/components/dsfr/Button.vue'
 import Link from '@/components/dsfr/Link.vue'
@@ -400,7 +401,7 @@ export default {
     DsfrButton,
     Link
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, Emailable],
   data () {
     return {
       loading: false,
@@ -570,6 +571,12 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          const isEmailValid = await this.emailableValidation()
+          if (!isEmailValid) {
+            this.errors.email = 'Votre adresse mail comporte une erreur'
+            this.$toast.error('Votre adresse mail comporte une erreur')
+            return
+          }
           await this.$store.dispatch('auth/registerResponsable', {
             ...this.form,
             structure_name: this.form.structure.name,

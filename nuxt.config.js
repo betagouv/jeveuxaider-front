@@ -154,6 +154,9 @@ export default {
     usetiful: {
       enabled: process.env.USETIFUL_ENABLED,
       token: process.env.USETIFUL_TOKEN
+    },
+    emailable: {
+      enabled: process.env.EMAILABLE_ENABLED
     }
   },
 
