@@ -409,3 +409,73 @@ body.full-height-layout {
 .Vue-Toastification__toast {
   border-radius: 0 !important;
 }
+
+.vc-container {
+  font-family: Marianne, -apple-system !important;
+  border-color: rgba(212, 212, 212, 1) !important;
+  border-radius: 0 !important;
+}
+.vc-title {
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  text-transform: capitalize !important;
+  color: black !important;
+  text-transform: uppercase !important;
+}
+.vc-weekday {
+  color: rgba(105, 105, 116, 1) !important;
+}
+.vc-arrow {
+  border-radius: 0 !important;
+  color: black !important;
+}
+.vc-arrow:hover {
+  border-radius: 0 !important;
+  color: black !important;
+  background-color: rgb(245, 245, 245) !important;
+}
+
+.vc-day {
+  width: 47px !important;
+  height: 38px !important;
+}
+
+.vc-day .vc-day-content {
+  width: 44px !important;
+  height: 35px !important;
+  font-size: 16px !important;
+  border-radius: 0 !important;
+}
+
+.vc-day .vc-highlight {
+  border-radius: 0 !important;
+  width: 44px !important;
+  height: 35px !important;
+}
+
+
+.vc-day .vc-day-content.is-highlight  {
+  color: white !important;
+  font-weight: bold !important;
+  background-color: #070191 !important;
+}
+
+.vc-day .vc-day-content.is-disabled, .vc-day .vc-day-content.is-disabled.is-highlight  {
+  background-color: white !important;
+  color: rgb(167, 167, 176) !important;
+  font-weight: 500 !important;
+  cursor: not-allowed !important;
+}
+
+.vc-day .vc-day-content:hover,.vc-day .vc-day-content:focus  {
+  background-color: rgb(18, 18, 255) !important;
+  color: white !important;
+  font-weight: bold !important;
+  border-radius: 0 !important;
+}
+
+.vc-day .vc-day-content.is-disabled:hover,.vc-day .vc-day-content.is-disabled:focus  {
+  background-color: white !important;
+  color: rgb(167, 167, 176) !important;
+  font-weight: 500 !important;
+}

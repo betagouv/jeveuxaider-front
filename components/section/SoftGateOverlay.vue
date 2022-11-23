@@ -1,9 +1,6 @@
 <template>
   <div class="fixed inset-0 w-full h-full z-50">
-    <div
-      id="soft-gate"
-      class="w-full h-full flex flex-col items-center justify-center"
-    >
+    <div class="w-full h-full flex flex-col items-center justify-center bg-jva-blue-500/95">
       <div class="flex flex-col w-full h-full px-4">
         <button
           class="p-4 -mr-4 lg:m-0 lg:p-8 cursor-pointer ml-auto lg:absolute lg:right-0"
@@ -17,10 +14,10 @@
           class="overflow-y-auto flex-1 flex flex-col lg:justify-center"
         >
           <div class="pb-32 lg:pb-0">
-            <div class="text-center text-white text-lg">
+            <div class="text-center text-white text-lg tracking-tight">
               #ChacunPourTous
             </div>
-            <div class="title text-center text-white font-bold mb-4">
+            <div class="text-center text-white font-bold mb-4 text-4xl tracking-tight">
               <template
                 v-if="step != 'share'"
               >
@@ -50,11 +47,14 @@
                 :datas="datas"
                 @next="step = 'participate'"
               />
-
               <SoftGateAntiFlood
                 v-if="step == 'anti-flood'"
                 @next="step = 'participate'"
                 @close="onClose"
+              />
+              <SoftGateSelectCreneaux
+                v-if="step == 'select-creneaux'"
+                @next="step = 'share'"
               />
               <SoftGateParticipate
                 v-if="step == 'participate'"
@@ -75,6 +75,7 @@ import SoftGateLogin from '@/components/section/soft-gate/Login'
 import SoftGateRegister from '@/components/section/soft-gate/Register'
 import SoftGateAntiFlood from '@/components/section/soft-gate/AntiFlood'
 import SoftGateParticipate from '@/components/section/soft-gate/Participate'
+import SoftGateSelectCreneaux from '@/components/section/soft-gate/SelectCreneaux'
 import SoftGateShare from '@/components/section/soft-gate/Share'
 
 export default {
@@ -85,22 +86,29 @@ export default {
     SoftGateRegister,
     SoftGateAntiFlood,
     SoftGateParticipate,
+    SoftGateSelectCreneaux,
     SoftGateShare
   },
   data () {
     return {
-      step: 'email',
-      datas: null
+      datas: null,
+      selectedMission: this.$store.state.softGate.selectedMission
     }
   },
-  created () {
-    if (this.$store.getters.isLogged) {
+  computed: {
+    step () {
+      if (!this.$store.getters.isLogged) {
+        return 'email'
+      }
       if (
         this.$store.state.auth.user.statistics.new_participations_today >= 3
       ) {
-        this.step = 'anti-flood'
+        return 'anti-flood'
+      }
+      if (this.selectedMission.dates) {
+        return 'select-creneaux'
       } else {
-        this.step = 'participate'
+        return 'participate'
       }
     }
   },
@@ -123,16 +131,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-#soft-gate {
-  background-color: rgba(25, 22, 130, 0.95);
-  .title {
-    font-size: 24px;
-    @screen lg {
-      font-size: 50px;
-      letter-spacing: -1px;
-    }
-  }
-}
-</style>

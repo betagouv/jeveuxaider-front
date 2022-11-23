@@ -107,7 +107,7 @@
             height="363"
             @error="$event.target.srcset = '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'"
           >
-
+          <!-- Logo Organisation -->
           <component
             :is="mission.structure.statut_juridique == 'Association' && mission.structure.state == 'Validée'? 'nuxt-link' : 'div'"
             v-if="mission.structure.logo"
@@ -126,9 +126,10 @@
             >
           </component>
 
-          <div class="bg-white pb-8 pt-10">
-            <div class="px-4 text-center">
-              <div class="text-xl font-bold">
+          <div class="bg-white pb-8 pt-10 px-6 divide-y">
+            <!-- Ils recherchent -->
+            <div class="text-center pb-6">
+              <div class="text-xl font-bold text-black">
                 <template v-if="!mission.has_places_left">
                   La mission est désormais complète
                 </template>
@@ -145,7 +146,7 @@
 
               <template v-if="participationsCount">
                 <div
-                  class="uppercase text-cool-gray-500 text-xs"
+                  class="uppercase text-cool-gray-500 text-xs font-semibold"
                 >
                   {{ participationsCount|pluralize('personne déjà inscrite','personnes déjà inscrites') }}
                 </div>
@@ -170,15 +171,16 @@
               </template>
             </div>
 
-            <div v-if="dates.length && !mission.dates" class="px-8 sm:px-32 lg:px-8 mt-4 sm:mt-8">
+            <!-- Dates début et fin -->
+            <div v-if="dates.length && !mission.dates" class="py-6">
               <div
-                class="grid pb-3 sm:pb-0"
-                :class="[{ 'sm:grid-cols-2 sm:divide-x border-b': dates.length == 2 }]"
+                class="grid"
+                :class="[{ 'sm:grid-cols-2 sm:divide-x': dates.length == 2 }]"
               >
                 <div
                   v-for="(date, i) in dates"
                   :key="i"
-                  class="mx-auto sm:mx-0 sm:pb-3"
+                  class="mx-auto sm:mx-0"
                   :class="[{ 'sm:pr-3': i == 0 && dates.length > 1 }, { 'sm:pl-3': i == 1 && dates.length > 1 }]"
                 >
                   <div
@@ -189,8 +191,7 @@
                       class="text-center flex gap-2 items-baseline sm:block"
                       :class="[{'sm:text-right ml-auto': i === 0 && dates.length > 1}, {'sm:text-left': i === 1 && dates.length > 1}]"
                     >
-                      <!-- <RiCalendarEventFill class="hidden sm:inline text-cool-gray-400 fill-current w-4 h-4" /> -->
-                      <div class="text-cool-gray-500 space-x-2 text-[11px]">
+                      <div class="uppercase text-cool-gray-500 font-semibold text-xs space-x-2">
                         {{ date.label }}
                       </div>
                       <div class="text-black font-bold">
@@ -202,94 +203,60 @@
               </div>
             </div>
 
-            <div class="flex flex-col">
-              <!-- Durée de la mission -->
-              <div class="mx-8 sm:mx-12">
-                <div class="text-center">
-                  <div class="mt-3 uppercase text-cool-gray-500 text-[11px]" :class="[dates.length && !mission.dates ? 'mt-3' : 'mt-5']">
-                    Durée de la mission
-                  </div>
-                  <div class="font-bold">
-                    <template v-if="mission.commitment__duration">
-                      <span>{{ mission.commitment__duration|label('duration') }}</span>
-                      <template v-if="mission.commitment__time_period">
-                        <span class="font-normal"> par </span>
-                        <span>{{ mission.commitment__time_period|label('time_period') }}</span>
-                      </template>
-                    </template>
-                    <template v-else>
-                      Non spécifié
-                    </template>
-                  </div>
-                  <div v-if="mission.recurrent_description" class="text-cool-gray-500 text-sm">
-                    {{ mission.recurrent_description }}
-                  </div>
+            <!-- Durée de la mission -->
+            <div class="text-center py-6">
+              <div class="uppercase text-cool-gray-500 font-semibold text-xs">
+                Durée de la mission
+              </div>
+              <div class="text-black font-bold">
+                <template v-if="mission.commitment__duration">
+                  <span>{{ mission.commitment__duration|label('duration') }}</span>
+                  <template v-if="mission.commitment__time_period">
+                    <span class="font-normal"> par </span>
+                    <span>{{ mission.commitment__time_period|label('time_period') }}</span>
+                  </template>
+                </template>
+                <template v-else>
+                  Non spécifié
+                </template>
+              </div>
+              <div v-if="mission.recurrent_description" class="text-cool-gray-500 text-sm">
+                {{ mission.recurrent_description }}
+              </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="pt-6">
+              <div v-if="mission.dates" class="text-center mb-6">
+                <div class="uppercase text-cool-gray-500 font-semibold text-xs space-x-2 mb-2">
+                  Prochaines dates
+                </div>
+                <div class="space-x-2">
+                  <Badge v-for="date in mission.dates.slice(0,3)" :key="date.id" :no-icon="true" type="new">
+                    {{ $dayjs(date.id).format('D MMM') }}
+                  </Badge>
+                  <Badge v-if="mission.dates.length > 3" :no-icon="true" type="new">
+                    ...
+                  </Badge>
                 </div>
               </div>
-
-              <div class="mt-4 mx-6">
-                <LoadingIndicator v-if="loading" class="min-h-[66px]" />
-                <DsfrButton
-                  v-else-if="userParticipation"
-                  size="lg"
-                  class="w-full mt-6"
-                  type="secondary"
-                  @click.native="$router.push(userParticipationLink)"
-                >
-                  Suivre ma candidature
-                </DsfrButton>
-                <template v-else-if="canRegister">
-                  <template v-if="mission.dates">
-                    <div v-if="!dateSelected" class="flex justify-center">
-                      <client-only>
-                        <!-- todo slot day-content pour accessibility button -->
-                        <v-calendar
-                          ref="calendar"
-                          :attributes="calendarAttrs"
-                          :min-date="new Date()"
-                          trim-weeks
-                          @dayclick="handleDayClick"
-                          @transition-end="addHighlightClasses"
-                          @hook:mounted="addHighlightClasses"
-                        />
-                      </client-only>
-                    </div>
-                    <div v-else-if="dateSelected" class="mt-3 relative mx-6">
-                      <div class="left-0 top-[-3px] absolute cursor-pointer group p-1 hover:bg-[#edf2f7] rounded-sm" @click="handlePreviousStepClick">
-                        <ChevronLeftIcon class="text-[#718096] h-5 w-5" />
-                      </div>
-                      <div class="text-center font-bold capitalize">
-                        {{ $dayjs(dateSelected.id).format('dddd D MMMM') }}
-                      </div>
-
-                      <TagsGroup
-                        v-model="slotSelected"
-                        :options="$labels.slots.filter(slot => dateSelected.slots.includes(slot.key))"
-                        class="mt-4"
-                        wrapper-class="justify-center"
-                      />
-
-                      <div class="flex items-center justify-center mt-6">
-                        <ButtonJeProposeMonAide
-                          :disabled="!slotSelected || slotSelected.length == 0"
-                          :mission="{...mission, dateSelected, slotSelected}"
-                          label="Continuer"
-                          type="secondary"
-                          size="md"
-                        />
-                      </div>
-                    </div>
-                  </template>
-
-                  <div v-else class="relative text-center mt-4">
-                    <ButtonJeProposeMonAide :mission="mission" class="w-full" />
-                  </div>
-                </template>
-
-                <DsfrButton v-else disabled size="lg" class="w-full mt-6">
-                  Inscription fermée
-                </DsfrButton>
+              <LoadingIndicator v-if="loading" class="min-h-[66px]" />
+              <DsfrButton
+                v-else-if="userParticipation"
+                size="lg"
+                class="w-full mt-6"
+                type="secondary"
+                @click.native="$router.push(userParticipationLink)"
+              >
+                Suivre ma candidature
+              </DsfrButton>
+              <div v-else-if="canRegister" class="relative text-center">
+                <ButtonJeProposeMonAide :mission="mission" class="w-full" />
               </div>
+
+              <DsfrButton v-else disabled size="lg" class="w-full">
+                Inscription fermée
+              </DsfrButton>
             </div>
           </div>
         </Box>
@@ -357,6 +324,7 @@ import DsfrButton from '@/components/dsfr/Button.vue'
 import TagsGroup from '@/components/dsfr/TagsGroup.vue'
 import MixinHotjar from '@/mixins/hotjar.client.js'
 import LoadingIndicator from '@/components/custom/LoadingIndicator'
+import Badge from '@/components/dsfr/Badge.vue'
 
 export default {
   components: {
@@ -371,7 +339,8 @@ export default {
     Heading,
     DsfrButton,
     TagsGroup,
-    LoadingIndicator
+    LoadingIndicator,
+    Badge
   },
   mixins: [MixinMission, MixinHotjar],
   async asyncData ({ $axios, params, error, store }) {
@@ -573,14 +542,6 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-  .custom-gradient {
-    background: linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.5) 0%,
-      rgba(0, 0, 0, 0) 70.1%
-    );
-  }
-
   .card--mission--wrapper {
     @apply !flex flex-col h-full max-w-[323px] transition;
     width: calc(100vw - 64px) !important;
@@ -597,68 +558,6 @@ export default {
       }
     }
   }
-
-:deep(.vc-title) {
-  @apply text-black font-bold;
-  font-size: 16px;
-  text-transform: capitalize;
-}
-
-:deep(.vc-container) {
-  border: none;
-}
-
-:deep(.vc-container div) {
-  @apply font-sans;
-}
-
-:deep(.vc-day .vc-day-content) {
-  font-size: 15px;
-  width: 32px;
-  height: 32px;
-  outline: none;
-  border-radius: 0;
-  @screen sm {
-    width: 40px;
-  }
-  &:focus-visible {
-    outline-style: solid;
-    outline-color: #0a76f6;
-    outline-width: 2px;
-    outline-offset: 2px;
-    background-color: transparent;
-  }
-
-}
-
-:deep(.vc-day .vc-highlight) {
-  border-radius: 0 !important;
-  height: 100%;
-  width: 100%;
-}
-:deep(.vc-weekday) {
-  @apply hidden;
-}
-
-:deep(.vc-day-content:hover) {
-  @apply hover:bg-transparent;
-}
-
-:deep(.vc-day.has-highlight:hover .vc-highlight) {
-  @apply bg-jva-blue-300 text-white;
-}
-:deep(.vc-day.has-highlight:hover .vc-day-content) {
-  @apply text-white;
-}
-
-:deep(.vc-header),
-:deep(.vc-arrows-container) {
-  padding-top: 0;
-}
-
-:deep(.vc-weeks) {
-  @apply gap-1;
-}
 
 .deco--2 {
   left: calc(50% - 772px);

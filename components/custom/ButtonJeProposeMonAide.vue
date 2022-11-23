@@ -3,6 +3,7 @@
     :size="size"
     :type="type"
     :disabled="disabled"
+    class="!font-bold"
     @click.native="onClick"
   >
     {{ label }}
