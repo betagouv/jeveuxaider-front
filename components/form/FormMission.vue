@@ -80,7 +80,31 @@
               attribute-key="id"
               attribute-label="name"
               :disabled="Boolean(mission.template)"
-            />
+            >
+              <template
+                v-if="activitiesClassifier?.code === 200"
+                #option="{ item, attributeLabel, selectedOption, highlightIndex, index }"
+              >
+                <div class="w-full flex justify-between">
+                  <div>{{ item[attributeLabel] }}</div>
+                  <Tag
+                    size="sm"
+                    class="ml-2 !transition-none"
+                    :class="[
+                      {'!bg-jva-blue-500 !text-white': (selectedOption?.id === item.id || highlightIndex == index)},
+                      {'text-[#161616] bg-[#EEEEEE] group-hover:bg-jva-blue-500 group-hover:text-white': selectedOption?.id !== item.id},
+                    ]"
+                    :custom-theme="true"
+                  >
+                    {{ item.formattedScore }}
+                  </Tag>
+                </div>
+              </template>
+            </Combobox>
+            <FormHelperText class="mt-2 !mb-0">
+              <span>Veuillez sélectioner le type d'activité principal.</span>
+              <span v-if="activitiesClassifier?.code === 200"> Le pourcentage indique le degré de pertinence en fonction des champs déjà remplis.</span>
+            </FormHelperText>
           </FormControl>
           <FormControl
             label="Publics aidés"
@@ -549,14 +573,17 @@ import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 import AlgoliaTermsInput from '@/components/section/search/AlgoliaTermsInput'
 import FormMissionParameters from '~/components/form/FormMissionParameters.vue'
+import Tag from '@/components/dsfr/Tag.vue'
+import activitiesClassifierMixin from '@/mixins/activitiesClassifier'
 
 export default {
   components: {
     FormMissionParameters,
     AlgoliaSkillsInput,
-    AlgoliaTermsInput
+    AlgoliaTermsInput,
+    Tag
   },
-  mixins: [inputGeo, FormErrors],
+  mixins: [inputGeo, FormErrors, activitiesClassifierMixin],
   props: {
     mission: {
       type: Object,
@@ -763,6 +790,9 @@ export default {
   async fetch () {
     const { data: activities } = await this.$axios.get('/activities?pagination=999')
     this.activities = activities.data.filter(item => item.is_published || item.id === this.mission.activity_id)
+    if (!this.mission.template) {
+      this.fetchActivitiesClassifier()
+    }
   },
   computed: {
     structureId () {

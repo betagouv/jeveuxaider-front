@@ -78,7 +78,31 @@
                 clearable
                 attribute-key="id"
                 attribute-label="name"
-              />
+              >
+                <template
+                  v-if="activitiesClassifier?.code === 200"
+                  #option="{ item, attributeLabel, selectedOption, highlightIndex, index }"
+                >
+                  <div class="w-full flex justify-between">
+                    <div>{{ item[attributeLabel] }}</div>
+                    <Tag
+                      size="sm"
+                      class="ml-2 !transition-none"
+                      :class="[
+                        {'!bg-jva-blue-500 !text-white': (selectedOption?.id === item.id || highlightIndex == index)},
+                        {'text-[#161616] bg-[#EEEEEE] group-hover:bg-jva-blue-500 group-hover:text-white': selectedOption?.id !== item.id},
+                      ]"
+                      :custom-theme="true"
+                    >
+                      {{ item.formattedScore }}
+                    </Tag>
+                  </div>
+                </template>
+              </Combobox>
+              <FormHelperText class="mt-2 !mb-0">
+                <span>Veuillez sélectioner le type d'activité principal.</span>
+                <span v-if="activitiesClassifier?.code === 200"> Le pourcentage indique le degré de pertinence en fonction des champs déjà remplis.</span>
+              </FormHelperText>
             </FormControl>
             <FormControl
               label="Description"
@@ -157,12 +181,15 @@ import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import ButtonsSubmitFormMissionTemplate from '@/components/custom/ButtonsSubmitFormMissionTemplate.vue'
+import activitiesClassifierMixin from '@/mixins/activitiesClassifier'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
-    ButtonsSubmitFormMissionTemplate
+    ButtonsSubmitFormMissionTemplate,
+    Tag
   },
-  mixins: [FormErrors, FormUploads],
+  mixins: [FormErrors, FormUploads, activitiesClassifierMixin],
   props: {
     missionTemplate: {
       type: Object,
@@ -187,6 +214,7 @@ export default {
   async fetch () {
     const { data: activities } = await this.$axios.get('/activities?pagination=999')
     this.activities = activities.data.filter(item => item.is_published || item.id === this.missionTemplate.activity_id)
+    this.fetchActivitiesClassifier()
   },
   methods: {
     async handleSubmit (attributes) {

@@ -18,7 +18,7 @@
           :slides-are-links="true"
           :more-link="{
             link: `https://jeveuxaider.gouv.fr/engagement/actualites/`,
-            label: `Plus d'articles ›`,
+            label: `Plus d'articles`,
             isExternal: true,
           }"
           :slides-count="articles.length"
