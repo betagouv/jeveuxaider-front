@@ -14,13 +14,11 @@ export default {
   },
   watch: {
     // @todo: pourquoi 2 fois ?
-    // @todo: 5sec
     activitiesClassifierDescription () {
       this.timeout?.cancel()
       this.timeout = debounce(() => {
-        console.log('ICI')
         this.fetchActivitiesClassifier()
-      }, 1000)
+      }, 5000)
       this.timeout()
     }
   },
@@ -33,6 +31,13 @@ export default {
       const { data: activitiesClassifier } = await this.$axios.post(
         '/activity-classifier', { description: this.activitiesClassifierDescription }
       )
+
+      // Si le model est en train de charger, refaire le call
+      if (activitiesClassifier.code === 503) {
+        await new Promise(resolve => setTimeout(resolve, 15000))
+        this.fetchActivitiesClassifier()
+      }
+
       if (activitiesClassifier.code === 200) {
         this.activities = this.activities.map((activity) => {
           const activityFromClassifier = activitiesClassifier.content[0].find(ac => ac.label === activity.name)

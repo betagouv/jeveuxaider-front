@@ -65,6 +65,28 @@
               </FormControl>
             </div>
             <FormControl
+              label="Description"
+              html-for="description"
+              :error="errors.description"
+              required
+            >
+              <RichEditor
+                v-model="form.description"
+                placeholder="Décrivez la mission en quelques mots..."
+              />
+            </FormControl>
+            <FormControl
+              label="Objectif"
+              html-for="objectif"
+              :error="errors.objectif"
+              required
+            >
+              <RichEditor
+                v-model="form.objectif"
+                placeholder="Décrivez la mission en quelques mots..."
+              />
+            </FormControl>
+            <FormControl
               v-if="activities.length"
               label="Activité"
               html-for="activity_id"
@@ -103,28 +125,6 @@
                 <span>Veuillez sélectioner le type d'activité principal.</span>
                 <span v-if="activitiesClassifier?.code === 200"> Le pourcentage indique le degré de pertinence en fonction des champs déjà remplis.</span>
               </FormHelperText>
-            </FormControl>
-            <FormControl
-              label="Description"
-              html-for="description"
-              :error="errors.description"
-              required
-            >
-              <RichEditor
-                v-model="form.description"
-                placeholder="Décrivez la mission en quelques mots..."
-              />
-            </FormControl>
-            <FormControl
-              label="Objectif"
-              html-for="objectif"
-              :error="errors.objectif"
-              required
-            >
-              <RichEditor
-                v-model="form.objectif"
-                placeholder="Décrivez la mission en quelques mots..."
-              />
             </FormControl>
           </div>
         </Box>
@@ -213,7 +213,7 @@ export default {
   fetchOnServer: false,
   async fetch () {
     const { data: activities } = await this.$axios.get('/activities?pagination=999')
-    this.activities = activities.data.filter(item => item.is_published || item.id === this.missionTemplate.activity_id)
+    this.activities = activities.data.filter(item => item.is_published || item.id === this.missionTemplate.activity_id).sort((a, b) => a.name.localeCompare(b.name, 'fr'))
     this.fetchActivitiesClassifier()
   },
   methods: {
