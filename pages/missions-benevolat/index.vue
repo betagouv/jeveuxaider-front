@@ -5,7 +5,17 @@
     </div>
 
     <AlgoliaSearch
-      :secondary-filters="['is_autonomy', 'publics_beneficiaires', 'is_minors', 'structure.name', 'domaines', 'structure.reseaux.name', 'department_name', 'template_subtitle']"
+      :secondary-filters="[
+        'is_autonomy',
+        'publics_beneficiaires',
+        'is_minors',
+        'structure.name',
+        'tags',
+        'domaines',
+        'structure.reseaux.name',
+        'department_name',
+        'template_subtitle'
+      ]"
     />
   </div>
 </template>

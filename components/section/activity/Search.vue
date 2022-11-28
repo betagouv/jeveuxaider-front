@@ -63,7 +63,7 @@ export default {
   },
   computed: {
     moreLink () {
-      return `/missions-benevolat?activity.name=${this.activity.name}`
+      return `/missions-benevolat?activity.name=${encodeURIComponent(this.activity.name)}`
     },
     filters () {
       return `activity.name:"${this.activity.name}"`

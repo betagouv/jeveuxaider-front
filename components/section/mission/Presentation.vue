@@ -104,6 +104,23 @@
       </div>
     </div>
 
+    <template v-if="['admin'].includes($store.getters.contextRole)">
+      <div v-if="mission.tags?.length" class="mt-10">
+        <HrTitle>
+          Tags
+        </HrTitle>
+        <div class="flex flex-wrap gap-2">
+          <Badge
+            v-for="(tag, key) in mission.tags"
+            :key="key"
+            :no-icon="true"
+          >
+            {{ tag.name }}
+          </Badge>
+        </div>
+      </div>
+    </template>
+
     <template v-if="mission.isFromApi">
       <hr class="border-gray-200 my-8">
 

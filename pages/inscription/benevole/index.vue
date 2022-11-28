@@ -81,7 +81,7 @@
             <p
               class="pt-10 pb-16 lg:pb-0 leading-10 text-3xl sm:text-4xl font-medium text-white sm:mt-5"
             >
-              Plus de <b class="font-bold">380 000 bénévoles</b> <br class="hidden sm:block">sont
+              Plus de <b class="font-bold">400 000 bénévoles</b> <br class="hidden sm:block">sont
               déjà inscrits.
             </p>
           </div>
@@ -316,7 +316,7 @@
         <h3
           class="text-center leading-8 pb-8 text-gray-900 font-medium text-3xl px-4"
         >
-          Plus de <b class="font-bold">9300 organisations</b> ont déjà rejoint
+          Plus de <b class="font-bold">10 000 organisations</b> ont déjà rejoint
           JeVeuxAider.gouv.fr
         </h3>
         <CarouselLogos />
