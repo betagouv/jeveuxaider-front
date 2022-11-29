@@ -138,17 +138,6 @@
         </NavItem>
 
         <NavItem
-          v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
-          key="banques-alimentaires"
-          href="https://www.jeveuxaider.gouv.fr/engagement/banques-alimentaires/"
-          target="_blank"
-          class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
-        >
-          <span>Collecte Nationale</span>
-          <span>🧡</span>
-        </NavItem>
-
-        <NavItem
           v-if="$store.getters.contextRole == 'admin'"
           to="/admin/contenus/missions-prioritaires"
           :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500 ml-auto flex items-center', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/admin/(settings|contenus|scripts)/*')}]"
@@ -253,17 +242,6 @@
                 >
                   <span>Notre impact</span>
                   <span>🎯</span>
-                </NavItem>
-
-                <NavItem
-                  v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
-                  key="banques-alimentaires"
-                  href="https://www.jeveuxaider.gouv.fr/engagement/banques-alimentaires/"
-                  target="_blank"
-                  :class="['flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600']"
-                >
-                  <span>Collecte Nationale</span>
-                  <span>🧡</span>
                 </NavItem>
               </div>
             </div>

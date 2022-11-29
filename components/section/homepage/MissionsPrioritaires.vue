@@ -24,10 +24,6 @@
           }"
           :slides-count="missions.length"
         >
-          <div key="ukraine" href="" class="card--mission--wrapper">
-            <CardBanquesAlimentaires class="!h-full" />
-          </div>
-
           <nuxt-link
             v-for="mission in missions"
             :key="mission.id"
@@ -45,13 +41,11 @@
 <script>
 import CardMission from '@/components/card/CardMission'
 import Heading from '@/components/dsfr/Heading.vue'
-import CardBanquesAlimentaires from '@/components/card/CardBanquesAlimentaires'
 
 export default {
   components: {
     CardMission,
-    Heading,
-    CardBanquesAlimentaires
+    Heading
   },
   data () {
     return {
