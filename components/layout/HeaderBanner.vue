@@ -12,29 +12,6 @@
       </template>
     </Banner>
 
-    <div v-if="isBenevoleOrNotLogged" class="relative z-30 bg-[#FF6A00] text-white">
-      <div class="container py-3">
-        <div class="flex items-center justify-between flex-wrap">
-          <div class="w-full flex-1 flex items-center">
-            <SpeakerphoneIcon
-              class="h-5 w-5 flex-none"
-            />
-            <p class="ml-3 truncate">
-              <strong>Banques Alimentaires</strong> 10 000 bénévoles recherchés partout en France
-            </p>
-          </div>
-          <div class="flex-shrink-0 w-full sm:w-auto sm:ml-2">
-            <Link
-              icon="RiArrowRightLine"
-              @click.native="onClickBACollecte"
-            >
-              Trouver une collecte
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <Banner v-if="$store.state.settings.general.maintenance_mode_active" icon="RiSettings4Line">
       Le site est en mode maintenance, seuls les admins peuvent y accéder !
       <template #action>
