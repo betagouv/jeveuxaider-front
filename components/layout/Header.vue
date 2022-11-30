@@ -127,7 +127,7 @@
           {{ link.name }}
         </NavItem>
 
-        <NavItem
+        <!-- <NavItem
           key="mesure-impact"
           href="https://www.jeveuxaider.gouv.fr/engagement/mesure-dimpact/"
           target="_blank"
@@ -135,7 +135,7 @@
         >
           <span>Notre impact</span>
           <span>🎯</span>
-        </NavItem>
+        </NavItem> -->
 
         <NavItem
           v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
@@ -245,7 +245,7 @@
                   {{ link.name }}
                 </NavItem>
 
-                <NavItem
+                <!-- <NavItem
                   key="mesure-impact"
                   href="https://www.jeveuxaider.gouv.fr/engagement/mesure-dimpact/"
                   target="_blank"
@@ -253,7 +253,7 @@
                 >
                   <span>Notre impact</span>
                   <span>🎯</span>
-                </NavItem>
+                </NavItem> -->
 
                 <NavItem
                   v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
