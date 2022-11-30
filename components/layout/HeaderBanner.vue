@@ -12,6 +12,33 @@
       </template>
     </Banner>
 
+    <div v-if="isBenevoleOrNotLogged" class="relative z-30 bg-[#F75C5D] text-white">
+      <div class="container py-3">
+        <div class="flex items-center justify-between flex-wrap">
+          <div class="w-full flex-1 flex items-center">
+            <SpeakerphoneIcon
+              class="h-5 w-5 flex-none"
+            />
+            <p class="ml-3 truncate">
+              <strong>Décembre ensemble :</strong> donnons du temps contre l’isolement
+            </p>
+          </div>
+          <div class="flex-shrink-0 w-full sm:w-auto sm:ml-2">
+            <nuxt-link
+              to="/missions-benevolat?tags=Décembre%20ensemble"
+            >
+              <Link
+                icon="RiArrowRightLine"
+                @click.native="onClick"
+              >
+                Trouver une mission
+              </Link>
+            </nuxt-link>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <Banner v-if="$store.state.settings.general.maintenance_mode_active" icon="RiSettings4Line">
       Le site est en mode maintenance, seuls les admins peuvent y accéder !
       <template #action>
@@ -93,12 +120,17 @@ export default {
     }
   },
   methods: {
-    onClickBACollecte () {
+    onClick () {
+      console.log('onClick')
       window.plausible &&
-        window.plausible('Click CTA - Collecte BA - Bandeau', {
+        window.plausible('Click CTA - Decembre Ensemble - Bandeau', {
           props: { isLogged: this.$store.getters.isLogged }
         })
-      this.$router.push('/missions-benevolat?tags=Collecte%20nationale%20des%20Banques%20Alimentaires')
+      this.$cookies.set('utm_medium', 'JVA_CLIC_BANDEAU', {
+        path: '/',
+        secure: true,
+        maxAge: 60 * 60 * 24 * 10 // 10 jours
+      })
     }
   }
 }
