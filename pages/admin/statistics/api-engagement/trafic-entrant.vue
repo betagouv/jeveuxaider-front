@@ -13,6 +13,7 @@
 
     <SectionHeading
       title="Trafic entrant"
+      secondary-title-bottom="Les missions proposées sur JeVeuxAider.gouv.fr sont diffusées sur des plateformes partenaires, en vue d’optimiser leur visibilité."
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
