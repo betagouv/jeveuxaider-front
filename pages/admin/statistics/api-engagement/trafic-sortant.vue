@@ -49,6 +49,7 @@ export default {
   methods: {
     refetch () {
       this.$refs.apiEngagementStatisticSortant.$fetch()
+      this.$refs.apiEngagementStatisticsSortantDetails.$fetch()
     }
   }
 }
