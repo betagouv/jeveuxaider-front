@@ -5,13 +5,14 @@
         :links="[
           { text: 'Tableau de bord', to: '/dashboard' },
           { text: 'Plus de chiffres', to: '/admin/statistics' },
-          { text: 'API Engagement' }
+          { text: 'API Engagement' },
+          { text: 'Trafic sortant' }
         ]"
       />
     </portal>
 
     <SectionHeading
-      title="API Engagement"
+      title="Trafic sortant"
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
@@ -21,20 +22,23 @@
     </SectionHeading>
 
     <div class="space-y-12">
-      <ApiEngagementStatistics ref="apiEngagementStatistics" />
+      <OverviewApiEngagementSortant ref="apiEngagementStatisticSortant" />
+      <OverviewApiEngagementSortantDetails ref="apiEngagementStatisticsSortantDetails" />
     </div>
   </div>
 </template>
 
 <script>
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
-import ApiEngagementStatistics from '@/components/numbers/ApiEngagementStatistics.vue'
+import OverviewApiEngagementSortant from '@/components/numbers/OverviewApiEngagementSortant.vue'
+import OverviewApiEngagementSortantDetails from '@/components/numbers/OverviewApiEngagementSortantDetails.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     FiltersStatistics,
-    ApiEngagementStatistics,
+    OverviewApiEngagementSortant,
+    OverviewApiEngagementSortantDetails,
     Breadcrumb
   },
   layout: 'statistics',
@@ -44,12 +48,8 @@ export default {
   },
   methods: {
     refetch () {
-      this.$refs.apiEngagementStatistics.$fetch()
+      this.$refs.apiEngagementStatisticSortant.$fetch()
     }
   }
 }
 </script>
-
-<style>
-
-</style>
