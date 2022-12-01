@@ -5,20 +5,20 @@
         Button
       </slot>
     </div>
-    <transition
+    <!-- <transition
       enter-active-class="transition duration-3000"
       enter-class="transform opacity-0"
       enter-to-class="transform opacity-100"
       leave-active-class="transition duration-75"
       leave-class="transform opacity-100"
       leave-to-class="transform opacity-0"
-    >
-      <div v-if="isOpen">
-        <slot>
-          Panel
-        </slot>
-      </div>
-    </transition>
+    > -->
+    <div v-show="isOpen">
+      <slot>
+        Panel
+      </slot>
+    </div>
+    <!-- </transition> -->
   </div>
 </template>
 
