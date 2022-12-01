@@ -134,6 +134,13 @@ export default {
         return `${this.$options.filters.label(this.mission.commitment__duration, 'duration')} par ${this.$options.filters.label(this.mission.commitment__time_period, 'time_period')}`
       }
       return this.mission.commitment__duration ? this.$options.filters.label(this.mission.commitment__duration, 'duration') : null
+    },
+    nextDates () {
+      if (this.mission.dates) {
+        return this.mission.dates.filter(date =>
+          this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
+        )
+      }
     }
   }
 }

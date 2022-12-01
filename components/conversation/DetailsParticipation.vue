@@ -22,6 +22,28 @@
 
     <ConversationBenevole v-if="!isBenevole" />
 
+    <section v-if="participation.slots">
+      <div class="text-xl leading-8 font-bold text-gray-900">
+        <template v-if="isBenevole">
+          Vos disponibilités
+        </template>
+        <template v-else>
+          Les disponiblités de {{ participation.profile.first_name }}
+        </template>
+      </div>
+      <div class="mt-4">
+        <div
+          v-for="(date, index) in participation.slots"
+          :key="date.id"
+          :class="[{'border-b-0 pb-0 mb-0': index == participation.slots.length - 1}, 'pb-4 mb-4 border-b']"
+        >
+          <div class="font-semibold text-black first-letter:uppercase">
+            {{ $dayjs(date.date).format('dddd D MMMM') }}<span class="font-normal text-gray-600 text-sm"> : {{ date.slots.map(slot => $options.filters.label(slot, 'slots')).join(', ') }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section>
       <div v-if="participation.mission.domaine" class="mb-4">
         <img
@@ -35,24 +57,6 @@
       <h3 class="text-xl leading-8 font-bold text-gray-900 mb-4">
         {{ participation.mission.name }}
       </h3>
-
-      <div v-if="participation.date" class="mt-2 mb-4">
-        <div class="text-gray-600 font-semibold text-sm">
-          Les disponiblités de {{ participation.profile.first_name }}
-        </div>
-        <div
-          class="flex items-center space-x-3 border p-2 mt-1"
-        >
-          <div class="font-medium text-sm first-letter:uppercase">
-            {{ $dayjs(participation.date).format('dddd D MMMM') }}
-          </div>
-          <div class="flex space-x-3">
-            <div v-for="slot in participation.slots" :key="slot" class="p-2 bg-jva-blue-100 text-jva-blue-500 text-sm">
-              {{ slot | label('slots') }}
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div class="font-light">
         La participation est

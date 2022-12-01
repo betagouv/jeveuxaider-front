@@ -114,9 +114,9 @@
         </Alert>
         <div class="divide-y divide-solid text-sm">
           <div v-for="date in form.dates" :key="date.id" class="py-3 flex items-center justify-between">
-            <div>
+            <div class="mr-2">
               <div class="first-letter:uppercase">
-                {{ date.ariaLabel }}
+                {{ $dayjs(date.id).format('dddd D MMMM YYYY') }}
               </div>
               <div class="text-gray-500 font-medium">
                 {{ date.slots.map(slot => $options.filters.label(slot, 'slots')).join(', ') }}
@@ -255,16 +255,14 @@ export default {
     }
   },
   methods: {
-
     handleAddDate () {
-      const elementIndex = this.form.dates.findIndex(obj => obj.id == this.selectedDate)
-
       const newDate = {
-        ariaLabel: this.$dayjs(this.selectedDate).format('dddd D MMMM YYYY'),
         date: this.$dayjs(this.selectedDate).format(),
         id: this.selectedDate,
-        slots: this.selectedSlot
+        slots: this.$labels.slots.filter(slot => this.selectedSlot.includes(slot.key)).map(slot => slot.key) // On part de $labels.slots pour garder l'ordre
       }
+      const elementIndex = this.form.dates.findIndex(obj => obj.id == this.selectedDate)
+
       if (elementIndex != -1) {
         this.form.dates[elementIndex] = newDate
       } else {

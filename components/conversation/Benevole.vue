@@ -4,7 +4,7 @@
       <div class="w-full h-64"></div>
     </ElContainer> -->
 
-    <section v-if="!loading" ref="container" key="loaded">
+    <section v-if="!loading" ref="container" key="loaded" class="bg-white p-6">
       <h3 class="text-xl leading-8 font-bold text-gray-900 mb-4">
         À propos de {{ profile.full_name }}
       </h3>

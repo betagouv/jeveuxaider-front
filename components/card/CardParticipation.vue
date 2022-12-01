@@ -89,19 +89,18 @@
         </div>
       </div>
       <TextFormatted v-if="participation.conversation && participation.conversation.latest_message" :max-lines="4" :text="participation.conversation.latest_message.content" class="text-gray-600 mt-3" />
-      <div v-if="participation.date" class="mt-2">
-        <div class="text-gray-600 font-semibold text-sm">
-          Les disponiblités de {{ participation.profile.first_name }}
+      <div v-if="participation.slots" class="mt-4">
+        <div class="text-sm font-semibold">
+          Disponibilités :
         </div>
-        <div
-          class="flex items-center space-x-3 border p-2 mt-1"
-        >
-          <div class="font-medium text-sm first-letter:uppercase">
-            {{ $dayjs(participation.date).format('dddd D MMMM') }}
-          </div>
-          <div class="flex space-x-3">
-            <div v-for="slot in participation.slots" :key="slot" class="p-2 bg-jva-blue-100 text-jva-blue-500 text-sm">
-              {{ slot | label('slots') }}
+        <div class="mt-2">
+          <div
+            v-for="(date, index) in participation.slots"
+            :key="date.id"
+            :class="[{'border-b-0 pb-0 mb-0': index == participation.slots.length - 1}, 'pb-2 mb-2 border-b']"
+          >
+            <div class="text-sm text-black first-letter:uppercase">
+              {{ $dayjs(date.date).format('dddd D MMMM') }}<span class="font-normal text-gray-600"> : {{ date.slots.map(slot => $options.filters.label(slot, 'slots')).join(', ') }}</span>
             </div>
           </div>
         </div>
@@ -135,6 +134,11 @@ export default {
     },
     profile () {
       return this.display === 'benevole' ? this.participation.profile : this.participation.mission.responsable
+    },
+    isBenevole () {
+      return (
+        this.participation.profile_id == this.$store.getters.profile.id
+      )
     },
     badgeTypeParticipationSate () {
       switch (this.participation.state) {

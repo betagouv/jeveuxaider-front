@@ -2,71 +2,60 @@
   <div>
     <div class="text-center mb-6">
       <Heading as="div" size="lg" class="mb-2 lg:mb-3">
-        Sélectionner le ou les créneaux de vos disponibilités
+        Renseignez vos prochaines disponibilités
       </Heading>
     </div>
     <div class="mx-auto">
-      <div class="space-y-2">
-        <Disclosure v-for="date in datesPaginated" :key="date.id" class="bg-white border hover:shadow">
-          <template #button="{ isOpen }">
-            <div class="flex items-center justify-between group p-4">
-              <div class="font-bold text-sm first-letter:uppercase">
-                {{ $dayjs(date.id).format('dddd D MMMM') }}
-              </div>
-              <div class="flex">
-                <div v-if="selectedSlots.filter(selectedSlot => selectedSlot.date == date.id).length > 0" class="text-sm font-medium text-jva-green-500 mr-4">
-                  Sélectionnée
-                </div>
-                <ChevronUpIcon v-if="isOpen" class="text-gray-800 group-hover:text-gray-600 h-5 w-5" />
-                <ChevronDownIcon v-else class="text-gray-800 group-hover:text-gray-600 h-5 w-5" />
-              </div>
+      <Disclosure v-for="date in datesPaginated" :key="date.id" class="bg-white border-b hover:shadow">
+        <template #button="{ isOpen }">
+          <div class="flex items-center justify-between group p-4">
+            <div class="text-black text-sm group-hover:font-semibold flex items-center" :class="[{'font-semibold': isOpen}]">
+              <CheckCircleSolidIcon v-if="selectedSlots.filter(selectedSlot => selectedSlot.date == date.id).length > 0" class="text-jva-green-500 mr-2 h-5 w-5" />
+              <span class="first-letter:uppercase">{{ $dayjs(date.id).format('dddd D MMMM') }}</span>
             </div>
-          </template>
-          <div class="border-t p-4 flex space-x-2">
-            <div v-for="slot in date.slots" :key="date.id + slot">
-              <input
-                :id="date.id + slot"
-                v-model="selectedSlots"
-                class="hidden"
-                :name="date.id + slot"
-                type="checkbox"
-                :value="{date: date.id, slot}"
-              >
-              <label
-                class="px-2.5 py-1.5 cursor-pointer text-sm border border-jva-blue-500"
-                :class="[
-                  selectedSlots.filter(selectedSlot => selectedSlot.date == date.id && selectedSlot.slot == slot).length > 0 ?
-                    'bg-jva-blue-500 text-white font-bold' :
-                    'text-jva-blue-500 hover:bg-gray-100'
-                ]"
-                :for="date.id + slot"
-              >{{ slot | label('slots') }}</label>
+            <div class="flex">
+              <MinusIcon v-if="isOpen" class="text-gray-800 group-hover:text-gray-600 h-5 w-5" />
+              <PlusIcon v-else class="text-gray-800 group-hover:text-jva-blue-600 h-5 w-5" />
             </div>
           </div>
-        </Disclosure>
-      </div>
-      <div v-if="pageCount > 1" class="mt-6 grid justify-items-stretch">
-        <div v-if="pageCurrent > 1" class="flex items-center justify-self-start cursor-pointer text-sm text-black hover:underline" @click="handlePreviousPage">
-          <ChevronLeftIcon class="h-4 w-4 mr-3" /> Dates précédentes
+        </template>
+        <div class="px-4 pb-4 flex flex-wrap -mx-1">
+          <div v-for="slot in date.slots" :key="date.id + slot" class="mx-1 mb-2">
+            <input
+              :id="date.id + slot"
+              v-model="selectedSlots"
+              class="hidden"
+              :name="date.id + slot"
+              type="checkbox"
+              :value="{date: date.id, slot}"
+            >
+            <Tag
+              as="label"
+              size="md"
+              context="selectable"
+              :for="date.id + slot"
+              :is-selected="selectedSlots.filter(selectedSlot => selectedSlot.date == date.id && selectedSlot.slot == slot).length > 0"
+            >
+              {{ slot | label('slots') }}
+            </Tag>
+          </div>
         </div>
-        <div v-if="pageCurrent < pageCount" class="flex justify-self-end items-center cursor-pointer text-sm text-black hover:underline" @click="handleNextPage">
-          Dates suivantes <ChevronRightIcon class="h-4 w-4 ml-3" />
+      </Disclosure>
+      <div class="flex mt-6">
+        <div v-if="pageCount > 1" class="flex items-center">
+          <div :class="[pageCurrent > 1 ? 'bg-white cursor-pointer text-black hover:bg-gray-100' : 'bg-gray-200 text-gray-500']" class="border border-r-0 p-2 flex" @click="handlePreviousPage">
+            <ChevronLeftIcon class="h-4 w-4" />
+          </div>
+          <div :class="[pageCurrent < pageCount ? 'bg-white cursor-pointer text-black hover:bg-gray-100' : 'bg-gray-200 text-gray-500']" class="border p-2 flex" @click="handleNextPage">
+            <ChevronRightIcon class="h-4 w-4" />
+          </div>
         </div>
-      </div>
-
-      <div v-if="selectedSlots.length > 0" class="mt-6">
-        <div class="text-jva-green-500 font-bold text-center mb-2">
-          {{ selectedSlots.length }} créneaux sélectionnés
+        <div class="ml-auto font-semibold text-sm text-gray-600">
+          {{ $options.filters.pluralize(selectedSlots.length, 'créneau sélectionné', 'créneaux sélectionnés') }}
+          <Button :disabled="selectedSlots.length == 0" size="lg" class="ml-4 flex items-center" @click.native="handleSubmit">
+            Continuer <ChevronRightIcon class="h-4 w-4 ml-2" />
+          </Button>
         </div>
-        <div class="flex flex-wrap justify-center space-x-2 mb-6">
-          <Badge v-for="slot in [...new Map(selectedSlots.map(item => [item['date'], item])).values()] " :key="slot.date" :no-icon="true" type="new">
-            {{ $dayjs(slot.date).format('D MMM') }}
-          </Badge>
-        </div>
-
-        <Button :disabled="selectedSlots.length == 0" size="lg" class="w-full">
-          Continuer
-        </Button>
       </div>
     </div>
   </div>
@@ -75,14 +64,14 @@
 <script>
 import Heading from '@/components/dsfr/Heading.vue'
 import Button from '@/components/dsfr/Button.vue'
-import Badge from '@/components/dsfr/Badge.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   name: 'SoftGateSelectCreneaux',
   components: {
     Heading,
     Button,
-    Badge
+    Tag
   },
   data () {
     return {
@@ -92,8 +81,16 @@ export default {
     }
   },
   computed: {
+    mission () {
+      return this.$store.state.softGate.selectedMission
+    },
+    nextDates () {
+      return this.mission.dates.filter(date =>
+        this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
+      )
+    },
     pageCount () {
-      return Math.round(this.mission.dates.length / this.pageSize)
+      return Math.ceil(this.nextDates.length / this.pageSize)
     },
     indexStart () {
       return (this.pageCurrent - 1) * this.pageSize
@@ -102,10 +99,7 @@ export default {
       return this.indexStart + this.pageSize
     },
     datesPaginated () {
-      return this.mission.dates.slice(this.indexStart, this.indexEnd)
-    },
-    mission () {
-      return this.$store.state.softGate.selectedMission
+      return this.nextDates.slice(this.indexStart, this.indexEnd)
     }
   },
   methods: {
@@ -120,6 +114,23 @@ export default {
         return
       }
       this.pageCurrent = this.pageCurrent + 1
+    },
+    handleSubmit () {
+      // On groupe les slots dans un tableau par date
+      const selectedSlots = this.selectedSlots.reduce((acc, cur) => {
+        if (!acc.some(item => item.date === cur.date)) {
+          acc.push({ date: cur.date, slots: [] })
+        }
+
+        const found = acc.find(item => item.date === cur.date)
+
+        found.slots.push(cur.slot)
+
+        return acc
+      }, [])
+
+      this.$store.commit('softGate/setSelectedMission', { ...this.mission, selectedSlots })
+      this.$emit('next')
     }
   }
 }
