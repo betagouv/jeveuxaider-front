@@ -12,28 +12,27 @@
       </template>
     </Banner>
 
-    <div v-if="isBenevoleOrNotLogged" class="relative z-30 bg-[#F75C5D] text-white">
+    <div v-if="isBenevoleOrNotLogged" class="relative z-30 bg-[#F75C5D] text-white cursor-pointer" @click="onClick">
       <div class="container py-3">
         <div class="flex items-center justify-between flex-wrap">
           <div class="w-full flex-1 flex items-center">
             <SpeakerphoneIcon
-              class="h-5 w-5 flex-none"
+              class="hidden sm:block h-5 w-5 flex-none"
             />
-            <p class="ml-3 truncate">
+            <p class="ml-3">
               <strong>Décembre ensemble :</strong> donnons du temps contre l’isolement
             </p>
           </div>
-          <div class="flex-shrink-0 w-full sm:w-auto sm:ml-2">
-            <nuxt-link
-              to="/missions-benevolat?tags=Décembre%20ensemble"
+          <div class="flex-shrink-0 ml-4">
+            <Link
+              icon="RiArrowRightLine"
+              class="hidden sm:block"
             >
-              <Link
-                icon="RiArrowRightLine"
-                @click.native="onClick"
-              >
-                Trouver une mission
-              </Link>
-            </nuxt-link>
+              Trouver une mission
+            </Link>
+            <ArrowRightIcon
+              class="sm:hidden h-5 w-5 flex-none"
+            />
           </div>
         </div>
       </div>
@@ -126,11 +125,7 @@ export default {
         window.plausible('Click CTA - Decembre Ensemble - Bandeau', {
           props: { isLogged: this.$store.getters.isLogged }
         })
-      this.$cookies.set('utm_medium', 'JVA_CLIC_BANDEAU', {
-        path: '/',
-        secure: true,
-        maxAge: 60 * 60 * 24 * 10 // 10 jours
-      })
+      window.location = '/missions-benevolat?tags=Décembre%20ensemble&utm_medium=JVA_CLIC_BANDEAU'
     }
   }
 }

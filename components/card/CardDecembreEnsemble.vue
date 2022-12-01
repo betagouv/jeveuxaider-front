@@ -14,7 +14,8 @@
       <!-- <div class="absolute inset-0 bg-[#F27830] opacity-80" /> -->
 
       <div
-        class="relative p-6 sm:py-8 flex flex-col items-center justify-end space-y-4 text-center h-full"
+        class="relative p-6 sm:py-8 flex flex-col items-center justify-end space-y-4 text-center h-full cursor-pointer"
+        @click="onClick"
       >
         <div class="mb-8">
           <div class="text-5xl leading-none mb-3">
@@ -60,11 +61,8 @@ export default {
         window.plausible('Click CTA - Decembre Ensemble - Card', {
           props: { isLogged: this.$store.getters.isLogged }
         })
-      this.$cookies.set('utm_medium', 'JVA_CLIC_CARD', {
-        path: '/',
-        secure: true,
-        maxAge: 60 * 60 * 24 * 10 // 10 jours
-      })
+      console.log('onClick')
+      window.location = '/missions-benevolat?tags=Décembre%20ensemble&utm_medium=JVA_CLIC_CARD'
     }
   }
 }
