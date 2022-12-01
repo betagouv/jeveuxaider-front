@@ -114,7 +114,7 @@
         </Alert>
         <div class="divide-y divide-solid text-sm">
           <div v-for="date in form.dates" :key="date.id" class="py-3 flex items-center justify-between">
-            <div>
+            <div class="mr-2">
               <div class="first-letter:uppercase">
                 {{ date.ariaLabel }}
               </div>
@@ -263,7 +263,7 @@ export default {
         ariaLabel: this.$dayjs(this.selectedDate).format('dddd D MMMM YYYY'),
         date: this.$dayjs(this.selectedDate).format(),
         id: this.selectedDate,
-        slots: this.selectedSlot
+        slots: [...this.selectedSlot]
       }
       if (elementIndex != -1) {
         this.form.dates[elementIndex] = newDate
