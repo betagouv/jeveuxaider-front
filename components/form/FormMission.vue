@@ -66,23 +66,6 @@
             </FormControl>
           </div>
           <FormControl
-            v-if="activities.length"
-            label="Activité"
-            html-for="activity_id"
-          >
-            <Combobox
-              v-model="form.activity_id"
-              :value="form.activity_id"
-              name="activity_id"
-              placeholder="Sélectionner une activité"
-              :options="activities"
-              clearable
-              attribute-key="id"
-              attribute-label="name"
-              :disabled="Boolean(mission.template)"
-            />
-          </FormControl>
-          <FormControl
             label="Publics aidés"
             html-for="publics_beneficiaires"
             :error="errors.publics_beneficiaires"
@@ -128,6 +111,49 @@
               v-model="form.information"
               placeholder="Incitez les bénévoles à candidater ..."
             />
+          </FormControl>
+          <FormControl
+            v-if="activities.length"
+            label="Activité"
+            html-for="activity_id"
+          >
+            <Combobox
+              v-model="form.activity_id"
+              :value="form.activity_id"
+              name="activity_id"
+              placeholder="Sélectionner une activité"
+              :options="activities"
+              clearable
+              attribute-key="id"
+              attribute-label="name"
+              :disabled="Boolean(mission.template)"
+            >
+              <template
+                v-if="activitiesClassifier?.code === 200"
+                #option="{ item, attributeLabel, selectedOption, highlightIndex, index }"
+              >
+                <div class="w-full flex justify-between">
+                  <div>{{ item[attributeLabel] }}</div>
+                  <Tag
+                    size="sm"
+                    class="ml-2 !transition-none"
+                    :class="[
+                      {'!bg-jva-blue-500 !text-white': (selectedOption?.id === item.id || highlightIndex == index)},
+                      {'text-[#161616] bg-[#EEEEEE] group-hover:bg-jva-blue-500 group-hover:text-white': selectedOption?.id !== item.id},
+                    ]"
+                    :custom-theme="true"
+                  >
+                    {{ item.formattedScore }}
+                  </Tag>
+                </div>
+              </template>
+            </Combobox>
+            <FormHelperText class="mt-2 !mb-0">
+              <span>Nous vous suggérons automatiquement une activité adaptée au contenu de votre mission !</span>
+              <span v-if="activitiesClassifier?.code === 200">
+                Astuce : les pourcentages indiquent le niveau de pertinence de la recommandation
+              </span>
+            </FormHelperText>
           </FormControl>
           <FormControl
             label="Mission ouverte également aux"
@@ -549,14 +575,17 @@ import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 import AlgoliaTermsInput from '@/components/section/search/AlgoliaTermsInput'
 import FormMissionParameters from '~/components/form/FormMissionParameters.vue'
+import Tag from '@/components/dsfr/Tag.vue'
+import activitiesClassifierMixin from '@/mixins/activitiesClassifier'
 
 export default {
   components: {
     FormMissionParameters,
     AlgoliaSkillsInput,
-    AlgoliaTermsInput
+    AlgoliaTermsInput,
+    Tag
   },
-  mixins: [inputGeo, FormErrors],
+  mixins: [inputGeo, FormErrors, activitiesClassifierMixin],
   props: {
     mission: {
       type: Object,
@@ -762,7 +791,10 @@ export default {
   fetchOnServer: false,
   async fetch () {
     const { data: activities } = await this.$axios.get('/activities?pagination=999')
-    this.activities = activities.data.filter(item => item.is_published || item.id === this.mission.activity_id)
+    this.activities = activities.data.filter(item => item.is_published || item.id === this.mission.activity_id).sort((a, b) => a.name.localeCompare(b.name, 'fr'))
+    if (!this.mission.template) {
+      this.fetchActivitiesClassifier()
+    }
   },
   computed: {
     structureId () {
