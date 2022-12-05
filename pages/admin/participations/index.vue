@@ -156,6 +156,18 @@
         </Tag>
 
         <Tag
+          :key="`state-encoursmoderation-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[is_state_pending]'] && $route.query['filter[is_state_pending]'] == 'true'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[is_state_pending]', 'true')"
+        >
+          En cours de modération
+        </Tag>
+
+        <!-- <Tag
           :key="`state-encoursvalidation-${$route.fullPath}`"
           as="button"
           size="md"
@@ -213,7 +225,7 @@
           @click.native="changeFilter('filter[state]', 'Refusée')"
         >
           Refusée
-        </Tag>
+        </Tag> -->
       </div>
 
       <BulkOperationActions v-if="bulkOperationIsActive" :operations="operations" @unselectAll="operations = []">

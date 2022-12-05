@@ -50,12 +50,12 @@
       </template>
     </Banner>
 
-    <Banner v-if="isResponsable && nbWaitingParticipations > 0" type="error">
-      Vous avez {{ $options.filters.pluralize(nbWaitingParticipations, 'participation', 'participations') }} en cours de modération. Merci de mettre à jour le statut des candidatures reçues.
+    <Banner v-if="isResponsable && totalPendingParticipationsActions > 0" type="error">
+      Vous avez {{ $options.filters.pluralize(totalPendingParticipationsActions, 'participation', 'participations') }} en cours de modération. Merci de mettre à jour le statut des candidatures reçues.
       <template #action>
         <Link
           icon="RiArrowRightLine"
-          :to="`/admin/participations?filter[state]=En attente de validation&filter[ofResponsable]=${$store.getters.profile.id}`"
+          :to="`/admin/participations?filter[is_state_pending]=true&filter[ofResponsable]=${$store.getters.profile.id}`"
         >
           Modérer les participations
         </Link>
@@ -98,8 +98,14 @@ export default {
     isResponsable () {
       return this.$store.getters.currentRole?.key === 'responsable'
     },
+    totalPendingParticipationsActions () {
+      return this.nbWaitingParticipations + this.nbInProgressParticipations
+    },
     nbWaitingParticipations () {
       return this.userActions?.find(action => action.type === 'participations_waiting_validation')?.value ?? 0
+    },
+    nbInProgressParticipations () {
+      return this.userActions?.find(action => action.type === 'participations_in_progress')?.value ?? 0
     },
     isBenevoleOrNotLogged () {
       if (!this.$store.getters.isLogged) {
