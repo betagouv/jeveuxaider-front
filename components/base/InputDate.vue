@@ -1,6 +1,14 @@
 <template>
   <client-only>
-    <v-date-picker v-model="date" :is-required="required" :model-config="modelConfig">
+    <v-date-picker
+      ref="datePicker"
+      v-model="date"
+      :is-required="required"
+      :model-config="modelConfig"
+      :min-date="minDate"
+      :attributes="attributes"
+      @popoverWillShow="$emit('popoverWillShow', $refs.datePicker)"
+    >
       <template #default="data">
         <div class="flex items-center relative w-full">
           <input
@@ -32,6 +40,18 @@ export default {
     required: {
       type: Boolean,
       default: false
+    },
+    minDate: {
+      type: Date,
+      default: null
+    },
+    attributes: {
+      type: Array,
+      default: null
+    },
+    popoverWillShow: {
+      type: Function,
+      default: () => {}
     }
   },
   data () {
