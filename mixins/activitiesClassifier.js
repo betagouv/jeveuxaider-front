@@ -9,7 +9,7 @@ export default {
   },
   computed: {
     activitiesClassifierDescription () {
-      return [this.form.objectif, this.form.description].join(' ')
+      return this.form.objectif || this.form.description ? [this.form.objectif, this.form.description].join(' ') : null
     }
   },
   watch: {
