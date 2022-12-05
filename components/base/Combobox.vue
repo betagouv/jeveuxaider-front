@@ -33,12 +33,12 @@
         />
         <XIcon
           v-else-if="selectedOption && !disabled"
-          class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+          class="h-5 text-gray-400 hover:text-jva-blue-500 cursor-pointer"
           @click="reset()"
         />
         <SelectorIcon
           v-else
-          class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+          class="h-5 text-gray-400"
         />
       </div>
     </div>
