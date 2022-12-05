@@ -127,6 +127,7 @@
               attribute-key="id"
               attribute-label="name"
               :disabled="Boolean(mission.template)"
+              :loading="activitiesClassifierLoading"
             >
               <template
                 v-if="activitiesClassifier?.code === 200"
