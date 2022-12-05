@@ -149,8 +149,10 @@
               </template>
             </Combobox>
             <FormHelperText class="mt-2 !mb-0">
-              <span>Veuillez sélectioner le type d'activité principal.</span>
-              <span v-if="activitiesClassifier?.code === 200"> Le pourcentage indique le degré de pertinence en fonction des champs déjà remplis.</span>
+              <span>Nous vous suggérons automatiquement une activité adaptée au contenu de votre mission !</span>
+              <span v-if="activitiesClassifier?.code === 200">
+                Astuce : les pourcentages indiquent le niveau de pertinence de la recommandation
+              </span>
             </FormHelperText>
           </FormControl>
           <FormControl
