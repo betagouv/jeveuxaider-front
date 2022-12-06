@@ -46,6 +46,7 @@ export default {
       if (activitiesClassifier.code === 503) {
         await new Promise(resolve => setTimeout(resolve, 15000))
         this.fetchActivitiesClassifier()
+        return
       }
 
       if (activitiesClassifier.code === 200) {
