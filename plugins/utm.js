@@ -1,10 +1,8 @@
 export default function ({ route, app }) {
-  console.log('debug utm', document?.domain)
-  // secure true does not work on http://localhost and safari
   const cookiesOptions = {
     path: '/',
-    secure: true,
-    // secure: document?.domain !== 'localhost',
+    // secure true does not work on http://localhost and safari
+    secure: document?.domain !== 'localhost',
     maxAge: 60 * 60 * 24 * 10 // 10 jours
     // domain: '.jeveuxaider.gouv.fr'
   }

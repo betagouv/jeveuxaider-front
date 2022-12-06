@@ -1,7 +1,10 @@
 /* eslint-disable */
 
 export default ({ app, $config }) => {
-  console.log(document?.domain)
+  // Bypass on local
+  if (document?.domain === 'localhost') {
+    return
+  }
 
   document.addEventListener('DOMContentLoaded', function () {
 
