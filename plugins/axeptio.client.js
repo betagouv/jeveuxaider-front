@@ -1,6 +1,8 @@
 /* eslint-disable */
 
 export default ({ app, $config }) => {
+  console.log(document?.domain)
+
   document.addEventListener('DOMContentLoaded', function () {
 
     let cookieDomains = [
