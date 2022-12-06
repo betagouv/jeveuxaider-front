@@ -37,10 +37,12 @@ export const actions = {
       })
       .then(async (response) => {
         // secure true does not work on http://localhost and safari
+        console.log('debug login', document?.domain)
         await this.$cookies.set('access-token', response?.data?.access_token, {
           maxAge: response?.data?.expires_in,
           path: '/',
           secure: true
+          // secure: document?.domain !== 'localhost'
         })
         await this.$gtm.push({ event: 'user-login' })
         await dispatch('fetchUser')
@@ -106,10 +108,13 @@ export const actions = {
   },
   async impersonate ({ commit, dispatch }, userId) {
     const { data } = await this.$axios.post(`/users/${userId}/impersonate`)
+    console.log('debug impersonate', document?.domain)
+    // secure true does not work on http://localhost and safari
     this.$cookies.set('access-token-impersonate', data.accessToken, {
       maxAge: 3600, // 1 heure
       path: '/',
       secure: true
+      // secure: document?.domain !== 'localhost'
     })
     this.$cookies.set('token-id-impersonate', data.token.id, {
       maxAge: 3600, // 1 heure
