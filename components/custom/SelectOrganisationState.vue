@@ -46,12 +46,16 @@ export default {
     handleSelect ($event) {
       this.titleAlert = 'Changement de statut'
 
+      if ($event.key == 'Brouillon') {
+        this.textAlert = 'Vous êtes sur le point de passer l\'organisation au statut <b>brouillon</b>.'
+      }
+
       if ($event.key == 'En attente de validation') {
-        this.textAlert = 'Vous êtes sur le point de passer la mission au statut <b>en attente de validation</b>.'
+        this.textAlert = 'Vous êtes sur le point de passer l\'organisation au statut <b>en attente de validation</b>.'
       }
 
       if ($event.key == 'En cours de traitement') {
-        this.textAlert = 'Vous êtes sur le point de passer la mission au statut <b>en cours de traitement</b>.'
+        this.textAlert = 'Vous êtes sur le point de passer l\'organisation au statut <b>en cours de traitement</b>.'
       }
 
       if ($event.key == 'Validée') {
