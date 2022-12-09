@@ -3,7 +3,7 @@
     <button class="group flex justify-between items-center cursor-pointer w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
       <div class="flex space-x-2 items-center text-gray-900 truncate">
         <RiMapPin2Fill class="h-4 w-4 flex-none transition-opacity opacity-25 group-hover:opacity-100" />
-        <div v-if="ipLatLng" class="truncate">
+        <div v-if="!$route.query.city && (ipLatLng || $store.state.algoliaSearch.navigatorGeolocation)" class="truncate">
           Autour de moi
         </div>
         <div v-else class="font-bold truncate">

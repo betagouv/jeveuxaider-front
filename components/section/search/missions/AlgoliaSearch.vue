@@ -164,6 +164,11 @@ export default {
       this.$store.commit('algoliaSearch/setAroundLatLng', this.initialAroundLatLng)
     }
   },
+  mounted () {
+    if (navigator.geolocation && !this.$store.state.algoliaSearch.aroundLatLng && !this.$store.state.algoliaSearch.navigatorGeolocation) {
+      navigator.geolocation.getCurrentPosition(this.onNavigatorGeolocation)
+    }
+  },
   beforeDestroy () {
     this.$store.dispatch('algoliaSearch/reset')
   },

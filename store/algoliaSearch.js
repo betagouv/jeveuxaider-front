@@ -1,3 +1,4 @@
+
 export const state = () => ({
   setIndexKey: null,
   indexName: null,
@@ -5,7 +6,8 @@ export const state = () => ({
   facetsResults: [],
   initialFilters: '',
   hitsPerPage: null,
-  aroundLatLng: null
+  aroundLatLng: null,
+  navigatorGeolocation: null
 })
 
 export const mutations = {
@@ -15,7 +17,8 @@ export const mutations = {
   setFacetsResults: (state, payload) => { state.facetsResults = payload },
   setInitialFilters: (state, payload) => { state.initialFilters = payload },
   setHitsPerPage: (state, payload) => { state.hitsPerPage = payload },
-  setAroundLatLng: (state, payload) => { state.aroundLatLng = payload }
+  setAroundLatLng: (state, payload) => { state.aroundLatLng = payload },
+  setNavigatorGeolocation: (state, payload) => { state.navigatorGeolocation = payload }
 }
 
 export const actions = {
