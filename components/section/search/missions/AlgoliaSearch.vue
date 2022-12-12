@@ -167,7 +167,7 @@ export default {
   mounted () {
     if (navigator.geolocation && !this.$store.state.algoliaSearch.aroundLatLng && !this.$store.state.algoliaSearch.navigatorGeolocation) {
       this.$store.commit('algoliaSearch/setLoadingNavigatorGeolocation', true)
-      navigator.geolocation.getCurrentPosition(this.onNavigatorGeolocation)
+      navigator.geolocation.getCurrentPosition(this.onNavigatorGeolocation, this.onNavigatorGeolocationError)
     }
   },
   beforeDestroy () {
