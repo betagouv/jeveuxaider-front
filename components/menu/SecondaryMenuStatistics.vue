@@ -48,50 +48,6 @@ export default {
   mixins: [MixinSecondaryMenu],
   data () {
     return {
-      // items: [
-      //   {
-      //     key: 'statistics',
-      //     label: 'Statistiques',
-      //     childrens: [
-      //       { label: 'Vue d\'ensemble', to: '/admin/statistics' },
-      //       { label: 'Indicateurs clés', to: '/admin/statistics/indicateurs-cles' },
-      //       { label: 'Participations', to: '/admin/statistics/participations' },
-      //       { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
-      //       { label: 'Organisations', to: '/admin/statistics/organisations' },
-      //       { label: 'Missions', to: '/admin/statistics/missions' },
-      //       { label: 'Places', to: '/admin/statistics/places' },
-      //       ['admin'].includes(
-      //         this.$store.getters.contextRole
-      //       )
-      //         ? { label: 'API Engagement', to: '/admin/statistics/api-engagement' }
-      //         : null
-      //     ]
-      //   },
-      //   ['admin'].includes(
-      //     this.$store.getters.contextRole
-      //   )
-      //     ? {
-      //         key: 'actions',
-      //         label: 'Actions en attente',
-      //         childrens: [
-      //           { label: 'Organisations', to: '/admin/statistics/organisations/participations-a-valider' },
-      //           { label: 'Départements', to: '/admin/statistics/departements/organisations-a-valider' }
-      //         ]
-      //       }
-      //     : null,
-      //   ['admin'].includes(
-      //     this.$store.getters.contextRole
-      //   )
-      //     ? {
-      //         key: 'services',
-      //         label: 'Services tiers',
-      //         childrens: [
-      //           { label: 'Metabase', href: 'https://reserve-civique-metabase.osc-secnum-fr1.scalingo.io/' },
-      //           { label: 'Plausible', href: this.$config.plausible.shared_link }
-      //         ]
-      //       }
-      //     : null
-      // ]
     }
   },
   computed: {
@@ -110,6 +66,14 @@ export default {
               { label: 'Missions', to: '/admin/statistics/missions' },
               { label: 'Places', to: '/admin/statistics/places' },
               { label: 'API Engagement', to: '/admin/statistics/api-engagement' }
+            ]
+          },
+          {
+            key: 'api',
+            label: 'API Engagement',
+            childrens: [
+              { label: 'Trafic entrant', to: '/admin/statistics/api-engagement/trafic-entrant' },
+              { label: 'Trafic sortant', to: '/admin/statistics/api-engagement/trafic-sortant' }
             ]
           },
           {

@@ -76,6 +76,8 @@ export default {
 
       this.$store.commit('algoliaSearch/setResults', results[0])
       this.$store.commit('algoliaSearch/setFacetsResults', results.slice(1))
+
+      // console.log('SEARCH')
     },
     async searchForFacetValues (facetName, facetQuery) {
       return await this.$algolia[this.$store.state.algoliaSearch.indexKey].searchForFacetValues(facetName, facetQuery, {
@@ -118,6 +120,12 @@ export default {
     },
     isActiveFilter (name, value) {
       return this.$route.query[name] && this.$route.query[name].split('|').includes(value)
+    },
+    async onNavigatorGeolocation (data) {
+      // console.log('onNavigatorGeolocation', data)
+      this.$store.commit('algoliaSearch/setNavigatorGeolocation', data)
+      await this.search()
+      this.$store.commit('algoliaSearch/setLoadingNavigatorGeolocation', false)
     }
   }
 }

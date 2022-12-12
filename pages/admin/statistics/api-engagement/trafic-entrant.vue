@@ -5,13 +5,15 @@
         :links="[
           { text: 'Tableau de bord', to: '/dashboard' },
           { text: 'Plus de chiffres', to: '/admin/statistics' },
-          { text: 'API Engagement' }
+          { text: 'API Engagement' },
+          { text: 'Trafic entrant' }
         ]"
       />
     </portal>
 
     <SectionHeading
-      title="API Engagement"
+      title="Trafic entrant"
+      secondary-title-bottom="Les missions proposées sur JeVeuxAider.gouv.fr sont diffusées sur des plateformes partenaires, en vue d’optimiser leur visibilité."
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
@@ -21,20 +23,23 @@
     </SectionHeading>
 
     <div class="space-y-12">
-      <ApiEngagementStatistics ref="apiEngagementStatistics" />
+      <OverviewApiEngagementEntrant ref="apiEngagementStatisticsEntrant" />
+      <OverviewApiEngagementEntrantDetails ref="apiEngagementStatisticsEntrantDetails" />
     </div>
   </div>
 </template>
 
 <script>
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
-import ApiEngagementStatistics from '@/components/numbers/ApiEngagementStatistics.vue'
+import OverviewApiEngagementEntrant from '@/components/numbers/OverviewApiEngagementEntrant.vue'
+import OverviewApiEngagementEntrantDetails from '@/components/numbers/OverviewApiEngagementEntrantDetails.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     FiltersStatistics,
-    ApiEngagementStatistics,
+    OverviewApiEngagementEntrant,
+    OverviewApiEngagementEntrantDetails,
     Breadcrumb
   },
   layout: 'statistics',
@@ -44,12 +49,9 @@ export default {
   },
   methods: {
     refetch () {
-      this.$refs.apiEngagementStatistics.$fetch()
+      this.$refs.apiEngagementStatisticsEntrant.$fetch()
+      this.$refs.apiEngagementStatisticsEntrantDetails.$fetch()
     }
   }
 }
 </script>
-
-<style>
-
-</style>

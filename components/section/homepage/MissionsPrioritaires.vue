@@ -24,8 +24,8 @@
           }"
           :slides-count="missions.length"
         >
-          <div key="ukraine" href="" class="card--mission--wrapper">
-            <CardBanquesAlimentaires class="!h-full" />
+          <div key="decembre" href="" class="card--mission--wrapper">
+            <CardDecembreEnsemble class="!h-full" />
           </div>
 
           <nuxt-link
@@ -44,14 +44,14 @@
 
 <script>
 import CardMission from '@/components/card/CardMission'
+import CardDecembreEnsemble from '@/components/card/CardDecembreEnsemble'
 import Heading from '@/components/dsfr/Heading.vue'
-import CardBanquesAlimentaires from '@/components/card/CardBanquesAlimentaires'
 
 export default {
   components: {
     CardMission,
-    Heading,
-    CardBanquesAlimentaires
+    CardDecembreEnsemble,
+    Heading
   },
   data () {
     return {

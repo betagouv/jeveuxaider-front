@@ -86,13 +86,13 @@ export default {
         {
           rel: 'canonical',
           href: 'https://www.jeveuxaider.gouv.fr/'
-        },
-        {
-          rel: 'preload',
-          as: 'image',
-          href: '/images/banner_mobile.jpg',
-          imagesrcset: '/images/homepage/banner_mobile.webp, /images/homepage/banner_mobile.jpg, /images/homepage/banner_mobile@2x.webp 2x, /images/homepage/banner_mobile@2x.jpg  2x'
         }
+        // {
+        //   rel: 'preload',
+        //   as: 'image',
+        //   href: '/images/banner_mobile.jpg',
+        //   imagesrcset: '/images/homepage/banner_mobile.webp, /images/homepage/banner_mobile.jpg, /images/homepage/banner_mobile@2x.webp 2x, /images/homepage/banner_mobile@2x.jpg 2x'
+        // }
       ],
       meta: [
         {

@@ -151,6 +151,9 @@ export default {
       if (['Désinscrite', 'Signalée', 'Brouillon'].includes(structure.state)) {
         return error({ statusCode: 403 })
       }
+      if (!store.state.auth.user?.profile?.mobile) {
+        return error({ statusCode: 403 })
+      }
     }
 
     return {

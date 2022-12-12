@@ -127,7 +127,7 @@
           {{ link.name }}
         </NavItem>
 
-        <NavItem
+        <!-- <NavItem
           key="mesure-impact"
           href="https://www.jeveuxaider.gouv.fr/engagement/mesure-dimpact/"
           target="_blank"
@@ -135,17 +135,17 @@
         >
           <span>Notre impact</span>
           <span>🎯</span>
-        </NavItem>
+        </NavItem> -->
 
         <NavItem
           v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
-          key="banques-alimentaires"
-          href="https://www.jeveuxaider.gouv.fr/engagement/banques-alimentaires/"
+          key="decembre-ensemble"
+          href="https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/"
           target="_blank"
           class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
         >
-          <span>Collecte Nationale</span>
-          <span>🧡</span>
+          <span>Décembre ensemble</span>
+          <span>❄️</span>
         </NavItem>
 
         <NavItem
@@ -245,7 +245,7 @@
                   {{ link.name }}
                 </NavItem>
 
-                <NavItem
+                <!-- <NavItem
                   key="mesure-impact"
                   href="https://www.jeveuxaider.gouv.fr/engagement/mesure-dimpact/"
                   target="_blank"
@@ -253,17 +253,17 @@
                 >
                   <span>Notre impact</span>
                   <span>🎯</span>
-                </NavItem>
+                </NavItem> -->
 
                 <NavItem
                   v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
-                  key="banques-alimentaires"
-                  href="https://www.jeveuxaider.gouv.fr/engagement/banques-alimentaires/"
+                  key="decembre-ensemble"
+                  href="https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/"
                   target="_blank"
                   :class="['flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600']"
                 >
-                  <span>Collecte Nationale</span>
-                  <span>🧡</span>
+                  <span>Décembre ensemble</span>
+                  <span>❄️</span>
                 </NavItem>
               </div>
             </div>

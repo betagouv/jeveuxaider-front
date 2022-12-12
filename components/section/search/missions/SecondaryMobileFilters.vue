@@ -21,7 +21,7 @@
         :icon-fill-current="false"
         @click.native="isSearchMissionsLocalisationOpen = true"
       >
-        <div v-if="$store.state.algoliaSearch.results.aroundLatLng">
+        <div v-if="$store.state.algoliaSearch.results.aroundLatLng || $store.state.algoliaSearch.navigatorGeolocation">
           Autour de moi
         </div>
         <div v-else class="truncate">
