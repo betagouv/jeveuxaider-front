@@ -10,7 +10,12 @@
           {{ $route.query.city }}
         </div>
       </div>
-      <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900 flex-none" />
+
+      <RiLoader5Line
+        v-if="$store.state.algoliaSearch.loadingNavigatorGeolocation"
+        class="animate-spin h-5 w-5 text-gray-400 fill-current"
+      />
+      <ChevronDownIcon v-else class="text-gray-500 h-4 w-4 group-hover:text-gray-900 flex-none" />
     </button>
 
     <transition name="fade-in">

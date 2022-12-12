@@ -7,7 +7,8 @@ export const state = () => ({
   initialFilters: '',
   hitsPerPage: null,
   aroundLatLng: null,
-  navigatorGeolocation: null
+  navigatorGeolocation: null,
+  loadingNavigatorGeolocation: false
 })
 
 export const mutations = {
@@ -18,7 +19,8 @@ export const mutations = {
   setInitialFilters: (state, payload) => { state.initialFilters = payload },
   setHitsPerPage: (state, payload) => { state.hitsPerPage = payload },
   setAroundLatLng: (state, payload) => { state.aroundLatLng = payload },
-  setNavigatorGeolocation: (state, payload) => { state.navigatorGeolocation = payload }
+  setNavigatorGeolocation: (state, payload) => { state.navigatorGeolocation = payload },
+  setLoadingNavigatorGeolocation: (state, payload) => { state.loadingNavigatorGeolocation = payload }
 }
 
 export const actions = {
