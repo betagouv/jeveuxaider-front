@@ -7,7 +7,13 @@
         </Heading>
         <div class="space-y-10">
           <Alert>
-            Consultez <a class="font-semibold underline" href="https://reserve-civique.crisp.help/fr/article/comment-bien-rediger-une-mission-1dizodt/" target="_blank">cet article</a> <ExternalLinkIcon class="h-3 w-3 inline" /> pour découvrir nos astuces pour rédiger une mission impactante.
+            Consultez <DsfrLink
+              to="https://reserve-civique.crisp.help/fr/article/comment-bien-rediger-une-mission-1dizodt/"
+              :is-external="true"
+              :icon-size="14"
+            >
+              cet article
+            </DsfrLink> pour découvrir nos astuces pour rédiger une mission impactante.
           </Alert>
           <FormControl
             html-for="name"
@@ -127,6 +133,7 @@
               attribute-key="id"
               attribute-label="name"
               :disabled="Boolean(mission.template)"
+              :loading="activitiesClassifierLoading"
             >
               <template
                 v-if="activitiesClassifier?.code === 200"
@@ -577,13 +584,15 @@ import AlgoliaTermsInput from '@/components/section/search/AlgoliaTermsInput'
 import FormMissionParameters from '~/components/form/FormMissionParameters.vue'
 import Tag from '@/components/dsfr/Tag.vue'
 import activitiesClassifierMixin from '@/mixins/activitiesClassifier'
+import DsfrLink from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
     FormMissionParameters,
     AlgoliaSkillsInput,
     AlgoliaTermsInput,
-    Tag
+    Tag,
+    DsfrLink
   },
   mixins: [inputGeo, FormErrors, activitiesClassifierMixin],
   props: {

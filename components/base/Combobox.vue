@@ -26,15 +26,19 @@
         @keydown="onKeydown"
         @click="!disabled ? showOptions = true : null"
       >
-      <div class="absolute right-3" :class="{'pointer-events-none': !selectedOption || disabled}">
+      <div class="absolute right-3" :class="{'pointer-events-none': !selectedOption || disabled || loading}">
+        <RiLoader5Line
+          v-if="loading"
+          class="animate-spin h-5 w-5 text-gray-400 fill-current"
+        />
         <XIcon
-          v-if="selectedOption && !disabled"
-          class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+          v-else-if="selectedOption && !disabled"
+          class="h-5 text-gray-400 hover:text-jva-blue-500 cursor-pointer"
           @click="reset()"
         />
         <SelectorIcon
           v-else
-          class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+          class="h-5 text-gray-400"
         />
       </div>
     </div>
@@ -93,7 +97,8 @@ export default {
     attributeLabel: { type: String, default: 'label' },
     variant: { type: String, default: null }, // transparent
     clearable: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    loading: { type: Boolean, default: false }
   },
   data () {
     return {

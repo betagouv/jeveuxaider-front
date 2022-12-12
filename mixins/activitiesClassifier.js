@@ -3,13 +3,22 @@ import { debounce } from 'lodash'
 export default {
   data () {
     return {
-      activitiesClassifier: null
-
+      activitiesClassifier: null,
+      activitiesClassifierLoading: false
     }
   },
   computed: {
     activitiesClassifierDescription () {
-      return this.form.objectif || this.form.description ? [this.form.objectif, this.form.description].join(' ') : null
+      let description = [this.form.objectif, this.form.description]
+      if (this.form.template) {
+        description = [this.form.template.title, ...description]
+      } else {
+        description = [this.form.name, ...description]
+      }
+      if (description.some(item => item)) {
+        return description.join(' ').trim()
+      }
+      return null
     }
   },
   watch: {
@@ -18,7 +27,7 @@ export default {
       this.timeout?.cancel()
       this.timeout = debounce(() => {
         this.fetchActivitiesClassifier()
-      }, 5000)
+      }, 3000)
       this.timeout()
     }
   },
@@ -28,6 +37,7 @@ export default {
         return
       }
 
+      this.activitiesClassifierLoading = true
       const { data: activitiesClassifier } = await this.$axios.post(
         '/activity-classifier', { description: this.activitiesClassifierDescription }
       )
@@ -36,6 +46,7 @@ export default {
       if (activitiesClassifier.code === 503) {
         await new Promise(resolve => setTimeout(resolve, 15000))
         this.fetchActivitiesClassifier()
+        return
       }
 
       if (activitiesClassifier.code === 200) {
@@ -46,6 +57,8 @@ export default {
         }).sort((a, b) => a.score > b.score ? -1 : 1)
         this.activitiesClassifier = activitiesClassifier
       }
+
+      this.activitiesClassifierLoading = false
     }
   }
 }

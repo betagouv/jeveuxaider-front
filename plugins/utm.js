@@ -1,7 +1,8 @@
 export default function ({ route, app }) {
   const cookiesOptions = {
     path: '/',
-    secure: true,
+    // secure true does not work on http://localhost and safari
+    secure: document?.domain !== 'localhost',
     maxAge: 60 * 60 * 24 * 10 // 10 jours
     // domain: '.jeveuxaider.gouv.fr'
   }
