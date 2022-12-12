@@ -126,6 +126,10 @@ export default {
       this.$store.commit('algoliaSearch/setNavigatorGeolocation', data)
       await this.search()
       this.$store.commit('algoliaSearch/setLoadingNavigatorGeolocation', false)
+    },
+    onNavigatorGeolocationError (data) {
+      // console.log('ERROR', data)
+      this.$store.commit('algoliaSearch/setLoadingNavigatorGeolocation', false)
     }
   }
 }
