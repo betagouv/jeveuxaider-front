@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen flex flex-col justify-center">
+  <div class="flex flex-col justify-center">
     <div class="py-12 px-4 relative w-full lg:inset-y-0 text-center z-10">
       <div class="flex-shrink-0 flex justify-center mb-12">
         <nuxt-link to="/">
@@ -51,7 +51,6 @@
               variant="green"
               full
               :loading="loading"
-              @click="onSubmit"
             >
               Connexion
             </Button>
