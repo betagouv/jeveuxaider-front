@@ -17,7 +17,7 @@ export default {
         this.emailableResponse = response
       }
 
-      return this.emailableResponse.code !== 200 ? true : this.emailableResponse.content.state === 'deliverable'
+      return this.emailableResponse.code !== 200 ? true : this.emailableResponse.content.state !== 'undeliverable'
     }
   }
 }
