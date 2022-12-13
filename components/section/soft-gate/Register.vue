@@ -44,6 +44,7 @@
         >
           <Input
             v-model="form.email"
+            type="email"
             name="email"
             placeholder="jean.dupont@gmail.com"
             @blur="validate('email')"
@@ -168,7 +169,9 @@
           <span>En m'inscrivant j'accepte la</span>
           <Link
             to="/politique-de-confidentialite"
-            is-external="true"
+            :is-external="true"
+            :icon-size="12"
+            icon-class="mb-[.5px]"
           >
             politique de confidentialité
           </Link>
@@ -176,7 +179,9 @@
           <span>et la</span>
           <Link
             to="/charte-reserve-civique"
-            is-external="true"
+            :is-external="true"
+            :icon-size="12"
+            icon-class="mb-[.5px]"
           >
             charte
           </Link>

@@ -13,6 +13,7 @@
         <FormControl label="Email" html-for="email" required :error="errors.email">
           <Input
             v-model="form.email"
+            type="email"
             name="email"
             placeholder="Entrez votre email"
             @blur="validate('email')"

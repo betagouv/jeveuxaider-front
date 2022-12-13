@@ -32,6 +32,7 @@
               <Input
                 v-model="form.email"
                 name="email"
+                type="email"
                 placeholder="Entrez votre email"
                 @blur="validate('email')"
               />
@@ -51,6 +52,7 @@
               variant="green"
               full
               :loading="loading"
+              @click.native.prevent="onSubmit"
             >
               Connexion
             </Button>

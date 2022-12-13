@@ -72,6 +72,7 @@
             >
               <Input
                 v-model="form.email"
+                type="email"
                 name="email"
                 placeholder="jean.dupont@gmail.com"
                 @blur="validate('email')"

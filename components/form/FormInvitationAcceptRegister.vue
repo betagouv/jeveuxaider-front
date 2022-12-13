@@ -53,6 +53,7 @@
       variant="green"
       full
       :loading="loading"
+      @click.native.prevent="onSubmit"
     >
       J'accepte l'invitation
     </Button>

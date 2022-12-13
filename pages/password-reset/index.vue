@@ -37,6 +37,7 @@
                 <Input
                   v-model="form.email"
                   name="email"
+                  type="email"
                   placeholder="Entrez votre email"
                   @blur="validate('email')"
                 />
