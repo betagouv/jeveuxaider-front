@@ -185,7 +185,7 @@
         leave-to-class="opacity-0 scale-95"
       >
         <div v-show="showMobileMenu" v-scroll-lock="showMobileMenu" class="h-screen overflow-y-auto z-30 absolute top-0 inset-x-0 mx-auto w-full transition transform origin-top">
-          <div class="bg-white h-full flex flex-col gap-3 justify-between">
+          <div class="bg-white h-full flex flex-col gap-3">
             <div class="p-4 bg-white">
               <div class="flex items-center justify-between pl-4 pb-6">
                 <div>
@@ -256,9 +256,8 @@
                   <span>❄️</span>
                 </NavItem>
               </div>
-            </div>
 
-            <div class="bg-jva-blue-500 text-white p-4 pb-32">
+              <div class="border-t my-2" />
               <NavItem
                 v-for="link in mobileLoggedNavigation"
                 :key="link.name"
@@ -266,7 +265,7 @@
                 :to="link.to"
                 :target="link.target"
                 :click="link.click"
-                :class="['block rounded-md px-3 py-2 text-base text-cool-gray-100', {'bg-jva-blue-600 font-medium': link.isActive}]"
+                :class="['block rounded-md px-3 py-2 text-base text-cool-gray-600', {'!text-jva-blue-500 bg-gray-50 font-medium': link.isActive}]"
               >
                 {{ link.name }}
               </NavItem>
