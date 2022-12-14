@@ -56,7 +56,8 @@ export default {
         this.$cookies.set('access-token', response.data.accessToken, {
           maxAge: 3600 * 24 * 365,
           path: '/',
-          secure: true
+          // secure true does not work on http://localhost and safari
+          secure: document?.domain !== 'localhost'
         })
         await this.$gtm.push({ event: 'user-login' })
         this.$store.dispatch('auth/fetchUser').then(() => {

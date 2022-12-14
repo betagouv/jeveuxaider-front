@@ -3,14 +3,19 @@
     <button class="group flex justify-between items-center cursor-pointer w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
       <div class="flex space-x-2 items-center text-gray-900 truncate">
         <RiMapPin2Fill class="h-4 w-4 flex-none transition-opacity opacity-25 group-hover:opacity-100" />
-        <div v-if="ipLatLng" class="truncate">
+        <div v-if="!$route.query.city && (ipLatLng || $store.state.algoliaSearch.navigatorGeolocation)" class="truncate">
           Autour de moi
         </div>
         <div v-else class="font-bold truncate">
           {{ $route.query.city }}
         </div>
       </div>
-      <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900 flex-none" />
+
+      <RiLoader5Line
+        v-if="$store.state.algoliaSearch.loadingNavigatorGeolocation"
+        class="animate-spin h-5 w-5 text-gray-400 fill-current"
+      />
+      <ChevronDownIcon v-else class="text-gray-500 h-4 w-4 group-hover:text-gray-900 flex-none" />
     </button>
 
     <transition name="fade-in">

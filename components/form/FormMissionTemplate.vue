@@ -100,6 +100,7 @@
                 clearable
                 attribute-key="id"
                 attribute-label="name"
+                :loading="activitiesClassifierLoading"
               >
                 <template
                   v-if="activitiesClassifier?.code === 200"

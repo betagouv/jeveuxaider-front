@@ -13,13 +13,21 @@ export default {
     aroundLatLng () {
       if (this.$store.state.algoliaSearch.aroundLatLng) {
         return this.$store.state.algoliaSearch.aroundLatLng
-      } else {
-        return this.$route.query.aroundLatLng || ''
       }
+
+      if (this.$route.query.aroundLatLng) {
+        return this.$route.query.aroundLatLng
+      }
+
+      if (this.$store.state.algoliaSearch.navigatorGeolocation) {
+        return `${this.$store.state.algoliaSearch.navigatorGeolocation.coords.latitude}, ${this.$store.state.algoliaSearch.navigatorGeolocation.coords.longitude}`
+      }
+
+      return ''
     },
     searchParameters () {
       return {
-        aroundLatLngViaIP: this.$route.query.type != 'Mission à distance' && !this.$route.query.aroundLatLng,
+        aroundLatLngViaIP: this.$route.query.type != 'Mission à distance' && !this.aroundLatLng,
         aroundLatLng: this.aroundLatLng,
         aroundRadius: this.$route.query.aroundLatLng ? 35000 : 'all',
         query: this.$route.query.search || '',
@@ -40,7 +48,7 @@ export default {
         })
       })
 
-      if (!this.$route.query.type && this.$route.name === 'missions-benevolat') {
+      if (!this.$route.query.type && this.$route.name != 'activites-slug') {
         activeFacets.push(['type:Mission en présentiel'])
       }
 

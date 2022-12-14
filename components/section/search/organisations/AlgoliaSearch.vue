@@ -112,6 +112,12 @@ export default {
     this.$store.commit('algoliaSearch/setIndexName', this.$config.algolia.organisationsIndex)
     this.$store.commit('algoliaSearch/setInitialFilters', this.initialFilters)
   },
+  mounted () {
+    if (navigator.geolocation && !this.$store.state.algoliaSearch.aroundLatLng && !this.$store.state.algoliaSearch.navigatorGeolocation) {
+      this.$store.commit('algoliaSearch/setLoadingNavigatorGeolocation', true)
+      navigator.geolocation.getCurrentPosition(this.onNavigatorGeolocation, this.onNavigatorGeolocationError)
+    }
+  },
   beforeDestroy () {
     this.$store.dispatch('algoliaSearch/reset')
   },

@@ -24,7 +24,7 @@
         </DsfrBadge>
 
         <div class="custom-gradient-2 absolute inset-0" />
-        <div v-if="['admin'].includes($store.getters.contextRole)" class="text-white absolute bottom-1 right-2 text-xs text-shadow">
+        <div v-if="['admin', 'referent', 'referent_regional'].includes($store.getters.contextRole)" class="text-white absolute bottom-1 right-2 text-xs text-shadow">
           Id: {{ mission.id }}
         </div>
       </template>
