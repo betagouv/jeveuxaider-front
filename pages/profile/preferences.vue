@@ -2,7 +2,7 @@
   <div class="container">
     <Breadcrumb
       :links="[
-        { text: 'Mon profil', to: '/profile' },
+        { text: 'Mon espace', to: '/profile' },
         { text: 'Mes préférences de notifications' },
       ]"
     />

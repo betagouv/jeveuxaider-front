@@ -29,7 +29,7 @@
     <template #items>
       <div class="w-56 divide-y">
         <DropdownOptionsItem @click.native="handleClick('/profile')">
-          Mon profil
+          Mon espace
         </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="handleClick('/profile/missions')">
           Mes missions

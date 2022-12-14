@@ -2,7 +2,7 @@
   <Container2Cols>
     <template #breadcrumb>
       <Breadcrumb
-        :links="[{ text: 'Mon profil' }]"
+        :links="[{ text: 'Mon espace' }]"
       />
     </template>
     <template #header>

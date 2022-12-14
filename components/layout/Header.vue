@@ -63,6 +63,11 @@
           </NavItem>
         </div>
         <DropdownUser v-if="$store.getters.isLogged" class="" />
+        <template v-if="!$store.getters.isLogged">
+          <DsfrButton type="tertiary" size="sm" icon="UserIcon" @click="$router.push('/login')">
+            Mon compte
+          </DsfrButton>
+        </template>
       </nav>
     </div>
     <div class="hidden lg:block w-full border-t" />
@@ -157,22 +162,7 @@
           Administration
         </NavItem>
       </div>
-      <div class="flex">
-        <template v-if="!$store.getters.isLogged">
-          <NavItem
-            to="/inscription"
-            :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/inscription')}]"
-          >
-            Inscription
-          </NavItem>
-          <NavItem
-            to="/login"
-            :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/login')}]"
-          >
-            Connexion
-          </NavItem>
-        </template>
-      </div>
+      <div class="flex" />
     </div>
     <!-- Mobile menu -->
     <div>
@@ -297,16 +287,18 @@
 </template>
 
 <script>
-import { CalendarIcon, SearchIcon, UserIcon, ChatAltIcon } from '@vue-hero-icons/outline'
+import { CalendarIcon, SearchIcon, ChatAltIcon } from '@vue-hero-icons/outline'
 import DropdownUser from '@/components/custom/DropdownUser'
 import LazySoftGateOverlay from '@/components/section/SoftGateOverlay'
 import LazyMissionShareOverlay from '@/components/section/MissionShareOverlay'
+import DsfrButton from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
     DropdownUser,
     LazySoftGateOverlay,
-    LazyMissionShareOverlay
+    LazyMissionShareOverlay,
+    DsfrButton
   },
   props: {
     fullWidth: {
@@ -325,8 +317,7 @@ export default {
       if (!this.$store.getters.isLogged) {
         return [
           { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' },
-          { name: 'Publier une mission', to: '/inscription/responsable', icon: CalendarIcon },
-          { name: 'Devenir bénévole', to: '/inscription/benevole', icon: UserIcon }
+          { name: 'Publier une mission', to: '/inscription/responsable', icon: CalendarIcon }
         ]
       }
       return [
@@ -337,12 +328,11 @@ export default {
     mobileLoggedNavigation () {
       if (!this.$store.getters.isLogged) {
         return [
-          { name: 'Inscription', to: '/inscription', isActive: this.isActiveLink('inscription') },
-          { name: 'Connexion', to: '/login', isActive: this.isActiveLink('login') }
+          { name: 'Mon compte', to: '/login', isActive: this.isActiveLink('login') }
         ]
       }
       return [
-        { name: `${this.$store.state.auth.user.profile.full_name}`, to: '/profile', isActive: this.isActiveLink('/profile', true) },
+        { name: 'Mon espace', to: '/profile', isActive: this.isActiveLink('/profile', true) },
         { name: 'Mes missions', to: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
         { name: 'Mes paramètres', to: '/profile/settings', isActive: this.isActiveLink('profile/settings') },
         { name: 'Se déconnecter', click: () => this.$store.dispatch('auth/logout') }
@@ -351,10 +341,9 @@ export default {
     secondNavigation () {
       if (!this.$store.getters.isLogged) {
         return [
-          { name: 'Organisations', to: '/organisations', isActive: this.isActiveLink('/organisations') },
-          { name: 'Territoires', to: '/territoires', isActive: this.isActiveLink('/territoires') },
-          { name: 'Écoles et universités', href: 'https://www.jeveuxaider.gouv.fr/engagement/ecoles-et-universites/', target: '_blank' },
-          { name: 'Actualités', href: 'https://www.jeveuxaider.gouv.fr/engagement/actualites/', target: '_blank' },
+          { name: 'Bénévolat près de chez moi', to: '/missions-benevolat', isActive: this.isBenevolatPresDeChezMoiActiveLink() },
+          { name: 'À distance', to: '/missions-benevolat?type=Mission%20à%20distance', isActive: this.isBenevolatADistanceActiveLink() },
+          { name: 'Associations', to: '/organisations', isActive: this.isActiveLink('/organisations') },
           { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/', target: '_blank' }
         ]
       } else if (this.$store.getters.currentRole?.key === 'admin') {
@@ -370,12 +359,15 @@ export default {
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
           { name: 'Mon organisation', to: `/admin/organisations/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/organisations/*(?!.*missions/add)') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*|missions/add') },
-          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
+          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') },
+          { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/organisation-1u4m061/', target: '_blank' }
         ]
       } else if (this.$store.getters.currentRole?.key === 'responsable_territoire') {
         return [
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
-          { name: 'Mon territoire', to: `/admin/contenus/territoires/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/contenus/territoires/*') }
+          { name: 'Mon territoire', to: `/admin/contenus/territoires/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/contenus/territoires/*') },
+          { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/collectivites-1s01ktj/', target: '_blank' }
+
         ]
       } else if (this.$store.getters.currentRole?.key === 'tete_de_reseau') {
         return [
@@ -383,7 +375,8 @@ export default {
           { name: 'Mon réseau', to: `/admin/contenus/reseaux/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/contenus/reseaux/*') },
           { name: 'Membres du réseau', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
-          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') }
+          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') },
+          { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/tetes-de-reseau-1pfzcje/', target: '_blank' }
         ]
       } else if (this.$store.getters.currentRole?.key === 'referent') {
         return [
@@ -391,7 +384,8 @@ export default {
           { name: 'Organisations', to: '/admin/organisations', isActive: this.isActiveLink('/admin/organisations/*') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*') },
           { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') },
-          { name: 'Utilisateurs', to: '/admin/utilisateurs', isActive: this.isActiveLink('/admin/utilisateurs/*') }
+          { name: 'Utilisateurs', to: '/admin/utilisateurs', isActive: this.isActiveLink('/admin/utilisateurs/*') },
+          { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/referent-1j08uk0/', target: '_blank' }
         ]
       } else if (this.$store.getters.currentRole?.key === 'referent_regional') {
         return [
@@ -402,7 +396,7 @@ export default {
         ]
       }
       return [
-        { name: 'Mon profil', to: '/profile', isActive: this.isActiveLink('/profile', true) },
+        { name: 'Mon espace', to: '/profile', isActive: this.isActiveLink('/profile', true) },
         { name: 'Mes missions', to: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
         { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', target: '_blank' }
       ]
@@ -431,6 +425,18 @@ export default {
     },
     isActiveLink (regex, exact = false) {
       return exact ? this.$route.path === regex : RegExp(regex).test(this.$route.path)
+    },
+    isBenevolatPresDeChezMoiActiveLink () {
+      if (this.$route.path === '/missions-benevolat' && this.$route.query.type !== 'Mission à distance') {
+        return true
+      }
+      return false
+    },
+    isBenevolatADistanceActiveLink () {
+      if (this.$route.path === '/missions-benevolat' && this.$route.query.type === 'Mission à distance') {
+        return true
+      }
+      return false
     }
   }
 }
