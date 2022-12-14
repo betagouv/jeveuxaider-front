@@ -84,7 +84,7 @@
             <div class="w-[400px]">
               <RadioGroup
                 v-model="form.notification__referent_frequency"
-                :options="[{key: 'realtime', label: 'Temps réel'}, { key: 'summary', label: 'Résumé hebdomadaire'}]"
+                :options="[{key: 'realtime', label: 'Temps réel'}, { key: 'summary', label: 'Résumé bi-hebdomadaire'}]"
                 variant="tabs"
                 @updated="handleUpdateProfile"
               />
