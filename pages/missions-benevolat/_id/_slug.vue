@@ -227,15 +227,15 @@
 
             <!-- CTA -->
             <div class="pt-6">
-              <div v-if="mission.dates" class="text-center mb-6">
+              <div v-if="nextDates" class="text-center mb-6">
                 <div class="uppercase text-cool-gray-500 font-semibold text-xs space-x-2 mb-2">
                   Prochaines dates
                 </div>
                 <div class="space-x-2">
-                  <Badge v-for="date in mission.dates.slice(0,3)" :key="date.id" :no-icon="true" type="new">
+                  <Badge v-for="date in nextDates.slice(0,3)" :key="date.id" :no-icon="true" type="new">
                     {{ $dayjs(date.id).format('D MMM') }}
                   </Badge>
-                  <Badge v-if="mission.dates.length > 3" :no-icon="true" type="new">
+                  <Badge v-if="nextDates.length > 3" :no-icon="true" type="new">
                     ...
                   </Badge>
                 </div>
@@ -370,8 +370,6 @@ export default {
   },
   data () {
     return {
-      dateSelected: null,
-      slotSelected: null,
       similarMissions: [],
       userParticipation: null,
       loading: false
@@ -487,55 +485,10 @@ export default {
     missionType () {
       return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
     },
-    calendarAttrs () {
-      const highlight = {
-        class: 'bg-jva-blue-600',
-        contentClass: 'text-white',
-        contentStyle: {
-          fontWeight: 600
-        }
-      }
-
-      return [
-        {
-          key: 'creneaux',
-          highlight,
-          dates: this.mission.dates
-            .filter(date => this.$dayjs(date.date).isAfter(this.$dayjs(), 'day') || this.$dayjs(date.date).isSame(this.$dayjs(), 'day'))
-            .map(day => day.date)
-        }
-      ]
-    },
     userParticipationLink () {
       return !this.userParticipation
         ? null
         : this.userParticipation.conversation?.id ? `/messages/${this.userParticipation.conversation.id}` : '/profile/missions'
-    }
-  },
-  mounted () {
-    // get next date calendar
-    if (this.mission.dates) {
-      const nextDates = this.mission.dates.filter(date => this.$dayjs(date.date).isAfter(this.$dayjs(), 'day') || this.$dayjs(date.date).isSame(this.$dayjs(), 'day'))
-      if (nextDates.length > 0 && this.$refs.calendar) {
-        this.$refs.calendar.move(new Date(nextDates[0].date))
-      }
-    }
-  },
-  methods: {
-    handlePreviousStepClick () {
-      this.dateSelected = null
-      this.slotSelected = null
-    },
-    handleDayClick (dateSelected) {
-      const dateFound = this.mission.dates.find(date => date.id == dateSelected.id)
-      if (dateFound && (this.$dayjs(dateFound.date).isAfter(this.$dayjs(), 'day') || this.$dayjs(dateFound.date).isSame(this.$dayjs(), 'day'))) {
-        this.dateSelected = dateFound
-      }
-    },
-    addHighlightClasses () {
-      this.mission.dates.forEach((date) => {
-        this.$refs.calendar.$el.querySelector(`.id-${date.id}`)?.classList.add('has-highlight')
-      })
     }
   }
 }

@@ -54,11 +54,12 @@
               />
               <SoftGateSelectCreneaux
                 v-if="step == 'select-creneaux'"
-                @next="step = 'share'"
+                @next="step = 'participate'"
               />
               <SoftGateParticipate
                 v-if="step == 'participate'"
                 @next="step = 'share'"
+                @back="step = 'select-creneaux'"
               />
               <SoftGateShare v-if="step == 'share'" @next="onClose" />
             </div>
@@ -92,23 +93,25 @@ export default {
   data () {
     return {
       datas: null,
-      selectedMission: this.$store.state.softGate.selectedMission
+      selectedMission: this.$store.state.softGate.selectedMission,
+      step: 'email'
     }
   },
   computed: {
-    step () {
-      if (!this.$store.getters.isLogged) {
-        return 'email'
-      }
+    nextDates () {
+      return this.selectedMission.dates.filter(date =>
+        this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
+      )
+    }
+  },
+  created () {
+    if (this.$store.getters.isLogged) {
       if (
         this.$store.state.auth.user.statistics.new_participations_today >= 3
       ) {
-        return 'anti-flood'
-      }
-      if (this.selectedMission.dates) {
-        return 'select-creneaux'
-      } else {
-        return 'participate'
+        this.step = 'anti-flood'
+      } else if (this.nextDates?.length > 0) {
+        this.step = 'select-creneaux'
       }
     }
   },
@@ -122,6 +125,7 @@ export default {
       this.datas = datas
     },
     onClose () {
+      this.step = null
       this.$store.commit('softGate/hideOverlay')
       // this.$emit('closed')
       if (this.step == 'share') {
