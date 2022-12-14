@@ -34,6 +34,9 @@
         <DropdownOptionsItem @click.native="handleClick('/profile/missions')">
           Mes missions
         </DropdownOptionsItem>
+        <DropdownOptionsItem v-if="['referent','responsable'].includes($store.getters.contextRole)" @click.native="handleClick('/profile/preferences')">
+          Mes préférences
+        </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="handleClick('/profile/settings')">
           Mes paramètres
         </DropdownOptionsItem>
@@ -56,6 +59,7 @@ export default {
         case '/profile':
         case '/profile/missions':
         case '/profile/settings':
+        case '/profile/preferences':
           this.$router.push(action)
           break
       }
