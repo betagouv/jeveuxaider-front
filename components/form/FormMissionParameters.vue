@@ -134,6 +134,7 @@
             required
           >
             <InputDate
+              ref="inputDatePicker"
               v-model="selectedDate"
               required
               name="date"
@@ -161,7 +162,7 @@
             Ajouter
           </Button>
         </div>
-        <Button v-if="!showFormAddDate" variant="white" @click.native="showFormAddDate = true">
+        <Button v-if="!showFormAddDate" variant="white" @click.native="handleShowFormAddDate()">
           Ajouter une date
         </Button>
       </template>
@@ -255,6 +256,12 @@ export default {
     }
   },
   methods: {
+    handleShowFormAddDate () {
+      this.showFormAddDate = true
+      this.$nextTick(() => {
+        this.$refs.inputDatePicker.$refs.datePicker.showPopover()
+      })
+    },
     handleAddDate () {
       const newDate = {
         date: this.$dayjs(this.selectedDate).format(),

@@ -53,7 +53,7 @@
                 @close="onClose"
               />
               <SoftGateSelectCreneaux
-                v-if="step == 'select-creneaux'"
+                v-if="$store.state.softGate.selectedMission && step == 'select-creneaux'"
                 @next="step = 'participate'"
               />
               <SoftGateParticipate
@@ -91,10 +91,26 @@ export default {
     SoftGateShare
   },
   data () {
+    let firstStep = 'email'
+    const selectedMission = this.$store.state.softGate.selectedMission
+    if (this.$store.getters.isLogged) {
+      if (
+        this.$store.state.auth.user.statistics.new_participations_today >= 3
+      ) {
+        firstStep = 'anti-flood'
+      } else if (selectedMission.dates?.filter(date =>
+        this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
+      ).length > 0) {
+        firstStep = 'select-creneaux'
+      } else {
+        firstStep = 'participate'
+      }
+    }
+
     return {
       datas: null,
-      selectedMission: this.$store.state.softGate.selectedMission,
-      step: 'email'
+      selectedMission,
+      step: firstStep
     }
   },
   computed: {
@@ -107,18 +123,6 @@ export default {
       return this.nextDates?.length > 0
     }
   },
-  created () {
-    this.step = 'select-creneaux'
-    // if (this.$store.getters.isLogged) {
-    //   if (
-    //     this.$store.state.auth.user.statistics.new_participations_today >= 3
-    //   ) {
-    //     this.step = 'anti-flood'
-    //   } else if (this.nextDates?.length > 0) {
-    //     this.step = 'select-creneaux'
-    //   }
-    // }
-  },
   methods: {
     goToLogin (datas) {
       this.step = 'login'
@@ -129,11 +133,12 @@ export default {
       this.datas = datas
     },
     onClose () {
-      this.step = null
-      this.$store.commit('softGate/hideOverlay')
-      // this.$emit('closed')
+      console.log(this.step)
       if (this.step == 'share') {
+        this.$store.commit('softGate/hideOverlay')
         this.$router.push('/profile/missions')
+      } else {
+        this.$store.commit('softGate/hideOverlay')
       }
     }
   }
