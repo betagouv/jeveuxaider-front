@@ -236,6 +236,13 @@ export default {
     }
   },
   watch: {
+    hasCreneaux (newHasCreneaux) {
+      if (newHasCreneaux == 'yes') {
+        this.$emit('change', this.form)
+      } else {
+        this.$emit('change', { ...this.form, dates: null })
+      }
+    },
     form: {
       deep: true,
       handler () {
