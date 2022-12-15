@@ -38,22 +38,22 @@
               <SoftGateLogin
                 v-if="step == 'login'"
                 :datas="datas"
-                @next="step = 'participate'"
+                @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
                 @anti-flood="step = 'anti-flood'"
                 @close="onClose"
               />
               <SoftGateRegister
                 v-if="step == 'register'"
                 :datas="datas"
-                @next="step = 'participate'"
+                @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
               />
               <SoftGateAntiFlood
                 v-if="step == 'anti-flood'"
-                @next="step = 'participate'"
+                @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
                 @close="onClose"
               />
               <SoftGateSelectCreneaux
-                v-if="step == 'select-creneaux'"
+                v-if="$store.state.softGate.selectedMission && step == 'select-creneaux'"
                 @next="step = 'participate'"
               />
               <SoftGateParticipate
@@ -91,10 +91,26 @@ export default {
     SoftGateShare
   },
   data () {
+    let firstStep = 'email'
+    const selectedMission = this.$store.state.softGate.selectedMission
+    if (this.$store.getters.isLogged) {
+      if (
+        this.$store.state.auth.user.statistics.new_participations_today >= 3
+      ) {
+        firstStep = 'anti-flood'
+      } else if (selectedMission.dates?.filter(date =>
+        this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
+      ).length > 0) {
+        firstStep = 'select-creneaux'
+      } else {
+        firstStep = 'participate'
+      }
+    }
+
     return {
       datas: null,
-      selectedMission: this.$store.state.softGate.selectedMission,
-      step: 'email'
+      selectedMission,
+      step: firstStep
     }
   },
   computed: {
@@ -102,17 +118,9 @@ export default {
       return this.selectedMission.dates.filter(date =>
         this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
       )
-    }
-  },
-  created () {
-    if (this.$store.getters.isLogged) {
-      if (
-        this.$store.state.auth.user.statistics.new_participations_today >= 3
-      ) {
-        this.step = 'anti-flood'
-      } else if (this.nextDates?.length > 0) {
-        this.step = 'select-creneaux'
-      }
+    },
+    hasCreneaux () {
+      return this.nextDates?.length > 0
     }
   },
   methods: {
@@ -125,11 +133,12 @@ export default {
       this.datas = datas
     },
     onClose () {
-      this.step = null
-      this.$store.commit('softGate/hideOverlay')
-      // this.$emit('closed')
+      console.log(this.step)
       if (this.step == 'share') {
+        this.$store.commit('softGate/hideOverlay')
         this.$router.push('/profile/missions')
+      } else {
+        this.$store.commit('softGate/hideOverlay')
       }
     }
   }
