@@ -183,7 +183,6 @@
             :icon-size="12"
             icon-class="mb-[.5px]"
           >
-            >
             charte
           </Link>
           <span>de JeVeuxAider.gouv.fr</span>
