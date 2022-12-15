@@ -3,7 +3,7 @@
     <template #breadcrumb>
       <Breadcrumb
         :links="[
-          { text: 'Mon profil', to: '/profile' },
+          { text: 'Mon espace', to: '/profile' },
           { text: 'Mes missions' },
         ]"
       />

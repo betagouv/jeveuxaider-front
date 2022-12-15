@@ -104,7 +104,9 @@ export default {
             { key: 'responsable_waiting_actions', label: 'Des bénévoles attendent votre réponse !', description: 'Rappel envoyé au responsable si des participations sont toujours en attente de validation', tags: ['app-organisation-rappel-participations-en-attente-de-validation'] },
             { key: 'new_message', label: 'Nouveau message de la part de XXX', description: "Lorsque le responsable reçoit un nouveau message dans l'une de ses conversations", tags: ['app-organisation-nouveau-message'] },
             { key: 'structure_switch_responsable', label: 'XXX vous a confié la gestion de nouvelles missions', description: "Lorsque'un responsable quitte l'organisation ou se désinscrit" },
-            { key: 'structure_unregister_contact_admin', label: 'XXX souhaite se désinscrire...', description: "Lorsque'un responsable ne peut pas se désinscrire (car participations reliées à sa structure)" }
+            { key: 'structure_unregister_contact_admin', label: 'XXX souhaite se désinscrire...', description: "Lorsque'un responsable ne peut pas se désinscrire (car participations reliées à sa structure)" },
+            { key: 'responsable_summary_daily', label: '[Prénom], découvrez l’activité du jour sur JeVeuxAider.gouv.fr !', description: "Notification envoyée aux responsables lorsqu'ils ont activé le résumé quotidien dans leurs préférences de notification" },
+            { key: 'responsable_summary_monthly', label: '[Prénom], découvrez votre résumé mensuel d’activité sur JeVeuxaider.gouv.fr !', description: "Notification envoyée aux responsables lorsqu'ils ont activé le résumé mensuel dans leurs préférences de notification" }
           ]
         },
         {
@@ -112,8 +114,10 @@ export default {
           label: '👮🏽‍♀️ Emails envoyés aux référents',
           notifications: [
             { key: 'referent_mission_created', label: 'Mission en attente de validation par les référents', description: "Notification envoyée aux référents du département lorsqu'une mission est postée" },
-            { key: 'referent_organisation_created', label: 'Organisation créée', description: "Notification envoyée aux référents du département lorsqu'une organisation s'inscrit" },
-            { key: 'referent_waiting_actions', label: 'Actions à faire - ça bouge dans votre département !', description: "Notification envoyée aux référents lorsqu'ils ont des actions en attente" }
+            { key: 'referent_organisation_created', label: 'Une organisation est en attente de validation', description: "Notification envoyée aux référents du département lorsqu'une organisation s'inscrit et est en attente de validation" },
+            { key: 'referent_waiting_actions', label: 'Actions à faire - ça bouge dans votre département !', description: "Notification envoyée aux référents lorsqu'ils ont des actions en attente" },
+            { key: 'referent_summary_daily', label: '[Prénom], voici le résumé des actions à réaliser sur votre territoire !', description: "Notification envoyée aux référents lorsqu'ils ont activé le résumé bi-hebdomadaire dans leurs préférences de notification" },
+            { key: 'referent_summary_monthly', label: '[Prénom], découvrez le résumé mensuel de l’activité sur JeVeuxaider.gouv.fr !', description: "Notification envoyée aux référents lorsqu'ils ont activé le résumé mensuel dans leurs préférences de notification" }
           ]
         },
         {
