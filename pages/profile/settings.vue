@@ -4,7 +4,7 @@
       <ModalUnregisterUser :is-open="showAlert" @cancel="showAlert = false" @close="showAlert = false" />
       <Breadcrumb
         :links="[
-          { text: 'Mon profil', to: '/profile' },
+          { text: 'Mon espace', to: '/profile' },
           { text: 'Mes paramètres' },
         ]"
       />

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form id="form-invitation" @submit.prevent="handleSubmit">
+    <form id="form-invitation" novalidate @submit.prevent="handleSubmit">
       <FormControl
         v-if="!role"
         class="mb-6"

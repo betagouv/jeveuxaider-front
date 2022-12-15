@@ -11,7 +11,7 @@
     />
 
     <input
-      v-model="value"
+      v-model.trim="inputValue"
       :type="type"
       :placeholder="placeholder"
       :class="[
@@ -30,7 +30,8 @@
 
         inputClass
       ]"
-      @input="$emit('input', value)"
+      @input="onInput"
+      @keypress.space="onKeypressSpace"
     >
 
     <component
@@ -48,6 +49,10 @@
 <script>
 export default {
   props: {
+    value: {
+      type: [String, Number],
+      default: null
+    },
     size: {
       type: String,
       default: 'md',
@@ -86,7 +91,17 @@ export default {
   },
   data () {
     return {
-      value: null
+      inputValue: this.value
+    }
+  },
+  methods: {
+    onKeypressSpace (event) {
+      if (this.type === 'email') {
+        event.preventDefault()
+      }
+    },
+    onInput () {
+      this.$emit('input', this.inputValue)
     }
   }
 }

@@ -64,8 +64,7 @@ export default {
               { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
               { label: 'Organisations', to: '/admin/statistics/organisations' },
               { label: 'Missions', to: '/admin/statistics/missions' },
-              { label: 'Places', to: '/admin/statistics/places' },
-              { label: 'API Engagement', to: '/admin/statistics/api-engagement' }
+              { label: 'Places', to: '/admin/statistics/places' }
             ]
           },
           {

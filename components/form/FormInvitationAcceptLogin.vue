@@ -34,6 +34,7 @@
       variant="green"
       full
       :loading="loading"
+      @click.native.prevent="onSubmit"
     >
       J'accepte l'invitation
     </Button>
@@ -42,8 +43,10 @@
 
 <script>
 import { string, object } from 'yup'
+import FormErrors from '@/mixins/form/errors'
 
 export default {
+  mixins: [FormErrors],
   props: {
     invitation: {
       type: Object,

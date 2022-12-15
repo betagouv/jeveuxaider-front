@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="flex flex-col min-h-screen">
     <HeaderBanner v-if="!$store.state.settings.general.maintenance_mode_active" />
-    <Nuxt />
+    <Nuxt class="flex-1" />
     <client-only>
       <portal-target name="body-end" multiple />
     </client-only>

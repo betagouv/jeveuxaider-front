@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form id="form-add-responsable" @submit.prevent="handleSubmit">
+    <form id="form-add-responsable" novalidate name="form-add-responsable" @submit.prevent="handleSubmit">
       <FormControl
         label="Email"
         html-for="email"
@@ -9,6 +9,7 @@
         <Input
           v-model="form.email"
           name="email"
+          type="email"
           placeholder="responsable@example.fr"
         />
       </FormControl>
