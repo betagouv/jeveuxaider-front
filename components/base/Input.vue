@@ -31,7 +31,6 @@
         ]"
         autocomplete="off"
         @blur="handleBlur"
-        @input="onInput"
         @keypress.space="onKeypressSpace"
       >
       <div v-if="type == 'password' && inputValue" class="absolute right-3">
@@ -90,8 +89,17 @@ export default {
   },
   data () {
     return {
-      typeValue: this.type,
-      inputValue: this.value
+      typeValue: this.type
+    }
+  },
+  computed: {
+    inputValue: {
+      get () {
+        return this.value
+      },
+      set (newValue) {
+        this.$emit('input', newValue)
+      }
     }
   },
   methods: {
@@ -108,9 +116,6 @@ export default {
       if (this.type === 'email') {
         event.preventDefault()
       }
-    },
-    onInput () {
-      this.$emit('input', this.inputValue)
     }
   }
 }

@@ -30,7 +30,6 @@
 
         inputClass
       ]"
-      @input="onInput"
       @keypress.space="onKeypressSpace"
     >
 
@@ -89,9 +88,14 @@ export default {
       default: ''
     }
   },
-  data () {
-    return {
-      inputValue: this.value
+  computed: {
+    inputValue: {
+      get () {
+        return this.value
+      },
+      set (newValue) {
+        this.$emit('input', newValue)
+      }
     }
   },
   methods: {
@@ -99,9 +103,6 @@ export default {
       if (this.type === 'email') {
         event.preventDefault()
       }
-    },
-    onInput () {
-      this.$emit('input', this.inputValue)
     }
   }
 }
