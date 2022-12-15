@@ -180,12 +180,9 @@
           <Link
             to="/charte-reserve-civique"
             :is-external="true"
-            <<<<<<<
-            h-e-a-d="======"
             :icon-size="12"
             icon-class="mb-[.5px]"
           >
-            >>>>>> prod
             >
             charte
           </Link>
