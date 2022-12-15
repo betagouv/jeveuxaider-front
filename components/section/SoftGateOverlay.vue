@@ -28,7 +28,7 @@
               </template>
             </div>
             <div
-              class="bg-gray-100 max-w-full lg:max-w-xl mx-auto p-6 lg:p-10"
+              class="bg-gray-100 max-w-full lg:max-w-xl mx-auto px-2 py-6 sm:p-6 lg:p-10"
             >
               <SoftGateEmail
                 v-if="step == 'email'"
@@ -115,7 +115,7 @@ export default {
   },
   computed: {
     nextDates () {
-      return this.selectedMission.dates.filter(date =>
+      return this.selectedMission.dates?.filter(date =>
         this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
       )
     },

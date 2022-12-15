@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     nextDates () {
-      return this.selectedMission.dates.filter(date =>
+      return this.selectedMission.dates?.filter(date =>
         this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
       )
     }

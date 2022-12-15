@@ -231,6 +231,9 @@
                 <div class="uppercase text-cool-gray-500 font-semibold text-xs space-x-2 mb-2">
                   Prochaines dates
                 </div>
+                <div v-if="nextDates.length == 0" class="text-black font-bold -mt-2">
+                  Plus de dates disponibles
+                </div>
                 <div class="space-x-2">
                   <Badge v-for="date in nextDates.slice(0,3)" :key="date.id" :no-icon="true" type="new">
                     {{ $dayjs(date.id).format('D MMM') }}

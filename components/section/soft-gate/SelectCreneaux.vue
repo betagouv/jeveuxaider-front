@@ -6,8 +6,8 @@
       </Heading>
     </div>
     <div class="mx-auto">
-      <AccordionsGroup>
-        <Accordion v-for="date in datesPaginated" :key="date.id" class="bg-white">
+      <AccordionsGroup class="px-4 sm:px-0 bg-white">
+        <Accordion v-for="date in datesPaginated" :key="date.id">
           <template slot="title">
             <CheckCircleSolidIcon v-if="selectedSlots.filter(selectedSlot => selectedSlot.date == date.id).length > 0" class="text-jva-green-500 mr-2 h-5 w-5" />
             <span class="first-letter:uppercase">{{ $dayjs(date.id).format('dddd D MMMM') }}</span>
@@ -35,7 +35,7 @@
           </div>
         </Accordion>
       </AccordionsGroup>
-      <div class="flex mt-6">
+      <div class="sm:flex mt-6">
         <div v-if="pageCount > 1" class="flex items-center">
           <div :class="[pageCurrent > 1 ? 'bg-white cursor-pointer text-black hover:bg-gray-100' : 'bg-gray-200 text-gray-500']" class="border border-r-0 p-2 flex" @click="handlePreviousPage">
             <ChevronLeftIcon class="h-4 w-4" />
@@ -44,14 +44,11 @@
             <ChevronRightIcon class="h-4 w-4" />
           </div>
         </div>
-        <div class="ml-auto font-semibold text-sm text-gray-600">
-          <span class="hidden sm:inline">
+        <div class="flex flex-col sm:flex-row items-center mt-2 sm:mt-0 sm:ml-auto font-semibold text-sm text-gray-600">
+          <div class="block mb-3 sm:mb-0 text-center sm:text-left sm:inline">
             {{ $options.filters.pluralize(selectedSlots.length, 'créneau sélectionné', 'créneaux sélectionnés') }}
-          </span>
-          <span class="sm:hidden">
-            {{ $options.filters.pluralize(selectedSlots.length, 'sélectionné', 'sélectionnés') }}
-          </span>
-          <Button :disabled="selectedSlots.length == 0" size="lg" class="ml-4 flex items-center" @click.native="handleSubmit">
+          </div>
+          <Button :disabled="selectedSlots.length == 0" size="lg" class="sm:ml-4 flex items-center" @click.native="handleSubmit">
             Continuer <ChevronRightIcon class="h-4 w-4 ml-2" />
           </Button>
         </div>
