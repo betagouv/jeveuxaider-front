@@ -32,18 +32,19 @@
               v-if="!submitted"
               ref="subscribeForm"
               class="flex flex-wrap sm:flex-nowrap gap-4 sm:gap-8"
-              @submit="onSubmit"
+              @submit.prevent="onSubmit"
             >
               <div class="w-full relative">
                 <label for="email" class="text-gray-900 font-bold text-xs">E-MAIL</label>
                 <input
                   id="email"
-                  v-model="form.email"
+                  v-model.trim="form.email"
                   name="email"
                   type="email"
                   required
                   placeholder="Renseignez votre e-mail"
                   class="w-full p-0 border-none !outline-none placeholder-gray-400 focus:ring-0"
+                  @keypress.space.prevent
                 >
                 <div v-if="errors" class="text-sm text-jva-red-500">
                   <div v-for="(error, key) in errors" :key="key">

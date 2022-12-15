@@ -76,10 +76,10 @@
           v-for="(item, index) in options"
           :key="index"
           :ref="`option_${index}`"
-          class="relative flex justify-between items-center text-sm px-8 py-2 pr-10 cursor-pointer hover:bg-[#E3E3FD] focus:bg-[#E3E3FD]"
+          class="relative flex justify-between items-center text-sm px-8 py-2 pr-10 cursor-pointer hover:bg-[#F0F0FF] focus:bg-[#F0F0FF]"
           :class="[
-            {'bg-[#E3E3FD]': highlightIndex == index},
-            {'bg-[#E3E3FD]': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
+            {'bg-[#F0F0FF]': highlightIndex == index},
+            {'bg-[#F0F0FF]': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
           ]"
           @click="handleSelectOption(item)"
         >

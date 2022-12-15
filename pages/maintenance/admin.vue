@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen flex flex-col justify-center">
+  <div class="flex flex-col justify-center">
     <div class="py-12 px-4 relative w-full lg:inset-y-0 text-center z-10">
       <div class="flex-shrink-0 flex justify-center mb-12">
         <nuxt-link to="/">
@@ -32,6 +32,7 @@
               <Input
                 v-model="form.email"
                 name="email"
+                type="email"
                 placeholder="Entrez votre email"
                 @blur="validate('email')"
               />
@@ -51,7 +52,7 @@
               variant="green"
               full
               :loading="loading"
-              @click="onSubmit"
+              @click.native.prevent="onSubmit"
             >
               Connexion
             </Button>

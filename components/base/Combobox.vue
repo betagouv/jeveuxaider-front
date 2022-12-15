@@ -26,15 +26,19 @@
         @keydown="onKeydown"
         @click="!disabled ? showOptions = true : null"
       >
-      <div class="absolute right-3">
+      <div class="absolute right-3" :class="{'pointer-events-none': !selectedOption || disabled || loading}">
+        <RiLoader5Line
+          v-if="loading"
+          class="animate-spin h-5 w-5 text-gray-400 fill-current"
+        />
         <XIcon
-          v-if="selectedOption && !disabled"
-          class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+          v-else-if="selectedOption && !disabled"
+          class="h-5 text-gray-400 hover:text-jva-blue-500 cursor-pointer"
           @click="reset()"
         />
         <SelectorIcon
           v-else
-          class="h-5 text-gray-400 hover:text-gray-500 cursor-pointer"
+          class="h-5 text-gray-400"
         />
       </div>
     </div>
@@ -49,17 +53,27 @@
         <li
           v-for="(item, index) in filteredOptions"
           :key="index"
-          class="relative flex justify-between items-center text-sm px-8 py-2 pr-10 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
+          :ref="`option_${index}`"
+          class="relative flex justify-between items-center text-sm px-8 py-2 pr-10 cursor-pointer hover:bg-[#F0F0FF] focus:outline-none text-[#3A3A3A] focus:bg-[#F0F0FF] group"
           :class="[
-            {'bg-gray-50 text-jva-blue-500': highlightIndex == index},
-            {'bg-gray-50 text-jva-blue-500': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
+            {'bg-[#F0F0FF]': highlightIndex == index},
+            {'bg-[#F0F0FF]': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
           ]"
           @click="handleSelectOption(item)"
         >
-          <span class="">
-            {{ item[attributeLabel] }}
-          </span>
-          <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="absolute right-2" />
+          <slot
+            name="option"
+            :item="item"
+            :attributeLabel="attributeLabel"
+            :selectedOption="selectedOption"
+            :highlightIndex="highlightIndex"
+            :index="index"
+          >
+            <span class="">
+              {{ item[attributeLabel] }}
+            </span>
+            <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="absolute right-2" />
+          </slot>
         </li>
         <li v-if="!filteredOptions.length" class="px-8 py-2 text-center text-sm text-gray-500">
           {{ labelEmpty }}
@@ -83,7 +97,8 @@ export default {
     attributeLabel: { type: String, default: 'label' },
     variant: { type: String, default: null }, // transparent
     clearable: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    loading: { type: Boolean, default: false }
   },
   data () {
     return {
@@ -110,6 +125,11 @@ export default {
       return this.options
     }
   },
+  watch: {
+    search () {
+      this.highlightIndex = null
+    }
+  },
   methods: {
     reset () {
       this.highlightIndex = null
@@ -119,6 +139,7 @@ export default {
     },
     clickedOutside () {
       this.showOptions = false
+      this.highlightIndex = null
     },
     handleSelectOption (item) {
       if (item && this.selectedOption && this.selectedOption[this.attributeKey] === item[this.attributeKey]) {
@@ -154,6 +175,8 @@ export default {
         }
       }
       if (keyValue === 40 || keyValue === 38 || keyValue === 13) {
+        e.preventDefault()
+        e.stopPropagation()
         if (this.highlightIndex === null) {
           this.showOptions = true
           this.highlightIndex = 0
@@ -173,6 +196,9 @@ export default {
             this.highlightIndex -= 1
           }
         }
+        this.$refs[`option_${this.highlightIndex}`]?.[0]?.scrollIntoView({
+          block: 'nearest'
+        })
       }
     }
 

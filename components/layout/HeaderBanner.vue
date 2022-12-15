@@ -12,24 +12,27 @@
       </template>
     </Banner>
 
-    <div v-if="isBenevoleOrNotLogged" class="relative z-30 bg-[#FF6A00] text-white">
+    <div v-if="isBenevoleOrNotLogged" class="relative z-30 bg-[#F75C5D] text-white cursor-pointer" @click="onClick">
       <div class="container py-3">
         <div class="flex items-center justify-between flex-wrap">
           <div class="w-full flex-1 flex items-center">
             <SpeakerphoneIcon
-              class="h-5 w-5 flex-none"
+              class="hidden sm:block h-5 w-5 flex-none"
             />
-            <p class="ml-3 truncate">
-              <strong>Banques Alimentaires</strong> 10 000 bénévoles recherchés partout en France
+            <p class="ml-3">
+              <strong>Décembre ensemble :</strong> donnons du temps contre l’isolement
             </p>
           </div>
-          <div class="flex-shrink-0 w-full sm:w-auto sm:ml-2">
+          <div class="flex-shrink-0 ml-4">
             <Link
               icon="RiArrowRightLine"
-              @click.native="onClickBACollecte"
+              class="hidden sm:block"
             >
-              Trouver une collecte
+              Trouver une mission
             </Link>
+            <ArrowRightIcon
+              class="sm:hidden h-5 w-5 flex-none"
+            />
           </div>
         </div>
       </div>
@@ -47,12 +50,12 @@
       </template>
     </Banner>
 
-    <Banner v-if="isResponsable && nbWaitingParticipations > 0" type="error">
-      Vous avez {{ $options.filters.pluralize(nbWaitingParticipations, 'participation', 'participations') }} en cours de modération. Merci de mettre à jour le statut des candidatures reçues.
+    <Banner v-if="isResponsable && totalPendingParticipationsActions > 0" type="error">
+      Vous avez {{ $options.filters.pluralize(totalPendingParticipationsActions, 'participation', 'participations') }} en cours de modération. Merci de mettre à jour le statut des candidatures reçues.
       <template #action>
         <Link
           icon="RiArrowRightLine"
-          :to="`/admin/participations?filter[state]=En attente de validation&filter[ofResponsable]=${$store.getters.profile.id}`"
+          :to="`/admin/participations?filter[is_state_pending]=true&filter[ofResponsable]=${$store.getters.profile.id}`"
         >
           Modérer les participations
         </Link>
@@ -95,8 +98,14 @@ export default {
     isResponsable () {
       return this.$store.getters.currentRole?.key === 'responsable'
     },
+    totalPendingParticipationsActions () {
+      return this.nbWaitingParticipations + this.nbInProgressParticipations
+    },
     nbWaitingParticipations () {
       return this.userActions?.find(action => action.type === 'participations_waiting_validation')?.value ?? 0
+    },
+    nbInProgressParticipations () {
+      return this.userActions?.find(action => action.type === 'participations_in_progress')?.value ?? 0
     },
     isBenevoleOrNotLogged () {
       if (!this.$store.getters.isLogged) {
@@ -116,12 +125,13 @@ export default {
     }
   },
   methods: {
-    onClickBACollecte () {
+    onClick () {
+      console.log('onClick')
       window.plausible &&
-        window.plausible('Click CTA - Collecte BA - Bandeau', {
+        window.plausible('Click CTA - Decembre Ensemble - Bandeau', {
           props: { isLogged: this.$store.getters.isLogged }
         })
-      this.$router.push('/missions-benevolat?tags=Collecte%20nationale%20des%20Banques%20Alimentaires')
+      window.location = '/missions-benevolat?tags=Décembre%20ensemble&utm_medium=JVA_CLIC_BANDEAU'
     }
   }
 }

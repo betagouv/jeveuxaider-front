@@ -9,7 +9,7 @@
       </div>
       <input
         :id="name"
-        v-model="inputValue"
+        v-model.trim="inputValue"
         :name="name"
         :type="typeValue"
         :placeholder="placeholder"
@@ -31,6 +31,8 @@
         ]"
         autocomplete="off"
         @blur="handleBlur"
+        @input="onInput"
+        @keypress.space="onKeypressSpace"
       >
       <div v-if="type == 'password' && inputValue" class="absolute right-3">
         <RiEyeFill
@@ -88,17 +90,8 @@ export default {
   },
   data () {
     return {
-      typeValue: this.type
-    }
-  },
-  computed: {
-    inputValue: {
-      get () {
-        return this.value
-      },
-      set (newValue) {
-        this.$emit('input', newValue)
-      }
+      typeValue: this.type,
+      inputValue: this.value
     }
   },
   methods: {
@@ -110,6 +103,14 @@ export default {
       if (this.inputValue !== null) {
         this.$emit('blur')
       }
+    },
+    onKeypressSpace (event) {
+      if (this.type === 'email') {
+        event.preventDefault()
+      }
+    },
+    onInput () {
+      this.$emit('input', this.inputValue)
     }
   }
 }

@@ -72,6 +72,7 @@
             >
               <Input
                 v-model="form.email"
+                type="email"
                 name="email"
                 placeholder="jean.dupont@gmail.com"
                 @blur="validate('email')"
@@ -436,6 +437,7 @@ import { cloneDeep } from 'lodash'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
+import Emailable from '@/mixins/emailable.client'
 import activitiesOptions from '@/assets/activities.json'
 import FormProfileRole from '@/components/form/FormProfileRole'
 
@@ -444,7 +446,7 @@ export default {
     AlgoliaSkillsInput,
     FormProfileRole
   },
-  mixins: [FormErrors, FormUploads],
+  mixins: [FormErrors, FormUploads, Emailable],
   props: {
     profile: {
       type: Object,
@@ -529,6 +531,14 @@ export default {
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          if (this.form.email !== this.profile.email) {
+            const isEmailValid = await this.emailableValidation()
+            if (!isEmailValid) {
+              this.errors.email = 'Votre adresse mail comporte une erreur'
+              this.$toast.error('Votre adresse mail comporte une erreur')
+              return
+            }
+          }
           await this.uploadFiles('profile', this.form.id)
           if (this.form.id === this.$store.state.auth.user.profile.id) {
             await this.$store.dispatch('auth/updateProfile', {

@@ -31,7 +31,7 @@
     <OverviewOrganisations ref="overviewOrganisations" />
     <OverviewMissions ref="overviewMissions" />
     <OverviewPlaces ref="overviewPlaces" />
-    <OverviewAPIEngagement v-if="['admin'].includes($store.getters.contextRole)" ref="overviewAPIEngagement" />
+    <!-- <OverviewAPIEngagement v-if="['admin'].includes($store.getters.contextRole)" ref="overviewAPIEngagement" /> -->
   </div>
 </template>
 
@@ -42,7 +42,7 @@ import OverviewParticipations from '@/components/numbers/OverviewParticipations'
 import OverviewQuickGlance from '@/components/numbers/OverviewQuickGlance'
 import OverviewUtilisateurs from '@/components/numbers/OverviewUtilisateurs'
 import OverviewPlaces from '@/components/numbers/OverviewPlaces'
-import OverviewAPIEngagement from '@/components/numbers/OverviewAPIEngagement'
+// import OverviewAPIEngagement from '@/components/numbers/OverviewAPIEngagement'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
@@ -55,7 +55,7 @@ export default {
     OverviewMissions,
     OverviewUtilisateurs,
     OverviewPlaces,
-    OverviewAPIEngagement,
+    // OverviewAPIEngagement,
     Breadcrumb
   },
   layout: 'statistics',

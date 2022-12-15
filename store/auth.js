@@ -36,11 +36,11 @@ export const actions = {
         scope: '*'
       })
       .then(async (response) => {
-        // secure true does not work on http://localhost and safari
         await this.$cookies.set('access-token', response?.data?.access_token, {
           maxAge: response?.data?.expires_in,
           path: '/',
-          secure: true
+          // secure true does not work on http://localhost and safari
+          secure: document?.domain !== 'localhost'
         })
         await this.$gtm.push({ event: 'user-login' })
         await dispatch('fetchUser')
@@ -59,11 +59,12 @@ export const actions = {
     commit('setUser', res ? res.data : null)
   },
   async logout ({ commit }) {
+    this.$router.push('/')
     await this.$axios.post('/logout')
     this.$cookies.remove('access-token')
     this.$cookies.remove('access-token-impersonate')
     commit('setUser', null)
-    window.location.href = '/'
+    // window.location.href = '/'
   },
   async updateProfile ({ dispatch }, payload) {
     await this.$axios.put(`/profiles/${payload.id}`, payload)
@@ -109,7 +110,8 @@ export const actions = {
     this.$cookies.set('access-token-impersonate', data.accessToken, {
       maxAge: 3600, // 1 heure
       path: '/',
-      secure: true
+      // secure true does not work on http://localhost and safari
+      secure: document?.domain !== 'localhost'
     })
     this.$cookies.set('token-id-impersonate', data.token.id, {
       maxAge: 3600, // 1 heure

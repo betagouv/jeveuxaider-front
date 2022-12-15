@@ -1,6 +1,11 @@
 /* eslint-disable */
 
 export default ({ app, $config }) => {
+  // Bypass on local
+  if (document?.domain === 'localhost') {
+    return
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
 
     let cookieDomains = [

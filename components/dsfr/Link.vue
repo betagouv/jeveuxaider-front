@@ -13,7 +13,7 @@
       :is="icon"
       v-if="icon && iconPosition === 'left'"
       :width="iconSize"
-      :class="iconClass"
+      :class="[iconClasses, iconClass]"
     />
 
     <slot />
@@ -22,13 +22,13 @@
       :is="icon"
       v-if="icon && iconPosition === 'right'"
       :width="iconSize"
-      :class="iconClass"
+      :class="[iconClasses, iconClass]"
     />
 
     <RiExternalLinkLine
       v-if="isExternal"
       :width="iconSize"
-      :class="iconClass"
+      :class="[iconClasses, iconClass]"
     />
   </component>
 </template>
@@ -61,10 +61,14 @@ export default {
     iconSize: {
       type: Number,
       default: 16
+    },
+    iconClass: {
+      type: String,
+      default: null
     }
   },
   computed: {
-    iconClass () {
+    iconClasses () {
       return 'inline-block fill-current align-baseline translate-y-[.15rem]'
     }
   }

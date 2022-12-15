@@ -2,8 +2,8 @@
   <div class="container">
     <Breadcrumb
       :links="[
-        { text: 'Mon profil', to: '/profile' },
-        { text: 'Modification' },
+        { text: 'Mon espace', to: '/profile' },
+        { text: 'Modification de mon profil' },
       ]"
     />
     <div class="flex flex-col pb-12 gap-12">

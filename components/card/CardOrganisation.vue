@@ -25,16 +25,15 @@
         <div
           :class="[
             'absolute inset-0',
-            ['admin'].includes($store.getters.contextRole) && showInfos && organisation.completion_rate < 100 ? 'custom-gradient-3' : 'custom-gradient-2'
+            ['admin','referent','referent_regional'].includes($store.getters.contextRole) && showInfos && organisation.completion_rate < 100 ? 'custom-gradient-3' : 'custom-gradient-2'
           ]"
         />
-        <div class="text-white text-right absolute bottom-2 right-2 text-xs text-shadow leading-tight">
-          <div v-if="['admin'].includes($store.getters.contextRole)">
-            Id: {{ organisation.id }}
-          </div>
-          <div
-            v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole) && showInfos && organisation.completion_rate < 100"
-          >
+        <div
+          v-if="['admin','referent','referent_regional'].includes($store.getters.contextRole)"
+          class="text-white text-right absolute bottom-2 right-2 text-xs text-shadow leading-tight"
+        >
+          <div> Id: {{ organisation.id }} </div>
+          <div v-if="showInfos && organisation.completion_rate < 100">
             Complétion: {{ organisation.completion_rate }}%
           </div>
         </div>

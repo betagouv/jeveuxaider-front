@@ -64,6 +64,7 @@
         >
           <Input
             v-model="form.email"
+            type="email"
             name="email"
             placeholder="jean.dupont@gmail.com"
             @blur="validate('email')"
@@ -142,12 +143,10 @@
         </FormControl>
         <div class="lg:col-span-2">
           <Button
-            type="submit"
-            variant="green"
             :loading="loading"
-            full
-            size="xl"
-            @click="onSubmit"
+            class="w-full"
+            size="lg"
+            @click.native.prevent="onSubmit"
           >
             Demander la gestion d'un réseau
           </Button>
@@ -179,9 +178,14 @@
 <script>
 import { string, object, number } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Emailable from '@/mixins/emailable.client'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
-  mixins: [FormErrors],
+  components: {
+    Button
+  },
+  mixins: [FormErrors, Emailable],
   data () {
     return {
       loading: false,
@@ -208,6 +212,12 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          const isEmailValid = await this.emailableValidation()
+          if (!isEmailValid) {
+            this.errors.email = 'Votre adresse mail comporte une erreur'
+            this.$toast.error('Votre adresse mail comporte une erreur')
+            return
+          }
           this.loading = true
           await this.$axios.post('/reseaux/lead', this.form)
           this.sent = true

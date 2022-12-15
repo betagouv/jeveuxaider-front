@@ -51,7 +51,8 @@ export default {
   },
   computed: {
     canCreateMission () {
-      return !!this.structure?.state && !['Brouillon', 'Signalée', 'Désinscrite'].includes(this.structure.state)
+      return !!this.structure?.state && !['Brouillon', 'Signalée', 'Désinscrite'].includes(this.structure.state) &&
+        this.$store.state.auth.user?.profile?.mobile
     },
     tooltipCantCreateMission () {
       let content
@@ -65,14 +66,22 @@ export default {
         case 'Brouillon':
           content = 'Votre organisation est incomplète - Complétez les informations de votre organisation afin de pouvoir publier une mission'
           break
-        default:
-          return null
+      }
+
+      if (!this.$store.state.auth.user?.profile?.mobile) {
+        content = 'Renseignez au préalable votre numéro de mobile dans <a class="active:!bg-transparent" href="/profile/edit">votre profil</a> afin de pouvoir publier une mission'
       }
 
       return {
         content,
         hideOnTargetClick: true,
-        placement: 'top'
+        classes: 'theme-black formatted-text',
+        placement: 'top',
+        html: true,
+        delay: {
+          show: 200,
+          hide: 2000
+        }
       }
     }
   }

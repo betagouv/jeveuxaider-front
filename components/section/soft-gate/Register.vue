@@ -44,6 +44,7 @@
         >
           <Input
             v-model="form.email"
+            type="email"
             name="email"
             placeholder="jean.dupont@gmail.com"
             @blur="validate('email')"
@@ -169,6 +170,8 @@
           <Link
             to="/politique-de-confidentialite"
             :is-external="true"
+            :icon-size="12"
+            icon-class="mb-[.5px]"
           >
             politique de confidentialité
           </Link>
@@ -177,7 +180,13 @@
           <Link
             to="/charte-reserve-civique"
             :is-external="true"
+            <<<<<<<
+            h-e-a-d="======"
+            :icon-size="12"
+            icon-class="mb-[.5px]"
           >
+            >>>>>> prod
+            >
             charte
           </Link>
           <span>de JeVeuxAider.gouv.fr</span>
