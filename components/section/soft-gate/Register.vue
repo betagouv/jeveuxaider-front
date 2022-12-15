@@ -168,7 +168,7 @@
           <span>En m'inscrivant j'accepte la</span>
           <Link
             to="/politique-de-confidentialite"
-            is-external="true"
+            :is-external="true"
           >
             politique de confidentialité
           </Link>
@@ -176,7 +176,7 @@
           <span>et la</span>
           <Link
             to="/charte-reserve-civique"
-            is-external="true"
+            :is-external="true"
           >
             charte
           </Link>

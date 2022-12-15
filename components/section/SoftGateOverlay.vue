@@ -38,18 +38,18 @@
               <SoftGateLogin
                 v-if="step == 'login'"
                 :datas="datas"
-                @next="step = 'participate'"
+                @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
                 @anti-flood="step = 'anti-flood'"
                 @close="onClose"
               />
               <SoftGateRegister
                 v-if="step == 'register'"
                 :datas="datas"
-                @next="step = 'participate'"
+                @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
               />
               <SoftGateAntiFlood
                 v-if="step == 'anti-flood'"
-                @next="step = 'participate'"
+                @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
                 @close="onClose"
               />
               <SoftGateSelectCreneaux
@@ -102,18 +102,22 @@ export default {
       return this.selectedMission.dates.filter(date =>
         this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
       )
+    },
+    hasCreneaux () {
+      return this.nextDates?.length > 0
     }
   },
   created () {
-    if (this.$store.getters.isLogged) {
-      if (
-        this.$store.state.auth.user.statistics.new_participations_today >= 3
-      ) {
-        this.step = 'anti-flood'
-      } else if (this.nextDates?.length > 0) {
-        this.step = 'select-creneaux'
-      }
-    }
+    this.step = 'select-creneaux'
+    // if (this.$store.getters.isLogged) {
+    //   if (
+    //     this.$store.state.auth.user.statistics.new_participations_today >= 3
+    //   ) {
+    //     this.step = 'anti-flood'
+    //   } else if (this.nextDates?.length > 0) {
+    //     this.step = 'select-creneaux'
+    //   }
+    // }
   },
   methods: {
     goToLogin (datas) {
