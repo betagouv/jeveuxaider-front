@@ -11,6 +11,10 @@ export default {
       }
     },
     aroundLatLng () {
+      if (this.$route.query.type == 'Mission à distance') {
+        return ''
+      }
+
       if (this.$store.state.algoliaSearch.aroundLatLng) {
         return this.$store.state.algoliaSearch.aroundLatLng
       }

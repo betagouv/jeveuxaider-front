@@ -21,12 +21,14 @@
                     icon: 'RiMapPinFill',
                     filterValue: 'Mission en présentiel',
                     current: !$route.query['type'],
-                    label: 'Près de chez moi'
+                    label: 'Près de chez moi',
+                    sublabel: `${$store.getters['algoliaSearch/nbMissionsPresentiel']} missions`
                   },
                   {
                     icon: 'RiComputerFill',
                     filterValue: 'Mission à distance',
-                    label: 'Depuis chez moi'
+                    label: 'Depuis chez moi',
+                    sublabel: `${$store.state.algoliaSearch.nbMissionsDistance} missions`
                   }
                 ]"
               />
