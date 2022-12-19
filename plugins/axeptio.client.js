@@ -32,11 +32,7 @@ export default ({ app, $config }) => {
     void 0 === window._axcb && (window._axcb = [])
     window._axcb.push(function (axeptio) {
       axeptio.on('cookies:complete', function (choices) {
-        if (choices.crisp) {
-          launchCrisp()
-        } else {
-          removeCrisp()
-        }
+        console.log('cookies:complete', choices)
       })
     })
 

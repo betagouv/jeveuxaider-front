@@ -37,11 +37,6 @@ export default {
         rel: 'preconnect',
         href: 'https://client.axept.io',
         crossorigin: 'anonymous'
-      },
-      {
-        rel: 'preconnect',
-        href: 'https://client.crisp.chat',
-        crossorigin: 'anonymous'
       }
     ]
   },
