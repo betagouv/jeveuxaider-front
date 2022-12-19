@@ -22,6 +22,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+      { rel: 'sitemap', type: 'application/xml', title: 'Sitemap', href: 'https://www.jeveuxaider.gouv.fr/sitemap.xml' },
       {
         rel: 'preconnect',
         href: 'https://gqlg3qh7po-dsn.algolia.net',

@@ -313,21 +313,20 @@ export default {
         }
       ],
       links2: [
+        // {
+        //   name: 'Sitemap',
+        //   url: 'https://www.jeveuxaider.gouv.fr/sitemap.xml',
+        //   external: true
+        // },
         {
           name: 'Plan du site',
-          url: 'https://www.jeveuxaider.gouv.fr/sitemap.xml',
-          external: true
+          url: '/plan-du-site'
         },
-        {
-          name: 'Partenaires',
-          url: 'https://www.jeveuxaider.gouv.fr/engagement/organisations/',
-          external: true
-        },
-        {
-          name: 'Centre d\'aide',
-          url: 'https://reserve-civique.crisp.help/fr/',
-          external: true
-        },
+        // {
+        //   name: 'Partenaires',
+        //   url: 'https://www.jeveuxaider.gouv.fr/engagement/organisations/',
+        //   external: true
+        // },
         {
           name: 'Mentions légales',
           url: '/mentions-legales'
