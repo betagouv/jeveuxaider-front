@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- <div v-if="nextDates" class="flex items-center text-sm cursor-pointer text-gray-600" @click="$emit('back')">
+      <ChevronLeftIcon class="mr-1 h-4 w-4" /> Retour
+    </div> -->
     <div class="text-center mb-6">
       <Heading as="div" size="lg" class="mb-2 lg:mb-3">
         Proposez votre aide
@@ -52,18 +55,22 @@ export default {
   },
   mixins: [FormErrors],
   data () {
-    let message = `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
-    if (this.$store.state.softGate.selectedMission.dateSelected) {
-      message = `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide le ${this.$store.state.softGate.selectedMission?.dateSelected.ariaLabel} (${this.$store.state.softGate.selectedMission?.slotSelected.map(slot => this.$options.filters.label(slot, 'slots')).join(', ').toLowerCase()}). \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
-    }
     return {
       loading: false,
+      selectedMission: this.$store.state.softGate.selectedMission,
       form: {
-        content: message
+        content: `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
       },
       formSchema: object({
         content: string().min(10, 'Votre message est trop court').required('Un message est requis')
       })
+    }
+  },
+  computed: {
+    nextDates () {
+      return this.selectedMission.dates?.filter(date =>
+        this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
+      )
     }
   },
   methods: {
@@ -82,8 +89,7 @@ export default {
             utm_source: this.$cookies.get('utm_source'),
             utm_campaign: this.$cookies.get('utm_campaign'),
             utm_medium: this.$cookies.get('utm_medium'),
-            date: this.$store.state.softGate.selectedMission.dateSelected?.id,
-            slots: this.$store.state.softGate.selectedMission.slotSelected
+            slots: this.$store.state.softGate.selectedMission.selectedSlots
           })
 
           window.apieng && window.apieng('trackApplication')
