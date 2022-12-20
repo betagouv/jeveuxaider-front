@@ -371,11 +371,15 @@ export default {
           url: '/charte-reserve-civique'
         },
         {
+          name: 'Manifeste',
+          url: 'https://www.jeveuxaider.gouv.fr/engagement/manifeste/',
+          external: true
+        },
+        {
           name: 'Actualités du bénévolat',
           url: 'https://www.jeveuxaider.gouv.fr/engagement/actualites/',
           external: true
         },
-
         {
           name: 'Communication',
           url: 'https://www.jeveuxaider.gouv.fr/engagement/communication/',
