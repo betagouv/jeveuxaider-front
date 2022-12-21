@@ -66,6 +66,23 @@
         </div>
       </div>
     </div>
+
+    <!-- CTA MOBILE FIXED FOOTER -->
+    <div
+      class="sm:hidden fixed bottom-0 p-4 bg-white z-50 w-full left-0 right-0"
+      style="box-shadow: 0 25px 20px 30px rgb(0 0 0 / 25%);"
+    >
+      <ButtonJeProposeMonAideApiEngagement
+        :url="mission.application_url"
+        class="w-full"
+      />
+
+      <div
+        v-if="formattedDate"
+        class="text-cool-gray-500 text-sm text-center mt-4"
+        v-html="formattedDate"
+      />
+    </div>
   </div>
 </template>
 
