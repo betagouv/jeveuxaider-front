@@ -309,6 +309,43 @@
         </div>
       </div>
     </div>
+
+    <!-- CTA MOBILE FIXED FOOTER -->
+    <div
+      class="sm:hidden fixed bottom-0 p-4 bg-white z-50 w-full left-0 right-0"
+      style="box-shadow: 0 25px 20px 30px rgb(0 0 0 / 25%);"
+    >
+      <div class="">
+        <LoadingIndicator v-if="loading" class="min-h-[66px]" />
+        <DsfrButton
+          v-else-if="userParticipation"
+          size="lg"
+          class="w-full mt-6"
+          type="secondary"
+          @click.native="$router.push(userParticipationLink)"
+        >
+          Suivre ma candidature
+        </DsfrButton>
+        <div v-else-if="canRegister" class="relative text-center">
+          <ButtonJeProposeMonAide :mission="mission" class="w-full" />
+        </div>
+
+        <DsfrButton v-else disabled size="lg" class="w-full">
+          Inscription fermée
+        </DsfrButton>
+
+        <div v-if="mission.commitment__duration" class="mt-4 font-bold text-center">
+          <span>{{ mission.commitment__duration|label('duration') }}</span>
+          <template v-if="mission.commitment__time_period">
+            <span class="font-normal"> par </span>
+            <span>{{ mission.commitment__time_period|label('time_period') }}</span>
+          </template>
+        </div>
+        <!-- <div v-if="mission.recurrent_description" class="text-cool-gray-500 text-sm text-center">
+          {{ mission.recurrent_description }}
+        </div> -->
+      </div>
+    </div>
   </div>
 </template>
 
