@@ -22,13 +22,13 @@
                     filterValue: 'Mission en présentiel',
                     current: !$route.query['type'],
                     label: 'Près de chez moi',
-                    sublabel: `${$store.getters['algoliaSearch/nbMissionsPresentiel']} missions`
+                    sublabel: $options.filters.pluralize($store.getters['algoliaSearch/nbMissionsPresentiel'], 'mission', 'missions')
                   },
                   {
                     icon: 'RiComputerFill',
                     filterValue: 'Mission à distance',
                     label: 'Depuis chez moi',
-                    sublabel: `${$store.state.algoliaSearch.nbMissionsDistance} missions`
+                    sublabel: $options.filters.pluralize($store.state.algoliaSearch.nbMissionsDistance, 'mission', 'missions')
                   }
                 ]"
               />
@@ -51,7 +51,7 @@
         <div v-if="$store.state.algoliaSearch.results.nbHits == 0" class="text-center">
           Il n'y a aucun résultat avec les filtres actuels.<br>
           <Link
-            link-class="justify-center hover:underline"
+            class="text-jva-blue-500"
             @click.native="deleteAllFilters()"
           >
             Réinitialiser les filtres
@@ -102,6 +102,7 @@ import PrimaryMobileFilters from '~/components/section/search/missions/PrimaryMo
 import SecondaryMobileFilters from '~/components/section/search/missions/SecondaryMobileFilters.vue'
 import PromoteMissionDistance from '~/components/section/search/PromoteMissionDistance.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
@@ -112,7 +113,8 @@ export default {
     PromoteMissionDistance,
     PrimaryMobileFilters,
     SecondaryMobileFilters,
-    Pagination
+    Pagination,
+    Link
   },
   mixins: [AlgoliaMissionsQueryBuilder],
   props: {

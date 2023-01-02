@@ -43,6 +43,9 @@ export const getters = {
     state.results?.facets[facetName] ?? {}
   },
   nbMissionsPresentiel: (state, getters) => {
-    return state.indexKey === 'missionsIndex' ? getters.facetResults('type')?.['Mission en présentiel'] : 0
+    if (state.indexKey !== 'missionsIndex') {
+      return 0
+    }
+    return getters.facetResults('type')?.['Mission en présentiel'] ?? 0
   }
 }

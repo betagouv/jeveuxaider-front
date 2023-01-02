@@ -25,7 +25,7 @@
         <div v-if="$store.state.algoliaSearch.results.nbHits == 0" class="text-center">
           Il n'y a aucun résultat avec les filtres actuels.<br>
           <Link
-            link-class="justify-center hover:underline"
+            class="text-jva-blue-500"
             @click.native="deleteAllFilters()"
           >
             Réinitialiser les filtres
