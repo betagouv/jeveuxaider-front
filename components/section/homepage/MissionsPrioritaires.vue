@@ -24,9 +24,9 @@
           }"
           :slides-count="missions.length"
         >
-          <div key="decembre" href="" class="card--mission--wrapper">
+          <!-- <div key="decembre" href="" class="card--mission--wrapper">
             <CardDecembreEnsemble class="!h-full" />
-          </div>
+          </div> -->
 
           <nuxt-link
             v-for="mission in missions"
@@ -44,13 +44,13 @@
 
 <script>
 import CardMission from '@/components/card/CardMission'
-import CardDecembreEnsemble from '@/components/card/CardDecembreEnsemble'
+// import CardDecembreEnsemble from '@/components/card/CardDecembreEnsemble'
 import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
     CardMission,
-    CardDecembreEnsemble,
+    // CardDecembreEnsemble,
     Heading
   },
   data () {

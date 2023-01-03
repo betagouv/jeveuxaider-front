@@ -142,7 +142,7 @@
           <span>🎯</span>
         </NavItem> -->
 
-        <NavItem
+        <!-- <NavItem
           v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
           key="decembre-ensemble"
           href="https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/"
@@ -151,7 +151,7 @@
         >
           <span>Décembre ensemble</span>
           <span>❄️</span>
-        </NavItem>
+        </NavItem> -->
 
         <NavItem
           v-if="$store.getters.contextRole == 'admin'"
@@ -245,7 +245,7 @@
                   <span>🎯</span>
                 </NavItem> -->
 
-                <NavItem
+                <!-- <NavItem
                   v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
                   key="decembre-ensemble"
                   href="https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/"
@@ -254,7 +254,7 @@
                 >
                   <span>Décembre ensemble</span>
                   <span>❄️</span>
-                </NavItem>
+                </NavItem> -->
               </div>
 
               <div class="border-t my-2" />
