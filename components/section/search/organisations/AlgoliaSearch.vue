@@ -110,7 +110,9 @@ export default {
   created () {
     this.$store.commit('algoliaSearch/setIndexKey', 'organisationsIndex')
     this.$store.commit('algoliaSearch/setIndexName', this.$config.algolia.organisationsIndex)
+    this.$store.commit('algoliaSearch/setAvailableFacets', ['department_name', 'domaines.name', 'reseaux.name', 'publics_beneficiaires', 'activities.name', 'statut_juridique'])
     this.$store.commit('algoliaSearch/setInitialFilters', this.initialFilters)
+    this.$store.commit('algoliaSearch/setSearchParameters', this.searchParameters)
   },
   mounted () {
     if (navigator.geolocation && !this.$store.state.algoliaSearch.aroundLatLng && !this.$store.state.algoliaSearch.navigatorGeolocation) {
