@@ -97,7 +97,7 @@
               <OnlineIndicator v-if="organisation.statut_juridique === 'Association'" :published="hasPageOnline" :link="hasPageOnline ? `/organisations/${organisation.slug}` : null" />
             </div>
           </div>
-          <nuxt-link :to="`/admin/organisations/${organisation.id}/edit`">
+          <nuxt-link v-if="organisation?.permissions?.canUpdate" :to="`/admin/organisations/${organisation.id}/edit`">
             <Button icon="PencilIcon">
               Modifier
             </Button>
@@ -108,7 +108,7 @@
           <Tabs
             :tabs="[
               { name: 'Informations', to: '', icon: 'InformationCircleSolidIcon', current: !['#membres','#historique'].includes($route.hash) },
-              { name: 'Membres', to: '#membres', icon: 'UsersIcon', current: $route.hash === '#membres', count: organisation.members.length },
+              organisation?.permissions?.canUpdate ? { name: 'Membres', to: '#membres', icon: 'UsersIcon', current: $route.hash === '#membres', count: organisation.members.length } : null,
               { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash === '#historique' }
             ]"
           />
