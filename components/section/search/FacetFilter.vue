@@ -141,6 +141,14 @@ export default {
       return this.$route.query[this.facetName]?.split('|').length
     }
   },
+  watch: {
+    async '$route' () {
+      if (this.facetHits && this.facetQuery) {
+        const res = await this.searchForFacetValues(this.facetName, this.facetQuery)
+        this.facetHits = res.facetHits
+      }
+    }
+  },
   methods: {
     deleteFacet () {
       this.deleteFilter(this.facetName)

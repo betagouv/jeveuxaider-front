@@ -25,7 +25,7 @@
         <div v-if="$store.state.algoliaSearch.results.nbHits == 0" class="text-center">
           Il n'y a aucun résultat avec les filtres actuels.<br>
           <Link
-            link-class="justify-center hover:underline"
+            class="text-jva-blue-500"
             @click.native="deleteAllFilters()"
           >
             Réinitialiser les filtres
@@ -110,7 +110,9 @@ export default {
   created () {
     this.$store.commit('algoliaSearch/setIndexKey', 'organisationsIndex')
     this.$store.commit('algoliaSearch/setIndexName', this.$config.algolia.organisationsIndex)
+    this.$store.commit('algoliaSearch/setAvailableFacets', ['department_name', 'domaines.name', 'reseaux.name', 'publics_beneficiaires', 'activities.name', 'statut_juridique'])
     this.$store.commit('algoliaSearch/setInitialFilters', this.initialFilters)
+    this.$store.commit('algoliaSearch/setSearchParameters', this.searchParameters)
   },
   mounted () {
     if (navigator.geolocation && !this.$store.state.algoliaSearch.aroundLatLng && !this.$store.state.algoliaSearch.navigatorGeolocation) {

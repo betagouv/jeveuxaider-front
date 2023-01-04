@@ -151,8 +151,16 @@ export default {
       }
     },
     async facetHits () {
-      await this.$nextTick()
-      this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
+      if (this.isOpen) {
+        await this.$nextTick()
+        this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
+      }
+    },
+    async '$route' () {
+      if (this.facetHits && this.facetQuery) {
+        const res = await this.searchForFacetValues(this.facetName, this.facetQuery)
+        this.facetHits = res.facetHits
+      }
     }
   },
   methods: {

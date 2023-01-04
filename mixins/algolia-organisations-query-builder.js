@@ -1,4 +1,3 @@
-
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 
 export default {
@@ -26,16 +25,19 @@ export default {
         hitsPerPage: 18
       }
     },
-    activeMoreFacets () {
-      return this.availableFacets.filter(facetName => this.$route.query[facetName] && !['search'].includes(facetName))
-    }
-  },
-  methods: {
-    getIndexName () {
-      return this.$config.algolia.organisationsIndex
+    activeFacets () {
+      let activeFacets = this.$store.state.algoliaSearch.availableFacets.filter(facetName => this.$route.query[facetName])
+
+      activeFacets = activeFacets.map((facetName) => {
+        return this.$route.query[facetName].split('|').map((facetValue) => {
+          return `${facetName}:${facetValue}`
+        })
+      })
+
+      return activeFacets
     },
-    getAvailableFacets () {
-      return ['department_name', 'domaines.name', 'reseaux.name', 'publics_beneficiaires', 'activities.name', 'statut_juridique']
+    activeMoreFacets () {
+      return this.$store.state.algoliaSearch.availableFacets.filter(facetName => this.$route.query[facetName] && !['search'].includes(facetName))
     }
   }
 }
