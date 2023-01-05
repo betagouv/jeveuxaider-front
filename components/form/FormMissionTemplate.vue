@@ -162,6 +162,34 @@
             </FormControl>
           </div>
         </Box>
+        <Box v-if="$store.getters.contextRole === 'admin'" padding="sm">
+          <Heading :level="3" class="mb-8">
+            Tags
+          </Heading>
+          <div class="space-y-8">
+            <FormControl label="Ajouter les tags liés à ce modèle de mission" html-for="algolia-search-tags">
+              <AlgoliaTermsInput
+                :items="form.tags"
+                vocabulary-name="Missions"
+                @add-item="handleSelectedTag"
+              />
+              <div>
+                <div v-if="form.tags.length" class="mt-6">
+                  <div class="flex flex-wrap gap-2">
+                    <TagFormItem
+                      v-for="item in form.tags"
+                      :key="item.id"
+                      :tag="item"
+                      @removed="onRemovedTag"
+                    >
+                      {{ item.name }}
+                    </TagFormItem>
+                  </div>
+                </div>
+              </div>
+            </FormControl>
+          </div>
+        </Box>
       </div>
     </div>
     <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
@@ -184,11 +212,13 @@ import FormUploads from '@/mixins/form/uploads'
 import ButtonsSubmitFormMissionTemplate from '@/components/custom/ButtonsSubmitFormMissionTemplate.vue'
 import activitiesClassifierMixin from '@/mixins/activitiesClassifier'
 import Tag from '@/components/dsfr/Tag.vue'
+import AlgoliaTermsInput from '@/components/section/search/AlgoliaTermsInput'
 
 export default {
   components: {
     ButtonsSubmitFormMissionTemplate,
-    Tag
+    Tag,
+    AlgoliaTermsInput
   },
   mixins: [FormErrors, FormUploads, activitiesClassifierMixin],
   props: {
@@ -218,6 +248,12 @@ export default {
     this.fetchActivitiesClassifier()
   },
   methods: {
+    handleSelectedTag (item) {
+      this.$set(this.form, 'tags', [...this.form.tags, item])
+    },
+    onRemovedTag (item) {
+      this.form.tags = this.form.tags.filter(skill => skill.id !== item.id)
+    },
     async handleSubmit (attributes) {
       if (this.loading) {
         return

@@ -622,7 +622,8 @@ export default {
         objectif: this.mission.template?.objectif || this.mission.objectif,
         description: this.mission.template?.description || this.mission.description,
         illustrations: this.mission.illustrations || [],
-        autonomy_zips: this.mission.autonomy_zips || []
+        autonomy_zips: this.mission.autonomy_zips || [],
+        tags: this.mission?.tags?.length ? this.mission?.tags : (this.mission.template?.tags || [])
       },
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),

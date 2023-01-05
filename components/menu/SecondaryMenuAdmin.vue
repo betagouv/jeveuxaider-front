@@ -94,7 +94,6 @@ export default {
           label: 'Scripts',
           childrens: [
             { label: 'Transfert de missions', to: '/admin/scripts/migrate-organisation-missions' },
-            { label: 'Activités des missions libres', to: '/admin/scripts/activites-missions-libres' },
             { label: 'Réinitialisation d\'un utilisateur', to: '/admin/scripts/user-reset-context-role' }
           ]
         }
