@@ -125,10 +125,14 @@ export default {
       this.$store.commit('algoliaSearch/setSearchParameters', this.searchParameters)
       await this.search()
       this.$store.commit('algoliaSearch/setLoadingNavigatorGeolocation', false)
+      window.plausible &&
+        window.plausible('Géolocalisation par navigateur - Acceptation')
     },
     onNavigatorGeolocationError (data) {
       // console.log('ERROR', data)
       this.$store.commit('algoliaSearch/setLoadingNavigatorGeolocation', false)
+      window.plausible &&
+        window.plausible('Géolocalisation par navigateur - Refus')
     }
   },
   watch: {
