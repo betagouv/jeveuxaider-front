@@ -11,7 +11,7 @@
         v-model="inputValue"
         type="text"
         :placeholder="placeholder"
-        class="border-0 p-0 pl-3 text-sm !outline-none w-full"
+        class="border-0 p-0 pl-3 text-base sm:text-sm !outline-none w-full"
         autocomplete="off"
       >
 
