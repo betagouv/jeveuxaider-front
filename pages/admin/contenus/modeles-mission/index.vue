@@ -88,25 +88,21 @@
           Réseaux
         </Tag>
 
-        <SelectAdvanced
+        <TagSelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Tous les statuts"
           :options="$labels.mission_template_workflow_states"
           :value="$route.query['filter[state]']"
-          theme="filter"
-          variant="transparent"
           clearable
           @input="changeFilter('filter[state]', $event)"
         />
-        <SelectAdvanced
+        <TagSelectAdvanced
           :key="`domaine-${$route.fullPath}`"
           name="domaine"
           placeholder="Tous les domaines"
           :options="$labels.domaines"
           :value="$route.query['filter[domaine.id]']"
-          variant="transparent"
-          theme="filter"
           clearable
           @input="changeFilter('filter[domaine.id]', $event)"
         />

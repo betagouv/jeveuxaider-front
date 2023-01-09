@@ -76,13 +76,11 @@
           Hors ligne
         </Tag>
 
-        <SelectAdvanced
+        <TagSelectAdvanced
           name="domaine"
           placeholder="Tous les domaines"
           :options="$labels.domaines"
           :value="$route.query['filter[domaines.id]']"
-          variant="transparent"
-          theme="filter"
           clearable
           @input="changeFilter('filter[domaines.id]', $event)"
         />

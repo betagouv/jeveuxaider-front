@@ -1,26 +1,26 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerTemoignage :temoignage-id="drawerTemoignageId" @close="drawerTemoignageId = null" @updated="$fetch()" @refetch="$fetch()" />
+    <!-- <DrawerTemoignage :temoignage-id="drawerTemoignageId" @close="drawerTemoignageId = null" @updated="$fetch()" @refetch="$fetch()" /> -->
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[
           { text: 'Tableau de bord', to: '/dashboard' },
-          { text: 'Témoignages' },
+          { text: 'Notes' },
         ]"
       />
     </portal>
     <SectionHeading
       :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(
         queryResult.total,
-        'témoignage',
-        'témoignages',
+        'note',
+        'notes',
         false
       )}`"
     />
     <SearchFilters>
       <Input
         name="search"
-        placeholder="Rechercher par mots clés, email, nom"
+        placeholder="Rechercher par mots clés, nom"
         icon="SearchIcon"
         variant="transparent"
         :value="$route.query['filter[search]']"
@@ -37,52 +37,53 @@
           is-selected-class="border-gray-50 bg-gray-50"
           @click.native="deleteAllFilters"
         >
-          Tous
+          Toutes
         </Tag>
 
         <Tag
-          :key="`published-${$route.fullPath}`"
+          :key="`mine-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'"
+          :is-selected="$route.query['filter[mine]'] && $route.query['filter[mine]'] == '1'"
           is-selected-class="border-gray-50 bg-gray-50"
-          @click.native="changeFilter('filter[is_published]', 'true')"
+          @click.native="changeFilter('filter[mine]', '1')"
         >
-          En ligne
+          Mes notes
         </Tag>
 
         <Tag
-          :key="`unpublished-${$route.fullPath}`"
+          :key="`type-organisations-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'"
+          :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'organisations'"
           is-selected-class="border-gray-50 bg-gray-50"
-          @click.native="changeFilter('filter[is_published]', 'false')"
+          @click.native="changeFilter('filter[type]', 'organisations')"
         >
-          Hors ligne
+          Organisations
         </Tag>
 
-        <TagSelectAdvanced
-          :key="`state-${$route.fullPath}`"
-          name="state"
-          placeholder="Toutes les notes"
-          :options="$labels.testimonial_grade"
-          :value="$route.query['filter[grade]']"
-          clearable
-          @input="changeFilter('filter[grade]', $event)"
-        />
+        <Tag
+          :key="`type-missions-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'missions'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[type]', 'missions')"
+        >
+          Missions
+        </Tag>
       </template>
     </SearchFilters>
 
     <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
-      <CardTemoignage
-        v-for="temoignage in queryResult.data"
-        :key="temoignage.id"
-        class="cursor-pointer"
-        :temoignage="temoignage"
-        @click.native="drawerTemoignageId = temoignage.id"
+      <CardNote
+        v-for="note in queryResult.data"
+        :key="note.id"
+        class=""
+        :note="note"
       />
     </div>
 
@@ -98,8 +99,8 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import CardTemoignage from '@/components/card/CardTemoignage.vue'
-import DrawerTemoignage from '@/components/drawer/DrawerTemoignage.vue'
+import CardNote from '@/components/card/CardNote.vue'
+// import DrawerTemoignage from '@/components/drawer/DrawerTemoignage.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
@@ -107,8 +108,7 @@ import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
-    CardTemoignage,
-    DrawerTemoignage,
+    CardNote,
     SearchFilters,
     Pagination,
     Breadcrumb,
@@ -119,7 +119,7 @@ export default {
   middleware: 'authenticated',
   asyncData ({ store, error }) {
     if (
-      !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'responsable'].includes(
+      !['admin', 'referent'].includes(
         store.getters.contextRole
       )
     ) {
@@ -128,7 +128,7 @@ export default {
   },
   data () {
     return {
-      endpoint: '/temoignages',
+      endpoint: '/notes',
       queryParams: {
       },
       drawerTemoignageId: null

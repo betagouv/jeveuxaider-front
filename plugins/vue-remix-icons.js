@@ -6,6 +6,7 @@ import Vue from 'vue'
 import RiSearchLine from 'vue-remix-icons/icons/RiSearchLine.vue'
 import RiSearchEyeFill from 'vue-remix-icons/icons/RiSearchEyeFill.vue'
 import RiArrowRightLine from 'vue-remix-icons/icons/RiArrowRightLine.vue'
+import RiArrowDownSLine from 'vue-remix-icons/icons/RiArrowDownSLine.vue'
 import RiAddLine from 'vue-remix-icons/icons/RiAddLine.vue'
 import RiBuildingFill from 'vue-remix-icons/icons/RiBuildingFill.vue'
 import RiExternalLinkLine from 'vue-remix-icons/icons/RiExternalLinkLine.vue'
@@ -46,6 +47,7 @@ const components = {
   RiSearchLine,
   RiSearchEyeFill,
   RiArrowRightLine,
+  RiArrowDownSLine,
   RiAddLine,
   RiBuildingFill,
   RiExternalLinkLine,

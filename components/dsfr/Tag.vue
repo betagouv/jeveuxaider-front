@@ -8,7 +8,6 @@
       {'px-3 py-1 text-sm h-8': size == 'md'},
 
       {'text-[#161616] bg-[#EEEEEE]': !customTheme && !context},
-      // {'text-white bg-[#242424]': theme === 'dark' && !context},
 
       {'cursor-pointer': ['clickable', 'selectable', 'deletable'].includes(context)},
 
@@ -22,7 +21,7 @@
   >
     <component
       :is="icon"
-      v-if="icon"
+      v-if="icon && iconPosition === 'left'"
       :class="[
         'flex-none',
 
@@ -42,11 +41,29 @@
       v-if="!iconOnly"
       :class="[
         'truncate',
-        {'ml-1': ['sm', 'md'].includes(size) && icon},
+        {'ml-1': ['sm', 'md'].includes(size) && icon && iconPosition === 'left'},
+        {'mr-1': ['sm', 'md'].includes(size) && icon && iconPosition === 'right'},
       ]"
     >
       <slot />
     </span>
+
+    <component
+      :is="iconOrClearable"
+      v-if="icon && iconPosition === 'right'"
+      :class="[
+        'flex-none',
+        {'fill-current': iconFillCurrent},
+        {'w-3 h-3': size === 'sm'},
+        {'w-4 h-4': size === 'md'},
+        {'mr-[-0.09375rem]': size === 'sm'},
+        {'mr-[-0.125rem]': size === 'md'},
+        {'ml-[-0.09375rem]': size === 'sm' && iconOnly},
+        {'ml-[-0.125rem]': size === 'md' && iconOnly},
+        {'pointer-events-none': clearable && !isActive}
+      ]"
+      @click.native.stop="isActive ? $emit('clear') : $emit('icon-right-click')"
+    />
 
     <RiCheckboxCircleLine
       v-if="isSelected"
@@ -70,15 +87,24 @@ export default {
       default: 'sm',
       validator: s => ['sm', 'md'].includes(s)
     },
+    clearable: {
+      type: Boolean,
+      default: false
+    },
     context: {
       type: [String, null],
       default: null,
-      validator: c => ['clickable', 'selectable', 'deletable'].includes(c) // @todo deletable
+      validator: c => ['clickable', 'selectable'].includes(c)
     },
     icon: {
       // See vue-remix-icons.js
       type: [String, null],
       default: null
+    },
+    iconPosition: {
+      type: String,
+      default: 'left',
+      validator: i => ['left', 'right'].includes(i)
     },
     iconOnly: {
       type: Boolean,
@@ -104,6 +130,12 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  computed: {
+    iconOrClearable () {
+      return this.isActive ? 'RiCloseFill' : this.icon
+    }
   }
+
 }
 </script>

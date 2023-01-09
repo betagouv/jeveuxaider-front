@@ -103,14 +103,12 @@
           Hors ligne
         </Tag>
 
-        <SelectAdvanced
+        <TagSelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Tous les statuts"
           :options="$labels.territoire_workflow_states"
           :value="$route.query['filter[state]']"
-          theme="filter"
-          variant="transparent"
           clearable
           @input="changeFilter('filter[state]', $event)"
         />

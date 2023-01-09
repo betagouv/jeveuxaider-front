@@ -65,6 +65,8 @@
       </Box>
     </template>
     <template #right>
+      <MoreNumbers v-if="['admin','referent'].includes($store.getters.contextRole)" />
+      <GuideLinks />
       <HelpCenter />
     </template>
   </Container2Cols>
@@ -73,12 +75,16 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
+import GuideLinks from '@/components/section/dashboard/GuideLinks'
+import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
     HelpCenter,
+    GuideLinks,
+    MoreNumbers,
     Pagination,
     Breadcrumb
   },

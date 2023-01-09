@@ -61,7 +61,7 @@
             />
           </div>
           <div class="flex justify-center mt-8">
-            <Link :to="`/admin/contenus/testimonials`" class="uppercase font-semibold text-sm hover:underline">
+            <Link :to="`/admin/temoignages`" class="uppercase font-semibold text-sm hover:underline">
               Tous les retours
             </Link>
           </div>
@@ -118,23 +118,7 @@
         </div>
       </Box>
       <MoreNumbers v-if="['admin','referent'].includes($store.getters.contextRole)" />
-      <Box>
-        <Heading as="h2" :level="2" class="mb-8 font-extrabold">
-          {{ $store.getters.contextRole === 'admin' ? 'Liens utiles' : 'Suivez le guide' }}
-        </Heading>
-        <StackedList class="border-t">
-          <StackedListItem
-            v-for="link,i in links"
-            :key="i"
-            :icon="link.icon"
-            :link="link.link"
-          >
-            <div class="group-hover:underline font-bold">
-              {{ link.title }}
-            </div>
-          </StackedListItem>
-        </StackedList>
-      </Box>
+      <GuideLinks />
       <HelpCenter />
     </template>
   </Container2Cols>
@@ -144,6 +128,7 @@
 import MixinAction from '@/mixins/action'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
+import GuideLinks from '@/components/section/dashboard/GuideLinks'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import CardStatistic from '@/components/card/CardStatistic'
 import CardTemoignage from '@/components/card/CardTemoignage'
@@ -158,7 +143,8 @@ export default {
     MoreNumbers,
     CardTemoignage,
     ButtonCreateMission,
-    Breadcrumb
+    Breadcrumb,
+    GuideLinks
   },
   mixins: [MixinAction],
   middleware: 'authenticated',
@@ -182,24 +168,7 @@ export default {
     }
   },
   computed: {
-    links () {
-      if (this.$store.getters.contextRole === 'admin') {
-        return [
-          { icon: '🏞', title: 'Territoires', link: '/admin/contenus/territoires' },
-          { icon: '🗂', title: 'Modèles de missions', link: '/admin/contenus/modeles-mission' },
-          { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
-        ]
-      }
-      if (this.$store.getters.contextRole === 'tete_de_reseau') {
-        return [
-          { icon: '🗂', title: 'Modèles de missions', link: '/admin/contenus/modeles-mission' },
-          { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
-        ]
-      }
-      return [
-        { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
-      ]
-    }
+
   },
   async created () {
     await Promise.all([
