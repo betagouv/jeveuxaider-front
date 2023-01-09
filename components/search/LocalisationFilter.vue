@@ -3,8 +3,11 @@
     <button class="group flex justify-between items-center cursor-pointer w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
       <div class="flex space-x-2 items-center text-gray-900 truncate">
         <RiMapPin2Fill class="h-4 w-4 flex-none transition-opacity opacity-25 group-hover:opacity-100" />
-        <div v-if="!$route.query.city && (ipLatLng || $store.state.algoliaSearch.navigatorGeolocation)" class="truncate">
+        <div v-if="!$route.query.city && $store.state.algoliaSearch.navigatorGeolocation" class="truncate font-bold">
           Autour de moi
+        </div>
+        <div v-if="!$route.query.city && ipLatLng" class="truncate italic pr-[1px] text-[#888888]">
+          Ville ou code postal
         </div>
         <div v-else class="font-bold truncate">
           {{ $route.query.city }}
@@ -30,7 +33,7 @@
             {{ label }}
           </div>
 
-          <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Nom ou code postal" @input="handleInput" />
+          <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Renseignez une ville ou un code postal" @input="handleInput" />
         </div>
 
         <div class="text-sm">

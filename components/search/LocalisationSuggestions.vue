@@ -2,9 +2,9 @@
   <div>
     <div class="space-y-3">
       <div class="font-medium text-[15px]">
-        Ma ville est…
+        Localisation
       </div>
-      <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Nom ou code postal" @input="handleInput" @clear="handleSelectedAdress(null)" />
+      <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Renseignez une ville ou un code postal" @input="handleInput" @clear="handleSelectedAdress(null)" />
     </div>
     <div class="flex flex-col py-2 text-sm">
       <button
