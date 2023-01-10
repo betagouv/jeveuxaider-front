@@ -1,11 +1,11 @@
 <template>
-  <div class="flex items-center">
+  <div class="flex items-stretch">
     <button
       v-for="tab,i in tabs"
       :key="i"
       :class="[
-        'flex-grow flex flex-col sm:flex-row justify-center items-center px-4 py-3 sm:px-8 sm:py-6 sm:space-x-2 transition',
-        isActiveFilter(filterName, tab.filterValue) || tab.current ? 'bg-white shadow-active cursor-default' : 'shadow-inactive cursor-pointer bg-[#E3E3FD] hover:bg-[#C1C1FB] active:bg-[#ADADF9]'
+        'flex-grow flex flex-col sm:flex-row justify-center items-center px-4 py-4 sm:px-8 sm:space-x-2 transition ',
+        isActiveFilter(filterName, tab.filterValue) || tab.current ? 'bg-white shadow-active cursor-default border-t-4 border-jva-blue-500' : 'cursor-pointer bg-transparent hover:bg-[#F3EDE5] active:bg-[#e3d5c5] border-[#C6C6C6] border border-t'
       ]"
       @click="handleClickTab(tab)"
     >
@@ -14,18 +14,25 @@
         v-if="tab.icon"
         :class="[
           'fill-current h-7 w-7 sm:h-5 sm:w-5 mb-2 sm:mb-0 transition',
-          isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-jva-blue-500' : 'text-gray-900',
+          isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-jva-blue-500' : 'text-gray-600',
         ]"
         aria-hidden="true"
       />
-      <span
-        :class="[
-          'text-center sm:text-left transition',
-          isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-gray-700 font-bold': 'font-normal text-gray-900',
-        ]"
-      >
-        {{ tab.label || tab.filterValue }}
-      </span>
+
+      <div class="text-center sm:text-left flex flex-col">
+        <span
+          :class="[
+            'transition font-bold',
+            isActiveFilter(filterName, tab.filterValue) || tab.current ? 'text-gray-700': 'text-gray-600',
+          ]"
+        >
+          {{ tab.label || tab.filterValue }}
+        </span>
+
+        <span v-if="tab.sublabel" class="text-center sm:text-left text-[#929292] text-xs leading-none mt-[2px]">
+          {{ tab.sublabel }}
+        </span>
+      </div>
     </button>
   </div>
 </template>

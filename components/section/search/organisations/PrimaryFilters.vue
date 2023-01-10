@@ -17,7 +17,7 @@
           <button class="flex space-x-2 items-center justify-between group w-full">
             <div class="flex space-x-2 items-center truncate">
               <RiBookmark3Fill class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none" />
-              <span v-if="!firstValueSelected">Toutes</span>
+              <span v-if="!firstValueSelected" class="italic pr-[1px] text-[#888888]">Toutes</span>
               <span v-else class="font-bold truncate">
                 {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </span>
@@ -36,7 +36,7 @@
           <button class="flex space-x-2 items-center justify-between group w-full">
             <div class="flex space-x-2 items-center truncate">
               <RiUserHeartFill class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none" />
-              <span v-if="!firstValueSelected">Toutes</span>
+              <span v-if="!firstValueSelected" class="italic pr-[1px] text-[#888888]">Tous</span>
               <span v-else class="font-bold truncate">
                 {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </span>

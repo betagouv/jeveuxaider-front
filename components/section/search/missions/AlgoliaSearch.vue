@@ -21,12 +21,14 @@
                     icon: 'RiMapPinFill',
                     filterValue: 'Mission en présentiel',
                     current: !$route.query['type'],
-                    label: 'Près de chez moi'
+                    label: 'Près de chez moi',
+                    sublabel: $options.filters.pluralize($store.getters['algoliaSearch/nbMissionsPresentiel'], 'mission', 'missions')
                   },
                   {
                     icon: 'RiComputerFill',
                     filterValue: 'Mission à distance',
-                    label: 'Depuis chez moi'
+                    label: 'Depuis chez moi',
+                    sublabel: $options.filters.pluralize($store.state.algoliaSearch.nbMissionsDistance, 'mission', 'missions')
                   }
                 ]"
               />
@@ -49,7 +51,7 @@
         <div v-if="$store.state.algoliaSearch.results.nbHits == 0" class="text-center">
           Il n'y a aucun résultat avec les filtres actuels.<br>
           <Link
-            link-class="justify-center hover:underline"
+            class="text-jva-blue-500"
             @click.native="deleteAllFilters()"
           >
             Réinitialiser les filtres
@@ -100,6 +102,7 @@ import PrimaryMobileFilters from '~/components/section/search/missions/PrimaryMo
 import SecondaryMobileFilters from '~/components/section/search/missions/SecondaryMobileFilters.vue'
 import PromoteMissionDistance from '~/components/section/search/PromoteMissionDistance.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
@@ -110,7 +113,8 @@ export default {
     PromoteMissionDistance,
     PrimaryMobileFilters,
     SecondaryMobileFilters,
-    Pagination
+    Pagination,
+    Link
   },
   mixins: [AlgoliaMissionsQueryBuilder],
   props: {
@@ -156,12 +160,23 @@ export default {
   created () {
     this.$store.commit('algoliaSearch/setIndexKey', 'missionsIndex')
     this.$store.commit('algoliaSearch/setIndexName', this.$config.algolia.missionsIndex)
+    this.$store.commit('algoliaSearch/setAvailableFacets', ['type', 'activity.name', 'structure.name', 'tags', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires', 'template_subtitle', 'publics_volontaires'])
+    this.$store.commit('algoliaSearch/setAvailableNumericFilters', ['commitment__total', 'is_autonomy'])
     this.$store.commit('algoliaSearch/setInitialFilters', this.initialFilters)
     if (this.initialHitsPerPage) {
       this.$store.commit('algoliaSearch/setHitsPerPage', this.initialHitsPerPage)
     }
     if (this.initialAroundLatLng) {
       this.$store.commit('algoliaSearch/setAroundLatLng', this.initialAroundLatLng)
+    }
+    this.$store.commit('algoliaSearch/setSearchParameters', this.searchParameters)
+  },
+  mounted () {
+    if (navigator.geolocation && !this.$store.state.algoliaSearch.aroundLatLng && !this.$store.state.algoliaSearch.navigatorGeolocation) {
+      if (!this.$route.query.aroundLatLng) {
+        this.$store.commit('algoliaSearch/setLoadingNavigatorGeolocation', true)
+      }
+      navigator.geolocation.getCurrentPosition(this.onNavigatorGeolocation, this.onNavigatorGeolocationError)
     }
   },
   beforeDestroy () {

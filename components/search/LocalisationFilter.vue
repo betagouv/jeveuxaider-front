@@ -3,14 +3,22 @@
     <button class="group flex justify-between items-center cursor-pointer w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
       <div class="flex space-x-2 items-center text-gray-900 truncate">
         <RiMapPin2Fill class="h-4 w-4 flex-none transition-opacity opacity-25 group-hover:opacity-100" />
-        <div v-if="ipLatLng" class="truncate">
+        <div v-if="!$route.query.city && $store.state.algoliaSearch.navigatorGeolocation" class="truncate font-bold">
           Autour de moi
+        </div>
+        <div v-if="!$route.query.city && ipLatLng" class="truncate italic pr-[1px] text-[#888888]">
+          Ville ou code postal
         </div>
         <div v-else class="font-bold truncate">
           {{ $route.query.city }}
         </div>
       </div>
-      <ChevronDownIcon class="text-gray-500 h-4 w-4 group-hover:text-gray-900 flex-none" />
+
+      <RiLoader5Line
+        v-if="$store.state.algoliaSearch.loadingNavigatorGeolocation"
+        class="animate-spin h-5 w-5 text-gray-400 fill-current"
+      />
+      <ChevronDownIcon v-else class="text-gray-500 h-4 w-4 group-hover:text-gray-900 flex-none" />
     </button>
 
     <transition name="fade-in">
@@ -25,19 +33,51 @@
             {{ label }}
           </div>
 
-          <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Nom ou code postal" @input="handleInput" />
+          <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Renseignez une ville ou un code postal" @input="handleInput" />
         </div>
 
         <div class="text-sm">
           <div class="flex flex-col py-2">
+            <!-- Seulement si geolocalisation par navigateur acceptée -->
+            <button
+              v-if="$store.state.algoliaSearch.navigatorGeolocation"
+              :class="[
+                'px-4 py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD]',
+                {'text-jva-blue-500': !$route.query.aroundLatLng}
+              ]"
+              @click="handleSelectedAdress(null)"
+            >
+              <div class="flex items-center">
+                <LocationMarkerIcon
+                  :class="[
+                    'flex-none mr-2 transition group-hover:text-jva-blue-500 group-hover:scale-110',
+                    !$route.query.aroundLatLng ? 'text-jva-blue-500': 'text-gray-400'
+                  ]"
+                  width="16"
+                  height="16"
+                />
+                <div>Autour de moi</div>
+              </div>
+            </button>
+
             <button
               v-for="suggestion in suggestions"
               :key="suggestion.id"
-              class="px-4 py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD]"
+              :class="[
+                'px-4 py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD]',
+                {'text-jva-blue-500': $route.query?.aroundLatLng === suggestion.aroundLatLng}
+              ]"
               @click="handleSelectedAdress(suggestion)"
             >
               <div class="flex items-center">
-                <LocationMarkerIcon class="flex-none mr-2 transition text-gray-400 group-hover:text-jva-blue-500 group-hover:scale-110" width="16" height="16" />
+                <LocationMarkerIcon
+                  :class="[
+                    'flex-none mr-2 transition group-hover:text-jva-blue-500 group-hover:scale-110',
+                    $route.query?.aroundLatLng === suggestion.aroundLatLng ? 'text-jva-blue-500': 'text-gray-400'
+                  ]"
+                  width="16"
+                  height="16"
+                />
                 <div class="truncate">
                   {{ suggestion.city }}
                 </div>

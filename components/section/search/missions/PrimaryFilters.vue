@@ -5,7 +5,7 @@
         Localisation
       </div>
       <div class="">
-        <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Saisissez votre ville" :ip-lat-lng="$store.state.algoliaSearch.results.aroundLatLng" />
+        <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Localisation" :ip-lat-lng="$store.state.algoliaSearch.results.aroundLatLng" />
         <div v-else>
           <div class="flex space-x-2 items-center">
             <RiComputerFill class="h-4 w-4 flex-none transition-opacity opacity-25 group-hover:opacity-100" />
@@ -23,7 +23,7 @@
           <button class="w-full flex space-x-2 items-center justify-between group">
             <div class="flex space-x-2 items-center truncate">
               <RiBookmark3Fill class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none" />
-              <span v-if="!firstValueSelected">Toutes</span>
+              <span v-if="!firstValueSelected" class="italic pr-[1px] text-[#888888]">Toutes</span>
               <span v-else class="font-bold truncate">
                 {{ firstValueSelected }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
               </span>
@@ -42,7 +42,7 @@
           <div class="flex space-x-2 items-center justify-between group w-full">
             <div class="flex space-x-2 items-center truncate">
               <RiTimeFill class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none" />
-              <div :class="['truncate', {'font-bold': activeValue }]">
+              <div :class="['truncate', {'font-bold': activeValue }, {'italic pr-[1px] text-[#888888]': !activeValue}]">
                 {{ activeValue || 'Toutes' }}
               </div>
             </div>
