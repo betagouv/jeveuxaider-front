@@ -19,14 +19,10 @@
         as="button"
         icon="LocationMarkerIcon"
         :icon-fill-current="false"
+        class="truncate"
         @click.native="isSearchMissionsLocalisationOpen = true"
       >
-        <div v-if="$store.state.algoliaSearch.results.aroundLatLng || $store.state.algoliaSearch.navigatorGeolocation">
-          Autour de moi
-        </div>
-        <div v-else class="truncate">
-          {{ $route.query.city }}
-        </div>
+        {{ $route.query.city || 'Autour de moi' }}
       </Tag>
       <Tag
         :is-active="nbMobileSecondaryFilters > 0"
