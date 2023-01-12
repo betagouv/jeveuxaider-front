@@ -117,7 +117,28 @@
           />
         </div>
       </Box>
-      <BoxScore v-if="['responsable'].includes($store.getters.contextRole)" :structure-id="$store.getters.currentRole.contextable_id" />
+      <BoxScore
+        v-if="['responsable'].includes($store.getters.contextRole)"
+        padding="sm"
+        :structure-id="$store.getters.currentRole.contextable_id"
+      >
+        <template slot="top">
+          <Heading as="h2" :level="3" class="mb-8">
+            Votre visibilité
+          </Heading>
+        </template>
+        <template slot="bottom">
+          <div
+            class="mt-8 text-center"
+          >
+            <nuxt-link to="/admin/participations">
+              <Button type="secondary">
+                Modérer les participations
+              </Button>
+            </nuxt-link>
+          </div>
+        </template>
+      </BoxScore>
       <MoreNumbers v-if="['admin','referent'].includes($store.getters.contextRole)" />
       <GuideLinks />
       <HelpCenter />
@@ -136,6 +157,7 @@ import CardTemoignage from '@/components/card/CardTemoignage'
 import ButtonCreateMission from '@/components/custom/ButtonCreateMission'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import BoxScore from '@/components/section/organisation/BoxScore.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
@@ -147,7 +169,8 @@ export default {
     ButtonCreateMission,
     Breadcrumb,
     GuideLinks,
-    BoxScore
+    BoxScore,
+    Button
   },
   mixins: [MixinAction],
   middleware: 'authenticated',

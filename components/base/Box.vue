@@ -30,7 +30,7 @@ export default {
     loading: { type: Boolean, default: false },
     loadingText: { type: String, default: 'Chargement en cours' },
     variant: {
-      type: [String],
+      type: [String, Boolean],
       default: 'shadow',
       validator: s => ['shadow', 'flat', false].includes(s)
     },

@@ -152,34 +152,13 @@
                 </div>
               </Box>
             </div>
-            <div v-if="organisationStats && organisationStats.response_ratio">
-              <div class="px-2 mb-2 text-sm uppercase font-semibold text-gray-600">
-                Vos échanges avec les bénévoles
+            <div>
+              <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
+                Votre visibilité
               </div>
-              <Box variant="flat" :padding="!Boolean(organisationStats) ? 'lg' : false" :loading="!Boolean(organisationStats)" loading-text="Récupération de l'activité ..." class="!border-none">
-                <div v-if="organisationStats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
-                  <CardStatistic
-                    :value="`${organisationStats.response_ratio}%`"
-                    title="Taux de réponse"
-                    subtitle="aux participations"
-                  />
-                  <CardStatistic
-                    :value="`${(organisationStats.response_time / (60 * 60 * 24)).toFixed(0)} jours`"
-                    title="Temps de réponse"
-                    subtitle="aux participations"
-                  />
-                  <div class="col-span-2 bg-white">
-                    <CardStatistic
-                      :value="`${organisationStats.score_response_time}/100`"
-                      title="Score de réactivité"
-                    />
-                    <div class="text-xs text-gray-700 font-medium text-center px-12 mb-4 relative -mt-3">
-                      🏆 Améliorez votre visibilité sur la plateforme<br> en améliorant votre réactivité ›
-                    </div>
-                  </div>
-                </div>
-              </Box>
+              <BoxScore :variant="false" :padding="false" :structure-id="organisation.id" />
             </div>
+
             <BoxReseau v-for="reseau in organisation.reseaux" :key="reseau.id" class="mb-8" :reseau="reseau" />
             <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="organisation.department" />
           </div>
@@ -228,6 +207,7 @@ import BoxReseau from '@/components/section/organisation/BoxReseau'
 import BoxNotes from '@/components/custom/BoxNotes'
 import BoxMember from '@/components/section/BoxMember'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import BoxScore from '@/components/section/organisation/BoxScore.vue'
 
 export default {
   components: {
@@ -244,7 +224,8 @@ export default {
     BoxReseau,
     BoxNotes,
     BoxMember,
-    Breadcrumb
+    Breadcrumb,
+    BoxScore
   },
   mixins: [MixinOrganisation],
   middleware: 'authenticated',
