@@ -19,14 +19,10 @@
         size="md"
         context="clickable"
         as="button"
+        class="truncate"
         @click.native="isSearchOrganisationsLocalisationOpen = true"
       >
-        <div v-if="$store.state.algoliaSearch.results.aroundLatLng || $store.state.algoliaSearch.navigatorGeolocation">
-          Autour de moi
-        </div>
-        <div v-else>
-          {{ $route.query.city }}
-        </div>
+        {{ $route.query.city || 'Autour de moi' }}
       </Tag>
 
       <Tag
