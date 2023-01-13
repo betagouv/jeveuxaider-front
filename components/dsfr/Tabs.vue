@@ -1,7 +1,13 @@
 <template>
   <div>
     <ul role="tablist" :aria-label="name">
-      <li role="presentation" class="flex items-stretch overflow-x-auto px-3 py-1">
+      <li
+        role="presentation"
+        :class="[
+          'flex items-stretch overflow-x-auto px-3 py-1',
+          tabswrapperClass
+        ]"
+      >
         <button
           v-for="(title, key) in tabs"
           :id="`tabpanel-${_uid}-${key}`"
@@ -62,11 +68,19 @@ export default {
     tabpanelClass: {
       type: String,
       default: ''
+    },
+    selectedTab: {
+      type: Number,
+      default: 0
+    },
+    tabswrapperClass: {
+      type: String,
+      default: ''
     }
   },
   data () {
     return {
-      selected: 0
+      selected: this.selectedTab
     }
   }
 }

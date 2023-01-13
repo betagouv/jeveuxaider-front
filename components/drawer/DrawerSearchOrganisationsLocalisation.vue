@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO DELETE -->
   <DrawerLeft :is-open="isOpen" @close="$emit('close')">
     <template #title>
       <div class="font-bold">
@@ -9,9 +10,7 @@
       Je cherche une association située à…
     </div>
 
-    <LocalisationSuggestions
-      :ip-lat-lng="$store.state.algoliaSearch.results.aroundLatLng"
-    />
+    <LocalisationSuggestions />
 
     <template #footer>
       <div
