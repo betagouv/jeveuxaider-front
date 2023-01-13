@@ -37,7 +37,7 @@
           </client-only>
 
           <div class="text-xs text-[#696974] font-medium text-center px-12 relative">
-            🏆 Chez JeVeuxAider.gouv.fr nous chouchoutons les bons élèves. Plus vous êtes réactifs, plus la visibilité de vos missions augmente. <span class="cursor-pointer underline text-jva-blue-500 hover:text-jva-blue-600">Astuces ›</span>
+            🏆 Chez JeVeuxAider.gouv.fr, nous valorisons votre réactivité : apportez une réponse rapide aux bénévoles pour décupler la visibilité de vos missions ! <span class="cursor-pointer underline text-jva-blue-500 hover:text-jva-blue-600" @click="toggleOverlay">Astuces ›</span>
           </div>
         </div>
         <CardStatistic
@@ -52,16 +52,51 @@
         />
       </div>
       <slot name="bottom" />
+
+      <portal to="body-end">
+        <Overlay :is-open="showOverlay" title="Augmenter son score" @close="showOverlay = false">
+          <div class="text-cool-gray-500 text-lg lg:text-xl text-center">
+            Pour améliorer votre score de réactivité, voici quelques règles à suivre :
+          </div>
+          <div class="my-8 space-y-8">
+            <div>
+              <div class="text-lg mb-4 font-semibold">
+                💬 Répondez aux bénévoles dans un délai raisonnable
+              </div>
+              <div class="text-gray-600">
+                Une réponse apportée au plus tôt est la garantie de bénévoles mobilisés ! Nous recommandons d’apporter une première réponse dans un délai de 5 jours ouvrés.
+              </div>
+            </div>
+            <div>
+              <div class="text-lg mb-4 font-semibold">
+                👊 Tenez à jour les candidatures reçues sur la plateforme
+              </div>
+              <div class="text-gray-600">
+                Que votre réponse soit positive ou négative, il est essentiel de tenir au courant les bénévoles qui ont proposé leur aide : prenez le temps de répondre à leur message et de mettre à jour le statut de leur participation.
+              </div>
+            </div>
+            <div class="text-center">
+              <nuxt-link to="/admin/participations">
+                <Button type="secondary">
+                  Modérer les participations
+                </Button>
+              </nuxt-link>
+            </div>
+          </div>
+        </Overlay>
+      </portal>
     </div>
   </Box>
 </template>
 
 <script>
 import CardStatistic from '@/components/card/CardStatistic'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
-    CardStatistic
+    CardStatistic,
+    Button
   },
   props: {
     structureId: {
@@ -82,7 +117,8 @@ export default {
   data () {
     return {
       score: null,
-      loadingScore: true
+      loadingScore: true,
+      showOverlay: false
     }
   },
   async fetch () {
@@ -92,6 +128,11 @@ export default {
     const { data: score } = await this.$axios.get(`/structures/${this.structureId}/score`)
     this.score = score
     this.loadingScore = false
+  },
+  methods: {
+    toggleOverlay () {
+      this.showOverlay = !this.showOverlay
+    }
   }
 }
 </script>
