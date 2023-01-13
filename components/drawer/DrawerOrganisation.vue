@@ -66,6 +66,7 @@
         </div>
         <div class="border-t -mx-6 my-6" />
         <BoxInformations class="mb-8" :organisation="organisation" show-title />
+        <BoxScoreLight v-if="['admin', 'referent'].includes($store.getters.contextRole)" class="mb-8" :structure-id="organisation.id" show-title />
         <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="organisation.department" />
         <BoxMission class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
         <BoxParticipation class="mb-8" :organisation="organisation" :organisation-stats="organisationStats" />
@@ -101,6 +102,7 @@ import BoxReferents from '@/components/section/BoxReferents'
 import LoadingIndicator from '@/components/custom/LoadingIndicator'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
 import Button from '@/components/dsfr/Button.vue'
+import BoxScoreLight from '@/components/section/organisation/BoxScoreLight.vue'
 
 export default {
   components: {
@@ -113,7 +115,8 @@ export default {
     LoadingIndicator,
     OnlineIndicator,
     BoxReferents,
-    Button
+    Button,
+    BoxScoreLight
   },
   mixins: [MixinOrganisation],
   props: {

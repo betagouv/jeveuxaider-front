@@ -41,7 +41,7 @@
           </div>
         </div>
         <CardStatistic
-          :value="`${score.response_ratio}%`"
+          :value="`${score.response_ratio || 0}%`"
           title="Taux de réponse"
           subtitle="aux participations"
         />
