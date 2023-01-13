@@ -52,7 +52,7 @@
       <ul
         v-if="show"
         v-click-outside="() => show = false"
-        class="origin-top-left absolute z-10 left-0 mt-2 w-72 shadow-lg overflow-hidden bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none"
+        class="origin-top-left absolute z-10 left-0 mt-2 w-72 shadow-lg bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none max-h-80 overscroll-contain overflow-auto"
         tabindex="-1"
         role="listbox"
         aria-labelledby="listbox-label"
