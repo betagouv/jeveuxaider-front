@@ -56,7 +56,7 @@
                 </nuxt-link>
                 <a
                   v-else
-                  href="#search-wrapper"
+                  href="#recherche"
                   :class="$options.filters.label(domaine.id, 'domaines', 'color')"
                   class="shadow-lg w-full flex items-center justify-center px-10 py-3 text-base mb-4 font-medium rounded-full bg-white hover:bg-white !outline-none focus:ring transition md:py-4 md:text-lg md:px-15"
                 >
@@ -180,6 +180,7 @@
     </div>
 
     <AlgoliaSearch
+      id="recherche"
       :initial-filters="`domaines:&quot;${domaine.name}&quot;`"
       :secondary-filters="['structure.name','publics_beneficiaires', 'structure.reseaux.name', 'department_name', 'template_subtitle']"
       class="my-8 sm:my-16 lg:my-24"

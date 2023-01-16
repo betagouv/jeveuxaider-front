@@ -6,8 +6,9 @@
     <template v-else>
       <div v-if="messages" class="flex justify-center flex-col lg:flex-row lg:items-start gap-6 items-start">
         <img
-          srcset="/images/dashboard/giulietta.png, /images/dashboard/giulietta@2x.png 2x"
-          alt="Gulietta"
+          srcset="/images/dashboard/margot.png, /images/dashboard/margot@2x.png 2x"
+          alt="Margot"
+          class="h-[100px] w-[100px]"
           data-not-lazy
         >
         <div class="flex-1">
