@@ -18,7 +18,7 @@
       </portal>
     </client-only>
 
-    <div class="absolute bg-gradient-to-b from-[#ECECFE] to-transparent w-full overflow-hidden" style="height: 777px">
+    <div class="absolute bg-gradient-to-b from-[#ECECFE] to-transparent w-full overflow-hidden pointer-events-none" style="height: 777px">
       <img
         src="/images/homepage/deco_2.svg"
         alt="Décorations"
