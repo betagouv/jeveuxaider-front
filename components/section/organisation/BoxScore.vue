@@ -36,8 +36,8 @@
             </div>
           </client-only>
 
-          <div class="text-xs text-[#696974] font-medium text-center px-12 relative">
-            🏆 Chez JeVeuxAider.gouv.fr, nous valorisons votre réactivité : apportez une réponse rapide aux bénévoles pour décupler la visibilité de vos missions ! <span class="cursor-pointer underline text-jva-blue-500 hover:text-jva-blue-600" @click="toggleOverlay">Astuces ›</span>
+          <div class="text-xs text-[#696974] font-medium text-center px-4 relative">
+            🏆 Chez JeVeuxAider.gouv.fr, nous valorisons votre réactivité : apportez une réponse rapide aux bénévoles pour décupler la visibilité de vos missions ! <span v-if="['responsable'].includes($store.getters.contextRole)" class="cursor-pointer underline text-jva-blue-500 hover:text-jva-blue-600" @click="toggleOverlay">Astuces ›</span>
           </div>
         </div>
         <CardStatistic

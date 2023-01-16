@@ -6,9 +6,9 @@
     <Box :variant="boxVariant" :padding="boxPadding" :loading="loadingScore" loading-text="Récupération du score ...">
       <DescriptionList v-if="score">
         <DescriptionListItem term="Score" :description="`${score.score}%`" />
-        <DescriptionListItem term="Tx. de réponse" :description="`${score.response_ratio || 0}%`" />
-        <DescriptionListItem term="Tps. de réponse" :description="`${(score.response_time / (60 * 60 * 24)).toFixed(0)} jours`" />
-        <DescriptionListItem term="Témoignages" :description="score.testimonials_bonus" />
+        <DescriptionListItem term="Tx. de réponse" :description="responseRatioDescription" />
+        <DescriptionListItem term="Tps. de réponse" :description="responseTimeDescription" />
+        <DescriptionListItem term="Bonus" :description="bonusDescription" />
       </DescriptionList>
     </Box>
   </div>
@@ -47,6 +47,26 @@ export default {
     const { data: score } = await this.$axios.get(`/structures/${this.structureId}/score`)
     this.score = score
     this.loadingScore = false
+  },
+  computed: {
+    bonusDescription () {
+      if (!this.score.response_time) {
+        return null
+      }
+      return `${this.score.testimonials_bonus}pts`
+    },
+    responseRatioDescription () {
+      if (!this.score.response_time) {
+        return null
+      }
+      return `${this.score.response_ratio || 0}% soit ${this.score.response_ratio_pts}pts`
+    },
+    responseTimeDescription () {
+      if (!this.score.response_time) {
+        return null
+      }
+      return `${(this.score.response_time / (60 * 60 * 24)).toFixed(0)} jours soit ${this.score.response_time_pts}pts`
+    }
   }
 }
 </script>
