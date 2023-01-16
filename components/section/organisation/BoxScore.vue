@@ -54,7 +54,7 @@
       <slot name="bottom" />
 
       <portal to="body-end">
-        <Overlay :is-open="showOverlay" title="Augmenter son score" @close="showOverlay = false">
+        <Overlay :is-open="showOverlay" title="Pour une meilleure visibilité" @close="showOverlay = false">
           <div class="text-cool-gray-500 text-lg lg:text-xl text-center">
             Pour améliorer votre score de réactivité, voici quelques règles à suivre :
           </div>
