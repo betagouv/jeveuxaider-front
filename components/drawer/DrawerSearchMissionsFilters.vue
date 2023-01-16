@@ -17,7 +17,7 @@
       </div>
       <CommitmentMobileFilter />
     </div>
-    <div class="space-y-2">
+    <div v-if="isPresentiel" class="space-y-2">
       <div class="relative font-medium text-[15px]">
         En autonomie
       </div>
@@ -138,6 +138,9 @@ export default {
   mixins: [AlgoliaMissionsQueryBuilder],
   props: {
     isOpen: { type: Boolean, default: false }
+  },
+  computed: {
+    isPresentiel () { return !this.$route.query.type || this.$route.query.type == 'Mission en présentiel' }
   },
   methods: {
     deleteAllFiltersExceptLocalisation () {

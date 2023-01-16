@@ -5,7 +5,7 @@
         Localisation
       </div>
       <div class="">
-        <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Localisation" :ip-lat-lng="$store.state.algoliaSearch.results.aroundLatLng" />
+        <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Localisation" />
         <div v-else>
           <div class="flex space-x-2 items-center">
             <RiComputerFill class="h-4 w-4 flex-none transition-opacity opacity-25 group-hover:opacity-100" />

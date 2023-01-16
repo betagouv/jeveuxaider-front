@@ -5,6 +5,12 @@
         Filtres de recherche
       </div>
     </template>
+    <div class="space-y-2">
+      <div class="relative font-medium text-[15px]">
+        Mots-clés
+      </div>
+      <SearchFilter />
+    </div>
     <FacetFilter
       show-more
       facet-name="publics_beneficiaires"
@@ -75,12 +81,14 @@ import AlgoliaOrganisationsQueryBuilder from '@/mixins/algolia-organisations-que
 import FacetFilter from '~/components/section/search/FacetFilter.vue'
 import Link from '@/components/dsfr/Link.vue'
 import Button from '@/components/dsfr/Button.vue'
+import SearchFilter from '@/components/search/SearchFilter.vue'
 
 export default {
   components: {
     FacetFilter,
     Link,
-    Button
+    Button,
+    SearchFilter
   },
   mixins: [AlgoliaOrganisationsQueryBuilder],
   props: {
@@ -88,7 +96,7 @@ export default {
   },
   methods: {
     deleteFilters () {
-      const filteredQueries = (({ city, aroundLatLng, search }) => ({ city, aroundLatLng, search }))(this.$route.query)
+      const filteredQueries = (({ city, aroundLatLng }) => ({ city, aroundLatLng }))(this.$route.query)
 
       this.$router.push({
         path: this.$route.path,

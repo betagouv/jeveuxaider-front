@@ -1,34 +1,84 @@
 <template>
-  <div>
-    <div class="space-y-3">
-      <div class="font-medium text-[15px]">
-        Localisation
-      </div>
-      <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Renseignez une ville ou un code postal" @input="handleInput" @clear="handleSelectedAdress(null)" />
+  <div v-click-outside="() => isGeolocFilterActive = false">
+    <div class="text-[#7B7B7B] mb-1">
+      Localisation
     </div>
-    <div class="flex flex-col py-2 text-sm">
-      <button
-        v-for="suggestion in suggestions"
-        :key="suggestion.id"
-        class="py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD] -mx-4 px-4"
-        @click="handleSelectedAdress(suggestion)"
-      >
-        <div class="flex items-center">
-          <LocationMarkerIcon
-            class="flex-none mr-2 transition text-gray-400"
-            width="16"
-            height="16"
-          />
+
+    <!-- Fake input -->
+    <div
+      v-if="!isGeolocFilterActive"
+      class="flex space-x-3 items-center text-gray-900 truncate"
+      @click="handleFakeInputClick"
+    >
+      <RiMapPin2Fill class="h-5 w-5 flex-none fill-current text-gray-400" />
+      <div v-if="!$route.query.city && $store.state.algoliaSearch.navigatorGeolocation" class="truncate font-bold w-full">
+        Autour de moi
+      </div>
+      <div v-else-if="!$route.query.city && $store.state.algoliaSearch.results.aroundLatLng" class="truncate italic pr-[1px] text-[#888888] w-full">
+        Ville ou code postal
+      </div>
+      <div v-else class="font-bold truncate w-full">
+        {{ $route.query.city }}
+      </div>
+      <RiLoader5Line
+        v-if="$store.state.algoliaSearch.loadingNavigatorGeolocation"
+        class="animate-spin h-5 w-5 text-gray-400 fill-current self-end"
+      />
+    </div>
+
+    <!-- Real input -->
+    <FacetSearch
+      v-else
+      ref="facetSearch"
+      v-model="searchValue"
+      placeholder="Ville ou code postal"
+      icon="RiMapPin2Fill"
+      @focus="isGeolocFilterActive = true"
+      @input="handleInput"
+      @clear="() => { handleSelectedAdress(null); isGeolocFilterActive = true }"
+    />
+
+    <!-- Transition to avoid missclick due to layout shift -->
+    <transition
+      enter-active-class="ease-out duration-200"
+      enter-class="opacity-0 -translate-y-4 sm:translate-y-0 sm:scale-95"
+      enter-to-class="opacity-100 translate-y-0 sm:scale-100"
+      leave-active-class="tease-in duration-100"
+      leave-class="opacity-100 translate-y-0 sm:scale-100"
+      leave-to-class="opacity-0 -translate-y-4 sm:translate-y-0 sm:scale-95"
+    >
+      <div v-if="isGeolocFilterActive" class="flex flex-col py-2 text-sm">
+        <!-- Seulement si geolocalisation par navigateur acceptée -->
+        <button
+          v-if="$store.state.algoliaSearch.navigatorGeolocation"
+          :class="[
+            'py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD] -mx-4 px-4',
+            {'text-jva-blue-500': !$route.query.aroundLatLng}
+          ]"
+          @click="handleSelectedAdress(null)"
+        >
+          <div>Autour de moi</div>
+        </button>
+
+        <button
+          v-for="suggestion in suggestions"
+          :key="suggestion.id"
+          :class="[
+            'py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD] -mx-4 px-4',
+            {'text-jva-blue-500': $route.query?.aroundLatLng === suggestion.aroundLatLng}
+          ]"
+          @click="handleSelectedAdress(suggestion)"
+        >
           <div class="truncate">
             {{ suggestion.city }}
           </div>
-        </div>
 
-        <div class="text-gray-600 ml-1 font-light">
-          {{ suggestion.postcode }}
-        </div>
-      </button>
-    </div>
+          <div class="text-gray-600 ml-1 font-light">
+            {{ suggestion.postcode }}
+          </div>
+        </button>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -42,12 +92,7 @@ export default {
     FacetSearch
   },
   mixins: [AlgoliaQueryBuilder],
-  props: {
-    ipLatLng: {
-      type: String,
-      default: null
-    }
-  },
+  props: {},
   data () {
     return {
       searchValue: this.$route.query.city,
@@ -83,7 +128,8 @@ export default {
           aroundLatLng: '44.851895,-0.587877',
           postcode: '33200'
         }
-      ]
+      ],
+      isGeolocFilterActive: false
     }
   },
   computed: {
@@ -99,6 +145,9 @@ export default {
   watch: {
     '$route.query.city' (newVal) {
       this.searchValue = newVal
+    },
+    isGeolocFilterActive (newVal) {
+      this.$emit('geolocFilterActiveStateToggle', newVal)
     }
   },
   methods: {
@@ -126,8 +175,8 @@ export default {
         this.timeout.cancel()
       }
       this.timeout = debounce(() => {
-        if (this.searchValue?.length < 3) {
-          if (!this.searchValue) {
+        if (!this.searchValue || this.searchValue?.length < 3) {
+          if (this.searchValue === '') {
             this.fetchSuggestions = []
           }
           return
@@ -153,7 +202,7 @@ export default {
         this.setHistory(suggestion)
       }
 
-      this.$emit('updated')
+      this.isGeolocFilterActive = false
     },
     setHistory (suggestion) {
       const history = [
@@ -165,6 +214,11 @@ export default {
         ...this.$cookies.get('localisation-history') ?? []
       ].reduce((unique, item) => (unique.find(i => i.aroundLatLng == item.aroundLatLng) ? unique : [...unique, item]), []).slice(0, 5)
       this.$cookies.set('localisation-history', history)
+    },
+    async handleFakeInputClick () {
+      this.isGeolocFilterActive = true
+      await this.$nextTick()
+      this.$refs.facetSearch.$refs.input.focus()
     }
   }
 }

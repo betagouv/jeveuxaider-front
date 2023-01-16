@@ -12,10 +12,7 @@
           )}`"
         />
 
-        <div class="sm:hidden">
-          <PrimaryMobileFilters />
-          <SecondaryMobileFilters />
-        </div>
+        <MobileFilters class="sm:hidden" />
 
         <div class="hidden sm:flex sm:flex-col relative z-10">
           <PrimaryFilters />
@@ -71,8 +68,7 @@ import CardOrganisation from '@/components/card/CardOrganisation.vue'
 import AlgoliaOrganisationsQueryBuilder from '@/mixins/algolia-organisations-query-builder'
 import PrimaryFilters from '~/components/section/search/organisations/PrimaryFilters.vue'
 import SecondaryFilters from '~/components/section/search/organisations/SecondaryFilters.vue'
-import PrimaryMobileFilters from '~/components/section/search/organisations/PrimaryMobileFilters.vue'
-import SecondaryMobileFilters from '~/components/section/search/organisations/SecondaryMobileFilters.vue'
+import MobileFilters from '~/components/section/search/organisations/MobileFilters.vue'
 import Link from '@/components/dsfr/Link.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 
@@ -81,8 +77,7 @@ export default {
     CardOrganisation,
     PrimaryFilters,
     SecondaryFilters,
-    PrimaryMobileFilters,
-    SecondaryMobileFilters,
+    MobileFilters,
     Link,
     Pagination
   },

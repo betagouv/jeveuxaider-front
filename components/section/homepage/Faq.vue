@@ -14,7 +14,7 @@
         </div>
 
         <Tabs
-          name="hello"
+          name="Catégories de faq"
           :tabs="[
             { content: 'Bénévoles' },
             { content: 'Organisation' },
