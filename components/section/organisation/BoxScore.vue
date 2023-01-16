@@ -1,5 +1,5 @@
 <template>
-  <Box :variant="variant" :padding="padding" :loading="loadingScore" loading-text="Récupération de votre score ...">
+  <Box :variant="variant" :padding="loadingScore ? 'lg' : padding" :loading="loadingScore" loading-text="Récupération de votre score ...">
     <slot name="top" />
     <div v-if="score">
       <div
@@ -27,7 +27,7 @@
               />
               <div class="absolute flex flex-col justify-center items-center top-[60px] left-1/2 transform -translate-x-1/2 h-[224px] w-[224px] text-center border border-[#F1F2F9] rounded-full">
                 <div class="font-bold text-5xl">
-                  {{ score.score }}/100
+                  {{ score.score }}%
                 </div>
                 <div class="text-[#F95A5C] text-sm font-bold mt-2">
                   Score de réactivité

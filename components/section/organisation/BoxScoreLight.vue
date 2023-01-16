@@ -5,7 +5,7 @@
     </div>
     <Box :variant="boxVariant" :padding="boxPadding" :loading="loadingScore" loading-text="Récupération du score ...">
       <DescriptionList v-if="score">
-        <DescriptionListItem term="Score" :description="`${score.score}/100`" />
+        <DescriptionListItem term="Score" :description="`${score.score}%`" />
         <DescriptionListItem term="Tx. de réponse" :description="`${score.response_ratio || 0}%`" />
         <DescriptionListItem term="Tps. de réponse" :description="`${(score.response_time / (60 * 60 * 24)).toFixed(0)} jours`" />
         <DescriptionListItem term="Témoignages" :description="score.testimonials_bonus" />
