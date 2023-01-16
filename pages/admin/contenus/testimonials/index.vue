@@ -73,6 +73,20 @@
           clearable
           @input="changeFilter('filter[grade]', $event)"
         />
+
+        <template v-if="$store.getters.contextRole === 'admin'">
+          <InputAutocomplete
+            :value="$route.query['filter[organisation]']"
+            icon="SearchIcon"
+            name="autocomplete"
+            placeholder="Toutes les organisations"
+            theme="filter"
+            :options="autocompleteOptionsOrganisations"
+            variant="transparent"
+            @fetch-suggestions="onFetchSuggestionsOrganisations"
+            @selected="changeFilter('filter[organisation]', $event ? $event.name : undefined)"
+          />
+        </template>
       </template>
     </SearchFilters>
 
@@ -131,7 +145,20 @@ export default {
       endpoint: '/temoignages',
       queryParams: {
       },
-      drawerTemoignageId: null
+      drawerTemoignageId: null,
+      autocompleteOptionsOrganisations: []
+
+    }
+  },
+  methods: {
+    async onFetchSuggestionsOrganisations (value) {
+      const res = await this.$axios.get('/structures', {
+        params: {
+          'filter[search]': value,
+          pagination: 6
+        }
+      })
+      this.autocompleteOptionsOrganisations = res.data.data
     }
   }
 }
