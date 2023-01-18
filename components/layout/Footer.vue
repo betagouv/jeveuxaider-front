@@ -386,6 +386,11 @@ export default {
           external: true
         },
         {
+          name: 'Partenaires',
+          url: 'https://www.jeveuxaider.gouv.fr/engagement/organisations/',
+          external: true
+        },
+        {
           name: 'Presse',
           url: 'https://www.jeveuxaider.gouv.fr/engagement/presse/',
           external: true
