@@ -1,20 +1,6 @@
 <template>
   <Box :padding="false" variant="flat">
     <div class="p-6">
-      <!-- <div class="mb-8">
-        <div class="flex justify-between p-4 bg-gray-50">
-          <div class="font-semibold">
-            XXX
-          </div>
-          <DsfrLink
-            icon="RiArrowRightLine"
-            :to="url"
-            class="ml-8 flex-none self-center"
-          >
-            Voir
-          </DsfrLink>
-        </div>
-      </div> -->
       <div class="flex flex-col lg:flex-row lg:justify-between gap-8">
         <div class="flex">
           <Avatar
@@ -33,7 +19,26 @@
           />
           <div>
             <div>
-              <span class="font-bold">{{ log.causer?.profile.full_name }}</span> {{ action }} <span class="font-bold">{{ objectName }}</span>
+              <template v-if="log.causer">
+                <span class="font-bold">{{ log.causer?.profile.full_name }}</span>
+                <template v-if="log.subject_type === 'App\\Models\\Structure'">
+                  {{ action }} la structure <span class="font-bold">{{ log?.data?.subject_title }}</span>
+                </template>
+                <template v-if="log.subject_type === 'App\\Models\\Mission'">
+                  {{ action }} la mission <span class="font-bold">{{ log?.data?.subject_title }}</span>
+                </template>
+                <template v-if="log.subject_type === 'App\\Models\\Participation'">
+                  {{ action }} la participation de <span class="font-bold">{{ log?.data?.subject_title }}</span>
+                </template>
+                <template v-if="log.subject_type === 'App\\Models\\Profile'">
+                  {{ action }} le compte <span class="font-bold">{{ log?.data?.subject_title }}</span>
+                </template>
+              </template>
+              <template v-else>
+                <template v-if="log.subject_type === 'App\\Models\\Profile'">
+                  <span class="font-bold">{{ log?.data?.subject_title }}</span> a crée son compte
+                </template>
+              </template>
             </div>
             <div class="text-sm text-gray-600">
               {{
@@ -48,7 +53,7 @@
               type="info"
               no-icon
             >
-              {{ log.subject_type.replace('App\\Models\\','') }}
+              {{ subjectTypeLabel }}
             </DsfrBadge>
           </div>
         </div>
@@ -104,17 +109,29 @@ export default {
       if (this.log.description === 'updated') {
         return 'a modifié'
       }
+      if (this.log.description === 'deleted') {
+        return 'a supprimé'
+      }
+      if (this.log.description === 'duplicated') {
+        return 'a dupliqué'
+      }
       return this.log.description
     },
-    objectName () {
-      if (this.mission || this.structure) {
-        return this.log.subject.name
+    subjectTypeLabel () {
+      switch (this.log.subject_type) {
+        case 'App\\Models\\Mission':
+          return 'Mission'
+        case 'App\\Models\\Structure':
+          return 'Organisation'
+        case 'App\\Models\\Participation':
+          return 'Participation'
+        case 'App\\Models\\Profile':
+          return 'Utilisateur'
+        default:
+          return this.log.subject_type
       }
-      if (this.participation) {
-        return this.log?.participationMission?.name
-      }
-      return this.log.subject_type
     }
+
   }
 }
 </script>

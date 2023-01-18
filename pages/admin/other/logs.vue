@@ -42,6 +42,20 @@
         >
           Toutes
         </Tag>
+        <TagSelectAdvanced
+          :key="`subject-type-${$route.fullPath}`"
+          name="types"
+          placeholder="Tous les types"
+          :options="[
+            {key:'organisations', label:'Organisations'},
+            {key:'missions', label:'Missions'},
+            {key:'participations', label:'Participations'},
+            {key:'utilisateurs', label:'Utilisateurs'},
+          ]"
+          :value="$route.query['filter[type]']"
+          clearable
+          @input="changeFilter('filter[type]', $event)"
+        />
       </template>
     </SearchFilters>
 
