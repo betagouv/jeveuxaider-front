@@ -101,7 +101,7 @@ export default {
       loading: false,
       endpoint: '/activity-logs',
       queryParams: {
-        include: 'causer,causer.profile,subject'
+        include: 'causer,causer.profile'
       },
       drawerLogId: null
     }

@@ -28,7 +28,12 @@
                   {{ action }} la mission <span class="font-bold">{{ log?.data?.subject_title }}</span>
                 </template>
                 <template v-if="log.subject_type === 'App\\Models\\Participation'">
-                  {{ action }} la participation de <span class="font-bold">{{ log?.data?.subject_title }}</span>
+                  <template v-if="log.description === 'created'">
+                    a candidaté à la mission <span class="font-bold">{{ log?.subject?.mission?.name }}</span>
+                  </template>
+                  <template v-if="log.description === 'updated'">
+                    modifié la candidature de <span class="font-bold">{{ log?.data?.subject_title }}</span> sur la mission <span class="font-bold">{{ log?.subject?.mission?.name }}</span>
+                  </template>
                 </template>
                 <template v-if="log.subject_type === 'App\\Models\\Profile'">
                   {{ action }} le compte <span class="font-bold">{{ log?.data?.subject_title }}</span>
@@ -74,31 +79,6 @@ export default {
     }
   },
   computed: {
-    url () {
-      switch (this.log.subject_type) {
-        case 'App\\Models\\Mission':
-          return `/admin/missions/${this.log.subject_id}`
-        case 'App\\Models\\Structure':
-          return `/admin/organisations/${this.log.subject_id}`
-        default:
-          return ''
-      }
-    },
-    structure () {
-      return this.log.subject_type === 'App\\Models\\Structure'
-        ? this.log.subject
-        : null
-    },
-    mission () {
-      return this.log.subject_type === 'App\\Models\\Mission'
-        ? this.log.subject
-        : null
-    },
-    participation () {
-      return this.log.subject_type === 'App\\Models\\Participation'
-        ? this.log.subject
-        : null
-    },
     action () {
       if (this.log.log_name === 'note') {
         return 'a ajouté une note à'
