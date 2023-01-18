@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO DELETE -->
   <DrawerLeft :is-open="isOpen" @close="$emit('close')">
     <template #title>
       <div class="font-bold">
@@ -27,7 +28,6 @@
     />
     <LocalisationSuggestions
       v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'"
-      :ip-lat-lng="$store.state.algoliaSearch.results.aroundLatLng"
     />
 
     <div v-else class="text-gray-700">

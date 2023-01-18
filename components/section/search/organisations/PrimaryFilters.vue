@@ -5,7 +5,7 @@
         Localisation
       </div>
       <div class="">
-        <LocalisationFilter label="Saisissez votre ville" :ip-lat-lng="$store.state.algoliaSearch.results.aroundLatLng" />
+        <LocalisationFilter label="Saisissez votre ville" />
       </div>
     </div>
     <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">

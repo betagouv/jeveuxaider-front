@@ -1,18 +1,19 @@
 <template>
   <div>
     <div class="flex items-center relative w-full pb-1 group border-b border-transparent focus-within:border-jva-blue-500 transition-colors">
-      <SearchIcon
-        class="text-gray-400 group-focus-within:text-jva-blue-500"
-        width="20"
-      />
+      <component :is="icon" class="w-5 h-5 flex-none fill-current text-gray-400 group-focus-within:text-jva-blue-500" />
 
       <input
         ref="input"
         v-model="inputValue"
         type="text"
         :placeholder="placeholder"
-        class="border-0 p-0 pl-3 text-base sm:text-sm !outline-none w-full"
+        :class="[
+          'border-0 p-0 pl-3 text-base sm:text-sm !outline-none w-full truncate',
+          {'pr-4': inputValue}
+        ]"
         autocomplete="off"
+        @focus="$emit('focus')"
       >
 
       <XIcon
@@ -31,7 +32,8 @@ export default {
   props: {
     value: { type: [String, Number], default: null },
     alwaysShowClear: { type: Boolean, default: false },
-    placeholder: { type: String, default: 'Rechercher' }
+    placeholder: { type: String, default: 'Rechercher' },
+    icon: { type: String, default: 'RiSearchLine' }
   },
   data () {
     return {}

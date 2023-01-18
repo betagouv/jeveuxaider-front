@@ -6,7 +6,7 @@
         <div v-if="!$route.query.city && $store.state.algoliaSearch.navigatorGeolocation" class="truncate font-bold">
           Autour de moi
         </div>
-        <div v-if="!$route.query.city && ipLatLng" class="truncate italic pr-[1px] text-[#888888]">
+        <div v-else-if="!$route.query.city && $store.state.algoliaSearch.results.aroundLatLng" class="truncate italic pr-[1px] text-[#888888]">
           Ville ou code postal
         </div>
         <div v-else class="font-bold truncate">
@@ -121,10 +121,6 @@ export default {
     label: {
       type: String,
       required: true
-    },
-    ipLatLng: {
-      type: String,
-      default: null
     }
   },
   data () {
