@@ -51,11 +51,11 @@
       <div
         :class="[
           'p-4 flex items-center space-x-3',
-          activeMoreFacets.length ? 'justify-between' : 'justify-end'
+          nbMobileActiveFilters ? 'justify-between' : 'justify-end'
         ]"
       >
         <Link
-          v-if="activeMoreFacets.length"
+          v-if="nbMobileActiveFilters"
           @click.native="deleteFilters()"
         >
           Réinitialiser
