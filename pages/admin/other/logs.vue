@@ -23,7 +23,7 @@
     <SearchFilters>
       <Input
         name="search"
-        placeholder="Recherche par mots clés..."
+        placeholder="Recherche par emails..."
         icon="SearchIcon"
         variant="transparent"
         :value="$route.query['filter[search]']"
@@ -87,7 +87,7 @@ export default {
       loading: false,
       endpoint: '/activity-logs',
       queryParams: {
-        include: 'causer,causer.profile'
+        include: 'causer,causer.profile,subject'
       },
       drawerLogId: null
     }
