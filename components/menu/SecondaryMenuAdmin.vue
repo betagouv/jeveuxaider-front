@@ -86,6 +86,7 @@ export default {
             { label: 'Statistiques', to: '/admin/statistics' },
             { label: 'Indicateurs clés', to: '/admin/statistics/indicateurs-cles' },
             { label: 'Invitations', to: '/admin/other/invitations' },
+            { label: 'Logs', to: '/admin/other/logs' },
             { label: 'Strapi', href: 'https://jeveuxaider-strapi.osc-secnum-fr1.scalingo.io/admin/auth/login' }
           ]
         },

@@ -10,18 +10,22 @@
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="relative z-10">
+          <div class="flex flex-wrap gap-2 mb-2">
+            <template v-if="profile.user.roles">
+              <Tag v-for="role in profile.user.roles" :key="role.id" size="md">
+                {{ role.name | label('roles') }}
+              </Tag>
+            </template>
+            <template v-if="profile.tags">
+              <Tag v-for="tag in profile.tags" :key="tag.id" size="md">
+                {{ tag.name }}
+              </Tag>
+            </template>
+          </div>
           <div class="sm:flex justify-between items-center">
             <Heading as="h1" :level="1" class="mb-2">
               {{ profile.full_name }}
             </Heading>
-            <div
-              v-if="$store.getters.contextRole == 'admin' && profile.tags"
-              class="mt-2 mb-4 flex flex-wrap gap-1"
-            >
-              <Badge v-for="tag in profile.tags" :key="tag.id" size="xxs" color="gray-light">
-                {{ tag.name }}
-              </Badge>
-            </div>
           </div>
           <div v-if="profile.user.last_online_at" class="text-cool-gray-500 font-semibold">
             Dernière connexion le {{ $dayjs(profile.user.last_online_at).format('D MMMM YYYY à HH:mm') }}
@@ -108,6 +112,7 @@
             <BoxOrganisations v-if="profile.user.structures" :structures="profile.user.structures" />
             <BoxTerritoires v-if="profile.user.territoires" :territoires="profile.user.territoires" />
             <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" />
+            <BoxActions v-if="$store.getters.contextRole === 'admin'" :profile="profile" />
             <BoxUtm v-if="$store.getters.contextRole === 'admin'" :model="profile.user" />
           </div>
           <History v-if="$route.hash === '#historique'" :model-id="profile.id" model-type="profile" />
@@ -124,8 +129,10 @@ import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
 import BoxReseau from '@/components/section/profile/BoxReseau'
 import BoxTerritoires from '@/components/section/profile/BoxTerritoires'
 import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
+import BoxActions from '@/components/section/profile/BoxActions'
 import BoxUtm from '@/components/section/BoxUtm'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
@@ -136,7 +143,9 @@ export default {
     BoxTerritoires,
     BoxOrganisations,
     BoxUtm,
-    Breadcrumb
+    BoxActions,
+    Breadcrumb,
+    Tag
   },
   async asyncData ({ $axios, params, error, store }) {
     if (
