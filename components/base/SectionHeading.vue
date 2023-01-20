@@ -4,9 +4,12 @@
       <div v-if="secondaryTitle" class="text-xl text-gray-600">
         {{ secondaryTitle }}
       </div>
-      <Heading as="h1" size="2xl">
-        {{ title }}
-      </Heading>
+      <div class="flex space-x-4 justify-center">
+        <Heading as="h1" size="2xl">
+          {{ title }}
+        </Heading>
+        <LoadingIndicator v-if="loading" />
+      </div>
 
       <slot name="tags" />
       <div v-if="secondaryTitleBottom" class="text-gray-600 mt-2 text-lg lg:text-xl">
@@ -19,10 +22,12 @@
 
 <script>
 import Heading from '@/components/dsfr/Heading.vue'
+import LoadingIndicator from '@/components/custom/LoadingIndicator'
 
 export default {
   components: {
-    Heading
+    Heading,
+    LoadingIndicator
   },
   props: {
     title: {
@@ -36,6 +41,10 @@ export default {
     secondaryTitleBottom: {
       type: String,
       default: null
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   }
 }

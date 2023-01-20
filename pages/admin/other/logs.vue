@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-8">
-    <!-- <DrawerLog :log-id="drawerLogId" @close="drawerLogId = null" /> -->
+    <DrawerActivityLog :activity-log-id="drawerActivityLogId" @close="drawerActivityLogId = null" />
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[
@@ -18,6 +18,7 @@
         'logs',
         false
       )}`"
+      :loading="$fetchState.pending"
     />
 
     <SearchFilters>
@@ -56,6 +57,20 @@
           clearable
           @input="changeFilter('filter[type]', $event)"
         />
+        <TagSelectAdvanced
+          :key="`action-${$route.fullPath}`"
+          name="action"
+          placeholder="Toutes les actions"
+          :options="[
+            {key:'created', label:'Création'},
+            {key:'updated', label:'Modification'},
+            {key:'duplicated', label:'Duplication'},
+            {key:'deleted', label:'Suppression'},
+          ]"
+          :value="$route.query['filter[description]']"
+          clearable
+          @input="changeFilter('filter[description]', $event)"
+        />
       </template>
     </SearchFilters>
 
@@ -63,6 +78,8 @@
       v-for="log in queryResult.data"
       :key="log.id"
       :log="log"
+      class="cursor-pointer"
+      @click.native="drawerActivityLogId = log.id"
     />
 
     <Pagination
@@ -77,7 +94,7 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-// import DrawerLog from '@/components/drawer/DrawerLog'
+import DrawerActivityLog from '@/components/drawer/DrawerActivityLog.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
@@ -86,7 +103,7 @@ import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
-    // DrawerLog,
+    DrawerActivityLog,
     SearchFilters,
     Pagination,
     Breadcrumb,
@@ -103,7 +120,7 @@ export default {
       queryParams: {
         include: 'causer,causer.profile'
       },
-      drawerLogId: null
+      drawerActivityLogId: null
     }
   }
 }

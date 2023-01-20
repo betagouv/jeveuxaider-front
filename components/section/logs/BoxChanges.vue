@@ -1,55 +1,41 @@
 <template>
-  <div v-if="queryActivityLogs && queryActivityLogs.total > 0" ref="history" class="text-sm space-y-2">
-    <Box v-for="activity in queryActivityLogs.data" :key="activity.id" variant="flat" padding="xs">
-      <div class="font-medium">
-        {{ activity.data.full_name }}
+  <div v-if="changes.length > 0">
+    <div class="text-sm flex justify-between px-2 mb-2 items-center">
+      <div v-if="showTitle" class="uppercase font-semibold text-gray-600">
+        Champs
       </div>
-      <div class="text-gray-500 mb-4">
-        {{ formatActionLabel(activity) }}
-      </div>
-      <div class="flex space-y-2 flex-col">
-        <Disclosure v-for="change in changes(activity)" :key="change.property">
-          <template #button="{ isOpen }">
-            <div class="flex font-semibold text-sm items-center group">
-              <div class="flex-shrink-0 group-hover:text-gray-600">
-                {{ change.property }}
-              </div>
-              <div class="w-full border-t mt-1 ml-2 -mr-1" />
-              <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
-              <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+    </div>
+    <Box :variant="boxVariant" :padding="boxPadding" :loading="loading">
+      <Disclosure v-for="change in changes" :key="change.property">
+        <template #button="{ isOpen }">
+          <div class="flex font-semibold text-sm items-center group">
+            <div class="flex-shrink-0 group-hover:text-gray-600">
+              {{ change.property }}
             </div>
-          </template>
-          <div class="mt-3 space-y-3">
-            <div>
-              <Badge color="gray-light" size="xs">
-                Avant
-              </Badge>
-              <div class="text-gray-500 italic mt-2">
-                {{ change.before || '-' }}
-              </div>
-            </div>
-            <div>
-              <Badge color="gray-light" size="xs">
-                Après
-              </Badge>
-              <div class="text-gray-500 italic mt-2">
-                {{ change.after || '-' }}
-              </div>
+            <div class="w-full border-t mt-1 ml-2 -mr-1" />
+            <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+            <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+          </div>
+        </template>
+        <div class="mt-3 space-y-3">
+          <div>
+            <Badge color="gray-light" size="xs">
+              Avant
+            </Badge>
+            <div class="text-gray-500 italic mt-2">
+              {{ change.before || '-' }}
             </div>
           </div>
-        </Disclosure>
-      </div>
-    </Box>
-    <Pagination
-      :current-page="queryActivityLogs.current_page"
-      :total-rows="queryActivityLogs.total"
-      :per-page="queryActivityLogs.per_page"
-      @page-change="handleChangePage"
-    />
-  </div>
-  <div v-else>
-    <Box variant="flat" padding="xs" class="text-sm">
-      Aucun historique disponible
+          <div>
+            <Badge color="gray-light" size="xs">
+              Après
+            </Badge>
+            <div class="text-gray-500 italic mt-2">
+              {{ change.after || '-' }}
+            </div>
+          </div>
+        </div>
+      </Disclosure>
     </Box>
   </div>
 </template>
@@ -57,55 +43,66 @@
 <script>
 export default {
   props: {
-    modelId: {
-      type: Number,
+    activityLog: {
+      type: Object,
       required: true
     },
-    modelType: {
+    showAction: {
+      type: Boolean,
+      default: true
+    },
+    linkLabel: {
       type: String,
-      required: true
+      default: 'Consulter'
+    },
+    showTitle: {
+      type: Boolean,
+      default: true
+    },
+    boxVariant: {
+      type: [String],
+      default: 'flat'
+    },
+    boxPadding: {
+      type: [String, Boolean],
+      default: 'xs'
     }
   },
   data () {
     return {
-      page: 1,
-      queryActivityLogs: null
+      loading: false
     }
-  },
-  async fetch () {
-    const { data: queryActivityLogs } = await this.$axios.get('/activity-logs', {
-      params: {
-        'filter[log_name]': 'default',
-        'filter[subject_id]': this.modelId,
-        'filter[subject_type]': this.modelType,
-        pagination: 10,
-        page: this.page
-      }
-    })
-    this.queryActivityLogs = queryActivityLogs
   },
   computed: {
     uselessProperties () {
       return ['user_id', 'latitude', 'longitude', 'country', 'api_id', 'updated_at', 'commitment__total']
+    },
+    changes () {
+      return this.formatChanges(this.activityLog)
     }
   },
   methods: {
-    handleChangePage (page) {
-      this.page = page
-      this.$fetch()
-      this.$scrollTo(this.$refs.history, {
-        offset: -90
-      })
-    },
-    formatActionLabel (activity) {
-      let label = 'Crée le '
-      if (activity.description == 'updated') {
-        label = 'Modifiée le '
-      } else if (activity.description == 'duplicated') {
-        label = 'Dupliquée le '
+    formatChanges (activityLog) {
+      const changes = []
+
+      if (!activityLog?.properties?.attributes) {
+        return changes
       }
-      label = label + this.$dayjs(activity.created_at).format('D MMM YYYY')
-      return label
+
+      for (const [key, value] of Object.entries(activityLog.properties.attributes)) {
+        if (this.uselessProperties.includes(key)) {
+          continue
+        }
+        if (!activityLog.properties.old && !value) { // Valeurs vides
+          continue
+        }
+        changes.push({
+          property: this.formatPropertyLabel(key),
+          after: value,
+          before: activityLog.properties.old && activityLog.properties.old[key]
+        })
+      }
+      return changes
     },
     formatPropertyLabel (property) {
       switch (property) {
@@ -237,23 +234,6 @@ export default {
           return 'Mission ID'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
-    },
-    changes (activity) {
-      const changes = []
-      for (const [key, value] of Object.entries(activity.properties.attributes)) {
-        if (this.uselessProperties.includes(key)) {
-          continue
-        }
-        if (!activity.properties.old && !value) { // Valeurs vides
-          continue
-        }
-        changes.push({
-          property: this.formatPropertyLabel(key),
-          after: value,
-          before: activity.properties.old && activity.properties.old[key]
-        })
-      }
-      return changes
     }
   }
 

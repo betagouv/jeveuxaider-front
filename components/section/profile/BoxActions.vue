@@ -2,7 +2,7 @@
   <div>
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
       <div v-if="showTitle" class="uppercase font-semibold text-gray-600">
-        Logs
+        Actions
       </div>
       <Link :to="`/admin/other/logs?filter[search]=${profile.email}`" icon="ChevronRightIcon">
         {{ linkLabel }}
@@ -11,7 +11,8 @@
     <Box :variant="boxVariant" :padding="boxPadding" :loading="loading">
       <slot name="box-before" />
       <DescriptionList v-if="logs">
-        <DescriptionListItem term="Nombre" :description="logs.activity_logs_count" />
+        <DescriptionListItem term="Total" :description="logs.activity_logs_count" />
+        <DescriptionListItem term="30 dern. jours" :description="logs.activity_logs_last_days_count" />
         <DescriptionListItem term="Dernière action" :description="logs.last_activity_log ? $dayjs(logs.last_activity_log?.created_at).fromNow() : null" />
       </DescriptionList>
     </Box>
@@ -55,7 +56,7 @@ export default {
   async fetch () {
     this.loading = true
 
-    await this.$axios.get(`/users/${this.profile.user_id}/logs`).then((response) => {
+    await this.$axios.get(`/users/${this.profile.user_id}/actions`).then((response) => {
       this.loading = false
       this.logs = response.data
     })

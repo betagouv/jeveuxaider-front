@@ -395,6 +395,9 @@ const labels = {
   roles: [
     { key: 'admin', label: 'Modérateur' },
     { key: 'referent', label: 'Référent départemental' },
-    { key: 'referent_regional', label: 'Référent régionnal' }
+    { key: 'referent_regional', label: 'Référent régionnal' },
+    { key: 'responsable', label: 'Responsable' },
+    { key: 'responsable_territoire', label: 'Responsable territoire' },
+    { key: 'tete_de_reseau', label: 'Tête de réseau' }
   ]
 }
