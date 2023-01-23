@@ -4,7 +4,7 @@
       <div v-if="secondaryTitle" class="text-xl text-gray-600">
         {{ secondaryTitle }}
       </div>
-      <div class="flex space-x-4 justify-center">
+      <div class="flex space-x-4 items-center">
         <Heading as="h1" size="2xl">
           {{ title }}
         </Heading>
