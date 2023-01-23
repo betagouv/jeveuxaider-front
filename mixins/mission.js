@@ -141,6 +141,36 @@ export default {
           this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
         )
       }
+    },
+    missionStructureResponseTimeInDays () {
+      if (!this.mission.structure) {
+        return null
+      }
+      if (!this.mission.structure?.response_time) {
+        return null
+      }
+      return Math.round(this.mission.structure?.response_time / (60 * 60 * 24))
+    },
+    missionStructureResponseTimeFormatted () {
+      if (!this.mission.structure) {
+        return null
+      }
+      if (!this.mission.structure?.response_time) {
+        return null
+      }
+      if (this.missionStructureResponseTimeInDays > 10) {
+        return 'en plus de 10 jours'
+      } else if (this.missionStructureResponseTimeInDays > 5) {
+        return 'en moins de 10 jours'
+      } else if (this.missionStructureResponseTimeInDays > 3) {
+        return 'en moins de 5 jours'
+      } else if (this.missionStructureResponseTimeInDays > 2) {
+        return 'en moins de 3 jours'
+      } else if (this.missionStructureResponseTimeInDays > 1) {
+        return 'en moins de 2 jours'
+      } else {
+        return 'en moins d\'un jour'
+      }
     }
   }
 }

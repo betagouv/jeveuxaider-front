@@ -57,7 +57,7 @@
           icon="RiArrowRightLine"
           :to="`/admin/participations?filter[is_state_pending]=true&filter[ofResponsable]=${$store.getters.profile.id}`"
         >
-          Modérer les participations
+          Traiter les participations
         </Link>
       </template>
     </Banner>

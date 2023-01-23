@@ -75,10 +75,18 @@
                 Que votre réponse soit positive ou négative, il est essentiel de tenir au courant les bénévoles qui ont proposé leur aide : prenez le temps de répondre à leur message et de mettre à jour le statut de leur participation.
               </div>
             </div>
+            <div>
+              <div class="text-lg mb-4 font-semibold">
+                💌 Utiliser la messagerie
+              </div>
+              <div class="text-gray-600">
+                Il est préférable d'utiliser la messagerie de JeVeuxAider.gouv.fr afin que votre temps de réponse puisse être pris en compte et que vous soyez ainsi mieux référencés.
+              </div>
+            </div>
             <div class="text-center">
               <nuxt-link to="/admin/participations">
                 <Button type="secondary">
-                  Modérer les participations
+                  Traiter les participations
                 </Button>
               </nuxt-link>
             </div>

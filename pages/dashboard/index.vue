@@ -133,7 +133,7 @@
           >
             <nuxt-link to="/admin/participations">
               <Button type="secondary">
-                Modérer les participations
+                Traiter les participations
               </Button>
             </nuxt-link>
           </div>

@@ -260,6 +260,10 @@
               <DsfrButton v-else disabled size="lg" class="w-full">
                 Inscription fermée
               </DsfrButton>
+
+              <div v-if="mission.structure.response_time" class="mt-4 px-8 text-cool-gray-500 text-xs text-center leading-4">
+                L'organisation répond généralement<br> <span class="font-semibold">{{ missionStructureResponseTimeFormatted }}</span>
+              </div>
             </div>
           </div>
         </Box>
@@ -530,6 +534,7 @@ export default {
         ? null
         : this.userParticipation.conversation?.id ? `/messages/${this.userParticipation.conversation.id}` : '/profile/missions'
     }
+
   }
 }
 </script>
