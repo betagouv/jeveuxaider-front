@@ -77,10 +77,10 @@
             </div>
             <div>
               <div class="text-lg mb-4 font-semibold">
-                💌 Utiliser la messagerie
+                💌 Utilisez la messagerie
               </div>
               <div class="text-gray-600">
-                Il est préférable d'utiliser la messagerie de JeVeuxAider.gouv.fr afin que votre temps de réponse puisse être pris en compte et que vous soyez ainsi mieux référencés.
+                Il est préférable d'utiliser la messagerie de JeVeuxAider.gouv.fr afin que les bénévoles disposent de toutes les informations directement sur leur espace.
               </div>
             </div>
             <div class="text-center">
