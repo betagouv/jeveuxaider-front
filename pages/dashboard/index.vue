@@ -73,7 +73,7 @@
         <Heading as="h2" :level="3" class="mb-8">
           Votre activité en chiffres
         </Heading>
-        <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px]">
+        <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px] mb-8">
           <CardStatistic
             :value="statistics.places_left"
             :title="`${$options.filters.pluralize(statistics.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
@@ -117,6 +117,28 @@
           />
         </div>
       </Box>
+      <BoxScore
+        v-if="['responsable'].includes($store.getters.contextRole)"
+        padding="sm"
+        :structure-id="$store.getters.currentRole.contextable_id"
+      >
+        <template slot="top">
+          <Heading as="h2" :level="3" class="mb-8">
+            Votre visibilité
+          </Heading>
+        </template>
+        <template slot="bottom">
+          <div
+            class="mt-8 text-center"
+          >
+            <nuxt-link to="/admin/participations">
+              <Button type="secondary">
+                Traiter les participations
+              </Button>
+            </nuxt-link>
+          </div>
+        </template>
+      </BoxScore>
       <MoreNumbers v-if="['admin','referent'].includes($store.getters.contextRole)" />
       <GuideLinks />
       <HelpCenter />
@@ -134,6 +156,8 @@ import CardStatistic from '@/components/card/CardStatistic'
 import CardTemoignage from '@/components/card/CardTemoignage'
 import ButtonCreateMission from '@/components/custom/ButtonCreateMission'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import BoxScore from '@/components/section/organisation/BoxScore.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
@@ -144,7 +168,9 @@ export default {
     CardTemoignage,
     ButtonCreateMission,
     Breadcrumb,
-    GuideLinks
+    GuideLinks,
+    BoxScore,
+    Button
   },
   mixins: [MixinAction],
   middleware: 'authenticated',
@@ -160,6 +186,7 @@ export default {
   data () {
     return {
       statistics: null,
+      score: null,
       testimonials: [],
       loadingActions: true,
       loadingSnuActions: true,

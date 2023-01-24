@@ -66,7 +66,8 @@ export default {
     '~/plugins/apiengagement.client.js',
     { src: '~/plugins/utm.js', mode: 'client' },
     { src: '~/plugins/vue-chart.js', mode: 'client' },
-    '~/plugins/vue-remix-icons.js'
+    '~/plugins/vue-remix-icons.js',
+    { src: '~/plugins/vue-svg-gauge.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
