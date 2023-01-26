@@ -232,7 +232,7 @@
                   Prochaines dates
                 </div>
                 <div v-if="nextDates.length == 0" class="text-black font-bold -mt-2">
-                  Plus de dates disponibles
+                  Plus de date disponible
                 </div>
                 <div class="space-x-2">
                   <Badge v-for="date in nextDates.slice(0,3)" :key="date.id" :no-icon="true" type="new">
