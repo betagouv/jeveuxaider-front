@@ -132,15 +132,6 @@ export default {
           image:
             '/images/domaines/card_domaine_benevolat_competences.webp, /images/domaines/card_domaine_benevolat_competences@2x.webp 2x, /images/domaines/card_domaine_benevolat_competences.jpg, /images/domaines/card_domaine_benevolat_competences@2x.jpg 2x',
           bottom: true
-        },
-        {
-          id: 5,
-          name: 'Mobilisation Covid-19',
-          slug: 'mobilisation-covid-19',
-          description: 'Participez à la lutte contre la Covid-19',
-          image:
-            '/images/domaines/card_domaine_covid19.webp, /images/domaines/card_domaine_covid19@2x.webp 2x, /images/domaines/card_domaine_covid19.jpg, /images/domaines/card_domaine_covid19@2x.jpg 2x',
-          bottom: true
         }
       ]
     }
