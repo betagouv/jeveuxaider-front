@@ -108,7 +108,10 @@
       </template>
 
       <div class="flex items-end justify-between space-x-1 text-xs text-[#666666] pt-8 mt-auto w-full">
-        <div>
+        <div v-if="hasExpired">
+          Inscription terminée
+        </div>
+        <div v-else>
           <span>{{ placesLeftText }}</span>
           <template v-if="formattedDate && placesLeftText !== 'Complet'">
             <br> {{ formattedDate }}
