@@ -1,5 +1,26 @@
 <template>
   <Box class="space-y-12">
+    <div v-if="mission.prerequisites" class="border border-b-4 border-b-jva-blue-500 p-8">
+      <div class="flex items-center gap-8">
+        <img src="/images/missions/prerequisites.svg" alt="Pré-requis" class="flex-none">
+        <div>
+          <div class="text-base font-bold mb-2">
+            Pré-requis pour réaliser cette mission
+          </div>
+          <ol
+            :class="[
+              'text-cool-gray-500 hyphens-auto',
+              {'list-decimal pl-6': mission.prerequisites.length > 1}
+            ]"
+          >
+            <li v-for="(prerequisite, key) in mission.prerequisites" :key="key">
+              {{ prerequisite }}
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
     <div>
       <div class="text-lg mb-4 text-gray-800">
         Présentation de la mission

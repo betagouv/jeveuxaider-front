@@ -810,24 +810,24 @@ export default {
             ),
             otherwise: schema => schema.nullable()
           }),
-        prerequisites: array()
+        prerequisites: array().nullable()
           .test(
             'test-contains-email',
             'Les pré-requis ne doivent pas contenir d\'email',
             (prerequisites) => {
-              return prerequisites.every(prerequisite => !this.stringContainsEmail(prerequisite))
+              return !prerequisites || prerequisites.every(prerequisite => !this.stringContainsEmail(prerequisite))
             }
           ).test(
             'test-contains-url',
             'Les pré-requis ne doivent pas contenir de liens.',
             (prerequisites) => {
-              return prerequisites.every(prerequisite => !this.stringContainsUrl(prerequisite))
+              return !prerequisites || prerequisites.every(prerequisite => !this.stringContainsUrl(prerequisite))
             }
           ).test(
             'test-contains-phone',
             'Les pré-requis ne doivent pas contenir de téléphone.',
             (prerequisites) => {
-              return prerequisites.every(prerequisite => !this.stringContainsPhone(prerequisite))
+              return !prerequisites || prerequisites.every(prerequisite => !this.stringContainsPhone(prerequisite))
             }
           )
 
