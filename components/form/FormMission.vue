@@ -163,6 +163,22 @@
             </FormHelperText>
           </FormControl>
           <FormControl
+            label="Pré-requis pour réaliser la mission"
+            html-for="prerequisites"
+            :error="errors.prerequisites"
+          >
+            <template #afterLabel>
+              <div class="inline-flex flex-wrap">
+                <span class="!font-normal">(3 max.)</span>
+                <span class="absolute right-0 hidden sm:block !font-normal">100 caractéres max.</span>
+              </div>
+            </template>
+            <PrerequisitesInput
+              :initial-value="form.prerequisites"
+              @change="form.prerequisites = $event"
+            />
+          </FormControl>
+          <FormControl
             label="Mission ouverte également aux"
             html-for="publics_volontaires"
           >
@@ -585,6 +601,7 @@ import FormMissionParameters from '~/components/form/FormMissionParameters.vue'
 import Tag from '@/components/dsfr/Tag.vue'
 import activitiesClassifierMixin from '@/mixins/activitiesClassifier'
 import DsfrLink from '@/components/dsfr/Link.vue'
+import PrerequisitesInput from '@/components/custom/PrerequisitesInput'
 
 export default {
   components: {
@@ -592,7 +609,8 @@ export default {
     AlgoliaSkillsInput,
     AlgoliaTermsInput,
     Tag,
-    DsfrLink
+    DsfrLink,
+    PrerequisitesInput
   },
   mixins: [inputGeo, FormErrors, activitiesClassifierMixin],
   props: {
@@ -791,7 +809,27 @@ export default {
               }
             ),
             otherwise: schema => schema.nullable()
-          })
+          }),
+        prerequisites: array()
+          .test(
+            'test-contains-email',
+            'Les pré-requis ne doivent pas contenir d\'email',
+            (prerequisites) => {
+              return prerequisites.every(prerequisite => !this.stringContainsEmail(prerequisite))
+            }
+          ).test(
+            'test-contains-url',
+            'Les pré-requis ne doivent pas contenir de liens.',
+            (prerequisites) => {
+              return prerequisites.every(prerequisite => !this.stringContainsUrl(prerequisite))
+            }
+          ).test(
+            'test-contains-phone',
+            'Les pré-requis ne doivent pas contenir de téléphone.',
+            (prerequisites) => {
+              return prerequisites.every(prerequisite => !this.stringContainsPhone(prerequisite))
+            }
+          )
 
       }),
       activities: [],

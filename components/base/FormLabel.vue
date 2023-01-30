@@ -1,5 +1,5 @@
 <template>
-  <label :for="htmlFor" class="block text-xs uppercase font-bold text-gray-700 mb-2">
+  <label :for="htmlFor" class="block text-xs uppercase font-bold text-gray-700 mb-2 relative">
     <slot />
     <span v-if="required" class="text-[#E2011C]">
       *
