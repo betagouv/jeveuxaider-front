@@ -38,17 +38,22 @@
               <SoftGateLogin
                 v-if="step == 'login'"
                 :datas="datas"
-                @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
+                @next="step = hasPrerequisites ? 'prerequisites' : hasCreneaux ? 'select-creneaux' : 'participate'"
                 @anti-flood="step = 'anti-flood'"
                 @close="onClose"
               />
               <SoftGateRegister
                 v-if="step == 'register'"
                 :datas="datas"
-                @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
+                @next="step = hasPrerequisites ? 'prerequisites' : hasCreneaux ? 'select-creneaux' : 'participate'"
               />
               <SoftGateAntiFlood
                 v-if="step == 'anti-flood'"
+                @next="step = hasPrerequisites ? 'prerequisites' : hasCreneaux ? 'select-creneaux' : 'participate'"
+                @close="onClose"
+              />
+              <SoftGatePrerequisites
+                v-if="step == 'prerequisites'"
                 @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
                 @close="onClose"
               />
@@ -78,6 +83,7 @@ import SoftGateAntiFlood from '@/components/section/soft-gate/AntiFlood'
 import SoftGateParticipate from '@/components/section/soft-gate/Participate'
 import SoftGateSelectCreneaux from '@/components/section/soft-gate/SelectCreneaux'
 import SoftGateShare from '@/components/section/soft-gate/Share'
+import SoftGatePrerequisites from '@/components/section/soft-gate/Prerequisites'
 
 export default {
   name: 'SoftGateOverlay',
@@ -88,16 +94,17 @@ export default {
     SoftGateAntiFlood,
     SoftGateParticipate,
     SoftGateSelectCreneaux,
-    SoftGateShare
+    SoftGateShare,
+    SoftGatePrerequisites
   },
   data () {
     let firstStep = 'email'
     const selectedMission = this.$store.state.softGate.selectedMission
     if (this.$store.getters.isLogged) {
-      if (
-        this.$store.state.auth.user.statistics.new_participations_today >= 3
-      ) {
+      if (this.$store.state.auth.user.statistics.new_participations_today >= 3) {
         firstStep = 'anti-flood'
+      } else if (selectedMission.prerequisites) {
+        firstStep = 'prerequisites'
       } else if (selectedMission.dates?.filter(date =>
         this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
       ).length > 0) {
@@ -121,6 +128,9 @@ export default {
     },
     hasCreneaux () {
       return this.nextDates?.length > 0
+    },
+    hasPrerequisites () {
+      return this.selectedMission?.prerequisites?.length > 0
     }
   },
   methods: {
@@ -133,12 +143,11 @@ export default {
       this.datas = datas
     },
     onClose () {
-      console.log(this.step)
       if (this.step == 'share') {
-        this.$store.commit('softGate/hideOverlay')
+        this.$store.dispatch('softGate/closeOverlay')
         this.$router.push('/profile/missions')
       } else {
-        this.$store.commit('softGate/hideOverlay')
+        this.$store.dispatch('softGate/closeOverlay')
       }
     }
   }

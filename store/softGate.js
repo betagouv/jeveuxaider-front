@@ -12,7 +12,6 @@ export const mutations = {
   },
   hideOverlay: (state) => {
     state.showOverlay = false
-    state.selectedMission = null
   },
   setSelectedMission: (state, mission) => {
     state.selectedMission = mission
@@ -23,5 +22,10 @@ export const mutations = {
 }
 
 export const actions = {
-
+  async closeOverlay ({ commit }) {
+    commit('hideOverlay')
+    // Wait for fade
+    await new Promise(resolve => setTimeout(resolve, 500))
+    commit('resetSelectedMission')
+  }
 }
