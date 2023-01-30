@@ -1,5 +1,5 @@
 <template>
-  <Drawer :is-open="Boolean(notificationKey)" width="xl" @close="$emit('close')">
+  <Drawer :is-open="Boolean(notificationKey)" width="4xl" @close="$emit('close')">
     <template #title>
       <Heading :level="3">
         {{ notificationLabel }}

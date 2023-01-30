@@ -36,7 +36,17 @@
               arrow
               @click.native="onClick(notification)"
             >
-              <div class="text-gray-900 font-semibold" v-html="notification.label" />
+              <div class="flex space-x-4 items-center">
+                <div class="text-gray-900 font-semibold" v-html="notification.label" />
+                <DsfrBadge
+                  v-if="notification.is_updated"
+                  size="sm"
+                  type="info"
+                  no-icon
+                >
+                  New
+                </DsfrBadge>
+              </div>
               <div v-if="notification.description" class="text-gray-500 text-sm" v-html="notification.description" />
             </StackedListItem>
           </StackedList>
@@ -49,11 +59,13 @@
 <script>
 import DrawerNotification from '@/components/drawer/DrawerNotification'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import DsfrBadge from '@/components/dsfr/Badge.vue'
 
 export default {
   components: {
     DrawerNotification,
-    Breadcrumb
+    Breadcrumb,
+    DsfrBadge
   },
   layout: 'admin-with-sidebar-menu',
   middleware: 'admin',
@@ -67,11 +79,11 @@ export default {
           key: 'benevole',
           label: '🙋‍♀️ Emails envoyés aux bénévoles',
           notifications: [
-            { key: 'benevole_register', label: '💪 Une dernière étape pour s’engager XXX !', description: "Notification envoyée au bénévole lorsqu'il s'inscrit", tags: ['app-benevole-inscription'] },
-            { key: 'benevole_participation_being_processed', label: 'Votre demande de participation est en cours de traitement', description: 'Notification envoyée au bénévole lorsque le responsable passe la participation en cours de traitement' },
-            { key: 'benevole_participation_validated', label: 'Bravo ! Votre demande de participation vient d’être acceptée', description: 'Notification envoyée au bénévole lorsque sa participation est validée', tags: ['app-benevole-participation-validee'] },
-            { key: 'benevole_participation_temoignage', label: 'Participation terminée, demande de témoignage', description: 'Notification envoyée au bénévole lorsque sa participation est terminée' },
-            { key: 'benevole_participation_refused', label: 'Votre participation a été déclinée', description: 'Notification envoyée au bénévole lorsque sa participation est refusée' },
+            { key: 'benevole_register', label: '👏 [Prénom], félicitations pour votre inscription sur JeVeuxAider.gouv.fr !', description: 'Le bénévole vient de s’inscrire sur JVA et reçoit une première proposition de mission', tags: ['app-benevole-inscription'], is_updated: true },
+            { key: 'benevole_participation_being_processed', label: '⏳ Votre demande de participation est en cours de traitement', description: 'Le référent a répondu au premier message du bénévole ou a besoin d’informations complémentaires et a donc passé la mission à “En cours de traitement”', tags: ['app-benevole-participation-being-processed'], is_updated: true },
+            { key: 'benevole_participation_validated', label: '🥳 Bonne nouvelle ! Votre demande de participation est validée', description: 'Le bénévole a reçu une réponse positive suite à sa candidature sur une mission de bénévolat', tags: ['app-benevole-participation-validee'], is_updated: true },
+            { key: 'benevole_participation_temoignage', label: '[Prénom], comment s’est passée votre mission ?', description: 'Le responsable de mission a passé la mission au statut Terminé. Le bénévole est invité à partager son retour d’expérience.', tags: ['app-benevole-mission-over-temoignage'], is_updated: true },
+            { key: 'benevole_participation_refused', label: 'Quel dommage… votre participation vient d’être déclinée', description: 'Le responsable a refusé la candidature proposée par le bénévole. Ce dernier a une précision sur les raisons de refus de sa proposition de participation.', tags: ['app-benevole-participation-declined'], is_updated: true },
             { key: 'benevole_participation_canceled', label: 'Votre participation a été annulée', description: 'Notification envoyée au bénévole lorsque sa participation est annulée' },
             { key: 'benevole_marketplace_mission', label: 'XXX vous propose une mission de bénévolat', description: 'Notification envoyée via la marketplace inversée' },
             { key: 'new_message', label: 'Nouveau message de la part de XXX ([organisation])', description: "Lorsque le bénévole reçoit un nouveau message dans l'une de ses conversations", tags: ['app-benevole-nouveau-message'] },

@@ -16,6 +16,9 @@
             {'max-w-md': width === 'md'},
             {'max-w-lg': width === 'lg'},
             {'max-w-xl': width === 'xl'},
+            {'max-w-2xl': width === '2xl'},
+            {'max-w-3xl': width === '3xl'},
+            {'max-w-4xl': width === '4xl'},
           ]"
         >
           <div class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl">
