@@ -1,9 +1,9 @@
 <template>
   <Box class="space-y-12">
-    <div v-if="mission.prerequisites" class="border border-b-4 border-b-jva-blue-500 p-8">
-      <div class="flex items-center gap-8">
+    <div v-if="mission.prerequisites" class="border border-b-4 border-b-jva-blue-500 p-6 sm:p-8">
+      <div class="flex flex-wrap items-center gap-4 sm:gap-8">
         <img src="/images/missions/prerequisites.svg" alt="Pré-requis" class="flex-none">
-        <div>
+        <div class="w-full sm:w-auto">
           <div class="text-base font-bold mb-2">
             Pré-requis pour réaliser cette mission
           </div>
