@@ -137,7 +137,9 @@
         <div class="text-sm text-gray-500 mb-4 font-light">
           Précisions sur la zone d'intervention
         </div>
-        <div class="font-light" v-html="participation.mission.autonomy_precisions" />
+        <div class="font-light">
+          {{ participation.mission.autonomy_precisions | stripHTML | decodeHTMLEntities }}
+        </div>
       </div>
 
       <div class="mb-6">

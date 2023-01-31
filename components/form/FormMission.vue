@@ -348,11 +348,16 @@
               html-for="autonomy_precisions"
               :error="errors.autonomy_precisions"
             >
-              <RichEditor
-                v-model="form.autonomy_precisions"
-                placeholder="Précisez en quelques mots les zones d'intervention du bénévole en autonomie"
-                class="autonomy_precisions_wrapper"
-              />
+              <client-only>
+                <TextareaAutosize
+                  v-model="form.autonomy_precisions"
+                  name="Autonomie - Précisions"
+                  placeholder="Précisez en quelques mots les zones d'intervention du bénévole en autonomie"
+                  class="w-full placeholder-gray-text-400 border border-gray-300 text-sm px-6 py-3"
+                  maxlength="700"
+                  @keydown.enter.native.prevent
+                />
+              </client-only>
             </FormControl>
           </template>
 
@@ -981,12 +986,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-.autonomy_precisions_wrapper {
-  :deep(.ck-editor__editable) {
-    min-height: 80px;
-  }
-}
-
-</style>

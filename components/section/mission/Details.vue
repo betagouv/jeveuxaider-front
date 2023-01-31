@@ -41,12 +41,14 @@
       <TextFormatted :max-lines="3" :text="mission.description" class="text-cool-gray-500" />
     </div>
 
-    <div v-if="mission.autonomy_precisions">
+    <!-- <div v-if="mission.autonomy_precisions">
       <div class="text-lg mb-4 text-gray-800">
         Précisions sur la zone d'intervention
       </div>
-      <TextFormatted :max-lines="3" :text="mission.autonomy_precisions" class="text-cool-gray-500" />
-    </div>
+      <div class="text-cool-gray-500">
+        {{ mission.autonomy_precisions | stripHTML | decodeHTMLEntities }}
+      </div>
+    </div> -->
 
     <div v-if="publicsVolontaires.length > 0">
       <HrTitle>
