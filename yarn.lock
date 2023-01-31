@@ -10488,6 +10488,11 @@ tailwind-config-viewer@^1.6.2:
     portfinder "^1.0.26"
     replace-in-file "^6.1.0"
 
+tailwindcss-hyphens@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/tailwindcss-hyphens/-/tailwindcss-hyphens-0.1.0.tgz#b119219d9b53626178e59e925b81760eb06d58eb"
+  integrity sha512-Fdbb37iC3G33RX5YaIkBjT7NM0qL6EhE1ifMy6MdQkybpo6cuOVwnQnW+KHMB0fM0ep5nPI3C9bc1R3OanuJNg==
+
 tailwindcss@^2.2.2:
   version "2.2.19"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-2.2.19.tgz#540e464832cd462bb9649c1484b0a38315c2653c"
