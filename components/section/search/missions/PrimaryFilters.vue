@@ -19,8 +19,8 @@
         Activités
       </div>
       <FacetFilterToggle facet-name="activity.name" label="Activités" :facets="$store.getters['algoliaSearch/facetResults']('activity.name')">
-        <template #button="{ firstValueSelected, activeValuesCount }">
-          <button class="w-full flex space-x-2 items-center justify-between group">
+        <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
+          <button :aria-expanded="isOpen || 'false'" class="w-full flex space-x-2 items-center justify-between group">
             <div class="flex space-x-2 items-center truncate">
               <RiBookmark3Fill class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none" />
               <span v-if="!firstValueSelected" class="italic pr-[1px] text-[#888888]">Toutes</span>

@@ -14,7 +14,7 @@
 
       <template #prevArrow="arrowOption">
         <transition name="fade">
-          <div
+          <button
             v-show="settings.infinite || arrowOption.currentSlide"
             class="rounded-full !bg-white transition flex justify-center items-center !p-6 relative z-10"
           >
@@ -24,13 +24,13 @@
               class="absolute inset-0 m-auto"
               data-not-lazy
             >
-          </div>
+          </button>
         </transition>
       </template>
 
       <template #nextArrow="arrowOption">
         <transition name="fade">
-          <div
+          <button
             v-show="
               settings.infinite || arrowOption.currentSlide < slidesCount - 3
             "
@@ -42,7 +42,7 @@
               class="absolute inset-0 m-auto"
               data-not-lazy
             >
-          </div>
+          </button>
         </transition>
       </template>
 
@@ -205,6 +205,12 @@ export default {
       @apply right-0;
       top: calc(50% - 24px);
       @apply -translate-y-1/2;
+    }
+    &:focus-visible {
+      outline-style: solid;
+      outline-color: #0a76f6;
+      outline-width: 2px;
+      outline-offset: 2px;
     }
   }
 

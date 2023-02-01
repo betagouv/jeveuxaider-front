@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <button class="flex w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
+    <button :aria-expanded="isOpen || 'false'" class="flex w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
       <slot name="button" :isOpen="isOpen" :activeValue="activeValue">
         Toggle facet
       </slot>

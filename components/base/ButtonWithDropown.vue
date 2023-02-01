@@ -12,8 +12,8 @@
         id="option-menu-button"
         type="button"
         class="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-jva-blue-500 focus:border-jva-blue-500 h-full"
-        aria-expanded="true"
         aria-haspopup="true"
+        :aria-expanded="show || 'false'"
         @click="show = !show"
       >
         <span class="sr-only">Open options</span>

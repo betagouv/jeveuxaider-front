@@ -11,7 +11,7 @@
             ? '/images/france-connect/franceconnect-blue.svg'
             : '/images/france-connect/franceconnect.svg'
         "
-        alt="Soumettre"
+        alt="S'identifier avec FranceConnect"
       >
     </button>
     <Link

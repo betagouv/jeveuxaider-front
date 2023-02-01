@@ -7,6 +7,7 @@
       <div class="flex flex-col w-full h-full px-4">
         <button
           class="p-4 -mr-4 lg:m-0 lg:p-8 cursor-pointer ml-auto lg:absolute lg:right-0"
+          title="annuler le partage"
           @click="onClose"
         >
           <RiCloseFill class="text-white h-10 w-10 fill-current" />

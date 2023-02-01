@@ -21,6 +21,7 @@
         class="absolute sm:static flex-none w-8 h-8"
         style="right: 0; top: -48px"
         as="button"
+        title="partager la mission"
         @click.native="handleClickShare"
       />
     </div>

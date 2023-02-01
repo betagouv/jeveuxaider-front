@@ -3,12 +3,13 @@
     <div class="hidden sm:flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
       <template v-for="filter,i in filtersName">
         <FacetFilterToggle v-if="filter === 'publics_beneficiaires'" :key="i" facet-name="publics_beneficiaires" label="Publics aidés">
-          <template #button="{ firstValueSelected, activeValuesCount }">
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
               as="button"
+              :aria-expanded="isOpen || 'false'"
             >
               <span v-if="!firstValueSelected">Publics aidés</span>
               <div v-else>
@@ -20,12 +21,13 @@
         </FacetFilterToggle>
 
         <FacetFilterToggle v-if="filter === 'domaines.name'" :key="i" facet-name="domaines.name" label="Domaines">
-          <template #button="{ firstValueSelected, activeValuesCount }">
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
               as="button"
+              :aria-expanded="isOpen || 'false'"
             >
               <span v-if="!firstValueSelected">Domaines</span>
               <div v-else>
@@ -37,12 +39,13 @@
         </FacetFilterToggle>
 
         <FacetFilterToggle v-if="filter === 'reseaux.name'" :key="i" facet-name="reseaux.name" label="Réseaux" options-class="right-0 md:left-0">
-          <template #button="{ firstValueSelected, activeValuesCount }">
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
               as="button"
+              :aria-expanded="isOpen || 'false'"
             >
               <span v-if="!firstValueSelected">Réseaux</span>
               <div v-else>
@@ -60,12 +63,13 @@
           label="Départements"
           options-class="right-0 lg:left-0"
         >
-          <template #button="{ firstValueSelected, activeValuesCount }">
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
               as="button"
+              :aria-expanded="isOpen || 'false'"
             >
               <span v-if="!firstValueSelected">Départements</span>
               <div v-else>
@@ -77,12 +81,13 @@
         </FacetFilterToggle>
 
         <FacetFilterToggle v-if="filter === 'statut_juridique'" :key="i" facet-name="statut_juridique" label="Types d’organisation" options-class="right-0 md:left-0">
-          <template #button="{ firstValueSelected, activeValuesCount }">
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
               as="button"
+              :aria-expanded="isOpen || 'false'"
             >
               <span v-if="!firstValueSelected">Types d’organisation</span>
               <div v-else>
