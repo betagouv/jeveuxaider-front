@@ -1,5 +1,6 @@
 <template>
   <div v-click-outside="clickedOutside" class="relative">
+    <!-- @click.native="!disabled ? showOptions = !showOptions : null" -->
     <Tag
       :id="name"
       :name="name"
@@ -12,7 +13,7 @@
       clearable
       :is-active="value ? true : false"
       @keydown.native="onKeydown"
-      @click.native="!disabled ? showOptions = !showOptions : null"
+      @click.native="onClick"
       @keydown.native.tab="showOptions = false"
       @keydown.native.esc="showOptions = false"
       @clear="reset()"

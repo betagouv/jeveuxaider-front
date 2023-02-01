@@ -3,7 +3,7 @@ export default {
   data () {
     return {
       showOptions: false,
-      highlightIndex: null
+      highlightIndex: this.value ? this.options.findIndex((option) => { return option.key == this.value }) : 0
     }
   },
   computed: {
@@ -13,13 +13,18 @@ export default {
       },
       set (newItem) {
         this.$emit('changed', newItem)
-        // this.handleSelectOption(newItem)
+        if (newItem) {
+          const index = this.options.findIndex((option) => { return option.key === newItem.key })
+          this.highlightIndex = index
+        } else {
+          this.highlightIndex = 0
+        }
       }
     }
   },
   methods: {
     reset () {
-      this.highlightIndex = null
+      this.highlightIndex = 0
       this.selectedOption = null
       this.showOptions = false
       this.$emit('input', null)
@@ -37,50 +42,70 @@ export default {
       }
       this.$emit('blur')
       this.showOptions = false
-      this.highlightIndex = null
+    },
+    onClick (e) {
+      if (!this.disabled) {
+        this.showOptions = !this.showOptions
+      }
+      this.highlightScrollIntoView()
     },
     onKeydown (e) {
       if (this.disabled) {
         return
       }
-      const keyValue = e.which // enter key
-      if (keyValue === 9) {
+
+      if (e.key === 'Tab') {
         this.showOptions = false
-        this.highlightIndex = null
+        if (this.selectedOption) {
+          const index = this.options.findIndex((option) => { return option.key === this.selectedOption.key })
+          this.highlightIndex = index
+        }
       }
 
-      if (keyValue === 13) {
-        if (this.highlightIndex !== null) {
+      if (e.key === 'Enter') {
+        if (this.showOptions) {
+          e.preventDefault()
+          e.stopPropagation()
           this.handleSelectOption(this.options[this.highlightIndex])
           return
         }
       }
-      if (keyValue === 40 || keyValue === 38 || keyValue === 13) {
+
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter') {
         e.preventDefault()
         e.stopPropagation()
-        if (this.highlightIndex === null) {
+
+        if (!this.showOptions) {
           this.showOptions = true
-          this.highlightIndex = 0
-          return
         }
-        if (keyValue === 40) {
+
+        if (e.key === 'Enter' && !this.selectedOption) {
+          this.highlightIndex = 0
+        }
+
+        if (e.key === 'ArrowDown') {
           if (this.highlightIndex + 1 === this.options.length) {
             this.highlightIndex = 0
           } else {
             this.highlightIndex += 1
           }
         }
-        if (keyValue === 38) {
+        if (e.key === 'ArrowUp') {
           if (this.highlightIndex === 0) {
             this.highlightIndex = this.options.length - 1
           } else {
             this.highlightIndex -= 1
           }
         }
-        this.$refs[`option_${this.highlightIndex}`]?.[0].scrollIntoView({
-          block: 'nearest'
-        })
+
+        this.highlightScrollIntoView()
       }
+    },
+    async highlightScrollIntoView () {
+      await this.$nextTick()
+      this.$refs[`option_${this.highlightIndex}`]?.[0].scrollIntoView({
+        block: 'nearest'
+      })
     }
   }
 }
