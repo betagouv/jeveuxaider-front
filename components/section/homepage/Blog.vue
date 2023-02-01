@@ -3,7 +3,7 @@
     <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
-          <Heading as="h2" size="2xl">
+          <Heading :id="`label-blog-${_uid}`" as="h2" size="2xl">
             Les actualités de l'engagement
           </Heading>
 
@@ -22,6 +22,7 @@
             isExternal: true,
           }"
           :slides-count="articles.length"
+          :aria-labelledby="`label-blog-${_uid}`"
         >
           <a
             v-for="article in articles"

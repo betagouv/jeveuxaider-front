@@ -3,7 +3,7 @@
     <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
-          <Heading as="h2" size="2xl" class="text-center md:text-left">
+          <Heading :id="`label-domaines-action-${_uid}`" as="h2" size="2xl" class="text-center md:text-left">
             Trouvez votre domaine d'action
           </Heading>
           <span
@@ -19,6 +19,7 @@
             :key="domaine.id"
             class="card--domaine--wrapper"
             :to="`/domaines-action/${domaine.slug}`"
+            :aria-labelledby="`label-domaines-action-${_uid}`"
           >
             <CardDomaine :domaine="domaine" class="!h-full" />
           </nuxt-link>

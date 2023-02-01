@@ -46,10 +46,13 @@
         </transition>
       </template>
 
-      <template #customPaging>
-        <div class="text-sm text-[#DEDEDE]">
-          <div>●</div>
-        </div>
+      <template #customPaging="page">
+        <button
+          :aria-label="`slide ${page+1}`"
+          class="!text-sm !leading-none !p-0 !rounded-full !text-[#DEDEDE]"
+        >
+          ●
+        </button>
       </template>
     </VueSlickCarousel>
 
@@ -107,7 +110,9 @@ export default {
           variableWidth: true
         }
       }
-    }
+    },
+    ariaLabelledby: { type: String, default: null },
+    ariaLabel: { type: String, default: null }
   },
   data () {
     return {
@@ -115,8 +120,9 @@ export default {
     }
   },
   mounted () {
+    this.handleSlidesAccessibility()
     if (this.slidesAreLinks) {
-      this.handleSlidesAccessibility()
+      this.handleLinksAccessibility()
     }
     if (this.addDotsWrapper) {
       this.handleDotsWrapper()
@@ -124,6 +130,18 @@ export default {
   },
   methods: {
     handleSlidesAccessibility () {
+      const slickTrack = this.$refs.vueSlickCarousel.$el.getElementsByClassName(
+        'slick-track'
+      )?.[0]
+      slickTrack.setAttribute('role', 'group')
+      slickTrack.setAttribute('aria-roledescription', 'carousel')
+      if (this.ariaLabelledby) {
+        slickTrack.setAttribute('aria-labelledby', this.ariaLabelledby)
+      } else if (this.ariaLabel) {
+        slickTrack.setAttribute('aria-label', this.ariaLabel)
+      }
+    },
+    handleLinksAccessibility () {
       const slides = this.$refs.vueSlickCarousel.$el.getElementsByClassName(
         'slick-slide'
       )
@@ -219,11 +237,21 @@ export default {
     @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8;
     > li {
       @apply w-auto h-auto my-0 mx-2;
-      > div {
+      > button {
         @apply transition;
+        &:before {
+          opacity : 0 !important;
+          pointer-events: none !important;
+        }
+        &:focus-visible {
+          outline-style: solid;
+          outline-color: #0a76f6;
+          outline-width: 2px;
+          outline-offset: 2px;
+        }
       }
-      &.slick-active > div {
-        color: #696974;
+      &.slick-active > button {
+        color: #696974 !important;
       }
     }
     @screen xl {

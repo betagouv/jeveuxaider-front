@@ -315,6 +315,7 @@
     <div class="bg-white overflow-hidden">
       <div class="mx-auto max-w-6xl pt-14 pb-20 px-4 sm:px-6 lg:px-8">
         <h3
+          id="label-carousel-logos-inscription-benevoles"
           class="text-center leading-8 pb-8 text-gray-900 font-medium text-3xl px-4"
         >
           Plus de <b class="font-bold">10 000 organisations</b> ont déjà rejoint

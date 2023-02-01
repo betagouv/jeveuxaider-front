@@ -1,6 +1,12 @@
 <template>
   <client-only>
-    <Slideshow :slides-count="logos.length" class="mt-12" :settings="settings" :add-dots-wrapper="false">
+    <Slideshow
+      :slides-count="logos.length"
+      class="mt-12"
+      :settings="settings"
+      :add-dots-wrapper="false"
+      aria-labelledby="label-carousel-logos-inscription-benevoles"
+    >
       <div
         v-for="logo,index in logos"
         :key="index"

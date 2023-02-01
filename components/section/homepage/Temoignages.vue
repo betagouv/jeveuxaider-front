@@ -15,11 +15,16 @@
     >
 
     <div class="container mx-auto px-4 ">
-      <Heading as="h2" size="2xl" class="text-center">
+      <Heading :id="`label-paroles-benevoles-${_uid}`" as="h2" size="2xl" class="text-center">
         Paroles de bénévoles
       </Heading>
 
-      <Slideshow :slides-count="testimonies.length" :settings="settings" class="mt-12">
+      <Slideshow
+        :slides-count="testimonies.length"
+        :settings="settings"
+        class="mt-12"
+        :aria-labelledby="`label-paroles-benevoles-${_uid}`"
+      >
         <div v-for="testimony,index in testimonies" :key="index">
           <div
             class="testimony--wrapper flex flex-col items-center space-y-6 text-center max-w-[768px] mx-auto lg:flex-row lg:text-left lg:space-y-0"

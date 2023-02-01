@@ -282,7 +282,7 @@
     >
       <div class="container mx-auto px-8 sm:px-4">
         <div class="pt-16 pb-24">
-          <Heading as="div" class="text-center mb-12">
+          <Heading :id="`label-autres-missions-${_uid}`" as="div" class="text-center mb-12">
             Vous pourriez aussi aimer&nbsp;…
           </Heading>
 
@@ -290,6 +290,7 @@
             class="mb-6"
             :slides-are-links="true"
             :slides-count="similarMissions.length"
+            :aria-labelledby="`label-autres-missions-${_uid}`"
           >
             <nuxt-link
               v-for="mission in similarMissions"
