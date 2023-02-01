@@ -139,7 +139,7 @@
           class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
         >
           <span>Notre impact</span>
-          <span>🎯</span>
+          <span aria-hidden="true">🎯</span>
         </NavItem> -->
 
         <!-- <NavItem
@@ -150,7 +150,7 @@
           class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
         >
           <span>Décembre ensemble</span>
-          <span>❄️</span>
+          <span aria-hidden="true">❄️</span>
         </NavItem> -->
 
         <NavItem
@@ -242,7 +242,7 @@
                   :class="['flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600']"
                 >
                   <span>Notre impact</span>
-                  <span>🎯</span>
+                  <span aria-hidden="true">🎯</span>
                 </NavItem> -->
 
                 <!-- <NavItem
@@ -253,7 +253,7 @@
                   :class="['flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600']"
                 >
                   <span>Décembre ensemble</span>
-                  <span>❄️</span>
+                  <span aria-hidden="true">❄️</span>
                 </NavItem> -->
               </div>
 

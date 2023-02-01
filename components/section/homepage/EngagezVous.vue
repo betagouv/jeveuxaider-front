@@ -13,6 +13,8 @@
             v-for="(city, index) in cities"
             :key="index"
             :to="city.url"
+            :title="city.title || undefined"
+            :target="city.target || undefined"
             class="rounded-full"
           >
             <Tag
@@ -133,7 +135,9 @@ export default {
         },
         {
           name: '+',
-          url: '/territoires'
+          url: '/territoires',
+          target: '_blank',
+          title: 'Voir tous les territoires engagés'
         }
       ]
     }
