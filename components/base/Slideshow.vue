@@ -164,7 +164,7 @@ export default {
         if (slide.classList.contains('slick-current')) {
           slide.setAttribute('aria-selected', 'true')
           el.setAttribute('tabindex', 0)
-          if (!isInit && document.activeElement.nodeName !== 'BUTTON') {
+          if (!isInit && this.$refs.vueSlickCarousel.$el.contains(document.activeElement) && document.activeElement.nodeName !== 'BUTTON') {
             el.focus()
           }
         } else {
