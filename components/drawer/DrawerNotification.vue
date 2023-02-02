@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-:deep(table) {
+/* :deep(table) {
   &.inner-body, &.content, &.subcopy {
     width: 100% !important;
   }
@@ -72,6 +72,7 @@ export default {
   list-style: disc;
   padding-left: 15px;
 }
+*/
 
 :deep(a) {
   pointer-events: none !important;
