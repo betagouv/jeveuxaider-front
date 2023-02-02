@@ -107,7 +107,9 @@ export default {
           touchThreshold: 100,
           swipeToSlide: true,
           infinite: false,
-          variableWidth: true
+          variableWidth: true,
+          accessibility: true,
+          focusOnSelect: true
         }
       }
     },
@@ -120,16 +122,16 @@ export default {
     }
   },
   mounted () {
-    this.handleSlidesAccessibility()
-    if (this.slidesAreLinks) {
-      this.handleLinksAccessibility()
-    }
+    this.handleAccessibilityInit()
+    // if (this.slidesAreLinks) {
+    //   this.handleLinksAccessibility()
+    // }
     if (this.addDotsWrapper) {
       this.handleDotsWrapper()
     }
   },
   methods: {
-    handleSlidesAccessibility () {
+    handleAccessibilityInit () {
       const slickTrack = this.$refs.vueSlickCarousel.$el.getElementsByClassName(
         'slick-track'
       )?.[0]
@@ -140,14 +142,35 @@ export default {
       } else if (this.ariaLabel) {
         slickTrack.setAttribute('aria-label', this.ariaLabel)
       }
-    },
-    handleLinksAccessibility () {
+
       const slides = this.$refs.vueSlickCarousel.$el.getElementsByClassName(
         'slick-slide'
       )
       slides.forEach((slide) => {
-        slide.removeAttribute('tabindex')
-        slide.getElementsByTagName('a').item(0).removeAttribute('tabindex')
+        if (this.slidesAreLinks) {
+          slide.removeAttribute('tabindex')
+        }
+      })
+
+      this.handleAccessibility(true)
+    },
+    handleAccessibility (isInit) {
+      const slides = this.$refs.vueSlickCarousel.$el.getElementsByClassName(
+        'slick-slide'
+      )
+      slides.forEach((slide) => {
+        slide.removeAttribute('aria-hidden')
+        const el = this.slidesAreLinks ? slide.getElementsByTagName('a').item(0) : slide
+        if (slide.classList.contains('slick-current')) {
+          slide.setAttribute('aria-selected', 'true')
+          el.setAttribute('tabindex', 0)
+          if (!isInit && document.activeElement.nodeName !== 'BUTTON') {
+            el.focus()
+          }
+        } else {
+          slide.setAttribute('aria-selected', 'false')
+          el.setAttribute('tabindex', -1)
+        }
       })
     },
     handleDotsWrapper () {
@@ -182,6 +205,8 @@ export default {
       }
     },
     onAfterChange () {
+      this.handleAccessibility()
+
       if (this.$refs.vueSlickCarousel.autoplay) {
         this.$refs.vueSlickCarousel.play()
       }
@@ -239,6 +264,8 @@ export default {
       @apply w-auto h-auto my-0 mx-2;
       > button {
         @apply transition;
+        width: 14px;
+        height: 14px;
         &:before {
           opacity : 0 !important;
           pointer-events: none !important;
