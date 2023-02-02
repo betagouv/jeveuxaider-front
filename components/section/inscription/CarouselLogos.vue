@@ -69,7 +69,6 @@ export default {
             settings: {
               slidesToScroll: 1,
               slidesToShow: 1,
-              dots: false,
               speed: 750
             }
           }
