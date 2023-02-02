@@ -4,7 +4,13 @@
       <template v-for="filter,i in visibleFilters">
         <AutonomyFilter v-if="filter === 'is_autonomy'" :key="i" />
 
-        <FacetFilterToggle v-if="filter === 'structure.name'" :key="i" facet-name="structure.name" label="Organisations">
+        <FacetFilterToggle
+          v-if="filter === 'structure.name'"
+          :key="i"
+          facet-name="structure.name"
+          label="Organisations"
+          legend="Filtrer par organisation"
+        >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
@@ -22,7 +28,13 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'tags'" :key="i" facet-name="tags" label="Opérations nationales">
+        <FacetFilterToggle
+          v-if="filter === 'tags'"
+          :key="i"
+          facet-name="tags"
+          label="Opérations nationales"
+          legend="Filtrer par opération nationale"
+        >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
@@ -40,7 +52,13 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'publics_beneficiaires'" :key="i" facet-name="publics_beneficiaires" label="Publics aidés">
+        <FacetFilterToggle
+          v-if="filter === 'publics_beneficiaires'"
+          :key="i"
+          facet-name="publics_beneficiaires"
+          label="Publics aidés"
+          legend="Filtrer par public aidé"
+        >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
@@ -58,7 +76,13 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'domaines'" :key="i" facet-name="domaines" label="Domaines">
+        <FacetFilterToggle
+          v-if="filter === 'domaines'"
+          :key="i"
+          facet-name="domaines"
+          label="Domaines"
+          legend="Filtrer par domaine d'action"
+        >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
@@ -76,7 +100,14 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'structure.reseaux.name'" :key="i" facet-name="structure.reseaux.name" label="Réseaux" options-class="right-0 md:left-0">
+        <FacetFilterToggle
+          v-if="filter === 'structure.reseaux.name'"
+          :key="i"
+          facet-name="structure.reseaux.name"
+          label="Réseaux"
+          options-class="right-0 lg:left-0"
+          legend="Filtrer par réseau"
+        >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
@@ -100,6 +131,7 @@
           facet-name="department_name"
           label="Départements"
           options-class="right-0 lg:left-0"
+          legend="Filtrer par département"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
@@ -118,7 +150,14 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'template_subtitle'" :key="i" facet-name="template_subtitle" label="Types de mission" options-class="right-0 md:left-0">
+        <FacetFilterToggle
+          v-if="filter === 'template_subtitle'"
+          :key="i"
+          facet-name="template_subtitle"
+          label="Types de mission"
+          options-class="right-0 lg:left-0"
+          legend="Filtrer par type de mission"
+        >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"

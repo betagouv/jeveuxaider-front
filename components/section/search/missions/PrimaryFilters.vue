@@ -18,7 +18,12 @@
       <div class="text-[#7B7B7B] mb-1">
         Activités
       </div>
-      <FacetFilterToggle facet-name="activity.name" label="Activités" :facets="$store.getters['algoliaSearch/facetResults']('activity.name')">
+      <FacetFilterToggle
+        facet-name="activity.name"
+        label="Activités"
+        :facets="$store.getters['algoliaSearch/facetResults']('activity.name')"
+        legend="Filtrer par type d'activité"
+      >
         <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
           <button :aria-expanded="isOpen || 'false'" class="w-full flex space-x-2 items-center justify-between group">
             <div class="flex space-x-2 items-center truncate">

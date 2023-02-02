@@ -15,6 +15,8 @@
             class="px-6 py-3 text-sm appearance-none block w-full placeholder-gray-text-400 border border-gray-300 overflow-ellipsis"
             :value="data.inputValue"
             placeholder="jj/mm/aaaa"
+            :aria-required="ariaRequired"
+            :autocomplete="autocomplete || 'off'"
             v-on="data.inputEvents"
           >
           <div class="absolute right-4">
@@ -52,7 +54,9 @@ export default {
     popoverWillShow: {
       type: Function,
       default: () => {}
-    }
+    },
+    ariaRequired: { type: String, default: null },
+    autocomplete: { type: String, default: null }
   },
   data () {
     return {

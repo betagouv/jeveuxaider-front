@@ -1,6 +1,6 @@
 <template>
   <div v-click-outside="() => isGeolocFilterActive = false">
-    <div class="text-[#7B7B7B] mb-1">
+    <div :id="`label-search-${_uid}`" class="text-[#7B7B7B] mb-1">
       Localisation
     </div>
 
@@ -33,6 +33,7 @@
       v-model="searchValue"
       placeholder="Ville ou code postal"
       icon="RiMapPin2Fill"
+      :aria-labelledby="`label-search-${_uid}`"
       @focus="isGeolocFilterActive = true"
       @input="handleInput"
       @clear="() => { handleSelectedAdress(null); isGeolocFilterActive = true }"

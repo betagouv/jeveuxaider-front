@@ -12,7 +12,12 @@
       <div class="text-gray-500 mb-1">
         Activités
       </div>
-      <FacetFilterToggle facet-name="activities.name" label="Activités" :facets="$store.getters['algoliaSearch/facetResults']('activities.name')">
+      <FacetFilterToggle
+        facet-name="activities.name"
+        label="Activités"
+        :facets="$store.getters['algoliaSearch/facetResults']('activities.name')"
+        legend="Filtrer par type d'activité"
+      >
         <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
           <button :aria-expanded="isOpen || 'false'" class="flex space-x-2 items-center justify-between group w-full">
             <div class="flex space-x-2 items-center truncate">
@@ -31,7 +36,12 @@
       <div class="text-gray-500 mb-1">
         Publics aidés
       </div>
-      <FacetFilterToggle facet-name="publics_beneficiaires" label="Publics aidés" :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')">
+      <FacetFilterToggle
+        facet-name="publics_beneficiaires"
+        label="Publics aidés"
+        :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')"
+        legend="Filtrer par public aidé"
+      >
         <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
           <button :aria-expanded="isOpen || 'false'" class="flex space-x-2 items-center justify-between group w-full">
             <div class="flex space-x-2 items-center truncate">

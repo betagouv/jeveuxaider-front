@@ -135,7 +135,7 @@
                 </div>
                 <div
                   v-show="!isLoadingFranceConnect"
-                  class="border-t-2 border-gray-100 pt-10 pb-2 px-4 sm:px-12 bg-gray-50"
+                  class="border-t-2 border-gray-100 pt-8 pb-2 px-4 sm:px-12 bg-gray-50"
                 >
                   <template v-if="$store.state.settings.general.light_mode_active">
                     <div class="text-center space-y-6 pb-12">
@@ -160,6 +160,10 @@
                     </div>
                   </template>
                   <template v-else>
+                    <!-- <div class="text-xs text-gray-600 mb-6">
+                      <InformationCircleIcon class="h-4 w-4 text-gray-500 inline relative bottom-[1px]" />
+                      <span> Les champs marqués d'un <span class="text-[#E2011C] font-bold">*</span> sont requis</span>
+                    </div> -->
                     <form id="inscription" class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2" @submit.prevent="onSubmit">
                       <FormControl
                         label="Prénom"
@@ -171,6 +175,8 @@
                           v-model="form.first_name"
                           name="first_name"
                           placeholder="Jean"
+                          aria-required="true"
+                          autocomplete="given-name"
                           @blur="validate('first_name')"
                         />
                       </FormControl>
@@ -184,6 +190,8 @@
                           v-model="form.last_name"
                           name="last_name"
                           placeholder="Dupont"
+                          aria-required="true"
+                          autocomplete="family-name"
                           @blur="validate('last_name')"
                         />
                       </FormControl>
@@ -198,6 +206,8 @@
                           type="email"
                           name="email"
                           placeholder="jean.dupont@gmail.com"
+                          aria-required="true"
+                          autocomplete="email"
                           @blur="validate('email')"
                         />
                       </FormControl>
@@ -213,6 +223,8 @@
                           type="tel"
                           placeholder="56000"
                           maxlength="5"
+                          aria-required="true"
+                          autocomplete="postal-code"
                           @blur="validate('zip')"
                         />
                       </FormControl>
@@ -228,6 +240,8 @@
                           type="tel"
                           maxlength="14"
                           placeholder="0612345678"
+                          aria-required="true"
+                          autocomplete="tel"
                           @blur="validate('mobile')"
                         />
                       </FormControl>
@@ -237,7 +251,13 @@
                         required
                         :error="errors.birthday"
                       >
-                        <InputDate v-model="form.birthday" required name="birthday" />
+                        <InputDate
+                          v-model="form.birthday"
+                          required
+                          name="birthday"
+                          aria-required="true"
+                          autocomplete="bday"
+                        />
                       </FormControl>
                       <FormControl
                         label="Mot de passe"
@@ -250,6 +270,8 @@
                           name="password"
                           placeholder="Votre mot de passe"
                           type="password"
+                          aria-required="true"
+                          autocomplete="current-password"
                           @blur="validate('password')"
                         />
                       </FormControl>
@@ -264,6 +286,8 @@
                           name="password_confirmation"
                           placeholder="Votre mot de passe"
                           type="password"
+                          aria-required="true"
+                          autocomplete="current-password"
                           @blur="validate('password_confirmation')"
                         />
                       </FormControl>

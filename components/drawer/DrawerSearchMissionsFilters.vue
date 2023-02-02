@@ -35,6 +35,7 @@
       label="Activités"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('activity.name')"
+      legend="Filtrer par type d'activité"
     />
     <FacetFilter
       show-more
@@ -42,6 +43,7 @@
       label="Organisations"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('structure.name')"
+      legend="Filtrer par organisation"
     />
     <FacetFilter
       show-more
@@ -49,6 +51,7 @@
       label="Opérations nationales"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('tags')"
+      legend="Filtrer par opération nationale"
     />
     <FacetFilter
       show-more
@@ -56,6 +59,7 @@
       label="Publics aidés"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')"
+      legend="Filtrer par public aidé"
     />
     <FacetFilter
       show-more
@@ -63,6 +67,7 @@
       label="Domaines"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('domaines')"
+      legend="Filtrer par domaine d'action"
     />
     <FacetFilter
       show-more
@@ -70,6 +75,7 @@
       label="Réseaux"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('structure.reseaux.name')"
+      legend="Filtrer par réseau"
     />
     <FacetFilter
       show-more
@@ -77,6 +83,7 @@
       label="Départements"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('department_name')"
+      legend="Filtrer par département"
     />
     <FacetFilter
       show-more
@@ -84,6 +91,7 @@
       label="Types de mission"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('template_subtitle')"
+      legend="Filtrer par type de mission"
     />
 
     <template #footer>

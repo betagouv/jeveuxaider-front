@@ -34,11 +34,17 @@
         @keydown.esc="isOpen = false"
       >
         <div class="p-4 pb-0 space-y-3">
-          <div class="font-medium">
+          <div :id="`label-search-${_uid}`" class="font-medium">
             {{ label }}
           </div>
 
-          <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Renseignez une ville ou un code postal" @input="handleInput" />
+          <FacetSearch
+            ref="facetSearch"
+            v-model="searchValue"
+            placeholder="Renseignez une ville ou un code postal"
+            :aria-labelledby="`label-search-${_uid}`"
+            @input="handleInput"
+          />
         </div>
 
         <div class="text-sm">

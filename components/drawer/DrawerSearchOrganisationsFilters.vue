@@ -17,6 +17,7 @@
       label="Publics aidés"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')"
+      legend="Filtrer par public aidé"
     />
     <FacetFilter
       show-more
@@ -24,6 +25,7 @@
       label="Domaines"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('domaines.name')"
+      legend="Filtrer par domaine d'action"
     />
     <FacetFilter
       show-more
@@ -31,6 +33,7 @@
       label="Types d’organisation"
       :show-more-limit="5"
       :facets="$store.getters['algoliaSearch/facetResults']('statut_juridique')"
+      legend="Filtrer par type d'organisation'"
     />
     <FacetFilter
       show-more
@@ -38,6 +41,7 @@
       label="Réseaux"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('reseaux.name')"
+      legend="Filtrer par réseau"
     />
     <FacetFilter
       show-more
@@ -45,6 +49,7 @@
       label="Départements"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('department_name')"
+      legend="Filtrer par département"
     />
 
     <template #footer>

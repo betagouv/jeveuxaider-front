@@ -2,7 +2,13 @@
   <div class="lg:flex justify-between items-center mt-8 lg:mb-4">
     <div class="hidden sm:flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
       <template v-for="filter,i in filtersName">
-        <FacetFilterToggle v-if="filter === 'publics_beneficiaires'" :key="i" facet-name="publics_beneficiaires" label="Publics aidés">
+        <FacetFilterToggle
+          v-if="filter === 'publics_beneficiaires'"
+          :key="i"
+          facet-name="publics_beneficiaires"
+          label="Publics aidés"
+          legend="Filtrer par public aidé"
+        >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
@@ -20,7 +26,13 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'domaines.name'" :key="i" facet-name="domaines.name" label="Domaines">
+        <FacetFilterToggle
+          v-if="filter === 'domaines.name'"
+          :key="i"
+          facet-name="domaines.name"
+          label="Domaines"
+          legend="Filtrer par domaine d'action"
+        >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
@@ -38,7 +50,14 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'reseaux.name'" :key="i" facet-name="reseaux.name" label="Réseaux" options-class="right-0 md:left-0">
+        <FacetFilterToggle
+          v-if="filter === 'reseaux.name'"
+          :key="i"
+          facet-name="reseaux.name"
+          label="Réseaux"
+          options-class="right-0 lg:left-0"
+          legend="Filtrer par réseau"
+        >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
@@ -62,6 +81,7 @@
           facet-name="department_name"
           label="Départements"
           options-class="right-0 lg:left-0"
+          legend="Filtrer par département"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
@@ -80,7 +100,14 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'statut_juridique'" :key="i" facet-name="statut_juridique" label="Types d’organisation" options-class="right-0 md:left-0">
+        <FacetFilterToggle
+          v-if="filter === 'statut_juridique'"
+          :key="i"
+          facet-name="statut_juridique"
+          label="Types d’organisation"
+          options-class="right-0 lg:left-0"
+          legend="Filtrer par type d'organisation'"
+        >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"

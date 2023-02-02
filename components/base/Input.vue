@@ -29,7 +29,8 @@
           {'px-3 py-2': variant == 'facet'},
           inputClass,
         ]"
-        autocomplete="off"
+        :aria-required="ariaRequired"
+        :autocomplete="autocomplete || 'off'"
         @blur="handleBlur"
         @keypress.space="onKeypressSpace"
       >
@@ -85,7 +86,9 @@ export default {
         ['text', 'email', 'password', 'date', 'number', 'datetime-local', 'tel'].includes(s)
     },
     inputClass: { type: String, default: '' },
-    iconClass: { type: String, default: '' }
+    iconClass: { type: String, default: '' },
+    ariaRequired: { type: String, default: null },
+    autocomplete: { type: String, default: null }
   },
   data () {
     return {

@@ -69,6 +69,8 @@
                   type="email"
                   name="email"
                   placeholder="Entrez votre email"
+                  aria-required="true"
+                  autocomplete="email"
                   @blur="validate('email')"
                 />
               </FormControl>
@@ -78,6 +80,8 @@
                   name="password"
                   placeholder="Entrez votre mot de passe"
                   type="password"
+                  aria-required="true"
+                  autocomplete="current-password"
                   @blur="validate('password')"
                 />
                 <template #description>

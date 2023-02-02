@@ -13,13 +13,16 @@
           </span>
         </div>
 
-        <Slideshow :slides-are-links="true" :slides-count="domaines.length">
+        <Slideshow
+          :slides-are-links="true"
+          :slides-count="domaines.length"
+          :aria-labelledby="`label-domaines-action-${_uid}`"
+        >
           <nuxt-link
             v-for="domaine in domaines"
             :key="domaine.id"
             class="card--domaine--wrapper"
             :to="`/domaines-action/${domaine.slug}`"
-            :aria-labelledby="`label-domaines-action-${_uid}`"
           >
             <CardDomaine :domaine="domaine" class="!h-full" />
           </nuxt-link>
