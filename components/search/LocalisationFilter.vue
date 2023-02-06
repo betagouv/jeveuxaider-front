@@ -8,15 +8,15 @@
     >
       <div class="flex space-x-2 items-center text-gray-900 truncate">
         <RiMapPin2Fill class="h-4 w-4 flex-none transition-opacity opacity-25 group-hover:opacity-100" />
-        <div v-if="!$route.query.city && $store.state.algoliaSearch.navigatorGeolocation" class="truncate font-bold">
+        <p v-if="!$route.query.city && $store.state.algoliaSearch.navigatorGeolocation" class="truncate font-bold">
           Autour de moi
-        </div>
-        <div v-else-if="!$route.query.city && $store.state.algoliaSearch.results.aroundLatLng" class="truncate italic pr-[1px] text-[#888888]">
+        </p>
+        <p v-else-if="!$route.query.city && $store.state.algoliaSearch.results.aroundLatLng" class="truncate italic pr-[1px] text-[#888888]">
           Ville ou code postal
-        </div>
-        <div v-else class="font-bold truncate">
+        </p>
+        <p v-else class="font-bold truncate">
           {{ $route.query.city }}
-        </div>
+        </p>
       </div>
 
       <RiLoader5Line

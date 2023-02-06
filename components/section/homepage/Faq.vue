@@ -6,11 +6,9 @@
           <Heading as="h2" size="2xl" class="text-center md:text-left">
             Toutes les réponses à vos questions
           </Heading>
-          <span
-            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
-          >
+          <p class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]">
             #faq
-          </span>
+          </p>
         </div>
 
         <Tabs

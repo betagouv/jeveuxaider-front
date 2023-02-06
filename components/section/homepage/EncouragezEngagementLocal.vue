@@ -5,11 +5,9 @@
     <div
       class="flex flex-col items-start text-center lg:text-left h-full"
     >
-      <div
-        class="flex-none w-full text-white text-lg mb-6 uppercase"
-      >
+      <p class="flex-none w-full text-white text-lg mb-6 uppercase">
         Collectivités territoriales et territoires
-      </div>
+      </p>
 
       <Heading as="h2" size="2xl" class="mb-8" color="text-white">
         Encouragez l'engagement local de vos citoyens

@@ -40,7 +40,7 @@
           <h1
             class="mt-2 text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter text-gray-900"
           >
-            <div>Découvrez {{ organisation.statut_juridique|label('structure_legal_status', 'label2') }}</div>
+            <p>Découvrez {{ organisation.statut_juridique|label('structure_legal_status', 'label2') }}</p>
             <span class="font-extrabold">{{ organisation.name }}</span>
           </h1>
 

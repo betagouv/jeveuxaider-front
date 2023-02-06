@@ -6,11 +6,9 @@
           <Heading :id="`label-domaines-action-${_uid}`" as="h2" size="2xl" class="text-center md:text-left">
             Trouvez votre domaine d'action
           </Heading>
-          <span
-            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
-          >
+          <p class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]">
             #jeveuxaider
-          </span>
+          </p>
         </div>
 
         <Slideshow

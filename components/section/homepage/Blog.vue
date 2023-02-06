@@ -7,11 +7,9 @@
             Les actualités de l'engagement
           </Heading>
 
-          <span
-            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
-          >
+          <p class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]">
             #blog
-          </span>
+          </p>
         </div>
 
         <Slideshow

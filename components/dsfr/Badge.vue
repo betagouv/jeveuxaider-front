@@ -1,5 +1,6 @@
 <template>
-  <span
+  <component
+    :is="as"
     :class="[
       'inline-flex items-center justify-center max-w-full truncate uppercase rounded font-bold',
 
@@ -31,7 +32,7 @@
     <span class="truncate">
       <slot />
     </span>
-  </span>
+  </component>
 </template>
 
 <script>
@@ -63,6 +64,10 @@ export default {
     noIcon: {
       type: Boolean,
       default: false
+    },
+    as: {
+      type: String,
+      default: 'span'
     }
   },
   computed: {

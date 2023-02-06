@@ -9,11 +9,9 @@
           <Heading :id="`label-missions-prioritaires-${_uid}`" as="h2" size="2xl" class="text-center md:text-left">
             Les missions de bénévolat prioritaires
           </Heading>
-          <span
-            class="hidden lg:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
-          >
+          <p class="hidden lg:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]">
             #{{ $dayjs(Date.now()).format('MMMM') }}
-          </span>
+          </p>
         </div>
 
         <Slideshow

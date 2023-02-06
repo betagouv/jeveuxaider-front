@@ -21,7 +21,7 @@
             <h2
               class="font-bold text-center mb-6 text-3xl leading-8 tracking-tight sm:text-5xl sm:leading-tight"
             >
-              <span>Faites un don à l'organisation</span>
+              <span>Faites un don à l'organisation </span>
               <br class="hidden xl:block">
               <span class="font-extrabold">{{ organisation.name }}</span>
             </h2>
