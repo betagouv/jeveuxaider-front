@@ -172,6 +172,19 @@ export default {
           el.setAttribute('tabindex', -1)
         }
       })
+
+      const dots = this.$refs?.vueSlickCarousel?.$el
+        ?.getElementsByClassName('slick-dots')
+        ?.item(0).querySelectorAll(':scope > li')
+      if (dots) {
+        dots.forEach((dot) => {
+          if (dot.classList.contains('slick-active')) {
+            dot.firstChild.setAttribute('aria-selected', 'true')
+          } else {
+            dot.firstChild.setAttribute('aria-selected', 'false')
+          }
+        })
+      }
     },
     handleDotsWrapper () {
       const dotsWrapper = this.$refs?.vueSlickCarousel?.$el

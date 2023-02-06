@@ -310,9 +310,9 @@
                           to="/politique-de-confidentialite"
                           class="font-medium text-gray-900"
                         >
-                          politique de confidentialité
+                          <span>politique de confidentialité</span>
                         </Link>
-                        <br>
+                        <br class="hidden sm:block">
                         et la
                         <Link
                           to="/charte-reserve-civique"
