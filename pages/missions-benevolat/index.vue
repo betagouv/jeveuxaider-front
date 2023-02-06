@@ -35,9 +35,12 @@ export default {
     }
   },
   head () {
+    let title = 'Devenez bénévole dans une association en quelques clics | Je Veux Aider, la plateforme publique du bénévolat par la Réserve Civique'
+    if (this.$route.query?.page) {
+      title = `${title} - Recherche page ${this.$route.query?.page}`
+    }
     return {
-      title:
-        'Devenez bénévole dans une association en quelques clics | Je Veux Aider, la plateforme publique du bénévolat par la Réserve Civique ',
+      title,
       link: [
         {
           rel: 'canonical',
