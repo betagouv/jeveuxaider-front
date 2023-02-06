@@ -22,13 +22,14 @@
             </div>
 
             <div class="title text-center text-white font-bold mb-4">
-              Partagez la mission autour de vous
+              Partagez la mission autour de vous ! !
             </div>
 
             <div class="flex justify-center space-x-3 my-10">
               <ShareFacebook />
               <ShareTwitter :message="message" />
               <ShareLinkedin :message="message" />
+              <ShareWhatsApp :message="message" />
               <ShareMail
                 :subject="mailSubject"
                 :message="message"
@@ -45,6 +46,7 @@
 import ShareFacebook from '@/components/share/Facebook.vue'
 import ShareTwitter from '@/components/share/Twitter.vue'
 import ShareLinkedin from '@/components/share/Linkedin.vue'
+import ShareWhatsApp from '@/components/share/WhatsApp.vue'
 import ShareMail from '@/components/share/Mail.vue'
 
 export default {
@@ -52,6 +54,7 @@ export default {
     ShareFacebook,
     ShareTwitter,
     ShareLinkedin,
+    ShareWhatsApp,
     ShareMail
   },
   data () {
