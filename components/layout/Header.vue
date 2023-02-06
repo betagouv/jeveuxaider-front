@@ -185,61 +185,62 @@
         leave-to-class="opacity-0 scale-95"
       >
         <div v-show="showMobileMenu" v-scroll-lock="showMobileMenu" class="h-screen overflow-y-auto z-30 absolute top-0 inset-x-0 mx-auto w-full transition transform origin-top">
-          <div class="bg-white h-full flex flex-col gap-3">
-            <div class="p-4 bg-white">
-              <div class="flex items-center justify-between pl-4 pb-6">
-                <div>
-                  <img
-                    class="h-8 w-auto"
-                    src="@/assets/images/jeveuxaider-logo.svg"
-                    alt="Bénévolat je veux aider"
-                  >
+          <FocusLoop :is-visible="showMobileMenu" @keydown.native.esc="showMobileMenu = false">
+            <div class="bg-white h-full flex flex-col gap-3">
+              <div class="p-4 bg-white">
+                <div class="flex items-center justify-between pl-4 pb-6">
+                  <div>
+                    <img
+                      class="h-8 w-auto"
+                      src="@/assets/images/jeveuxaider-logo.svg"
+                      alt="Bénévolat je veux aider"
+                    >
+                  </div>
+                  <div class="-mr-2">
+                    <button
+                      type="button"
+                      class="bg-white p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+                      @click="showMobileMenu = false"
+                    >
+                      <span class="sr-only">Close menu</span>
+                      <!-- Heroicon name: outline/x -->
+                      <XIcon class="h-6 w-6" />
+                    </button>
+                  </div>
                 </div>
-                <div class="-mr-2">
-                  <button
-                    type="button"
-                    class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500"
-                    @click="showMobileMenu = false"
+                <div class="">
+                  <NavItem
+                    v-for="link in navigation"
+                    :key="link.name"
+                    :href="link.href"
+                    :to="link.to"
+                    :click="link.click"
+                    class="flex items-center px-3 py-2 hover:bg-gray-100 hover:text-gray-800 text-jva-900"
                   >
-                    <span class="sr-only">Close menu</span>
-                    <!-- Heroicon name: outline/x -->
-                    <XIcon class="h-6 w-6" />
-                  </button>
+                    <component :is="link.icon" class="flex-shrink-0 h-4 w-4" aria-hidden="true" />
+                    <span class="text-base font-medium ml-2">{{ link.name }}</span>
+                  </NavItem>
                 </div>
-              </div>
-              <div class="">
-                <NavItem
-                  v-for="link in navigation"
-                  :key="link.name"
-                  :href="link.href"
-                  :to="link.to"
-                  :click="link.click"
-                  class="flex items-center px-3 py-2 hover:bg-gray-100 hover:text-gray-800 text-jva-900 rounded-md"
-                >
-                  <component :is="link.icon" class="flex-shrink-0 h-4 w-4" aria-hidden="true" />
-                  <span class="text-base font-medium ml-2">{{ link.name }}</span>
-                </NavItem>
-              </div>
-              <div class="border-t my-2" />
+                <div class="border-t my-2" />
 
-              <div class="">
-                <NavItem
-                  v-for="link in secondNavigation"
-                  :key="link.name"
-                  :href="link.href"
-                  :to="link.to"
-                  :target="link.target"
-                  :click="link.click"
-                  :class="['block rounded-md px-3 py-2 text-base text-cool-gray-600', {'!text-jva-blue-500 bg-gray-50 font-medium': link.isActive}]"
-                >
-                  {{ link.name }}
-                </NavItem>
+                <div class="">
+                  <NavItem
+                    v-for="link in secondNavigation"
+                    :key="link.name"
+                    :href="link.href"
+                    :to="link.to"
+                    :target="link.target"
+                    :click="link.click"
+                    :class="['block px-3 py-2 text-base text-cool-gray-600', {'!text-jva-blue-500 bg-gray-50 font-medium': link.isActive}]"
+                  >
+                    {{ link.name }}
+                  </NavItem>
 
                 <!-- <NavItem
                   key="mesure-impact"
                   href="https://www.jeveuxaider.gouv.fr/engagement/mesure-dimpact/"
                   target="_blank"
-                  :class="['flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600']"
+                  :class="['flex space-x-1 px-3 py-2 text-base text-cool-gray-600']"
                 >
                   <span>Notre impact</span>
                   <span aria-hidden="true">🎯</span>
@@ -250,27 +251,28 @@
                   key="decembre-ensemble"
                   href="https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/"
                   target="_blank"
-                  :class="['flex space-x-1 rounded-md px-3 py-2 text-base text-cool-gray-600']"
+                  :class="['flex space-x-1 px-3 py-2 text-base text-cool-gray-600']"
                 >
                   <span>Décembre ensemble</span>
                   <span aria-hidden="true">❄️</span>
                 </NavItem> -->
-              </div>
+                </div>
 
-              <div class="border-t my-2" />
-              <NavItem
-                v-for="link in mobileLoggedNavigation"
-                :key="link.name"
-                :href="link.href"
-                :to="link.to"
-                :target="link.target"
-                :click="link.click"
-                :class="['block rounded-md px-3 py-2 text-base text-cool-gray-600', {'!text-jva-blue-500 bg-gray-50 font-medium': link.isActive}]"
-              >
-                {{ link.name }}
-              </NavItem>
+                <div class="border-t my-2" />
+                <NavItem
+                  v-for="link in mobileLoggedNavigation"
+                  :key="link.name"
+                  :href="link.href"
+                  :to="link.to"
+                  :target="link.target"
+                  :click="link.click"
+                  :class="['block px-3 py-2 text-base text-cool-gray-600', {'!text-jva-blue-500 bg-gray-50 font-medium': link.isActive}]"
+                >
+                  {{ link.name }}
+                </NavItem>
+              </div>
             </div>
-          </div>
+          </FocusLoop>
         </div>
       </transition>
     </div>
@@ -287,6 +289,7 @@
 
 <script>
 import { CalendarIcon, SearchIcon, ChatAltIcon } from '@vue-hero-icons/outline'
+import { FocusLoop } from '@vue-a11y/focus-loop'
 import DropdownUser from '@/components/custom/DropdownUser'
 import LazySoftGateOverlay from '@/components/section/SoftGateOverlay'
 import LazyMissionShareOverlay from '@/components/section/MissionShareOverlay'
@@ -297,7 +300,8 @@ export default {
     DropdownUser,
     LazySoftGateOverlay,
     LazyMissionShareOverlay,
-    DsfrButton
+    DsfrButton,
+    FocusLoop
   },
   props: {
     fullWidth: {

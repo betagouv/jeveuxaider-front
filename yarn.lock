@@ -2190,6 +2190,11 @@
     "@typescript-eslint/types" "4.33.0"
     eslint-visitor-keys "^2.0.0"
 
+"@vue-a11y/focus-loop@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@vue-a11y/focus-loop/-/focus-loop-0.2.0.tgz#123bd892e4b4f19887cdc4829a42390a4c6842c3"
+  integrity sha512-12j4dE4cZa++qIqhB/K7QBMkauTTmZ3/xk1KWuoosUN/+6j4noydpl++yOXjJ4rVOX6uzOl5q4u56YImRXz0gA==
+
 "@vue-hero-icons/outline@^1.7.2":
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/@vue-hero-icons/outline/-/outline-1.7.2.tgz#ec723ee45e142d2249948c58be65f5d35e3c4ed3"

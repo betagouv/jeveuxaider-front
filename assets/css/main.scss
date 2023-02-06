@@ -479,3 +479,10 @@ body.full-height-layout {
   color: rgb(167, 167, 176) !important;
   font-weight: 500 !important;
 }
+
+.vue-focus-loop {
+  height: 100%;
+  > div:nth-child(2) {
+    height: 100%;
+  }
+}

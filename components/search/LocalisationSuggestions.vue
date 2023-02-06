@@ -5,8 +5,9 @@
     </div>
 
     <!-- Fake input -->
-    <div
+    <button
       v-if="!isGeolocFilterActive"
+      ref="fakeInput"
       class="flex space-x-3 items-center text-gray-900 truncate"
       @click="handleFakeInputClick"
     >
@@ -24,7 +25,7 @@
         v-if="$store.state.algoliaSearch.loadingNavigatorGeolocation"
         class="animate-spin h-5 w-5 text-gray-400 fill-current self-end"
       />
-    </div>
+    </button>
 
     <!-- Real input -->
     <FacetSearch
@@ -37,6 +38,7 @@
       @focus="isGeolocFilterActive = true"
       @input="handleInput"
       @clear="() => { handleSelectedAdress(null); isGeolocFilterActive = true }"
+      @keydown.native.esc="handleCloseSuggestions"
     />
 
     <!-- Transition to avoid missclick due to layout shift -->
@@ -57,6 +59,7 @@
             {'text-jva-blue-500': !$route.query.aroundLatLng}
           ]"
           @click="handleSelectedAdress(null)"
+          @keydown.esc="handleCloseSuggestions"
         >
           <div>Autour de moi</div>
         </button>
@@ -203,7 +206,7 @@ export default {
         this.setHistory(suggestion)
       }
 
-      this.isGeolocFilterActive = false
+      this.handleCloseSuggestions()
     },
     setHistory (suggestion) {
       const history = [
@@ -220,6 +223,11 @@ export default {
       this.isGeolocFilterActive = true
       await this.$nextTick()
       this.$refs.facetSearch.$refs.input.focus()
+    },
+    async handleCloseSuggestions () {
+      this.isGeolocFilterActive = false
+      await this.$nextTick()
+      this.$refs.fakeInput.focus()
     }
   }
 }
