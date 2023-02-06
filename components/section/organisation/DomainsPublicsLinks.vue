@@ -22,7 +22,7 @@
           <div class="flex-none w-6 h-6 mr-3">
             <img
               :src="$options.filters.label(domaine.id, 'domaines', 'icon')"
-              :alt="$options.filters.label(domaine.id, 'domaines')"
+              alt=""
               width="24"
               height="24"
             >

@@ -50,7 +50,7 @@
 
           <img
             src="/images/homepage/telebenevolat.svg"
-            alt="Télébénévolat"
+            alt=""
             class="-mt-16 md:mt-0 md:mr-[-97px] z-0"
             width="379"
             height="292"
@@ -61,7 +61,7 @@
 
       <img
         src="/images/homepage/map_france_2.svg"
-        alt="Carte de la France"
+        alt=""
         class="hidden lg:block absolute top-0 right-0 mr-[-180px] xl:-mr-0 pr-4 h-full"
         width="607"
         height="624"

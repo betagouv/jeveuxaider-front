@@ -9,6 +9,7 @@
             src="/images/organisations/bg_don.png"
             srcset="/images/organisations/bg_don@2x.png 2x"
             class="bg-img absolute object-cover w-full h-full"
+            alt=""
           >
 
           <div

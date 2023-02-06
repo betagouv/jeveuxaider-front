@@ -17,7 +17,7 @@
 
       <img
         src="/images/homepage/collectivites_territoires.svg"
-        alt="Collectivités territoriales et territoires"
+        alt=""
         width="311"
         height="299"
         class="mx-auto mb-8 lg:h-full lg:max-h-[170px] xl:max-h-[270px]"

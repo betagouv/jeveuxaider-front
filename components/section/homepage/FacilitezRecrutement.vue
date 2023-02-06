@@ -17,7 +17,7 @@
 
       <img
         src="/images/homepage/associations_organisations_publiques.svg"
-        alt="Associations & organisations publiques"
+        alt=""
         width="311"
         height="219"
         class="mx-auto mb-8 lg:h-full lg:max-h-[170px] xl:max-h-[270px]"

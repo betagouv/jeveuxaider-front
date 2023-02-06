@@ -5,8 +5,7 @@
         <nuxt-link to="/" class="my-6 p-2 block">
           <img
             src="@/assets/images/jeveuxaider-logo.svg"
-            alt="Bénévolat je veux aider"
-            title="Bénévolat association"
+            alt=""
             width="227"
             height="37"
             class="mx-auto"

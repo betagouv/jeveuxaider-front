@@ -21,14 +21,14 @@
     <div class="absolute bg-gradient-to-b from-[#ECECFE] to-transparent w-full overflow-hidden pointer-events-none" style="height: 777px">
       <img
         src="/images/homepage/deco_2.svg"
-        alt="Décorations"
+        alt=""
         class="deco--2 absolute hidden lg:block pointer-events-none"
         data-not-lazy
       >
 
       <img
         src="/images/homepage/deco_3.svg"
-        alt="Décorations"
+        alt=""
         class="deco--3 absolute hidden lg:block pointer-events-none"
         data-not-lazy
       >
