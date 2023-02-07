@@ -104,9 +104,10 @@ export default {
     },
     videoIsPaused (newVal) {
       const video = this.$refs.video
-      if (!newVal) {
+      const isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > video.HAVE_CURRENT_DATA
+      if (!newVal && !isPlaying) {
         video.play()
-      } else {
+      } else if (newVal && isPlaying) {
         video.pause()
       }
     }
