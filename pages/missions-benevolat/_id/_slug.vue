@@ -133,6 +133,9 @@
                 <template v-if="!mission.has_places_left">
                   La mission est désormais complète
                 </template>
+                <template v-else-if="!mission.is_registration_open">
+                  Les inscriptions sont fermées
+                </template>
                 <template v-else>
                   <template v-if="['Terminée', 'Annulée'].includes(mission.state)">
                     Ils recherchaient
