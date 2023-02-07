@@ -1,7 +1,9 @@
 <template>
   <div>
     <HeaderBanner />
-    <Nuxt />
+    <main role="main">
+      <Nuxt />
+    </main>
     <Footer />
     <client-only>
       <portal-target name="body-end" multiple />

@@ -1,5 +1,5 @@
 <template>
-  <footer class="relative z-1 border-t-2 border-[#000091]">
+  <footer role="contentinfo" class="relative z-1 border-t-2 border-[#000091]">
     <div class="bg-gray-50 py-8">
       <div class="container px-4 mx-auto">
         <div class="mx-auto max-w-6xl">
