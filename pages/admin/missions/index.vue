@@ -274,19 +274,17 @@
           >
             Ouverte aux mineurs
           </Tag>
-        </template>
-        <template #sorts>
-          <Sort
+          <FilterSelectAdvanced
             key="sort"
             name="sort"
-            transparent
-            :value="$route.query['sort'] ? $route.query['sort'] : '-created_at'"
             :options="[
               { key: '-created_at', label: 'Les plus récentes' },
               { key: 'created_at', label: 'Les plus anciennes' },
               { key: '-updated_at', label: 'Date de denière modification' },
               { key: '-places_left', label: 'Nombre de bénévoles recherchés' },
             ]"
+            :value="$route.query['sort']"
+            placeholder="Trier par"
             @input="changeFilter('sort', $event)"
           />
         </template>

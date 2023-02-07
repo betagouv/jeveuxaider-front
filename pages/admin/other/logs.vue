@@ -43,7 +43,7 @@
         >
           Toutes
         </Tag>
-        <TagSelectAdvanced
+        <FilterSelectAdvanced
           :key="`subject-type-${$route.fullPath}`"
           name="types"
           placeholder="Tous les types"
@@ -57,7 +57,7 @@
           clearable
           @input="changeFilter('filter[type]', $event)"
         />
-        <TagSelectAdvanced
+        <FilterSelectAdvanced
           :key="`action-${$route.fullPath}`"
           name="action"
           placeholder="Toutes les actions"
