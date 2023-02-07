@@ -30,7 +30,7 @@
       {{ mission.name }}
     </Heading>
 
-    <p v-if="mission.responsable" class="mt-8 text-[#666666]">
+    <div v-if="mission.responsable" class="mt-8 text-[#666666]">
       <span>Publié par </span>
       <img
         v-if="mission.responsable.image"
@@ -62,7 +62,7 @@
           {{ mission.structure.name }}
         </h3>
       </span>
-    </p>
+    </div>
 
     <div v-if="mission.publics_beneficiaires?.length" class="mt-10">
       <HrTitle>
