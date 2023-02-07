@@ -173,27 +173,15 @@
           >
             Têtes de réseau
           </Tag>
-
-        <!-- <Checkbox
-          :key="`role-responsable_territoire-${$route.fullPath}`"
-          :option="{key: 'responsable_territoire', label:'Responsables territoriaux'}"
-          :is-checked="$route.query['filter[user.role]'] == 'responsable_territoire'"
-          variant="button"
-          size="xs"
-          transparent
-          @change="changeFilter('filter[user.role]', 'responsable_territoire')"
-        /> -->
-        </template>
-        <template #sorts>
-          <Sort
+          <FilterSelectAdvanced
             key="sort"
             name="sort"
-            transparent
-            :value="$route.query['sort'] ? $route.query['sort'] : '-created_at'"
             :options="[
               { key: '-created_at', label: 'Date de création' },
               { key: '-participations_validated_count', label: 'Nombre de participations réalisées' },
             ]"
+            :value="$route.query['sort']"
+            placeholder="Trier par"
             @input="changeFilter('sort', $event)"
           />
         </template>

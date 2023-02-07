@@ -31,6 +31,7 @@
                 <ShareFacebook />
                 <ShareTwitter :message="message" />
                 <ShareLinkedin :message="message" />
+                <ShareWhatsApp :message="message" />
                 <ShareMail
                   :subject="mailSubject"
                   :message="message"
@@ -49,6 +50,7 @@ import { FocusLoop } from '@vue-a11y/focus-loop'
 import ShareFacebook from '@/components/share/Facebook.vue'
 import ShareTwitter from '@/components/share/Twitter.vue'
 import ShareLinkedin from '@/components/share/Linkedin.vue'
+import ShareWhatsApp from '@/components/share/WhatsApp.vue'
 import ShareMail from '@/components/share/Mail.vue'
 
 export default {
@@ -57,7 +59,8 @@ export default {
     ShareTwitter,
     ShareLinkedin,
     ShareMail,
-    FocusLoop
+    FocusLoop,
+    ShareWhatsApp
   },
   data () {
     return {
