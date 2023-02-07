@@ -1,6 +1,12 @@
 <template>
   <client-only>
-    <Slideshow :slides-count="logos.length" class="mt-12" :settings="settings" :add-dots-wrapper="false">
+    <Slideshow
+      :slides-count="logos.length"
+      class="mt-12"
+      :settings="settings"
+      :add-dots-wrapper="false"
+      aria-labelledby="label-carousel-logos-inscription-benevoles"
+    >
       <div
         v-for="logo,index in logos"
         :key="index"
@@ -33,8 +39,9 @@ export default {
         variableWidth: true,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: true,
+        autoplay: false,
         centerMode: false,
+        pauseOnFocus: true,
         responsive: [
           {
             breakpoint: 1280,
@@ -63,7 +70,6 @@ export default {
             settings: {
               slidesToScroll: 1,
               slidesToShow: 1,
-              dots: false,
               speed: 750
             }
           }

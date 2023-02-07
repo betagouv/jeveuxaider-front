@@ -1,6 +1,5 @@
 <template>
   <div class="bg-gray-100 h-full flex flex-col">
-    <HeaderBanner />
     <Header full-width />
 
     <client-only>
@@ -144,13 +143,11 @@
 import { debounce } from 'lodash'
 import ConversationTeaser from '@/components/conversation/Teaser.vue'
 import Header from '@/components/layout/Header.vue'
-import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 
 export default {
   name: 'MessagesLayout',
   components: {
     Header,
-    HeaderBanner,
     ConversationTeaser
   },
   middleware: 'authenticated',

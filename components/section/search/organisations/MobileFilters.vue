@@ -10,12 +10,12 @@
         enter-class="opacity-0 translate-x-4 sm:translate-x-0 sm:scale-95"
         enter-to-class="opacity-100 translate-x-0 sm:scale-100"
       >
-        <div v-show="!isGeolocFilterActive" class="flex-none p-2 pl-6 relative" @click="isFiltersOpen = true">
+        <button v-show="!isGeolocFilterActive" class="flex-none p-2 ml-4 relative" @click="isFiltersOpen = true">
           <RiEqualizerFill class="text-jva-blue-500 fill-current w-6 h-6" />
           <div v-if="nbMobileSecondaryFilters > 0" class="absolute -top-1.5 -right-1 bg-[#A1A1F8] px-1.5 py-0.5 rounded-full text-white font-bold text-xs min-w-[22px] !leading-[18px] inline-flex justify-center">
             {{ nbMobileSecondaryFilters }}
           </div>
-        </div>
+        </button>
       </transition>
     </div>
 

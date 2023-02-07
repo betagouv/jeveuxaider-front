@@ -6,14 +6,12 @@
     <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
-          <Heading as="h2" size="2xl" class="text-center md:text-left">
+          <Heading :id="`label-missions-prioritaires-${_uid}`" as="h2" size="2xl" class="text-center md:text-left">
             Les missions de bénévolat prioritaires
           </Heading>
-          <span
-            class="hidden lg:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
-          >
+          <p class="hidden lg:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]">
             #{{ $dayjs(Date.now()).format('MMMM') }}
-          </span>
+          </p>
         </div>
 
         <Slideshow
@@ -23,6 +21,7 @@
             label: 'Plus de missions ›',
           }"
           :slides-count="missions.length"
+          :aria-labelledby="`label-missions-prioritaires-${_uid}`"
         >
           <!-- <div key="decembre" href="" class="card--mission--wrapper">
             <CardDecembreEnsemble class="!h-full" />

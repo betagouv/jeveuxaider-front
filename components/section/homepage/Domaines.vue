@@ -3,17 +3,19 @@
     <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
-          <Heading as="h2" size="2xl" class="text-center md:text-left">
+          <Heading :id="`label-domaines-action-${_uid}`" as="h2" size="2xl" class="text-center md:text-left">
             Trouvez votre domaine d'action
           </Heading>
-          <span
-            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
-          >
+          <p class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]">
             #jeveuxaider
-          </span>
+          </p>
         </div>
 
-        <Slideshow :slides-are-links="true" :slides-count="domaines.length">
+        <Slideshow
+          :slides-are-links="true"
+          :slides-count="domaines.length"
+          :aria-labelledby="`label-domaines-action-${_uid}`"
+        >
           <nuxt-link
             v-for="domaine in domaines"
             :key="domaine.id"

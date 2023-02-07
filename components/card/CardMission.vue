@@ -31,28 +31,30 @@
     </div>
 
     <div class="m-8 flex-1 flex flex-col items-start">
-      <div class="mb-4 flex flex-wrap gap-2">
-        <Tag :custom-theme="true" :class="`${domaineBackgroundColor(domainId)} text-white`">
-          {{ $options.filters.label(domainId, 'domaines') }}
-        </Tag>
-        <Tag v-if="(mission.template && mission.template.domaine_secondary_id) || mission.domaine_secondary_id">
-          +1
-        </Tag>
-      </div>
+      <div class="flex flex-col w-full">
+        <Heading as="h3" size="xs" class="line-clamp-3 mb-3 order-3" :title="mission.name">
+          {{ mission.name }}
+        </Heading>
 
-      <div class="text-[#666666] text-xs flex items-center justify-start truncate mb-4 max-w-full">
-        <component
-          :is="iconOrganizationState"
-          v-if="['admin','referent'].includes($store.getters.contextRole) && showState"
-          class="w-4 h-4 mr-2 fill-current flex-none"
-        />
-        <RiBuildingFill v-else class="fill-current w-4 h-4 flex-none mr-2" />
-        <span class="truncate">{{ mission.structure.name }}</span>
-      </div>
+        <div class="mb-4 flex flex-wrap gap-2 order-1">
+          <Tag :custom-theme="true" :class="`${domaineBackgroundColor(domainId)} text-white`">
+            {{ $options.filters.label(domainId, 'domaines') }}
+          </Tag>
+          <Tag v-if="(mission.template && mission.template.domaine_secondary_id) || mission.domaine_secondary_id">
+            +1
+          </Tag>
+        </div>
 
-      <Heading as="h3" size="xs" class="line-clamp-3 mb-3" :title="mission.name">
-        {{ mission.name }}
-      </Heading>
+        <div class="text-[#666666] text-xs flex items-center justify-start truncate mb-4 max-w-full order-2">
+          <component
+            :is="iconOrganizationState"
+            v-if="['admin','referent'].includes($store.getters.contextRole) && showState"
+            class="w-4 h-4 mr-2 fill-current flex-none"
+          />
+          <RiBuildingFill v-else class="fill-current w-4 h-4 flex-none mr-2" />
+          <span class="truncate">{{ mission.structure.name }}</span>
+        </div>
+      </div>
 
       <div class="truncate text-[#3A3A3A] text-sm max-w-full">
         <template v-if="mission.is_autonomy">

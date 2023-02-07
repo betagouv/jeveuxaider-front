@@ -21,6 +21,7 @@
         class="absolute sm:static flex-none w-8 h-8"
         style="right: 0; top: -48px"
         as="button"
+        title="partager la mission"
         @click.native="handleClickShare"
       />
     </div>
@@ -29,7 +30,7 @@
       {{ mission.name }}
     </Heading>
 
-    <div v-if="mission.responsable" class="mt-8 text-[#666666]">
+    <p v-if="mission.responsable" class="mt-8 text-[#666666]">
       <span>Publié par </span>
       <img
         v-if="mission.responsable.image"
@@ -61,29 +62,30 @@
           {{ mission.structure.name }}
         </h3>
       </span>
-    </div>
+    </p>
 
     <div v-if="mission.publics_beneficiaires?.length" class="mt-10">
       <HrTitle>
         Publics aidés
       </HrTitle>
-      <div class="flex flex-wrap gap-2">
+      <ul class="flex flex-wrap gap-2">
         <Badge
           v-for="(publicBeneficiaire, key) in mission.publics_beneficiaires"
           :key="key"
           :no-icon="true"
           type="info"
+          as="li"
         >
           {{ publicBeneficiaire|label('mission_publics_beneficiaires') }}
         </Badge>
-      </div>
+      </ul>
     </div>
 
     <div v-if="mission.activity?.name" class="mt-10">
       <HrTitle>
         Activité
       </HrTitle>
-      <Badge>
+      <Badge as="p">
         {{ mission.activity.name }}
       </Badge>
     </div>
@@ -92,16 +94,17 @@
       <HrTitle>
         Compétences recherchées
       </HrTitle>
-      <div class="flex flex-wrap gap-2">
+      <ul class="flex flex-wrap gap-2">
         <Badge
           v-for="(skill, key) in mission.skills"
           :key="key"
           :no-icon="true"
           type="new"
+          as="li"
         >
           {{ skill.name }}
         </Badge>
-      </div>
+      </ul>
     </div>
 
     <template v-if="['admin'].includes($store.getters.contextRole)">

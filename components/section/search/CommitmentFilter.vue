@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <button class="flex w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
+    <button :aria-expanded="isOpen || 'false'" class="flex w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
       <slot name="button" :isOpen="isOpen" :activeValue="activeValue">
         Toggle facet
       </slot>
@@ -25,6 +25,7 @@
               <SelectAdvanced
                 v-model="commitment__duration"
                 name="commitment__duration"
+                aria-label="Disponibilités - Durée"
                 placeholder="1 heure"
                 :options="$labels.duration"
                 @changed="handleChange()"
@@ -37,6 +38,7 @@
               <SelectAdvanced
                 v-model="commitment__time_period"
                 name="commitment__time_period"
+                aria-label="Disponibilités - Fréquence"
                 placeholder="par an"
                 options-class="right-0"
                 :options="$labels.time_period"

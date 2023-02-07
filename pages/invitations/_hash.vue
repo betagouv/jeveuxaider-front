@@ -5,8 +5,7 @@
         <nuxt-link to="/">
           <img
             src="@/assets/images/jeveuxaider-logo.svg"
-            alt="Bénévolat je veux aider"
-            title="Bénévolat association"
+            alt=""
             class="h-10 lg:h-12"
             width="350"
             height="auto"

@@ -23,7 +23,7 @@
         ]"
         autocomplete="off"
         @keydown="onKeydown"
-        @click="!disabled ? showOptions = !showOptions : null"
+        @click="onClick"
         @keydown.tab="showOptions = false"
         @keydown.esc="showOptions = false"
       >
@@ -71,6 +71,9 @@
     >
       <ul
         class="py-2"
+        role="listbox"
+        :aria-labelledby="ariaLabelledby"
+        :aria-label="!ariaLabelledby && ariaLabel"
       >
         <li
           v-for="(item, index) in options"
@@ -81,6 +84,8 @@
             {'bg-[#F0F0FF]': highlightIndex == index},
             {'bg-[#F0F0FF]': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
           ]"
+          role="option"
+          :aria-selected="selectedOption && item[attributeKey] == selectedOption[attributeKey] || 'false'"
           @click="handleSelectOption(item)"
         >
           <span class="">
@@ -116,7 +121,9 @@ export default {
     theme: { type: String, default: 'default' },
     prefixLabel: { type: String, default: null },
     selectClass: { type: String, default: '' },
-    optionsClass: { type: String, default: '' }
+    optionsClass: { type: String, default: '' },
+    ariaLabelledby: { type: String, default: null },
+    ariaLabel: { type: String, default: null }
   }
 }
 </script>

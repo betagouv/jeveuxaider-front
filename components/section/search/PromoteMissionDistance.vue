@@ -15,7 +15,7 @@
     >
       <img
         src="/images/icons/computer.svg"
-        alt="Télébénévolat"
+        alt=""
         class="my-4"
       >
       <div

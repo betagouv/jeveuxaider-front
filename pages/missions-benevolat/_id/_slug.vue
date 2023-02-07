@@ -21,14 +21,14 @@
     <div class="absolute bg-gradient-to-b from-[#ECECFE] to-transparent w-full overflow-hidden pointer-events-none" style="height: 777px">
       <img
         src="/images/homepage/deco_2.svg"
-        alt="Décorations"
+        alt=""
         class="deco--2 absolute hidden lg:block pointer-events-none"
         data-not-lazy
       >
 
       <img
         src="/images/homepage/deco_3.svg"
-        alt="Décorations"
+        alt=""
         class="deco--3 absolute hidden lg:block pointer-events-none"
         data-not-lazy
       >
@@ -80,15 +80,15 @@
                 {{ mission.structure.name }}
               </div>
 
-              <div class="text-cool-gray-500 line-clamp-3 break-word">
+              <p class="text-cool-gray-500 line-clamp-3 break-word">
                 {{ mission.structure.description }}
-              </div>
+              </p>
 
               <nuxt-link
                 v-if="mission.structure.statut_juridique == 'Association' && mission.structure.state == 'Validée'"
                 :to="`/organisations/${mission.structure.slug}`"
               >
-                <DsfrButton type="secondary" class="mt-8">
+                <DsfrButton type="secondary" class="mt-8" tabindex="-1">
                   En savoir plus
                 </DsfrButton>
               </nuxt-link>
@@ -129,7 +129,7 @@
           <div class="bg-white pb-8 pt-10 px-6 divide-y">
             <!-- Ils recherchent -->
             <div class="text-center pb-6">
-              <div class="text-xl font-bold text-black">
+              <p class="text-xl font-bold text-black">
                 <template v-if="!mission.has_places_left">
                   La mission est désormais complète
                 </template>
@@ -145,14 +145,14 @@
                   </template>
                   {{ mission.participations_max|pluralize('bénévole', 'bénévoles') }}
                 </template>
-              </div>
+              </p>
 
               <template v-if="participationsCount">
-                <div
+                <p
                   class="uppercase text-cool-gray-500 text-xs font-semibold"
                 >
                   {{ participationsCount|pluralize('personne déjà inscrite','personnes déjà inscrites') }}
-                </div>
+                </p>
 
                 <div class="mt-4 flex justify-center">
                   <img
@@ -190,17 +190,17 @@
                     class="flex items-center flex-col sm:flex-row gap-2"
                     :class="[{ 'justify-center': dates.length === 1 }]"
                   >
-                    <div
+                    <dl
                       class="text-center flex gap-2 items-baseline sm:block"
                       :class="[{'sm:text-right ml-auto': i === 0 && dates.length > 1}, {'sm:text-left': i === 1 && dates.length > 1}]"
                     >
-                      <div class="uppercase text-cool-gray-500 font-semibold text-xs space-x-2">
+                      <dt class="uppercase text-cool-gray-500 font-semibold text-xs space-x-2">
                         {{ date.label }}
-                      </div>
-                      <div class="text-black font-bold">
+                      </dt>
+                      <dd class="text-black font-bold">
                         {{ date.date }}
-                      </div>
-                    </div>
+                      </dd>
+                    </dl>
                   </div>
                 </div>
               </div>
@@ -208,10 +208,10 @@
 
             <!-- Durée de la mission -->
             <div class="text-center py-6">
-              <div class="uppercase text-cool-gray-500 font-semibold text-xs">
+              <p class="uppercase text-cool-gray-500 font-semibold text-xs">
                 Durée de la mission
-              </div>
-              <div class="text-black font-bold">
+              </p>
+              <p class="text-black font-bold">
                 <template v-if="mission.commitment__duration">
                   <span>{{ mission.commitment__duration|label('duration') }}</span>
                   <template v-if="mission.commitment__time_period">
@@ -222,29 +222,35 @@
                 <template v-else>
                   Non spécifié
                 </template>
-              </div>
-              <div v-if="mission.recurrent_description" class="text-cool-gray-500 text-sm">
+              </p>
+              <p v-if="mission.recurrent_description" class="text-cool-gray-500 text-sm">
                 {{ mission.recurrent_description }}
-              </div>
+              </p>
             </div>
 
             <!-- CTA -->
             <div class="pt-6">
               <div v-if="nextDates" class="text-center mb-6">
-                <div class="uppercase text-cool-gray-500 font-semibold text-xs space-x-2 mb-2">
+                <p class="uppercase text-cool-gray-500 font-semibold text-xs space-x-2 mb-2">
                   Prochaines dates
-                </div>
-                <div v-if="nextDates.length == 0" class="text-black font-bold -mt-2">
+                </p>
+                <p v-if="nextDates.length == 0" class="text-black font-bold -mt-2">
                   Plus de date disponible
-                </div>
-                <div class="space-x-2">
-                  <Badge v-for="date in nextDates.slice(0,3)" :key="date.id" :no-icon="true" type="new">
+                </p>
+                <ul class="space-x-2">
+                  <Badge
+                    v-for="date in nextDates.slice(0,3)"
+                    :key="date.id"
+                    as="li"
+                    :no-icon="true"
+                    type="new"
+                  >
                     {{ $dayjs(date.id).format('D MMM') }}
                   </Badge>
-                  <Badge v-if="nextDates.length > 3" :no-icon="true" type="new">
+                  <Badge v-if="nextDates.length > 3" :no-icon="true" type="new" as="li">
                     ...
                   </Badge>
-                </div>
+                </ul>
               </div>
               <LoadingIndicator v-if="loading" class="min-h-[66px]" />
               <DsfrButton
@@ -264,9 +270,9 @@
                 Inscription fermée
               </DsfrButton>
 
-              <div v-if="mission.structure.response_time" class="mt-4 px-8 text-cool-gray-500 text-xs text-center leading-4">
+              <p v-if="mission.structure.response_time" class="mt-4 px-8 text-cool-gray-500 text-xs text-center leading-4">
                 <span class="font-semibold">{{ mission.structure.name }}</span> répond généralement <span class="font-semibold">{{ missionStructureResponseTimeFormatted }}</span>
-              </div>
+              </p>
             </div>
           </div>
         </Box>
@@ -285,7 +291,7 @@
     >
       <div class="container mx-auto px-8 sm:px-4">
         <div class="pt-16 pb-24">
-          <Heading as="div" class="text-center mb-12">
+          <Heading :id="`label-autres-missions-${_uid}`" as="div" class="text-center mb-12">
             Vous pourriez aussi aimer&nbsp;…
           </Heading>
 
@@ -293,6 +299,7 @@
             class="mb-6"
             :slides-are-links="true"
             :slides-count="similarMissions.length"
+            :aria-labelledby="`label-autres-missions-${_uid}`"
           >
             <nuxt-link
               v-for="mission in similarMissions"

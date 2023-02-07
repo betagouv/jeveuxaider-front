@@ -1,8 +1,8 @@
 <template>
-  <div class="text-xs text-[#CE0500] mt-4">
+  <p class="text-xs text-[#CE0500] mt-4">
     <IconFormError class="inline fill-current flex-none mr-1 object-contain w-4 h-4 translate-y-[-1px]" />
     <slot />
-  </div>
+  </p>
 </template>
 
 <script>

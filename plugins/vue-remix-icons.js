@@ -43,6 +43,8 @@ import RiPencilLine from 'vue-remix-icons/icons/RiPencilLine.vue'
 import RiDeleteBinLine from 'vue-remix-icons/icons/RiDeleteBinLine.vue'
 import RiFileCopyLine from 'vue-remix-icons/icons/RiFileCopyLine.vue'
 import RiEqualizerFill from 'vue-remix-icons/icons/RiEqualizerFill.vue'
+import RiPauseCircleLine from 'vue-remix-icons/icons/RiPauseCircleLine.vue'
+import RiPlayCircleLine from 'vue-remix-icons/icons/RiPlayCircleLine.vue'
 
 const components = {
   RiSearchLine,
@@ -84,7 +86,9 @@ const components = {
   RiPencilLine,
   RiDeleteBinLine,
   RiFileCopyLine,
-  RiEqualizerFill
+  RiEqualizerFill,
+  RiPauseCircleLine,
+  RiPlayCircleLine
 }
 
 Object.entries(components).forEach(([name, component]) => {

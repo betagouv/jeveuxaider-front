@@ -35,7 +35,7 @@
     </Presentation>
 
     <Details :organisation="reseau" :src-set="image2">
-      <div
+      <p
         v-if="reseau.participations_max > 0"
         slot="nbBenevoles"
         class="text-2xl sm:text-4xl font-extrabold text-white mb-8 tracking-tight"
@@ -48,7 +48,7 @@
               'bénévoles recherchés partout en France',
             ])
         }}
-      </div>
+      </p>
     </Details>
 
     <!-- ANTENNES -->

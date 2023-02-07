@@ -5,11 +5,9 @@
     <div
       class="flex flex-col items-start text-center lg:text-left h-full"
     >
-      <div
-        class="flex-none w-full text-[#161616] text-lg mb-6 uppercase"
-      >
+      <p class="flex-none w-full text-[#161616] text-lg mb-6 uppercase">
         Associations et organisations publiques
-      </div>
+      </p>
 
       <Heading as="h2" size="2xl" class="mb-8">
         Facilitez-vous le recrutement de vos bénévoles
@@ -17,7 +15,7 @@
 
       <img
         src="/images/homepage/associations_organisations_publiques.svg"
-        alt="Associations & organisations publiques"
+        alt=""
         width="311"
         height="219"
         class="mx-auto mb-8 lg:h-full lg:max-h-[170px] xl:max-h-[270px]"

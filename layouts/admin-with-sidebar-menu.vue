@@ -1,6 +1,5 @@
 <template>
   <div class="h-full">
-    <HeaderBanner />
     <Header />
     <div class="container">
       <div class="min-h-[92px] md:min-h-[116px]">
@@ -29,7 +28,6 @@
 </template>
 
 <script>
-import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
 import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin'
@@ -39,7 +37,6 @@ import SecondaryMenuTeteDeReseau from '@/components/menu/SecondaryMenuTeteDeRese
 export default {
   name: 'Dashboard',
   components: {
-    HeaderBanner,
     Header,
     Footer,
     SecondaryMenuAdmin,

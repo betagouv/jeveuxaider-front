@@ -3,7 +3,7 @@
     <div class="space-y-2">
       <div class="relative font-medium text-[15px]">
         <div v-if="!showSearch" class="h-[29px]">
-          <span>{{ label }}</span>
+          <span :id="`label-search-${_uid}`">{{ label }}</span>
           <SearchIcon
             class=" text-gray-400 hover:text-gray-500 cursor-pointer absolute right-0 top-0"
             width="20"
@@ -16,6 +16,7 @@
           ref="facetSearch"
           v-model="facetQuery"
           always-show-clear
+          :aria-labelledby="`label-search-${_uid}`"
           @input="handleChangeSearchFacetValues"
           @clear="showSearch = false"
         />
@@ -26,33 +27,38 @@
           Aucun résultat avec les filtres actuels.
         </div>
 
-        <div
-          v-for="(facet) in limitedValues"
-          :key="facet.value"
-          :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
-          class="cursor-pointer flex items-center"
-        >
-          <input
-            :id="`facetMobileFilter__${facetName}_${facet.value}`"
-            :name="`facetMobileFilter__${facetName}_${facet.value}`"
-            :value="isActiveFilter(facetName, facet.value)"
-            type="checkbox"
-            :checked="isActiveFilter(facetName, facet.value)"
-            class="rounded text-jva-blue-500"
-            @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
+        <fieldset class="space-y-4 relative" style="min-inline-size: auto;">
+          <legend hidden class="sr-only">
+            {{ legend }}
+          </legend>
+          <div
+            v-for="(facet) in limitedValues"
+            :key="facet.value"
+            :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
+            class="cursor-pointer flex items-center"
           >
-          <label
-            :for="`facetMobileFilter__${facetName}_${facet.value}`"
-            class="ml-2 flex justify-between truncate flex-1"
-          >
-            <div class="truncate">
-              {{ facet.value }}
-            </div>
-            <div class="text-gray-600 ml-1 font-light">
-              {{ facet.count }}
-            </div>
-          </label>
-        </div>
+            <input
+              :id="`facetMobileFilter__${facetName}_${facet.value}`"
+              :name="`facetMobileFilter__${facetName}_${facet.value}`"
+              :value="isActiveFilter(facetName, facet.value)"
+              type="checkbox"
+              :checked="isActiveFilter(facetName, facet.value)"
+              class="rounded text-jva-blue-500"
+              @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
+            >
+            <label
+              :for="`facetMobileFilter__${facetName}_${facet.value}`"
+              class="ml-2 flex justify-between truncate flex-1"
+            >
+              <div class="truncate">
+                {{ facet.value }}
+              </div>
+              <div class="text-gray-600 ml-1 font-light">
+                {{ facet.count }}
+              </div>
+            </label>
+          </div>
+        </fieldset>
 
         <div v-if="showMore && allValues.length > showMoreLimit" class="">
           <div class="" @click="showAllValues = !showAllValues">
@@ -93,6 +99,10 @@ export default {
     showMore: {
       type: Boolean,
       default: false
+    },
+    legend: {
+      type: String,
+      default: null
     }
   },
   data () {

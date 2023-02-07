@@ -4,7 +4,7 @@
   >
     <img
       src="/images/homepage/rejoindre_communaute.svg"
-      alt="Rejoindre la communauté"
+      alt=""
       class="flex absolute bottom-0 right-0 transform w-[152px] sm:w-[243px] md:w-[350px] xl:w-auto"
     >
 

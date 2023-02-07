@@ -41,7 +41,7 @@
 
     <!-- DETAILS -->
     <Details :organisation="organisation" :src-set="image2">
-      <div
+      <p
         v-if="organisation.places_left > 0"
         class="text-2xl sm:text-4xl font-extrabold text-white mb-8 tracking-tight"
       >
@@ -49,7 +49,7 @@
           organisation.places_left
             | pluralize('bénévole recherché', 'bénévoles recherchés')
         }}
-      </div>
+      </p>
     </Details>
 
     <!-- MISSIONS -->
@@ -58,7 +58,7 @@
         <h2
           class="text-center mb-12 text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter text-gray-900"
         >
-          <span>Trouvez une mission dans {{ organisation.statut_juridique|label('structure_legal_status', 'label2') }}</span>
+          <span>Trouvez une mission dans {{ organisation.statut_juridique|label('structure_legal_status', 'label2') }} </span>
           <br class="hidden xl:block">
           <span class="font-extrabold">{{ organisation.name }}</span>
         </h2>
@@ -80,6 +80,7 @@
           >
             <button
               class="uppercase shadow-lg text-sm font-bold rounded-full text-gray-500 bg-white py-3 px-8 hover:scale-105 transform transition"
+              tabindex="-1"
             >
               Plus de missions
             </button>

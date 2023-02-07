@@ -1,5 +1,5 @@
 <template>
-  <footer class="relative z-1 border-t-2 border-[#000091]">
+  <footer role="contentinfo" class="relative z-1 border-t-2 border-[#000091]">
     <div class="bg-gray-50 py-8">
       <div class="container px-4 mx-auto">
         <div class="mx-auto max-w-6xl">
@@ -41,16 +41,10 @@
               </div>
               <div class="grid grid-cols-1 gap-4">
                 <component
-                  :is="
-                    link.component
-                      ? link.component
-                      : link.external
-                        ? 'a'
-                        : 'nuxt-link'
-                  "
+                  :is="link.component ? link.component : link.external ? 'a' : 'nuxt-link'"
                   v-for="(link) in usefullLinks"
                   :key="link.name"
-                  :to="link.url"
+                  :to="!link.external && link.url"
                   :href="link.url"
                   :target="link.external ? '_blank' : null"
                   class="hover:underline text-gray-600 truncate"
@@ -82,8 +76,7 @@
 
               <img
                 src="@/assets/images/jeveuxaider-logo.svg"
-                alt="Bénévolat je veux aider"
-                title="Bénévolat association"
+                alt=""
                 width="251"
                 height="41"
               >
@@ -124,16 +117,10 @@
         <div class="mx-auto max-w-6xl text-gray-600 text-xs">
           <div class="divide-x">
             <component
-              :is="
-                link.component
-                  ? link.component
-                  : link.external
-                    ? 'a'
-                    : 'nuxt-link'
-              "
+              :is="link.component ? link.component : link.external ? 'a' : 'nuxt-link'"
               v-for="(link, index) in footerLinks"
               :key="link.name"
-              :to="link.url"
+              :to="!link.external && !link.component && link.url"
               :href="link.url"
               :target="link.external ? '_blank' : null"
               class="cursor-pointer hover:underline px-3 my-1 inline-block"

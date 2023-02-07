@@ -31,6 +31,7 @@
       loop
       muted
       class="object-cover absolute w-full h-full hidden lg:block"
+      autoplay
     >
       <source src="/video/banner.mp4" type="video/mp4">
     </video>
@@ -38,12 +39,8 @@
     <div class="bg-black opacity-50 absolute inset-0 h-full w-full" />
 
     <div class="relative z-10 h-full">
-      <div
-        class="container mx-auto px-4 h-full"
-      >
-        <div
-          class="flex flex-col justify-center items-center h-full text-shadow text-center"
-        >
+      <div class="container mx-auto px-4 h-full">
+        <div class="flex flex-col justify-center items-center h-full text-shadow text-center">
           <Heading as="div" size="alt-sm" class="mb-4" color="text-white">
             Envie de bénévolat&nbsp;?
           </Heading>
@@ -62,6 +59,15 @@
           </Button>
         </div>
       </div>
+
+      <div class="absolute bottom-0 left-0 p-4 hidden lg:block z-20">
+        <button class="rounded-full" @click="videoPausedByUser = !videoPausedByUser">
+          <component
+            :is="videoIsPaused ? 'RiPlayCircleLine' : 'RiPauseCircleLine'"
+            class="text-white fill-current w-6 h-6"
+          />
+        </button>
+      </div>
     </div>
   </section>
 </template>
@@ -77,17 +83,31 @@ export default {
     Button
   },
   mixins: [inViewport],
+  data () {
+    return {
+      videoPausedByViewport: false,
+      videoPausedByUser: false
+    }
+  },
+  computed: {
+    videoIsPaused () {
+      return this.videoPausedByViewport || this.videoPausedByUser
+    }
+  },
   watch: {
     'inViewport.now' (visible) {
+      if (!visible) {
+        this.videoPausedByViewport = true
+      } else {
+        this.videoPausedByViewport = false
+      }
+    },
+    videoIsPaused (newVal) {
       const video = this.$refs.video
-      const isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > video.HAVE_CURRENT_DATA
-      if (!visible && isPlaying) {
+      if (!newVal) {
+        video.play()
+      } else {
         video.pause()
-      } else if (visible) {
-        const playPromise = video.play()
-        if (playPromise !== null) {
-          playPromise.catch(() => { /* discard runtime error */ })
-        }
       }
     }
   },

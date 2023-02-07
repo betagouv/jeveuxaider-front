@@ -19,7 +19,7 @@
           ]"
           tabindex="0"
           role="tab"
-          aria-selected="true"
+          :aria-selected="selected === key || 'false'"
           :aria-controls="`tabpanel-${_uid}-${key}`"
           @click="() => {selected = key; $emit('selected', title)}"
         >

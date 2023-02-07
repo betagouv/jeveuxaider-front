@@ -2,7 +2,7 @@
   <section class="relative overflow-hidden md:h-[525px] md:flex items-center">
     <img
       src="/images/homepage/deco_1.svg"
-      alt="Décorations"
+      alt=""
       class="deco--1 absolute hidden xl:block pointer-events-none"
       data-not-lazy
     >
@@ -14,7 +14,7 @@
               /images/homepage/mosaique_orgas@2x.webp 2x,
               /images/homepage/mosaique_orgas@2x.png  2x
             "
-          alt="Mosaïque organisations"
+          alt=""
           class="sm:hidden object-cover object-left-bottom w-full h-[370px] translate-y-[-25px] mosaic"
           width="440"
           height="371"
@@ -27,7 +27,7 @@
               /images/homepage/mosaique_orgas_desktop.png,
               /images/homepage/mosaique_orgas_desktop@2x.png  2x
             "
-          alt="Mosaïque organisations"
+          alt=""
           class="hidden sm:block object-cover object-left-bottom w-full h-[370px] md:h-[650px] md:translate-y-[-138px] md:absolute md:right-0 md:top-0 mosaic"
           width="790"
           height="670"
