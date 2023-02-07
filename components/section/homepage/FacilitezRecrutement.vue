@@ -30,10 +30,10 @@
           <img
             src="/images/icons/puce_li_check_blue.svg"
             alt="Check"
-            class="flex-none mt-1"
+            class="flex-none mt-1 xl:mt-[6px]"
             data-not-lazy
-            width="19px"
-            height="19px"
+            width="19"
+            height="19"
           >
           <span class="text-lg xl:text-xl text-[#696974]">
             {{ goal }}
