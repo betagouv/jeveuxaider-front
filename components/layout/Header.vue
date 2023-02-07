@@ -1,5 +1,7 @@
 <template>
   <header id="header" ref="header" role="banner">
+    <a class="absolute translate-x-[-150%] focus:translate-x-0 p-2 m-2 sm:p-4 sm:m-4 bg-white shadow-xl z-50" href="#contenuprincipal">Aller au contenu</a>
+
     <HeaderBanner />
     <portal-target name="header-top" multiple />
 
