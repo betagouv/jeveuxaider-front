@@ -131,14 +131,14 @@
         </div>
       </div>
       <div class="max-w-3xl mx-auto">
-        <dl class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <div class="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div
             class="border-[#1e429f] border overflow-hidden shadow"
           >
             <div class="px-4 py-5 sm:p-6">
-              <dt class="text-base font-medium text-[#c3ddfd] truncate">
+              <p class="text-base font-medium text-[#c3ddfd] truncate">
                 Vous êtes une organisation ?
-              </dt>
+              </p>
               <nuxt-link
                 to="/inscription/responsable"
                 class="mt-4 w-full flex justify-center py-3 px-4 text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white transition"
@@ -150,9 +150,9 @@
 
           <div class="border-[#1e429f] border overflow-hidden shadow">
             <div class="px-4 py-5 sm:p-6">
-              <dt class="text-base font-medium text-[#c3ddfd] truncate">
+              <p class="text-base font-medium text-[#c3ddfd] truncate">
                 Vous êtes une collectivité territoriale ?
-              </dt>
+              </p>
               <nuxt-link
                 to="/inscription/responsable?orga_type=Collectivité"
                 class="mt-4 w-full flex justify-center py-3 px-4 text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white transition"
@@ -161,7 +161,7 @@
               </nuxt-link>
             </div>
           </div>
-        </dl>
+        </div>
       </div>
     </div>
   </div>
