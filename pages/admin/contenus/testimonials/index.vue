@@ -64,7 +64,7 @@
           Hors ligne
         </Tag>
 
-        <TagSelectAdvanced
+        <FilterSelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Toutes les notes"
@@ -75,14 +75,11 @@
         />
 
         <template v-if="$store.getters.contextRole === 'admin'">
-          <InputAutocomplete
+          <FilterInputAutocomplete
             :value="$route.query['filter[organisation]']"
-            icon="SearchIcon"
+            label="Toutes les organisations"
             name="autocomplete"
-            placeholder="Toutes les organisations"
-            theme="filter"
             :options="autocompleteOptionsOrganisations"
-            variant="transparent"
             @fetch-suggestions="onFetchSuggestionsOrganisations"
             @selected="changeFilter('filter[organisation]', $event ? $event.name : undefined)"
           />
