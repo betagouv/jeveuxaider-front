@@ -2,7 +2,7 @@
   <div class="h-full">
     <Header />
     <portal-target name="mobile-filters" class="relative z-30" multiple />
-    <main id="contenuprincipal" role="main" tabindex="-1">
+    <main id="contenuprincipal" role="main">
       <Nuxt />
     </main>
     <portal-target name="drawer" class="relative z-20" multiple />

@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderBanner />
-    <main role="main">
+    <main id="contenuprincipal" role="main">
       <Nuxt />
     </main>
     <Footer />

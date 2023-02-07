@@ -93,8 +93,7 @@ export default {
   methods: {
     handleDrawerStyle (event) {
       const headerheight = document.getElementById('header')?.offsetHeight ?? 0
-      const headerBannerheight = document.getElementById('header-banner')?.offsetHeight ?? 0
-      const offset = (headerheight + headerBannerheight) >= window.scrollY ? headerheight + headerBannerheight - window.scrollY : 0
+      const offset = headerheight >= window.scrollY ? headerheight - window.scrollY : 0
       this.drawerStyle = `height: calc(100vh - ${offset}px); top: ${offset}px`
     }
   }
