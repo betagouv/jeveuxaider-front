@@ -178,7 +178,7 @@ export default {
     },
     placesLeftText () {
       if (!this.mission.is_registration_open) {
-        return 'Inscriptions fermées'
+        return 'Inscription fermée'
       } else if (
         this.mission.publisher_name &&
         this.mission.publisher_name !== 'Réserve Civique' &&
