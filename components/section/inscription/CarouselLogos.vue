@@ -39,8 +39,9 @@ export default {
         variableWidth: true,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: true,
+        autoplay: false,
         centerMode: false,
+        pauseOnFocus: true,
         responsive: [
           {
             breakpoint: 1280,

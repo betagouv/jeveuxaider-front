@@ -109,7 +109,8 @@ export default {
           infinite: false,
           variableWidth: true,
           accessibility: true,
-          focusOnSelect: true
+          focusOnSelect: true,
+          pauseOnFocus: true
         }
       }
     },
@@ -304,5 +305,12 @@ export default {
   :deep(a) {
     @apply pointer-events-none;
   }
+}
+
+:deep(.slick-slide:focus-visible) {
+  outline-style: solid !important;
+  outline-color: #0a76f6 !important;
+  outline-width: 2px !important;
+  outline-offset: 2px !important;
 }
 </style>
