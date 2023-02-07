@@ -115,7 +115,7 @@
         </div>
         <div v-else>
           <span>{{ placesLeftText }}</span>
-          <template v-if="formattedDate && placesLeftText !== 'Complet'">
+          <template v-if="formattedDate && placesLeftText !== 'Complet' && !mission.is_registration_open">
             <br> {{ formattedDate }}
           </template>
         </div>
