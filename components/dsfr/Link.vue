@@ -6,7 +6,7 @@
       'dsfr-link inline no-underline cursor-pointer'
     ]"
     :href="to"
-    :to="to"
+    :to="!isExternal && to"
     :title="title || $slots.default?.[0]?.text?.trim()"
   >
     <component
