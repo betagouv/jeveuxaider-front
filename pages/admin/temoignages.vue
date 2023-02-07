@@ -67,7 +67,7 @@
               Hors ligne
             </Tag>
 
-            <TagSelectAdvanced
+            <FilterSelectAdvanced
               :key="`state-${$route.fullPath}`"
               name="state"
               placeholder="Toutes les notes"

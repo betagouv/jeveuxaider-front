@@ -76,7 +76,7 @@
           Hors ligne
         </Tag>
 
-        <TagSelectAdvanced
+        <FilterSelectAdvanced
           name="domaine"
           placeholder="Tous les domaines"
           :options="$labels.domaines"

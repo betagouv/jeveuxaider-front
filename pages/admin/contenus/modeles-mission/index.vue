@@ -88,7 +88,7 @@
           Réseaux
         </Tag>
 
-        <TagSelectAdvanced
+        <FilterSelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Tous les statuts"
@@ -97,7 +97,7 @@
           clearable
           @input="changeFilter('filter[state]', $event)"
         />
-        <TagSelectAdvanced
+        <FilterSelectAdvanced
           :key="`domaine-${$route.fullPath}`"
           name="domaine"
           placeholder="Tous les domaines"
@@ -108,7 +108,7 @@
         />
 
         <template v-if="$store.getters.contextRole === 'admin'">
-          <TagInputAutocomplete
+          <FilterInputAutocomplete
             :value="$route.query['filter[reseau.name]']"
             label="Tous les réseaux"
             name="autocomplete"
