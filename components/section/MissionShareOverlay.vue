@@ -22,7 +22,7 @@
             </div>
 
             <div class="title text-center text-white font-bold mb-4">
-              Partagez la mission autour de vous ! !
+              Partagez la mission autour de vous
             </div>
 
             <div class="flex justify-center space-x-3 my-10">
