@@ -11,6 +11,7 @@
       icon-position="right"
       clearable
       :is-active="value ? true : false"
+      class="max-w-[300px]"
       @keydown.native="onKeydown"
       @click.native="!disabled ? showOptions = !showOptions : null"
       @keydown.native.tab="showOptions = false"
@@ -21,8 +22,10 @@
     </Tag>
     <div
       v-show="showOptions"
-      class="absolute w-full z-50 bg-white border border-gray-200 shadow-md max-h-60 overflow-auto mt-2 overscroll-contain min-w-[200px]"
-      :class="['absolute w-full z-50 bg-white border border-gray-200 shadow-md max-h-60 overflow-auto mt-2 overscroll-contain min-w-[200px]', optionsClass]"
+      :class="[
+        'absolute w-full z-50 bg-white border border-gray-200 shadow-md max-h-60 overflow-auto mt-2 overscroll-contain min-w-[250px]',
+        optionsClass
+      ]"
       @focusout="showOptions = false"
     >
       <ul
@@ -39,7 +42,7 @@
           ]"
           @click="handleSelectOption(item)"
         >
-          <span class="">
+          <span class="truncate">
             {{ item[attributeLabel] }}
           </span>
           <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="absolute right-2" />

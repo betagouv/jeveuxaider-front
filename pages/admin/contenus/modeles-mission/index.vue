@@ -108,14 +108,11 @@
         />
 
         <template v-if="$store.getters.contextRole === 'admin'">
-          <InputAutocomplete
+          <TagInputAutocomplete
             :value="$route.query['filter[reseau.name]']"
-            icon="SearchIcon"
+            label="Tous les réseaux"
             name="autocomplete"
-            placeholder="Tous les réseaux"
-            theme="filter"
             :options="autocompleteOptionsReseau"
-            variant="transparent"
             @fetch-suggestions="onFetchSuggestionsReseau"
             @selected="changeFilter('filter[reseau.name]', $event ? $event.name : undefined)"
           />
