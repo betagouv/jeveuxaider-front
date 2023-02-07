@@ -176,7 +176,7 @@ export default {
 
       const dots = this.$refs?.vueSlickCarousel?.$el
         ?.getElementsByClassName('slick-dots')
-        ?.item(0).querySelectorAll(':scope > li')
+        ?.item(0)?.querySelectorAll(':scope > li')
       if (dots) {
         dots.forEach((dot) => {
           if (dot.classList.contains('slick-active')) {
