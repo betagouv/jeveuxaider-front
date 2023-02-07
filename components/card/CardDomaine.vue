@@ -22,21 +22,19 @@
         />
 
         <div
-          class="absolute p-6 sm:p-8 space-y-4"
+          class="absolute p-6 sm:p-8 flex flex-col w-full items-start"
           :class="[
             { 'bottom-0': domaine.bottom },
             { 'top-0': !domaine.bottom },
           ]"
         >
-          <Tag class="mb-2">
-            {{ domaine.name }}
-          </Tag>
-
-          <h3
-            class="text-white font-bold text-2xl leading-[28px] text-shadow"
-          >
+          <h3 class="text-white font-bold text-2xl leading-[28px] text-shadow order-2">
             {{ domaine.description }}
           </h3>
+
+          <Tag class="mb-6 order-1">
+            {{ domaine.name }}
+          </Tag>
         </div>
       </div>
     </div>
