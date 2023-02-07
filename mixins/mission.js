@@ -85,6 +85,9 @@ export default {
       if (!this.mission.has_places_left) {
         return false
       }
+      if (!this.mission.is_registration_open) {
+        return false
+      }
 
       if (this.mission.end_date && this.$dayjs(this.mission.end_date).isBefore(this.$dayjs())) {
         return false

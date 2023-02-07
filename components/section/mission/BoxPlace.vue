@@ -33,8 +33,11 @@
       <template v-if="mission.places_left > 0">
         <div class="border-t -mx-4 xl:-mx-6 mt-4 mb-4" />
         <div class="flex justify-center text-sm">
-          <Link @click.native="handleMarkComplete()">
-            Marquer la mission comme complète
+          <Link v-if="mission.is_registration_open" @click.native="handleChangeIsRegistrationOpen(false)">
+            Fermer les inscriptions
+          </Link>
+          <Link v-else @click.native="handleChangeIsRegistrationOpen(true)">
+            Ouvrir les inscriptions
           </Link>
         </div>
       </template>
@@ -51,12 +54,9 @@ export default {
     }
   },
   methods: {
-    async handleMarkComplete () {
-      let participationsMax = this.mission.participations_max - this.mission.places_left
-      if (participationsMax < 1) {
-        participationsMax = 1
-      }
-      const { data: mission } = await this.$axios.put(`/missions/${this.mission.id}`, { ...this.mission, participations_max: participationsMax }).catch(() => {})
+    async handleChangeIsRegistrationOpen (value) {
+      const { data: mission } = await this.$axios.put(`/missions/${this.mission.id}`, { ...this.mission, is_registration_open: value }).catch(() => {})
+      this.$toast.success(value ? 'Les bénévoles peuvent s\'inscrire à cette mission' : 'Les bénévoles ne peuvent plus s\'inscrire à cette mission')
       this.$emit('updated', mission)
     }
   }
