@@ -1,6 +1,15 @@
 <template>
   <div v-click-outside="() => show = false" class="relative inline-block text-left">
-    <div id="menu-button" class="cursor-pointer" :aria-expanded="show" aria-haspopup="true" @click="show = !show">
+    <div
+      id="menu-button"
+      class="cursor-pointer"
+      :aria-expanded="show"
+      aria-haspopup="true"
+
+      @keydown="onKeydown"
+      @click="show = !show"
+      @keydown.esc="show = false"
+    >
       <span class="sr-only">Open options</span>
       <slot name="button" />
     </div>
@@ -22,7 +31,7 @@
         role="menu"
         aria-orientation="vertical"
         aria-labelledby="menu-button"
-        tabindex="-1"
+        @keydown.esc="show = false"
       >
         <div class="py-1" role="none">
           <slot name="items" />
@@ -48,6 +57,12 @@ export default {
   methods: {
     close () {
       this.show = false
+    },
+    onKeydown (e) {
+      // todo: même logique de navigation que selectAdvanced :
+      // tab = hide,
+      // navigation au clavier
+      // selection par défaut du premier de la liste
     }
   }
 }
