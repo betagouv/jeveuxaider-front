@@ -1,11 +1,11 @@
 <template>
   <div>
-    <Heading as="h2" size="sm" class="mb-4">
+    <Heading :id="`newsletter-headline-${_uid}`" as="h2" size="sm" class="mb-4">
       Un email par mois pour plus d'engagement
     </Heading>
 
     <form
-      aria-labelledby="newsletter-headline"
+      :aria-labelledby="`newsletter-headline-${_uid}`"
       class="relative flex flex-col lg:flex-row w-full"
     >
       <FormControl

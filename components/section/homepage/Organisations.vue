@@ -11,9 +11,12 @@
       <div class="mx-auto max-w-6xl">
         <img
           srcset="
+              /images/homepage/mosaique_orgas.webp,
+              /images/homepage/mosaique_orgas.png,
               /images/homepage/mosaique_orgas@2x.webp 2x,
-              /images/homepage/mosaique_orgas@2x.png  2x
+              /images/homepage/mosaique_orgas@2x.png 2x
             "
+          src="/images/homepage/mosaique_orgas.png"
           alt=""
           class="sm:hidden object-cover object-left-bottom w-full h-[370px] translate-y-[-25px] mosaic"
           width="440"
@@ -25,8 +28,9 @@
               /images/homepage/mosaique_orgas_desktop.webp,
               /images/homepage/mosaique_orgas_desktop@2x.webp 2x,
               /images/homepage/mosaique_orgas_desktop.png,
-              /images/homepage/mosaique_orgas_desktop@2x.png  2x
+              /images/homepage/mosaique_orgas_desktop@2x.png 2x
             "
+          src="/images/homepage/mosaique_orgas_desktop.png"
           alt=""
           class="hidden sm:block object-cover object-left-bottom w-full h-[370px] md:h-[650px] md:translate-y-[-138px] md:absolute md:right-0 md:top-0 mosaic"
           width="790"

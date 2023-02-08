@@ -14,12 +14,14 @@
           </p>
         </div>
 
-        <Slideshow
-          :slides-are-links="true"
+        <!--
           :more-link="{
             link: '/missions-benevolat?toggle[is_priority]=true',
             label: 'Plus de missions ›',
           }"
+         -->
+        <Slideshow
+          :slides-are-links="true"
           :slides-count="missions.length"
           :aria-labelledby="`label-missions-prioritaires-${_uid}`"
         >

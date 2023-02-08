@@ -15,6 +15,7 @@
     </h3>
 
     <div
+      :id="`accordion-${_uid}`"
       :class="[
         'fr-collapse',
         { 'fr-collapse--expanded': isOpen },
