@@ -109,7 +109,6 @@ export default {
           infinite: false,
           variableWidth: true,
           accessibility: true,
-          focusOnSelect: true,
           pauseOnFocus: true
         }
       }
