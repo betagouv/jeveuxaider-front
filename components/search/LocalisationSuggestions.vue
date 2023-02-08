@@ -222,12 +222,12 @@ export default {
     async handleFakeInputClick () {
       this.isGeolocFilterActive = true
       await this.$nextTick()
-      this.$refs.facetSearch.$refs.input.focus()
+      this.$refs.facetSearch.$refs.input?.focus()
     },
     async handleCloseSuggestions () {
       this.isGeolocFilterActive = false
       await this.$nextTick()
-      this.$refs.fakeInput.focus()
+      this.$refs.fakeInput?.focus()
     }
   }
 }
