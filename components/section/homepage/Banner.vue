@@ -106,7 +106,10 @@ export default {
       const video = this.$refs.video
       const isPlaying = video.currentTime > 0 && !video.paused && !video.ended && video.readyState > video.HAVE_CURRENT_DATA
       if (!newVal && !isPlaying) {
-        video.play()
+        const playPromise = video.play()
+        if (playPromise !== null) {
+          playPromise.catch(() => { /* discard runtime error */ })
+        }
       } else if (newVal && isPlaying) {
         video.pause()
       }

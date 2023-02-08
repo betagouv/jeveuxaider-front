@@ -21,6 +21,7 @@
         to="/missions-benevolat/13190/benevolat-jeveuxaidergouvfr-paris"
         class="xl:absolute right-[19.75%] bottom-0"
       >
+        <!-- @click="$router.push('/missions-benevolat/13190/benevolat-jeveuxaidergouvfr-paris')" -->
         <Button class="mt-10 xl:mt-0" size="lg">
           Rejoindre le groupe
         </Button>
