@@ -1,5 +1,9 @@
 <template>
-  <button
+  <component
+    :is="to ? (isExternal ? 'a' : 'nuxt-link') : 'button'"
+    :to="!isExternal && to"
+    :target="to && isExternal ? '_blank' : null"
+    :href="to"
     :class="[
       'font-medium border',
       'inline-flex items-center justify-center transition',
@@ -57,7 +61,7 @@
         {'animate-spin': loading }
       ]"
     />
-  </button>
+  </component>
 </template>
 
 <script>
@@ -94,6 +98,14 @@ export default {
     loading: {
       type: Boolean,
       default: false
+    },
+    isExternal: {
+      type: Boolean,
+      default: null
+    },
+    to: {
+      type: String,
+      default: null
     }
   },
   computed: {

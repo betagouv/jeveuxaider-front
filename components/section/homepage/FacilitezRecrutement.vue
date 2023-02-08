@@ -41,14 +41,9 @@
         </li>
       </ul>
 
-      <nuxt-link
-        to="/inscription/responsable"
-        class="flex items-center justify-center mx-auto mt-auto"
-      >
-        <Button size="lg" tabindex="-1">
-          Inscrire mon organisation
-        </Button>
-      </nuxt-link>
+      <Button to="/inscription/responsable" class="flex items-center justify-center mx-auto mt-auto" size="lg">
+        Inscrire mon organisation
+      </Button>
     </div>
   </div>
 </template>

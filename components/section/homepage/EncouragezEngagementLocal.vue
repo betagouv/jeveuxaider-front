@@ -41,14 +41,14 @@
         </li>
       </ul>
 
-      <nuxt-link
+      <Button
         to="/inscription/responsable?orga_type=Collectivité"
+        size="lg"
+        type="tertiary-no-outline"
         class="flex items-center justify-center mx-auto mt-auto"
       >
-        <Button size="lg" type="tertiary-no-outline" tabindex="-1">
-          Inscrire ma collectivité territoriale
-        </Button>
-      </nuxt-link>
+        Inscrire ma collectivité territoriale
+      </Button>
     </div>
   </div>
 </template>
