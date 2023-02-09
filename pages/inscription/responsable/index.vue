@@ -92,47 +92,59 @@
         class="max-w-5xl flex flex-col gap-8 flex-wrap items-center justify-center my-12 md:flex-row mx-auto"
       >
         <BoxItem
+          tabindex="0"
           icon="💪"
           title="Une<br><strong>association</strong>"
           subtitle="Trouver des bénévoles<br>pour vos missions"
           class="md:h-[235px]"
           @click.native="handleChooseOrgaType('Association')"
+          @keypress.native.enter="handleChooseOrgaType('Association')"
         />
         <BoxItem
+          tabindex="0"
           icon="🏫️"
           title="Une <strong>collectivité territoriale</strong>"
           subtitle="Mairies, CCAS, EPCI et tout établissement public local"
           class="md:h-[235px]"
           @click.native="handleChooseOrgaType('Collectivité')"
+          @keypress.native.enter="handleChooseOrgaType('Collectivité')"
         />
         <BoxItem
+          tabindex="0"
           icon="🚀"
           title="Une<br><strong>tête de réseau</strong>"
           subtitle="Gérer vos différentes antennes, <br>délégations, associations locales ..."
           class="md:h-[235px]"
           @click.native="handleChooseOrgaType('Tête de réseau')"
+          @keypress.native.enter="handleChooseOrgaType('Tête de réseau')"
         />
         <BoxItem
+          tabindex="0"
           icon="🏢"
           title="Autre organisation<br><strong>publique</strong>"
           subtitle="Ehpad public, <br>services de l’Etat ..."
           class="md:h-[235px]"
           @click.native="handleChooseOrgaType('Organisation publique')"
+          @keypress.native.enter="handleChooseOrgaType('Organisation publique')"
         />
         <BoxItem
+          tabindex="0"
           icon="🏩"
           title="<strong>Organisation privée</strong> à but non lucratif"
           subtitle="Établissement de santé privé d'intérêt collectif, Ehpad privé,
             fondation, ESUS"
           class="md:h-[235px]"
           @click.native="handleChooseOrgaType('Organisation privée')"
+          @keypress.native.enter="handleChooseOrgaType('Organisation privée')"
         />
         <BoxItem
+          tabindex="0"
           icon="🤔"
           title=" Vous êtes<br><strong>perdu ?</strong>"
           subtitle="Notre équipe se fera une joie<br>de vous guider :)"
           class="md:h-[235px]"
           @click.native="handleChooseOrgaType('Crisp')"
+          @keypress.native.enter="handleChooseOrgaType('Crisp')"
         />
       </div>
 

@@ -1,5 +1,9 @@
 <template>
-  <div class="card--banques-alimentaires relative">
+  <a
+    href="/missions-benevolat?tags=Collecte%20nationale%20des%20Restos%20du%20Cœur"
+    class="card--banques-alimentaires relative"
+    @click.prevent="onClick"
+  >
     <div
       class="relative overflow-hidden safari-fix-scale h-full flex flex-col"
     >
@@ -15,7 +19,6 @@
 
       <div
         class="relative p-6 sm:py-8 flex flex-col items-center justify-end space-y-4 text-center h-full cursor-pointer"
-        @click="onClick"
       >
         <div class="mb-8">
           <div class="text-5xl leading-none mb-3">
@@ -35,17 +38,16 @@
           </div>
         </div>
 
-        <nuxt-link
-          to="/missions-benevolat?tags=Collecte%20nationale%20des%20Restos%20du%20Cœur"
-          @click="onClick"
+        <Button
+          tabindex="-1"
+          type="tertiary-no-outline"
+          @click.native.prevent.stop="onClick"
         >
-          <Button type="tertiary-no-outline" tabindex="-1" @click="onClick">
-            Je trouve une mission
-          </Button>
-        </nuxt-link>
+          Je trouve une mission
+        </Button>
       </div>
     </div>
-  </div>
+  </a>
 </template>
 
 <script>
@@ -57,6 +59,7 @@ export default {
   },
   methods: {
     onClick () {
+      console.log('CLICK')
       window.plausible &&
         window.plausible('Click CTA - Collecte nationale Restos du Coeur - Card', {
           props: { isLogged: this.$store.getters.isLogged }

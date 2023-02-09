@@ -8,6 +8,7 @@
         ]"
         :aria-expanded="isOpen"
         :aria-controls="`accordion-${_uid}`"
+        type="button"
         @click="isOpen = !isOpen"
       >
         <slot name="title" />
@@ -31,9 +32,15 @@
 import '@gouvfr/dsfr/dist/component/accordion/accordion.main.min.css'
 
 export default {
+  props: {
+    initialIsOpen: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
-      isOpen: false
+      isOpen: this.initialIsOpen
     }
   }
 }

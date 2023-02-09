@@ -1,6 +1,7 @@
 <template>
   <component
     :is="as"
+    :type="as === 'button' ? 'button' : null"
     :class="[
       'tag inline-flex items-center justify-center rounded-full max-w-full relative transition',
 
