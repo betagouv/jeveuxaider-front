@@ -25,12 +25,8 @@
             🍽️
           </div>
 
-          <h3
-            class="text-white font-bold text-shadow text-2xl leading-tight sm:text-3xl mb-4"
-          >
-            <div class="-mx-2">
-              Collecte nationale des Restos du Cœur
-            </div>
+          <h3 class="text-white font-bold text-shadow text-2xl leading-tight sm:text-3xl mb-4 -mx-2">
+            Collecte nationale des Restos du Cœur
           </h3>
 
           <div class="text-white text-shadow font-bold max-w-[272px] text-xl mb-4">

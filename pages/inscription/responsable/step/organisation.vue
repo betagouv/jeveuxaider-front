@@ -60,7 +60,11 @@
             required
           >
             <FormHelperText>
-              Consultez le <a class="font-medium underline" href="https://www.journal-officiel.gouv.fr/pages/associations-recherche/?reinitrefine=1&sort=cronosort&disjunctive.source" target="blank">répertoire national des associations</a> <ExternalLinkIcon class="h-3 w-3 inline" /> sur la plateforme ouverte des données publiques data.gouv.fr pour retrouver votre numéro RNA.
+              <span>Consultez le </span>
+              <Link class="font-medium" to="https://www.journal-officiel.gouv.fr/pages/associations-recherche/?reinitrefine=1&sort=cronosort&disjunctive.source" :is-external="true" :icon-size="12">
+                répertoire national des associations
+              </Link>
+              <span> sur la plateforme ouverte des données publiques data.gouv.fr pour retrouver votre numéro RNA.</span>
             </FormHelperText>
             <Input
               v-model="form.rna"
@@ -72,6 +76,7 @@
               v-model="form.is_alsace_moselle"
               name="is_alsace_moselle"
               size="xs"
+              class="mt-1"
               @checked="form.rna = null"
             >
               Je n’ai pas de numéro RNA car je suis une association de droit local (Alsace-Moselle)
@@ -297,11 +302,13 @@ import FormErrors from '@/mixins/form/errors'
 import MixinInputGeo from '@/mixins/input-geo'
 import Button from '@/components/dsfr/Button.vue'
 import TagsGroup from '@/components/dsfr/TagsGroup.vue'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
     Button,
-    TagsGroup
+    TagsGroup,
+    Link
   },
   mixins: [FormErrors, MixinInputGeo],
   layout: 'register-steps',

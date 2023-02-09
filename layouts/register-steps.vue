@@ -1,14 +1,14 @@
 <template>
   <div class="w-full lg:min-h-screen flex flex-col lg:flex-row">
     <div class="bg-white lg:w-1/3">
-      <div class="p-6 lg:p-12 border-b border-cool-gray-100">
-        <nuxt-link to="/">
+      <div class="p-6 lg:p-12 border-b border-cool-gray-100 text-center">
+        <nuxt-link to="/" class="inline-block">
           <img
             src="@/assets/images/jeveuxaider-logo.svg"
             alt=""
             class="mx-auto"
-            width="243px"
-            height="39px"
+            width="243"
+            height="39"
           >
         </nuxt-link>
       </div>
