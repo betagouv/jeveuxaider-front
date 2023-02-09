@@ -153,7 +153,7 @@
             to="/missions-benevolat?tags=Collecte%20nationale%20des%20Restos%20du%20Cœur"
             class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
           >
-            <span>🍽️</span>
+            <span aria-hidden="true">🍽️</span>
             <span>Restos du Cœur</span>
           </NavItem>
 

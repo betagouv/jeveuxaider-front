@@ -4,6 +4,7 @@
     :to="!isExternal && to"
     :target="to && isExternal ? '_blank' : null"
     :href="to"
+    :type="isSubmit ? 'submit' : (!to ? 'button' : null)"
     :class="[
       'font-medium border',
       'inline-flex items-center justify-center transition',
@@ -106,6 +107,10 @@ export default {
     to: {
       type: String,
       default: null
+    },
+    isSubmit: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

@@ -21,7 +21,7 @@
         class="relative p-6 sm:py-8 flex flex-col items-center justify-end space-y-4 text-center h-full cursor-pointer"
       >
         <div class="mb-8">
-          <div class="text-5xl leading-none mb-3">
+          <div class="text-5xl leading-none mb-3" aria-hidden="true">
             🍽️
           </div>
 
