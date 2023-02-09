@@ -5,7 +5,7 @@
     <img
       class="absolute right-0 bottom-0 p-6"
       src="/images/icons/quote.svg"
-      alt="Guillemets"
+      alt=""
     >
     <component :is="as" class="citation relative z-10 text-lg">
       <div v-if="htmlEncoded" class="formatted-text" v-html="htmlEncoded" />
