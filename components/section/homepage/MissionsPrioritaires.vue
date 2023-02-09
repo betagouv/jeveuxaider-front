@@ -25,9 +25,9 @@
           :slides-count="missions.length"
           :aria-labelledby="`label-missions-prioritaires-${_uid}`"
         >
-          <!-- <div key="decembre" href="" class="card--mission--wrapper">
-            <CardDecembreEnsemble class="!h-full" />
-          </div> -->
+          <div key="restos-du-coeur" href="" class="card--mission--wrapper">
+            <CardRestaurantsDuCoeur class="!h-full" />
+          </div>
 
           <nuxt-link
             v-for="mission in missions"
@@ -45,13 +45,13 @@
 
 <script>
 import CardMission from '@/components/card/CardMission'
-// import CardDecembreEnsemble from '@/components/card/CardDecembreEnsemble'
+import CardRestaurantsDuCoeur from '@/components/card/CardRestaurantsDuCoeur'
 import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
     CardMission,
-    // CardDecembreEnsemble,
+    CardRestaurantsDuCoeur,
     Heading
   },
   data () {

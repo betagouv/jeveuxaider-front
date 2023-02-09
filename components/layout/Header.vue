@@ -147,16 +147,15 @@
             <span aria-hidden="true">🎯</span>
           </NavItem> -->
 
-          <!-- <NavItem
+          <NavItem
             v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
-            key="decembre-ensemble"
-            href="https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/"
-            target="_blank"
+            key="restos-du-coeur"
+            to="/missions-benevolat?tags=Collecte%20nationale%20des%20Restos%20du%20Cœur"
             class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
           >
-            <span>Décembre ensemble</span>
-            <span aria-hidden="true">❄️</span>
-          </NavItem> -->
+            <span>🍽️</span>
+            <span>Restos du Cœur</span>
+          </NavItem>
 
           <NavItem
             v-if="$store.getters.contextRole == 'admin'"
@@ -250,16 +249,15 @@
                       <span aria-hidden="true">🎯</span>
                     </NavItem> -->
 
-                    <!-- <NavItem
+                    <NavItem
                       v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
-                      key="decembre-ensemble"
-                      href="https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/"
-                      target="_blank"
+                      key="restos-du-coeur"
+                      to="/missions-benevolat?tags=Collecte%20nationale%20des%20Restos%20du%20Cœur"
                       :class="['flex space-x-1 px-3 py-2 text-base text-cool-gray-600']"
                     >
-                      <span>Décembre ensemble</span>
-                      <span aria-hidden="true">❄️</span>
-                    </NavItem> -->
+                      <span aria-hidden="true">🍽️</span>
+                      <span>Restos du Cœur</span>
+                    </NavItem>
 
                     <div class="border-t my-2" />
 
