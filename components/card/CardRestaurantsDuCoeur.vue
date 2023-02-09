@@ -36,7 +36,6 @@
 
         <Button
           as="span"
-          tabindex="-1"
           type="tertiary-no-outline"
           @click.native.prevent.stop="onClick"
         >
