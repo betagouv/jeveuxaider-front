@@ -1,10 +1,10 @@
 <template>
   <component
-    :is="to ? (isExternal ? 'a' : 'nuxt-link') : 'button'"
-    :to="!isExternal && to"
+    :is="tag"
+    :to="tag === 'nuxt-link' && to"
     :target="to && isExternal ? '_blank' : null"
     :href="to"
-    :type="isSubmit ? 'submit' : (!to ? 'button' : null)"
+    :type="isSubmit ? 'submit' : (tag === 'button' ? 'button' : null)"
     :class="[
       'font-medium border',
       'inline-flex items-center justify-center transition',
@@ -111,11 +111,18 @@ export default {
     isSubmit: {
       type: Boolean,
       default: false
+    },
+    as: {
+      type: String,
+      default: null
     }
   },
   computed: {
     iconOrLoading () {
       return this.loading ? 'RiLoader5Line' : this.icon
+    },
+    tag () {
+      return this.as ?? (this.to ? (this.isExternal ? 'a' : 'nuxt-link') : 'button')
     }
   }
 }
