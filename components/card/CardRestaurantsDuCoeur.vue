@@ -4,7 +4,7 @@
       class="relative overflow-hidden safari-fix-scale h-full flex flex-col"
     >
       <img
-        srcset="/images/card_collecte_nationale_restos_du_coeur.webp, /images/card_decembre_ensemble@2x.webp 2x"
+        srcset="/images/card_collecte_nationale_restos_du_coeur.webp, /images/card_collecte_nationale_restos_du_coeur@2x.webp 2x"
         alt="Collecte nationale des Restos du Cœur"
         class="w-full object-cover object-center absolute min-h-[398px] h-full"
         width="323"
