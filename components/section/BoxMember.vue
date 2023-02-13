@@ -92,7 +92,7 @@ export default {
   methods: {
     handleClickSendMessage () {
       if (this.conversationCurrentUserAndResponsable) {
-        this.$router.push(`/messages/${this.conversationCurrentUserAndResponsable.id}`)
+        this.$router.push(`/messages-old/${this.conversationCurrentUserAndResponsable.id}`)
       } else {
         this.showModalSendMessage = true
       }

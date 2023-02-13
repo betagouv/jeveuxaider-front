@@ -13,7 +13,7 @@
       </div>
       <template v-if="participation.conversation && canEditStatut">
         <div class="border-t -mx-6 my-6" />
-        <nuxt-link :to="`/messages/${participation.conversation.id}`" class="text-jva-blue-500 flex items-center text-sm font-bold">
+        <nuxt-link :to="`/messages-old/${participation.conversation.id}`" class="text-jva-blue-500 flex items-center text-sm font-bold">
           <ChatAltIcon class="h-4 w-4 mr-4" /> Accéder à la messagerie
         </nuxt-link>
       </template>

@@ -147,13 +147,13 @@ export default {
       )
       if (this.$store.getters['messaging/conversations'][key + 1]) {
         this.$router.push(
-          `/messages/${
+          `/messages-old/${
             this.$store.getters['messaging/conversations'][key + 1].id
           }`
         )
       } else if (this.$store.getters['messaging/conversations'][key - 1]) {
         this.$router.push(
-          `/messages/${
+          `/messages-old/${
             this.$store.getters['messaging/conversations'][key - 1].id
           }`
         )

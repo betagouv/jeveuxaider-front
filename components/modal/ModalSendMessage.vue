@@ -80,7 +80,7 @@ export default {
             }
           )
           console.log(conversation)
-          this.$router.push(`/messages/${conversation.id}`)
+          this.$router.push(`/messages-old/${conversation.id}`)
         })
         .catch((errors) => {
           this.setErrors(errors)

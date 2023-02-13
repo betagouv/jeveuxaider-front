@@ -113,7 +113,7 @@ export default {
   methods: {
     handleClickParticipation (participation) {
       if (participation.conversation) {
-        this.$router.push(`/messages/${participation.conversation.id}`)
+        this.$router.push(`/messages-old/${participation.conversation.id}`)
       } else {
         this.$router.push(`${participation.mission.full_url}`)
       }

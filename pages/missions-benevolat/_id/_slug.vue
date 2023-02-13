@@ -542,7 +542,7 @@ export default {
     userParticipationLink () {
       return !this.userParticipation
         ? null
-        : this.userParticipation.conversation?.id ? `/messages/${this.userParticipation.conversation.id}` : '/profile/missions'
+        : this.userParticipation.conversation?.id ? `/messages-old/${this.userParticipation.conversation.id}` : '/profile/missions'
     }
 
   }
