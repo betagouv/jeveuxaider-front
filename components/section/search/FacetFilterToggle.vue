@@ -19,6 +19,7 @@
           </div>
 
           <FacetSearch
+            ref="facetSearch"
             v-model="facetQuery"
             :aria-labelledby="`label-search-${_uid}`"
             @input="handleChangeSearchFacetValues"
@@ -159,6 +160,7 @@ export default {
         await this.$nextTick()
         this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
         this.$refs.scrollContainer.addEventListener('scroll', this.handleScroll)
+        this.$refs.facetSearch.$refs?.input?.focus()
       } else {
         this.$refs.scrollContainer.removeEventListener('scroll', this.handleScroll)
       }

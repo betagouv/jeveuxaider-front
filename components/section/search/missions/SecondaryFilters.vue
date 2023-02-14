@@ -176,6 +176,31 @@
         </FacetFilterToggle>
 
         <MinorsFilter v-if="filter === 'is_minors'" :key="i" />
+
+        <FacetFilterToggle
+          v-if="filter === 'publisher_name'"
+          :key="i"
+          facet-name="publisher_name"
+          label="Partenaires"
+          options-class="right-0 lg:left-0"
+          legend="Filtrer par partenaire"
+        >
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
+            <Tag
+              :is-active="!!activeValuesCount"
+              context="clickable"
+              size="md"
+              as="button"
+              :aria-expanded="isOpen || 'false'"
+            >
+              <span v-if="!firstValueSelected">Partenaires</span>
+              <div v-else>
+                <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+              </div>
+            </Tag>
+          </template>
+        </FacetFilterToggle>
       </template>
 
       <Tag

@@ -14,7 +14,8 @@
         'domaines',
         'structure.reseaux.name',
         'department_name',
-        'template_subtitle'
+        'template_subtitle',
+        'publisher_name'
       ]"
     />
   </div>
