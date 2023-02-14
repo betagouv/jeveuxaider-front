@@ -30,7 +30,7 @@
       {{ mission.name }}
     </Heading>
 
-    <div v-if="mission.responsable" class="mt-8 text-[#666666]">
+    <p v-if="mission.responsable" class="mt-8 text-[#666666]">
       <span>Publié par </span>
       <img
         v-if="mission.responsable.image"
@@ -52,33 +52,29 @@
         :title="mission.structure.name"
         class="font-bold text-jva-blue-500"
       >
-        <h3 class="inline">
-          {{ mission.structure.name }}
-        </h3>
+        {{ mission.structure.name }}
       </Link>
 
       <span v-else class="font-bold text-jva-blue-500">
-        <h3 class="inline">
-          {{ mission.structure.name }}
-        </h3>
+        {{ mission.structure.name }}
       </span>
-    </div>
+    </p>
 
     <div v-if="mission.publics_beneficiaires?.length" class="mt-10">
       <HrTitle>
         Publics aidés
       </HrTitle>
-      <ul class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-2">
         <Badge
           v-for="(publicBeneficiaire, key) in mission.publics_beneficiaires"
           :key="key"
           :no-icon="true"
           type="info"
-          as="li"
+          as="p"
         >
           {{ publicBeneficiaire|label('mission_publics_beneficiaires') }}
         </Badge>
-      </ul>
+      </div>
     </div>
 
     <div v-if="mission.activity?.name" class="mt-10">
