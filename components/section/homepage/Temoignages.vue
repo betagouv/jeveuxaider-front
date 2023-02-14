@@ -229,6 +229,9 @@ export default {
 
   .slick-dots {
     @apply !text-center !mr-0;
+    @screen xl {
+      display: none !important;
+    }
   }
 
   .slick-track {
