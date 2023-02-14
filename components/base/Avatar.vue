@@ -8,8 +8,8 @@
       {'w-16 h-16': size == 'md'},
 
       // Background color
-      {'bg-jva-blue-500 ': backgroundColor == 'blue' && !sources},
-      {'bg-white ': backgroundColor == 'white' && !sources},
+      {'bg-jva-blue-500': backgroundColor == 'blue' && !sources},
+      {'bg-white': backgroundColor == 'white' && !sources},
     ]"
   >
     <img
