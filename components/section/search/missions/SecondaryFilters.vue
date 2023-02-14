@@ -181,7 +181,7 @@
           v-if="filter === 'publisher_name'"
           :key="i"
           facet-name="publisher_name"
-          label="Plateforme"
+          label="Plateformes"
           options-class="right-0 lg:left-0"
           legend="Filtrer par plateforme"
         >
@@ -193,7 +193,7 @@
               as="button"
               :aria-expanded="isOpen || 'false'"
             >
-              <span v-if="!firstValueSelected">Plateforme</span>
+              <span v-if="!firstValueSelected">Plateformes</span>
               <div v-else>
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>

@@ -96,7 +96,7 @@
     <FacetFilter
       show-more
       facet-name="publisher_name"
-      label="Plateforme"
+      label="Plateformes"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('publisher_name')"
       legend="Filtrer par plateforme"
