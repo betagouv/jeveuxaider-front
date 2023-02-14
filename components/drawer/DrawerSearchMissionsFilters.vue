@@ -96,10 +96,10 @@
     <FacetFilter
       show-more
       facet-name="publisher_name"
-      label="Partenaires"
+      label="Plateforme"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('publisher_name')"
-      legend="Filtrer par partenaire"
+      legend="Filtrer par plateforme"
     />
 
     <template #footer>

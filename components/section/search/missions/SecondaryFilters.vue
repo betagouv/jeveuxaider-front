@@ -181,9 +181,9 @@
           v-if="filter === 'publisher_name'"
           :key="i"
           facet-name="publisher_name"
-          label="Partenaires"
+          label="Plateforme"
           options-class="right-0 lg:left-0"
-          legend="Filtrer par partenaire"
+          legend="Filtrer par plateforme"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
@@ -193,7 +193,7 @@
               as="button"
               :aria-expanded="isOpen || 'false'"
             >
-              <span v-if="!firstValueSelected">Partenaires</span>
+              <span v-if="!firstValueSelected">Plateforme</span>
               <div v-else>
                 <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
                 <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
