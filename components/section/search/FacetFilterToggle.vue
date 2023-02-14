@@ -36,37 +36,39 @@
                   Aucun résultat avec les filtres actuels.
                 </div>
 
-                <fieldset class="space-y-4 relative" style="min-inline-size: auto;">
-                  <legend hidden class="sr-only">
+                <fieldset class="relative" style="min-inline-size: auto;">
+                  <legend class="sr-only">
                     {{ legend }}
                   </legend>
 
-                  <div
-                    v-for="(facet) in [...activeValues, ...inactiveValues]"
-                    :key="facet.value"
-                    :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
-                    class="flex items-center pl-1 group"
-                  >
-                    <input
-                      :id="`facetFilter__${facetName}_${facet.value}`"
-                      :name="`facetFilter__${facetName}_${facet.value}`"
-                      :value="isActiveFilter(facetName, facet.value)"
-                      type="checkbox"
-                      :checked="isActiveFilter(facetName, facet.value)"
-                      class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500 cursor-pointer"
-                      @change="handleFacetToggle(facetName, facet.value)"
+                  <div class="space-y-4">
+                    <div
+                      v-for="(facet) in [...activeValues, ...inactiveValues]"
+                      :key="facet.value"
+                      :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
+                      class="flex items-center pl-1 group"
                     >
-                    <label
-                      :for="`facetFilter__${facetName}_${facet.value}`"
-                      class="pl-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500 cursor-pointer"
-                    >
-                      <div class="truncate">
-                        {{ facet.value }}
-                      </div>
-                      <div class="text-gray-600 ml-1 font-light">
-                        {{ facet.count }}
-                      </div>
-                    </label>
+                      <input
+                        :id="`facetFilter__${facetName}_${facet.value}`"
+                        :name="`facetFilter__${facetName}_${facet.value}`"
+                        :value="isActiveFilter(facetName, facet.value)"
+                        type="checkbox"
+                        :checked="isActiveFilter(facetName, facet.value)"
+                        class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500 cursor-pointer"
+                        @change="handleFacetToggle(facetName, facet.value)"
+                      >
+                      <label
+                        :for="`facetFilter__${facetName}_${facet.value}`"
+                        class="pl-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500 cursor-pointer"
+                      >
+                        <div class="truncate">
+                          {{ facet.value }}
+                        </div>
+                        <div class="text-gray-600 ml-1 font-light">
+                          {{ facet.count }}
+                        </div>
+                      </label>
+                    </div>
                   </div>
                 </fieldset>
               </div>

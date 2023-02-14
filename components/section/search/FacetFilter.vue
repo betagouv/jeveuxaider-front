@@ -27,36 +27,38 @@
           Aucun résultat avec les filtres actuels.
         </div>
 
-        <fieldset class="space-y-4 relative" style="min-inline-size: auto;">
-          <legend hidden class="sr-only">
+        <fieldset class="relative" style="min-inline-size: auto;">
+          <legend class="sr-only">
             {{ legend }}
           </legend>
-          <div
-            v-for="(facet) in limitedValues"
-            :key="facet.value"
-            :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
-            class="cursor-pointer flex items-center"
-          >
-            <input
-              :id="`facetMobileFilter__${facetName}_${facet.value}`"
-              :name="`facetMobileFilter__${facetName}_${facet.value}`"
-              :value="isActiveFilter(facetName, facet.value)"
-              type="checkbox"
-              :checked="isActiveFilter(facetName, facet.value)"
-              class="rounded text-jva-blue-500"
-              @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
+          <div class="space-y-4">
+            <div
+              v-for="(facet) in limitedValues"
+              :key="facet.value"
+              :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
+              class="cursor-pointer flex items-center"
             >
-            <label
-              :for="`facetMobileFilter__${facetName}_${facet.value}`"
-              class="ml-2 flex justify-between truncate flex-1"
-            >
-              <div class="truncate">
-                {{ facet.value }}
-              </div>
-              <div class="text-gray-600 ml-1 font-light">
-                {{ facet.count }}
-              </div>
-            </label>
+              <input
+                :id="`facetMobileFilter__${facetName}_${facet.value}`"
+                :name="`facetMobileFilter__${facetName}_${facet.value}`"
+                :value="isActiveFilter(facetName, facet.value)"
+                type="checkbox"
+                :checked="isActiveFilter(facetName, facet.value)"
+                class="rounded text-jva-blue-500"
+                @change="isActiveFilter(facetName, facet.value) ? deleteFilter(facetName, facet.value, true) : addFilter(facetName, facet.value, true)"
+              >
+              <label
+                :for="`facetMobileFilter__${facetName}_${facet.value}`"
+                class="ml-2 flex justify-between truncate flex-1"
+              >
+                <div class="truncate">
+                  {{ facet.value }}
+                </div>
+                <div class="text-gray-600 ml-1 font-light">
+                  {{ facet.count }}
+                </div>
+              </label>
+            </div>
           </div>
         </fieldset>
 
