@@ -322,7 +322,7 @@ export default {
       ],
       footerLinks: [
         {
-          name: 'Accessibilité : Non conforme',
+          name: 'Accessibilité : partiellement conforme',
           url: '/accessibilite'
         },
         {
