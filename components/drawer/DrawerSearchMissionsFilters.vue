@@ -93,6 +93,14 @@
       :facets="$store.getters['algoliaSearch/facetResults']('template_subtitle')"
       legend="Filtrer par type de mission"
     />
+    <FacetFilter
+      show-more
+      facet-name="publisher_name"
+      label="Plateformes"
+      :show-more-limit="3"
+      :facets="$store.getters['algoliaSearch/facetResults']('publisher_name')"
+      legend="Filtrer par plateforme"
+    />
 
     <template #footer>
       <div

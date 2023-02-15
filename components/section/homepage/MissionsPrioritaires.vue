@@ -82,5 +82,10 @@ export default {
       @apply translate-x-[104px];
     }
   }
+  .slick-dots {
+    @screen xl {
+      display: none !important;
+    }
+  }
 }
 </style>

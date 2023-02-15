@@ -125,9 +125,7 @@
                   </template>
                   <template v-else>
                     <div class="py-6">
-                      <h2
-                        class="text-center text-3xl font-bold text-gray-900 leading-8 px-4"
-                      >
+                      <h2 class="text-center text-3xl font-bold text-gray-900 leading-8 px-4">
                         Création de votre compte
                       </h2>
                     </div>
@@ -135,7 +133,7 @@
                 </div>
                 <div
                   v-show="!isLoadingFranceConnect"
-                  class="border-t-2 border-gray-100 pt-8 pb-2 px-4 sm:px-12 bg-gray-50"
+                  class="border-t-2 border-gray-100 pt-2 pb-2 px-4 sm:px-12 bg-gray-50"
                 >
                   <template v-if="$store.state.settings.general.light_mode_active">
                     <div class="text-center space-y-6 pb-12">
@@ -160,10 +158,9 @@
                     </div>
                   </template>
                   <template v-else>
-                    <!-- <div class="text-xs text-gray-600 mb-6">
-                      <InformationCircleIcon class="h-4 w-4 text-gray-500 inline relative bottom-[1px]" />
-                      <span> Les champs marqués d'un <span class="text-[#E2011C] font-bold">*</span> sont requis</span>
-                    </div> -->
+                    <p class="mb-8 text-xs text-gray-600 text-center">
+                      Les champs avec <span class="text-[#E2011C] font-bold">*</span> sont requis.
+                    </p>
                     <form id="inscription" class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2" @submit.prevent="onSubmit">
                       <FormControl
                         label="Prénom"

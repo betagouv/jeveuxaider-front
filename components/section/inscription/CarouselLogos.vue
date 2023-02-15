@@ -41,39 +41,7 @@ export default {
         slidesToScroll: 1,
         autoplay: false,
         centerMode: false,
-        pauseOnFocus: true,
-        responsive: [
-          {
-            breakpoint: 1280,
-            settings: {
-              slidesToScroll: 1,
-              slidesToShow: 1
-            }
-          },
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToScroll: 1,
-              slidesToShow: 1
-            }
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToScroll: 1,
-              slidesToShow: 1,
-              speed: 750
-            }
-          },
-          {
-            breakpoint: 640,
-            settings: {
-              slidesToScroll: 1,
-              slidesToShow: 1,
-              speed: 750
-            }
-          }
-        ]
+        pauseOnFocus: true
       },
       logos: [
         {

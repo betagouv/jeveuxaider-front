@@ -294,9 +294,6 @@ export default {
         color: #696974 !important;
       }
     }
-    @screen xl {
-      display: none !important;
-    }
   }
 }
 

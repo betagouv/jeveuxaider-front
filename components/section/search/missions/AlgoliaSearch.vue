@@ -155,7 +155,7 @@ export default {
   created () {
     this.$store.commit('algoliaSearch/setIndexKey', 'missionsIndex')
     this.$store.commit('algoliaSearch/setIndexName', this.$config.algolia.missionsIndex)
-    this.$store.commit('algoliaSearch/setAvailableFacets', ['type', 'activity.name', 'structure.name', 'tags', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires', 'template_subtitle', 'publics_volontaires'])
+    this.$store.commit('algoliaSearch/setAvailableFacets', ['type', 'activity.name', 'structure.name', 'tags', 'department_name', 'domaines', 'structure.reseaux.name', 'publics_beneficiaires', 'template_subtitle', 'publics_volontaires', 'publisher_name'])
     this.$store.commit('algoliaSearch/setAvailableNumericFilters', ['commitment__total', 'is_autonomy'])
     this.$store.commit('algoliaSearch/setInitialFilters', this.initialFilters)
     if (this.initialHitsPerPage) {
