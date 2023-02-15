@@ -89,7 +89,7 @@ export default {
         return false
       }
 
-      if (this.mission.end_date && this.$dayjs(this.mission.end_date).isBefore(this.$dayjs())) {
+      if (this.mission.end_date && this.$dayjs(this.mission.end_date).endOf('day').isBefore(this.$dayjs())) {
         return false
       }
 
@@ -130,7 +130,11 @@ export default {
               ? this.$dayjs(endDate)
               : null
 
-      return endDateObject && endDateObject.isBefore(now)
+      if (!endDateObject) {
+        return false
+      }
+
+      return this.mission.provider == 'api_engagement' ? endDateObject.isBefore(now) : endDateObject.endOf('day').isBefore(now)
     },
     formattedCommitment () {
       if (this.mission.commitment__time_period) {
