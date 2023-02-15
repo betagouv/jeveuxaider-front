@@ -179,7 +179,7 @@ export default {
       return null
     },
     placesLeftText () {
-      if (this.provider === 'reserve_civique' && !this.mission.is_registration_open) {
+      if (this.mission.provider === 'reserve_civique' && !this.mission.is_registration_open) {
         return 'Inscription fermée'
       } else if (
         this.mission.publisher_name &&
