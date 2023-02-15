@@ -210,7 +210,8 @@ export default {
     { from: '^/dashboard/reseaux/(.*)$', to: '/admin/contenus/reseaux/$1', statusCode: 301 },
     { from: '^/dashboard/(.*)$', to: '/admin/$1', statusCode: 301 },
     { from: '^/missions/(.*)$', to: '/missions-benevolat/$1', statusCode: 301 },
-    { from: '^/inscription/organisation$', to: '/inscription/responsable', statusCode: 301 }
+    { from: '^/inscription/organisation$', to: '/inscription/responsable', statusCode: 301 },
+    { from: '^/statistiques', to: '/stats', statusCode: 301 }
   ],
 
   // Plugins config

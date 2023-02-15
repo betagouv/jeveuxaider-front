@@ -41,7 +41,10 @@
         </template>
       </template>
       <template v-if="display === 'percent'">
-        {{ value | formatNumber("0.[0]") }} <span class="text-xs text-gray-600">%</span>
+        {{ percentValue | formatNumber("0.[0]") }} <span class="text-xs text-gray-600">%</span>
+      </template>
+      <template v-if="display === 'count_percent'">
+        {{ value | formatNumber }} <span class="text-gray-500 text-sm"> ({{ percentValue | formatNumber("0.[0]") }}%)</span>
       </template>
     </div>
   </div>
@@ -65,7 +68,7 @@ export default {
     },
     display: {
       type: String,
-      default: 'count'
+      default: 'count' // count, percent, count_percent
     },
     count: {
       type: [String, Number],
@@ -78,10 +81,10 @@ export default {
   },
   computed: {
     value () {
-      if (this.display === 'percent') {
-        return this.total ? (this.count / this.total) * 100 : 0
-      }
       return this.count
+    },
+    percentValue () {
+      return this.total ? (this.count / this.total) * 100 : 0
     }
   }
 }
