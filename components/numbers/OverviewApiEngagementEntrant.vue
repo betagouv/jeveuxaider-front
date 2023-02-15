@@ -6,25 +6,25 @@
         :value="statistics.periodRedirections"
         title="Redirections"
         subtitle="sur la période"
-        infos-bulle="Nombre de redirections des partenaires vers JVA sur la période"
+        infos-bulle="Nombre de redirections des partenaires vers JeVeuxAider.gouv.fr sur la période"
       />
       <CardStatistic
         :value="statistics.periodApplications"
         title="Candidatures"
         subtitle="sur la période"
-        infos-bulle="Nombre de candidatures des partenaires vers JVA depuis le début"
+        infos-bulle="Nombre de candidatures des partenaires vers JeVeuxAider.gouv.fr depuis le début"
       />
       <CardStatistic
         :value="statistics.totalRedirections"
         title="Redirections"
         subtitle="au total"
-        infos-bulle="Nombre de redirections des partenaires vers JVA sur la période"
+        infos-bulle="Nombre de redirections des partenaires vers JeVeuxAider.gouv.fr sur la période"
       />
       <CardStatistic
         :value="statistics.totalApplications"
         title="Candidatures"
         subtitle="au total"
-        infos-bulle="Nombre de candidatures des partenaires vers JVA depuis le début"
+        infos-bulle="Nombre de candidatures des partenaires vers JeVeuxAider.gouv.fr depuis le début"
       />
     </div>
   </Box>

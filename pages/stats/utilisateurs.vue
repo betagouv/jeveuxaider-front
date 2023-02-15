@@ -3,7 +3,7 @@
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[
-          { text: 'Statistiques', to: '/statistiques' },
+          { text: 'Statistiques', to: '/stats' },
           { text: 'Utilisateurs' },
         ]"
       />
@@ -27,10 +27,11 @@
       <UtilisateursByDate ref="utilisateursByDate" />
       <div class="flex flex-col lg:flex-row gap-12">
         <div class="space-y-12 lg:w-1/2">
-          <TemoignagesByGrades ref="temoignagesByGrades" />
+          <UtilisateursByAge ref="utilisateursByAge" />
           <ParticipationsDelaysByRegistrations ref="participationsDelaysByRegistrations" />
         </div>
         <div class="space-y-12 lg:w-1/2">
+          <TemoignagesByGrades ref="temoignagesByGrades" />
           <UtilisateursByDomaines ref="utilisateursByDomaines" />
           <!-- <ParticipationsCanceledByBenevoles ref="participationsCanceledByBenevoles" /> -->
         </div>
@@ -44,6 +45,7 @@ import FiltersStatistics from '@/components/custom/FiltersStatistics'
 import UtilisateursStatistics from '@/components/statistics/UtilisateursStatistics.vue'
 import UtilisateursByDate from '@/components/statistics/UtilisateursByDate.vue'
 import UtilisateursByDomaines from '@/components/statistics/UtilisateursByDomaines.vue'
+import UtilisateursByAge from '@/components/statistics/UtilisateursByAge.vue'
 // import ParticipationsCanceledByBenevoles from '@/components/statistics/ParticipationsCanceledByBenevoles.vue'
 import ParticipationsDelaysByRegistrations from '@/components/statistics/ParticipationsDelaysByRegistrations.vue'
 import TemoignagesByGrades from '@/components/statistics/TemoignagesByGrades.vue'
@@ -55,6 +57,7 @@ export default {
     UtilisateursStatistics,
     UtilisateursByDate,
     UtilisateursByDomaines,
+    UtilisateursByAge,
     // ParticipationsCanceledByBenevoles,
     ParticipationsDelaysByRegistrations,
     TemoignagesByGrades,
@@ -68,6 +71,7 @@ export default {
     refetch () {
       this.$refs.utilisateursStatistics.$fetch()
       this.$refs.utilisateursByDate.$fetch()
+      this.$refs.utilisateursByAge.$fetch()
       // this.$refs.participationsCanceledByBenevoles.$fetch()
       this.$refs.utilisateursByDomaines.$fetch()
       this.$refs.participationsDelaysByRegistrations.$fetch()

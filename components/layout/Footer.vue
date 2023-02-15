@@ -389,7 +389,7 @@ export default {
         },
         {
           name: 'Statistiques',
-          url: '/statistiques'
+          url: '/stats'
         }
       ]
     }

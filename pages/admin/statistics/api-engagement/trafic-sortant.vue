@@ -13,7 +13,7 @@
 
     <SectionHeading
       title="Trafic sortant"
-      secondary-title-bottom="JeVeuxAider.gouv.fr diffuse les missions de bénévolat hébergées sur des plateformes partenaires, avec l’objectif d’optimiser leur visibilité."
+      secondary-title-bottom="JeVeuxAider.gouv.fr diffuse les missions de bénévolat hébergées sur des plateformes partenaires, avec l’objectif d’optimiser leur visibilité. Le trafic sortant est donc le trafic généré par JeVeuxAider.gouv.fr vers les sites partenaires."
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">

@@ -3,7 +3,7 @@
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[
-          { text: 'Statistiques', to: '/statistiques' },
+          { text: 'Statistiques', to: '/stats' },
           { text: 'Missions' },
         ]"
       />
