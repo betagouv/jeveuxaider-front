@@ -1,19 +1,20 @@
 <template>
   <div ref="container" class="h-full" @scroll="onScroll">
-    <Conversation
+    <ConversationTeaser
       v-for="conversation in conversations"
       :key="conversation.id"
       :conversation="conversation"
+      @click.native="onClick(conversation)"
     />
   </div>
 </template>
 
 <script>
-import Conversation from '@/components/messaging/Conversation.vue'
+import ConversationTeaser from '@/components/messaging/ConversationTeaser.vue'
 
 export default {
   components: {
-    Conversation
+    ConversationTeaser
   },
   data () {
     return {
@@ -41,6 +42,9 @@ export default {
     }
   },
   methods: {
+    onClick (conversation) {
+      this.$router.push(`/messages/${conversation.id}`)
+    },
     onScroll ({ target: { scrollTop, clientHeight, scrollHeight } }) {
       const isBottom = Math.ceil(scrollTop) + clientHeight >= scrollHeight
       if (this.currentPage < this.lastPage && isBottom && !this.loading) {
