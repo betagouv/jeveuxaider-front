@@ -37,7 +37,7 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/statistics/public/utilisateurs-by-age', {
+    await this.$axios.get('/statistics/utilisateurs-by-age', {
       params: this.$store.state.statistics.params
     }).then((response) => {
       this.loading = false

@@ -14,7 +14,7 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics @refetch="refetch()" />
+          <FiltersStatisticsPublic @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
 import UtilisateursStatistics from '@/components/statistics/UtilisateursStatistics.vue'
 import UtilisateursByDate from '@/components/statistics/UtilisateursByDate.vue'
 import UtilisateursByDomaines from '@/components/statistics/UtilisateursByDomaines.vue'
@@ -53,7 +53,7 @@ import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    FiltersStatistics,
+    FiltersStatisticsPublic,
     UtilisateursStatistics,
     UtilisateursByDate,
     UtilisateursByDomaines,

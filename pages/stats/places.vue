@@ -14,7 +14,7 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics :filters="['department']" @refetch="refetch()" />
+          <FiltersStatisticsPublic :filters="['department']" @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>
@@ -46,12 +46,12 @@ import PlacesByMissions from '@/components/statistics/PlacesByMissions.vue'
 import PlacesByDomaines from '@/components/statistics/PlacesByDomaines.vue'
 import PlacesByActivities from '@/components/statistics/PlacesByActivities.vue'
 import PlacesStatistics from '@/components/statistics/PlacesStatistics'
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    FiltersStatistics,
+    FiltersStatisticsPublic,
     PlacesByReseaux,
     PlacesByOrganisations,
     PlacesByMissions,

@@ -50,7 +50,7 @@ import UtilisateursWithParticipations from '@/components/numbers/UtilisateursWit
 import ParticipationsCanceledByBenevoles from '@/components/numbers/ParticipationsCanceledByBenevoles.vue'
 import ParticipationsDelaysByRegistrations from '@/components/numbers/ParticipationsDelaysByRegistrations.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
-import UtilisateursByAge from '@/components/statistics/UtilisateursByAge.vue'
+import UtilisateursByAge from '@/components/numbers/UtilisateursByAge.vue'
 
 export default {
   components: {

@@ -14,7 +14,7 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics :filters="['daterange']" @refetch="refetch()" />
+          <FiltersStatisticsPublic :filters="['daterange']" @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>
@@ -27,13 +27,13 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
 // import ApiEngagementStatistics from '@/components/statistics/ApiEngagementStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    FiltersStatistics,
+    FiltersStatisticsPublic,
     // ApiEngagementStatistics
     Breadcrumb
   },
