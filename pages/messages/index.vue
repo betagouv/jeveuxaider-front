@@ -1,5 +1,7 @@
 <template>
-  <div>TODOOOOOO</div>
+  <div class="hidden lg:block">
+    TODOOOOOO
+  </div>
 </template>
 
 <script>

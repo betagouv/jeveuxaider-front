@@ -1,12 +1,15 @@
 <template>
-  <div ref="container" class="h-full" @scroll="onScroll">
+  <ContainerScrollable
+    :class="[{'hidden lg:block': $route.name == 'messages-id'}, 'h-full divide-y']"
+    @scroll.native="onScroll"
+  >
     <ConversationTeaser
       v-for="conversation in conversations"
       :key="conversation.id"
       :conversation="conversation"
       @click.native="onClick(conversation)"
     />
-  </div>
+  </ContainerScrollable>
 </template>
 
 <script>
@@ -37,9 +40,9 @@ export default {
     this.loading = false
   },
   watch: {
-    filters () {
-      this.conversations = []
-    }
+    // filters () {
+    //   this.conversations = []
+    // }
   },
   methods: {
     onClick (conversation) {

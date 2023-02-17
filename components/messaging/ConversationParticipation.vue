@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col h-full">
     <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
-    <ConversationParticipationContextualAction :conversation="conversation" />
-    <ContainerScrollable>
+    <ContainerScrollable class="flex-1">
+      <ConversationParticipationContextualAction :conversation="conversation" />
       <CardMissionInfos :mission="mission" />
       <ConversationMessages :conversation="conversation" />
     </ContainerScrollable>

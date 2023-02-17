@@ -2,14 +2,9 @@
   <div class="overflow-hidden h-full">
     <div class="h-full flex flex-col">
       <Header full-width />
-      <div class="flex h-full">
-        <client-only>
-          <div ref="wrapperColumns" class="h-full bg-white w-full lg:max-w-[492px]">
-            <ContainerScrollable>
-              <ConversationsListingResults class="divide-y" />
-            </ContainerScrollable>
-          </div>
-        </client-only>
+      <div class="flex h-full bg-white overflow-hidden">
+        <ConversationsListingResults />
+
         <Nuxt />
       </div>
       <portal-target name="body-end" multiple />

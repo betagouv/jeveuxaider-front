@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-red-200 overflow-y-auto custom-scrollbar h-[200px]"
+    class="bg-red-200 overflow-y-auto custom-scrollbar"
   >
     <!-- ICI une logique pour avoir un beau scroll qu'on puisse réutiliser partout -->
     <slot />

@@ -94,7 +94,7 @@ export default {
       const mission = this.conversation.conversable?.mission
 
       if (mission?.is_autonomy && mission.autonomy_zips.length) {
-        return this.mission.autonomy_zips.map((item) => {
+        return mission.autonomy_zips.map((item) => {
           return item.city.includes(' Arrondissement') ? `${item.city.replace(' Arrondissement', '')}` : `${item.city} (${item.zip})`
         }).sort((a, b) => a.localeCompare(b, 'fr', { numeric: true })).join(', ')
       }
