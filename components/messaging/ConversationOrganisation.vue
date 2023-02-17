@@ -2,6 +2,7 @@
   <div class="flex flex-col h-full">
     <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
     <ContainerScrollable class="flex-1">
+      <ConversationOrganisationContextualAction />
       <CardOrganisationInfos v-if="organisation" :organisation="organisation" />
       <ConversationMessages />
     </ContainerScrollable>
@@ -14,13 +15,15 @@ import ConversationRecipientUser from '@/components/messaging/ConversationRecipi
 import CardOrganisationInfos from '~/components/messaging/CardOrganisationInfos.vue'
 import ConversationMessages from '@/components/messaging/ConversationMessages.vue'
 import ConversationForm from '@/components/messaging/ConversationForm.vue'
+import ConversationOrganisationContextualAction from '@/components/messaging/ConversationOrganisationContextualAction.vue'
 
 export default {
   components: {
     ConversationRecipientUser,
     CardOrganisationInfos,
     ConversationMessages,
-    ConversationForm
+    ConversationForm,
+    ConversationOrganisationContextualAction
   },
   computed: {
     conversation () {
