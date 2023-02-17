@@ -1,6 +1,6 @@
 <template>
   <div class="bg-blue-200">
-    <div>Id: {{ organisation.id }}</div>
+    <div>Organisation Id: {{ organisation.id }}</div>
     <div>Nom: {{ organisation.name }}</div>
   </div>
 </template>

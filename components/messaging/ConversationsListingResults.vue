@@ -22,7 +22,6 @@ export default {
   data () {
     return {
       loading: true,
-      conversations: [],
       filters: [],
       currentPage: 1,
       lastPage: null
@@ -33,11 +32,16 @@ export default {
     const conversations = await this.$axios.get('/conversations', {
       params: { ...this.filters }
     })
-
-    this.conversations = [...this.conversations, ...conversations.data?.data]
     this.currentPage = conversations.data?.current_page
     this.lastPage = conversations.data?.last_page
     this.loading = false
+
+    this.$store.commit('messaging2/setConversations', [...this.conversations, ...conversations.data?.data])
+  },
+  computed: {
+    conversations () {
+      return this.$store.getters['messaging2/conversations']
+    }
   },
   watch: {
     // filters () {

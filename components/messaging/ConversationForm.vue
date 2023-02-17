@@ -9,15 +9,14 @@
 
 <script>
 export default {
-  props: {
-    conversation: {
-      type: Object,
-      required: true
-    }
-  },
   data () {
     return {
       message: ''
+    }
+  },
+  computed: {
+    conversation () {
+      return this.$store.getters['messaging2/activeConversation']
     }
   },
   methods: {

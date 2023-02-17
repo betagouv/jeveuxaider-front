@@ -4,7 +4,6 @@
       <Header full-width />
       <div class="flex h-full bg-white overflow-hidden">
         <ConversationsListingResults />
-
         <Nuxt />
       </div>
       <portal-target name="body-end" multiple />

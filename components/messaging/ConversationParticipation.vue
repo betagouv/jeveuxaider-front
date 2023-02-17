@@ -2,11 +2,11 @@
   <div class="flex flex-col h-full">
     <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
     <ContainerScrollable class="flex-1">
-      <ConversationParticipationContextualAction :conversation="conversation" />
-      <CardMissionInfos :mission="mission" />
-      <ConversationMessages :conversation="conversation" />
+      <ConversationParticipationContextualAction />
+      <CardMissionInfos v-if="mission" :mission="mission" />
+      <ConversationMessages />
     </ContainerScrollable>
-    <ConversationForm :conversation="conversation" @submitted="onSubmitted" />
+    <ConversationForm />
   </div>
 </template>
 
@@ -25,13 +25,10 @@ export default {
     ConversationMessages,
     ConversationForm
   },
-  props: {
-    conversation: {
-      type: Object,
-      required: true
-    }
-  },
   computed: {
+    conversation () {
+      return this.$store.getters['messaging2/activeConversation']
+    },
     recipientUser () {
       return this.conversation.users.filter(user => user.id != this.$store.getters.profile.user_id)[0]
     },
@@ -43,9 +40,6 @@ export default {
     }
   },
   methods: {
-    onSubmitted (message) {
-      console.log('onSubmitted', message)
-    }
   }
 }
 </script>

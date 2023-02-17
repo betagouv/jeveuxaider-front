@@ -16,7 +16,7 @@
       <div>Mobile: {{ user.profile.mobile }}</div>
       <div>Email: {{ user.profile.email }}</div>
     </template>
-    <template v-if="variant === 'responsable'">
+    <template v-if="variant === 'referent'">
       <div>Fullname: {{ user.profile.full_name }}</div>
       <div>Référent du département: department.name</div>
       <div>Mobile: {{ user.profile.mobile }}</div>

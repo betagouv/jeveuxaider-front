@@ -9,13 +9,10 @@
 
 <script>
 export default {
-  props: {
-    conversation: {
-      type: Object,
-      required: true
-    }
-  },
   computed: {
+    conversation () {
+      return this.$store.getters['messaging2/activeConversation']
+    },
     participation () {
       return this.conversation.conversable
     }

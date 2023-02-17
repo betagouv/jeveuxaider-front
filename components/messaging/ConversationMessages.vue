@@ -12,12 +12,6 @@
 
 <script>
 export default {
-  props: {
-    conversation: {
-      type: Object,
-      required: true
-    }
-  },
   data () {
     return {
       loading: true,
@@ -30,6 +24,11 @@ export default {
       this.loading = false
       this.messages = response.data.data
     })
+  },
+  computed: {
+    conversation () {
+      return this.$store.getters['messaging2/activeConversation']
+    }
   },
   created () {
     this.$fetch()

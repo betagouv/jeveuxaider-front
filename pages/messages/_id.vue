@@ -1,13 +1,13 @@
 <template>
   <div>
     <template v-if="conversation.conversable_type == 'App\\Models\\Participation'">
-      <ConversationParticipation :conversation="conversation" />
+      <ConversationParticipation />
     </template>
     <template v-if="conversation.conversable_type == 'App\\Models\\Mission'">
-      <ConversationMission :conversation="conversation" />
+      <ConversationMission />
     </template>
     <template v-if="conversation.conversable_type == 'App\\Models\\Structure'">
-      <ConversationOrganisation :conversation="conversation" />
+      <ConversationOrganisation />
     </template>
   </div>
 </template>
@@ -31,7 +31,11 @@ export default {
       return error({ statusCode: 403 })
     }
 
-    return { conversation }
+    store.commit('messaging2/setActiveConversation', conversation)
+
+    return {
+      conversation
+    }
   },
   mounted () {},
   beforeDestroy () {}

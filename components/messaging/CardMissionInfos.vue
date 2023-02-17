@@ -1,6 +1,6 @@
 <template>
   <div class="bg-blue-200">
-    <div>Id: {{ mission.id }}</div>
+    <div>Mission Id: {{ mission.id }}</div>
     <div>Nom: {{ mission.name }}</div>
     <template v-if="mission.type == 'Mission à distance'">
       <div>Type: Mission à distance</div>

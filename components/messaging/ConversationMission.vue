@@ -1,18 +1,16 @@
 <template>
   <div class="flex flex-col h-full">
     <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
-    <ConversationParticipationContextualAction :conversation="conversation" />
-    <ContainerScrollable>
-      <CardMissionInfos :mission="mission" />
-      <ConversationMessages :conversation="conversation" />
+    <ContainerScrollable class="flex-1">
+      <CardMissionInfos v-if="mission" :mission="mission" />
+      <ConversationMessages />
     </ContainerScrollable>
-    <ConversationForm :conversation="conversation" @submitted="onSubmitted" />
+    <ConversationForm />
   </div>
 </template>
 
 <script>
 import ConversationRecipientUser from '@/components/messaging/ConversationRecipientUser.vue'
-import ConversationParticipationContextualAction from '@/components/messaging/ConversationParticipationContextualAction.vue'
 import CardMissionInfos from '@/components/messaging/CardMissionInfos.vue'
 import ConversationMessages from '@/components/messaging/ConversationMessages.vue'
 import ConversationForm from '@/components/messaging/ConversationForm.vue'
@@ -20,18 +18,14 @@ import ConversationForm from '@/components/messaging/ConversationForm.vue'
 export default {
   components: {
     ConversationRecipientUser,
-    ConversationParticipationContextualAction,
     CardMissionInfos,
     ConversationMessages,
     ConversationForm
   },
-  props: {
-    conversation: {
-      type: Object,
-      required: true
-    }
-  },
   computed: {
+    conversation () {
+      return this.$store.getters['messaging2/activeConversation']
+    },
     recipientUser () {
       return this.conversation.users.filter(user => user.id != this.$store.getters.profile.user_id)[0]
     },
@@ -44,9 +38,6 @@ export default {
     }
   },
   methods: {
-    onSubmitted (message) {
-      console.log('onSubmitted', message)
-    }
   }
 }
 </script>
