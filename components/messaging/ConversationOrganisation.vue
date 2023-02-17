@@ -3,7 +3,7 @@
     <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
     <ConversationParticipationContextualAction :conversation="conversation" />
     <ContainerScrollable>
-      <CardMissionInfos :mission="mission" />
+      <CardOrganisationInfos :organisation="organisation" />
       <ConversationMessages :conversation="conversation" />
     </ContainerScrollable>
     <ConversationForm :conversation="conversation" @submitted="onSubmitted" />
@@ -13,7 +13,7 @@
 <script>
 import ConversationRecipientUser from '@/components/messaging/ConversationRecipientUser.vue'
 import ConversationParticipationContextualAction from '@/components/messaging/ConversationParticipationContextualAction.vue'
-import CardMissionInfos from '@/components/messaging/CardMissionInfos.vue'
+import CardOrganisationInfos from '~/components/messaging/CardOrganisationInfos.vue'
 import ConversationMessages from '@/components/messaging/ConversationMessages.vue'
 import ConversationForm from '@/components/messaging/ConversationForm.vue'
 
@@ -21,7 +21,7 @@ export default {
   components: {
     ConversationRecipientUser,
     ConversationParticipationContextualAction,
-    CardMissionInfos,
+    CardOrganisationInfos,
     ConversationMessages,
     ConversationForm
   },
@@ -35,11 +35,12 @@ export default {
     recipientUser () {
       return this.conversation.users.filter(user => user.id != this.$store.getters.profile.user_id)[0]
     },
-    mission () {
-      return this.conversation.conversable.mission
+    organisation () {
+      return this.conversation.conversable
     },
     userVariant () {
-      return this.conversation.conversable.profile_id == this.$store.getters.profile.id ? 'benevole' : 'responsable'
+      // TODO variant referent / responsable / admin
+      return 'referent'
     }
   },
   methods: {

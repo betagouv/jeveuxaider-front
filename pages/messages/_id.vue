@@ -4,20 +4,24 @@
       <ConversationParticipation :conversation="conversation" />
     </template>
     <template v-if="conversation.conversable_type == 'App\\Models\\Mission'">
-      @TODO Conversation d'une mission
+      <ConversationMission :conversation="conversation" />
     </template>
     <template v-if="conversation.conversable_type == 'App\\Models\\Structure'">
-      @TODO Conversation d'une organisation
+      <ConversationOrganisation :conversation="conversation" />
     </template>
   </div>
 </template>
 
 <script>
 import ConversationParticipation from '@/components/messaging/ConversationParticipation.vue'
+import ConversationOrganisation from '@/components/messaging/ConversationOrganisation.vue'
+import ConversationMission from '@/components/messaging/ConversationMission.vue'
 
 export default {
   components: {
-    ConversationParticipation
+    ConversationParticipation,
+    ConversationOrganisation,
+    ConversationMission
   },
   layout: 'messages',
   async asyncData ({ store, error, $api, params, $axios }) {

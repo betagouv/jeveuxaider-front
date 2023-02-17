@@ -36,10 +36,11 @@ export default {
       return this.conversation.users.filter(user => user.id != this.$store.getters.profile.user_id)[0]
     },
     mission () {
-      return this.conversation.conversable.mission
+      return this.conversation.conversable
     },
     userVariant () {
-      return this.conversation.conversable.profile_id == this.$store.getters.profile.id ? 'benevole' : 'responsable'
+      // TODO variant referent / responsable / admin
+      return 'referent'
     }
   },
   methods: {
