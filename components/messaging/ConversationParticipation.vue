@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-col h-full">
+  <div class="flex flex-col h-full ">
     <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
-    <ContainerScrollable class="flex-1">
-      <ConversationParticipationContextualAction />
-      <CardMissionInfos v-if="mission" :mission="mission" />
+    <ContainerScrollable class="flex-1 flex flex-col-reverse">
       <ConversationMessages />
+      <CardMissionInfos v-if="mission" :mission="mission" />
+      <ConversationParticipationContextualAction />
     </ContainerScrollable>
     <ConversationForm />
   </div>

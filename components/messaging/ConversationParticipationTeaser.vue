@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6">
+  <div class="p-6 pr-[10px] lg:p-6">
     <div class="flex">
       <Avatar
         v-for="(recipient, i) in recipients.slice(0, 3)"
@@ -12,32 +12,47 @@
         size="sm"
       />
       <div class="flex-1 min-w-0 relative">
-        <p class="truncate font-bold" v-html="recipients.map(recipient => recipient.profile.first_name).join(', ')" />
-        <p class="text-cool-gray-500 text-sm leading-none">
+        <div class="flex items-center">
+          <p
+            class="truncate font-bold text-lg"
+            v-html="recipients.map(recipient => recipient.profile.first_name).join(', ')"
+          />
+          <div
+            v-if="hasUnreadMessage"
+            aria-label="Message non lu"
+            class="flex-none w-3 h-3 ml-2 mr-auto bg-[#F95A5C] rounded-full"
+          />
+          <div class="ml-auto hidden xs:block leading-none">
+            <Badge
+              size="sm"
+              :type="badgeType"
+              :no-icon="true"
+              class="ml-2"
+            >
+              {{ conversation.conversable.state }}
+            </Badge>
+          </div>
+        </div>
+        <p class="text-cool-gray-500 text-sm leading-tight first-letter:capitalize">
           {{ lastMessageDate }}
         </p>
-        <div class="text-gray-800 mt-2">
-          <template v-if="conversation.conversable_type === 'App\\Models\\Participation'">
-            <p class="line-clamp-2">
-              {{ conversation.conversable.mission.name }}
-            </p>
-            <div v-if="place" class="flex space-x-1 items-center truncate text-sm mt-2 text-cool-gray-500">
-              <RiMapPin2Fill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
-              <p class="truncate leading-none">
-                {{ place }}
-              </p>
-            </div>
-          </template>
-          <p v-else class="line-clamp-2">
-            {{ conversation.latest_message.content }}
+        <div class="text-gray-800 mt-4">
+          <p :class="['line-clamp-2', {'font-bold': hasUnreadMessage}]">
+            {{ conversation.conversable.mission.name }}
           </p>
+          <div v-if="place" class="flex space-x-1 items-center truncate text-sm mt-2 text-cool-gray-500">
+            <RiMapPin2Fill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+            <p class="truncate leading-none">
+              {{ place }}
+            </p>
+          </div>
         </div>
+
         <Badge
-          v-if="conversation.conversable_type === 'App\\Models\\Participation'"
           size="sm"
           :type="badgeType"
           :no-icon="true"
-          class="mt-3 sm:mt-0 sm:absolute right-0 top-0"
+          class="mt-4 xs:hidden"
         >
           {{ conversation.conversable.state }}
         </Badge>
@@ -103,6 +118,23 @@ export default {
       }
 
       return 'Mission à distance'
+    },
+    currentConversationUser () {
+      return this.conversation.users.find((user) => {
+        return user.id == this.$store.getters.profile.user_id
+      })
+    },
+    hasUnreadMessage () {
+      if (this.currentConversationUser.pivot.read_at == null) {
+        return true
+      }
+      if (this.$dayjs(this.currentConversationUser.pivot.read_at).isSame(this.$dayjs(this.conversation.updated_at))) {
+        return false
+      }
+      if (this.$dayjs(this.currentConversationUser.pivot.read_at).isAfter(this.$dayjs(this.conversation.updated_at))) {
+        return false
+      }
+      return true
     }
   },
   methods: {

@@ -39,10 +39,8 @@ export default {
     })
     this.currentPage = conversations.data?.current_page
     this.lastPage = conversations.data?.last_page
+    this.$store.commit('messaging2/setConversations', [...this.conversations, ...conversations.data?.data])
     this.loading = false
-
-    // this.$store.commit('messaging2/setConversations', [...this.conversations, ...conversations.data?.data]) // Duplicate keys
-    this.$store.commit('messaging2/setConversations', conversations.data.data)
   },
   computed: {
     conversations () {
@@ -71,7 +69,7 @@ export default {
       this.$router.push(`/messages/${conversation.id}`)
     },
     onScroll ({ target: { scrollTop, clientHeight, scrollHeight } }) {
-      const isBottom = Math.ceil(scrollTop) + clientHeight >= scrollHeight
+      const isBottom = Math.ceil(scrollTop + clientHeight) >= (scrollHeight - 45)
       if (this.currentPage < this.lastPage && isBottom && !this.loading) {
         this.filters.page = this.currentPage + 1
         this.$fetch()

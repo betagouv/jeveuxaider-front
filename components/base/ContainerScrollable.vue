@@ -1,18 +1,9 @@
 <template>
-  <div
-    class="bg-red-200 overflow-y-auto custom-scrollbar"
-  >
-    <!-- ICI une logique pour avoir un beau scroll qu'on puisse réutiliser partout -->
+  <div class="overflow-y-auto custom-scrollbar-gray">
     <slot />
   </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
-
-<style>
-
-</style>

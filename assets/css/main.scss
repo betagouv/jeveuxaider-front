@@ -230,16 +230,12 @@ body.full-height-layout {
 }
 
 .custom-scrollbar-gray {
-  &::-webkit-scrollbar-track {
-    border-radius: 10px;
-    @apply bg-gray-100;
-  }
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 14px;
   }
   &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    @apply bg-gray-300;
+    background-clip: padding-box;
+    @apply bg-gray-300 border-4 border-solid border-transparent rounded-full;
   }
 }
 
