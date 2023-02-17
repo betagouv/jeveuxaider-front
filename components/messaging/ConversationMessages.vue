@@ -4,14 +4,27 @@
       v-for="message in messages"
       :key="message.id"
     >
-      <div>Message content:{{ message.content }}</div>
-      <div>Message created_at:{{ $dayjs(message.created_at).format('D MMM HH[h]mm') }}</div>
+      <MessageChat
+        v-if="message.type === 'chat'"
+        :message="message"
+      />
+      <MessageParticipationContextual
+        v-if="conversation.conversable_type == 'App\\Models\\Participation' && message.type === 'contextual'"
+        :message="message"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import MessageChat from '@/components/messaging/MessageChat.vue'
+import MessageParticipationContextual from '~/components/messaging/MessageParticipationContextual.vue'
+
 export default {
+  components: {
+    MessageChat,
+    MessageParticipationContextual
+  },
   data () {
     return {
       loading: true,
@@ -32,6 +45,8 @@ export default {
   },
   created () {
     this.$fetch()
+  },
+  methods: {
   }
 }
 </script>
