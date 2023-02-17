@@ -20,7 +20,7 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get(`/conversations/${this.conversation.id}/messages`).then((response) => {
+    await this.$axios.get(`/conversationsv2/${this.conversation.id}/messages`).then((response) => {
       this.loading = false
       this.messages = response.data.data
     })

@@ -22,7 +22,7 @@ export default {
   methods: {
     async handleSubmit () {
       if (this.message.trim().length) {
-        const response = await this.$axios.post(`/conversations/${this.conversation.id}/messages`, {
+        const response = await this.$axios.post(`/conversationsv2/${this.conversation.id}/messages`, {
           content: this.message
         }).catch(() => {})
         this.$emit('submitted', response.data)

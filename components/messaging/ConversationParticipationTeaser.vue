@@ -11,34 +11,27 @@
         :initials="recipient.profile.short_name"
         size="sm"
       />
-
       <div class="flex-1 min-w-0 relative">
         <p class="truncate font-bold" v-html="recipients.map(recipient => recipient.profile.first_name).join(', ')" />
-
-        <template v-if="conversation.latest_message">
-          <p class="text-cool-gray-500 text-sm leading-none">
-            {{ lastMessageDate }}
-          </p>
-
-          <div class="text-gray-800 mt-2">
-            <template v-if="conversation.conversable_type === 'App\\Models\\Participation'">
-              <p class="line-clamp-2">
-                {{ conversation.conversable.mission.name }}
-              </p>
-              <div v-if="place" class="flex space-x-1 items-center truncate text-sm mt-2 text-cool-gray-500">
-                <RiMapPin2Fill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
-                <p class="truncate leading-none">
-                  {{ place }}
-                </p>
-              </div>
-            </template>
-
-            <p v-else class="line-clamp-2">
-              {{ conversation.latest_message.content }}
+        <p class="text-cool-gray-500 text-sm leading-none">
+          {{ lastMessageDate }}
+        </p>
+        <div class="text-gray-800 mt-2">
+          <template v-if="conversation.conversable_type === 'App\\Models\\Participation'">
+            <p class="line-clamp-2">
+              {{ conversation.conversable.mission.name }}
             </p>
-          </div>
-        </template>
-
+            <div v-if="place" class="flex space-x-1 items-center truncate text-sm mt-2 text-cool-gray-500">
+              <RiMapPin2Fill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+              <p class="truncate leading-none">
+                {{ place }}
+              </p>
+            </div>
+          </template>
+          <p v-else class="line-clamp-2">
+            {{ conversation.latest_message.content }}
+          </p>
+        </div>
         <Badge
           v-if="conversation.conversable_type === 'App\\Models\\Participation'"
           size="sm"
@@ -69,10 +62,10 @@ export default {
         return user.id != this.$store.getters.profile.user_id
       })
     },
-    // lastMessageDate () {
-    //   const date = this.$dayjs(this.conversation.latest_message.created_at)
-    //   return this.$dayjs().isSame(date, 'day') ? date.fromNow() : date.format('dddd D MMMM YYYY')
-    // },
+    lastMessageDate () {
+      const date = this.$dayjs(this.conversation.updated_at)
+      return this.$dayjs().isSame(date, 'day') ? date.fromNow() : date.format('dddd D MMMM YYYY')
+    },
     badgeType () {
       switch (this.conversation.conversable?.state) {
         case 'Validée':
@@ -88,10 +81,10 @@ export default {
       }
     },
     place () {
-      if (this.conversation.conversable_type !== 'App\\Models\\Participation') {
+      const mission = this.conversation.conversable?.mission
+      if (!mission) {
         return
       }
-      const mission = this.conversation.conversable?.mission
 
       if (mission?.is_autonomy && mission.autonomy_zips.length) {
         return mission.autonomy_zips.map((item) => {

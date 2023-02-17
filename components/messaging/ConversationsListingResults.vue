@@ -3,7 +3,8 @@
     :class="[{'hidden lg:block': $route.name == 'messages-id'}, 'h-full divide-y']"
     @scroll.native="onScroll"
   >
-    <ConversationTeaser
+    <component
+      :is="retrieveComponent(conversation)"
       v-for="conversation in conversations"
       :key="conversation.id"
       :conversation="conversation"
@@ -13,11 +14,15 @@
 </template>
 
 <script>
-import ConversationTeaser from '@/components/messaging/ConversationTeaser.vue'
+import ConversationParticipationTeaser from '@/components/messaging/ConversationParticipationTeaser.vue'
+import ConversationMissionTeaser from '@/components/messaging/ConversationMissionTeaser.vue'
+import ConversationOrganisationTeaser from '@/components/messaging/ConversationOrganisationTeaser.vue'
 
 export default {
   components: {
-    ConversationTeaser
+    ConversationParticipationTeaser,
+    ConversationMissionTeaser,
+    ConversationOrganisationTeaser
   },
   data () {
     return {
@@ -29,14 +34,15 @@ export default {
   },
   async fetch () {
     this.loading = true
-    const conversations = await this.$axios.get('/conversations', {
+    const conversations = await this.$axios.get('/conversationsv2', {
       params: { ...this.filters }
     })
     this.currentPage = conversations.data?.current_page
     this.lastPage = conversations.data?.last_page
     this.loading = false
 
-    this.$store.commit('messaging2/setConversations', [...this.conversations, ...conversations.data?.data])
+    // this.$store.commit('messaging2/setConversations', [...this.conversations, ...conversations.data?.data]) // Duplicate keys
+    this.$store.commit('messaging2/setConversations', conversations.data.data)
   },
   computed: {
     conversations () {
@@ -49,6 +55,18 @@ export default {
     // }
   },
   methods: {
+    retrieveComponent (conversation) {
+      if (conversation.conversable_type == 'App\\Models\\Participation') {
+        return 'ConversationParticipationTeaser'
+      }
+      if (conversation.conversable_type == 'App\\Models\\Mission') {
+        return 'ConversationMissionTeaser'
+      }
+      if (conversation.conversable_type == 'App\\Models\\Structure') {
+        return 'ConversationOrganisationTeaser'
+      }
+      return null
+    },
     onClick (conversation) {
       this.$router.push(`/messages/${conversation.id}`)
     },

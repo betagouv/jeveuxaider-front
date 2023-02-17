@@ -25,7 +25,7 @@ export default {
   },
   layout: 'messages',
   async asyncData ({ store, error, $api, params, $axios }) {
-    const { data: conversation } = await $axios.get(`/conversations/${params.id}`)
+    const { data: conversation } = await $axios.get(`/conversationsv2/${params.id}`)
 
     if (!conversation) {
       return error({ statusCode: 403 })
