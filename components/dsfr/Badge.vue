@@ -3,8 +3,8 @@
     :is="as"
     :class="[
       'inline-flex items-center justify-center max-w-full truncate uppercase rounded font-bold',
+      'tracking-[-.25px]',
 
-      {'px-[6px] text-[11px]': size == 'xs'},
       {'px-[6px] text-xs': size == 'sm'},
       {'px-2 text-sm': size == 'md'},
 

@@ -1,15 +1,5 @@
 <template>
-  <div>
-    <template v-if="conversation.conversable_type == 'App\\Models\\Participation'">
-      <ConversationParticipation />
-    </template>
-    <template v-if="conversation.conversable_type == 'App\\Models\\Mission'">
-      <ConversationMission />
-    </template>
-    <template v-if="conversation.conversable_type == 'App\\Models\\Structure'">
-      <ConversationOrganisation />
-    </template>
-  </div>
+  <component :is="as" />
 </template>
 
 <script>
@@ -37,7 +27,19 @@ export default {
       conversation
     }
   },
-  mounted () {},
-  beforeDestroy () {}
+  computed: {
+    as () {
+      if (this.conversation.conversable_type == 'App\\Models\\Participation') {
+        return 'ConversationParticipation'
+      }
+      if (this.conversation.conversable_type == 'App\\Models\\Mission') {
+        return 'ConversationMission'
+      }
+      if (this.conversation.conversable_type == 'App\\Models\\Structure') {
+        return 'ConversationOrganisation'
+      }
+      return null
+    }
+  }
 }
 </script>

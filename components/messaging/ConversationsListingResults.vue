@@ -5,7 +5,7 @@
   >
     <component
       :is="retrieveComponent(conversation)"
-      v-for="conversation in conversations"
+      v-for="conversation in $store.getters['messaging2/conversations']"
       :key="conversation.id"
       :conversation="conversation"
       @click.native="onClick(conversation)"
@@ -39,18 +39,19 @@ export default {
     })
     this.currentPage = conversations.data?.current_page
     this.lastPage = conversations.data?.last_page
-    this.$store.commit('messaging2/setConversations', [...this.conversations, ...conversations.data?.data])
+    this.$store.commit('messaging2/setConversations', [
+      ...this.$store.getters['messaging2/conversations'],
+      ...conversations.data?.data
+    ])
     this.loading = false
-  },
-  computed: {
-    conversations () {
-      return this.$store.getters['messaging2/conversations']
-    }
   },
   watch: {
     // filters () {
     //   this.conversations = []
     // }
+  },
+  beforeDestroy () {
+    this.$store.commit('messaging2/setConversations', [])
   },
   methods: {
     retrieveComponent (conversation) {
