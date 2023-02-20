@@ -12,8 +12,11 @@
         size="sm"
       />
       <div class="flex-1 min-w-0 relative">
-        <p class="truncate font-bold" v-html="recipients.map(recipient => recipient.profile.first_name).join(', ')" />
-        <p class="text-cool-gray-500 text-sm leading-none">
+        <p
+          class="truncate font-bold text-lg"
+          v-html="recipients.map(recipient => recipient.profile.first_name).join(', ')"
+        />
+        <p class="text-cool-gray-500 text-sm leading-none first-letter:capitalize">
           {{ lastMessageDate }}
         </p>
         <div class="text-gray-800 mt-2">

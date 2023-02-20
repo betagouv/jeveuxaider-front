@@ -1,6 +1,9 @@
 <template>
   <div class="p-6 pr-[10px] lg:p-6">
     <div class="flex">
+      <!-- TODO: refactoriser avec ConversationOrganisationTeaser et ConversationMissionTeaser -->
+      <!-- Avatar, Recipients, Unread message et LastMessageDate en commun -->
+      <!-- Faire un component ConversationTeaser avec des slots -->
       <Avatar
         v-for="(recipient, i) in recipients.slice(0, 3)"
         :key="recipient.id"
