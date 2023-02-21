@@ -46,7 +46,7 @@ export default {
   },
   computed: {
     total () {
-      return this.statistics.length > 0 ? Object.values(this.statistics).reduce((a, b) => a + b) : 0
+      return this.statistics ? Object.values(this.statistics).reduce((a, b) => a + b) : 0
     }
   }
 }
