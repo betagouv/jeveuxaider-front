@@ -80,7 +80,7 @@
         <nav role="navigation" class="flex w-full">
           <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 1" ref="switchRole" position="left" class="h-full">
             <template #button>
-              <div class="flex items-center justify-between gap-4 border-r py-4 pr-2 pl-5 w-52">
+              <button class="flex items-center justify-between gap-4 border-r py-4 pr-2 pl-5 w-52">
                 <div class="truncate">
                   <div class="truncate mr-auto font-semibold">
                     <template v-if="$store.getters.currentRole">
@@ -92,7 +92,7 @@
                   </div>
                 </div>
                 <ChevronDownIcon class="h-3 flex-none" />
-              </div>
+              </button>
             </template>
             <template #items>
               <template v-if="$store.getters.roles" class="w-80">

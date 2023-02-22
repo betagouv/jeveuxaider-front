@@ -133,6 +133,7 @@
             ]"
             :value="$route.query['sort']"
             placeholder="Trier par"
+            options-class="!min-w-[300px]"
             @input="changeFilter('sort', $event)"
           />
         </template>

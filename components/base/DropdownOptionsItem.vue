@@ -1,6 +1,6 @@
 <template>
   <button
-    class="group flex justify-between items-center cursor-pointer p-4 hover:bg-gray-50 w-full"
+    class="group flex justify-between items-center cursor-pointer p-4 hover:bg-gray-50 w-full text-left"
     :class="[{'p-4': size == 'md', 'px-3 py-2': size == 'sm'}]"
     role="menuitem"
   >

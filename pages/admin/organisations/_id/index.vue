@@ -176,12 +176,14 @@
                 :organisation="organisation"
                 @removed="$fetch()"
               />
-              <Button variant="white" @click.native="showDrawerInvitation = true">
-                <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
-              </Button>
-              <Button v-if="['admin'].includes($store.getters.contextRole)" variant="white" @click.native="showDrawerAddResponsable = true">
-                <PlusIcon class="h-4 w-4 mr-2" /> Ajouter un membre
-              </Button>
+              <div class="space-x-2">
+                <Button variant="white" @click.native="showDrawerInvitation = true">
+                  <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
+                </Button>
+                <Button v-if="['admin'].includes($store.getters.contextRole)" variant="white" @click.native="showDrawerAddResponsable = true">
+                  <PlusIcon class="h-4 w-4 mr-2" /> Ajouter un membre
+                </Button>
+              </div>
             </div>
           </template>
           <History v-if="$route.hash === '#historique'" :model-id="organisation.id" model-type="structure" />
