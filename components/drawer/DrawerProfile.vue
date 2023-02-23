@@ -50,6 +50,7 @@
         </Button>
       </div>
       <div class="border-t -mx-6 my-6" />
+      <BoxRoles v-if="$store.getters.contextRole === 'admin' && profile" :user-id="profile.user_id" class="mb-8" />
       <BoxActions v-if="$store.getters.contextRole === 'admin'" class="mb-8" :profile="profile" />
       <BoxDisponibilities class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
       <BoxInformations class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
@@ -76,6 +77,7 @@ import BoxActions from '@/components/section/profile/BoxActions'
 import BoxUtm from '@/components/section/BoxUtm'
 import Tag from '@/components/dsfr/Tag'
 import Button from '@/components/dsfr/Button.vue'
+import BoxRoles from '@/components/section/profile/BoxRoles'
 
 export default {
   components: {
@@ -87,7 +89,8 @@ export default {
     BoxUtm,
     Tag,
     Button,
-    BoxActions
+    BoxActions,
+    BoxRoles
   },
   props: {
     profileId: {

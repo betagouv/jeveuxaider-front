@@ -10,7 +10,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
         <Box class="relative z-10">
-          <div class="flex flex-wrap gap-2 mb-2">
+          <div class="flex flex-wrap gap-2 mb-4">
             <template v-if="profile.user.roles">
               <Tag v-for="role in profile.user.roles" :key="role.id" size="md">
                 {{ role.name | label('roles') }}
@@ -109,6 +109,7 @@
                 </div>
               </Box>
             </div>
+            <BoxRoles v-if="$store.getters.contextRole === 'admin'" :user-id="profile.user_id" />
             <BoxOrganisations v-if="profile.user.structures" :structures="profile.user.structures" />
             <BoxTerritoires v-if="profile.user.territoires" :territoires="profile.user.territoires" />
             <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" />
@@ -133,6 +134,7 @@ import BoxActions from '@/components/section/profile/BoxActions'
 import BoxUtm from '@/components/section/BoxUtm'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import Tag from '@/components/dsfr/Tag.vue'
+import BoxRoles from '@/components/section/profile/BoxRoles'
 
 export default {
   components: {
@@ -145,7 +147,8 @@ export default {
     BoxUtm,
     BoxActions,
     Breadcrumb,
-    Tag
+    Tag,
+    BoxRoles
   },
   async asyncData ({ $axios, params, error, store }) {
     if (
