@@ -5,6 +5,7 @@
         'overflow-y-auto custom-scrollbar-gray h-full',
         {'flex flex-col-reverse': reverse}
       ]"
+      @scroll="$emit('scroll', $event)"
     >
       <slot />
     </div>

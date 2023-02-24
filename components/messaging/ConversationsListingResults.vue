@@ -1,7 +1,7 @@
 <template>
   <ContainerScrollable
     :class="[{'hidden lg:block': $route.name == 'messages-id'}, 'h-full divide-y']"
-    @scroll.native="onScroll"
+    @scroll="onScroll"
   >
     <component
       :is="retrieveComponent(conversation)"
