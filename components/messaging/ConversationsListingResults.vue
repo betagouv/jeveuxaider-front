@@ -47,7 +47,9 @@ export default {
   },
   watch: {
     async '$store.state.messaging2.activeConversation' (newConversation, oldConversation) {
-      await this.$store.dispatch('messaging2/refreshConversationInConversations', oldConversation)
+      if (oldConversation.id) {
+        await this.$store.dispatch('messaging2/refreshConversationInConversations', oldConversation.id)
+      }
     }
     // filters () {
     //   this.conversations = []

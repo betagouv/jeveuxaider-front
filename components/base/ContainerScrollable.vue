@@ -1,9 +1,20 @@
 <template>
-  <div class="overflow-y-auto custom-scrollbar-gray">
-    <slot />
+  <div class="overflow-hidden">
+    <div
+      :class="[
+        'overflow-y-auto custom-scrollbar-gray h-full',
+        {'flex flex-col-reverse': reverse}
+      ]"
+    >
+      <slot />
+    </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    reverse: { type: Boolean, default: false }
+  }
+}
 </script>

@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col h-full">
     <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
-    <ContainerScrollable class="flex-1">
-      <ConversationOrganisationContextualAction />
-      <CardOrganisationInfos v-if="organisation" :organisation="organisation" />
+    <ContainerScrollable class="flex-1" :reverse="true">
       <ConversationMessages />
+      <CardOrganisationInfos v-if="organisation" :organisation="organisation" />
+      <ConversationOrganisationContextualAction />
     </ContainerScrollable>
     <ConversationForm />
   </div>
@@ -45,7 +45,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

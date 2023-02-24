@@ -27,8 +27,8 @@ export const mutations = {
 }
 
 export const actions = {
-  async refreshConversationInConversations ({ state, commit }, payload) {
-    const { data: conversation } = await this.$axios.get(`/conversationsv2/${payload.id}`)
+  async refreshConversationInConversations ({ state, commit }, conversationId) {
+    const { data: conversation } = await this.$axios.get(`/conversationsv2/${conversationId}`)
     commit('refreshConversationInConversations', conversation)
   },
   async getUserUnreadMessagesCount ({ commit }) {

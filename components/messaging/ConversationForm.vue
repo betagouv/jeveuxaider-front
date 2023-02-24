@@ -22,10 +22,11 @@ export default {
   methods: {
     async handleSubmit () {
       if (this.message.trim().length) {
-        const response = await this.$axios.post(`/conversationsv2/${this.conversation.id}/messages`, {
+        await this.$axios.post(`/conversationsv2/${this.conversation.id}/messages`, {
           content: this.message
         }).catch(() => {})
-        this.$emit('submitted', response.data)
+
+        await this.$store.dispatch('messaging2/refreshConversationInConversations', this.conversation.id)
       }
     }
   }

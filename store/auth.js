@@ -64,6 +64,7 @@ export const actions = {
     this.$cookies.remove('access-token')
     this.$cookies.remove('access-token-impersonate')
     commit('setUser', null)
+    commit('setIsImpersonate', false)
     // window.location.href = '/'
   },
   async updateProfile ({ dispatch }, payload) {

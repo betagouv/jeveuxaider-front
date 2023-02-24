@@ -1,6 +1,6 @@
 <template>
   <div id="header-banner">
-    <Banner v-if="$store.state.auth.isImpersonate" icon="RiProfileLine" type="warning">
+    <Banner v-if="$store.state.auth.isImpersonate && $store.getters.profile" icon="RiProfileLine" type="warning">
       Attention ! Vous vous faites passer pour <span class="font-bold">{{ $store.getters.profile.full_name }}</span>
       <template #action>
         <Link

@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="mb-auto">
     <div
-      v-for="message in messages"
+      v-for="message in messages.reverse()"
       :key="message.id"
     >
       <MessageChat
@@ -27,30 +27,18 @@ export default {
   },
   data () {
     return {
-      loading: true,
       messages: []
     }
   },
   async fetch () {
-    this.loading = true
-    await this.$axios.get(`/conversationsv2/${this.conversation.id}/messages`).then((response) => {
-      this.loading = false
-      this.messages = response.data.data
-    })
+    const { data: response } = await this.$axios.get(`/conversationsv2/${this.conversation.id}/messages`)
+    this.messages = response.data
   },
   computed: {
     conversation () {
       return this.$store.getters['messaging2/activeConversation']
     }
   },
-  created () {
-    this.$fetch()
-  },
-  methods: {
-  }
+  methods: {}
 }
 </script>
-
-<style>
-
-</style>
