@@ -20,22 +20,16 @@ export const mutations = {
   setUnreadMessagesCount: (state, payload) => {
     state.activeConversation = payload
   },
-  refreshActiveConversationInConversations (state, payload) {
-    state.conversations.splice(
-      state.conversations.findIndex(
-        conversation => conversation.id == payload.id
-      ),
-      1,
-      payload
-    )
+  refreshConversationInConversations (state, payload) {
+    const index = state.conversations.findIndex(conversation => conversation.id == payload.id)
+    state.conversations.splice(index, 1, payload)
   }
 }
 
 export const actions = {
-  async refreshActiveConversation ({ state, commit }, payload) {
+  async refreshConversationInConversations ({ state, commit }, payload) {
     const { data: conversation } = await this.$axios.get(`/conversationsv2/${payload.id}`)
-    commit('setActiveConversation', conversation)
-    commit('refreshActiveConversationInConversations', conversation)
+    commit('refreshConversationInConversations', conversation)
   },
   async getUserUnreadMessagesCount ({ commit }) {
     const { data: count } = await this.$axios.get('user/unread-messages')

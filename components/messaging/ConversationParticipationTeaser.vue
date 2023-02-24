@@ -43,6 +43,7 @@ export default {
           return 'success'
         case 'Signalée':
         case 'Annulée':
+        case 'Refusée':
           return 'error'
         case 'En attente de validation':
         case 'En cours de traitement':
