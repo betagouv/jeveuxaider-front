@@ -1,7 +1,7 @@
 <template>
   <div class="mb-auto">
     <div
-      v-for="message in messages.reverse()"
+      v-for="message in messages"
       :key="message.id"
     >
       <MessageChat
@@ -32,7 +32,7 @@ export default {
   },
   async fetch () {
     const { data: response } = await this.$axios.get(`/conversationsv2/${this.conversation.id}/messages`)
-    this.messages = response.data
+    this.messages = response.data.reverse()
   },
   computed: {
     conversation () {
