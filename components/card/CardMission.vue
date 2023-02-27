@@ -183,7 +183,7 @@ export default {
         return 'Inscription fermée'
       } else if (
         this.mission.publisher_name &&
-        this.mission.publisher_name !== 'Réserve Civique' &&
+        this.mission.publisher_name !== 'JeVeuxAider.gouv.fr' &&
         this.mission.places_left > 99
       ) {
         return 'Plusieurs bénévoles recherchés'
