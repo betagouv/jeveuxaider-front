@@ -2,26 +2,26 @@
   <Conversation>
     <template #header>
       <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
-      <ConversationParticipationContextualAction />
+      <ConversationContextualActionParticipation />
     </template>
 
     <template #scroll-container-top>
-      <CardMissionInfos v-if="conversation.conversable.mission" :mission="conversation.conversable.mission" />
+      <CardInfosMission v-if="conversation.conversable.mission" :mission="conversation.conversable.mission" />
     </template>
   </Conversation>
 </template>
 
 <script>
 import ConversationRecipientUser from '@/components/messaging/ConversationRecipientUser.vue'
-import ConversationParticipationContextualAction from '@/components/messaging/ConversationParticipationContextualAction.vue'
-import CardMissionInfos from '@/components/messaging/CardMissionInfos.vue'
+import ConversationContextualActionParticipation from '@/components/messaging/ConversationContextualActionParticipation.vue'
+import CardInfosMission from '@/components/messaging/CardInfosMission.vue'
 import Conversation from '@/components/messaging/Conversation.vue'
 
 export default {
   components: {
     ConversationRecipientUser,
-    ConversationParticipationContextualAction,
-    CardMissionInfos,
+    ConversationContextualActionParticipation,
+    CardInfosMission,
     Conversation
   },
   computed: {

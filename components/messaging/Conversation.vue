@@ -51,8 +51,9 @@ export default {
   },
   methods: {
     onScroll ({ target: { scrollTop, clientHeight, scrollHeight } }) {
-      // Il faut prendre en compte la taille du slot header
-      const offset = 250
+      // Il faut prendre en compte la taille du slot header,
+      // plus une marge pour éviter le content shift au scroll
+      const offset = 400
       const isBottom = Math.ceil(Math.abs(scrollTop) + clientHeight) >= (scrollHeight - offset)
       if (this.currentPage < this.lastPage && isBottom && !this.loading) {
         this.$fetch()

@@ -14,15 +14,15 @@
 </template>
 
 <script>
-import ConversationParticipationTeaser from '@/components/messaging/ConversationParticipationTeaser.vue'
-import ConversationMissionTeaser from '@/components/messaging/ConversationMissionTeaser.vue'
-import ConversationOrganisationTeaser from '@/components/messaging/ConversationOrganisationTeaser.vue'
+import ConversationTeaserParticipation from '@/components/messaging/ConversationTeaserParticipation.vue'
+import ConversationTeaserMission from '@/components/messaging/ConversationTeaserMission.vue'
+import ConversationTeaserOrganisation from '@/components/messaging/ConversationTeaserOrganisation.vue'
 
 export default {
   components: {
-    ConversationParticipationTeaser,
-    ConversationMissionTeaser,
-    ConversationOrganisationTeaser
+    ConversationTeaserParticipation,
+    ConversationTeaserMission,
+    ConversationTeaserOrganisation
   },
   data () {
     return {
@@ -61,13 +61,13 @@ export default {
   methods: {
     retrieveComponent (conversation) {
       if (conversation.conversable_type == 'App\\Models\\Participation') {
-        return 'ConversationParticipationTeaser'
+        return 'ConversationTeaserParticipation'
       }
       if (conversation.conversable_type == 'App\\Models\\Mission') {
-        return 'ConversationMissionTeaser'
+        return 'ConversationTeaserMission'
       }
       if (conversation.conversable_type == 'App\\Models\\Structure') {
-        return 'ConversationOrganisationTeaser'
+        return 'ConversationTeaserOrganisation'
       }
       return null
     },
