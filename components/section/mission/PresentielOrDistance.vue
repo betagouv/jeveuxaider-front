@@ -8,19 +8,25 @@
       allowfullscreen
       :src="`https://www.google.com/maps/embed/v1/place?key=${$config.google.places}&q=${googleQuery}`"
     />
-    <div class="text-sm px-6 py-4">
-      <div class="text-gray-800 uppercase">
+    <div class="text-sm px-6 xl:px-16 py-6">
+      <div class="text-gray-800 uppercase font-bold">
         <span v-if="mission.is_autonomy">Mission en autonomie</span>
         <span v-else>Mission sur le terrain</span>
       </div>
-      <p v-if="mission.is_autonomy" class="text-[#666666] mt-1 mb-1">
+      <!-- <p v-if="mission.is_autonomy" class="text-[#666666] mt-1 mb-1">
         Cette mission peut être réalisée sans l’encadrement du responsable de mission.
         <span v-if="mission.autonomy_zips.length > 1">Elle est proposée sur plusieurs lieux.</span>
-      </p>
-      <div class="line-clamp-1">
-        <span>📍</span>
-        <span v-if="mission.is_autonomy">{{ autonomyCities }}</span>
-        <span v-else>{{ address }}</span>
+      </p> -->
+      <div class="text-[#727273]">
+        <div class="line-clamp-1">
+          <span>📍 </span>
+          <span v-if="mission.is_autonomy">{{ autonomyCities }}</span>
+          <span v-else>{{ address }}</span>
+        </div>
+        <div v-if="mission.is_autonomy && mission.autonomy_precisions">
+          <span class="font-bold">Précisions sur la zone d’intervention&nbsp;: </span>
+          <span>{{ mission.autonomy_precisions | stripHTML | decodeHTMLEntities }}</span>
+        </div>
       </div>
     </div>
   </Box>

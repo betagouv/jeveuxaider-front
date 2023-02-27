@@ -223,7 +223,7 @@ const labels = {
     { key: 6, label: 'Coopération internationale', icon: '/images/icons/domaine-cooperation-internationale.svg', color: 'text-domaine-cooperation', bg: 'bg-domaine-cooperation', emoji: '🌍' },
     { key: 9, label: 'Éducation pour tous', icon: '/images/icons/domaine-education-pour-tous.svg', color: 'text-domaine-education', bg: 'bg-domaine-education', emoji: '📚' },
     { key: 8, label: 'Mémoire et citoyenneté', icon: '/images/icons/domaine-memoire-citoyennete.svg', color: 'text-domaine-memoire', bg: 'bg-domaine-memoire', emoji: '📯' },
-    { key: 5, label: 'Mobilisation covid-19', icon: '/images/icons/domaine-covid.svg', color: 'text-domaine-covid', bg: 'bg-domaine-covid', emoji: '😷' },
+    // { key: 5, label: 'Mobilisation covid-19', icon: '/images/icons/domaine-covid.svg', color: 'text-domaine-covid', bg: 'bg-domaine-covid', emoji: '😷' },
     { key: 2, label: 'Prévention et protection', icon: '/images/icons/domaine-prevention-protection.svg', color: 'text-domaine-prevention', bg: 'bg-domaine-prevention', emoji: '🚨' },
     { key: 10, label: 'Protection de la nature', icon: '/images/icons/domaine-protection-nature.svg', color: 'text-domaine-nature', bg: 'bg-domaine-nature', emoji: '🌿' },
     { key: 1, label: 'Santé pour tous', icon: '/images/icons/domaine-sante-pour-tous.svg', color: 'text-domaine-sante', bg: 'bg-domaine-sante', emoji: '💊' },
@@ -395,6 +395,9 @@ const labels = {
   roles: [
     { key: 'admin', label: 'Modérateur' },
     { key: 'referent', label: 'Référent départemental' },
-    { key: 'referent_regional', label: 'Référent régionnal' }
+    { key: 'referent_regional', label: 'Référent régionnal' },
+    { key: 'responsable', label: 'Responsable' },
+    { key: 'responsable_territoire', label: 'Responsable territoire' },
+    { key: 'tete_de_reseau', label: 'Tête de réseau' }
   ]
 }

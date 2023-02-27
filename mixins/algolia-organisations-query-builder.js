@@ -37,8 +37,12 @@ export default {
 
       return activeFacets
     },
-    activeMoreFacets () {
-      return this.$store.state.algoliaSearch.availableFacets.filter(facetName => this.$route.query[facetName] && !['search'].includes(facetName))
+    nbMobileActiveFilters () {
+      let nbFacets = this.$store.state.algoliaSearch.availableFacets.filter(facetName => this.$route.query[facetName]).length
+      if (this.searchParameters?.query) {
+        nbFacets++
+      }
+      return nbFacets
     }
   }
 }

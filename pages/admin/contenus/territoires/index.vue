@@ -103,29 +103,25 @@
           Hors ligne
         </Tag>
 
-        <SelectAdvanced
+        <FilterSelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Tous les statuts"
           :options="$labels.territoire_workflow_states"
           :value="$route.query['filter[state]']"
-          theme="filter"
-          variant="transparent"
           clearable
           @input="changeFilter('filter[state]', $event)"
         />
-      </template>
-      <template #sorts>
-        <Sort
+        <FilterSelectAdvanced
           key="sort"
           name="sort"
-          transparent
-          :value="$route.query['sort'] ? $route.query['sort'] : '-created_at'"
           :options="[
             { key: '-created_at', label: 'Les plus récentes' },
             { key: 'created_at', label: 'Les plus anciennes' },
             { key: '-updated_at', label: 'Date de denière modification' },
           ]"
+          :value="$route.query['sort']"
+          placeholder="Trier par"
           @input="changeFilter('sort', $event)"
         />
       </template>

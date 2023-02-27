@@ -86,6 +86,7 @@ export default {
             { label: 'Statistiques', to: '/admin/statistics' },
             { label: 'Indicateurs clés', to: '/admin/statistics/indicateurs-cles' },
             { label: 'Invitations', to: '/admin/other/invitations' },
+            { label: 'Logs', to: '/admin/other/logs' },
             { label: 'Strapi', href: 'https://jeveuxaider-strapi.osc-secnum-fr1.scalingo.io/admin/auth/login' }
           ]
         },
@@ -94,7 +95,6 @@ export default {
           label: 'Scripts',
           childrens: [
             { label: 'Transfert de missions', to: '/admin/scripts/migrate-organisation-missions' },
-            { label: 'Activités des missions libres', to: '/admin/scripts/activites-missions-libres' },
             { label: 'Réinitialisation d\'un utilisateur', to: '/admin/scripts/user-reset-context-role' }
           ]
         }

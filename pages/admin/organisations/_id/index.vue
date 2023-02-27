@@ -97,7 +97,7 @@
               <OnlineIndicator v-if="organisation.statut_juridique === 'Association'" :published="hasPageOnline" :link="hasPageOnline ? `/organisations/${organisation.slug}` : null" />
             </div>
           </div>
-          <nuxt-link :to="`/admin/organisations/${organisation.id}/edit`">
+          <nuxt-link v-if="organisation?.permissions?.canUpdate" :to="`/admin/organisations/${organisation.id}/edit`">
             <Button icon="PencilIcon">
               Modifier
             </Button>
@@ -108,7 +108,7 @@
           <Tabs
             :tabs="[
               { name: 'Informations', to: '', icon: 'InformationCircleSolidIcon', current: !['#membres','#historique'].includes($route.hash) },
-              { name: 'Membres', to: '#membres', icon: 'UsersIcon', current: $route.hash === '#membres', count: organisation.members.length },
+              organisation?.permissions?.canUpdate ? { name: 'Membres', to: '#membres', icon: 'UsersIcon', current: $route.hash === '#membres', count: organisation.members.length } : null,
               { name: 'Historique', to: '#historique', icon: 'ClockIcon', current: $route.hash === '#historique' }
             ]"
           />
@@ -152,34 +152,13 @@
                 </div>
               </Box>
             </div>
-            <div v-if="organisationStats && organisationStats.response_ratio">
-              <div class="px-2 mb-2 text-sm uppercase font-semibold text-gray-600">
-                Vos échanges avec les bénévoles
+            <div>
+              <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
+                Votre visibilité
               </div>
-              <Box variant="flat" :padding="!Boolean(organisationStats) ? 'lg' : false" :loading="!Boolean(organisationStats)" loading-text="Récupération de l'activité ..." class="!border-none">
-                <div v-if="organisationStats" class="grid grid-cols-1 lg:grid-cols-2 rounded-lg border bg-gray-200 gap-[1px] overflow-hidden">
-                  <CardStatistic
-                    :value="`${organisationStats.response_ratio}%`"
-                    title="Taux de réponse"
-                    subtitle="aux participations"
-                  />
-                  <CardStatistic
-                    :value="`${(organisationStats.response_time / (60 * 60 * 24)).toFixed(0)} jours`"
-                    title="Temps de réponse"
-                    subtitle="aux participations"
-                  />
-                  <div class="col-span-2 bg-white">
-                    <CardStatistic
-                      :value="`${organisationStats.score_response_time}/100`"
-                      title="Score de réactivité"
-                    />
-                    <div class="text-xs text-gray-700 font-medium text-center px-12 mb-4 relative -mt-3">
-                      🏆 Améliorez votre visibilité sur la plateforme<br> en améliorant votre réactivité ›
-                    </div>
-                  </div>
-                </div>
-              </Box>
+              <BoxScore :variant="false" :padding="false" :structure-id="organisation.id" />
             </div>
+
             <BoxReseau v-for="reseau in organisation.reseaux" :key="reseau.id" class="mb-8" :reseau="reseau" />
             <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" class="mb-8" :department="organisation.department" />
           </div>
@@ -197,12 +176,14 @@
                 :organisation="organisation"
                 @removed="$fetch()"
               />
-              <Button variant="white" @click.native="showDrawerInvitation = true">
-                <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
-              </Button>
-              <Button v-if="['admin'].includes($store.getters.contextRole)" variant="white" @click.native="showDrawerAddResponsable = true">
-                <PlusIcon class="h-4 w-4 mr-2" /> Ajouter un membre
-              </Button>
+              <div class="space-x-2">
+                <Button variant="white" @click.native="showDrawerInvitation = true">
+                  <UsersIcon class="h-4 w-4 mr-2" /> Inviter un membre
+                </Button>
+                <Button v-if="['admin'].includes($store.getters.contextRole)" variant="white" @click.native="showDrawerAddResponsable = true">
+                  <PlusIcon class="h-4 w-4 mr-2" /> Ajouter un membre
+                </Button>
+              </div>
             </div>
           </template>
           <History v-if="$route.hash === '#historique'" :model-id="organisation.id" model-type="structure" />
@@ -228,6 +209,7 @@ import BoxReseau from '@/components/section/organisation/BoxReseau'
 import BoxNotes from '@/components/custom/BoxNotes'
 import BoxMember from '@/components/section/BoxMember'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import BoxScore from '@/components/section/organisation/BoxScore.vue'
 
 export default {
   components: {
@@ -244,7 +226,8 @@ export default {
     BoxReseau,
     BoxNotes,
     BoxMember,
-    Breadcrumb
+    Breadcrumb,
+    BoxScore
   },
   mixins: [MixinOrganisation],
   middleware: 'authenticated',

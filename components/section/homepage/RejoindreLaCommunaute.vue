@@ -4,7 +4,7 @@
   >
     <img
       src="/images/homepage/rejoindre_communaute.svg"
-      alt="Rejoindre la communauté"
+      alt=""
       class="flex absolute bottom-0 right-0 transform w-[152px] sm:w-[243px] md:w-[350px] xl:w-auto"
     >
 
@@ -17,14 +17,11 @@
         Devenez ambassadeur de l’engagement près de chez vous&nbsp;! <br class="hidden xl:block">Rejoignez notre groupe de bénévoles engagés et motivés pour partager, s'inspirer, mobiliser et agir chacun pour tous.&nbsp;💪
       </p>
 
-      <nuxt-link
-        to="/missions-benevolat/13190/benevolat-jeveuxaidergouvfr-paris"
-        class="xl:absolute right-[19.75%] bottom-0"
-      >
-        <Button class="mt-10 xl:mt-0" size="lg">
+      <div class="xl:absolute right-[19.75%] bottom-0">
+        <Button to="/missions-benevolat/13190/benevolat-jeveuxaidergouvfr-paris" class="mt-10 xl:mt-0" size="lg">
           Rejoindre le groupe
         </Button>
-      </nuxt-link>
+      </div>
     </div>
   </div>
 </template>

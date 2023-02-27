@@ -9,6 +9,7 @@
             src="/images/organisations/bg_don.png"
             srcset="/images/organisations/bg_don@2x.png 2x"
             class="bg-img absolute object-cover w-full h-full"
+            alt=""
           >
 
           <div
@@ -20,7 +21,7 @@
             <h2
               class="font-bold text-center mb-6 text-3xl leading-8 tracking-tight sm:text-5xl sm:leading-tight"
             >
-              <span>Faites un don à l'organisation</span>
+              <span>Faites un don à l'organisation </span>
               <br class="hidden xl:block">
               <span class="font-extrabold">{{ organisation.name }}</span>
             </h2>
@@ -45,9 +46,11 @@
               },
             ]"
           >
-            <button
-              class="mx-auto flex items-center justify-center font-extrabold cursor-pointer shadow-lg text-xl leading-6 rounded-full text-white bg-jva-green-500 py-4 px-10 hover:shadow-lg hover:scale-105 focus:scale-105 !outline-none transform transition will-change-transform"
-              @click="goTo(organisation.donation)"
+            <a
+              :href="organisation.donation"
+              target="_blank"
+              class="mx-auto inline-flex items-center justify-center font-extrabold cursor-pointer shadow-lg text-xl leading-6 rounded-full text-white bg-jva-green-500 py-4 px-10 hover:shadow-lg hover:scale-105 focus:scale-105 !outline-none transform transition will-change-transform"
+              @click.prevent="goTo(organisation.donation)"
             >
               Faire un don
               <svg
@@ -64,7 +67,7 @@
                   d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                 />
               </svg>
-            </button>
+            </a>
           </div>
 
           <div

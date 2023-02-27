@@ -86,13 +86,15 @@ export default {
   methods: {
     refetch () {
       this.$refs.participationsByDate.$fetch()
-      this.$refs.participationsConversionByDate.$fetch()
       this.$refs.participationsStatistics.$fetch()
       this.$refs.participationsByStates.$fetch()
       this.$refs.participationsByDomaines.$fetch()
       this.$refs.participationsByOrganisations.$fetch()
       this.$refs.participationsByReseaux.$fetch()
       this.$refs.participationsByActivities.$fetch()
+      if (['admin'].includes(this.$store.getters.contextRole)) {
+        this.$refs.participationsConversionByDate.$fetch()
+      }
     }
   }
 }

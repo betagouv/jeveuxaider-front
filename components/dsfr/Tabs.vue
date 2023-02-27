@@ -17,10 +17,9 @@
             {'bg-[#E3E3FD] border-[#E3E3FD] sm:hover:border-[#C1C1FB] sm:hover:bg-[#C1C1FB] active:bg-[#ADADF9] active:border-[#ADADF9]': key !== selected},
             {'bg-white text-jva-blue-500 border-t-jva-blue-500 border-b-white sm:hover:bg-[#F6F6F6] active:bg-[#EDEDED]': key === selected},
           ]"
-          tabindex="0"
           role="tab"
-          aria-selected="true"
-          :aria-controls="`tabpanel-${_uid}-${key}`"
+          :aria-selected="selected === key || 'false'"
+          :aria-controls="`tabpanel-${_uid}-${key}-panel`"
           @click="() => {selected = key; $emit('selected', title)}"
         >
           <component

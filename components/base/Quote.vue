@@ -3,9 +3,9 @@
     class="p-6 md:p-8 xl:p-12 custom-gradient relative min-h-[120px]"
   >
     <img
-      class="absolute right-0 bottom-0 p-6"
+      class="absolute right-0 bottom-0 p-6 pointer-events-none"
       src="/images/icons/quote.svg"
-      alt="Guillemets"
+      alt=""
     >
     <component :is="as" class="citation relative z-10 text-lg">
       <div v-if="htmlEncoded" class="formatted-text" v-html="htmlEncoded" />

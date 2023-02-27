@@ -15,7 +15,7 @@
     <Box>
       <div class="space-y-8">
         <FormControl label="Auteur des petits mots" html-for="title" required :error="errors.title">
-          <Input v-model="form.title" name="title" placeholder="Le petit mot de Giulietta" />
+          <Input v-model="form.title" name="title" placeholder="Le petit mot de Margot" />
         </FormControl>
         <FormControl label="Le petit mot pour les bénévoles" html-for="benevole" required :error="errors.benevole">
           <RichEditor v-model="form.benevole" :toolbar="['bold','link']" name="benevole" placeholder="Message que vous souhaitez afficher..." />

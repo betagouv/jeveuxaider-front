@@ -92,6 +92,14 @@ export default {
     conversation () {
       return this.$store.getters['messaging/conversation']
     }
+  },
+  methods: {
+    async handleChangeState (option) {
+      this.organisation.state = option.key
+      await this.$axios.put(`/structures/${this.organisation.id}`, this.organisation).catch(() => {})
+      this.$fetch()
+      this.$emit('updated')
+    }
   }
 }
 </script>

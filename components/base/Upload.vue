@@ -23,7 +23,7 @@
         <div class="text-sm text-gray-600">
           <label
             :for="`inputfile--${_uid}`"
-            class="relative cursor-pointer font-medium text-jva-blue-500 focus-within:outline-none"
+            class="relative cursor-pointer font-medium text-jva-blue-500 label"
             @click.stop
           >
             {{ cLabel }}
@@ -254,3 +254,12 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.label:focus-within {
+  outline-style: solid;
+  outline-color: #0a76f6;
+  outline-width: 2px;
+  outline-offset: 2px;
+}
+</style>

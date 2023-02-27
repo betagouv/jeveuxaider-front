@@ -5,11 +5,9 @@
     <div
       class="flex flex-col items-start text-center lg:text-left h-full"
     >
-      <div
-        class="flex-none w-full text-white text-lg mb-6 uppercase"
-      >
+      <p class="flex-none w-full text-white text-lg mb-6 uppercase">
         Collectivités territoriales et territoires
-      </div>
+      </p>
 
       <Heading as="h2" size="2xl" class="mb-8" color="text-white">
         Encouragez l'engagement local de vos citoyens
@@ -17,7 +15,7 @@
 
       <img
         src="/images/homepage/collectivites_territoires.svg"
-        alt="Collectivités territoriales et territoires"
+        alt=""
         width="311"
         height="299"
         class="mx-auto mb-8 lg:h-full lg:max-h-[170px] xl:max-h-[270px]"
@@ -32,10 +30,10 @@
           <img
             src="/images/icons/puce_li_check_white.svg"
             alt="Check"
-            class="flex-none mt-1"
+            class="flex-none mt-1 xl:mt-[6px]"
             data-not-lazy
-            width="19px"
-            height="19px"
+            width="19"
+            height="19"
           >
           <span class="text-lg xl:text-xl text-white">
             {{ goal }}
@@ -43,14 +41,14 @@
         </li>
       </ul>
 
-      <nuxt-link
+      <Button
         to="/inscription/responsable?orga_type=Collectivité"
+        size="lg"
+        type="tertiary-no-outline"
         class="flex items-center justify-center mx-auto mt-auto"
       >
-        <Button size="lg" type="tertiary-no-outline" tabindex="-1">
-          Inscrire ma collectivité territoriale
-        </Button>
-      </nuxt-link>
+        Inscrire ma collectivité territoriale
+      </Button>
     </div>
   </div>
 </template>

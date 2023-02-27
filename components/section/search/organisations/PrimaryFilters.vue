@@ -12,9 +12,14 @@
       <div class="text-gray-500 mb-1">
         Activités
       </div>
-      <FacetFilterToggle facet-name="activities.name" label="Activités" :facets="$store.getters['algoliaSearch/facetResults']('activities.name')">
-        <template #button="{ firstValueSelected, activeValuesCount }">
-          <button class="flex space-x-2 items-center justify-between group w-full">
+      <FacetFilterToggle
+        facet-name="activities.name"
+        label="Activités"
+        :facets="$store.getters['algoliaSearch/facetResults']('activities.name')"
+        legend="Filtrer par type d'activité"
+      >
+        <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
+          <button :aria-expanded="isOpen || 'false'" class="flex space-x-2 items-center justify-between group w-full">
             <div class="flex space-x-2 items-center truncate">
               <RiBookmark3Fill class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none" />
               <span v-if="!firstValueSelected" class="italic pr-[1px] text-[#888888]">Toutes</span>
@@ -31,9 +36,14 @@
       <div class="text-gray-500 mb-1">
         Publics aidés
       </div>
-      <FacetFilterToggle facet-name="publics_beneficiaires" label="Publics aidés" :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')">
-        <template #button="{ firstValueSelected, activeValuesCount }">
-          <button class="flex space-x-2 items-center justify-between group w-full">
+      <FacetFilterToggle
+        facet-name="publics_beneficiaires"
+        label="Publics aidés"
+        :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')"
+        legend="Filtrer par public aidé"
+      >
+        <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
+          <button :aria-expanded="isOpen || 'false'" class="flex space-x-2 items-center justify-between group w-full">
             <div class="flex space-x-2 items-center truncate">
               <RiUserHeartFill class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none" />
               <span v-if="!firstValueSelected" class="italic pr-[1px] text-[#888888]">Tous</span>

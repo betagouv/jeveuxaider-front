@@ -163,6 +163,22 @@
             </FormHelperText>
           </FormControl>
           <FormControl
+            label="Pré-requis pour réaliser la mission"
+            html-for="prerequisites"
+            :error="errors.prerequisites"
+          >
+            <template #afterLabel>
+              <div class="inline-flex flex-wrap">
+                <span class="!font-normal">(3 max.)</span>
+                <span class="absolute right-0 hidden sm:block !font-normal">100 caractéres max.</span>
+              </div>
+            </template>
+            <PrerequisitesInput
+              :initial-value="form.prerequisites"
+              @change="form.prerequisites = $event"
+            />
+          </FormControl>
+          <FormControl
             label="Mission ouverte également aux"
             html-for="publics_volontaires"
           >
@@ -332,11 +348,16 @@
               html-for="autonomy_precisions"
               :error="errors.autonomy_precisions"
             >
-              <RichEditor
-                v-model="form.autonomy_precisions"
-                placeholder="Précisez en quelques mots les zones d'intervention du bénévole en autonomie"
-                class="autonomy_precisions_wrapper"
-              />
+              <client-only>
+                <TextareaAutosize
+                  v-model="form.autonomy_precisions"
+                  name="Autonomie - Précisions"
+                  placeholder="Précisez en quelques mots les zones d'intervention du bénévole en autonomie"
+                  class="w-full placeholder-gray-text-400 border border-gray-300 text-sm px-6 py-3"
+                  maxlength="700"
+                  @keydown.enter.native.prevent
+                />
+              </client-only>
             </FormControl>
           </template>
 
@@ -585,6 +606,7 @@ import FormMissionParameters from '~/components/form/FormMissionParameters.vue'
 import Tag from '@/components/dsfr/Tag.vue'
 import activitiesClassifierMixin from '@/mixins/activitiesClassifier'
 import DsfrLink from '@/components/dsfr/Link.vue'
+import PrerequisitesInput from '@/components/custom/PrerequisitesInput'
 
 export default {
   components: {
@@ -592,7 +614,8 @@ export default {
     AlgoliaSkillsInput,
     AlgoliaTermsInput,
     Tag,
-    DsfrLink
+    DsfrLink,
+    PrerequisitesInput
   },
   mixins: [inputGeo, FormErrors, activitiesClassifierMixin],
   props: {
@@ -622,7 +645,8 @@ export default {
         objectif: this.mission.template?.objectif || this.mission.objectif,
         description: this.mission.template?.description || this.mission.description,
         illustrations: this.mission.illustrations || [],
-        autonomy_zips: this.mission.autonomy_zips || []
+        autonomy_zips: this.mission.autonomy_zips || [],
+        tags: this.mission?.tags?.length ? this.mission?.tags : (this.mission.template?.tags || [])
       },
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
@@ -790,7 +814,27 @@ export default {
               }
             ),
             otherwise: schema => schema.nullable()
-          })
+          }),
+        prerequisites: array().nullable()
+          .test(
+            'test-contains-email',
+            'Les pré-requis ne doivent pas contenir d\'email',
+            (prerequisites) => {
+              return !prerequisites || prerequisites.every(prerequisite => !this.stringContainsEmail(prerequisite))
+            }
+          ).test(
+            'test-contains-url',
+            'Les pré-requis ne doivent pas contenir de liens.',
+            (prerequisites) => {
+              return !prerequisites || prerequisites.every(prerequisite => !this.stringContainsUrl(prerequisite))
+            }
+          ).test(
+            'test-contains-phone',
+            'Les pré-requis ne doivent pas contenir de téléphone.',
+            (prerequisites) => {
+              return !prerequisites || prerequisites.every(prerequisite => !this.stringContainsPhone(prerequisite))
+            }
+          )
 
       }),
       activities: [],
@@ -845,6 +889,7 @@ export default {
       if (this.form.type === 'Mission à distance') {
         this.form.is_snu_mig_compatible = false
         this.form.snu_mig_places = null
+        this.form.is_autonomy = false
         this.clearAddress()
       }
     },
@@ -941,12 +986,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-.autonomy_precisions_wrapper {
-  :deep(.ck-editor__editable) {
-    min-height: 80px;
-  }
-}
-
-</style>

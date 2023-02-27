@@ -1,17 +1,22 @@
 <template>
   <div class="relative">
-    <button class="group flex justify-between items-center cursor-pointer w-full" @click="isOpen = !isOpen" @keydown.esc="isOpen = false">
+    <button
+      class="group flex justify-between items-center cursor-pointer w-full"
+      :aria-expanded="isOpen || 'false'"
+      @click="isOpen = !isOpen"
+      @keydown.esc="isOpen = false"
+    >
       <div class="flex space-x-2 items-center text-gray-900 truncate">
         <RiMapPin2Fill class="h-4 w-4 flex-none transition-opacity opacity-25 group-hover:opacity-100" />
-        <div v-if="!$route.query.city && $store.state.algoliaSearch.navigatorGeolocation" class="truncate font-bold">
+        <p v-if="!$route.query.city && $store.state.algoliaSearch.navigatorGeolocation" class="truncate font-bold">
           Autour de moi
-        </div>
-        <div v-else-if="!$route.query.city && $store.state.algoliaSearch.results.aroundLatLng" class="truncate italic pr-[1px] text-[#888888]">
+        </p>
+        <p v-else-if="!$route.query.city && $store.state.algoliaSearch.results.aroundLatLng" class="truncate italic pr-[1px] text-[#888888]">
           Ville ou code postal
-        </div>
-        <div v-else class="font-bold truncate">
+        </p>
+        <p v-else class="font-bold truncate">
           {{ $route.query.city }}
-        </div>
+        </p>
       </div>
 
       <RiLoader5Line
@@ -29,11 +34,17 @@
         @keydown.esc="isOpen = false"
       >
         <div class="p-4 pb-0 space-y-3">
-          <div class="font-medium">
+          <div :id="`label-search-${_uid}`" class="font-medium">
             {{ label }}
           </div>
 
-          <FacetSearch ref="facetSearch" v-model="searchValue" placeholder="Renseignez une ville ou un code postal" @input="handleInput" />
+          <FacetSearch
+            ref="facetSearch"
+            v-model="searchValue"
+            placeholder="Renseignez une ville ou un code postal"
+            :aria-labelledby="`label-search-${_uid}`"
+            @input="handleInput"
+          />
         </div>
 
         <div class="text-sm">

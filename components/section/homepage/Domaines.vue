@@ -3,17 +3,19 @@
     <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
-          <Heading as="h2" size="2xl" class="text-center md:text-left">
+          <Heading :id="`label-domaines-action-${_uid}`" as="h2" size="2xl" class="text-center md:text-left">
             Trouvez votre domaine d'action
           </Heading>
-          <span
-            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
-          >
+          <p class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]">
             #jeveuxaider
-          </span>
+          </p>
         </div>
 
-        <Slideshow :slides-are-links="true" :slides-count="domaines.length">
+        <Slideshow
+          :slides-are-links="true"
+          :slides-count="domaines.length"
+          :aria-labelledby="`label-domaines-action-${_uid}`"
+        >
           <nuxt-link
             v-for="domaine in domaines"
             :key="domaine.id"
@@ -132,15 +134,6 @@ export default {
           image:
             '/images/domaines/card_domaine_benevolat_competences.webp, /images/domaines/card_domaine_benevolat_competences@2x.webp 2x, /images/domaines/card_domaine_benevolat_competences.jpg, /images/domaines/card_domaine_benevolat_competences@2x.jpg 2x',
           bottom: true
-        },
-        {
-          id: 5,
-          name: 'Mobilisation Covid-19',
-          slug: 'mobilisation-covid-19',
-          description: 'Participez à la lutte contre la Covid-19',
-          image:
-            '/images/domaines/card_domaine_covid19.webp, /images/domaines/card_domaine_covid19@2x.webp 2x, /images/domaines/card_domaine_covid19.jpg, /images/domaines/card_domaine_covid19@2x.jpg 2x',
-          bottom: true
         }
       ]
     }
@@ -161,6 +154,11 @@ export default {
     }
     &.slick-next {
       @apply translate-x-[104px];
+    }
+  }
+  .slick-dots {
+    @screen xl {
+      display: none !important;
     }
   }
 }

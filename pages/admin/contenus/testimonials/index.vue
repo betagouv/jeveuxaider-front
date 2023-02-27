@@ -64,17 +64,26 @@
           Hors ligne
         </Tag>
 
-        <SelectAdvanced
+        <FilterSelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Toutes les notes"
           :options="$labels.testimonial_grade"
           :value="$route.query['filter[grade]']"
-          theme="filter"
-          variant="transparent"
           clearable
           @input="changeFilter('filter[grade]', $event)"
         />
+
+        <template v-if="$store.getters.contextRole === 'admin'">
+          <FilterInputAutocomplete
+            :value="$route.query['filter[organisation]']"
+            label="Toutes les organisations"
+            name="autocomplete"
+            :options="autocompleteOptionsOrganisations"
+            @fetch-suggestions="onFetchSuggestionsOrganisations"
+            @selected="changeFilter('filter[organisation]', $event ? $event.name : undefined)"
+          />
+        </template>
       </template>
     </SearchFilters>
 
@@ -133,7 +142,20 @@ export default {
       endpoint: '/temoignages',
       queryParams: {
       },
-      drawerTemoignageId: null
+      drawerTemoignageId: null,
+      autocompleteOptionsOrganisations: []
+
+    }
+  },
+  methods: {
+    async onFetchSuggestionsOrganisations (value) {
+      const res = await this.$axios.get('/structures', {
+        params: {
+          'filter[search]': value,
+          pagination: 6
+        }
+      })
+      this.autocompleteOptionsOrganisations = res.data.data
     }
   }
 }

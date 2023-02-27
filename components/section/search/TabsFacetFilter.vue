@@ -7,6 +7,7 @@
         'flex-grow flex flex-col sm:flex-row justify-center items-center px-4 py-4 sm:px-8 sm:space-x-2 transition ',
         isActiveFilter(filterName, tab.filterValue) || tab.current ? 'bg-white shadow-active cursor-default border-t-4 border-jva-blue-500' : 'cursor-pointer bg-transparent hover:bg-[#F3EDE5] active:bg-[#e3d5c5] border-[#C6C6C6] border border-t'
       ]"
+      :aria-pressed="isActiveFilter(filterName, tab.filterValue) || tab.current ? 'true' : 'false'"
       @click="handleClickTab(tab)"
     >
       <component

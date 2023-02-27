@@ -4,7 +4,9 @@
       {{ term }}
     </dt>
     <dd class="mt-1 text-sm text-gray-900 font-semibold sm:mt-0 flex-1" style="word-break: break-word;">
-      {{ description || '-' }}
+      <slot>
+        {{ description || '-' }}
+      </slot>
     </dd>
   </div>
 </template>

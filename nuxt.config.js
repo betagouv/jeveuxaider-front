@@ -22,6 +22,7 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' },
+      { rel: 'sitemap', type: 'application/xml', title: 'Sitemap', href: 'https://www.jeveuxaider.gouv.fr/sitemap.xml' },
       {
         rel: 'preconnect',
         href: 'https://gqlg3qh7po-dsn.algolia.net',
@@ -35,11 +36,6 @@ export default {
       {
         rel: 'preconnect',
         href: 'https://client.axept.io',
-        crossorigin: 'anonymous'
-      },
-      {
-        rel: 'preconnect',
-        href: 'https://client.crisp.chat',
         crossorigin: 'anonymous'
       }
     ]
@@ -70,7 +66,8 @@ export default {
     '~/plugins/apiengagement.client.js',
     { src: '~/plugins/utm.js', mode: 'client' },
     { src: '~/plugins/vue-chart.js', mode: 'client' },
-    '~/plugins/vue-remix-icons.js'
+    '~/plugins/vue-remix-icons.js',
+    { src: '~/plugins/vue-svg-gauge.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -213,7 +210,8 @@ export default {
     { from: '^/dashboard/reseaux/(.*)$', to: '/admin/contenus/reseaux/$1', statusCode: 301 },
     { from: '^/dashboard/(.*)$', to: '/admin/$1', statusCode: 301 },
     { from: '^/missions/(.*)$', to: '/missions-benevolat/$1', statusCode: 301 },
-    { from: '^/inscription/organisation$', to: '/inscription/responsable', statusCode: 301 }
+    { from: '^/inscription/organisation$', to: '/inscription/responsable', statusCode: 301 },
+    { from: '^/statistiques', to: '/stats', statusCode: 301 }
   ],
 
   // Plugins config

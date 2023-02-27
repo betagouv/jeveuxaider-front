@@ -2,27 +2,33 @@
   <section v-if="testimonials.length" class="pt-12 pb-24 bg-gray-50 overflow-hidden relative">
     <img
       src="/images/homepage/deco_2.svg"
-      alt="Décorations"
+      alt=""
       class="deco--2 absolute hidden lg:block pointer-events-none"
       data-not-lazy
     >
 
     <img
       src="/images/homepage/deco_3.svg"
-      alt="Décorations"
+      alt=""
       class="deco--3 absolute hidden lg:block pointer-events-none"
       data-not-lazy
     >
 
     <div class="container mx-auto px-4 ">
       <h2
+        :id="`label-parole-benevoles-${_uid}`"
         class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight text-center text-gray-900"
       >
         Paroles de bénévoles<br>
         chez <span class="font-extrabold">{{ model.name }}</span>
       </h2>
 
-      <Slideshow :slides-count="testimonials.length" :settings="settings" class="mt-12">
+      <Slideshow
+        :slides-count="testimonials.length"
+        :settings="settings"
+        class="mt-12"
+        :aria-labelledby="`label-parole-benevoles-${_uid}`"
+      >
         <div v-for="testimony in testimonials" :key="testimony.id">
           <div
             class="testimony--wrapper flex flex-col items-center space-y-6 text-center max-w-[768px] mx-auto"
@@ -132,6 +138,9 @@ export default {
 
   .slick-dots {
     @apply !text-center;
+    @screen xl {
+      display: none !important;
+    }
   }
 
   .slick-track {

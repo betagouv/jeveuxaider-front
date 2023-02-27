@@ -13,6 +13,8 @@
           {'pr-4': inputValue}
         ]"
         autocomplete="off"
+        :aria-labelledby="ariaLabelledby"
+        :aria-label="!ariaLabelledby && ariaLabel"
         @focus="$emit('focus')"
       >
 
@@ -33,7 +35,9 @@ export default {
     value: { type: [String, Number], default: null },
     alwaysShowClear: { type: Boolean, default: false },
     placeholder: { type: String, default: 'Rechercher' },
-    icon: { type: String, default: 'RiSearchLine' }
+    icon: { type: String, default: 'RiSearchLine' },
+    ariaLabelledby: { type: String, default: null },
+    ariaLabel: { type: String, default: null }
   },
   data () {
     return {}

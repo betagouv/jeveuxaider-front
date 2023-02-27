@@ -1,6 +1,6 @@
 <template>
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
-    <BoxHeadingStatistics title="Missions ›" link="/statistiques/missions" no-period class="mb-6" />
+    <BoxHeadingStatistics title="Missions ›" link="/stats/missions" no-period class="mb-6" />
     <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-4 border bg-gray-200 gap-[1px] overflow-hidden">
       <CardStatistic
         :value="statistics.missions_available"

@@ -4,7 +4,7 @@
       <BoxHeadingStatistics title="Vue détaillée du trafic entrant" class="mb-6" />
       <Table>
         <TableHead>
-          <TableHeadCell>Noms</TableHeadCell>
+          <TableHeadCell>Partenaires</TableHeadCell>
           <TableHeadCell>Redirections</TableHeadCell>
           <TableHeadCell>Candidatures</TableHeadCell>
         </TableHead>

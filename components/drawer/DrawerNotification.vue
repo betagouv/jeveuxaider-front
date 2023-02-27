@@ -1,5 +1,5 @@
 <template>
-  <Drawer :is-open="Boolean(notificationKey)" width="xl" @close="$emit('close')">
+  <Drawer :is-open="Boolean(notificationKey)" width="4xl" @close="$emit('close')">
     <template #title>
       <Heading :level="3">
         {{ notificationLabel }}
@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-:deep(table) {
+/* :deep(table) {
   &.inner-body, &.content, &.subcopy {
     width: 100% !important;
   }
@@ -72,6 +72,7 @@ export default {
   list-style: disc;
   padding-left: 15px;
 }
+*/
 
 :deep(a) {
   pointer-events: none !important;

@@ -32,46 +32,32 @@
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
           <FormControl label="Quelles activités de bénévolat pourraient vous intéresser ?" html-for="activites">
             <div class="bg-white border">
-              <Disclosure :default-open="true" class="py-4 border-b px-4">
-                <template #button="{ isOpen }">
-                  <div class="flex font-semibold text-sm items-center justify-between group">
-                    <div class="flex-shrink-0 group-hover:text-gray-600">
-                      Activités les plus populaires
-                    </div>
-                    <MinusIcon v-if="isOpen" class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5" />
-                    <PlusIcon v-else class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5" />
-                  </div>
-                </template>
-                <div class="mt-3 space-y-3">
+              <AccordionsGroup>
+                <Accordion :initial-is-open="true">
+                  <template slot="title">
+                    Activités les plus populaires
+                  </template>
+
                   <TagsGroup
-                    :key="'popular-' + form.activities.join(',')"
                     v-model="form.activities"
                     name="activites"
                     :options="activitiesOptions.filter(activity => activity.popular)"
                     is-model
                   />
-                </div>
-              </Disclosure>
-              <Disclosure v-for="(domain, i) in domainsOptions" :key="domain" class="py-4 px-4" :class="[{'border-b': i < domainsOptions.length - 1}]">
-                <template #button="{ isOpen }">
-                  <div class="flex font-semibold text-sm items-center justify-between group">
-                    <div class="flex-shrink-0 group-hover:text-gray-600">
-                      {{ domain }}
-                    </div>
-                    <MinusIcon v-if="isOpen" class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5" />
-                    <PlusIcon v-else class="text-gray-800 group-hover:text-gray-600 h-7 w-7 flex-shrink-0 mt-0.5" />
-                  </div>
-                </template>
-                <div class="mt-3 space-y-3">
+                </Accordion>
+                <Accordion v-for="domain in domainsOptions" :key="domain">
+                  <template slot="title">
+                    {{ domain }}
+                  </template>
+
                   <TagsGroup
-                    :key="domain + form.activities.join(',')"
                     v-model="form.activities"
                     name="activites"
                     :options="activitiesOptions.filter(activity => activity.domain.includes(domain))"
                     is-model
                   />
-                </div>
-              </Disclosure>
+                </Accordion>
+              </AccordionsGroup>
             </div>
           </FormControl>
           <FormControl label="Décrivez vos motivations" html-for="description">
@@ -80,6 +66,7 @@
           <Button
             size="lg"
             :loading="loading"
+            :is-submit="true"
             class="w-full"
             @click.native.prevent="onSubmit"
           >
@@ -99,11 +86,15 @@ import FormUploads from '@/mixins/form/uploads'
 import activitiesOptions from '@/assets/activities.json'
 import Button from '@/components/dsfr/Button.vue'
 import TagsGroup from '@/components/dsfr/TagsGroup.vue'
+import Accordion from '~/components/dsfr/Accordion.vue'
+import AccordionsGroup from '~/components/dsfr/AccordionsGroup.vue'
 
 export default {
   components: {
     Button,
-    TagsGroup
+    TagsGroup,
+    Accordion,
+    AccordionsGroup
   },
   mixins: [FormErrors, FormUploads],
   layout: 'register-steps',

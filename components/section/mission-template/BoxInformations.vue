@@ -11,6 +11,11 @@
         <DescriptionListItem term="Sous titre" :description="missionTemplate.subtitle" />
         <DescriptionListItem term="Domaine" :description="missionTemplate.domaine.name" />
         <DescriptionListItem v-if="missionTemplate.domaine_secondary" term="Domaine secondaire" :description="missionTemplate.domaine_secondary.name" />
+        <DescriptionListItem
+          v-if="['admin'].includes($store.getters.contextRole) && missionTemplate.tags"
+          term="Tags"
+          :description="missionTemplate.tags.map((item) => item.name).join(', ')"
+        />
       </DescriptionList>
     </Box>
   </div>

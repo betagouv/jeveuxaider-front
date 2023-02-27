@@ -61,7 +61,7 @@
             />
           </div>
           <div class="flex justify-center mt-8">
-            <Link :to="`/admin/contenus/testimonials`" class="uppercase font-semibold text-sm hover:underline">
+            <Link :to="`/admin/temoignages`" class="uppercase font-semibold text-sm hover:underline">
               Tous les retours
             </Link>
           </div>
@@ -73,7 +73,7 @@
         <Heading as="h2" :level="3" class="mb-8">
           Votre activité en chiffres
         </Heading>
-        <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px]">
+        <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px] mb-8">
           <CardStatistic
             :value="statistics.places_left"
             :title="`${$options.filters.pluralize(statistics.places_left, 'Bénévole recherché', 'Bénévoles recherchés', false)}`"
@@ -117,24 +117,30 @@
           />
         </div>
       </Box>
-      <MoreNumbers v-if="['admin','referent'].includes($store.getters.contextRole)" />
-      <Box>
-        <Heading as="h2" :level="2" class="mb-8 font-extrabold">
-          {{ $store.getters.contextRole === 'admin' ? 'Liens utiles' : 'Suivez le guide' }}
-        </Heading>
-        <StackedList class="border-t">
-          <StackedListItem
-            v-for="link,i in links"
-            :key="i"
-            :icon="link.icon"
-            :link="link.link"
+      <BoxScore
+        v-if="['responsable'].includes($store.getters.contextRole)"
+        padding="sm"
+        :structure-id="$store.getters.currentRole.contextable_id"
+      >
+        <template slot="top">
+          <Heading as="h2" :level="3" class="mb-8">
+            Votre visibilité
+          </Heading>
+        </template>
+        <template slot="bottom">
+          <div
+            class="mt-8 text-center"
           >
-            <div class="group-hover:underline font-bold">
-              {{ link.title }}
-            </div>
-          </StackedListItem>
-        </StackedList>
-      </Box>
+            <nuxt-link to="/admin/participations">
+              <Button type="secondary">
+                Traiter les participations
+              </Button>
+            </nuxt-link>
+          </div>
+        </template>
+      </BoxScore>
+      <MoreNumbers v-if="['admin','referent'].includes($store.getters.contextRole)" />
+      <GuideLinks />
       <HelpCenter />
     </template>
   </Container2Cols>
@@ -144,11 +150,14 @@
 import MixinAction from '@/mixins/action'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
+import GuideLinks from '@/components/section/dashboard/GuideLinks'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
 import CardStatistic from '@/components/card/CardStatistic'
 import CardTemoignage from '@/components/card/CardTemoignage'
 import ButtonCreateMission from '@/components/custom/ButtonCreateMission'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import BoxScore from '@/components/section/organisation/BoxScore.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
@@ -158,7 +167,10 @@ export default {
     MoreNumbers,
     CardTemoignage,
     ButtonCreateMission,
-    Breadcrumb
+    Breadcrumb,
+    GuideLinks,
+    BoxScore,
+    Button
   },
   mixins: [MixinAction],
   middleware: 'authenticated',
@@ -174,6 +186,7 @@ export default {
   data () {
     return {
       statistics: null,
+      score: null,
       testimonials: [],
       loadingActions: true,
       loadingSnuActions: true,
@@ -182,24 +195,7 @@ export default {
     }
   },
   computed: {
-    links () {
-      if (this.$store.getters.contextRole === 'admin') {
-        return [
-          { icon: '🏞', title: 'Territoires', link: '/admin/contenus/territoires' },
-          { icon: '🗂', title: 'Modèles de missions', link: '/admin/contenus/modeles-mission' },
-          { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
-        ]
-      }
-      if (this.$store.getters.contextRole === 'tete_de_reseau') {
-        return [
-          { icon: '🗂', title: 'Modèles de missions', link: '/admin/contenus/modeles-mission' },
-          { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
-        ]
-      }
-      return [
-        { icon: '📋', title: 'Ressources', link: '/admin/ressources' }
-      ]
-    }
+
   },
   async created () {
     await Promise.all([

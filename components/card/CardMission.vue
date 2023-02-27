@@ -31,28 +31,30 @@
     </div>
 
     <div class="m-8 flex-1 flex flex-col items-start">
-      <div class="mb-4 flex flex-wrap gap-2">
-        <Tag :custom-theme="true" :class="`${domaineBackgroundColor(domainId)} text-white`">
-          {{ $options.filters.label(domainId, 'domaines') }}
-        </Tag>
-        <Tag v-if="(mission.template && mission.template.domaine_secondary_id) || mission.domaine_secondary_id">
-          +1
-        </Tag>
-      </div>
+      <div class="flex flex-col w-full">
+        <Heading as="h3" size="xs" class="line-clamp-3 mb-3 order-3" :title="mission.name">
+          {{ mission.name }}
+        </Heading>
 
-      <div class="text-[#666666] text-xs flex items-center justify-start truncate mb-4 max-w-full">
-        <component
-          :is="iconOrganizationState"
-          v-if="['admin','referent'].includes($store.getters.contextRole) && showState"
-          class="w-4 h-4 mr-2 fill-current flex-none"
-        />
-        <RiBuildingFill v-else class="fill-current w-4 h-4 flex-none mr-2" />
-        <span class="truncate">{{ mission.structure.name }}</span>
-      </div>
+        <div class="mb-4 flex flex-wrap gap-2 order-1">
+          <Tag :custom-theme="true" :class="`${domaineBackgroundColor(domainId)} text-white`">
+            {{ $options.filters.label(domainId, 'domaines') }}
+          </Tag>
+          <Tag v-if="(mission.template && mission.template.domaine_secondary_id) || mission.domaine_secondary_id">
+            +1
+          </Tag>
+        </div>
 
-      <Heading as="h3" size="xs" class="line-clamp-3 mb-3" :title="mission.name">
-        {{ mission.name }}
-      </Heading>
+        <div class="text-[#666666] text-xs flex items-center justify-start truncate mb-4 max-w-full order-2">
+          <component
+            :is="iconOrganizationState"
+            v-if="['admin','referent'].includes($store.getters.contextRole) && showState"
+            class="w-4 h-4 mr-2 fill-current flex-none"
+          />
+          <RiBuildingFill v-else class="fill-current w-4 h-4 flex-none mr-2" />
+          <span class="truncate">{{ mission.structure.name }}</span>
+        </div>
+      </div>
 
       <div class="truncate text-[#3A3A3A] text-sm max-w-full">
         <template v-if="mission.is_autonomy">
@@ -108,9 +110,12 @@
       </template>
 
       <div class="flex items-end justify-between space-x-1 text-xs text-[#666666] pt-8 mt-auto w-full">
-        <div>
+        <div v-if="hasExpired">
+          Inscription terminée
+        </div>
+        <div v-else>
           <span>{{ placesLeftText }}</span>
-          <template v-if="formattedDate && placesLeftText !== 'Complet'">
+          <template v-if="formattedDate && placesLeftText !== 'Complet' && !mission.is_registration_open">
             <br> {{ formattedDate }}
           </template>
         </div>
@@ -174,7 +179,9 @@ export default {
       return null
     },
     placesLeftText () {
-      if (
+      if (this.mission.provider === 'reserve_civique' && !this.mission.is_registration_open) {
+        return 'Inscription fermée'
+      } else if (
         this.mission.publisher_name &&
         this.mission.publisher_name !== 'Réserve Civique' &&
         this.mission.places_left > 99

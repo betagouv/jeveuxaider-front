@@ -88,38 +88,31 @@
           Réseaux
         </Tag>
 
-        <SelectAdvanced
+        <FilterSelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Tous les statuts"
           :options="$labels.mission_template_workflow_states"
           :value="$route.query['filter[state]']"
-          theme="filter"
-          variant="transparent"
           clearable
           @input="changeFilter('filter[state]', $event)"
         />
-        <SelectAdvanced
+        <FilterSelectAdvanced
           :key="`domaine-${$route.fullPath}`"
           name="domaine"
           placeholder="Tous les domaines"
           :options="$labels.domaines"
           :value="$route.query['filter[domaine.id]']"
-          variant="transparent"
-          theme="filter"
           clearable
           @input="changeFilter('filter[domaine.id]', $event)"
         />
 
         <template v-if="$store.getters.contextRole === 'admin'">
-          <InputAutocomplete
+          <FilterInputAutocomplete
             :value="$route.query['filter[reseau.name]']"
-            icon="SearchIcon"
+            label="Tous les réseaux"
             name="autocomplete"
-            placeholder="Tous les réseaux"
-            theme="filter"
             :options="autocompleteOptionsReseau"
-            variant="transparent"
             @fetch-suggestions="onFetchSuggestionsReseau"
             @selected="changeFilter('filter[reseau.name]', $event ? $event.name : undefined)"
           />

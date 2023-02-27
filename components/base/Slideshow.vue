@@ -14,7 +14,7 @@
 
       <template #prevArrow="arrowOption">
         <transition name="fade">
-          <div
+          <button
             v-show="settings.infinite || arrowOption.currentSlide"
             class="rounded-full !bg-white transition flex justify-center items-center !p-6 relative z-10"
           >
@@ -24,13 +24,13 @@
               class="absolute inset-0 m-auto"
               data-not-lazy
             >
-          </div>
+          </button>
         </transition>
       </template>
 
       <template #nextArrow="arrowOption">
         <transition name="fade">
-          <div
+          <button
             v-show="
               settings.infinite || arrowOption.currentSlide < slidesCount - 3
             "
@@ -42,14 +42,17 @@
               class="absolute inset-0 m-auto"
               data-not-lazy
             >
-          </div>
+          </button>
         </transition>
       </template>
 
-      <template #customPaging>
-        <div class="text-sm text-[#DEDEDE]">
-          <div>●</div>
-        </div>
+      <template #customPaging="page">
+        <button
+          :aria-label="`slide ${page+1}`"
+          class="!text-sm !leading-none !p-0 !rounded-full !text-[#DEDEDE]"
+        >
+          ●
+        </button>
       </template>
     </VueSlickCarousel>
 
@@ -104,10 +107,14 @@ export default {
           touchThreshold: 100,
           swipeToSlide: true,
           infinite: false,
-          variableWidth: true
+          variableWidth: true,
+          accessibility: true,
+          pauseOnFocus: true
         }
       }
-    }
+    },
+    ariaLabelledby: { type: String, default: null },
+    ariaLabel: { type: String, default: null }
   },
   data () {
     return {
@@ -115,22 +122,69 @@ export default {
     }
   },
   mounted () {
-    if (this.slidesAreLinks) {
-      this.handleSlidesAccessibility()
-    }
+    this.handleAccessibilityInit()
+    // if (this.slidesAreLinks) {
+    //   this.handleLinksAccessibility()
+    // }
     if (this.addDotsWrapper) {
       this.handleDotsWrapper()
     }
   },
   methods: {
-    handleSlidesAccessibility () {
+    handleAccessibilityInit () {
+      const slickTrack = this.$refs.vueSlickCarousel.$el.getElementsByClassName(
+        'slick-track'
+      )?.[0]
+      slickTrack.setAttribute('role', 'group')
+      slickTrack.setAttribute('aria-roledescription', 'carousel')
+      if (this.ariaLabelledby) {
+        slickTrack.setAttribute('aria-labelledby', this.ariaLabelledby)
+      } else if (this.ariaLabel) {
+        slickTrack.setAttribute('aria-label', this.ariaLabel)
+      }
+
       const slides = this.$refs.vueSlickCarousel.$el.getElementsByClassName(
         'slick-slide'
       )
       slides.forEach((slide) => {
-        slide.removeAttribute('tabindex')
-        slide.getElementsByTagName('a').item(0).removeAttribute('tabindex')
+        if (this.slidesAreLinks) {
+          slide.removeAttribute('tabindex')
+        }
       })
+
+      this.handleAccessibility(true)
+    },
+    handleAccessibility (isInit) {
+      const slides = this.$refs.vueSlickCarousel.$el.getElementsByClassName(
+        'slick-slide'
+      )
+      slides.forEach((slide) => {
+        slide.removeAttribute('aria-hidden')
+        const el = this.slidesAreLinks ? slide.getElementsByTagName('a').item(0) : slide
+        if (slide.classList.contains('slick-current')) {
+          slide.setAttribute('aria-selected', 'true')
+          el.setAttribute('tabindex', 0)
+          if (!isInit && this.$refs.vueSlickCarousel.$el.contains(document.activeElement) && document.activeElement.nodeName !== 'BUTTON') {
+            el.focus()
+          }
+        } else {
+          slide.setAttribute('aria-selected', 'false')
+          el.setAttribute('tabindex', -1)
+        }
+      })
+
+      const dots = this.$refs?.vueSlickCarousel?.$el
+        ?.getElementsByClassName('slick-dots')
+        ?.item(0)?.querySelectorAll(':scope > li')
+      if (dots) {
+        dots.forEach((dot) => {
+          if (dot.classList.contains('slick-active')) {
+            dot.firstChild.setAttribute('aria-selected', 'true')
+          } else {
+            dot.firstChild.setAttribute('aria-selected', 'false')
+          }
+        })
+      }
     },
     handleDotsWrapper () {
       const dotsWrapper = this.$refs?.vueSlickCarousel?.$el
@@ -164,6 +218,8 @@ export default {
       }
     },
     onAfterChange () {
+      this.handleAccessibility()
+
       if (this.$refs.vueSlickCarousel.autoplay) {
         this.$refs.vueSlickCarousel.play()
       }
@@ -206,6 +262,12 @@ export default {
       top: calc(50% - 24px);
       @apply -translate-y-1/2;
     }
+    &:focus-visible {
+      outline-style: solid;
+      outline-color: #0a76f6;
+      outline-width: 2px;
+      outline-offset: 2px;
+    }
   }
 
   :deep(.slick-dots) {
@@ -213,15 +275,24 @@ export default {
     @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8;
     > li {
       @apply w-auto h-auto my-0 mx-2;
-      > div {
+      > button {
         @apply transition;
+        width: 14px;
+        height: 14px;
+        &:before {
+          opacity : 0 !important;
+          pointer-events: none !important;
+        }
+        &:focus-visible {
+          outline-style: solid;
+          outline-color: #0a76f6;
+          outline-width: 2px;
+          outline-offset: 2px;
+        }
       }
-      &.slick-active > div {
-        color: #696974;
+      &.slick-active > button {
+        color: #696974 !important;
       }
-    }
-    @screen xl {
-      display: none !important;
     }
   }
 }
@@ -230,5 +301,12 @@ export default {
   :deep(a) {
     @apply pointer-events-none;
   }
+}
+
+:deep(.slick-slide:focus-visible) {
+  outline-style: solid !important;
+  outline-color: #0a76f6 !important;
+  outline-width: 2px !important;
+  outline-offset: 2px !important;
 }
 </style>

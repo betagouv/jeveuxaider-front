@@ -1,14 +1,14 @@
 <template>
-  <footer class="relative z-1">
-    <div v-if="!$store.getters.isLogged" class="bg-gray-50 py-8">
+  <footer role="contentinfo" class="relative z-1 border-t-2 border-[#000091]">
+    <div class="bg-gray-50 py-8">
       <div class="container px-4 mx-auto">
         <div class="mx-auto max-w-6xl">
-          <div class="grid lg:grid-cols-2 text-xs gap-8">
-            <div>
+          <div class="grid grid-cols-1 md:grid-cols-5 text-xs gap-8">
+            <div class="md:col-span-2">
               <div class="font-bold mb-8">
                 Le bénévolat en France
               </div>
-              <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div class="grid grid-cols-2 gap-4">
                 <nuxt-link
                   v-for="city in cities"
                   :key="city.name"
@@ -20,11 +20,11 @@
               </div>
             </div>
 
-            <div>
+            <div class="md:col-span-2">
               <div class="font-bold mb-8">
                 Organisations populaires
               </div>
-              <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div class="grid grid-cols-2 gap-4">
                 <nuxt-link
                   v-for="organization in organizations"
                   :key="organization.name"
@@ -33,6 +33,24 @@
                 >
                   {{ organization.name }}
                 </nuxt-link>
+              </div>
+            </div>
+            <div>
+              <div class="font-bold mb-8">
+                Liens utiles
+              </div>
+              <div class="grid grid-cols-1 gap-4">
+                <component
+                  :is="link.component ? link.component : link.external ? 'a' : 'nuxt-link'"
+                  v-for="(link) in usefullLinks"
+                  :key="link.name"
+                  :to="!link.external && link.url"
+                  :href="link.url"
+                  :target="link.external ? '_blank' : null"
+                  class="hover:underline text-gray-600 truncate"
+                >
+                  {{ link.name }}
+                </component>
               </div>
             </div>
           </div>
@@ -58,8 +76,7 @@
 
               <img
                 src="@/assets/images/jeveuxaider-logo.svg"
-                alt="Bénévolat je veux aider"
-                title="Bénévolat association"
+                alt=""
                 width="251"
                 height="41"
               >
@@ -77,7 +94,7 @@
 
               <div class="flex flex-wrap -mx-3 -my-2">
                 <a
-                  v-for="link in links"
+                  v-for="link in gouvLinks"
                   :key="link.url"
                   class="hover:underline font-bold text-sm px-3 py-2"
                   :href="link.url"
@@ -100,16 +117,10 @@
         <div class="mx-auto max-w-6xl text-gray-600 text-xs">
           <div class="divide-x">
             <component
-              :is="
-                link.component
-                  ? link.component
-                  : link.external
-                    ? 'a'
-                    : 'nuxt-link'
-              "
-              v-for="(link, index) in links2"
+              :is="link.component ? link.component : link.external ? 'a' : 'nuxt-link'"
+              v-for="(link, index) in footerLinks"
               :key="link.name"
-              :to="link.url"
+              :to="!link.external && !link.component && link.url"
               :href="link.url"
               :target="link.external ? '_blank' : null"
               class="cursor-pointer hover:underline px-3 my-1 inline-block"
@@ -120,9 +131,6 @@
           </div>
 
           <div class="mt-6">
-            <a href="/accessibilite" class="mr-2 hover:underline border-r pr-2">
-              Accessibilité : Non conforme
-            </a>
             Sauf mention contraire, tous les textes de ce site sont sous
             <a
               href="https://github.com/etalab/licence-ouverte/blob/master/LO.md"
@@ -294,7 +302,7 @@ export default {
           url: '/organisations/6875-le-bon-samaritain'
         }
       ],
-      links: [
+      gouvLinks: [
         {
           name: 'legifrance.gouv.fr',
           url: 'https://legifrance.gouv.fr'
@@ -312,10 +320,56 @@ export default {
           url: 'https://www.data.gouv.fr'
         }
       ],
-      links2: [
+      footerLinks: [
+        {
+          name: 'Accessibilité : partiellement conforme',
+          url: '/accessibilite'
+        },
+        {
+          name: 'Données personnelles',
+          url: '/politique-de-confidentialite'
+        },
+        {
+          name: 'Mentions légales',
+          url: '/mentions-legales'
+        },
+        {
+          name: 'CGU',
+          url: '/conditions-generales-d-utilisation'
+        },
         {
           name: 'Plan du site',
-          url: 'https://www.jeveuxaider.gouv.fr/sitemap.xml',
+          url: '/plan-du-site'
+        },
+        {
+          name: 'Gestion des cookies',
+          url: 'javascript:openAxeptioCookies()',
+          component: 'a'
+        }
+      ],
+      usefullLinks: [
+        {
+          name: 'Centre d\'aide',
+          url: 'https://reserve-civique.crisp.help/fr/',
+          external: true
+        },
+        {
+          name: 'Charte de la Réserve Civique',
+          url: '/charte-reserve-civique'
+        },
+        {
+          name: 'Manifeste',
+          url: 'https://www.jeveuxaider.gouv.fr/engagement/manifeste/',
+          external: true
+        },
+        {
+          name: 'Actualités du bénévolat',
+          url: 'https://www.jeveuxaider.gouv.fr/engagement/actualites/',
+          external: true
+        },
+        {
+          name: 'Communication',
+          url: 'https://www.jeveuxaider.gouv.fr/engagement/communication/',
           external: true
         },
         {
@@ -324,44 +378,18 @@ export default {
           external: true
         },
         {
-          name: 'Centre d\'aide',
-          url: 'https://reserve-civique.crisp.help/fr/',
-          external: true
-        },
-        {
-          name: 'Mentions légales',
-          url: '/mentions-legales'
-        },
-        {
-          name: 'Données personnelles',
-          url: '/politique-de-confidentialite'
-        },
-        {
-          name: 'Gestion des cookies',
-          url: 'javascript:openAxeptioCookies()',
-          component: 'a'
-        },
-        {
-          name: 'CGU',
-          url: '/conditions-generales-d-utilisation'
-        },
-        {
-          name: 'Charte',
-          url: '/charte-reserve-civique'
-        },
-        {
-          name: 'Statistiques',
-          url: '/statistiques'
-        },
-        {
           name: 'Presse',
           url: 'https://www.jeveuxaider.gouv.fr/engagement/presse/',
           external: true
         },
         {
-          name: 'Communication',
-          url: 'https://www.jeveuxaider.gouv.fr/engagement/communication/',
+          name: 'Écoles et Universités',
+          url: 'https://www.jeveuxaider.gouv.fr/engagement/ecoles-et-universites/',
           external: true
+        },
+        {
+          name: 'Statistiques',
+          url: '/stats'
         }
       ]
     }

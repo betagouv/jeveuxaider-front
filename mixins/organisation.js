@@ -16,7 +16,13 @@ export default {
     },
     canEditStatut () {
       const rolesWhoCanEdit = this.$options.filters.label(this.organisation.state, 'structure_workflow_states', 'roles')
-      return !!rolesWhoCanEdit.includes(this.$store.getters.contextRole)
+      switch (this.$store.getters.contextRole) {
+        case 'admin': return true
+        case 'referent':
+        case 'referent_regional':
+          return !!rolesWhoCanEdit.includes(this.$store.getters.contextRole) && this.organisation?.permissions?.canChangeState
+        default: return false
+      }
     }
   }
 }

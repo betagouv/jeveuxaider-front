@@ -85,8 +85,11 @@ export default {
       if (!this.mission.has_places_left) {
         return false
       }
+      if (!this.mission.is_registration_open) {
+        return false
+      }
 
-      if (this.mission.end_date && this.$dayjs(this.mission.end_date).isBefore(this.$dayjs())) {
+      if (this.mission.end_date && this.$dayjs(this.mission.end_date).endOf('day').isBefore(this.$dayjs())) {
         return false
       }
 
@@ -127,7 +130,11 @@ export default {
               ? this.$dayjs(endDate)
               : null
 
-      return endDateObject && endDateObject.isBefore(now)
+      if (!endDateObject) {
+        return false
+      }
+
+      return this.mission.provider == 'api_engagement' ? endDateObject.isBefore(now) : endDateObject.endOf('day').isBefore(now)
     },
     formattedCommitment () {
       if (this.mission.commitment__time_period) {
@@ -140,6 +147,36 @@ export default {
         return this.mission.dates.filter(date =>
           this.$dayjs(date.id).isAfter(this.$dayjs()) || this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
         )
+      }
+    },
+    missionStructureResponseTimeInDays () {
+      if (!this.mission.structure) {
+        return null
+      }
+      if (!this.mission.structure?.response_time) {
+        return null
+      }
+      return Math.round(this.mission.structure?.response_time / (60 * 60 * 24))
+    },
+    missionStructureResponseTimeFormatted () {
+      if (!this.mission.structure) {
+        return null
+      }
+      if (!this.mission.structure?.response_time) {
+        return null
+      }
+      if (this.missionStructureResponseTimeInDays > 10) {
+        return 'en plus de 10 jours'
+      } else if (this.missionStructureResponseTimeInDays > 5) {
+        return 'en moins de 10 jours'
+      } else if (this.missionStructureResponseTimeInDays > 3) {
+        return 'en moins de 5 jours'
+      } else if (this.missionStructureResponseTimeInDays > 2) {
+        return 'en moins de 3 jours'
+      } else if (this.missionStructureResponseTimeInDays > 1) {
+        return 'en moins de 2 jours'
+      } else {
+        return 'en moins d\'un jour'
       }
     }
   }

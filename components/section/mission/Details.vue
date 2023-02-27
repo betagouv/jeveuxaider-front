@@ -1,5 +1,26 @@
 <template>
   <Box class="space-y-12">
+    <div v-if="mission.prerequisites" class="border border-b-4 border-b-jva-blue-500 p-6 sm:p-8">
+      <div class="flex flex-wrap sm:flex-nowrap items-center gap-4 sm:gap-8 justify-start">
+        <img src="/images/missions/prerequisites.svg" alt="Pré-requis" class="flex-none">
+        <div class="w-full sm:w-auto">
+          <div class="text-base font-bold mb-2">
+            Pré-requis pour réaliser cette mission
+          </div>
+          <ol
+            :class="[
+              'text-cool-gray-500 hyphens-auto',
+              {'list-decimal pl-6': mission.prerequisites.length > 1}
+            ]"
+          >
+            <li v-for="(prerequisite, key) in mission.prerequisites" :key="key">
+              {{ prerequisite }}
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
     <div>
       <div class="text-lg mb-4 text-gray-800">
         Présentation de la mission
@@ -20,12 +41,14 @@
       <TextFormatted :max-lines="3" :text="mission.description" class="text-cool-gray-500" />
     </div>
 
-    <div v-if="mission.autonomy_precisions">
+    <!-- <div v-if="mission.autonomy_precisions">
       <div class="text-lg mb-4 text-gray-800">
         Précisions sur la zone d'intervention
       </div>
-      <TextFormatted :max-lines="3" :text="mission.autonomy_precisions" class="text-cool-gray-500" />
-    </div>
+      <div class="text-cool-gray-500">
+        {{ mission.autonomy_precisions | stripHTML | decodeHTMLEntities }}
+      </div>
+    </div> -->
 
     <div v-if="publicsVolontaires.length > 0">
       <HrTitle>

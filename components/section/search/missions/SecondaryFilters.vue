@@ -4,13 +4,20 @@
       <template v-for="filter,i in visibleFilters">
         <AutonomyFilter v-if="filter === 'is_autonomy'" :key="i" />
 
-        <FacetFilterToggle v-if="filter === 'structure.name'" :key="i" facet-name="structure.name" label="Organisations">
-          <template #button="{ firstValueSelected, activeValuesCount }">
+        <FacetFilterToggle
+          v-if="filter === 'structure.name'"
+          :key="i"
+          facet-name="structure.name"
+          label="Organisations"
+          legend="Filtrer par organisation"
+        >
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
               as="button"
+              :aria-expanded="isOpen || 'false'"
             >
               <span v-if="!firstValueSelected">Organisations</span>
               <div v-else>
@@ -21,13 +28,20 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'tags'" :key="i" facet-name="tags" label="Opérations nationales">
-          <template #button="{ firstValueSelected, activeValuesCount }">
+        <FacetFilterToggle
+          v-if="filter === 'tags'"
+          :key="i"
+          facet-name="tags"
+          label="Opérations nationales"
+          legend="Filtrer par opération nationale"
+        >
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
               as="button"
+              :aria-expanded="isOpen || 'false'"
             >
               <span v-if="!firstValueSelected">Opérations nationales</span>
               <div v-else>
@@ -38,13 +52,20 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'publics_beneficiaires'" :key="i" facet-name="publics_beneficiaires" label="Publics aidés">
-          <template #button="{ firstValueSelected, activeValuesCount }">
+        <FacetFilterToggle
+          v-if="filter === 'publics_beneficiaires'"
+          :key="i"
+          facet-name="publics_beneficiaires"
+          label="Publics aidés"
+          legend="Filtrer par public aidé"
+        >
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
               as="button"
+              :aria-expanded="isOpen || 'false'"
             >
               <span v-if="!firstValueSelected">Publics aidés</span>
               <div v-else>
@@ -55,13 +76,20 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'domaines'" :key="i" facet-name="domaines" label="Domaines">
-          <template #button="{ firstValueSelected, activeValuesCount }">
+        <FacetFilterToggle
+          v-if="filter === 'domaines'"
+          :key="i"
+          facet-name="domaines"
+          label="Domaines"
+          legend="Filtrer par domaine d'action"
+        >
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
               as="button"
+              :aria-expanded="isOpen || 'false'"
             >
               <span v-if="!firstValueSelected">Domaines</span>
               <div v-else>
@@ -72,13 +100,21 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'structure.reseaux.name'" :key="i" facet-name="structure.reseaux.name" label="Réseaux" options-class="right-0 md:left-0">
-          <template #button="{ firstValueSelected, activeValuesCount }">
+        <FacetFilterToggle
+          v-if="filter === 'structure.reseaux.name'"
+          :key="i"
+          facet-name="structure.reseaux.name"
+          label="Réseaux"
+          options-class="right-0 lg:left-0"
+          legend="Filtrer par réseau"
+        >
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
               as="button"
+              :aria-expanded="isOpen || 'false'"
             >
               <span v-if="!firstValueSelected">Réseaux</span>
               <div v-else>
@@ -95,13 +131,15 @@
           facet-name="department_name"
           label="Départements"
           options-class="right-0 lg:left-0"
+          legend="Filtrer par département"
         >
-          <template #button="{ firstValueSelected, activeValuesCount }">
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
               as="button"
+              :aria-expanded="isOpen || 'false'"
             >
               <span v-if="!firstValueSelected">Départements</span>
               <div v-else>
@@ -112,13 +150,21 @@
           </template>
         </FacetFilterToggle>
 
-        <FacetFilterToggle v-if="filter === 'template_subtitle'" :key="i" facet-name="template_subtitle" label="Types de mission" options-class="right-0 md:left-0">
-          <template #button="{ firstValueSelected, activeValuesCount }">
+        <FacetFilterToggle
+          v-if="filter === 'template_subtitle'"
+          :key="i"
+          facet-name="template_subtitle"
+          label="Types de mission"
+          options-class="right-0 lg:left-0"
+          legend="Filtrer par type de mission"
+        >
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <Tag
               :is-active="!!activeValuesCount"
               context="clickable"
               size="md"
               as="button"
+              :aria-expanded="isOpen || 'false'"
             >
               <span v-if="!firstValueSelected">Types de mission</span>
               <div v-else>
@@ -130,6 +176,31 @@
         </FacetFilterToggle>
 
         <MinorsFilter v-if="filter === 'is_minors'" :key="i" />
+
+        <FacetFilterToggle
+          v-if="filter === 'publisher_name'"
+          :key="i"
+          facet-name="publisher_name"
+          label="Plateformes"
+          options-class="right-0 lg:left-0"
+          legend="Filtrer par plateforme"
+        >
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
+            <Tag
+              :is-active="!!activeValuesCount"
+              context="clickable"
+              size="md"
+              as="button"
+              :aria-expanded="isOpen || 'false'"
+            >
+              <span v-if="!firstValueSelected">Plateformes</span>
+              <div v-else>
+                <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+              </div>
+            </Tag>
+          </template>
+        </FacetFilterToggle>
       </template>
 
       <Tag
@@ -139,6 +210,7 @@
         :icon-only="true"
         size="md"
         as="button"
+        title="afficher plus de filtres"
         @click.native="showAllFilters = true"
       />
     </div>

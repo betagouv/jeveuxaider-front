@@ -6,26 +6,27 @@
     <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
-          <Heading as="h2" size="2xl" class="text-center md:text-left">
+          <Heading :id="`label-missions-prioritaires-${_uid}`" as="h2" size="2xl" class="text-center md:text-left">
             Les missions de bénévolat prioritaires
           </Heading>
-          <span
-            class="hidden lg:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
-          >
+          <p class="hidden lg:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]">
             #{{ $dayjs(Date.now()).format('MMMM') }}
-          </span>
+          </p>
         </div>
 
-        <Slideshow
-          :slides-are-links="true"
+        <!--
           :more-link="{
             link: '/missions-benevolat?toggle[is_priority]=true',
             label: 'Plus de missions ›',
           }"
+         -->
+        <Slideshow
+          :slides-are-links="true"
           :slides-count="missions.length"
+          :aria-labelledby="`label-missions-prioritaires-${_uid}`"
         >
-          <div key="decembre" href="" class="card--mission--wrapper">
-            <CardDecembreEnsemble class="!h-full" />
+          <div key="restos-du-coeur" class="card--mission--wrapper">
+            <CardRestaurantsDuCoeur class="!h-full" />
           </div>
 
           <nuxt-link
@@ -44,13 +45,13 @@
 
 <script>
 import CardMission from '@/components/card/CardMission'
-import CardDecembreEnsemble from '@/components/card/CardDecembreEnsemble'
+import CardRestaurantsDuCoeur from '@/components/card/CardRestaurantsDuCoeur'
 import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
     CardMission,
-    CardDecembreEnsemble,
+    CardRestaurantsDuCoeur,
     Heading
   },
   data () {
@@ -79,6 +80,11 @@ export default {
     }
     &.slick-next {
       @apply translate-x-[104px];
+    }
+  }
+  .slick-dots {
+    @screen xl {
+      display: none !important;
     }
   }
 }

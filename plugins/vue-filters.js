@@ -17,7 +17,7 @@ export default function ({ app, ...props }) {
   })
 
   Vue.filter('stripHTML', function (value) {
-    return value.replace(/(<([^>]+)>)/gi, '')
+    return value.replace(/(<([^>]+)>)/gi, ' ')
   })
 
   Vue.filter('decodeHTMLEntities', function (value) {

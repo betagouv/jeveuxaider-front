@@ -163,7 +163,7 @@ export default {
       await this.$axios.delete(`/missions/${this.missionId}`).then((res) => {
         this.showAlert = false
         this.$emit('close')
-        this.$emit('refetch')
+        this.$emit('updated')
       }).catch(() => {})
     }
   }

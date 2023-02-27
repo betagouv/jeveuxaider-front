@@ -23,7 +23,7 @@
         ]"
         autocomplete="off"
         @keydown="onKeydown"
-        @click="!disabled ? showOptions = !showOptions : null"
+        @click="onClick"
         @keydown.tab="showOptions = false"
         @keydown.esc="showOptions = false"
       >
@@ -33,7 +33,7 @@
             <span class="truncate">{{ selectedOption[attributeLabel] }}</span>
           </template>
           <template v-else>
-            <span class="placeholder">{{ placeholder }}</span>
+            <span class="truncate italic text-[#888888]">{{ placeholder }}</span>
           </template>
         </div>
       </div>
@@ -71,6 +71,9 @@
     >
       <ul
         class="py-2"
+        role="listbox"
+        :aria-labelledby="ariaLabelledby"
+        :aria-label="!ariaLabelledby && ariaLabel"
       >
         <li
           v-for="(item, index) in options"
@@ -81,6 +84,8 @@
             {'bg-[#F0F0FF]': highlightIndex == index},
             {'bg-[#F0F0FF]': selectedOption && item[attributeKey] == selectedOption[attributeKey]}
           ]"
+          role="option"
+          :aria-selected="selectedOption && item[attributeKey] == selectedOption[attributeKey] || 'false'"
           @click="handleSelectOption(item)"
         >
           <span class="">
@@ -97,8 +102,10 @@
 </template>
 
 <script>
+import Selectable from '@/mixins/form/selectable'
 
 export default {
+  mixins: [Selectable],
   props: {
     value: { type: [String, Number], default: null },
     placeholder: { type: String, default: null },
@@ -114,98 +121,9 @@ export default {
     theme: { type: String, default: 'default' },
     prefixLabel: { type: String, default: null },
     selectClass: { type: String, default: '' },
-    optionsClass: { type: String, default: '' }
-  },
-  data () {
-    return {
-      showOptions: false,
-      highlightIndex: null
-    }
-  },
-  computed: {
-    selectedOption: {
-      get () {
-        return this.value ? this.options.find(item => item[this.attributeKey] == this.value) : null
-      },
-      set (newItem) {
-        this.$emit('changed', newItem)
-        // this.handleSelectOption(newItem)
-      }
-    }
-  },
-  methods: {
-    reset () {
-      this.highlightIndex = null
-      this.selectedOption = null
-      this.showOptions = false
-      this.$emit('input', null)
-    },
-    clickedOutside () {
-      this.showOptions = false
-    },
-    handleSelectOption (item) {
-      if (item && this.selectedOption && this.selectedOption[this.attributeKey] === item[this.attributeKey]) {
-        this.$emit('input', null)
-        this.selectedOption = null
-      } else if (item) {
-        this.$emit('input', item[this.attributeKey])
-        this.selectedOption = item
-      }
-      this.$emit('blur')
-      this.showOptions = false
-      this.highlightIndex = null
-    },
-    onKeydown (e) {
-      if (this.disabled) {
-        return
-      }
-      const keyValue = e.which // enter key
-      if (keyValue === 9) {
-        this.showOptions = false
-        this.highlightIndex = null
-      }
-
-      if (keyValue === 13) {
-        if (this.highlightIndex !== null) {
-          this.handleSelectOption(this.options[this.highlightIndex])
-          return
-        }
-      }
-      if (keyValue === 40 || keyValue === 38 || keyValue === 13) {
-        e.preventDefault()
-        e.stopPropagation()
-        if (this.highlightIndex === null) {
-          this.showOptions = true
-          this.highlightIndex = 0
-          return
-        }
-        if (keyValue === 40) {
-          if (this.highlightIndex + 1 === this.options.length) {
-            this.highlightIndex = 0
-          } else {
-            this.highlightIndex += 1
-          }
-        }
-        if (keyValue === 38) {
-          if (this.highlightIndex === 0) {
-            this.highlightIndex = this.options.length - 1
-          } else {
-            this.highlightIndex -= 1
-          }
-        }
-        this.$refs[`option_${this.highlightIndex}`]?.[0].scrollIntoView({
-          block: 'nearest'
-        })
-      }
-    }
-
+    optionsClass: { type: String, default: '' },
+    ariaLabelledby: { type: String, default: null },
+    ariaLabel: { type: String, default: null }
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-.placeholder {
-  font-style: italic;
-  color: #888888 !important;
-}
-</style>

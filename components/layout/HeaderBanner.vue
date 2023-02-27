@@ -12,7 +12,7 @@
       </template>
     </Banner>
 
-    <div v-if="isBenevoleOrNotLogged" class="relative z-30 bg-[#F75C5D] text-white cursor-pointer" @click="onClick">
+    <!-- <div v-if="isBenevoleOrNotLogged" class="relative z-30 bg-[#F75C5D] text-white cursor-pointer" @click="onClick">
       <div class="container py-3">
         <div class="flex items-center justify-between flex-wrap">
           <div class="w-full flex-1 flex items-center">
@@ -36,7 +36,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <Banner v-if="$store.state.settings.general.maintenance_mode_active" icon="RiSettings4Line">
       Le site est en mode maintenance, seuls les admins peuvent y accéder !
@@ -57,7 +57,7 @@
           icon="RiArrowRightLine"
           :to="`/admin/participations?filter[is_state_pending]=true&filter[ofResponsable]=${$store.getters.profile.id}`"
         >
-          Modérer les participations
+          Traiter les participations
         </Link>
       </template>
     </Banner>

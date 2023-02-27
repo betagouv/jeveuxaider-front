@@ -8,7 +8,7 @@
       ]"
       tabpanel-class="py-4 bg-white"
       tabswrapper-class="!px-2 !text-[15px] xs:!px-3 xs:!text-base"
-      :selected-tab="$route.query['type'] === 'Mission à distance' ? 1 : 0"
+      :selected-tab="selectedTab"
       @selected="onTabSelect"
     >
       <div slot="tab-0">
@@ -22,7 +22,19 @@
             enter-class="opacity-0 translate-x-4 sm:translate-x-0 sm:scale-95"
             enter-to-class="opacity-100 translate-x-0 sm:scale-100"
           >
-            <portal-target v-show="!isGeolocFilterActive" name="mobile-button-filter" multiple />
+            <div>
+              <button
+                v-show="!isGeolocFilterActive"
+                ref="buttonFilterOnsite"
+                class="flex-none p-2 ml-4 relative rounded-lg"
+                @click="isFiltersOpen = true"
+              >
+                <RiEqualizerFill class="text-jva-blue-500 fill-current w-6 h-6" />
+                <div v-if="nbMobileSecondaryFilters > 0" class="absolute -top-1.5 -right-1 bg-[#A1A1F8] px-1.5 py-0.5 rounded-full text-white font-bold text-xs min-w-[22px] !leading-[18px] inline-flex justify-center">
+                  {{ nbMobileSecondaryFilters }}
+                </div>
+              </button>
+            </div>
           </transition>
         </div>
       </div>
@@ -38,24 +50,27 @@
               <span class="font-bold">Depuis chez moi</span>
             </div>
           </div>
-          <portal-target v-show="!isGeolocFilterActive" name="mobile-button-filter" multiple />
+          <div>
+            <button
+              v-show="!isGeolocFilterActive"
+              ref="buttonFilterRemote"
+              class="flex-none p-2 ml-4 relative rounded-lg"
+              @click="isFiltersOpen = true"
+            >
+              <RiEqualizerFill class="text-jva-blue-500 fill-current w-6 h-6" />
+              <div v-if="nbMobileSecondaryFilters > 0" class="absolute -top-1.5 -right-1 bg-[#A1A1F8] px-1.5 py-0.5 rounded-full text-white font-bold text-xs min-w-[22px] !leading-[18px] inline-flex justify-center">
+                {{ nbMobileSecondaryFilters }}
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </Tabs>
 
-    <portal to="mobile-button-filter">
-      <div class="flex-none p-2 pl-6 relative" @click="isFiltersOpen = true">
-        <RiEqualizerFill class="text-jva-blue-500 fill-current w-6 h-6" />
-        <div v-if="nbMobileSecondaryFilters > 0" class="absolute -top-1.5 -right-1 bg-[#A1A1F8] px-1.5 py-0.5 rounded-full text-white font-bold text-xs min-w-[22px] !leading-[18px] inline-flex justify-center">
-          {{ nbMobileSecondaryFilters }}
-        </div>
-      </div>
-    </portal>
-
     <DrawerSearchMissionsFilters
       v-if="$store.state.algoliaSearch.results"
       :is-open="isFiltersOpen"
-      @close="isFiltersOpen = false"
+      @close="handleClose"
     />
   </div>
 </template>
@@ -79,6 +94,11 @@ export default {
       isGeolocFilterActive: false
     }
   },
+  computed: {
+    selectedTab () {
+      return this.$route.query.type === 'Mission à distance' ? 1 : 0
+    }
+  },
   methods: {
     onTabSelect (tab) {
       if (tab.slug === 'remote') {
@@ -95,6 +115,12 @@ export default {
         path: this.$route.path,
         query: { ...this.$route.query, type: 'Mission à distance', page: undefined, city: undefined, aroundLatLng: undefined, department_name: undefined, is_autonomy: undefined }
       })
+    },
+    async handleClose () {
+      this.isFiltersOpen = false
+      await this.$nextTick()
+      const button = this.selectedTab === 0 ? this.$refs.buttonFilterOnsite : this.$refs.buttonFilterRemote
+      button.focus()
     }
   }
 }

@@ -26,6 +26,7 @@
     "@nuxtjs/svg": "^0.3.0",
     "@tailwindcss/forms": "^0.5.1",
     "@tailwindcss/line-clamp": "^0.2.2",
+    "@vue-a11y/focus-loop": "^0.2.0",
     "@vue-hero-icons/outline": "^1.7.2",
     "@vue-hero-icons/solid": "^1.7.2",
     "add": "^2.0.6",
@@ -60,6 +61,7 @@
     "vue-scrollto": "^2.20.0",
     "vue-slick-carousel": "^1.0.6",
     "vue-star-rating": "^1.7.0",
+    "vue-svg-gauge": "^1.2.1",
     "vue-textarea-autosize": "^1.1.1",
     "vue-toastification": "^1.7.14",
     "yarn": "^1.22.17",
@@ -75,6 +77,7 @@
     "eslint-plugin-vue": "^7.12.1",
     "node-sass": "^6.0.1",
     "postcss": "^8.3.5",
-    "sass-loader": "^10"
+    "sass-loader": "^10",
+    "tailwindcss-hyphens": "^0.1.0"
   }
 }

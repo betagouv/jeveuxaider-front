@@ -2,24 +2,29 @@
   <section class="py-16 bg-[#ECECFE] overflow-hidden relative">
     <img
       src="/images/homepage/deco_2.svg"
-      alt="Décorations"
+      alt=""
       class="deco--2 absolute hidden lg:block pointer-events-none"
       data-not-lazy
     >
 
     <img
       src="/images/homepage/deco_3.svg"
-      alt="Décorations"
+      alt=""
       class="deco--3 absolute hidden lg:block pointer-events-none"
       data-not-lazy
     >
 
     <div class="container mx-auto px-4 ">
-      <Heading as="h2" size="2xl" class="text-center">
+      <Heading :id="`label-paroles-benevoles-${_uid}`" as="h2" size="2xl" class="text-center">
         Paroles de bénévoles
       </Heading>
 
-      <Slideshow :slides-count="testimonies.length" :settings="settings" class="mt-12">
+      <Slideshow
+        :slides-count="testimonies.length"
+        :settings="settings"
+        class="mt-12"
+        :aria-labelledby="`label-paroles-benevoles-${_uid}`"
+      >
         <div v-for="testimony,index in testimonies" :key="index">
           <div
             class="testimony--wrapper flex flex-col items-center space-y-6 text-center max-w-[768px] mx-auto lg:flex-row lg:text-left lg:space-y-0"
@@ -45,9 +50,7 @@
             <div>
               <RiDoubleQuotesL class="text-[#8B8BF6] fill-current w-6 h-6 mb-4 hidden lg:block" />
 
-              <div class="text-[#161616] text-xl font-bold">
-                « {{ testimony.content | decodeHTMLEntities }} »
-              </div>
+              <blockquote class="text-[#161616] text-xl font-bold" v-html="testimony.content" />
 
               <div class="text-center lg:text-left mt-4">
                 <div class="font-bold text-[#3A3A3A]">
@@ -76,8 +79,7 @@ export default {
     return {
       testimonies: [
         {
-          content: `Experience très positive qui m'a permise d'être utile envers les autres, mais aussi de rencontrer des belles personnes.
-Je me suis désormais active dans la Banque Alimentaire près de chez moi deux matinées par semaine&nbsp;🙂`,
+          content: 'Experience très positive qui m\'a permise d\'être utile envers les autres, mais aussi de rencontrer des belles personnes. Je me suis désormais active dans la Banque Alimentaire près de chez moi deux matinées par semaine&nbsp;<span aria-hidden="true">🙂</span>',
           author: {
             name: 'Anne-Marie',
             image: {
@@ -160,7 +162,7 @@ Je me suis désormais active dans la Banque Alimentaire près de chez moi deux m
           }
         },
         {
-          content: 'J’ai adoré cette expérience. L’équipe est formidable et les bénévoles sont tellement admirables. Pour une première, j’ai adoré. Un grand merci 🙏🏽',
+          content: 'J’ai adoré cette expérience. L’équipe est formidable et les bénévoles sont tellement admirables. Pour une première, j’ai adoré. Un grand merci&nbsp;<span aria-hidden="true">🙏🏽</span>',
           author: {
             name: 'Kevin',
             image: {
@@ -227,6 +229,9 @@ Je me suis désormais active dans la Banque Alimentaire près de chez moi deux m
 
   .slick-dots {
     @apply !text-center !mr-0;
+    @screen xl {
+      display: none !important;
+    }
   }
 
   .slick-track {
@@ -235,6 +240,15 @@ Je me suis désormais active dans la Banque Alimentaire près de chez moi deux m
 
   .slick-list {
     overflow: hidden;
+  }
+}
+
+blockquote {
+  &::before {
+    content: '\00AB ';
+  }
+  &::after {
+    content: ' \00BB';
   }
 }
 

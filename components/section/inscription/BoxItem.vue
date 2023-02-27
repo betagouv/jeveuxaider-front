@@ -2,7 +2,7 @@
   <div
     class="bg-white w-full md:w-72 text-center flex-col items-center space-y-2 justify-center px-4 py-10 transform cursor-pointer hover:scale-105 duration-150"
   >
-    <div v-if="icon" class="text-4xl">
+    <div v-if="icon" class="text-4xl" aria-hidden="true">
       {{ icon }}
     </div>
     <div v-if="title" class="text-2xl leading-tight" v-html="title" />

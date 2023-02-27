@@ -125,9 +125,7 @@
                   </template>
                   <template v-else>
                     <div class="py-6">
-                      <h2
-                        class="text-center text-3xl font-bold text-gray-900 leading-8 px-4"
-                      >
+                      <h2 class="text-center text-3xl font-bold text-gray-900 leading-8 px-4">
                         Création de votre compte
                       </h2>
                     </div>
@@ -135,7 +133,7 @@
                 </div>
                 <div
                   v-show="!isLoadingFranceConnect"
-                  class="border-t-2 border-gray-100 pt-10 pb-2 px-4 sm:px-12 bg-gray-50"
+                  class="border-t-2 border-gray-100 pt-2 pb-2 px-4 sm:px-12 bg-gray-50"
                 >
                   <template v-if="$store.state.settings.general.light_mode_active">
                     <div class="text-center space-y-6 pb-12">
@@ -160,6 +158,9 @@
                     </div>
                   </template>
                   <template v-else>
+                    <p class="mb-8 text-xs text-gray-600 text-center">
+                      Les champs avec <span class="text-[#E2011C] font-bold">*</span> sont requis.
+                    </p>
                     <form id="inscription" class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2" @submit.prevent="onSubmit">
                       <FormControl
                         label="Prénom"
@@ -171,6 +172,8 @@
                           v-model="form.first_name"
                           name="first_name"
                           placeholder="Jean"
+                          aria-required="true"
+                          autocomplete="given-name"
                           @blur="validate('first_name')"
                         />
                       </FormControl>
@@ -184,6 +187,8 @@
                           v-model="form.last_name"
                           name="last_name"
                           placeholder="Dupont"
+                          aria-required="true"
+                          autocomplete="family-name"
                           @blur="validate('last_name')"
                         />
                       </FormControl>
@@ -198,6 +203,8 @@
                           type="email"
                           name="email"
                           placeholder="jean.dupont@gmail.com"
+                          aria-required="true"
+                          autocomplete="email"
                           @blur="validate('email')"
                         />
                       </FormControl>
@@ -213,6 +220,8 @@
                           type="tel"
                           placeholder="56000"
                           maxlength="5"
+                          aria-required="true"
+                          autocomplete="postal-code"
                           @blur="validate('zip')"
                         />
                       </FormControl>
@@ -228,6 +237,8 @@
                           type="tel"
                           maxlength="14"
                           placeholder="0612345678"
+                          aria-required="true"
+                          autocomplete="tel"
                           @blur="validate('mobile')"
                         />
                       </FormControl>
@@ -237,7 +248,13 @@
                         required
                         :error="errors.birthday"
                       >
-                        <InputDate v-model="form.birthday" required name="birthday" />
+                        <InputDate
+                          v-model="form.birthday"
+                          required
+                          name="birthday"
+                          aria-required="true"
+                          autocomplete="bday"
+                        />
                       </FormControl>
                       <FormControl
                         label="Mot de passe"
@@ -250,6 +267,8 @@
                           name="password"
                           placeholder="Votre mot de passe"
                           type="password"
+                          aria-required="true"
+                          autocomplete="current-password"
                           @blur="validate('password')"
                         />
                       </FormControl>
@@ -264,6 +283,8 @@
                           name="password_confirmation"
                           placeholder="Votre mot de passe"
                           type="password"
+                          aria-required="true"
+                          autocomplete="current-password"
                           @blur="validate('password_confirmation')"
                         />
                       </FormControl>
@@ -286,9 +307,9 @@
                           to="/politique-de-confidentialite"
                           class="font-medium text-gray-900"
                         >
-                          politique de confidentialité
+                          <span>politique de confidentialité</span>
                         </Link>
-                        <br>
+                        <br class="hidden sm:block">
                         et la
                         <Link
                           to="/charte-reserve-civique"
@@ -315,6 +336,7 @@
     <div class="bg-white overflow-hidden">
       <div class="mx-auto max-w-6xl pt-14 pb-20 px-4 sm:px-6 lg:px-8">
         <h3
+          id="label-carousel-logos-inscription-benevoles"
           class="text-center leading-8 pb-8 text-gray-900 font-medium text-3xl px-4"
         >
           Plus de <b class="font-bold">10 000 organisations</b> ont déjà rejoint

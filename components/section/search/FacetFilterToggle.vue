@@ -14,15 +14,20 @@
         @keydown.esc="isOpen = false"
       >
         <div class="p-4 space-y-3">
-          <div class="font-medium">
+          <div :id="`label-search-${_uid}`" class="font-medium">
             {{ label }}
           </div>
 
-          <FacetSearch v-model="facetQuery" @input="handleChangeSearchFacetValues" />
+          <FacetSearch
+            ref="facetSearch"
+            v-model="facetQuery"
+            :aria-labelledby="`label-search-${_uid}`"
+            @input="handleChangeSearchFacetValues"
+          />
 
           <div class="relative overflow-hidden">
             <div
-              class="absolute custom-gradient bottom-0 w-full pointer-events-none transition duration-500"
+              class="absolute custom-gradient bottom-0 w-full pointer-events-none transition duration-500 z-10"
               :class="[{'h-0': isScrollAtBottom}, {'h-12': !isScrollAtBottom}]"
             />
 
@@ -32,33 +37,41 @@
                   Aucun résultat avec les filtres actuels.
                 </div>
 
-                <div
-                  v-for="(facet) in [...activeValues, ...inactiveValues]"
-                  :key="facet.value"
-                  :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
-                  class="flex items-center pl-1 group"
-                >
-                  <input
-                    :id="`facetFilter__${facetName}_${facet.value}`"
-                    :name="`facetFilter__${facetName}_${facet.value}`"
-                    :value="isActiveFilter(facetName, facet.value)"
-                    type="checkbox"
-                    :checked="isActiveFilter(facetName, facet.value)"
-                    class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500 cursor-pointer"
-                    @change="handleFacetToggle(facetName, facet.value)"
-                  >
-                  <label
-                    :for="`facetFilter__${facetName}_${facet.value}`"
-                    class="pl-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500 cursor-pointer"
-                  >
-                    <div class="truncate">
-                      {{ facet.value }}
+                <fieldset class="relative" style="min-inline-size: auto;">
+                  <legend class="sr-only">
+                    {{ legend }}
+                  </legend>
+
+                  <div class="space-y-4">
+                    <div
+                      v-for="(facet) in [...activeValues, ...inactiveValues]"
+                      :key="facet.value"
+                      :class="[{'text-jva-blue-500': isActiveFilter(facetName, facet.value)}]"
+                      class="flex items-center pl-1 group"
+                    >
+                      <input
+                        :id="`facetFilter__${facetName}_${facet.value}`"
+                        :name="`facetFilter__${facetName}_${facet.value}`"
+                        :value="isActiveFilter(facetName, facet.value)"
+                        type="checkbox"
+                        :checked="isActiveFilter(facetName, facet.value)"
+                        class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500 cursor-pointer"
+                        @change="handleFacetToggle(facetName, facet.value)"
+                      >
+                      <label
+                        :for="`facetFilter__${facetName}_${facet.value}`"
+                        class="pl-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500 cursor-pointer"
+                      >
+                        <div class="truncate">
+                          {{ facet.value }}
+                        </div>
+                        <div class="text-gray-600 ml-1 font-light">
+                          {{ facet.count }}
+                        </div>
+                      </label>
                     </div>
-                    <div class="text-gray-600 ml-1 font-light">
-                      {{ facet.count }}
-                    </div>
-                  </label>
-                </div>
+                  </div>
+                </fieldset>
               </div>
             </div>
           </div>
@@ -94,7 +107,8 @@ export default {
   props: {
     facetName: { type: String, required: true },
     label: { type: String, required: true },
-    optionsClass: { type: String, default: '' }
+    optionsClass: { type: String, default: '' },
+    legend: { type: String, default: null }
   },
   data () {
     return {
@@ -146,6 +160,7 @@ export default {
         await this.$nextTick()
         this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
         this.$refs.scrollContainer.addEventListener('scroll', this.handleScroll)
+        this.$refs.facetSearch.$refs?.input?.focus()
       } else {
         this.$refs.scrollContainer.removeEventListener('scroll', this.handleScroll)
       }

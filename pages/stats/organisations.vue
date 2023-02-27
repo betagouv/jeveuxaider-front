@@ -3,7 +3,7 @@
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[
-          { text: 'Statistiques', to: '/statistiques' },
+          { text: 'Statistiques', to: '/stats' },
           { text: 'Organisations' },
         ]"
       />
@@ -14,7 +14,7 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics @refetch="refetch()" />
+          <FiltersStatisticsPublic @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
 import OrganisationsStatistics from '@/components/statistics/OrganisationsStatistics.vue'
 import OrganisationsByDate from '@/components/statistics/OrganisationsByDate.vue'
 import OrganisationsByStates from '@/components/statistics/OrganisationsByStates.vue'
@@ -53,7 +53,7 @@ import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    FiltersStatistics,
+    FiltersStatisticsPublic,
     OrganisationsStatistics,
     OrganisationsByDate,
     OrganisationsByStates,

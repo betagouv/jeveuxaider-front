@@ -75,6 +75,7 @@ export default {
   async fetch () {
     const { data: queryActivityLogs } = await this.$axios.get('/activity-logs', {
       params: {
+        'filter[log_name]': 'default',
         'filter[subject_id]': this.modelId,
         'filter[subject_type]': this.modelType,
         pagination: 10,
@@ -214,6 +215,26 @@ export default {
           return 'Récurrent - Description'
         case 'is_autonomy':
           return 'Autonomie'
+        case 'notification__responsable_frequency':
+          return 'Fréquence notif. responsable'
+        case 'notification__responsable_bilan':
+          return 'Bilan notif. responsable'
+        case 'notification__referent_frequency':
+          return 'Fréquence notif. referent'
+        case 'notification__referent_bilan':
+          return 'Bilan notif. referent'
+        case 'birthday':
+          return 'Date de naissance'
+        case 'utm_source':
+          return 'UTM source'
+        case 'utm_medium':
+          return 'UTM medium'
+        case 'utm_campaign':
+          return 'UTM campaign'
+        case 'profile_id':
+          return 'Profile ID'
+        case 'mission_id':
+          return 'Mission ID'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },

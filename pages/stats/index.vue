@@ -3,7 +3,7 @@
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[
-          { text: 'Statistiques', to: '/statistiques' },
+          { text: 'Statistiques', to: '/stats' },
           { text: 'Vue d\'ensemble' },
         ]"
       />
@@ -14,7 +14,7 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics @refetch="refetch()" />
+          <FiltersStatisticsPublic @refetch="refetch()" />
         </div>
       </template>
     </SectionHeading>
@@ -50,12 +50,12 @@ import OverviewQuickGlance from '@/components/statistics/OverviewQuickGlance'
 import OverviewUtilisateurs from '@/components/statistics/OverviewUtilisateurs'
 import OverviewPlaces from '@/components/statistics/OverviewPlaces'
 // import OverviewAPIEngagement from '@/components/statistics/OverviewAPIEngagement'
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    FiltersStatistics,
+    FiltersStatisticsPublic,
     OverviewQuickGlance,
     OverviewOrganisations,
     OverviewParticipations,

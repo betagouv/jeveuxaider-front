@@ -3,15 +3,13 @@
     <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
-          <Heading as="h2" size="2xl">
+          <Heading :id="`label-blog-${_uid}`" as="h2" size="2xl">
             Les actualités de l'engagement
           </Heading>
 
-          <span
-            class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]"
-          >
+          <p class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]">
             #blog
-          </span>
+          </p>
         </div>
 
         <Slideshow
@@ -22,6 +20,7 @@
             isExternal: true,
           }"
           :slides-count="articles.length"
+          :aria-labelledby="`label-blog-${_uid}`"
         >
           <a
             v-for="article in articles"
@@ -89,6 +88,11 @@ export default {
     }
     &.slick-next {
       @apply translate-x-[104px];
+    }
+  }
+  .slick-dots {
+    @screen xl {
+      display: none !important;
     }
   }
 }

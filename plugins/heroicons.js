@@ -46,7 +46,8 @@ import {
   InformationCircleIcon,
   PlusCircleIcon,
   MinusCircleIcon,
-  TagIcon
+  TagIcon,
+  StarIcon
 } from '@vue-hero-icons/outline'
 import {
   InformationCircleIcon as InformationCircleSolidIcon,
@@ -126,7 +127,8 @@ const components = {
   XCircleIcon,
   PlusCircleSolidIcon,
   MinusCircleSolidIcon,
-  TagIcon
+  TagIcon,
+  StarIcon
 }
 
 Object.entries(components).forEach(([name, component]) => {

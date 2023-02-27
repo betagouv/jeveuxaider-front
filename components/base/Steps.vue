@@ -1,6 +1,6 @@
 <template>
   <nav aria-label="Progress">
-    <ol class="hidden lg:block overflow-hidden">
+    <ol class="hidden lg:block overflow-hidden -m-1 p-1">
       <template v-for="(step, stepIdx) in steps">
         <template v-if="step">
           <li

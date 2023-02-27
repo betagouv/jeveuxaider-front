@@ -4,7 +4,7 @@
       <label for="tabs" class="sr-only">Select a tab</label>
       <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
       <select id="tabs" name="tabs" class="block w-full focus:ring-jva-blue-500 focus:border-jva-blue-500 border-gray-300 rounded-md">
-        <option v-for="tab in tabs" :key="tab.name" :selected="tab.current">
+        <option v-for="tab in filteredTabs" :key="tab.name" :selected="tab.current">
           {{ tab.name }}
         </option>
       </select>
@@ -13,7 +13,7 @@
       <div class="border-b border-gray-200 overflow-hidden">
         <nav v-dragscroll class="overflow-hidden -mb-px flex space-x-4 xl:space-x-8" aria-label="Tabs">
           <nuxt-link
-            v-for="tab in tabs"
+            v-for="tab in filteredTabs"
             :key="tab.name"
             :to="tab.to"
             :class="[
@@ -36,6 +36,11 @@ export default {
     tabs: {
       type: Array,
       required: true
+    }
+  },
+  computed: {
+    filteredTabs () {
+      return this.tabs.filter(n => n)
     }
   }
 }

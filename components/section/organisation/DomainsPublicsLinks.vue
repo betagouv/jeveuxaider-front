@@ -3,18 +3,18 @@
     <!-- DOMAINES -->
     <template v-if="organisation.domaines">
       <div class="flex items-center mb-4">
-        <div class="flex-none uppercase font-bold text-sm mr-4">
+        <p class="flex-none uppercase font-bold text-sm mr-4">
           Causes défendues
-        </div>
+        </p>
         <hr class="w-full border-white opacity-25">
       </div>
 
-      <div v-if="!organisation.domaines.length">
+      <p v-if="!organisation.domaines.length">
         Non renseigné
-      </div>
+      </p>
 
-      <div v-else class="grid md:grid-cols-2 gap-3 xl:gap-x-6">
-        <div
+      <ul v-else class="grid md:grid-cols-2 gap-3 xl:gap-x-6">
+        <li
           v-for="domaine in organisation.domaines"
           :key="domaine.id"
           class="flex items-start"
@@ -22,34 +22,34 @@
           <div class="flex-none w-6 h-6 mr-3">
             <img
               :src="$options.filters.label(domaine.id, 'domaines', 'icon')"
-              :alt="$options.filters.label(domaine.id, 'domaines')"
+              alt=""
               width="24"
               height="24"
             >
           </div>
           <div>{{ $options.filters.label(domaine.id, 'domaines') }}</div>
-        </div>
-      </div>
+        </li>
+      </ul>
     </template>
 
     <!-- PUBLICS -->
     <template v-if="organisation.publics_beneficiaires">
       <div class="flex items-center mb-4 mt-8">
-        <div class="flex-none uppercase font-bold text-sm mr-4">
+        <p class="flex-none uppercase font-bold text-sm mr-4">
           Bénéficiaires
-        </div>
+        </p>
         <hr class="w-full border-white opacity-25">
       </div>
 
-      <div v-if="!organisation.publics_beneficiaires.length">
+      <p v-if="!organisation.publics_beneficiaires.length">
         Non renseigné
-      </div>
+      </p>
 
-      <div
+      <ul
         v-else
         class="space-y-3"
       >
-        <div
+        <li
           v-for="(
             public_beneficiaire, key
           ) in organisation.publics_beneficiaires"
@@ -67,8 +67,8 @@
                 | label('mission_publics_beneficiaires')
             }}
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
     </template>
 
     <!-- SHARE -->
