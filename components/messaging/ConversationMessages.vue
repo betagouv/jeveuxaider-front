@@ -1,8 +1,9 @@
 <template>
-  <div class="mb-auto">
+  <div class="mb-auto divide-y">
     <div
       v-for="message in messages"
       :key="message.id"
+      class="p-8"
     >
       <MessageChat
         v-if="message.type === 'chat'"
@@ -25,14 +26,11 @@ export default {
     MessageChat,
     MessageParticipationContextual
   },
-  data () {
-    return {
-      messages: []
-    }
+  props: {
+    messages: { type: Array, required: true }
   },
-  async fetch () {
-    const { data: response } = await this.$axios.get(`/conversationsv2/${this.conversation.id}/messages`)
-    this.messages = response.data.reverse()
+  data () {
+    return {}
   },
   computed: {
     conversation () {

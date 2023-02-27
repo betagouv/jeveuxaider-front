@@ -1,26 +1,25 @@
 <template>
-  <div class="flex flex-col h-full">
-    <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
-    <ContainerScrollable class="flex-1" :reverse="true">
-      <ConversationMessages />
-      <CardMissionInfos v-if="mission" :mission="mission" />
-    </ContainerScrollable>
-    <ConversationForm />
-  </div>
+  <Conversation>
+    <template #header>
+      <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
+    </template>
+
+    <template #scroll-container-top>
+      <CardMissionInfos v-if="conversation.conversable" :mission="conversation.conversable" />
+    </template>
+  </Conversation>
 </template>
 
 <script>
 import ConversationRecipientUser from '@/components/messaging/ConversationRecipientUser.vue'
 import CardMissionInfos from '@/components/messaging/CardMissionInfos.vue'
-import ConversationMessages from '@/components/messaging/ConversationMessages.vue'
-import ConversationForm from '@/components/messaging/ConversationForm.vue'
+import Conversation from '@/components/messaging/Conversation.vue'
 
 export default {
   components: {
     ConversationRecipientUser,
     CardMissionInfos,
-    ConversationMessages,
-    ConversationForm
+    Conversation
   },
   computed: {
     conversation () {
@@ -29,19 +28,11 @@ export default {
     recipientUser () {
       return this.conversation.users.filter(user => user.id != this.$store.getters.profile.user_id)[0]
     },
-    mission () {
-      return this.conversation.conversable
-    },
     userVariant () {
       // TODO variant referent / responsable / admin
       return 'referent'
     }
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
-
-<style>
-
-</style>
