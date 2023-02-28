@@ -175,7 +175,7 @@ export default {
     loaders: {
       vue: {
         compilerOptions: {
-          whitespace: 'condense'
+          // whitespace: 'condense'
         }
       }
     },
