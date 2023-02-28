@@ -15,8 +15,8 @@ export default {
     thumbnail () {
       return this.mission.provider == 'api_engagement'
         ? this.thumbnailApi
-        : this.mission.template?.photo?.urls?.formPreview ??
-        this.mission.illustrations?.[0]?.urls?.formPreview ??
+        : this.mission.template?.photo?.urls?.card ??
+        this.mission.illustrations?.[0]?.urls?.card ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     },
     thumbnailApi () {
