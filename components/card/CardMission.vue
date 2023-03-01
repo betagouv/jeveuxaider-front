@@ -110,17 +110,15 @@
       </template>
 
       <div class="flex items-end justify-between space-x-1 text-xs text-[#666666] pt-8 mt-auto w-full">
-        <client-only>
-          <div v-if="hasExpired">
-            Inscription terminée
-          </div>
-          <div v-else>
-            <span>{{ placesLeftText }}</span>
-            <template v-if="formattedDate && placesLeftText !== 'Complet' && !mission.is_registration_open">
-              <br> {{ formattedDate }}
-            </template>
-          </div>
-        </client-only>
+        <p v-if="hasExpired">
+          Inscription terminée
+        </p>
+        <div v-else>
+          <p>{{ placesLeftText }}</p>
+          <p v-if="formattedDate && (placesLeftText !== 'Complet') && mission.is_registration_open">
+            {{ formattedDate }}
+          </p>
+        </div>
 
         <RiArrowRightLine
           :class="['flex-none ml-auto w-6 h-6 fill-current text-jva-blue-500']"
