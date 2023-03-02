@@ -57,6 +57,7 @@
     "vue-in-viewport-mixin": "^2.0.2",
     "vue-instantsearch": "^3.5.0",
     "vue-nl2br": "^0.1.2",
+    "vue-observe-visibility": "^1.0.0",
     "vue-remix-icons": "^2.0.3",
     "vue-scrollto": "^2.20.0",
     "vue-slick-carousel": "^1.0.6",

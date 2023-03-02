@@ -102,7 +102,10 @@
             :src="illustrationSrc"
             sizes="(min-width: 1024px) 384px, 100vw"
             alt=""
-            class="w-full object-cover object-top h-[180px] lg:h-[130px]"
+            :class="[
+              'w-full object-cover object-top h-[180px] lg:h-[130px]',
+              {'grayscale': !canRegister && !userParticipation}
+            ]"
             width="761"
             height="363"
             @error="$event.target.srcset = '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'"
@@ -120,16 +123,24 @@
               :srcset="mission.structure.logo.urls.small"
               :src="mission.structure.logo.urls.original"
               :alt="mission.structure.name"
-              class="my-auto object-contain w-full h-full"
+              :class="[
+                'my-auto object-contain w-full h-full',
+                {'grayscale': !canRegister && !userParticipation}
+              ]"
               style="max-width: 120px"
               @error="$event.target.remove()"
             >
           </component>
 
-          <div class="bg-white pb-8 pt-10 px-6 divide-y">
+          <div
+            :class="[
+              'bg-white pb-8 pt-10 px-6',
+              { 'divide-y': canRegister}
+            ]"
+          >
             <!-- Ils recherchent -->
             <div class="text-center pb-6">
-              <p class="text-xl font-bold text-black">
+              <p class="text-xl leading-tight mb-1 font-bold text-black">
                 <template v-if="!mission.has_places_left">
                   La mission est désormais complète
                 </template>
@@ -175,7 +186,7 @@
             </div>
 
             <!-- Dates début et fin -->
-            <div v-if="dates.length && !mission.dates" class="py-6">
+            <div v-if="canRegister && dates.length && !mission.dates" class="py-6">
               <div
                 class="grid"
                 :class="[{ 'sm:grid-cols-2 sm:divide-x': dates.length == 2 }]"
@@ -207,7 +218,7 @@
             </div>
 
             <!-- Durée de la mission -->
-            <div class="text-center py-6">
+            <div v-if="canRegister" class="text-center py-6">
               <p class="uppercase text-cool-gray-500 font-semibold text-xs">
                 Durée de la mission
               </p>
@@ -230,7 +241,7 @@
 
             <!-- CTA -->
             <div class="pt-6">
-              <div v-if="nextDates" class="text-center mb-6">
+              <div v-if="canRegister && nextDates" class="text-center mb-6">
                 <p class="uppercase text-cool-gray-500 font-semibold text-xs space-x-2 mb-2">
                   Prochaines dates
                 </p>
@@ -266,11 +277,20 @@
                 <ButtonJeProposeMonAide :mission="mission" class="w-full" />
               </div>
 
-              <DsfrButton v-else disabled size="lg" class="w-full">
-                Inscription fermée
-              </DsfrButton>
+              <template v-else>
+                <DsfrButton disabled size="lg" class="w-full">
+                  Inscription fermée
+                </DsfrButton>
+                <DsfrButton
+                  v-scroll-to="{el: '#missions-similaires', duration: 2000, cancellable: false}"
+                  size="lg"
+                  class="w-full mt-4"
+                >
+                  Voir les missions similaires
+                </DsfrButton>
+              </template>
 
-              <p v-if="mission.structure.response_time" class="mt-4 px-8 text-cool-gray-500 text-xs text-center leading-4">
+              <p v-if="canRegister && mission.structure.response_time" class="mt-4 px-8 text-cool-gray-500 text-xs text-center leading-4">
                 <span class="font-semibold">{{ mission.structure.name }}</span> répond généralement <span class="font-semibold">{{ missionStructureResponseTimeFormatted }}</span>
               </p>
             </div>
@@ -287,6 +307,8 @@
 
     <div
       v-if="similarMissions.length > 0"
+      id="missions-similaires"
+      v-observe-visibility="!userParticipation && !canRegister ? handleVisibilityMissionsSimilaires : false"
       class="bg-[#ECECFE] overflow-hidden mt-12"
     >
       <div class="container mx-auto px-8 sm:px-4">
@@ -326,7 +348,12 @@
 
     <!-- CTA MOBILE FIXED FOOTER -->
     <div
-      class="sm:hidden fixed bottom-0 p-4 bg-white z-50 w-full left-0 right-0"
+      v-show="showFixedCtaMobile"
+      :class="[
+        'sm:hidden fixed bottom-0 px-4 bg-white z-50 w-full left-0 right-0',
+        {'pt-4 pb-2': canRegister || userParticipation},
+        {'pt-2 pb-4': !canRegister && !userParticipation},
+      ]"
       style="box-shadow: 0 25px 20px 30px rgb(0 0 0 / 25%);"
     >
       <div class="">
@@ -334,7 +361,7 @@
         <DsfrButton
           v-else-if="userParticipation"
           size="lg"
-          class="w-full mt-6"
+          class="w-full"
           type="secondary"
           @click.native="$router.push(userParticipationLink)"
         >
@@ -344,20 +371,26 @@
           <ButtonJeProposeMonAide :mission="mission" class="w-full" />
         </div>
 
-        <DsfrButton v-else disabled size="lg" class="w-full">
-          Inscription fermée
-        </DsfrButton>
+        <div v-else>
+          <p class="text-gray-500 uppercase text-center text-xs font-bold">
+            Inscription fermée
+          </p>
+          <DsfrButton
+            v-scroll-to="{el: '#missions-similaires', duration: 2000, cancellable: false, lazy: false, offset: 56}"
+            size="lg"
+            class="w-full mt-2"
+          >
+            Voir les missions similaires
+          </DsfrButton>
+        </div>
 
-        <div v-if="mission.commitment__duration" class="mt-4 font-bold text-center">
+        <div v-if="canRegister && mission.commitment__duration" class="mt-1 text-sm font-bold text-center">
           <span>{{ mission.commitment__duration|label('duration') }}</span>
           <template v-if="mission.commitment__time_period">
             <span class="font-normal"> par </span>
             <span>{{ mission.commitment__time_period|label('time_period') }}</span>
           </template>
         </div>
-        <!-- <div v-if="mission.recurrent_description" class="text-cool-gray-500 text-sm text-center">
-          {{ mission.recurrent_description }}
-        </div> -->
       </div>
     </div>
   </div>
@@ -426,7 +459,8 @@ export default {
     return {
       similarMissions: [],
       userParticipation: null,
-      loading: false
+      loading: false,
+      showFixedCtaMobile: true
     }
   },
   async fetch () {
@@ -545,6 +579,11 @@ export default {
         : this.userParticipation.conversation?.id ? `/messages/${this.userParticipation.conversation.id}` : '/profile/missions'
     }
 
+  },
+  methods: {
+    handleVisibilityMissionsSimilaires (isVisible, entry) {
+      this.showFixedCtaMobile = !isVisible
+    }
   }
 }
 </script>
