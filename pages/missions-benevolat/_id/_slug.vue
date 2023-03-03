@@ -282,9 +282,11 @@
                   Inscription fermée
                 </DsfrButton>
                 <DsfrButton
+                  v-if="similarMissions.length > 0"
                   v-scroll-to="{el: '#missions-similaires', duration: 2000, cancellable: false}"
                   size="lg"
                   class="w-full mt-4"
+                  @click.native="onClickGoToSimilarMissions"
                 >
                   Voir les missions similaires
                 </DsfrButton>
@@ -308,7 +310,7 @@
     <div
       v-if="similarMissions.length > 0"
       id="missions-similaires"
-      v-observe-visibility="!userParticipation && !canRegister ? handleVisibilityMissionsSimilaires : false"
+      v-observe-visibility="!userParticipation && !canRegister ? handleVisibilityFixedCtaMobile : false"
       class="bg-[#ECECFE] overflow-hidden mt-12"
     >
       <div class="container mx-auto px-8 sm:px-4">
@@ -328,14 +330,15 @@
               :key="mission.id"
               class="card--mission--wrapper"
               :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
+              @click.native="onClickSimilarMission"
             >
               <CardMission :mission="mission" class="!h-full" />
             </nuxt-link>
           </Slideshow>
 
-          <div v-if="mission.domaine" class="text-center">
+          <div v-if="activity || domaine" class="text-center">
             <Link
-              :to="`/missions-benevolat?domaines=${mission.domaine.name}`"
+              :to="activity ? `/missions-benevolat?activity.name=${encodeURIComponent(activity.name)}` : `/missions-benevolat?domaines=${encodeURIComponent(domaine.name)}`"
               class="text-jva-blue-500"
               icon="RiArrowRightLine"
             >
@@ -376,9 +379,11 @@
             Inscription fermée
           </p>
           <DsfrButton
+            v-if="similarMissions.length > 0"
             v-scroll-to="{el: '#missions-similaires', duration: 2000, cancellable: false, lazy: false, offset: 56}"
             size="lg"
             class="w-full mt-2"
+            @click.native="onClickGoToSimilarMissions"
           >
             Voir les missions similaires
           </DsfrButton>
@@ -459,20 +464,27 @@ export default {
     return {
       similarMissions: [],
       userParticipation: null,
-      loading: false,
+      loading: true,
       showFixedCtaMobile: true
     }
   },
   async fetch () {
+    this.loading = true
+
     if (this.$store.getters.isLogged) {
-      this.loading = true
       const { data: userParticipation } = await this.$axios.get(`/user/mission/${this.mission.id}/has-participation`)
       this.userParticipation = userParticipation || null
+    }
+
+    // No need to wait for similar missions
+    if (this.canRegister || this.userParticipation) {
       this.loading = false
     }
 
     const { data: missions } = await this.$axios.get(`/missions/${this.mission.id}/similar`)
     this.similarMissions = missions
+
+    this.loading = false
   },
   head () {
     return {
@@ -581,8 +593,30 @@ export default {
 
   },
   methods: {
-    handleVisibilityMissionsSimilaires (isVisible, entry) {
+    handleVisibilityFixedCtaMobile (isVisible, entry) {
       this.showFixedCtaMobile = !isVisible
+    },
+    onClickGoToSimilarMissions () {
+      window.plausible &&
+        window.plausible('Click Voir les missions similaires', {
+          props: {
+            isRegistrationOpen: this.mission.is_registration_open,
+            hasPlacesLeft: this.mission.has_places_left,
+            isOutdated: this.hasExpired
+          }
+        })
+    },
+    onClickSimilarMission () {
+      // todo: mixin quand le bloc missions similaires sera aussi sur les pages de mission API
+      window.plausible &&
+        window.plausible('Click Card Mission Similaire', {
+          props: {
+            isFromApi: this.mission.isFromApi ?? false,
+            isRegistrationOpen: this.mission.is_registration_open,
+            hasPlacesLeft: this.mission.has_places_left,
+            isOutdated: this.hasExpired
+          }
+        })
     }
   }
 }
