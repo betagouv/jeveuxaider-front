@@ -1,12 +1,12 @@
 <template>
   <component
     :is="to ? (isExternal ? 'a' : 'nuxt-link') : 'button'"
-    :target="isExternal ? '_blank' : '_self'"
+    :target="to ? (isExternal ? '_blank' : '_self') : undefined"
     :class="[
       'dsfr-link inline no-underline cursor-pointer'
     ]"
-    :href="to"
-    :to="!isExternal && to"
+    :href="to || undefined"
+    :to="!isExternal && to ? to : undefined"
     :title="title || $slots.default?.[0]?.text?.trim()"
   >
     <component

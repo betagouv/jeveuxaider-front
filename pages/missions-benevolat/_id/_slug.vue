@@ -338,9 +338,9 @@
 
           <div v-if="activity || domaine" class="text-center">
             <Link
-              :to="activity ? `/missions-benevolat?activity.name=${encodeURIComponent(activity.name)}` : `/missions-benevolat?domaines=${encodeURIComponent(domaine.name)}`"
               class="text-jva-blue-500"
               icon="RiArrowRightLine"
+              @click.native="onClickMoreMissions"
             >
               Plus de missions
             </Link>
@@ -617,6 +617,21 @@ export default {
             isOutdated: this.hasExpired
           }
         })
+    },
+    onClickMoreMissions () {
+      // todo: mixin quand le bloc missions similaires sera aussi sur les pages de mission API
+      window.plausible &&
+        window.plausible('Click Plus de missions', {
+          props: {
+            isFromApi: this.mission.isFromApi ?? false,
+            isRegistrationOpen: this.mission.is_registration_open,
+            hasPlacesLeft: this.mission.has_places_left,
+            isOutdated: this.hasExpired
+          }
+        })
+
+      const url = this.activity ? `/missions-benevolat?activity.name=${encodeURIComponent(this.activity.name)}` : `/missions-benevolat?domaines=${encodeURIComponent(this.domaine.name)}`
+      this.$router.push(url)
     }
   }
 }
