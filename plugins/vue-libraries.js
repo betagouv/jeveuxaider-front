@@ -7,6 +7,7 @@ import VueStarRating from 'vue-star-rating'
 import VueDragscroll from 'vue-dragscroll'
 import VCalendar from 'v-calendar'
 import Nl2br from 'vue-nl2br'
+import VueObserveVisibility from 'vue-observe-visibility'
 
 Vue.component('StarRating', VueStarRating)
 
@@ -29,3 +30,5 @@ Vue.use(TextareaAutosize)
 Vue.use(VueDragscroll)
 Vue.use(VCalendar)
 Vue.component('Nl2br', Nl2br)
+
+Vue.use(VueObserveVisibility)

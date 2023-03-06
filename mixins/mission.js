@@ -12,6 +12,18 @@ export default {
         this.mission?.template?.domaine_id
       )
     },
+    activity () {
+      return (
+        this.mission?.activity ??
+        this.mission?.template?.activity
+      )
+    },
+    activityId () {
+      return (
+        this.mission?.activity_id ??
+        this.mission?.template?.activity_id
+      )
+    },
     thumbnail () {
       return this.mission.provider == 'api_engagement'
         ? this.thumbnailApi
