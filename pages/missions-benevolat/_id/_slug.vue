@@ -283,7 +283,7 @@
                 </DsfrButton>
                 <DsfrButton
                   v-if="similarMissions.length > 0"
-                  v-scroll-to="{el: '#missions-similaires', duration: 2000, cancellable: false}"
+                  v-scroll-to="{el: '#missions-similaires', duration: 2000}"
                   size="lg"
                   class="w-full mt-4"
                   @click.native="onClickGoToSimilarMissions"
@@ -380,7 +380,7 @@
           </p>
           <DsfrButton
             v-if="similarMissions.length > 0"
-            v-scroll-to="{el: '#missions-similaires', duration: 2000, cancellable: false, lazy: false, offset: 56}"
+            v-scroll-to="{el: '#missions-similaires', duration: 2000, lazy: false, offset: 56}"
             size="lg"
             class="w-full mt-2"
             @click.native="onClickGoToSimilarMissions"
