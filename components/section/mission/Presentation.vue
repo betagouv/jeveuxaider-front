@@ -77,12 +77,12 @@
       </div>
     </div>
 
-    <div v-if="mission.activity?.name" class="mt-10">
+    <div v-if="activity" class="mt-10">
       <HrTitle>
         Activité
       </HrTitle>
       <Badge as="p">
-        {{ mission.activity.name }}
+        {{ activity.name }}
       </Badge>
     </div>
 

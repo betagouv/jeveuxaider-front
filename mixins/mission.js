@@ -191,5 +191,42 @@ export default {
         return 'en moins d\'un jour'
       }
     }
+  },
+  methods: {
+    onClickGoToSimilarMissions () {
+      window.plausible &&
+        window.plausible('Click Voir les missions similaires', {
+          props: {
+            isRegistrationOpen: this.mission.is_registration_open,
+            hasPlacesLeft: this.mission.has_places_left,
+            isOutdated: this.hasExpired
+          }
+        })
+    },
+    onClickSimilarMission () {
+      window.plausible &&
+        window.plausible('Click Card Mission Similaire', {
+          props: {
+            isFromApi: this.mission.isFromApi ?? false,
+            isRegistrationOpen: this.mission.is_registration_open,
+            hasPlacesLeft: this.mission.has_places_left,
+            isOutdated: this.hasExpired
+          }
+        })
+    },
+    onClickMoreMissions () {
+      window.plausible &&
+        window.plausible('Click Plus de missions', {
+          props: {
+            isFromApi: this.mission.isFromApi ?? false,
+            isRegistrationOpen: this.mission.is_registration_open,
+            hasPlacesLeft: this.mission.has_places_left,
+            isOutdated: this.hasExpired
+          }
+        })
+
+      const url = this.activity ? `/missions-benevolat?activity.name=${encodeURIComponent(this.activity.name)}` : `/missions-benevolat?domaines=${encodeURIComponent(this.domaine.name)}`
+      this.$router.push(url)
+    }
   }
 }

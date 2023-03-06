@@ -595,43 +595,6 @@ export default {
   methods: {
     handleVisibilityFixedCtaMobile (isVisible, entry) {
       this.showFixedCtaMobile = !isVisible
-    },
-    onClickGoToSimilarMissions () {
-      window.plausible &&
-        window.plausible('Click Voir les missions similaires', {
-          props: {
-            isRegistrationOpen: this.mission.is_registration_open,
-            hasPlacesLeft: this.mission.has_places_left,
-            isOutdated: this.hasExpired
-          }
-        })
-    },
-    onClickSimilarMission () {
-      // todo: mixin quand le bloc missions similaires sera aussi sur les pages de mission API
-      window.plausible &&
-        window.plausible('Click Card Mission Similaire', {
-          props: {
-            isFromApi: this.mission.isFromApi ?? false,
-            isRegistrationOpen: this.mission.is_registration_open,
-            hasPlacesLeft: this.mission.has_places_left,
-            isOutdated: this.hasExpired
-          }
-        })
-    },
-    onClickMoreMissions () {
-      // todo: mixin quand le bloc missions similaires sera aussi sur les pages de mission API
-      window.plausible &&
-        window.plausible('Click Plus de missions', {
-          props: {
-            isFromApi: this.mission.isFromApi ?? false,
-            isRegistrationOpen: this.mission.is_registration_open,
-            hasPlacesLeft: this.mission.has_places_left,
-            isOutdated: this.hasExpired
-          }
-        })
-
-      const url = this.activity ? `/missions-benevolat?activity.name=${encodeURIComponent(this.activity.name)}` : `/missions-benevolat?domaines=${encodeURIComponent(this.domaine.name)}`
-      this.$router.push(url)
     }
   }
 }
@@ -644,29 +607,13 @@ export default {
     @apply w-full;
   }
 
-  :deep(.slick-slider) {
-    .slick-arrow {
-      &.slick-prev {
-        @apply translate-x-[-104px];
-      }
-      &.slick-next {
-        @apply translate-x-[104px];
-      }
-    }
-    .slick-dots {
-      @screen xl {
-        display: none !important;
-      }
-    }
+  .deco--2 {
+    left: calc(50% - 772px);
+    top: 150px;
   }
 
-.deco--2 {
-  left: calc(50% - 772px);
-  top: 150px;
-}
-
-.deco--3 {
-  right: calc(50% - 728px);
-  top: -12px;
-}
+  .deco--3 {
+    right: calc(50% - 728px);
+    top: -12px;
+  }
 </style>
