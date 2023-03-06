@@ -53,7 +53,6 @@ export default {
     '~/plugins/heroicons.js',
     '~/plugins/axeptio.client.js',
     // '~/plugins/userback.client.js',
-    '~/plugins/atinternet.client.js',
     '~/plugins/flare.client.js',
     '~/plugins/yup.js',
     '~/plugins/vue-filters.js',
