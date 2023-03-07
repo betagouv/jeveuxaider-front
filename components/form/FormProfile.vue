@@ -460,13 +460,43 @@ export default {
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
-        birthday: date().required("Une date d'anniversaire est requise").nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
+        birthday: date().test(
+          'test-birthday-required',
+          "Une date d'anniversaire est requise",
+          (birthday) => {
+            return ['admin'].includes(this.$store.getters.contextRole) || birthday
+          }
+        ).nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
-        type: string().nullable().required('Une profession est requise'),
-        mobile: string().nullable().min(10, 'Le mobile doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un mobile est requis'),
+        type: string().nullable().test(
+          'test-profession-required',
+          'Une profession est requise',
+          (type) => {
+            return ['admin'].includes(this.$store.getters.contextRole) || type
+          }
+        ),
+        mobile: string().nullable().min(10, 'Le mobile doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').test(
+          'test-mobile-required',
+          'Un mobile est requis',
+          (mobile) => {
+            return ['admin'].includes(this.$store.getters.contextRole) || mobile
+          }
+        ).transform(v => v === '' ? null : v),
         phone: string().nullable().min(10, 'Le téléphone doit contenir au moins 10 caractères').matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect').transform(v => v === '' ? null : v),
-        zip: string().nullable().min(5, 'Le format du code postal est incorrect').required('Un code postal est requis'),
-        disponibilities: array().transform(v => (!v ? [] : v)).min(1, 'Merci de sélectionner au moins 1 disponibilité').required('df'),
+        zip: string().nullable().min(5, 'Le format du code postal est incorrect').test(
+          'test-zip-required',
+          'Un code postal est requis',
+          (zip) => {
+            return ['admin'].includes(this.$store.getters.contextRole) || zip
+          }
+        ),
+        disponibilities: array().transform(v => (!v ? [] : v)).test(
+          'test-disponibilities-required',
+          'Merci de sélectionner au moins 1 disponibilité',
+          (disponibilities) => {
+            return ['admin'].includes(this.$store.getters.contextRole) || disponibilities.length >= 1
+          }
+        ),
         cej_email_adviser: string().nullable().email("Le format de l'email est incorrect").when('cej', {
           is: true,
           then: schema => schema.required("L'email de votre conseiller CEJ est obligatoire")
