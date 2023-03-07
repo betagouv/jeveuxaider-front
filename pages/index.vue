@@ -1,6 +1,10 @@
 <template>
-  <div>
+  <div class="bg-[#F9F6F2]">
     <Banner />
+    <InscriptionBenevole />
+    <InscriptionResponsable />
+
+    <!-- <Banner />
     <Organisations />
 
     <hr class="mt-12 pt-12 md:hidden border-[#CDCDCD]">
@@ -41,42 +45,20 @@
       </div>
     </section>
 
-    <Faq />
+    <Faq /> -->
   </div>
 </template>
 
 <script>
-import Banner from '@/components/section/homepage/Banner'
-import Organisations from '@/components/section/homepage/Organisations'
-import MissionsPrioritaires from '@/components/section/homepage/MissionsPrioritaires'
-import Domaines from '@/components/section/homepage/Domaines'
-import EngagezVous from '@/components/section/homepage/EngagezVous'
-import Blog from '@/components/section/homepage/Blog'
-import Temoignages from '@/components/section/homepage/Temoignages'
-import Faq from '@/components/section/homepage/Faq'
-import Newsletter from '@/components/section/homepage/Newsletter'
-import Communaute from '@/components/section/homepage/Communaute'
-import FacilitezRecrutement from '@/components/section/homepage/FacilitezRecrutement'
-import EncouragezEngagementLocal from '@/components/section/homepage/EncouragezEngagementLocal'
-import Heading from '@/components/dsfr/Heading.vue'
-import RejoindreLaCommunaute from '@/components/section/homepage/RejoindreLaCommunaute'
+import Banner from '@/components/section/home/Banner'
+import InscriptionBenevole from '@/components/section/home/InscriptionBenevole'
+import InscriptionResponsable from '@/components/section/home/InscriptionResponsable'
 
 export default {
   components: {
     Banner,
-    Organisations,
-    MissionsPrioritaires,
-    Domaines,
-    EngagezVous,
-    Blog,
-    Temoignages,
-    Faq,
-    Newsletter,
-    Communaute,
-    FacilitezRecrutement,
-    EncouragezEngagementLocal,
-    Heading,
-    RejoindreLaCommunaute
+    InscriptionBenevole,
+    InscriptionResponsable
   },
   head () {
     return {
@@ -87,12 +69,6 @@ export default {
           rel: 'canonical',
           href: 'https://www.jeveuxaider.gouv.fr/'
         }
-        // {
-        //   rel: 'preload',
-        //   as: 'image',
-        //   href: '/images/banner_mobile.jpg',
-        //   imagesrcset: '/images/homepage/banner_mobile.webp, /images/homepage/banner_mobile.jpg, /images/homepage/banner_mobile@2x.webp 2x, /images/homepage/banner_mobile@2x.jpg 2x'
-        // }
       ],
       meta: [
         {

@@ -79,6 +79,7 @@ module.exports = {
           600: '#EA6861'
         },
         'jva-orange': {
+          300: '#FFA48B',
           500: '#DA7600'
         },
         gray: {

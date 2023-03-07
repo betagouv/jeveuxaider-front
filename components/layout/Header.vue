@@ -6,7 +6,7 @@
     <portal-target name="header-top" multiple />
 
     <div class="relative bg-white shadow-lg z-30">
-      <div class="flex justify-between lg:justify-start items-center space-x-2 relative lg:p-2" :class="{'lg:max-w-7xl lg:mx-auto': !fullWidth}">
+      <div class="flex justify-between lg:justify-start items-center space-x-2 relative p-4 lg:p-2" :class="{'lg:max-w-7xl lg:mx-auto': !fullWidth}">
         <div class="flex space-x-6 items-center">
           <img
             src="@/assets/images/republique-francaise-logo.svg"

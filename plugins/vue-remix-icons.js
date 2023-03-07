@@ -22,6 +22,7 @@ import RiBookmark3Fill from 'vue-remix-icons/icons/RiBookmark3Fill.vue'
 import RiTimeFill from 'vue-remix-icons/icons/RiTimeFill.vue'
 import RiCloseFill from 'vue-remix-icons/icons/RiCloseFill.vue'
 import RiCheckboxCircleLine from 'vue-remix-icons/icons/RiCheckboxCircleLine.vue'
+import RiUserHeartLine from 'vue-remix-icons/icons/RiUserHeartLine.vue'
 import RiUserHeartFill from 'vue-remix-icons/icons/RiUserHeartFill.vue'
 import RiComputerFill from 'vue-remix-icons/icons/RiComputerFill.vue'
 import RiShareFill from 'vue-remix-icons/icons/RiShareFill.vue'
@@ -66,6 +67,7 @@ const components = {
   RiTimeFill,
   RiCloseFill,
   RiCheckboxCircleLine,
+  RiUserHeartLine,
   RiUserHeartFill,
   RiComputerFill,
   RiShareFill,
