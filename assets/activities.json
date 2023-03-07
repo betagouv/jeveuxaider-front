@@ -2,201 +2,277 @@
   {
     "key": 18,
     "label": "✉️ Vie citoyenne",
+    "icon": "✉️",
+    "name": "Vie citoyenne",
     "domain":["Mémoire et citoyenneté"]
   },
   {
     "key": 40,
     "label": "🏛 Valorisation du patrimoine",
+    "icon": "🏛",
+    "name": "Valorisation du patrimoine",
     "domain": ["Art et culture pour tous"]
   },
   {
     "key": 22,
     "label": "🔨 Travaux manuels",
+    "icon": "🔨",
+    "name": "Travaux manuels",
     "domain": ["Solidarité et insertion", "Protection de la nature"]
   },
   {
     "key": 35,
     "label": "💬 Traduction",
+    "icon": "💬",
+    "name": "Traduction",
     "domain": ["Bénévolat de compétences"],
     "popular": true
   },
   {
     "key": 17,
     "label": "👨‍🏫 Soutien scolaire et formation",
+    "icon": "👨‍🏫",
+    "name": "Soutien scolaire et formation",
     "domain": ["Éducation pour tous"]
   },
   {
     "key": 16,
     "label": "🐰 Soins aux animaux",
+    "icon": "🐰",
+    "name": "Soins aux animaux",
     "domain": ["Protection de la nature"],
     "popular": true
   },
   {
     "key": 15,
     "label": "💆‍♀️ Services à la personne",
+    "icon": "💆‍♀️",
+    "name": "Services à la personne",
     "domain": ["Solidarité et insertion"]
   },
   {
     "key": 14,
     "label": "👨‍🚒 Secourisme et sécurité civile",
+    "icon": "👨‍🚒",
+    "name": "Secourisme et sécurité civile",
     "domain": ["Prévention et protection"]
   },
   {
     "key": 26,
     "label": "🌟 Recherche de partenariats",
+    "icon": "🌟",
+    "name": "Recherche de partenariats",
     "domain": ["Bénévolat de compétences"]
   },
   {
     "key": 12,
     "label": "♻️ Ramassage de déchets",
+    "icon": "♻️",
+    "name": "Ramassage de déchets",
     "domain": ["Protection de la nature"],
     "popular": true
   },
   {
     "key": 10,
     "label": "🙋‍♂️ Mentorat et parrainage",
+    "icon": "🙋‍♂️",
+    "name": "Mentorat et parrainage",
     "domain": ["Éducation pour tous"],
     "popular": true
   },
   {
     "key": 2,
     "label": "👩‍⚕️ Médical",
+    "icon": "👩‍⚕️",
+    "name": "Médical",
     "domain": ["Santé pour tous"]
   },
   {
     "key": 34,
     "label": "🎨 Médiation culturelle",
+    "icon": "🎨",
+    "name": "Médiation culturelle",
     "domain": ["Art et culture pour tous"]
   },
   {
     "key": 1,
     "label": "☕️ Maraude",
+    "icon": "☕️",
+    "name": "Maraude",
     "domain": ["Solidarité et insertion"],
     "popular": true
   },
   {
     "key": 8,
     "label": "👫 Lutte contre l’isolement",
+    "icon": "👫",
+    "name": "Lutte contre l’isolement",
     "domain": ["Solidarité et insertion"]
   },
   {
     "key": 33,
     "label": "🚛 Logistique",
+    "icon": "🚛",
+    "name": "Logistique",
     "domain": ["Bénévolat de compétences"],
     "popular": true
   },
   {
     "key": 39,
     "label": "🖥 Informatique",
+    "icon": "🖥",
+    "name": "Informatique",
     "domain": ["Bénévolat de compétences"],
     "popular": true
   },
   {
     "key": 32,
-    "label": "🧩 Gouvernance ",
+    "label": "🧩 Gouvernance",
+    "icon": "🧩",
+    "name": "Gouvernance",
     "domain": ["Bénévolat de compétences"]
   },
   {
     "key": 30,
     "label": "📊 Gestion financière/Comptabilité",
+    "icon": "📊",
+    "name": "Gestion financière/Comptabilité",
     "domain": ["Bénévolat de compétences"]
   },
   {
     "key": 38,
     "label": "💭 Gestion des ressources humaines",
+    "icon": "💭",
+    "name": "Gestion des ressources humaines",
     "domain": ["Bénévolat de compétences"],
     "popular": true
   },
   {
     "key": 37,
     "label": "🚀 Gestion de projets",
+    "icon": "🚀",
+    "name": "Gestion de projets",
     "domain": ["Bénévolat de compétences"]
   },
   {
     "key": 31,
     "label": "🗃 Gestion administrative",
+    "icon": "🗃",
+    "name": "Gestion administrative",
     "domain": ["Bénévolat de compétences"]
   },
   {
     "key": 11,
     "label": "📆 Événementiel",
+    "icon": "📆",
+    "name": "Événementiel",
     "domain": ["Bénévolat de compétences"],
     "popular": true
   },
   {
     "key": 29,
     "label": "☎️ Écoute / Aide psychologique",
+    "icon": "☎️",
+    "name": "Écoute / Aide psychologique",
     "domain": ["Solidarité et insertion"]
   },
   {
     "key": 41,
     "label": "⚖️ Droit et conseil juridique",
+    "icon": "⚖️",
+    "name": "Droit et conseil juridique",
     "domain": ["Bénévolat de compétences"]
   },
   {
     "key": 28,
     "label": "🥘 Distribution",
+    "icon": "🥘",
+    "name": "Distribution",
     "domain": ["Solidarité et insertion"]
   },
   {
     "key": 27,
     "label": "🗣 Dialogue interculturel",
+    "icon": "🗣",
+    "name": "Dialogue interculturel",
     "domain": ["Art et culture pour tous"]
   },
   {
     "key": 24,
     "label": "📇 Communication",
+    "icon": "📇",
+    "name": "Communication",
     "domain": ["Bénévolat de compétences"]
   },
   {
     "key": 7,
     "label": "🥫 Collecte de produits",
+    "icon": "🥫",
+    "name": "Collecte de produits",
     "domain": ["Solidarité et insertion"]
   },
   {
     "key": 23,
     "label": "💶 Collecte de fonds",
+    "icon": "💶",
+    "name": "Collecte de fonds",
     "domain": ["Bénévolat de compétences", "Solidarité et insertion", "Mémoire et citoyenneté", "Art et culture pour tous", "Protection de la nature", "Éducation pour tous", "Santé pour tous", "Sport pour tous", "Prévention et protection"]
   },
   {
     "key": 6,
     "label": "🤸‍♂️ Animation/Loisirs",
+    "icon": "🤸‍♂️",
+    "name": "Animation/Loisirs",
     "domain": ["Éducation pour tous", "Sport pour tous"]
   },
   {
     "key": 5,
     "label": "🌳 Aménagement d’espaces naturels",
+    "icon": "🌳",
+    "name": "Aménagement d’espaces naturels",
     "domain": ["Protection de la nature"],
     "popular": true
   },
   {
     "key": 4,
     "label": "📚 Alphabétisation / Apprentissage du français (FLE)",
+    "icon": "📚",
+    "name": "Alphabétisation / Apprentissage du français (FLE)",
     "domain": ["Éducation pour tous"]
   },
   {
     "key": 3,
     "label": "✍️ Aide aux démarches administratives",
+    "icon": "✍️",
+    "name": "Aide aux démarches administratives",
     "domain": ["Solidarité et insertion"]
   },
   {
     "key": 19,
     "label": "📣 Actions de sensibilisation",
+    "icon": "📣",
+    "name": "Actions de sensibilisation",
     "domain": ["Prévention et protection", "Santé pour tous"]
   },
   {
     "key": 21,
     "label": "👋 Accueil / Information",
+    "icon": "👋",
+    "name": "Accueil / Information",
     "domain": ["Solidarité et insertion"]
   },
   {
     "key": 20,
     "label": "🏀 Accompagnement aux activités sportives",
+    "icon": "🏀",
+    "name": "Accompagnement aux activités sportives",
     "domain": ["Sport pour tous"]
   },
   {
     "key": 36,
     "label": "🚗 Accompagnement à la mobilité",
+    "icon": "🚗",
+    "name": "Accompagnement à la mobilité",
     "domain": ["Solidarité et insertion"]
   }
 ]

@@ -3,6 +3,7 @@
     <Banner />
     <InscriptionBenevole />
     <InscriptionResponsable />
+    <BlocActivities />
 
     <!-- <Banner />
     <Organisations />
@@ -53,12 +54,14 @@
 import Banner from '@/components/section/home/Banner'
 import InscriptionBenevole from '@/components/section/home/InscriptionBenevole'
 import InscriptionResponsable from '@/components/section/home/InscriptionResponsable'
+import BlocActivities from '@/components/section/home/BlocActivities'
 
 export default {
   components: {
     Banner,
     InscriptionBenevole,
-    InscriptionResponsable
+    InscriptionResponsable,
+    BlocActivities
   },
   head () {
     return {
