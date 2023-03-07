@@ -4,6 +4,7 @@
     <InscriptionBenevole />
     <InscriptionResponsable />
     <BlocActivities />
+    <PrintempsPourLaPlanete />
 
     <!-- <Banner />
     <Organisations />
@@ -51,17 +52,19 @@
 </template>
 
 <script>
-import Banner from '@/components/section/home/Banner'
-import InscriptionBenevole from '@/components/section/home/InscriptionBenevole'
-import InscriptionResponsable from '@/components/section/home/InscriptionResponsable'
-import BlocActivities from '@/components/section/home/BlocActivities'
+import Banner from '@/components/section/home/Banner.vue'
+import InscriptionBenevole from '@/components/section/home/InscriptionBenevole.vue'
+import InscriptionResponsable from '@/components/section/home/InscriptionResponsable.vue'
+import BlocActivities from '@/components/section/home/BlocActivities.vue'
+import PrintempsPourLaPlanete from '@/components/section/operations/PrintempsPourLaPlanete.vue'
 
 export default {
   components: {
     Banner,
     InscriptionBenevole,
     InscriptionResponsable,
-    BlocActivities
+    BlocActivities,
+    PrintempsPourLaPlanete
   },
   head () {
     return {
