@@ -88,7 +88,7 @@
               <OnlineIndicator :published="!!reseau.is_published" :link="reseau.full_url" />
             </div>
           </div>
-          <nuxt-link v-if="['admin', 'tete_de_reseau'].includes($store.getters.contextRole)" :to="`/admin/contenus/reseaux/${reseau.id}/edit`">
+          <nuxt-link v-if="['admin'].includes($store.getters.contextRole)" :to="`/admin/contenus/reseaux/${reseau.id}/edit`">
             <Button icon="PencilIcon">
               Modifier
             </Button>
