@@ -148,16 +148,6 @@
           </NavItem> -->
 
           <NavItem
-            v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
-            key="restos-du-coeur"
-            to="/missions-benevolat?tags=Collecte%20nationale%20des%20Restos%20du%20Cœur"
-            class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
-          >
-            <span aria-hidden="true">🍽️</span>
-            <span>Restos du Cœur</span>
-          </NavItem>
-
-          <NavItem
             v-if="$store.getters.contextRole == 'admin'"
             to="/admin/contenus/missions-prioritaires"
             :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500 ml-auto flex items-center', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/admin/(settings|contenus|scripts)/*')}]"
@@ -248,16 +238,6 @@
                       <span>Notre impact</span>
                       <span aria-hidden="true">🎯</span>
                     </NavItem> -->
-
-                    <NavItem
-                      v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
-                      key="restos-du-coeur"
-                      to="/missions-benevolat?tags=Collecte%20nationale%20des%20Restos%20du%20Cœur"
-                      :class="['flex space-x-1 px-3 py-2 text-base text-cool-gray-600']"
-                    >
-                      <span aria-hidden="true">🍽️</span>
-                      <span>Restos du Cœur</span>
-                    </NavItem>
 
                     <div class="border-t my-2" />
 
