@@ -6,6 +6,7 @@
     <BlocActivities />
     <PrintempsPourLaPlanete />
     <BlocMissionsCourtes />
+    <BlocActionsBenevolesPopulaires />
 
     <!-- <Banner />
     <Organisations />
@@ -59,6 +60,7 @@ import InscriptionResponsable from '@/components/section/home/InscriptionRespons
 import BlocActivities from '@/components/section/home/BlocActivities.vue'
 import PrintempsPourLaPlanete from '@/components/section/operations/PrintempsPourLaPlanete.vue'
 import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
+import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
 
 export default {
   components: {
@@ -67,7 +69,8 @@ export default {
     InscriptionResponsable,
     BlocActivities,
     PrintempsPourLaPlanete,
-    BlocMissionsCourtes
+    BlocMissionsCourtes,
+    BlocActionsBenevolesPopulaires
   },
   head () {
     return {
