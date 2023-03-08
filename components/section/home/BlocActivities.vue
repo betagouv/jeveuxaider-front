@@ -20,9 +20,8 @@
           :slides-are-links="true"
           :slides-count="activities.length"
           :aria-labelledby="`label-activities-action-${_uid}`"
-          :settings="settings"
         >
-          <div v-for="(group,i) in activitiesGroups" :key="i" class="flex flex-col space-y-4">
+          <div v-for="(group,i) in activitiesGroups" :key="i" class="w-full flex flex-col space-y-4">
             <div
               v-for="activity in group"
               :key="activity.key"
@@ -51,19 +50,7 @@ export default {
   },
   data () {
     return {
-      activities,
-      settings: {
-        arrows: false,
-        dots: true,
-        speed: 500,
-        edgeFriction: 0,
-        touchThreshold: 100,
-        swipeToSlide: true,
-        infinite: false,
-        variableWidth: true,
-        accessibility: true,
-        pauseOnFocus: true
-      }
+      activities
     }
   },
   computed: {
@@ -77,7 +64,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

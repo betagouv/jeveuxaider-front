@@ -32,10 +32,10 @@
         <nuxt-link
           v-for="mission in missions"
           :key="mission.id"
-          class="card--mission--wrapper"
+          class="slide-wrapper"
           :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
         >
-          <CardMission :mission="mission" class="!h-full" />
+          <CardMission :mission="mission" />
         </nuxt-link>
       </Slideshow>
       <div class="mt-8 text-center">
@@ -86,25 +86,8 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.card--mission--wrapper {
+.slide-wrapper {
   @apply !flex flex-col h-full max-w-[323px] transition;
-  width: calc(100vw - 64px) !important;
-  @apply w-full;
-}
-
-:deep(.slick-slider) {
-  .slick-arrow {
-    &.slick-prev {
-      @apply translate-x-[-104px];
-    }
-    &.slick-next {
-      @apply translate-x-[104px];
-    }
-  }
-  .slick-dots {
-    @screen xl {
-      display: none !important;
-    }
-  }
+  width: calc(100vw - 64px) !important; /* To let the next slide appear */
 }
 </style>

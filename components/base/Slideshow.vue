@@ -2,7 +2,16 @@
   <div>
     <VueSlickCarousel
       ref="vueSlickCarousel"
-      v-bind="settings"
+      :accessibility="true"
+      :edge-friction="0"
+      :swipe-to-slide="true"
+      :pause-on-focus="true"
+      :touch-threshold="100"
+      :adaptive-height="adaptiveHeight"
+      :arrows="arrows"
+      :dots="dots"
+      :speed="speed"
+      :variable-width="variableWidth"
       :class="[{ 'is-swipping': isSwiping }]"
       @beforeChange="onBeforeChange"
       @afterChange="onAfterChange"
@@ -15,7 +24,7 @@
       <template #prevArrow="arrowOption">
         <transition name="fade">
           <button
-            v-show="settings.infinite || arrowOption.currentSlide"
+            v-show="infinite || arrowOption.currentSlide"
             class="rounded-full !bg-white transition flex justify-center items-center !p-6 relative z-10"
           >
             <img
@@ -32,7 +41,7 @@
         <transition name="fade">
           <button
             v-show="
-              settings.infinite || arrowOption.currentSlide < slidesCount - 3
+              infinite || arrowOption.currentSlide < slidesCount - 3
             "
             class="rounded-full !bg-white transition flex justify-center items-center !p-6 relative z-10"
           >
@@ -56,7 +65,7 @@
       </template>
     </VueSlickCarousel>
 
-    <template v-if="moreLink">
+    <!-- <template v-if="moreLink">
       <template v-if="moreLink.isExternal">
         <Link ref="moreLink" :to="moreLink.link" :is-external="true" class="text-[#696974]">
           {{ moreLink.label }}
@@ -67,7 +76,7 @@
           {{ moreLink.label }}
         </Link>
       </template>
-    </template>
+    </template> -->
   </div>
 </template>
 
@@ -75,43 +84,46 @@
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
-import Link from '@/components/dsfr/Link.vue'
+// import Link from '@/components/dsfr/Link.vue'
 
 export default {
-  components: { VueSlickCarousel, Link },
+  components: { VueSlickCarousel },
   props: {
     slidesAreLinks: {
       type: Boolean,
       default: false
     },
-    moreLink: {
-      type: [Object, Boolean],
-      default: false
-    },
+    // moreLink: {
+    //   type: [Object, Boolean],
+    //   default: false
+    // },
     slidesCount: {
       type: Number,
       required: true
     },
-    addDotsWrapper: {
+    adaptiveHeight: {
       type: Boolean,
       default: true
     },
-    settings: {
-      type: Object,
-      default () {
-        return {
-          arrows: true,
-          dots: true,
-          speed: 500,
-          edgeFriction: 0,
-          touchThreshold: 100,
-          swipeToSlide: true,
-          infinite: false,
-          variableWidth: true,
-          accessibility: true,
-          pauseOnFocus: true
-        }
-      }
+    arrows: {
+      type: Boolean,
+      default: true
+    },
+    dots: {
+      type: Boolean,
+      default: true
+    },
+    speed: {
+      type: Number,
+      default: 500
+    },
+    infinite: {
+      type: Boolean,
+      default: false
+    },
+    variableWidth: {
+      type: Boolean,
+      default: false
     },
     ariaLabelledby: { type: String, default: null },
     ariaLabel: { type: String, default: null }
@@ -126,9 +138,9 @@ export default {
     // if (this.slidesAreLinks) {
     //   this.handleLinksAccessibility()
     // }
-    if (this.addDotsWrapper) {
-      this.handleDotsWrapper()
-    }
+    // if (this.addDotsWrapper) {
+    //   this.handleDotsWrapper()
+    // }
   },
   methods: {
     handleAccessibilityInit () {
@@ -186,32 +198,32 @@ export default {
         })
       }
     },
-    handleDotsWrapper () {
-      const dotsWrapper = this.$refs?.vueSlickCarousel?.$el
-        ?.getElementsByClassName('slick-dots')
-        ?.item(0)
-      const moreLinkEl = this.$refs?.moreLink?.$el || this.$refs?.moreLink
+    // handleDotsWrapper () {
+    //   const dotsWrapper = this.$refs?.vueSlickCarousel?.$el
+    //     ?.getElementsByClassName('slick-dots')
+    //     ?.item(0)
+    //   const moreLinkEl = this.$refs?.moreLink?.$el || this.$refs?.moreLink
 
-      if (dotsWrapper || moreLinkEl) {
-        // Add wrapper.
-        const wrapper = document.createElement('div')
-        wrapper.className =
-          'wrapper--slick-dots mt-6 flex flex-col sm:flex-row items-center sm:justify-start space-y-4 sm:space-y-0'
-        if (dotsWrapper) {
-          dotsWrapper.parentNode.insertBefore(wrapper, dotsWrapper)
-        } else {
-          moreLinkEl.parentNode.insertBefore(wrapper, moreLinkEl)
-        }
+    //   if (dotsWrapper || moreLinkEl) {
+    //     // Add wrapper.
+    //     const wrapper = document.createElement('div')
+    //     wrapper.className =
+    //       'wrapper--slick-dots mt-6 flex flex-col sm:flex-row items-center sm:justify-start space-y-4 sm:space-y-0'
+    //     if (dotsWrapper) {
+    //       dotsWrapper.parentNode.insertBefore(wrapper, dotsWrapper)
+    //     } else {
+    //       moreLinkEl.parentNode.insertBefore(wrapper, moreLinkEl)
+    //     }
 
-        // Add elements to the wrapper.
-        if (dotsWrapper) {
-          wrapper.appendChild(dotsWrapper)
-        }
-        if (moreLinkEl) {
-          wrapper.appendChild(moreLinkEl)
-        }
-      }
-    },
+    //     // Add elements to the wrapper.
+    //     if (dotsWrapper) {
+    //       wrapper.appendChild(dotsWrapper)
+    //     }
+    //     if (moreLinkEl) {
+    //       wrapper.appendChild(moreLinkEl)
+    //     }
+    //   }
+    // },
     onBeforeChange (event, slick, currentSlide, nextSlide) {
       if (this.$refs.vueSlickCarousel.autoplay) {
         this.$refs.vueSlickCarousel.pause()
@@ -230,9 +242,9 @@ export default {
 
 <style lang="postcss" scoped>
 .slick-slider {
-  :deep(.slick-slide) {
+  /* :deep(.slick-slide) {
     height: auto !important;
-  }
+  } */
 
   :deep(.slick-list) {
     overflow: visible;
@@ -240,9 +252,9 @@ export default {
 
   :deep(.slick-track) {
     @apply space-x-[16px] sm:space-x-[30px] flex items-stretch;
-    > div > div {
+    /* > div > div {
       height: 100%;
-    }
+    } */
   }
 
   :deep(.slick-arrow) {
@@ -272,7 +284,7 @@ export default {
 
   :deep(.slick-dots) {
     position: inherit;
-    @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8;
+    @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8 mt-8;
     > li {
       @apply w-auto h-auto my-0 mx-2;
       > button {

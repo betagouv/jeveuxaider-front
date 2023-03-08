@@ -5,6 +5,7 @@
     <InscriptionResponsable />
     <BlocActivities />
     <PrintempsPourLaPlanete />
+    <BlocMissionsCourtes />
 
     <!-- <Banner />
     <Organisations />
@@ -57,6 +58,7 @@ import InscriptionBenevole from '@/components/section/home/InscriptionBenevole.v
 import InscriptionResponsable from '@/components/section/home/InscriptionResponsable.vue'
 import BlocActivities from '@/components/section/home/BlocActivities.vue'
 import PrintempsPourLaPlanete from '@/components/section/operations/PrintempsPourLaPlanete.vue'
+import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
 
 export default {
   components: {
@@ -64,7 +66,8 @@ export default {
     InscriptionBenevole,
     InscriptionResponsable,
     BlocActivities,
-    PrintempsPourLaPlanete
+    PrintempsPourLaPlanete,
+    BlocMissionsCourtes
   },
   head () {
     return {
