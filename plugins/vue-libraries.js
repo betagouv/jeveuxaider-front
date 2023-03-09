@@ -8,10 +8,12 @@ import VueDragscroll from 'vue-dragscroll'
 import VCalendar from 'v-calendar'
 import Nl2br from 'vue-nl2br'
 import VueObserveVisibility from 'vue-observe-visibility'
+import VueTyperPlugin from 'vue-typer'
 
 Vue.component('StarRating', VueStarRating)
 
 Vue.use(vClickOutside)
+Vue.use(VueTyperPlugin)
 
 Vue.use(VScrollLock, {
   bodyScrollOptions: {

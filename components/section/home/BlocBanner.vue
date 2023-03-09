@@ -2,7 +2,21 @@
   <div class="bg-jva-blue-500">
     <div class="p-6">
       <div class="text-jva-orange-300 text-[32px] font-bold mb-4">
-        Je veux être utile
+        <span>Je veux</span>
+        <vue-typer
+          :text="words"
+          :repeat="Infinity"
+          :shuffle="true"
+          initial-action="typing"
+          :pre-type-delay="70"
+          :type-delay="70"
+          :pre-erase-delay="2000"
+          :erase-delay="250"
+          erase-style="select-all"
+          :erase-on-complete="false"
+          caret-animation="blink"
+          class="ml-2 text-jva-orange-300"
+        />
       </div>
       <div>
         <Heading as="h1" size="alt-lg" class="mb-10" color="text-white">
@@ -38,6 +52,21 @@ export default {
     Button,
     Heading
   },
+  data () {
+    return {
+      words: [
+        'aider',
+        'du sens',
+        'plus de solidarité',
+        'être utile',
+        'partager',
+        'avoir de l’impact',
+        'être fier de moi',
+        'apprendre',
+        'passer à l’action'
+      ]
+    }
+  },
   methods: {
     handleClick () {
       window.plausible &&
@@ -50,6 +79,16 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="postcss" scoped>
+:deep(.vue-typer) {
+  .custom.char.typed {
+    @apply text-jva-orange-300
+  }
+  .custom.char.selected {
+    @apply text-jva-orange-300 bg-[#5077D4]
+  }
+  .custom.caret {
+  background-color: #6666BD;
+}
+}
 </style>
