@@ -4,7 +4,7 @@
       <img src="/images/home/acteurs-ecoles.svg" alt="" class="flex-none">
     </div>
     <div class="text-3xl font-bold mt-8">
-      écoles et universités à destination des étudiants
+      Écoles et universités à destination des étudiants
     </div>
     <ul class="text-xl mt-8 space-y-6">
       <li class="flex items-center space-x-6">
