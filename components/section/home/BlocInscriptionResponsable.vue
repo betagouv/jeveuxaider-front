@@ -14,19 +14,17 @@
       </div>
 
       <div class="absolute bottom-0 right-0 left-0">
-        <picture>
-          <img
-            srcset="
+        <img
+          srcset="
           /images/home/trombi-organisations.webp,
           /images/home/trombi-organisations@2x.webp 2x,
           /images/home/trombi-organisations.png,
           /images/home/trombi-organisations@2x.png 2x
         "
-            alt="Trombinoscope organisations"
-            class=""
-            data-not-lazy
-          >
-        </picture>
+          alt="Trombinoscope organisations"
+          class=""
+          data-not-lazy
+        >
       </div>
     </div>
   </div>

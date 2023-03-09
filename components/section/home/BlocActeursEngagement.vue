@@ -6,16 +6,25 @@
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <BlocActeursAssociations />
+      <BlocActeursCollectivites />
+      <BlocEcolesUniversites />
+      <BlocCommunaute />
     </div>
   </div>
 </template>
 
 <script>
 import BlocActeursAssociations from '@/components/section/home/BlocActeursAssociations.vue'
+import BlocActeursCollectivites from '@/components/section/home/BlocActeursCollectivites.vue'
+import BlocEcolesUniversites from '@/components/section/home/BlocEcolesUniversites.vue'
+import BlocCommunaute from '@/components/section/home/BlocCommunaute.vue'
 
 export default {
   components: {
-    BlocActeursAssociations
+    BlocActeursAssociations,
+    BlocActeursCollectivites,
+    BlocEcolesUniversites,
+    BlocCommunaute
   }
 }
 </script>
