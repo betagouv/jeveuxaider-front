@@ -10,7 +10,7 @@
       <Slideshow
         :slides-are-links="true"
         :slides-count="missions.length"
-        :aria-labelledby="`label-missions-prioritaires-${_uid}`"
+        :aria-labelledby="`label-missions-courtes-${_uid}`"
       >
         <nuxt-link
           v-for="mission in missions"

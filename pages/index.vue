@@ -1,12 +1,15 @@
 <template>
   <div class="bg-[#F9F6F2]">
-    <Banner />
-    <InscriptionBenevole />
-    <InscriptionResponsable />
+    <BlocBanner />
+    <BlocInscriptionBenevole />
+    <BlocInscriptionResponsable />
     <BlocActivities />
     <PrintempsPourLaPlanete />
     <BlocMissionsCourtes />
     <BlocActionsBenevolesPopulaires />
+    <BlocTemoignages />
+    <BlocActualites v-if="$store.state.settings.general.blog_active" />
+    <BlocActeursEngagement />
 
     <!-- <Banner />
     <Organisations />
@@ -54,23 +57,29 @@
 </template>
 
 <script>
-import Banner from '@/components/section/home/Banner.vue'
-import InscriptionBenevole from '@/components/section/home/InscriptionBenevole.vue'
-import InscriptionResponsable from '@/components/section/home/InscriptionResponsable.vue'
+import BlocBanner from '~/components/section/home/BlocBanner.vue'
+import BlocInscriptionBenevole from '~/components/section/home/BlocInscriptionBenevole.vue'
+import BlocInscriptionResponsable from '~/components/section/home/BlocInscriptionResponsable.vue'
 import BlocActivities from '@/components/section/home/BlocActivities.vue'
 import PrintempsPourLaPlanete from '@/components/section/operations/PrintempsPourLaPlanete.vue'
 import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
 import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
+import BlocTemoignages from '@/components/section/home/BlocTemoignages.vue'
+import BlocActualites from '@/components/section/home/BlocActualites.vue'
+import BlocActeursEngagement from '@/components/section/home/BlocActeursEngagement.vue'
 
 export default {
   components: {
-    Banner,
-    InscriptionBenevole,
-    InscriptionResponsable,
+    BlocBanner,
+    BlocInscriptionBenevole,
+    BlocInscriptionResponsable,
     BlocActivities,
     PrintempsPourLaPlanete,
     BlocMissionsCourtes,
-    BlocActionsBenevolesPopulaires
+    BlocActionsBenevolesPopulaires,
+    BlocTemoignages,
+    BlocActualites,
+    BlocActeursEngagement
   },
   head () {
     return {

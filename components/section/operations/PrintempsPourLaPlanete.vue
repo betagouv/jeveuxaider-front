@@ -20,14 +20,14 @@
         >
       </div>
     </div>
-    <div v-if="missions.length" class="mt-12">
+    <div v-if="missions.length" class="overflow-hidden mt-12">
       <div class="text-xl font-bold mb-4">
         Opération du 3 au 23 avril
       </div>
       <Slideshow
         :slides-are-links="true"
         :slides-count="missions.length"
-        :aria-labelledby="`label-missions-prioritaires-${_uid}`"
+        :aria-labelledby="`label-missions-operation-${_uid}`"
       >
         <nuxt-link
           v-for="mission in missions"

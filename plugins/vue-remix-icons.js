@@ -12,6 +12,7 @@ import RiAddLine from 'vue-remix-icons/icons/RiAddLine.vue'
 import RiBuildingFill from 'vue-remix-icons/icons/RiBuildingFill.vue'
 import RiExternalLinkLine from 'vue-remix-icons/icons/RiExternalLinkLine.vue'
 import RiDoubleQuotesL from 'vue-remix-icons/icons/RiDoubleQuotesL.vue'
+import RiChatQuoteLine from 'vue-remix-icons/icons/RiChatQuoteLine.vue'
 import RiFacebookCircleFill from 'vue-remix-icons/icons/RiFacebookCircleFill.vue'
 import RiTwitterFill from 'vue-remix-icons/icons/RiTwitterFill.vue'
 import RiLinkedinBoxFill from 'vue-remix-icons/icons/RiLinkedinBoxFill.vue'
@@ -58,6 +59,7 @@ const components = {
   RiBuildingFill,
   RiExternalLinkLine,
   RiDoubleQuotesL,
+  RiChatQuoteLine,
   RiFacebookCircleFill,
   RiTwitterFill,
   RiLinkedinBoxFill,

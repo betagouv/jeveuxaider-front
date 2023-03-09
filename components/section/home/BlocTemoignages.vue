@@ -1,0 +1,175 @@
+<template>
+  <div class="relative bg-[#6A6AF4]">
+    <div class="px-4 py-12">
+      <div class="text-[40px] font-bold mb-6 leading-10 text-white">
+        Paroles de bénévoles
+      </div>
+      <div class="text-white text-xl">
+        Découvrez les témoignages des bénévoles de la communauté JeVeuxAider.gouv.fr
+      </div>
+      <div v-if="temoignages.length" class="overflow-hidden mt-12">
+        <Slideshow
+          :slides-count="temoignages.length"
+          :aria-labelledby="`label-temoignages-${_uid}`"
+        >
+          <div
+            v-for="temoignage,i in temoignages"
+            :key="i"
+            class="slide-wrapper bg-white p-6"
+          >
+            <div>LOGO</div>
+            <div><RiChatQuoteLine class="text-[#8B8BF6] fill-current w-6 h-6" /></div>
+            <blockquote class="text-[#161616] text-xl font-bold" v-html="temoignage.content" />
+            <div class="mt-4">
+              <div class="font-bold text-[#3A3A3A]">
+                {{ temoignage.author.name }}
+              </div>
+              <div class="text-[#666666] text-xs mt-1">
+                Bénévole chez <span class="uppercase"> {{ temoignage.organization.name }} </span>
+              </div>
+            </div>
+          </div>
+        </Slideshow>
+      </div>
+    </div>
+    <div class="">
+      <img
+        srcset="
+          /images/home/temoignages.webp,
+          /images/home/temoignages@2x.webp 2x,
+          /images/home/temoignages.png,
+          /images/home/temoignages@2x.png 2x
+        "
+        alt="Témoignages"
+        class="h-[110px] object-cover"
+        data-not-lazy
+      >
+    </div>
+  </div>
+</template>
+
+<script>
+
+export default {
+  components: {
+  },
+  data () {
+    return {
+      temoignages: [
+        {
+          content: 'Experience très positive qui m\'a permise d\'être utile envers les autres, mais aussi de rencontrer des belles personnes. Je me suis désormais active dans la Banque Alimentaire près de chez moi deux matinées par semaine&nbsp;<span aria-hidden="true">🙂</span>',
+          author: {
+            name: 'Anne-Marie',
+            image: {
+              default: '/images/temoignages/portraits/annemarie.jpg',
+              x2: '/images/temoignages/portraits/annemarie@2x.jpg'
+            }
+          },
+          organization: {
+            name: 'Banque Alimentaire',
+            logo: {
+              default: '/images/temoignages/organisations/banques_alimentaires.png',
+              x2: '/images/temoignages/organisations/banques_alimentaires@2x.png',
+              width: 150,
+              height: 34
+            }
+          }
+        },
+        {
+          content: 'Une expérience formidable avec un super groupe de vacanciers et d\'accompagnateurs. On s\'est vite sentis comme en famille. Hâte de partir à nouveau avec l\'APF l\'année prochaine &nbsp;!',
+          author: {
+            name: 'Romain',
+            image: {
+              default: '/images/temoignages/portraits/romain.jpg',
+              x2: '/images/temoignages/portraits/romain@2x.jpg'
+            }
+          },
+          organization: {
+            name: 'APF Evasion France Handicap',
+            logo: {
+              default: '/images/temoignages/organisations/APF_Evasion_France_Handicap.svg',
+              x2: null,
+              width: 95,
+              height: 60
+            }
+          }
+        },
+        {
+          content: 'Superbe et enrichissante. En tant que bénévole arbitre j’ai rencontré des joueurs tolérants passionnés qui ont la passion au dessus de l’enjeu. Une expérience sans pareil.',
+          author: {
+            name: 'Romaric',
+            image: {
+              default: '/images/temoignages/portraits/romaric.webp'
+            }
+          },
+          organization: {
+            name: 'Comité Départemental du Sport Adapté Drôme - Ardèche',
+            logo: {
+              default: '/images/temoignages/organisations/comite_departemental_sport_adapte_drome_ardeche.webp',
+              x2: null
+            }
+          }
+        },
+        {
+          content: 'Très belle expérience, une magnifique équipe, de beaux moments passés, beau spectacle.',
+          author: {
+            name: 'Ange',
+            image: {
+              default: '/images/temoignages/portraits/ange.webp'
+            }
+          },
+          organization: {
+            name: 'Le Temps des Rues',
+            logo: {
+              default: '/images/temoignages/organisations/le_temps_des_rues.webp',
+              x2: null
+            }
+          }
+        },
+        {
+          content: 'Bel échange et super accompagnement par l\'équipe. On se sent utile et les ateliers sont super bien encadrés !',
+          author: {
+            name: 'Maud'
+          },
+          organization: {
+            name: 'Kodiko',
+            logo: {
+              default: '/images/temoignages/organisations/kodiko.webp',
+              x2: null
+            }
+          }
+        },
+        {
+          content: 'J’ai adoré cette expérience. L’équipe est formidable et les bénévoles sont tellement admirables. Pour une première, j’ai adoré. Un grand merci&nbsp;<span aria-hidden="true">🙏🏽</span>',
+          author: {
+            name: 'Kevin',
+            image: {
+              default: '/images/temoignages/portraits/kevin.webp'
+            }
+          },
+          organization: {
+            name: 'TRIATHL\'AIX',
+            logo: {
+              default: '/images/temoignages/organisations/triathlaix.webp',
+              x2: null
+            }
+          }
+        },
+        {
+          content: 'Très bonne expérience. J\'ai pû voir l\'organisation d\'un bureau de vote. Et par la même occasion rencontrer des gens très sympathiques!',
+          author: {
+            name: 'Corinne'
+          },
+          organization: {
+            name: 'Commune de Beaussais-sur-Mer',
+            logo: {
+              default: '/images/temoignages/organisations/beaussais_sur_mer.webp',
+              x2: null
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+</script>
