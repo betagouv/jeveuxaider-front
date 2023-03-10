@@ -1,23 +1,32 @@
 <template>
   <div class="bg-jva-blue-500">
     <div class="container pt-6">
-      <p class="text-jva-orange-300 text-xl xxs:text-2xl xs:text-3xl sm:text-[32px] font-bold mb-4">
-        <span>Je veux</span>
-        <vue-typer
-          :text="words"
-          :repeat="Infinity"
-          :shuffle="true"
-          initial-action="typing"
-          :pre-type-delay="70"
-          :type-delay="70"
-          :pre-erase-delay="2000"
-          :erase-delay="250"
-          erase-style="select-all"
-          :erase-on-complete="false"
-          caret-animation="blink"
-          class="ml-2 text-jva-orange-300"
-        />
-      </p>
+      <div class="text-jva-orange-300 text-xl xxs:text-2xl xs:text-3xl sm:text-[32px] font-bold mb-4">
+        <client-only>
+          <div>
+            <p>
+              <span>Je veux</span>
+              <vue-typer
+                :text="words"
+                :repeat="Infinity"
+                :shuffle="true"
+                initial-action="typing"
+                :pre-type-delay="70"
+                :type-delay="70"
+                :pre-erase-delay="2000"
+                :erase-delay="250"
+                erase-style="select-all"
+                :erase-on-complete="false"
+                caret-animation="blink"
+                class="ml-2 text-jva-orange-300"
+              />
+            </p>
+          </div>
+          <p slot="placeholder" class="truncate">
+            <span class="truncate"> {{ words.map(word => `Je veux ${word}`).join(', ') }} </span>
+          </p>
+        </client-only>
+      </div>
       <Heading as="h1" size="alt-xl" class="mb-10" color="text-white">
         Devenez
         <span class="relative">
@@ -36,6 +45,8 @@
         "
         src="/images/home/trombinoscope-mobile.png"
         alt=""
+        width="425"
+        height="250"
         class="mt-10 object-contain w-full"
       >
     </div>
