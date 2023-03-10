@@ -1,7 +1,7 @@
 <template>
   <div class="bg-jva-blue-500">
-    <div class="p-6">
-      <div class="text-jva-orange-300 text-[32px] font-bold mb-4">
+    <div class="container pt-6">
+      <p class="text-jva-orange-300 text-xl xxs:text-2xl xs:text-3xl sm:text-[32px] font-bold mb-4">
         <span>Je veux</span>
         <vue-typer
           :text="words"
@@ -17,27 +17,26 @@
           caret-animation="blink"
           class="ml-2 text-jva-orange-300"
         />
-      </div>
-      <div>
-        <Heading as="h1" size="alt-lg" class="mb-10" color="text-white">
-          Devenez <span class="relative">bénévole <img class="absolute right-[-26px] top-[6px]" src="/images/home/sparkle-right.svg"></span>
-        </Heading>
-      </div>
+      </p>
+      <Heading as="h1" size="alt-xl" class="mb-10" color="text-white">
+        Devenez
+        <span class="relative">
+          <span>bénévole</span>
+          <img class="absolute right-[-26px] -top-1 xxs:top-[6px]" src="/images/home/sparkle-right.svg">
+        </span>
+      </Heading>
       <Button type="tertiary-no-outline" icon="RiSearchLine" @click="handleClick()">
-        Trouvez une mission de bénévolat
+        Trouvez une mission <span class="hidden xxs:inline"> de bénévolat</span>
       </Button>
-    </div>
-    <div class="">
+
       <img
         srcset="
-          /images/home/trombinoscope.webp,
-          /images/home/trombinoscope@2x.webp 2x,
-          /images/home/trombinoscope.png,
-          /images/home/trombinoscope@2x.png 2x
+          /images/home/trombinoscope-mobile.webp, /images/home/trombinoscope-mobile@2x.webp 2x,
+          /images/home/trombinoscope-mobile.png, /images/home/trombinoscope-mobile@2x.png 2x
         "
-        alt="Trombinoscope"
-        class=""
-        data-not-lazy
+        src="/images/home/trombinoscope-mobile.png"
+        alt=""
+        class="mt-10 object-contain w-full"
       >
     </div>
   </div>
@@ -88,7 +87,7 @@ export default {
     @apply text-jva-orange-300 bg-[#5077D4]
   }
   .custom.caret {
-  background-color: #6666BD;
-}
+    background-color: #6666BD;
+  }
 }
 </style>
