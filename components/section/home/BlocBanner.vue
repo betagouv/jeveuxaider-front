@@ -31,7 +31,13 @@
         Devenez
         <span class="relative">
           <span>bénévole</span>
-          <img class="absolute right-[-26px] -top-1 xxs:top-[6px]" src="/images/home/sparkle-right.svg">
+          <img
+            aria-hidden="true"
+            src="/images/home/sparkle-right.svg"
+            width="40"
+            height="43"
+            class="absolute right-[-26px] -top-1 xxs:top-[6px] pointer-events-none"
+          >
         </span>
       </Heading>
       <Button type="tertiary-no-outline" icon="RiSearchLine" @click="handleClick()">

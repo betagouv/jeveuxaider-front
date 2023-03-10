@@ -2,6 +2,7 @@
   <div class="container py-4">
     <div class="relative overflow-hidden h-full flex flex-col">
       <img
+        aria-hidden="true"
         srcset="
           /images/home/bg-inscription-benevole.webp, /images/home/bg-inscription-benevole@2x.webp 2x,
           /images/home/bg-inscription-benevole.jpg, /images/home/bg-inscription-benevole@2x.jpg 2x"
@@ -16,20 +17,20 @@
           <span class="block">Égalité<span class="text-jva-orange-300">.</span></span>
           <span class="block">Je veux aider<span class="text-jva-orange-300">.</span></span>
         </Heading>
-        <div class="mb-8">
-          <div class="text-5xl font-bold leading-[56px]">
+        <p class="mb-8">
+          <span class="text-5xl font-bold leading-[56px]">
             100 000
-          </div>
-          <div class="text-xl xxs:text-2xl font-bold">
+          </span>
+          <span class="text-xl xxs:text-2xl font-bold">
             bénévoles recherchés
-          </div>
-        </div>
+          </span>
+        </p>
         <Button type="tertiary-no-outline" icon="RiUserHeartLine" @click.native="onClick()">
           Créer mon espace <span class="hidden xxs:inline"> Bénévole</span>
         </Button>
-        <div class="text-lg mt-3">
+        <p class="text-lg mt-3">
           Inscription en 2 minutes
-        </div>
+        </p>
       </div>
     </div>
   </div>
