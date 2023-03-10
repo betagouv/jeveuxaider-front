@@ -41,12 +41,12 @@
           </div>
         </div>
         <CardStatistic
-          :value="`${score.response_ratio || 0}%`"
+          :value="score.response_ratio ? `${score.response_ratio}%` : '-'"
           title="Taux de réponse"
           subtitle="aux participations"
         />
         <CardStatistic
-          :value="`${(score.response_time / (60 * 60 * 24)).toFixed(0)} jours`"
+          :value="score.response_time ? $dayjs.duration(score.response_time, 'seconds').humanize() : '-'"
           title="Temps de réponse"
           subtitle="aux participations"
         />
