@@ -19,13 +19,13 @@
         <Heading as="h3" size="alt-sm" class="mb-6 text-[#522F29]">
           Le bénévolat et plus si affinités
         </Heading>
-        <p class="text-[#522F29] text-xl leading-tight">
+        <p id="label-slideshow-activities-action" class="text-[#522F29] text-xl leading-tight">
           Contribuez à une cause qui vous touche au coeur
         </p>
         <div class="mt-12">
           <!-- @todo: accessibilité -->
           <Slideshow
-            :aria-labelledby="`label-activities-action-${_uid}`"
+            aria-labelledby="label-slideshow-activities-action"
             dots-variant="light"
             :adaptive-height="true"
             class="sm:overflow-hidden"

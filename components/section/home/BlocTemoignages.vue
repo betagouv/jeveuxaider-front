@@ -4,12 +4,12 @@
       <div class="text-[40px] font-bold mb-6 leading-10 text-white">
         Paroles de bénévoles
       </div>
-      <div class="text-white text-xl">
+      <div id="label-slideshow-temoignages" class="text-white text-xl">
         Découvrez les témoignages des bénévoles de la communauté JeVeuxAider.gouv.fr
       </div>
       <div v-if="temoignages.length" class="overflow-hidden mt-12">
         <Slideshow
-          :aria-labelledby="`label-temoignages-${_uid}`"
+          aria-labelledby="label-slideshow-temoignages"
         >
           <div
             v-for="temoignage,i in temoignages"

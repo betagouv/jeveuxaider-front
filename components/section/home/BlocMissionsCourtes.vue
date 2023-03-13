@@ -1,44 +1,46 @@
 <template>
-  <div class="bg-jva-blue-500 px-4 py-12 ">
-    <div class="text-[40px] font-bold mb-6 leading-10 text-white">
-      Devenez bénévole d’un jour !
-    </div>
-    <div class="text-white text-xl">
-      Des missions courtes et sans engagement selon vos envies.
-    </div>
-    <div v-if="missions.length" class="overflow-hidden mt-12">
-      <Slideshow
-        :slides-are-links="true"
-        :aria-labelledby="`label-missions-courtes-${_uid}`"
-      >
-        <nuxt-link
-          v-for="mission in missions"
-          :key="mission.id"
-          class="slide-wrapper"
-          :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
+  <div class="bg-jva-blue-500 py-12 overflow-hidden">
+    <div class="container">
+      <Heading as="h2" size="alt-xs" class="mb-6" color="text-white">
+        Devenez bénévole d’un jour !
+      </Heading>
+      <p id="label-slideshow-missions-courtes" class="text-white text-xl">
+        Des missions courtes et sans engagement selon vos envies.
+      </p>
+      <div v-if="missions.length" class="mt-12">
+        <Slideshow
+          :slides-are-links="true"
+          aria-labelledby="label-slideshow-missions-courtes"
         >
-          <CardMission :mission="mission" />
-        </nuxt-link>
-      </Slideshow>
-    </div>
-    <div class="mt-8 text-center">
-      <Button type="tertiary-no-outline" @click="handleClick()">
-        Plus de missions
-      </Button>
-    </div>
-    <div class="mt-8 flex flex-col space-y-6">
-      <div class="text-white font-bold text-xl">
-        Quelles sont vos disponibilités ?
+          <nuxt-link
+            v-for="mission in missions"
+            :key="mission.id"
+            class="slide-wrapper"
+            :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
+          >
+            <CardMission :mission="mission" />
+          </nuxt-link>
+        </Slideshow>
       </div>
-      <div class="flex flex-wrap gap-4">
-        <nuxt-link
-          v-for="link,i in links"
-          :key="i"
-          :to="link.to"
-          class="border border-white rounded-full text-white px-3 py-1"
-        >
-          {{ link.label }}
-        </nuxt-link>
+      <div class="mt-6 text-center">
+        <Button type="tertiary-no-outline" @click="handleClick()">
+          Plus de missions
+        </Button>
+      </div>
+      <div class="mt-8 flex flex-col space-y-6">
+        <p class="text-white font-bold text-xl">
+          Quelles sont vos disponibilités ?
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <nuxt-link
+            v-for="link,i in links"
+            :key="i"
+            :to="link.to"
+            class="border border-white rounded-full text-white px-3 py-1"
+          >
+            {{ link.label }}
+          </nuxt-link>
+        </div>
       </div>
     </div>
   </div>
@@ -47,18 +49,20 @@
 <script>
 import Button from '@/components/dsfr/Button.vue'
 import CardMission from '@/components/card/CardMission.vue'
+import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
     Button,
-    CardMission
+    CardMission,
+    Heading
   },
   data () {
     return {
       missions: [],
       links: [
-        { label: '1 hour', to: '/missions-benevolat?commitment__total=<%3D1&duration=1_hour&time_period=year' },
-        { label: '2 hours', to: '/missions-benevolat?commitment__total=<%3D2&duration=2_hours&time_period=year' },
+        { label: '1 heure', to: '/missions-benevolat?commitment__total=<%3D1&duration=1_hour&time_period=year' },
+        { label: '2 heures', to: '/missions-benevolat?commitment__total=<%3D2&duration=2_hours&time_period=year' },
         { label: 'Une demi-journée', to: '/missions-benevolat?commitment__total=<%3D4&duration=half_day&time_period=year' },
         { label: '1 jour', to: '/missions-benevolat?commitment__total=<%3D7&duration=day&time_period=year' },
         { label: '2 jours', to: '/missions-benevolat?commitment__total=<%3D14&duration=2_days&time_period=year' },

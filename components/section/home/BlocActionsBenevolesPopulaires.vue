@@ -3,13 +3,13 @@
     <div class="text-[40px] font-bold mb-6 leading-10">
       Actions bénévoles populaires
     </div>
-    <div class="text-[#4D4D4D] text-xl">
+    <p id="label-slideshow-missions-prioritaires" class="text-[#4D4D4D] text-xl">
       Découvrez les missions de bénévolat qui engagent le plus la communauté
-    </div>
+    </p>
     <div v-if="missions.length" class="overflow-hidden mt-12">
       <Slideshow
         :slides-are-links="true"
-        :aria-labelledby="`label-missions-prioritaires-${_uid}`"
+        aria-labelledby="label-slideshow-missions-prioritaires"
       >
         <nuxt-link
           v-for="mission in missions"
@@ -21,7 +21,7 @@
         </nuxt-link>
       </Slideshow>
     </div>
-    <div class="mt-8 text-center">
+    <div class="mt-6 text-center">
       <Button type="tertiary" @click="handleClick()">
         Plus de missions
       </Button>

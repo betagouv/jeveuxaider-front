@@ -38,7 +38,7 @@
             <CardMission :mission="mission" />
           </nuxt-link>
         </Slideshow>
-        <div class="mt-8 text-center">
+        <div class="mt-6 text-center">
           <Button type="tertiary" @click="handleClick()">
             Plus de missions
           </Button>
@@ -89,6 +89,6 @@ export default {
 <style lang="postcss" scoped>
 .slide-wrapper {
   @apply !flex flex-col h-full max-w-[323px] transition;
-  width: calc(100vw - 78px) !important; /* To let the next slide appear */
+  width: calc(100vw - 64px) !important; /* To let the next slide appear */
 }
 </style>

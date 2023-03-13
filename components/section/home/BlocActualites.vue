@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white px-4 py-12">
-    <div class="text-[40px] font-bold mb-6 leading-10">
+    <div id="label-slideshow-articles" class="text-[40px] font-bold mb-6 leading-10">
       Les actualités de l’engagement
     </div>
     <div class="text-[#4D4D4D] text-xl">
@@ -9,7 +9,7 @@
     <div v-if="articles.length" class="overflow-hidden mt-12">
       <Slideshow
         :slides-are-links="true"
-        :aria-labelledby="`label-articles-${_uid}`"
+        aria-labelledby="label-slideshow-articles"
       >
         <a
           v-for="article in articles"

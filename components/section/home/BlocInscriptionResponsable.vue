@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="relative bg-white">
-      <div class="px-4 pt-8">
+      <div class="px-4 pt-10">
         <Heading as="h2" size="alt-md" class="mb-6 text-center">
           <span class="relative">
             <img
