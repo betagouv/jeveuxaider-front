@@ -48,11 +48,12 @@
 
     <img
       srcset="
-          /images/home/temoignages.webp,
-          /images/home/temoignages@2x.webp 2x,
-          /images/home/temoignages.png,
-          /images/home/temoignages@2x.png 2x
-        "
+        /images/home/temoignages.webp,
+        /images/home/temoignages@2x.webp 2x,
+        /images/home/temoignages.png,
+        /images/home/temoignages@2x.png 2x
+      "
+      src="/images/home/temoignages.png"
       alt=""
       class="h-[110px] object-cover pointer-events-none"
     >
