@@ -58,7 +58,13 @@
       <template #customPaging="page">
         <button
           :aria-label="`slide ${page+1}`"
-          class="!text-sm !leading-none !p-0 !rounded-full !text-[#DEDEDE]"
+          :class="[
+            '!text-xs !leading-none !p-0 !rounded-full',
+            {'!text-[#DEDEDE]': dotsVariant === 'dark' && currentSlideIndex !== page},
+            {'!text-[#696974]': dotsVariant === 'dark' && currentSlideIndex === page},
+            {'!text-white !opacity-30': dotsVariant === 'light' && currentSlideIndex !== page},
+            {'!text-white': dotsVariant === 'light' && currentSlideIndex === page},
+          ]"
         >
           ●
         </button>
@@ -126,11 +132,17 @@ export default {
       default: false
     },
     ariaLabelledby: { type: String, default: null },
-    ariaLabel: { type: String, default: null }
+    ariaLabel: { type: String, default: null },
+    dotsVariant: {
+      type: String,
+      default: 'dark',
+      validator: v => ['dark', 'light'].includes(v)
+    }
   },
   data () {
     return {
-      isSwiping: false
+      isSwiping: false,
+      currentSlideIndex: 0
     }
   },
   mounted () {
@@ -224,10 +236,11 @@ export default {
     //     }
     //   }
     // },
-    onBeforeChange (event, slick, currentSlide, nextSlide) {
+    onBeforeChange (oldSlide, newSlide) {
       if (this.$refs.vueSlickCarousel.autoplay) {
         this.$refs.vueSlickCarousel.pause()
       }
+      this.currentSlideIndex = newSlide
     },
     onAfterChange () {
       this.handleAccessibility()
@@ -286,11 +299,11 @@ export default {
     position: inherit;
     @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8 mt-8;
     > li {
-      @apply w-auto h-auto my-0 mx-2;
+      @apply w-auto h-auto;
       > button {
         @apply transition;
-        width: 14px;
-        height: 14px;
+        width: 10px;
+        height: 10px;
         &:before {
           opacity : 0 !important;
           pointer-events: none !important;
@@ -301,9 +314,6 @@ export default {
           outline-width: 2px;
           outline-offset: 2px;
         }
-      }
-      &.slick-active > button {
-        color: #696974 !important;
       }
     }
   }

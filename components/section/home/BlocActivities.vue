@@ -1,37 +1,46 @@
 <template>
-  <div class="">
-    <div class="p-4 text-[40px] font-bold mt-8 leading-10 text-center">
-      <span class="relative"><img class="absolute left-[-26px] top-[-5px]" src="/images/home/sparkle-left.svg"> C’est votre première fois ? Suivez le guide</span>
+  <div>
+    <div class="container">
+      <Heading as="h2" size="alt-md" class="mt-12 text-center">
+        <span class="relative">
+          <img class="absolute left-[-26px] top-[-5px]" src="/images/home/sparkle-left.svg">
+          <span>C’est votre première fois ? Suivez le guide</span>
+        </span>
+      </Heading>
     </div>
+
     <div class="flex justify-center">
       <div class="relative h-[78px] w-[78px] flex justify-center items-center bg-jva-orange-300 border-8 border-[#F9F6F2] rounded-full top-[31px]">
         <RiArrowDownLine class="text-[#F9F6F2] w-8 fill-current flex-none" />
       </div>
     </div>
     <div class="bg-jva-orange-300 px-4 py-12">
-      <div class="text-[40px] font-bold mb-6 leading-10 text-[#4D312A]">
+      <Heading as="h3" size="alt-sm" class="mb-6 text-[#522F29]">
         Le bénévolat et plus si affinités
-      </div>
-      <div class="text-[#4D312A] text-xl">
+      </Heading>
+      <p class="text-[#522F29] text-xl leading-tight">
         Contribuez à une cause qui vous touche au coeur
-      </div>
+      </p>
       <div class="overflow-hidden mt-12">
         <Slideshow
           :slides-are-links="true"
           :slides-count="activities.length"
           :aria-labelledby="`label-activities-action-${_uid}`"
+          dots-variant="light"
+          :variable-width="true"
         >
-          <div v-for="(group,i) in activitiesGroups" :key="i" class="w-full flex flex-col space-y-4">
+          <!-- @todo: w-full ne marhce pas !!!! -->
+          <div v-for="(group,i) in activitiesGroups" :key="i" class="slide-wrapper flex flex-col space-y-4">
             <div
               v-for="activity in group"
               :key="activity.key"
             >
               <nuxt-link
                 :to="`/missions-benevolat?activity.name=${activity.name}`"
-                class="inline-flex p-4 bg-white shadow text-lg font-bold"
+                class="inline-flex p-4 bg-white shadow text-lg font-bold w-full"
               >
-                <span class="">{{ activity.icon }}</span>
-                <span class="ml-2">{{ activity.name }}</span>
+                <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
+                <span class="ml-3">{{ activity.name }}</span>
               </nuxt-link>
             </div>
           </div>
@@ -43,10 +52,11 @@
 
 <script>
 import activities from '@/assets/activities.json'
+import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
-
+    Heading
   },
   data () {
     return {
@@ -64,3 +74,9 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.slide-wrapper {
+  width: calc(100vw - 2rem) !important;
+}
+</style>
