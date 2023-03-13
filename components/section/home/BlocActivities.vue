@@ -16,7 +16,7 @@
     </div>
     <div class="bg-jva-orange-300 py-12 overflow-hidden">
       <div class="container">
-        <Heading as="h3" size="alt-sm" class="mb-6 text-[#522F29]">
+        <Heading as="h3" size="alt-sm" class="mb-6" color="text-[#522F29]">
           Le bénévolat et plus si affinités
         </Heading>
         <p id="label-slideshow-activities-action" class="text-[#522F29] text-xl leading-tight">

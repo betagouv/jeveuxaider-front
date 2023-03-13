@@ -1,26 +1,21 @@
 <template>
   <div class="px-8 py-12 bg-white shadow-xl">
-    <div>
-      <img src="/images/home/acteurs-hands.svg" alt="" class="flex-none">
-    </div>
-    <div class="text-3xl font-bold mt-8">
+    <img src="/images/home/acteurs-hands.svg" alt="" class="flex-none">
+    <Heading as="h2" size="2xl" class="mt-8">
       Associations et organisations publiques
-    </div>
-    <ul class="text-xl mt-8 space-y-6">
-      <li class="flex items-center space-x-6">
-        <RiCheckboxCircleLine
-          class="w-6 h-6 text-jva-blue-500 fill-current flex-none"
-        /><span>Inscrivez votre organisation <strong>en quelques clics</strong></span>
+    </Heading>
+    <ul class="text-xl leading-6 mt-8 space-y-6">
+      <li class="flex items-start space-x-3">
+        <RiCheckboxCircleLine aria-hidden="true" class="w-6 h-6 text-jva-blue-500 fill-current flex-none" />
+        <p>Inscrivez votre organisation <strong>en quelques clics</strong></p>
       </li>
-      <li class="flex items-center space-x-6">
-        <RiCheckboxCircleLine
-          class="w-6 h-6 text-jva-blue-500 fill-current flex-none"
-        /><span><strong>Publiez vos missions</strong> de bénévolat</span>
+      <li class="flex items-start space-x-3">
+        <RiCheckboxCircleLine aria-hidden="true" class="w-6 h-6 text-jva-blue-500 fill-current flex-none" />
+        <p><strong>Publiez vos missions</strong> de bénévolat</p>
       </li>
-      <li class="flex items-center space-x-6">
-        <RiCheckboxCircleLine
-          class="w-6 h-6 text-jva-blue-500 fill-current flex-none"
-        /><span>Trouvez facilement de <strong>nouveaux bénévoles</strong></span>
+      <li class="flex items-start space-x-3">
+        <RiCheckboxCircleLine aria-hidden="true" class="w-6 h-6 text-jva-blue-500 fill-current flex-none" />
+        <p>Trouvez facilement de <strong>nouveaux bénévoles</strong></p>
       </li>
     </ul>
     <div class="mt-8">
@@ -32,40 +27,38 @@
       <div class="flex flex-shrink-0">
         <img
           srcset="
-          /images/home/caroline.webp,
-          /images/home/caroline@2x.webp 2x,
-          /images/home/caroline.png,
-          /images/home/caroline@2x.png 2x
-        "
+            /images/home/caroline.webp, /images/home/caroline@2x.webp 2x,
+            /images/home/caroline.png, /images/home/caroline@2x.png 2x
+          "
+          src="/images/home/caroline.png"
           alt="Caroline"
-          class="relative z-20 flex-none h-[48px] w-[48px] lg:w-[60px] lg:h-[60px]"
-          data-not-lazy
+          class="relative z-[3] flex-none h-[48px] w-[48px] lg:w-[60px] lg:h-[60px]"
         >
         <img
           srcset="
-          /images/home/sophie.webp,
-          /images/home/sophie@2x.webp 2x,
-          /images/home/sophie.png,
-          /images/home/sophie@2x.png 2x
-        "
+            /images/home/sophie.webp, /images/home/sophie@2x.webp 2x,
+            /images/home/sophie.png, /images/home/sophie@2x.png 2x
+          "
+          src="/images/home/sophie.png"
           alt="Sophie"
-          class="relative ml-[-38px] z-10 flex-none h-[48px] w-[48px] lg:w-[60px] lg:h-[60px]"
-          data-not-lazy
+          class="relative z-[2] flex-none h-[48px] w-[48px] -ml-4 lg:w-[60px] lg:h-[60px]"
         >
       </div>
-      <div class="text-[#3A3A3A]">
+      <p class="text-[#3A3A3A]">
         <strong>Caroline et Sophie</strong> de JeVeuxAider.gouv.fr pour vous accompagner
-      </div>
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 import Button from '@/components/dsfr/Button.vue'
+import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
-    Button
+    Button,
+    Heading
   },
   methods: {
     handleClick () {
@@ -78,7 +71,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

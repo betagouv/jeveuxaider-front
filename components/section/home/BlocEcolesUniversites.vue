@@ -1,26 +1,21 @@
 <template>
   <div class="px-8 py-12 bg-jva-orange-300 shadow-xl text-[#4D312A]">
-    <div>
-      <img src="/images/home/acteurs-ecoles.svg" alt="" class="flex-none">
-    </div>
-    <div class="text-3xl font-bold mt-8">
+    <img src="/images/home/acteurs-ecoles.svg" alt="" class="flex-none">
+    <Heading as="h2" size="2xl" class="mt-8" color="text-[#522F29]">
       Écoles et universités à destination des étudiants
-    </div>
-    <ul class="text-xl mt-8 space-y-6">
-      <li class="flex items-center space-x-6">
-        <RiCheckboxCircleLine
-          class="w-6 h-6 text-[#4D312A] fill-current flex-none"
-        /><span>Créez <strong>une page dédiée</strong> à votre collectivité</span>
+    </Heading>
+    <ul class="text-xl leading-6 mt-8 space-y-6">
+      <li class="flex items-start space-x-3">
+        <RiCheckboxCircleLine aria-hidden="true" class="w-6 h-6 text-[#4D312A] fill-current flex-none" />
+        <p>Créez <strong>une page dédiée</strong> à votre collectivité</p>
       </li>
-      <li class="flex items-center space-x-6">
-        <RiCheckboxCircleLine
-          class="w-6 h-6 text-[#4D312A] fill-current flex-none"
-        /><span><strong>Centralisez les missions</strong> des organisations locales</span>
+      <li class="flex items-start space-x-3">
+        <RiCheckboxCircleLine aria-hidden="true" class="w-6 h-6 text-[#4D312A] fill-current flex-none" />
+        <p><strong>Centralisez les missions</strong> des organisations locales</p>
       </li>
-      <li class="flex items-center space-x-6">
-        <RiCheckboxCircleLine
-          class="w-6 h-6 text-[#4D312A] fill-current flex-none"
-        /><span>Encouragez l'<strong>engagement de vos citoyens</strong></span>
+      <li class="flex items-start space-x-3">
+        <RiCheckboxCircleLine aria-hidden="true" class="w-6 h-6 text-[#4D312A] fill-current flex-none" />
+        <p>Encouragez l'<strong>engagement de vos citoyens</strong></p>
       </li>
     </ul>
     <div class="mt-8">
@@ -29,32 +24,29 @@
       </Button>
     </div>
     <div class="mt-8 flex space-x-4">
-      <div class="flex-none">
-        <img
+      <!-- <img
           srcset="
-          /images/home/maiwelle.webp,
-          /images/home/maiwelle@2x.webp 2x,
-          /images/home/maiwelle.png,
-          /images/home/maiwelle@2x.png 2x
-        "
+            /images/home/maiwelle.webp, /images/home/maiwelle@2x.webp 2x,
+            /images/home/maiwelle.png, /images/home/maiwelle@2x.png 2x
+          "
+          src="/images/home/maiwelle.png"
           alt="Maiwelle"
           class="flex-none h-[48px] w-[48px] lg:w-[60px] lg:h-[60px]"
-          data-not-lazy
-        >
-      </div>
-      <div class="">
-        <strong>Timothée</strong> de JeVeuxAider.gouv.fr pour vous accompagner
-      </div>
+        > -->
+      <div class="bg-red-500 rounded-full flex-none h-[48px] w-[48px]" />
+      <p><strong>Timothée</strong> de JeVeuxAider.gouv.fr pour vous accompagner</p>
     </div>
   </div>
 </template>
 
 <script>
 import Button from '@/components/dsfr/Button.vue'
+import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
-    Button
+    Button,
+    Heading
   },
   methods: {
     handleClick () {
@@ -67,7 +59,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
