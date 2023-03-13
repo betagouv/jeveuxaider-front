@@ -9,7 +9,6 @@
     <div v-if="articles.length" class="overflow-hidden mt-12">
       <Slideshow
         :slides-are-links="true"
-        :slides-count="articles.length"
         :aria-labelledby="`label-articles-${_uid}`"
       >
         <a

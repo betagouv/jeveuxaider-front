@@ -13,7 +13,6 @@
 
         <Slideshow
           :slides-are-links="true"
-          :slides-count="domaines.length"
           :aria-labelledby="`label-domaines-action-${_uid}`"
         >
           <nuxt-link

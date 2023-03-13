@@ -27,7 +27,6 @@
         </p>
         <Slideshow
           :slides-are-links="true"
-          :slides-count="missions.length"
           :aria-labelledby="`label-missions-operation-${_uid}`"
         >
           <nuxt-link

@@ -9,7 +9,6 @@
       </div>
       <div v-if="temoignages.length" class="overflow-hidden mt-12">
         <Slideshow
-          :slides-count="temoignages.length"
           :aria-labelledby="`label-temoignages-${_uid}`"
         >
           <div

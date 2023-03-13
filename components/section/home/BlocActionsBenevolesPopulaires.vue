@@ -9,7 +9,6 @@
     <div v-if="missions.length" class="overflow-hidden mt-12">
       <Slideshow
         :slides-are-links="true"
-        :slides-count="missions.length"
         :aria-labelledby="`label-missions-prioritaires-${_uid}`"
       >
         <nuxt-link

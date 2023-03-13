@@ -12,6 +12,7 @@
       :dots="dots"
       :speed="speed"
       :variable-width="variableWidth"
+      :infinite="infinite"
       :class="[{ 'is-swipping': isSwiping }, { 'is-adaptive-height': adaptiveHeight}]"
       @beforeChange="onBeforeChange"
       @afterChange="onAfterChange"
@@ -40,9 +41,7 @@
       <template #nextArrow="arrowOption">
         <transition name="fade">
           <button
-            v-show="
-              infinite || arrowOption.currentSlide < slidesCount - 3
-            "
+            v-show="infinite || arrowOption.currentSlide < arrowOption.slideCount - 1"
             class="rounded-full !bg-white transition flex justify-center items-center !p-6 relative z-10"
           >
             <img
@@ -103,10 +102,10 @@ export default {
     //   type: [Object, Boolean],
     //   default: false
     // },
-    slidesCount: {
-      type: Number,
-      required: true
-    },
+    // slidesCount: {
+    //   type: Number,
+    //   required: true
+    // },
     adaptiveHeight: {
       type: Boolean,
       default: false

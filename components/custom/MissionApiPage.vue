@@ -95,7 +95,6 @@
           <Slideshow
             class="mb-6"
             :slides-are-links="true"
-            :slides-count="similarMissions.length"
             :aria-labelledby="`label-autres-missions-${_uid}`"
           >
             <nuxt-link

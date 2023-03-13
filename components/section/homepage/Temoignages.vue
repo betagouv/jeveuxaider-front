@@ -20,7 +20,6 @@
       </Heading>
 
       <Slideshow
-        :slides-count="testimonies.length"
         :settings="settings"
         class="mt-12"
         :aria-labelledby="`label-paroles-benevoles-${_uid}`"

@@ -25,7 +25,6 @@
         <div class="mt-12">
           <!-- @todo: accessibilité -->
           <Slideshow
-            :slides-count="activities.length"
             :aria-labelledby="`label-activities-action-${_uid}`"
             dots-variant="light"
             :adaptive-height="true"

@@ -19,7 +19,6 @@
             label: `Plus d'articles`,
             isExternal: true,
           }"
-          :slides-count="articles.length"
           :aria-labelledby="`label-blog-${_uid}`"
         >
           <a

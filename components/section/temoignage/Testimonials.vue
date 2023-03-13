@@ -24,7 +24,6 @@
       </h2>
 
       <Slideshow
-        :slides-count="testimonials.length"
         :settings="settings"
         class="mt-12"
         :aria-labelledby="`label-parole-benevoles-${_uid}`"

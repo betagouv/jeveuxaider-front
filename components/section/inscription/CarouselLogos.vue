@@ -1,7 +1,6 @@
 <template>
   <client-only>
     <Slideshow
-      :slides-count="logos.length"
       class="mt-12"
       :settings="settings"
       :add-dots-wrapper="false"
