@@ -4,41 +4,20 @@
       Score
     </div>
     <Box :variant="boxVariant" :padding="boxPadding" :loading="loadingScore" loading-text="Récupération du score ...">
-      <DescriptionList v-if="score">
-        <DescriptionListItem term="Total" :description="`${score.score}%`" />
-        <DescriptionListItem term="Engagement">
-          <template v-if="score.response_ratio">
-            <p>{{ score.engagement_points|pluralize('point', 'points') }}</p>
-            <p class="text-xs font-normal">
-              Taux réponse : {{ score.response_ratio }}%
-            </p>
-          </template>
-        </DescriptionListItem>
-        <DescriptionListItem term="Réactivité">
-          <template v-if="score.response_ratio">
-            <p>{{ score.reactivity_points|pluralize('point', 'points') }}</p>
-            <div class="text-xs font-normal">
-              <p>
-                Nb. de réponses : {{ score.nb_last_participations_with_response }} sur {{ score.nb_last_participations }}
-              </p>
-              <p v-if="responseTime">
-                Tps. de réponse moyen : {{ responseTime }}
-              </p>
-            </div>
-          </template>
-        </DescriptionListItem>
-        <DescriptionListItem term="Bonus">
-          <template v-if="score.response_ratio">
-            {{ score.bonus_points }} {{ Math.abs(score.bonus_points)|pluralize('point', 'points', false) }}
-          </template>
-        </DescriptionListItem>
-      </DescriptionList>
+      <ScoreDetails :score="score" />
     </Box>
   </div>
 </template>
 
 <script>
+import ScoreMixin from '~/mixins/score'
+import ScoreDetails from '~/components/section/organisation/ScoreDetails.vue'
+
 export default {
+  components: {
+    ScoreDetails
+  },
+  mixins: [ScoreMixin],
   props: {
     structureId: {
       type: Number,
@@ -55,25 +34,6 @@ export default {
     boxPadding: {
       type: String,
       default: 'xs'
-    }
-  },
-  data () {
-    return {
-      score: null,
-      loadingScore: true
-    }
-  },
-  async fetch () {
-    if (!this.structureId) {
-      return
-    }
-    const { data: score } = await this.$axios.get(`/structures/${this.structureId}/score`)
-    this.score = score
-    this.loadingScore = false
-  },
-  computed: {
-    responseTime () {
-      return this.score.response_time ? this.$dayjs.duration(this.score.response_time, 'seconds').humanize() : null
     }
   }
 }
