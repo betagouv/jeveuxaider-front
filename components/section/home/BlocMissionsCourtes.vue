@@ -2,7 +2,7 @@
   <div class="bg-jva-blue-500 py-12 overflow-hidden">
     <div class="container">
       <Heading as="h2" size="alt-xs" class="mb-6" color="text-white">
-        Devenez bénévole d’un jour !
+        Devenez bénévole d’un jour !
       </Heading>
       <p id="label-slideshow-missions-courtes" class="text-white text-xl">
         Des missions courtes et sans engagement selon vos envies.
@@ -36,9 +36,15 @@
             v-for="link,i in links"
             :key="i"
             :to="link.to"
-            class="border border-white rounded-full text-white px-3 py-1"
+            class="rounded-full"
           >
-            {{ link.label }}
+            <Tag
+              size="md"
+              :custom-theme="true"
+              class="text-white border border-[#8080CD] cursor-ponter sm:hover:border-[#b8b8e8] active:!border-white"
+            >
+              {{ link.label }}
+            </Tag>
           </nuxt-link>
         </div>
       </div>
@@ -50,12 +56,14 @@
 import Button from '@/components/dsfr/Button.vue'
 import CardMission from '@/components/card/CardMission.vue'
 import Heading from '@/components/dsfr/Heading.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
     Button,
     CardMission,
-    Heading
+    Heading,
+    Tag
   },
   data () {
     return {
