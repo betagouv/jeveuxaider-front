@@ -11,6 +11,7 @@
         <Slideshow
           :slides-are-links="true"
           aria-labelledby="label-slideshow-missions-courtes"
+          dots-variant="light"
         >
           <nuxt-link
             v-for="mission in missions"
