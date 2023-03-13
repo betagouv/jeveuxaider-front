@@ -12,7 +12,7 @@
       :dots="dots"
       :speed="speed"
       :variable-width="variableWidth"
-      :class="[{ 'is-swipping': isSwiping }]"
+      :class="[{ 'is-swipping': isSwiping }, { 'is-adaptive-height': adaptiveHeight}]"
       @beforeChange="onBeforeChange"
       @afterChange="onAfterChange"
       @swipe="isSwiping = true"
@@ -109,7 +109,7 @@ export default {
     },
     adaptiveHeight: {
       type: Boolean,
-      default: true
+      default: false
     },
     arrows: {
       type: Boolean,
@@ -129,7 +129,7 @@ export default {
     },
     variableWidth: {
       type: Boolean,
-      default: false
+      default: true
     },
     ariaLabelledby: { type: String, default: null },
     ariaLabel: { type: String, default: null },
@@ -255,19 +255,12 @@ export default {
 
 <style lang="postcss" scoped>
 .slick-slider {
-  /* :deep(.slick-slide) {
-    height: auto !important;
-  } */
-
   :deep(.slick-list) {
     overflow: visible;
   }
 
   :deep(.slick-track) {
-    @apply space-x-[16px] sm:space-x-[30px] flex items-stretch;
-    /* > div > div {
-      height: 100%;
-    } */
+    @apply gap-[16px] sm:gap-[30px] flex items-stretch;
   }
 
   :deep(.slick-arrow) {
@@ -299,7 +292,7 @@ export default {
     position: inherit;
     @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8 mt-8;
     > li {
-      @apply w-auto h-auto;
+      @apply w-auto h-auto mx-1;
       > button {
         @apply transition;
         width: 10px;
@@ -330,5 +323,16 @@ export default {
   outline-color: #0a76f6 !important;
   outline-width: 2px !important;
   outline-offset: 2px !important;
+}
+
+.slick-slider:not(.is-adaptive-height) {
+  :deep(.slick-slide) {
+    height: auto !important;
+  }
+  :deep(.slick-track) {
+    > div > div {
+      height: 100%;
+    }
+  }
 }
 </style>
