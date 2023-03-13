@@ -1,56 +1,70 @@
 <template>
   <div class="relative bg-[#6A6AF4]">
     <div class="px-4 py-12">
-      <div class="text-[40px] font-bold mb-6 leading-10 text-white">
+      <Heading as="h2" size="alt-xs" class="mb-6" color="text-white">
         Paroles de bénévoles
-      </div>
-      <div id="label-slideshow-temoignages" class="text-white text-xl">
+      </Heading>
+      <p id="label-slideshow-temoignages" class="text-white text-xl">
         Découvrez les témoignages des bénévoles de la communauté JeVeuxAider.gouv.fr
-      </div>
+      </p>
       <div v-if="temoignages.length" class="overflow-hidden mt-12">
         <Slideshow
           aria-labelledby="label-slideshow-temoignages"
+          :adaptive-height="true"
+          dots-variant="light"
         >
           <div
             v-for="temoignage,i in temoignages"
             :key="i"
             class="slide-wrapper bg-white p-6"
           >
-            <div>LOGO</div>
-            <div><RiChatQuoteLine class="text-[#8B8BF6] fill-current w-6 h-6" /></div>
+            <img
+              :src="temoignage.organization.logo.default"
+              :srcset="
+                temoignage.organization.logo.x2
+                  ? `${temoignage.organization.logo.x2} 2x`
+                  : false
+              "
+              :alt="temoignage.organization.name"
+              class="flex-none max-w-[120px] max-h-[60px] object-contain w-full h-full mt-6 mb-12 mx-auto"
+              :width="temoignage.organization.logo.width"
+              :height="temoignage.organization.logo.height"
+              data-not-lazy
+            >
+            <RiChatQuoteLine aria-hidden="true" class="text-[#8B8BF6] fill-current w-6 h-6" />
             <blockquote class="text-[#161616] text-xl font-bold" v-html="temoignage.content" />
             <div class="mt-4">
-              <div class="font-bold text-[#3A3A3A]">
+              <p class="font-bold text-[#3A3A3A]">
                 {{ temoignage.author.name }}
-              </div>
-              <div class="text-[#666666] text-xs mt-1">
+              </p>
+              <p class="text-[#666666] text-xs mt-1">
                 Bénévole chez <span class="uppercase"> {{ temoignage.organization.name }} </span>
-              </div>
+              </p>
             </div>
           </div>
         </Slideshow>
       </div>
     </div>
-    <div class="">
-      <img
-        srcset="
+
+    <img
+      srcset="
           /images/home/temoignages.webp,
           /images/home/temoignages@2x.webp 2x,
           /images/home/temoignages.png,
           /images/home/temoignages@2x.png 2x
         "
-        alt="Témoignages"
-        class="h-[110px] object-cover"
-        data-not-lazy
-      >
-    </div>
+      alt=""
+      class="h-[110px] object-cover pointer-events-none"
+    >
   </div>
 </template>
 
 <script>
+import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
+    Heading
   },
   data () {
     return {
@@ -172,3 +186,19 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.slide-wrapper {
+  @apply !flex flex-col h-full max-w-[708px] transition;
+  width: calc(100vw - 32px) !important;
+}
+
+blockquote {
+  &::before {
+    content: '\00AB ';
+  }
+  &::after {
+    content: ' \00BB';
+  }
+}
+</style>
