@@ -1,47 +1,49 @@
 <template>
-  <div class="bg-white px-4 py-12">
-    <div class="flex flex-col lg:flex-wrap justify-between items-center">
-      <div class="flex flex-col space-y-4">
-        <div class="font-bold text-jva-blue-500 uppercase">
-          Actions bénévoles pour la planète
+  <div class="bg-white py-12 overflow-hidden">
+    <div class="container">
+      <div class="flex flex-col lg:flex-wrap justify-between items-center">
+        <div class="flex flex-col space-y-4">
+          <p class="font-bold text-jva-blue-500 uppercase">
+            Actions bénévoles pour la planète
+          </p>
+          <Heading as="h2" size="alt-xs">
+            Rejoignez le mouvement Printemps pour la planète
+          </Heading>
+          <p class="text-xl text-[#4D4D4D]">
+            Passez de l’éveil à l’action en participant aux missions de bénévolat au service de ce que nous avons de plus précieux : notre planète.
+          </p>
         </div>
-        <Heading as="h2" size="alt-xs">
-          Rejoignez le mouvement Printemps pour la planète
-        </Heading>
-        <div class="text-xl text-[#4D4D4D]">
-          Passez de l’éveil à l’action en participant aux missions de bénévolat au service de ce que nous avons de plus précieux : notre planète.
+        <div class="mt-12">
+          <img
+            src="/images/operations/logo-printemps-pour-la-planete.svg"
+            alt="Printemps pour la planète"
+            class="w-[227px] h-[227px]"
+          >
         </div>
       </div>
-      <div class="mt-12">
-        <img
-          src="/images/operations/logo-printemps-pour-la-planete.svg"
-          alt="Printemps pour la planète"
-          class="w-[227px] h-[227px]"
+      <div v-if="missions.length" class="mt-12">
+        <p class="text-xl font-bold mb-4">
+          Opération du 3 au 23 avril
+        </p>
+        <Slideshow
+          :slides-are-links="true"
+          :slides-count="missions.length"
+          :aria-labelledby="`label-missions-operation-${_uid}`"
         >
-      </div>
-    </div>
-    <div v-if="missions.length" class="overflow-hidden mt-12">
-      <div class="text-xl font-bold mb-4">
-        Opération du 3 au 23 avril
-      </div>
-      <Slideshow
-        :slides-are-links="true"
-        :slides-count="missions.length"
-        :aria-labelledby="`label-missions-operation-${_uid}`"
-      >
-        <nuxt-link
-          v-for="mission in missions"
-          :key="mission.id"
-          class="slide-wrapper"
-          :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
-        >
-          <CardMission :mission="mission" />
-        </nuxt-link>
-      </Slideshow>
-      <div class="mt-8 text-center">
-        <Button type="tertiary" @click="handleClick()">
-          Plus de missions
-        </Button>
+          <nuxt-link
+            v-for="mission in missions"
+            :key="mission.id"
+            class="slide-wrapper"
+            :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
+          >
+            <CardMission :mission="mission" />
+          </nuxt-link>
+        </Slideshow>
+        <div class="mt-8 text-center">
+          <Button type="tertiary" @click="handleClick()">
+            Plus de missions
+          </Button>
+        </div>
       </div>
     </div>
   </div>
@@ -88,6 +90,6 @@ export default {
 <style lang="postcss" scoped>
 .slide-wrapper {
   @apply !flex flex-col h-full max-w-[323px] transition;
-  width: calc(100vw - 64px) !important; /* To let the next slide appear */
+  width: calc(100vw - 78px) !important; /* To let the next slide appear */
 }
 </style>
