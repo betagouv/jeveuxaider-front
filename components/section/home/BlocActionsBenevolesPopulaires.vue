@@ -1,30 +1,32 @@
 <template>
-  <div class="bg-white px-4 py-12">
-    <div class="text-[40px] font-bold mb-6 leading-10">
-      Actions bénévoles populaires
-    </div>
-    <p id="label-slideshow-missions-prioritaires" class="text-[#4D4D4D] text-xl">
-      Découvrez les missions de bénévolat qui engagent le plus la communauté
-    </p>
-    <div v-if="missions.length" class="overflow-hidden mt-12">
-      <Slideshow
-        :slides-are-links="true"
-        aria-labelledby="label-slideshow-missions-prioritaires"
-      >
-        <nuxt-link
-          v-for="mission in missions"
-          :key="mission.id"
-          class="slide-wrapper"
-          :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
+  <div class="bg-white py-12 overflow-hidden">
+    <div class="container">
+      <Heading as="h2" size="alt-xs" class="mb-6">
+        Actions bénévoles populaires
+      </Heading>
+      <p id="label-slideshow-missions-prioritaires" class="text-[#4D4D4D] text-xl">
+        Découvrez les missions de bénévolat qui engagent le plus la communauté
+      </p>
+      <div v-if="missions.length" class="mt-12">
+        <Slideshow
+          :slides-are-links="true"
+          aria-labelledby="label-slideshow-missions-prioritaires"
         >
-          <CardMission :mission="mission" />
-        </nuxt-link>
-      </Slideshow>
-    </div>
-    <div class="mt-6 text-center">
-      <Button type="tertiary" @click="handleClick()">
-        Plus de missions
-      </Button>
+          <nuxt-link
+            v-for="mission in missions"
+            :key="mission.id"
+            class="slide-wrapper"
+            :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
+          >
+            <CardMission :mission="mission" />
+          </nuxt-link>
+        </Slideshow>
+      </div>
+      <div class="mt-6 text-center">
+        <Button type="tertiary" @click="handleClick()">
+          Plus de missions
+        </Button>
+      </div>
     </div>
   </div>
 </template>
@@ -32,11 +34,13 @@
 <script>
 import Button from '@/components/dsfr/Button.vue'
 import CardMission from '@/components/card/CardMission.vue'
+import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
     Button,
-    CardMission
+    CardMission,
+    Heading
   },
   data () {
     return {
