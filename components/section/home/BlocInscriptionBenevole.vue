@@ -26,7 +26,8 @@
           </span>
         </p>
         <Button type="tertiary-no-outline" icon="RiUserHeartLine" @click.native="onClick()">
-          Créer mon espace <span class="hidden xxs:inline"> Bénévole</span>
+          <span>Créer mon espace </span>
+          <span class="hidden xxs:inline">Bénévole</span>
         </Button>
         <p class="text-lg mt-3">
           Inscription en 2 minutes
