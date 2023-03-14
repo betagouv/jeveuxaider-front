@@ -25,7 +25,10 @@ module.exports = {
     },
     container: {
       center: true,
-      padding: '1rem'
+      padding: {
+        DEFAULT: '1rem',
+        sm: '1.5rem'
+      }
     },
     fontSize: {
       xxs: ['0.60rem', { lineHeight: '1rem' }],
