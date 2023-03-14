@@ -1,16 +1,27 @@
 <template>
-  <div class="relative overflow-hidden h-full flex flex-col">
-    <img
-      aria-hidden="true"
-      srcset="
-        /images/home/bg-inscription-benevole.webp, /images/home/bg-inscription-benevole@2x.webp 2x,
-        /images/home/bg-inscription-benevole.jpg, /images/home/bg-inscription-benevole@2x.jpg 2x"
-      alt=""
-      width="343"
-      height="568"
-      class="w-full pointer-events-none object-cover object-top absolute min-h-[568px] h-full"
-    >
-    <div class="relative text-white px-8 pt-12 pb-16">
+  <div class="relative overflow-hidden">
+    <picture aria-hidden="true">
+      <source
+        srcset="
+          /images/home/bg-inscription-benevole.webp, /images/home/bg-inscription-benevole@2x.webp 2x,
+          /images/home/bg-inscription-benevole.jpg, /images/home/bg-inscription-benevole@2x.jpg 2x"
+        media="(max-width: 640px)"
+      >
+      <source
+        srcset="
+          /images/home/bg-inscription-benevole-desktop.webp, /images/home/bg-inscription-benevole-desktop@2x.webp 2x,
+          /images/home/bg-inscription-benevole-desktop.jpg, /images/home/bg-inscription-benevole-desktop@2x.jpg 2x"
+        media="(min-width: 640px)"
+      >
+      <img
+        src="/images/home/bg-inscription-benevole.jpg"
+        alt=""
+        width="343"
+        height="568"
+        class="w-full pointer-events-none object-cover object-top absolute min-h-[568px] h-full"
+      >
+    </picture>
+    <div class="relative text-white px-8 py-12 lg:px-12 lg:py-14 xl:px-[72px] xl:py-20">
       <Heading as="h2" size="alt-lg" class="mb-6" color="text-white">
         <span class="block">Liberté<span class="text-jva-orange-300">.</span></span>
         <span class="block">Égalité<span class="text-jva-orange-300">.</span></span>
@@ -25,7 +36,12 @@
           bénévoles recherchés
         </span>
       </p>
-      <Button type="tertiary-no-outline" icon="RiUserHeartLine" @click.native="onClick()">
+      <Button
+        type="tertiary-no-outline"
+        icon="RiUserHeartLine"
+        class="xl:px-6 xl:py-3 xl:text-lg"
+        @click.native="onClick()"
+      >
         <span>Créer mon espace </span>
         <span class="hidden xxs:inline">Bénévole</span>
       </Button>
