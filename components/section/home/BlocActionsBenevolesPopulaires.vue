@@ -1,14 +1,30 @@
 <template>
   <div class="bg-white py-12 overflow-hidden">
     <div class="container">
-      <Heading as="h2" size="alt-xs" class="mb-6">
-        Actions bénévoles populaires
-      </Heading>
-      <p id="label-slideshow-missions-prioritaires" class="text-[#4D4D4D] text-xl">
-        Découvrez les missions de bénévolat qui engagent le plus la communauté
-      </p>
+      <div class="lg:flex lg:justify-between lg:items-center">
+        <div class="">
+          <Heading as="h2" size="alt-xs" class="mb-6">
+            Actions bénévoles populaires
+          </Heading>
+          <p id="label-slideshow-missions-prioritaires" class="text-[#4D4D4D] text-xl">
+            Découvrez les missions de bénévolat qui engagent le plus la communauté
+          </p>
+        </div>
+        <div class="hidden lg:block">
+          <div class="flex space-x-2">
+            <SlideshowArrows
+              @previous="handleSlideshowPreviousClick"
+              @next="handleSlideshowNextClick"
+            />
+            <Button class="flex-none" type="secondary" @click="handleClick()">
+              Plus de missions
+            </Button>
+          </div>
+        </div>
+      </div>
       <div v-if="missions.length" class="mt-12">
         <Slideshow
+          ref="slideshowPopulaire"
           :slides-are-links="true"
           aria-labelledby="label-slideshow-missions-prioritaires"
         >
@@ -56,6 +72,12 @@ export default {
     this.missions = missions
   },
   methods: {
+    handleSlideshowPreviousClick () {
+      this.$refs.slideshowPopulaire.previous()
+    },
+    handleSlideshowNextClick () {
+      this.$refs.slideshowPopulaire.next()
+    },
     handleClick () {
       window.plausible &&
         window.plausible('Click CTA - Homepage - Actions bénévoles populaires - Plus de missions', {

@@ -22,15 +22,27 @@
     </div>
     <div class="bg-jva-orange-300 py-12 overflow-hidden">
       <div class="container">
-        <Heading as="h3" size="alt-sm" class="mb-6" color="text-[#522F29]">
-          Le bénévolat et plus si affinités
-        </Heading>
-        <p id="label-slideshow-activities-action" class="text-[#522F29] text-xl leading-tight">
-          Contribuez à une cause qui vous touche au coeur
-        </p>
+        <div class="lg:flex lg:justify-between lg:items-center">
+          <div class="">
+            <Heading as="h3" size="alt-sm" class="mb-6" color="text-[#522F29]">
+              Le bénévolat et plus si affinités
+            </Heading>
+            <p id="label-slideshow-activities-action" class="text-[#522F29] text-xl leading-tight">
+              Contribuez à une cause qui vous touche au coeur
+            </p>
+          </div>
+          <div class="hidden lg:block">
+            <SlideshowArrows
+              variant="brown"
+              @previous="handleSlideshowPreviousClick"
+              @next="handleSlideshowNextClick"
+            />
+          </div>
+        </div>
         <div class="mt-12">
           <!-- @todo: accessibilité -->
           <Slideshow
+            ref="slideshowActivities"
             aria-labelledby="label-slideshow-activities-action"
             dots-variant="light"
             :adaptive-height="true"
@@ -77,7 +89,12 @@ export default {
     }
   },
   methods: {
-
+    handleSlideshowPreviousClick () {
+      this.$refs.slideshowActivities.previous()
+    },
+    handleSlideshowNextClick () {
+      this.$refs.slideshowActivities.next()
+    }
   }
 }
 </script>

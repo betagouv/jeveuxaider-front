@@ -22,10 +22,27 @@
         </div>
       </div>
       <div v-if="missions.length" class="mt-12">
-        <p class="text-xl font-bold mb-4">
-          Opération du 3 au 23 avril
-        </p>
+        <div class="lg:flex lg:justify-between lg:items-center">
+          <div class="">
+            <p class="text-xl font-bold mb-4">
+              Opération du 3 au 23 avril
+            </p>
+          </div>
+          <div class="hidden lg:block">
+            <div class="flex space-x-2">
+              <SlideshowArrows
+
+                @previous="handleSlideshowPreviousClick"
+                @next="handleSlideshowNextClick"
+              />
+              <Button class="flex-none" type="secondary" @click="handleClick()">
+                Plus de missions
+              </Button>
+            </div>
+          </div>
+        </div>
         <Slideshow
+          ref="slideshowOperation"
           :slides-are-links="true"
           :aria-labelledby="`label-missions-operation-${uuid}`"
         >
@@ -77,6 +94,12 @@ export default {
     this.missions = missions
   },
   methods: {
+    handleSlideshowPreviousClick () {
+      this.$refs.slideshowOperation.previous()
+    },
+    handleSlideshowNextClick () {
+      this.$refs.slideshowOperation.next()
+    },
     handleClick () {
       window.plausible &&
         window.plausible('Click CTA - Homepage - Opérations nationales - Printemps pour la planète', {

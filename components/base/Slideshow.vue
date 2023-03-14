@@ -1,7 +1,7 @@
 <template>
   <div>
     <VueSlickCarousel
-      ref="vueSlickCarousel"
+      ref="slideshowRef"
       :accessibility="true"
       :edge-friction="0"
       :swipe-to-slide="true"
@@ -22,7 +22,7 @@
     >
       <slot />
 
-      <template #prevArrow="arrowOption">
+      <!-- <template #prevArrow="arrowOption">
         <transition name="fade">
           <button
             v-show="infinite || arrowOption.currentSlide"
@@ -52,7 +52,7 @@
             >
           </button>
         </transition>
-      </template>
+      </template> -->
 
       <template #customPaging="page">
         <button
@@ -69,19 +69,6 @@
         </button>
       </template>
     </VueSlickCarousel>
-
-    <!-- <template v-if="moreLink">
-      <template v-if="moreLink.isExternal">
-        <Link ref="moreLink" :to="moreLink.link" :is-external="true" class="text-[#696974]">
-          {{ moreLink.label }}
-        </Link>
-      </template>
-      <template v-else>
-        <Link ref="moreLink" :to="moreLink.link" class="text-[#696974]">
-          {{ moreLink.label }}
-        </Link>
-      </template>
-    </template> -->
   </div>
 </template>
 
@@ -89,30 +76,25 @@
 import VueSlickCarousel from 'vue-slick-carousel'
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
-// import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: { VueSlickCarousel },
   props: {
+    slideshowRef: {
+      type: String,
+      default: 'slideshow'
+    },
     slidesAreLinks: {
       type: Boolean,
       default: false
     },
-    // moreLink: {
-    //   type: [Object, Boolean],
-    //   default: false
-    // },
-    // slidesCount: {
-    //   type: Number,
-    //   required: true
-    // },
     adaptiveHeight: {
       type: Boolean,
       default: false
     },
     arrows: {
       type: Boolean,
-      default: true
+      default: false
     },
     dots: {
       type: Boolean,
@@ -146,16 +128,16 @@ export default {
   },
   mounted () {
     this.handleAccessibilityInit()
-    // if (this.slidesAreLinks) {
-    //   this.handleLinksAccessibility()
-    // }
-    // if (this.addDotsWrapper) {
-    //   this.handleDotsWrapper()
-    // }
   },
   methods: {
+    previous () {
+      this.$refs.slideshowRef.prev()
+    },
+    next () {
+      this.$refs.slideshowRef.next()
+    },
     handleAccessibilityInit () {
-      const slickTrack = this.$refs.vueSlickCarousel.$el.getElementsByClassName(
+      const slickTrack = this.$refs.slideshowRef.$el.getElementsByClassName(
         'slick-track'
       )?.[0]
       slickTrack.setAttribute('role', 'group')
@@ -166,7 +148,7 @@ export default {
         slickTrack.setAttribute('aria-label', this.ariaLabel)
       }
 
-      const slides = this.$refs.vueSlickCarousel.$el.getElementsByClassName(
+      const slides = this.$refs.slideshowRef.$el.getElementsByClassName(
         'slick-slide'
       )
       slides.forEach((slide) => {
@@ -178,7 +160,7 @@ export default {
       this.handleAccessibility(true)
     },
     handleAccessibility (isInit) {
-      const slides = this.$refs.vueSlickCarousel.$el.getElementsByClassName(
+      const slides = this.$refs.slideshowRef.$el.getElementsByClassName(
         'slick-slide'
       )
       slides.forEach((slide) => {
@@ -187,7 +169,7 @@ export default {
         if (slide.classList.contains('slick-current')) {
           slide.setAttribute('aria-selected', 'true')
           el.setAttribute('tabindex', 0)
-          if (!isInit && this.$refs.vueSlickCarousel.$el.contains(document.activeElement) && document.activeElement.nodeName !== 'BUTTON') {
+          if (!isInit && this.$refs.slideshowRef.$el.contains(document.activeElement) && document.activeElement.nodeName !== 'BUTTON') {
             el.focus()
           }
         } else {
@@ -196,7 +178,7 @@ export default {
         }
       })
 
-      const dots = this.$refs?.vueSlickCarousel?.$el
+      const dots = this.$refs?.slideshowRef?.$el
         ?.getElementsByClassName('slick-dots')
         ?.item(0)?.querySelectorAll(':scope > li')
       if (dots) {
@@ -209,43 +191,17 @@ export default {
         })
       }
     },
-    // handleDotsWrapper () {
-    //   const dotsWrapper = this.$refs?.vueSlickCarousel?.$el
-    //     ?.getElementsByClassName('slick-dots')
-    //     ?.item(0)
-    //   const moreLinkEl = this.$refs?.moreLink?.$el || this.$refs?.moreLink
-
-    //   if (dotsWrapper || moreLinkEl) {
-    //     // Add wrapper.
-    //     const wrapper = document.createElement('div')
-    //     wrapper.className =
-    //       'wrapper--slick-dots mt-6 flex flex-col sm:flex-row items-center sm:justify-start space-y-4 sm:space-y-0'
-    //     if (dotsWrapper) {
-    //       dotsWrapper.parentNode.insertBefore(wrapper, dotsWrapper)
-    //     } else {
-    //       moreLinkEl.parentNode.insertBefore(wrapper, moreLinkEl)
-    //     }
-
-    //     // Add elements to the wrapper.
-    //     if (dotsWrapper) {
-    //       wrapper.appendChild(dotsWrapper)
-    //     }
-    //     if (moreLinkEl) {
-    //       wrapper.appendChild(moreLinkEl)
-    //     }
-    //   }
-    // },
     onBeforeChange (oldSlide, newSlide) {
-      if (this.$refs.vueSlickCarousel.autoplay) {
-        this.$refs.vueSlickCarousel.pause()
+      if (this.$refs.slideshowRef.autoplay) {
+        this.$refs.slideshowRef.pause()
       }
       this.currentSlideIndex = newSlide
     },
     onAfterChange () {
       this.handleAccessibility()
 
-      if (this.$refs.vueSlickCarousel.autoplay) {
-        this.$refs.vueSlickCarousel.play()
+      if (this.$refs.slideshowRef.autoplay) {
+        this.$refs.slideshowRef.play()
       }
     }
   }

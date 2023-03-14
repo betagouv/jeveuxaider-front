@@ -1,14 +1,31 @@
 <template>
   <div class="bg-white py-12 overflow-hidden">
     <div class="container">
-      <Heading id="label-slideshow-articles" as="h2" size="alt-xs" class="mb-6">
-        Les actualités de l’engagement
-      </Heading>
-      <p class="text-[#4D4D4D] text-xl">
-        Restez informé de l'actualité de tous ceux qui font vivre l'engagement en France
-      </p>
+      <div class="lg:flex lg:justify-between lg:items-center">
+        <div class="">
+          <Heading id="label-slideshow-articles" as="h2" size="alt-xs" class="mb-6">
+            Les actualités de l’engagement
+          </Heading>
+          <p class="text-[#4D4D4D] text-xl">
+            Restez informé de l'actualité de tous ceux qui font vivre l'engagement en France
+          </p>
+        </div>
+        <div class="hidden lg:block">
+          <div class="flex space-x-2">
+            <SlideshowArrows
+              @previous="handleSlideshowPreviousClick"
+              @next="handleSlideshowNextClick"
+            />
+            <Button class="flex-none" type="secondary" @click="handleClick()">
+              Plus de missions
+            </Button>
+          </div>
+        </div>
+      </div>
+
       <div v-if="articles.length" class="mt-12">
         <Slideshow
+          ref="slideshowArticles"
           :slides-are-links="true"
           aria-labelledby="label-slideshow-articles"
         >
@@ -67,6 +84,14 @@ export default {
       }
     }
     this.articles = articlesWithMedia
+  },
+  methods: {
+    handleSlideshowPreviousClick () {
+      this.$refs.slideshowArticles.previous()
+    },
+    handleSlideshowNextClick () {
+      this.$refs.slideshowArticles.next()
+    }
   }
 }
 </script>
