@@ -16,7 +16,7 @@
 
     <div class="container mx-auto px-4 ">
       <h2
-        :id="`label-parole-benevoles-${_uid}`"
+        :id="`label-parole-benevoles-${uuid}`"
         class="text-4xl lg:text-[40px] lg:leading-[42px] tracking-tight text-center text-gray-900"
       >
         Paroles de bénévoles<br>
@@ -26,7 +26,7 @@
       <Slideshow
         :settings="settings"
         class="mt-12"
-        :aria-labelledby="`label-parole-benevoles-${_uid}`"
+        :aria-labelledby="`label-parole-benevoles-${uuid}`"
       >
         <div v-for="testimony in testimonials" :key="testimony.id">
           <div
@@ -67,7 +67,10 @@
 </template>
 
 <script>
+import uuid from '@/mixins/uuid'
+
 export default {
+  mixins: [uuid],
   props: {
     model: {
       type: Object,

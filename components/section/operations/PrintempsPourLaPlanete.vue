@@ -9,7 +9,7 @@
           <Heading as="h2" size="alt-xs">
             Rejoignez le mouvement Printemps pour la planète
           </Heading>
-          <p class="text-xl text-[#4D4D4D]">
+          <p :id="`label-missions-operation-${uuid}`" class="text-xl text-[#4D4D4D]">
             Passez de l’éveil à l’action en participant aux missions de bénévolat au service de ce que nous avons de plus précieux : notre planète.
           </p>
         </div>
@@ -27,7 +27,7 @@
         </p>
         <Slideshow
           :slides-are-links="true"
-          :aria-labelledby="`label-missions-operation-${_uid}`"
+          :aria-labelledby="`label-missions-operation-${uuid}`"
         >
           <nuxt-link
             v-for="mission in missions"
@@ -52,6 +52,7 @@
 import Button from '@/components/dsfr/Button.vue'
 import Heading from '@/components/dsfr/Heading.vue'
 import CardMission from '@/components/card/CardMission.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
@@ -59,6 +60,7 @@ export default {
     Button,
     CardMission
   },
+  mixins: [uuid],
   data () {
     return {
       missions: [],

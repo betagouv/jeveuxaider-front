@@ -10,7 +10,7 @@
       >
         <button
           v-for="(title, key) in tabs"
-          :id="`tabpanel-${_uid}-${key}`"
+          :id="`tabpanel-${uuid}-${key}`"
           :key="title.content"
           :class="[
             'inline-flex items-center justify-center transition mx-1 px-4 py-2 border border-b-0 border-t-2 flex-none',
@@ -19,7 +19,7 @@
           ]"
           role="tab"
           :aria-selected="selected === key || 'false'"
-          :aria-controls="`tabpanel-${_uid}-${key}-panel`"
+          :aria-controls="`tabpanel-${uuid}-${key}-panel`"
           @click="() => {selected = key; $emit('selected', title)}"
         >
           <component
@@ -39,10 +39,10 @@
     <div
       v-for="(title, key) in tabs"
       v-show="key === selected"
-      :id="`tabpanel-${_uid}-${key}-panel`"
+      :id="`tabpanel-${uuid}-${key}-panel`"
       :key="key"
       role="tabpanel"
-      :aria-labelledby="`tabpanel-${_uid}-${key}`"
+      :aria-labelledby="`tabpanel-${uuid}-${key}`"
       :class="[
         'border p-4 mt-[-5px]',
         tabpanelClass
@@ -54,7 +54,10 @@
 </template>
 
 <script>
+import uuid from '@/mixins/uuid'
+
 export default {
+  mixins: [uuid],
   props: {
     name: {
       type: String,

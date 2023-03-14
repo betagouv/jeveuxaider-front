@@ -6,7 +6,7 @@
     <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
-          <Heading :id="`label-missions-prioritaires-${_uid}`" as="h2" size="2xl" class="text-center md:text-left">
+          <Heading :id="`label-missions-prioritaires-${uuid}`" as="h2" size="2xl" class="text-center md:text-left">
             Les missions de bénévolat prioritaires
           </Heading>
           <p class="hidden lg:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]">
@@ -22,7 +22,7 @@
          -->
         <Slideshow
           :slides-are-links="true"
-          :aria-labelledby="`label-missions-prioritaires-${_uid}`"
+          :aria-labelledby="`label-missions-prioritaires-${uuid}`"
         >
           <div key="restos-du-coeur" class="card--mission--wrapper">
             <CardRestaurantsDuCoeur class="!h-full" />
@@ -46,6 +46,7 @@
 import CardMission from '@/components/card/CardMission'
 import CardRestaurantsDuCoeur from '@/components/card/CardRestaurantsDuCoeur'
 import Heading from '@/components/dsfr/Heading.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
@@ -53,6 +54,7 @@ export default {
     CardRestaurantsDuCoeur,
     Heading
   },
+  mixins: [uuid],
   data () {
     return {
       missions: []

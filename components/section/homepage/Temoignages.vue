@@ -15,14 +15,14 @@
     >
 
     <div class="container mx-auto px-4 ">
-      <Heading :id="`label-paroles-benevoles-${_uid}`" as="h2" size="2xl" class="text-center">
+      <Heading :id="`label-paroles-benevoles-${uuid}`" as="h2" size="2xl" class="text-center">
         Paroles de bénévoles
       </Heading>
 
       <Slideshow
         :settings="settings"
         class="mt-12"
-        :aria-labelledby="`label-paroles-benevoles-${_uid}`"
+        :aria-labelledby="`label-paroles-benevoles-${uuid}`"
       >
         <div v-for="testimony,index in testimonies" :key="index">
           <div
@@ -69,11 +69,13 @@
 
 <script>
 import Heading from '@/components/dsfr/Heading.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
     Heading
   },
+  mixins: [uuid],
   data () {
     return {
       testimonies: [

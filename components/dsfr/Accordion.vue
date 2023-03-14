@@ -7,7 +7,7 @@
           'hover:bg-[#F6F6F6] active:bg-[#EDEDED]',
         ]"
         :aria-expanded="isOpen"
-        :aria-controls="`accordion-${_uid}`"
+        :aria-controls="`accordion-${uuid}`"
         type="button"
         @click="isOpen = !isOpen"
       >
@@ -16,7 +16,7 @@
     </h3>
 
     <div
-      :id="`accordion-${_uid}`"
+      :id="`accordion-${uuid}`"
       :class="[
         'fr-collapse',
         { 'fr-collapse--expanded': isOpen },
@@ -30,8 +30,10 @@
 
 <script>
 import '@gouvfr/dsfr/dist/component/accordion/accordion.main.min.css'
+import uuid from '@/mixins/uuid'
 
 export default {
+  mixins: [uuid],
   props: {
     initialIsOpen: {
       type: Boolean,

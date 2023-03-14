@@ -1,6 +1,6 @@
 <template>
   <div v-click-outside="() => isGeolocFilterActive = false">
-    <div :id="`label-search-${_uid}`" class="text-[#7B7B7B] mb-1">
+    <div :id="`label-search-${uuid}`" class="text-[#7B7B7B] mb-1">
       Localisation
     </div>
 
@@ -34,7 +34,7 @@
       v-model="searchValue"
       placeholder="Ville ou code postal"
       icon="RiMapPin2Fill"
-      :aria-labelledby="`label-search-${_uid}`"
+      :aria-labelledby="`label-search-${uuid}`"
       @focus="isGeolocFilterActive = true"
       @input="handleInput"
       @clear="() => { handleSelectedAdress(null); isGeolocFilterActive = true }"
@@ -90,12 +90,13 @@
 import { debounce } from 'lodash'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
     FacetSearch
   },
-  mixins: [AlgoliaQueryBuilder],
+  mixins: [AlgoliaQueryBuilder, uuid],
   props: {},
   data () {
     return {

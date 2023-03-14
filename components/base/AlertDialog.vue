@@ -1,7 +1,7 @@
 <template>
   <portal to="body-end">
     <Modal
-      :key="`modal_alert_dialog_${_uid}`"
+      :key="`modal_alert_dialog_${uuid}`"
       v-scroll-lock="isOpen"
       :title="title"
       :is-open="isOpen"
@@ -23,7 +23,10 @@
 </template>
 
 <script>
+import uuid from '@/mixins/uuid'
+
 export default {
+  mixins: [uuid],
   props: {
     isOpen: {
       type: Boolean,
