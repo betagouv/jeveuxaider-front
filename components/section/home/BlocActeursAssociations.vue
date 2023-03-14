@@ -44,7 +44,7 @@
           class="relative z-[2] flex-none h-[48px] w-[48px] -ml-4 lg:w-[60px] lg:h-[60px]"
         >
       </div>
-      <p class="text-[#3A3A3A]">
+      <p class="text-[#3A3A3A] !-mr-1 xs:!mr-0">
         <strong>Caroline et Sophie</strong> de JeVeuxAider.gouv.fr pour vous accompagner
       </p>
     </div>

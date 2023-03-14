@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#F5F5FE] py-4">
+  <div class="bg-[#F5F5FE] pt-4 pb-8">
     <div class="container">
       <FormNewsletter />
       <div class="h-[1px] bg-[#6A6AF4] my-8" />
