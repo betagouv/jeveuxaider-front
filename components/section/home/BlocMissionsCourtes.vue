@@ -1,14 +1,31 @@
 <template>
   <div class="bg-jva-blue-500 py-12 overflow-hidden">
     <div class="container">
-      <Heading as="h2" size="alt-xs" class="mb-6" color="text-white">
-        Devenez bénévole d’un jour !
-      </Heading>
-      <p id="label-slideshow-missions-courtes" class="text-white text-xl">
-        Des missions courtes et sans engagement selon vos envies.
-      </p>
+      <div class="lg:flex lg:justify-between lg:items-center">
+        <div class="">
+          <Heading as="h2" size="alt-xs" class="mb-6" color="text-white">
+            Devenez bénévole d’un jour !
+          </Heading>
+          <p id="label-slideshow-missions-courtes" class="text-white text-xl">
+            Des missions courtes et sans engagement selon vos envies.
+          </p>
+        </div>
+        <div class="hidden lg:block">
+          <div class="flex space-x-2">
+            <SlideshowArrows
+              variant="white"
+              @previous="handleSlideshowPreviousClick"
+              @next="handleSlideshowNextClick"
+            />
+            <Button class="flex-none" type="primary-outline" @click="handleClick()">
+              Plus de missions
+            </Button>
+          </div>
+        </div>
+      </div>
       <div v-if="missions.length" class="mt-12">
         <Slideshow
+          ref="slideshowBenevoleDunJour"
           :slides-are-links="true"
           aria-labelledby="label-slideshow-missions-courtes"
           dots-variant="light"
@@ -89,6 +106,12 @@ export default {
     this.missions = missions
   },
   methods: {
+    handleSlideshowPreviousClick () {
+      this.$refs.slideshowBenevoleDunJour.previous()
+    },
+    handleSlideshowNextClick () {
+      this.$refs.slideshowBenevoleDunJour.next()
+    },
     handleClick () {
       window.plausible &&
         window.plausible('Click CTA - Homepage - Mission courtes - Plus de missions', {

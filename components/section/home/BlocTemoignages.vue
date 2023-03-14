@@ -1,14 +1,26 @@
 <template>
   <div class="relative bg-[#6A6AF4]">
-    <div class="px-4 py-12">
-      <Heading as="h2" size="alt-xs" class="mb-6" color="text-white">
-        Paroles de bénévoles
-      </Heading>
-      <p id="label-slideshow-temoignages" class="text-white text-xl">
-        Découvrez les témoignages des bénévoles de la communauté JeVeuxAider.gouv.fr
-      </p>
+    <div class="container py-12">
+      <div class="lg:flex lg:justify-between lg:items-center">
+        <div class="">
+          <Heading as="h2" size="alt-xs" class="mb-6" color="text-white">
+            Paroles de bénévoles
+          </Heading>
+          <p id="label-slideshow-temoignages" class="text-white text-xl">
+            Découvrez les témoignages des bénévoles de la communauté JeVeuxAider.gouv.fr
+          </p>
+        </div>
+        <div class="hidden lg:block">
+          <SlideshowArrows
+            variant="white"
+            @previous="handleSlideshowPreviousClick"
+            @next="handleSlideshowNextClick"
+          />
+        </div>
+      </div>
       <div v-if="temoignages.length" class="overflow-hidden mt-12">
         <Slideshow
+          ref="slideshowTemoignages"
           aria-labelledby="label-slideshow-temoignages"
           :adaptive-height="true"
           dots-variant="light"
@@ -183,6 +195,14 @@ export default {
           }
         }
       ]
+    }
+  },
+  methods: {
+    handleSlideshowPreviousClick () {
+      this.$refs.slideshowTemoignages.previous()
+    },
+    handleSlideshowNextClick () {
+      this.$refs.slideshowTemoignages.next()
     }
   }
 }
