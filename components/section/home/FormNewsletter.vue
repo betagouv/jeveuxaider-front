@@ -1,11 +1,11 @@
 <template>
   <div>
-    <Heading :id="`newsletter-headline-${_uid}`" as="h2" size="sm" class="mb-4">
+    <Heading :id="`newsletter-headline`" as="h2" size="sm" class="mb-4">
       Recevez nos suggestions de missions de bénévolat
     </Heading>
 
     <form
-      :aria-labelledby="`newsletter-headline-${_uid}`"
+      :aria-labelledby="`newsletter-headline`"
       class="relative flex flex-col lg:flex-row w-full"
     >
       <FormControl
@@ -86,7 +86,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

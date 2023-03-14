@@ -1,9 +1,19 @@
 <template>
-  <div class="bg-white px-4 pb-12">
-    <div class="py-16 text-[40px] font-bold leading-10 text-center">
-      <span class="relative">Vous avez des questions ? <img class="absolute right-[-26px] top-[30px]" src="/images/home/sparkle-right.svg"></span>
-    </div>
-    <div class="">
+  <div class="bg-white pb-12">
+    <div class="container">
+      <Heading as="h2" size="alt-md" class="py-16 text-center">
+        <span class="relative">
+          <span>Vous avez des questions ?</span>
+          <img
+            src="/images/home/sparkle-right.svg"
+            alt=""
+            width="40"
+            height="43"
+            class="absolute right-[-22px] top-[35px] xxs:top-[40px] sm:top-[-10px] w-8"
+            aria-hidden="true"
+          >
+        </span>
+      </Heading>
       <Tabs
         name="Catégories de faq"
         :tabs="[
@@ -182,15 +192,15 @@
           </AccordionsGroup>
         </div>
       </Tabs>
-    </div>
-    <div class="mt-8 text-center">
-      <Link
-        to="https://reserve-civique.crisp.help/fr/"
-        :is-external="true"
-        class="text-jva-blue-500"
-      >
-        Toutes les réponses à vos questions
-      </Link>
+      <div class="mt-8 text-center">
+        <Link
+          to="https://reserve-civique.crisp.help/fr/"
+          :is-external="true"
+          class="text-jva-blue-500"
+        >
+          Toutes les réponses à vos questions
+        </Link>
+      </div>
     </div>
   </div>
 </template>
@@ -200,13 +210,15 @@ import Tabs from '@/components/dsfr/Tabs.vue'
 import Accordion from '~/components/dsfr/Accordion.vue'
 import AccordionsGroup from '~/components/dsfr/AccordionsGroup.vue'
 import Link from '~/components/dsfr/Link.vue'
+import Heading from '@/components/dsfr/Heading.vue'
 
 export default {
   components: {
     Tabs,
     Accordion,
     AccordionsGroup,
-    Link
+    Link,
+    Heading
   },
   data () {
     return {}

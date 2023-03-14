@@ -3,7 +3,13 @@
     <div class="container">
       <Heading as="h2" size="alt-md" class="mt-12 text-center">
         <span class="relative">
-          <img class="absolute left-[-26px] top-[-5px]" src="/images/home/sparkle-left.svg">
+          <img
+            src="/images/home/sparkle-left.svg"
+            class="absolute left-[-26px] top-[-5px]"
+            width="37"
+            height="33"
+            aria-hidden="true"
+          >
           <span>C’est votre première fois ? Suivez le guide</span>
         </span>
       </Heading>

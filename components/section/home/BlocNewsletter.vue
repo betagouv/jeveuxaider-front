@@ -1,12 +1,12 @@
 <template>
-  <div class="bg-[#F5F5FE] p-4">
-    <FormNewsletter />
-    <div class="h-[1px] bg-[#6A6AF4] my-8" />
-    <div>
+  <div class="bg-[#F5F5FE] py-4">
+    <div class="container">
+      <FormNewsletter />
+      <div class="h-[1px] bg-[#6A6AF4] my-8" />
       <Heading as="h2" size="sm" class="mb-6">
-        Suivez-nous <br class=""> sur les réseaux sociaux
+        Suivez-nous <br> sur les réseaux sociaux
       </Heading>
-      <div class="flex space-x-4">
+      <div class="flex space-x-4 -ml-2">
         <a
           v-for="socialMedia in socialMedias"
           :key="socialMedia.url"
