@@ -122,7 +122,7 @@
                       to="/missions-benevolat?tags=Environnement"
                       :class="['flex space-x-1 px-3 py-2 text-base text-cool-gray-600']"
                     >
-                      <span aria-hidden="true">☘️</span>
+                      <span aria-hidden="true">🌍</span>
                       <span>Printemps pour la planète</span>
                     </NavItem>
 
