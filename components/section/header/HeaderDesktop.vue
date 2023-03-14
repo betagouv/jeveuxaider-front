@@ -77,7 +77,7 @@
                   @click.native="switchRole(role)"
                 >
                   {{ role.label }}
-                  <template #icon>
+                  <template #iconRight>
                     <template v-if="['responsable','responsable_territoire'].includes($store.getters.contextRole)">
                       <template v-if="$store.getters.contextRole === 'responsable'">
                         <CheckIcon v-if="role.contextable_type === 'structure' && role.contextable_id === $store.getters.contextableId " class="h-5 text-jva-green-500 " />
@@ -116,7 +116,7 @@
           to="/missions-benevolat?tags=Environnement"
           class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
         >
-          <span aria-hidden="true">☘️</span>
+          <span aria-hidden="true">🌍</span>
           <span>Printemps pour la planète</span>
         </NavItem>
 
