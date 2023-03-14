@@ -10,7 +10,7 @@
             height="33"
             aria-hidden="true"
           >
-          <span>C’est votre première fois ? Suivez le guide</span>
+          <span>C’est votre première fois ? <br class="hidden md:block">Suivez le guide</span>
         </span>
       </Heading>
     </div>

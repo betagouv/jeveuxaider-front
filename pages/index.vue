@@ -1,8 +1,10 @@
 <template>
   <div class="bg-[#F9F6F2]">
     <BlocBanner />
-    <BlocInscriptionBenevole />
-    <BlocInscriptionResponsable />
+    <div class="container md:!max-w-full xl:!max-w-[1680px] grid gap-6 lg:gap-8 md:grid-cols-2 pt-4 md:pt-6 lg:pt-8">
+      <BlocInscriptionBenevole />
+      <BlocInscriptionResponsable />
+    </div>
     <BlocActivities />
     <PrintempsPourLaPlanete />
     <BlocMissionsCourtes />

@@ -49,7 +49,7 @@
       </nav>
     </div>
     <div class="w-full border-t" />
-    <div class="flex justify-between text-sm text-gray-800" :class="{'max-w-7xl mx-auto': !fullWidth}">
+    <div class="flex justify-between text-sm text-gray-800" :class="{'max-w-[1260px] mx-auto': !fullWidth}">
       <nav role="navigation" class="flex w-full">
         <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 1" ref="switchRole" position="left" class="h-full">
           <template #button>
