@@ -18,16 +18,16 @@
         alt=""
         width="343"
         height="568"
-        class="w-full pointer-events-none object-cover object-top absolute min-h-[568px] h-full"
+        class="w-full pointer-events-none object-cover object-top absolute h-full"
       >
     </picture>
-    <div class="relative text-white px-8 py-12 lg:px-12 lg:py-14 xl:px-[72px] xl:py-20">
-      <Heading as="h2" size="alt-lg" class="mb-6" color="text-white">
+    <div class="relative text-white px-8 py-12 lg:px-12 lg:py-14 xl:px-[72px] xl:py-20 space-y-8 md:space-y-10 lg:space-y-12 xl:space-y-16">
+      <Heading as="h2" size="alt-lg" color="text-white">
         <span class="block">Liberté<span class="text-jva-orange-300">.</span></span>
         <span class="block">Égalité<span class="text-jva-orange-300">.</span></span>
         <span class="block">Je veux aider<span class="text-jva-orange-300">.</span></span>
       </Heading>
-      <p class="mb-8">
+      <p>
         <span class="text-5xl font-bold leading-[56px]">
           100 000
         </span>
@@ -36,18 +36,20 @@
           bénévoles recherchés
         </span>
       </p>
-      <Button
-        type="tertiary-no-outline"
-        icon="RiUserHeartLine"
-        class="xl:px-6 xl:py-3 xl:text-lg"
-        @click.native="onClick()"
-      >
-        <span>Créer mon espace </span>
-        <span class="hidden xxs:inline">Bénévole</span>
-      </Button>
-      <p class="text-lg mt-3">
-        Inscription en 2 minutes
-      </p>
+      <div>
+        <Button
+          type="tertiary-no-outline"
+          icon="RiUserHeartLine"
+          class="xl:px-6 xl:py-3 xl:text-lg"
+          @click.native="onClick()"
+        >
+          <span>Créer mon espace </span>
+          <span class="hidden xxs:inline">Bénévole</span>
+        </Button>
+        <p class="text-lg mt-3">
+          Inscription en 2 minutes
+        </p>
+      </div>
     </div>
   </div>
 </template>
