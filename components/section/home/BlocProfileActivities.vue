@@ -9,7 +9,7 @@
         i % 2 == 0 ? 'bg-[#F9F6F2]' : 'bg-white'
       ]"
     />
-    <div class="container pb-24">
+    <div class="container py-24">
       <div class="flex flex-col gap-16">
         <div v-if="profileActivitiesRemaining.length > 0">
           <Heading as="h3" size="md" class="">
@@ -30,13 +30,13 @@
             </div>
           </div>
         </div>
-        <div v-if="profileActivitiesRemaining.length > 0">
+        <div v-if="otherActivitiesFromDomains.length > 0">
           <Heading as="h3" size="md" class="">
             Ces sujets devraient également vous parler
           </Heading>
           <div class="flex flex-wrap gap-8 mt-12">
             <div
-              v-for="activity in otherActivities"
+              v-for="activity in otherActivitiesFromDomains"
               :key="activity.key"
               class="inline-flex border border-[#CECECE] text-xl font-bold "
             >
@@ -44,7 +44,7 @@
                 <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
                 <span class="ml-3">{{ activity.name }}</span>
               </div>
-              <button class="flex justify-center items-center border-l border-[#CECECE] w-[72px] cursor-pointer hover:bg-[#F9F9F9]" @click="handleClickOtherActivity(activity)">
+              <button class="flex justify-center items-center border-l border-[#CECECE] w-[72px] cursor-pointer hover:bg-[#F9F9F9]" @click="attachActivityToProfile(activity)">
                 <RiAddLine class=" fill-current w-[20px] h-[20px]" />
               </button>
             </div>
@@ -67,35 +67,59 @@ export default {
   },
   data () {
     return {
-      activities
+      activities,
+      chunkSize: 4
     }
   },
   computed: {
     profileActivities () {
-      if (!this.$store.getters.profile.activities) {
+      if (this.$store.getters.profile.activities.length === 0) {
         return []
       }
-      const profileActivitiesIds = this.$store.getters.profile.activities.slice(0, 3).map((activity) => { return activity.id })
+      const profileActivitiesIds = this.$store.getters.profile.activities.slice(0, this.chunkSize).map((activity) => { return activity.id })
       return activities.filter(activity => profileActivitiesIds.includes(activity.key))
     },
     profileActivitiesRemaining () {
-      if (!this.$store.getters.profile.activities) {
+      if (this.$store.getters.profile.activities.length === 0) {
         return []
       }
-      const profileActivitiesIds = this.$store.getters.profile.activities.slice(3, this.$store.getters.profile.activities.length).map((activity) => { return activity.id })
+      const profileActivitiesIds = this.$store.getters.profile.activities.slice(this.chunkSize, this.$store.getters.profile.activities.length).map((activity) => { return activity.id })
       return activities.filter(activity => profileActivitiesIds.includes(activity.key))
     },
-    otherActivities () {
-      if (!this.$store.getters.profile.activities) {
-        return this.activities
+    profileDomainsByActivities () {
+      if (this.$store.getters.profile.activities.length === 0) {
+        return []
       }
       const profileActivitiesIds = this.$store.getters.profile.activities.map((activity) => { return activity.id })
-      return activities.filter(activity => !profileActivitiesIds.includes(activity.key))
+
+      const activitiesFiltered = activities.filter(activity => profileActivitiesIds.includes(activity.key))
+
+      const domains = []
+      activitiesFiltered.map(activity => domains.push(activity.domain))
+      return domains.flat()
+    },
+    otherActivitiesFromDomains () {
+      if (this.profileDomainsByActivities.length === 0) {
+        return this.activities.filter(activity => activity.popular)
+      }
+      const profileActivitiesIds = this.$store.getters.profile.activities.map((activity) => { return activity.id })
+      return activities.filter(activity => activity.domain.some(i => this.profileDomainsByActivities.includes(i) && !profileActivitiesIds.includes(activity.key)))
     }
   },
   methods: {
-    handleClickOtherActivity (activity) {
-      console.log('handleClickOtherActivity', activity)
+    async attachActivityToProfile (activity) {
+      await this.$axios.put(`/profiles/${this.$store.getters.profile.id}/activity/${activity.id}/attach`, this.mission)
+        .then(async () => {
+          await this.$store.dispatch('auth/fetchUser')
+          this.$toast.success(`${activity.label} a été ajouté à vos préférences`)
+        }).catch(() => {})
+    },
+    async detachActivityToProfile (activity) {
+      await this.$axios.put(`/profiles/${this.$store.getters.profile.id}/activity/${activity.id}/detach`, this.mission)
+        .then(async () => {
+          await this.$store.dispatch('auth/fetchUser')
+          this.$toast.success(`${activity.label} a été retirer de vos préférences`)
+        }).catch(() => {})
     }
   }
 }

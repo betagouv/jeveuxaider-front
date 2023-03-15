@@ -102,7 +102,7 @@ export default {
   },
   computed: {
     profileActivitiesFilters () {
-      if (!this.$store.getters.profile.activities) {
+      if (this.$store.getters.profile.activities.length === 0) {
         return ''
       }
       const activities = this.$store.getters.profile.activities.map((activity) => {

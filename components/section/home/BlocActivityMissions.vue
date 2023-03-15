@@ -4,7 +4,7 @@
       <div class="container">
         <div class="lg:flex lg:justify-between lg:items-center">
           <div class="">
-            <Heading as="h3" size="alt-sm" class="mb-6" color="">
+            <Heading as="h3" size="alt-sm" class="" color="">
               {{ activity.icon }} {{ activity.name }}
             </Heading>
           </div>
