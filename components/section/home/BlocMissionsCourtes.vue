@@ -18,8 +18,8 @@
               @previous="handleSlideshowPreviousClick"
               @next="handleSlideshowNextClick"
             />
-            <Button class="flex-none" type="primary-outline" @click="handleClick()">
-              Plus de missions
+            <Button class="flex-none" type="transparent" extra-class="text-jva-blue-500 border-jva-blue-500" @click="handleClick()">
+              Plus de missions
             </Button>
           </div>
         </div>

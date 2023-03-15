@@ -3,50 +3,69 @@
     <div class="container pt-6 sm:pt-0">
       <div class="relative sm:pt-10 sm:pb-14 lg:pt-14 lg:pb-20 xl:pt-20 xl:pb-32">
         <div class="sm:max-w-[425px] lg:max-w-[600px] xl:max-w-[860px]">
-          <div
-            :class="[
-              'text-jva-orange-300 font-bold mb-4 xl:mb-12',
-              'text-xl xxs:text-2xl xs:text-3xl sm:text-[32px] xl:text-[56px] xl:leading-[56px]'
-            ]"
-          >
-            <client-only>
-              <div>
-                <p>
-                  <span>Je veux</span>
-                  <vue-typer
-                    :text="words"
-                    :repeat="Infinity"
-                    :shuffle="true"
-                    initial-action="typing"
-                    :pre-type-delay="70"
-                    :type-delay="70"
-                    :pre-erase-delay="2000"
-                    :erase-delay="250"
-                    erase-style="select-all"
-                    :erase-on-complete="false"
-                    caret-animation="blink"
-                    class="ml-2 text-jva-orange-300"
-                  />
+          <template v-if="$store.getters.isLogged">
+            <div>
+              <Heading as="h1" size="alt-xl" class="mb-10 xl:mb-20" color="text-white">
+                <span class="relative">
+                  <span>{{ $store.getters.profile.first_name }}</span>
+                  <img
+                    aria-hidden="true"
+                    src="/images/home/sparkle-right.svg"
+                    width="40"
+                    height="43"
+                    class="absolute right-[-26px] -top-1 xxs:top-[6px] pointer-events-none lg:right-[-60px] lg:top-[-10px] lg:w-[80px]"
+                  >
+                </span><br>
+                <span>ravis de vous voir connecté </span>
+              </Heading>
+            </div>
+          </template>
+          <template v-else>
+            <div
+              :class="[
+                'text-jva-orange-300 font-bold mb-4 xl:mb-12',
+                'text-xl xxs:text-2xl xs:text-3xl sm:text-[32px] xl:text-[56px] xl:leading-[56px]'
+              ]"
+            >
+              <client-only>
+                <div>
+                  <p>
+                    <span>Je veux</span>
+                    <vue-typer
+                      :text="words"
+                      :repeat="Infinity"
+                      :shuffle="true"
+                      initial-action="typing"
+                      :pre-type-delay="70"
+                      :type-delay="70"
+                      :pre-erase-delay="2000"
+                      :erase-delay="250"
+                      erase-style="select-all"
+                      :erase-on-complete="false"
+                      caret-animation="blink"
+                      class="ml-2 text-jva-orange-300"
+                    />
+                  </p>
+                </div>
+                <p slot="placeholder" class="truncate">
+                  <span class="truncate"> {{ words.map(word => `Je veux ${word}`).join(', ') }} </span>
                 </p>
-              </div>
-              <p slot="placeholder" class="truncate">
-                <span class="truncate"> {{ words.map(word => `Je veux ${word}`).join(', ') }} </span>
-              </p>
-            </client-only>
-          </div>
-          <Heading as="h1" size="alt-xl" class="mb-10 xl:mb-20" color="text-white">
-            <span>Devenez </span>
-            <span class="relative">
-              <span>bénévole</span>
-              <img
-                aria-hidden="true"
-                src="/images/home/sparkle-right.svg"
-                width="40"
-                height="43"
-                class="absolute right-[-26px] -top-1 xxs:top-[6px] pointer-events-none xl:-right-16 xl:w-[80px]"
-              >
-            </span>
-          </Heading>
+              </client-only>
+            </div>
+            <Heading as="h1" size="alt-2xl" class="mb-10 xl:mb-20" color="text-white">
+              <span>Devenez </span>
+              <span class="relative">
+                <span>bénévole</span>
+                <img
+                  aria-hidden="true"
+                  src="/images/home/sparkle-right.svg"
+                  width="40"
+                  height="43"
+                  class="absolute right-[-26px] -top-1 xxs:top-[6px] pointer-events-none xl:-right-16 xl:w-[80px]"
+                >
+              </span>
+            </Heading>
+          </template>
           <Button
             type="tertiary-no-outline"
             icon="RiSearchLine"

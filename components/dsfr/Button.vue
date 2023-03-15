@@ -14,14 +14,16 @@
       {'px-6 py-2 text-lg min-h-[3rem]': size === 'lg'},
 
       {'text-white bg-jva-blue-500 hover:bg-jva-blue-800 active:bg-jva-blue-900 border-transparent': type === 'primary'},
-      {'text-white bg-jva-blue-500 hover:bg-jva-blue-800 active:bg-jva-blue-900 border-white': type === 'primary-outline'},
       {'text-jva-blue-500 border-jva-blue-500 bg-white hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'secondary'},
       {'text-jva-blue-500 border-[#DDDDDD] bg-white hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'tertiary'},
       {'text-jva-blue-500 border-transparent bg-white hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'tertiary-no-outline'},
+      {'bg-transparent': type === 'transparent'},
 
       {'cursor-not-allowed !bg-[#E5E5E5] text-[#929292]': disabled && type === 'primary'},
       {'cursor-not-allowed !border-[#E5E5E5] text-[#929292]': disabled && ['secondary', 'tertiary'].includes(type)},
       {'cursor-not-allowed text-[#929292]': disabled && type === 'tertiary-no-outline'},
+
+      extraClass
     ]"
     :disabled="disabled"
     @click="$emit('click')"
@@ -77,7 +79,7 @@ export default {
     type: {
       type: String,
       default: 'primary',
-      validator: s => ['primary', 'primary-outline', 'secondary', 'tertiary', 'tertiary-no-outline'].includes(s)
+      validator: s => ['primary', 'transparent', 'secondary', 'tertiary', 'tertiary-no-outline'].includes(s)
     },
     icon: {
       // See vue-remix-icons.js
@@ -114,6 +116,10 @@ export default {
       default: false
     },
     as: {
+      type: String,
+      default: null
+    },
+    extraClass: {
       type: String,
       default: null
     }
