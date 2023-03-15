@@ -26,6 +26,7 @@
           :adaptive-height="true"
           dots-variant="light"
         >
+          <!-- @todo card témoignage + affichage desktop -->
           <div
             v-for="temoignage,i in temoignages"
             :key="i"

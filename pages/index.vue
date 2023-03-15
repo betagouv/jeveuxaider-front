@@ -6,7 +6,9 @@
       <PrintempsPourLaPlanete />
       <BlocProfileActivities />
       <BlocTemoignages />
-      <BlocNewsletter />
+      <div class="pt-6">
+        <BlocNewsletter />
+      </div>
     </template>
     <template v-if="!$store.getters.isLogged">
       <div class="container md:!max-w-full xl:!max-w-[1680px] grid gap-6 xl:gap-8 md:grid-cols-2 pt-4 md:pt-6 lg:pt-8">
