@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white">
     <div class="container">
-      <div class="pt-24 pb-12">
+      <div class="pt-12 pb-10 xl:pt-20 xl:pb-[72px]">
         <Heading as="h2" size="alt-md" class="text-center">
           <span class="relative">
             <img
@@ -11,34 +11,37 @@
               height="33"
               aria-hidden="true"
             >
-            <span>On vous a concocté une petite sélection de missions</span>
+            <span>On vous a concocté une </span>
+            <br class="hidden md:block">
+            <span>petite sélection de missions</span>
           </span>
         </Heading>
-        <p class="mt-4 text-[#666666] text-[28px] leading-10 text-center">
+        <p class="mt-4 text-[#666666] text-xl leading-7 text-center">
           Suggérées d’après
-          <nuxt-link to="/profile/edit" class="underline hover:text-gray-800">
+          <Link to="/profile/edit">
             vos préférences
-          </nuxt-link> ›
+          </Link> ›
         </p>
       </div>
     </div>
 
     <div class="flex justify-center">
-      <div class="relative h-[78px] w-[78px] flex justify-center items-center bg-[#F9F6F2] border-8 border-white rounded-full top-[31px]">
+      <div class="h-[78px] w-[78px] mb-[-39px] flex justify-center items-center bg-[#F9F6F2] border-8 border-white rounded-full">
         <RiArrowDownLine class="text-[#666666] w-8 fill-current flex-none" />
       </div>
     </div>
-    <div class="bg-[#F9F6F2] py-12 overflow-hidden">
+    <div class="bg-[#F9F6F2] pt-14 pb-10 md:pt-16 md:pb-12 lg:pt-20 lg:pb-16 xl:pt-32 xl:pb-28 overflow-hidden">
       <div class="container">
         <div class="lg:flex lg:justify-between lg:items-center">
           <div class="">
             <Heading as="h3" size="alt-sm" class="mb-6" color="">
               Ça devrait vous plaire
             </Heading>
-            <p id="label-slideshow-preferences-action" class="text-[#666666] text-xl leading-tight">
-              Missions sélectionnées d’après vos  <nuxt-link to="/profile/edit" class="underline hover:text-gray-800">
+            <p id="label-slideshow-preferences-action" class="text-[#666666] text-xl leading-7">
+              <span>Missions sélectionnées d’après vos </span>
+              <Link to="/profile/edit">
                 affinités et disponibilités
-              </nuxt-link> ›
+              </Link> ›
             </p>
           </div>
           <div class="hidden lg:block">
@@ -78,12 +81,14 @@
 import Heading from '@/components/dsfr/Heading.vue'
 import CardMission from '@/components/card/CardMission.vue'
 import Button from '@/components/dsfr/Button.vue'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
     Heading,
     CardMission,
-    Button
+    Button,
+    Link
   },
   data () {
     return {

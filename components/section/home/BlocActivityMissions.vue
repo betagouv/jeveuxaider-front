@@ -1,11 +1,12 @@
 <template>
   <div class="">
-    <div class="py-12 overflow-hidden">
+    <div class="py-6 xl:py-12 overflow-hidden">
       <div class="container">
-        <div class="lg:flex lg:justify-between lg:items-center">
+        <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
           <div class="">
-            <Heading as="h3" size="alt-sm" class="" color="">
-              {{ activity.icon }} {{ activity.name }}
+            <Heading as="h3" size="alt-sm" class="tracking-[-.5px]">
+              <span aria-hidden="true">{{ activity.icon }} </span>
+              <span>{{ activity.name }}</span>
             </Heading>
           </div>
           <div class="hidden lg:block">

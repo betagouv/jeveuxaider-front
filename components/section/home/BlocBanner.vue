@@ -1,6 +1,12 @@
 <template>
   <div class="bg-jva-blue-500 overflow-hidden">
-    <div class="container pt-6 sm:pt-0">
+    <div
+      :class="[
+        'container',
+        {'pt-10 sm:pt-0': !$store.getters.isLogged},
+        {'pt-12': $store.getters.isLogged},
+      ]"
+    >
       <div class="relative sm:pt-10 sm:pb-14 lg:pt-14 lg:pb-20 xl:pt-20 xl:pb-32">
         <div class="sm:max-w-[425px] lg:max-w-[600px] xl:max-w-[860px]">
           <template v-if="$store.getters.isLogged">
@@ -8,12 +14,13 @@
               <Heading as="h1" size="alt-xl" class="mb-10 xl:mb-20" color="text-white">
                 <span class="relative">
                   <span>{{ $store.getters.profile.first_name }}</span>
+                  <!-- @todo: d, f, l -->
                   <img
                     aria-hidden="true"
                     src="/images/home/sparkle-right.svg"
                     width="40"
                     height="43"
-                    class="absolute right-[-26px] -top-1 xxs:top-[6px] pointer-events-none lg:right-[-60px] lg:top-[-10px] lg:w-[80px]"
+                    class="absolute right-[-28px] -top-1 xxs:top-[4px] xxs:right-[-32px] pointer-events-none lg:right-[-60px] lg:top-[-10px] lg:w-[80px]"
                   >
                 </span><br>
                 <span>ravis de vous voir connecté </span>

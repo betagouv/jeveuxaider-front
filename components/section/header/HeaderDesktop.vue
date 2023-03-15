@@ -2,7 +2,6 @@
   <div>
     <div class="flex justify-start items-center relative p-4 h-[116px]" :class="{'xl:container': !fullWidth}">
       <div class="flex space-x-6 items-center">
-        <!-- @todo: enlever espaces dans le logo -->
         <img
           src="@/assets/images/republique-francaise-logo.svg"
           alt="République Française"
