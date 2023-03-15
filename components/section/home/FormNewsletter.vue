@@ -13,17 +13,24 @@
         :success="success"
         html-for="email"
       >
-        <Input
-          v-model="form.email"
-          :error="!!error"
-          :success="!!success"
-          type="email"
-          aria-label="Adresse email"
-          placeholder="Votre adresse électronique"
-        />
-        <Button :disabled="loading" class="w-full mt-4" @click.native.prevent="onSubmit()">
-          S'abonner
-        </Button>
+        <div class="w-full gap-4 lg:gap-0 flex flex-col lg:flex-row">
+          <Input
+            v-model="form.email"
+            :error="!!error"
+            :success="!!success"
+            type="email"
+            aria-label="Adresse email"
+            placeholder="Votre adresse électronique"
+            input-class="lg:!rounded-none lg:!rounded-tl"
+          />
+          <Button
+            :disabled="loading"
+            class="w-full lg:w-auto lg:flex-none lg:!rounded-none lg:!rounded-tr"
+            @click.native.prevent="onSubmit()"
+          >
+            S'abonner
+          </Button>
+        </div>
       </FormControl>
     </form>
 
