@@ -22,7 +22,7 @@
             >
               <nuxt-link
                 :to="`/missions-benevolat?activity.name=${activity.name}`"
-                class="inline-flex p-4 lg:px-8 lg:py-5 bg-white shadow-xl text-lg lg:text-xl font-bold w-full sm:w-auto hover:bg-[#F9F9F9]"
+                class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow-xl text-lg xl:text-xl font-bold w-full sm:w-auto hover:bg-[#F9F9F9]"
               >
                 <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
                 <span class="ml-3">{{ activity.name }}</span>
@@ -38,14 +38,15 @@
             <div
               v-for="activity in otherActivities"
               :key="activity.key"
+              class="inline-flex border border-[#CECECE] text-lg xl:text-xl font-bold w-full sm:w-auto"
             >
-              <nuxt-link
-                :to="`/missions-benevolat?activity.name=${activity.name}`"
-                class="inline-flex p-4 lg:px-8 lg:py-5 bg-white shadow-xl text-lg lg:text-xl font-bold w-full sm:w-auto hover:bg-[#F9F9F9]"
-              >
+              <div class="p-4 xl:px-8 xl:py-5 mr-auto">
                 <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
                 <span class="ml-3">{{ activity.name }}</span>
-              </nuxt-link>
+              </div>
+              <button class="flex-none flex justify-center items-center border-l border-[#CECECE] w-[50px] sm:w-[72px] cursor-pointer hover:bg-[#F9F9F9]" @click="handleClickOtherActivity(activity)">
+                <RiAddLine class=" fill-current w-[20px] h-[20px]" />
+              </button>
             </div>
           </div>
         </div>
@@ -90,6 +91,11 @@ export default {
       }
       const profileActivitiesIds = this.$store.getters.profile.activities.map((activity) => { return activity.id })
       return activities.filter(activity => !profileActivitiesIds.includes(activity.key))
+    }
+  },
+  methods: {
+    handleClickOtherActivity (activity) {
+      console.log('handleClickOtherActivity', activity)
     }
   }
 }
