@@ -24,16 +24,16 @@
     </div>
     <div class="bg-jva-orange-300 pt-14 pb-10 md:pt-16 md:pb-12 lg:pt-20 lg:pb-16 xl:pt-32 xl:pb-28 overflow-hidden">
       <div class="container">
-        <div class="lg:flex lg:justify-between lg:items-center">
+        <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
           <div class="">
-            <Heading as="h3" size="alt-sm" class="mb-6" color="text-[#522F29]">
+            <Heading as="h3" size="alt-sm" class="mb-6 md:mb-2" color="text-[#522F29]">
               Le bénévolat et plus si affinités
             </Heading>
-            <p id="label-slideshow-activities-action" class="text-[#522F29] text-xl leading-tight">
+            <p id="label-slideshow-activities-action" class="text-[#522F29] text-xl xl:text-2x leading-tight">
               Contribuez à une cause qui vous touche au coeur
             </p>
           </div>
-          <div class="hidden lg:block">
+          <div class="hidden lg:block flex-none">
             <SlideshowArrows
               variant="brown"
               button-class="hover:bg-[#EA9680]"

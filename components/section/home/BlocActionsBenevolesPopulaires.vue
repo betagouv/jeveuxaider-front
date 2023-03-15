@@ -1,16 +1,16 @@
 <template>
-  <div class="bg-white py-12 overflow-hidden">
+  <div class="bg-white py-12 xl:py-24 overflow-hidden">
     <div class="container">
-      <div class="lg:flex lg:justify-between lg:items-center">
+      <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
         <div class="">
-          <Heading as="h2" size="alt-sm" class="mb-6">
+          <Heading as="h2" size="alt-sm" class="mb-6 md:mb-2">
             Actions bénévoles populaires
           </Heading>
-          <p id="label-slideshow-missions-prioritaires" class="text-[#4D4D4D] text-xl">
+          <p id="label-slideshow-missions-prioritaires" class="text-[#4D4D4D] text-xl xl:text-2xl">
             Découvrez les missions de bénévolat qui engagent le plus la communauté
           </p>
         </div>
-        <div class="hidden lg:block">
+        <div class="hidden lg:block flex-none">
           <div class="flex space-x-2">
             <SlideshowArrows
               button-class="hover:bg-[#F6F6F6]"
@@ -39,7 +39,7 @@
           </nuxt-link>
         </Slideshow>
       </div>
-      <div class="mt-6 text-center">
+      <div class="lg:hidden mt-6 text-center">
         <Button type="tertiary" @click="handleClick()">
           Plus de missions
         </Button>

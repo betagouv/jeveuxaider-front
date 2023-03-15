@@ -1,13 +1,14 @@
 <template>
   <div>
-    <div class="flex justify-start items-center relative p-4 h-[116px]" :class="{'max-w-7xl mx-auto': !fullWidth}">
+    <div class="flex justify-start items-center relative p-4 h-[116px]" :class="{'xl:container': !fullWidth}">
       <div class="flex space-x-6 items-center">
+        <!-- @todo: enlever espaces dans le logo -->
         <img
           src="@/assets/images/republique-francaise-logo.svg"
           alt="République Française"
-          class="w-24"
-          width="166"
-          height="150"
+          class="w-[76px]"
+          width="6500"
+          height="5670"
           data-not-lazy
         >
       </div>
@@ -49,8 +50,8 @@
       </nav>
     </div>
     <div class="w-full border-t" />
-    <div class="flex justify-between text-sm text-gray-800" :class="{'max-w-[1260px] mx-auto': !fullWidth}">
-      <nav role="navigation" class="flex w-full">
+    <div class="flex justify-between text-sm text-gray-800" :class="{'xl:container': !fullWidth}">
+      <nav role="navigation" class="flex w-full xl:-mx-4" :style="!fullWidth ? 'width: calc(100% + 2rem);' : null">
         <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 1" ref="switchRole" position="left" class="h-full">
           <template #button>
             <button class="flex items-center justify-between gap-4 border-r py-4 pr-2 pl-5 w-52">

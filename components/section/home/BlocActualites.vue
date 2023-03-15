@@ -1,16 +1,16 @@
 <template>
-  <div class="bg-white py-12 overflow-hidden">
+  <div class="bg-white py-12 xl:py-24 overflow-hidden">
     <div class="container">
-      <div class="lg:flex lg:justify-between lg:items-center">
+      <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
         <div class="">
-          <Heading id="label-slideshow-articles" as="h2" size="alt-sm" class="mb-6">
+          <Heading id="label-slideshow-articles" as="h2" size="alt-sm" class="mb-6 md:mb-2">
             Les actualités de l’engagement
           </Heading>
-          <p class="text-[#4D4D4D] text-xl">
+          <p class="text-[#4D4D4D] text-xl xl:text-2xl">
             Restez informé de l'actualité de tous ceux qui font vivre l'engagement en France
           </p>
         </div>
-        <div class="hidden lg:block">
+        <div class="hidden lg:block flex-none">
           <div class="flex space-x-2">
             <SlideshowArrows
               @previous="handleSlideshowPreviousClick"
@@ -40,7 +40,7 @@
           </a>
         </Slideshow>
       </div>
-      <div class="mt-8 text-center">
+      <div class="lg:hidden mt-8 text-center">
         <Button type="tertiary" @click="handleClick()">
           Plus d’articles
         </Button>

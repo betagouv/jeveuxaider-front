@@ -1,7 +1,7 @@
 <template>
   <div class="bg-[#F5F5FE] pb-6">
     <div class="container">
-      <Heading as="h2" size="alt-md" class="py-16 text-center">
+      <Heading as="h2" size="alt-md" class="pt-12 pb-10 xl:pt-20 xl:pb-[72px] text-center">
         <span class="relative">
           <img
             src="/images/home/sparkle-left.svg"
@@ -10,15 +10,27 @@
             height="33"
             aria-hidden="true"
           >
-          <span>Acteurs de l’engagement, rejoignez le mouvement !</span>
+          <span>Acteurs de l’engagement, </span>
+          <br class="hidden md:block">
+          <span>rejoignez le mouvement !</span>
         </span>
       </Heading>
+    </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <BlocActeursAssociations />
-        <BlocActeursCollectivites />
-        <!-- <BlocEcolesUniversites /> -->
-        <BlocCommunaute />
+    <div class="container md:!max-w-full xl:!max-w-[1680px]">
+      <div class="flex flex-col md:flex-row md:flex-wrap -m-3 xl:-m-4">
+        <div class="w-full md:w-1/2 p-3 xl:p-4">
+          <BlocActeursAssociations class="h-full" />
+        </div>
+        <div class="w-full md:w-1/2 p-3 xl:p-4">
+          <BlocActeursCollectivites class="h-full" />
+        </div>
+        <!-- <div class="w-full p-3 xl:p-4">
+          <BlocEcolesUniversites  />
+        </div> -->
+        <div class="w-full p-3 xl:p-4">
+          <BlocCommunaute class="h-full" />
+        </div>
       </div>
     </div>
   </div>
