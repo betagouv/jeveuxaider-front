@@ -3,7 +3,7 @@
     <div class="container">
       <div class="lg:flex lg:justify-between lg:items-center">
         <div class="">
-          <Heading as="h2" size="alt-xs" class="mb-6">
+          <Heading as="h2" size="alt-sm" class="mb-6">
             Actions bénévoles populaires
           </Heading>
           <p id="label-slideshow-missions-prioritaires" class="text-[#4D4D4D] text-xl">
@@ -18,7 +18,7 @@
               @next="handleSlideshowNextClick"
             />
             <Button class="flex-none" type="secondary" @click="handleClick()">
-              Plus de missions
+              Plus de missions
             </Button>
           </div>
         </div>

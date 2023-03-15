@@ -3,7 +3,7 @@
     <div class="container">
       <div class="lg:flex lg:justify-between lg:items-center">
         <div class="">
-          <Heading as="h2" size="alt-xs" class="mb-6" color="text-white">
+          <Heading as="h2" size="alt-sm" class="mb-6" color="text-white">
             Devenez bénévole d’un jour !
           </Heading>
           <p id="label-slideshow-missions-courtes" class="text-white text-xl">

@@ -245,7 +245,7 @@ export default {
 
   :deep(.slick-dots) {
     position: inherit;
-    @apply text-center sm:text-left bottom-0 w-auto flex-none sm:mr-8 mt-6;
+    @apply text-center sm:text-left sm:-mx-1 bottom-0 w-auto flex-none sm:mr-8 mt-6;
     > li {
       @apply w-auto h-auto mx-1;
       > button {
