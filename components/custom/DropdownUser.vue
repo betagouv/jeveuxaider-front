@@ -22,7 +22,7 @@
           </div>
         </div>
 
-        <ChevronDownIcon class="h-4 ml-auto flex-none" />
+        <ChevronDownIcon class="h-4 ml-auto flex-none mr-[-6px]" />
       </button>
     </template>
 

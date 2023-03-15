@@ -1,16 +1,16 @@
 <template>
-  <div class="relative bg-[#6A6AF4]">
-    <div class="container py-12">
-      <div class="lg:flex lg:justify-between lg:items-center">
+  <div class="relative bg-[#6A6AF4] overflow-hidden">
+    <div class="container py-12 xl:pt-24 xl:pb-16">
+      <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
         <div class="">
-          <Heading as="h2" size="alt-sm" class="mb-6" color="text-white">
+          <Heading as="h2" size="alt-sm" class="mb-6 md:mb-2" color="text-white">
             Paroles de bénévoles
           </Heading>
-          <p id="label-slideshow-temoignages" class="text-white text-xl">
+          <p id="label-slideshow-temoignages" class="text-white text-xl xl:text-2xl">
             Découvrez les témoignages des bénévoles de la communauté JeVeuxAider.gouv.fr
           </p>
         </div>
-        <div class="hidden lg:block">
+        <div class="hidden lg:block flex-none">
           <SlideshowArrows
             variant="white"
             button-class="hover:bg-[#6666EA]"
@@ -19,7 +19,7 @@
           />
         </div>
       </div>
-      <div v-if="temoignages.length" class="overflow-hidden mt-12">
+      <div v-if="temoignages.length" class="mt-12">
         <Slideshow
           ref="slideshowTemoignages"
           aria-labelledby="label-slideshow-temoignages"
@@ -29,7 +29,7 @@
           <div
             v-for="temoignage,i in temoignages"
             :key="i"
-            class="slide-wrapper bg-white p-6"
+            class="bg-white p-6 !flex flex-col h-full transition"
           >
             <img
               :src="temoignage.organization.logo.default"
@@ -59,17 +59,22 @@
       </div>
     </div>
 
-    <img
-      srcset="
+    <div class="flex justify-center">
+      <img
+        aria-hidden="true"
+        srcset="
         /images/home/temoignages.webp,
         /images/home/temoignages@2x.webp 2x,
         /images/home/temoignages.png,
         /images/home/temoignages@2x.png 2x
       "
-      src="/images/home/temoignages.png"
-      alt=""
-      class="h-[110px] object-cover pointer-events-none"
-    >
+        src="/images/home/temoignages.png"
+        alt=""
+        width="1754"
+        height="238"
+        class="h-[110px] w-[818px] md:h-[119px] md:w-[877px] lg:h-[132px] lg:w-[976px] xl:h-[238px] xl:w-[1754px] mx-auto object-cover object-top pointer-events-none"
+      >
+    </div>
   </div>
 </template>
 
@@ -210,9 +215,14 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.slide-wrapper {
-  @apply !flex flex-col h-full max-w-[708px] transition;
-  width: calc(100vw - 32px) !important;
+:deep(.slick-track) {
+  width: 100% !important;
+}
+
+:deep(.slick-slide) {
+  width: 100%;
+  flex: none;
+  max-width: 708px !important;
 }
 
 blockquote {
