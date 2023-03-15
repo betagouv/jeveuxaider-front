@@ -1,9 +1,18 @@
 <template>
-  <div class="px-8 py-12 bg-[#21AB8E] shadow-xl text-white">
-    <img src="/images/home/france-localization.svg" alt="" class="flex-none">
-    <Heading as="h2" size="2xl" class="mt-8" color="text-white">
-      Collectivités locales et territoires
-    </Heading>
+  <div class="px-8 py-12 xl:px-12 xl:py-24 bg-[#21AB8E] shadow-xl text-white">
+    <div class="flex flex-col xl:flex-row gap-8">
+      <img
+        src="/images/home/france-localization.svg"
+        alt=""
+        class="flex-none"
+        width="74"
+        height="81"
+        aria-hidden="true"
+      >
+      <Heading as="h2" size="2xl" color="text-white">
+        Collectivités locales et territoires
+      </Heading>
+    </div>
     <ul class="text-xl leading-6 mt-8 space-y-6">
       <li class="flex items-start space-x-3">
         <RiCheckboxCircleLine aria-hidden="true" class="w-6 h-6 text-white fill-current flex-none" />
@@ -23,7 +32,7 @@
         Inscrivez votre collectivité
       </Button>
     </div>
-    <div class="mt-8 flex space-x-4">
+    <div class="mt-8 flex space-x-4 items-center">
       <!-- <img
         srcset="
           /images/home/maiwelle.webp, /images/home/maiwelle@2x.webp 2x,

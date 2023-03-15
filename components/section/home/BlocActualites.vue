@@ -40,7 +40,7 @@
           </a>
         </Slideshow>
       </div>
-      <div class="mt-8 text-center">
+      <div class="lg:hidden mt-8 text-center">
         <Button type="tertiary" @click="handleClick()">
           Plus d’articles
         </Button>

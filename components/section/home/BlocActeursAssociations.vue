@@ -1,9 +1,20 @@
 <template>
-  <div class="px-8 py-12 bg-white shadow-xl">
-    <img src="/images/home/acteurs-hands.svg" alt="" class="flex-none">
-    <Heading as="h2" size="2xl" class="mt-8">
-      Associations et organisations publiques
-    </Heading>
+  <div class="px-8 py-12 xl:px-12 xl:py-24 bg-white shadow-xl">
+    <div class="flex flex-col xl:flex-row gap-8">
+      <img
+        src="/images/home/acteurs-hands.svg"
+        alt=""
+        class="flex-none"
+        width="70"
+        height="69"
+        aria-hidden="true"
+      >
+      <Heading as="h2" size="2xl">
+        <span>Associations et </span>
+        <br class="hidden sm:block">
+        <span>organisations publiques</span>
+      </Heading>
+    </div>
     <ul class="text-xl leading-6 mt-8 space-y-6">
       <li class="flex items-start space-x-3">
         <RiCheckboxCircleLine aria-hidden="true" class="w-6 h-6 text-jva-blue-500 fill-current flex-none" />
@@ -23,7 +34,7 @@
         Inscrivez votre organisation
       </Button>
     </div>
-    <div class="mt-8 flex space-x-4">
+    <div class="mt-8 flex items-center space-x-4">
       <div class="flex flex-shrink-0">
         <img
           srcset="
