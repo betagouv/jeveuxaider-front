@@ -3,7 +3,7 @@
     <div class="container">
       <div class="lg:flex lg:justify-between lg:items-center">
         <div class="">
-          <Heading id="label-slideshow-articles" as="h2" size="alt-xs" class="mb-6">
+          <Heading id="label-slideshow-articles" as="h2" size="alt-sm" class="mb-6">
             Les actualités de l’engagement
           </Heading>
           <p class="text-[#4D4D4D] text-xl">

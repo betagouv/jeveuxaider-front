@@ -1,37 +1,46 @@
 <template>
-  <div class="bg-white py-12 overflow-hidden">
-    <div class="container">
-      <div class="flex flex-col lg:flex-wrap justify-between items-center">
-        <div class="flex flex-col space-y-4">
-          <p class="font-bold text-jva-blue-500 uppercase">
+  <div class="bg-white py-12 xl:py-24 relative overflow-hidden">
+    <img
+      aria-hidden="true"
+      src="/images/home/decorations.svg"
+      alt=""
+      width="1692"
+      height="553"
+      class="absolute top-16 object-cover object-top w-[1692px] h-[553px] mx-auto"
+    >
+    <div class="container relative">
+      <div class="flex flex-col justify-between items-center sm:flex-row gap-12">
+        <div class="flex flex-col space-y-4 xl:space-y-8 max-w-[740px]">
+          <p class="font-bold text-jva-blue-500 uppercase xl:text-2xl">
             Actions bénévoles pour la planète
           </p>
-          <Heading as="h2" size="alt-xs">
-            Rejoignez le mouvement Printemps pour la planète
+          <Heading as="h2" size="alt-sm">
+            <span>Rejoignez le mouvement </span>
+            <br class="hidden lg:block">
+            <span>Printemps pour la planète</span>
           </Heading>
-          <p :id="`label-missions-operation-${uuid}`" class="text-xl text-[#4D4D4D]">
+          <p :id="`label-missions-operation-${uuid}`" class="text-xl text-[#4D4D4D] xl:text-2xl xl:leading-[48px]">
             Passez de l’éveil à l’action en participant aux missions de bénévolat au service de ce que nous avons de plus précieux : notre planète.
           </p>
         </div>
-        <div class="mt-12">
-          <img
-            src="/images/operations/logo-printemps-pour-la-planete.svg"
-            alt="Printemps pour la planète"
-            class="w-[227px] h-[227px]"
-          >
-        </div>
+        <img
+          src="/images/operations/logo-printemps-pour-la-planete.svg"
+          alt="Printemps pour la planète"
+          width="231"
+          height="231"
+          class="flex-none w-[227px] h-[227px] sm:w-[169px] sm:h-[169px] lg:w-[200px] lg:h-[200px] xl:w-[382px] xl:h-[382px]"
+        >
       </div>
       <div v-if="missions.length" class="mt-12">
-        <div class="lg:flex lg:justify-between lg:items-center">
+        <div class="lg:flex lg:justify-between lg:items-center mb-4 lg:mb-8 xl:mb-14">
           <div class="">
-            <p class="text-xl font-bold mb-4">
+            <p class="font-bold text-xl lg:text-2xl xl:text-[32px] xl:leading-[40px]">
               Opération du 3 au 23 avril
             </p>
           </div>
           <div class="hidden lg:block">
             <div class="flex space-x-2">
               <SlideshowArrows
-
                 @previous="handleSlideshowPreviousClick"
                 @next="handleSlideshowNextClick"
               />
@@ -55,7 +64,7 @@
             <CardMission :mission="mission" />
           </nuxt-link>
         </Slideshow>
-        <div class="mt-6 text-center">
+        <div class="lg:hidden mt-6 text-center">
           <Button type="tertiary" @click="handleClick()">
             Plus de missions
           </Button>

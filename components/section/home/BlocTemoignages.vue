@@ -3,7 +3,7 @@
     <div class="container py-12">
       <div class="lg:flex lg:justify-between lg:items-center">
         <div class="">
-          <Heading as="h2" size="alt-xs" class="mb-6" color="text-white">
+          <Heading as="h2" size="alt-sm" class="mb-6" color="text-white">
             Paroles de bénévoles
           </Heading>
           <p id="label-slideshow-temoignages" class="text-white text-xl">
