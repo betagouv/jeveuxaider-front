@@ -15,7 +15,8 @@
       {'text-4xl xxs:text-[40px] xxs:leading-[48px] xl:text-[56px] xl:leading-[64px]': size === 'alt-sm'},
       {'text-4xl xxs:text-[40px] xxs:leading-[48px] xl:text-[64px] xl:leading-[72px]': size === 'alt-md'},
       {'text-[40px] leading-[48px] xxs:text-[48px] xxs:leading-[56px] xl:text-[72px] xl:leading-[82px]': size === 'alt-lg'},
-      {'text-5xl leading-[52px] xxs:text-[64px] xxs:leading-[64px] lg:text-[80px] lg:leading-[80px] xl:text-[150px] xl:leading-[150px] xl:tracking-tight': size === 'alt-xl'},
+      {'text-5xl leading-[52px] xxs:text-[64px] xxs:leading-[64px] lg:text-[80px] lg:leading-[80px] xl:text-[90px] xl:leading-[90px] xl:tracking-tight': size === 'alt-xl'},
+      {'text-5xl leading-[52px] xxs:text-[64px] xxs:leading-[64px] lg:text-[80px] lg:leading-[80px] xl:text-[150px] xl:leading-[150px] xl:tracking-tight': size === 'alt-2xl'},
 
       color ?? ($store.state.settings.theme === 'light' ? lightColor : darkColor)
     ]"

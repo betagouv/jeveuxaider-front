@@ -1,11 +1,16 @@
 <template>
   <div class="bg-[#F9F6F2]">
     <BlocBanner />
-    <div class="container md:!max-w-full xl:!max-w-[1680px] grid gap-6 lg:gap-8 md:grid-cols-2 pt-4 md:pt-6 lg:pt-8">
-      <BlocInscriptionBenevole />
-      <BlocInscriptionResponsable />
-    </div>
-    <BlocActivities />
+    <template v-if="!$store.getters.isLogged">
+      <div class="container md:!max-w-full xl:!max-w-[1680px] grid gap-6 lg:gap-8 md:grid-cols-2 pt-4 md:pt-6 lg:pt-8">
+        <BlocInscriptionBenevole />
+        <BlocInscriptionResponsable />
+      </div>
+      <BlocActivities />
+    </template>
+    <template v-if="$store.getters.isLogged">
+      <BlocCaDevraitVousPlaire />
+    </template>
     <PrintempsPourLaPlanete />
     <BlocMissionsCourtes />
     <BlocActionsBenevolesPopulaires />
@@ -22,6 +27,7 @@ import BlocBanner from '~/components/section/home/BlocBanner.vue'
 import BlocInscriptionBenevole from '~/components/section/home/BlocInscriptionBenevole.vue'
 import BlocInscriptionResponsable from '~/components/section/home/BlocInscriptionResponsable.vue'
 import BlocActivities from '@/components/section/home/BlocActivities.vue'
+import BlocCaDevraitVousPlaire from '@/components/section/home/BlocCaDevraitVousPlaire.vue'
 import PrintempsPourLaPlanete from '@/components/section/operations/PrintempsPourLaPlanete.vue'
 import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
 import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
@@ -37,6 +43,7 @@ export default {
     BlocInscriptionBenevole,
     BlocInscriptionResponsable,
     BlocActivities,
+    BlocCaDevraitVousPlaire,
     PrintempsPourLaPlanete,
     BlocMissionsCourtes,
     BlocActionsBenevolesPopulaires,
