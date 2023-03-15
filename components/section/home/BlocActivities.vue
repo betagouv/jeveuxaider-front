@@ -1,18 +1,20 @@
 <template>
   <div>
     <div class="container">
-      <Heading as="h2" size="alt-md" class="mt-12 mb-10 xl:mt-20 xl:mb-[72px] text-center">
-        <span class="relative">
-          <img
-            src="/images/home/sparkle-left.svg"
-            class="absolute left-[-26px] top-[-5px]"
-            width="37"
-            height="33"
-            aria-hidden="true"
-          >
-          <span>C’est votre première fois ? <br class="hidden md:block">Suivez le guide</span>
-        </span>
-      </Heading>
+      <div class="pt-12 pb-10 xl:pt-20 xl:pb-[72px]">
+        <Heading as="h2" size="alt-md" class=" text-center">
+          <span class="relative">
+            <img
+              src="/images/home/sparkle-left.svg"
+              class="absolute left-[-26px] top-[-5px]"
+              width="37"
+              height="33"
+              aria-hidden="true"
+            >
+            <span>C’est votre première fois ? <br class="hidden md:block">Suivez le guide</span>
+          </span>
+        </Heading>
+      </div>
     </div>
 
     <div class="flex justify-center">

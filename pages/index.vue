@@ -1,24 +1,28 @@
 <template>
   <div class="bg-[#F9F6F2]">
     <BlocBanner />
+    <template v-if="$store.getters.isLogged">
+      <BlocCaDevraitVousPlaire />
+      <PrintempsPourLaPlanete />
+      <BlocProfileActivities />
+      <BlocTemoignages />
+      <BlocNewsletter />
+    </template>
     <template v-if="!$store.getters.isLogged">
       <div class="container md:!max-w-full xl:!max-w-[1680px] grid gap-6 xl:gap-8 md:grid-cols-2 pt-4 md:pt-6 lg:pt-8">
         <BlocInscriptionBenevole />
         <BlocInscriptionResponsable />
       </div>
       <BlocActivities />
+      <PrintempsPourLaPlanete />
+      <BlocMissionsCourtes />
+      <BlocActionsBenevolesPopulaires />
+      <BlocTemoignages />
+      <BlocActualites v-if="$store.state.settings.general.blog_active" />
+      <BlocActeursEngagement />
+      <BlocNewsletter />
+      <BlocFaq />
     </template>
-    <template v-if="$store.getters.isLogged">
-      <BlocCaDevraitVousPlaire />
-    </template>
-    <PrintempsPourLaPlanete />
-    <BlocMissionsCourtes />
-    <BlocActionsBenevolesPopulaires />
-    <BlocTemoignages />
-    <BlocActualites v-if="$store.state.settings.general.blog_active" />
-    <BlocActeursEngagement />
-    <BlocNewsletter />
-    <BlocFaq />
   </div>
 </template>
 
@@ -36,6 +40,7 @@ import BlocActualites from '@/components/section/home/BlocActualites.vue'
 import BlocActeursEngagement from '@/components/section/home/BlocActeursEngagement.vue'
 import BlocNewsletter from '@/components/section/home/BlocNewsletter.vue'
 import BlocFaq from '@/components/section/home/BlocFaq.vue'
+import BlocProfileActivities from '@/components/section/home/BlocProfileActivities.vue'
 
 export default {
   components: {
@@ -51,7 +56,8 @@ export default {
     BlocActualites,
     BlocActeursEngagement,
     BlocNewsletter,
-    BlocFaq
+    BlocFaq,
+    BlocProfileActivities
   },
   head () {
     return {

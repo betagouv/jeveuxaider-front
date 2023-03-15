@@ -15,7 +15,8 @@
           </span>
         </Heading>
         <p class="mt-4 text-[#666666] text-[28px] leading-10 text-center">
-          Suggérées d’après <nuxt-link to="/profile/edit" class="underline hover:text-gray-800">
+          Suggérées d’après
+          <nuxt-link to="/profile/edit" class="underline hover:text-gray-800">
             vos préférences
           </nuxt-link> ›
         </p>
@@ -43,11 +44,11 @@
           <div class="hidden lg:block">
             <div class="flex space-x-2">
               <SlideshowArrows
-                button-class="hover:bg-[#F6F6F6]"
+                button-class="hover:bg-[#EFECE8]"
                 @previous="handleSlideshowPreviousClick"
                 @next="handleSlideshowNextClick"
               />
-              <Button class="flex-none" type="transparent" extra-class="text-jva-blue-500 border-jva-blue-500 hover:bg-[#F6F6F6]" @click="handleClick()">
+              <Button class="flex-none" type="transparent" extra-class="text-jva-blue-500 border-jva-blue-500 hover:bg-[#EFECE8]" @click="handleClick()">
                 Plus de missions
               </Button>
             </div>
@@ -87,22 +88,52 @@ export default {
   data () {
     return {
       missions: [],
-      tags: 'Décembre ensemble'
+      defaultFilters: 'provider:reserve_civique AND is_registration_open=1 AND has_places_left=1 AND is_outdated=0'
     }
   },
   fetchOnServer: false,
   async fetch () {
     const { data: missions } = await this.$axios.post('/algolia/missions', {
-      facetFilters: `tags:${this.tags}`,
-      filters: 'provider:reserve_civique AND is_registration_open=1 AND has_places_left=1 AND is_outdated=0',
+      filters: `${this.profileActivitiesFilters}`,
+      numericFilters: [`${this.profileCommitmentFilters}`],
       aroundLatLngViaIP: true
     })
     this.missions = missions
   },
   computed: {
-    activitiesGroups () {
-      const [list, chunkSize] = [[...this.activities], 7]
-      return [...Array(Math.ceil(list.length / chunkSize))].map(_ => list.splice(0, chunkSize))
+    profileActivitiesFilters () {
+      if (!this.$store.getters.profile.activities) {
+        return ''
+      }
+      const activities = this.$store.getters.profile.activities.map((activity) => {
+        return `activity.id=${activity.id}`
+      })
+      return `(${activities.join(' OR ')})`
+    },
+    profileCommitmentFilters () {
+      if (!this.$store.getters.profile.commitment__total) {
+        return ''
+      }
+      return `"commitment__total <= ${this.$store.getters.profile.commitment__total}"`
+    },
+    searchPageWithFilters () {
+      const filters = []
+      if (this.$store.getters.profile.commitment__total) {
+        filters.push(`commitment__total=<%3D${this.$store.getters.profile.commitment__total}`)
+      }
+      // if (this.$store.getters.profile.commitment__duration) {
+      //   filters.push(`duration=${this.$store.getters.profile.commitment__duration}`)
+      // }
+      // if (this.$store.getters.profile.commitment__time_period) {
+      //   filters.push(`time_period=${this.$store.getters.profile.commitment__time_period}`)
+      // }
+      if (this.$store.getters.profile.activities) {
+        filters.push(`activity.name=${this.$store.getters.profile.activities.map((activity) => {
+          return activity.name
+        }).join('|')}`)
+      }
+
+      return filters.join('&')
     }
   },
   methods: {
@@ -117,7 +148,7 @@ export default {
         window.plausible('Click CTA - Homepage - Ca devrait vous plaire', {
           props: { isLogged: this.$store.getters.isLogged }
         })
-      this.$router.push('/missions-benevolat')
+      this.$router.push(`/missions-benevolat?${this.searchPageWithFilters}`)
     }
   }
 }
