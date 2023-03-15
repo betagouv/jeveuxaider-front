@@ -38,14 +38,15 @@
             <div
               v-for="activity in otherActivities"
               :key="activity.key"
+              class="inline-flex border border-[#CECECE] text-xl font-bold "
             >
-              <nuxt-link
-                :to="`/missions-benevolat?activity.name=${activity.name}`"
-                class="inline-flex px-8 py-5 bg-white shadow-xl text-xl font-bold w-full sm:w-auto hover:bg-[#F9F9F9]"
-              >
+              <div class="px-8 py-5">
                 <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
                 <span class="ml-3">{{ activity.name }}</span>
-              </nuxt-link>
+              </div>
+              <button class="flex justify-center items-center border-l border-[#CECECE] w-[72px] cursor-pointer hover:bg-[#F9F9F9]" @click="handleClickOtherActivity(activity)">
+                <RiAddLine class=" fill-current w-[20px] h-[20px]" />
+              </button>
             </div>
           </div>
         </div>
@@ -90,6 +91,11 @@ export default {
       }
       const profileActivitiesIds = this.$store.getters.profile.activities.map((activity) => { return activity.id })
       return activities.filter(activity => !profileActivitiesIds.includes(activity.key))
+    }
+  },
+  methods: {
+    handleClickOtherActivity (activity) {
+      console.log('handleClickOtherActivity', activity)
     }
   }
 }
