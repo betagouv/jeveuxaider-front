@@ -35,7 +35,7 @@ export default {
     size: {
       type: String,
       default: 'xl',
-      validator: s => ['xs', 'sm', 'md', 'lg', 'xl', '2xl', 'alt-xs', 'alt-sm', 'alt-md', 'alt-lg', 'alt-xl'].includes(s)
+      validator: s => ['xs', 'sm', 'md', 'lg', 'xl', '2xl', 'alt-xs', 'alt-sm', 'alt-md', 'alt-lg', 'alt-xl', 'alt-2xl'].includes(s)
     },
     bold: {
       type: Boolean,
