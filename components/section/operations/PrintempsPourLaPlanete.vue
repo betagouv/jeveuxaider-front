@@ -41,6 +41,7 @@
           <div class="hidden lg:block">
             <div class="flex space-x-2">
               <SlideshowArrows
+                button-class="hover:bg-[#F6F6F6]"
                 @previous="handleSlideshowPreviousClick"
                 @next="handleSlideshowNextClick"
               />
