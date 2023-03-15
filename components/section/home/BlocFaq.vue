@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-white pb-12">
+  <div class="bg-white pb-12 md:pb-20">
     <div class="container">
-      <Heading as="h2" size="alt-md" class="py-16 text-center">
+      <Heading as="h2" size="alt-md" class="py-16 xl:pt-24 text-center">
         <span class="relative">
           <span>Vous avez des questions ?</span>
           <img
@@ -9,7 +9,7 @@
             alt=""
             width="40"
             height="43"
-            class="absolute right-[-22px] top-[35px] xxs:top-[40px] sm:top-[-10px] w-8"
+            class="absolute right-[-22px] top-[35px] xxs:top-[40px] sm:top-[-10px] w-8 xl:w-[40px] xl:-right-8"
             aria-hidden="true"
           >
         </span>
@@ -192,7 +192,7 @@
           </AccordionsGroup>
         </div>
       </Tabs>
-      <div class="mt-8 text-center">
+      <div class="mt-8 text-center md:text-left">
         <Link
           to="https://reserve-civique.crisp.help/fr/"
           :is-external="true"
