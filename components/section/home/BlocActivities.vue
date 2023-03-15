@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <Heading as="h2" size="alt-md" class="mt-12 text-center">
+      <Heading as="h2" size="alt-md" class="mt-12 mb-10 xl:mt-20 xl:mb-[72px] text-center">
         <span class="relative">
           <img
             src="/images/home/sparkle-left.svg"
@@ -16,11 +16,11 @@
     </div>
 
     <div class="flex justify-center">
-      <div class="relative h-[78px] w-[78px] flex justify-center items-center bg-jva-orange-300 border-8 border-[#F9F6F2] rounded-full top-[31px]">
+      <div class="h-[78px] w-[78px] mb-[-39px] flex justify-center items-center bg-jva-orange-300 border-8 border-[#F9F6F2] rounded-full">
         <RiArrowDownLine class="text-[#F9F6F2] w-8 fill-current flex-none" />
       </div>
     </div>
-    <div class="bg-jva-orange-300 py-12 overflow-hidden">
+    <div class="bg-jva-orange-300 pt-14 pb-10 md:pt-16 md:pb-12 lg:pt-20 lg:pb-16 xl:pt-32 xl:pb-28 overflow-hidden">
       <div class="container">
         <div class="lg:flex lg:justify-between lg:items-center">
           <div class="">
@@ -43,6 +43,7 @@
           <!-- @todo: accessibilité -->
           <Slideshow
             ref="slideshowActivities"
+            :key="chunkSize"
             aria-labelledby="label-slideshow-activities-action"
             dots-variant="light"
             :adaptive-height="true"
@@ -79,14 +80,21 @@ export default {
   },
   data () {
     return {
-      activities
+      activities,
+      chunkSize: 7
     }
   },
   computed: {
     activitiesGroups () {
-      const [list, chunkSize] = [[...this.activities], 7]
+      const [list, chunkSize] = [[...this.activities], this.chunkSize]
       return [...Array(Math.ceil(list.length / chunkSize))].map(_ => list.splice(0, chunkSize))
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize)
+      this.onResize()
+    })
   },
   methods: {
     handleSlideshowPreviousClick () {
@@ -94,6 +102,13 @@ export default {
     },
     handleSlideshowNextClick () {
       this.$refs.slideshowActivities.next()
+    },
+    onResize () {
+      if (window.innerWidth >= 1024) {
+        this.chunkSize = 12
+      } else {
+        this.chunkSize = 7
+      }
     }
   }
 }
