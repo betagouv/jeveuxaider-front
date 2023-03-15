@@ -6,8 +6,9 @@
         {
           'border-jva-blue-500 text-jva-blue-500': variant == 'blue',
           'border-white text-white': variant == 'white',
-          'border-[#522F29] text-[#522F29]': variant == 'brown'
-        }
+          'border-[#522F29] text-[#522F29]': variant == 'brown',
+        },
+        buttonClass
       ]"
       @click="$emit('previous')"
     >
@@ -20,7 +21,8 @@
           'border-jva-blue-500 text-jva-blue-500': variant == 'blue',
           'border-white text-white': variant == 'white',
           'border-[#522F29] text-[#522F29]': variant == 'brown'
-        }
+        },
+        buttonClass
       ]"
       @click="$emit('next')"
     >
@@ -35,6 +37,10 @@ export default {
     variant: {
       type: String,
       default: 'blue'
+    },
+    buttonClass: {
+      type: String,
+      default: null
     }
   }
 }

@@ -34,6 +34,7 @@
           <div class="hidden lg:block">
             <SlideshowArrows
               variant="brown"
+              button-class="hover:bg-[#EA9680]"
               @previous="handleSlideshowPreviousClick"
               @next="handleSlideshowNextClick"
             />

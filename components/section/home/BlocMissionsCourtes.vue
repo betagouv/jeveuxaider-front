@@ -14,6 +14,7 @@
           <div class="flex space-x-2">
             <SlideshowArrows
               variant="white"
+              button-class="hover:bg-jva-blue-900"
               @previous="handleSlideshowPreviousClick"
               @next="handleSlideshowNextClick"
             />

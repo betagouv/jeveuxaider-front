@@ -77,7 +77,7 @@ export default {
     type: {
       type: String,
       default: 'primary',
-      validator: s => ['primary', 'secondary', 'tertiary', 'tertiary-no-outline'].includes(s)
+      validator: s => ['primary', 'primary-outline', 'secondary', 'tertiary', 'tertiary-no-outline'].includes(s)
     },
     icon: {
       // See vue-remix-icons.js
