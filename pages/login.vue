@@ -231,7 +231,7 @@ export default {
         .then(async () => {
           await this.$store.dispatch('auth/login', this.form)
           this.$router.push(
-            this.$router.history.current.query.redirect || '/profile'
+            this.$router.history.current.query.redirect || '/'
           )
         })
         .catch((errors) => {
