@@ -18,7 +18,7 @@
               @previous="handleSlideshowPreviousClick"
               @next="handleSlideshowNextClick"
             />
-            <Button class="flex-none" type="transparent" extra-class="text-jva-blue-500 border-jva-blue-500" @click="handleClick()">
+            <Button class="flex-none" type="transparent" extra-class="text-white border-white hover:bg-jva-blue-900" @click="handleClick()">
               Plus de missions
             </Button>
           </div>
@@ -46,8 +46,8 @@
           Plus de missions
         </Button>
       </div>
-      <div class="mt-8 flex flex-col space-y-6">
-        <p class="text-white font-bold text-xl">
+      <div class="mt-8 flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6">
+        <p class="text-white font-bold text-xl lg:text-2xl">
           Quelles sont vos disponibilités ?
         </p>
         <div class="flex flex-wrap gap-4">
@@ -60,7 +60,7 @@
             <Tag
               size="md"
               :custom-theme="true"
-              class="text-white border border-[#8080CD] cursor-ponter sm:hover:border-[#b8b8e8] active:!border-white"
+              class="text-white border border-[#8080CD] cursor-ponter hover:bg-jva-blue-900 sm:hover:border-[#b8b8e8] active:!border-white lg:!text-base"
             >
               {{ link.label }}
             </Tag>

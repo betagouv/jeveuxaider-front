@@ -22,7 +22,7 @@
             >
               <nuxt-link
                 :to="`/missions-benevolat?activity.name=${activity.name}`"
-                class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow-xl text-lg xl:text-xl font-bold w-full sm:w-auto hover:bg-[#F9F9F9]"
+                class="inline-flex p-4 lg:px-8 lg:py-5 bg-white shadow lg:shadow-xl text-xl lg:text-[22px] font-bold w-full sm:w-auto hover:bg-[#F6F6F6]"
               >
                 <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
                 <span class="ml-3">{{ activity.name }}</span>

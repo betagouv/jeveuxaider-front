@@ -28,7 +28,7 @@
         <span class="block">Je veux aider<span class="text-jva-orange-300">.</span></span>
       </Heading>
       <p>
-        <span class="text-5xl font-bold leading-[56px]">
+        <span class="text-5xl font-bold leading-[56px] lg:text-[72px]">
           100 000
         </span>
         <br>
@@ -37,18 +37,20 @@
         </span>
       </p>
       <div>
-        <Button
-          type="tertiary-no-outline"
-          icon="RiUserHeartLine"
-          class="xl:px-6 xl:py-3 xl:text-lg"
-          @click.native="onClick()"
-        >
-          <span>Créer mon espace </span>
-          <span class="hidden xxs:inline">Bénévole</span>
-        </Button>
-        <p class="text-lg mt-3">
-          Inscription en 2 minutes
-        </p>
+        <div class="inline-block text-center">
+          <Button
+            type="tertiary-no-outline"
+            icon="RiUserHeartLine"
+            class="flex-none xl:px-6 xl:py-3 xl:text-lg"
+            @click.native="onClick()"
+          >
+            <span>Créer mon espace </span>
+            <span class="hidden xxs:inline">Bénévole</span>
+          </Button>
+          <p class="text-lg mt-[14px]">
+            Inscription en 2 minutes
+          </p>
+        </div>
       </div>
     </div>
   </div>

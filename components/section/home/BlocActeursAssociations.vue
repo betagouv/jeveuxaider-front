@@ -1,6 +1,6 @@
 <template>
   <div class="px-8 py-12 xl:px-12 xl:py-24 bg-white shadow-xl">
-    <div class="flex flex-col xl:flex-row gap-8">
+    <div class="flex flex-col xl:flex-row gap-8 xl:mb-16">
       <img
         src="/images/home/acteurs-hands.svg"
         alt=""
@@ -15,26 +15,26 @@
         <span>organisations publiques</span>
       </Heading>
     </div>
-    <ul class="text-xl leading-6 mt-8 space-y-6">
-      <li class="flex items-start space-x-3">
+    <ul class="text-xl xl:text-2xl leading-6 mt-8 space-y-6 xl:mb-12">
+      <li class="flex items-start lg:items-center space-x-3">
         <RiCheckboxCircleLine aria-hidden="true" class="w-6 h-6 text-jva-blue-500 fill-current flex-none" />
         <p>Inscrivez votre organisation <strong>en quelques clics</strong></p>
       </li>
-      <li class="flex items-start space-x-3">
+      <li class="flex items-start lg:items-center space-x-3">
         <RiCheckboxCircleLine aria-hidden="true" class="w-6 h-6 text-jva-blue-500 fill-current flex-none" />
         <p><strong>Publiez vos missions</strong> de bénévolat</p>
       </li>
-      <li class="flex items-start space-x-3">
+      <li class="flex items-start lg:items-center space-x-3">
         <RiCheckboxCircleLine aria-hidden="true" class="w-6 h-6 text-jva-blue-500 fill-current flex-none" />
         <p>Trouvez facilement de <strong>nouveaux bénévoles</strong></p>
       </li>
     </ul>
     <div class="mt-8">
-      <Button @click="handleClick()">
+      <Button size="lg" @click="handleClick()">
         Inscrivez votre organisation
       </Button>
     </div>
-    <div class="mt-8 flex items-center space-x-4">
+    <div class="mt-8 lg:mt-12 flex items-center space-x-4">
       <div class="flex flex-shrink-0">
         <img
           srcset="
@@ -55,8 +55,8 @@
           class="relative z-[2] flex-none h-[48px] w-[48px] -ml-4 lg:w-[60px] lg:h-[60px]"
         >
       </div>
-      <p class="text-[#3A3A3A] !-mr-1 xs:!mr-0">
-        <strong>Caroline et Sophie</strong> de JeVeuxAider.gouv.fr pour vous accompagner
+      <p class="text-[#3A3A3A] !-mr-1 xs:!mr-0 xl:text-lg">
+        <strong>Caroline et Sophie</strong> de JeVeuxAider.gouv.fr <br class="hidden lg:block"> pour vous accompagner
       </p>
     </div>
   </div>

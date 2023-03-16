@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <div class="pt-12 pb-10 xl:pt-20 xl:pb-[72px]">
+      <div class="pt-12 pb-10 xl:pt-24 xl:pb-[72px]">
         <Heading as="h2" size="alt-md" class=" text-center">
           <span class="relative">
             <img
@@ -18,8 +18,8 @@
     </div>
 
     <div class="flex justify-center">
-      <div class="h-[78px] w-[78px] mb-[-39px] flex justify-center items-center bg-jva-orange-300 border-8 border-[#F9F6F2] rounded-full">
-        <RiArrowDownLine class="text-[#F9F6F2] w-8 fill-current flex-none" />
+      <div class="h-[78px] w-[78px] lg:h-[90px] lg:w-[90px] mb-[-39px] lg:mb-[-45px] flex justify-center items-center bg-jva-orange-300 border-8 border-[#F9F6F2] rounded-full">
+        <RiArrowDownLine class="text-[#F9F6F2] w-8 lg:w-10 fill-current flex-none" />
       </div>
     </div>
     <div class="bg-jva-orange-300 pt-14 pb-10 md:pt-16 md:pb-12 lg:pt-20 lg:pb-16 xl:pt-32 xl:pb-28 overflow-hidden">
@@ -29,7 +29,7 @@
             <Heading as="h3" size="alt-sm" class="mb-6 md:mb-2" color="text-[#522F29]">
               Le bénévolat et plus si affinités
             </Heading>
-            <p id="label-slideshow-activities-action" class="text-[#522F29] text-xl xl:text-2x leading-tight">
+            <p id="label-slideshow-activities-action" class="text-[#522F29] text-xl xl:text-2xl leading-tight">
               Contribuez à une cause qui vous touche au coeur
             </p>
           </div>
@@ -52,14 +52,14 @@
             :adaptive-height="true"
             class="sm:overflow-hidden"
           >
-            <div v-for="(group,i) in activitiesGroups" :key="i" class="!flex flex-col gap-4 sm:flex-row flex-wrap">
+            <div v-for="(group,i) in activitiesGroups" :key="i" class="!flex flex-col gap-4 lg:gap-7 sm:flex-row flex-wrap">
               <div
                 v-for="activity in group"
                 :key="activity.key"
               >
                 <nuxt-link
                   :to="`/missions-benevolat?activity.name=${activity.name}`"
-                  class="inline-flex p-4 bg-white shadow text-lg font-bold w-full sm:w-auto"
+                  class="inline-flex p-4 lg:px-8 lg:py-5 bg-white shadow lg:shadow-xl text-xl lg:text-[22px] font-bold w-full sm:w-auto hover:bg-[#F6F6F6]"
                 >
                   <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
                   <span class="ml-3">{{ activity.name }}</span>
