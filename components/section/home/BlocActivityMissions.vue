@@ -73,7 +73,7 @@ export default {
       this.$refs[`slideshowActivityMission_${this.activity.key}`].next()
     },
     handleClick () {
-      this.$router.push(`/missions-benevolat?activity.name=${this.activity.name}`)
+      this.$router.push(`/missions-benevolat?activity.name=${encodeURIComponent(this.activity.name)}`)
     }
   }
 }

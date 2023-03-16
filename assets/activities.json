@@ -92,9 +92,9 @@
   {
     "id": 10,
     "key": 10,
-    "label": "🙋‍♂️ Mentorat et parrainage",
+    "label": "🙋‍♂️ Mentorat & parrainage",
     "icon": "🙋‍♂️",
-    "name": "Mentorat et parrainage",
+    "name": "Mentorat & parrainage",
     "domain": ["Éducation pour tous"],
     "popular": true
   },
@@ -128,9 +128,9 @@
   {
     "id": 8,
     "key": 8,
-    "label": "👫 Lutte contre l’isolement",
+    "label": "👫 Lutte contre l'isolement",
     "icon": "👫",
-    "name": "Lutte contre l’isolement",
+    "name": "Lutte contre l'isolement",
     "domain": ["Solidarité et insertion"],
     "popular": false
   },
@@ -281,9 +281,9 @@
   {
     "id": 5,
     "key": 5,
-    "label": "🌳 Aménagement d’espaces naturels",
+    "label": "🌳 Aménagement d'espaces naturels",
     "icon": "🌳",
-    "name": "Aménagement d’espaces naturels",
+    "name": "Aménagement d'espaces naturels",
     "domain": ["Protection de la nature"],
     "popular": true
   },

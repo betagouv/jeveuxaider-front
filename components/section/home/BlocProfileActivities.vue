@@ -9,8 +9,8 @@
         i % 2 == 0 ? 'bg-[#F9F6F2]' : 'bg-white'
       ]"
     />
-    <div class="container py-24">
-      <div class="flex flex-col gap-16">
+    <div class="container py-12">
+      <div class="flex flex-col gap-16 pb-12">
         <div v-if="profileActivitiesRemaining.length > 0">
           <Heading as="h3" size="md" class="">
             Parmi les autres thématiques qui vous touchent
@@ -68,7 +68,7 @@ export default {
   data () {
     return {
       activities,
-      chunkSize: 4
+      chunkSize: 3
     }
   },
   computed: {
@@ -103,7 +103,9 @@ export default {
         return this.activities.filter(activity => activity.popular)
       }
       const profileActivitiesIds = this.$store.getters.profile.activities.map((activity) => { return activity.id })
-      return activities.filter(activity => activity.domain.some(i => this.profileDomainsByActivities.includes(i) && !profileActivitiesIds.includes(activity.key)))
+      return activities
+        .filter(activity => activity.name !== 'Collecte de fonds') // Too much domains
+        .filter(activity => activity.domain.some(i => this.profileDomainsByActivities.includes(i) && !profileActivitiesIds.includes(activity.key)))
     }
   },
   methods: {
