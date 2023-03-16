@@ -59,6 +59,7 @@
             aroundPrecision: 2000,
             facetFilters: ['tags:Environnement'],
             aroundLatLngViaIP: true,
+            aroundRadius: 'all'
           }"
         />
         <div class="lg:hidden mt-6 text-center">

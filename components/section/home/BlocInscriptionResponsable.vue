@@ -4,12 +4,12 @@
       <Heading as="h2" size="alt-md" class="mb-6 text-center">
         <span class="relative">
           <img
-            aria-hidden="true"
             src="/images/home/sparkle-left.svg"
             alt=""
             width="37"
             height="33"
-            class="absolute left-[-26px] top-[-10px] xxs:-top-2 pointer-events-none"
+            aria-hidden="true"
+            class="absolute left-[-26px] top-[-10px] xl:w-[50px] xl:left-[-38px] xl:top-[-8px] pointer-events-none"
           >
           <span>Ils sont là.</span>
         </span>

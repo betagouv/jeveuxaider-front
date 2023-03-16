@@ -6,10 +6,11 @@
           <span class="relative">
             <img
               src="/images/home/sparkle-left.svg"
-              class="absolute left-[-26px] top-[-5px]"
+              alt=""
               width="37"
               height="33"
               aria-hidden="true"
+              class="absolute left-[-26px] top-[-8px] xl:w-[50px] xl:left-[-38px] xl:top-[-8px] pointer-events-none"
             >
             <span>On vous a concocté une </span>
             <br class="hidden md:block">
@@ -69,6 +70,7 @@
               hitsPerPage: 6,
               aroundLatLngViaIP: true,
               aroundPrecision: 2000,
+              aroundRadius: 'all',
               facetFilters: [profileFacetFiltersActivities],
               numericFilters: [profileNumericFiltersCommitmentTotal],
             }"

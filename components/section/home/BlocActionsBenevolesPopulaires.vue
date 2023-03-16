@@ -31,7 +31,8 @@
             hitsPerPage: 6,
             aroundPrecision: 2000,
             aroundLatLngViaIP: true,
-            facetFilters: [facetFilterOrganisationsNames]
+            facetFilters: [facetFilterOrganisationsNames],
+            aroundRadius: 'all'
           }"
         />
       </div>
