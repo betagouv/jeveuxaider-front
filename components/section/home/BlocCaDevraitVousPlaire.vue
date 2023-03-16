@@ -69,6 +69,7 @@
               hitsPerPage: 6,
               aroundLatLngViaIP: true,
               aroundPrecision: 2000,
+              aroundRadius: 'all',
               facetFilters: [profileFacetFiltersActivities],
               numericFilters: [profileNumericFiltersCommitmentTotal],
             }"

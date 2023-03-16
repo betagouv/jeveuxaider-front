@@ -37,6 +37,7 @@
             hitsPerPage: 6,
             aroundPrecision: 2000,
             aroundLatLngViaIP: true,
+            aroundRadius: 'all',
             numericFilters: ['commitment__total <= 4'],
           }"
         />

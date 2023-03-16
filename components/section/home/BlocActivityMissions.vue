@@ -33,6 +33,7 @@
               hitsPerPage: 6,
               aroundPrecision: 2000,
               aroundLatLngViaIP: true,
+              aroundRadius: 'all',
               facetFilters: [`activity.name:${activity.name}`],
             }"
           />
