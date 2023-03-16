@@ -44,7 +44,7 @@
                 <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
                 <span class="ml-3">{{ activity.name }}</span>
               </div>
-              <button class="flex-none flex justify-center items-center border-l border-[#CECECE] w-[50px] sm:w-[72px] cursor-pointer hover:bg-[#F9F9F9]" @click="handleClickOtherActivity(activity)">
+              <button class="flex-none flex justify-center items-center border-l border-[#CECECE] w-[50px] sm:w-[72px] cursor-pointer hover:bg-[#F9F9F9]" @click="attachActivityToProfile(activity)">
                 <RiAddLine class=" fill-current w-[20px] h-[20px]" />
               </button>
             </div>
