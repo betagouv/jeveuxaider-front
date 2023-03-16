@@ -123,7 +123,7 @@ export default {
       }
       if (this.$store.getters.profile.activities) {
         filters.push(`activity.name=${this.$store.getters.profile.activities.map((activity) => {
-          return activity.name
+          return encodeURIComponent(activity.name)
         }).join('|')}`)
       }
 

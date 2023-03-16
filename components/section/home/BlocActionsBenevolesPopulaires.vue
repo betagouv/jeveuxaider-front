@@ -23,7 +23,7 @@
           </div>
         </div>
       </div>
-      <div class="mt-12">
+      <div v-if="organisations.length > 0" class="mt-12">
         <AlgoliaSlideshowMissions
           ref="slideshowPopulaire"
           aria-labelledby="label-slideshow-missions-populaires"
@@ -31,6 +31,7 @@
             hitsPerPage: 6,
             aroundPrecision: 2000,
             aroundLatLngViaIP: true,
+            facetFilters: [facetFilterOrganisationsNames],
             aroundRadius: 'all'
           }"
         />
@@ -57,7 +58,34 @@ export default {
   },
   data () {
     return {
-      missions: []
+      organisations: []
+    }
+  },
+  fetchOnServer: false,
+  async fetch () {
+    const { data: organisations } = await this.$axios.get('/organisations/popular')
+    this.organisations = organisations
+  },
+  computed: {
+    facetFilterOrganisationsNames () {
+      if (this.organisations.length == 0) {
+        return ''
+      }
+      const names = this.organisations.map((organisation) => {
+        return `structure.name:${organisation.name}`
+      })
+      return names
+    },
+    searchPageWithFilters () {
+      const filters = []
+
+      if (this.organisations.length > 0) {
+        filters.push(`structure.name=${this.organisations.map((organisation) => {
+          return encodeURIComponent(organisation.name)
+        }).join('|')}`)
+      }
+
+      return filters.join('&')
     }
   },
   methods: {
@@ -72,7 +100,7 @@ export default {
         window.plausible('Click CTA - Homepage - Actions bénévoles populaires - Plus de missions', {
           props: { isLogged: this.$store.getters.isLogged }
         })
-      this.$router.push('/missions-benevolat')
+      this.$router.push(`/missions-benevolat?${this.searchPageWithFilters}`)
     }
   }
 }
