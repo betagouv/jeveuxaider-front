@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#F5F5FE] pt-4 pb-8">
+  <div class="bg-[#F5F5FE] py-8 lg:py-14 xl:py-[72px]">
     <div class="container">
       <div class="lg:flex w-full lg:items-center">
         <FormNewsletter />

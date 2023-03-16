@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#F5F5FE] pb-6">
+  <div class="bg-[#F5F5FE]">
     <div class="container">
       <Heading as="h2" size="alt-md" class="pt-12 pb-10 xl:pt-20 xl:pb-[72px] text-center">
         <span class="relative">
