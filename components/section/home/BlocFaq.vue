@@ -9,8 +9,8 @@
             alt=""
             width="40"
             height="43"
-            class="absolute right-[-22px] top-[35px] xxs:top-[40px] sm:top-[-10px] w-8 xl:w-[40px] xl:-right-8"
             aria-hidden="true"
+            class="absolute right-[-22px] top-[35px] xxs:top-[40px] sm:top-[-10px] w-8 xl:w-[50px] xl:right-[-40px] xl:top-[-20px] pointer-events-none"
           >
         </span>
       </Heading>

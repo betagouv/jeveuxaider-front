@@ -6,10 +6,11 @@
           <span class="relative">
             <img
               src="/images/home/sparkle-left.svg"
-              class="absolute left-[-26px] top-[-5px] xl:w-[50px] xl:left-[-38px] xl:top-[-8px]"
+              alt=""
               width="37"
               height="33"
               aria-hidden="true"
+              class="absolute left-[-26px] top-[-5px] xl:w-[50px] xl:left-[-38px] xl:top-[-8px] pointer-events-none"
             >
             <span>C’est votre première fois ? <br class="hidden md:block">Suivez le guide</span>
           </span>
