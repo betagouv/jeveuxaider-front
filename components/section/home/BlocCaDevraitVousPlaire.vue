@@ -61,20 +61,18 @@
             </div>
           </div>
         </div>
-        <div v-if="missions.length" class="mt-12">
-          <Slideshow
+        <div class="mt-12">
+          <AlgoliaSlideshowMissions
             ref="slideshowMissionsByAffinities"
             aria-labelledby="label-slideshow-preferences-action"
-          >
-            <nuxt-link
-              v-for="mission in missions"
-              :key="mission.id"
-              class="slide-wrapper"
-              :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
-            >
-              <CardMission :mission="mission" />
-            </nuxt-link>
-          </Slideshow>
+            :search-parameters="{
+              hitsPerPage: 6,
+              aroundLatLngViaIP: true,
+              aroundPrecision: 2000,
+              facetFilters: [profileFacetFiltersActivities],
+              numericFilters: [profileNumericFiltersCommitmentTotal],
+            }"
+          />
         </div>
       </div>
     </div>
@@ -83,59 +81,44 @@
 
 <script>
 import Heading from '@/components/dsfr/Heading.vue'
-import CardMission from '@/components/card/CardMission.vue'
 import Button from '@/components/dsfr/Button.vue'
 import Link from '@/components/dsfr/Link.vue'
+import AlgoliaSlideshowMissions from '@/components/section/search/missions/AlgoliaSlideshowMissions.vue'
 
 export default {
   components: {
     Heading,
-    CardMission,
+    AlgoliaSlideshowMissions,
     Button,
     Link
   },
-  data () {
-    return {
-      missions: [],
-      defaultFilters: 'provider:reserve_civique AND is_registration_open=1 AND has_places_left=1 AND is_outdated=0'
-    }
-  },
-  fetchOnServer: false,
-  async fetch () {
-    const { data: missions } = await this.$axios.post('/algolia/missions', {
-      filters: `${this.profileActivitiesFilters}`,
-      numericFilters: [`${this.profileCommitmentFilters}`],
-      aroundLatLngViaIP: true
-    })
-    this.missions = missions
-  },
   computed: {
-    profileActivitiesFilters () {
+    profileFacetFiltersActivities () {
       if (this.$store.getters.profile.activities.length === 0) {
         return ''
       }
       const activities = this.$store.getters.profile.activities.map((activity) => {
-        return `activity.id=${activity.id}`
+        return `activity.name:${activity.name}`
       })
-      return `(${activities.join(' OR ')})`
+      return activities
     },
-    profileCommitmentFilters () {
+    profileNumericFiltersCommitmentTotal () {
       if (!this.$store.getters.profile.commitment__total) {
         return ''
       }
-      return `"commitment__total <= ${this.$store.getters.profile.commitment__total}"`
+      return `commitment__total <= ${this.$store.getters.profile.commitment__total}`
     },
     searchPageWithFilters () {
       const filters = []
       if (this.$store.getters.profile.commitment__total) {
         filters.push(`commitment__total=<%3D${this.$store.getters.profile.commitment__total}`)
       }
-      // if (this.$store.getters.profile.commitment__duration) {
-      //   filters.push(`duration=${this.$store.getters.profile.commitment__duration}`)
-      // }
-      // if (this.$store.getters.profile.commitment__time_period) {
-      //   filters.push(`time_period=${this.$store.getters.profile.commitment__time_period}`)
-      // }
+      if (this.$store.getters.profile.commitment__duration) {
+        filters.push(`duration=${this.$store.getters.profile.commitment__duration}`)
+      }
+      if (this.$store.getters.profile.commitment__time_period) {
+        filters.push(`time_period=${this.$store.getters.profile.commitment__time_period}`)
+      }
       if (this.$store.getters.profile.activities) {
         filters.push(`activity.name=${this.$store.getters.profile.activities.map((activity) => {
           return activity.name

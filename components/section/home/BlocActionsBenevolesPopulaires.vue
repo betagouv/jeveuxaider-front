@@ -6,7 +6,7 @@
           <Heading as="h2" size="alt-sm" class="mb-6 md:mb-2">
             Actions bénévoles populaires
           </Heading>
-          <p id="label-slideshow-missions-prioritaires" class="text-[#4D4D4D] text-xl xl:text-2xl">
+          <p id="label-slideshow-missions-populaires" class="text-[#4D4D4D] text-xl xl:text-2xl">
             Découvrez les missions de bénévolat qui engagent le plus la communauté
           </p>
         </div>
@@ -23,21 +23,16 @@
           </div>
         </div>
       </div>
-      <div v-if="missions.length" class="mt-12">
-        <Slideshow
+      <div class="mt-12">
+        <AlgoliaSlideshowMissions
           ref="slideshowPopulaire"
-          :slides-are-links="true"
-          aria-labelledby="label-slideshow-missions-prioritaires"
-        >
-          <nuxt-link
-            v-for="mission in missions"
-            :key="mission.id"
-            class="slide-wrapper"
-            :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
-          >
-            <CardMission :mission="mission" />
-          </nuxt-link>
-        </Slideshow>
+          aria-labelledby="label-slideshow-missions-populaires"
+          :search-parameters="{
+            hitsPerPage: 6,
+            aroundPrecision: 2000,
+            aroundLatLngViaIP: true,
+          }"
+        />
       </div>
       <div class="lg:hidden mt-6 text-center">
         <Button type="tertiary" @click="handleClick()">
@@ -50,27 +45,19 @@
 
 <script>
 import Button from '@/components/dsfr/Button.vue'
-import CardMission from '@/components/card/CardMission.vue'
 import Heading from '@/components/dsfr/Heading.vue'
+import AlgoliaSlideshowMissions from '@/components/section/search/missions/AlgoliaSlideshowMissions.vue'
 
 export default {
   components: {
     Button,
-    CardMission,
+    AlgoliaSlideshowMissions,
     Heading
   },
   data () {
     return {
       missions: []
     }
-  },
-  fetchOnServer: false,
-  async fetch () {
-    const { data: missions } = await this.$axios.post('/algolia/missions', {
-      filters: 'provider:reserve_civique AND is_registration_open=1 AND has_places_left=1 AND is_outdated=0',
-      aroundLatLngViaIP: true
-    })
-    this.missions = missions
   },
   methods: {
     handleSlideshowPreviousClick () {

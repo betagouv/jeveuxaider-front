@@ -31,7 +31,7 @@
           class="flex-none w-[227px] h-[227px] sm:w-[169px] sm:h-[169px] lg:w-[200px] lg:h-[200px] xl:w-auto xl:h-auto"
         >
       </div>
-      <div v-if="missions.length" class="mt-12">
+      <div class="mt-12">
         <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8 mb-4 lg:mb-8 xl:mb-14">
           <div class="">
             <p class="font-bold text-xl lg:text-2xl xl:text-[32px] xl:leading-[40px]">
@@ -51,20 +51,16 @@
             </div>
           </div>
         </div>
-        <Slideshow
+        <AlgoliaSlideshowMissions
           ref="slideshowOperation"
-          :slides-are-links="true"
           :aria-labelledby="`label-missions-operation-${uuid}`"
-        >
-          <nuxt-link
-            v-for="mission in missions"
-            :key="mission.id"
-            class="slide-wrapper"
-            :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
-          >
-            <CardMission :mission="mission" />
-          </nuxt-link>
-        </Slideshow>
+          :search-parameters="{
+            hitsPerPage: 6,
+            aroundPrecision: 2000,
+            facetFilters: ['tags:Environnement'],
+            aroundLatLngViaIP: true,
+          }"
+        />
         <div class="lg:hidden mt-6 text-center">
           <Button type="tertiary" @click="handleClick()">
             Plus de missions
@@ -78,31 +74,16 @@
 <script>
 import Button from '@/components/dsfr/Button.vue'
 import Heading from '@/components/dsfr/Heading.vue'
-import CardMission from '@/components/card/CardMission.vue'
 import uuid from '@/mixins/uuid'
+import AlgoliaSlideshowMissions from '@/components/section/search/missions/AlgoliaSlideshowMissions.vue'
 
 export default {
   components: {
     Heading,
     Button,
-    CardMission
+    AlgoliaSlideshowMissions
   },
   mixins: [uuid],
-  data () {
-    return {
-      missions: [],
-      tags: 'Décembre ensemble'
-    }
-  },
-  fetchOnServer: false,
-  async fetch () {
-    const { data: missions } = await this.$axios.post('/algolia/missions', {
-      facetFilters: `tags:${this.tags}`,
-      filters: 'provider:reserve_civique AND is_registration_open=1 AND has_places_left=1 AND is_outdated=0',
-      aroundLatLngViaIP: true
-    })
-    this.missions = missions
-  },
   methods: {
     handleSlideshowPreviousClick () {
       this.$refs.slideshowOperation.previous()
@@ -115,7 +96,7 @@ export default {
         window.plausible('Click CTA - Homepage - Opérations nationales - Printemps pour la planète', {
           props: { isLogged: this.$store.getters.isLogged }
         })
-      this.$router.push(`/missions-benevolat?tags=${this.tags}`)
+      this.$router.push('/missions-benevolat?tags=Environnement')
     }
   }
 }
