@@ -56,6 +56,7 @@
           :aria-labelledby="`label-missions-operation-${uuid}`"
           :search-parameters="{
             hitsPerPage: 6,
+            aroundPrecision: 2000,
             facetFilters: ['tags:Environnement'],
             aroundLatLngViaIP: true,
           }"
@@ -74,7 +75,7 @@
 import Button from '@/components/dsfr/Button.vue'
 import Heading from '@/components/dsfr/Heading.vue'
 import uuid from '@/mixins/uuid'
-import AlgoliaSlideshowMissions from '~/components/section/search/missions/AlgoliaSlideshowMissions.vue'
+import AlgoliaSlideshowMissions from '@/components/section/search/missions/AlgoliaSlideshowMissions.vue'
 
 export default {
   components: {

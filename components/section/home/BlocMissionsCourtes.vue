@@ -31,6 +31,7 @@
           aria-labelledby="label-slideshow-missions-courtes"
           :search-parameters="{
             hitsPerPage: 6,
+            aroundPrecision: 2000,
             aroundLatLngViaIP: true,
             numericFilters: ['commitment__total <= 4'],
           }"
@@ -71,7 +72,7 @@
 import Button from '@/components/dsfr/Button.vue'
 import Heading from '@/components/dsfr/Heading.vue'
 import Tag from '@/components/dsfr/Tag.vue'
-import AlgoliaSlideshowMissions from '~/components/section/search/missions/AlgoliaSlideshowMissions.vue'
+import AlgoliaSlideshowMissions from '@/components/section/search/missions/AlgoliaSlideshowMissions.vue'
 
 export default {
   components: {

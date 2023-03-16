@@ -22,19 +22,16 @@
             </div>
           </div>
         </div>
-        <div v-if="missions.length" class="mt-12">
-          <Slideshow
+        <div class="mt-12">
+          <AlgoliaSlideshowMissions
             :ref="`slideshowActivityMission_${activity.key}`"
-          >
-            <nuxt-link
-              v-for="mission in missions"
-              :key="mission.id"
-              class="slide-wrapper"
-              :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
-            >
-              <CardMission :mission="mission" />
-            </nuxt-link>
-          </Slideshow>
+            :search-parameters="{
+              hitsPerPage: 6,
+              aroundPrecision: 2000,
+              aroundLatLngViaIP: true,
+              facetFilters: [`activity.name:${activity.name}`],
+            }"
+          />
         </div>
       </div>
     </div>
@@ -43,13 +40,13 @@
 
 <script>
 import Heading from '@/components/dsfr/Heading.vue'
-import CardMission from '@/components/card/CardMission.vue'
+import AlgoliaSlideshowMissions from '@/components/section/search/missions/AlgoliaSlideshowMissions.vue'
 import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
     Heading,
-    CardMission,
+    AlgoliaSlideshowMissions,
     Button
   },
   props: {
@@ -62,14 +59,6 @@ export default {
     return {
       missions: []
     }
-  },
-  fetchOnServer: false,
-  async fetch () {
-    const { data: missions } = await this.$axios.post('/algolia/missions', {
-      facetFilters: `activity.name:${this.activity.name}`,
-      aroundLatLngViaIP: true
-    })
-    this.missions = missions
   },
   methods: {
     handleSlideshowPreviousClick () {

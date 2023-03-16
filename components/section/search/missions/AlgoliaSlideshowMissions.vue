@@ -52,7 +52,6 @@ export default {
   fetchOnServer: false,
   async fetch () {
     const { hits } = await this.$algolia.missionsIndex.search('', this.searchParameters)
-    console.log(this.ariaLabelledby, this.missions)
     this.missions = hits
   },
 

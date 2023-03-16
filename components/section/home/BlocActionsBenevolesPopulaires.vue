@@ -26,10 +26,10 @@
       <div class="mt-12">
         <AlgoliaSlideshowMissions
           ref="slideshowPopulaire"
-          dots-variant="light"
           aria-labelledby="label-slideshow-missions-populaires"
           :search-parameters="{
             hitsPerPage: 6,
+            aroundPrecision: 2000,
             aroundLatLngViaIP: true,
           }"
         />
@@ -46,7 +46,7 @@
 <script>
 import Button from '@/components/dsfr/Button.vue'
 import Heading from '@/components/dsfr/Heading.vue'
-import AlgoliaSlideshowMissions from '~/components/section/search/missions/AlgoliaSlideshowMissions.vue'
+import AlgoliaSlideshowMissions from '@/components/section/search/missions/AlgoliaSlideshowMissions.vue'
 
 export default {
   components: {
