@@ -1,6 +1,6 @@
 <template>
   <div class="px-8 py-12 xl:px-12 xl:py-24 bg-[#6A6AF4] shadow-xl text-white">
-    <div class="relative flex flex-col items-start gap-8">
+    <div class="relative flex flex-col items-start gap-8 lg:gap-12">
       <div class="flex flex-col md:flex-row gap-8 xl:mb-10">
         <img
           src="/images/home/acteurs-stars.svg"
@@ -19,7 +19,7 @@
       <ul class="text-xl xl:text-2xl leading-6 space-y-6 lg:space-y-0 lg:flex lg:flex-wrap lg:gap-x-12 lg:gap-y-6 xl:gap-x-16">
         <li class="flex items-start lg:items-center space-x-3">
           <RiCheckboxCircleLine class="w-6 h-6 text-white fill-current flex-none" />
-          <p>Agissez en faveur de l<strong>’intérêt général</strong></p>
+          <p>Agissez en faveur de l’<strong>intérêt général</strong></p>
         </li>
         <li class="flex items-start lg:items-center space-x-3">
           <RiCheckboxCircleLine class="w-6 h-6 text-white fill-current flex-none" />
@@ -40,7 +40,7 @@
       </Button>
       <div class="flex items-center space-x-4 xl:absolute xl:right-[320px] xl:max-w-[340px] xl:top-[26px]">
         <div class="bg-red-500 rounded-full flex-none h-[48px] w-[48px]" />
-        <p><strong>Coralie</strong> de JeVeuxAider.gouv.fr pour vous accompagner</p>
+        <p><strong>Coralie</strong> de JeVeuxAider.gouv.fr <br class="hidden sm:block"> pour vous accompagner</p>
       </div>
     </div>
   </div>
