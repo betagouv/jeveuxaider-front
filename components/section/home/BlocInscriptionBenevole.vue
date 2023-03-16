@@ -28,11 +28,11 @@
         <span class="block">Je veux aider<span class="text-jva-orange-300">.</span></span>
       </Heading>
       <p>
-        <span class="text-5xl font-bold leading-[56px] lg:text-[72px]">
-          100 000
+        <span class="text-5xl font-bold leading-[56px] lg:text-[72px] lg:leading-[72px]">
+          100 000
         </span>
         <br>
-        <span class="text-xl xxs:text-2xl font-bold">
+        <span class="text-xl xxs:text-2xl xl:text-[32px] font-bold">
           bénévoles recherchés
         </span>
       </p>

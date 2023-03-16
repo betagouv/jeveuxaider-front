@@ -1,7 +1,7 @@
 <template>
   <div class="flex space-x-2">
     <button
-      class="flex border h-12 w-12  justify-center items-center"
+      class="flex border h-12 w-12 justify-center items-center transition"
       :class="[
         {
           'border-jva-blue-500 text-jva-blue-500': variant == 'blue',
@@ -15,7 +15,7 @@
       <RiArrowLeftLine class="w-6 h-6 fill-current" />
     </button>
     <button
-      class="flex border h-12 w-12  justify-center items-center"
+      class="flex border h-12 w-12  justify-center items-center transition"
       :class="[
         {
           'border-jva-blue-500 text-jva-blue-500': variant == 'blue',
@@ -45,7 +45,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

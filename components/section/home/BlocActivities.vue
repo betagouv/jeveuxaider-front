@@ -6,7 +6,7 @@
           <span class="relative">
             <img
               src="/images/home/sparkle-left.svg"
-              class="absolute left-[-26px] top-[-5px]"
+              class="absolute left-[-26px] top-[-5px] xl:w-[50px] xl:left-[-38px] xl:top-[-8px]"
               width="37"
               height="33"
               aria-hidden="true"
@@ -59,7 +59,7 @@
               >
                 <nuxt-link
                   :to="`/missions-benevolat?activity.name=${activity.name}`"
-                  class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow xl:shadow-xl text-xl xl:text-[22px] font-bold w-full sm:w-auto hover:bg-[#F6F6F6]"
+                  class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow xl:shadow-xl text-lg  xl:text-[22px] font-bold w-full sm:w-auto hover:bg-[#F6F6F6]"
                 >
                   <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
                   <span class="ml-3">{{ activity.name }}</span>

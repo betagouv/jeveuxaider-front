@@ -22,8 +22,6 @@
       {'cursor-not-allowed !bg-[#E5E5E5] text-[#929292]': disabled && type === 'primary'},
       {'cursor-not-allowed !border-[#E5E5E5] text-[#929292]': disabled && ['secondary', 'tertiary'].includes(type)},
       {'cursor-not-allowed text-[#929292]': disabled && type === 'tertiary-no-outline'},
-
-      extraClass
     ]"
     :disabled="disabled"
     @click="$emit('click')"
@@ -116,10 +114,6 @@ export default {
       default: false
     },
     as: {
-      type: String,
-      default: null
-    },
-    extraClass: {
       type: String,
       default: null
     }

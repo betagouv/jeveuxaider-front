@@ -1,13 +1,27 @@
 <template>
-  <div class="bg-jva-blue-500 overflow-hidden">
+  <div class="bg-jva-blue-500 overflow-hidden relative">
+    <img
+      src="/images/home/banner-ronds.svg"
+      alt=""
+      width="1592"
+      height="691"
+      aria-hidden="true"
+      :class="[
+        'absolute inset-0 m-auto object-cover',
+        'w-full h-[700px]',
+        'md:h-[1000px]',
+        'lg:w-[1024px] lg:h-[1200px] lg:translate-x-[-120px] lg:translate-y-[50px]',
+        'xl:w-[1860px] xl:h-[1527px] lg:translate-x-[-162px] lg:translate-y-[38px]'
+      ]"
+    >
     <div
       :class="[
-        'container',
+        'container relative',
         {'pt-10 sm:pt-0': !$store.getters.isLogged},
         {'pt-12': $store.getters.isLogged},
       ]"
     >
-      <div class="relative sm:pt-10 sm:pb-14 lg:pt-14 lg:pb-20 xl:pt-20 xl:pb-32">
+      <div class="relative sm:pt-10 sm:pb-14 lg:pt-14 lg:pb-20 xl:pt-[89px] xl:pb-[136px]">
         <div class="sm:max-w-[425px] lg:max-w-[600px] xl:max-w-[860px]">
           <template v-if="$store.getters.isLogged">
             <div>
@@ -30,7 +44,7 @@
           <template v-else>
             <div
               :class="[
-                'text-jva-orange-300 font-bold mb-4 xl:mb-12',
+                'text-jva-orange-300 font-bold mb-4 xl:mb-8',
                 'text-xl xxs:text-2xl xs:text-3xl sm:text-[32px] xl:text-[56px] xl:leading-[56px]'
               ]"
             >
@@ -59,9 +73,9 @@
                 </p>
               </client-only>
             </div>
-            <Heading as="h1" size="alt-2xl" class="mb-10 xl:mb-20" color="text-white">
-              <span>Devenez </span>
-              <span class="relative">
+            <Heading as="h1" size="alt-2xl" class="mb-10 xl:mb-16" color="text-white">
+              <span class="relative left-[-4px] md:left-[-6px] lg:left-[-8px] xl:left-[-15px]">Devenez </span>
+              <span class="relative left-[-3px] md:left-[-5px] lg:left-[-6px] xl:left-[-11px]">
                 <span>bénévole</span>
                 <img
                   aria-hidden="true"
@@ -88,7 +102,7 @@
           :class="[
             'hidden sm:flex sm:gap-4 lg:gap-6 xl:gap-8 sm:items-center',
             'absolute top-0 -right-32 md:-right-12 xl:-right-48',
-            'rotate-6 -translate-y-16 lg:-translate-y-24 xl:-translate-y-36'
+            'rotate-[4.89deg] -translate-y-16 lg:-translate-y-24 xl:-translate-y-36'
           ]"
         >
           <picture data-not-lazy>
