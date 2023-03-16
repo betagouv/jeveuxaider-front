@@ -24,23 +24,19 @@
           </div>
         </div>
       </div>
-      <div v-if="missions.length" class="mt-12 xl:mt-20">
-        <Slideshow
+      <div class="mt-12 xl:mt-20">
+        <AlgoliaSlideshowMissions
           ref="slideshowBenevoleDunJour"
-          :slides-are-links="true"
-          aria-labelledby="label-slideshow-missions-courtes"
           dots-variant="light"
-        >
-          <nuxt-link
-            v-for="mission in missions"
-            :key="mission.id"
-            class="slide-wrapper"
-            :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
-          >
-            <CardMission :mission="mission" />
-          </nuxt-link>
-        </Slideshow>
+          aria-labelledby="label-slideshow-missions-courtes"
+          :search-parameters="{
+            hitsPerPage: 6,
+            aroundLatLngViaIP: true,
+            numericFilters: ['commitment__total <= 4'],
+          }"
+        />
       </div>
+
       <div class="lg:hidden mt-6 text-center">
         <Button type="tertiary-no-outline" @click="handleClick()">
           Plus de missions
@@ -73,20 +69,19 @@
 
 <script>
 import Button from '@/components/dsfr/Button.vue'
-import CardMission from '@/components/card/CardMission.vue'
 import Heading from '@/components/dsfr/Heading.vue'
 import Tag from '@/components/dsfr/Tag.vue'
+import AlgoliaSlideshowMissions from '~/components/section/search/missions/AlgoliaSlideshowMissions.vue'
 
 export default {
   components: {
     Button,
-    CardMission,
     Heading,
-    Tag
+    Tag,
+    AlgoliaSlideshowMissions
   },
   data () {
     return {
-      missions: [],
       links: [
         { label: '1 heure', to: '/missions-benevolat?commitment__total=<%3D1&duration=1_hour&time_period=year' },
         { label: '2 heures', to: '/missions-benevolat?commitment__total=<%3D2&duration=2_hours&time_period=year' },
@@ -96,15 +91,6 @@ export default {
         { label: '3 jours', to: '/missions-benevolat?commitment__total=<%3D21&duration=3_days&time_period=year' }
       ]
     }
-  },
-  fetchOnServer: false,
-  async fetch () {
-    const { data: missions } = await this.$axios.post('/algolia/missions', {
-      filters: 'provider:reserve_civique AND is_registration_open=1 AND has_places_left=1 AND is_outdated=0',
-      numericFilters: ['commitment__total <= 4'],
-      aroundLatLngViaIP: true
-    })
-    this.missions = missions
   },
   methods: {
     handleSlideshowPreviousClick () {
