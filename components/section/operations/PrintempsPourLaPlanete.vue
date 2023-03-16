@@ -6,7 +6,7 @@
       alt=""
       width="1692"
       height="553"
-      class="absolute top-16 object-cover object-top w-[1692px] h-[553px] mx-auto"
+      class="hidden xl:block pointer-events-none absolute top-16 inset-x-0 object-cover object-top w-[1692px] h-[553px] mx-auto"
     >
     <div class="container relative">
       <div class="flex flex-col justify-between items-center sm:flex-row gap-12">
@@ -19,16 +19,16 @@
             <br class="hidden lg:block">
             <span>Printemps pour la planète</span>
           </Heading>
-          <p :id="`label-missions-operation-${uuid}`" class="text-xl text-[#4D4D4D] xl:text-2xl xl:leading-[48px]">
+          <p :id="`label-missions-operation-${uuid}`" class="text-xl text-[#3A3A3A] xl:text-[28px] xl:leading-[48px]">
             Passez de l’éveil à l’action en participant aux missions de bénévolat au service de ce que nous avons de plus précieux : notre planète.
           </p>
         </div>
         <img
           src="/images/operations/logo-printemps-pour-la-planete.svg"
           alt="Printemps pour la planète"
-          width="231"
-          height="231"
-          class="flex-none w-[227px] h-[227px] sm:w-[169px] sm:h-[169px] lg:w-[200px] lg:h-[200px] xl:w-[382px] xl:h-[382px]"
+          width="383"
+          height="384"
+          class="flex-none w-[227px] h-[227px] sm:w-[169px] sm:h-[169px] lg:w-[200px] lg:h-[200px] xl:w-auto xl:h-auto"
         >
       </div>
       <div v-if="missions.length" class="mt-12">
