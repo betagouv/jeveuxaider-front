@@ -52,14 +52,14 @@
             :adaptive-height="true"
             class="sm:overflow-hidden"
           >
-            <div v-for="(group,i) in activitiesGroups" :key="i" class="!flex flex-col gap-4 lg:gap-7 sm:flex-row flex-wrap">
+            <div v-for="(group,i) in activitiesGroups" :key="i" class="!flex flex-col gap-4 xl:gap-7 sm:flex-row flex-wrap">
               <div
                 v-for="activity in group"
                 :key="activity.key"
               >
                 <nuxt-link
                   :to="`/missions-benevolat?activity.name=${activity.name}`"
-                  class="inline-flex p-4 lg:px-8 lg:py-5 bg-white shadow lg:shadow-xl text-xl lg:text-[22px] font-bold w-full sm:w-auto hover:bg-[#F6F6F6]"
+                  class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow xl:shadow-xl text-xl xl:text-[22px] font-bold w-full sm:w-auto hover:bg-[#F6F6F6]"
                 >
                   <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
                   <span class="ml-3">{{ activity.name }}</span>

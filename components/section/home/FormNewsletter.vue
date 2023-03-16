@@ -35,7 +35,6 @@
     </form>
 
     <p class="text-xs text mt-4 text-[#666666]">
-      Chaque mois, nous vous proposons de nouvelles missions de bénévolat à distance ou près de chez vous.
       En renseignant votre adresse électronique, vous acceptez de recevoir nos actualités par courriel. Vous pouvez vous désinscrire à tout moment à l’aide des liens de désinscription ou en nous contactant.
     </p>
   </div>

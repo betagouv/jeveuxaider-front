@@ -11,7 +11,7 @@
         <div class="sm:max-w-[425px] lg:max-w-[600px] xl:max-w-[860px]">
           <template v-if="$store.getters.isLogged">
             <div>
-              <Heading as="h1" size="alt-xl" class="mb-10 xl:mb-20" color="text-white">
+              <Heading as="h1" size="alt-xl" class="mb-10 xl:mb-20 xl:max-w-[720px]" color="text-white">
                 <span class="relative">
                   <span>{{ $store.getters.profile.first_name }}</span>
                   <!-- @todo: d, f, l -->
@@ -23,7 +23,7 @@
                     class="absolute right-[-28px] -top-1 xxs:top-[4px] xxs:right-[-32px] pointer-events-none lg:right-[-60px] lg:top-[-10px] lg:w-[80px]"
                   >
                 </span><br>
-                <span>ravis de vous voir connecté </span>
+                <span>Et si on bougeait les lignes ? </span>
               </Heading>
             </div>
           </template>

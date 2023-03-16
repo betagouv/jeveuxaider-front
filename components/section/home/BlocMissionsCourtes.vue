@@ -46,8 +46,8 @@
           Plus de missions
         </Button>
       </div>
-      <div class="mt-8 flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-6">
-        <p class="text-white font-bold text-xl lg:text-2xl">
+      <div class="mt-8 flex flex-col xl:flex-row space-y-6 xl:space-y-0 xl:space-x-6">
+        <p class="text-white font-bold text-xl xl:text-2xl">
           Quelles sont vos disponibilités ?
         </p>
         <div class="flex flex-wrap gap-4">
@@ -60,7 +60,7 @@
             <Tag
               size="md"
               :custom-theme="true"
-              class="text-white border border-[#8080CD] cursor-ponter hover:bg-jva-blue-900 sm:hover:border-[#b8b8e8] active:!border-white lg:!text-base"
+              class="text-white border border-[#8080CD] cursor-ponter hover:bg-jva-blue-900 sm:hover:border-[#b8b8e8] active:!border-white"
             >
               {{ link.label }}
             </Tag>

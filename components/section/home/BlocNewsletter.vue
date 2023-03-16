@@ -3,8 +3,8 @@
     <div class="container">
       <div class="lg:flex w-full lg:items-center">
         <FormNewsletter />
-        <div class="lg:hidden h-[1px] bg-[#6A6AF4] my-8" />
-        <div class="hidden lg:flex flex-none self-stretch w-[1px] bg-[#6A6AF4] mx-16 xl:mx-48" />
+        <div class="lg:hidden h-[1px] bg-[#CACAFB] my-8" />
+        <div class="hidden lg:flex flex-none self-stretch w-[1px] bg-[#CACAFB] mx-16 xl:mx-48" />
         <div class="flex-none">
           <Heading as="h2" size="sm" class="mb-6">
             <span>Suivez-nous </span>

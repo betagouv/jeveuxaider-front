@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white pb-12 md:pb-20">
     <div class="container">
-      <Heading as="h2" size="alt-md" class="py-16 xl:pt-24 text-center">
+      <Heading as="h2" size="alt-md" class="py-16 xl:pt-24 xl:pb-24 text-center">
         <span class="relative">
           <span>Vous avez des questions ?</span>
           <img

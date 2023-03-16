@@ -1,6 +1,6 @@
 <template>
   <div class="px-8 py-12 xl:px-12 xl:py-24 bg-[#21AB8E] shadow-xl text-white">
-    <div class="flex flex-col xl:flex-row gap-8 xl:mb-16">
+    <div class="flex flex-col xl:flex-row gap-8 lg:gap-6 xl:mb-16">
       <img
         src="/images/home/france-localization.svg"
         alt=""
