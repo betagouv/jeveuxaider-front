@@ -71,8 +71,8 @@
               aroundLatLngViaIP: true,
               aroundPrecision: 2000,
               aroundRadius: 'all',
-              facetFilters: profileFacetFiltersActivities,
-              numericFilters: profileNumericFiltersCommitmentTotal,
+              facetFilters,
+              numericFilters,
             }"
           />
         </div>
@@ -94,15 +94,36 @@ export default {
     Button,
     Link
   },
+  fetchOnServer: false,
+  data () {
+    return {
+      organisations: null
+    }
+  },
+  async fetch () {
+    const { data: organisations } = await this.$axios.get('/organisations/popular')
+    this.organisations = organisations
+  },
   computed: {
+    facetFilters () {
+      return this.profileFacetFiltersActivities ?? (this.facetFilterOrganisationsNames ?? [])
+    },
+    numericFilters () {
+      return this.profileFacetFiltersActivities ? this.profileNumericFiltersCommitmentTotal : ['commitment__total <= 4']
+    },
     profileFacetFiltersActivities () {
       if (this.$store.getters.profile.activities.length === 0) {
-        return []
+        return null
       }
       const activities = this.$store.getters.profile.activities.map((activity) => {
         return `activity.name:${activity.name}`
       })
       return [activities]
+    },
+    facetFilterOrganisationsNames () {
+      return this.organisations?.map((organisation) => {
+        return `structure.name:${organisation.name}`
+      })
     },
     profileNumericFiltersCommitmentTotal () {
       if (!this.$store.getters.profile.commitment__total) {
@@ -112,6 +133,14 @@ export default {
     },
     searchPageWithFilters () {
       const filters = []
+
+      if (!this.$store.getters.profile.activities.length && this.organisations) {
+        filters.push(`structure.name=${this.organisations.map((organisation) => {
+          return encodeURIComponent(organisation.name)
+        }).join('|')}`, 'commitment__total <= 4', 'duration=half_day', 'time_period=year')
+        return filters.join('&')
+      }
+
       if (this.$store.getters.profile.commitment__total) {
         filters.push(`commitment__total=<%3D${this.$store.getters.profile.commitment__total}`)
       }
