@@ -71,8 +71,8 @@
               aroundLatLngViaIP: true,
               aroundPrecision: 2000,
               aroundRadius: 'all',
-              facetFilters: [profileFacetFiltersActivities],
-              numericFilters: [profileNumericFiltersCommitmentTotal],
+              facetFilters: profileFacetFiltersActivities,
+              numericFilters: profileNumericFiltersCommitmentTotal,
             }"
           />
         </div>
@@ -97,18 +97,18 @@ export default {
   computed: {
     profileFacetFiltersActivities () {
       if (this.$store.getters.profile.activities.length === 0) {
-        return ''
+        return []
       }
       const activities = this.$store.getters.profile.activities.map((activity) => {
         return `activity.name:${activity.name}`
       })
-      return activities
+      return [activities]
     },
     profileNumericFiltersCommitmentTotal () {
       if (!this.$store.getters.profile.commitment__total) {
-        return ''
+        return []
       }
-      return `commitment__total <= ${this.$store.getters.profile.commitment__total}`
+      return [`commitment__total <= ${this.$store.getters.profile.commitment__total}`]
     },
     searchPageWithFilters () {
       const filters = []

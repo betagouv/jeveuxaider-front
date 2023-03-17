@@ -121,7 +121,7 @@ export default {
 <style lang="postcss" scoped>
 :deep(.slick-track) {
   width: 100% !important;
-  @apply xl:!gap-16;
+  @apply sm:!gap-16;
 }
 
 :deep(.slick-slide) {

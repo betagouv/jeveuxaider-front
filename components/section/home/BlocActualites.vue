@@ -17,7 +17,7 @@
               @next="handleSlideshowNextClick"
             />
             <Button class="flex-none" type="secondary" @click="handleClick()">
-              Plus de missions
+              Plus d’articles
             </Button>
           </div>
         </div>
