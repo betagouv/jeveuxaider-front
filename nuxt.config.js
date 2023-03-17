@@ -219,7 +219,8 @@ export default {
     defaultLocale: 'fr',
     plugins: [
       'relativeTime',
-      'customParseFormat'
+      'customParseFormat',
+      'duration'
     ]
   },
 

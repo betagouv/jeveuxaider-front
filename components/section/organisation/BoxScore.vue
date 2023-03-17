@@ -26,27 +26,43 @@
                 style="width: 350px; height: 224px;"
               />
               <div class="absolute flex flex-col justify-center items-center top-[60px] left-1/2 transform -translate-x-1/2 h-[224px] w-[224px] text-center border border-[#F1F2F9] rounded-full">
-                <div class="font-bold text-5xl">
-                  {{ score.score }}%
+                <div class="font-bold text-5xl tracking-tight">
+                  <span>{{ score.score }}</span>
+                  <span class="mx-1">/</span>
+                  <span>100</span>
                 </div>
                 <div class="text-[#F95A5C] text-sm font-bold mt-2">
-                  Score de réactivité
+                  Score d'engagement <br> et de réactivité
                 </div>
+                <Link class="text-xs mt-2" @click.native="showModalScoreDetails = true">
+                  Voir le détail
+                </Link>
+
+                <portal to="body-end">
+                  <Modal
+                    v-scroll-lock="showModalScoreDetails"
+                    :is-open="showModalScoreDetails"
+                    hide-footer
+                    @close="showModalScoreDetails = false"
+                  >
+                    <ScoreDetails :score="score" />
+                  </Modal>
+                </portal>
               </div>
             </div>
           </client-only>
 
           <div class="text-xs text-[#696974] font-medium text-center px-4 relative">
-            🏆 Chez JeVeuxAider.gouv.fr, nous valorisons votre réactivité : apportez une réponse rapide aux bénévoles pour décupler la visibilité de vos missions ! <span v-if="['responsable'].includes($store.getters.contextRole)" class="cursor-pointer underline text-jva-blue-500 hover:text-jva-blue-600" @click="toggleOverlay">Astuces ›</span>
+            🏆 Chez JeVeuxAider.gouv.fr, nous valorisons votre réactivité : apportez une réponse rapide aux bénévoles pour décupler la visibilité de vos missions ! <span class="cursor-pointer underline text-jva-blue-500 hover:text-jva-blue-600" @click="toggleOverlay">Astuces ›</span>
           </div>
         </div>
         <CardStatistic
-          :value="`${score.response_ratio || 0}%`"
+          :value="score.response_ratio ? `${score.response_ratio}%` : '-'"
           title="Taux de réponse"
           subtitle="aux participations"
         />
         <CardStatistic
-          :value="`${(score.response_time / (60 * 60 * 24)).toFixed(0)} jours`"
+          :value="score.response_time ? $dayjs.duration(score.response_time, 'seconds').humanize() : '-'"
           title="Temps de réponse"
           subtitle="aux participations"
         />
@@ -100,12 +116,18 @@
 <script>
 import CardStatistic from '@/components/card/CardStatistic'
 import Button from '@/components/dsfr/Button.vue'
+import Link from '@/components/dsfr/Link.vue'
+import ScoreMixin from '~/mixins/score'
+import ScoreDetails from '~/components/section/organisation/ScoreDetails.vue'
 
 export default {
   components: {
     CardStatistic,
-    Button
+    Button,
+    Link,
+    ScoreDetails
   },
+  mixins: [ScoreMixin],
   props: {
     structureId: {
       type: Number,
@@ -126,16 +148,9 @@ export default {
     return {
       score: null,
       loadingScore: true,
-      showOverlay: false
+      showOverlay: false,
+      showModalScoreDetails: false
     }
-  },
-  async fetch () {
-    if (!this.structureId) {
-      return
-    }
-    const { data: score } = await this.$axios.get(`/structures/${this.structureId}/score`)
-    this.score = score
-    this.loadingScore = false
   },
   methods: {
     toggleOverlay () {
@@ -144,7 +159,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

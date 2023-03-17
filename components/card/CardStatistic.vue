@@ -12,7 +12,7 @@
       <InformationCircleIcon class="h-4 w-4 text-gray-400 group-hover:text-gray-900" />
     </div>
     <div class="px-4 py-6 flex-1 flex flex-col items-center bg-white space-y-2">
-      <div v-if="value !== null" class="text-[36px] font-bold leading-10">
+      <div v-if="value !== null" class="text-[36px] font-bold leading-10 text-center">
         <template v-if="!isNaN(value)">
           {{ value | formatNumber('0,0.[0]') }}
         </template>
