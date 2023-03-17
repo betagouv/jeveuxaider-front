@@ -44,7 +44,7 @@
         alt=""
         width="425"
         height="188"
-        class="object-cover object-top w-full h-[170px] sm:h-[240px] sm:px-8 md:px-0 max-w-none md:w-[500px] lg:w-[650px] xl:w-[890px] xl:h-[364px]"
+        class="object-cover object-top w-full h-[170px] sm:h-[240px] sm:px-8 md:px-0 max-w-none md:w-[500px] lg:w-[650px] xl:w-[890px] xl:h-[360px]"
       >
     </picture>
   </div>

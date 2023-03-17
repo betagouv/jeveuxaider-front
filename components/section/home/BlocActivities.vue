@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="bg-jva-orange-300 pt-14 pb-10 md:pt-16 md:pb-12 lg:pt-20 lg:pb-16 xl:pt-32 xl:pb-28 overflow-hidden">
-      <div class="container">
+      <div class="container sm:overflow-hidden">
         <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
           <div class="">
             <Heading as="h3" size="alt-sm" class="mb-6 md:mb-2" color="text-[#522F29]">
@@ -51,7 +51,7 @@
             aria-labelledby="label-slideshow-activities-action"
             dots-variant="light"
             :adaptive-height="true"
-            class="sm:overflow-hidden"
+            class=""
           >
             <div v-for="(group,i) in activitiesGroups" :key="i" class="!flex flex-col gap-4 xl:gap-7 sm:flex-row flex-wrap">
               <div
@@ -60,7 +60,7 @@
               >
                 <nuxt-link
                   :to="`/missions-benevolat?activity.name=${activity.name}`"
-                  class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow xl:shadow-xl text-lg  xl:text-[22px] font-bold w-full sm:w-auto hover:bg-[#F6F6F6]"
+                  class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow xl:shadow-xl text-lg  xl:text-[22px] font-bold w-full sm:w-auto sm:hover:bg-[#F6F6F6] transition"
                 >
                   <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
                   <span class="ml-3">{{ activity.name }}</span>
@@ -121,6 +121,7 @@ export default {
 <style lang="postcss" scoped>
 :deep(.slick-track) {
   width: 100% !important;
+  @apply xl:!gap-16;
 }
 
 :deep(.slick-slide) {

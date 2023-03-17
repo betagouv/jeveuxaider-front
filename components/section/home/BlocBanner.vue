@@ -52,7 +52,7 @@
               <client-only>
                 <div>
                   <p>
-                    <span>Je veux</span>
+                    <span>Je veux </span>
                     <vue-typer
                       :text="words"
                       :repeat="Infinity"
@@ -65,7 +65,7 @@
                       erase-style="select-all"
                       :erase-on-complete="false"
                       caret-animation="blink"
-                      class="ml-2 text-jva-orange-300"
+                      class="text-jva-orange-300"
                     />
                   </p>
                 </div>

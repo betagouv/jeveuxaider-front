@@ -37,7 +37,7 @@
         </span>
       </p>
       <div>
-        <div class="inline-block text-center">
+        <div class="inline-block">
           <Button
             type="tertiary-no-outline"
             icon="RiUserHeartLine"
@@ -47,7 +47,7 @@
             <span>Créer mon espace </span>
             <span class="hidden xxs:inline">Bénévole</span>
           </Button>
-          <p class="text-lg mt-[14px]">
+          <p class="text-lg mt-[14px] xl:text-center">
             Inscription en 2 minutes
           </p>
         </div>

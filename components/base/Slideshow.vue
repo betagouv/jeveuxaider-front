@@ -215,7 +215,7 @@ export default {
   }
 
   :deep(.slick-track) {
-    @apply gap-[16px] sm:gap-[30px] flex items-stretch;
+    @apply gap-4 sm:gap-6 xl:gap-8 flex items-stretch;
   }
 
   :deep(.slick-arrow) {
