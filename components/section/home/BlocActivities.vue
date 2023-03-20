@@ -36,6 +36,7 @@
           </div>
           <div class="hidden lg:block flex-none">
             <SlideshowArrows
+              :key="chunkSize"
               variant="brown"
               button-class="hover:bg-[#EA9680]"
               ref-name="slideshowActivities"
