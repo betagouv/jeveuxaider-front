@@ -21,14 +21,14 @@
         class="w-full pointer-events-none object-cover object-top absolute h-full"
       >
     </picture>
-    <div class="relative text-white px-8 py-12 lg:px-12 lg:py-14 xl:px-[72px] xl:py-16 space-y-8 md:space-y-10 lg:space-y-12 xl:space-y-16">
+    <div class="relative text-white px-8 py-12 lg:px-12 lg:py-14 xl:px-[72px] xl:py-16 space-y-8 md:space-y-10 lg:space-y-12">
       <Heading as="h2" size="alt-lg" color="text-white">
         <span class="block">Liberté<span class="text-jva-orange-300">.</span></span>
         <span class="block">Égalité<span class="text-jva-orange-300">.</span></span>
         <span class="block">Je veux aider<span class="text-jva-orange-300">.</span></span>
       </Heading>
       <p>
-        <span class="text-5xl font-bold leading-[56px] lg:text-[72px] lg:leading-[72px]">
+        <span class="text-5xl font-bold leading-[56px] lg:text-[54px] lg:leading-[72px]">
           100 000
         </span>
         <br>

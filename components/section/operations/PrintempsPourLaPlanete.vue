@@ -11,7 +11,7 @@
     <div class="container relative">
       <div class="flex flex-col justify-between items-center sm:flex-row gap-12">
         <div class="flex flex-col space-y-4 xl:space-y-8 max-w-[740px]">
-          <p class="font-bold text-jva-blue-500 uppercase xl:text-2xl">
+          <p class="font-bold text-jva-blue-500 uppercase xl:text-xl">
             Actions bénévoles pour la planète
           </p>
           <Heading as="h2" size="alt-sm">
@@ -19,7 +19,7 @@
             <br class="hidden lg:block">
             <span>Printemps pour la planète</span>
           </Heading>
-          <p :id="`label-missions-operation-${uuid}`" class="text-xl text-[#3A3A3A] xl:text-[28px] xl:leading-[48px]">
+          <p :id="`label-missions-operation-${uuid}`" class="text-xl text-[#3A3A3A] xl:text-[24px] xl:leading-[38px]">
             Passez de l’éveil à l’action en participant aux missions de bénévolat au service de ce que nous avons de plus précieux : notre planète.
           </p>
         </div>

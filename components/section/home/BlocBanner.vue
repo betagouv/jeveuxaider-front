@@ -28,14 +28,17 @@
               <Heading as="h1" size="alt-xl" class="mb-10 xl:mb-20 xl:max-w-[720px]" color="text-white">
                 <span class="relative">
                   <span>{{ $store.getters.profile.first_name }}</span>
-                  <!-- @todo: d, f, l -->
                   <img
                     src="/images/home/sparkle-right.svg"
                     alt=""
                     width="40"
                     height="43"
                     aria-hidden="true"
-                    class="absolute right-[-28px] -top-1 xxs:top-[4px] xxs:right-[-32px] pointer-events-none lg:right-[-60px] lg:top-[-10px] lg:w-[80px]"
+                    :class="[
+                      'absolute right-[-28px] xxs:right-[-32px] pointer-events-none lg:right-[-60px] lg:w-[80px]',
+                      {'-top-1 xxs:top-[4px] lg:top-[-20px]': !['d', 'f', 'l'].includes($store.getters.profile.first_name.slice(-1))},
+                      {'-top-4 xxs:top-[-12px] lg:top-[-36px]': ['d', 'f', 'l'].includes($store.getters.profile.first_name.slice(-1))},
+                    ]"
                   >
                 </span><br>
                 <span>Et si on bougeait les lignes ? </span>
@@ -46,7 +49,7 @@
             <div
               :class="[
                 'text-jva-orange-300 font-bold mb-4 xl:mb-8',
-                'text-xl xxs:text-2xl xs:text-3xl sm:text-[32px] xl:text-[56px] xl:leading-[56px]'
+                'text-xl xxs:text-2xl xs:text-3xl sm:text-[32px] xl:text-[46px] xl:leading-[46px]'
               ]"
             >
               <client-only>

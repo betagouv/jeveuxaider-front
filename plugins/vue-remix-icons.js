@@ -52,6 +52,7 @@ import RiListUnordered from 'vue-remix-icons/icons/RiListUnordered.vue'
 import RiLogoutBoxRLine from 'vue-remix-icons/icons/RiLogoutBoxRLine.vue'
 import RiCalendarEventLine from 'vue-remix-icons/icons/RiCalendarEventLine.vue'
 import RiUserSettingsLine from 'vue-remix-icons/icons/RiUserSettingsLine.vue'
+import RiUserLine from 'vue-remix-icons/icons/RiUserLine.vue'
 import RiNotification3Line from 'vue-remix-icons/icons/RiNotification3Line.vue'
 import RiArrowLeftLine from 'vue-remix-icons/icons/RiArrowLeftLine.vue'
 
@@ -60,6 +61,7 @@ const components = {
   RiArrowLeftLine,
   RiNotification3Line,
   RiUserSettingsLine,
+  RiUserLine,
   RiCalendarEventLine,
   RiLogoutBoxRLine,
   RiListUnordered,

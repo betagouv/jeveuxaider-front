@@ -1,5 +1,5 @@
 <template>
-  <div class="px-8 py-12 xl:px-12 xl:py-24 bg-[#21AB8E] shadow-xl text-white">
+  <div class="px-8 py-12 xl:p-16 bg-[#21AB8E] shadow-xl text-white">
     <div class="flex flex-col xl:flex-row gap-8 lg:gap-6 xl:mb-16">
       <img
         src="/images/home/france-localization.svg"
@@ -13,7 +13,7 @@
         Collectivités locales et territoires
       </Heading>
     </div>
-    <ul class="text-xl xl:text-2xl leading-6 mt-8 space-y-6 xl:mb-12">
+    <ul class="text-xl leading-6 mt-8 space-y-6 xl:mb-12">
       <li class="flex items-start lg:items-center space-x-3">
         <RiCheckboxCircleLine aria-hidden="true" class="w-6 h-6 text-white fill-current flex-none" />
         <p>Créez <strong>une page dédiée</strong> à votre collectivité</p>

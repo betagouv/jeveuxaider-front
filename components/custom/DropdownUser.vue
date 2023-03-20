@@ -40,7 +40,7 @@
         </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="handleClick('/profile/edit')">
           <div class="flex items-center justify-center space-x-2">
-            <RiUserSettingsLine class="h-[17px] w-auto fill-current" /> <span>Mon profil</span>
+            <RiUserLine class="h-[17px] w-auto fill-current" /> <span>Mon profil</span>
           </div>
         </DropdownOptionsItem>
         <DropdownOptionsItem v-if="['referent','responsable'].includes($store.getters.contextRole)" @click.native="handleClick('/profile/preferences')">

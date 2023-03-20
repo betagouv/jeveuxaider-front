@@ -1,6 +1,6 @@
 <template>
   <div class="relative bg-white flex flex-col items-center overflow-hidden">
-    <div class="px-6 pt-12 md:px-8 lg:px-12 lg:pt-14 xl:px-[72px] xl:pt-20">
+    <div class="px-6 pt-12 md:px-8 lg:px-12 lg:pt-14 xl:px-[72px] xl:pt-16">
       <Heading as="h2" size="alt-md" class="mb-6 text-center">
         <span class="relative">
           <img
@@ -44,7 +44,7 @@
         alt=""
         width="425"
         height="188"
-        class="object-cover object-top w-full h-[170px] sm:h-[240px] sm:px-8 md:px-0 max-w-none md:w-[500px] lg:w-[650px] xl:w-[890px] xl:h-[360px]"
+        class="object-cover object-top w-full h-[170px] sm:h-[240px] sm:px-8 md:px-0 max-w-none md:w-[500px] lg:w-[650px] xl:w-[738px] xl:h-[292px]"
       >
     </picture>
   </div>
