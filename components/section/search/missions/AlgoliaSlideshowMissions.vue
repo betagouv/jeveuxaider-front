@@ -17,6 +17,7 @@
             ? `/missions-benevolat/${mission.id}`
             : `/missions-benevolat/${mission.id}/${mission.slug}`
         "
+        @click.native="$emit('slide-click')"
       >
         <CardMission :mission="mission" />
       </nuxt-link>

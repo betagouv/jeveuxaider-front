@@ -45,7 +45,7 @@
                 @previous="handleSlideshowPreviousClick"
                 @next="handleSlideshowNextClick"
               />
-              <Button class="flex-none" type="secondary" @click="handleClick()">
+              <Button class="flex-none" type="secondary" @click="onViewMoreClick()">
                 Plus de missions
               </Button>
             </div>
@@ -61,9 +61,10 @@
             aroundLatLngViaIP: true,
             aroundRadius: 'all'
           }"
+          @slide-click="onSlideClick"
         />
         <div class="lg:hidden mt-6 text-center">
-          <Button type="tertiary" @click="handleClick()">
+          <Button type="tertiary" @click="onViewMoreClick()">
             Plus de missions
           </Button>
         </div>
@@ -92,12 +93,18 @@ export default {
     handleSlideshowNextClick () {
       this.$refs.slideshowOperation.next()
     },
-    handleClick () {
+    onViewMoreClick () {
       window.plausible &&
-        window.plausible('Click CTA - Homepage - Opérations nationales - Printemps pour la planète', {
-          props: { isLogged: this.$store.getters.isLogged }
+        window.plausible('Homepage|CTA - Plus de missions - Opé nationale', {
+          props: { isLogged: this.$store.getters.isLogged, operation: 'Printemps pour la planète' }
         })
       this.$router.push('/missions-benevolat?tags=Environnement')
+    },
+    onSlideClick () {
+      window.plausible &&
+        window.plausible('Homepage|Clique - Mission opé nationale', {
+          props: { isLogged: this.$store.getters.isLogged, operation: 'Printemps pour la planète' }
+        })
     }
   }
 }

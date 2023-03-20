@@ -68,7 +68,7 @@ export default {
   methods: {
     onClick () {
       window.plausible &&
-        window.plausible('Click CTA - Homepage - Créer mon espace Bénévole', {
+        window.plausible('Homepage|CTA - Créer mon espace bénévole', {
           props: { isLogged: this.$store.getters.isLogged }
         })
       this.$router.push('/inscription/benevole')

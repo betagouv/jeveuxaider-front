@@ -16,7 +16,12 @@
               @previous="handleSlideshowPreviousClick"
               @next="handleSlideshowNextClick"
             />
-            <Button class="flex-none" type="secondary" @click="handleClick()">
+            <Button
+              to="https://www.jeveuxaider.gouv.fr/engagement/actualites/"
+              :is-external="true"
+              class="flex-none"
+              type="secondary"
+            >
               Plus d’articles
             </Button>
           </div>
@@ -35,13 +40,18 @@
             class="slide-wrapper"
             :href="`${$config.blog.url}/${article.slug}`"
             target="_blank"
+            @click="onSlideClick"
           >
             <CardArticle :article="article" class="!h-full" />
           </a>
         </Slideshow>
       </div>
       <div class="lg:hidden mt-8 text-center">
-        <Button type="tertiary" @click="handleClick()">
+        <Button
+          to="https://www.jeveuxaider.gouv.fr/engagement/actualites/"
+          :is-external="true"
+          type="tertiary"
+        >
           Plus d’articles
         </Button>
       </div>
@@ -91,6 +101,12 @@ export default {
     },
     handleSlideshowNextClick () {
       this.$refs.slideshowArticles.next()
+    },
+    onSlideClick () {
+      window.plausible &&
+        window.plausible('Homepage|Clique - Article du blog', {
+          props: { isLogged: this.$store.getters.isLogged }
+        })
     }
   }
 }

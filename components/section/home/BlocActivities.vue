@@ -58,13 +58,13 @@
                 v-for="activity in group"
                 :key="activity.key"
               >
-                <nuxt-link
-                  :to="`/missions-benevolat?activity.name=${activity.name}`"
+                <button
                   class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow xl:shadow-xl text-lg  xl:text-[22px] font-bold w-full sm:w-auto sm:hover:bg-[#F6F6F6] transition"
+                  @click="onClick(activity)"
                 >
                   <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
                   <span class="ml-3">{{ activity.name }}</span>
-                </nuxt-link>
+                </button>
               </div>
             </div>
           </Slideshow>
@@ -113,6 +113,13 @@ export default {
       } else {
         this.chunkSize = 7
       }
+    },
+    onClick (activity) {
+      window.plausible &&
+        window.plausible('Homepage|Clique - Activités', {
+          props: { isLogged: this.$store.getters.isLogged }
+        })
+      this.$router.push(`/missions-benevolat?activity.name=${activity.name}`)
     }
   }
 }

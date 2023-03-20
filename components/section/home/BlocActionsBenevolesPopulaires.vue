@@ -17,7 +17,7 @@
               @previous="handleSlideshowPreviousClick"
               @next="handleSlideshowNextClick"
             />
-            <Button class="flex-none" type="secondary" @click="handleClick()">
+            <Button class="flex-none" type="secondary" @click="onViewMoreClick()">
               Plus de missions
             </Button>
           </div>
@@ -34,10 +34,11 @@
             facetFilters: [facetFilterOrganisationsNames],
             aroundRadius: 'all'
           }"
+          @slide-click="onSlideClick()"
         />
       </div>
       <div class="lg:hidden mt-6 text-center">
-        <Button type="tertiary" @click="handleClick()">
+        <Button type="tertiary" @click="onViewMoreClick()">
           Plus de missions
         </Button>
       </div>
@@ -95,12 +96,18 @@ export default {
     handleSlideshowNextClick () {
       this.$refs.slideshowPopulaire.next()
     },
-    handleClick () {
+    onViewMoreClick () {
       window.plausible &&
-        window.plausible('Click CTA - Homepage - Actions bénévoles populaires - Plus de missions', {
+        window.plausible('Homepage|CTA - Plus de missions - Mission populaire', {
           props: { isLogged: this.$store.getters.isLogged }
         })
       this.$router.push(`/missions-benevolat?${this.searchPageWithFilters}`)
+    },
+    onSlideClick () {
+      window.plausible &&
+        window.plausible('Homepage|Clique - Mission populaire', {
+          props: { isLogged: this.$store.getters.isLogged }
+        })
     }
   }
 }

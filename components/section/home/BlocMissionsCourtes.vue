@@ -21,7 +21,7 @@
             <Button
               class="flex-none text-white border-white hover:bg-jva-blue-900"
               type="transparent"
-              @click="handleClick()"
+              @click="onViewMoreClick()"
             >
               Plus de missions
             </Button>
@@ -40,11 +40,12 @@
             aroundRadius: 'all',
             numericFilters: ['commitment__total <= 4'],
           }"
+          @slide-click="onSlideClick"
         />
       </div>
 
       <div class="lg:hidden mt-6 text-center">
-        <Button type="tertiary-no-outline" @click="handleClick()">
+        <Button type="tertiary-no-outline" @click="onViewMoreClick()">
           Plus de missions
         </Button>
       </div>
@@ -58,6 +59,7 @@
             :key="i"
             :to="link.to"
             class="rounded-full"
+            @click.native="onDisponibilityClick()"
           >
             <Tag
               size="md"
@@ -105,12 +107,24 @@ export default {
     handleSlideshowNextClick () {
       this.$refs.slideshowBenevoleDunJour.next()
     },
-    handleClick () {
+    onViewMoreClick () {
       window.plausible &&
-        window.plausible('Click CTA - Homepage - Mission courtes - Plus de missions', {
+        window.plausible('Homepage|CTA - Plus de missions - Mission courte', {
           props: { isLogged: this.$store.getters.isLogged }
         })
       this.$router.push('/missions-benevolat?commitment__total=<%3D4&duration=half_day&time_period=year')
+    },
+    onSlideClick () {
+      window.plausible &&
+        window.plausible('Homepage|Clique - Mission courte', {
+          props: { isLogged: this.$store.getters.isLogged }
+        })
+    },
+    onDisponibilityClick () {
+      window.plausible &&
+        window.plausible('Homepage|CTA - Disponibilités - Mission courte', {
+          props: { isLogged: this.$store.getters.isLogged }
+        })
     }
   }
 }

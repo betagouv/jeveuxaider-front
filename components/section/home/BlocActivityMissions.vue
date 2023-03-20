@@ -19,7 +19,7 @@
               <Button
                 class="flex-none text-jva-blue-500 border-jva-blue-500 hover:bg-[#EFECE8]"
                 type="transparent"
-                @click="handleClick()"
+                @click="onViewMoreClick(activity)"
               >
                 Plus de missions
               </Button>
@@ -36,6 +36,7 @@
               aroundRadius: 'all',
               facetFilters: [`activity.name:${activity.name}`],
             }"
+            @slide-click="onSlideClick(activity)"
           />
         </div>
       </div>
@@ -72,8 +73,18 @@ export default {
     handleSlideshowNextClick () {
       this.$refs[`slideshowActivityMission_${this.activity.key}`].next()
     },
-    handleClick () {
+    onViewMoreClick (activity) {
+      window.plausible &&
+        window.plausible(`Homepage|CTA - Plus de missions - Activité ${activity.name}`, {
+          props: { isLogged: this.$store.getters.isLogged }
+        })
       this.$router.push(`/missions-benevolat?activity.name=${encodeURIComponent(this.activity.name)}`)
+    },
+    onSlideClick (activity) {
+      window.plausible &&
+        window.plausible(`Homepage|Clique - Mission - Activité ${activity.name}`, {
+          props: { isLogged: this.$store.getters.isLogged }
+        })
     }
   }
 }
