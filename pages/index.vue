@@ -6,6 +6,7 @@
       <PrintempsPourLaPlanete />
       <BlocProfileActivities />
       <BlocTemoignages />
+      <BlocActualites v-if="$store.state.settings.general.blog_active" />
       <BlocNewsletter />
     </template>
     <template v-if="!$store.getters.isLogged">
