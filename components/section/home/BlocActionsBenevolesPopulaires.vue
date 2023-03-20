@@ -10,7 +10,7 @@
             Découvrez les missions de bénévolat qui engagent le plus la communauté
           </p>
         </div>
-        <div class="hidden lg:block flex-none">
+        <div v-if="organisations.length > 0" class="hidden lg:block flex-none">
           <div class="flex space-x-2">
             <SlideshowArrows
               button-class="hover:bg-[#F6F6F6]"
