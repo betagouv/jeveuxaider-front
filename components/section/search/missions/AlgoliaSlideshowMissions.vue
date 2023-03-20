@@ -7,6 +7,7 @@
       :aria-label="ariaLabel"
       :aria-labelledby="ariaLabelledby"
       :dots-variant="dotsVariant"
+      @before-change="currentSlideIndex = $event"
     >
       <nuxt-link
         v-for="mission in missions"
@@ -47,7 +48,8 @@ export default {
   },
   data () {
     return {
-      missions: []
+      missions: [],
+      currentSlideIndex: 0
     }
   },
   fetchOnServer: false,
@@ -55,7 +57,6 @@ export default {
     const { hits } = await this.$algolia.missionsIndex.search('', this.searchParameters)
     this.missions = hits
   },
-
   methods: {
     previous () {
       this.$refs.algoliaSlideshow.previous()

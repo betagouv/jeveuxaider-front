@@ -49,6 +49,8 @@
             <div class="flex space-x-2">
               <SlideshowArrows
                 button-class="hover:bg-[#EFECE8]"
+                ref-name="slideshowMissionsByAffinities"
+                :refs="$refs"
                 @previous="handleSlideshowPreviousClick"
                 @next="handleSlideshowNextClick"
               />

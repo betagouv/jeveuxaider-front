@@ -38,6 +38,8 @@
             <SlideshowArrows
               variant="brown"
               button-class="hover:bg-[#EA9680]"
+              ref-name="slideshowActivities"
+              :refs="$refs"
               @previous="handleSlideshowPreviousClick"
               @next="handleSlideshowNextClick"
             />

@@ -196,6 +196,7 @@ export default {
         this.$refs.slideshowRef.pause()
       }
       this.currentSlideIndex = newSlide
+      this.$emit('before-change', this.currentSlideIndex)
     },
     onAfterChange () {
       this.handleAccessibility()

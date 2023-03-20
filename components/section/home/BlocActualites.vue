@@ -13,6 +13,8 @@
         <div class="hidden lg:block flex-none">
           <div class="flex space-x-2">
             <SlideshowArrows
+              ref-name="slideshowArticles"
+              :refs="$refs"
               @previous="handleSlideshowPreviousClick"
               @next="handleSlideshowNextClick"
             />

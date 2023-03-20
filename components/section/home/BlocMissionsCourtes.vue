@@ -15,6 +15,8 @@
             <SlideshowArrows
               variant="white"
               button-class="hover:bg-jva-blue-900"
+              ref-name="slideshowBenevoleDunJour"
+              :refs="$refs"
               @previous="handleSlideshowPreviousClick"
               @next="handleSlideshowNextClick"
             />

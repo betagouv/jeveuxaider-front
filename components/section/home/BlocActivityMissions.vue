@@ -13,6 +13,8 @@
             <div class="flex space-x-2">
               <SlideshowArrows
                 button-class="hover:bg-[#EFECE8]"
+                :ref-name="`slideshowActivityMission_${activity.key}`"
+                :refs="$refs"
                 @previous="handleSlideshowPreviousClick"
                 @next="handleSlideshowNextClick"
               />

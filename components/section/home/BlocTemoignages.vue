@@ -14,6 +14,8 @@
           <SlideshowArrows
             variant="white"
             button-class="hover:bg-[#6666EA]"
+            ref-name="slideshowTemoignages"
+            :refs="$refs"
             @previous="handleSlideshowPreviousClick"
             @next="handleSlideshowNextClick"
           />
