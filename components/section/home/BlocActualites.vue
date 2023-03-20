@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white py-12 xl:py-24 overflow-hidden">
+  <div v-if="articles.length" class="bg-white py-12 xl:py-24 overflow-hidden">
     <div class="container">
       <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
         <div class="">
