@@ -44,7 +44,7 @@
       > -->
       <div class="bg-red-500 rounded-full flex-none h-[48px] w-[48px]" />
       <p class="text-white xl:text-lg">
-        <strong>???</strong> de JeVeuxAider.gouv.fr <br class="hidden lg:block">pour vous accompagner
+        <strong>Maiwelle</strong> de JeVeuxAider.gouv.fr <br class="hidden lg:block">pour vous accompagner
       </p>
     </div>
   </div>

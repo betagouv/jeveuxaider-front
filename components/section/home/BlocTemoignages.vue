@@ -12,6 +12,7 @@
         </div>
         <div class="hidden lg:block flex-none">
           <SlideshowArrows
+            :key="slideshowKey"
             variant="white"
             button-class="hover:bg-[#6666EA]"
             ref-name="slideshowTemoignages"
@@ -24,40 +25,12 @@
       <div v-if="temoignages.length" class="mt-12">
         <Slideshow
           ref="slideshowTemoignages"
+          :key="slideshowKey"
           aria-labelledby="label-slideshow-temoignages"
-          :adaptive-height="true"
+          :adaptive-height="isSlideshowAdaptativeHeight"
           dots-variant="light"
         >
-          <!-- @todo card témoignage + affichage desktop -->
-          <div
-            v-for="temoignage,i in temoignages"
-            :key="i"
-            class="bg-white p-6 !flex flex-col h-full transition"
-          >
-            <img
-              :src="temoignage.organization.logo.default"
-              :srcset="
-                temoignage.organization.logo.x2
-                  ? `${temoignage.organization.logo.x2} 2x`
-                  : false
-              "
-              :alt="temoignage.organization.name"
-              class="flex-none max-w-[120px] max-h-[60px] object-contain w-full h-full mt-6 mb-12 mx-auto"
-              :width="temoignage.organization.logo.width"
-              :height="temoignage.organization.logo.height"
-              data-not-lazy
-            >
-            <RiChatQuoteLine aria-hidden="true" class="text-[#8B8BF6] fill-current w-6 h-6" />
-            <blockquote class="text-[#161616] text-xl font-bold" v-html="temoignage.content" />
-            <div class="mt-4">
-              <p class="font-bold text-[#3A3A3A]">
-                {{ temoignage.author.name }}
-              </p>
-              <p class="text-[#666666] text-xs mt-1">
-                Bénévole chez <span class="uppercase"> {{ temoignage.organization.name }} </span>
-              </p>
-            </div>
-          </div>
+          <CardQuote v-for="(temoignage, i) in temoignages" :key="i" :quote="temoignage" />
         </Slideshow>
       </div>
     </div>
@@ -83,10 +56,12 @@
 
 <script>
 import Heading from '@/components/dsfr/Heading.vue'
+import CardQuote from '@/components/card/CardQuote.vue'
 
 export default {
   components: {
-    Heading
+    Heading,
+    CardQuote
   },
   data () {
     return {
@@ -203,8 +178,16 @@ export default {
             }
           }
         }
-      ]
+      ],
+      isSlideshowAdaptativeHeight: true,
+      slideshowKey: 0
     }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize)
+      this.onResize()
+    })
   },
   methods: {
     handleSlideshowPreviousClick () {
@@ -212,6 +195,14 @@ export default {
     },
     handleSlideshowNextClick () {
       this.$refs.slideshowTemoignages.next()
+    },
+    onResize () {
+      if (window.innerWidth >= 768) {
+        this.isSlideshowAdaptativeHeight = false
+      } else {
+        this.isSlideshowAdaptativeHeight = true
+      }
+      this.slideshowKey++
     }
   }
 }
