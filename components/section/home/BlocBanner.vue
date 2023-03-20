@@ -95,7 +95,7 @@
             class="xl:px-6 xl:py-3 xl:text-lg"
             @click="handleClick()"
           >
-            Trouvez une mission <span class="hidden xxs:inline">de bénévolat</span>
+            Trouver une mission <span class="hidden xxs:inline">de bénévolat</span>
           </Button>
         </div>
 

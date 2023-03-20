@@ -31,7 +31,7 @@
     </ul>
     <div class="mt-8">
       <Button size="lg" @click="handleClick()">
-        Inscrivez votre organisation
+        Inscrire votre organisation
       </Button>
     </div>
     <div class="mt-8 lg:mt-12 flex items-center space-x-4">

@@ -120,7 +120,7 @@ export default {
       await this.$axios.put(`/profiles/${this.$store.getters.profile.id}/activity/${activity.id}/detach`, this.mission)
         .then(async () => {
           await this.$store.dispatch('auth/fetchUser')
-          this.$toast.success(`${activity.label} a été retirer de vos préférences`)
+          this.$toast.success(`${activity.label} a été retiré de vos préférences`)
         }).catch(() => {})
     }
   }

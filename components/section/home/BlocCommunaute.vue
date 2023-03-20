@@ -36,7 +36,7 @@
         size="lg"
         @click="handleClick()"
       >
-        Devenez Super-Bénévole
+        Devenir Super-Bénévole
       </Button>
       <div class="flex items-center space-x-4 xl:absolute xl:right-[320px] xl:max-w-[340px] xl:top-[26px]">
         <div class="bg-red-500 rounded-full flex-none h-[48px] w-[48px]" />

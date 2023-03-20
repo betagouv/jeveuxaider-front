@@ -29,7 +29,7 @@
     </ul>
     <div class="mt-8">
       <Button size="lg" type="tertiary-no-outline" @click="handleClick()">
-        Inscrivez votre collectivité
+        Inscrire votre collectivité
       </Button>
     </div>
     <div class="mt-8 lg:mt-12 flex items-center space-x-4">
