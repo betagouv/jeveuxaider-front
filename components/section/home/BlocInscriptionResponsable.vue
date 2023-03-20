@@ -19,7 +19,7 @@
       </p>
       <div class="text-center mb-8 xl:mb-12">
         <Button class="xl:px-6 xl:py-3 xl:text-lg" @click="handleClick()">
-          Inscrire votre organisation
+          Inscrire mon organisation
         </Button>
       </div>
     </div>
