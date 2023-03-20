@@ -55,7 +55,7 @@
               <Button
                 class="flex-none text-jva-blue-500 border-jva-blue-500 hover:bg-[#EFECE8]"
                 type="transparent"
-                @click="handleClick()"
+                @click="onViewMoreClick()"
               >
                 Plus de missions
               </Button>
@@ -74,6 +74,7 @@
               facetFilters,
               numericFilters,
             }"
+            @slide-click="onSlideClick"
           />
         </div>
       </div>
@@ -166,12 +167,18 @@ export default {
     handleSlideshowNextClick () {
       this.$refs.slideshowMissionsByAffinities.next()
     },
-    handleClick () {
+    onViewMoreClick () {
       window.plausible &&
-        window.plausible('Click CTA - Homepage - Ca devrait vous plaire', {
+        window.plausible('Homepage|CTA - Plus de missions - Recommandations', {
           props: { isLogged: this.$store.getters.isLogged }
         })
       this.$router.push(`/missions-benevolat?${this.searchPageWithFilters}`)
+    },
+    onSlideClick () {
+      window.plausible &&
+      window.plausible('Homepage|Clique - Mission recommandée', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
     }
   }
 }
