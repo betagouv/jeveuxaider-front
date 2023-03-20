@@ -44,7 +44,11 @@
                 <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
                 <span class="ml-3">{{ activity.name }}</span>
               </div>
-              <button class="flex-none flex justify-center items-center border-l border-[#CECECE] w-[50px] sm:w-[72px] cursor-pointer hover:bg-[#F9F9F9]" @click="attachActivityToProfile(activity)">
+              <button
+                v-if="!attachedActivities.includes(activity.key)"
+                class="flex-none flex justify-center items-center border-l border-[#CECECE] w-[50px] sm:w-[72px] cursor-pointer hover:bg-[#F9F9F9]"
+                @click="attachActivityToProfile(activity)"
+              >
                 <RiAddLine class=" fill-current w-[20px] h-[20px]" />
               </button>
             </div>
@@ -68,7 +72,8 @@ export default {
   data () {
     return {
       activities,
-      chunkSize: 3
+      chunkSize: 3,
+      attachedActivities: []
     }
   },
   computed: {
@@ -111,15 +116,16 @@ export default {
   methods: {
     async attachActivityToProfile (activity) {
       await this.$axios.put(`/profiles/${this.$store.getters.profile.id}/activity/${activity.id}/attach`, this.mission)
-        .then(async () => {
-          await this.$store.dispatch('auth/fetchUser')
+        .then(() => {
+          // await this.$store.dispatch('auth/fetchUser')
           this.$toast.success(`${activity.label} a été ajouté à vos préférences`)
+          this.attachedActivities.push(activity.key)
         }).catch(() => {})
     },
     async detachActivityToProfile (activity) {
       await this.$axios.put(`/profiles/${this.$store.getters.profile.id}/activity/${activity.id}/detach`, this.mission)
-        .then(async () => {
-          await this.$store.dispatch('auth/fetchUser')
+        .then(() => {
+          // await this.$store.dispatch('auth/fetchUser')
           this.$toast.success(`${activity.label} a été retiré de vos préférences`)
         }).catch(() => {})
     }
