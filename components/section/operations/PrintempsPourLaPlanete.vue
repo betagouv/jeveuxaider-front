@@ -59,7 +59,21 @@
           :search-parameters="{
             hitsPerPage: 6,
             aroundPrecision: 2000,
-            facetFilters: ['tags:Environnement'],
+            facetFilters: [
+              ['domaines:Protection de la nature'],
+              [
+                'publisher_name:JeVeuxAider.gouv.fr',
+                `publisher_name:J'agis pour la nature`
+              ],
+              [
+                'activity.name:Travaux manuels',
+                'activity.name:Actions de sensibilisation',
+                'activity.name:Vie citoyenne',
+                'activity.name:Ramassage de déchets',
+                'activity.name:Aménagement d\'espaces naturels',
+                'activity.name:Soins aux animaux',
+              ]
+            ],
             aroundLatLngViaIP: true,
             aroundRadius: 'all'
           }"
@@ -100,7 +114,7 @@ export default {
         window.plausible('Homepage|CTA - Plus de missions - Opé nationale', {
           props: { isLogged: this.$store.getters.isLogged, operation: 'Printemps pour la planète' }
         })
-      this.$router.push('/missions-benevolat?tags=Environnement')
+      this.$router.push('/missions-benevolat?publisher_name=J%27agis%20pour%20la%20nature%7CJeVeuxAider.gouv.fr&activity.name=Travaux%20manuels%7CActions%20de%20sensibilisation%7CVie%20citoyenne%7CRamassage%20de%20d%C3%A9chets%7CAm%C3%A9nagement%20d%27espaces%20naturels%7CSoins%20aux%20animaux&domaines=Protection%20de%20la%20nature')
     },
     onSlideClick () {
       window.plausible &&
