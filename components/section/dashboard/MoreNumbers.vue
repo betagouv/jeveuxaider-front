@@ -8,7 +8,7 @@
         Tout l'historique de votre activité sur la plateforme
       </div>
       <Button variant="white-green" @click.native="$router.push('/admin/statistics')">
-        Vos performances
+        Vos statistiques
       </Button>
     </div>
   </div>

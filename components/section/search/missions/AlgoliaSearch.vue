@@ -184,7 +184,7 @@ export default {
         query: { ...this.$route.query, page }
       })
     },
-    handleClickCard (item) {
+    async handleClickCard (item) {
       window.plausible &&
         window.plausible('Click Card Missions - Liste résultat', {
           props: {
@@ -195,6 +195,7 @@ export default {
             isOutdated: item.is_outdated
           }
         })
+      await this.$gtm.push({ event: 'benevole-clic-carte-mission' })
     }
   }
 }
