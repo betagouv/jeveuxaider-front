@@ -377,11 +377,6 @@
             <Link to="/politique-de-confidentialite"
             >la politique de confidentialité</Link>
             <!-- eslint-enable -->
-            et
-            <!-- eslint-disable -->
-            <Link to="/charte-reserve-civique"
-            >la charte de JeVeuxAider.gouv.fr</Link>
-            <!-- eslint-enable -->
           </div>
         </div>
       </div>
