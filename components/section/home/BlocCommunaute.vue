@@ -39,7 +39,15 @@
         Devenir Super-Bénévole
       </Button>
       <div class="flex items-center space-x-4 xl:absolute xl:right-[320px] xl:max-w-[340px] xl:top-[26px]">
-        <div class="bg-red-500 rounded-full flex-none h-[48px] w-[48px]" />
+        <img
+          srcset="
+            /images/home/coralie.webp, /images/home/coralie@2x.webp 2x,
+            /images/home/coralie.png, /images/home/coralie@2x.png 2x
+          "
+          src="/images/home/coralie.png"
+          alt="Coralie"
+          class="flex-none h-[48px] w-[48px] lg:w-[60px] lg:h-[60px]"
+        >
         <p><strong>Coralie</strong> de JeVeuxAider.gouv.fr <br class="hidden sm:block"> pour vous accompagner</p>
       </div>
     </div>

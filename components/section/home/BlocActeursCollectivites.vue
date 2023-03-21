@@ -33,18 +33,17 @@
       </Button>
     </div>
     <div class="mt-8 lg:mt-12 flex items-center space-x-4">
-      <!-- <img
+      <img
         srcset="
-          /images/home/maiwelle.webp, /images/home/maiwelle@2x.webp 2x,
-          /images/home/maiwelle.png, /images/home/maiwelle@2x.png 2x
+          /images/home/angela.webp, /images/home/angela@2x.webp 2x,
+          /images/home/angela.png, /images/home/angela@2x.png 2x
         "
-        src="/images/home/maiwelle.png"
-        alt="Maiwelle"
+        src="/images/home/angela.png"
+        alt="Angela"
         class="flex-none h-[48px] w-[48px] lg:w-[60px] lg:h-[60px]"
-      > -->
-      <div class="bg-red-500 rounded-full flex-none h-[48px] w-[48px]" />
+      >
       <p class="text-white xl:text-lg">
-        <strong>Maiwelle</strong> de JeVeuxAider.gouv.fr <br class="hidden lg:block">pour vous accompagner
+        <strong>Angela</strong> de JeVeuxAider.gouv.fr <br class="hidden lg:block">pour vous accompagner
       </p>
     </div>
   </div>
@@ -65,7 +64,7 @@ export default {
         window.plausible('Homepage|CTA - Inscrire collectivités', {
           props: { isLogged: this.$store.getters.isLogged }
         })
-      this.$router.push('/inscription/responsable')
+      this.$router.push('/inscription/responsable?orga_type=Collectivité')
     }
   }
 }
