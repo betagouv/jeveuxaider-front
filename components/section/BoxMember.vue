@@ -22,6 +22,19 @@
       <DescriptionListItem term="Mobile" :description="responsable.mobile" />
       <DescriptionListItem v-if="responsable.pivot?.fonction" term="Rôle" :description="responsable.pivot.fonction" />
       <DescriptionListItem term="Nb missions" :description="responsable.missions_count" />
+      <DescriptionListItem term="Invité par">
+        <template v-if="role?.invited_by">
+          <Link
+            v-if="['admin'].includes($store.getters.contextRole)"
+            class="inline-flex"
+            :to="`/admin/utilisateurs/${role.invited_by.profile.id}`"
+          >
+            {{ role.invited_by.profile.full_name }}
+          </Link>
+          <span v-else>{{ role.invited_by.profile.full_name }}</span>
+        </template>
+        <span v-else> - </span>
+      </DescriptionListItem>
       <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="responsable" />
     </DescriptionList>
     <template v-if="['admin', 'referent'].includes($store.getters.contextRole)">
@@ -75,7 +88,8 @@ export default {
       showModalSendMessage: false,
       memberSelected: null,
       showAlertMemberDeleted: false,
-      conversationCurrentUserAndResponsable: null
+      conversationCurrentUserAndResponsable: null,
+      role: null
     }
   },
   async fetch () {
@@ -86,8 +100,10 @@ export default {
         'filter[with_users]': `${this.responsable.user_id},${this.$store.getters.profile.user_id}`
       }
     })
-    // console.log(data)
     this.conversationCurrentUserAndResponsable = data.total > 0 && data.data[0]
+
+    const { data: roles } = await this.$axios.get(`/users/${this.responsable.user_id}/roles`)
+    this.role = roles.find(role => role.name === 'responsable' && role.pivot_model.id === this.organisation.id)
   },
   methods: {
     handleClickSendMessage () {

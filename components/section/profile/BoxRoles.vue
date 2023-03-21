@@ -13,11 +13,7 @@
           :term="getTerm(role)"
           :description="role.pivot_model.name"
         />
-        <DescriptionListItem
-          v-if="role.name !== 'admin'"
-          term="Invité par"
-          :description="role.invited_by?.profile.full_name"
-        >
+        <DescriptionListItem v-if="role.name !== 'admin'" term="Invité par">
           <Link v-if="role.invited_by" class="inline-flex" :to="`/admin/utilisateurs/${role.invited_by.profile.id}`">
             {{ role.invited_by.profile.full_name }}
           </Link>
