@@ -450,6 +450,7 @@ export default {
             return
           }
           await this.$store.dispatch('auth/registerVolontaire', this.form)
+          await this.$gtm.push({ event: 'benevole-inscription' })
           window.plausible && window.plausible('Inscription bénévole - Étape 1 - Création de compte')
           this.$router.push('/inscription/benevole/step/profile')
         })
