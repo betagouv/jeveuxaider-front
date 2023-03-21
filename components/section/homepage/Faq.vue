@@ -74,7 +74,7 @@
                     Après avoir identifié la mission qui vous convenait et avoir bien pris connaissance du descriptif, vous pouvez candidater.
                   </p>
                   <ul>
-                    <li>Cliquer sur le bouton vert situé à droite de l’écran « Je propose mon aide »</li>
+                    <li>Cliquer sur le bouton bleu situé à droite de l’écran « Je propose mon aide »</li>
                   </ul>
                 </div>
 
