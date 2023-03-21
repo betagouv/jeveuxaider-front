@@ -78,8 +78,8 @@
               </client-only>
             </div>
             <Heading as="h1" size="alt-2xl" class="mb-10 xl:mb-16" color="text-white">
-              <span class="relative left-[-4px] md:left-[-6px] lg:left-[-8px] xl:left-[-15px]">Devenez </span>
-              <span class="relative left-[-3px] md:left-[-5px] lg:left-[-6px] xl:left-[-11px]">
+              <span class="relative left-[-4px] md:left-[-6px] lg:left-[-8px] xl:left-[-12px]">Devenez </span>
+              <span class="relative left-[-3px] md:left-[-5px] lg:left-[-6px] xl:left-[-8px]">
                 <span>bénévole</span>
                 <img
                   src="/images/home/sparkle-right.svg"
