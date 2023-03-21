@@ -17,7 +17,7 @@
     <div class="hidden md:flex flex-none self-stretch w-[1px] bg-[#CACAFB] mx-8" />
 
     <div>
-      <RiChatQuoteLine aria-hidden="true" class="text-[#8B8BF6] fill-current w-6 h-6 mb-2" />
+      <img src="/images/home/quote.svg" class="text-[#8B8BF6] fill-current w-6 h-6 mb-2" alt="" aria-hidden="true">
       <blockquote class="text-[#161616] text-xl font-bold" v-html="quote.content" />
       <div class="mt-4">
         <p class="font-bold text-[#3A3A3A]">
