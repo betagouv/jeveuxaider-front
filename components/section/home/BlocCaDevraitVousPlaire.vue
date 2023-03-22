@@ -104,8 +104,8 @@ export default {
     }
   },
   async fetch () {
-    const { data: organisations } = await this.$axios.get('/organisations/popular')
-    this.organisations = organisations
+    // const { data: organisations } = await this.$axios.get('/organisations/popular')
+    // this.organisations = organisations
   },
   computed: {
     facetFilters () {
