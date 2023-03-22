@@ -112,7 +112,7 @@ export default {
     },
     onResize () {
       if (window.innerWidth >= 1024) {
-        this.chunkSize = 12
+        this.chunkSize = 14
       } else {
         this.chunkSize = 7
       }

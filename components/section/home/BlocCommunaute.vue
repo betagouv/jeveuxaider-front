@@ -23,7 +23,7 @@
         </li>
         <li class="flex items-start lg:items-center space-x-3">
           <RiCheckboxCircleLine class="w-6 h-6 text-white fill-current flex-none" />
-          <p>Faites des <strong>rencontres qui transforment</strong></p>
+          <p>Partagez des moments de <strong>convivialité</strong></p>
         </li>
         <li class="flex items-start lg:items-center space-x-3">
           <RiCheckboxCircleLine class="w-6 h-6 text-white fill-current flex-none" />
