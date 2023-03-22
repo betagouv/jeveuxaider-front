@@ -17,7 +17,7 @@
       <BlocActivities />
       <!-- <PrintempsPourLaPlanete /> -->
       <BlocMissionsCourtes />
-      <BlocActionsBenevolesPopulaires />
+      <!-- <BlocActionsBenevolesPopulaires /> -->
       <BlocTemoignages />
       <!-- <BlocActualites v-if="$store.state.settings.general.blog_active" /> -->
       <BlocActeursEngagement />
@@ -35,7 +35,7 @@ import BlocActivities from '@/components/section/home/BlocActivities.vue'
 import BlocCaDevraitVousPlaire from '@/components/section/home/BlocCaDevraitVousPlaire.vue'
 // import PrintempsPourLaPlanete from '@/components/section/operations/PrintempsPourLaPlanete.vue'
 import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
-import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
+// import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
 import BlocTemoignages from '@/components/section/home/BlocTemoignages.vue'
 // import BlocActualites from '@/components/section/home/BlocActualites.vue'
 import BlocActeursEngagement from '@/components/section/home/BlocActeursEngagement.vue'
@@ -52,7 +52,7 @@ export default {
     BlocCaDevraitVousPlaire,
     // PrintempsPourLaPlanete,
     BlocMissionsCourtes,
-    BlocActionsBenevolesPopulaires,
+    // BlocActionsBenevolesPopulaires,
     BlocTemoignages,
     // BlocActualites,
     BlocActeursEngagement,
