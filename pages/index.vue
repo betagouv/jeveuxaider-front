@@ -3,7 +3,7 @@
     <BlocBanner />
     <template v-if="$store.getters.isLogged">
       <BlocCaDevraitVousPlaire />
-      <PrintempsPourLaPlanete />
+      <!-- <PrintempsPourLaPlanete /> -->
       <BlocProfileActivities />
       <BlocTemoignages />
       <BlocActualites v-if="$store.state.settings.general.blog_active" />
@@ -15,7 +15,7 @@
         <BlocInscriptionResponsable />
       </div>
       <BlocActivities />
-      <PrintempsPourLaPlanete />
+      <!-- <PrintempsPourLaPlanete /> -->
       <BlocMissionsCourtes />
       <BlocActionsBenevolesPopulaires />
       <BlocTemoignages />
@@ -33,7 +33,7 @@ import BlocInscriptionBenevole from '~/components/section/home/BlocInscriptionBe
 import BlocInscriptionResponsable from '~/components/section/home/BlocInscriptionResponsable.vue'
 import BlocActivities from '@/components/section/home/BlocActivities.vue'
 import BlocCaDevraitVousPlaire from '@/components/section/home/BlocCaDevraitVousPlaire.vue'
-import PrintempsPourLaPlanete from '@/components/section/operations/PrintempsPourLaPlanete.vue'
+// import PrintempsPourLaPlanete from '@/components/section/operations/PrintempsPourLaPlanete.vue'
 import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
 import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
 import BlocTemoignages from '@/components/section/home/BlocTemoignages.vue'
@@ -50,7 +50,7 @@ export default {
     BlocInscriptionResponsable,
     BlocActivities,
     BlocCaDevraitVousPlaire,
-    PrintempsPourLaPlanete,
+    // PrintempsPourLaPlanete,
     BlocMissionsCourtes,
     BlocActionsBenevolesPopulaires,
     BlocTemoignages,
