@@ -20,9 +20,10 @@
       </Heading>
 
       <Slideshow
-        :settings="settings"
-        class="mt-12"
+        :infinite="true"
+        :variable-width="false"
         :aria-labelledby="`label-paroles-benevoles-${uuid}`"
+        class="mt-12"
       >
         <div v-for="testimony,index in testimonies" :key="index">
           <div
@@ -41,6 +42,7 @@
                 :width="testimony.organization.logo.width"
                 :height="testimony.organization.logo.height"
                 data-not-lazy
+                draggable="false"
               >
             </div>
 
@@ -191,15 +193,7 @@ export default {
             }
           }
         }
-      ],
-      settings: {
-        arrows: true,
-        dots: true,
-        speed: 500,
-        edgeFriction: 0,
-        touchThreshold: 100,
-        infinite: true
-      }
+      ]
     }
   }
 }
@@ -230,9 +224,6 @@ export default {
 
   .slick-dots {
     @apply !text-center !mr-0;
-    @screen xl {
-      display: none !important;
-    }
   }
 
   .slick-track {

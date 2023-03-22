@@ -24,9 +24,10 @@
       </h2>
 
       <Slideshow
-        :settings="settings"
-        class="mt-12"
+        :infinite="true"
+        :variable-width="false"
         :aria-labelledby="`label-parole-benevoles-${uuid}`"
+        class="mt-12"
       >
         <div v-for="testimony in testimonials" :key="testimony.id">
           <div
@@ -84,15 +85,7 @@ export default {
   data () {
     return {
       loading: true,
-      testimonials: [],
-      settings: {
-        arrows: true,
-        dots: true,
-        speed: 500,
-        edgeFriction: 0,
-        touchThreshold: 100,
-        infinite: true
-      }
+      testimonials: []
     }
   },
   async fetch () {
@@ -140,9 +133,6 @@ export default {
 
   .slick-dots {
     @apply !text-center;
-    @screen xl {
-      display: none !important;
-    }
   }
 
   .slick-track {
