@@ -25,7 +25,9 @@
           </div>
         </div>
       </div>
-      <div v-if="organisations.length > 0" class="mt-12">
+      <!-- v-if="organisations.length > 0" -->
+      <div class="mt-12">
+        <!-- facetFilters: [facetFilterOrganisationsNames], -->
         <AlgoliaSlideshowMissions
           ref="slideshowPopulaire"
           aria-labelledby="label-slideshow-missions-populaires"
@@ -33,7 +35,6 @@
             hitsPerPage: 6,
             aroundPrecision: 2000,
             aroundLatLngViaIP: true,
-            facetFilters: [facetFilterOrganisationsNames],
             aroundRadius: 'all'
           }"
           @slide-click="onSlideClick()"
