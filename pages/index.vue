@@ -6,7 +6,7 @@
       <!-- <PrintempsPourLaPlanete /> -->
       <BlocProfileActivities />
       <BlocTemoignages />
-      <BlocActualites v-if="$store.state.settings.general.blog_active" />
+      <!-- <BlocActualites v-if="$store.state.settings.general.blog_active" /> -->
       <BlocNewsletter />
     </template>
     <template v-if="!$store.getters.isLogged">
@@ -19,7 +19,7 @@
       <BlocMissionsCourtes />
       <BlocActionsBenevolesPopulaires />
       <BlocTemoignages />
-      <BlocActualites v-if="$store.state.settings.general.blog_active" />
+      <!-- <BlocActualites v-if="$store.state.settings.general.blog_active" /> -->
       <BlocActeursEngagement />
       <BlocNewsletter />
       <BlocFaq />
@@ -37,7 +37,7 @@ import BlocCaDevraitVousPlaire from '@/components/section/home/BlocCaDevraitVous
 import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
 import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
 import BlocTemoignages from '@/components/section/home/BlocTemoignages.vue'
-import BlocActualites from '@/components/section/home/BlocActualites.vue'
+// import BlocActualites from '@/components/section/home/BlocActualites.vue'
 import BlocActeursEngagement from '@/components/section/home/BlocActeursEngagement.vue'
 import BlocNewsletter from '@/components/section/home/BlocNewsletter.vue'
 import BlocFaq from '@/components/section/home/BlocFaq.vue'
@@ -54,7 +54,7 @@ export default {
     BlocMissionsCourtes,
     BlocActionsBenevolesPopulaires,
     BlocTemoignages,
-    BlocActualites,
+    // BlocActualites,
     BlocActeursEngagement,
     BlocNewsletter,
     BlocFaq,
