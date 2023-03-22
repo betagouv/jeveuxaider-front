@@ -42,30 +42,20 @@
 
                   <div class="flex flex-wrap">
                     <div
-                      class="pb-4 sm:p-4 md:px-8 lg:px-10 xl:px-16 xl:pb-8 sm:border-r flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
+                      class="p-4 md:px-8 lg:px-10 xl:px-16 xl:pb-8 sm:border-r flex-grow w-full sm:w-1/2 lg:w-1/3 lg:flex-none text-center lg:text-left"
                     >
                       <div class="font-extrabold text-4xl">
-                        1ère
+                        460 000
                       </div>
                       <div class="text-lg">
-                        plateforme<br>d'engagement
+                        bénévoles inscrits<br>depuis 2018
                       </div>
                     </div>
                     <div
-                      class="p-4 md:px-8 lg:px-10 xl:px-16 xl:pb-8 sm:border-r flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
+                      class="p-4 pb-8 md:px-8 lg:px-12 xl:px-16 flex-grow w-full sm:w-1/2 lg:w-1/3 lg:flex-none text-center lg:text-left"
                     >
                       <div class="font-extrabold text-4xl">
-                        400 000
-                      </div>
-                      <div class="text-lg">
-                        bénévoles inscrits<br>depuis 2020
-                      </div>
-                    </div>
-                    <div
-                      class="p-4 pb-8 md:px-8 lg:px-12 xl:px-16 flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
-                    >
-                      <div class="font-extrabold text-4xl">
-                        10 000
+                        11 200
                       </div>
                       <div class="text-lg">
                         organisations<br>partenaires

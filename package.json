@@ -65,6 +65,7 @@
     "vue-svg-gauge": "^1.2.1",
     "vue-textarea-autosize": "^1.1.1",
     "vue-toastification": "^1.7.14",
+    "vue-typer": "^1.2.0",
     "yarn": "^1.22.17",
     "yup": "^0.32.11"
   },

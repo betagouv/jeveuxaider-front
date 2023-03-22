@@ -68,7 +68,7 @@
 
       <portal to="body-end">
         <Modal
-          :key="`modal_crop_${_uid}`"
+          :key="`modal_crop_${uuid}`"
           :is-open="showModal"
           title="Recadrer"
           @close="showModal = false"
@@ -103,11 +103,13 @@
 <script>
 import { Cropper } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
     Cropper
   },
+  mixins: [uuid],
   props: {
     defaultValue: { type: Object, default: () => {} },
     previewWidth: { type: Number, default: 200 },

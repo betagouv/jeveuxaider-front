@@ -1,7 +1,6 @@
 <template>
   <client-only>
     <Slideshow
-      :slides-count="logos.length"
       class="mt-12"
       :settings="settings"
       :add-dots-wrapper="false"
@@ -18,6 +17,7 @@
           :alt="logo.alt"
           class="flex-none max-w-[150px] max-h-[60px] object-contain"
           data-not-lazy
+          draggable="false"
         >
       </div>
     </Slideshow>

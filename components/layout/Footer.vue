@@ -1,57 +1,55 @@
 <template>
   <footer role="contentinfo" class="relative z-1 border-t-2 border-[#000091]">
     <div class="bg-gray-50 py-8">
-      <div class="container px-4 mx-auto">
-        <div class="mx-auto max-w-6xl">
-          <div class="grid grid-cols-1 md:grid-cols-5 text-xs gap-8">
-            <div class="md:col-span-2">
-              <div class="font-bold mb-8">
-                Le bénévolat en France
-              </div>
-              <div class="grid grid-cols-2 gap-4">
-                <nuxt-link
-                  v-for="city in cities"
-                  :key="city.name"
-                  :to="city.url"
-                  class="hover:underline text-gray-600"
-                >
-                  {{ city.name }}
-                </nuxt-link>
-              </div>
+      <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-5 text-xs gap-8">
+          <div class="md:col-span-2">
+            <div class="font-bold mb-8">
+              Le bénévolat en France
             </div>
+            <div class="grid grid-cols-2 gap-4">
+              <nuxt-link
+                v-for="city in cities"
+                :key="city.name"
+                :to="city.url"
+                class="hover:underline text-gray-600"
+              >
+                {{ city.name }}
+              </nuxt-link>
+            </div>
+          </div>
 
-            <div class="md:col-span-2">
-              <div class="font-bold mb-8">
-                Organisations populaires
-              </div>
-              <div class="grid grid-cols-2 gap-4">
-                <nuxt-link
-                  v-for="organization in organizations"
-                  :key="organization.name"
-                  :to="organization.url"
-                  class="hover:underline text-gray-600 truncate"
-                >
-                  {{ organization.name }}
-                </nuxt-link>
-              </div>
+          <div class="md:col-span-2">
+            <div class="font-bold mb-8">
+              Organisations populaires
             </div>
-            <div>
-              <div class="font-bold mb-8">
-                Liens utiles
-              </div>
-              <div class="grid grid-cols-1 gap-4">
-                <component
-                  :is="link.component ? link.component : link.external ? 'a' : 'nuxt-link'"
-                  v-for="(link) in usefullLinks"
-                  :key="link.name"
-                  :to="!link.external && link.url"
-                  :href="link.url"
-                  :target="link.external ? '_blank' : null"
-                  class="hover:underline text-gray-600 truncate"
-                >
-                  {{ link.name }}
-                </component>
-              </div>
+            <div class="grid grid-cols-2 gap-4">
+              <nuxt-link
+                v-for="organization in organizations"
+                :key="organization.name"
+                :to="organization.url"
+                class="hover:underline text-gray-600 truncate"
+              >
+                {{ organization.name }}
+              </nuxt-link>
+            </div>
+          </div>
+          <div>
+            <div class="font-bold mb-8">
+              Liens utiles
+            </div>
+            <div class="grid grid-cols-1 gap-4">
+              <component
+                :is="link.component ? link.component : link.external ? 'a' : 'nuxt-link'"
+                v-for="(link) in usefullLinks"
+                :key="link.name"
+                :to="!link.external && link.url"
+                :href="link.url"
+                :target="link.external ? '_blank' : null"
+                class="hover:underline text-gray-600 truncate"
+              >
+                {{ link.name }}
+              </component>
             </div>
           </div>
         </div>
@@ -59,51 +57,49 @@
     </div>
 
     <div class="bg-white py-8">
-      <div class="container mx-auto px-4">
-        <div class="mx-auto max-w-6xl">
-          <div class="lg:flex">
-            <nuxt-link
-              to="/"
-              class="flex flex-col space-y-8 items-center justify-center sm:flex-row sm:space-x-8 sm:space-y-0 lg:space-x-4 lg:justify-start xl:space-x-8"
+      <div class="container">
+        <div class="lg:flex">
+          <nuxt-link
+            to="/"
+            class="flex flex-col gap-4 sm:gap-6 sm:flex-row lg:gap-8 xl:gap-12"
+          >
+            <img
+              src="@/assets/images/republique-francaise-logo.svg"
+              alt="République Française"
+              width="6500"
+              height="5870"
+              class="w-[76px] lg:w-[127px]"
             >
-              <img
-                src="@/assets/images/republique-francaise-logo.svg"
-                alt="République Française"
-                width="167"
-                height="151"
-                class="ml-[-19px]"
-              >
 
-              <img
-                src="@/assets/images/jeveuxaider-logo.svg"
-                alt=""
-                width="251"
-                height="41"
-              >
-            </nuxt-link>
+            <img
+              src="@/assets/images/jeveuxaider-logo.svg"
+              alt=""
+              width="251"
+              height="41"
+            >
+          </nuxt-link>
 
-            <div class="ml-auto lg:pl-16">
-              <div
-                class="text-[#383838] text-sm lg:max-w-lg leading-relaxed mt-8 mb-6"
-              >
-                Trouvez une mission d'intérêt général auprès d'un organisme
-                public
-                <br class="hidden md:block">
-                ou associatif et faites vivre les valeurs de la République.
-              </div>
+          <div class="ml-auto lg:pl-16">
+            <div
+              class="text-[#383838] text-sm lg:max-w-lg leading-relaxed mt-8 mb-6"
+            >
+              Trouvez une mission d'intérêt général auprès d'un organisme
+              public
+              <br class="hidden md:block">
+              ou associatif et faites vivre les valeurs de la République.
+            </div>
 
-              <div class="flex flex-wrap -mx-3 -my-2">
-                <a
-                  v-for="link in gouvLinks"
-                  :key="link.url"
-                  class="hover:underline font-bold text-sm px-3 py-2"
-                  :href="link.url"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  {{ link.name }}
-                </a>
-              </div>
+            <div class="flex flex-wrap -mx-3 -my-2">
+              <a
+                v-for="link in gouvLinks"
+                :key="link.url"
+                class="hover:underline font-bold text-sm px-3 py-2"
+                :href="link.url"
+                target="_blank"
+                rel="noopener"
+              >
+                {{ link.name }}
+              </a>
             </div>
           </div>
         </div>
@@ -113,8 +109,8 @@
     <hr>
 
     <div class="bg-white py-4">
-      <div class="container mx-auto px-4">
-        <div class="mx-auto max-w-6xl text-gray-600 text-xs">
+      <div class="container">
+        <div class="text-gray-600 text-xs">
           <div class="divide-x">
             <component
               :is="link.component ? link.component : link.external ? 'a' : 'nuxt-link'"

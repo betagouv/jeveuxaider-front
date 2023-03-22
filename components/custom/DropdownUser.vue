@@ -22,26 +22,41 @@
           </div>
         </div>
 
-        <ChevronDownIcon class="h-4 ml-auto flex-none" />
+        <ChevronDownIcon class="h-4 ml-auto flex-none mr-[-6px]" />
       </button>
     </template>
 
     <template #items>
-      <div class="w-56 divide-y">
+      <div class="w-[316px]">
         <DropdownOptionsItem @click.native="handleClick('/profile')">
-          Mon espace
+          <div class="flex items-center justify-center space-x-2">
+            <RiListUnordered class="h-[17px] w-auto fill-current" /> <span>Mon espace</span>
+          </div>
         </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="handleClick('/profile/missions')">
-          Mes missions
+          <div class="flex items-center justify-center space-x-2">
+            <RiCalendarEventLine class="h-[17px] w-auto fill-current" /> <span>Mes missions</span>
+          </div>
+        </DropdownOptionsItem>
+        <DropdownOptionsItem @click.native="handleClick('/profile/edit')">
+          <div class="flex items-center justify-center space-x-2">
+            <RiUserLine class="h-[17px] w-auto fill-current" /> <span>Mon profil</span>
+          </div>
         </DropdownOptionsItem>
         <DropdownOptionsItem v-if="['referent','responsable'].includes($store.getters.contextRole)" @click.native="handleClick('/profile/preferences')">
-          Mes préférences
+          <div class="flex items-center justify-center space-x-2">
+            <RiNotification3Line class="h-[17px] w-auto fill-current" /> <span>Mes préférences</span>
+          </div>
         </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="handleClick('/profile/settings')">
-          Mes paramètres
+          <div class="flex items-center justify-center space-x-2">
+            <RiUserSettingsLine class="h-[17px] w-auto fill-current" /> <span>Mes paramètres</span>
+          </div>
         </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="handleClick('logout')">
-          <span class="text-[#E2011C]">Se déconnecter</span>
+          <div class="flex items-center justify-center space-x-2 text-[#C9191E]">
+            <RiLogoutBoxRLine class="h-[17px] w-auto fill-current" /> <span>Déconnexion</span>
+          </div>
         </DropdownOptionsItem>
       </div>
     </template>
@@ -60,6 +75,7 @@ export default {
         case '/profile/missions':
         case '/profile/settings':
         case '/profile/preferences':
+        case '/profile/edit':
           this.$router.push(action)
           break
       }

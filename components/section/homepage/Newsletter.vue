@@ -1,11 +1,11 @@
 <template>
   <div>
-    <Heading :id="`newsletter-headline-${_uid}`" as="h2" size="sm" class="mb-4">
+    <Heading :id="`newsletter-headline-${uuid}`" as="h2" size="sm" class="mb-4">
       Un email par mois pour plus d'engagement
     </Heading>
 
     <form
-      :aria-labelledby="`newsletter-headline-${_uid}`"
+      :aria-labelledby="`newsletter-headline-${uuid}`"
       class="relative flex flex-col lg:flex-row w-full"
     >
       <FormControl
@@ -41,6 +41,7 @@
 import Heading from '@/components/dsfr/Heading.vue'
 import Button from '@/components/dsfr/Button.vue'
 import Input from '@/components/dsfr/Input.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
@@ -48,6 +49,7 @@ export default {
     Button,
     Input
   },
+  mixins: [uuid],
   data () {
     return {
       loading: false,
@@ -89,7 +91,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

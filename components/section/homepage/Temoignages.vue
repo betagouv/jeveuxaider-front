@@ -15,15 +15,15 @@
     >
 
     <div class="container mx-auto px-4 ">
-      <Heading :id="`label-paroles-benevoles-${_uid}`" as="h2" size="2xl" class="text-center">
+      <Heading :id="`label-paroles-benevoles-${uuid}`" as="h2" size="2xl" class="text-center">
         Paroles de bénévoles
       </Heading>
 
       <Slideshow
-        :slides-count="testimonies.length"
-        :settings="settings"
+        :infinite="true"
+        :variable-width="false"
+        :aria-labelledby="`label-paroles-benevoles-${uuid}`"
         class="mt-12"
-        :aria-labelledby="`label-paroles-benevoles-${_uid}`"
       >
         <div v-for="testimony,index in testimonies" :key="index">
           <div
@@ -42,6 +42,7 @@
                 :width="testimony.organization.logo.width"
                 :height="testimony.organization.logo.height"
                 data-not-lazy
+                draggable="false"
               >
             </div>
 
@@ -70,11 +71,13 @@
 
 <script>
 import Heading from '@/components/dsfr/Heading.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
     Heading
   },
+  mixins: [uuid],
   data () {
     return {
       testimonies: [
@@ -190,15 +193,7 @@ export default {
             }
           }
         }
-      ],
-      settings: {
-        arrows: true,
-        dots: true,
-        speed: 500,
-        edgeFriction: 0,
-        touchThreshold: 100,
-        infinite: true
-      }
+      ]
     }
   }
 }
@@ -229,9 +224,6 @@ export default {
 
   .slick-dots {
     @apply !text-center !mr-0;
-    @screen xl {
-      display: none !important;
-    }
   }
 
   .slick-track {

@@ -88,15 +88,14 @@
     >
       <div class="container mx-auto px-8 sm:px-4">
         <div class="pt-16 pb-24">
-          <Heading :id="`label-autres-missions-${_uid}`" as="div" class="text-center mb-12">
+          <Heading :id="`label-autres-missions-${uuid}`" as="div" class="text-center mb-12">
             Vous pourriez aussi aimer&nbsp;…
           </Heading>
 
           <Slideshow
             class="mb-6"
             :slides-are-links="true"
-            :slides-count="similarMissions.length"
-            :aria-labelledby="`label-autres-missions-${_uid}`"
+            :aria-labelledby="`label-autres-missions-${uuid}`"
           >
             <nuxt-link
               v-for="similarMission in similarMissions"
@@ -150,6 +149,7 @@ import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import CardMission from '~/components/card/CardMission'
 import Heading from '@/components/dsfr/Heading.vue'
 import Link from '@/components/dsfr/Link.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
@@ -161,7 +161,7 @@ export default {
     Heading,
     Link
   },
-  mixins: [MixinMission],
+  mixins: [MixinMission, uuid],
   props: {
     mission: {
       type: Object,

@@ -1,82 +1,64 @@
 <template>
-  <div>
-    <Banner />
-    <Organisations />
-
-    <hr class="mt-12 pt-12 md:hidden border-[#CDCDCD]">
-
-    <MissionsPrioritaires />
-
-    <Domaines />
-    <EngagezVous />
-    <Blog v-if="$store.state.settings.general.blog_active" />
-    <Temoignages />
-
-    <section class="py-16 bg-[#ECECFE] border-t border-[#C1C1FB]">
-      <div class="container mx-auto px-4 ">
-        <div class="lg:flex w-full">
-          <Newsletter class="w-full max-w-[690px] flex-grow" />
-          <div class="hidden lg:flex flex-none self-stretch w-[1px] bg-[#C1C1FB] mx-16 xl:mx-24" />
-          <Communaute class="sm:min-w-[300px] mt-16 lg:mt-0" />
-        </div>
+  <div class="bg-[#F9F6F2]">
+    <BlocBanner />
+    <template v-if="$store.getters.isLogged">
+      <BlocCaDevraitVousPlaire />
+      <!-- <PrintempsPourLaPlanete /> -->
+      <BlocProfileActivities />
+      <BlocTemoignages />
+      <BlocActualites v-if="$store.state.settings.general.blog_active" />
+      <BlocNewsletter />
+    </template>
+    <template v-if="!$store.getters.isLogged">
+      <div class="container md:!max-w-full xl:!max-w-[1680px] grid gap-6 xl:gap-8 md:grid-cols-2 py-4 md:py-6 lg:py-8">
+        <BlocInscriptionBenevole />
+        <BlocInscriptionResponsable />
       </div>
-    </section>
-
-    <section class="pt-16">
-      <div class="container mx-auto px-4 xl:!max-w-[1412px]">
-        <RejoindreLaCommunaute />
-      </div>
-    </section>
-
-    <section class="py-16">
-      <div class="container mx-auto px-4 xl:!max-w-[1412px]">
-        <Heading as="h2" size="2xl" class="mb-16 text-center">
-          Acteurs de l'engagement, <br class="hidden md:block xl:hidden">rejoignez le mouvement !
-        </Heading>
-
-        <div class="grid gap-5 lg:grid-cols-2">
-          <FacilitezRecrutement />
-          <EncouragezEngagementLocal />
-        </div>
-      </div>
-    </section>
-
-    <Faq />
+      <BlocActivities />
+      <!-- <PrintempsPourLaPlanete /> -->
+      <BlocMissionsCourtes />
+      <BlocActionsBenevolesPopulaires />
+      <BlocTemoignages />
+      <BlocActualites v-if="$store.state.settings.general.blog_active" />
+      <BlocActeursEngagement />
+      <BlocNewsletter />
+      <BlocFaq />
+    </template>
   </div>
 </template>
 
 <script>
-import Banner from '@/components/section/homepage/Banner'
-import Organisations from '@/components/section/homepage/Organisations'
-import MissionsPrioritaires from '@/components/section/homepage/MissionsPrioritaires'
-import Domaines from '@/components/section/homepage/Domaines'
-import EngagezVous from '@/components/section/homepage/EngagezVous'
-import Blog from '@/components/section/homepage/Blog'
-import Temoignages from '@/components/section/homepage/Temoignages'
-import Faq from '@/components/section/homepage/Faq'
-import Newsletter from '@/components/section/homepage/Newsletter'
-import Communaute from '@/components/section/homepage/Communaute'
-import FacilitezRecrutement from '@/components/section/homepage/FacilitezRecrutement'
-import EncouragezEngagementLocal from '@/components/section/homepage/EncouragezEngagementLocal'
-import Heading from '@/components/dsfr/Heading.vue'
-import RejoindreLaCommunaute from '@/components/section/homepage/RejoindreLaCommunaute'
+import BlocBanner from '~/components/section/home/BlocBanner.vue'
+import BlocInscriptionBenevole from '~/components/section/home/BlocInscriptionBenevole.vue'
+import BlocInscriptionResponsable from '~/components/section/home/BlocInscriptionResponsable.vue'
+import BlocActivities from '@/components/section/home/BlocActivities.vue'
+import BlocCaDevraitVousPlaire from '@/components/section/home/BlocCaDevraitVousPlaire.vue'
+// import PrintempsPourLaPlanete from '@/components/section/operations/PrintempsPourLaPlanete.vue'
+import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
+import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
+import BlocTemoignages from '@/components/section/home/BlocTemoignages.vue'
+import BlocActualites from '@/components/section/home/BlocActualites.vue'
+import BlocActeursEngagement from '@/components/section/home/BlocActeursEngagement.vue'
+import BlocNewsletter from '@/components/section/home/BlocNewsletter.vue'
+import BlocFaq from '@/components/section/home/BlocFaq.vue'
+import BlocProfileActivities from '@/components/section/home/BlocProfileActivities.vue'
 
 export default {
   components: {
-    Banner,
-    Organisations,
-    MissionsPrioritaires,
-    Domaines,
-    EngagezVous,
-    Blog,
-    Temoignages,
-    Faq,
-    Newsletter,
-    Communaute,
-    FacilitezRecrutement,
-    EncouragezEngagementLocal,
-    Heading,
-    RejoindreLaCommunaute
+    BlocBanner,
+    BlocInscriptionBenevole,
+    BlocInscriptionResponsable,
+    BlocActivities,
+    BlocCaDevraitVousPlaire,
+    // PrintempsPourLaPlanete,
+    BlocMissionsCourtes,
+    BlocActionsBenevolesPopulaires,
+    BlocTemoignages,
+    BlocActualites,
+    BlocActeursEngagement,
+    BlocNewsletter,
+    BlocFaq,
+    BlocProfileActivities
   },
   head () {
     return {
@@ -87,12 +69,6 @@ export default {
           rel: 'canonical',
           href: 'https://www.jeveuxaider.gouv.fr/'
         }
-        // {
-        //   rel: 'preload',
-        //   as: 'image',
-        //   href: '/images/banner_mobile.jpg',
-        //   imagesrcset: '/images/homepage/banner_mobile.webp, /images/homepage/banner_mobile.jpg, /images/homepage/banner_mobile@2x.webp 2x, /images/homepage/banner_mobile@2x.jpg 2x'
-        // }
       ],
       meta: [
         {

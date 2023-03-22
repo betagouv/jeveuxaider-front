@@ -315,15 +315,14 @@
     >
       <div class="container mx-auto px-8 sm:px-4">
         <div class="pt-16 pb-24">
-          <Heading :id="`label-autres-missions-${_uid}`" as="div" class="text-center mb-12">
+          <Heading :id="`label-autres-missions-${uuid}`" as="div" class="text-center mb-12">
             Vous pourriez aussi aimer&nbsp;…
           </Heading>
 
           <Slideshow
             class="mb-6"
             :slides-are-links="true"
-            :slides-count="similarMissions.length"
-            :aria-labelledby="`label-autres-missions-${_uid}`"
+            :aria-labelledby="`label-autres-missions-${uuid}`"
           >
             <nuxt-link
               v-for="mission in similarMissions"
@@ -417,6 +416,7 @@ import TagsGroup from '@/components/dsfr/TagsGroup.vue'
 import MixinHotjar from '@/mixins/hotjar.client.js'
 import LoadingIndicator from '@/components/custom/LoadingIndicator'
 import Badge from '@/components/dsfr/Badge.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
@@ -434,7 +434,7 @@ export default {
     LoadingIndicator,
     Badge
   },
-  mixins: [MixinMission, MixinHotjar],
+  mixins: [MixinMission, MixinHotjar, uuid],
   async asyncData ({ $axios, params, error, store }) {
     const { data: mission } = await $axios.get(`/missions/${params.id}`).catch((err) => {
       return error({ statusCode: err.response.status, message: err.response.statusText })

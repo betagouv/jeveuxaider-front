@@ -1,4 +1,5 @@
 <template>
+  <!-- {'text-4xl xxs:text-[40px] xxs:leading-[48px] xl:text-5xl xl:leading-[56px]': size === 'alt-xs'}, -->
   <component
     :is="as"
     :class="[
@@ -11,11 +12,11 @@
       {'text-[28px] leading-9 lg:text-[32px] lg:leading-10': size === 'xl'}, // H2
       {'text-[32px] leading-10 lg:text-[40px] lg:leading-[48px]': size === '2xl'}, // H1
 
-      {'text-[40px] leading-[48px] lg:text-5xl lg:leading-[56px]': size === 'alt-xs'},
-      {'text-5xl leading-[56px] lg:text-[56px] lg:leading-[64px]': size === 'alt-sm'},
-      {'text-[56px] leading-[64px] lg:text-[64px] lg:leading-[72px]': size === 'alt-md'},
-      {'text-[64px] leading-[72px] lg:text-[72px] lg:leading-[80px]': size === 'alt-lg'},
-      {'text-[72px] leading-[80px] lg:text-[80px] lg:leading-[88px]': size === 'alt-xl'},
+      {'text-4xl xxs:text-[40px] xxs:leading-[48px] xl:text-[46px] xl:leading-[54px]': size === 'alt-sm'},
+      {'text-4xl xxs:text-[40px] xxs:leading-[48px] xl:text-[54px] xl:leading-[62px]': size === 'alt-md'},
+      {'text-[40px] leading-[48px] xxs:text-[48px] xxs:leading-[56px] xl:text-[62px] xl:leading-[72px]': size === 'alt-lg'},
+      {'text-5xl leading-[52px] xxs:text-[64px] xxs:leading-[64px] lg:text-[80px] lg:leading-[80px]': size === 'alt-xl'},
+      {'text-5xl leading-[52px] xxs:text-[64px] xxs:leading-[64px] lg:text-[80px] lg:leading-[80px] xl:text-[120px] xl:leading-[120px] xl:tracking-tight': size === 'alt-2xl'},
 
       color ?? ($store.state.settings.theme === 'light' ? lightColor : darkColor)
     ]"
@@ -34,7 +35,7 @@ export default {
     size: {
       type: String,
       default: 'xl',
-      validator: s => ['xs', 'sm', 'md', 'lg', 'xl', '2xl', 'alt-xs', 'alt-sm', 'alt-md', 'alt-lg', 'alt-xl'].includes(s)
+      validator: s => ['xs', 'sm', 'md', 'lg', 'xl', '2xl', 'alt-xs', 'alt-sm', 'alt-md', 'alt-lg', 'alt-xl', 'alt-2xl'].includes(s)
     },
     bold: {
       type: Boolean,

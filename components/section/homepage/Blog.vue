@@ -3,7 +3,7 @@
     <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
-          <Heading :id="`label-blog-${_uid}`" as="h2" size="2xl">
+          <Heading :id="`label-blog-${uuid}`" as="h2" size="2xl">
             Les actualités de l'engagement
           </Heading>
 
@@ -19,8 +19,7 @@
             label: `Plus d'articles`,
             isExternal: true,
           }"
-          :slides-count="articles.length"
-          :aria-labelledby="`label-blog-${_uid}`"
+          :aria-labelledby="`label-blog-${uuid}`"
         >
           <a
             v-for="article in articles"
@@ -41,12 +40,14 @@
 import axios from 'axios'
 import CardArticle from '@/components/card/CardArticle'
 import Heading from '@/components/dsfr/Heading.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
     CardArticle,
     Heading
   },
+  mixins: [uuid],
   data () {
     return {
       articles: []

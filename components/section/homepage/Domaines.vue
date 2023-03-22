@@ -3,7 +3,7 @@
     <div class="container mx-auto px-8 sm:px-4 ">
       <div class="mx-auto max-w-6xl">
         <div class="flex justify-between items-baseline mb-12">
-          <Heading :id="`label-domaines-action-${_uid}`" as="h2" size="2xl" class="text-center md:text-left">
+          <Heading :id="`label-domaines-action-${uuid}`" as="h2" size="2xl" class="text-center md:text-left">
             Trouvez votre domaine d'action
           </Heading>
           <p class="hidden md:block ml-4 text-[32px] xl:text-[40px] text-[#A7A7B0]">
@@ -13,8 +13,7 @@
 
         <Slideshow
           :slides-are-links="true"
-          :slides-count="domaines.length"
-          :aria-labelledby="`label-domaines-action-${_uid}`"
+          :aria-labelledby="`label-domaines-action-${uuid}`"
         >
           <nuxt-link
             v-for="domaine in domaines"
@@ -33,12 +32,14 @@
 <script>
 import CardDomaine from '@/components/card/CardDomaine'
 import Heading from '@/components/dsfr/Heading.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
     CardDomaine,
     Heading
   },
+  mixins: [uuid],
   data () {
     return {
       domaines: [

@@ -3,7 +3,7 @@
     <div class="space-y-2">
       <div class="relative font-medium text-[15px]">
         <div v-if="!showSearch" class="h-[29px]">
-          <span :id="`label-search-${_uid}`">{{ label }}</span>
+          <span :id="`label-search-${uuid}`">{{ label }}</span>
           <SearchIcon
             class=" text-gray-400 hover:text-gray-500 cursor-pointer absolute right-0 top-0"
             width="20"
@@ -16,7 +16,7 @@
           ref="facetSearch"
           v-model="facetQuery"
           always-show-clear
-          :aria-labelledby="`label-search-${_uid}`"
+          :aria-labelledby="`label-search-${uuid}`"
           @input="handleChangeSearchFacetValues"
           @clear="showSearch = false"
         />
@@ -75,12 +75,13 @@
 <script>
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
     FacetSearch
   },
-  mixins: [AlgoliaQueryBuilder],
+  mixins: [AlgoliaQueryBuilder, uuid],
   props: {
     facetName: {
       type: String,

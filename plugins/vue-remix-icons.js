@@ -7,10 +7,12 @@ import RiSearchLine from 'vue-remix-icons/icons/RiSearchLine.vue'
 import RiSearchEyeFill from 'vue-remix-icons/icons/RiSearchEyeFill.vue'
 import RiArrowRightLine from 'vue-remix-icons/icons/RiArrowRightLine.vue'
 import RiArrowDownSLine from 'vue-remix-icons/icons/RiArrowDownSLine.vue'
+import RiArrowDownLine from 'vue-remix-icons/icons/RiArrowDownLine.vue'
 import RiAddLine from 'vue-remix-icons/icons/RiAddLine.vue'
 import RiBuildingFill from 'vue-remix-icons/icons/RiBuildingFill.vue'
 import RiExternalLinkLine from 'vue-remix-icons/icons/RiExternalLinkLine.vue'
 import RiDoubleQuotesL from 'vue-remix-icons/icons/RiDoubleQuotesL.vue'
+import RiChatQuoteLine from 'vue-remix-icons/icons/RiChatQuoteLine.vue'
 import RiFacebookCircleFill from 'vue-remix-icons/icons/RiFacebookCircleFill.vue'
 import RiTwitterFill from 'vue-remix-icons/icons/RiTwitterFill.vue'
 import RiLinkedinBoxFill from 'vue-remix-icons/icons/RiLinkedinBoxFill.vue'
@@ -22,6 +24,7 @@ import RiBookmark3Fill from 'vue-remix-icons/icons/RiBookmark3Fill.vue'
 import RiTimeFill from 'vue-remix-icons/icons/RiTimeFill.vue'
 import RiCloseFill from 'vue-remix-icons/icons/RiCloseFill.vue'
 import RiCheckboxCircleLine from 'vue-remix-icons/icons/RiCheckboxCircleLine.vue'
+import RiUserHeartLine from 'vue-remix-icons/icons/RiUserHeartLine.vue'
 import RiUserHeartFill from 'vue-remix-icons/icons/RiUserHeartFill.vue'
 import RiComputerFill from 'vue-remix-icons/icons/RiComputerFill.vue'
 import RiShareFill from 'vue-remix-icons/icons/RiShareFill.vue'
@@ -45,16 +48,32 @@ import RiFileCopyLine from 'vue-remix-icons/icons/RiFileCopyLine.vue'
 import RiEqualizerFill from 'vue-remix-icons/icons/RiEqualizerFill.vue'
 import RiPauseCircleLine from 'vue-remix-icons/icons/RiPauseCircleLine.vue'
 import RiPlayCircleLine from 'vue-remix-icons/icons/RiPlayCircleLine.vue'
+import RiListUnordered from 'vue-remix-icons/icons/RiListUnordered.vue'
+import RiLogoutBoxRLine from 'vue-remix-icons/icons/RiLogoutBoxRLine.vue'
+import RiCalendarEventLine from 'vue-remix-icons/icons/RiCalendarEventLine.vue'
+import RiUserSettingsLine from 'vue-remix-icons/icons/RiUserSettingsLine.vue'
+import RiUserLine from 'vue-remix-icons/icons/RiUserLine.vue'
+import RiNotification3Line from 'vue-remix-icons/icons/RiNotification3Line.vue'
+import RiArrowLeftLine from 'vue-remix-icons/icons/RiArrowLeftLine.vue'
 
 const components = {
+  RiArrowRightLine,
+  RiArrowLeftLine,
+  RiNotification3Line,
+  RiUserSettingsLine,
+  RiUserLine,
+  RiCalendarEventLine,
+  RiLogoutBoxRLine,
+  RiListUnordered,
   RiSearchLine,
   RiSearchEyeFill,
-  RiArrowRightLine,
   RiArrowDownSLine,
+  RiArrowDownLine,
   RiAddLine,
   RiBuildingFill,
   RiExternalLinkLine,
   RiDoubleQuotesL,
+  RiChatQuoteLine,
   RiFacebookCircleFill,
   RiTwitterFill,
   RiLinkedinBoxFill,
@@ -66,6 +85,7 @@ const components = {
   RiTimeFill,
   RiCloseFill,
   RiCheckboxCircleLine,
+  RiUserHeartLine,
   RiUserHeartFill,
   RiComputerFill,
   RiShareFill,

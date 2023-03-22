@@ -1,0 +1,141 @@
+<template>
+  <div>
+    <div class="container">
+      <div class="pt-12 pb-10 xl:pt-24 xl:pb-[72px]">
+        <Heading as="h2" size="alt-md" class=" text-center">
+          <span class="relative">
+            <img
+              src="/images/home/sparkle-left.svg"
+              alt=""
+              width="37"
+              height="33"
+              aria-hidden="true"
+              class="absolute left-[-26px] top-[-5px] xl:w-[50px] xl:left-[-38px] xl:top-[-8px] pointer-events-none"
+            >
+            <span>C’est votre première fois ? <br class="hidden md:block">Suivez le guide</span>
+          </span>
+        </Heading>
+      </div>
+    </div>
+
+    <div class="flex justify-center">
+      <div class="h-[78px] w-[78px] lg:h-[90px] lg:w-[90px] mb-[-39px] lg:mb-[-45px] flex justify-center items-center bg-jva-orange-300 border-8 border-[#F9F6F2] rounded-full">
+        <RiArrowDownLine class="text-[#F9F6F2] w-8 lg:w-10 fill-current flex-none" />
+      </div>
+    </div>
+    <div class="bg-jva-orange-300 pt-14 pb-10 md:pt-16 md:pb-12 lg:pt-20 lg:pb-16 xl:pt-32 xl:pb-28 overflow-hidden">
+      <div class="container sm:overflow-hidden">
+        <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
+          <div class="">
+            <Heading as="h3" size="alt-sm" class="mb-6 md:mb-2" color="text-[#522F29]">
+              Le bénévolat et plus si affinités
+            </Heading>
+            <p id="label-slideshow-activities-action" class="text-[#522F29] text-xl xl:text-2xl leading-tight">
+              Contribuez à une cause qui vous touche au coeur
+            </p>
+          </div>
+          <div class="hidden lg:block flex-none">
+            <SlideshowArrows
+              :key="chunkSize"
+              variant="brown"
+              button-class="hover:bg-[#EA9680]"
+              ref-name="slideshowActivities"
+              :refs="$refs"
+              @previous="handleSlideshowPreviousClick"
+              @next="handleSlideshowNextClick"
+            />
+          </div>
+        </div>
+        <div class="mt-12">
+          <!-- @todo: accessibilité -->
+          <Slideshow
+            ref="slideshowActivities"
+            :key="chunkSize"
+            aria-labelledby="label-slideshow-activities-action"
+            dots-variant="light"
+            :adaptive-height="true"
+            class=""
+          >
+            <div v-for="(group,i) in activitiesGroups" :key="i" class="!flex flex-col gap-4 xl:gap-7 sm:flex-row flex-wrap">
+              <div
+                v-for="activity in group"
+                :key="activity.key"
+              >
+                <button
+                  class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow xl:shadow-xl text-lg  xl:text-[22px] font-bold w-full sm:w-auto sm:hover:bg-[#F6F6F6] transition"
+                  @click="onClick(activity)"
+                >
+                  <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
+                  <span class="ml-3">{{ activity.name }}</span>
+                </button>
+              </div>
+            </div>
+          </Slideshow>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import activities from '@/assets/activities.json'
+import Heading from '@/components/dsfr/Heading.vue'
+
+export default {
+  components: {
+    Heading
+  },
+  data () {
+    return {
+      activities,
+      chunkSize: 7
+    }
+  },
+  computed: {
+    activitiesGroups () {
+      const [list, chunkSize] = [[...this.activities], this.chunkSize]
+      return [...Array(Math.ceil(list.length / chunkSize))].map(_ => list.splice(0, chunkSize))
+    }
+  },
+  mounted () {
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize)
+      this.onResize()
+    })
+  },
+  methods: {
+    handleSlideshowPreviousClick () {
+      this.$refs.slideshowActivities.previous()
+    },
+    handleSlideshowNextClick () {
+      this.$refs.slideshowActivities.next()
+    },
+    onResize () {
+      if (window.innerWidth >= 1024) {
+        this.chunkSize = 14
+      } else {
+        this.chunkSize = 7
+      }
+    },
+    onClick (activity) {
+      window.plausible &&
+        window.plausible('Homepage|Clique - Activités', {
+          props: { isLogged: this.$store.getters.isLogged }
+        })
+      this.$router.push(`/missions-benevolat?activity.name=${activity.name}`)
+    }
+  }
+}
+</script>
+
+<style lang="postcss" scoped>
+:deep(.slick-track) {
+  width: 100% !important;
+  @apply sm:!gap-16;
+}
+
+:deep(.slick-slide) {
+  width: 100%;
+  flex: none;
+}
+</style>

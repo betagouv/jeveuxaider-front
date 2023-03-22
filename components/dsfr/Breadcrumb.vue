@@ -11,14 +11,14 @@
         colorClass
       ]"
       :aria-expanded="hideButton"
-      :aria-controls="_uid"
+      :aria-controls="uuid"
       @click="hideButton = !hideButton"
     >
       Voir le fil d’Ariane
     </button>
 
     <div
-      :id="_uid"
+      :id="uuid"
       class="fr-collapse"
       :class="{ 'fr-collapse--expanded': hideButton }"
     >
@@ -52,8 +52,10 @@
 
 <script>
 import '@gouvfr/dsfr/dist/component/breadcrumb/breadcrumb.main.min.css'
+import uuid from '@/mixins/uuid'
 
 export default {
+  mixins: [uuid],
   props: {
     links: {
       type: Array,
