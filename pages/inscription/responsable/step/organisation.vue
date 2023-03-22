@@ -250,7 +250,7 @@
           </div>
 
           <FormControl
-            v-if="!['Collectivité', 'Organisation privée'].includes(form.statut_juridique)"
+            v-if="!['Collectivité'].includes(form.statut_juridique)"
             label="Faites-vous partie d'un réseau national ?"
             html-for="tete_de_reseau_id"
           >

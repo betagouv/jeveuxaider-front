@@ -50,7 +50,7 @@
         </Button>
       </div>
       <div class="border-t -mx-6 my-6" />
-      <BoxRoles v-if="$store.getters.contextRole === 'admin' && profile" :user-id="profile.user_id" class="mb-8" />
+      <BoxRoles v-if="['admin', 'referent', 'referent_regional'].includes($store.getters.contextRole) && profile" :user-id="profile.user_id" class="mb-8" />
       <BoxActions v-if="$store.getters.contextRole === 'admin'" class="mb-8" :profile="profile" />
       <BoxDisponibilities class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
       <BoxInformations class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />

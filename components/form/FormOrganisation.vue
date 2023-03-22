@@ -242,7 +242,7 @@
             </div>
           </div>
         </Box>
-        <Box v-if="!['Collectivité', 'Organisation privée'].includes(form.statut_juridique)">
+        <Box v-if="!['Collectivité'].includes(form.statut_juridique)">
           <Heading :level="3" class="mb-8">
             Réseau national ou territorial
           </Heading>

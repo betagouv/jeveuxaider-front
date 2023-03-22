@@ -109,7 +109,7 @@
                 </div>
               </Box>
             </div>
-            <BoxRoles v-if="$store.getters.contextRole === 'admin'" :user-id="profile.user_id" />
+            <BoxRoles v-if="['admin', 'referent', 'referent_regional'].includes($store.getters.contextRole)" :user-id="profile.user_id" />
             <BoxOrganisations v-if="profile.user.structures" :structures="profile.user.structures" />
             <BoxTerritoires v-if="profile.user.territoires" :territoires="profile.user.territoires" />
             <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" />

@@ -1,4 +1,5 @@
 <template>
+  <!-- @todo: refactoring portal body-end -->
   <transition
     enter-active-class="ease-out duration-300"
     enter-class="opacity-0"
@@ -36,7 +37,7 @@
             >
               <div class="bg-white p-6 sm:p-8">
                 <div class="hidden sm:block absolute top-0 right-0 p-6 sm:p-8">
-                  <button v-if="!hideClose" type="button" class="bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cool-gray-500" @click="$emit('close')">
+                  <button v-if="!hideClose" type="button" class="bg-white text-gray-400 hover:text-gray-500" @click="$emit('close')">
                     <span class="sr-only">Close</span>
                     <RiCloseFill class="h-6 w-6 fill-current cursor-pointer" />
                   </button>

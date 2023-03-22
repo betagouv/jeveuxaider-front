@@ -97,7 +97,7 @@ export default {
             window.plausible(
               'Soft Gate - Étape 3 - Demande de participation'
             )
-
+          await this.$gtm.push({ event: 'benevole-participation-soft-gate' })
           this.$toast.success('Votre participation a été enregistrée et est en attente de validation !')
           await this.$store.dispatch('auth/fetchUser')
           this.$emit('next')

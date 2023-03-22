@@ -24,10 +24,6 @@
           :slides-are-links="true"
           :aria-labelledby="`label-missions-prioritaires-${uuid}`"
         >
-          <div key="restos-du-coeur" class="card--mission--wrapper">
-            <CardRestaurantsDuCoeur class="!h-full" />
-          </div>
-
           <nuxt-link
             v-for="mission in missions"
             :key="mission.id"
@@ -44,14 +40,12 @@
 
 <script>
 import CardMission from '@/components/card/CardMission'
-import CardRestaurantsDuCoeur from '@/components/card/CardRestaurantsDuCoeur'
 import Heading from '@/components/dsfr/Heading.vue'
 import uuid from '@/mixins/uuid'
 
 export default {
   components: {
     CardMission,
-    CardRestaurantsDuCoeur,
     Heading
   },
   mixins: [uuid],
