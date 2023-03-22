@@ -12,6 +12,7 @@
         },
         buttonClass
       ]"
+      aria-label="Précédent"
       @click="$emit('previous')"
     >
       <RiArrowLeftLine class="w-6 h-6 fill-current" />
@@ -28,6 +29,7 @@
         },
         buttonClass
       ]"
+      aria-label="Suivant"
       @click="$emit('next')"
     >
       <RiArrowRightLine class="w-6 h-6 fill-current" />

@@ -13,7 +13,7 @@
           >
         </div>
         <div class="flex items-center">
-          <nuxt-link to="/">
+          <nuxt-link to="/" aria-label="Page d'accueil">
             <img
               src="@/assets/images/jeveuxaider-logo.svg"
               alt=""
@@ -25,7 +25,7 @@
           </nuxt-link>
         </div>
         <div class="flex space-x-2 text-jva-blue-500">
-          <nuxt-link to="/missions-benevolat">
+          <nuxt-link to="/missions-benevolat" aria-label="Recherche">
             <SearchIcon />
           </nuxt-link>
           <button
