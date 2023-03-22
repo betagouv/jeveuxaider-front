@@ -17,6 +17,7 @@
           :alt="logo.alt"
           class="flex-none max-w-[150px] max-h-[60px] object-contain"
           data-not-lazy
+          draggable="false"
         >
       </div>
     </Slideshow>
