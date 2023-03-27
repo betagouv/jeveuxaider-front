@@ -7,7 +7,7 @@
             Devenez bénévole d'un jour !
           </Heading>
           <p id="label-slideshow-missions-courtes" class="text-white text-xl xl:text-2xl">
-            Des missions courtes et sans engagement selon vos envies.
+            Des missions courtes selon vos envies.
           </p>
         </div>
         <div class="hidden lg:block flex-none">
