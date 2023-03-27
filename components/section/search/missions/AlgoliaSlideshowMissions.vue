@@ -56,6 +56,7 @@ export default {
   async fetch () {
     const { hits } = await this.$algolia.missionsIndex.search('', this.searchParameters)
     this.missions = hits
+    this.$emit('results', this.missions)
   },
   methods: {
     previous () {
