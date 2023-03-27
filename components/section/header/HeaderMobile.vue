@@ -146,15 +146,6 @@
           </div>
         </transition>
       </portal>
-
-      <client-only>
-        <portal to="body-end">
-          <transition name="fade">
-            <LazySoftGateOverlay v-if="$store.state.softGate.showOverlay" />
-            <LazyMissionShareOverlay v-if="$store.state.missionShare.showOverlay" />
-          </transition>
-        </portal>
-      </client-only>
     </div>
   </div>
 </template>
@@ -163,16 +154,12 @@
 import { CalendarIcon, SearchIcon, ChatAltIcon } from '@vue-hero-icons/outline'
 import { FocusLoop } from '@vue-a11y/focus-loop'
 import DropdownUser from '@/components/custom/DropdownUser'
-import LazySoftGateOverlay from '@/components/section/SoftGateOverlay'
-import LazyMissionShareOverlay from '@/components/section/MissionShareOverlay'
 import DsfrButton from '@/components/dsfr/Button.vue'
 import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 
 export default {
   components: {
     DropdownUser,
-    LazySoftGateOverlay,
-    LazyMissionShareOverlay,
     DsfrButton,
     FocusLoop,
     HeaderBanner

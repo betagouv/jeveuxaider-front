@@ -62,32 +62,16 @@
           :value="$route.query['filter[ofActivity]']"
           @input="changeFilter('filter[ofActivity]', $event)"
         />
-        <div class="flex flex-wrap mb-2 gap-4">
-          <Checkbox
-            :key="`type-1-${$route.fullPath}`"
-            :option="{key:'presentiel', label: 'Présentiel'}"
-            :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'].includes('Mission en présentiel')"
-            transparent
-            variant="button"
-            @change="changeFilter('filter[type]', 'Mission en présentiel', true)"
-          />
-          <Checkbox
-            :key="`type-2-${$route.fullPath}`"
-            :option="{key:'distance', label: 'À distance'}"
-            :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'].includes('Mission à distance')"
-            transparent
-            variant="button"
-            @change="changeFilter('filter[type]', 'Mission à distance', true)"
-          />
-          <Checkbox
-            :key="`type-3-${$route.fullPath}`"
-            :option="{key:'autonomy', label: 'En autonomie'}"
-            :is-checked="$route.query['filter[is_autonomy]'] && $route.query['filter[is_autonomy]'].includes('true')"
-            transparent
-            variant="button"
-            @change="changeFilter('filter[is_autonomy]', 'true', true)"
-          />
-        </div>
+        <SelectAdvanced
+          :key="`creneaux-${$route.fullPath}`"
+          name="creneaux"
+          placeholder="Créneaux"
+          :options="[{key: 'true', label: 'Oui'}, {key: 'false', label: 'Non'}]"
+          :value="$route.query['filter[hasCreneaux]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[hasCreneaux]', $event)"
+        />
         <SelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
@@ -160,6 +144,32 @@
           clearable
           @input="changeFilter('filter[no_tags]', $event)"
         />
+        <div class="flex flex-wrap mb-2 gap-4">
+          <Checkbox
+            :key="`type-1-${$route.fullPath}`"
+            :option="{key:'presentiel', label: 'Présentiel'}"
+            :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'].includes('Mission en présentiel')"
+            transparent
+            variant="button"
+            @change="changeFilter('filter[type]', 'Mission en présentiel', true)"
+          />
+          <Checkbox
+            :key="`type-2-${$route.fullPath}`"
+            :option="{key:'distance', label: 'À distance'}"
+            :is-checked="$route.query['filter[type]'] && $route.query['filter[type]'].includes('Mission à distance')"
+            transparent
+            variant="button"
+            @change="changeFilter('filter[type]', 'Mission à distance', true)"
+          />
+          <Checkbox
+            :key="`type-3-${$route.fullPath}`"
+            :option="{key:'autonomy', label: 'En autonomie'}"
+            :is-checked="$route.query['filter[is_autonomy]'] && $route.query['filter[is_autonomy]'].includes('true')"
+            transparent
+            variant="button"
+            @change="changeFilter('filter[is_autonomy]', 'true', true)"
+          />
+        </div>
       </div>
     </template>
     <div>

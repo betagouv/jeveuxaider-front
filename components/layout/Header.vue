@@ -7,6 +7,15 @@
       <HeaderMobile class="block lg:hidden" :full-width="fullWidth" />
       <HeaderDesktop class="hidden lg:block" :full-width="fullWidth" />
     </div>
+
+    <client-only>
+      <portal to="body-end">
+        <transition name="fade">
+          <LazySoftGateOverlay v-if="$store.state.softGate.showOverlay" />
+          <LazyMissionShareOverlay v-if="$store.state.missionShare.showOverlay" />
+        </transition>
+      </portal>
+    </client-only>
   </header>
 </template>
 
@@ -14,12 +23,16 @@
 import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 import HeaderMobile from '@/components/section/header/HeaderMobile.vue'
 import HeaderDesktop from '@/components/section/header/HeaderDesktop.vue'
+import LazySoftGateOverlay from '@/components/section/SoftGateOverlay'
+import LazyMissionShareOverlay from '@/components/section/MissionShareOverlay'
 
 export default {
   components: {
     HeaderBanner,
     HeaderMobile,
-    HeaderDesktop
+    HeaderDesktop,
+    LazySoftGateOverlay,
+    LazyMissionShareOverlay
   },
   props: {
     fullWidth: {
