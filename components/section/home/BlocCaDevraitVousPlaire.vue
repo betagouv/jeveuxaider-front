@@ -107,7 +107,7 @@ export default {
   },
   computed: {
     activities () {
-      return this.$store.getters.profile.activities.length
+      return this.$store.getters.profile.activities?.length
         ? this.$store.getters.profile.activities
         : this.allActivities.filter(activity => activity.popular === true)
     },
