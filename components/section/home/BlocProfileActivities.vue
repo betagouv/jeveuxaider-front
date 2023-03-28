@@ -79,21 +79,21 @@ export default {
   },
   computed: {
     profileActivities () {
-      if (this.$store.getters.profile.activities.length === 0) {
+      if (!this.$store.getters.profile.activities || this.$store.getters.profile.activities.length === 0) {
         return []
       }
       const profileActivitiesIds = this.$store.getters.profile.activities.slice(0, this.chunkSize).map((activity) => { return activity.id })
       return activities.filter(activity => profileActivitiesIds.includes(activity.key))
     },
     profileActivitiesRemaining () {
-      if (this.$store.getters.profile.activities.length === 0) {
+      if (!this.$store.getters.profile.activities || this.$store.getters.profile.activities.length === 0) {
         return []
       }
       const profileActivitiesIds = this.$store.getters.profile.activities.slice(this.chunkSize, this.$store.getters.profile.activities.length).map((activity) => { return activity.id })
       return activities.filter(activity => profileActivitiesIds.includes(activity.key))
     },
     profileDomainsByActivities () {
-      if (this.$store.getters.profile.activities.length === 0) {
+      if (!this.$store.getters.profile.activities || this.$store.getters.profile.activities.length === 0) {
         return []
       }
       const profileActivitiesIds = this.$store.getters.profile.activities.map((activity) => { return activity.id })

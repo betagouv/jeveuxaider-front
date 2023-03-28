@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white py-12 xl:py-24 overflow-hidden">
+  <div v-show="hasResults" class="bg-white py-12 xl:py-24 overflow-hidden">
     <div class="container">
       <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
         <div class="">
@@ -25,19 +25,20 @@
           </div>
         </div>
       </div>
-      <!-- v-if="organisations.length > 0" -->
       <div class="mt-12">
-        <!-- facetFilters: [facetFilterOrganisationsNames], -->
         <AlgoliaSlideshowMissions
+          v-if="organisations.length > 0"
           ref="slideshowPopulaire"
           aria-labelledby="label-slideshow-missions-populaires"
           :search-parameters="{
             hitsPerPage: 6,
             aroundPrecision: 2000,
             aroundLatLngViaIP: true,
-            aroundRadius: 'all'
+            aroundRadius: 'all',
+            facetFilters: facetFilterOrganisationsNames
           }"
           @slide-click="onSlideClick()"
+          @results="hasResults = $event.length > 0"
         />
       </div>
       <div class="lg:hidden mt-6 text-center">
@@ -62,23 +63,24 @@ export default {
   },
   data () {
     return {
-      organisations: []
+      organisations: [],
+      hasResults: false
     }
   },
   fetchOnServer: false,
   async fetch () {
-    // const { data: organisations } = await this.$axios.get('/organisations/popular')
-    // this.organisations = organisations
+    const { data: organisations } = await this.$axios.get('/organisations/popular')
+    this.organisations = organisations
   },
   computed: {
     facetFilterOrganisationsNames () {
       if (this.organisations.length == 0) {
-        return ''
+        return []
       }
       const names = this.organisations.map((organisation) => {
         return `structure.name:${organisation.name}`
       })
-      return names
+      return [names]
     },
     searchPageWithFilters () {
       const filters = []

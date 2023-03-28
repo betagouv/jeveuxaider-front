@@ -402,6 +402,7 @@ body.full-height-layout {
 
 .Vue-Toastification__toast {
   border-radius: 0 !important;
+  @apply font-sans #{!important};
 }
 
 .vc-container {

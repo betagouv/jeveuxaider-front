@@ -62,7 +62,7 @@
                 :key="activity.key"
               >
                 <button
-                  class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow xl:shadow-xl text-lg  xl:text-[22px] font-bold w-full sm:w-auto sm:hover:bg-[#F6F6F6] transition"
+                  class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow xl:shadow-xl text-lg  xl:text-[22px] font-bold w-full sm:w-auto sm:hover:bg-[#F6F6F6] transition text-left"
                   @click="onClick(activity)"
                 >
                   <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
@@ -87,8 +87,8 @@ export default {
   },
   data () {
     return {
-      activities,
-      chunkSize: 7
+      activities: activities.sort((a, b) => b.popular - a.popular),
+      chunkSize: 5
     }
   },
   computed: {
@@ -113,8 +113,10 @@ export default {
     onResize () {
       if (window.innerWidth >= 1024) {
         this.chunkSize = 14
-      } else {
+      } else if (window.innerWidth >= 768) {
         this.chunkSize = 7
+      } else {
+        this.chunkSize = 5
       }
     },
     onClick (activity) {

@@ -15,7 +15,7 @@
         </span>
       </Heading>
       <p class="text-xl leading-7 mb-6 xl:mb-10 text-center">
-        Tous les acteurs du bénévolat vous attendent sur la première <strong>plateforme nationale de l’engagement</strong>.
+        Tous les acteurs du bénévolat vous attendent sur la <strong>plateforme publique de l’engagement</strong>.
       </p>
       <div class="text-center mb-8 xl:mb-12">
         <Button class="xl:px-6 xl:py-3 xl:text-lg" @click="handleClick()">

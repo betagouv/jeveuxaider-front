@@ -338,6 +338,7 @@
     "label": "🚗 Accompagnement à la mobilité",
     "icon": "🚗",
     "name": "Accompagnement à la mobilité",
-    "domain": ["Solidarité et insertion"]
+    "domain": ["Solidarité et insertion"],
+    "popular": false
   }
 ]

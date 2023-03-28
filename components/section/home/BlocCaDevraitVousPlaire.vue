@@ -73,8 +73,8 @@
               aroundLatLngViaIP: true,
               aroundPrecision: 2000,
               aroundRadius: 'all',
-              facetFilters,
-              numericFilters,
+              facetFilters: [facetFilterActivities],
+              numericFilters: [numericFiltersCommitmentTotal],
             }"
             @slide-click="onSlideClick"
           />
@@ -89,6 +89,7 @@ import Heading from '@/components/dsfr/Heading.vue'
 import Button from '@/components/dsfr/Button.vue'
 import Link from '@/components/dsfr/Link.vue'
 import AlgoliaSlideshowMissions from '@/components/section/search/missions/AlgoliaSlideshowMissions.vue'
+import allActivities from '@/assets/activities.json'
 
 export default {
   components: {
@@ -100,65 +101,29 @@ export default {
   fetchOnServer: false,
   data () {
     return {
-      organisations: null
+      organisations: null,
+      allActivities
     }
   },
-  async fetch () {
-    // const { data: organisations } = await this.$axios.get('/organisations/popular')
-    // this.organisations = organisations
-  },
   computed: {
-    facetFilters () {
-      return this.profileFacetFiltersActivities ?? (this.facetFilterOrganisationsNames ?? [])
+    activities () {
+      return this.$store.getters.profile.activities.length
+        ? this.$store.getters.profile.activities
+        : this.allActivities.filter(activity => activity.popular === true)
     },
-    numericFilters () {
-      return this.profileFacetFiltersActivities ? this.profileNumericFiltersCommitmentTotal : ['commitment__total <= 4']
+    facetFilterActivities () {
+      return this.activities.map(activity => `activity.name:${activity.name}`)
     },
-    profileFacetFiltersActivities () {
-      if (this.$store.getters.profile.activities.length === 0) {
-        return null
-      }
-      const activities = this.$store.getters.profile.activities.map((activity) => {
-        return `activity.name:${activity.name}`
-      })
-      return [activities]
-    },
-    facetFilterOrganisationsNames () {
-      return this.organisations?.map((organisation) => {
-        return `structure.name:${organisation.name}`
-      })
-    },
-    profileNumericFiltersCommitmentTotal () {
-      if (!this.$store.getters.profile.commitment__total) {
-        return []
-      }
-      return [`commitment__total <= ${this.$store.getters.profile.commitment__total}`]
+    numericFiltersCommitmentTotal () {
+      const commitmentTotal = this.$store.getters.profile.commitment__total ?? 4
+      return [`commitment__total <= ${commitmentTotal}`]
     },
     searchPageWithFilters () {
       const filters = []
-
-      if (!this.$store.getters.profile.activities.length && this.organisations) {
-        filters.push(`structure.name=${this.organisations.map((organisation) => {
-          return encodeURIComponent(organisation.name)
-        }).join('|')}`, 'commitment__total <= 4', 'duration=half_day', 'time_period=year')
-        return filters.join('&')
-      }
-
-      if (this.$store.getters.profile.commitment__total) {
-        filters.push(`commitment__total=<%3D${this.$store.getters.profile.commitment__total}`)
-      }
-      if (this.$store.getters.profile.commitment__duration) {
-        filters.push(`duration=${this.$store.getters.profile.commitment__duration}`)
-      }
-      if (this.$store.getters.profile.commitment__time_period) {
-        filters.push(`time_period=${this.$store.getters.profile.commitment__time_period}`)
-      }
-      if (this.$store.getters.profile.activities) {
-        filters.push(`activity.name=${this.$store.getters.profile.activities.map((activity) => {
-          return encodeURIComponent(activity.name)
-        }).join('|')}`)
-      }
-
+      filters.push(`commitment__total=<%3D${this.$store.getters.profile.commitment__total ?? '4'}`)
+      filters.push(`duration=${this.$store.getters.profile.commitment__duration ?? 'half_day'}`)
+      filters.push(`time_period=${this.$store.getters.profile.commitment__time_period ?? 'year'}`)
+      filters.push(`activity.name=${this.activities.map(activity => encodeURIComponent(activity.name)).join('|')}`)
       return filters.join('&')
     }
   },
