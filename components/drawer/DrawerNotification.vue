@@ -64,6 +64,7 @@ export default {
   methods: {
     async onSubmit () {
       await this.$axios.post(`/notifications/${this.notificationKey}/test`)
+      this.$toast.success("Vous allez recevoir la notification d'ici quelques instants...")
     }
   }
 }
