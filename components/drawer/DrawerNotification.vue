@@ -1,5 +1,12 @@
 <template>
-  <Drawer :is-open="Boolean(notificationKey)" width="4xl" @close="$emit('close')">
+  <Drawer
+    :is-open="Boolean(notificationKey)"
+    width="4xl"
+    form-id="form-notification"
+    :submit-label="`Envoyer à ${$store.getters.profile.email}`"
+    @close="$emit('close')"
+    @submit="onSubmit"
+  >
     <template #title>
       <Heading :level="3">
         {{ notificationLabel }}
@@ -53,27 +60,16 @@ export default {
   },
   watch: {
     notificationKey: '$fetch'
+  },
+  methods: {
+    async onSubmit () {
+      await this.$axios.post(`/notifications/${this.notificationKey}/test`)
+    }
   }
 }
 </script>
 
 <style lang="postcss" scoped>
-/* :deep(table) {
-  &.inner-body, &.content, &.subcopy {
-    width: 100% !important;
-  }
-}
-:deep(table p),
-:deep(table ul) {
-  margin-bottom: 15px !important;
-}
-
-:deep(table ul) {
-  list-style: disc;
-  padding-left: 15px;
-}
-*/
-
 :deep(a) {
   pointer-events: none !important;
   word-break: break-word !important;
