@@ -21,10 +21,7 @@
         </p>
 
         <AccordionsGroup>
-          <Accordion title-variant="xxl">
-            <template slot="iconTitle">
-              ✊
-            </template>
+          <Accordion title-variant="xxl" title-emoji="✊">
             <template slot="title">
               Proposer des missions de bénévolat d’intérêt général, à l’exclusion de tout autre type de mission
             </template>
@@ -38,10 +35,7 @@
               </p>
             </div>
           </Accordion>
-          <Accordion title-variant="xxl">
-            <template slot="iconTitle">
-              🙅
-            </template>
+          <Accordion title-variant="xxl" title-emoji="🙅">
             <template slot="title">
               Proposer des missions sans exiger de participation financière en contrepartie
             </template>
@@ -55,10 +49,7 @@
               </p>
             </div>
           </Accordion>
-          <Accordion title-variant="xxl">
-            <template slot="iconTitle">
-              🤓
-            </template>
+          <Accordion title-variant="xxl" title-emoji="🤓">
             <template slot="title">
               Avoir des informations complètes et à jour sur la plateforme
             </template>
@@ -72,10 +63,7 @@
               </p>
             </div>
           </Accordion>
-          <Accordion title-variant="xxl">
-            <template slot="iconTitle">
-              ✅
-            </template>
+          <Accordion title-variant="xxl" title-emoji="✅">
             <template slot="title">
               Publier des missions dont les contenus respectent les exigences de la plateforme
             </template>
@@ -102,10 +90,7 @@
               </p>
             </div>
           </Accordion>
-          <Accordion title-variant="xxl">
-            <template slot="iconTitle">
-              ‼
-            </template>
+          <Accordion title-variant="xxl" title-emoji="‼">
             <template slot="title">
               Éviter la publication de missions en doublon, triplon…
             </template>
@@ -127,10 +112,7 @@
               </ul>
             </div>
           </Accordion>
-          <Accordion title-variant="xxl">
-            <template slot="iconTitle">
-              🛟
-            </template>
+          <Accordion title-variant="xxl" title-emoji="🛟">
             <template slot="title">
               Garantir la sécurité et le bon déroulement de la mission de bénévolat
             </template>
@@ -154,10 +136,7 @@
               </ul>
             </div>
           </Accordion>
-          <Accordion title-variant="xxl">
-            <template slot="iconTitle">
-              😁
-            </template>
+          <Accordion title-variant="xxl" title-emoji="😁">
             <template slot="title">
               Veiller au respect des règles élémentaires de politesse et de courtoisie
             </template>
@@ -168,10 +147,7 @@
               </p>
             </div>
           </Accordion>
-          <Accordion title-variant="xxl">
-            <template slot="iconTitle">
-              ⏰
-            </template>
+          <Accordion title-variant="xxl" title-emoji="⏰">
             <template slot="title">
               Répondre aux bénévoles dès que possible
             </template>
@@ -185,10 +161,7 @@
               </p>
             </div>
           </Accordion>
-          <Accordion title-variant="xxl">
-            <template slot="iconTitle">
-              📋
-            </template>
+          <Accordion title-variant="xxl" title-emoji="📋">
             <template slot="title">
               Mettre à jour les demandes de participations
             </template>

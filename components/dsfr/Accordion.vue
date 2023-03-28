@@ -12,16 +12,16 @@
         type="button"
         @click="isOpen = !isOpen"
       >
-        <span :class="{ 'lg:flex lg:items-center': !!$slots.iconTitle}">
+        <span :class="{ 'lg:flex lg:items-center': titleEmoji}">
           <span
-            v-if="!!$slots.iconTitle"
+            v-if="titleEmoji"
             aria-hidden="true"
             :class="[
               'mr-1 md:mr-2 font-emoji',
               { 'lg:text-[32px] lg:mr-6': titleVariant === 'xxl' }
             ]"
           >
-            <slot name="iconTitle" />
+            {{ titleEmoji }}
           </span>
           <span>
             <slot name="title" />
@@ -63,6 +63,10 @@ export default {
       type: String,
       default: null,
       validator: tv => ['xxl', null].includes(tv)
+    },
+    titleEmoji: {
+      type: String,
+      default: null
     }
   },
   data () {
