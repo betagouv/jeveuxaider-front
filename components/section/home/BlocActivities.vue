@@ -87,7 +87,7 @@ export default {
   },
   data () {
     return {
-      activities,
+      activities: activities.sort((a, b) => b.popular - a.popular),
       chunkSize: 5
     }
   },
