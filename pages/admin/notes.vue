@@ -130,6 +130,15 @@ export default {
   },
   mixins: [QueryBuilder],
   middleware: 'authenticated',
+  asyncData ({ store, error }) {
+    if (
+      !['admin', 'referent'].includes(
+        store.getters.contextRole
+      )
+    ) {
+      return error({ statusCode: 403 })
+    }
+  },
   data () {
     return {
       loading: false,
@@ -137,9 +146,6 @@ export default {
       queryParams: {
       }
     }
-  },
-  methods: {
-
   }
 }
 </script>
