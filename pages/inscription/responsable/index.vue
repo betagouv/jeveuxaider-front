@@ -596,10 +596,7 @@ export default {
           window.plausible && window.plausible('Inscription responsable - Étape 1 - Création de compte')
           await this.$gtm.push({ event: 'inscription-responsable' })
           this.$router.push({
-            path: '/inscription/responsable/step/profile',
-            query: {
-              orga_type: this.$route.query.orga_type
-            }
+            path: '/inscription/responsable/step/charte-bon-fonctionnement'
           })
         })
         .catch((errors) => {

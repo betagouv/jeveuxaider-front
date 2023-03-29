@@ -209,11 +209,18 @@ export default {
     return {}
   },
   methods: {
-    onSubmit () {
-      console.log('onSubmit')
+    async onSubmit () {
+      await this.$store.dispatch('auth/updateUser', {
+        has_agreed_responsable_terms_at: this.$dayjs().utc(true).toISOString()
+      })
+
+      window.plausible &&
+        window.plausible('Inscription responsable|CTA - Charte bon fonctionnement')
+
+      this.$router.push(this.$route.query?.redirect || '/inscription/responsable/step/profile')
     },
     onCancel () {
-      console.log('onCancel')
+      this.$router.push({ path: '/' })
     }
   }
 }
