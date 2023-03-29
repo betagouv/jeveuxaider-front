@@ -314,7 +314,7 @@ export default {
     Breadcrumb
   },
   mixins: [QueryBuilder, MixinExport, MixinBulkOperations, MixinUsetiful],
-  middleware: ['authenticated'],
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   async asyncData ({ $axios, store, error }) {
     if (
       !['admin', 'referent', 'referent_regional', 'responsable', 'tete_de_reseau'].includes(
