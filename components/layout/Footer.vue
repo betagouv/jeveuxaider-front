@@ -334,6 +334,10 @@ export default {
           url: '/conditions-generales-d-utilisation'
         },
         {
+          name: 'Charte de bon fonctionnement',
+          url: '/charte-bon-fonctionnement'
+        },
+        {
           name: 'Plan du site',
           url: '/plan-du-site'
         },
