@@ -40,7 +40,9 @@
         {'w-4 h-4': ['sm', 'md'].includes(size) },
         {'w-6 h-6': size === 'lg'},
 
-        {'animate-spin': loading }
+        {'animate-spin': loading },
+
+        iconClass
       ]"
     />
 
@@ -60,7 +62,9 @@
         {'w-4 h-4': ['sm', 'md'].includes(size) },
         {'w-6 h-6': size === 'lg'},
 
-        {'animate-spin': loading }
+        {'animate-spin': loading },
+
+        iconClass
       ]"
     />
   </component>
@@ -92,6 +96,10 @@ export default {
     iconOnly: {
       type: Boolean,
       default: false
+    },
+    iconClass: {
+      type: String,
+      default: ''
     },
     disabled: {
       type: Boolean,

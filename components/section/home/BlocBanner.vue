@@ -7,7 +7,7 @@
       height="691"
       aria-hidden="true"
       :class="[
-        'absolute inset-0 m-auto object-cover',
+        'pointer-events-none absolute inset-0 m-auto object-cover',
         'w-full h-[700px]',
         'md:h-[1000px]',
         'lg:w-[1024px] lg:h-[1200px] lg:translate-x-[-120px] lg:translate-y-[50px]',
@@ -95,10 +95,14 @@
           <Button
             type="tertiary-no-outline"
             icon="RiSearchLine"
-            class="xl:px-6 xl:py-3 xl:text-lg"
+            icon-class="lg:!w-5 lg:!h-5 lg:!mr-3"
+            class="lg:px-6 lg:py-3 lg:text-lg"
             @click="handleClick()"
           >
-            Trouver une mission <span class="hidden xxs:inline">de bénévolat</span>
+            <span>
+              <span>Trouver une mission</span>
+              <span class="hidden xxs:inline"> de bénévolat</span>
+            </span>
           </Button>
         </div>
 
@@ -121,7 +125,7 @@
               alt=""
               width="194"
               height="829"
-              class="sm:w-[100px] lg:w-[145px] xl:w-auto"
+              class="sm:w-[100px] lg:w-[145px] xl:w-auto pointer-events-none select-none"
             >
           </picture>
 
@@ -136,7 +140,7 @@
               alt=""
               width="193"
               height="1114"
-              class="sm:w-[100px] lg:w-[145px] xl:w-auto"
+              class="sm:w-[100px] lg:w-[145px] xl:w-auto pointer-events-none select-none"
             >
           </picture>
 
@@ -151,7 +155,7 @@
               alt=""
               width="193"
               height="828"
-              class="sm:w-[100px] lg:w-[145px] xl:w-auto"
+              class="sm:w-[100px] lg:w-[145px] xl:w-auto pointer-events-none select-none"
             >
           </picture>
         </div>
@@ -167,7 +171,7 @@
         alt=""
         width="425"
         height="250"
-        class="mt-10 object-contain w-full sm:hidden"
+        class="mt-10 object-contain w-full sm:hidden pointer-events-none select-none"
       >
     </div>
   </div>

@@ -48,7 +48,7 @@
         alt=""
         width="1754"
         height="238"
-        class="h-[110px] w-[818px] md:h-[119px] md:w-[877px] lg:h-[132px] lg:w-[976px] xl:h-[238px] xl:w-[1754px] mx-auto object-cover object-top pointer-events-none"
+        class="h-[110px] w-[818px] md:h-[119px] md:w-[877px] lg:h-[132px] lg:w-[976px] xl:h-[238px] xl:w-[1754px] mx-auto object-cover object-top pointer-events-none select-none"
       >
     </div>
   </div>
