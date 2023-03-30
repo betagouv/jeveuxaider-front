@@ -12,7 +12,7 @@
     <div class="container py-12">
       <div class="flex flex-col gap-16 pb-12">
         <div v-if="profileActivitiesRemaining.length > 0">
-          <Heading as="h3" size="md" class="">
+          <Heading as="h3" size="md" with-line>
             Parmi les autres thématiques qui vous touchent
           </Heading>
           <div class="flex flex-wrap gap-4 sm:gap-6 xl:gap-8 mt-12">
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div v-if="otherActivitiesFromDomains.length > 0">
-          <Heading as="h3" size="md" class="">
+          <Heading as="h3" size="md" with-line>
             Ces sujets devraient également vous parler
           </Heading>
           <div class="flex flex-wrap gap-4 sm:gap-6 xl:gap-8 mt-12">
@@ -50,7 +50,7 @@
                 aria-label="Ajouter"
                 @click="attachActivityToProfile(activity)"
               >
-                <RiAddLine class=" fill-current w-[20px] h-[20px]" />
+                <RiAddLine class="fill-current w-[20px] h-[20px]" />
               </button>
             </div>
           </div>

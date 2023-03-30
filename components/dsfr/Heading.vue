@@ -18,7 +18,9 @@
       {'text-5xl leading-[52px] xxs:text-[64px] xxs:leading-[64px] lg:text-[80px] lg:leading-[80px]': size === 'alt-xl'},
       {'text-5xl leading-[52px] xxs:text-[64px] xxs:leading-[64px] lg:text-[80px] lg:leading-[80px] xl:text-[120px] xl:leading-[120px] xl:tracking-tight': size === 'alt-2xl'},
 
-      color ?? ($store.state.settings.theme === 'light' ? lightColor : darkColor)
+      color ?? ($store.state.settings.theme === 'light' ? lightColor : darkColor),
+
+      {'with-line flex': withLine}
     ]"
   >
     <slot />
@@ -52,7 +54,22 @@ export default {
     color: {
       type: String,
       default: null
+    },
+    withLine: {
+      type: Boolean,
+      default: false
     }
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.with-line {
+  &::after {
+    content: '';
+    flex: 1 1;
+    border-bottom: 1px solid #E5E5E5;
+    @apply my-auto ml-4 relative top-[2px];
+  }
+}
+</style>
