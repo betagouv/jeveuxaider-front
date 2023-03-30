@@ -18,6 +18,7 @@
       </div>
     </template>
     <DescriptionList v-if="responsable">
+      <DescriptionListItem term="Rôle" :description="role?.pivot.fonction" />
       <DescriptionListItem term="E-mail" :description="responsable.email" />
       <DescriptionListItem term="Mobile" :description="responsable.mobile" />
       <DescriptionListItem v-if="responsable.pivot?.fonction" term="Rôle" :description="responsable.pivot.fonction" />

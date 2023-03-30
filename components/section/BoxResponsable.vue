@@ -18,16 +18,23 @@
             {{ tag.name }}
           </Tag>
         </div>
-        <div class="py-2 sm:gap-4 sm:flex">
-          <dt class="text-sm text-gray-500 flex-none" style="width: calc(33.3333%);">
-            Nom
-          </dt>
-          <dd class="mt-1 text-sm text-gray-900 font-semibold sm:mt-0 flex-1" style="word-break: break-word;">
-            {{ responsable.full_name }}
-          </dd>
-        </div>
+        <DescriptionListItem term="Nom" :description="responsable.full_name" />
+        <DescriptionListItem term="Rôle" :description="role?.pivot.fonction" />
         <DescriptionListItem term="E-mail" :description="responsable.email" />
         <DescriptionListItem term="Mobile" :description="responsable.mobile" />
+        <DescriptionListItem term="Invité par">
+          <template v-if="role?.invited_by">
+            <Link
+              v-if="['admin'].includes($store.getters.contextRole)"
+              class="inline-flex"
+              :to="`/admin/utilisateurs/${role.invited_by.profile.id}`"
+            >
+              {{ role.invited_by.profile.full_name }}
+            </Link>
+            <span v-else>{{ role.invited_by.profile.full_name }}</span>
+          </template>
+          <span v-else> - </span>
+        </DescriptionListItem>
         <DescriptionListItem
           v-if="responsable.user"
           term="Der. connexion"
@@ -80,7 +87,8 @@ export default {
   data () {
     return {
       showModalSendMessage: false,
-      conversationCurrentUserAndResponsable: null
+      conversationCurrentUserAndResponsable: null,
+      role: null
     }
   },
   async fetch () {
@@ -92,6 +100,9 @@ export default {
       }
     })
     this.conversationCurrentUserAndResponsable = data.total > 0 && data.data[0]
+
+    const { data: roles } = await this.$axios.get(`/users/${this.responsable.user_id}/roles`)
+    this.role = roles.find(role => role.name === 'responsable' && role.pivot_model.id === this.conversableId)
   },
   methods: {
     handleClickSendMessage () {
