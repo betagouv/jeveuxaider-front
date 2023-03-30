@@ -125,7 +125,7 @@
               alt=""
               width="194"
               height="829"
-              class="sm:w-[100px] lg:w-[145px] xl:w-auto pointer-events-none select-none"
+              class="sm:w-[100px] lg:w-[145px] xl:w-auto pointer-events-none select-none parallax-1"
             >
           </picture>
 
@@ -134,13 +134,13 @@
             <img
               src="/images/home/trombi-desktop-strip-2.png"
               srcset="
-              /images/home/trombi-desktop-strip-2.webp, /images/home/trombi-desktop-strip-2@2x.webp 2x,
-              /images/home/trombi-desktop-strip-2.png, /images/home/trombi-desktop-strip-2@2x.png 2x
-            "
+                /images/home/trombi-desktop-strip-2.webp, /images/home/trombi-desktop-strip-2@2x.webp 2x,
+                /images/home/trombi-desktop-strip-2.png, /images/home/trombi-desktop-strip-2@2x.png 2x
+              "
               alt=""
               width="193"
               height="1114"
-              class="sm:w-[100px] lg:w-[145px] xl:w-auto pointer-events-none select-none"
+              class="sm:w-[100px] lg:w-[145px] xl:w-auto pointer-events-none select-none parallax-2"
             >
           </picture>
 
@@ -149,13 +149,13 @@
             <img
               src="/images/home/trombi-desktop-strip-3.png"
               srcset="
-              /images/home/trombi-desktop-strip-3.webp, /images/home/trombi-desktop-strip-3@2x.webp 2x,
-              /images/home/trombi-desktop-strip-3.png, /images/home/trombi-desktop-strip-3@2x.png 2x
-            "
+                /images/home/trombi-desktop-strip-3.webp, /images/home/trombi-desktop-strip-3@2x.webp 2x,
+                /images/home/trombi-desktop-strip-3.png, /images/home/trombi-desktop-strip-3@2x.png 2x
+              "
               alt=""
               width="193"
               height="828"
-              class="sm:w-[100px] lg:w-[145px] xl:w-auto pointer-events-none select-none"
+              class="sm:w-[100px] lg:w-[145px] xl:w-auto pointer-events-none select-none parallax-3"
             >
           </picture>
         </div>
@@ -178,6 +178,7 @@
 </template>
 
 <script>
+import lax from 'lax.js'
 import Button from '@/components/dsfr/Button.vue'
 import Heading from '@/components/dsfr/Heading.vue'
 
@@ -200,6 +201,13 @@ export default {
         'passer à l’action'
       ]
     }
+  },
+  mounted () {
+    lax.init()
+    lax.addDriver('scrollY', function () { return window.scrollY })
+    lax.addElements('.parallax-1', { scrollY: { translateY: [[0, 'screenWidth'], [0, -150]] } })
+    lax.addElements('.parallax-2', { scrollY: { translateY: [[0, 'screenWidth'], [0, 200]] } })
+    lax.addElements('.parallax-3', { scrollY: { translateY: [[0, 'screenWidth'], [0, -300]] } })
   },
   methods: {
     handleClick () {
