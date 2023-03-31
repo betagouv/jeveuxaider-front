@@ -132,7 +132,7 @@
               </p>
             </div>
           </Accordion>
-          <Accordion title-variant="xxl" title-emoji="🛟">
+          <Accordion title-variant="xxl" title-emoji="🦺">
             <template slot="title">
               Garantir la sécurité et le bon déroulement de la mission de bénévolat
             </template>
