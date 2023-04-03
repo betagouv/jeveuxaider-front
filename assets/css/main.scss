@@ -319,6 +319,8 @@ body.full-height-layout {
 }
 
 .formatted-text {
+  word-break: normal;
+  overflow-wrap: break-word;
 
   > *:not(:last-child) {
     @apply mb-6;
