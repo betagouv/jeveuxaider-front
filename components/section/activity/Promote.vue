@@ -48,7 +48,7 @@
                         460 000
                       </div>
                       <div class="text-lg">
-                        bénévoles inscrits
+                        bénévoles<br>inscrits
                       </div>
                     </div>
                     <div
@@ -59,6 +59,16 @@
                       </div>
                       <div class="text-lg">
                         organisations<br>partenaires
+                      </div>
+                    </div>
+                    <div
+                      class="pb-4 sm:p-4 md:px-8 lg:px-10 xl:px-16 xl:pb-8 flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
+                    >
+                      <div class="font-extrabold text-4xl">
+                        15 000
+                      </div>
+                      <div class="text-lg">
+                        missions<br>disponibles
                       </div>
                     </div>
                   </div>

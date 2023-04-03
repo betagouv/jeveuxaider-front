@@ -48,7 +48,7 @@
                         460 000
                       </div>
                       <div class="text-lg">
-                        bénévoles inscrits<br>depuis 2018
+                        bénévoles<br>inscrits
                       </div>
                     </div>
                     <div
