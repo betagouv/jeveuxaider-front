@@ -9,7 +9,7 @@
     <div class="relative container py-12 lg:py-16">
       <div class="mb-12 text-center text-white">
         <h1 class="text-4xl lg:text-5xl font-bold mb-4 lg:mb-8 max-w-4xl mx-auto tracking-tight">
-          Les règles de bon fonctionnement
+          Acceptez les règles de bon fonctionnement
         </h1>
         <p class="text-lg lg:text-2xl">
           Charte co-rédigée avec les responsables d’organisation de la plateforme
@@ -198,7 +198,7 @@
           En cas de non-respect de ces règles, des mesures restrictives d’utilisation seront mises en place (limitation des fonctionnalités de la plateforme jusqu’à l’exclusion de la plateforme). Bien sûr, nous ne le souhaitons pas et ce serait dommage d’en arriver là !
         </p>
 
-        <div class="md:text-center mt-6 md:mt-10 lg:mt-12 flex flex-col items-center gap-4">
+        <div v-if="!$store.state.auth.user?.has_agreed_responsable_terms_at" class="md:text-center mt-6 md:mt-10 lg:mt-12 flex flex-col items-center gap-4">
           <Button type="primary" size="lg" class="w-full md:w-auto" @click.native.prevent="onSubmit">
             J'accepte la charte
           </Button>
@@ -226,6 +226,11 @@ export default {
   },
   data () {
     return {}
+  },
+  mounted () {
+    if (!this.$store.state.auth.user?.has_agreed_responsable_terms_at) {
+      this.$toast.success("Merci d'accepter les règles de bon fonctionnement ci-dessous 😉")
+    }
   },
   methods: {
     async onSubmit () {
