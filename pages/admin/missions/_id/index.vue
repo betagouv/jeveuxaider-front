@@ -65,7 +65,10 @@
             />
             <BoxOrganisation :organisation="mission.structure" />
           </div>
-          <History v-if="$route.hash === '#historique'" :model-id="mission.id" model-type="mission" />
+          <template v-if="$route.hash === '#historique'">
+            <HistoryStateChanges :model-id="mission.id" model-type="mission" />
+            <History :model-id="mission.id" model-type="mission" />
+          </template>
         </client-only>
       </div>
     </div>
@@ -83,6 +86,7 @@ import BoxEnChiffre from '@/components/section/mission/BoxEnChiffre.vue'
 import BoxDates from '@/components/section/mission/BoxDates.vue'
 import BoxOrganisation from '@/components/section/mission/BoxOrganisation.vue'
 import History from '@/components/section/History.vue'
+import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import MixinMission from '@/mixins/mission'
 import OnlineIndicator from '~/components/custom/OnlineIndicator'
 import SelectMissionState from '@/components/custom/SelectMissionState'
@@ -101,6 +105,7 @@ export default {
     BoxEnChiffre,
     BoxDates,
     BoxOrganisation,
+    HistoryStateChanges,
     History,
     OnlineIndicator,
     SelectMissionState,

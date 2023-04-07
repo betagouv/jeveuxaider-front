@@ -1,56 +1,63 @@
 <template>
-  <div v-if="queryActivityLogs && queryActivityLogs.total > 0" ref="history" class="text-sm space-y-2">
-    <Box v-for="activity in queryActivityLogs.data" :key="activity.id" variant="flat" padding="xs">
-      <div class="font-medium">
-        {{ activity.data.full_name }}
+  <div>
+    <div class="text-sm flex justify-between px-2 mb-2 items-center">
+      <div class="uppercase font-semibold text-gray-600">
+        Modifications
       </div>
-      <div class="text-gray-500 mb-4">
-        {{ formatActionLabel(activity) }}
-      </div>
-      <div class="flex space-y-2 flex-col">
-        <Disclosure v-for="change in changes(activity)" :key="change.property">
-          <template #button="{ isOpen }">
-            <div class="flex font-semibold text-sm items-center group">
-              <div class="flex-shrink-0 group-hover:text-gray-600">
-                {{ change.property }}
+    </div>
+    <div v-if="queryActivityLogs && queryActivityLogs.total > 0" ref="history" class="text-sm space-y-2">
+      <Box v-for="activity in queryActivityLogs.data" :key="activity.id" variant="flat" padding="xs">
+        <div class="font-medium">
+          {{ activity.data.full_name }}
+        </div>
+        <div class="text-gray-500 mb-4">
+          {{ formatActionLabel(activity) }}
+        </div>
+        <div class="flex space-y-2 flex-col">
+          <Disclosure v-for="change in changes(activity)" :key="change.property">
+            <template #button="{ isOpen }">
+              <div class="flex font-semibold text-sm items-center group">
+                <div class="flex-shrink-0 group-hover:text-gray-600">
+                  {{ change.property }}
+                </div>
+                <div class="w-full border-t mt-1 ml-2 -mr-1" />
+                <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+                <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
               </div>
-              <div class="w-full border-t mt-1 ml-2 -mr-1" />
-              <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
-              <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
-            </div>
-          </template>
-          <div class="mt-3 space-y-3">
-            <div>
-              <Badge color="gray-light" size="xs">
-                Avant
-              </Badge>
-              <div class="text-gray-500 italic mt-2">
-                {{ change.before || '-' }}
+            </template>
+            <div class="mt-3 space-y-3">
+              <div>
+                <Badge color="gray-light" size="xs">
+                  Avant
+                </Badge>
+                <div class="text-gray-500 italic mt-2">
+                  {{ change.before || '-' }}
+                </div>
+              </div>
+              <div>
+                <Badge color="gray-light" size="xs">
+                  Après
+                </Badge>
+                <div class="text-gray-500 italic mt-2">
+                  {{ change.after || '-' }}
+                </div>
               </div>
             </div>
-            <div>
-              <Badge color="gray-light" size="xs">
-                Après
-              </Badge>
-              <div class="text-gray-500 italic mt-2">
-                {{ change.after || '-' }}
-              </div>
-            </div>
-          </div>
-        </Disclosure>
-      </div>
-    </Box>
-    <Pagination
-      :current-page="queryActivityLogs.current_page"
-      :total-rows="queryActivityLogs.total"
-      :per-page="queryActivityLogs.per_page"
-      @page-change="handleChangePage"
-    />
-  </div>
-  <div v-else>
-    <Box variant="flat" padding="xs" class="text-sm">
-      Aucun historique disponible
-    </Box>
+          </Disclosure>
+        </div>
+      </Box>
+      <Pagination
+        :current-page="queryActivityLogs.current_page"
+        :total-rows="queryActivityLogs.total"
+        :per-page="queryActivityLogs.per_page"
+        @page-change="handleChangePage"
+      />
+    </div>
+    <div v-else>
+      <Box variant="flat" padding="xs" class="text-sm">
+        Aucun historique disponible
+      </Box>
+    </div>
   </div>
 </template>
 

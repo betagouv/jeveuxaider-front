@@ -55,8 +55,24 @@ import RiUserSettingsLine from 'vue-remix-icons/icons/RiUserSettingsLine.vue'
 import RiUserLine from 'vue-remix-icons/icons/RiUserLine.vue'
 import RiNotification3Line from 'vue-remix-icons/icons/RiNotification3Line.vue'
 import RiArrowLeftLine from 'vue-remix-icons/icons/RiArrowLeftLine.vue'
+import RiHistoryLine from 'vue-remix-icons/icons/RiHistoryLine.vue'
+import RiDraftLine from 'vue-remix-icons/icons/RiDraftLine.vue'
+import RiCheckLine from 'vue-remix-icons/icons/RiCheckLine.vue'
+import RiChatDeleteLine from 'vue-remix-icons/icons/RiChatDeleteLine.vue'
+import RiCloseCircleLine from 'vue-remix-icons/icons/RiCloseCircleLine.vue'
+import RiChatCheckLine from 'vue-remix-icons/icons/RiChatCheckLine.vue'
+import RiFlagLine from 'vue-remix-icons/icons/RiFlagLine.vue'
+import RiCloseLine from 'vue-remix-icons/icons/RiCloseLine.vue'
 
 const components = {
+  RiCloseLine,
+  RiFlagLine,
+  RiCloseCircleLine,
+  RiChatCheckLine,
+  RiChatDeleteLine,
+  RiCheckLine,
+  RiDraftLine,
+  RiHistoryLine,
   RiArrowRightLine,
   RiArrowLeftLine,
   RiNotification3Line,

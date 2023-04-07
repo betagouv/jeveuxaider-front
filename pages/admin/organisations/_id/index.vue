@@ -186,7 +186,10 @@
               </div>
             </div>
           </template>
-          <History v-if="$route.hash === '#historique'" :model-id="organisation.id" model-type="structure" />
+          <template v-if="$route.hash === '#historique'">
+            <HistoryStateChanges :model-id="organisation.id" model-type="structure" />
+            <History :model-id="organisation.id" model-type="structure" />
+          </template>
         </client-only>
       </div>
     </div>
@@ -195,6 +198,7 @@
 
 <script>
 import History from '@/components/section/History'
+import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import MixinOrganisation from '@/mixins/organisation'
 import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks'
 import BoxInformations from '@/components/section/organisation/BoxInformations'
@@ -214,6 +218,7 @@ import BoxScore from '@/components/section/organisation/BoxScore.vue'
 export default {
   components: {
     History,
+    HistoryStateChanges,
     DomainsPublicsLinks,
     OnlineIndicator,
     BoxInformations,
