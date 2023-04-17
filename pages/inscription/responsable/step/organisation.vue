@@ -53,6 +53,17 @@
           </FormControl>
 
           <FormControl
+            label="SIRET"
+            html-for="siret"
+          >
+            <Input
+              v-model="form.siret"
+              name="siret"
+              placeholder="Ex: 784 671 695 00087"
+            />
+          </FormControl>
+
+          <FormControl
             v-if="form.statut_juridique == 'Association'"
             label="Renseignez votre numéro RNA"
             html-for="rna"

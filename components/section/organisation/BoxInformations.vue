@@ -5,6 +5,7 @@
     </div>
     <Box :variant="boxVariant" :padding="boxPadding">
       <DescriptionList>
+        <DescriptionListItem term="SIRET" :description="organisation.siret" />
         <DescriptionListItem term="Adresse" :description="organisation.city ? `${organisation.city} - ${organisation.zip}` : '-'" />
         <DescriptionListItem term="Département" :description="organisation.department ? `${organisation.department} - ${$options.filters.label(organisation.department, 'departments')}` : '-'" />
         <DescriptionListItem term="RNA" :description="organisation.rna" />

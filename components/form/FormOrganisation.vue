@@ -470,9 +470,19 @@
           padding="sm"
         >
           <Heading as="h3" :level="3" class="mb-4">
-            Répertoire national des associations
+            Administratif
           </Heading>
           <div class="grid col-span-1 gap-8">
+            <FormControl
+              label="SIRET"
+              html-for="siret"
+            >
+              <Input
+                v-model="form.siret"
+                name="siret"
+                placeholder="Ex: 784 671 695 00087"
+              />
+            </FormControl>
             <FormControl
               label="Numéro RNA"
               html-for="rna"
@@ -493,6 +503,7 @@
                 Je n’ai pas de numéro RNA car je suis une association de droit local (Alsace-Moselle)
               </CheckboxBoolean>
             </FormControl>
+
             <FormControl
               v-if="['admin'].includes($store.getters.contextRole)"
               label="# API Engagement"
