@@ -18,7 +18,7 @@
           label="Raison"
           required
         >
-          <RadioGroup v-model="form.reason" :options="$labels.participation_canceled_by_benevole_reasons.filter((term) => term.key != 'user_unsubscribed')" />
+          <RadioGroup v-model="form.reason" :options="$labels.participation_canceled_by_benevole_reasons" />
         </FormControl>
 
         <FormControl

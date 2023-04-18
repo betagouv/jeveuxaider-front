@@ -28,6 +28,9 @@ export default {
         case 'Annulée':
           message = 'La participation a été annulée'
           break
+        case 'Désinscription':
+          message = 'La participation a été annulée'
+          break
         case 'Annulée par bénévole':
           message = this.message.content
           break
@@ -47,6 +50,9 @@ export default {
         }
         if (this.message.contextual_state == 'Annulée par bénévole') {
           message += `<br><span class="font-light text-sm"> ${this.$options.filters.label(this.message.contextual_reason, 'participation_canceled_by_benevole_reasons')}</span>`
+        }
+        if (this.message.contextual_state == 'Désinscription') {
+          message += '<br><span class="font-light text-sm"> Désinscription de l\'utilisateur</span>'
         }
       }
       return message

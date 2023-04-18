@@ -341,7 +341,6 @@ const labels = {
     { key: 'no_response', label: 'L\'organisation ne répond pas.' },
     { key: 'requirements_not_fulfilled', label: 'La mission ne correspond pas à mes attentes.' },
     { key: 'not_available', label: 'Je ne suis plus disponible.' },
-    { key: 'user_unsubscribed', label: 'Le bénévole s\'est désinscrit.' },
     { key: 'other', label: 'Autres.' }
   ],
   testimonial_grade: [
