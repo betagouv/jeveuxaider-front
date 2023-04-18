@@ -44,7 +44,7 @@
                 <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
                   <div>
                     <p class="text-sm text-gray-500">
-                      <span class="font-medium text-gray-800">{{ change.causer.profile.full_name }}</span> a passé le statut à <span class="font-semibold text-gray-900">{{ change.properties.attributes.state }}</span>
+                      <span class="font-medium text-gray-800">{{ change.causer ? change.causer.profile.full_name : '[AUTO]' }}</span> a passé le statut à <span class="font-semibold text-gray-900">{{ change.properties.attributes.state }}</span>
                     </p>
                   </div>
                   <div class="whitespace-nowrap text-right text-sm text-gray-500">
