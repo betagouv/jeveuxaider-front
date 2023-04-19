@@ -28,6 +28,31 @@
         </p>
 
         <AccordionsGroup>
+          <Accordion title-variant="xxl" title-emoji="⏰">
+            <template slot="title">
+              Répondre aux bénévoles dès que possible
+            </template>
+
+            <div class="formatted-text md:text-lg lg:text-xl">
+              <p>
+                Les bénévoles peuvent consulter plus de 10 000 missions sur JeVeuxAider.gouv.fr.
+              </p>
+              <p>
+                Lorsqu’ils proposent leur aide, ils s’attendent à une réponse rapide de votre part. <strong>Ils choisiront souvent la première mission pour laquelle ils auront eu une réponse.</strong> Nous vous recommandons, en tant qu'organisation, de répondre aux sollicitations des bénévoles dans un délai raisonnable (<strong>si possible dans la semaine qui suit la demande de participation</strong>). La messagerie de JeVeuxAider.gouv.fr est à privilégier dans le cadre des échanges.
+              </p>
+            </div>
+          </Accordion>
+          <Accordion title-variant="xxl" title-emoji="📋">
+            <template slot="title">
+              Mettre à jour les demandes de participations
+            </template>
+
+            <div class="formatted-text md:text-lg lg:text-xl">
+              <p>
+                Le suivi des participations que vous allez pouvoir réaliser sur la plateforme, <strong>est un élément clef</strong> à de nombreux niveaux. Nous vous demandons ainsi de bien passer les nouvelles demandes de participation au statut “En cours de traitement”, puis <strong>de les valider ou de les refuser en précisant le motif de refus, dans un délai de deux mois</strong>.
+              </p>
+            </div>
+          </Accordion>
           <Accordion title-variant="xxl" title-emoji="✊">
             <template slot="title">
               Proposer exclusivement des missions de bénévolat
@@ -167,31 +192,6 @@
               </p>
             </div>
           </Accordion>
-          <Accordion title-variant="xxl" title-emoji="⏰">
-            <template slot="title">
-              Répondre aux bénévoles dès que possible
-            </template>
-
-            <div class="formatted-text md:text-lg lg:text-xl">
-              <p>
-                Les bénévoles peuvent consulter plus de 10 000 missions sur JeVeuxAider.gouv.fr.
-              </p>
-              <p>
-                Lorsqu’ils proposent leur aide, ils s’attendent à une réponse rapide de votre part. <strong>Ils choisiront souvent la première mission pour laquelle ils auront eu une réponse.</strong> Nous vous recommandons, en tant qu'organisation, de répondre aux sollicitations des bénévoles dans un délai raisonnable (<strong>si possible dans la semaine qui suit la demande de participation</strong>). La messagerie de JeVeuxAider.gouv.fr est à privilégier dans le cadre des échanges.
-              </p>
-            </div>
-          </Accordion>
-          <Accordion title-variant="xxl" title-emoji="📋">
-            <template slot="title">
-              Mettre à jour les demandes de participations
-            </template>
-
-            <div class="formatted-text md:text-lg lg:text-xl">
-              <p>
-                Le suivi des participations que vous allez pouvoir réaliser sur la plateforme, <strong>est un élément clef</strong> à de nombreux niveaux. Nous vous demandons ainsi de bien passer les nouvelles demandes de participation au statut “En cours de traitement”, puis <strong>de les valider ou de les refuser en précisant le motif de refus, dans un délai de deux mois</strong>.
-              </p>
-            </div>
-          </Accordion>
         </AccordionsGroup>
 
         <p class="md:text-center md:text-lg lg:text-xl mt-4 lg:mt-8">
@@ -238,8 +238,13 @@ export default {
         has_agreed_responsable_terms_at: this.$dayjs().utc(true).toISOString()
       })
 
-      window.plausible &&
-        window.plausible('Inscription responsable|CTA - Charte bon fonctionnement')
+      // Seulement pour les nouvelles inscriptions
+      const dateFeatureLaunch = this.$dayjs('2023-04-18 17:00:00').utc(true)
+      const userCreatedAt = this.$dayjs(this.$store.state.auth.user?.created_at).utc(true)
+      if (userCreatedAt.isAfter(dateFeatureLaunch)) {
+        window.plausible &&
+          window.plausible('Inscription responsable|CTA - Charte bon fonctionnement')
+      }
 
       this.$router.push(this.$route.query?.redirect || '/inscription/responsable/step/profile')
     },
