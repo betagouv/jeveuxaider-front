@@ -55,7 +55,6 @@ import RiUserSettingsLine from 'vue-remix-icons/icons/RiUserSettingsLine.vue'
 import RiUserLine from 'vue-remix-icons/icons/RiUserLine.vue'
 import RiNotification3Line from 'vue-remix-icons/icons/RiNotification3Line.vue'
 import RiArrowLeftLine from 'vue-remix-icons/icons/RiArrowLeftLine.vue'
-import RiLogoutBoxLine from 'vue-remix-icons/icons/RiLogoutBoxLine.vue'
 
 const components = {
   RiArrowRightLine,
@@ -109,8 +108,7 @@ const components = {
   RiFileCopyLine,
   RiEqualizerFill,
   RiPauseCircleLine,
-  RiPlayCircleLine,
-  RiLogoutBoxLine
+  RiPlayCircleLine
 }
 
 Object.entries(components).forEach(([name, component]) => {

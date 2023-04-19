@@ -202,9 +202,6 @@
           <Button type="primary" size="lg" class="w-full md:w-auto" @click.native.prevent="onSubmit">
             J'accepte la charte
           </Button>
-          <!-- <Button type="tertiary" icon="RiLogoutBoxLine" class="w-full md:w-auto" @click.native.prevent="onCancel">
-            Abandonner l'inscription
-          </Button> -->
         </div>
       </Box>
     </div>
