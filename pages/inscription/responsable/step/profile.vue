@@ -111,6 +111,7 @@ export default {
   },
   mixins: [FormErrors, FormUploads],
   layout: 'register-steps',
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   data () {
     return {
       loading: false,

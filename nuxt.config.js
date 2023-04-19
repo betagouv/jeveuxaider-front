@@ -220,7 +220,8 @@ export default {
     plugins: [
       'relativeTime',
       'customParseFormat',
-      'duration'
+      'duration',
+      'utc'
     ]
   },
 

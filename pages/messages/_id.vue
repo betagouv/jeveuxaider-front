@@ -10,6 +10,7 @@ export default {
     ConversationPage
   },
   layout: 'messages',
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   async asyncData ({ store, error, $api, params, $axios }) {
     const { data: conversation } = await $axios.get(`/conversations/${params.id}`)
 

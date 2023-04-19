@@ -235,7 +235,7 @@ export default {
     BoxScore
   },
   mixins: [MixinOrganisation],
-  middleware: 'authenticated',
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   async asyncData ({ $axios, params, error, store }) {
     if (
       ![

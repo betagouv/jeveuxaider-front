@@ -136,7 +136,7 @@ export default {
     ButtonsSubmitFormMission,
     Breadcrumb
   },
-  middleware: 'authenticated',
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   async asyncData ({ $axios, params, error, store }) {
     if (!store.getters.currentRole || store.getters.currentRole.contextable_type !== 'structure') {
       return error({ statusCode: 403 })

@@ -142,7 +142,7 @@ import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 export default {
   components: { CardProfileBenevole, DrawerBenevole, Pagination, Breadcrumb },
   mixins: [QueryBuilder, MixinMission],
-  middleware: 'authenticated',
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   async asyncData ({ $axios, params, error, store }) {
     if (
       ![

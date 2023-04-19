@@ -10,6 +10,7 @@ export default {
     ConversationPage
   },
   layout: 'messages',
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   data () {
     return {
       conversationIsSet: false

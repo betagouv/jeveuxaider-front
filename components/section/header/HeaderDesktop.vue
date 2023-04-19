@@ -50,7 +50,11 @@
     </div>
     <div class="w-full border-t" />
     <div class="flex justify-between text-sm text-gray-800" :class="{'xl:container': !fullWidth}">
-      <nav role="navigation" class="flex w-full xl:-mx-4" :style="!fullWidth ? 'width: calc(100% + 2rem);' : null">
+      <nav
+        role="navigation"
+        :class="['flex w-full', {'xl:-mx-4': !fullWidth}]"
+        :style="!fullWidth ? 'width: calc(100% + 2rem);' : null"
+      >
         <Dropdown v-if="$store.getters.roles && $store.getters.roles.length > 1" ref="switchRole" position="left" class="h-full">
           <template #button>
             <button class="flex items-center justify-between gap-4 border-r py-4 pr-2 pl-5 w-52">

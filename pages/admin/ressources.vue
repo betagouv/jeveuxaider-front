@@ -89,7 +89,7 @@ export default {
     Breadcrumb
   },
   mixins: [QueryBuilder],
-  middleware: 'authenticated',
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   data () {
     return {
       loading: false,

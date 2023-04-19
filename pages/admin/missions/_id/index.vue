@@ -114,7 +114,7 @@ export default {
     Breadcrumb
   },
   mixins: [MixinMission],
-  middleware: 'authenticated',
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   async asyncData ({ $axios, params, error, store }) {
     if (
       ![

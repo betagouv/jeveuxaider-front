@@ -132,7 +132,7 @@ export default {
     Tag
   },
   mixins: [QueryBuilder],
-  middleware: 'authenticated',
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   data () {
     return {
       loading: false,
