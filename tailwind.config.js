@@ -125,7 +125,8 @@ module.exports = {
         blue: colors.blue,
         orange: colors.amber,
         red: colors.red,
-        green: colors.green
+        green: colors.green,
+        yellow: colors.yellow
       },
       borderRadius: {
         xl: '10px'

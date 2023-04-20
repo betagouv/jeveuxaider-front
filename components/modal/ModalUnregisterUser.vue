@@ -22,7 +22,7 @@
           @confirm="handleLeaveStructureAndUnsubscribeUser()"
           @cancel="$emit('cancel')"
         >
-          <div class="text-sm text-gray-500 space-y-4">
+          <div class="text-gray-700 space-y-4">
             <p>
               Vous êtes sur le point de vous désinscrire de la plateforme JeVeuxAider.gouv.fr.
             </p>
@@ -42,7 +42,7 @@
           :prevent-click-outside="true"
           @close="$emit('cancel')"
         >
-          <div class="text-sm text-gray-500 space-y-4">
+          <div class="text-gray-700 space-y-4">
             <p>
               Vous êtes sur le point de vous désinscrire de la plateforme JeVeuxAider.gouv.fr.
             </p>
@@ -52,9 +52,9 @@
             <p>Un modérateur de JeVeuxAider.gouv.fr va être notifié de <span class="text-gray-700 font-semibold">votre demande de désinscription</span> et vous serez contacté très prochainement.</p>
           </div>
           <template #footer>
-            <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
+            <button class="mr-8 hover:underline" type="transparent" @click="$emit('cancel')">
               Retour
-            </Button>
+            </button>
             <Button variant="red" @click.native="handleContactAdmin">
               Je soumets ma demande
             </Button>
@@ -71,7 +71,7 @@
           @close="$emit('cancel')"
         >
           <div class="space-y-4">
-            <div class="text-sm text-gray-500 space-y-4">
+            <div class="text-gray-700 space-y-4">
               <p>
                 Vous êtes sur le point de vous désinscrire de la plateforme JeVeuxAider.gouv.fr.
               </p>
@@ -100,9 +100,9 @@
           </div>
 
           <template #footer>
-            <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
+            <button class="mr-8 hover:underline" type="transparent" @click="$emit('cancel')">
               Retour
-            </Button>
+            </button>
             <Button :loading="loading" variant="red" type="submit" @click.native="handleSetNewResponsableAndUnsubscribeUser">
               Supprimer mon compte
             </Button>
@@ -118,7 +118,7 @@
           :prevent-click-outside="true"
           @close="$emit('cancel')"
         >
-          <div class="text-sm text-gray-500 space-y-4">
+          <div class="text-gray-700 space-y-4">
             <p>
               Vous êtes sur le point de désinscrire  <span class="text-gray-700 font-semibold">{{ userStatus.structure.name }}</span> de la plateforme JeVeuxAider.gouv.fr.
             </p>
@@ -134,9 +134,9 @@
           </div>
 
           <template #footer>
-            <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
+            <button class="mr-8 hover:underline" type="transparent" @click="$emit('cancel')">
               Retour
-            </Button>
+            </button>
             <Button variant="red" @click.native="handleUnsubscribeStructureAndUser">
               Supprimer mon compte
             </Button>

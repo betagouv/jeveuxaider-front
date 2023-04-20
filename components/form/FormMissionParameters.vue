@@ -36,6 +36,12 @@
             suffix="bénévoles"
           />
         </FormControl>
+        <Alert
+          v-if="['responsable'].includes($store.getters.contextRole) && form.participations_max > 70"
+          variant="warning"
+        >
+          <span class="font-bold">Ça fait beaucoup de bénévoles 😅</span><br> Vous vous engagez à mettre à jour (valider ou refuser) toutes les demandes de participations.
+        </Alert>
         <FormControl
           v-if="form.date_type == 'recurring'"
           label="Début de la mission"

@@ -12,18 +12,46 @@
         Publier une mission
       </Button>
     </div>
-    <nuxt-link
+    <Button
       v-else
-      :to="`/admin/organisations/${$store.getters.currentRole.contextable_id}/missions/add`"
+      icon="RiAddLine"
+      :size="size"
+      tabindex="-1"
+      @click.native="handleClick"
     >
-      <Button
-        icon="RiAddLine"
-        :size="size"
-        tabindex="-1"
-      >
-        Publier une mission
-      </Button>
-    </nuxt-link>
+      Publier une mission
+    </Button>
+    <Modal
+      v-scroll-lock="showModal"
+      :is-open="showModal"
+      title="C’est votre première mission !"
+      width-class="sm:max-w-3xl"
+      :prevent-click-outside="true"
+      icon="RiErrorWarningFill"
+      @close="showModal = false"
+    >
+      <div class="text-gray-700 space-y-4">
+        <p>
+          En créant des missions sur JeVeuxAider.gouv.fr, vous vous engagez à traiter toutes les participations le plus rapidement possible.
+        </p>
+        <p>
+          Il est recommandé de répondre au bénévole dans un <span class="text-gray-900 font-semibold">délai maximum d’1 semaine,</span> et de mettre à jour le statut des participations (Validées ou Refusées) <span class="text-gray-900 font-semibold">dans un délai de 2 mois.</span> Au delà, les bénévoles risquent de se désengager, et vous risquez de voir votre utilisation de la plateforme contrainte (moins bon référencement des missions, dépublication des missions, etc)
+        </p>
+        <p>Pour être incollable sur la modération des participations, consultez la <a class="text-jva-blue-500 underline" target="_blank" href="https://reserve-civique.crisp.help/fr/category/organisation-1u4m061/">foire aux questions</a>.</p>
+      </div>
+      <template #footer>
+        <button class="mr-8 hover:underline" type="transparent" @click="showModal = false">
+          Retour
+        </button>
+        <nuxt-link
+          :to="`/admin/organisations/${$store.getters.currentRole.contextable_id}/missions/add`"
+        >
+          <Button>
+            J’ai compris
+          </Button>
+        </nuxt-link>
+      </template>
+    </Modal>
   </div>
 </template>
 
@@ -42,7 +70,8 @@ export default {
   },
   data () {
     return {
-      structure: null
+      structure: null,
+      showModal: false
     }
   },
   async fetch () {
@@ -82,6 +111,18 @@ export default {
           show: 200,
           hide: 2000
         }
+      }
+    },
+    isFirstMission () {
+      return this.$store.state.auth.user.statistics.missions_as_responsable_count === 0
+    }
+  },
+  methods: {
+    handleClick () {
+      if (this.isFirstMission) {
+        this.showModal = true
+      } else {
+        this.$router.push(`/admin/organisations/${this.$store.getters.currentRole.contextable_id}/missions/add`)
       }
     }
   }

@@ -51,6 +51,7 @@
               :mission-stats="missionStats"
               @selected="handleChangeState($event)"
             />
+            <BoxAideModeration v-if="['admin', 'referent'].includes($store.getters.contextRole)" :mission="mission" />
             <BoxDates :mission="mission" />
             <BoxPlace :mission="mission" @updated="handleChangePlace($event)" />
             <BoxEnChiffre :mission="mission" />
@@ -85,6 +86,7 @@ import BoxInformations from '@/components/section/mission/BoxInformations.vue'
 import BoxEnChiffre from '@/components/section/mission/BoxEnChiffre.vue'
 import BoxDates from '@/components/section/mission/BoxDates.vue'
 import BoxOrganisation from '@/components/section/mission/BoxOrganisation.vue'
+import BoxAideModeration from '@/components/section/mission/BoxAideModeration.vue'
 import History from '@/components/section/History.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import MixinMission from '@/mixins/mission'
@@ -111,7 +113,8 @@ export default {
     SelectMissionState,
     BoxReferents,
     BoxNotes,
-    Breadcrumb
+    Breadcrumb,
+    BoxAideModeration
   },
   mixins: [MixinMission],
   middleware: ['authenticated', 'agreedResponsableTerms'],
