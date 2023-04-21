@@ -120,7 +120,7 @@
             />
 
             <BoxAideModeration v-if="['admin', 'referent'].includes($store.getters.contextRole)" :organisation="organisation" />
-            <BoxAideModerationAI v-if="['admin', 'referent'].includes($store.getters.contextRole)" :organisation="organisation" />
+            <BoxAideModerationAI v-if="['admin'].includes($store.getters.contextRole)" :organisation="organisation" />
 
             <div>
               <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">

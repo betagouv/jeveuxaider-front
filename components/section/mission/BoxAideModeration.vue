@@ -13,7 +13,8 @@
           <template #button="{ isOpen }">
             <div class="flex font-semibold text-sm items-center group">
               <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
-                <RiAlertFill v-if="score.score < 70" class="h-5 w-5 text-yellow-600 fill-current mr-2" aria-hidden="true" />
+                <RiCloseLine v-if="score.score < 50" class="h-5 w-5 text-red-600 fill-current mr-2" aria-hidden="true" />
+                <RiAlertFill v-else-if="score.score < 75" class="h-5 w-5 text-yellow-600 fill-current mr-2" aria-hidden="true" />
                 <RiCheckLine v-else class="h-5 w-5 text-green-700 fill-current mr-2" aria-hidden="true" />
                 Score de réactivité : {{ score.score }}
               </div>
@@ -154,7 +155,7 @@ export default {
   },
   computed: {
     hasResults () {
-      return this.tooManyTotalHours || this.tooManyParticipationsMax || this.needReviewTitle || this.startDateInPass || this.endDateToBig
+      return this.score || this.tooManyTotalHours || this.tooManyParticipationsMax || this.needReviewTitle || this.startDateInPass || this.endDateToBig
     },
     tooManyTotalHours () {
       return this.mission.commitment__total > 1000

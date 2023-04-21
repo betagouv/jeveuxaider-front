@@ -27,6 +27,9 @@
             <div>Success: score au dessus de 95%</div>
             <div>Warning: score entre 85% et 95%</div>
             <div>Error: score en dessous de 85%</div>
+            <!-- <div v-for="sentence in sentencesWithKeyAndScore" :key="sentence.key">
+              <span class="font-semibold text-gray-900">[{{ sentence.key }}] {{ sentence.score * 100 | formatNumber("0.[00]") }}</span> : {{ sentence.text }}
+            </div> -->
           </div>
         </Disclosure>
         <Disclosure>
@@ -42,8 +45,8 @@
             </div>
           </template>
           <div class="ml-7 mt-3 text-sm space-y-2">
-            <div v-for="sentence,key in sentencesError" :key="key">
-              <span class="font-semibold text-gray-900">{{ response.scores[key] * 100 | formatNumber("0.[00]") }}</span> : {{ sentence.value }}
+            <div v-for="sentence in sentencesError" :key="sentence.key">
+              <span class="font-semibold text-gray-900">[{{ sentence.key }}] {{ sentence.score * 100 | formatNumber("0.[00]") }}</span> : {{ sentence.text }}
             </div>
           </div>
         </Disclosure>
@@ -60,8 +63,8 @@
             </div>
           </template>
           <div class="ml-7 mt-3 text-sm space-y-2">
-            <div v-for="sentence,key in sentencesWarning" :key="key">
-              <span class="font-semibold text-gray-900">{{ response.scores[key] * 100 | formatNumber("0.[00]") }}</span> : {{ sentence.value }}
+            <div v-for="sentence in sentencesWarning" :key="sentence.key">
+              <span class="font-semibold text-gray-900">[{{ sentence.key }}] {{ sentence.score * 100 | formatNumber("0.[00]") }}</span> : {{ sentence.text }}
             </div>
           </div>
         </Disclosure>
@@ -79,8 +82,8 @@
             </div>
           </template>
           <div class="ml-7 mt-3 text-sm space-y-2">
-            <div v-for="sentence,key in sentencesSuccess" :key="key">
-              <span class="font-semibold text-gray-900">{{ response.scores[key] * 100 | formatNumber("0.[00]") }}</span> : {{ sentence.value }}
+            <div v-for="sentence in sentencesSuccess" :key="sentence.key">
+              <span class="font-semibold text-gray-900">[{{ sentence.key }}] {{ sentence.score * 100 | formatNumber("0.[00]") }}</span> : {{ sentence.text }}
             </div>
           </div>
         </Disclosure>
@@ -120,29 +123,35 @@ export default {
     this.loading = false
   },
   computed: {
-    scores () {
-      return this.response.scores.map((item, key) => ({ value: item, key }))
+    sentencesWithKeyAndScore () {
+      if (!this.response) {
+        return []
+      }
+      return this.response.sentences.map((sentence, key) => ({ key, text: sentence, score: this.response.scores[key] }))
     },
-    indexScoresSuccess () {
-      return this.scores.filter(item => item.value >= 0.95)
-    },
-    indexScoresWarning () {
-      return this.scores.filter(item => item.value > 0.85 && item.value < 0.95)
-    },
-    indexScoresError () {
-      return this.scores.filter(item => item.value <= 0.85)
-    },
-    sentences () {
-      return this.response.sentences.map((item, key) => ({ value: item, key }))
-    },
+    // scores () {
+    //   return this.response.scores.map((item, key) => ({ value: item, key }))
+    // },
+    // indexScoresSuccess () {
+    //   return this.scores.filter(item => item.value >= 0.95)
+    // },
+    // indexScoresWarning () {
+    //   return this.scores.filter(item => item.value > 0.85 && item.value < 0.95)
+    // },
+    // indexScoresError () {
+    //   return this.scores.filter(item => item.value <= 0.85)
+    // },
+    // sentences () {
+    //   return this.response.sentences.map((item, key) => ({ value: item, key }))
+    // },
     sentencesSuccess () {
-      return this.sentences.filter(item => this.indexScoresSuccess.find(score => score.key == item.key))
+      return this.sentencesWithKeyAndScore.filter(item => item.score >= 0.95)
     },
     sentencesWarning () {
-      return this.sentences.filter(item => this.indexScoresWarning.find(score => score.key == item.key))
+      return this.sentencesWithKeyAndScore.filter(item => item.score > 0.85 && item.score < 0.95)
     },
     sentencesError () {
-      return this.sentences.filter(item => this.indexScoresError.find(score => score.key == item.key))
+      return this.sentencesWithKeyAndScore.filter(item => item.score <= 0.85)
     },
     textToAnalyze () {
       let text = this.mission.name + '|' + this.mission.objectif + '|' + this.mission.description + '|' + this.mission.information
