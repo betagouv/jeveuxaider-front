@@ -99,7 +99,7 @@ export default {
   components: {
   },
   props: {
-    mission: {
+    organisation: {
       type: Object,
       required: true
     }
@@ -112,7 +112,7 @@ export default {
   },
   async fetch () {
     this.loading = true
-    const { data: response } = await axios.post(this.$config.ai.missionModerationUrl, {
+    const { data: response } = await axios.post(this.$config.ai.organisationModerationUrl, {
       text: this.textToAnalyze
     })
     this.response = response
@@ -145,7 +145,7 @@ export default {
       return this.sentences.filter(item => this.indexScoresError.find(score => score.key == item.key))
     },
     textToAnalyze () {
-      let text = this.mission.name + '|' + this.mission.objectif + '|' + this.mission.description + '|' + this.mission.information
+      let text = this.organisation.name + '|' + this.organisation.description
       text = text.replace(/<\/li>/g, '</li>|')
       text = text.replace(/<\/?[^>]+(>|$)/g, '')
       return text
