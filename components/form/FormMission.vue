@@ -583,15 +583,13 @@
       @cancel="handleSNUCancel"
       @confirm="handleSNUConfirm"
     >
-      <div class="text-sm text-gray-500 pr-4">
-        <p class="mb-2">
-          Avant de proposer votre mission sur la plateforme du Service National Universel (SNU), merci de vous assurer que :
-        </p>
-        <ul class="">
-          <li>- Votre mission est adaptée pour l’accueil de volontaires de 15 à 18 ans</li>
-          <li>- Un tuteur sera présent durant la mission pour accompagner les volontaires du SNU</li>
-        </ul>
-      </div>
+      <p>
+        Avant de proposer votre mission sur la plateforme du Service National Universel (SNU), merci de vous assurer que :
+      </p>
+      <ul class="">
+        <li>- Votre mission est adaptée pour l’accueil de volontaires de 15 à 18 ans</li>
+        <li>- Un tuteur sera présent durant la mission pour accompagner les volontaires du SNU</li>
+      </ul>
     </AlertDialog>
   </div>
 </template>
