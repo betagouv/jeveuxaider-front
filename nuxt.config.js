@@ -128,6 +128,9 @@ export default {
     google: {
       places: process.env.GOOGLE_PLACE_API_KEY
     },
+    ai: {
+      missionModerationUrl: process.env.API_AI_MISSION_MODERATION_URL
+    },
     apiEngagement: {
       key: process.env.APIENG_KEY,
       tracking_key: process.env.APIENG_TRACKING_KEY
