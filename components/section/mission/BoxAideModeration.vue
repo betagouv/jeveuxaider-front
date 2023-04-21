@@ -27,7 +27,7 @@
           </div>
         </Disclosure>
 
-        <Disclosure v-if="mission.participations_max > 70">
+        <Disclosure v-if="needReviewTitle">
           <template #button="{ isOpen }">
             <div class="flex font-semibold text-sm items-center group">
               <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
@@ -43,7 +43,7 @@
           </div>
         </Disclosure>
 
-        <Disclosure v-if="mission.participations_max > 70">
+        <Disclosure v-if="tooManyParticipationsMax">
           <template #button="{ isOpen }">
             <div class="flex font-semibold text-sm items-center group">
               <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
@@ -59,7 +59,7 @@
           </div>
         </Disclosure>
 
-        <Disclosure v-if="$dayjs().isAfter(mission.start_date)">
+        <Disclosure v-if="startDateInPass">
           <template #button="{ isOpen }">
             <div class="flex font-semibold text-sm items-center group">
               <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
@@ -75,7 +75,7 @@
           </div>
         </Disclosure>
 
-        <Disclosure v-if="mission.end_date && $dayjs(mission.end_date).diff($dayjs(), 'year') > 5">
+        <Disclosure v-if="endDateToBig">
           <template #button="{ isOpen }">
             <div class="flex font-semibold text-sm items-center group">
               <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
@@ -125,7 +125,18 @@ export default {
     this.loading = false
   },
   computed: {
-
+    tooManyParticipationsMax () {
+      return this.mission.participations_max > 70
+    },
+    needReviewTitle () {
+      return !this.mission.name.match(/^(Je|J'|J’)/)
+    },
+    startDateInPass () {
+      return this.$dayjs().isAfter(this.mission.start_date)
+    },
+    endDateToBig () {
+      return this.mission.end_date && this.$dayjs(this.mission.end_date).diff(this.$dayjs(), 'year') > 5
+    }
   }
 }
 </script>
