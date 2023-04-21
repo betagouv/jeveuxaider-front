@@ -7,8 +7,8 @@
       <slot name="action" />
     </div>
 
-    <Box variant="flat" padding="xs">
-      <div class="flex space-y-2 flex-col">
+    <Box variant="flat" padding="xs" :loading="loading">
+      <div v-if="hasResults" class="flex space-y-2 flex-col">
         <Disclosure v-if="score">
           <template #button="{ isOpen }">
             <div class="flex font-semibold text-sm items-center group">
@@ -79,7 +79,7 @@
           <template #button="{ isOpen }">
             <div class="flex font-semibold text-sm items-center group">
               <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
-                <RiAlertFill class="h-5 w-5 text-yellow-600 fill-current mr-2" aria-hidden="true" /> Date de fin très éloignée : {{ $dayjs(mission.end_date).format('DD/MM/YYYY') }}
+                <RiAlertFill class="h-5 w-5 text-yellow-600 fill-current mr-2" aria-hidden="true" /> Durée de mission élevée : {{ $dayjs(mission.end_date).diff($dayjs(mission.start_date), 'year') }} ans
               </div>
               <div class="w-full border-t mt-1 mx-2" />
               <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
@@ -87,9 +87,37 @@
             </div>
           </template>
           <div class="ml-7 mt-3 text-sm text-gray-500">
-            La date de fin de la mission semble très éloignée : {{ $dayjs(mission.end_date).diff($dayjs(), 'year') }} ans.
+            La durée de la mission semble élevée : {{ $dayjs(mission.end_date).diff($dayjs(mission.start_date), 'year') }} ans.<br>
+            Début de mission : {{ $dayjs(mission.start_date).format('DD/MM/YYYY') }}<br>
+            Fin de mission : {{ $dayjs(mission.end_date).format('DD/MM/YYYY') }}
           </div>
         </Disclosure>
+
+        <Disclosure v-if="tooManyTotalHours">
+          <template #button="{ isOpen }">
+            <div class="flex font-semibold text-sm items-center group">
+              <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
+                <RiAlertFill class="h-5 w-5 text-yellow-600 fill-current mr-2" aria-hidden="true" /> Durée d'engagement excessive
+              </div>
+              <div class="w-full border-t mt-1 mx-2" />
+              <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+              <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+            </div>
+          </template>
+          <div class="ml-7 mt-3 text-sm text-gray-500">
+            La durée d'engagement semble excessive:
+            <template v-if="mission.commitment__duration">
+              <span>{{ mission.commitment__duration|label('duration') }}</span>
+              <template v-if="mission.commitment__time_period">
+                <span class="font-normal"> par </span>
+                <span>{{ mission.commitment__time_period|label('time_period') }}</span>
+              </template>
+            </template>. Soit {{ mission.commitment__total }} heures réparties sur l'année.
+          </div>
+        </Disclosure>
+      </div>
+      <div v-else class="text-sm text-gray-500">
+        Rien à signaler
       </div>
     </Box>
   </div>
@@ -125,6 +153,12 @@ export default {
     this.loading = false
   },
   computed: {
+    hasResults () {
+      return this.tooManyTotalHours || this.tooManyParticipationsMax || this.needReviewTitle || this.startDateInPass || this.endDateToBig
+    },
+    tooManyTotalHours () {
+      return this.mission.commitment__total > 1000
+    },
     tooManyParticipationsMax () {
       return this.mission.participations_max > 70
     },
@@ -132,10 +166,10 @@ export default {
       return !this.mission.name.match(/^(Je|J'|J’)/)
     },
     startDateInPass () {
-      return this.$dayjs().isAfter(this.mission.start_date)
+      return ['Brouillon', 'En attente de validation', 'En cours de traitement'].includes(this.mission.state) && this.$dayjs().isAfter(this.mission.start_date)
     },
     endDateToBig () {
-      return this.mission.end_date && this.$dayjs(this.mission.end_date).diff(this.$dayjs(), 'year') > 5
+      return this.mission.end_date && this.$dayjs(this.mission.end_date).diff(this.$dayjs(this.mission.start_date), 'year') > 5
     }
   }
 }

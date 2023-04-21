@@ -7,8 +7,8 @@
       <slot name="action" />
     </div>
 
-    <Box variant="flat" padding="xs">
-      <div class="flex space-y-2 flex-col">
+    <Box variant="flat" padding="xs" :loading="loading">
+      <div v-if="hasResults" class="flex space-y-2 flex-col">
         <Disclosure v-if="organisationHasDoublon">
           <template #button="{ isOpen }">
             <div class="flex font-semibold text-sm items-center group">
@@ -89,6 +89,9 @@
           </div>
         </Disclosure>
       </div>
+      <div v-else class="text-sm text-gray-500">
+        Rien à signaler
+      </div>
     </Box>
   </div>
 </template>
@@ -136,6 +139,9 @@ export default {
     this.loading = false
   },
   computed: {
+    hasResults () {
+      return this.needSiret || this.organisationHasDoublon || this.collectivityHasDoublon
+    },
     needSiret () {
       return this.organisation.statut_juridique === 'Association' && !this.organisation.siret
     },
