@@ -119,8 +119,7 @@
               @selected="handleChangeState($event)"
             />
 
-            <BoxAideModeration v-if="['admin', 'referent'].includes($store.getters.contextRole)" :organisation="organisation" />
-            <BoxAideModerationAI v-if="['admin'].includes($store.getters.contextRole)" :organisation="organisation" />
+            <BoxAideModeration v-if="['admin'].includes($store.getters.contextRole)" :organisation="organisation" />
 
             <div>
               <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
@@ -218,7 +217,6 @@ import BoxMember from '@/components/section/BoxMember'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import BoxScore from '@/components/section/organisation/BoxScore.vue'
 import BoxAideModeration from '@/components/section/organisation/BoxAideModeration.vue'
-import BoxAideModerationAI from '@/components/section/organisation/BoxAideModerationAI.vue'
 
 export default {
   components: {
@@ -238,8 +236,7 @@ export default {
     BoxMember,
     Breadcrumb,
     BoxScore,
-    BoxAideModeration,
-    BoxAideModerationAI
+    BoxAideModeration
   },
   mixins: [MixinOrganisation],
   middleware: ['authenticated', 'agreedResponsableTerms'],

@@ -116,6 +116,8 @@
             </template>. Soit {{ mission.commitment__total }} heures réparties sur l'année.
           </div>
         </Disclosure>
+
+        <DisclosureModerationAI :mission="mission" />
       </div>
       <div v-else class="text-sm text-gray-500">
         Rien à signaler
@@ -126,10 +128,12 @@
 
 <script>
 import ScoreDetails from '~/components/section/organisation/ScoreDetails.vue'
+import DisclosureModerationAI from '~/components/section/mission/DisclosureModerationAI.vue'
 
 export default {
   components: {
-    ScoreDetails
+    ScoreDetails,
+    DisclosureModerationAI
   },
   props: {
     mission: {
@@ -155,7 +159,7 @@ export default {
   },
   computed: {
     hasResults () {
-      return this.score || this.tooManyTotalHours || this.tooManyParticipationsMax || this.needReviewTitle || this.startDateInPass || this.endDateToBig
+      return true
     },
     tooManyTotalHours () {
       return this.mission.commitment__total > 1000

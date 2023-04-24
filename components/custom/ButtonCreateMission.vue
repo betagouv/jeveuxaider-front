@@ -35,9 +35,12 @@
           En créant des missions sur JeVeuxAider.gouv.fr, vous vous engagez à traiter toutes les participations le plus rapidement possible.
         </p>
         <p>
-          Il est recommandé de répondre au bénévole dans un <span class="text-gray-900 font-semibold">délai maximum d’1 semaine,</span> et de mettre à jour le statut des participations (Validées ou Refusées) <span class="text-gray-900 font-semibold">dans un délai de 2 mois.</span> Au delà, les bénévoles risquent de se désengager, et vous risquez de voir votre utilisation de la plateforme contrainte (moins bon référencement des missions, dépublication des missions, etc)
+          Il est recommandé de répondre au bénévole dans un <span class="text-gray-900 font-semibold">délai maximum d’1 semaine,</span> et de mettre à jour le statut des participations (Validées ou Refusées) <span class="text-gray-900 font-semibold">dans un délai de 2 mois.</span>
         </p>
-        <p>Pour être incollable sur la modération des participations, consultez la <a class="text-jva-blue-500 underline" target="_blank" href="https://reserve-civique.crisp.help/fr/category/organisation-1u4m061/">foire aux questions</a>.</p>
+        <p>
+          Au delà, les bénévoles risquent de se désengager, et vous risquez de voir votre utilisation de la plateforme contrainte (moins bon référencement, dépublication des missions, etc)
+        </p>
+        <p>Pour être incollable sur la modération des participations, consultez la <a class="text-jva-blue-500 underline" target="_blank" href="https://reserve-civique.crisp.help/fr/article/comment-gerer-au-mieux-ses-participants-tc1boy/">foire aux questions</a>.</p>
       </div>
       <template #footer>
         <button class="mr-8 hover:underline" type="transparent" @click="showModal = false">

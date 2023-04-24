@@ -34,45 +34,15 @@
             name="participations_max"
             type="number"
             suffix="bénévoles"
-            @blur="handleBlurParticipationsMax"
           />
-          <Modal
-            v-scroll-lock="showModalParticipationsMax"
-            :is-open="showModalParticipationsMax"
-            title="Vous recherchez un grand nombre de bénévoles"
-            width-class="sm:max-w-3xl"
-            :prevent-click-outside="true"
-            icon="RiErrorWarningFill"
-            @close="showModalParticipationsMax = false"
-          >
-            <div class="text-gray-700 space-y-4">
-              <p>
-                Vous allez probablement recevoir beaucoup de demandes de participations.
-              </p>
-              <p>
-                Vous vous engagez à toutes les mettre à jour (validées ou refusées) dans un délai de 2 mois maximum, sans quoi les bénévoles <span class="text-gray-900 font-semibold">risquent de se désengager</span>, et votre utilisation de la plateforme pourrait être restreinte (moins bon référencement des missions, dépublication des missions, etc)
-              </p>
-              <p>
-                💡 Astuce ! Il est conseillé de mobiliser progressivement des bénévoles, et de revoir votre besoin à la hausse si nécessaire.
-              </p>
-              <p>Pour être incollable sur la modération des participations, consultez la <a class="text-jva-blue-500 underline" target="_blank" href="https://reserve-civique.crisp.help/fr/category/organisation-1u4m061/">foire aux questions</a>.</p>
-            </div>
-            <template #footer>
-              <button class="mr-8 hover:underline" type="transparent" @click="showModalParticipationsMax = false">
-                Retour
-              </button>
-
-              <Button @click.native="showModalParticipationsMax = false">
-                J’ai compris
-              </Button>
-            </template>
-          </Modal>
         </FormControl>
         <Alert
           v-if="form.participations_max > 70"
           variant="warning"
         >
-          <span class="font-bold">Ça fait beaucoup de bénévoles 😅</span><br> Vous vous engagez à mettre à jour (valider ou refuser) toutes les demandes de participations.
+          <span class="font-bold">Ça fait beaucoup de bénévoles 😅</span><br>
+          Toutes les demandes de participations devront être mises à jour (validées ou refusées).<br>
+          Nous vous conseillons de mobiliser progressivement des bénévoles, et de revoir votre besoin à l ahausse si nécessaire.
         </Alert>
         <FormControl
           v-if="form.date_type == 'recurring'"
@@ -270,8 +240,7 @@ export default {
         commitment__time_period: this.initialForm.commitment__time_period || '',
         recurrent_description: this.initialForm.recurrent_description || ''
 
-      },
-      showModalParticipationsMax: false
+      }
     }
   },
   watch: {
@@ -338,11 +307,6 @@ export default {
     async handlePopoverWillShow (calendar) {
       if (this.lastDateAdded) {
         await calendar.move(this.lastDateAdded)
-      }
-    },
-    handleBlurParticipationsMax () {
-      if (this.form.participations_max > 70) {
-        this.showModalParticipationsMax = true
       }
     }
   }

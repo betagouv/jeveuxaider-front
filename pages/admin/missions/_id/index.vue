@@ -51,8 +51,7 @@
               :mission-stats="missionStats"
               @selected="handleChangeState($event)"
             />
-            <BoxAideModeration v-if="['admin', 'referent'].includes($store.getters.contextRole)" :mission="mission" />
-            <BoxAideModerationAI v-if="['admin'].includes($store.getters.contextRole)" :mission="mission" />
+            <BoxAideModeration v-if="['admin'].includes($store.getters.contextRole)" :mission="mission" />
             <BoxDates :mission="mission" />
             <BoxPlace :mission="mission" @updated="handleChangePlace($event)" />
             <BoxEnChiffre :mission="mission" />
@@ -88,7 +87,6 @@ import BoxEnChiffre from '@/components/section/mission/BoxEnChiffre.vue'
 import BoxDates from '@/components/section/mission/BoxDates.vue'
 import BoxOrganisation from '@/components/section/mission/BoxOrganisation.vue'
 import BoxAideModeration from '@/components/section/mission/BoxAideModeration.vue'
-import BoxAideModerationAI from '@/components/section/mission/BoxAideModerationAI.vue'
 import History from '@/components/section/History.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import MixinMission from '@/mixins/mission'
@@ -116,8 +114,7 @@ export default {
     BoxReferents,
     BoxNotes,
     Breadcrumb,
-    BoxAideModeration,
-    BoxAideModerationAI
+    BoxAideModeration
   },
   mixins: [MixinMission],
   middleware: ['authenticated', 'agreedResponsableTerms'],

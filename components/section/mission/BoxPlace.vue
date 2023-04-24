@@ -22,15 +22,6 @@
           </div>
         </div>
       </div>
-      <template v-if="['admin', 'referent'].includes($store.getters.contextRole)">
-        <Alert
-          v-if="['En attente de validation', 'En cours de traitement'].includes(mission.state) && mission.participations_max > 70"
-          class="mt-4"
-          variant="warning"
-        >
-          Le nombre de bénévoles recherchés semble élevé
-        </Alert>
-      </template>
       <template v-if="mission.places_left > 0">
         <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
         <div class="flex justify-center text-sm">
