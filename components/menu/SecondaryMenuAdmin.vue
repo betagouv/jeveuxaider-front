@@ -75,6 +75,7 @@ export default {
           label: 'Paramètres',
           childrens: [
             { label: 'Général', to: '/admin/settings/general' },
+            { label: 'Règles', to: '/admin/settings/rules' },
             { label: 'Emails', to: '/admin/settings/emails' },
             { label: 'Messages', to: '/admin/settings/messages' }
           ]
