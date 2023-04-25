@@ -77,15 +77,21 @@ export default {
     },
     onViewMoreClick (activity) {
       window.plausible &&
-        window.plausible(`Homepage|CTA - Plus de missions - Activité ${activity.name}`, {
-          props: { isLogged: this.$store.getters.isLogged }
+        window.plausible('Homepage|CTA - Plus de missions - Activité', {
+          props: {
+            activity: activity.name,
+            isLogged: this.$store.getters.isLogged
+          }
         })
       this.$router.push(`/missions-benevolat?activity.name=${encodeURIComponent(this.activity.name)}`)
     },
     onSlideClick (activity) {
       window.plausible &&
-        window.plausible(`Homepage|Clique - Mission - Activité ${activity.name}`, {
-          props: { isLogged: this.$store.getters.isLogged }
+        window.plausible('Homepage|Clique - Mission - Activité', {
+          props: {
+            activity: activity.name,
+            isLogged: this.$store.getters.isLogged
+          }
         })
     }
   }
