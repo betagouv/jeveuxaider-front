@@ -225,6 +225,17 @@ export default {
         : `Bénévolat ${this.mission.structure.name}`
     }
   },
+  mounted () {
+    window.plausible &&
+      window.plausible('Mission|Visite', {
+        props: {
+          isFromApi: this.mission.isFromApi ?? false,
+          isRegistrationOpen: this.mission.is_registration_open,
+          hasPlacesLeft: this.mission.has_places_left,
+          isOutdated: this.hasExpired
+        }
+      })
+  },
   methods: {
     onImgError ($event) {
       $event.target.srcset = '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
