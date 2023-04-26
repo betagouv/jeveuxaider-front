@@ -8,9 +8,14 @@
               <LoadingIndicator>Analyse des contenus AI</LoadingIndicator>
             </template>
             <template v-else>
-              <RiCheckLine v-if="sentencesError.length == 0" class="h-5 w-5 text-green-700 fill-current mr-2" aria-hidden="true" />
-              <RiAlertFill v-else class="h-5 w-5 text-yellow-600 fill-current mr-2" aria-hidden="true" />
-              Phrases à vérifier : {{ sentencesError.length }}
+              <template v-if="sentencesError.length > 0">
+                <RiAlertFill class="h-5 w-5 text-[#C9191E] fill-current mr-2" aria-hidden="true" />
+                Textes qui semblent non conformes : {{ sentencesError.length }}
+              </template>
+              <template v-else>
+                <RiInformationFill class="h-5 w-5 text-gray-400 fill-current mr-2" aria-hidden="true" />
+                Textes qui semblent conformes
+              </template>
             </template>
           </div>
           <div class="w-full border-t mt-1 mx-2" />
@@ -24,12 +29,12 @@
         </div>
       </div>
     </Disclosure>
-    <Disclosure v-if="!loading" class="mt-2">
+    <Disclosure v-if="!loading" class="mt-6">
       <template #button="{ isOpen }">
         <div class="flex font-semibold text-sm items-center group">
           <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
-            <RiAlertFill class="h-5 w-5 text-gray-400 fill-current mr-2" aria-hidden="true" />
-            [TEMPORAIRE] Debug score modération
+            <RiInformationFill class="h-5 w-5 text-gray-400 fill-current mr-2" aria-hidden="true" />
+            [TMP] Debug score modération
           </div>
           <div class="w-full border-t mt-1 mx-2" />
           <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
