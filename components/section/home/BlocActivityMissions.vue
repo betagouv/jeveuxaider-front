@@ -77,7 +77,7 @@ export default {
     },
     onViewMoreClick (activity) {
       window.plausible &&
-        window.plausible('Homepage|CTA - Plus de missions - Activité', {
+        window.plausible('Homepage - CTA - Plus de missions - Activité', {
           props: {
             activity: activity.name,
             isLogged: this.$store.getters.isLogged
@@ -87,7 +87,7 @@ export default {
     },
     onSlideClick (activity) {
       window.plausible &&
-        window.plausible('Homepage|Clique - Mission - Activité', {
+        window.plausible('Homepage - Clique - Mission - Activité', {
           props: {
             activity: activity.name,
             isLogged: this.$store.getters.isLogged

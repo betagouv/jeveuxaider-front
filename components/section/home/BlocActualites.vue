@@ -106,7 +106,7 @@ export default {
     },
     onSlideClick () {
       window.plausible &&
-        window.plausible('Homepage|Clique - Article du blog', {
+        window.plausible('Homepage - Clique - Article du blog', {
           props: { isLogged: this.$store.getters.isLogged }
         })
     }

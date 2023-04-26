@@ -136,14 +136,14 @@ export default {
     },
     onViewMoreClick () {
       window.plausible &&
-        window.plausible('Homepage|CTA - Plus de missions - Recommandations', {
+        window.plausible('Homepage - CTA - Plus de missions - Recommandations', {
           props: { isLogged: this.$store.getters.isLogged }
         })
       this.$router.push(`/missions-benevolat?${this.searchPageWithFilters}`)
     },
     onSlideClick () {
       window.plausible &&
-      window.plausible('Homepage|Clique - Mission recommandée', {
+      window.plausible('Homepage - Clique - Mission recommandée', {
         props: { isLogged: this.$store.getters.isLogged }
       })
     }

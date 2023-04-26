@@ -85,7 +85,7 @@ export default {
           .finally(() => {
             this.loading = false
             window.plausible &&
-              window.plausible('Homepage|CTA - Email', {
+              window.plausible('Homepage - CTA - Email', {
                 props: { isLogged: this.$store.getters.isLogged }
               })
           })

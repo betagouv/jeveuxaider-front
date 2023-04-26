@@ -61,7 +61,7 @@ export default {
   methods: {
     handleClick () {
       window.plausible &&
-        window.plausible('Homepage|CTA - Inscrire collectivités', {
+        window.plausible('Homepage - CTA - Inscrire collectivités', {
           props: { isLogged: this.$store.getters.isLogged }
         })
       this.$router.push('/inscription/responsable?orga_type=Collectivité')

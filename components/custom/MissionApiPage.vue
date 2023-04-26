@@ -227,7 +227,7 @@ export default {
   },
   mounted () {
     window.plausible &&
-      window.plausible('Mission|Visite', {
+      window.plausible('Mission - Visite', {
         props: {
           isFromApi: this.mission.isFromApi ?? false,
           isRegistrationOpen: this.mission.is_registration_open,

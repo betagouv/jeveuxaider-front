@@ -66,7 +66,7 @@ export default {
   methods: {
     handleClick () {
       window.plausible &&
-        window.plausible('Homepage|CTA - Rejoindre la communauté', {
+        window.plausible('Homepage - CTA - Rejoindre la communauté', {
           props: { isLogged: this.$store.getters.isLogged }
         })
       this.$router.push('/missions-benevolat/13190/benevolat-jeveuxaidergouvfr-paris')

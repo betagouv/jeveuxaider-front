@@ -111,20 +111,20 @@ export default {
     },
     onViewMoreClick () {
       window.plausible &&
-        window.plausible('Homepage|CTA - Plus de missions - Mission courte', {
+        window.plausible('Homepage - CTA - Plus de missions - Mission courte', {
           props: { isLogged: this.$store.getters.isLogged }
         })
       this.$router.push('/missions-benevolat?commitment__total=<%3D4&duration=half_day&time_period=year')
     },
     onSlideClick () {
       window.plausible &&
-        window.plausible('Homepage|Clique - Mission courte', {
+        window.plausible('Homepage - Clique - Mission courte', {
           props: { isLogged: this.$store.getters.isLogged }
         })
     },
     onDisponibilityClick () {
       window.plausible &&
-        window.plausible('Homepage|CTA - Disponibilités - Mission courte', {
+        window.plausible('Homepage - CTA - Disponibilités - Mission courte', {
           props: { isLogged: this.$store.getters.isLogged }
         })
     }

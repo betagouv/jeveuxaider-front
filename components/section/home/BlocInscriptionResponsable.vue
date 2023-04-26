@@ -62,7 +62,7 @@ export default {
   methods: {
     handleClick () {
       window.plausible &&
-        window.plausible('Homepage|CTA - Inscrire organisation', {
+        window.plausible('Homepage - CTA - Inscrire organisation', {
           props: { isLogged: this.$store.getters.isLogged }
         })
       this.$router.push('/inscription/responsable')
