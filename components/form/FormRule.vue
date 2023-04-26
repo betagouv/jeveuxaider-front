@@ -26,9 +26,9 @@
               :error="errors.criterias"
               required
             >
-              <Paragraph
+              <ParagraphQueryBuiler
                 :schema="[
-                  { key: 'title', label: 'Titre', type: 'text' },
+                  { key: 'field', label: 'Titre', type: 'text' },
                   { key: 'description', label: 'Description', type: 'richtext' },
                 ]"
                 :items="form.criterias"
@@ -37,13 +37,14 @@
                 @remove="onParagraphRemoveItem('criterias', $event)"
               />
             </FormControl>
+            {{ form.criterias }}
             <FormControl
               label="Actions"
               html-for="actions"
               :error="errors.actions"
               required
             >
-              <Paragraph
+              <ParagraphQueryBuiler
                 :schema="[
                   { key: 'title', label: 'Titre', type: 'text' },
                   { key: 'description', label: 'Description', type: 'richtext' },
@@ -98,8 +99,12 @@
 import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormParagraphs from '@/mixins/form/paragraphs'
+import ParagraphQueryBuiler from '@/components/custom/ParagraphQueryBuilder.vue'
 
 export default {
+  components: {
+    ParagraphQueryBuiler
+  },
   mixins: [FormErrors, FormParagraphs],
   middleware: 'admin',
   props: {
