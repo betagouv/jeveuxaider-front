@@ -21,40 +21,45 @@
               />
             </FormControl>
             <FormControl
-              label="Critères de sélection"
-              html-for="criterias"
-              :error="errors.criterias"
+              label="Conditions"
+              html-for="conditions"
+              :error="errors.conditions"
               required
             >
-              <ParagraphQueryBuiler
-                :schema="[
-                  { key: 'field', label: 'Titre', type: 'text' },
-                  { key: 'description', label: 'Description', type: 'richtext' },
+              <RuleConditions
+                :available-condition-fields="[
+                  {key:'domaines', label: 'Domaines'},
+                  {key:'activities', label: 'Activities'}
                 ]"
-                :items="form.criterias"
-                @add="onParagraphAddItem('criterias', $event)"
-                @update="onParagraphUpdateItem('criterias', $event)"
-                @remove="onParagraphRemoveItem('criterias', $event)"
+                :conditions="form.conditions"
+                empty-text="Aucune condition"
+                add-button-label="Ajouter une condition"
+                @add="onParagraphAddItem('conditions', $event)"
+                @update="onParagraphUpdateItem('conditions', $event)"
+                @remove="onParagraphRemoveItem('conditions', $event)"
               />
             </FormControl>
-            {{ form.criterias }}
+            {{ form.conditions }}
             <FormControl
               label="Actions"
               html-for="actions"
               :error="errors.actions"
               required
             >
-              <ParagraphQueryBuiler
-                :schema="[
-                  { key: 'title', label: 'Titre', type: 'text' },
-                  { key: 'description', label: 'Description', type: 'richtext' },
+              <RuleActions
+                :available-action-fields="[
+                  {key:'attach_tag', label: 'Ajouter un tag'},
+                  {key:'detach_tag', label: 'Retirer un tag'}
                 ]"
-                :items="form.actions"
+                :actions="form.actions"
+                empty-text="Aucune action"
+                add-button-label="Ajouter une action"
                 @add="onParagraphAddItem('actions', $event)"
                 @update="onParagraphUpdateItem('actions', $event)"
                 @remove="onParagraphRemoveItem('actions', $event)"
               />
             </FormControl>
+            {{ form.actions }}
           </div>
         </Box>
       </div>
@@ -99,11 +104,13 @@
 import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormParagraphs from '@/mixins/form/paragraphs'
-import ParagraphQueryBuiler from '@/components/custom/ParagraphQueryBuilder.vue'
+import RuleConditions from '@/components/custom/RuleConditions.vue'
+import RuleActions from '@/components/custom/RuleActions.vue'
 
 export default {
   components: {
-    ParagraphQueryBuiler
+    RuleConditions,
+    RuleActions
   },
   mixins: [FormErrors, FormParagraphs],
   middleware: 'admin',
@@ -124,7 +131,7 @@ export default {
       formSchema: object({
         name: string().min(2, 'Le nom est trop court').required('Le nom est requis'),
         events: array().min(1, 'Au moins 1 déclencheur').required('Ajouter au moins 1 déclencheur'),
-        criterias: array().min(1, 'Au moins 1 critère').required('Ajouter au moins 1 critère'),
+        conditions: array().min(1, 'Au moins 1 condition').required('Ajouter au moins 1 condition'),
         actions: array().min(1, 'Au moins 1 actions').required('Ajouter au moins 1 action')
       })
     }

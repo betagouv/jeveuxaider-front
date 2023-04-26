@@ -1,57 +1,62 @@
 <template>
   <div>
-    <template v-if="items && items.length">
+    <div v-if="actions && actions.length">
       <div
-        v-for="(item, index) in items"
-        :key="item.uuid || item.id"
+        v-for="(action, index) in actions"
+        :key="action.uuid || action.id"
         class="bg-gray-50 py-4 px-4 mb-4"
       >
-        <ParagraphQueryBuilderItem
-          :schema="schema"
-          :item="item"
+        <RuleActionsItem
+          :fields="availableActionFields"
+          :action="action"
           @update="onUpdate($event, index)"
           @remove="onRemove(index)"
         />
       </div>
-    </template>
+    </div>
 
     <div v-else class="bg-gray-50 py-4 px-4 mb-4 text-gray-500 text-sm">
-      Aucun critère
+      {{ emptyText }}
     </div>
 
     <div class="flex justify-end">
       <Button variant="white" @click.native="onAdd">
-        Ajouter un critère
+        {{ addButtonLabel }}
       </Button>
     </div>
   </div>
 </template>
 
 <script>
-import ParagraphQueryBuilderItem from '@/components/custom/ParagraphQueryBuilderItem.vue'
+import RuleActionsItem from '@/components/custom/RuleActionsItem.vue'
 
 export default {
   components: {
-    ParagraphQueryBuilderItem
+    RuleActionsItem
   },
   props: {
-    schema: {
+    availableActionFields: {
       type: Array,
       required: true
     },
-    items: {
+    actions: {
       type: Array,
       default: () => {
         return []
       }
+    },
+    emptyText: {
+      type: String,
+      default: 'Aucun élément'
+    },
+    addButtonLabel: {
+      type: String,
+      default: 'Ajouter un élément'
     }
   },
   methods: {
     onAdd () {
       const item = {}
-      this.schema.forEach((field) => {
-        item[field.key] = null
-      })
       this.$emit('add', item)
     },
     onUpdate (payload, index) {

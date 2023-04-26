@@ -22,7 +22,7 @@
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
           <Button icon="RiAddLine" @click="$router.push(`/admin/settings/rules/add`)">
-            Nouveau
+            Nouvelle règle
           </Button>
         </div>
       </template>
