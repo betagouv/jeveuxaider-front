@@ -63,7 +63,23 @@
         />
       </div>
       <div class="border-t -mx-6 my-6" />
-      <div class="text-sm  uppercase font-semibold text-gray-600">
+      <template v-if="['admin'].includes($store.getters.contextRole)">
+        <div class="text-sm uppercase font-semibold text-gray-600">
+          État de la mission
+        </div>
+        <div class="mt-2">
+          <p>La mission est actuellement <strong>{{ mission.is_active ? 'activée' : 'désactivée' }}</strong></p>
+          <Link
+            class="text-sm !inline-flex"
+            @click.native="handleChangeIsActive(!mission.is_active)"
+          >
+            {{ mission.is_active ? 'Désactiver la mission' : 'Activer la mission' }}
+          </Link>
+        </div>
+
+        <div class="border-t -mx-6 my-6" />
+      </template>
+      <div class="text-sm uppercase font-semibold text-gray-600">
         Statut de la mission
       </div>
       <SelectMissionState
@@ -176,6 +192,12 @@ export default {
         this.$emit('close')
         this.$emit('updated')
       }).catch(() => {})
+    },
+    async handleChangeIsActive (value) {
+      await this.$axios.put(`/missions/${this.mission.id}`, { ...this.mission, is_active: value }).catch(() => {})
+      this.$toast.success(value ? 'La mission est désormais active' : 'La mission a été désactivée')
+      this.$fetch()
+      this.$emit('updated')
     }
   }
 }
