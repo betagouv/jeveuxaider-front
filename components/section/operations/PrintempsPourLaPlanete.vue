@@ -35,7 +35,7 @@
         <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8 mb-4 lg:mb-8 xl:mb-14">
           <div class="">
             <p class="font-bold text-xl lg:text-2xl xl:text-[32px] xl:leading-[40px]">
-              Campagne nationale du 3 au 23 avril
+              Engagez-vous pour l’environnement
             </p>
           </div>
           <div class="hidden lg:block flex-none">
