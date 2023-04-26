@@ -23,7 +23,23 @@
           {{ mission.state }}
         </DsfrBadge>
 
-        <div class="custom-gradient-2 absolute inset-0" />
+        <DsfrBadge
+          v-if="!mission.is_active"
+          v-tooltip="{
+            content: 'Cette mission a été désactivée par un modérateur. Elle n\'apparait plus dans la recherche et il est impossible de s\'inscrire.',
+            classes: 'theme-white',
+            hideOnTargetClick: false,
+            placement: 'bottom',
+            offset: 8
+          }"
+          size="sm"
+          type="warning"
+          class="absolute bottom-3 left-3 shadow-lg"
+        >
+          Mission désactivée
+        </DsfrBadge>
+
+        <div class="custom-gradient-2 absolute inset-0 pointer-events-none" />
         <div v-if="['admin', 'referent', 'referent_regional'].includes($store.getters.contextRole)" class="text-white absolute bottom-1 right-2 text-xs text-shadow">
           Id: {{ mission.id }}
         </div>
