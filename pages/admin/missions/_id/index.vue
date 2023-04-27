@@ -59,10 +59,16 @@
             <Link
               v-if="['admin'].includes($store.getters.contextRole)"
               class="text-jva-blue-500 mt-2"
-              @click.native="handleChangeIsActive(!mission.is_active)"
+              @click.native="showModalSwitchIsActive = true"
             >
               {{ mission.is_active ? 'Désactiver la mission' : 'Activer la mission' }}
             </Link>
+            <ModalMissionToggleIsActive
+              :mission="mission"
+              :is-open="showModalSwitchIsActive"
+              @cancel="showModalSwitchIsActive = false"
+              @confirm="afterChangeIsActive"
+            />
           </div>
         </Box>
 
@@ -125,6 +131,7 @@ import BoxReferents from '@/components/section/BoxReferents'
 import BoxNotes from '@/components/custom/BoxNotes'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import Link from '@/components/dsfr/Link.vue'
+import ModalMissionToggleIsActive from '@/components/modal/ModalMissionToggleIsActive.vue'
 
 export default {
   components: {
@@ -145,7 +152,8 @@ export default {
     BoxNotes,
     Breadcrumb,
     BoxAideModeration,
-    Link
+    Link,
+    ModalMissionToggleIsActive
   },
   mixins: [MixinMission],
   middleware: ['authenticated', 'agreedResponsableTerms'],
@@ -180,6 +188,11 @@ export default {
       missionStats
     }
   },
+  data () {
+    return {
+      showModalSwitchIsActive: false
+    }
+  },
   methods: {
     async handleChangeState (event) {
       this.mission.state = event.key
@@ -190,12 +203,10 @@ export default {
       this.mission.places_left = mission.places_left
       this.mission.is_registration_open = mission.is_registration_open
     },
-    async handleChangeIsActive (value) {
-      const { data: mission } = await this.$axios.put(`/missions/${this.mission.id}`, { ...this.mission, is_active: value }).catch(() => {})
-      this.$toast.success(value ? 'La mission est désormais active' : 'La mission a été désactivée')
+    afterChangeIsActive (mission) {
       this.mission.is_active = mission.is_active
+      this.showModalSwitchIsActive = false
     }
-
   }
 }
 </script>

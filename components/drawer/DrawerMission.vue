@@ -69,10 +69,16 @@
           <p>La mission est actuellement <strong>{{ mission.is_active ? 'activée' : 'désactivée' }}</strong>.</p>
           <Link
             class="!inline-flex"
-            @click.native="handleChangeIsActive(!mission.is_active)"
+            @click.native="showModalSwitchIsActive = true"
           >
             {{ mission.is_active ? 'Désactiver la mission' : 'Activer la mission' }}
           </Link>
+          <ModalMissionToggleIsActive
+            :mission="mission"
+            :is-open="showModalSwitchIsActive"
+            @cancel="showModalSwitchIsActive = false"
+            @confirm="afterChangeIsActive()"
+          />
         </div>
 
         <div class="border-t -mx-6 my-6" />
@@ -127,6 +133,7 @@ import BoxReferents from '@/components/section/BoxReferents'
 import Button from '@/components/dsfr/Button.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import LoadingIndicator from '@/components/custom/LoadingIndicator'
+import ModalMissionToggleIsActive from '@/components/modal/ModalMissionToggleIsActive.vue'
 
 export default {
   components: {
@@ -141,7 +148,8 @@ export default {
     ButtonMissionDuplicate,
     BoxReferents,
     Button,
-    HistoryStateChanges
+    HistoryStateChanges,
+    ModalMissionToggleIsActive
   },
   mixins: [MixinMission],
   props: {
@@ -155,7 +163,8 @@ export default {
       showAlert: false,
       mission: null,
       missionStats: null,
-      loading: false
+      loading: false,
+      showModalSwitchIsActive: false
     }
   },
   async fetch () {
@@ -191,11 +200,10 @@ export default {
         this.$emit('updated')
       }).catch(() => {})
     },
-    async handleChangeIsActive (value) {
-      await this.$axios.put(`/missions/${this.mission.id}`, { ...this.mission, is_active: value }).catch(() => {})
-      this.$toast.success(value ? 'La mission est désormais active' : 'La mission a été désactivée')
+    afterChangeIsActive () {
       this.$fetch()
       this.$emit('updated')
+      this.showModalSwitchIsActive = false
     }
   }
 }
