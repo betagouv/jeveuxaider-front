@@ -5,23 +5,27 @@
         <div class="flex font-semibold text-sm items-center group">
           <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
             <template v-if="loading">
-              <LoadingIndicator>Analyse des contenus AI</LoadingIndicator>
+              <LoadingIndicator>Analyse des contenus</LoadingIndicator>
             </template>
             <template v-else>
               <RiAlertFill class="h-5 w-5 text-[#C9191E] fill-current mr-2" aria-hidden="true" />
-              Description semble non conforme : {{ score | formatNumber("0.[00]") }}
+              Description semble non conforme
             </template>
           </div>
           <div class="w-full border-t mt-1 mx-2" />
-          <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
-          <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+          <template v-if="!loading">
+            <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+            <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+          </template>
         </div>
       </template>
-      <div v-if="response" class="ml-7 mt-3 text-sm space-y-2">
+      <div v-if="response" class="ml-7 mt-3 text-sm space-y-2 text-gray-500">
         <template v-if="sentencesError.length > 0">
-          <div v-for="sentence in sentencesError" :key="sentence.key">
-            {{ sentence.text }}
-          </div>
+          <div
+            v-for="sentence in sentencesError"
+            :key="sentence.key"
+            v-html="` ... ${highlightSentenceWithWordToCheck(sentence.text) } ...`"
+          />
         </template>
         <template v-else>
           La description dans son ensemble semble non conforme.
@@ -143,6 +147,10 @@ export default {
   methods: {
     recomputeScoreSentenceWithWordsToCheck (sentence, score) {
       return this.wordsToCheck.some(word => sentence.toLowerCase().includes(word)) ? 0 : score
+    },
+    highlightSentenceWithWordToCheck (sentence) {
+      const regex = new RegExp(`\\b(${this.wordsToCheck.join('|')})\\b`, 'gi')
+      return sentence.replace(regex, '<span class="bg-yellow-300 text-gray-900 px-1">$1</span>')
     }
   }
 }

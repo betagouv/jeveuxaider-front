@@ -14,9 +14,7 @@
       leave-to-class="transform opacity-0"
     > -->
     <div v-show="isOpen">
-      <slot>
-        Panel
-      </slot>
+      <slot />
     </div>
     <!-- </transition> -->
   </div>

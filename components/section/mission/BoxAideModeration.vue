@@ -33,12 +33,12 @@
         </template>
         <div class="ml-7 mt-3 text-sm text-gray-500">
           <template v-if="mission.commitment__duration">
-            <span>{{ mission.commitment__duration|label('duration') }}</span>
+            Fréquence : <span>{{ mission.commitment__duration|label('duration') }}</span>
             <template v-if="mission.commitment__time_period">
               <span class="font-normal"> par </span>
               <span>{{ mission.commitment__time_period|label('time_period') }}</span>
             </template>
-          </template>. Soit {{ mission.commitment__total }} heures réparties sur l'année.
+          </template>
         </div>
       </Disclosure>
 
@@ -89,27 +89,9 @@
           </div>
         </template>
         <div class="ml-7 mt-3 text-sm text-gray-500">
-          Mission ponctuelle -  {{ $dayjs(mission.start_date).format('DD/MM/YYYY') }}
+          Date de début :  {{ $dayjs(mission.start_date).format('DD/MM/YYYY') }}
         </div>
       </Disclosure>
-
-      <!-- <Disclosure v-if="endDateToBig">
-        <template #button="{ isOpen }">
-          <div class="flex font-semibold text-sm items-center group">
-            <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
-              <RiAlertFill class="h-5 w-5 text-[#FA7A35] fill-current mr-2" aria-hidden="true" /> Durée de mission élevée : {{ $dayjs(mission.end_date).diff($dayjs(mission.start_date), 'year') }} ans
-            </div>
-            <div class="w-full border-t mt-1 mx-2" />
-            <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
-            <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
-          </div>
-        </template>
-        <div class="ml-7 mt-3 text-sm text-gray-500">
-          La durée de la mission semble élevée : {{ $dayjs(mission.end_date).diff($dayjs(mission.start_date), 'year') }} ans.<br>
-          Début de mission : {{ $dayjs(mission.start_date).format('DD/MM/YYYY') }}<br>
-          Fin de mission : {{ $dayjs(mission.end_date).format('DD/MM/YYYY') }}
-        </div>
-      </Disclosure> -->
     </div>
     <div v-else class="text-sm text-gray-500">
       Rien à signaler, tout semble correct, mais rien ne vaut une vérification humaine.
@@ -156,7 +138,7 @@ export default {
       return this.loadingModerationAI || this.showModerationAI || this.frequenceTotalHours || this.tooManyParticipationsMax || this.needReviewTitle || this.startDateInPass
     },
     frequenceTotalHours () {
-      return this.mission.commitment__total > 1000
+      return this.mission.commitment__total > 1091
     },
     tooManyParticipationsMax () {
       return this.mission.participations_max > this.maxPlaces
@@ -167,9 +149,6 @@ export default {
     startDateInPass () {
       return ['Brouillon', 'En attente de validation', 'En cours de traitement'].includes(this.mission.state) && this.$dayjs().isAfter(this.mission.start_date)
     }
-    // endDateToBig () {
-    //   return this.mission.end_date && this.$dayjs(this.mission.end_date).diff(this.$dayjs(this.mission.start_date), 'year') > 5
-    // }
   }
 }
 </script>
