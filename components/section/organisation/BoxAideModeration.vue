@@ -12,12 +12,14 @@
             On peut vous aider à modérer ?
           </div>
           <div class="text-sm text-gray-600">
-            Alertes, points de vigilance, l’IA c’est plus fort que toi.
+            Vérifiez les alertes remontées par notre système d’intelligence artificielle 🤖
           </div>
         </div>
       </div>
     </template>
-    <div v-if="hasResults" class="flex space-y-6 flex-col">
+    <div v-if="isLoadingOrhasResults" class="flex space-y-6 flex-col">
+      <DisclosureModerationAI v-if="showModerationAI" :organisation="organisation" @analyzed="loadingModerationAI = false" @hide="showModerationAI = false" />
+
       <Disclosure v-if="organisationHasDoublon">
         <template #button="{ isOpen }">
           <div class="flex font-semibold text-sm items-center group">
@@ -65,11 +67,9 @@
           Le SIRET n'a pas été communiqué
         </div>
       </Disclosure>
-
-      <DisclosureModerationAI :organisation="organisation" />
     </div>
     <div v-else class="text-sm text-gray-500">
-      Rien à signaler
+      Rien à signaler, tout semble correct, mais rien ne vaut une vérification humaine.
     </div>
   </Box>
 </template>
@@ -94,7 +94,9 @@ export default {
   data () {
     return {
       loading: true,
-      doublonAlgoliaOrganisations: []
+      doublonAlgoliaOrganisations: [],
+      loadingModerationAI: true,
+      showModerationAI: true
     }
   },
   async fetch () {
@@ -109,14 +111,14 @@ export default {
     this.loading = false
   },
   computed: {
-    hasResults () {
-      return this.needSiret || this.organisationHasDoublon || this.collectivityHasDoublon
+    isLoadingOrhasResults () {
+      return this.loadingModerationAI || this.showModerationAI || this.needSiret || this.organisationHasDoublon
     },
     needSiret () {
       return this.organisation.statut_juridique === 'Association' && !this.organisation.siret
     },
     organisationHasDoublon () {
-      return this.organisation.statut_juridique !== 'Collectivité' && this.doublonAlgoliaOrganisations.total > 0
+      return this.doublonAlgoliaOrganisations.total > 0
     }
   }
 }

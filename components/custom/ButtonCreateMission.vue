@@ -24,7 +24,7 @@
     <Modal
       v-scroll-lock="showModal"
       :is-open="showModal"
-      title="C’est votre première mission !"
+      title="C’est votre première mission ! 🍾"
       width-class="sm:max-w-3xl"
       :prevent-click-outside="true"
       icon="RiErrorWarningFill"
@@ -32,15 +32,16 @@
     >
       <div class="text-gray-700 space-y-4">
         <p>
-          En créant des missions sur JeVeuxAider.gouv.fr, vous vous engagez à traiter toutes les participations le plus rapidement possible.
+          Un grand pouvoir implique de grandes responsabilités. En publiant cette annonce vous vous engagez à :
         </p>
+        <ul class="list-disc pl-8">
+          <li>répondre aux demandes de participations dans un <span class="text-gray-900 font-semibold">délai maximum d’1 semaine</span></li>
+          <li>valider ou refuser les participations dans un <span class="text-gray-900 font-semibold">délai de 2 mois</span></li>
+        </ul>
         <p>
-          Il est recommandé de répondre au bénévole dans un <span class="text-gray-900 font-semibold">délai maximum d’1 semaine,</span> et de mettre à jour le statut des participations (Validées ou Refusées) <span class="text-gray-900 font-semibold">dans un délai de 2 mois.</span>
+          Au-delà, les bénévoles risquent de se désengager.
         </p>
-        <p>
-          Au delà, les bénévoles risquent de se désengager, et vous risquez de voir votre utilisation de la plateforme contrainte (moins bon référencement, dépublication des missions, etc)
-        </p>
-        <p>Pour être incollable sur la modération des participations, consultez la <a class="text-jva-blue-500 underline" target="_blank" href="https://reserve-civique.crisp.help/fr/article/comment-gerer-au-mieux-ses-participants-tc1boy/">foire aux questions</a>.</p>
+        <p>Devenez incollable sur la modération en consultant la <a class="text-jva-blue-500 underline" target="_blank" href="https://reserve-civique.crisp.help/fr/article/comment-gerer-au-mieux-ses-participants-tc1boy/">foire aux questions</a>.</p>
       </div>
       <template #footer>
         <button class="mr-8 hover:underline" type="transparent" @click="showModal = false">
