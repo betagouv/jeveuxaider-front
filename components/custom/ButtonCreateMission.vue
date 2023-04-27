@@ -41,7 +41,7 @@
         <p>
           Au-delà, les bénévoles risquent de se désengager.
         </p>
-        <p>Devenez incollable sur la modération en consultant la <a class="text-jva-blue-500 underline" target="_blank" href="https://reserve-civique.crisp.help/fr/article/comment-gerer-au-mieux-ses-participants-tc1boy/">foire aux questions</a>.</p>
+        <p>Devenez incollable sur la modération en consultant la <a class="text-jva-blue-500 underline" target="_blank" href="https://reserve-civique.crisp.help/fr/article/comment-gerer-les-participations-des-benevoles-1sizkcs/?bust=1682607862363">foire aux questions</a>.</p>
       </div>
       <template #footer>
         <button class="mr-8 hover:underline" type="transparent" @click="showModal = false">
