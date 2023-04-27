@@ -4,7 +4,7 @@
       v-if="missionTemplate"
       theme="danger"
       title="Supprimer le modèle de mission"
-      :text="`Vous êtes sur le point de supprimer le modèle de mission ${missionTemplate.name}.`"
+      :text="`Vous êtes sur le point de supprimer le modèle de mission ${missionTemplate.title}.`"
       :is-open="showAlert"
       @confirm="handleConfirmDelete()"
       @cancel="showAlert = false"

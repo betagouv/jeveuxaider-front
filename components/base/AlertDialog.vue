@@ -8,8 +8,10 @@
       :theme="theme"
       @close="$emit('cancel')"
     >
-      <div class="text-sm text-gray-500" v-html="text" />
-      <slot />
+      <div class="text-gray-700 space-y-4">
+        <div v-html="text" />
+        <slot />
+      </div>
       <template #footer>
         <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
           {{ cancelLabel }}

@@ -29,10 +29,12 @@ import RiUserHeartFill from 'vue-remix-icons/icons/RiUserHeartFill.vue'
 import RiComputerFill from 'vue-remix-icons/icons/RiComputerFill.vue'
 import RiShareFill from 'vue-remix-icons/icons/RiShareFill.vue'
 import RiErrorWarningLine from 'vue-remix-icons/icons/RiErrorWarningLine.vue'
+import RiErrorWarningFill from 'vue-remix-icons/icons/RiErrorWarningFill.vue'
 import RiProfileLine from 'vue-remix-icons/icons/RiProfileLine.vue'
 import RiInformationLine from 'vue-remix-icons/icons/RiInformationLine.vue'
 import RiInformationFill from 'vue-remix-icons/icons/RiInformationFill.vue'
 import RiAlertLine from 'vue-remix-icons/icons/RiAlertLine.vue'
+import RiAlertFill from 'vue-remix-icons/icons/RiAlertFill.vue'
 import RiSettings4Line from 'vue-remix-icons/icons/RiSettings4Line.vue'
 import RiCalendarEventFill from 'vue-remix-icons/icons/RiCalendarEventFill.vue'
 import RiLoader5Line from 'vue-remix-icons/icons/RiLoader5Line.vue'
@@ -63,8 +65,10 @@ import RiCloseCircleLine from 'vue-remix-icons/icons/RiCloseCircleLine.vue'
 import RiChatCheckLine from 'vue-remix-icons/icons/RiChatCheckLine.vue'
 import RiFlagLine from 'vue-remix-icons/icons/RiFlagLine.vue'
 import RiCloseLine from 'vue-remix-icons/icons/RiCloseLine.vue'
+import RiFlashlightLine from 'vue-remix-icons/icons/RiFlashlightLine.vue'
 
 const components = {
+  RiFlashlightLine,
   RiCloseLine,
   RiFlagLine,
   RiCloseCircleLine,
@@ -106,10 +110,12 @@ const components = {
   RiComputerFill,
   RiShareFill,
   RiErrorWarningLine,
+  RiErrorWarningFill,
   RiProfileLine,
   RiInformationLine,
   RiInformationFill,
   RiAlertLine,
+  RiAlertFill,
   RiSettings4Line,
   RiCalendarEventFill,
   RiLoader5Line,

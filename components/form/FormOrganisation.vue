@@ -168,6 +168,7 @@
                 label="Téléphone public"
                 html-for="phone"
                 :error="errors.phone"
+                required
               >
                 <Input
                   v-model="form.phone"

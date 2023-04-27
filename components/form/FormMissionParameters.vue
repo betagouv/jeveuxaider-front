@@ -36,6 +36,14 @@
             suffix="bénévoles"
           />
         </FormControl>
+        <Alert
+          v-if="form.participations_max > 70"
+          variant="warning"
+        >
+          <span class="font-bold">Ça fait beaucoup de bénévoles 😅</span><br>
+          Toutes les demandes de participations devront être mises à jour (validées ou refusées).<br>
+          Nous vous conseillons de mobiliser progressivement des bénévoles, et de revoir votre besoin à la hausse si nécessaire.
+        </Alert>
         <FormControl
           v-if="form.date_type == 'recurring'"
           label="Début de la mission"
