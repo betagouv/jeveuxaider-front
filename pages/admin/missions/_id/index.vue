@@ -51,7 +51,7 @@
               :mission-stats="missionStats"
               @selected="handleChangeState($event)"
             />
-            <BoxAideModeration v-if="['admin', 'referent'].includes($store.getters.contextRole)" :mission="mission" />
+            <BoxAideModeration v-if="['admin'].includes($store.getters.contextRole)" :mission="mission" />
             <BoxDates :mission="mission" />
             <BoxPlace :mission="mission" @updated="handleChangePlace($event)" />
             <BoxEnChiffre :mission="mission" />
