@@ -937,6 +937,9 @@ export default {
         .then(async () => {
           if (this.isAdding) {
             const { data: mission } = await this.$axios.post(`/structures/${this.structureId}/missions`, this.form).catch(() => {})
+            if (this.$store.getters.contextRole === 'responsable') {
+              await this.$store.dispatch('auth/fetchUser')
+            }
             this.$router.push(`/admin/missions/${mission.id}`)
           } else {
             const { data: mission } = await this.$axios.put(`/missions/${this.mission.id}`, this.form).catch(() => {})
