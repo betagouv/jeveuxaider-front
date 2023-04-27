@@ -61,14 +61,14 @@
         />
       </div>
       <div class="border-t -mx-6 my-6" />
-      <template v-if="['admin'].includes($store.getters.contextRole)">
+      <template v-if="['admin'].includes($store.getters.contextRole) && mission.state == 'Validée'">
         <div class="text-sm uppercase font-semibold text-gray-600">
           État de la mission
         </div>
         <div class="mt-2">
-          <p>La mission est actuellement <strong>{{ mission.is_active ? 'activée' : 'désactivée' }}</strong></p>
+          <p>La mission est actuellement <strong>{{ mission.is_active ? 'activée' : 'désactivée' }}</strong>.</p>
           <Link
-            class="text-sm !inline-flex"
+            class="!inline-flex"
             @click.native="handleChangeIsActive(!mission.is_active)"
           >
             {{ mission.is_active ? 'Désactiver la mission' : 'Activer la mission' }}

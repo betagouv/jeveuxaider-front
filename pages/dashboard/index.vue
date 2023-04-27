@@ -15,7 +15,7 @@
     <template #left>
       <Box v-if="$store.state.auth.user.statistics?.missions_inactive_count">
         <Heading as="h2" :level="3" class="mb-8">
-          <span aria-hidden="true" class="font-emoji">⚠️</span> Vous avez {{ $store.state.auth.user.statistics?.missions_inactive_count | pluralize('mission désactivée', 'missions désactivées') }} !
+          <span aria-hidden="true" class="font-emoji text-2xl mr-2">⚠️</span> Vous avez {{ $store.state.auth.user.statistics?.missions_inactive_count | pluralize('mission désactivée', 'missions désactivées') }} !
         </Heading>
         <div class="formatted-text">
           <p>
