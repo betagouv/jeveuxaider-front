@@ -27,10 +27,8 @@
           v-if="!mission.is_active"
           v-tooltip="{
             content: 'Cette mission a été désactivée par un modérateur. Elle n\'apparait plus dans la recherche et il est impossible de s\'inscrire.',
-            classes: 'theme-white',
-            hideOnTargetClick: false,
+            classes: 'theme-dsfr',
             placement: 'bottom',
-            offset: 8
           }"
           size="sm"
           type="warning"

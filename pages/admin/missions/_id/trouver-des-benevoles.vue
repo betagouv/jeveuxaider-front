@@ -167,6 +167,10 @@ export default {
       }
     }
 
+    if (!mission.is_active) {
+      return error({ statusCode: 403 })
+    }
+
     return {
       mission
     }
