@@ -49,9 +49,7 @@
           :mission-id="mission.id"
           :mission="mission"
           @duplicated="handleDuplicated($event)"
-        >
-          Dupliquer
-        </ButtonMissionDuplicate>
+        />
 
         <Button
           v-if="['admin','responsable'].includes($store.getters.contextRole)"
