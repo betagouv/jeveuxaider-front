@@ -73,6 +73,17 @@
           @input="changeFilter('filter[hasCreneaux]', $event)"
         />
         <SelectAdvanced
+          v-if="['admin'].includes($store.getters.contextRole)"
+          :key="`is-active-${$route.fullPath}`"
+          name="is-active"
+          placeholder="État"
+          :options="[{key: 'true', label: 'Activée'}, {key: 'false', label: 'Désactivée'}]"
+          :value="$route.query['filter[is_active]']"
+          variant="transparent"
+          clearable
+          @input="changeFilter('filter[is_active]', $event)"
+        />
+        <SelectAdvanced
           :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Statut"
