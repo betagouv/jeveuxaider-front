@@ -26,40 +26,29 @@
               :error="errors.conditions"
               required
             >
-              <RuleConditions
-                :available-condition-fields="[
+              <InputQueryBuilder
+                :model-value="form.conditions"
+                :condition-field-options="[
                   {key:'domaines', label: 'Domaines'},
                   {key:'activities', label: 'Activities'}
                 ]"
-                :conditions="form.conditions"
-                empty-text="Aucune condition"
-                add-button-label="Ajouter une condition"
-                @add="onParagraphAddItem('conditions', $event)"
-                @update="onParagraphUpdateItem('conditions', $event)"
-                @remove="onParagraphRemoveItem('conditions', $event)"
+                @update:modelValue="newValue => form.conditions = newValue"
               />
             </FormControl>
-            {{ form.conditions }}
             <FormControl
               label="Actions"
               html-for="actions"
               :error="errors.actions"
               required
             >
-              <RuleActions
-                :available-action-fields="[
-                  {key:'attach_tag', label: 'Ajouter un tag'},
-                  {key:'detach_tag', label: 'Retirer un tag'}
+              <InputActionBuilder
+                :model-value="form.actions"
+                :action-field-options="[
+                  {key:'attach_tag', label: 'Ajouter un tag'}
                 ]"
-                :actions="form.actions"
-                empty-text="Aucune action"
-                add-button-label="Ajouter une action"
-                @add="onParagraphAddItem('actions', $event)"
-                @update="onParagraphUpdateItem('actions', $event)"
-                @remove="onParagraphRemoveItem('actions', $event)"
+                @update:modelValue="newValue => form.actions = newValue"
               />
             </FormControl>
-            {{ form.actions }}
           </div>
         </Box>
       </div>
@@ -72,7 +61,7 @@
             <Toggle
               v-model="form.is_active"
               :label="form.is_active ? 'Active' : 'Inactive'"
-              description="dsfsdfsdffds"
+              :description="form.is_active ? 'La règle sera exécutée' : 'La règle ne sera plus exécutée'"
             />
             <FormControl
               html-for="name"
@@ -103,16 +92,15 @@
 <script>
 import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
-import FormParagraphs from '@/mixins/form/paragraphs'
-import RuleConditions from '@/components/custom/RuleConditions.vue'
-import RuleActions from '@/components/custom/RuleActions.vue'
+import InputQueryBuilder from '@/components/custom/InputQueryBuilder.vue'
+import InputActionBuilder from '@/components/custom/InputActionBuilder.vue'
 
 export default {
   components: {
-    RuleConditions,
-    RuleActions
+    InputQueryBuilder,
+    InputActionBuilder
   },
-  mixins: [FormErrors, FormParagraphs],
+  mixins: [FormErrors],
   middleware: 'admin',
   props: {
     rule: {

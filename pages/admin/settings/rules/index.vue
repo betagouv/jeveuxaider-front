@@ -78,6 +78,15 @@
     </SearchFilters>
 
     <Table v-if="queryResult.total">
+      <TableHead>
+        <TableHeadCell>Nom</TableHeadCell>
+        <TableHeadCell>
+          Actions
+        </TableHeadCell>
+        <TableHeadCell>
+          Statut
+        </TableHeadCell>
+      </TableHead>
       <TableBody>
         <TableRow
           v-for="rule in queryResult.data"
@@ -89,21 +98,34 @@
             <div class="font-medium text-gray-900 truncate">
               {{ rule.name }}
             </div>
-            <div class="text-gray-500">
-              {{ rule.type| label('rule_events') }}
+            <div class="text-gray-500 space-x-2">
+              <DsfrBadge
+                v-for="event,i in rule.events"
+                :key="i"
+                type="info"
+                size="sm"
+                no-icon
+                class="truncate"
+              >
+                {{ event | label('rule_events') }}
+              </DsfrBadge>
             </div>
           </TableRowCell>
-          <TableRowCell center>
-            <template v-if="rule.type">
+          <TableRowCell>
+            <div class=" space-x-2">
               <DsfrBadge
                 v-for="action,i in rule.actions"
                 :key="i"
                 size="sm"
                 class="truncate"
               >
-                {{ action.key }}
+                {{ action.action }} : {{ action.value }}
               </DsfrBadge>
-            </template>
+            </div>
+          </TableRowCell>
+          <TableRowCell>
+            <RiCheckboxCircleLine v-if="rule.is_active" class="w-6 h-6 text-green-600 fill-current flex-none" />
+            <RiCloseCircleLine v-else class="w-6 h-6 text-gray-500 fill-current flex-none" />
           </TableRowCell>
         </TableRow>
       </TableBody>

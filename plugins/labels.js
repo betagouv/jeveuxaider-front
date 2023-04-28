@@ -401,7 +401,7 @@ const labels = {
     { key: 'tete_de_reseau', label: 'Tête de réseau' }
   ],
   rule_events: [
-    { key: 'mission_created', label: 'La mission est créée' },
-    { key: 'mission_updated', label: 'La mission est modifiée' }
+    { key: 'mission_created', label: 'Mission créée' },
+    { key: 'mission_updated', label: 'Mission modifiée' }
   ]
 }
