@@ -35,7 +35,7 @@
             <DescriptionListItem term="Modifié le" :description="$dayjs(rule.updated_at).format('D MMMM YYYY à HH:mm')" />
             <DescriptionListItem term="Nom" :description="rule.name" />
             <DescriptionListItem term="Déclencheurs" :description="rule.events.map(event => $options.filters.label(event, 'rule_events')).join(', ')" />
-            <DescriptionListItem term="Dernière éxecution" :description="rule.last_trigger_at ? $dayjs(rule.last_trigger_at).fromNow() : '-'" />
+            <DescriptionListItem term="Dernière éxecution" :description="rule.last_triggered_at ? $dayjs(rule.last_triggered_at).fromNow() : '-'" />
             <DescriptionListItem term="# Éxécution" :description="`${rule.triggers_count ?? 0} fois`" />
           </DescriptionList>
         </Box>
