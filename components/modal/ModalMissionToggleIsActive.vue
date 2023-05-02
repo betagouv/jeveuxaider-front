@@ -10,7 +10,7 @@
     >
       <div class="formatted-text">
         <p>
-          Vous êtes sur le point {{ mission.is_active ? 'de désactiver' : 'd\'activer' }} la mission <strong>{{ mission.name }}</strong> <span class="text-gray-500">#{{ mission.id }}</span>.
+          Vous êtes sur le point {{ mission.is_active ? 'de désactiver' : 'd\'activer' }} la mission <strong>{{ mission.name }}</strong> <span class="text-gray-500">#{{ mission.id }}</span>. Le responsable de la mission <strong>{{ mission.responsable.full_name }}</strong> en sera notifié par mail.
         </p>
         <p v-if="mission.is_active">
           La mission <strong>n'apparaîtra plus dans la recherche</strong> et il sera impossible pour de nouveaux bénévoles de s'y inscrire.
