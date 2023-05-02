@@ -17,6 +17,9 @@
     <template v-if="rule">
       <OnlineIndicator :published="rule.is_active" class="mt-2" />
       <div class="flex gap-2 mt-4">
+        <Button variant="white" size="sm" icon="RiPlayCircleLine" @click.native="executeRule">
+          Exécuter
+        </Button>
         <nuxt-link :to="`/admin/settings/rules/${rule.id}/edit`" class="inline-flex">
           <Button variant="white" size="sm" icon="PencilIcon">
             Modifier
@@ -25,7 +28,7 @@
         <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
       </div>
       <div class="border-t -mx-6 my-6" />
-      <div>
+      <div class="mb-8">
         <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
           Informations
         </div>
@@ -36,8 +39,22 @@
             <DescriptionListItem term="Nom" :description="rule.name" />
             <DescriptionListItem term="Déclencheurs" :description="rule.events.map(event => $options.filters.label(event, 'rule_events')).join(', ')" />
             <DescriptionListItem term="Dernière éxecution" :description="rule.last_triggered_at ? $dayjs(rule.last_triggered_at).fromNow() : '-'" />
-            <DescriptionListItem term="# Éxécution" :description="`${rule.triggers_count ?? 0} fois`" />
+            <DescriptionListItem term="# Exécutions" :description="`${rule.triggers_count ?? 0} fois`" />
           </DescriptionList>
+        </Box>
+      </div>
+      <div class="">
+        <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
+          Résultats
+        </div>
+        <Box variant="flat" padding="xs">
+          <DescriptionList v-if="rule.totalItems !== false">
+            <DescriptionListItem term="# Résultats" :description="rule.totalItemsCount" />
+            <DescriptionListItem term="# À traiter" :description="rule.pendingItemsCount" />
+          </DescriptionList>
+          <div v-else class="">
+            Les conditions semblent invalides
+          </div>
         </Box>
       </div>
     </template>
@@ -67,7 +84,7 @@ export default {
     if (!this.ruleId) {
       return null
     }
-    const { data: rule } = await this.$axios.get(`/rules/${this.ruleId}`)
+    const { data: rule } = await this.$axios.get(`/rules/${this.ruleId}?appends=totalItemsCount,pendingItemsCount`)
     this.rule = rule
     this.$emit('loaded', rule)
   },
@@ -75,6 +92,11 @@ export default {
     ruleId: '$fetch'
   },
   methods: {
+    async executeRule () {
+      await this.$axios.post(`/rules/${this.ruleId}/bulk-execute`).then((res) => {
+        console.log('resolveItems', res)
+      }).catch(() => {})
+    },
     async handleConfirmDelete () {
       await this.$axios.delete(`/rules/${this.ruleId}`).then((res) => {
         this.showAlert = false

@@ -112,16 +112,12 @@
             </div>
           </TableRowCell>
           <TableRowCell>
-            <div class=" space-x-2">
-              <DsfrBadge
-                v-for="action,i in rule.actions"
-                :key="i"
-                size="sm"
-                class="truncate"
-              >
-                {{ action.action }} : {{ action.value }}
-              </DsfrBadge>
-            </div>
+            <DsfrBadge
+              size="sm"
+              class="truncate"
+            >
+              {{ rule.action_key | label('rule_actions') }} : {{ rule.action_value }}
+            </DsfrBadge>
           </TableRowCell>
           <TableRowCell>
             <RiCheckboxCircleLine v-if="rule.is_active" class="w-6 h-6 text-green-600 fill-current flex-none" />

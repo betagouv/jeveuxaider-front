@@ -39,9 +39,7 @@
               name="operand"
               :options="[
                 {key: '=', label: '='},
-                {key: '!=', label: '!='},
-                {key: 'in', label: 'in'},
-                {key: 'not in', label: 'not in'}
+                {key: '!=', label: '!='}
               ]"
             />
           </FormControl>

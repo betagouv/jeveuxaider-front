@@ -29,24 +29,37 @@
               <InputQueryBuilder
                 :model-value="form.conditions"
                 :condition-field-options="[
-                  {key:'domaines', label: 'Domaines'},
-                  {key:'activities', label: 'Activities'}
+                  {key:'domaine_id', label: 'Domaine principal'},
+                  {key:'domaine_secondary_id', label: 'Domaine secondaire'},
+                  {key:'activity_id', label: 'Activité'},
+                  {key:'template_id', label: 'Modèle de mission'},
                 ]"
                 @update:modelValue="newValue => form.conditions = newValue"
               />
             </FormControl>
             <FormControl
-              label="Actions"
-              html-for="actions"
-              :error="errors.actions"
+              label="Nom de l'action"
+              html-for="action_key"
+              :error="errors.action_key"
               required
             >
-              <InputActionBuilder
-                :model-value="form.actions"
-                :action-field-options="[
-                  {key:'attach_tag', label: 'Ajouter un tag'}
-                ]"
-                @update:modelValue="newValue => form.actions = newValue"
+              <SelectAdvanced
+                v-model="form.action_key"
+                name="action_key"
+                :options="$labels.rule_actions"
+              />
+            </FormControl>
+            <FormControl
+              label="Valeur à traiter"
+              html-for="action_value"
+              :error="errors.action_value"
+              required
+            >
+              <Input
+                v-model="form.action_value"
+                name="action_value"
+                :options="$labels.rule_actions"
+                placeholder="ID du tag"
               />
             </FormControl>
           </div>
@@ -93,12 +106,10 @@
 import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import InputQueryBuilder from '@/components/custom/InputQueryBuilder.vue'
-import InputActionBuilder from '@/components/custom/InputActionBuilder.vue'
 
 export default {
   components: {
-    InputQueryBuilder,
-    InputActionBuilder
+    InputQueryBuilder
   },
   mixins: [FormErrors],
   middleware: 'admin',
@@ -107,7 +118,8 @@ export default {
       type: Object,
       default: () => {
         return {
-          is_active: true
+          is_active: true,
+          action_key: 'attach_tag'
         }
       }
     }
@@ -120,7 +132,8 @@ export default {
         name: string().min(2, 'Le nom est trop court').required('Le nom est requis'),
         events: array().min(1, 'Au moins 1 déclencheur').required('Ajouter au moins 1 déclencheur'),
         conditions: array().min(1, 'Au moins 1 condition').required('Ajouter au moins 1 condition'),
-        actions: array().min(1, 'Au moins 1 actions').required('Ajouter au moins 1 action')
+        action_key: string().required('Une action est requise'),
+        action_value: string().required('Une valeur est requise')
       })
     }
   },
