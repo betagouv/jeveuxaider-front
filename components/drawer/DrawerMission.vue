@@ -106,7 +106,9 @@
         class="mb-8"
         :responsable="mission.responsable"
         :conversable-id="mission.id"
+        :conversable="mission"
         conversable-type="App\Models\Mission"
+        @updated="$emit('updated')"
       />
       <BoxOrganisation class="mb-8" :organisation="mission.structure" />
 
