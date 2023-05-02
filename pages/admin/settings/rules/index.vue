@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-8">
-    <DrawerRule :rule-id="drawerRuleId" @close="drawerRuleId = null" />
+    <DrawerRule :rule-id="drawerRuleId" @close="drawerRuleId = null" @refetch="$fetch" />
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[

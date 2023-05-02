@@ -107,6 +107,8 @@ export default {
           return 'Participation'
         case 'App\\Models\\Profile':
           return 'Utilisateur'
+        case 'App\\Models\\Rule':
+          return 'Règle'
         default:
           return this.log.subject_type
       }

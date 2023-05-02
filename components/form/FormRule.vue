@@ -119,7 +119,7 @@ export default {
       default: () => {
         return {
           is_active: true,
-          action_key: 'attach_tag'
+          action_key: 'mission_attach_tag'
         }
       }
     }

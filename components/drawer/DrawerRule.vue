@@ -102,6 +102,7 @@ export default {
         this.showAlert = false
         this.$emit('close')
         this.$emit('refetch')
+        this.$toast.success('La règle a bien été supprimée !')
       }).catch(() => {})
     }
   }

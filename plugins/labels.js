@@ -401,9 +401,9 @@ const labels = {
     { key: 'tete_de_reseau', label: 'Tête de réseau' }
   ],
   rule_events: [
-    { key: 'mission_validated', label: 'Mission est validée' }
+    { key: 'mission_updated', label: 'Mission est modifiée' }
   ],
   rule_actions: [
-    { key: 'attach_tag', label: 'Ajouter un tag' }
+    { key: 'mission_attach_tag', label: 'Ajouter un tag à la mission' }
   ]
 }
