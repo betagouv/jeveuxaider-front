@@ -18,6 +18,17 @@
       </div>
     </template>
     <DescriptionList v-if="responsable">
+      <div
+        v-if="$store.getters.contextRole == 'admin' && (responsable.tags || profileStats?.missions_inactive > 0)"
+        class="mt-1 mb-2 flex flex-wrap gap-1"
+      >
+        <Tag v-if="profileStats?.missions_inactive > 0" :custom-theme="true" class="bg-jva-red-600 text-white">
+          {{ profileStats.missions_inactive | pluralize('mission désactivée', 'missions désactivées') }}
+        </Tag>
+        <Tag v-for="tag in responsable.tags" :key="tag.id" size="sm">
+          {{ tag.name }}
+        </Tag>
+      </div>
       <DescriptionListItem term="Rôle" :description="role?.pivot.fonction" />
       <DescriptionListItem term="E-mail" :description="responsable.email" />
       <DescriptionListItem term="Mobile" :description="responsable.mobile" />
@@ -104,12 +115,14 @@
 import ModalSendMessage from '@/components/modal/ModalSendMessage.vue'
 import ModalRemoveResponsableFromOrganisation from '@/components/modal/ModalRemoveResponsableFromOrganisation.vue'
 import ModalResponsableSetMissionsIsActive from '~/components/modal/ModalResponsableSetMissionsIsActive.vue'
+import Tag from '@/components/dsfr/Tag.vue'
 
 export default {
   components: {
     ModalSendMessage,
     ModalRemoveResponsableFromOrganisation,
-    ModalResponsableSetMissionsIsActive
+    ModalResponsableSetMissionsIsActive,
+    Tag
   },
   props: {
     organisation: {
