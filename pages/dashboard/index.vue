@@ -25,6 +25,15 @@
             <span> {{ $store.state.auth.user.statistics?.missions_inactive_count | pluralize('a été désactivée', 'ont été désactivées', false) }}</span> par un modérateur car vous avez trop de participations à mettre à jour. {{ $store.state.auth.user.statistics?.missions_inactive_count | pluralize('Elle n\'apparait', 'Elles n\'apparaissent', false) }} plus dans la recherche et il est impossible pour les bénévoles de s'y inscrire.
           </p>
           <p>
+            Suivez ce lien pour mettre à jour le statut des participations :<br>
+            <DsfrLink
+              icon="RiArrowRightLine"
+              :to="`/admin/participations?filter[is_state_pending]=true&filter[ofResponsable]=${$store.getters.profile.id}`"
+            >
+              Traiter les participations
+            </DsfrLink>
+          </p>
+          <p>
             Pour toute information, veuillez contacter le support à l’adresse suivante : <DsfrLink href="\'mailto:support@jeveuxaider.beta.gouv.fr\'">
               support@jeveuxaider.beta.gouv.fr
             </DsfrLink>
