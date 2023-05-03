@@ -21,10 +21,10 @@
       </div>
 
       <template #footer>
-        <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
+        <Button :disabled="loading" class="mr-3" variant="white" @click.native="$emit('cancel')">
           Annuler
         </Button>
-        <Button @click.native="toggleIsActive()">
+        <Button :disabled="loading" :loading="loading" @click.native="toggleIsActive()">
           Confirmer
         </Button>
       </template>
@@ -44,10 +44,21 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      loading: false
+    }
+  },
   methods: {
     async toggleIsActive () {
+      if (this.loading) {
+        return
+      }
+
+      this.loading = true
       const { data: mission } = await this.$axios.put(`/missions/${this.mission.id}`, { ...this.mission, is_active: !this.mission.is_active }).catch(() => {})
       this.$toast.success(mission.is_active ? 'La mission est désormais active' : 'La mission a été désactivée')
+      this.loading = false
       this.$emit('confirm', mission)
     }
   }

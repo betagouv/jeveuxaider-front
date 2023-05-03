@@ -44,10 +44,10 @@
       </div>
 
       <template #footer>
-        <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
+        <Button :disabled="loading" class="mr-3" variant="white" @click.native="$emit('cancel')">
           Annuler
         </Button>
-        <Button @click.native="onConfirm()">
+        <Button :disabled="loading" :loading="loading" @click.native="onConfirm()">
           Confirmer
         </Button>
       </template>
