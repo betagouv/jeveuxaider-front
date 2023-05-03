@@ -65,7 +65,7 @@ export default {
   },
   computed: {
     textWithoutTags () {
-      return this.text.replace(/<\/li>/g, '</li> |').replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '')
+      return this.text.replace(/<\/li>/g, '</li> | ').replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '')
     },
     sentences () {
       return this.textWithoutTags.split(/[.?!|]\s+/)

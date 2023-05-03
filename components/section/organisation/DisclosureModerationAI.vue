@@ -92,7 +92,7 @@ export default {
     },
     textToAnalyze () {
       let text = this.organisation.name + '|' + this.organisation.description
-      text = text.replace(/<\/li>/g, '</li>|')
+      text = text.replace(/<\/li>/g, '</li> | ')
       text = text.replace(/<\/?[^>]+(>|$)/g, '')
       return text
     },

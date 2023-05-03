@@ -92,7 +92,7 @@ export default {
     },
     textToAnalyze () {
       let text = this.mission.name + ' | ' + this.mission.objectif + ' | ' + this.mission.description + ' | ' + this.mission.information + (this.mission.prerequisites ? ' | ' + this.mission.prerequisites.join(' | ') : '')
-      text = text.replace(/<\/li>/g, '</li> |')
+      text = text.replace(/<\/li>/g, '</li> | ')
       text = text.replace(/<\/?[^>]+(>|$)/g, '')
       return text
     },
