@@ -12,13 +12,24 @@
             On peut vous aider à modérer ?
           </div>
           <div class="text-sm text-gray-600">
-            Vérifiez les alertes remontées par notre système d’intelligence artificielle 🤖
+            Vérifiez les alertes remontées par l’outil 🔍
           </div>
         </div>
       </div>
     </template>
-    <div v-if="isLoadingOrhasResults" class="flex space-y-6 flex-col">
-      <DisclosureModerationAI v-if="showModerationAI" :organisation="organisation" @analyzed="loadingModerationAI = false" @hide="showModerationAI = false" />
+    <div v-if="hasResults" class="grid grid-cols-1 gap-6">
+      <DisclosureModerationAI
+        v-show="!seemCompliantAI"
+        :organisation="organisation"
+        @good-score="seemCompliantAI = true"
+        @bad-score="seemCompliantAI = false"
+      />
+
+      <DisclosureWarningWords
+        v-show="wordsDetected"
+        :text="textToAnalyze"
+        @words-detected="wordsDetected = true"
+      />
 
       <Disclosure v-if="organisationHasDoublon">
         <template #button="{ isOpen }">
@@ -52,11 +63,11 @@
         </div>
       </Disclosure>
 
-      <Disclosure v-if="needSiret">
+      <Disclosure v-if="needRNA">
         <template #button="{ isOpen }">
           <div class="flex font-semibold text-sm items-center group">
             <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
-              <RiAlertFill class="h-5 w-5 text-[#FA7A35] fill-current mr-2" aria-hidden="true" /> SIRET manquant
+              <RiAlertFill class="h-5 w-5 text-[#FA7A35] fill-current mr-2" aria-hidden="true" /> RNA manquant
             </div>
             <div class="w-full border-t mt-1 mx-2" />
             <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
@@ -64,7 +75,10 @@
           </div>
         </template>
         <div class="ml-7 mt-3 text-sm text-gray-500">
-          Le SIRET n'a pas été communiqué
+          Le numéro RNA n'a pas été communiqué
+          <template v-if="organisation.is_alsace_moselle">
+            car le responsable a précisé être une association de droit local (Alsace-Moselle)
+          </template>.
         </div>
       </Disclosure>
     </div>
@@ -76,10 +90,12 @@
 
 <script>
 import DisclosureModerationAI from '~/components/section/organisation/DisclosureModerationAI.vue'
+import DisclosureWarningWords from '~/components/section/mission/DisclosureWarningWords.vue'
 
 export default {
   components: {
-    DisclosureModerationAI
+    DisclosureModerationAI,
+    DisclosureWarningWords
   },
   props: {
     organisation: {
@@ -95,8 +111,8 @@ export default {
     return {
       loading: true,
       doublonAlgoliaOrganisations: [],
-      loadingModerationAI: true,
-      showModerationAI: true
+      wordsDetected: false,
+      seemCompliantAI: false
     }
   },
   async fetch () {
@@ -111,14 +127,17 @@ export default {
     this.loading = false
   },
   computed: {
-    isLoadingOrhasResults () {
-      return this.loadingModerationAI || this.showModerationAI || this.needSiret || this.organisationHasDoublon
+    hasResults () {
+      return !this.seemCompliantAI || this.wordsDetected || this.needRNA || this.organisationHasDoublon
     },
-    needSiret () {
-      return this.organisation.statut_juridique === 'Association' && !this.organisation.siret
+    needRNA () {
+      return this.organisation.statut_juridique == 'Association' && !this.organisation.rna
     },
     organisationHasDoublon () {
       return this.doublonAlgoliaOrganisations.total > 0
+    },
+    textToAnalyze () {
+      return this.organisation.name + ' | ' + this.organisation.description
     }
   }
 }

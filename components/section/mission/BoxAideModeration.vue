@@ -12,13 +12,19 @@
             On peut vous aider à modérer ?
           </div>
           <div class="text-sm text-gray-600">
-            Vérifiez les alertes remontées par notre système d’intelligence artificielle 🤖
+            Vérifiez les alertes remontées par l’outil 🔍
           </div>
         </div>
       </div>
     </template>
-    <div v-if="isLoadingOrhasResults" class="flex space-y-6 flex-col">
-      <DisclosureModerationAI v-if="showModerationAI" :mission="mission" @analyzed="loadingModerationAI = false" @hide="showModerationAI = false" />
+    <div v-if="hasResults" class="grid grid-cols-1 gap-6">
+      <DisclosureModerationAI
+        v-show="!seemCompliantAI"
+        :mission="mission"
+        @good-score="seemCompliantAI = true"
+        @bad-score="seemCompliantAI = false"
+      />
+      <DisclosureWarningWords v-show="wordsDetected" :text="textToAnalyze" @words-detected="wordsDetected = true" />
 
       <Disclosure v-if="frequenceTotalHours">
         <template #button="{ isOpen }">
@@ -46,7 +52,7 @@
         <template #button="{ isOpen }">
           <div class="flex font-semibold text-sm items-center group">
             <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
-              <RiAlertFill class="h-5 w-5 text-[#FA7A35] fill-current mr-2" aria-hidden="true" /> Titre non conforme
+              <RiAlertFill class="h-5 w-5 text-[#FA7A35] fill-current mr-2" aria-hidden="true" /> Le titre doit commencer par Je/J’
             </div>
             <div class="w-full border-t mt-1 mx-2" />
             <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
@@ -77,7 +83,7 @@
         </div>
       </Disclosure>
 
-      <Disclosure v-if="startDateInPass">
+      <Disclosure v-if="startDateInPassWithoutFrequency">
         <template #button="{ isOpen }">
           <div class="flex font-semibold text-sm items-center group">
             <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
@@ -100,11 +106,13 @@
 </template>
 
 <script>
+import DisclosureWarningWords from '~/components/section/mission/DisclosureWarningWords.vue'
 import DisclosureModerationAI from '~/components/section/mission/DisclosureModerationAI.vue'
 
 export default {
   components: {
-    DisclosureModerationAI
+    DisclosureModerationAI,
+    DisclosureWarningWords
   },
   props: {
     mission: {
@@ -120,9 +128,9 @@ export default {
     return {
       score: null,
       loading: false,
-      loadingModerationAI: true,
       maxPlaces: 70,
-      showModerationAI: true
+      seemCompliantAI: false,
+      wordsDetected: false
     }
   },
   async fetch () {
@@ -134,8 +142,8 @@ export default {
     this.loading = false
   },
   computed: {
-    isLoadingOrhasResults () {
-      return this.loadingModerationAI || this.showModerationAI || this.frequenceTotalHours || this.tooManyParticipationsMax || this.needReviewTitle || this.startDateInPass
+    hasResults () {
+      return !this.seemCompliantAI || this.wordsDetected || this.frequenceTotalHours || this.tooManyParticipationsMax || this.needReviewTitle || this.startDateInPassWithoutFrequency
     },
     frequenceTotalHours () {
       return this.mission.commitment__total > 1091
@@ -146,8 +154,11 @@ export default {
     needReviewTitle () {
       return !this.mission.name.match(/^(Je|J'|J’)/)
     },
-    startDateInPass () {
-      return ['Brouillon', 'En attente de validation', 'En cours de traitement'].includes(this.mission.state) && this.$dayjs().isAfter(this.mission.start_date)
+    startDateInPassWithoutFrequency () {
+      return !this.mission.commitment__time_period && ['Brouillon', 'En attente de validation', 'En cours de traitement'].includes(this.mission.state) && this.$dayjs().isAfter(this.mission.start_date)
+    },
+    textToAnalyze () {
+      return this.mission.name + ' | ' + this.mission.objectif + ' | ' + this.mission.description + ' | ' + this.mission.information + (this.mission.prerequisites ? ' | ' + this.mission.prerequisites.join(' | ') : '')
     }
   }
 }
