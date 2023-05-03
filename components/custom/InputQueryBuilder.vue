@@ -32,7 +32,7 @@
           </FormControl>
           <FormControl
             html-for="operand"
-            class="max-w-[110px]"
+            class="max-w-[90px]"
           >
             <SelectAdvanced
               v-model="condition.operand"
@@ -45,6 +45,7 @@
           </FormControl>
           <FormControl
             html-for="value"
+            class="max-w-[140px]"
           >
             <Input
               v-model="condition.value"

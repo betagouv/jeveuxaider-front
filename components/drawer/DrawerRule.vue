@@ -17,7 +17,7 @@
     <template v-if="rule">
       <OnlineIndicator :published="rule.is_active" class="mt-2" />
       <div class="flex gap-2 mt-4">
-        <Button variant="white" size="sm" icon="RiPlayCircleLine" @click.native="executeRule">
+        <Button variant="white" size="sm" icon="RiPlayCircleLine" :disabled="rule.pendingItemsCount === 0 || !rule.is_active" @click.native="executeRule">
           Exécuter
         </Button>
         <nuxt-link :to="`/admin/settings/rules/${rule.id}/edit`" class="inline-flex">

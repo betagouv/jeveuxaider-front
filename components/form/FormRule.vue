@@ -118,7 +118,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          is_active: true,
+          is_active: false,
           action_key: 'mission_attach_tag'
         }
       }
