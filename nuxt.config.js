@@ -53,7 +53,6 @@ export default {
     '~/plugins/heroicons.js',
     '~/plugins/axeptio.client.js',
     // '~/plugins/userback.client.js',
-    '~/plugins/atinternet.client.js',
     '~/plugins/flare.client.js',
     '~/plugins/yup.js',
     '~/plugins/vue-filters.js',
@@ -128,6 +127,10 @@ export default {
     },
     google: {
       places: process.env.GOOGLE_PLACE_API_KEY
+    },
+    ai: {
+      missionModerationUrl: process.env.API_AI_MISSION_MODERATION_URL,
+      organisationModerationUrl: process.env.API_AI_ORGANISATION_MODERATION_URL
     },
     apiEngagement: {
       key: process.env.APIENG_KEY,
@@ -220,7 +223,9 @@ export default {
     defaultLocale: 'fr',
     plugins: [
       'relativeTime',
-      'customParseFormat'
+      'customParseFormat',
+      'duration',
+      'utc'
     ]
   },
 

@@ -111,20 +111,17 @@
 
       <div class="flex items-end justify-between space-x-1 text-xs text-[#666666] pt-8 mt-auto w-full">
         <div v-if="hasExpired">
-          Inscription terminée
+          <p>Inscription terminée</p>
         </div>
         <div v-else>
-          <span>{{ placesLeftText }}</span>
-          <template v-if="formattedDate && placesLeftText !== 'Complet' && !mission.is_registration_open">
-            <br> {{ formattedDate }}
-          </template>
+          <p>{{ placesLeftText }}</p>
+          <p v-if="formattedDate && (placesLeftText !== 'Complet') && mission.is_registration_open">
+            {{ formattedDate }}
+          </p>
         </div>
 
         <RiArrowRightLine
-          :class="[
-            'flex-none ml-auto w-6 h-6 fill-current text-jva-blue-500',
-
-          ]"
+          :class="['flex-none ml-auto w-6 h-6 fill-current text-jva-blue-500']"
         />
       </div>
     </div>
@@ -183,7 +180,7 @@ export default {
         return 'Inscription fermée'
       } else if (
         this.mission.publisher_name &&
-        this.mission.publisher_name !== 'Réserve Civique' &&
+        this.mission.publisher_name !== 'JeVeuxAider.gouv.fr' &&
         this.mission.places_left > 99
       ) {
         return 'Plusieurs bénévoles recherchés'

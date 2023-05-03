@@ -22,14 +22,14 @@
 
         <div class="text-sm text-gray-600">
           <label
-            :for="`inputfile--${_uid}`"
+            :for="`inputfile--${uuid}`"
             class="relative cursor-pointer font-medium text-jva-blue-500 label"
             @click.stop
           >
             {{ cLabel }}
 
             <input
-              :id="`inputfile--${_uid}`"
+              :id="`inputfile--${uuid}`"
               ref="inputFile"
               type="file"
               :multiple="multiple"
@@ -86,9 +86,11 @@
 
 <script>
 import uniqid from 'uniqid'
+import uuid from '@/mixins/uuid'
 const mime = require('mime-types')
 
 export default {
+  mixins: [uuid],
   props: {
     multiple: {
       type: Boolean,

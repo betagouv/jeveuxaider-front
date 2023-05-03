@@ -1,15 +1,17 @@
 <template>
   <portal to="body-end">
     <Modal
-      :key="`modal_alert_dialog_${_uid}`"
+      :key="`modal_alert_dialog_${uuid}`"
       v-scroll-lock="isOpen"
       :title="title"
       :is-open="isOpen"
       :theme="theme"
       @close="$emit('cancel')"
     >
-      <div class="text-sm text-gray-500" v-html="text" />
-      <slot />
+      <div class="text-gray-700 space-y-4">
+        <div v-html="text" />
+        <slot />
+      </div>
       <template #footer>
         <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
           {{ cancelLabel }}
@@ -23,7 +25,10 @@
 </template>
 
 <script>
+import uuid from '@/mixins/uuid'
+
 export default {
+  mixins: [uuid],
   props: {
     isOpen: {
       type: Boolean,

@@ -65,7 +65,7 @@
                   ? `/missions-benevolat/${item.id}`
                   : `/missions-benevolat/${item.id}/${item.slug}`
               "
-              @click.native="handleClickCard"
+              @click.native="handleClickCard(item)"
             >
               <CardMission :mission="item" />
             </nuxt-link>
@@ -184,16 +184,19 @@ export default {
         query: { ...this.$route.query, page }
       })
     },
-    handleClickCard () {
+    async handleClickCard (item) {
       window.plausible &&
         window.plausible('Click Card Missions - Liste résultat', {
-          props: { isLogged: this.$store.getters.isLogged }
+          props: {
+            isLogged: this.$store.getters.isLogged,
+            isFromApi: item.provider === 'api_engagement',
+            isRegistrationOpen: item.is_registration_open,
+            hasPlacesLeft: item.has_places_left,
+            isOutdated: item.is_outdated
+          }
         })
+      await this.$gtm.push({ event: 'benevole-clic-carte-mission' })
     }
   }
 }
 </script>
-
-<style>
-
-</style>

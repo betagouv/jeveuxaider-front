@@ -60,7 +60,7 @@
     </div>
     <div
       v-show="searchTerm && showOptions"
-      class="options-wrapper absolute w-full z-50 bg-white border border-gray-200 mt-2 overflow-hidden rounded-xl shadow-md"
+      class="options-wrapper absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-x-hidden overflow-y-auto mt-1 overscroll-contain"
       :class="classOptions"
       @focusout="showOptions = false"
     >
@@ -133,6 +133,11 @@ export default {
       highlightIndex: null,
       selectedOption: null,
       searchTerm: this.value
+    }
+  },
+  watch: {
+    value (newVal) {
+      this.searchTerm = newVal
     }
   },
   mounted () {

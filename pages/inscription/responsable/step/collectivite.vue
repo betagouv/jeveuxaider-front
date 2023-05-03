@@ -128,6 +128,7 @@ export default {
   },
   mixins: [FormErrors, MixinInputGeo],
   layout: 'register-steps',
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   async asyncData ({ $axios, store, error, redirect }) {
     if (
       !store.getters.currentRole || store.getters.currentRole.contextable_type !== 'structure'

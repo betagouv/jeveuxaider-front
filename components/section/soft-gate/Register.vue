@@ -264,7 +264,7 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           await this.$store.dispatch('auth/registerVolontaire', this.form)
-
+          await this.$gtm.push({ event: 'benevole-inscription-soft-gate' })
           window.plausible &&
                 window.plausible('Soft Gate - Étape 2 - Inscription')
 

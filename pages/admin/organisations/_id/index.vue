@@ -119,6 +119,8 @@
               @selected="handleChangeState($event)"
             />
 
+            <BoxAideModeration v-if="['admin'].includes($store.getters.contextRole)" :organisation="organisation" />
+
             <div>
               <div class="text-sm flex justify-between px-2 mb-2 uppercase font-semibold text-gray-600">
                 Votre activité en chiffres
@@ -186,7 +188,10 @@
               </div>
             </div>
           </template>
-          <History v-if="$route.hash === '#historique'" :model-id="organisation.id" model-type="structure" />
+          <template v-if="$route.hash === '#historique'">
+            <HistoryStateChanges :model-id="organisation.id" model-type="structure" />
+            <History :model-id="organisation.id" model-type="structure" />
+          </template>
         </client-only>
       </div>
     </div>
@@ -195,6 +200,7 @@
 
 <script>
 import History from '@/components/section/History'
+import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import MixinOrganisation from '@/mixins/organisation'
 import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks'
 import BoxInformations from '@/components/section/organisation/BoxInformations'
@@ -210,10 +216,12 @@ import BoxNotes from '@/components/custom/BoxNotes'
 import BoxMember from '@/components/section/BoxMember'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import BoxScore from '@/components/section/organisation/BoxScore.vue'
+import BoxAideModeration from '@/components/section/organisation/BoxAideModeration.vue'
 
 export default {
   components: {
     History,
+    HistoryStateChanges,
     DomainsPublicsLinks,
     OnlineIndicator,
     BoxInformations,
@@ -227,10 +235,11 @@ export default {
     BoxNotes,
     BoxMember,
     Breadcrumb,
-    BoxScore
+    BoxScore,
+    BoxAideModeration
   },
   mixins: [MixinOrganisation],
-  middleware: 'authenticated',
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   async asyncData ({ $axios, params, error, store }) {
     if (
       ![

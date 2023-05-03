@@ -1,14 +1,8 @@
 @import "fonts";
 
 html {
-  color: #3A3A3A;
+  color: #161616;
   @apply antialiased bg-gray-50 h-full;
-}
-
-// todo: dans tailwind config, sinon toutes les classes dérivées ne sont pas prises en compte,
-// ex .sm:container
-.container {
-  @apply xl:max-w-7xl
 }
 
 .fade-enter-active,
@@ -325,6 +319,8 @@ body.full-height-layout {
 }
 
 .formatted-text {
+  word-break: normal;
+  overflow-wrap: break-word;
 
   > *:not(:last-child) {
     @apply mb-6;
@@ -408,6 +404,7 @@ body.full-height-layout {
 
 .Vue-Toastification__toast {
   border-radius: 0 !important;
+  @apply font-sans #{!important};
 }
 
 .vc-container {

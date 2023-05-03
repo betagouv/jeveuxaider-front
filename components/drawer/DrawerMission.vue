@@ -16,7 +16,10 @@
         </nuxt-link>
       </Heading>
     </template>
-    <div v-if="mission">
+    <div v-if="loading">
+      <LoadingIndicator class="mt-8" />
+    </div>
+    <div v-else>
       <OnlineIndicator :published="hasPageOnline" :link="`/missions-benevolat/${mission.id}/${mission.slug}`" class="mt-2" />
       <div class="flex flex-wrap gap-1 mt-4">
         <nuxt-link :to="`/admin/missions/${mission.id}`">
@@ -77,6 +80,7 @@
       <BoxDates class="mb-8" :mission="mission" />
       <BoxPlace class="mb-8" :mission="mission" @updated="$fetch" />
       <BoxInformations class="mb-8" :mission="mission" />
+      <HistoryStateChanges v-if="['admin','referent'].includes($store.getters.contextRole)" :model-id="mission.id" model-type="mission" class="mb-8" />
       <BoxReferents v-if="['admin'].includes($store.getters.contextRole)" :key="mission.department" :department="mission.department" class="mb-8" />
       <BoxResponsable
         class="mb-8"
@@ -107,9 +111,12 @@ import OnlineIndicator from '@/components/custom/OnlineIndicator'
 import ButtonMissionDuplicate from '@/components/custom/ButtonMissionDuplicate'
 import BoxReferents from '@/components/section/BoxReferents'
 import Button from '@/components/dsfr/Button.vue'
+import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
+import LoadingIndicator from '@/components/custom/LoadingIndicator'
 
 export default {
   components: {
+    LoadingIndicator,
     SelectMissionState,
     BoxDates,
     BoxPlace,
@@ -119,7 +126,8 @@ export default {
     OnlineIndicator,
     ButtonMissionDuplicate,
     BoxReferents,
-    Button
+    Button,
+    HistoryStateChanges
   },
   mixins: [MixinMission],
   props: {
@@ -132,15 +140,18 @@ export default {
     return {
       showAlert: false,
       mission: null,
-      missionStats: null
+      missionStats: null,
+      loading: false
     }
   },
   async fetch () {
+    this.loading = true
     if (!this.missionId) {
       return
     }
     const { data } = await this.$axios.get(`/missions/${this.missionId}`)
     this.mission = data
+    this.loading = false
     this.$axios.get(`/statistics/missions/${this.missionId}`).then(({ data }) => {
       this.missionStats = data
     })

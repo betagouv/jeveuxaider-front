@@ -14,14 +14,14 @@
         @keydown.esc="isOpen = false"
       >
         <div class="p-4 space-y-3">
-          <div :id="`label-search-${_uid}`" class="font-medium">
+          <div :id="`label-search-${uuid}`" class="font-medium">
             {{ label }}
           </div>
 
           <FacetSearch
             ref="facetSearch"
             v-model="facetQuery"
-            :aria-labelledby="`label-search-${_uid}`"
+            :aria-labelledby="`label-search-${uuid}`"
             @input="handleChangeSearchFacetValues"
           />
 
@@ -98,12 +98,13 @@
 <script>
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
     FacetSearch
   },
-  mixins: [AlgoliaQueryBuilder],
+  mixins: [AlgoliaQueryBuilder, uuid],
   props: {
     facetName: { type: String, required: true },
     label: { type: String, required: true },

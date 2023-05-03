@@ -53,6 +53,17 @@
           </FormControl>
 
           <FormControl
+            label="SIRET"
+            html-for="siret"
+          >
+            <Input
+              v-model="form.siret"
+              name="siret"
+              placeholder="Ex: 784 671 695 00087"
+            />
+          </FormControl>
+
+          <FormControl
             v-if="form.statut_juridique == 'Association'"
             label="Renseignez votre numéro RNA"
             html-for="rna"
@@ -250,7 +261,7 @@
           </div>
 
           <FormControl
-            v-if="!['Collectivité', 'Organisation privée'].includes(form.statut_juridique)"
+            v-if="!['Collectivité'].includes(form.statut_juridique)"
             label="Faites-vous partie d'un réseau national ?"
             html-for="tete_de_reseau_id"
           >
@@ -312,6 +323,7 @@ export default {
   },
   mixins: [FormErrors, MixinInputGeo],
   layout: 'register-steps',
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   async asyncData ({ $axios, store, error, $labels }) {
     if (
       !store.getters.currentRole || store.getters.currentRole.contextable_type !== 'structure'

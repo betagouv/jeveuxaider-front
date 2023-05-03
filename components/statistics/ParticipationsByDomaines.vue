@@ -6,7 +6,15 @@
       infos-bulle="Répartition des mises en relation sur la période par domaine d'action"
     />
     <div v-if="items" class="flex flex-col gap-2">
-      <ListItemCount v-for="item in items" :key="item.id" :color="item.id ? item.id : 'gray-light'" :label="item.name ? item.name : 'Sans domaine'" :count="item.count" />
+      <ListItemCount
+        v-for="item in items"
+        :key="item.id"
+        :color="item.id ? item.id : 'gray-light'"
+        :label="item.name ? item.name : 'Sans domaine'"
+        :count="item.count"
+        :total="total"
+        display="count_percent"
+      />
     </div>
   </Box>
 </template>
@@ -34,6 +42,11 @@ export default {
       this.loading = false
       this.items = response.data
     })
+  },
+  computed: {
+    total () {
+      return this.items ? this.items.reduce((acc, curr) => acc + curr.count, 0) : 0
+    }
   }
 }
 </script>

@@ -34,7 +34,7 @@
         @keydown.esc="isOpen = false"
       >
         <div class="p-4 pb-0 space-y-3">
-          <div :id="`label-search-${_uid}`" class="font-medium">
+          <div :id="`label-search-${uuid}`" class="font-medium">
             {{ label }}
           </div>
 
@@ -42,7 +42,7 @@
             ref="facetSearch"
             v-model="searchValue"
             placeholder="Renseignez une ville ou un code postal"
-            :aria-labelledby="`label-search-${_uid}`"
+            :aria-labelledby="`label-search-${uuid}`"
             @input="handleInput"
           />
         </div>
@@ -122,12 +122,13 @@
 import { debounce } from 'lodash'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
     FacetSearch
   },
-  mixins: [AlgoliaQueryBuilder],
+  mixins: [AlgoliaQueryBuilder, uuid],
   props: {
     label: {
       type: String,

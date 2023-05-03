@@ -6,11 +6,11 @@
       infos-bulle="Répartition des participations sur la période par statut"
     />
     <div v-if="statistics" class="flex flex-col gap-2">
-      <ListItemCount color="waiting" label="En attente de validation" :count="statistics.waiting" />
-      <ListItemCount color="in_progress" label="En cours de traitement" :count="statistics.in_progress" />
-      <ListItemCount color="validated" label="Validée" :count="statistics.validated" />
-      <ListItemCount color="canceled" label="Annulée" :count="statistics.canceled" />
-      <ListItemCount color="refused" label="Refusée" :count="statistics.refused" />
+      <ListItemCount color="waiting" label="En attente de validation" :count="statistics.waiting" :total="total" display="count_percent" />
+      <ListItemCount color="in_progress" label="En cours de traitement" :count="statistics.in_progress" :total="total" display="count_percent" />
+      <ListItemCount color="validated" label="Validée" :count="statistics.validated" :total="total" display="count_percent" />
+      <ListItemCount color="canceled" label="Annulée" :count="statistics.canceled" :total="total" display="count_percent" />
+      <ListItemCount color="refused" label="Refusée" :count="statistics.refused" :total="total" display="count_percent" />
     </div>
   </Box>
 </template>
@@ -38,6 +38,11 @@ export default {
       this.loading = false
       this.statistics = response.data
     })
+  },
+  computed: {
+    total () {
+      return this.statistics ? Object.values(this.statistics).reduce((a, b) => a + b) : 0
+    }
   }
 }
 </script>

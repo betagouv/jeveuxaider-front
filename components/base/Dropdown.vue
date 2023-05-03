@@ -33,7 +33,7 @@
         aria-labelledby="menu-button"
         @keydown.esc="show = false"
       >
-        <div class="py-1" role="none">
+        <div class="" role="none">
           <slot name="items" />
         </div>
       </div>

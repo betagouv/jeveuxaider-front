@@ -7,27 +7,34 @@
       </div>
     </template>
     <template v-if="participation">
-      <SelectParticipationState v-if="canEditStatut" :value="participation.state" :participation="participation" class="mt-4" @selected="handleChangeState($event)" />
-      <div v-else class="mt-4 font-medium text-gray-800">
-        {{ participation.state }}
+      <div v-if="loading">
+        <LoadingIndicator class="mt-8" />
       </div>
-      <template v-if="participation.conversation && canEditStatut">
-        <div class="border-t -mx-6 my-6" />
-        <nuxt-link :to="`/messages/${participation.conversation.id}`" class="text-jva-blue-500 flex items-center text-sm font-bold">
-          <ChatAltIcon class="h-4 w-4 mr-4" /> Accéder à la messagerie
-        </nuxt-link>
-      </template>
-      <div class="border-t -mx-6 my-6" />
-      <BoxInformationsProfile class="mb-8" :profile="participation.profile" title="Bénévole" :show-action="false" />
-      <BoxUtm v-if="$store.getters.contextRole === 'admin'" class="mb-8" :model="participation" />
-      <BoxInformationsMission class="mb-8" :mission="participation.mission" title="Mission">
-        <template #action>
-          <Link :to="`/admin/missions/${participation.mission.id}`" icon="ChevronRightIcon">
-            Consulter
-          </Link>
+      <div v-else>
+        <SelectParticipationState v-if="canEditStatut" :value="participation.state" :participation="participation" class="mt-4" @selected="handleChangeState($event)" />
+        <div v-else class="mt-4 font-medium text-gray-800">
+          {{ participation.state }}
+        </div>
+        <template v-if="participation.conversation && canEditStatut">
+          <div class="border-t -mx-6 my-6" />
+          <nuxt-link :to="`/messages/${participation.conversation.id}`" class="text-jva-blue-500 flex items-center text-sm font-bold">
+            <ChatAltIcon class="h-4 w-4 mr-4" /> Accéder à la messagerie
+          </nuxt-link>
         </template>
-      </BoxInformationsMission>
-      <BoxResponsable :responsable="participation.mission.responsable" />
+        <div class="border-t -mx-6 my-6" />
+        <HistoryStateChanges v-if="['admin','referent'].includes($store.getters.contextRole)" :model-id="participation.id" model-type="participation" class="mb-8" />
+
+        <BoxInformationsProfile class="mb-8" :profile="participation.profile" title="Bénévole" :show-action="false" />
+        <BoxUtm v-if="$store.getters.contextRole === 'admin'" class="mb-8" :model="participation" />
+        <BoxInformationsMission class="mb-8" :mission="participation.mission" title="Mission">
+          <template #action>
+            <Link :to="`/admin/missions/${participation.mission.id}`" icon="ChevronRightIcon">
+              Consulter
+            </Link>
+          </template>
+        </BoxInformationsMission>
+        <BoxResponsable :responsable="participation.mission.responsable" />
+      </div>
     </template>
   </Drawer>
 </template>
@@ -39,14 +46,18 @@ import BoxInformationsProfile from '@/components/section/profile/BoxInformations
 import BoxInformationsMission from '@/components/section/mission/BoxInformations'
 import BoxResponsable from '@/components/section/BoxResponsable'
 import BoxUtm from '@/components/section/BoxUtm'
+import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
+import LoadingIndicator from '@/components/custom/LoadingIndicator'
 
 export default {
   components: {
+    LoadingIndicator,
     SelectParticipationState,
     BoxInformationsProfile,
     BoxInformationsMission,
     BoxResponsable,
-    BoxUtm
+    BoxUtm,
+    HistoryStateChanges
   },
   mixins: [MixinParticipation],
   props: {
@@ -57,15 +68,18 @@ export default {
   },
   data () {
     return {
+      loading: false,
       participation: null
     }
   },
   async fetch () {
+    this.loading = true
     if (!this.participationId) {
       return null
     }
     const { data: participation } = await this.$axios.get(`/participations/${this.participationId}`)
     this.participation = participation
+    this.loading = false
     this.$emit('loaded', participation)
   },
   watch: {

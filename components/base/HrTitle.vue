@@ -1,12 +1,22 @@
 <template>
-  <div class="flex items-center gap-4 mb-4">
-    <p class="flex-none font-bold text-xs uppercase text-[#666666]">
+  <div class="hr-title flex items-center mb-4">
+    <p class="font-bold text-xs uppercase text-[#666666]">
       <slot />
     </p>
-    <hr class="text-gray-200 w-full">
   </div>
 </template>
 
 <script>
 export default {}
 </script>
+
+<style lang="postcss" scoped>
+.hr-title {
+  &::after {
+    content: '';
+    flex: 1 1;
+    border-bottom: 1px solid #E5E5E5;
+    @apply my-auto ml-4;
+  }
+}
+</style>

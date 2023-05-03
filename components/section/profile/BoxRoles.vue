@@ -13,14 +13,13 @@
           :term="getTerm(role)"
           :description="role.pivot_model.name"
         />
-        <DescriptionListItem
-          v-if="role.name !== 'admin'"
-          term="Invité par"
-          :description="role.invited_by?.profile.full_name"
-        >
-          <Link v-if="role.invited_by" class="inline-flex" :to="`/admin/utilisateurs/${role.invited_by.profile.id}`">
-            {{ role.invited_by.profile.full_name }}
-          </Link>
+        <DescriptionListItem v-if="role.name !== 'admin'" term="Invité par">
+          <template v-if="role.invited_by">
+            <Link v-if="['admin'].includes($store.getters.contextRole)" class="inline-flex" :to="`/admin/utilisateurs/${role.invited_by.profile.id}`">
+              {{ role.invited_by.profile.full_name }}
+            </Link>
+            <span v-else>{{ role.invited_by.profile.full_name }}</span>
+          </template>
           <span v-else> - </span>
         </DescriptionListItem>
       </DescriptionList>

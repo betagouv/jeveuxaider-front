@@ -6,8 +6,8 @@
     :href="to"
     :type="isSubmit ? 'submit' : (tag === 'button' ? 'button' : null)"
     :class="[
-      'font-medium border',
-      'inline-flex items-center justify-center transition',
+      'font-medium border transition',
+      'inline-flex items-center justify-center whitespace-pre-wrap',
 
       {'px-3 py-1 text-sm min-h-[34px]': size === 'sm'},
       {'px-4 py-2 text-base min-h-[42px]': size === 'md'},
@@ -17,6 +17,7 @@
       {'text-jva-blue-500 border-jva-blue-500 bg-white hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'secondary'},
       {'text-jva-blue-500 border-[#DDDDDD] bg-white hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'tertiary'},
       {'text-jva-blue-500 border-transparent bg-white hover:bg-[#F6F6F6] active:bg-[#EDEDED]': type === 'tertiary-no-outline'},
+      {'bg-transparent': type === 'transparent'},
 
       {'cursor-not-allowed !bg-[#E5E5E5] text-[#929292]': disabled && type === 'primary'},
       {'cursor-not-allowed !border-[#E5E5E5] text-[#929292]': disabled && ['secondary', 'tertiary'].includes(type)},
@@ -39,7 +40,9 @@
         {'w-4 h-4': ['sm', 'md'].includes(size) },
         {'w-6 h-6': size === 'lg'},
 
-        {'animate-spin': loading }
+        {'animate-spin': loading },
+
+        iconClass
       ]"
     />
 
@@ -59,7 +62,9 @@
         {'w-4 h-4': ['sm', 'md'].includes(size) },
         {'w-6 h-6': size === 'lg'},
 
-        {'animate-spin': loading }
+        {'animate-spin': loading },
+
+        iconClass
       ]"
     />
   </component>
@@ -76,7 +81,7 @@ export default {
     type: {
       type: String,
       default: 'primary',
-      validator: s => ['primary', 'secondary', 'tertiary', 'tertiary-no-outline'].includes(s)
+      validator: s => ['primary', 'transparent', 'secondary', 'tertiary', 'tertiary-no-outline'].includes(s)
     },
     icon: {
       // See vue-remix-icons.js
@@ -91,6 +96,10 @@ export default {
     iconOnly: {
       type: Boolean,
       default: false
+    },
+    iconClass: {
+      type: String,
+      default: ''
     },
     disabled: {
       type: Boolean,

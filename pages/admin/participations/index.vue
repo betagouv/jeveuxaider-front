@@ -34,9 +34,23 @@
           name="autocomplete"
           placeholder="Organisation"
           :options="autocompleteOptionsOrga"
+          :show-key-in-options="true"
           variant="transparent"
           @fetch-suggestions="onFetchSuggestionsOrga"
-          @selected="changeFilter('filter[mission.structure.name]', $event ? $event.name : undefined)"
+          @selected="onSelectOrganisation"
+        />
+        <SelectAdvanced
+          v-if="responsables.length && ['responsable', 'admin'].includes($store.getters.contextRole)"
+          :key="`responsable-${$route.fullPath}`"
+          name="responsable"
+          placeholder="Responsable"
+          :options="responsables"
+          :value="$route.query['filter[ofResponsable]']"
+          variant="transparent"
+          attribute-key="id"
+          attribute-label="full_name"
+          clearable
+          @input="changeFilter('filter[ofResponsable]', $event)"
         />
         <InputAutocomplete
           :value="$route.query['filter[mission.name]']"
@@ -44,6 +58,7 @@
           name="autocomplete"
           placeholder="Mission"
           :options="autocompleteOptionsMission"
+          :show-key-in-options="true"
           variant="transparent"
           @fetch-suggestions="onFetchSuggestionsMission"
           @selected="changeFilter('filter[mission.id]', $event ? $event.id : undefined)"
@@ -67,19 +82,6 @@
           variant="transparent"
           clearable
           @input="changeFilter('filter[mission.department]', $event)"
-        />
-        <SelectAdvanced
-          v-if="responsables.length && ['responsable'].includes($store.getters.contextRole)"
-          :key="`responsable-${$route.fullPath}`"
-          name="responsable"
-          placeholder="Responsable"
-          :options="responsables"
-          :value="$route.query['filter[ofResponsable]']"
-          variant="transparent"
-          attribute-key="id"
-          attribute-label="full_name"
-          clearable
-          @input="changeFilter('filter[ofResponsable]', $event)"
         />
         <Input
           name="mission.zip"
@@ -312,7 +314,7 @@ export default {
     Breadcrumb
   },
   mixins: [QueryBuilder, MixinExport, MixinBulkOperations, MixinUsetiful],
-  middleware: ['authenticated'],
+  middleware: ['authenticated', 'agreedResponsableTerms'],
   async asyncData ({ $axios, store, error }) {
     if (
       !['admin', 'referent', 'referent_regional', 'responsable', 'tete_de_reseau'].includes(
@@ -333,14 +335,16 @@ export default {
       ? await $axios.post(`/structures/${store.getters.contextableId}/waiting-participations`)
       : null
 
-    const responsablesResponse = store.getters.contextRole === 'responsable' && store.getters.contextableId
-      ? await $axios.get(`/structures/${store.getters.contextableId}/responsables`)
-      : null
+    let responsables = []
+    if (store.getters.contextRole === 'responsable' && store.getters.contextableId) {
+      const responsablesResponse = await $axios.get(`/structures/${store.getters.contextableId}/responsables`)
+      responsables = responsablesResponse?.data.map(user => user.profile) ?? []
+    }
 
     return {
       activities: activities.data,
-      responsables: responsablesResponse ? responsablesResponse.data.map(user => user.profile) : [],
-      waitingParticipationsCount: waitingParticipationsCountResponse ? waitingParticipationsCountResponse.data : null
+      responsables,
+      waitingParticipationsCount: waitingParticipationsCountResponse?.data ?? null
     }
   },
   data () {
@@ -367,6 +371,16 @@ export default {
     },
     canBulkDecline () {
       return this.$labels.participation_workflow_states.find(state => state.key === 'Refusée')?.roles?.includes(this.$store.getters.contextRole)
+    }
+  },
+  watch: {
+    '$route.query': {
+      handler (newQuery, oldQuery) {
+        if (this.$store.getters.contextRole === 'admin') {
+          this.fetchResponsablesForAdmins(newQuery['filter[mission.structure.id]'], oldQuery?.['filter[mission.structure.id]'])
+        }
+      },
+      immediate: true
     }
   },
   methods: {
@@ -416,6 +430,28 @@ export default {
       }
 
       return false
+    },
+    async onSelectOrganisation ($event) {
+      await this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.$route.query,
+          page: undefined,
+          'filter[mission.structure.name]': $event?.name ?? undefined,
+          'filter[mission.structure.id]': $event?.id ?? undefined,
+          'filter[ofResponsable]': undefined
+        }
+      })
+    },
+    async fetchResponsablesForAdmins (organisationId, oldOrganisationId) {
+      if (!organisationId) {
+        this.responsables = []
+        return
+      }
+      if (organisationId !== oldOrganisationId) {
+        const { data: responsables } = await this.$axios.get(`/structures/${organisationId}/responsables`)
+        this.responsables = responsables?.map(user => user.profile) ?? []
+      }
     }
   }
 }

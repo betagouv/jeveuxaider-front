@@ -2,12 +2,12 @@
   <Box padding="sm" :loading="loading" loading-text="Générations des données...">
     <BoxHeadingStatistics title="Délais d'engagement" class="mb-6" infos-bulle="Délais d'engagement sur la période entre l'inscription d'un utilisateur et sa première mise en relation" />
     <div v-if="statistics" class="flex flex-col gap-2">
-      <ListItemCount color="bg-green-900" label="Moins de une minute" :count="statistics.LESS_THAN_1_MIN" />
-      <ListItemCount color="bg-green-700" label="Moins de 5 minutes" :count="statistics.LESS_THAN_5_MIN" />
-      <ListItemCount color="bg-green-500" label="Moins de une heure" :count="statistics.LESS_THAN_1_HOUR" />
-      <ListItemCount color="bg-green-300" label="Moins de un jour" :count="statistics.LESS_THAN_1_DAY" />
-      <ListItemCount color="bg-green-100" label="Moins de 5 jours" :count="statistics.LESS_THAN_5_DAYS" />
-      <ListItemCount color="bg-green-50" label="Plus de 5 jours" :count="statistics.OTHER" />
+      <ListItemCount color="bg-green-900" label="Moins de une minute" :count="statistics.LESS_THAN_1_MIN" :total="total" display="count_percent" />
+      <ListItemCount color="bg-green-700" label="Moins de 5 minutes" :count="statistics.LESS_THAN_5_MIN" :total="total" display="count_percent" />
+      <ListItemCount color="bg-green-500" label="Moins de une heure" :count="statistics.LESS_THAN_1_HOUR" :total="total" display="count_percent" />
+      <ListItemCount color="bg-green-300" label="Moins de un jour" :count="statistics.LESS_THAN_1_DAY" :total="total" display="count_percent" />
+      <ListItemCount color="bg-green-100" label="Moins de 5 jours" :count="statistics.LESS_THAN_5_DAYS" :total="total" display="count_percent" />
+      <ListItemCount color="bg-green-50" label="Plus de 5 jours" :count="statistics.OTHER" :total="total" display="count_percent" />
     </div>
   </Box>
 </template>
@@ -35,6 +35,11 @@ export default {
       this.loading = false
       this.statistics = response.data
     })
+  },
+  computed: {
+    total () {
+      return this.statistics ? Object.values(this.statistics).reduce((a, b) => a + b, 0) : 0
+    }
   }
 }
 </script>

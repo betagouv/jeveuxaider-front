@@ -1,13 +1,29 @@
 <template>
   <div>
+    <div class="absolute bg-gradient-to-b from-[#ECECFE] to-transparent w-full overflow-hidden pointer-events-none" style="height: 777px">
+      <img
+        src="/images/homepage/deco_2.svg"
+        alt=""
+        class="deco--2 absolute hidden lg:block pointer-events-none"
+        data-not-lazy
+      >
+
+      <img
+        src="/images/homepage/deco_3.svg"
+        alt=""
+        class="deco--3 absolute hidden lg:block pointer-events-none"
+        data-not-lazy
+      >
+    </div>
+
     <div class="mb-12">
       <div class="px-4 max-w-3xl mx-auto lg:max-w-7xl">
         <Breadcrumb
           :links="[
             { text: 'Missions de bénévolat', to: '/missions-benevolat' },
             {
-              text: mission.domaine_name,
-              to: `/missions-benevolat?domaines=${mission.domaine_name}`,
+              text: mission.domaine.name,
+              to: `/missions-benevolat?domaines=${mission.domaine.name}`,
             },
             {
               text: breadcrumbTitle,
@@ -43,7 +59,7 @@
               @error="onImgError"
             >
 
-            <div class="px-6 py-12">
+            <div class="pb-8 pt-6 px-6">
               <div
                 v-if="formattedDate"
                 class="text-base"
@@ -55,14 +71,52 @@
                 v-html="placesLeftText"
               />
 
-              <div class="mx-8">
-                <ButtonJeProposeMonAideApiEngagement
-                  :url="mission.application_url"
-                  class="mt-8 w-full"
-                />
-              </div>
+              <ButtonJeProposeMonAideApiEngagement
+                :url="mission.application_url"
+                class="mt-8 w-full"
+              />
             </div>
           </Box>
+        </div>
+      </div>
+    </div>
+
+    <div
+      v-if="similarMissions.length > 0"
+      id="missions-similaires"
+      class="bg-[#ECECFE] overflow-hidden mt-12"
+    >
+      <div class="container mx-auto px-8 sm:px-4">
+        <div class="pt-16 pb-24">
+          <Heading :id="`label-autres-missions-${uuid}`" as="div" class="text-center mb-12">
+            Vous pourriez aussi aimer&nbsp;…
+          </Heading>
+
+          <Slideshow
+            class="mb-6"
+            :slides-are-links="true"
+            :aria-labelledby="`label-autres-missions-${uuid}`"
+          >
+            <nuxt-link
+              v-for="similarMission in similarMissions"
+              :key="similarMission.id"
+              class="card--mission--wrapper"
+              :to="`/missions-benevolat/${similarMission.id}/${similarMission.slug}`"
+              @click.native="onClickSimilarMission"
+            >
+              <CardMission :mission="similarMission" class="!h-full" />
+            </nuxt-link>
+          </Slideshow>
+
+          <div v-if="activity || domaine" class="text-center">
+            <Link
+              class="text-jva-blue-500"
+              icon="RiArrowRightLine"
+              @click.native="onClickMoreMissions"
+            >
+              Plus de missions
+            </Link>
+          </div>
         </div>
       </div>
     </div>
@@ -92,25 +146,41 @@ import PresentielOrDistance from '@/components/section/mission/PresentielOrDista
 import ButtonJeProposeMonAideApiEngagement from '@/components/custom/ButtonJeProposeMonAideApiEngagement.vue'
 import MixinMission from '@/mixins/mission'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import CardMission from '~/components/card/CardMission'
+import Heading from '@/components/dsfr/Heading.vue'
+import Link from '@/components/dsfr/Link.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
     Presentation,
     PresentielOrDistance,
     ButtonJeProposeMonAideApiEngagement,
-    Breadcrumb
+    Breadcrumb,
+    CardMission,
+    Heading,
+    Link
   },
-  mixins: [MixinMission],
+  mixins: [MixinMission, uuid],
   props: {
     mission: {
       type: Object,
       required: true
     }
   },
+  data () {
+    return {
+      similarMissions: []
+    }
+  },
+  async fetch () {
+    const { data: missions } = await this.$axios.post('/missions/similar-for-api', { mission: this.mission })
+    this.similarMissions = missions
+  },
   computed: {
     placesLeftText () {
       if (
-        this.mission.publisher_name != 'Réserve Civique' &&
+        this.mission.publisher_name != 'JeVeuxAider.gouv.fr' &&
         this.mission.places_left > 99
       ) {
         return 'Plusieurs bénévoles recherchés'
@@ -155,6 +225,17 @@ export default {
         : `Bénévolat ${this.mission.structure.name}`
     }
   },
+  mounted () {
+    window.plausible &&
+      window.plausible('Mission - Visite', {
+        props: {
+          isFromApi: this.mission.isFromApi ?? false,
+          isRegistrationOpen: this.mission.is_registration_open,
+          hasPlacesLeft: this.mission.has_places_left,
+          isOutdated: this.hasExpired
+        }
+      })
+  },
   methods: {
     onImgError ($event) {
       $event.target.srcset = '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
@@ -162,3 +243,21 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+  .card--mission--wrapper {
+    @apply !flex flex-col h-full max-w-[323px] transition;
+    width: calc(100vw - 64px) !important;
+    @apply w-full;
+  }
+
+  .deco--2 {
+    left: calc(50% - 772px);
+    top: 150px;
+  }
+
+  .deco--3 {
+    right: calc(50% - 728px);
+    top: -12px;
+  }
+</style>

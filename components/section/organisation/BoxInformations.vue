@@ -7,6 +7,7 @@
       <DescriptionList>
         <DescriptionListItem term="Adresse" :description="organisation.city ? `${organisation.city} - ${organisation.zip}` : '-'" />
         <DescriptionListItem term="Département" :description="organisation.department ? `${organisation.department} - ${$options.filters.label(organisation.department, 'departments')}` : '-'" />
+        <DescriptionListItem term="SIRET" :description="organisation.siret" />
         <DescriptionListItem term="RNA" :description="organisation.rna" />
         <DescriptionListItem term="Crée le" :description="$dayjs(organisation.created_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Modifié le" :description="$dayjs(organisation.updated_at).format('D MMMM YYYY à HH:mm')" />

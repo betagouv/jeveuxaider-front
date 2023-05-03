@@ -1,4 +1,5 @@
 <template>
+  <!-- @todo: refactoring portal body-end -->
   <transition
     enter-active-class="ease-out duration-300"
     enter-class="opacity-0"
@@ -32,64 +33,59 @@
                 {'overflow-hidden' : overflowHidden},
                 widthClass
               ]"
-              class="inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full"
+              class="inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full"
             >
-              <div class="bg-white p-6 sm:p-8">
-                <div class="hidden sm:block absolute top-0 right-0 p-6 sm:p-8">
-                  <button v-if="!hideClose" type="button" class="bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cool-gray-500" @click="$emit('close')">
-                    <span class="sr-only">Close</span>
-                    <RiCloseFill class="h-6 w-6 fill-current cursor-pointer" />
-                  </button>
-                </div>
-                <div class="sm:flex sm:items-start">
-                  <div
-                    v-if="icon || theme"
-                    class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10"
-                    :class="[
-                      {'bg-green-100': theme == 'success'},
-                      {'bg-orange-100': theme == 'warning'},
-                      {'bg-red-100': theme == 'danger'},
-                      {'bg-blue-100': theme == 'message'},
-                      {'bg-gray-100': !theme},
-                    ]"
-                  >
-                    <component
-                      :is="icon"
-                      v-if="icon"
-                      :class="[
-                        'h-6 w-6 ',
-                        {'text-jva-green-500': theme == 'success'},
-                        {'text-jva-orange-500': theme == 'warning'},
-                        {'text-jva-red-500': theme == 'danger'},
-                        {'text-jva-blue-500': theme == 'message'},
-                      ]"
-                    />
-                    <CheckIcon v-else-if="theme == 'success'" class="h-6 w-6 text-jva-green-500" />
-                    <ExclamationIcon v-else-if="theme == 'warning'" class="h-6 w-6 text-jva-orange-500" />
-                    <ExclamationIcon v-else-if="theme == 'danger'" class="h-6 w-6 text-jva-red-500" />
-                    <ChatAltIcon v-else-if="theme == 'message'" class="h-6 w-6 text-jva-blue-500" />
+              <div class="bg-white p-8 sm:p-12">
+                <div class="mb-6">
+                  <div class="hidden sm:block absolute top-0 right-0 p-8 sm:p-12">
+                    <button v-if="!hideClose" type="button" class="bg-white text-gray-400 hover:text-gray-700" @click="$emit('close')">
+                      <span class="sr-only">Close</span>
+                      <RiCloseFill class="h-6 w-6 fill-current cursor-pointer" />
+                    </button>
                   </div>
-                  <div
-                    :class="[
-                      {'sm:ml-4': theme || icon},
-                      'mt-3 text-center sm:mt-0 sm:text-left min-w-0 w-full'
-                    ]"
-                  >
-                    <h3
-                      v-if="title"
-                      id="modal-title"
+                  <div class="sm:flex sm:items-start">
+                    <div
+                      v-if="icon || theme"
+                      class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10"
+                    >
+                      <component
+                        :is="icon"
+                        v-if="icon"
+                        :class="[
+                          'h-8 w-8',
+                          {'text-jva-green-500': theme == 'success'},
+                          {'text-jva-orange-500': theme == 'warning'},
+                          {'text-jva-red-500': theme == 'danger'},
+                          {'text-jva-blue-500': theme == 'message'},
+                        ]"
+                      />
+                      <CheckIcon v-else-if="theme == 'success'" class="h-8 w-8 text-jva-green-500" />
+                      <ExclamationIcon v-else-if="theme == 'warning'" class="h-8 w-8 text-jva-orange-500" />
+                      <ExclamationIcon v-else-if="theme == 'danger'" class="h-8 w-8 text-jva-red-500" />
+                      <ChatAltIcon v-else-if="theme == 'message'" class="h-8 w-8 text-jva-blue-500" />
+                    </div>
+                    <div
                       :class="[
-                        'text-lg leading-6 font-medium text-gray-900',
-                        { 'mt-2': icon || theme },
-                        { 'mb-4': $slots.default }
+                        {'sm:ml-4': theme || icon},
+                        'mt-3 text-center sm:mt-0 sm:text-left min-w-0 w-full'
                       ]"
-                      v-html="title"
-                    />
-                    <slot />
+                    >
+                      <h3
+                        v-if="title"
+                        id="modal-title"
+                        :class="[
+                          'text-2xl leading-6 font-bold text-gray-900',
+                          { 'mt-2': icon || theme },
+                          { 'mb-4': $slots.default }
+                        ]"
+                        v-html="title"
+                      />
+                    </div>
                   </div>
                 </div>
+                <slot />
               </div>
-              <div v-if="!hideFooter" class="bg-gray-50 px-6 py-4 sm:px-8 flex justify-center lg:justify-end">
+              <div v-if="!hideFooter" class="bg-gray-50 px-8 py-6 sm:px-12 flex justify-center lg:justify-end">
                 <slot name="footer">
                   <Button variant="white" @click.native="$emit('close')">
                     Fermer
@@ -122,7 +118,7 @@ export default {
     },
     theme: {
       type: String,
-      default: '' // success, warning, danger
+      default: '' // success, warning, danger, info
     },
     icon: {
       type: String,
@@ -142,7 +138,7 @@ export default {
     },
     widthClass: {
       type: String,
-      default: 'sm:max-w-lg'
+      default: 'max-w-3xl'
     },
     hideFooter: {
       type: Boolean,

@@ -1,5 +1,4 @@
 const colors = require('tailwindcss/colors')
-const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   mode: 'jit',
@@ -19,12 +18,20 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     screens: {
+      xxs: '375px',
       xs: '425px',
-      ...defaultTheme.screens
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1348px'
     },
     container: {
       center: true,
-      padding: '1rem'
+      padding: {
+        DEFAULT: '1rem',
+        sm: '1.5rem',
+        xl: '2rem'
+      }
     },
     fontSize: {
       xxs: ['0.60rem', { lineHeight: '1rem' }],
@@ -36,8 +43,8 @@ module.exports = {
       '2xl': ['1.5rem', { lineHeight: '2rem' }],
       '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
       '4xl': ['2.25rem', { lineHeight: '2.75rem' }],
-      '5xl': ['3rem', { lineHeight: '1' }],
-      '6xl': ['3.75rem', { lineHeight: '1' }]
+      '5xl': ['3rem', { lineHeight: '1.3' }],
+      '6xl': ['3.75rem', { lineHeight: '1.3' }]
     },
     extend: {
       fontFamily: {
@@ -51,6 +58,13 @@ module.exports = {
           'Arial',
           '"Noto Sans"',
           'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+          '"Noto Color Emoji"'
+        ],
+        emoji: [
+          'Marianne',
           '"Apple Color Emoji"',
           '"Segoe UI Emoji"',
           '"Segoe UI Symbol"',
@@ -79,6 +93,7 @@ module.exports = {
           600: '#EA6861'
         },
         'jva-orange': {
+          300: '#FFA48B',
           500: '#DA7600'
         },
         gray: {
@@ -110,7 +125,8 @@ module.exports = {
         blue: colors.blue,
         orange: colors.amber,
         red: colors.red,
-        green: colors.green
+        green: colors.green,
+        yellow: colors.yellow
       },
       borderRadius: {
         xl: '10px'
@@ -119,7 +135,7 @@ module.exports = {
   },
   variants: {
     extend: {
-
+      borderColor: ['active']
     }
   },
   plugins: [
