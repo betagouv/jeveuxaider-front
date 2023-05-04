@@ -104,6 +104,12 @@ export default {
   computed: {
     processedItemsCount () {
       return this.batch ? this.batch.totalJobs - (this.batch.pendingJobs + this.batch.failedJobs) : 0
+    },
+    isBatchOver () {
+      if (!this.batch) {
+        return false
+      }
+      return this.batch.pendingJobs === 0
     }
   },
   methods: {
@@ -122,6 +128,10 @@ export default {
         const { data: batch } = await this.$axios.get(`/batch/${this.batchId}`)
         this.batch = batch
         this.progress = batch.progress
+        if (this.isBatchOver) {
+          this.progress = 100
+          this.state = 'processed'
+        }
       }
     }
   }
