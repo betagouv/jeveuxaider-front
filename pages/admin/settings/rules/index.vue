@@ -81,7 +81,10 @@
       <TableHead>
         <TableHeadCell>Nom</TableHeadCell>
         <TableHeadCell>
-          Actions
+          Déclencheur
+        </TableHeadCell>
+        <TableHeadCell>
+          Action
         </TableHeadCell>
         <TableHeadCell>
           Statut
@@ -98,18 +101,16 @@
             <div class="font-medium text-gray-900 truncate">
               {{ rule.name }}
             </div>
-            <div class="text-gray-500 space-x-2">
-              <DsfrBadge
-                v-for="event,i in rule.events"
-                :key="i"
-                type="info"
-                size="sm"
-                no-icon
-                class="truncate"
-              >
-                {{ event | label('rule_events') }}
-              </DsfrBadge>
-            </div>
+          </TableRowCell>
+          <TableRowCell>
+            <DsfrBadge
+              size="sm"
+              type="info"
+              no-icon
+              class="truncate"
+            >
+              {{ rule.event | label('rule_events') }}
+            </DsfrBadge>
           </TableRowCell>
           <TableRowCell>
             <DsfrBadge

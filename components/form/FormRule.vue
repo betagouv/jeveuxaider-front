@@ -8,15 +8,14 @@
           </Heading>
           <div class="space-y-10">
             <FormControl
-              label="Déclencheurs"
-              html-for="events"
+              label="Déclencheur"
+              html-for="event"
               required
-              :error="errors.events"
+              :error="errors.event"
             >
-              <CheckboxGroup
-                v-model="form.events"
-                name="events"
-                variant="button"
+              <SelectAdvanced
+                v-model="form.event"
+                name="event"
                 :options="$labels.rule_events"
               />
             </FormControl>
@@ -33,6 +32,7 @@
                   {key:'domaine_secondary_id', label: 'Domaine secondaire'},
                   {key:'activity_id', label: 'Activité'},
                   {key:'template_id', label: 'Modèle de mission'},
+                  {key:'state', label: 'Statut'},
                 ]"
                 @update:modelValue="newValue => form.conditions = newValue"
               />
@@ -119,6 +119,7 @@ export default {
       default: () => {
         return {
           is_active: false,
+          event: 'mission_updated',
           action_key: 'mission_attach_tag'
         }
       }
@@ -130,10 +131,10 @@ export default {
       form: { ...this.rule },
       formSchema: object({
         name: string().min(2, 'Le nom est trop court').required('Le nom est requis'),
-        events: array().min(1, 'Au moins 1 déclencheur').required('Ajouter au moins 1 déclencheur'),
+        event: string().required('Préciser le déclencheur'),
         conditions: array().min(1, 'Au moins 1 condition').required('Ajouter au moins 1 condition'),
-        action_key: string().required('Une action est requise'),
-        action_value: string().required('Une valeur est requise')
+        action_key: string().required('Préciser l\'action à exécuter'),
+        action_value: string().required('Préciser la valeur à exécuter')
       })
     }
   },

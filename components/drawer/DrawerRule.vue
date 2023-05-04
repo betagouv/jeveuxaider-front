@@ -5,9 +5,19 @@
       theme="danger"
       title="Supprimer la règle"
       :text="`Vous êtes sur le point de supprimer la règle' ${rule.name}.`"
-      :is-open="showAlert"
+      :is-open="showAlertDelete"
       @confirm="handleConfirmDelete()"
-      @cancel="showAlert = false"
+      @cancel="showAlertDelete = false"
+    />
+    <AlertDialog
+      v-if="rule"
+      theme="warning"
+      title="Exécuter la règle"
+      button-label="Exécuter"
+      :text="`Vous êtes sur le point de traiter ${rule.pendingItemsCount} élément(s) pour la règle ${rule.name}.`"
+      :is-open="showAlertExecute"
+      @confirm="handleConfirmExecute()"
+      @cancel="showAlertExecute = false"
     />
     <template #title>
       <Heading v-if="rule" :level="3" class="text-jva-blue-500">
@@ -17,7 +27,13 @@
     <template v-if="rule">
       <OnlineIndicator :published="rule.is_active" class="mt-2" />
       <div class="flex gap-2 mt-4">
-        <Button variant="white" size="sm" icon="RiPlayCircleLine" :disabled="rule.pendingItemsCount === 0 || !rule.is_active" @click.native="executeRule">
+        <Button
+          variant="white"
+          size="sm"
+          icon="RiPlayCircleLine"
+          :disabled="rule.pendingItemsCount === 0"
+          @click.native="() => showAlertExecute = true"
+        >
           Exécuter
         </Button>
         <nuxt-link :to="`/admin/settings/rules/${rule.id}/edit`" class="inline-flex">
@@ -25,7 +41,7 @@
             Modifier
           </Button>
         </nuxt-link>
-        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlert = true" />
+        <Button variant="white" size="sm" icon="TrashIcon" @click.native="() => showAlertDelete = true" />
       </div>
       <div class="border-t -mx-6 my-6" />
       <div class="mb-8">
@@ -37,7 +53,7 @@
             <DescriptionListItem term="Crée le" :description="$dayjs(rule.created_at).format('D MMMM YYYY à HH:mm')" />
             <DescriptionListItem term="Modifié le" :description="$dayjs(rule.updated_at).format('D MMMM YYYY à HH:mm')" />
             <DescriptionListItem term="Nom" :description="rule.name" />
-            <DescriptionListItem term="Déclencheurs" :description="rule.events.map(event => $options.filters.label(event, 'rule_events')).join(', ')" />
+            <DescriptionListItem term="Déclencheur" :description="rule.event | label('rule_events')" />
             <DescriptionListItem term="Dernière éxecution" :description="rule.last_triggered_at ? $dayjs(rule.last_triggered_at).fromNow() : '-'" />
             <DescriptionListItem term="# Exécutions" :description="`${rule.triggers_count ?? 0} fois`" />
           </DescriptionList>
@@ -77,7 +93,8 @@ export default {
   data () {
     return {
       rule: null,
-      showAlert: false
+      showAlertDelete: false,
+      showAlertExecute: false
     }
   },
   async fetch () {
@@ -92,14 +109,17 @@ export default {
     ruleId: '$fetch'
   },
   methods: {
-    async executeRule () {
+    async handleConfirmExecute () {
       await this.$axios.post(`/rules/${this.ruleId}/bulk-execute`).then((res) => {
-        console.log('resolveItems', res)
+        this.showAlertExecute = false
+        this.$emit('close')
+        this.$emit('refetch')
+        this.$toast.success('La règle a bien été exécutée !')
       }).catch(() => {})
     },
     async handleConfirmDelete () {
       await this.$axios.delete(`/rules/${this.ruleId}`).then((res) => {
-        this.showAlert = false
+        this.showAlertDelete = false
         this.$emit('close')
         this.$emit('refetch')
         this.$toast.success('La règle a bien été supprimée !')
