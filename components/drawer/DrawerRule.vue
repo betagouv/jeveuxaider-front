@@ -9,15 +9,13 @@
       @confirm="handleConfirmDelete()"
       @cancel="showAlertDelete = false"
     />
-    <AlertDialog
+    <BatchDialog
       v-if="rule"
-      theme="warning"
       title="Exécuter la règle"
-      button-label="Exécuter"
       :text="`Vous êtes sur le point de traiter ${rule.pendingItemsCount} élément(s) pour la règle ${rule.name}.`"
       :is-open="showAlertExecute"
-      @confirm="handleConfirmExecute()"
-      @cancel="showAlertExecute = false"
+      :batch-endpoint="`/rules/${ruleId}/batch`"
+      @close="showAlertExecute = false"
     />
     <template #title>
       <Heading v-if="rule" :level="3" class="text-jva-blue-500">
@@ -78,11 +76,13 @@
 </template>
 
 <script>
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
+import BatchDialog from '@/components/custom/BatchDialog.vue'
 
 export default {
   components: {
-    OnlineIndicator
+    OnlineIndicator,
+    BatchDialog
   },
   props: {
     ruleId: {
@@ -94,7 +94,9 @@ export default {
     return {
       rule: null,
       showAlertDelete: false,
-      showAlertExecute: false
+      showAlertExecute: false,
+      progress: 0,
+      interval: null
     }
   },
   async fetch () {
@@ -109,14 +111,21 @@ export default {
     ruleId: '$fetch'
   },
   methods: {
-    async handleConfirmExecute () {
-      await this.$axios.post(`/rules/${this.ruleId}/bulk-execute`).then((res) => {
-        this.showAlertExecute = false
-        this.$emit('close')
-        this.$emit('refetch')
-        this.$toast.success('La règle a bien été exécutée !')
-      }).catch(() => {})
-    },
+    // async handleSubmit (endpoint, payload = {}) {
+    //   this.state = 'processing'
+    //   const { data: batchId } = await this.$axios.post(endpoint, { ...payload, ids: this.modelIds })
+    //   this.interval = setInterval(() => this.refreshBatchProgress(batchId), 1500)
+    // },
+    // async handleConfirmExecute () {
+    //   await this.$axios.post(`/rules/${this.ruleId}/batch`).then(({ data: batchId }) => {
+    //     console.log('handleConfirmExecute batchId', batchId)
+    //     setInterval(() => this.refreshBatchProgress(batchId), 1500)
+    //     // this.showAlertExecute = false
+    //     // this.$emit('close')
+    //     // this.$emit('refetch')
+    //     // this.$toast.success('La règle a bien été exécutée !')
+    //   }).catch(() => {})
+    // },
     async handleConfirmDelete () {
       await this.$axios.delete(`/rules/${this.ruleId}`).then((res) => {
         this.showAlertDelete = false
