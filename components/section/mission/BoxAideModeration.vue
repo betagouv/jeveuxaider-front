@@ -52,7 +52,7 @@
         <template #button="{ isOpen }">
           <div class="flex font-semibold text-sm items-center group">
             <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
-              <RiAlertFill class="h-5 w-5 text-[#FA7A35] fill-current mr-2" aria-hidden="true" /> Le titre doit commencer par Je/J’
+              <RiAlertFill class="h-5 w-5 text-[#FA7A35] fill-current mr-2" aria-hidden="true" /> Le titre n’est pas conforme
             </div>
             <div class="w-full border-t mt-1 mx-2" />
             <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
@@ -60,7 +60,7 @@
           </div>
         </template>
         <div class="ml-7 mt-3 text-sm text-gray-500">
-          {{ mission.name }}
+          Le titre doit être à la première personne du singulier. Par exemple, “Je témoigne de mon métier et de mon parcours”.
         </div>
       </Disclosure>
 
