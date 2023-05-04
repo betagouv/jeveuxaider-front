@@ -25,7 +25,7 @@
       </Heading>
     </template>
     <template v-if="rule">
-      <OnlineIndicator :published="rule.is_active" class="mt-2" />
+      <OnlineIndicator :published="rule.is_active" class="mt-2" published-label="Activée" unpublished-label="Désactivée" />
       <div class="flex gap-2 mt-4">
         <Button
           variant="white"

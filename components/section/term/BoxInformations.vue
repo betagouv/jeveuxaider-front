@@ -5,9 +5,10 @@
     </div>
     <Box variant="flat" padding="xs">
       <DescriptionList>
+        <DescriptionListItem term="ID" :description="term.id" />
+        <DescriptionListItem term="Nom" :description="term.name" />
         <DescriptionListItem term="Crée le" :description="$dayjs(term.created_at).format('D MMMM YYYY à HH:mm')" />
         <DescriptionListItem term="Modifié le" :description="$dayjs(term.updated_at).format('D MMMM YYYY à HH:mm')" />
-        <DescriptionListItem term="Nom" :description="term.name" />
       </DescriptionList>
     </Box>
   </div>

@@ -65,7 +65,7 @@
               </Button>
             </template>
             <template #items>
-              <div class="w-56 divide-y">
+              <div class="w-[100px]">
                 <DropdownOptionsItem size="sm" @click.native="addCondition(group, 'AND')">
                   ET
                 </DropdownOptionsItem>
@@ -86,7 +86,7 @@
           </Button>
         </template>
         <template #items>
-          <div class="w-56 divide-y">
+          <div class="w-[100px]">
             <DropdownOptionsItem size="sm" @click.native="addGroup('AND')">
               ET
             </DropdownOptionsItem>

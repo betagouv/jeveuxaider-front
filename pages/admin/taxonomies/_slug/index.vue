@@ -122,7 +122,7 @@
               {{ term.name }}
             </div>
             <div class="text-gray-500">
-              {{ term.is_published ? 'En ligne' : 'Hors ligne' }}
+              #{{ term.id }} - {{ term.is_published ? 'En ligne' : 'Hors ligne' }}
             </div>
           </TableRowCell>
           <TableRowCell>
