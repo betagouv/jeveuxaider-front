@@ -22,7 +22,7 @@
           />
         </ul>
         <div class="text-xs bg-gray-50 px-2 py-2 rounded">
-          <RiInformationLine class="text-gray-400 fill-current h-4 w-4 inline " /> Des mots clés potentiellement “à risque” ont été détectés. Une vérification humaine est nécessaire.
+          <RiInformationLine class="text-gray-400 fill-current h-4 w-4 inline " /> L’outil détecte des mots clés qui peuvent présenter un risque. Par exemple, les mots stage, CDD, CDI, 35h seront mis en avant. Une vérification humaine est nécessaire.
         </div>
       </div>
     </Disclosure>
@@ -44,7 +44,6 @@ export default {
     return {
       loading: true,
       wordsToCheck: [
-        'travail',
         'emploi',
         'job',
         'salaire',

@@ -64,7 +64,7 @@ export default {
   },
   async fetch () {
     const { data: plausibleStats } = await this.$axios.get(
-      `https://plausible.io/api/v1/stats/aggregate?site_id=${this.$config.plausible.site_id}&metrics=pageviews&filters=event:page==${this.mission.full_url}`,
+      `https://plausible.io/api/v1/stats/aggregate?site_id=${this.$config.plausible.site_id}&metrics=pageviews&filters=event:page==${this.pageUrl}`,
       {
         excludeContextRole: true,
         headers: {
@@ -76,6 +76,11 @@ export default {
 
     const { data: apiEngagementStats } = await this.$axios.get(`/apiengagement/mymission/${this.mission.id}`)
     this.apiEngagementStats = apiEngagementStats.stats
+  },
+  computed: {
+    pageUrl () {
+      return `/missions-benevolat/${this.mission.id}/benevolat-*`
+    }
   }
 
 }
