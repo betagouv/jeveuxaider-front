@@ -6,6 +6,7 @@
       theme="warning"
       :title="`${mission.is_active ? 'Désactiver' : 'Activer'} la mission`"
       :prevent-click-outside="true"
+      :hide-close="true"
       @close="$emit('cancel')"
     >
       <div class="formatted-text">

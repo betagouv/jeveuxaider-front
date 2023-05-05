@@ -6,6 +6,7 @@
       theme="warning"
       :title="modalTitle"
       :prevent-click-outside="true"
+      :hide-close="true"
       @close="$emit('cancel')"
     >
       <div class="formatted-text">
