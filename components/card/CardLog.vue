@@ -38,6 +38,17 @@
                 <template v-if="log.subject_type === 'App\\Models\\Profile'">
                   {{ action }} le compte <span class="font-bold">{{ log?.data?.subject_title }}</span>
                 </template>
+                <template v-if="log.subject_type === 'App\\Models\\Rule'">
+                  <template v-if="log.description === 'created'">
+                    a créé la règle <span class="font-bold">{{ log?.subject?.name }}</span>
+                  </template>
+                  <template v-if="log.description === 'updated'">
+                    a modifié la règle <span class="font-bold">{{ log?.subject?.name }}</span>
+                  </template>
+                  <template v-if="log.description === 'executed'">
+                    a exécuté la règle <span class="font-bold">{{ log?.subject?.name }}</span> sur <span class="font-bold">{{ log?.properties?.items_count }} élément(s)</span>
+                  </template>
+                </template>
               </template>
               <template v-else>
                 <template v-if="log.subject_type === 'App\\Models\\Profile'">

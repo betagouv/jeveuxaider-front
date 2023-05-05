@@ -6,7 +6,8 @@
       :title="title"
       :is-open="isOpen"
       :theme="theme"
-      @close="$emit('cancel')"
+      :prevent-click-outside="true"
+      @close="$emit('close')"
     >
       <div class="text-gray-700 space-y-4">
         <div v-html="text" />
@@ -43,7 +44,7 @@
           </Button>
         </template>
         <template v-if="['processed','cancelled'].includes(state)">
-          <Button variant="white" @click.native="$emit('close')">
+          <Button variant="white" @click.native="handleBatchEnd">
             {{ closeLabel }}
           </Button>
         </template>
@@ -133,6 +134,10 @@ export default {
           this.state = 'processed'
         }
       }
+    },
+    handleBatchEnd () {
+      this.$emit('close')
+      this.$emit('batch-end')
     }
   }
 }

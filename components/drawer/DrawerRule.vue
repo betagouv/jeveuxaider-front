@@ -16,6 +16,7 @@
       :is-open="showAlertExecute"
       :batch-endpoint="`/rules/${ruleId}/batch`"
       @close="showAlertExecute = false"
+      @batch-end="handleBatchEnd"
     />
     <template #title>
       <Heading v-if="rule" :level="3" class="text-jva-blue-500">
@@ -133,6 +134,10 @@ export default {
         this.$emit('refetch')
         this.$toast.success('La règle a bien été supprimée !')
       }).catch(() => {})
+    },
+    handleBatchEnd () {
+      this.$emit('close')
+      this.$emit('refetch')
     }
   }
 }
