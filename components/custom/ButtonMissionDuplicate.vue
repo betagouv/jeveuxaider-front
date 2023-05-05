@@ -8,6 +8,7 @@
         type="tertiary"
         icon="RiFileCopyLine"
         size="sm"
+        icon-class="!mr-1"
         :disabled="true"
       >
         Dupliquer
@@ -18,6 +19,7 @@
       type="tertiary"
       icon="RiFileCopyLine"
       size="sm"
+      icon-class="!mr-1"
       :loading="loading"
       @click.native="showDialog = true"
     >
@@ -81,14 +83,12 @@ export default {
       }
 
       if (this.$store.state.auth.user.statistics?.missions_inactive_count) {
-        content = 'Vous ne pouvez pas dupliquer la mission car vous avez trop de participations à mettre à jour. Pour toute information, veuillez contacter le support à l’adresse suivante : <a href=\'mailto:support@jeveuxaider.beta.gouv.fr\'>support@jeveuxaider.beta.gouv.fr</a>'
+        content = 'Vous ne pouvez pas dupliquer la mission car vous avez trop de participations à mettre à jour. Pour toute information, veuillez contacter le support : <a href=\'mailto:support@jeveuxaider.beta.gouv.fr\'>support@jeveuxaider.beta.gouv.fr</a>'
       }
 
       return {
         content,
         hideOnTargetClick: true,
-        classes: 'theme-dsfr formatted-text',
-        html: true,
         delay: {
           show: 200,
           hide: 2000

@@ -43,10 +43,10 @@
             <div class="formatted-text">
               <template v-if="!['admin'].includes($store.getters.contextRole)">
                 <p>
-                  <span aria-hidden="true" class="font-emoji text-2xl mr-2">⚠️</span> La mission <strong>a été désactivée</strong> par un modérateur car vous avez <strong>trop de participations à mettre à jour</strong>. Elle n'apparait plus dans la recherche et il est impossible pour les bénévoles de s'y inscrire.
+                  <span aria-hidden="true" class="font-emoji text-2xl mr-2">⚠️</span> La mission <strong>a été désactivée</strong> par un membre du support car vous avez <strong>trop de participations non modérées</strong> (validées ou refusées). Elle n’est plus visible des bénévoles.
                 </p>
                 <p>
-                  Pour toute information, veuillez contacter le support à l’adresse suivante : <Link href="\'mailto:support@jeveuxaider.beta.gouv.fr\'">
+                  Pour toute information, veuillez contacter le support à l’adresse <Link href="\'mailto:support@jeveuxaider.beta.gouv.fr\'">
                     support@jeveuxaider.beta.gouv.fr
                   </Link>
                 </p>

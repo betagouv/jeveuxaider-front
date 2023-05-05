@@ -28,6 +28,7 @@
             icon="RiEyeLine"
             size="sm"
             tabindex="-1"
+            icon-class="!mr-1"
           >
             Détails
           </Button>
@@ -39,6 +40,7 @@
             icon="RiPencilLine"
             size="sm"
             tabindex="-1"
+            icon-class="!mr-1"
           >
             Modifier
           </Button>
@@ -83,6 +85,17 @@
 
         <div class="border-t -mx-6 my-6" />
       </template>
+      <div v-else-if="!mission.is_active" class="formatted-text">
+        <p>
+          <span aria-hidden="true" class="font-emoji text-2xl mr-2">⚠️</span> La mission <strong>a été désactivée</strong> par un membre du support car vous avez <strong>trop de participations non modérées</strong> (validées ou refusées). Elle n’est plus visible des bénévoles.
+        </p>
+        <p>
+          Pour toute information, veuillez contacter le support : <DsfrLink href="\'mailto:support@jeveuxaider.beta.gouv.fr\'">
+            support@jeveuxaider.beta.gouv.fr
+          </DsfrLink>
+        </p>
+        <div class="border-t -mx-6 my-6" />
+      </div>
       <div class="text-sm uppercase font-semibold text-gray-600">
         Statut de la mission
       </div>
@@ -136,6 +149,7 @@ import Button from '@/components/dsfr/Button.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import LoadingIndicator from '@/components/custom/LoadingIndicator'
 import ModalMissionToggleIsActive from '@/components/modal/ModalMissionToggleIsActive.vue'
+import DsfrLink from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
@@ -151,7 +165,8 @@ export default {
     BoxReferents,
     Button,
     HistoryStateChanges,
-    ModalMissionToggleIsActive
+    ModalMissionToggleIsActive,
+    DsfrLink
   },
   mixins: [MixinMission],
   props: {

@@ -26,9 +26,7 @@
         <DsfrBadge
           v-if="!mission.is_active"
           v-tooltip="{
-            content: 'Cette mission a été désactivée par un modérateur. Elle n\'apparait plus dans la recherche et il est impossible de s\'inscrire.',
-            classes: 'theme-dsfr',
-            placement: 'bottom',
+            content: 'Cette mission a été désactivée par un membre du support. Elle n’est plus visible des bénévoles.',
           }"
           size="sm"
           type="warning"
