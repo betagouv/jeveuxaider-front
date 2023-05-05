@@ -28,11 +28,11 @@
               <InputQueryBuilder
                 :model-value="form.conditions"
                 :condition-field-options="[
-                  {key:'domaine_id', label: 'Domaine principal'},
-                  {key:'domaine_secondary_id', label: 'Domaine secondaire'},
-                  {key:'activity_id', label: 'Activité'},
-                  {key:'template_id', label: 'Modèle de mission'},
-                  {key:'state', label: 'Statut'},
+                  {key:'missions.domaine_id', label: 'Domaine principal', type: 'select', options: $labels.domaines},
+                  {key:'missions.domaine_secondary_id', label: 'Domaine secondaire', type: 'select', options: $labels.domaines},
+                  {key:'missions.activity_id', label: 'Activité', type: 'select', options: activitiesOptions},
+                  {key:'missions.template_id', label: 'Modèle de mission', type: 'input'},
+                  {key:'missions.state', label: 'Statut', type: 'select', options: $labels.mission_workflow_states},
                 ]"
                 @update:modelValue="newValue => form.conditions = newValue"
               />
@@ -106,6 +106,7 @@
 import { string, object, array } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import InputQueryBuilder from '@/components/custom/InputQueryBuilder.vue'
+import activitiesOptions from '@/assets/activities.json'
 
 export default {
   components: {
@@ -135,7 +136,8 @@ export default {
         conditions: array().min(1, 'Au moins 1 condition').required('Ajouter au moins 1 condition'),
         action_key: string().required('Préciser l\'action à exécuter'),
         action_value: string().required('Préciser la valeur à exécuter')
-      })
+      }),
+      activitiesOptions
     }
   },
   methods: {

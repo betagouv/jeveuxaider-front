@@ -22,6 +22,7 @@
           </div>
           <FormControl
             html-for="field"
+            class="max-w-[170px]"
           >
             <SelectAdvanced
               v-model="condition.name"
@@ -45,9 +46,17 @@
           </FormControl>
           <FormControl
             html-for="value"
-            class="max-w-[140px]"
+            class="max-w-[224px]"
           >
+            <SelectAdvanced
+              v-if="fieldResolver(condition.name).type === 'select'"
+              v-model="condition.value"
+              placeholder="Valeur"
+              name="value"
+              :options="fieldResolver(condition.name).options"
+            />
             <Input
+              v-if="fieldResolver(condition.name).type === 'input'"
               v-model="condition.value"
               placeholder="Valeur"
               name="value"
@@ -119,7 +128,7 @@ export default {
           {
             conditions: [
               {
-                name: '',
+                name: 'missions.domaine_id',
                 operand: '=',
                 value: '',
                 operator: null
@@ -145,11 +154,14 @@ export default {
     }
   },
   methods: {
+    fieldResolver (key) {
+      return this.conditionFieldOptions.find(option => option.key === key)
+    },
     addGroup (operator) {
       this.query.splice(this.query.length, 0, {
         conditions: [
           {
-            name: '',
+            name: 'missions.domaine_id',
             operand: '=',
             value: '',
             operator: null
@@ -163,7 +175,7 @@ export default {
     },
     addCondition (group, operator) {
       group.conditions.splice(group.conditions.length, 0, {
-        name: '',
+        name: 'missions.domaine_id',
         operand: '=',
         value: '',
         operator
@@ -171,10 +183,6 @@ export default {
     },
     removeCondition (group, index) {
       group.conditions.splice(index, 1)
-    },
-    submitQuery () {
-      const json = JSON.stringify(this.query)
-      console.log('submitQuery', json)
     }
   }
 }
