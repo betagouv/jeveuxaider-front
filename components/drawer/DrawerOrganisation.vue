@@ -78,6 +78,7 @@
           :responsable="responsable.profile"
           :conversable-id="organisation.id"
           conversable-type="App\Models\Structure"
+          @updated="$fetch"
         />
         <BoxReseau v-for="reseau in organisation.reseaux" :key="reseau.id" class="mb-8" :reseau="reseau" />
         <div class="flex justify-center mb-10">

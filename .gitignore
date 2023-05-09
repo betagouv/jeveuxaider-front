@@ -91,3 +91,5 @@ sw.*
 
 # Thunder
 /thunder-tests
+
+/.vscode/tasks.json

@@ -46,7 +46,7 @@
       </nuxt-link>
     </div>
     <div class="border-t -mx-6 my-6" />
-    <div class="text-sm  uppercase font-semibold text-gray-600">
+    <div class="text-sm uppercase font-semibold text-gray-600">
       Statut de la mission
     </div>
 

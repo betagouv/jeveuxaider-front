@@ -176,7 +176,8 @@
                 :key="responsable.id"
                 :responsable="responsable.profile"
                 :organisation="organisation"
-                @removed="$fetch()"
+                @updated="$fetch"
+                @removed="$fetch"
               />
               <div class="space-x-2">
                 <Button variant="white" @click.native="showDrawerInvitation = true">

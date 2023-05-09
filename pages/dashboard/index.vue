@@ -13,6 +13,33 @@
       </Sectionheading>
     </template>
     <template #left>
+      <Box v-if="$store.state.auth.user.statistics?.missions_inactive_count">
+        <Heading as="h2" :level="3" class="mb-8">
+          <span aria-hidden="true" class="font-emoji text-2xl mr-2">⚠️</span> Vous avez {{ $store.state.auth.user.statistics?.missions_inactive_count | pluralize('mission désactivée', 'missions désactivées') }}
+          <RiInformationLine
+            v-tooltip="{
+              content: 'La mission n’est plus accessible publiquement, et les bénévoles ne peuvent plus proposer leur aide. Cette désactivation est temporaire, pour vous permettre de mettre à jour les participations (validées ou refusées).',
+            }"
+            class="w-5 h-5 inline mb-[1px] cursor-help"
+          />
+        </Heading>
+        <div class="formatted-text">
+          <p>
+            Pour {{ $store.state.auth.user.statistics?.missions_inactive_count | pluralize('la', 'les', false) }} réactiver, mettez à jour le statut des participations.<br>
+            <DsfrLink
+              icon="RiArrowRightLine"
+              :to="`/admin/participations?filter[is_state_pending]=true&filter[ofResponsable]=${$store.getters.profile.id}`"
+            >
+              Traiter les participations
+            </DsfrLink>
+          </p>
+          <p>
+            Pour toute information, veuillez contacter le support à l’adresse suivante : <DsfrLink href="\'mailto:support@jeveuxaider.beta.gouv.fr\'">
+              support@jeveuxaider.beta.gouv.fr
+            </DsfrLink>
+          </p>
+        </div>
+      </Box>
       <Box :loading="loadingActions" loading-text="Récupération des actions en attente ...">
         <Heading as="h2" :level="3" class="mb-8">
           Vous avez {{ formattedActions.length | pluralize('action') }} en attente
@@ -158,6 +185,7 @@ import ButtonCreateMission from '@/components/custom/ButtonCreateMission'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import BoxScore from '@/components/section/organisation/BoxScore.vue'
 import Button from '@/components/dsfr/Button.vue'
+import DsfrLink from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
@@ -170,7 +198,8 @@ export default {
     Breadcrumb,
     GuideLinks,
     BoxScore,
-    Button
+    Button,
+    DsfrLink
   },
   mixins: [MixinAction],
   middleware: ['authenticated', 'agreedResponsableTerms'],

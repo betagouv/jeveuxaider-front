@@ -37,6 +37,41 @@
             </Button>
           </nuxt-link>
         </div>
+
+        <Box v-if="!mission.is_active || (['admin'].includes($store.getters.contextRole) && mission.state == 'Validée')" variant="flat" :padding="false">
+          <div class="px-4 py-4 xl:py-6 xl:px-6">
+            <div class="formatted-text">
+              <template v-if="!['admin'].includes($store.getters.contextRole)">
+                <p>
+                  <span aria-hidden="true" class="font-emoji text-2xl mr-2">⚠️</span> La mission <strong>a été désactivée</strong> par un membre du support car vous avez <strong>trop de participations non modérées</strong> (validées ou refusées). Elle n’est plus visible des bénévoles.
+                </p>
+                <p>
+                  Pour toute information, veuillez contacter le support à l’adresse <Link href="\'mailto:support@jeveuxaider.beta.gouv.fr\'">
+                    support@jeveuxaider.beta.gouv.fr
+                  </Link>
+                </p>
+              </template>
+              <p v-else>
+                La mission est actuellement <strong>{{ mission.is_active ? 'activée' : 'désactivée' }}</strong>.
+              </p>
+            </div>
+
+            <Link
+              v-if="['admin'].includes($store.getters.contextRole)"
+              class="text-jva-blue-500 mt-2"
+              @click.native="showModalSwitchIsActive = true"
+            >
+              {{ mission.is_active ? 'Désactiver la mission' : 'Activer la mission' }}
+            </Link>
+            <ModalMissionToggleIsActive
+              :mission="mission"
+              :is-open="showModalSwitchIsActive"
+              @cancel="showModalSwitchIsActive = false"
+              @confirm="afterChangeIsActive"
+            />
+          </div>
+        </Box>
+
         <client-only>
           <Tabs
             :tabs="[
@@ -95,6 +130,8 @@ import SelectMissionState from '@/components/custom/SelectMissionState'
 import BoxReferents from '@/components/section/BoxReferents'
 import BoxNotes from '@/components/custom/BoxNotes'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import Link from '@/components/dsfr/Link.vue'
+import ModalMissionToggleIsActive from '@/components/modal/ModalMissionToggleIsActive.vue'
 
 export default {
   components: {
@@ -114,7 +151,9 @@ export default {
     BoxReferents,
     BoxNotes,
     Breadcrumb,
-    BoxAideModeration
+    BoxAideModeration,
+    Link,
+    ModalMissionToggleIsActive
   },
   mixins: [MixinMission],
   middleware: ['authenticated', 'agreedResponsableTerms'],
@@ -149,6 +188,11 @@ export default {
       missionStats
     }
   },
+  data () {
+    return {
+      showModalSwitchIsActive: false
+    }
+  },
   methods: {
     async handleChangeState (event) {
       this.mission.state = event.key
@@ -157,6 +201,11 @@ export default {
     handleChangePlace (mission) {
       this.mission.participations_max = mission.participations_max
       this.mission.places_left = mission.places_left
+      this.mission.is_registration_open = mission.is_registration_open
+    },
+    afterChangeIsActive (mission) {
+      this.mission.is_active = mission.is_active
+      this.showModalSwitchIsActive = false
     }
   }
 }
