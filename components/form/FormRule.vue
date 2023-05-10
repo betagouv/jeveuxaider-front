@@ -17,6 +17,7 @@
                 v-model="form.event"
                 name="event"
                 :options="$labels.rule_events"
+                placeholder="Sélectionnez un déclencheur"
               />
             </FormControl>
             <FormControl
@@ -132,7 +133,7 @@ export default {
       form: { ...this.rule },
       formSchema: object({
         name: string().min(2, 'Le nom est trop court').required('Le nom est requis'),
-        event: string().required('Préciser le déclencheur'),
+        event: string().required('Préciser le déclencheur').nullable(),
         conditions: array().min(1, 'Au moins 1 condition').required('Ajouter au moins 1 condition'),
         action_key: string().required('Préciser l\'action à exécuter'),
         action_value: string().required('Préciser la valeur à exécuter')

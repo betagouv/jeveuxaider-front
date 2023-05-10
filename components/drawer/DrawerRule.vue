@@ -12,7 +12,7 @@
     <BatchDialog
       v-if="rule"
       title="Exécuter la règle"
-      :text="`Vous êtes sur le point de traiter ${rule.pendingItemsCount} élément(s) pour la règle ${rule.name}.`"
+      :text="`Vous êtes sur le point de traiter ${rule.pendingItemsCount} élément(s) pour la règle ${rule.name}. Cela peut prendre plusieurs minutes.`"
       :is-open="showAlertExecute"
       :batch-endpoint="`/rules/${ruleId}/batch`"
       @close="showAlertExecute = false"
