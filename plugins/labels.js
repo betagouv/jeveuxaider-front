@@ -399,5 +399,11 @@ const labels = {
     { key: 'responsable', label: 'Responsable' },
     { key: 'responsable_territoire', label: 'Responsable territoire' },
     { key: 'tete_de_reseau', label: 'Tête de réseau' }
+  ],
+  rule_events: [
+    { key: 'mission_updated', label: 'Mission est modifiée' }
+  ],
+  rule_actions: [
+    { key: 'mission_attach_tag', label: 'Ajouter un tag à la mission' }
   ]
 }

@@ -52,6 +52,7 @@
             {key:'missions', label:'Missions'},
             {key:'participations', label:'Participations'},
             {key:'utilisateurs', label:'Utilisateurs'},
+            {key:'rules', label:'Règles'},
           ]"
           :value="$route.query['filter[type]']"
           clearable
