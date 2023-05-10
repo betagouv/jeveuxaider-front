@@ -19,10 +19,10 @@
     </template>
     <div v-if="hasResults" class="grid grid-cols-1 gap-6">
       <DisclosureModerationAI
-        v-show="!seemCompliantAI"
+        v-show="!seemsAICompliant"
         :mission="mission"
-        @good-score="seemCompliantAI = true"
-        @bad-score="seemCompliantAI = false"
+        @good-score="seemsAICompliant = true"
+        @bad-score="seemsAICompliant = false"
       />
       <DisclosureWarningWords v-show="wordsDetected" :text="textToAnalyze" @words-detected="wordsDetected = true" />
 
@@ -129,7 +129,7 @@ export default {
       score: null,
       loading: false,
       maxPlaces: 70,
-      seemCompliantAI: false,
+      seemsAICompliant: false,
       wordsDetected: false
     }
   },
@@ -143,7 +143,7 @@ export default {
   },
   computed: {
     hasResults () {
-      return !this.seemCompliantAI || this.wordsDetected || this.frequenceTotalHours || this.tooManyParticipationsMax || this.needReviewTitle || this.startDateInPassWithoutFrequency
+      return !this.seemsAICompliant || this.wordsDetected || this.frequenceTotalHours || this.tooManyParticipationsMax || this.needReviewTitle || this.startDateInPassWithoutFrequency
     },
     frequenceTotalHours () {
       return this.mission.commitment__total > 1091
