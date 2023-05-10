@@ -1,24 +1,24 @@
 <template>
-  <Disclosure>
+  <Disclosure v-if="$store.getters['aideModeration/isAICompliant'] !== true">
     <template #button="{ isOpen }">
       <div class="flex font-semibold text-sm items-center group">
         <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
-          <template v-if="loading">
+          <template v-if="$store.state.aideModeration.loading">
             <LoadingIndicator>Analyse de la mission</LoadingIndicator>
           </template>
-          <template v-else>
+          <template v-else-if="$store.getters['aideModeration/isAICompliant'] === false">
             <RiAlertFill class="h-5 w-5 text-[#C9191E] fill-current mr-2" aria-hidden="true" />
             La mission ne semble pas conforme
           </template>
         </div>
         <div class="w-full border-t mt-1 mx-2" />
-        <template v-if="!loading">
+        <template v-if="!$store.state.aideModeration.loading">
           <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
           <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
         </template>
       </div>
     </template>
-    <div v-if="response" class="ml-7 mt-3 text-sm space-y-2 text-gray-500">
+    <div v-if="$store.state.aideModeration.response" class="ml-7 mt-3 text-sm space-y-2 text-gray-500">
       <p> Score de conformité : {{ score | formatNumber("0.[00]") }}%. <br>En dessous de 87%, la mission présente un risque.</p>
       <template v-if="sentencesError.length > 0">
         <div>Les phrases détectées par le modèle :</div>
@@ -40,44 +40,30 @@
 </template>
 
 <script>
-import axios from 'axios'
 import LoadingIndicator from '@/components/custom/LoadingIndicator'
+import MixinAideModeration from '@/mixins/mission-aide-moderation'
 
 export default {
   components: {
     LoadingIndicator
   },
+  mixins: [MixinAideModeration],
   props: {
     mission: {
       type: Object,
       required: true
     }
   },
-  data () {
-    return {
-      response: null,
-      loading: true
-    }
-  },
-  async fetch () {
-    this.loading = true
-    const { data: response } = await axios.post(this.$config.ai.missionModerationUrl, {
-      text: this.textToAnalyze
-    })
-    this.response = response
-    if (this.response.global < 0.87) {
-      this.$emit('bad-score')
-    } else {
-      this.$emit('good-score')
-    }
-    this.loading = false
-  },
   computed: {
     sentencesWithKeyAndScore () {
-      if (!this.response) {
+      if (!this.$store.state.aideModeration.response) {
         return []
       }
-      return this.response.sentences.map((sentence, key) => ({ key, text: sentence, score: this.response.scores[key] }))
+      return this.$store.state.aideModeration.response.sentences.map((sentence, key) => ({
+        key,
+        text: sentence,
+        score: this.$store.state.aideModeration.response.scores[key]
+      }))
     },
     sentencesSuccess () {
       return this.sentencesWithKeyAndScore.filter(item => item.score >= 0.95)
@@ -93,17 +79,11 @@ export default {
         return parseFloat(a.score) - parseFloat(b.score)
       })
     },
-    textToAnalyze () {
-      let text = this.mission.name + ' | ' + this.mission.objectif + ' | ' + this.mission.description + ' | ' + this.mission.information + (this.mission.prerequisites ? ' | ' + this.mission.prerequisites.join(' | ') : '')
-      text = text.replace(/<\/li>/g, '</li> | ')
-      text = text.replace(/<\/?[^>]+(>|$)/g, '')
-      return text
-    },
     score () {
-      return this.response.global * 100
+      return this.$store.state.aideModeration.response?.global * 100
     },
     scoreMin () {
-      return this.response.scores.reduce((a, b) => Math.min(a, b)) * 100
+      return this.$store.state.aideModeration.response?.scores.reduce((a, b) => Math.min(a, b)) * 100
     }
   }
 }
