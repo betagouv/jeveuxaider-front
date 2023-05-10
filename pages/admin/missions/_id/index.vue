@@ -83,6 +83,7 @@
             <SelectMissionState
               v-if="canEditStatut"
               :value="mission.state"
+              :mission="mission"
               :mission-stats="missionStats"
               @selected="handleChangeState($event)"
             />
