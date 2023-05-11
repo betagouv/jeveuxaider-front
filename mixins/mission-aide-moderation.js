@@ -25,12 +25,15 @@ export default {
   },
   computed: {
     hasResults () {
-      return !this.$store.getters['aideModeration/isAICompliant'] === false ||
-        this.sentencesWithBlacklistedWords?.length > 0 ||
-        this.commitmentIsHigh ||
+      return this.hasError ||
         this.tooManyParticipationsMax ||
         this.needReviewTitle ||
         this.startDateInPastAndNoFrequency
+    },
+    hasError () {
+      return this.$store.getters['aideModeration/isAICompliant'] === false ||
+        this.sentencesWithBlacklistedWords?.length > 0 ||
+        this.commitmentIsHigh
     },
     commitmentIsHigh () {
       return this.mission.commitment__total > 1091
@@ -57,17 +60,12 @@ export default {
       return this.textToAnalyzeAsSentences?.filter(
         sentence => this.blacklistedWords.some(word => sentence.toLowerCase().includes(word))
       )
-    },
-    hasError () {
-      return !this.$store.getters['aideModeration/isAICompliant'] === false ||
-        this.sentencesWithBlacklistedWords?.length > 0 ||
-        this.commitmentIsHigh
     }
   },
   async fetch () {
-    if (this.$store.state.aideModeration.type != 'mission' || this.mission.id != this.$store.state.aideModeration.model.id) {
+    if (this.$store.state.aideModeration.type != 'mission' || this.mission.id != this.$store.state.aideModeration.model?.id) {
       await this.$store.dispatch('aideModeration/fetch', {
-        type: 'mission', model: this.mission, text: this.textToAnalyze
+        type: 'mission', model: { ...this.mission }, text: this.textToAnalyze
       })
     }
   }

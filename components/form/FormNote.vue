@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <form id="form-note" @submit.prevent="handleSubmit">
-      <FormControl
-        :label="label"
-        html-for="content"
-        :required="required"
-        :error="errors.content"
-      >
-        <FormHelperText v-if="!hideHelp" class="pb-4">
-          Visible seulement des administrateurs et des référents
-        </FormHelperText>
-        <Textarea
-          v-model="form.content"
-          name="content"
-          :placeholder="placeholder"
-          :rows="nbRows"
-          @blur="validate('content')"
-        />
-      </FormControl>
-    </form>
-  </div>
+  <form :id="id" @submit.prevent="handleSubmit">
+    <FormControl
+      :label="label"
+      html-for="content"
+      :required="required"
+      :error="errors.content"
+    >
+      <FormHelperText v-if="!hideHelp" class="pb-4">
+        Visible seulement des administrateurs et des référents
+      </FormHelperText>
+      <Textarea
+        v-model="form.content"
+        name="content"
+        :placeholder="placeholder"
+        :rows="nbRows"
+        @blur="validate('content')"
+      />
+    </FormControl>
+  </form>
 </template>
 
 <script>
@@ -29,6 +27,10 @@ import FormErrors from '@/mixins/form/errors'
 export default {
   mixins: [FormErrors],
   props: {
+    id: {
+      type: String,
+      default: 'form-note'
+    },
     notableType: {
       type: String,
       required: true
