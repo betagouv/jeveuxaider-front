@@ -62,11 +62,13 @@ export default {
       )
     }
   },
-  async fetch () {
-    if (this.$store.state.aideModeration.type != 'mission' || this.mission.id != this.$store.state.aideModeration.model?.id) {
-      await this.$store.dispatch('aideModeration/fetch', {
-        type: 'mission', model: { ...this.mission }, text: this.textToAnalyze
-      })
+  methods: {
+    async fetchAIReportScore () {
+      if (this.$store.state.aideModeration.type != 'mission' || this.mission.id != this.$store.state.aideModeration.model?.id) {
+        await this.$store.dispatch('aideModeration/fetch', {
+          type: 'mission', model: { ...this.mission }, text: this.textToAnalyze
+        })
+      }
     }
   }
 }

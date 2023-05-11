@@ -64,6 +64,13 @@ export default {
       type: Object,
       required: true
     }
+  },
+  watch: {
+    isOpen (newVal) {
+      if (newVal) {
+        this.fetchAIReportScore()
+      }
+    }
   }
 }
 </script>
