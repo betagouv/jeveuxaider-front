@@ -19,13 +19,14 @@
         </div>
 
         <FormNote
+          id="form-note-mission-report"
           notable-type="missions"
           :notable-id="mission.id"
           :nb-rows="5"
           :required="true"
           :hide-help="true"
           placeholder="Détaillez-ici les raisons de votre décision"
-          context="status_changed_to_signaled"
+          context="status_changed_to_reported"
           @submitted="$emit('confirm', $event)"
         />
       </div>
@@ -34,7 +35,7 @@
         <Button class="mr-3" variant="white" @click.native="$emit('cancel')">
           Annuler
         </Button>
-        <Button type="submit" form="form-note">
+        <Button type="submit" form="form-note-mission-report">
           Confirmer
         </Button>
       </template>
@@ -62,9 +63,6 @@ export default {
       type: Object,
       required: true
     }
-  },
-  data () {
-    return {}
   }
 }
 </script>

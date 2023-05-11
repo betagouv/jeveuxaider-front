@@ -82,7 +82,6 @@
           <div v-if="!['#historique'].includes($route.hash)" class="space-y-8">
             <SelectMissionState
               v-if="canEditStatut"
-              :value="mission.state"
               :mission="mission"
               :mission-stats="missionStats"
               @selected="handleChangeState($event)"

@@ -3,7 +3,7 @@
     <SelectWithDescription
       v-if="statesAvailable.length"
       :options="statesAvailable"
-      :value="value"
+      :value="mission.state"
       @selected="handleSelect($event)"
     />
 
@@ -43,10 +43,6 @@ export default {
     ModalMissionReport
   },
   props: {
-    value: {
-      type: String,
-      default: ''
-    },
     mission: {
       type: Object,
       required: true
@@ -66,7 +62,7 @@ export default {
   },
   computed: {
     statesAvailable () {
-      let toStates = this.$options.filters.label(this.value, 'mission_workflow_states', 'to')
+      let toStates = this.$options.filters.label(this.mission.state, 'mission_workflow_states', 'to')
       if (this.$store.getters.contextRole === 'admin') {
         return this.$labels.mission_workflow_states
       }
