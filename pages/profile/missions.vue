@@ -56,7 +56,7 @@
             Validées
           </Tag>
         </div>
-        <div class="my-8 space-y-4">
+        <div class="my-8 space-y-8">
           <CardParticipation
             v-for="participation in queryResult.data"
             :key="participation.id"

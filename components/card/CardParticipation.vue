@@ -1,121 +1,135 @@
 <template>
-  <Box padding="xs" class="!shadow-sm hover:!shadow-md cursor-pointer grid grid-cols-1 lg:grid-cols-3 w-full">
-    <div v-if="participation.mission" class="col-span-1 pr-4 py-2 flex flex-col justify-between gap-4">
-      <div>
-        <div class="truncate text-sm text-gray-600">
-          <span>📍</span>
+  <Box padding="sm" class="!shadow-sm hover:!shadow-md cursor-pointer">
+    <div class="grid grid-cols-1 lg:grid-cols-3 w-full">
+      <div v-if="participation.mission" class="col-span-1 pr-4 py-2 flex flex-col justify-between gap-8">
+        <div>
+          <div class="truncate text-sm text-gray-600 mb-8">
+            <span>📍</span>
 
-          <template
-            v-if="participation.mission.city && participation.mission.type == 'Mission en présentiel'"
-          >
-            <template v-if="participation.mission.zip">
-              <span class="font-semibold">{{ missionCity }}</span>
-              <span> ({{ participation.mission.zip }})</span>
+            <template
+              v-if="participation.mission.city && participation.mission.type == 'Mission en présentiel'"
+            >
+              <template v-if="participation.mission.zip">
+                <span class="font-semibold">{{ missionCity }}</span>
+                <span> ({{ participation.mission.zip }})</span>
+              </template>
+
+              <template v-else-if="participation.mission.department">
+                <span class="font-semibold">{{ missionCity }}</span>
+                <span> ({{ participation.mission.department }})</span>
+              </template>
+
+              <template v-else>
+                <span class="font-semibold">{{ missionCity }}</span>
+              </template>
             </template>
 
-            <template v-else-if="participation.mission.department">
-              <span class="font-semibold">{{ missionCity }}</span>
-              <span> ({{ participation.mission.department }})</span>
+            <template v-else-if="participation.mission.is_autonomy">
+              En autonomie
             </template>
 
             <template v-else>
-              <span class="font-semibold">{{ missionCity }}</span>
+              À distance
             </template>
-          </template>
-
-          <template v-else-if="participation.mission.is_autonomy">
-            En autonomie
-          </template>
-
-          <template v-else>
-            À distance
-          </template>
+          </div>
+          <div class="mb-8">
+            <div class="text-xs text-[#666666] leading-tight flex space-x-2 mb-2">
+              <RiBuildingFill class="w-4 h-4 fill-current" /> <span>{{ participation.mission.structure.name }}</span>
+            </div>
+            <div class="font-bold line-clamp-3 text-black leading-tight">
+              {{ participation.mission.name }}
+            </div>
+          </div>
+          <div class="text-xs text-[#666666] leading-tight flex space-x-2">
+            <RiCalendarEventFill class="w-4 h-4 fill-current" /> <span>à partir du {{ $dayjs(participation.mission.start_date).format('D MMMM YYYY') }} </span>
+          </div>
         </div>
-        <div class="font-extrabold line-clamp-3 mt-2 text-gray-900 leading-tight">
-          {{ participation.mission.name }}
-        </div>
-        <div
-          v-if="!['responsable'].includes($store.getters.contextRole)"
-          class="mt-2 text-sm text-gray-600 leading-tight"
-        >
-          {{ participation.mission.structure.name }}
-        </div>
-      </div>
-      <div class="hidden lg:block pt-4 border-t border-dashed">
-        <div class="flex space-x-1 text-sm truncate max-w-full text-gray-600">
-          <span class="">Responsable :</span>
-          <span v-if="participation.mission.responsable" class="font-bold truncate">{{ participation.mission.responsable.full_name }}</span>
+        <div v-if="!isBenevole" class="hidden lg:block pt-4 border-t border-dashed">
+          <div class="flex space-x-1 text-sm truncate max-w-full text-gray-600">
+            <span class="">Responsable :</span>
+            <span v-if="participation.mission.responsable" class="font-bold truncate">{{ participation.mission.responsable.full_name }}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-else>
-      La mission n'existe plus
-    </div>
-    <div class="col-span-2 lg:border-l -my-4 py-6 lg:pl-6 flex flex-col">
-      <div class="flex flex-col space-y-4 lg:flex-row lg:space-y-0">
-        <div class="flex">
-          <Avatar
-            :img-srcset="profile.avatar ? profile.avatar.urls.thumbMedium : null"
-            :img-src="profile.avatar ? profile.avatar.urls.original : null"
-            :initials="profile.short_name"
-            size="sm"
-            class="mr-4"
-          />
-          <div>
-            <div class="font-bold">
-              {{ profile.full_name }}
-              <div v-if="display == 'benevole' && participation.profile.cej" class="inline-flex font-normal text-gray-600 text-sm ">
-                <span class="ml-1 mr-2">•</span>
-                <a
-                  class=" inline-flex items-center hover:underline hover:text-jva-blue-500"
-                  href="https://travail-emploi.gouv.fr/emploi-et-insertion/mesures-jeunes/contrat-engagement-jeune/article/qu-est-ce-que-le-contrat-d-engagement-jeune-cej"
-                  target="_blank"
-                  @click.stop
-                >
-                  <span>Jeune en CEJ</span>
-                  <ExternalLinkIcon class="ml-1 h-3 w-3 inline-block" />
-                </a>
+      <div v-else>
+        La mission n'existe plus
+      </div>
+      <div class="col-span-2 lg:border-l py-6 lg:pl-6 flex flex-col justify-between gap-8">
+        <div class="">
+          <div class="flex flex-col space-y-4 lg:flex-row lg:space-y-0">
+            <div class="flex">
+              <Avatar
+                :img-srcset="profile.avatar ? profile.avatar.urls.thumbMedium : null"
+                :img-src="profile.avatar ? profile.avatar.urls.original : null"
+                :initials="profile.short_name"
+                size="sm"
+                class="mr-4"
+              />
+              <div>
+                <div class="font-bold">
+                  {{ profile.full_name }}
+                  <div v-if="display == 'benevole' && participation.profile.cej" class="inline-flex font-normal text-gray-600 text-sm ">
+                    <span class="ml-1 mr-2">•</span>
+                    <a
+                      class=" inline-flex items-center hover:underline hover:text-jva-blue-500"
+                      href="https://travail-emploi.gouv.fr/emploi-et-insertion/mesures-jeunes/contrat-engagement-jeune/article/qu-est-ce-que-le-contrat-d-engagement-jeune-cej"
+                      target="_blank"
+                      @click.stop
+                    >
+                      <span>Jeune en CEJ</span>
+                      <ExternalLinkIcon class="ml-1 h-3 w-3 inline-block" />
+                    </a>
+                  </div>
+                </div>
+                <div class="text-sm text-gray-600 first-letter:uppercase">
+                  {{ $dayjs(participation.created_at).fromNow() }}
+                </div>
               </div>
             </div>
-            <div class="text-sm text-gray-600 first-letter:uppercase">
-              {{ $dayjs(participation.created_at).fromNow() }}
+            <div class="lg:ml-auto lg:pl-2">
+              <Badge size="sm" :type="badgeTypeParticipationSate">
+                {{ participation.state }}
+              </Badge>
             </div>
           </div>
-        </div>
-        <div class="lg:ml-auto lg:pl-2">
-          <Badge size="sm" :type="badgeTypeParticipationSate">
-            {{ participation.state }}
-          </Badge>
-        </div>
-      </div>
-      <TextFormatted v-if="participation.conversation && participation.conversation.latest_message" :max-lines="4" :text="participation.conversation.latest_message.content" class="text-gray-600 mt-3" />
-      <div v-if="participation.slots" class="mt-4">
-        <div class="text-sm font-semibold">
-          Disponibilités :
-        </div>
-        <div class="mt-2">
-          <div
-            v-for="(date, index) in participation.slots"
-            :key="date.id"
-            :class="[{'border-b-0 pb-0 mb-0': index == participation.slots.length - 1}, 'pb-2 mb-2 border-b']"
-          >
-            <div class="text-sm text-black first-letter:uppercase">
-              {{ $dayjs(date.date).format('dddd D MMMM') }}<span class="font-normal text-gray-600"> : {{ date.slots.map(slot => $options.filters.label(slot, 'slots')).join(', ') }}</span>
+          <TextFormatted
+            v-if="participation.conversation && participation.conversation.latest_message"
+            :max-lines="4"
+            :text="participation.conversation.latest_message.content"
+            class="text-gray-600 mt-3"
+          />
+          <div v-if="participation.slots" class="mt-4">
+            <div class="text-sm font-semibold">
+              Disponibilités :
+            </div>
+            <div class="mt-2">
+              <div
+                v-for="(date, index) in participation.slots"
+                :key="date.id"
+                :class="[{'border-b-0 pb-0 mb-0': index == participation.slots.length - 1}, 'pb-2 mb-2 border-b']"
+              >
+                <div class="text-sm text-black first-letter:uppercase">
+                  {{ $dayjs(date.date).format('dddd D MMMM') }}<span class="font-normal text-gray-600"> : {{ date.slots.map(slot => $options.filters.label(slot, 'slots')).join(', ') }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <ParticipationBenevoleActions v-if="isBenevole" :participation="participation" class="mt-8" />
   </Box>
 </template>
 
 <script>
 import MixinMission from '@/mixins/mission'
 import Badge from '@/components/dsfr/Badge.vue'
+import ParticipationBenevoleActions from '@/components/custom/ParticipationBenevoleActions.vue'
 
 export default {
   components: {
-    Badge
+    Badge,
+    ParticipationBenevoleActions
   },
   mixins: [MixinMission],
   props: {
