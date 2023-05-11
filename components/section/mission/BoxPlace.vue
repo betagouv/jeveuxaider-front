@@ -22,7 +22,7 @@
           </div>
         </div>
       </div>
-      <template v-if="mission.places_left > 0">
+      <template v-if="mission.places_left > 0 && mission.is_active">
         <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
         <div class="flex justify-center text-sm">
           <Link :to="`/admin/missions/${mission.id}/trouver-des-benevoles`">
@@ -30,7 +30,7 @@
           </Link>
         </div>
       </template>
-      <template v-if="mission.places_left > 0">
+      <template v-if="mission.places_left > 0 && mission.is_active">
         <div class="border-t -mx-4 xl:-mx-6 mt-4 mb-4" />
         <div class="flex justify-center text-sm">
           <Link v-if="mission.is_registration_open" @click.native="handleChangeIsRegistrationOpen(false)">

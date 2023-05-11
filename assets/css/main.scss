@@ -32,7 +32,7 @@ html {
     height: 0;
     border-style: solid;
     position: absolute;
-    margin: 5px;
+    margin: 6px;
     z-index: 1;
   }
   &[aria-hidden='true'] {
@@ -46,53 +46,53 @@ html {
     transition: opacity 0.15s;
   }
   &[x-placement^='top'] {
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     .tooltip-arrow {
-      border-width: 5px 5px 0 5px;
+      border-width: 6px 6px 0 6px;
       border-left-color: transparent !important;
       border-right-color: transparent !important;
       border-bottom-color: transparent !important;
-      bottom: -5px;
-      left: calc(50% - 5px);
+      bottom: -6px;
+      left: calc(50% - 6px);
       margin-top: 0;
       margin-bottom: 0;
     }
   }
   &[x-placement^='bottom'] {
-    margin-top: 5px;
+    margin-top: 6px;
     .tooltip-arrow {
-      border-width: 0 5px 5px 5px;
+      border-width: 0 6px 6px 6px;
       border-left-color: transparent !important;
       border-right-color: transparent !important;
       border-top-color: transparent !important;
-      top: -5px;
-      left: calc(50% - 5px);
+      top: -6px;
+      left: calc(50% - 6px);
       margin-top: 0;
       margin-bottom: 0;
     }
   }
   &[x-placement^='right'] {
-    margin-left: 5px;
+    margin-left: 6px;
     .tooltip-arrow {
-      border-width: 5px 5px 5px 0;
+      border-width: 6px 6px 6px 0;
       border-left-color: transparent !important;
       border-top-color: transparent !important;
       border-bottom-color: transparent !important;
-      left: -5px;
-      top: calc(50% - 5px);
+      left: -6px;
+      top: calc(50% - 6px);
       margin-left: 0;
       margin-right: 0;
     }
   }
   &[x-placement^='left'] {
-    margin-right: 5px;
+    margin-right: 6px;
     .tooltip-arrow {
-      border-width: 5px 0 5px 5px;
+      border-width: 6px 0 6px 6px;
       border-top-color: transparent !important;
       border-right-color: transparent !important;
       border-bottom-color: transparent !important;
-      right: -5px;
-      top: calc(50% - 5px);
+      right: -6px;
+      top: calc(50% - 6px);
       margin-left: 0;
       margin-right: 0;
     }
@@ -130,6 +130,17 @@ html {
     }
     .tooltip-arrow {
       border-color: white;
+    }
+  }
+  &.theme-dsfr {
+    .tooltip-inner {
+      color: white;
+      border-radius: 8px;
+      padding: 16px;
+      @apply bg-[#E3E3FD] text-black shadow-lg;
+    }
+    .tooltip-arrow {
+      border-color: #E3E3FD;
     }
   }
 }

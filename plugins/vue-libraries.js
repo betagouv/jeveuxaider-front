@@ -23,8 +23,9 @@ Vue.use(VScrollLock, {
 
 Vue.use(VTooltip, {
   defaultPlacement: 'bottom',
-  defaultClass: 'theme-black'
-  // defaultDelay: { show: 200, hide: 9999999 }
+  defaultClass: 'theme-dsfr formatted-text',
+  defaultOffset: 4,
+  defaultDelay: { show: 200, hide: 200 }
 })
 
 Vue.use(TextareaAutosize)

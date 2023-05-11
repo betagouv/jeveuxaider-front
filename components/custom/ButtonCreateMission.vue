@@ -85,7 +85,7 @@ export default {
   computed: {
     canCreateMission () {
       return !!this.structure?.state && !['Brouillon', 'Signalée', 'Désinscrite'].includes(this.structure.state) &&
-        this.$store.state.auth.user?.profile?.mobile
+        this.$store.state.auth.user?.profile?.mobile && !this.$store.state.auth.user.statistics?.missions_inactive_count
     },
     tooltipCantCreateMission () {
       let content
@@ -97,7 +97,7 @@ export default {
           content = 'Vous ne pouvez pas créer de mission tant que votre organisation est signalée.'
           break
         case 'Brouillon':
-          content = 'Votre organisation est incomplète - Complétez les informations de votre organisation afin de pouvoir publier une mission'
+          content = 'Votre organisation est incomplète. Complétez les informations de votre organisation afin de pouvoir publier une mission.'
           break
       }
 
@@ -105,11 +105,14 @@ export default {
         content = 'Renseignez au préalable votre numéro de mobile dans <a class="active:!bg-transparent" href="/profile/edit">votre profil</a> afin de pouvoir publier une mission'
       }
 
+      if (this.$store.state.auth.user.statistics?.missions_inactive_count) {
+        content = 'Vous ne pouvez pas créer de nouvelles missions car vous avez trop de participations à mettre à jour. Pour toute information, veuillez contacter le support à l’adresse suivante : <a href=\'mailto:support@jeveuxaider.beta.gouv.fr\'>support@jeveuxaider.beta.gouv.fr</a>'
+      }
+
       return {
         content,
         hideOnTargetClick: true,
-        classes: 'theme-black formatted-text',
-        placement: 'top',
+        classes: 'theme-dsfr formatted-text',
         html: true,
         delay: {
           show: 200,

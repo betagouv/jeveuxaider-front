@@ -64,11 +64,18 @@ export default {
   },
   async fetch () {
     const { data: plausibleStats } = await this.$axios.get(
-      `https://plausible.io/api/v1/stats/aggregate?site_id=${this.$config.plausible.site_id}&metrics=pageviews&filters=event:page==${this.mission.full_url}`,
+      'https://plausible.io/api/v1/stats/aggregate',
       {
         excludeContextRole: true,
         headers: {
           Authorization: `Bearer ${this.$config.plausible.token}`
+        },
+        params: {
+          site_id: this.$config.plausible.site_id,
+          metrics: 'pageviews',
+          filters: `event:page==/missions-benevolat/${this.mission.id}/benevolat-*`,
+          period: 'custom',
+          date: `2018-01-01,${this.$dayjs().format('YYYY-MM-DD')}`
         }
       }
     )
@@ -77,6 +84,5 @@ export default {
     const { data: apiEngagementStats } = await this.$axios.get(`/apiengagement/mymission/${this.mission.id}`)
     this.apiEngagementStats = apiEngagementStats.stats
   }
-
 }
 </script>

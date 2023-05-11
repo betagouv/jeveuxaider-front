@@ -19,18 +19,21 @@
       </div>
     </template>
     <div v-if="response" class="ml-7 mt-3 text-sm space-y-2 text-gray-500">
-      <div> Score de conformité : {{ score | formatNumber("0.[00]") }}%. En dessous de 87%, la mission présente un risque.</div>
+      <p> Score de conformité : {{ score | formatNumber("0.[00]") }}%. <br>En dessous de 87%, la mission présente un risque.</p>
       <template v-if="sentencesError.length > 0">
         <div>Les phrases détectées par le modèle :</div>
-        <div
-          v-for="sentence in sentencesError"
-          :key="sentence.key"
-        >
-          {{ sentence.text }}
-        </div>
+        <ul class="pl-5 space-y-4">
+          <li
+            v-for="sentence in sentencesError"
+            :key="sentence.key"
+            class="list-disc italic"
+          >
+            ... {{ sentence.text }} ...
+          </li>
+        </ul>
       </template>
-      <div class="text-xs italic">
-        Cette information vient de notre modèle d’intelligence artificielle, qui se base sur l’historique des missions signalées. Il s’agit d’un outil en test, une vérification humaine est nécessaire.
+      <div class="text-xs bg-gray-50 px-2 py-2 rounded">
+        <RiInformationLine class="text-gray-400 fill-current h-4 w-4 inline " />  Cette information vient de notre modèle d’intelligence artificielle, qui se base sur l’historique des missions signalées. Il s’agit d’un outil en test, une vérification humaine est nécessaire.
       </div>
     </div>
   </Disclosure>

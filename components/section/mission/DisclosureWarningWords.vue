@@ -12,14 +12,17 @@
           <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
         </div>
       </template>
-      <div v-if="sentencesWithWords.length > 0" class="ml-7 mt-3 text-sm space-y-2 text-gray-500">
-        <div
-          v-for="sentence,i in sentencesWithWords"
-          :key="i"
-          v-html="` ... ${highlightSentenceWithWordToCheck(sentence) } ...`"
-        />
-        <div class="text-xs italic">
-          Des mots clés potentiellement “à risque” ont été détectés. Une vérification humaine est nécessaire puisque l’outil n’est pas parfait. Par exemple, si le mot clé backstage est présent, il sera considéré comme “à risque” puisqu’il y a le mot “stage” dedans.
+      <div v-if="sentencesWithWords.length > 0" class="ml-7 mt-3 text-sm space-y-4 text-gray-500">
+        <ul class="pl-5 space-y-4">
+          <li
+            v-for="sentence,i in sentencesWithWords"
+            :key="i"
+            class="list-disc italic"
+            v-html="` ... ${highlightSentenceWithWordToCheck(sentence) } ...`"
+          />
+        </ul>
+        <div class="text-xs bg-gray-50 px-2 py-2 rounded">
+          <RiInformationLine class="text-gray-400 fill-current h-4 w-4 inline " /> L’outil détecte des mots clés qui peuvent présenter un risque. Par exemple, les mots stage, CDD, CDI, 35h seront mis en avant. Une vérification humaine est nécessaire.
         </div>
       </div>
     </Disclosure>
@@ -41,7 +44,6 @@ export default {
     return {
       loading: true,
       wordsToCheck: [
-        'travail',
         'emploi',
         'job',
         'salaire',

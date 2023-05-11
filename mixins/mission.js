@@ -100,6 +100,9 @@ export default {
       if (!this.mission.is_registration_open) {
         return false
       }
+      if (!this.mission.is_active) {
+        return false
+      }
 
       if (this.mission.end_date && this.$dayjs(this.mission.end_date).endOf('day').isBefore(this.$dayjs())) {
         return false

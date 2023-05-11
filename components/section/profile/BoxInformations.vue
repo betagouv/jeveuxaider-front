@@ -36,6 +36,7 @@
           :description="profile.skills.map((item) => item.name).join(', ')"
         />
       </DescriptionList>
+      <DescriptionListItemMasquerade v-if="$store.getters.contextRole === 'admin'" :profile="profile" />
     </Box>
   </div>
 </template>
