@@ -81,10 +81,10 @@ export default {
     },
     score () {
       return this.$store.state.aideModeration.response?.global * 100
-    },
-    scoreMin () {
-      return this.$store.state.aideModeration.response?.scores.reduce((a, b) => Math.min(a, b)) * 100
     }
+    // scoreMin () {
+    //   return this.$store.state.aideModeration.response?.scores.reduce((a, b) => Math.min(a, b)) * 100
+    // }
   }
 }
 </script>

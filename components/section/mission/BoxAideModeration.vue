@@ -129,7 +129,7 @@ export default {
   },
   async fetch () {
     this.loading = true
-    this.fetchAIReportScore()
+    await this.fetchAIReportScore()
     if (this.mission.participations_max > this.maxPlaces) {
       const { data: score } = await this.$axios.get(`/structures/${this.mission.structure_id}/score`)
       this.score = score
