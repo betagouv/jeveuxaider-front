@@ -1,13 +1,13 @@
 <template>
   <div>
     <div
-      class="break-word whitespace-pre-line overflow-hidden formatted-text"
+      class="break-word whitespace-pre-line overflow-hidden formatted-text leading-7"
       v-html="isExpanded ? text : textHtml"
     />
     <Link
       v-if="needClip && !isExpanded"
       class="text-jva-blue-500 mt-4"
-      @click.native="readMore()"
+      @click.stop.native="readMore()"
     >
       Lire plus
     </Link>
@@ -30,10 +30,6 @@ export default {
     maxLines: {
       type: [Number, Boolean],
       default: false
-    },
-    textColor: {
-      type: String,
-      default: 'text-[#3A3A3A]'
     }
   },
   data () {
@@ -56,17 +52,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-/* :deep(p:not(:last-child)) {
-  @apply mb-4
-}
-:deep(ol) {
-    list-style: decimal;
-    @apply mb-4 pl-4
-}
-:deep(ul) {
-    list-style: disc;
-    @apply mb-4 pl-4 space-y-4
-} */
-</style>

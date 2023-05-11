@@ -1,61 +1,65 @@
 <template>
-  <Box padding="sm" class="!shadow-sm hover:!shadow-md cursor-pointer">
-    <div class="grid grid-cols-1 lg:grid-cols-3 w-full">
-      <div v-if="participation.mission" class="col-span-1 pr-4 py-2 flex flex-col justify-between gap-8">
-        <div>
-          <div class="truncate text-sm text-gray-600 mb-8">
-            <span>📍</span>
+  <Box :padding="false" class="!shadow-sm hover:!shadow-md cursor-pointer w-full">
+    <div class="grid grid-cols-1 lg:grid-cols-3 w-full divide-x divide-[#E5E5E5]">
+      <template v-if="participation.mission">
+        <div class="col-span-1 px-6 py-8 flex flex-col justify-between gap-6">
+          <div>
+            <div class="truncate text-sm text-gray-600 mb-8">
+              <span>📍</span>
 
-            <template
-              v-if="participation.mission.city && participation.mission.type == 'Mission en présentiel'"
-            >
-              <template v-if="participation.mission.zip">
-                <span class="font-semibold">{{ missionCity }}</span>
-                <span> ({{ participation.mission.zip }})</span>
+              <template
+                v-if="participation.mission.city && participation.mission.type == 'Mission en présentiel'"
+              >
+                <template v-if="participation.mission.zip">
+                  <span class="font-semibold">{{ missionCity }}</span>
+                  <span> ({{ participation.mission.zip }})</span>
+                </template>
+
+                <template v-else-if="participation.mission.department">
+                  <span class="font-semibold">{{ missionCity }}</span>
+                  <span> ({{ participation.mission.department }})</span>
+                </template>
+
+                <template v-else>
+                  <span class="font-semibold">{{ missionCity }}</span>
+                </template>
               </template>
 
-              <template v-else-if="participation.mission.department">
-                <span class="font-semibold">{{ missionCity }}</span>
-                <span> ({{ participation.mission.department }})</span>
+              <template v-else-if="participation.mission.is_autonomy">
+                En autonomie
               </template>
 
               <template v-else>
-                <span class="font-semibold">{{ missionCity }}</span>
+                À distance
               </template>
-            </template>
-
-            <template v-else-if="participation.mission.is_autonomy">
-              En autonomie
-            </template>
-
-            <template v-else>
-              À distance
-            </template>
-          </div>
-          <div class="mb-8">
-            <div class="text-xs text-[#666666] leading-tight flex space-x-2 mb-2">
-              <RiBuildingFill class="w-4 h-4 fill-current" /> <span>{{ participation.mission.structure.name }}</span>
             </div>
-            <div class="font-bold line-clamp-3 text-black leading-tight">
-              {{ participation.mission.name }}
+            <div class="mb-8">
+              <!-- <div class="text-xs text-[#666666] leading-tight flex space-x-2 mb-2">
+                <RiBuildingFill class="w-4 h-4 fill-current" /> <span>{{ participation.mission.structure.name }}</span>
+              </div> -->
+              <div class="font-bold line-clamp-3 text-black leading-tight">
+                {{ participation.mission.name }}
+              </div>
+            </div>
+            <div class="text-xs text-[#666666] leading-tight flex space-x-2">
+              <RiCalendarEventFill class="w-4 h-4 fill-current" /> <span>à partir du {{ $dayjs(participation.mission.start_date).format('D MMMM YYYY') }} </span>
             </div>
           </div>
-          <div class="text-xs text-[#666666] leading-tight flex space-x-2">
-            <RiCalendarEventFill class="w-4 h-4 fill-current" /> <span>à partir du {{ $dayjs(participation.mission.start_date).format('D MMMM YYYY') }} </span>
+          <div v-if="!isBenevole" class="hidden lg:block pt-4 border-t border-[#E5E5E5] border-dashed">
+            <div class="flex space-x-1 text-sm truncate max-w-full text-gray-600">
+              <span class="">Responsable :</span>
+              <span v-if="participation.mission.responsable" class="font-bold truncate">{{ participation.mission.responsable.full_name }}</span>
+            </div>
           </div>
         </div>
-        <div v-if="!isBenevole" class="hidden lg:block pt-4 border-t border-dashed">
-          <div class="flex space-x-1 text-sm truncate max-w-full text-gray-600">
-            <span class="">Responsable :</span>
-            <span v-if="participation.mission.responsable" class="font-bold truncate">{{ participation.mission.responsable.full_name }}</span>
-          </div>
+      </template>
+      <template v-else>
+        <div>
+          La mission n'existe plus
         </div>
-      </div>
-      <div v-else>
-        La mission n'existe plus
-      </div>
-      <div class="col-span-2 lg:border-l py-6 lg:pl-6 flex flex-col justify-between gap-8">
-        <div class="">
+      </template>
+      <div class="col-span-2 px-6 py-10 flex flex-col justify-between gap-6">
+        <div class="space-y-6">
           <div class="flex flex-col space-y-4 lg:flex-row lg:space-y-0">
             <div class="flex">
               <Avatar
@@ -96,9 +100,9 @@
             v-if="participation.conversation && participation.conversation.latest_message"
             :max-lines="4"
             :text="participation.conversation.latest_message.content"
-            class="text-gray-600 mt-3"
+            class="text-gray-600"
           />
-          <div v-if="participation.slots" class="mt-4">
+          <div v-if="participation.slots" class="">
             <div class="text-sm font-semibold">
               Disponibilités :
             </div>
@@ -117,7 +121,12 @@
         </div>
       </div>
     </div>
-    <ParticipationBenevoleActions v-if="isBenevole" :participation="participation" class="mt-8" />
+    <ParticipationBenevoleActions
+      v-if="isBenevole"
+      :participation="participation"
+      class="border-t border-[#E5E5E5]"
+      @updated="$emit('refetch')"
+    />
   </Box>
 </template>
 
@@ -167,6 +176,11 @@ export default {
         default:
           return 'info'
       }
+    }
+  },
+  methods: {
+    onParticipationUpdated (participation) {
+
     }
   }
 }

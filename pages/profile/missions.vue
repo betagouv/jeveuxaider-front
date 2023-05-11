@@ -63,6 +63,7 @@
             :participation="participation"
             display="responsable"
             @click.native="handleClickParticipation(participation)"
+            @refetch="$fetch()"
           />
         </div>
 
@@ -106,7 +107,7 @@ export default {
       loading: false,
       endpoint: '/user/participations',
       queryParams: {
-        include: 'conversation.latestMessage,mission.responsable.avatar,mission.structure'
+        include: 'conversation.latestMessage,mission.responsable.avatar,mission.structure,temoignage'
       }
     }
   },

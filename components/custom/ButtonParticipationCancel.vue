@@ -41,7 +41,7 @@ export default {
         return
       }
       this.loading = true
-      const { data: participation } = await this.$axios.put(`/participations/${this.participation.id}/cancel`, payload).catch(() => {})
+      const { data: participation } = await this.$axios.put(`/participations/${this.participation.id}/cancel-by-benevole`, payload).catch(() => {})
       const nbNewMessages = payload.content?.trim().length ? 2 : 1
       this.$store.commit('messaging/incrementNewMessagesCount', nbNewMessages)
       this.$emit('update', participation)

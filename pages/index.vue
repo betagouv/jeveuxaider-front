@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-[#F9F6F2]">
+  <div>
     <BlocBanner />
     <template v-if="$store.getters.isLogged">
       <BlocCaDevraitVousPlaire />
