@@ -115,7 +115,7 @@
           <div v-if="!['#membres','#historique'].includes($route.hash)" class="space-y-8">
             <SelectOrganisationState
               v-if="canEditStatut"
-              :value="organisation.state"
+              :organisation="organisation"
               @selected="handleChangeState($event)"
             />
 

@@ -26,10 +26,13 @@ export default {
   },
   computed: {
     hasResults () {
-      return this.$store.getters['aideModeration/isAICompliant'] === false ||
-      this.sentencesWithBlacklistedWords?.length > 0 ||
+      return this.hasError ||
       this.needRNA ||
       this.organisationHasDuplicates
+    },
+    hasError () {
+      return this.$store.getters['aideModeration/isAICompliant'] === false ||
+        this.sentencesWithBlacklistedWords?.length > 0
     },
     needRNA () {
       return this.organisation.statut_juridique == 'Association' && !this.organisation.rna
