@@ -10,7 +10,7 @@
     >
       <div class="space-y-4">
         <div>
-          Vous êtes sur le point d'annuler votre participation à la mission.
+          Vous êtes sur le point d'annuler votre participation à la mission <span class="font-semibold">{{ participation.mission.name }}</span>
         </div>
 
         <FormControl

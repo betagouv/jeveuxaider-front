@@ -24,7 +24,7 @@
       <div>
         <Input
           name="search"
-          placeholder="Recherche par mots clés"
+          placeholder="Recherche par responsables, missions, organisations..."
           icon="SearchIcon"
           variant="transparent"
           :value="$route.query['filter[search]']"

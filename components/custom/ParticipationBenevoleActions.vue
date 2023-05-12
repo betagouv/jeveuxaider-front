@@ -6,7 +6,7 @@
           Comment s'est déroulée la mission ?
         </div>
         <div class="flex justify-end gap-2">
-          <Button type="tertiary" size="sm" @click.native.stop="showCancelParticipationModal = true">
+          <Button type="tertiary" size="sm" @click.native.stop="showTestimonialOverlay = true">
             Laisser un témoignage
           </Button>
         </div>
@@ -31,16 +31,6 @@
           </Button>
         </div>
       </div>
-      <AlertDialog
-        theme="warning"
-        title="Valider votre participation"
-        :is-open="showValidateParticipationModal"
-        @confirm="handleConfirmValidateParticipation()"
-        @cancel="showValidateParticipationModal = false"
-      >
-        <p>Vous êtes sur le point de valider votre participation à la mission <span class="font-semibold">{{ participation.mission.name }}</span>.</p>
-        <p>Le responsable recevra une notification de votre action.</p>
-      </AlertDialog>
     </template>
     <template v-if="canCancelParticipation">
       <div class="flex justify-between items-center">
@@ -53,24 +43,43 @@
           </Button>
         </div>
       </div>
-      <ModalParticipationCancel
-        :participation="participation"
-        :is-open="showCancelParticipationModal"
-        @cancel="showCancelParticipationModal = false"
-        @confirm="handleConfirmCancelParticipation"
-      />
     </template>
+    <AlertDialog
+      theme="warning"
+      title="Valider votre participation"
+      :is-open="showValidateParticipationModal"
+      @confirm="handleConfirmValidateParticipation()"
+      @cancel="showValidateParticipationModal = false"
+    >
+      <p>Vous êtes sur le point de valider votre participation à la mission <span class="font-semibold">{{ participation.mission.name }}</span>.</p>
+      <p>Le responsable recevra une notification de votre action.</p>
+    </AlertDialog>
+    <ModalParticipationCancel
+      :participation="participation"
+      :is-open="showCancelParticipationModal"
+      @cancel="showCancelParticipationModal = false"
+      @confirm="handleConfirmCancelParticipation"
+    />
+
+    <TestimonialOverlay
+      :is-open="showTestimonialOverlay"
+      :participation="participation"
+      @submit="isTestimonialSubmitted = true"
+      @close="showTestimonialOverlay = false"
+    />
   </div>
 </template>
 
 <script>
 import Button from '@/components/dsfr/Button.vue'
 import ModalParticipationCancel from '@/components/modal/ModalParticipationCancel.vue'
+import TestimonialOverlay from '@/components/section/TestimonialOverlay.vue'
 
 export default {
   components: {
     Button,
-    ModalParticipationCancel
+    ModalParticipationCancel,
+    TestimonialOverlay
   },
   props: {
     participation: {
@@ -81,7 +90,9 @@ export default {
   data () {
     return {
       showCancelParticipationModal: false,
-      showValidateParticipationModal: false
+      showValidateParticipationModal: false,
+      showTestimonialOverlay: false,
+      isTestimonialSubmitted: false
     }
   },
   computed: {
@@ -106,18 +117,16 @@ export default {
       return this.$dayjs().isAfter(this.mission.start_date)
     },
     needTestimonial () {
-      return this.participation.state === 'Validée' && this.mission.state === 'Terminée' && !this.participation.temoignage
+      return this.participation.state === 'Validée' && this.mission.state === 'Terminée' && !this.participation.temoignage && !this.isTestimonialSubmitted
     }
   },
   methods: {
     async handleConfirmCancelParticipation (payload) {
-      console.log('handleConfirmCancelParticipation', payload)
       const { data: participation } = await this.$axios.put(`/participations/${this.participation.id}/cancel-by-benevole`, payload).catch(() => {})
       this.$emit('updated', participation)
       this.showCancelParticipationModal = false
     },
     async handleConfirmValidateParticipation (payload) {
-      console.log('handleConfirmValidateParticipation', payload)
       const { data: participation } = await this.$axios.put(`/participations/${this.participation.id}/validate-by-benevole`, payload).catch(() => {})
       this.$emit('updated', participation)
       this.showValidateParticipationModal = false

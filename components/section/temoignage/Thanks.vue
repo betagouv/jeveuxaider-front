@@ -15,9 +15,9 @@
           </div>
 
           <div class="flex justify-center space-x-5 mt-4">
-            <ShareFacebook :url="mission.full_url" />
-            <ShareTwitter :url="mission.full_url" :message="message" />
-            <ShareLinkedin :url="mission.full_url" :message="message" />
+            <ShareFacebook :url="mission.full_url" size="xl" />
+            <ShareTwitter :url="mission.full_url" :message="message" size="xl" />
+            <ShareLinkedin :url="mission.full_url" :message="message" size="xl" />
           </div>
         </template>
 

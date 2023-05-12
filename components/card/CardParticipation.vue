@@ -177,11 +177,6 @@ export default {
           return 'info'
       }
     }
-  },
-  methods: {
-    onParticipationUpdated (participation) {
-
-    }
   }
 }
 </script>
