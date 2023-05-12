@@ -266,7 +266,7 @@ const labels = {
     { key: 'En attente de validation', to: ['En attente de validation', 'En cours de traitement', 'Validée', 'Signalée'], roles: ['admin', 'referent', 'referent_regional'], label: 'En attente de validation', description: 'La mission est en attente de validation par le référérent départemental.' },
     { key: 'En cours de traitement', to: ['En cours de traitement', 'Validée', 'Signalée'], roles: ['admin', 'referent', 'referent_regional'], label: 'En cours de traitement', description: 'La mission est en cours de traitement par le référent départemental.' },
     { key: 'Validée', to: ['Validée', 'Terminée', 'Signalée', 'Annulée'], roles: ['admin', 'referent', 'referent_regional', 'responsable'], label: 'Validée', description: 'La mission est en ligne. Les bénévoles peuvent y participer.' },
-    { key: 'Terminée', to: ['Terminée', 'Validée', 'Annulée'], roles: ['admin'], label: 'Terminée', description: 'La mission est terminée. Les participations en attente seront annulées.' },
+    { key: 'Terminée', to: ['Terminée', 'Validée', 'Annulée'], roles: ['admin'], label: 'Terminée', description: 'La mission est terminée. Les participations en attente seront automatiquement déclinées.' },
     { key: 'Signalée', to: ['Signalée', 'Annulée'], roles: ['admin'], label: 'Signalée', description: 'La mission ne respecte pas la charte de JeVeuxAider.gouv.fr. Les participations en attente seront annulées. La mission est hors-ligne.' },
     { key: 'Annulée', to: ['Annulée', 'Signalée'], roles: ['admin'], label: 'Annulée', description: 'La mission est annulée. Les participations en attente seront annulées. La mission est hors-ligne.' }
   ],
