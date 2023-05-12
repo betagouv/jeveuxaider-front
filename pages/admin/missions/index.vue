@@ -157,17 +157,6 @@
           clearable
           @input="changeFilter('filter[tags]', $event)"
         />
-        <SelectAdvanced
-          v-if="$store.getters.contextRole == 'admin'"
-          :key="`no-tags-${$route.fullPath}`"
-          name="notags"
-          placeholder="Sans le tag"
-          :options="tags"
-          :value="$route.query['filter[no_tags]']"
-          variant="transparent"
-          clearable
-          @input="changeFilter('filter[no_tags]', $event)"
-        />
         <div class="flex flex-wrap mb-2 gap-4">
           <Checkbox
             :key="`type-1-${$route.fullPath}`"

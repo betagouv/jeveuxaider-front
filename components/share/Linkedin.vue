@@ -27,7 +27,7 @@ export default {
   props: {
     size: {
       type: String,
-      default: 'md'
+      default: 'xl'
     },
     url: {
       type: String,

@@ -105,16 +105,32 @@ export default {
     canCancelParticipation () {
       return this.$dayjs().isBefore(this.mission.start_date)
     },
+    hasCreneaux () {
+      return this.participation.slots?.length > 0
+    },
     checkParticipationProgress () {
       if (!['En attente de validation', 'En cours de traitement'].includes(this.participation.state)) {
         return false
       }
 
+      // Si créneaux avec une date passée
+      if (this.hasCreneaux && this.participation.slots.filter(slot => this.$dayjs().isAfter(slot.date)).length > 0) {
+        return true
+      }
+
+      // Si date de fin passée
       if (this.mission.end_date && this.$dayjs().isAfter(this.mission.end_date)) {
         return true
       }
 
-      return this.$dayjs().isAfter(this.mission.start_date)
+      // Si pas date de fin et date de début passée
+      if (!this.mission.end_date && this.$dayjs().isAfter(this.mission.start_date)) {
+        return true
+      }
+
+      // @TODO : si mission recurrent > 2 mois apres
+
+      return false
     },
     needTestimonial () {
       return this.participation.state === 'Validée' && this.mission.state === 'Terminée' && !this.participation.temoignage && !this.isTestimonialSubmitted

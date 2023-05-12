@@ -89,9 +89,11 @@
               </div>
 
               <div class="flex justify-center space-x-5 mt-4">
-                <ShareFacebook :url="mission.full_url" size="xl" />
-                <ShareTwitter :url="mission.full_url" :message="message" size="xl" />
-                <ShareLinkedin :url="mission.full_url" :message="message" size="xl" />
+                <ShareFacebook :url="mission.full_url" size="lg" />
+                <ShareTwitter :url="mission.full_url" :message="message" size="lg" />
+                <ShareLinkedin :url="mission.full_url" :message="message" size="lg" />
+                <ShareMail :url="mission.full_url" :message="message" size="lg" />
+                <ShareWhatsapp :url="mission.full_url" :message="message" size="lg" />
               </div>
             </template>
             <template v-else>
@@ -133,6 +135,8 @@ import Link from '@/components/dsfr/Link.vue'
 import ShareFacebook from '@/components/share/Facebook.vue'
 import ShareTwitter from '@/components/share/Twitter.vue'
 import ShareLinkedin from '@/components/share/Linkedin.vue'
+import ShareMail from '@/components/share/Mail.vue'
+import ShareWhatsapp from '@/components/share/Whatsapp.vue'
 
 export default {
   name: 'TestimonialOverlay',
@@ -140,7 +144,9 @@ export default {
     Link,
     ShareFacebook,
     ShareTwitter,
-    ShareLinkedin
+    ShareLinkedin,
+    ShareMail,
+    ShareWhatsapp
   },
   mixins: [FormErrors],
   props: {
@@ -156,8 +162,10 @@ export default {
   data () {
     return {
       loading: false,
-      currentStepIndex: 0,
-      form: {},
+      currentStepIndex: 2,
+      form: {
+        grade: 4
+      },
       formSchema: object({
         grade: number().required('Une note est requise'),
         testimony: string().min(50).required('Votre témoignage est requis')
