@@ -93,7 +93,7 @@
                 <ShareTwitter :url="mission.full_url" :message="message" size="lg" />
                 <ShareLinkedin :url="mission.full_url" :message="message" size="lg" />
                 <ShareMail :url="mission.full_url" :message="message" size="lg" />
-                <ShareWhatsapp :url="mission.full_url" :message="message" size="lg" />
+                <ShareWhatsApp :url="mission.full_url" :message="message" size="lg" />
               </div>
             </template>
             <template v-else>
@@ -136,7 +136,7 @@ import ShareFacebook from '@/components/share/Facebook.vue'
 import ShareTwitter from '@/components/share/Twitter.vue'
 import ShareLinkedin from '@/components/share/Linkedin.vue'
 import ShareMail from '@/components/share/Mail.vue'
-import ShareWhatsapp from '@/components/share/Whatsapp.vue'
+import ShareWhatsApp from '@/components/share/WhatsApp'
 
 export default {
   name: 'TestimonialOverlay',
@@ -146,7 +146,7 @@ export default {
     ShareTwitter,
     ShareLinkedin,
     ShareMail,
-    ShareWhatsapp
+    ShareWhatsApp
   },
   mixins: [FormErrors],
   props: {
@@ -162,10 +162,8 @@ export default {
   data () {
     return {
       loading: false,
-      currentStepIndex: 2,
-      form: {
-        grade: 4
-      },
+      currentStepIndex: 0,
+      form: {},
       formSchema: object({
         grade: number().required('Une note est requise'),
         testimony: string().min(50).required('Votre témoignage est requis')
@@ -215,11 +213,11 @@ export default {
       this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
-        .then(() => {
-          // await this.$axios.post('/temoignages', {
-          //   ...this.form,
-          //   participation_id: this.participation.id
-          // })
+        .then(async () => {
+          await this.$axios.post('/temoignages', {
+            ...this.form,
+            participation_id: this.participation.id
+          })
           this.currentStepIndex++
           this.$emit('submit')
         })

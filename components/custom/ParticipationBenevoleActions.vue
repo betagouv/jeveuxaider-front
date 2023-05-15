@@ -1,6 +1,6 @@
 <template>
   <div v-if="showActions" class="p-6">
-    <template v-if="needTestimonial">
+    <template v-if="checkNeedTestimonial">
       <div class="flex justify-between items-center">
         <div class="text-sm font-bold text-black">
           Comment s'est déroulée la mission ?
@@ -32,7 +32,7 @@
         </div>
       </div>
     </template>
-    <template v-if="canCancelParticipation">
+    <template v-if="checkCancelParticipation">
       <div class="flex justify-between items-center">
         <div class="text-sm font-bold text-black">
           Vous ne souhaitez plus participer ?
@@ -100,16 +100,30 @@ export default {
       return this.participation.mission
     },
     showActions () {
-      return this.checkParticipationProgress || this.needTestimonial || this.canCancelParticipation
+      return this.checkParticipationProgress || this.checkNeedTestimonial || this.checkCancelParticipation
     },
-    canCancelParticipation () {
-      return this.$dayjs().isBefore(this.mission.start_date)
+    checkCancelParticipation () {
+      if (['Annulée', 'Validée'].includes(this.participation.state)) {
+        return false
+      }
+      return !this.checkParticipationProgress
     },
     hasCreneaux () {
       return this.participation.slots?.length > 0
     },
+    isMissionRecurrent () {
+      return this.participation.mission.date_type === 'recurring'
+    },
+    isMissionPoncutal () {
+      return this.participation.mission.date_type === 'ponctual'
+    },
     checkParticipationProgress () {
       if (!['En attente de validation', 'En cours de traitement'].includes(this.participation.state)) {
+        return false
+      }
+
+      // Si participation créé depuis moins de 2 jours
+      if (this.$dayjs().subtract(2, 'days').isBefore(this.participation.created_at)) {
         return false
       }
 
@@ -118,21 +132,24 @@ export default {
         return true
       }
 
-      // Si date de fin passée
-      if (this.mission.end_date && this.$dayjs().isAfter(this.mission.end_date)) {
+      // Si date de fin passée et mission ponctuel
+      if (this.isMissionPoncutal && this.mission.end_date && this.$dayjs().isAfter(this.mission.end_date)) {
         return true
       }
 
-      // Si pas date de fin et date de début passée
-      if (!this.mission.end_date && this.$dayjs().isAfter(this.mission.start_date)) {
+      // Si pas date de fin et date de début passée et mission ponctuel
+      if (this.isMissionPoncutal && !this.mission.end_date && this.$dayjs().isAfter(this.mission.start_date)) {
         return true
       }
 
-      // @TODO : si mission recurrent > 2 mois apres
+      // Si date de debut passée depuis plus de 2 mois et mission recurrente
+      if (this.isMissionRecurrent && this.mission.start_date && this.$dayjs().subtract(2, 'month').isAfter(this.mission.start_date)) {
+        return true
+      }
 
       return false
     },
-    needTestimonial () {
+    checkNeedTestimonial () {
       return this.participation.state === 'Validée' && this.mission.state === 'Terminée' && !this.participation.temoignage && !this.isTestimonialSubmitted
     }
   },
@@ -150,7 +167,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
