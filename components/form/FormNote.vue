@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <form id="form-note" @submit.prevent="handleSubmit">
-      <FormControl
-        label="Note"
-        html-for="content"
-        required
-        :error="errors.content"
-      >
-        <FormHelperText class="pb-4">
-          Visible seulement des administrateurs et des référents
-        </FormHelperText>
-        <Textarea
-          v-model="form.content"
-          name="content"
-          placeholder="Rédigez votre note..."
-          :rows="10"
-          @blur="validate('content')"
-        />
-      </FormControl>
-    </form>
-  </div>
+  <form :id="id" @submit.prevent="handleSubmit">
+    <FormControl
+      :label="label"
+      html-for="content"
+      :required="required"
+      :error="errors.content"
+    >
+      <FormHelperText v-if="!hideHelp" class="pb-4">
+        Visible seulement des administrateurs et des référents
+      </FormHelperText>
+      <Textarea
+        v-model="form.content"
+        name="content"
+        :placeholder="placeholder"
+        :rows="nbRows"
+        @blur="validate('content')"
+      />
+    </FormControl>
+  </form>
 </template>
 
 <script>
@@ -29,6 +27,10 @@ import FormErrors from '@/mixins/form/errors'
 export default {
   mixins: [FormErrors],
   props: {
+    id: {
+      type: String,
+      default: 'form-note'
+    },
     notableType: {
       type: String,
       required: true
@@ -40,20 +42,54 @@ export default {
     note: {
       type: Object,
       default: () => {}
+    },
+    nbRows: {
+      type: Number,
+      default: 10
+    },
+    required: {
+      type: Boolean,
+      default: true
+    },
+    hideHelp: {
+      type: Boolean,
+      default: false
+    },
+    label: {
+      type: String,
+      default: 'Note'
+    },
+    placeholder: {
+      type: String,
+      default: 'Rédigez votre note...'
+    },
+    context: {
+      type: String,
+      default: null
     }
   },
   data () {
     return {
-      form: { ...this.note },
-      formSchema: object({
-        content: string().required('La note est requise')
-      }),
+      form: { ...this.note, context: this.context },
       loading: false
+    }
+  },
+  computed: {
+    formSchema () {
+      if (this.required) {
+        return object({
+          content: string().required('La note est requise')
+        })
+      } else {
+        return object({
+          content: string()
+        })
+      }
     }
   },
   watch: {
     note (newVal) {
-      this.form = { ...newVal }
+      this.form = { ...newVal, context: this.context }
     }
   },
   methods: {
@@ -61,6 +97,11 @@ export default {
       if (this.loading) {
         return
       }
+      if (!this.required && !this.form.content) {
+        this.$emit('submitted')
+        return
+      }
+
       this.loading = true
       await this.formSchema
         .validate(this.form, { abortEarly: false })

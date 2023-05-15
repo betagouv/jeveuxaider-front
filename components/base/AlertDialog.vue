@@ -6,6 +6,7 @@
       :title="title"
       :is-open="isOpen"
       :theme="theme"
+      :prevent-click-outside="preventClickOutside"
       @close="$emit('cancel')"
     >
       <div class="text-gray-700 space-y-4">
@@ -53,6 +54,10 @@ export default {
     cancelLabel: {
       type: String,
       default: 'Annuler'
+    },
+    preventClickOutside: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

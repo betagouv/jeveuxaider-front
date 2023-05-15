@@ -18,15 +18,10 @@
       </div>
     </template>
     <div v-if="hasResults" class="grid grid-cols-1 gap-6">
-      <DisclosureModerationAI
-        v-show="!seemCompliantAI"
-        :mission="mission"
-        @good-score="seemCompliantAI = true"
-        @bad-score="seemCompliantAI = false"
-      />
-      <DisclosureWarningWords v-show="wordsDetected" :text="textToAnalyze" @words-detected="wordsDetected = true" />
+      <DisclosureModerationAI :mission="mission" />
+      <DisclosureWarningWords :mission="mission" />
 
-      <Disclosure v-if="frequenceTotalHours">
+      <Disclosure v-if="commitmentIsHigh">
         <template #button="{ isOpen }">
           <div class="flex font-semibold text-sm items-center group">
             <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
@@ -83,7 +78,7 @@
         </div>
       </Disclosure>
 
-      <Disclosure v-if="startDateInPassWithoutFrequency">
+      <Disclosure v-if="startDateInPastAndNoFrequency">
         <template #button="{ isOpen }">
           <div class="flex font-semibold text-sm items-center group">
             <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
@@ -108,12 +103,14 @@
 <script>
 import DisclosureWarningWords from '~/components/section/mission/DisclosureWarningWords.vue'
 import DisclosureModerationAI from '~/components/section/mission/DisclosureModerationAI.vue'
+import MixinAideModeration from '@/mixins/mission-aide-moderation'
 
 export default {
   components: {
     DisclosureModerationAI,
     DisclosureWarningWords
   },
+  mixins: [MixinAideModeration],
   props: {
     mission: {
       type: Object,
@@ -127,39 +124,17 @@ export default {
   data () {
     return {
       score: null,
-      loading: false,
-      maxPlaces: 70,
-      seemCompliantAI: false,
-      wordsDetected: false
+      loading: false
     }
   },
   async fetch () {
     this.loading = true
+    await this.fetchAIReportScore()
     if (this.mission.participations_max > this.maxPlaces) {
       const { data: score } = await this.$axios.get(`/structures/${this.mission.structure_id}/score`)
       this.score = score
     }
     this.loading = false
-  },
-  computed: {
-    hasResults () {
-      return !this.seemCompliantAI || this.wordsDetected || this.frequenceTotalHours || this.tooManyParticipationsMax || this.needReviewTitle || this.startDateInPassWithoutFrequency
-    },
-    frequenceTotalHours () {
-      return this.mission.commitment__total > 1091
-    },
-    tooManyParticipationsMax () {
-      return this.mission.participations_max > this.maxPlaces
-    },
-    needReviewTitle () {
-      return !this.mission.name.match(/^(Je|J'|J’)/)
-    },
-    startDateInPassWithoutFrequency () {
-      return !this.mission.commitment__time_period && ['Brouillon', 'En attente de validation', 'En cours de traitement'].includes(this.mission.state) && this.$dayjs().isAfter(this.mission.start_date)
-    },
-    textToAnalyze () {
-      return this.mission.name + ' | ' + this.mission.objectif + ' | ' + this.mission.description + ' | ' + this.mission.information + (this.mission.prerequisites ? ' | ' + this.mission.prerequisites.join(' | ') : '')
-    }
   }
 }
 </script>

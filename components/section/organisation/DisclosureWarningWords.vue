@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import MixinAideModeration from '@/mixins/mission-aide-moderation'
+import MixinAideModeration from '@/mixins/organisation-aide-moderation'
 
 export default {
   mixins: [MixinAideModeration],
   props: {
-    mission: {
+    organisation: {
       type: Object,
       required: true
     }

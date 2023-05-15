@@ -1,9 +1,25 @@
 <template>
   <div>
-    <SelectWithDescription :options="statesAvailable" :value="value" @selected="handleSelect($event)" />
+    <SelectWithDescription
+      :options="statesAvailable"
+      :value="organisation.state"
+      @selected="handleSelect($event)"
+    />
+    <ModalOrganisationValidate
+      :organisation="organisation"
+      :is-open="showModalValidate"
+      @cancel="showModalValidate = false"
+      @confirm="handleConfirmDialog()"
+    />
+    <ModalOrganisationReport
+      :organisation="organisation"
+      :is-open="showModalReport"
+      @cancel="showModalReport = false"
+      @confirm="handleConfirmDialog()"
+    />
     <AlertDialog
       theme="warning"
-      :title="titleAlert"
+      title="Changement de statut"
       :text="textAlert"
       :is-open="showAlert"
       @confirm="handleConfirmDialog()"
@@ -13,20 +29,26 @@
 </template>
 
 <script>
+import ModalOrganisationValidate from '@/components/modal/ModalOrganisationValidate.vue'
+import ModalOrganisationReport from '@/components/modal/ModalOrganisationReport.vue'
 
 export default {
+  components: {
+    ModalOrganisationValidate,
+    ModalOrganisationReport
+  },
   props: {
-    value: {
-      type: String,
-      default: ''
+    organisation: {
+      type: Object,
+      required: true
     }
   },
   data () {
     return {
       selected: null,
       showAlert: false,
-      titleAlert: '',
-      textAlert: ''
+      showModalValidate: false,
+      showModalReport: false
     }
   },
   computed: {
@@ -34,52 +56,56 @@ export default {
       if (this.$store.getters.contextRole === 'admin') {
         return this.$labels.structure_workflow_states
       }
-      const toStates = this.$options.filters.label(this.value, 'structure_workflow_states', 'to')
+      const toStates = this.$options.filters.label(this.organisation.state, 'structure_workflow_states', 'to')
       return this.$labels.structure_workflow_states.filter(state => toStates.includes(state.key))
+    },
+    textAlert () {
+      let output = ''
+      switch (this.selected?.key) {
+        case 'Brouillon':
+          output = 'Vous êtes sur le point de passer l\'organisation au statut <b>brouillon</b>.'
+          break
+        case 'En attente de validation':
+          output = 'Vous êtes sur le point de passer l\'organisation au statut <b>en attente de validation</b>.'
+          break
+        case 'En cours de traitement':
+          output = 'Vous êtes sur le point de passer l\'organisation au statut <b>en cours de traitement</b>.'
+          break
+        case 'Désinscrite':
+          output = `
+            Vous êtes sur le point de <b>désinscrire</b> cette organisation.<br><br>
+            <ul>
+            <li>- Tous les responsables seront exclues de l'organisation.</li>
+            <li>- Les missions “En attente de validation” seront passées en “Annulée”.</li>
+            <li>- Les missions “Validée” dont la date de fin est passée bascule au statut “Terminée”</li>
+            <li>- Les missions “Validée” dont la date de fin n’est pas passée bascule au statut “Annulée”</li>
+            </ul>
+          `
+          break
+      }
+      return output
     }
   },
   methods: {
+    handleSelect ($event) {
+      this.selected = $event
+      switch (this.selected.key) {
+        case 'Validée':
+          this.showModalValidate = true
+          break
+        case 'Signalée':
+          this.showModalReport = true
+          break
+        default:
+          this.showAlert = true
+          break
+      }
+    },
     handleConfirmDialog () {
       this.$emit('selected', this.selected)
       this.showAlert = false
-    },
-    handleSelect ($event) {
-      this.titleAlert = 'Changement de statut'
-
-      if ($event.key == 'Brouillon') {
-        this.textAlert = 'Vous êtes sur le point de passer l\'organisation au statut <b>brouillon</b>.'
-      }
-
-      if ($event.key == 'En attente de validation') {
-        this.textAlert = 'Vous êtes sur le point de passer l\'organisation au statut <b>en attente de validation</b>.'
-      }
-
-      if ($event.key == 'En cours de traitement') {
-        this.textAlert = 'Vous êtes sur le point de passer l\'organisation au statut <b>en cours de traitement</b>.'
-      }
-
-      if ($event.key == 'Validée') {
-        this.textAlert = 'Vous êtes sur le point de <b>valider</b> cette organisation. Ses missions seront disponibles dans la recherche.'
-      }
-
-      if ($event.key == 'Signalée') {
-        this.textAlert = 'Vous êtes sur le point de <b>signaler</b> cette organisation qui ne répond pas aux exigences de la charte ou des règles fixés par le Décret n° 2017-930 du 9 mai 2017 relatif à la Réserve Civique. Ses missions seront également signalées et toutes les participations déjà effectuées seront annulées.'
-      }
-
-      if ($event.key == 'Désinscrite') {
-        this.textAlert = `
-          Vous êtes sur le point de <b>désinscrire</b> cette organisation.<br><br>
-          <ul>
-          <li>- Tous les responsables seront exclues de l'organisation.</li>
-          <li>- Les missions “En attente de validation” seront passées en “Annulée”.</li>
-          <li>- Les missions “Validée” dont la date de fin est passée bascule au statut “Terminée”</li>
-          <li>- Les missions “Validée” dont la date de fin n’est pas passée bascule au statut “Annulée”</li>
-          </ul>
-        `
-      }
-
-      this.selected = $event
-      this.showAlert = true
+      this.showModalValidate = false
+      this.showModalReport = false
     }
   }
 }

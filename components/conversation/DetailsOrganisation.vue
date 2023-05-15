@@ -49,7 +49,12 @@
     <div class="text-sm  uppercase font-semibold text-gray-600">
       Statut de l'organisation
     </div>
-    <SelectOrganisationState v-if="canEditStatut" :value="organisation.state" class="mt-4" @selected="handleChangeState($event)" />
+    <SelectOrganisationState
+      v-if="canEditStatut"
+      :organisation="organisation"
+      class="mt-4"
+      @selected="handleChangeState($event)"
+    />
     <div v-else class="mt-4 font-medium text-gray-800">
       {{ organisation.state }}
     </div>
