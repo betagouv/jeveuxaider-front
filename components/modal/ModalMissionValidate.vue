@@ -16,7 +16,7 @@
               <br><br>L’outil d’aide à la modération a identifié cette mission comme étant <strong>potentiellement non conforme</strong>. Avez-vous vérifié l’ensemble des éléments ? Dites-nous quelques mots sur la validation :
             </template>
             <template v-else>
-              N'hésitez pas à apporter des précisions sur votre modération en ajoutant une note :
+              Si besoin, vous pouvez ajouter des précisions sur votre modération en ajoutant une note :
             </template>
           </p>
         </div>
@@ -28,7 +28,8 @@
           :nb-rows="5"
           :required="hasError"
           :hide-help="true"
-          placeholder="Détaillez-ici les raisons de votre décision"
+          :label="hasError ? 'Note' : 'Note (optionnel)'"
+          :placeholder="hasError ? 'Détaillez-ici les raisons de votre décision' : 'Ajoutez une note si nécessaire'"
           context="status_changed_to_validated"
           @submitted="$emit('confirm', $event)"
         />

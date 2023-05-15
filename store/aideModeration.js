@@ -29,6 +29,7 @@ export const getters = {
 export const actions = {
   async fetch ({ commit }, { type, model, text }) {
     commit('setLoading', true)
+    commit('setResponse', null)
     commit('setType', type)
     commit('setModel', model)
 
