@@ -16,9 +16,23 @@
           name="autocomplete"
           placeholder="Organisation"
           :options="autocompleteOptionsOrga"
+          :show-key-in-options="true"
           variant="transparent"
           @fetch-suggestions="onFetchSuggestionsOrga"
-          @selected="changeFilter('filter[structure.name]', $event ? $event.name : undefined)"
+          @selected="onSelectOrganisation"
+        />
+        <SelectAdvanced
+          v-if="responsables.length && ['admin'].includes($store.getters.contextRole)"
+          :key="`responsable-${$route.fullPath}`"
+          name="responsable"
+          placeholder="Responsable"
+          :options="responsables"
+          :value="$route.query['filter[ofResponsable]']"
+          variant="transparent"
+          attribute-key="id"
+          attribute-label="full_name"
+          clearable
+          @input="changeFilter('filter[ofResponsable]', $event)"
         />
         <SelectAdvanced
           v-if="['admin', 'referent','referent_regional'].includes($store.getters.contextRole)"
@@ -391,7 +405,18 @@ export default {
       },
       drawerMissionId: null,
       autocompleteOptionsOrga: [],
-      tags: []
+      tags: [],
+      responsables: []
+    }
+  },
+  watch: {
+    '$route.query': {
+      handler (newQuery, oldQuery) {
+        if (this.$store.getters.contextRole === 'admin') {
+          this.fetchResponsablesForAdmins(newQuery['filter[structure.id]'], oldQuery?.['filter[structure.id]'])
+        }
+      },
+      immediate: true
     }
   },
   async mounted () {
@@ -407,6 +432,28 @@ export default {
         }
       })
       this.autocompleteOptionsOrga = res.data.data
+    },
+    async fetchResponsablesForAdmins (organisationId, oldOrganisationId) {
+      if (!organisationId) {
+        this.responsables = []
+        return
+      }
+      if (organisationId !== oldOrganisationId) {
+        const { data: responsables } = await this.$axios.get(`/structures/${organisationId}/responsables`)
+        this.responsables = responsables?.map(user => user.profile) ?? []
+      }
+    },
+    async onSelectOrganisation ($event) {
+      await this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.$route.query,
+          page: undefined,
+          'filter[structure.name]': $event?.name ?? undefined,
+          'filter[structure.id]': $event?.id ?? undefined,
+          'filter[ofResponsable]': undefined
+        }
+      })
     }
   }
 }
