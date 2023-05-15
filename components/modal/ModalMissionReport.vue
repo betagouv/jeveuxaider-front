@@ -14,7 +14,7 @@
             Vous êtes sur le point de <strong>signaler</strong> une mission qui ne répond pas aux exigences de la charte ou des règles fixés par le Décret n° 2017-930 du 9 mai 2017 relatif à la Réserve Civique. Le responsable est en lien avec {{ missionStats.participations_total }} bénévole(s).
           </p>
           <p>
-            Les participations à venir seront automatiquement <strong>annulées</strong>. Les coordonnées des bénévoles seront masquées.
+            Les participations en cours de validation seront automatiquement <strong>annulées</strong>.
           </p>
         </div>
 
