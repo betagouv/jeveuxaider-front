@@ -51,7 +51,6 @@ export default {
           key: 'contenus',
           label: 'Contenus',
           childrens: [
-            { label: 'Missions prioritaires', to: '/admin/contenus/missions-prioritaires' },
             { label: "Domaines d'action", to: '/admin/contenus/domaines' },
             { label: 'Activités', to: '/admin/contenus/activites' },
             { label: 'Modèles de mission', to: '/admin/contenus/modeles-mission' },

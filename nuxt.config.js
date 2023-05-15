@@ -225,7 +225,8 @@ export default {
       'relativeTime',
       'customParseFormat',
       'duration',
-      'utc'
+      'utc',
+      'dayOfYear'
     ]
   },
 
