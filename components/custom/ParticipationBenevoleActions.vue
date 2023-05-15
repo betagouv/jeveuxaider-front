@@ -142,8 +142,8 @@ export default {
         return true
       }
 
-      // Si date de debut passée depuis plus de 2 mois et mission recurrente
-      if (this.isMissionRecurrent && this.mission.start_date && this.$dayjs().subtract(2, 'month').isAfter(this.mission.start_date)) {
+      // Si date de participation créée depuis plus de 2 mois et mission recurrente
+      if (this.isMissionRecurrent && this.mission.start_date && this.$dayjs().subtract(2, 'month').isAfter(this.participation.created_at)) {
         return true
       }
 
