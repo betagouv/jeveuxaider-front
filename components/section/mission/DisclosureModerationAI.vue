@@ -63,22 +63,20 @@ export default {
         key,
         text: sentence,
         score: this.$store.state.aideModeration.response.scores[key]
-      }))
+      })).sort((a, b) => a.score - b.score)
     },
-    sentencesSuccess () {
-      return this.sentencesWithKeyAndScore.filter(item => item.score >= 0.95)
-    },
-    sentencesWarning () {
-      return this.sentencesWithKeyAndScore.filter(item => item.score > 0.75 && item.score < 0.95)
-    },
+    // sentencesSuccess () {
+    //   return this.sentencesWithKeyAndScore.filter(item => item.score >= 0.95)
+    // },
+    // sentencesWarning () {
+    //   return this.sentencesWithKeyAndScore.filter(item => item.score > 0.75 && item.score < 0.95)
+    // },
     sentencesError () {
       return this.sentencesWithKeyAndScore.filter(item => item.score <= 0.75)
     },
-    otherSentences () {
-      return this.sentencesWithKeyAndScore.filter(item => item.score > 0.75).sort(function (a, b) {
-        return parseFloat(a.score) - parseFloat(b.score)
-      })
-    },
+    // otherSentences () {
+    //   return this.sentencesWithKeyAndScore.filter(item => item.score > 0.75)
+    // },
     score () {
       return this.$store.state.aideModeration.response?.global * 100
     }
