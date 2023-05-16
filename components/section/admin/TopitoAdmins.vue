@@ -3,7 +3,7 @@
     <BoxHeadingStatistics
       title="Modérateurs"
       class="mb-6"
-      infos-bulle="Liste des modérateurs avec le plus d'activités sur les 2 dernières semaines"
+      infos-bulle="Liste des modérateurs avec le plus d'activités sur la période"
     />
 
     <StackedList :divided="false">
@@ -15,6 +15,7 @@
           { 'text-4xl': i < 3},
           { 'text-2xl font-semibold text-gray-500': i >= 3 }
         ]"
+        :link="`/admin/utilisateurs/${user.profile_id}`"
       >
         <div class="text-gray-900 font-semibold">
           {{ user.first_name }} {{ user.last_name }}

@@ -3,7 +3,9 @@
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Administration', to: ['admin'].includes(
+            $store.getters.contextRole
+          ) ? '/admin' : null },
           { text: 'Statistiques', to: '/admin/statistics' },
           { text: 'Indicateurs clés' },
         ]"

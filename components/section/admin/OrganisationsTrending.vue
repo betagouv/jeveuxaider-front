@@ -3,7 +3,7 @@
     <BoxHeadingStatistics
       title="TOP 5 des organisations"
       class="mb-6"
-      infos-bulle="Liste des organisations ayant reçu le plus de mises en relation sur les 2 dernières semaines"
+      infos-bulle="Liste des organisations ayant reçu le plus de mises en relation sur la période"
     />
 
     <StackedList :divided="false">

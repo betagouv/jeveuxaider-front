@@ -3,7 +3,7 @@
     <BoxHeadingStatistics
       :title="title"
       class="mb-6"
-      infos-bulle="Liste des pages les plus visitées sur les 2 dernières semaines"
+      infos-bulle="Liste des pages les plus visitées sur la période"
     />
 
     <StackedList :divided="false">
@@ -15,7 +15,7 @@
           { 'text-4xl': i < 3},
           { 'text-2xl font-semibold text-gray-500': i >= 3 }
         ]"
-        :href="`https://jeveuxaider.gouv.fr/${item.page}`"
+        :href="`https://jeveuxaider.gouv.fr${item.page}`"
       >
         <div class="text-gray-900 font-semibold">
           {{ item.page }}

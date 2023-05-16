@@ -11,7 +11,7 @@
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Administration', to: '/admin' },
           { text: 'Paramètres' },
           { text: 'Emails' },
         ]"

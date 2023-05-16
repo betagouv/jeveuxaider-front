@@ -2,7 +2,7 @@
   <div class="container">
     <Breadcrumb
       :links="[
-        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Administration', to: '/admin' },
         { text: 'Réseaux', to: $store.getters.contextRole === 'admin' ? '/admin/contenus/reseaux' : null },
         { text: reseau.name },
       ]"
