@@ -101,7 +101,11 @@ export default {
       this.selected = $event
       switch (this.selected.key) {
         case 'Validée':
-          this.showModalValidate = true
+          if (this.mission.structure?.state === 'Validée') {
+            this.showModalValidate = true
+          } else {
+            this.$toast.error("L'organisation doit être validée avant de pouvoir valider l'une de ses missions.")
+          }
           break
         case 'Signalée':
           this.showModalReport = true
