@@ -10,12 +10,12 @@
           >
             <template v-if="participation.mission.zip">
               <span class="font-semibold">{{ missionCity }}</span>
-              <span>({{ participation.mission.zip }})</span>
+              <span> ({{ participation.mission.zip }})</span>
             </template>
 
             <template v-else-if="participation.mission.department">
               <span class="font-semibold">{{ missionCity }}</span>
-              <span>({{ participation.mission.department }})</span>
+              <span> ({{ participation.mission.department }})</span>
             </template>
 
             <template v-else>
