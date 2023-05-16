@@ -3,7 +3,6 @@
     <BoxHeadingStatistics
       title="TOP 5 des missions"
       class="mb-6"
-      no-period
       infos-bulle="Liste des missions ayant reçu le plus de mises en relation sur les 2 dernières semaines"
     />
 
@@ -44,7 +43,9 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/administration/missions-trending').then((response) => {
+    await this.$axios.get('/administration/missions-trending', {
+      params: this.$store.state.statistics.params
+    }).then((response) => {
       this.loading = false
       this.missions = response.data
     })

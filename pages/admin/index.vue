@@ -8,7 +8,14 @@
         ]"
       />
     </portal>
-    <SectionHeading :title="`Quelles sont les news ?`" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`" />
+    <SectionHeading :title="`Quelles sont les news ?`" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
+      <template #action>
+        <div class="hidden lg:block space-x-2 flex-shrink-0">
+          <FiltersStatistics :filters="['daterange']" @refetch="refetch()" />
+        </div>
+      </template>
+    </SectionHeading>
+
     <div class="space-y-12 mt-12">
       <div>
         <Heading as="h2" size="xl" class="mb-6">
@@ -21,8 +28,16 @@
           💥 Pages les plus consultées
         </Heading>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <PlausiblePageViews title="Missions" params-filters="event:page==/missions-benevolat/*/benevolat-*" />
-          <PlausiblePageViews title="Blog" params-filters="event:page==/engagement/**" />
+          <PlausiblePageViews
+            ref="plausiblePageViewsMissions"
+            title="Missions"
+            params-filters="event:page==/missions-benevolat/*/benevolat-*"
+          />
+          <PlausiblePageViews
+            ref="plausiblePageViewsBlog"
+            title="Blog"
+            params-filters="event:page==/engagement/**"
+          />
         </div>
       </div>
       <div>
@@ -30,8 +45,8 @@
           🔥 Trending
         </Heading>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <MissionsTrending />
-          <OrganisationsTrending />
+          <MissionsTrending ref="missionsTrending" />
+          <OrganisationsTrending ref="organisationsTrending" />
         </div>
       </div>
       <div>
@@ -39,8 +54,8 @@
           🌟 Topito
         </Heading>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <TopitoAdmins />
-          <TopitoReferents />
+          <TopitoAdmins ref="topitoAdmins" />
+          <TopitoReferents ref="topitoReferents" />
         </div>
       </div>
     </div>
@@ -56,6 +71,7 @@ import OrganisationsTrending from '@/components/section/admin/OrganisationsTrend
 import PlausiblePageViews from '~/components/section/admin/PlausiblePageViews.vue'
 import JVAGoals from '~/components/section/admin/JVAGoals.vue'
 import Heading from '@/components/dsfr/Heading.vue'
+import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
 export default {
   components: {
@@ -66,13 +82,25 @@ export default {
     Heading,
     TopitoAdmins,
     TopitoReferents,
-    PlausiblePageViews
+    PlausiblePageViews,
+    FiltersStatistics
   },
   layout: 'admin-with-sidebar-menu',
   middleware: 'admin',
   data () {
     return {
     }
+  },
+  methods: {
+    refetch () {
+      this.$refs.plausiblePageViewsMissions.$fetch()
+      this.$refs.plausiblePageViewsBlog.$fetch()
+      this.$refs.missionsTrending.$fetch()
+      this.$refs.organisationsTrending.$fetch()
+      this.$refs.topitoAdmins.$fetch()
+      this.$refs.topitoReferents.$fetch()
+    }
   }
+
 }
 </script>

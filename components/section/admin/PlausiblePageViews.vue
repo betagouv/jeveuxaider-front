@@ -3,7 +3,6 @@
     <BoxHeadingStatistics
       :title="title"
       class="mb-6"
-      no-period
       infos-bulle="Liste des pages les plus visitées sur les 2 dernières semaines"
     />
 
@@ -66,7 +65,7 @@ export default {
           property: 'event:page',
           period: 'custom',
           filters: this.paramsFilters,
-          date: `${this.$dayjs().subtract(14, 'day').format('YYYY-MM-DD')},${this.$dayjs().format('YYYY-MM-DD')}`,
+          date: `${this.$dayjs(this.$store.state.statistics.params.startDate).format('YYYY-MM-DD')},${this.$dayjs(this.$store.state.statistics.params.endDate).format('YYYY-MM-DD')}`,
           limit: 5
         }
       }

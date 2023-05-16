@@ -3,7 +3,6 @@
     <BoxHeadingStatistics
       title="Modérateurs"
       class="mb-6"
-      no-period
       infos-bulle="Liste des modérateurs avec le plus d'activités sur les 2 dernières semaines"
     />
 
@@ -43,7 +42,9 @@ export default {
   },
   async fetch () {
     this.loading = true
-    await this.$axios.get('/administration/topito-admins').then((response) => {
+    await this.$axios.get('/administration/topito-admins', {
+      params: this.$store.state.statistics.params
+    }).then((response) => {
       this.loading = false
       this.users = response.data
     })
