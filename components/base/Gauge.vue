@@ -22,7 +22,9 @@
         :style="`width:${percentage}%`"
       />
     </div>
-    <div v-if="track" class="absolute text-[10px] z-10 top-0 w-[2px] h-6 -mt-1" :class="trackColorClass" :style="`left:${track}%`" />
+    <div v-if="track" class="absolute text-[16px] z-10 top-[-16px] text-gray-400" :style="`left:${track}%`">
+      ▾
+    </div>
   </div>
 </template>
 
@@ -64,9 +66,6 @@ export default {
         default:
           return 'bg-[#FF9A7B]'
       }
-    },
-    trackColorClass () {
-      return this.percentage > this.track ? 'bg-[#FFB99D]' : 'bg-gray-400'
     }
   }
 }

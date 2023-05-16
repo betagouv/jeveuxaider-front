@@ -50,7 +50,7 @@ export default {
       default: null
     },
     iconClass: {
-      type: String,
+      type: [String, Array],
       default: null
     },
     link: {

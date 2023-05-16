@@ -21,7 +21,7 @@
         <Heading as="h2" size="xl" class="mb-6">
           🚀 Objectifs
         </Heading>
-        <JVAGoals class="col-span-6" />
+        <Goals class="col-span-6" />
       </div>
       <div>
         <Heading as="h2" size="xl" class="mb-6">
@@ -69,7 +69,7 @@ import TopitoReferents from '~/components/section/admin/TopitoReferents.vue'
 import MissionsTrending from '@/components/section/admin/MissionsTrending.vue'
 import OrganisationsTrending from '@/components/section/admin/OrganisationsTrending.vue'
 import PlausiblePageViews from '~/components/section/admin/PlausiblePageViews.vue'
-import JVAGoals from '~/components/section/admin/JVAGoals.vue'
+import Goals from '~/components/section/admin/Goals.vue'
 import Heading from '@/components/dsfr/Heading.vue'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
 
@@ -78,7 +78,7 @@ export default {
     Breadcrumb,
     MissionsTrending,
     OrganisationsTrending,
-    JVAGoals,
+    Goals,
     Heading,
     TopitoAdmins,
     TopitoReferents,
