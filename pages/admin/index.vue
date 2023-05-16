@@ -18,6 +18,15 @@
       </div>
       <div>
         <Heading as="h2" size="xl" class="mb-6">
+          💥 Pages les plus consultées
+        </Heading>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <PlausiblePageViews title="Missions" params-filters="event:page==/missions-benevolat/*/benevolat-*" />
+          <PlausiblePageViews title="Blog" params-filters="event:page==/engagement/**" />
+        </div>
+      </div>
+      <div>
+        <Heading as="h2" size="xl" class="mb-6">
           🔥 Trending
         </Heading>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -27,7 +36,7 @@
       </div>
       <div>
         <Heading as="h2" size="xl" class="mb-6">
-          🌟 TOPITO
+          🌟 Topito
         </Heading>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
           <TopitoAdmins />
@@ -44,6 +53,7 @@ import TopitoAdmins from '~/components/section/admin/TopitoAdmins.vue'
 import TopitoReferents from '~/components/section/admin/TopitoReferents.vue'
 import MissionsTrending from '@/components/section/admin/MissionsTrending.vue'
 import OrganisationsTrending from '@/components/section/admin/OrganisationsTrending.vue'
+import PlausiblePageViews from '~/components/section/admin/PlausiblePageViews.vue'
 import JVAGoals from '~/components/section/admin/JVAGoals.vue'
 import Heading from '@/components/dsfr/Heading.vue'
 
@@ -55,7 +65,8 @@ export default {
     JVAGoals,
     Heading,
     TopitoAdmins,
-    TopitoReferents
+    TopitoReferents,
+    PlausiblePageViews
   },
   layout: 'admin-with-sidebar-menu',
   middleware: 'admin',

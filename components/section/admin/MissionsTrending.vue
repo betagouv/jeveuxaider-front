@@ -12,7 +12,10 @@
         v-for="mission, i in missions"
         :key="i"
         :icon="medal(i)"
-        icon-class="text-4xl font-semibold text-gray-500"
+        :icon-class="[
+          { 'text-4xl': i < 3},
+          { 'text-2xl font-semibold text-gray-500': i >= 3 }
+        ]"
         :link="`/admin/missions/${mission.id}`"
       >
         <div class="text-gray-900 font-semibold line-clamp-2">

@@ -12,7 +12,10 @@
         v-for="user, i in users"
         :key="i"
         :icon="medal(i)"
-        icon-class="text-4xl font-semibold text-gray-500"
+        :icon-class="[
+          { 'text-4xl': i < 3},
+          { 'text-2xl font-semibold text-gray-500': i >= 3 }
+        ]"
       >
         <div class="text-gray-900 font-semibold">
           {{ user.first_name }} {{ user.last_name }}

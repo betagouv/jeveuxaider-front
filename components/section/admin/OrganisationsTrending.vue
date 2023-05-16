@@ -12,7 +12,10 @@
         v-for="organisation, i in organisations"
         :key="i"
         :icon="medal(i)"
-        icon-class="text-4xl font-semibold text-gray-500"
+        :icon-class="[
+          { 'text-4xl': i < 3},
+          { 'text-2xl font-semibold text-gray-500': i >= 3 }
+        ]"
         :link="`/admin/organisations/${organisation.id}`"
       >
         <div class="text-gray-900 font-semibold">
