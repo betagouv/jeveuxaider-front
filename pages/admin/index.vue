@@ -25,12 +25,23 @@
           <OrganisationsTrending />
         </div>
       </div>
+      <div>
+        <Heading as="h2" size="xl" class="mb-6">
+          🌟 TOPITO
+        </Heading>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <TopitoAdmins />
+          <TopitoReferents />
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import TopitoAdmins from '~/components/section/admin/TopitoAdmins.vue'
+import TopitoReferents from '~/components/section/admin/TopitoReferents.vue'
 import MissionsTrending from '@/components/section/admin/MissionsTrending.vue'
 import OrganisationsTrending from '@/components/section/admin/OrganisationsTrending.vue'
 import JVAGoals from '~/components/section/admin/JVAGoals.vue'
@@ -42,7 +53,9 @@ export default {
     MissionsTrending,
     OrganisationsTrending,
     JVAGoals,
-    Heading
+    Heading,
+    TopitoAdmins,
+    TopitoReferents
   },
   layout: 'admin-with-sidebar-menu',
   middleware: 'admin',

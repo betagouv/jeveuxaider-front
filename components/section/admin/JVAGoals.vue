@@ -1,5 +1,5 @@
 <template>
-  <Box padding="sm" :loading="loading" loading-text="Récupération des missions">
+  <Box padding="sm" :loading="loading" loading-text="Récupération des objectifs">
     <BoxHeadingStatistics
       :title="`En ${$dayjs().year()}, quel est notre cap ?`"
       class="mb-6"
