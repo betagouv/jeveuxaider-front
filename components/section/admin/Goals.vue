@@ -14,10 +14,10 @@
         <span class="font-semibold text-gray-700">{{ result.organisations_validated_count }}</span> organisations inscrites
       </Goal>
       <Goal :value="result.participations_count" :from="0" :to="130000">
-        <span class="font-semibold text-gray-700">{{ result.participations_count }}</span> mises en relations brutes
+        <span class="font-semibold text-gray-700">{{ result.participations_count }}</span> mises en relation brutes
       </Goal>
       <Goal :value="result.participations_validated_count" :from="0" :to="90000">
-        <span class="font-semibold text-gray-700">{{ result.participations_validated_count }}</span> mises en relations validées
+        <span class="font-semibold text-gray-700">{{ result.participations_validated_count }}</span> mises en relation validées
       </Goal>
     </div>
   </Box>
