@@ -4,7 +4,7 @@
       <Breadcrumb
         :links="[
           { text: 'Administration' },
-          { text: `Objectifs & Tendances` },
+          { text: `Objectifs & Topito` },
         ]"
       />
     </portal>
