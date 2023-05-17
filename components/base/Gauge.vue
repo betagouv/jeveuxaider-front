@@ -1,25 +1,30 @@
 <template>
-  <div
-    v-tooltip="tooltip"
-    class="w-full bg-gray-200 overflow-hidden"
-    :class="[
-      { 'h-1': size === 'xs'},
-      { 'h-2': size === 'sm'},
-      { 'h-3': size === 'lg'},
-      { 'h-4': size === 'xl'},
-    ]"
-  >
+  <div class="relative">
     <div
+      v-tooltip="tooltip"
+      class="w-full bg-gray-200 overflow-hidden"
       :class="[
-        gaugeColorClass,
         { 'h-1': size === 'xs'},
         { 'h-2': size === 'sm'},
         { 'h-3': size === 'lg'},
         { 'h-4': size === 'xl'},
-        'transition-all duration-500'
       ]"
-      :style="`width:${percentage}%`"
-    />
+    >
+      <div
+        :class="[
+          gaugeColorClass,
+          { 'h-1': size === 'xs'},
+          { 'h-2': size === 'sm'},
+          { 'h-3': size === 'lg'},
+          { 'h-4': size === 'xl'},
+          'transition-all duration-500'
+        ]"
+        :style="`width:${percentage}%`"
+      />
+    </div>
+    <div v-if="track" class="absolute text-[16px] z-10 top-[-16px] text-gray-400" :style="`left:${track}%`">
+      ▾
+    </div>
   </div>
 </template>
 
@@ -43,6 +48,10 @@ export default {
       type: String,
       default: 'salmon',
       validator: s => ['salmon', 'green', 'blue'].includes(s)
+    },
+    track: {
+      type: Number,
+      default: null
     }
   },
   computed: {

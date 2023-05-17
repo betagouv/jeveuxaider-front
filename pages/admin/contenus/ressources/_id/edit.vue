@@ -2,7 +2,7 @@
   <div class="container">
     <Breadcrumb
       :links="[
-        { text: 'Tableau de bord', to: '/dashboard' },
+        { text: 'Administration', to: '/admin' },
         { text: 'Contenus' },
         { text: 'Ressources', to: `/admin/contenus/ressources` },
         { text: ressource.title }

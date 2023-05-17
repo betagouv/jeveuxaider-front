@@ -33,12 +33,6 @@
               placeholder="Merci de rédiger le titre de votre mission à la première personne du singulier"
               :disabled="Boolean(mission.template)"
             />
-            <Toggle
-              v-if="$store.getters.contextRole === 'admin'"
-              v-model="form.is_priority"
-              :label="form.is_priority ? 'Prioritaire' : 'Non prioritaire'"
-              description="Pour rendre la mission prioritaire"
-            />
           </FormControl>
           <div class="grid grid-cols-2 gap-4">
             <FormControl

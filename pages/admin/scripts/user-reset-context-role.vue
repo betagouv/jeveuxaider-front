@@ -14,7 +14,7 @@
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[
-          { text: 'Tableau de bord', to: '/dashboard' },
+          { text: 'Administration', to: '/admin' },
           { text: 'Scripts' },
           { text: 'Réinitialisation du rôle d\'un utilisateur' }
         ]"

@@ -126,7 +126,7 @@
 
         <NavItem
           v-if="$store.getters.contextRole == 'admin'"
-          to="/admin/contenus/missions-prioritaires"
+          to="/admin"
           :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500 ml-auto flex items-center', {'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink('/admin/(settings|contenus|scripts)/*')}]"
         >
           <CogIcon class="h-4 w-4 mr-2 flex-none" />
