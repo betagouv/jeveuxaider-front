@@ -4,25 +4,30 @@
       <Breadcrumb
         :links="[
           { text: 'Administration' },
-          { text: `Quelles sont les news ?` },
+          { text: `Objectifs & Tendances` },
         ]"
       />
     </portal>
-    <SectionHeading :title="`Quelles sont les news ?`" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`">
-      <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics :filters="['daterange']" @refetch="refetch()" />
-        </div>
-      </template>
-    </SectionHeading>
 
-    <div class="space-y-12 mt-12">
+    <div class="space-y-12 mb-24">
+      <SectionHeading :title="`Alors, on en est où aujourd'hui?`" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`" />
       <div>
         <Heading as="h2" size="xl" class="mb-6">
           🚀 Objectifs
         </Heading>
         <Goals class="col-span-6" />
       </div>
+    </div>
+
+    <div class="space-y-12">
+      <SectionHeading :title="`Topito`">
+        <template #action>
+          <div class="hidden lg:block space-x-2 flex-shrink-0">
+            <FiltersStatistics :filters="['daterange']" @refetch="refetch()" />
+          </div>
+        </template>
+      </SectionHeading>
+
       <div>
         <Heading as="h2" size="xl" class="mb-6">
           💥 Pages les plus consultées
@@ -42,7 +47,7 @@
       </div>
       <div>
         <Heading as="h2" size="xl" class="mb-6">
-          🔥 Trending
+          🔥 Tendances
         </Heading>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
           <MissionsTrending ref="missionsTrending" />
@@ -51,7 +56,7 @@
       </div>
       <div>
         <Heading as="h2" size="xl" class="mb-6">
-          🌟 Topito
+          🌟 Classement
         </Heading>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
           <TopitoAdmins ref="topitoAdmins" />
