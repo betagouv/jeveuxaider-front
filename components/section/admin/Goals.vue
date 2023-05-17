@@ -7,11 +7,11 @@
     />
 
     <div v-if="result" class="space-y-6">
-      <Goal :value="result.utilisateurs_count" :from="440000" :to="500000">
-        <span class="font-semibold text-gray-700">{{ result.utilisateurs_count - 440000 }}</span> utilisateurs inscrits
+      <Goal :value="result.utilisateurs_count" :from="0" :to="60000">
+        <span class="font-semibold text-gray-700">{{ result.utilisateurs_count }}</span> utilisateurs inscrits
       </Goal>
-      <Goal :value="result.organisations_validated_count" :from="10750" :to="14000">
-        <span class="font-semibold text-gray-700">{{ result.organisations_validated_count - 10750 }}</span> organisations inscrites
+      <Goal :value="result.organisations_validated_count" :from="0" :to="3250">
+        <span class="font-semibold text-gray-700">{{ result.organisations_validated_count }}</span> organisations inscrites
       </Goal>
       <Goal :value="result.participations_count" :from="0" :to="130000">
         <span class="font-semibold text-gray-700">{{ result.participations_count }}</span> mises en relations brutes
