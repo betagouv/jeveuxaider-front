@@ -21,7 +21,7 @@
           {{ user.first_name }} {{ user.last_name }}
         </div>
         <div class="text-gray-500 text-sm">
-          {{ user.count }} actions
+          {{ user.count|formatNumber }} actions
         </div>
       </StackedListItem>
     </StackedList>

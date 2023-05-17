@@ -21,7 +21,7 @@
           {{ item.page }}
         </div>
         <div class="text-gray-500 text-sm">
-          {{ item.pageviews }} vues
+          {{ item.pageviews|formatNumber }} vues
         </div>
       </StackedListItem>
     </StackedList>

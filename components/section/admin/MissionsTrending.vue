@@ -21,7 +21,7 @@
           {{ mission.template_name ?? mission.name }}
         </div>
         <div class="text-gray-500 text-sm">
-          {{ mission.count }} participations
+          {{ mission.count|formatNumber }} participations
         </div>
       </StackedListItem>
     </StackedList>

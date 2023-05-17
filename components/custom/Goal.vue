@@ -8,10 +8,10 @@
     <Gauge :percentage="percentage" size="xl" :track="track" />
     <div class="flex justify-between items-center text-sm">
       <div class="text-gray-300 font-semibold">
-        {{ from }}
+        {{ from|formatNumber }}
       </div>
       <div class="text-gray-300 font-semibold">
-        {{ to }}
+        {{ to|formatNumber }}
       </div>
     </div>
   </div>

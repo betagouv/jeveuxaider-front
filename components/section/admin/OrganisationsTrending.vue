@@ -21,7 +21,7 @@
           {{ organisation.name }}
         </div>
         <div class="text-gray-500 text-sm">
-          {{ organisation.count }} participations
+          {{ organisation.count|formatNumber }} participations
         </div>
       </StackedListItem>
     </StackedList>

@@ -8,16 +8,16 @@
 
     <div v-if="result" class="space-y-6">
       <Goal :value="result.utilisateurs_count" :from="0" :to="60000">
-        <span class="font-semibold text-gray-700">{{ result.utilisateurs_count }}</span> utilisateurs inscrits
+        <span class="font-semibold text-gray-700">{{ result.utilisateurs_count|formatNumber }}</span> utilisateurs inscrits
       </Goal>
       <Goal :value="result.organisations_validated_count" :from="0" :to="3250">
-        <span class="font-semibold text-gray-700">{{ result.organisations_validated_count }}</span> organisations inscrites
+        <span class="font-semibold text-gray-700">{{ result.organisations_validated_count|formatNumber }}</span> organisations inscrites
       </Goal>
       <Goal :value="result.participations_count" :from="0" :to="130000">
-        <span class="font-semibold text-gray-700">{{ result.participations_count }}</span> mises en relation brutes
+        <span class="font-semibold text-gray-700">{{ result.participations_count|formatNumber }}</span> mises en relation brutes
       </Goal>
       <Goal :value="result.participations_validated_count" :from="0" :to="90000">
-        <span class="font-semibold text-gray-700">{{ result.participations_validated_count }}</span> mises en relation validées
+        <span class="font-semibold text-gray-700">{{ result.participations_validated_count|formatNumber }}</span> mises en relation validées
       </Goal>
     </div>
   </Box>
