@@ -73,8 +73,8 @@
                         v-if="title"
                         id="modal-title"
                         :class="[
-                          'text-2xl leading-6 font-bold text-gray-900',
-                          { 'mt-2': icon || theme },
+                          'text-2xl leading-8 font-bold text-gray-900',
+                          { 'mt-1': icon || theme },
                           { 'mb-4': $slots.default }
                         ]"
                         v-html="title"

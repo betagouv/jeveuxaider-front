@@ -22,13 +22,13 @@
       Publier une mission
     </Button>
     <Modal
-      v-scroll-lock="showModal"
-      :is-open="showModal"
+      v-scroll-lock="showModalFirstMission"
+      :is-open="showModalFirstMission"
       title="C’est votre première mission ! 🍾"
       width-class="sm:max-w-3xl"
       :prevent-click-outside="true"
       icon="RiErrorWarningFill"
-      @close="showModal = false"
+      @close="showModalFirstMission = false"
     >
       <div class="text-gray-700 space-y-4">
         <p>
@@ -44,7 +44,38 @@
         <p>Devenez incollable sur la modération en consultant la <a class="text-jva-blue-500 underline" target="_blank" href="https://reserve-civique.crisp.help/fr/article/comment-gerer-les-participations-des-benevoles-1sizkcs/?bust=1682607862363">foire aux questions</a>.</p>
       </div>
       <template #footer>
-        <button class="mr-8 hover:underline" type="transparent" @click="showModal = false">
+        <button class="mr-8 hover:underline" type="transparent" @click="showModalFirstMission = false">
+          Retour
+        </button>
+        <nuxt-link
+          :to="`/admin/organisations/${$store.getters.currentRole.contextable_id}/missions/add`"
+        >
+          <Button>
+            J’ai compris
+          </Button>
+        </nuxt-link>
+      </template>
+    </Modal>
+    <Modal
+      v-scroll-lock="showModalHasParticipationsWaiting"
+      :is-open="showModalHasParticipationsWaiting"
+      title="Vous avez des participations non traitées sur d’autres missions"
+      width-class="sm:max-w-3xl"
+      :prevent-click-outside="true"
+      icon="RiErrorWarningFill"
+      @close="showModalHasParticipationsWaiting = false"
+    >
+      <div class="text-gray-700 space-y-4">
+        <p>
+          Nous vous recommandons de <span class="text-gray-900 font-semibold">mettre à jour les participations en cours</span> avant de créer une nouvelle mission.
+        </p>
+        <p>
+          En effet, en créant des mission sur JeVeuxAider.gouv.fr, vous vous engagez à mettre à jour toutes les participations (valider ou refuser), sans quoi les bénévoles <span class="text-gray-900 font-semibold">risquent de se désengager</span>, et votre utilisation de la plateforme pourrait être restreinte (moins bon référencement des missions, dépublication des missions, etc)
+        </p>
+        <p>Devenez incollable sur la modération en consultant la <a class="text-jva-blue-500 underline" target="_blank" href="https://reserve-civique.crisp.help/fr/article/comment-gerer-les-participations-des-benevoles-1sizkcs/?bust=1682607862363">foire aux questions</a>.</p>
+      </div>
+      <template #footer>
+        <button class="mr-8 hover:underline" type="transparent" @click="showModalHasParticipationsWaiting = false">
           Retour
         </button>
         <nuxt-link
@@ -75,7 +106,8 @@ export default {
   data () {
     return {
       structure: null,
-      showModal: false
+      showModalFirstMission: false,
+      showModalHasParticipationsWaiting: false
     }
   },
   async fetch () {
@@ -121,13 +153,18 @@ export default {
       }
     },
     isFirstMission () {
-      return this.$store.state.auth.user.statistics.missions_as_responsable_count === 0
+      return this.$store.state.auth.user.statistics?.missions_as_responsable_count === 0
+    },
+    hasParticipationsWaiting () {
+      return this.$store.state.auth.user.statistics?.missions_as_responsable_with_participations_waiting_count > 0
     }
   },
   methods: {
     handleClick () {
       if (this.isFirstMission) {
-        this.showModal = true
+        this.showModalFirstMission = true
+      } else if (this.hasParticipationsWaiting) {
+        this.showModalHasParticipationsWaiting = true
       } else {
         this.$router.push(`/admin/organisations/${this.$store.getters.currentRole.contextable_id}/missions/add`)
       }
