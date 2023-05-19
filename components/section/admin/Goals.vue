@@ -13,8 +13,11 @@
       <Goal :value="result.organisations_validated_count" :from="0" :to="3250">
         <span class="font-semibold text-gray-700">{{ result.organisations_validated_count|formatNumber }}</span> organisations inscrites
       </Goal>
-      <Goal :value="result.participations_count" :from="0" :to="130000">
+      <Goal :value="result.participations_count" :from="0" :to="190000">
         <span class="font-semibold text-gray-700">{{ result.participations_count|formatNumber }}</span> mises en relation brutes
+      </Goal>
+      <Goal :value="result.participations_in_progress_count" :from="0" :to="130000">
+        <span class="font-semibold text-gray-700">{{ result.participations_in_progress_count|formatNumber }}</span> mises en relation en cours
       </Goal>
       <Goal :value="result.participations_validated_count" :from="0" :to="90000">
         <span class="font-semibold text-gray-700">{{ result.participations_validated_count|formatNumber }}</span> mises en relation validées
