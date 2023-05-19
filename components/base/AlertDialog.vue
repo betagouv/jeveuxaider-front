@@ -5,7 +5,6 @@
       v-scroll-lock="isOpen"
       :title="title"
       :is-open="isOpen"
-      :prevent-click-outside="true"
       :theme="theme"
       :prevent-click-outside="preventClickOutside"
       @close="$emit('cancel')"
@@ -58,7 +57,7 @@ export default {
     },
     preventClickOutside: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   computed: {
