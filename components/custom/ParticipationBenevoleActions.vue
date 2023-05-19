@@ -1,6 +1,6 @@
 <template>
   <div v-if="showActions" class="p-6">
-    <template v-if="checkNeedTestimonial">
+    <template v-if="needTestimonial">
       <div class="flex justify-between items-center">
         <div class="text-sm font-bold text-black">
           Comment s'est déroulée la mission ?
@@ -12,7 +12,7 @@
         </div>
       </div>
     </template>
-    <template v-if="checkParticipationProgress">
+    <template v-if="participationShouldBeDone">
       <div class="flex justify-between items-center">
         <div class="text-sm font-bold text-black">
           Avez-vous réalisé la mission ?
@@ -32,7 +32,7 @@
         </div>
       </div>
     </template>
-    <template v-if="checkCancelParticipation">
+    <template v-if="canCancelParticipation">
       <div class="flex justify-between items-center">
         <div class="text-sm font-bold text-black">
           Vous ne souhaitez plus participer ?
@@ -100,13 +100,13 @@ export default {
       return this.participation.mission
     },
     showActions () {
-      return this.checkParticipationProgress || this.checkNeedTestimonial || this.checkCancelParticipation
+      return this.participationShouldBeDone || this.needTestimonial || this.canCancelParticipation
     },
-    checkCancelParticipation () {
+    canCancelParticipation () {
       if (['Annulée', 'Validée'].includes(this.participation.state)) {
         return false
       }
-      return !this.checkParticipationProgress
+      return !this.participationShouldBeDone
     },
     hasCreneaux () {
       return this.participation.slots?.length > 0
@@ -114,10 +114,10 @@ export default {
     isMissionRecurrent () {
       return this.participation.mission.date_type === 'recurring'
     },
-    isMissionPoncutal () {
+    isMissionPonctual () {
       return this.participation.mission.date_type === 'ponctual'
     },
-    checkParticipationProgress () {
+    participationShouldBeDone () {
       if (!['En attente de validation', 'En cours de traitement'].includes(this.participation.state)) {
         return false
       }
@@ -133,12 +133,12 @@ export default {
       }
 
       // Si date de fin passée et mission ponctuel
-      if (this.isMissionPoncutal && this.mission.end_date && this.$dayjs().isAfter(this.mission.end_date)) {
+      if (this.isMissionPonctual && this.mission.end_date && this.$dayjs().isAfter(this.mission.end_date)) {
         return true
       }
 
       // Si pas date de fin et date de début passée et mission ponctuel
-      if (this.isMissionPoncutal && !this.mission.end_date && this.$dayjs().isAfter(this.mission.start_date)) {
+      if (this.isMissionPonctual && !this.mission.end_date && this.$dayjs().isAfter(this.mission.start_date)) {
         return true
       }
 
@@ -149,7 +149,7 @@ export default {
 
       return false
     },
-    checkNeedTestimonial () {
+    needTestimonial () {
       return this.participation.state === 'Validée' && this.mission.state === 'Terminée' && !this.participation.temoignage && !this.isTestimonialSubmitted
     }
   },
