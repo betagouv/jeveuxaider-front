@@ -1,5 +1,5 @@
 <template>
-  <div id="help-center" class="bg-jva-green-500 p-12 shadow-lg overflow-hidden">
+  <div id="more-numbers" class="bg-jva-green-500 p-12 shadow-lg overflow-hidden">
     <div class="space-y-4">
       <Heading as="h2" :level="2" class="text-white font-extrabold">
         Plus de chiffres
@@ -26,7 +26,7 @@ export default {
 
 <style lang="postcss" scoped>
 
-#help-center {
+#more-numbers {
   background-image: url('/images/dashboard/bg-more-numbers.png');
   background-position: right -24px bottom;
   background-repeat: no-repeat;

@@ -77,7 +77,7 @@
       </div>
     </template>
     <template #right>
-      <HelpCenter />
+      <HelpCenter class="lg:sticky lg:top-12" />
     </template>
   </Container2Cols>
 </template>
