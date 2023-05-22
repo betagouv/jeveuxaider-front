@@ -196,7 +196,7 @@ export default {
           { name: 'Tableau de bord', to: '/dashboard', isActive: this.isActiveLink('/dashboard') },
           { name: 'Mon organisation', to: `/admin/organisations/${this.$store.getters.contextableId}`, isActive: this.isActiveLink('/admin/organisations/*(?!.*missions/add)') },
           { name: 'Missions', to: '/admin/missions', isActive: this.isActiveLink('/admin/missions/*|missions/add') },
-          { name: 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') },
+          { name: this.$store.state.auth.user.statistics?.participations_need_to_be_treated_count > 0 ? '⚠️ Participations' : 'Participations', to: '/admin/participations', isActive: this.isActiveLink('/admin/participations/*') },
           { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/organisation-1u4m061/', target: '_blank' }
         ]
       } else if (this.$store.getters.currentRole?.key === 'responsable_territoire') {
