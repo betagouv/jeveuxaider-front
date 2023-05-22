@@ -158,6 +158,19 @@
         </Tag>
 
         <Tag
+          v-if="$store.state.auth.user.statistics?.missions_as_responsable_with_participations_waiting_count > 0"
+          :key="`state-atraiterenpriorite-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['filter[need_to_be_treated]'] == 'true'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('filter[need_to_be_treated]', 'true')"
+        >
+          ⚠️ À traiter en priorité ({{ $store.state.auth.user.statistics?.missions_as_responsable_with_participations_waiting_count }})
+        </Tag>
+
+        <Tag
           :key="`state-encoursmoderation-${$route.fullPath}`"
           as="button"
           size="md"
