@@ -121,28 +121,23 @@ export default {
         return false
       }
 
-      // Si participation créé depuis moins de 2 jours
-      if (this.$dayjs().subtract(2, 'days').isBefore(this.participation.created_at)) {
-        return false
-      }
-
       // Si créneaux avec une date passée
-      if (this.hasCreneaux && this.participation.slots.filter(slot => this.$dayjs().isAfter(slot.date)).length > 0) {
+      if (this.hasCreneaux && this.participation.slots.filter(slot => this.$dayjs().startOf('day').isAfter(slot.date)).length > 0) {
         return true
       }
 
       // Si date de fin passée et mission ponctuel
-      if (this.isMissionPonctual && this.mission.end_date && this.$dayjs().isAfter(this.mission.end_date)) {
+      if (this.isMissionPonctual && this.mission.end_date && this.$dayjs().startOf('day').isAfter(this.mission.end_date)) {
         return true
       }
 
       // Si pas date de fin et date de début passée et mission ponctuel
-      if (this.isMissionPonctual && !this.mission.end_date && this.$dayjs().isAfter(this.mission.start_date)) {
+      if (this.isMissionPonctual && !this.mission.end_date && this.$dayjs().startOf('day').isAfter(this.mission.start_date)) {
         return true
       }
 
       // Si date de participation créée depuis plus de 2 mois et mission recurrente
-      if (this.isMissionRecurrent && this.mission.start_date && this.$dayjs().subtract(2, 'month').isAfter(this.participation.created_at)) {
+      if (this.isMissionRecurrent && this.mission.start_date && this.$dayjs().startOf('day').subtract(1, 'month').isAfter(this.participation.created_at)) {
         return true
       }
 
