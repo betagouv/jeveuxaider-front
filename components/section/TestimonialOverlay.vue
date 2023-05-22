@@ -17,7 +17,7 @@
               {{ benevole.first_name }}, comment s'est déroulée votre mission&nbsp;?
             </template>
             <template v-else>
-              Merci pour votre retour
+              Merci pour votre retour&nbsp;!
             </template>
           </h1>
 
@@ -92,7 +92,7 @@
                 <ShareFacebook :url="mission.full_url" size="lg" />
                 <ShareTwitter :url="mission.full_url" :message="message" size="lg" />
                 <ShareLinkedin :url="mission.full_url" :message="message" size="lg" />
-                <ShareMail :url="mission.full_url" :message="message" size="lg" />
+                <!-- <ShareMail :url="mission.full_url" :message="message" size="lg" /> -->
                 <ShareWhatsApp :url="mission.full_url" :message="message" size="lg" />
               </div>
             </template>
@@ -107,20 +107,9 @@
               </div>
             </template>
 
-            <div class="font-medium text-md sm:text-xl text-[#808080] mt-8 mb-4">
-              Trouvez dès maintenant votre prochaine mission
-            </div>
-
-            <nuxt-link to="/missions-benevolat">
-              <Button
-                id="search"
-                size="xl"
-                rounded
-                variant="green"
-              >
-                Trouver une mission
-              </button>
-            </nuxt-link>
+            <Link class="mt-8" @click.native="onCloseOverlay">
+              Fermer
+            </Link>
           </template>
         </div>
       </Overlay>
@@ -135,7 +124,7 @@ import Link from '@/components/dsfr/Link.vue'
 import ShareFacebook from '@/components/share/Facebook.vue'
 import ShareTwitter from '@/components/share/Twitter.vue'
 import ShareLinkedin from '@/components/share/Linkedin.vue'
-import ShareMail from '@/components/share/Mail.vue'
+// import ShareMail from '@/components/share/Mail.vue'
 import ShareWhatsApp from '@/components/share/WhatsApp'
 
 export default {
@@ -145,7 +134,7 @@ export default {
     ShareFacebook,
     ShareTwitter,
     ShareLinkedin,
-    ShareMail,
+    // ShareMail,
     ShareWhatsApp
   },
   mixins: [FormErrors],
@@ -168,7 +157,8 @@ export default {
         grade: number().required('Une note est requise'),
         testimony: string().min(50).required('Votre témoignage est requis')
       }),
-      message: "J'ai réalisé une mission de bénévolat grâce à #JeVeuxAider. Rejoignez le mouvement #ChacunPourTous"
+      message: encodeURIComponent("J'ai réalisé une mission de bénévolat grâce à #JeVeuxAider. Rejoignez le mouvement #ChacunPourTous"),
+      testimonialHasBeenCreated: false
     }
   },
   computed: {
@@ -219,7 +209,7 @@ export default {
             participation_id: this.participation.id
           })
           this.currentStepIndex++
-          this.$emit('submit')
+          this.testimonialHasBeenCreated = true
         })
         .catch((errors) => {
           this.setErrors(errors)
@@ -229,9 +219,9 @@ export default {
         })
     },
     onCloseOverlay () {
+      this.$emit('close', this.testimonialHasBeenCreated)
       this.currentStepIndex = 0
       this.form = {}
-      this.$emit('close')
     }
   }
 }

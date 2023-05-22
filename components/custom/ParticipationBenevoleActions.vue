@@ -64,8 +64,7 @@
     <TestimonialOverlay
       :is-open="showTestimonialOverlay"
       :participation="participation"
-      @submit="isTestimonialSubmitted = true"
-      @close="showTestimonialOverlay = false"
+      @close="onTestimonialOverlayClose"
     />
   </div>
 </template>
@@ -163,6 +162,12 @@ export default {
       const { data: participation } = await this.$axios.put(`/participations/${this.participation.id}/validate-by-benevole`, payload).catch(() => {})
       this.$emit('updated', participation)
       this.showValidateParticipationModal = false
+    },
+    onTestimonialOverlayClose (testimonialHasBeenCreated) {
+      this.showTestimonialOverlay = false
+      if (testimonialHasBeenCreated) {
+        this.isTestimonialSubmitted = true
+      }
     }
   }
 }
