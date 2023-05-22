@@ -1,8 +1,8 @@
 <template>
   <a
     target="_blank"
-    :href="`${shareBaseUrl}${message}${appUrl}${url}`"
-    class="bg-white  rounded-full flex justify-center items-center cursor-pointer tracking-wide shadow-lg hover:scale-105 transform transition will-change-transform"
+    :href="`${shareBaseUrl}${appUrl}${url}&text=${message}`"
+    class="bg-white rounded-full flex justify-center items-center cursor-pointer tracking-wide shadow-lg hover:scale-105 transform transition will-change-transform"
     :class="[
       {'h-20 w-20' : size === 'xl' },
       {'h-16 w-16' : size === 'lg' },
