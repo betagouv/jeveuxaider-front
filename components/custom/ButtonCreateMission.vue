@@ -70,7 +70,7 @@
           Nous vous recommandons de <span class="text-gray-900 font-semibold">mettre à jour les participations en cours</span> avant de créer une nouvelle mission.
         </p>
         <p>
-          En effet, en créant des mission sur JeVeuxAider.gouv.fr, vous vous engagez à mettre à jour toutes les participations (valider ou refuser), sans quoi les bénévoles <span class="text-gray-900 font-semibold">risquent de se désengager</span>, et votre utilisation de la plateforme pourrait être restreinte (moins bon référencement des missions, dépublication des missions, etc)
+          En effet, en créant des missions sur JeVeuxAider.gouv.fr, vous vous engagez à mettre à jour toutes les participations (valider ou refuser), sans quoi les bénévoles <span class="text-gray-900 font-semibold">risquent de se désengager</span>, et votre utilisation de la plateforme pourrait être restreinte (moins bon référencement des missions, dépublication des missions, etc)
         </p>
         <p>Devenez incollable sur la modération en consultant la <a class="text-jva-blue-500 underline" target="_blank" href="https://reserve-civique.crisp.help/fr/article/comment-gerer-les-participations-des-benevoles-1sizkcs/?bust=1682607862363">foire aux questions</a>.</p>
       </div>
