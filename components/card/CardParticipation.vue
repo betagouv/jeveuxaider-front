@@ -1,6 +1,6 @@
 <template>
   <Box :padding="false" class="!shadow-sm hover:!shadow-md cursor-pointer w-full">
-    <div class="grid grid-cols-1 lg:grid-cols-3 w-full divide-x divide-[#E5E5E5]">
+    <div class="grid grid-cols-1 lg:grid-cols-3 w-full divide-y lg:divide-y-0 lg:divide-x divide-[#E5E5E5]">
       <template v-if="participation.mission">
         <div class="col-span-1 px-6 py-8 flex flex-col justify-between gap-6">
           <div>
