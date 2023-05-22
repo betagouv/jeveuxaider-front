@@ -246,6 +246,7 @@ export default {
   watch: {
     hasCreneaux (newHasCreneaux) {
       if (newHasCreneaux == 'yes') {
+        this.autofillStartAndEndDates()
         this.$emit('change', this.form)
       } else {
         this.$emit('change', { ...this.form, dates: null })
@@ -255,14 +256,7 @@ export default {
       deep: true,
       handler () {
         if (this.hasCreneaux == 'yes') {
-          // Autofill start_date and end_date
-          if (this.form.dates.length == 1) {
-            this.form.start_date = this.form.dates[0].id
-            this.form.end_date = this.form.dates[0].id
-          } else if (this.form.dates.length > 1) {
-            this.form.start_date = this.form.dates[0].id
-            this.form.end_date = this.form.dates[this.form.dates.length - 1].id
-          }
+          this.autofillStartAndEndDates()
           this.$emit('change', this.form)
         } else {
           this.$emit('change', { ...this.form, dates: null })
@@ -308,6 +302,13 @@ export default {
       if (this.lastDateAdded) {
         await calendar.move(this.lastDateAdded)
       }
+    },
+    autofillStartAndEndDates () {
+      if (!this.form.dates.length) {
+        return
+      }
+      this.form.start_date = this.form.dates[0].id
+      this.form.end_date = this.form.dates[this.form.dates.length - 1].id
     }
   }
 }
