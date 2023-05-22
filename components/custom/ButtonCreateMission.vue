@@ -156,7 +156,7 @@ export default {
       return this.$store.state.auth.user.statistics?.missions_as_responsable_count === 0
     },
     hasParticipationsWaiting () {
-      return this.$store.state.auth.user.statistics?.missions_as_responsable_with_participations_waiting_count > 0
+      return this.$store.state.auth.user.statistics?.participations_need_to_be_treated_count > 0
     }
   },
   methods: {
