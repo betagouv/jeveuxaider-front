@@ -62,6 +62,7 @@
             image-srcset="/images/missions/card-add.png"
             state-text="Validation par un référent"
             state-style="warning"
+            class="bg-white"
             @click.native="onSelectTemplate()"
           >
             <template #footer>
@@ -81,6 +82,7 @@
             :description="missionTemplate.subtitle"
             :image-srcset="missionTemplate.photo ? missionTemplate.photo.urls.card : undefined"
             :image-src="missionTemplate.photo ? missionTemplate.photo.urls.original : undefined"
+            class="bg-white"
             @click.native="onSelectTemplate(missionTemplate)"
           >
             <template #badges>
