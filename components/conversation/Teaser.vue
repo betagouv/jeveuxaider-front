@@ -62,6 +62,9 @@
             {{ conversation.conversable.state }}
           </span>
         </div>
+        <div v-if="$store.getters.contextRole === 'responsable' && needToBeTreatedInPriority" class="text-xs text-[#EB786E] font-semibold mt-1">
+          ⚠️ À modérer en priorité
+        </div>
       </div>
     </div>
   </div>
@@ -76,6 +79,18 @@ export default {
     }
   },
   computed: {
+    needToBeTreatedInPriority () {
+      if (this.conversation.conversable_type !== 'App\\Models\\Participation') {
+        return false
+      }
+      if (this.conversation.conversable.state === 'En cours de traitement' && this.$dayjs(this.conversation.conversable.created_at).subtract(2, 'months').isBefore(this.$dayjs())) {
+        return true
+      }
+      if (this.conversation.conversable.state === 'En attente de validation' && this.$dayjs(this.conversation.conversable.created_at).subtract(10, 'days').isBefore(this.$dayjs())) {
+        return true
+      }
+      return false
+    },
     currentConversationUser () {
       return this.conversation.users.find((user) => {
         return user.id == this.$store.getters.profile.user_id
