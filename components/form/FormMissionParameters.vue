@@ -10,7 +10,7 @@
           :key="tab.key"
           class="flex justify-center pb-4 text-sm font-medium cursor-pointer group"
           :class="[tab.key == form.date_type ? 'border-b-2 border-jva-blue-500 text-jva-blue-500' : 'border-gray-300 border-b text-gray-500 hover:text-gray-800 hover:border-gray-500']"
-          @click="form.date_type = tab.key"
+          @click="() => { form.date_type = tab.key; $emit('dateTypeChange', tab.key) }"
         >
           <component :is="tab.icon" class="mr-2" :class="[tab.key == form.date_type ? 'text-jva-blue-500' : 'text-gray-400 group-hover:text-gray-800']" />
           <span>{{ tab.name }}</span>
@@ -112,11 +112,12 @@
         Dates de la mission
       </Heading>
       <RadioGroup
-        v-model="hasCreneaux"
-        :options="[{ key:'yes',label:'Avec créneaux'}, { key:'no',label:'Sans créneaux'}]"
+        :value="withSlots"
+        :options="[{ key:true, label:'Avec créneaux'}, { key:false, label:'Sans créneaux'}]"
         variant="tabs"
+        @input="$emit('withSlotChange', $event)"
       />
-      <template v-if="hasCreneaux == 'yes'">
+      <template v-if="withSlots">
         <Alert>
           Permettez aux bénévoles d'indiquer leurs disponibilités sur vos créneaux.
         </Alert>
@@ -135,46 +136,52 @@
             </div>
           </div>
         </div>
-        <div v-if="showFormAddDate" class="space-y-6 border p-4">
-          <FormControl
-            label="Ajouter une date"
-            html-for="date"
-            required
-          >
-            <InputDate
-              ref="inputDatePicker"
-              v-model="selectedDate"
+        <FormControl
+          html-for="dates"
+          required
+          :error="errors.dates"
+        >
+          <div v-if="showFormAddDate" class="space-y-6 border p-4">
+            <FormControl
+              label="Ajouter une date"
+              html-for="date"
               required
-              name="date"
-              :min-date="new Date()"
-              :attributes="[{
-                highlight: {
-                  class: 'is-highlight',
-                  contentClass: 'is-highlight',
-                },
-                dates: form.dates.map(date => date.id)
-              }]"
-              @popoverWillShow="handlePopoverWillShow"
-            />
-          </FormControl>
-          <FormControl label="Choisissez les créneaux pour cette date" html-for="creneaux" required>
-            <CheckboxGroup
-              v-model="selectedSlot"
-              name="creneaux"
-              variant="button"
-              :options="$labels.slots"
-            />
-          </FormControl>
+            >
+              <InputDate
+                ref="inputDatePicker"
+                v-model="selectedDate"
+                required
+                name="date"
+                :min-date="new Date()"
+                :attributes="[{
+                  highlight: {
+                    class: 'is-highlight',
+                    contentClass: 'is-highlight',
+                  },
+                  dates: form.dates.map(date => date.id)
+                }]"
+                @popoverWillShow="handlePopoverWillShow"
+              />
+            </FormControl>
+            <FormControl label="Choisissez les créneaux pour cette date" html-for="creneaux" required>
+              <CheckboxGroup
+                v-model="selectedSlot"
+                name="creneaux"
+                variant="button"
+                :options="$labels.slots"
+              />
+            </FormControl>
 
-          <Button variant="white" size="sm" :disabled="selectedSlot.length == 0 || !selectedDate" @click.native="handleAddDate">
-            Ajouter
+            <Button variant="white" size="sm" :disabled="selectedSlot.length == 0 || !selectedDate" @click.native="handleAddDate">
+              Ajouter
+            </Button>
+          </div>
+          <Button v-if="!showFormAddDate" variant="white" @click.native="handleShowFormAddDate()">
+            Ajouter une date
           </Button>
-        </div>
-        <Button v-if="!showFormAddDate" variant="white" @click.native="handleShowFormAddDate()">
-          Ajouter une date
-        </Button>
+        </FormControl>
       </template>
-      <template v-else-if="hasCreneaux == 'no'">
+      <template v-else-if="!withSlots">
         <Alert>
           Indiquez seulement la date de début et de fin de la mission.
         </Alert>
@@ -214,6 +221,10 @@ export default {
       type: Object,
       default: null
     },
+    withSlots: {
+      type: Boolean,
+      required: true
+    },
     errors: {
       type: Object,
       default: null
@@ -227,14 +238,13 @@ export default {
       ],
       selectedSlot: [],
       selectedDate: null,
-      showFormAddDate: true,
-      hasCreneaux: (this.initialForm.start_date || this.initialForm.end_date) && !this.initialForm.dates ? 'no' : 'yes',
+      showFormAddDate: !this.initialForm.dates?.length > 0 ?? true,
       lastDateAdded: null,
       form: {
         start_date: this.initialForm.start_date || null,
         end_date: this.initialForm.end_date || null,
         participations_max: this.initialForm.participations_max || 1,
-        date_type: this.initialForm.date_type || (this.initialForm.commitment__time_period ? 'recurring' : 'ponctual'),
+        date_type: this.initialForm.date_type,
         dates: this.initialForm.dates || [],
         commitment__duration: this.initialForm.commitment__duration || '',
         commitment__time_period: this.initialForm.commitment__time_period || '',
@@ -244,8 +254,8 @@ export default {
     }
   },
   watch: {
-    hasCreneaux (newHasCreneaux) {
-      if (newHasCreneaux == 'yes') {
+    withSlots (newWithSlots) {
+      if (newWithSlots) {
         this.autofillStartAndEndDates()
         this.$emit('change', this.form)
       } else {
@@ -255,7 +265,7 @@ export default {
     form: {
       deep: true,
       handler () {
-        if (this.hasCreneaux == 'yes') {
+        if (this.withSlots) {
           this.autofillStartAndEndDates()
           this.$emit('change', this.form)
         } else {
