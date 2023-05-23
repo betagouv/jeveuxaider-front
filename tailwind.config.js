@@ -51,7 +51,7 @@ module.exports = {
         sans: [
           'Marianne',
           '-apple-system',
-          'BlinkMacSystemFont',
+          // 'BlinkMacSystemFont', // Fait sauter des emojis ⚠️
           '"Segoe UI"',
           'Roboto',
           '"Helvetica Neue"',
