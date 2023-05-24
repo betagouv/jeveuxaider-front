@@ -5,7 +5,7 @@
       :is-open="isOpen"
       theme="warning"
       icon="RiErrorWarningLine"
-      title="Annuler ma participation"
+      title="Annulez votre participation"
       :prevent-click-outside="true"
       @close="$emit('cancel')"
     >

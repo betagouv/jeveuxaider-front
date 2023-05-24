@@ -45,14 +45,14 @@
       </div>
     </template>
     <AlertDialog
-      title="Valider votre participation"
+      title="Validez votre participation"
       button-label="Valider"
       :is-open="showValidateParticipationModal"
       @confirm="handleConfirmValidateParticipation()"
       @cancel="showValidateParticipationModal = false"
     >
-      <p>Vous êtes sur le point de valider votre participation à la mission <span class="font-semibold">{{ participation.mission.name }}</span>.</p>
-      <p>Le responsable en sera notifié.</p>
+      <p>{{ $store.getters.profile.first_name }}, merci pour votre aide.</p>
+      <p>Veuillez confirmer votre participation à la mission <strong>{{ participation.mission.name }}</strong>. {{ participation.mission.responsable.full_name }} de {{ participation.mission.structure.name }} sera notifié.</p>
     </AlertDialog>
     <ModalParticipationCancel
       :participation="participation"
