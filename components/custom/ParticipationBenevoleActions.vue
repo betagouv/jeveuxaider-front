@@ -45,14 +45,14 @@
       </div>
     </template>
     <AlertDialog
-      theme="warning"
       title="Valider votre participation"
+      button-label="Valider"
       :is-open="showValidateParticipationModal"
       @confirm="handleConfirmValidateParticipation()"
       @cancel="showValidateParticipationModal = false"
     >
       <p>Vous êtes sur le point de valider votre participation à la mission <span class="font-semibold">{{ participation.mission.name }}</span>.</p>
-      <p>Le responsable recevra une notification de votre action.</p>
+      <p>Le responsable en sera notifié.</p>
     </AlertDialog>
     <ModalParticipationCancel
       :participation="participation"

@@ -51,11 +51,12 @@
                         :is="icon"
                         v-if="icon"
                         :class="[
-                          'h-8 w-8',
+                          'h-8 w-8 fill-current',
                           {'text-jva-green-500': theme == 'success'},
                           {'text-jva-orange-500': theme == 'warning'},
                           {'text-jva-red-500': theme == 'danger'},
                           {'text-jva-blue-500': theme == 'message'},
+                          iconClass
                         ]"
                       />
                       <CheckIcon v-else-if="theme == 'success'" class="h-8 w-8 text-jva-green-500" />
@@ -120,6 +121,10 @@ export default {
       default: '' // success, warning, danger, info
     },
     icon: {
+      type: String,
+      default: null
+    },
+    iconClass: {
       type: String,
       default: null
     },

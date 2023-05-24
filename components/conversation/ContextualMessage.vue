@@ -22,6 +22,9 @@ export default {
         case 'En attente de validation':
           message = 'La participation est en attente de validation'
           break
+        case 'En cours de traitement':
+          message = 'La participation est en cours de traitement'
+          break
         case 'Validée':
           message = 'La participation a été validée'
           break
@@ -38,7 +41,7 @@ export default {
           message = 'La participation a été déclinée'
           break
         default:
-          message = `Le nouveau statut de la participation est: ${this.message.contextual_state}`
+          message = `Le nouveau statut de la participation est :<br> ${this.message.contextual_state}`
       }
 
       if (

@@ -4,13 +4,14 @@
       v-scroll-lock="isOpen"
       :is-open="isOpen"
       theme="warning"
+      icon="RiErrorWarningLine"
       title="Annuler ma participation"
       :prevent-click-outside="true"
       @close="$emit('cancel')"
     >
       <div class="space-y-4">
         <div>
-          Vous êtes sur le point d'annuler votre participation à la mission <span class="font-semibold">{{ participation.mission.name }}</span>
+          Vous êtes sur le point d'annuler votre participation à la mission <span class="font-semibold">{{ participation.mission.name }}</span>. Le responsable en sera notifié par email.
         </div>
 
         <FormControl

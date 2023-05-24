@@ -62,7 +62,7 @@ export default {
   },
   computed: {
     confirmButtonVariant () {
-      return this.theme == 'danger' ? 'red' : this.theme == 'warning' ? 'primary' : 'green'
+      return this.theme == 'danger' ? 'red' : 'primary'
     },
     confirmLabel () {
       if (this.buttonLabel) {
