@@ -14,7 +14,7 @@
 
     <SectionHeading
       title="Missions périmées"
-      secondary-title-bottom="Missions dont la date de fin est passée"
+      secondary-title-bottom="Missions validées dont la date de fin est passée"
     />
 
     <SearchFilters>

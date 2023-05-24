@@ -35,7 +35,7 @@
         <div class="space-y-10">
           <FormControl
             html-for="profile"
-            label="Sélectionnez l'utilisateur à réinitialiser"
+            label="Sélectionnez l'utilisateur"
             required
             :error="errors.profile"
           >
@@ -54,9 +54,9 @@
             />
           </FormControl>
 
-          <div v-if="form.profile" class="p-4 bg-gray-50 mt-10 ">
+          <div v-if="form.profile" class="p-6 bg-gray-50 mt-10">
             <div class="text-gray-700 font-semibold">
-              #{{ form.profile.id }} {{ form.profile.full_name }}
+              {{ form.profile.full_name }} <span class="text-sm text-gray-400">#{{ form.profile.id }}</span>
             </div>
             <div class="text-gray-500">
               {{ form.profile.email }}

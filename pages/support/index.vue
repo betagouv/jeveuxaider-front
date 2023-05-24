@@ -10,17 +10,24 @@
     </portal>
 
     <div class="space-y-12 mb-24">
-      <SectionHeading :title="`Alors, on en est où aujourd'hui?`" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`" />
+      <SectionHeading title="En quoi puis-je vous aider ? 😉" secondary-title="SAV de la plateforme bonjour !" />
+
+      <OverviewReferents ref="overviewReferents" />
+      <OverviewResponsables ref="overviewResponsables" />
     </div>
   </div>
 </template>
 
 <script>
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import OverviewReferents from '@/components/numbers/OverviewReferents'
+import OverviewResponsables from '@/components/numbers/OverviewResponsables'
 
 export default {
   components: {
-    Breadcrumb
+    Breadcrumb,
+    OverviewReferents,
+    OverviewResponsables
   },
   layout: 'support',
   data () {

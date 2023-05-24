@@ -42,11 +42,19 @@
           />
         </FormControl>
 
-        <div v-if="resetPasswordLink" class="p-4 bg-gray-50 mt-10 flex items-center justify-between gap-10">
-          <div class="truncate text-gray-500 italic">
-            {{ resetPasswordLink }}
+        <div v-if="resetPasswordLink" class="p-6 bg-gray-50 mt-10">
+          <div class="text-gray-700 font-semibold">
+            {{ form.profile.full_name }} <span class="text-sm text-gray-400">#{{ form.profile.id }}</span>
           </div>
-          <RiFileCopyLine class="flex-none h-5 cursor-pointer hover:text-jva-blue-500 fill-current" @click.native="handleCopy" />
+          <div class="text-gray-500">
+            {{ form.profile.email }}
+          </div>
+          <div class="mt-4 bg-white px-4 py-3 flex items-center justify-between gap-10">
+            <div class="truncate text-gray-500 italic">
+              {{ resetPasswordLink }}
+            </div>
+            <RiFileCopyLine class="flex-none h-5 cursor-pointer hover:text-jva-blue-500 fill-current" @click.native="handleCopy" />
+          </div>
         </div>
       </Box>
     </div>
