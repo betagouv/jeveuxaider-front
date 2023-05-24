@@ -51,8 +51,8 @@ export default {
           key: 'referents',
           label: 'Référents',
           childrens: [
-            { label: 'Tous les référents', to: '/support/referents' },
-            { label: 'Référents inactifs', to: '/support/referents-inactifs' }
+            { label: 'Actions en attente', to: '/support/referents/waiting-actions' },
+            { label: 'Activité', to: '/support/referents/activity-logs' }
           ]
         },
         // {
