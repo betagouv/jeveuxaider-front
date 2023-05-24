@@ -6,15 +6,15 @@
       <Breadcrumb
         :links="[
           { text: 'Support', to: '/support' },
-          { text: 'Référents' },
-          { text: 'Actions en attente' },
+          { text: 'Responsables' },
+          { text: 'Participations à modérer' },
         ]"
       />
     </portal>
 
     <SectionHeading
-      title="Actions en attente"
-      secondary-title-bottom="Liste des référents en fonction de leurs actions en attente de modération"
+      title="Participations à modérer"
+      secondary-title-bottom="En attente de validation depuis plus de 7 jours ou en cours de traitement depuis plus de 2 mois"
     />
 
     <SearchFilters>
@@ -39,26 +39,14 @@
         >
           Tous
         </Tag>
-        <FilterSelectAdvanced
-          :key="`department-${$route.fullPath}`"
-          name="department"
-          placeholder="Tous les départements"
-          :options="$labels.departments"
-          :value="$route.query['department']"
-          clearable
-          @input="changeFilter('department', $event)"
+        <FilterInputAutocomplete
+          :value="$route.query['organisation']"
+          label="Toutes les organisations"
+          name="autocomplete"
+          :options="autocompleteOptionsOrganisations"
+          @fetch-suggestions="onFetchSuggestionsOrganisations"
+          @selected="changeFilter('organisation', $event?.id)"
         />
-        <Tag
-          :key="`contact-principal-${$route.fullPath}`"
-          as="button"
-          size="md"
-          context="selectable"
-          :is-selected="$route.query['tag'] && $route.query['tag'] == '652'"
-          is-selected-class="border-gray-50 bg-gray-50"
-          @click.native="changeFilter('tag', '652')"
-        >
-          Contact principal
-        </Tag>
         <Tag
           :key="`inactif-${$route.fullPath}`"
           as="button"
@@ -74,8 +62,9 @@
           key="sort"
           name="sort"
           :options="[
-            { key: 'structures_total_count', label: 'Organisations à modérer' },
-            { key: 'missions_total_count', label: 'Missions à modérer' },
+            { key: 'participations_total_count', label: 'Participations à modérer' },
+            { key: 'participations_waiting_count', label: 'Participations en attente' },
+            { key: 'participations_in_progress_count', label: 'Participations en cours de traitement' },
           ]"
           :value="$route.query['sort']"
           placeholder="Trier par"
@@ -87,13 +76,10 @@
     <Table>
       <TableHead>
         <TableHeadCell>
-          Référents
+          Responsables
         </TableHeadCell>
         <TableHeadCell>
-          Organisations
-        </TableHeadCell>
-        <TableHeadCell>
-          Missions
+          # à modérer
         </TableHeadCell>
         <TableHeadCell>
           En ligne
@@ -104,7 +90,7 @@
           <TableRowCell>
             <div class="flex">
               <Avatar
-                :initials="item.department_number"
+                :initials="item.first_name[0] + item.last_name[0]"
                 size="sm"
                 class="mr-4"
               />
@@ -116,31 +102,20 @@
                   {{ item.email }}
                 </div>
                 <div class="text-xs">
-                  {{ item.department_number|label('departments') }}
+                  {{ item.structure_name }} #{{ item.structure_id }}
                 </div>
               </div>
             </div>
           </TableRowCell>
           <TableRowCell>
             <div class="text-gray-900 font-semibold">
-              {{ item.structures_total_count }} organisations
+              {{ item.participations_total_count }} participations
             </div>
             <div class="text-xs">
-              {{ item.structures_waiting_count }} en attente
+              {{ item.participations_waiting_count }} en attente de validation
             </div>
             <div class="text-xs">
-              {{ item.structures_in_progress_count }} en cours
-            </div>
-          </TableRowCell>
-          <TableRowCell>
-            <div class="text-gray-900 font-semibold">
-              {{ item.missions_total_count }} missions
-            </div>
-            <div class="text-xs">
-              {{ item.missions_waiting_count }} en attente
-            </div>
-            <div class="text-xs">
-              {{ item.missions_in_progress_count }} en cours
+              {{ item.participations_in_progress_count }} en cours de traitement
             </div>
           </TableRowCell>
           <TableRowCell>
@@ -185,16 +160,25 @@ export default {
   layout: 'support',
   data () {
     return {
-      endpoint: '/support/referents/waiting-actions',
+      endpoint: '/support/responsables/participations-to-be-treated',
       loading: true,
-      drawerProfileId: null
+      drawerProfileId: null,
+      autocompleteOptionsOrganisations: []
     }
   },
   computed: {
 
   },
   methods: {
-
+    async onFetchSuggestionsOrganisations (value) {
+      const res = await this.$axios.get('/structures', {
+        params: {
+          'filter[search]': value,
+          pagination: 12
+        }
+      })
+      this.autocompleteOptionsOrganisations = res.data.data
+    }
   }
 }
 </script>

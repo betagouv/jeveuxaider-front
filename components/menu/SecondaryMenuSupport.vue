@@ -52,16 +52,17 @@ export default {
           label: 'Référents',
           childrens: [
             { label: 'Actions en attente', to: '/support/referents/waiting-actions' },
-            { label: 'Logs des activités', to: '/support/referents/activity-logs?sort=activity_logs_last_month_count' }
+            { label: 'Logs des activités', to: '/support/referents/activity-logs' }
           ]
         },
-        // {
-        //   key: 'responsables',
-        //   label: 'Responsables',
-        //   childrens: [
-        //     { label: 'XXX', to: '/support/responsables' }
-        //   ]
-        // },
+        {
+          key: 'responsables',
+          label: 'Responsables',
+          childrens: [
+            { label: 'Participations à modérer', to: '/support/responsables/participations-to-be-treated' },
+            { label: 'Missions périmées', to: '/support/responsables/missions-outdated' }
+          ]
+        },
         {
           key: 'scripts',
           label: 'Scripts',

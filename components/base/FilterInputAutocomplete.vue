@@ -27,7 +27,6 @@
           'absolute w-full z-50 mt-2 p-2 bg-white border border-gray-200 shadow-md overflow-hidden min-w-[300px]',
           optionsClass
         ]"
-        @focusout="showOptions = false"
       >
         <div class="p-4 space-y-3">
           <div class="font-medium">
@@ -40,8 +39,8 @@
             >
               <li
                 v-for="(item, index) in options"
-                :key="index"
-                :ref="`option_${index}`"
+                :key="item[attributeKey]"
+                :ref="`option_${item[attributeKey]}`"
                 class="relative flex justify-between items-center text-sm px-2 py-2 pr-10 cursor-pointer hover:bg-[#F0F0FF] focus:bg-[#F0F0FF]"
                 :class="[
                   {'bg-[#F0F0FF]': highlightIndex == index},
@@ -50,7 +49,7 @@
                 @click="handleClick(item)"
               >
                 <span class="truncate">
-                  {{ item[attributeLabel] }}
+                  {{ item[attributeLabel] }} <span class="text-xs text-gray-400">#{{ item[attributeKey] }}</span>
                 </span>
                 <CheckIcon v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]" class="absolute right-2" />
               </li>
@@ -139,6 +138,7 @@ export default {
       this.timeout()
     },
     handleClick (item) {
+      console.log('handleClick', item)
       this.searchTerm = this.resetValueOnSelect ? null : item[this.attributeLabel]
       this.$emit('selected', item)
       this.selectedOption = item

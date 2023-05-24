@@ -13,7 +13,7 @@
     </portal>
 
     <SectionHeading
-      title="Logs des activités des référents"
+      title="Logs des activités"
       secondary-title-bottom="Liste des référents en fonction de leur activité"
     />
 
@@ -52,7 +52,6 @@
           key="sort"
           name="sort"
           :options="[
-            { key: 'department_number', label: 'Numéro de département' },
             { key: 'activity_logs_total_count', label: 'Actions depuis le début' },
             { key: 'activity_logs_last_month_count', label: 'Actions depuis les 30 derniers jours' },
             { key: 'activity_logs_last_week_count', label: 'Actions depuis les 7 derniers jours' },
@@ -67,7 +66,7 @@
     <Table>
       <TableHead>
         <TableHeadCell>
-          {{ queryResult.length }} référents
+          Référents
         </TableHeadCell>
         <TableHeadCell>
           # total
@@ -78,9 +77,12 @@
         <TableHeadCell>
           # semaine
         </TableHeadCell>
+        <TableHeadCell>
+          En ligne
+        </TableHeadCell>
       </TableHead>
-      <TableBody :loading="queryLoading" :colspan="4">
-        <TableRow v-for="item,y in queryResult" :key="y" class="hover:cursor-pointer" @click.native="drawerProfileId = item.profile_id">
+      <TableBody :loading="queryLoading" :colspan="5">
+        <TableRow v-for="item,y in queryResult.data" :key="y" class="hover:cursor-pointer" @click.native="drawerProfileId = item.profile_id">
           <TableRowCell>
             <div class="flex">
               <Avatar
@@ -125,9 +127,22 @@
               sur la semaine
             </div>
           </TableRowCell>
+          <TableRowCell>
+            <OnlineIndicator :published="$dayjs().subtract(10,'minute').isBefore(item.last_online_at)" class="text-xs" />
+            <div class="text-xs italic">
+              {{ item.last_online_at ? $dayjs(item.last_online_at).fromNow() : 'Jamais' }}
+            </div>
+          </TableRowCell>
         </TableRow>
       </TableBody>
     </Table>
+
+    <Pagination
+      :current-page="queryResult.current_page"
+      :total-rows="queryResult.total"
+      :per-page="queryResult.per_page"
+      @page-change="changePage"
+    />
   </div>
 </template>
 
@@ -137,6 +152,8 @@ import QueryBuilder from '@/mixins/query-builder'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Tag from '@/components/dsfr/Tag.vue'
 import DrawerProfile from '@/components/drawer/DrawerProfile.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import Pagination from '@/components/dsfr/Pagination.vue'
 
 export default {
 
@@ -144,7 +161,9 @@ export default {
     Breadcrumb,
     SearchFilters,
     Tag,
-    DrawerProfile
+    DrawerProfile,
+    OnlineIndicator,
+    Pagination
   },
   mixins: [QueryBuilder],
   layout: 'support',
