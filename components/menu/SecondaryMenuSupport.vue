@@ -52,7 +52,7 @@ export default {
           label: 'Référents',
           childrens: [
             { label: 'Actions en attente', to: '/support/referents/waiting-actions' },
-            { label: 'Activité', to: '/support/referents/activity-logs' }
+            { label: 'Logs des activités', to: '/support/referents/activity-logs?sort=activity_logs_last_month_count' }
           ]
         },
         // {
