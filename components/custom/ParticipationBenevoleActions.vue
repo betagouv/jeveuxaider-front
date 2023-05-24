@@ -52,7 +52,7 @@
       @cancel="showValidateParticipationModal = false"
     >
       <p>{{ $store.getters.profile.first_name }}, merci pour votre aide.</p>
-      <p>Veuillez confirmer votre participation à la mission <strong>{{ participation.mission.name }}</strong>. {{ participation.mission.responsable.full_name }} de {{ participation.mission.structure.name }} sera notifié.</p>
+      <p>Veuillez confirmer votre participation à la mission <strong>{{ participation.mission.name }}</strong>. {{ participation.mission.responsable.full_name }} de <strong>{{ participation.mission.structure.name }}</strong> sera notifié.</p>
     </AlertDialog>
     <ModalParticipationCancel
       :participation="participation"
