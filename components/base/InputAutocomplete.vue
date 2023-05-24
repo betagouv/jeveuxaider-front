@@ -150,6 +150,7 @@ export default {
       this.selectedOption = null
       this.showOptions = false
       this.$emit('selected', null)
+      this.$emit('cleared')
     },
     handleInput (evt) {
       this.searchTerm = evt.target.value

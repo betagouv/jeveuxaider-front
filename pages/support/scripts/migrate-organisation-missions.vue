@@ -13,9 +13,9 @@
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[
-          { text: 'Administration', to: '/admin' },
+          { text: 'Support', to: '/support' },
           { text: 'Scripts' },
-          { text: 'Transfert de missions' }
+          { text: 'Transfert de missions' },
         ]"
       />
     </portal>
@@ -165,8 +165,7 @@ export default {
     Breadcrumb
   },
   mixins: [FormErrors],
-  layout: 'admin-with-sidebar-menu',
-  middleware: 'admin',
+  layout: 'support',
   data () {
     return {
       loading: false,

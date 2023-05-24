@@ -67,7 +67,7 @@ export default {
           key: 'scripts',
           label: 'Scripts',
           childrens: [
-            { label: 'Réinitialisation mot de passe', to: '/support/scripts/migrate-organisation-missions' },
+            { label: 'Réinitialisation mot de passe', to: '/support/scripts/user-reset-password-link' },
             { label: 'Transfert de missions', to: '/support/scripts/migrate-organisation-missions' },
             { label: 'Réinitialisation d\'un utilisateur', to: '/support/scripts/user-reset-context-role' }
           ]

@@ -138,7 +138,6 @@ export default {
       this.timeout()
     },
     handleClick (item) {
-      console.log('handleClick', item)
       this.searchTerm = this.resetValueOnSelect ? null : item[this.attributeLabel]
       this.$emit('selected', item)
       this.selectedOption = item
