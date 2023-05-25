@@ -48,6 +48,17 @@
           @selected="changeFilter('organisation', $event?.id)"
         />
         <Tag
+          :key="`online-${$route.fullPath}`"
+          as="button"
+          size="md"
+          context="selectable"
+          :is-selected="$route.query['online'] && $route.query['online'] == 'true'"
+          is-selected-class="border-gray-50 bg-gray-50"
+          @click.native="changeFilter('online', 'true')"
+        >
+          En ligne
+        </Tag>
+        <Tag
           :key="`inactif-${$route.fullPath}`"
           as="button"
           size="md"
@@ -73,60 +84,63 @@
       </template>
     </SearchFilters>
 
-    <Table>
-      <TableHead>
-        <TableHeadCell>
-          Responsables
-        </TableHeadCell>
-        <TableHeadCell>
-          # à modérer
-        </TableHeadCell>
-        <TableHeadCell>
-          En ligne
-        </TableHeadCell>
-      </TableHead>
-      <TableBody :loading="queryLoading" :colspan="4">
-        <TableRow v-for="item,y in queryResult.data" :key="y" class="hover:cursor-pointer" @click.native="drawerProfileId = item.profile_id">
-          <TableRowCell>
-            <div class="flex">
-              <Avatar
-                :initials="item.first_name[0] + item.last_name[0]"
-                size="sm"
-                class="mr-4"
-              />
-              <div class="">
-                <div class="text-gray-900 font-semibold">
-                  {{ item.first_name }} {{ item.last_name }}
-                </div>
-                <div class="text-xs">
-                  {{ item.email }}
-                </div>
-                <div class="text-xs">
-                  {{ item.structure_name }} #{{ item.structure_id }}
+    <div>
+      <QueryResultSummary :loading="queryLoading" :total="queryResult.total" :from="queryResult.from" :to="queryResult.to" class="mb-2 pr-2" />
+      <Table>
+        <TableHead>
+          <TableHeadCell>
+            Responsables
+          </TableHeadCell>
+          <TableHeadCell>
+            # à modérer
+          </TableHeadCell>
+          <TableHeadCell>
+            En ligne
+          </TableHeadCell>
+        </TableHead>
+        <TableBody :loading="queryLoading" :colspan="4">
+          <TableRow v-for="item,y in queryResult.data" :key="y" class="hover:cursor-pointer" @click.native="drawerProfileId = item.profile_id">
+            <TableRowCell>
+              <div class="flex">
+                <Avatar
+                  :initials="item.first_name[0] + item.last_name[0]"
+                  size="sm"
+                  class="mr-4"
+                />
+                <div class="">
+                  <div class="text-gray-900 font-semibold">
+                    {{ item.first_name }} {{ item.last_name }}
+                  </div>
+                  <div class="text-xs">
+                    {{ item.email }}
+                  </div>
+                  <div class="text-xs">
+                    {{ item.structure_name }} #{{ item.structure_id }}
+                  </div>
                 </div>
               </div>
-            </div>
-          </TableRowCell>
-          <TableRowCell>
-            <div class="text-gray-900 font-semibold">
-              {{ item.participations_total_count }} participations
-            </div>
-            <div class="text-xs">
-              {{ item.participations_waiting_count }} en attente de validation
-            </div>
-            <div class="text-xs">
-              {{ item.participations_in_progress_count }} en cours de traitement
-            </div>
-          </TableRowCell>
-          <TableRowCell>
-            <OnlineIndicator :published="$dayjs().subtract(10,'minute').isBefore(item.last_online_at)" class="text-xs" />
-            <div class="text-xs italic">
-              {{ item.last_online_at ? $dayjs(item.last_online_at).fromNow() : 'Jamais' }}
-            </div>
-          </TableRowCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+            </TableRowCell>
+            <TableRowCell>
+              <div class="text-gray-900 font-semibold">
+                {{ item.participations_total_count }} participations
+              </div>
+              <div class="text-xs">
+                {{ item.participations_waiting_count }} en attente de validation
+              </div>
+              <div class="text-xs">
+                {{ item.participations_in_progress_count }} en cours de traitement
+              </div>
+            </TableRowCell>
+            <TableRowCell>
+              <OnlineIndicator :published="$dayjs().subtract(10,'minute').isBefore(item.last_online_at)" class="text-xs" />
+              <div class="text-xs italic">
+                {{ item.last_online_at ? $dayjs(item.last_online_at).fromNow() : 'Jamais' }}
+              </div>
+            </TableRowCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </div>
 
     <Pagination
       :current-page="queryResult.current_page"
@@ -145,16 +159,17 @@ import Tag from '@/components/dsfr/Tag.vue'
 import OnlineIndicator from '@/components/custom/OnlineIndicator'
 import DrawerProfile from '@/components/drawer/DrawerProfile.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
+import QueryResultSummary from '@/components/custom/QueryResultSummary.vue'
 
 export default {
-
   components: {
     Breadcrumb,
     SearchFilters,
     Tag,
     OnlineIndicator,
     DrawerProfile,
-    Pagination
+    Pagination,
+    QueryResultSummary
   },
   mixins: [QueryBuilder],
   layout: 'support',
