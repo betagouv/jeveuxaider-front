@@ -14,7 +14,7 @@
 
     <SectionHeading
       title="Participations à modérer"
-      secondary-title-bottom="En attente de validation depuis plus de 7 jours ou en cours de traitement depuis plus de 2 mois"
+      secondary-title-bottom="En attente de validation depuis plus de 10 jours ou en cours de traitement depuis plus de 2 mois"
     />
 
     <SearchFilters>
