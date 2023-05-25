@@ -18,6 +18,7 @@
             <ShareFacebook :url="mission.full_url" />
             <ShareTwitter :url="mission.full_url" :message="message" />
             <ShareLinkedin :url="mission.full_url" :message="message" />
+            <ShareWhatsApp :url="mission.full_url" :message="message" />
           </div>
         </template>
 
@@ -59,12 +60,14 @@
 import ShareFacebook from '@/components/share/Facebook.vue'
 import ShareTwitter from '@/components/share/Twitter.vue'
 import ShareLinkedin from '@/components/share/Linkedin.vue'
+import ShareWhatsApp from '@/components/share/WhatsApp.vue'
 
 export default {
   components: {
     ShareFacebook,
     ShareTwitter,
-    ShareLinkedin
+    ShareLinkedin,
+    ShareWhatsApp
   },
   props: {
     benevole: {
@@ -83,8 +86,7 @@ export default {
   data () {
     return {
       form: {},
-      message:
-        "J'ai réalisé une mission de bénévolat grâce à #JeVeuxAider. Rejoignez le mouvement #ChacunPourTous"
+      message: encodeURIComponent("J'ai réalisé une mission de bénévolat grâce à #JeVeuxAider. Rejoignez le mouvement #ChacunPourTous")
     }
   },
   computed: {

@@ -37,6 +37,7 @@
               >
                 <slot />
               </div>
+              <slot name="footer" />
             </div>
           </div>
         </div>

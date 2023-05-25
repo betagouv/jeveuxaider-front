@@ -71,7 +71,7 @@
       </div>
 
       <ButtonParticipationCancel
-        v-if="isBenevole && participation.state == 'En attente de validation'"
+        v-if="isBenevole && ['En attente de validation','En cours de traitement'].includes(participation.state)"
         class="mt-3"
         :participation="participation"
         @update="onParticipationUpdate"

@@ -256,7 +256,13 @@
       </Box>
     </div>
     <div class="lg:col-span-2 space-y-8 flex flex-col">
-      <FormMissionParameters :initial-form="form" :errors="errors" @change="handleParametersChanged" />
+      <FormMissionParameters
+        :initial-form="form"
+        :errors="errors"
+        :with-slots="withSlots"
+        @withSlotChange="withSlots = $event"
+        @change="handleParametersChanged"
+      />
       <Box padding="sm">
         <Heading :level="3" class="mb-8">
           Lieu de la mission
@@ -638,7 +644,8 @@ export default {
         description: this.mission.template?.description || this.mission.description,
         illustrations: this.mission.illustrations || [],
         autonomy_zips: this.mission.autonomy_zips || [],
-        tags: this.mission?.tags?.length ? this.mission?.tags : (this.mission.template?.tags || [])
+        tags: this.mission?.tags?.length ? this.mission?.tags : (this.mission.template?.tags || []),
+        date_type: this.mission.date_type || 'ponctual'
       },
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
@@ -826,11 +833,19 @@ export default {
             (prerequisites) => {
               return !prerequisites || prerequisites.every(prerequisite => !this.stringContainsPhone(prerequisite))
             }
-          )
+          ),
+        dates: array().nullable().test(
+          'test-should-have-one-slot',
+          'Il faut sélectionner au moins un créneau.',
+          (dates) => {
+            return this.form?.date_type === 'ponctual' && this.withSlots ? dates?.length > 0 : true
+          }
+        )
 
       }),
       activities: [],
-      showSNUModal: false
+      showSNUModal: false,
+      withSlots: !((this.mission.start_date || this.mission.end_date) && !this.mission.dates)
     }
   },
   fetchOnServer: false,

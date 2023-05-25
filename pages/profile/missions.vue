@@ -24,7 +24,7 @@
       <div>
         <Input
           name="search"
-          placeholder="Recherche par mots clés"
+          placeholder="Recherche par responsables, missions, organisations..."
           icon="SearchIcon"
           variant="transparent"
           :value="$route.query['filter[search]']"
@@ -56,13 +56,14 @@
             Validées
           </Tag>
         </div>
-        <div class="my-8 space-y-4">
+        <div class="my-8 space-y-8">
           <CardParticipation
             v-for="participation in queryResult.data"
             :key="participation.id"
             :participation="participation"
             display="responsable"
             @click.native="handleClickParticipation(participation)"
+            @refetch="$fetch()"
           />
         </div>
 
@@ -76,7 +77,7 @@
       </div>
     </template>
     <template #right>
-      <HelpCenter />
+      <HelpCenter class="lg:sticky lg:top-12" />
     </template>
   </Container2Cols>
 </template>
@@ -106,7 +107,7 @@ export default {
       loading: false,
       endpoint: '/user/participations',
       queryParams: {
-        include: 'conversation.latestMessage,mission.responsable.avatar,mission.structure'
+        include: 'conversation.latestMessage,mission.responsable.avatar,mission.structure,temoignage'
       }
     }
   },
