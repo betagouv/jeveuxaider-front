@@ -148,15 +148,21 @@ export default {
     }
   },
   methods: {
-    async handleConfirmCancelParticipation (payload) {
-      const { data: participation } = await this.$axios.put(`/participations/${this.participation.id}/cancel-by-benevole`, payload).catch(() => {})
-      this.$emit('updated', participation)
-      this.showCancelParticipationModal = false
+    handleConfirmCancelParticipation (payload) {
+      this.$axios.put(`/participations/${this.participation.id}/cancel-by-benevole`, payload)
+        .catch(() => {})
+        .then((res) => {
+          this.$emit('updated', res.data)
+          this.showCancelParticipationModal = false
+        })
     },
-    async handleConfirmValidateParticipation (payload) {
-      const { data: participation } = await this.$axios.put(`/participations/${this.participation.id}/validate-by-benevole`, payload).catch(() => {})
-      this.$emit('updated', participation)
-      this.showValidateParticipationModal = false
+    handleConfirmValidateParticipation (payload) {
+      this.$axios.put(`/participations/${this.participation.id}/validate-by-benevole`, payload)
+        .catch(() => {})
+        .then((res) => {
+          this.$emit('updated', res.data)
+          this.showValidateParticipationModal = false
+        })
     },
     onTestimonialOverlayClose (testimonialHasBeenCreated) {
       this.showTestimonialOverlay = false

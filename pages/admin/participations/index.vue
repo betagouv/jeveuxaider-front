@@ -271,6 +271,7 @@
           <CardParticipation
             :participation="participation"
             @click.native="drawerParticipationId = participation.id"
+            @refetch="$fetch()"
           />
         </div>
       </div>
