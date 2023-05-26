@@ -14,9 +14,9 @@
     <portal to="breadcrumb">
       <Breadcrumb
         :links="[
-          { text: 'Administration', to: '/admin' },
+          { text: 'Support', to: '/support' },
           { text: 'Scripts' },
-          { text: 'Réinitialisation du rôle d\'un utilisateur' }
+          { text: 'Réinitialisation du rôle d\'un utilisateur' },
         ]"
       />
     </portal>
@@ -35,43 +35,36 @@
         <div class="space-y-10">
           <FormControl
             html-for="profile"
-            label="Sélectionnez l'utilisateur à réinitialiser"
+            label="Sélectionnez l'utilisateur"
             required
             :error="errors.profile"
           >
             <InputAutocomplete
-              v-if="!form.profile"
               :value="$route.query['filter[search]']"
               icon="SearchIcon"
               name="autocomplete"
               placeholder="Recherche par mots clés..."
               :options="autocompleteOptionsProfiles"
-              clear-after-selected
               show-key-in-options
               attribute-label="full_name"
               class="max-w-xl"
               @fetch-suggestions="onFetchSuggestionsProfiles"
               @selected="handleSelectedprofile($event)"
+              @cleared="handleRemoveProfile"
             />
-            <div v-else class="flex">
-              <TagFormItem
-                :tag="form.profile"
-                @removed="handleRemoveProfile"
-              >
-                <div class="truncate">
-                  #{{ form.profile.id }} {{ form.profile.full_name }}
-                </div>
-                <div class="text-gray-500 text-xs font-normal">
-                  <div>
-                    {{ form.profile.email }}
-                  </div>
-                  <div>
-                    {{ form.profile.user.context_role }} {{ form.profile.user.contextable_type }} {{ form.profile.user.contextable_id }}
-                  </div>
-                </div>
-              </TagFormItem>
-            </div>
           </FormControl>
+
+          <div v-if="form.profile" class="p-6 bg-gray-50 mt-10">
+            <div class="text-gray-700 font-semibold">
+              {{ form.profile.full_name }} <span class="text-sm text-gray-400">#{{ form.profile.id }}</span>
+            </div>
+            <div class="text-gray-500">
+              {{ form.profile.email }}
+            </div>
+            <div class="text-gray-500 italic">
+              {{ form.profile.user.context_role }} {{ form.profile.user.contextable_type }} {{ form.profile.user.contextable_id }}
+            </div>
+          </div>
         </div>
       </Box>
     </div>
@@ -88,8 +81,7 @@ export default {
     Breadcrumb
   },
   mixins: [FormErrors],
-  layout: 'admin-with-sidebar-menu',
-  middleware: 'admin',
+  layout: 'support',
   data () {
     return {
       loading: false,

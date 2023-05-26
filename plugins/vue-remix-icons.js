@@ -66,8 +66,13 @@ import RiChatCheckLine from 'vue-remix-icons/icons/RiChatCheckLine.vue'
 import RiFlagLine from 'vue-remix-icons/icons/RiFlagLine.vue'
 import RiCloseLine from 'vue-remix-icons/icons/RiCloseLine.vue'
 import RiFlashlightLine from 'vue-remix-icons/icons/RiFlashlightLine.vue'
+import RiAdminLine from 'vue-remix-icons/icons/RiAdminLine.vue'
+import RiUserStarLine from 'vue-remix-icons/icons/RiUserStarLine.vue'
+import RiArrowUpLine from 'vue-remix-icons/icons/RiArrowUpLine.vue'
 
 const components = {
+  RiUserStarLine,
+  RiAdminLine,
   RiFlashlightLine,
   RiCloseLine,
   RiFlagLine,
@@ -89,6 +94,7 @@ const components = {
   RiSearchEyeFill,
   RiArrowDownSLine,
   RiArrowDownLine,
+  RiArrowUpLine,
   RiAddLine,
   RiBuildingFill,
   RiExternalLinkLine,

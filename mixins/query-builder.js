@@ -3,14 +3,17 @@ import { debounce } from 'lodash'
 export default {
   data () {
     return {
+      queryLoading: false,
       queryResult: {}
     }
   },
   async fetch () {
+    this.queryLoading = true
     const { data } = await this.$axios.get(this.endpoint, {
       params: { ...this.queryParams, ...this.$route.query }
     })
     this.queryResult = data
+    this.queryLoading = false
     // window.scrollTo(0, 0)
   },
   fetchOnServer: false,

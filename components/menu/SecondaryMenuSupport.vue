@@ -48,46 +48,28 @@ export default {
     return {
       items: [
         {
-          key: 'contenus',
-          label: 'Contenus',
+          key: 'referents',
+          label: 'Référents',
           childrens: [
-            { label: "Domaines d'action", to: '/admin/contenus/domaines' },
-            { label: 'Activités', to: '/admin/contenus/activites' },
-            { label: 'Modèles de mission', to: '/admin/contenus/modeles-mission' },
-            { label: 'Territoires', to: '/admin/contenus/territoires' },
-            { label: 'Reseaux', to: '/admin/contenus/reseaux' },
-            { label: 'Témoignages', to: '/admin/contenus/testimonials' },
-            { label: 'Ressources', to: '/admin/contenus/ressources' }
+            { label: 'Actions en attente', to: '/support/referents/waiting-actions' },
+            { label: 'Logs des activités', to: '/support/referents/activity-logs' }
           ]
         },
         {
-          key: 'taxonomies',
-          label: 'Tags',
+          key: 'responsables',
+          label: 'Responsables',
           childrens: [
-            { label: 'Missions', to: '/admin/taxonomies/missions' },
-            { label: 'Compétences', to: '/admin/taxonomies/skills' },
-            { label: 'Utilisateurs', to: '/admin/taxonomies/profiles' }
+            { label: 'Participations à modérer', to: '/support/responsables/participations-to-be-treated' },
+            { label: 'Missions périmées', to: '/support/responsables/missions-outdated' }
           ]
         },
         {
-          key: 'settings',
-          label: 'Paramètres',
+          key: 'scripts',
+          label: 'Scripts',
           childrens: [
-            { label: 'Général', to: '/admin/settings/general' },
-            { label: 'Règles', to: '/admin/settings/rules' },
-            { label: 'Emails', to: '/admin/settings/emails' },
-            { label: 'Messages', to: '/admin/settings/messages' }
-          ]
-        },
-        {
-          key: 'other',
-          label: 'Autre',
-          childrens: [
-            { label: 'Statistiques', to: '/admin/statistics' },
-            { label: 'Indicateurs clés', to: '/admin/statistics/indicateurs-cles' },
-            { label: 'Invitations', to: '/admin/other/invitations' },
-            { label: 'Logs', to: '/admin/other/logs' },
-            { label: 'Strapi', href: 'https://jeveuxaider-strapi.osc-secnum-fr1.scalingo.io/admin/auth/login' }
+            { label: 'Réinitialisation mot de passe', to: '/support/scripts/user-reset-password-link' },
+            { label: 'Transfert de missions', to: '/support/scripts/migrate-organisation-missions' },
+            { label: 'Réinitialisation d\'un utilisateur', to: '/support/scripts/user-reset-context-role' }
           ]
         }
       ]
