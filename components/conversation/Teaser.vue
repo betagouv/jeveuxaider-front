@@ -86,7 +86,7 @@ export default {
       if (this.conversation.conversable.state === 'En cours de traitement' && this.$dayjs(this.conversation.conversable.created_at).subtract(2, 'months').isBefore(this.$dayjs())) {
         return true
       }
-      if (this.conversation.conversable.state === 'En attente de validation' && this.$dayjs(this.conversation.conversable.created_at).subtract(10, 'days').isBefore(this.$dayjs())) {
+      if (this.conversation.conversable.state === 'En attente de validation' && this.$dayjs(this.conversation.conversable.created_at).subtract(7, 'days').isBefore(this.$dayjs())) {
         return true
       }
       return false
