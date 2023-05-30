@@ -181,66 +181,6 @@
         >
           En cours de modération
         </Tag>
-
-        <!-- <Tag
-          :key="`state-encoursvalidation-${$route.fullPath}`"
-          as="button"
-          size="md"
-          context="selectable"
-          :is-selected="$route.query['filter[state]'] == 'En attente de validation'"
-          is-selected-class="border-gray-50 bg-gray-50"
-          @click.native="changeFilter('filter[state]', 'En attente de validation')"
-        >
-          En attente de validation
-        </Tag>
-
-        <Tag
-          :key="`state-encourstraitement-${$route.fullPath}`"
-          as="button"
-          size="md"
-          context="selectable"
-          :is-selected="$route.query['filter[state]'] == 'En cours de traitement'"
-          is-selected-class="border-gray-50 bg-gray-50"
-          @click.native="changeFilter('filter[state]', 'En cours de traitement')"
-        >
-          En cours de traitement
-        </Tag>
-
-        <Tag
-          :key="`state-validee-${$route.fullPath}`"
-          as="button"
-          size="md"
-          context="selectable"
-          :is-selected="$route.query['filter[state]'] == 'Validée'"
-          is-selected-class="border-gray-50 bg-gray-50"
-          @click.native="changeFilter('filter[state]', 'Validée')"
-        >
-          Validée
-        </Tag>
-
-        <Tag
-          :key="`state-cancel-${$route.fullPath}`"
-          as="button"
-          size="md"
-          context="selectable"
-          :is-selected="$route.query['filter[state]'] == 'Annulée'"
-          is-selected-class="border-gray-50 bg-gray-50"
-          @click.native="changeFilter('filter[state]', 'Annulée')"
-        >
-          Annulée
-        </Tag>
-
-        <Tag
-          :key="`state-refus-${$route.fullPath}`"
-          as="button"
-          size="md"
-          context="selectable"
-          :is-selected="$route.query['filter[state]'] == 'Refusée'"
-          is-selected-class="border-gray-50 bg-gray-50"
-          @click.native="changeFilter('filter[state]', 'Refusée')"
-        >
-          Refusée
-        </Tag> -->
       </div>
 
       <BulkOperationActions v-if="bulkOperationIsActive" :operations="operations" @unselectAll="operations = []">

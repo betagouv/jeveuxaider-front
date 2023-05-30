@@ -159,8 +159,8 @@ export default {
           return {
             icon: '⚠️',
             iconVariant: 'warning',
-            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'participation', 'participations', false)}</b> à modérer en priorité`,
-            subtitle: 'Sans modération vous risquez de voir votre compte suspendu',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'participation', 'participations', false)}</b> à traiter en priorité`,
+            subtitle: 'Les bénévoles risquent de se désengager',
             link: `/admin/participations?filter[need_to_be_treated]=true&filter[ofResponsable]=${this.$store.getters.profile.id}`
           }
         case 'participations_in_progress':

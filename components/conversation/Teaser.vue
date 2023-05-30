@@ -63,7 +63,7 @@
           </span>
         </div>
         <div v-if="$store.getters.contextRole === 'responsable' && needToBeTreatedInPriority" class="text-xs text-[#EB786E] font-semibold mt-1">
-          ⚠️ À modérer en priorité
+          ⚠️ À traiter en priorité
         </div>
       </div>
     </div>
