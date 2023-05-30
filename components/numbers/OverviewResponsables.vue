@@ -18,13 +18,13 @@
         :value="overview.participations_need_to_be_treated_count"
         title="Participations"
         subtitle="à modérer"
-        infos-bulle="Nombre de participations à modérer (en attente de validation depuis 10 jours ou en cours de traitement depuis 2 mois)"
+        infos-bulle="Nombre de participations à modérer (en attente de validation depuis 7 jours ou en cours de traitement depuis 2 mois)"
       />
       <CardStatistic
         :value="overview.participations_waiting_count"
         title="Participations"
         subtitle="en attente de validation"
-        infos-bulle="Nombre de participations en attente de validation depuis 10 jours"
+        infos-bulle="Nombre de participations en attente de validation depuis 7 jours"
       />
       <CardStatistic
         :value="overview.participations_in_progress_count"
