@@ -38,7 +38,7 @@
           Naissance
         </div>
         <div class="text-gray-900 flex-1">
-          {{ profile.birthday }}
+          {{ $dayjs(profile.birthday).format('DD/MM/YYYY') }}
         </div>
       </div>
       <div v-if="profile.zip" class="mb-2 flex">

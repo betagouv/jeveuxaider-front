@@ -155,6 +155,14 @@ export default {
             subtitle: 'Des bénévoles attendent votre réponse pour s\'engager.',
             link: this.$store.getters.contextRole === 'responsable' ? `/admin/participations?filter[state]=En attente de validation&filter[ofResponsable]=${this.$store.getters.profile.id}` : '/admin/participations?filter[state]=En attente de validation'
           }
+        case 'participations_need_to_be_treated':
+          return {
+            icon: '⚠️',
+            iconVariant: 'warning',
+            title: `<b>${this.$options.filters.formatNumber(action.value)} ${this.$options.filters.pluralize(action.value, 'participation', 'participations', false)}</b> à traiter en priorité`,
+            subtitle: 'Les bénévoles risquent de se désengager',
+            link: `/admin/participations?filter[need_to_be_treated]=true&filter[ofResponsable]=${this.$store.getters.profile.id}`
+          }
         case 'participations_in_progress':
           return {
             icon: '⌛',
