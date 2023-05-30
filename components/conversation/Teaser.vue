@@ -83,10 +83,10 @@ export default {
       if (this.conversation.conversable_type !== 'App\\Models\\Participation') {
         return false
       }
-      if (this.conversation.conversable.state === 'En cours de traitement' && this.$dayjs(this.conversation.conversable.created_at).subtract(2, 'months').isBefore(this.$dayjs())) {
+      if (this.conversation.conversable.state === 'En cours de traitement' && this.$dayjs().subtract(2, 'months').isAfter(this.$dayjs(this.conversation.conversable.created_at))) {
         return true
       }
-      if (this.conversation.conversable.state === 'En attente de validation' && this.$dayjs(this.conversation.conversable.created_at).subtract(7, 'days').isBefore(this.$dayjs())) {
+      if (this.conversation.conversable.state === 'En attente de validation' && this.$dayjs().subtract(7, 'days').isAfter(this.$dayjs(this.conversation.conversable.created_at))) {
         return true
       }
       return false
