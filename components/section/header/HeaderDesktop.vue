@@ -114,15 +114,15 @@
           {{ link.name }}
         </NavItem>
 
-        <!-- <NavItem
+        <NavItem
           v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
-          key="printemps-pour-la-planete"
-          to="/missions-benevolat?publisher_name=J%27agis%20pour%20la%20nature%7CJeVeuxAider.gouv.fr&activity.name=Travaux%20manuels%7CActions%20de%20sensibilisation%7CVie%20citoyenne%7CRamassage%20de%20d%C3%A9chets%7CAm%C3%A9nagement%20d%27espaces%20naturels%7CSoins%20aux%20animaux&domaines=Protection%20de%20la%20nature"
+          key="operation"
+          to="/missions-benevolat?tags=La%20tournée%20d%27été"
           class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
         >
-          <span aria-hidden="true">🌍</span>
-          <span>Printemps pour la planète</span>
-        </NavItem> -->
+          <span aria-hidden="true">☀️</span>
+          <span>La tournée d’été</span>
+        </NavItem>
 
         <div v-if="$store.getters.contextRole == 'admin'" class="flex ml-auto">
           <NavItem
