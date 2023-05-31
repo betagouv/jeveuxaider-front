@@ -58,7 +58,7 @@
             hitsPerPage: 6,
             aroundPrecision: 2000,
             facetFilters: [
-              ['tags:La%20tournée%20d%27été']
+              ['tags:La tournée d\'été']
             ],
             aroundLatLngViaIP: true,
             aroundRadius: 'all'
