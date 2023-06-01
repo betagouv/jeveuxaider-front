@@ -165,19 +165,19 @@ export default {
       }
     },
     missionStructureResponseTimeInDays () {
-      if (!this.mission.structure) {
+      if (!this.structureScore) {
         return null
       }
-      if (!this.mission.structure?.response_time) {
+      if (!this.structureScore?.response_time) {
         return null
       }
-      return Math.round(this.mission.structure?.response_time / (60 * 60 * 24))
+      return Math.round(this.structureScore.response_time / (60 * 60 * 24))
     },
     missionStructureResponseTimeFormatted () {
-      if (!this.mission.structure) {
+      if (!this.structureScore) {
         return null
       }
-      if (!this.mission.structure?.response_time) {
+      if (!this.structureScore?.response_time) {
         return null
       }
       if (this.missionStructureResponseTimeInDays > 10) {
