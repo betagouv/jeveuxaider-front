@@ -11,11 +11,12 @@
       <div class="space-y-6">
         <div class="formatted-text">
           <p>
-            Vous êtes sur le point de <strong>signaler</strong> une mission qui ne répond pas aux exigences de la charte ou des règles fixés par le Décret n° 2017-930 du 9 mai 2017 relatif à la Réserve Civique.
+            Vous êtes sur le point de <strong>signaler</strong> cette mission qui ne répond pas aux exigences de la charte ou des règles fixés par le Décret n° 2017-930 du 9 mai 2017 relatif à la Réserve Civique.
           </p>
           <p>
             Les participations en cours de validation seront automatiquement <strong>annulées</strong>.
           </p>
+          <p>Si besoin, vous pouvez apporter des précisions en ajoutant une note.</p>
         </div>
 
         <FormNote
@@ -23,9 +24,9 @@
           notable-type="missions"
           :notable-id="mission.id"
           :nb-rows="5"
-          :required="true"
+          :required="false"
           :hide-help="true"
-          placeholder="Détaillez-ici les raisons de votre décision"
+          placeholder="Ajoutez une note si nécessaire"
           context="status_changed_to_reported"
           @submitted="$emit('confirm', $event)"
         />

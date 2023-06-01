@@ -2,7 +2,6 @@ export default {
   data () {
     return {
       blacklistedWords: [
-        'emploi',
         'job',
         'salaire',
         'cdi',

@@ -8,17 +8,12 @@
       :prevent-click-outside="true"
       @close="$emit('cancel')"
     >
-      <div class="space-y-4">
+      <div class="space-y-6">
         <div class="formatted-text">
           <p>
             Vous êtes sur le point de <b>valider</b> la mission. Elle sera disponible dans la recherche.
-            <template v-if="hasError">
-              <br><br>L’outil d’aide à la modération a identifié cette mission comme étant <strong>potentiellement non conforme</strong>. Avez-vous vérifié l’ensemble des éléments ? Dites-nous quelques mots sur la validation :
-            </template>
-            <template v-else>
-              Si besoin, vous pouvez ajouter des précisions sur votre modération en ajoutant une note :
-            </template>
           </p>
+          <p>Si besoin, vous pouvez apporter des précisions en ajoutant une note.</p>
         </div>
 
         <FormNote
@@ -26,10 +21,9 @@
           notable-type="missions"
           :notable-id="mission.id"
           :nb-rows="5"
-          :required="hasError"
+          :required="false"
           :hide-help="true"
-          :label="hasError ? 'Note' : 'Note (optionnel)'"
-          :placeholder="hasError ? 'Détaillez-ici les raisons de votre décision' : 'Ajoutez une note si nécessaire'"
+          placeholder="Ajoutez une note si nécessaire"
           context="status_changed_to_validated"
           @submitted="$emit('confirm', $event)"
         />
@@ -64,13 +58,6 @@ export default {
     mission: {
       type: Object,
       required: true
-    }
-  },
-  watch: {
-    isOpen (newVal) {
-      if (newVal) {
-        this.fetchAIReportScore()
-      }
     }
   }
 }
