@@ -2,6 +2,7 @@
   <form :id="id" @submit.prevent="handleSubmit">
     <FormControl
       :label="label"
+      :label-suffix="required ? '' : `(Optionnelle)`"
       html-for="content"
       :required="required"
       :error="errors.content"

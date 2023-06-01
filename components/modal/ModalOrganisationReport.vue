@@ -16,6 +16,7 @@
           <p>
             Ses missions seront également <strong>signalées</strong> et toutes les participations déjà effectuées seront <strong>annulées</strong>.
           </p>
+          <p>Si besoin, vous pouvez apporter des précisions en ajoutant une note.</p>
         </div>
 
         <FormNote
@@ -23,9 +24,9 @@
           notable-type="structures"
           :notable-id="organisation.id"
           :nb-rows="5"
-          :required="true"
+          :required="false"
           :hide-help="true"
-          placeholder="Détaillez-ici les raisons de votre décision"
+          placeholder="Ajoutez une note si nécessaire"
           context="status_changed_to_reported"
           @submitted="$emit('confirm', $event)"
         />
