@@ -103,13 +103,18 @@
           </template>
         </Dropdown>
         <NavItem
-          v-for="link in secondaryNavigation"
+          v-for="(link, i) in secondaryNavigation"
           :key="link.name"
           :href="link.href"
           :to="link.to"
           :click="link.click"
           :target="link.target"
-          :class="['p-4 hover:bg-gray-50 hover:text-jva-blue-500', {'text-jva-blue-500 bg-gray-50 font-medium': link.isActive}]"
+          :class="[
+            'p-4 hover:bg-gray-50 hover:text-jva-blue-500',
+            {'text-jva-blue-500 bg-gray-50 font-medium': link.isActive},
+            {'order-first': secondaryNavigation.length > (i+1) },
+            {'order-last': secondaryNavigation.length == (i+1) },
+          ]"
         >
           {{ link.name }}
         </NavItem>
@@ -117,8 +122,8 @@
         <NavItem
           v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
           key="operation"
-          to="/missions-benevolat?tags=La%20tournée%20d%27été"
-          class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate"
+          href="https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/"
+          class="p-4 hover:bg-gray-50 hover:text-jva-blue-500 flex space-x-1 truncate order-2"
         >
           <span aria-hidden="true">☀️</span>
           <span>La tournée d’été</span>

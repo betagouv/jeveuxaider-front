@@ -104,27 +104,34 @@
 
                     <div class="border-t my-2" />
 
-                    <NavItem
-                      v-for="link in secondaryNavigation"
-                      :key="link.name"
-                      :href="link.href"
-                      :to="link.to"
-                      :target="link.target"
-                      :click="link.click"
-                      :class="['block px-3 py-2 text-base text-cool-gray-600', {'!text-jva-blue-500 bg-gray-50 font-medium': link.isActive}]"
-                    >
-                      {{ link.name }}
-                    </NavItem>
+                    <div class="flex flex-col">
+                      <NavItem
+                        v-for="(link, i) in secondaryNavigation"
+                        :key="link.name"
+                        :href="link.href"
+                        :to="link.to"
+                        :target="link.target"
+                        :click="link.click"
+                        :class="[
+                          'block px-3 py-2 text-base text-cool-gray-600',
+                          {'!text-jva-blue-500 bg-gray-50 font-medium': link.isActive},
+                          {'order-first': secondaryNavigation.length > (i+1) },
+                          {'order-last': secondaryNavigation.length == (i+1) },
+                        ]"
+                      >
+                        {{ link.name }}
+                      </NavItem>
 
-                    <NavItem
-                      v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
-                      key="operation"
-                      to="/missions-benevolat?tags=La%20tournée%20d%27été"
-                      :class="['flex space-x-1 px-3 py-2 text-base text-cool-gray-600']"
-                    >
-                      <span aria-hidden="true">☀️</span>
-                      <span>La tournée d’été</span>
-                    </NavItem>
+                      <NavItem
+                        v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
+                        key="operation"
+                        href="https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/"
+                        :class="['flex space-x-1 px-3 py-2 text-base text-cool-gray-600 order-2']"
+                      >
+                        <span>La tournée d’été</span>
+                        <span aria-hidden="true">☀️</span>
+                      </NavItem>
+                    </div>
 
                     <div class="border-t my-2" />
 
