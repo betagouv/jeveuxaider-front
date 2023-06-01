@@ -14,7 +14,7 @@
               <VueSvgGauge
                 :start-angle="-110"
                 :end-angle="110"
-                :value="score.score"
+                :value="score.total_points"
                 :separator-step="25"
                 :min="0"
                 :max="100"
@@ -27,7 +27,7 @@
               />
               <div class="absolute flex flex-col justify-center items-center top-[60px] left-1/2 transform -translate-x-1/2 h-[224px] w-[224px] text-center border border-[#F1F2F9] rounded-full">
                 <div class="font-bold text-5xl tracking-tight">
-                  <span>{{ score.score }}</span>
+                  <span>{{ score.total_points }}</span>
                   <span class="mx-1">/</span>
                   <span>100</span>
                 </div>
@@ -57,9 +57,9 @@
           </div>
         </div>
         <CardStatistic
-          :value="score.response_ratio ? `${score.response_ratio}%` : '-'"
-          title="Taux de réponse"
-          subtitle="aux participations"
+          :value="score.processed_participations_rate ? `${score.processed_participations_rate}%` : '-'"
+          title="Taux de traitement"
+          subtitle="des participations"
         />
         <CardStatistic
           :value="score.response_time ? $dayjs.duration(score.response_time, 'seconds').humanize() : '-'"

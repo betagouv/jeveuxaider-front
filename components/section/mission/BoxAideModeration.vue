@@ -73,7 +73,7 @@
         <div class="ml-7 mt-3 text-sm text-gray-500">
           <div>Nombre de places : {{ mission.participations_max }}</div>
           <div v-if="score">
-            Score de réactivité : {{ score.score }}
+            Score de réactivité : {{ score.total_points }}
           </div>
         </div>
       </Disclosure>

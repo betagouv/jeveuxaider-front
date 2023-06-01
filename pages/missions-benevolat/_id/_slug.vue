@@ -292,7 +292,7 @@
                 </DsfrButton>
               </template>
 
-              <p v-if="canRegister && mission.structure.response_time" class="mt-4 px-8 text-cool-gray-500 text-xs text-center leading-4">
+              <p v-if="canRegister && structureScore?.response_time" class="mt-4 px-8 text-cool-gray-500 text-xs text-center leading-4">
                 <span class="font-semibold">{{ mission.structure.name }}</span> répond généralement <span class="font-semibold">{{ missionStructureResponseTimeFormatted }}</span>
               </p>
             </div>
@@ -465,7 +465,8 @@ export default {
       similarMissions: [],
       userParticipation: null,
       loading: true,
-      showFixedCtaMobile: true
+      showFixedCtaMobile: true,
+      structureScore: null
     }
   },
   async fetch () {
@@ -480,6 +481,9 @@ export default {
     if (this.canRegister || this.userParticipation) {
       this.loading = false
     }
+
+    const { data: structureScore } = await this.$axios.get(`/structures/${this.mission.structure_id}/score`)
+    this.structureScore = structureScore
 
     const { data: missions } = await this.$axios.get(`/missions/${this.mission.id}/similar`)
     this.similarMissions = missions
