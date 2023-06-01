@@ -25,7 +25,6 @@
           :notable-id="organisation.id"
           :nb-rows="5"
           :required="false"
-          :hide-help="true"
           placeholder="Ajoutez une note si nécessaire"
           context="status_changed_to_reported"
           @submitted="$emit('confirm', $event)"

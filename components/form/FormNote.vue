@@ -7,9 +7,6 @@
       :required="required"
       :error="errors.content"
     >
-      <FormHelperText v-if="!hideHelp" class="pb-4">
-        Visible seulement des administrateurs et des référents
-      </FormHelperText>
       <Textarea
         v-model="form.content"
         name="content"
@@ -17,6 +14,9 @@
         :rows="nbRows"
         @blur="validate('content')"
       />
+      <FormHelperText v-if="!hideHelp" class="mt-2">
+        Visible uniquement des administrateurs et des référents
+      </FormHelperText>
     </FormControl>
   </form>
 </template>

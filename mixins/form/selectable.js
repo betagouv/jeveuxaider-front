@@ -3,7 +3,8 @@ export default {
   data () {
     return {
       showOptions: false,
-      highlightIndex: this.value ? this.options.findIndex((option) => { return option.key == this.value }) : 0
+      highlightIndex: this.value ? this.options.findIndex((option) => { return option.key == this.value }) : 0,
+      enableUnselect: false
     }
   },
   computed: {
@@ -34,8 +35,10 @@ export default {
     },
     handleSelectOption (item) {
       if (item && this.selectedOption && this.selectedOption[this.attributeKey] === item[this.attributeKey]) {
-        this.$emit('input', null)
-        this.selectedOption = null
+        if (this.enableUnselect) {
+          this.$emit('input', null)
+          this.selectedOption = null
+        }
       } else if (item) {
         this.$emit('input', item[this.attributeKey])
         this.selectedOption = item

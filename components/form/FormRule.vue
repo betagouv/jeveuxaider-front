@@ -121,7 +121,7 @@ export default {
       default: () => {
         return {
           is_active: false,
-          event: 'mission_updated',
+          event: 'none',
           action_key: 'mission_attach_tag'
         }
       }

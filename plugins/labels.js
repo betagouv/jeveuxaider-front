@@ -401,9 +401,11 @@ const labels = {
     { key: 'tete_de_reseau', label: 'Tête de réseau' }
   ],
   rule_events: [
+    { key: 'none', label: 'Aucun (script seulement)' },
     { key: 'mission_updated', label: 'Mission est modifiée' }
   ],
   rule_actions: [
-    { key: 'mission_attach_tag', label: 'Ajouter un tag à la mission' }
+    { key: 'mission_attach_tag', label: 'Ajouter un tag à la mission' },
+    { key: 'mission_detach_tag', label: 'Retirer un tag à la mission' }
   ]
 }
