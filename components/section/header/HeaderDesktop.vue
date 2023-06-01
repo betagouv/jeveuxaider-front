@@ -103,7 +103,7 @@
           </template>
         </Dropdown>
         <NavItem
-          v-for="(link, i) in secondaryNavigation"
+          v-for="link in secondaryNavigation"
           :key="link.name"
           :href="link.href"
           :to="link.to"
@@ -112,8 +112,6 @@
           :class="[
             'p-4 hover:bg-gray-50 hover:text-jva-blue-500',
             {'text-jva-blue-500 bg-gray-50 font-medium': link.isActive},
-            {'order-first': secondaryNavigation.length > (i+1) },
-            {'order-last': secondaryNavigation.length == (i+1) },
           ]"
         >
           {{ link.name }}

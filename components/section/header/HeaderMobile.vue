@@ -106,7 +106,7 @@
 
                     <div class="flex flex-col">
                       <NavItem
-                        v-for="(link, i) in secondaryNavigation"
+                        v-for="link in secondaryNavigation"
                         :key="link.name"
                         :href="link.href"
                         :to="link.to"
@@ -115,8 +115,6 @@
                         :class="[
                           'block px-3 py-2 text-base text-cool-gray-600',
                           {'!text-jva-blue-500 bg-gray-50 font-medium': link.isActive},
-                          {'order-first': secondaryNavigation.length > (i+1) },
-                          {'order-last': secondaryNavigation.length == (i+1) },
                         ]"
                       >
                         {{ link.name }}
