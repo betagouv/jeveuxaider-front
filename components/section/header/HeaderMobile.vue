@@ -104,32 +104,20 @@
 
                     <div class="border-t my-2" />
 
-                    <div class="flex flex-col">
-                      <NavItem
-                        v-for="link in secondaryNavigation"
-                        :key="link.name"
-                        :href="link.href"
-                        :to="link.to"
-                        :target="link.target"
-                        :click="link.click"
-                        :class="[
-                          'block px-3 py-2 text-base text-cool-gray-600',
-                          {'!text-jva-blue-500 bg-gray-50 font-medium': link.isActive},
-                        ]"
-                      >
-                        {{ link.name }}
-                      </NavItem>
-
-                      <NavItem
-                        v-if="!$store.getters.isLogged || $store.getters.contextRole === 'volontaire'"
-                        key="operation"
-                        href="https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/"
-                        :class="['flex space-x-1 px-3 py-2 text-base text-cool-gray-600 order-2']"
-                      >
-                        <span>La tournée d’été</span>
-                        <span aria-hidden="true">☀️</span>
-                      </NavItem>
-                    </div>
+                    <NavItem
+                      v-for="link in secondaryNavigation"
+                      :key="link.name"
+                      :href="link.href"
+                      :to="link.to"
+                      :target="link.target"
+                      :click="link.click"
+                      :class="[
+                        'block px-3 py-2 text-base text-cool-gray-600',
+                        {'!text-jva-blue-500 bg-gray-50 font-medium': link.isActive},
+                      ]"
+                    >
+                      {{ link.name }}
+                    </NavItem>
 
                     <div class="border-t my-2" />
 
@@ -199,6 +187,7 @@ export default {
           { name: 'Bénévolat près de chez moi', to: '/missions-benevolat', isActive: this.isBenevolatPresDeChezMoiActiveLink() },
           { name: 'À distance', to: '/missions-benevolat?type=Mission%20à%20distance', isActive: this.isBenevolatADistanceActiveLink() },
           { name: 'Associations', to: '/organisations', isActive: this.isActiveLink('/organisations') },
+          { name: 'La tournée d\'été ☀️', href: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/' },
           { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/', target: '_blank' }
         ]
       } else if (this.$store.getters.currentRole?.key === 'admin') {
@@ -253,6 +242,7 @@ export default {
       return [
         { name: 'Mon espace', to: '/profile', isActive: this.isActiveLink('/profile', true) },
         { name: 'Mes missions', to: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
+        { name: 'La tournée d\'été ☀️', href: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/' },
         { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', target: '_blank' }
       ]
     },
