@@ -1,13 +1,13 @@
 <template>
   <div
-    class="flex items-center justify-between gap-4"
+    class="flex items-center justify-between gap-10"
     :class="[
       {'flex-row-reverse': position === 'left'}
     ]"
   >
     <span class="flex-grow flex flex-col">
-      <span v-if="label" id="availability-label" class="block text-sm text-black" v-html="label" />
-      <span v-if="description" id="availability-description" class="text-sm text-gray-500" v-html="description" />
+      <span v-if="label" id="availability-label" class="block text-xl font-bold text-black" v-html="label" />
+      <span v-if="description" id="availability-description" class="text-lg text-[#666666]" v-html="description" />
     </span>
     <button
       type="button"

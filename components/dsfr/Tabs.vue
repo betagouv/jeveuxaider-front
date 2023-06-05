@@ -9,9 +9,9 @@
         ]"
       >
         <button
-          v-for="(title, key) in tabs"
+          v-for="(tab, key) in tabs"
           :id="`tabpanel-${uuid}-${key}`"
-          :key="title.content"
+          :key="tab.content"
           :class="[
             'inline-flex items-center justify-center transition mx-1 px-4 py-2 border border-b-0 border-t-2 flex-none',
             {'bg-[#E3E3FD] border-[#E3E3FD] sm:hover:border-[#C1C1FB] sm:hover:bg-[#C1C1FB] active:bg-[#ADADF9] active:border-[#ADADF9]': key !== selected},
@@ -20,18 +20,18 @@
           role="tab"
           :aria-selected="selected === key || 'false'"
           :aria-controls="`tabpanel-${uuid}-${key}-panel`"
-          @click="() => {selected = key; $emit('selected', title)}"
+          @click="handleTabClick(tab)"
         >
           <component
-            :is="title.icon"
-            v-if="title.icon"
+            :is="tab.icon"
+            v-if="tab.icon"
             :class="[
               'fill-current flex-none mr-2',
               'ml-[0.125rem]',
               'w-4 h-4',
             ]"
           />
-          <span class="font-bold">{{ title.content }}</span>
+          <span class="font-bold">{{ tab.content }}</span>
         </button>
       </li>
     </ul>
@@ -83,6 +83,16 @@ export default {
   data () {
     return {
       selected: this.selectedTab
+    }
+  },
+  methods: {
+    handleTabClick (tab) {
+      if (tab.to) {
+        this.$router.push(tab.to)
+      } else {
+        this.selected = tab.key
+      }
+      this.$emit('selected', tab)
     }
   }
 }
