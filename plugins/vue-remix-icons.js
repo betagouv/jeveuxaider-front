@@ -69,6 +69,7 @@ import RiFlashlightLine from 'vue-remix-icons/icons/RiFlashlightLine.vue'
 import RiAdminLine from 'vue-remix-icons/icons/RiAdminLine.vue'
 import RiUserStarLine from 'vue-remix-icons/icons/RiUserStarLine.vue'
 import RiArrowUpLine from 'vue-remix-icons/icons/RiArrowUpLine.vue'
+import RiHeartLine from 'vue-remix-icons/icons/RiHeartLine.vue'
 
 const components = {
   RiUserStarLine,
@@ -136,7 +137,8 @@ const components = {
   RiFileCopyLine,
   RiEqualizerFill,
   RiPauseCircleLine,
-  RiPlayCircleLine
+  RiPlayCircleLine,
+  RiHeartLine
 }
 
 Object.entries(components).forEach(([name, component]) => {

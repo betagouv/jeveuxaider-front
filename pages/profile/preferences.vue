@@ -15,7 +15,7 @@
           { key: 'profil', content: 'Mon profil', to: '/profile/edit' },
           { key: 'preferences', content: 'Mes préférences de missions', to: '/profile/preferences' },
           { key: 'notifications', content: 'Mes notifications', to: '/profile/notifications' },
-          { key: 'settings', content: 'Mes paramètres', to: '/profile/settings' }
+          { key: 'settings', content: 'Mes paramètres de compte', to: '/profile/settings' }
         ]"
         :selected-tab="1"
         tabpanel-class="!p-0"

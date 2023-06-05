@@ -46,18 +46,24 @@
         @blur="validate('password_confirmation')"
       />
     </FormControl>
-    <div class="ml-auto">
-      <Button variant="green" size="lg" type="submit">
-        Enregistrer
-      </Button>
+    <div class="pt-8 lg:pt-14">
+      <div class="text-center">
+        <Button size="lg" type="primary" :loading="loading" @click.native="onSubmit()">
+          Mettre à jour
+        </Button>
+      </div>
     </div>
   </form>
 </template>
 <script>
 import { string, object, ref } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
+  components: {
+    Button
+  },
   mixins: [FormErrors],
   data () {
     return {

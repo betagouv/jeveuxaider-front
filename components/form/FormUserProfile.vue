@@ -129,7 +129,7 @@
         </div>
       </div>
 
-      <div class="pt-8 lg:pt-14">
+      <div v-if="canViewScAndCej" class="pt-8 lg:pt-14">
         <Heading as="h2" :level="2">
           Service Civique & Contrat d'Engagement Jeune
         </Heading>
