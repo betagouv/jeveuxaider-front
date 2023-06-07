@@ -95,7 +95,7 @@ export default {
   },
   data () {
     return {
-      selectedKey: this.selectedTabKey
+      selectedKey: this.selectedTabKey ? this.selectedTabKey : this.tabs[0].key
     }
   },
   methods: {

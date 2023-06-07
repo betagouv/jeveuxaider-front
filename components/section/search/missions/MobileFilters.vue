@@ -3,15 +3,15 @@
     <Tabs
       name="Près de chez moi ou depuis chez moi"
       :tabs="[
-        { content: 'Prés de chez moi', slug: 'onsite' },
-        { content: 'Depuis chez moi', slug: 'remote' },
+        { key: 'onsite', content: 'Prés de chez moi', slug: 'onsite' },
+        { key: 'remote', content: 'Depuis chez moi', slug: 'remote' },
       ]"
       tabpanel-class="py-4 bg-white"
       tabswrapper-class="!px-2 !text-[15px] xs:!px-3 xs:!text-base"
       :selected-tab="selectedTab"
       @selected="onTabSelect"
     >
-      <div slot="tab-0">
+      <div slot="tab-onsite">
         <div class="flex items-center divide-x">
           <LocalisationSuggestions
             class="w-full pr-4 mr-auto"
@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <div slot="tab-1">
+      <div slot="tab-remote">
         <div class="flex items-center divide-x">
           <div class="w-full pr-4 mr-auto">
             <div class="text-[#7B7B7B] mb-1">

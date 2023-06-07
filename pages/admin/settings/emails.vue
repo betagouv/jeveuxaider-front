@@ -23,7 +23,6 @@
       name="NAME"
       :tabs="tabs"
       tabpanel-class="!p-0"
-      selected-tab-key="benevoles"
     >
       <Box
         v-for="(tab) in tabs"

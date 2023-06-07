@@ -1,8 +1,9 @@
 <template>
   <div
-    class="flex items-center justify-between gap-10"
+    class="flex items-center justify-between"
     :class="[
-      {'flex-row-reverse': position === 'left'}
+      {'flex-row-reverse': position === 'left'},
+      {'gap-8': label }
     ]"
   >
     <span class="flex-grow flex flex-col">
@@ -31,7 +32,7 @@
       type="button"
       class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200"
       :class="[
-        selected ? 'bg-jva-blue-500': 'bg-gray-200'
+        selected ? 'bg-jva-green-300': 'bg-gray-200'
       ]"
       role="switch"
       aria-checked="false"
@@ -46,8 +47,8 @@
           selected ? 'translate-x-5': 'translate-x-0'
         ]"
       >
-        <CheckIcon v-if="selected" class="h-3 text-jva-blue-500" />
-        <XIcon v-else class="h-3 text-gray-400" />
+        <CheckIcon v-if="selected" class="h-3 text-jva-green-300" />
+        <!-- <XIcon v-else class="h-3 text-gray-400" /> -->
       </span>
     </button>
   </div>
