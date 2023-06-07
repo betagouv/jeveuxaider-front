@@ -36,8 +36,8 @@
                   <Heading as="h2" :level="2" class="mb-8">
                     Désinscription
                   </Heading>
-                  <div class="flex justify-between items-center space-x-8">
-                    <div class="flex-1 text-gray-600 mb-8">
+                  <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center lg:space-x-8">
+                    <div class="flex-1 text-gray-600 mb-8 lg:mr-8">
                       Vous souhaitez désactiver votre compte&nbsp;?<br><br> Attention, cette action est irréversible et toutes vos données de la plateforme JeVeuxAider.gouv.fr seront anonymisées.
                     </div>
                     <div>

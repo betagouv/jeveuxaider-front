@@ -3,11 +3,11 @@
     <Breadcrumb
       :links="[
         { text: 'Mon espace', to: '/profile' },
-        { text: 'Mes préférences' },
+        { text: 'Mes préférences de missions' },
       ]"
     />
     <div class="flex flex-col pb-12 gap-12">
-      <SectionHeading title="Mes préférences" />
+      <SectionHeading title="Mes préférences de missions" />
 
       <DsfrTabs
         name="NAME"
@@ -21,7 +21,7 @@
         tabpanel-class="!p-0"
       >
         <template slot="tab-1">
-          FORM PREFERENCES
+          <FormUserPreferences :profile="profile" />
         </template>
       </DsfrTabs>
     </div>
@@ -29,11 +29,14 @@
 </template>
 
 <script>
+import FormUserPreferences from '@/components/form/FormUserPreferences.vue'
+
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import DsfrTabs from '@/components/dsfr/Tabs.vue'
 
 export default {
   components: {
+    FormUserPreferences,
     Breadcrumb,
     DsfrTabs
   },

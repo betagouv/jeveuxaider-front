@@ -209,41 +209,6 @@
               </FormControl>
             </div>
           </div>
-
-        <!-- <div class="flex lg:space-x-8">
-          <img
-            src="/images/cej.png"
-            srcset="/images/cej.png, /images/cej@2x.png 2x"
-            alt="Contrat d'Engagement Jeune"
-            title="Contrat d'Engagement Jeune"
-            class="hidden lg:block h-10 flex-none w-[75px] object-contain object-left"
-            data-not-lazy
-          >
-          <Toggle
-            v-model="form.cej"
-            class="flex-1"
-            label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
-            :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
-          />
-        </div>
-        <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser" required>
-          <template #afterLabel>
-            <span
-              v-tooltip="{
-                content: 'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
-              }"
-              class="p-1 cursor-help group"
-            >
-              <InformationCircleIcon class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]" />
-            </span>
-          </template>
-          <Input
-            v-model="form.cej_email_adviser"
-            name="cej_email_adviser"
-            placeholder="jean.dupont@gmail.com"
-            @blur="validate('cej_email_adviser')"
-          />
-        </FormControl> -->
         </div>
       </div>
       <div class="pt-8 lg:pt-14">
@@ -259,7 +224,7 @@
 
 <script>
 import { cloneDeep } from 'lodash'
-import { string, object, array, date } from 'yup'
+import { string, object, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
@@ -313,13 +278,6 @@ export default {
             return ['admin'].includes(this.$store.getters.contextRole) || zip
           }
         ),
-        disponibilities: array().transform(v => (!v ? [] : v)).test(
-          'test-disponibilities-required',
-          'Merci de sélectionner au moins 1 disponibilité',
-          (disponibilities) => {
-            return ['admin'].includes(this.$store.getters.contextRole) || disponibilities.length >= 1
-          }
-        ),
         cej_email_adviser: string().nullable().email("Le format de l'email est incorrect").when('cej', {
           is: true,
           then: schema => schema.required("L'email de votre conseiller CEJ est obligatoire")
@@ -363,23 +321,14 @@ export default {
             }
           }
           await this.uploadFiles('profile', this.form.id)
-          if (this.form.id === this.$store.state.auth.user.profile.id) {
-            await this.$store.dispatch('auth/updateProfile', {
-              id: this.$store.getters.profile.id,
-              ...this.form
-            })
-            // this.loading = false
-            this.$router.push('/profile')
-          } else {
-            await this.$axios.put(`/profiles/${this.form.id}`, this.form)
-            this.$router.push(`/admin/utilisateurs/${this.form.id}`)
-          }
+          await this.$store.dispatch('auth/updateProfile', {
+            id: this.$store.getters.profile.id,
+            ...this.form
+          })
           this.$toast.success('Modifications enregistrées')
-          // this.$emit('submited', this.form)
         })
         .catch((errors) => {
           this.setErrors(errors)
-        // throw new Error('error')
         })
         .finally(() => {
           this.loading = false

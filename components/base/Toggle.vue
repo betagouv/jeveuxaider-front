@@ -6,14 +6,32 @@
     ]"
   >
     <span class="flex-grow flex flex-col">
-      <span v-if="label" id="availability-label" class="block text-xl font-bold text-black" v-html="label" />
-      <span v-if="description" id="availability-description" class="text-lg text-[#666666]" v-html="description" />
+      <span
+        v-if="label"
+        id="availability-label"
+        class="block font-bold text-black"
+        :class="[
+          {'text-lg': size === 'lg'},
+          {'text-xl': size === 'xl'}
+        ]"
+        v-html="label"
+      />
+      <span
+        v-if="description"
+        id="availability-description"
+        class="mt-2 text-[#666666]"
+        :class="[
+          {'text-md': size === 'lg'},
+          {'text-lg': size === 'xl'}
+        ]"
+        v-html="description"
+      />
     </span>
     <button
       type="button"
       class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200"
       :class="[
-        selected ?'bg-jva-blue-500': 'bg-gray-200'
+        selected ? 'bg-jva-blue-500': 'bg-gray-200'
       ]"
       role="switch"
       aria-checked="false"
@@ -53,6 +71,10 @@ export default {
     position: {
       type: String,
       default: 'left'
+    },
+    size: {
+      type: String,
+      default: 'lg'
     }
   },
   data () {
