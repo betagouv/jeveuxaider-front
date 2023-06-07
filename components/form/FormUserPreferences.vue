@@ -96,10 +96,42 @@
       </div>
 
       <div class="pt-8 lg:pt-14">
-        @TODO activités selection
+        <div class="text-3xl font-bold text-black">
+          Quelles activités de bénévolat peuvent vous intéresser ?
+        </div>
+        <TagsGroup
+          v-model="form.activities"
+          name="activites"
+          variant="button"
+          :options="activitiesOptions"
+          is-model
+          class="mt-12"
+        />
       </div>
       <div class="pt-8 lg:pt-14">
-        @TODO compétences
+        <div class="text-3xl font-bold text-black">
+          Les compétences que vous pourriez apporter
+        </div>
+        <FormControl label="Renseignez certaines de vos compétences" html-for="algolia-search" class="mt-12">
+          <AlgoliaSkillsInput
+            :items="form.skills"
+            class="max-w-xl"
+            @add-item="handleSelectSkillItems"
+          />
+        </FormControl>
+
+        <div v-if="form.skills.length" class="mt-6">
+          <div class="flex flex-wrap gap-4">
+            <TagFormItem
+              v-for="item in form.skills"
+              :key="item.id"
+              :tag="item"
+              @removed="onRemovedSkillItem"
+            >
+              {{ item.name }}
+            </TagFormItem>
+          </div>
+        </div>
       </div>
       <div class="pt-8 lg:pt-14">
         <div class="text-center">
@@ -120,11 +152,14 @@ import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
 import Button from '@/components/dsfr/Button.vue'
 import TagsGroup from '@/components/dsfr/TagsGroup.vue'
+import activitiesOptions from '@/assets/activities.json'
+import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 
 export default {
   components: {
     Button,
-    TagsGroup
+    TagsGroup,
+    AlgoliaSkillsInput
   },
   mixins: [FormErrors, FormUploads, Emailable],
   props: {
@@ -137,6 +172,8 @@ export default {
     return {
       loading: false,
       form: cloneDeep(this.profile),
+      activitiesOptions: activitiesOptions.sort((a, b) =>
+        a.name.localeCompare(b.name)),
       formSchema: object({
         disponibilities: array().transform(v => (!v ? [] : v)).test(
           'test-disponibilities-required',
@@ -145,8 +182,17 @@ export default {
             return ['admin'].includes(this.$store.getters.contextRole) || disponibilities.length >= 1
           }
         )
-      })
-
+      }),
+      domainsOptions: [
+        'Art et culture pour tous',
+        'Bénévolat de compétences',
+        'Éducation pour tous',
+        'Mémoire et citoyenneté',
+        'Prévention et protection',
+        'Protection de la nature',
+        'Solidarité et insertion',
+        'Sport pour tous'
+      ]
     }
   },
   computed: {
@@ -173,6 +219,12 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    handleSelectSkillItems (item) {
+      this.$set(this.form, 'skills', [...this.form.skills, item])
+    },
+    onRemovedSkillItem (item) {
+      this.form.skills = this.form.skills.filter(skill => skill.id !== item.id)
     }
   }
 }
