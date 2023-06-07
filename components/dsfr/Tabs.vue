@@ -18,7 +18,7 @@
             :id="`tabpanel-${uuid}-${tab.key}`"
             :key="tab.key"
             :class="[
-              'inline-flex items-center justify-center transition mx-1 px-4 py-2 border border-b-0 border-t-2 flex-none',
+              'inline-flex items-center justify-center transition mx-1 px-4 py-2 border border-b-0 border-t-2 flex-none whitespace-nowrap',
               {'bg-[#E3E3FD] border-[#E3E3FD] sm:hover:border-[#C1C1FB] sm:hover:bg-[#C1C1FB] active:bg-[#ADADF9] active:border-[#ADADF9]': tab.key !== selectedKey},
               {'bg-white text-jva-blue-500 border-t-jva-blue-500 border-b-white sm:hover:bg-[#F6F6F6] active:bg-[#EDEDED]': tab.key === selectedKey},
             ]"
