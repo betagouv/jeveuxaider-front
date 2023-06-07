@@ -23,11 +23,12 @@
       name="NAME"
       :tabs="tabs"
       tabpanel-class="!p-0"
+      selected-tab-key="benevoles"
     >
       <Box
-        v-for="(tab,index) in tabs"
-        :key="tab.index"
-        :slot="`tab-${index}`"
+        v-for="(tab) in tabs"
+        :key="tab.key"
+        :slot="`tab-${tab.key}`"
       >
         <StackedList :divided="false">
           <StackedListItem

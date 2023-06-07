@@ -9,21 +9,9 @@
     <div class="flex flex-col pb-12 gap-12">
       <SectionHeading title="Mes préférences de missions" />
 
-      <DsfrTabs
-        name="NAME"
-        :tabs="[
-          { key: 'profil', content: 'Mon profil', to: '/profile/edit' },
-          { key: 'preferences', content: 'Mes préférences de missions', to: '/profile/preferences' },
-          { key: 'notifications', content: 'Mes notifications', to: '/profile/notifications' },
-          { key: 'settings', content: 'Mes paramètres de compte', to: '/profile/settings' }
-        ]"
-        :selected-tab="1"
-        tabpanel-class="!p-0"
-      >
-        <template slot="tab-1">
-          <FormUserPreferences :profile="profile" />
-        </template>
-      </DsfrTabs>
+      <UserProfileTabs selected-tab-key="preferences">
+        <FormUserPreferences :profile="profile" />
+      </UserProfileTabs>
     </div>
   </div>
 </template>
@@ -32,13 +20,13 @@
 import FormUserPreferences from '@/components/form/FormUserPreferences.vue'
 
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
-import DsfrTabs from '@/components/dsfr/Tabs.vue'
+import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
 
 export default {
   components: {
     FormUserPreferences,
     Breadcrumb,
-    DsfrTabs
+    UserProfileTabs
   },
   middleware: 'authenticated',
   async asyncData ({ $axios, error, store }) {
