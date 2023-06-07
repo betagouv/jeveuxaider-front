@@ -31,8 +31,8 @@ export default {
           return {
             icon: '✍',
             iconVariant: 'warning',
-            title: 'Votre profil est <b>incomplet</b>',
-            subtitle: 'Mettez à jour vos informations afin de permettre aux organisations de vous proposer directement des missions.',
+            title: `Votre profil est incomplet (${action.completion_rate}%)`,
+            subtitle: `Complétez votre profil (${action.value.map(item => this.$options.filters.label(item, 'profile_fields')).join(', ')})`,
             link: '/profile/edit'
           }
         case 'search_missions':
