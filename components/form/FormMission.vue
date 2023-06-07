@@ -112,50 +112,91 @@
               placeholder="Incitez les bénévoles à candidater ..."
             />
           </FormControl>
-          <FormControl
-            v-if="activities.length"
-            label="Activité"
-            html-for="activity_id"
-          >
-            <Combobox
-              v-model="form.activity_id"
-              :value="form.activity_id"
-              name="activity_id"
-              placeholder="Sélectionner une activité"
-              :options="activities"
-              clearable
-              attribute-key="id"
-              attribute-label="name"
-              :disabled="Boolean(mission.template)"
-              :loading="activitiesClassifierLoading"
-            >
-              <template
-                v-if="activitiesClassifier?.code === 200"
-                #option="{ item, attributeLabel, selectedOption, highlightIndex, index }"
+          <template v-if="activities.length">
+            <div class="grid grid-cols-2 gap-4">
+              <FormControl
+                label="Activité principale"
+                html-for="activity_id"
               >
-                <div class="w-full flex justify-between">
-                  <div>{{ item[attributeLabel] }}</div>
-                  <Tag
-                    size="sm"
-                    class="ml-2 !transition-none"
-                    :class="[
-                      {'!bg-jva-blue-500 !text-white': (selectedOption?.id === item.id || highlightIndex == index)},
-                      {'text-[#161616] bg-[#EEEEEE] group-hover:bg-jva-blue-500 group-hover:text-white': selectedOption?.id !== item.id},
-                    ]"
-                    :custom-theme="true"
+                <Combobox
+                  v-model="form.activity_id"
+                  :value="form.activity_id"
+                  name="activity_id"
+                  placeholder="Sélectionner une activité"
+                  :options="activities"
+                  clearable
+                  attribute-key="id"
+                  attribute-label="name"
+                  :disabled="Boolean(mission.template)"
+                  :loading="activitiesClassifierLoading"
+                >
+                  <template
+                    v-if="activitiesClassifier?.code === 200"
+                    #option="{ item, attributeLabel, selectedOption, highlightIndex, index }"
                   >
-                    {{ item.formattedScore }}
-                  </Tag>
-                </div>
-              </template>
-            </Combobox>
-            <FormHelperText class="mt-2 !mb-0">
+                    <div class="w-full flex justify-between">
+                      <div>{{ item[attributeLabel] }}</div>
+                      <Tag
+                        size="sm"
+                        class="ml-2 !transition-none"
+                        :class="[
+                          {'!bg-jva-blue-500 !text-white': (selectedOption?.id === item.id || highlightIndex == index)},
+                          {'text-[#161616] bg-[#EEEEEE] group-hover:bg-jva-blue-500 group-hover:text-white': selectedOption?.id !== item.id},
+                        ]"
+                        :custom-theme="true"
+                      >
+                        {{ item.formattedScore }}
+                      </Tag>
+                    </div>
+                  </template>
+                </Combobox>
+              </FormControl>
+              <FormControl
+                label="Activité secondaire"
+                html-for="activity_secondary_id"
+              >
+                <Combobox
+                  v-model="form.activity_secondary_id"
+                  :value="form.activity_secondary_id"
+                  name="activity_secondary_id"
+                  placeholder="Sélectionner une activité"
+                  :options="activities"
+                  clearable
+                  attribute-key="id"
+                  attribute-label="name"
+                  :disabled="Boolean(mission.template)"
+                  :loading="activitiesClassifierLoading"
+                >
+                  <template
+                    v-if="activitiesClassifier?.code === 200"
+                    #option="{ item, attributeLabel, selectedOption, highlightIndex, index }"
+                  >
+                    <div class="w-full flex justify-between">
+                      <div>{{ item[attributeLabel] }}</div>
+                      <Tag
+                        size="sm"
+                        class="ml-2 !transition-none"
+                        :class="[
+                          {'!bg-jva-blue-500 !text-white': (selectedOption?.id === item.id || highlightIndex == index)},
+                          {'text-[#161616] bg-[#EEEEEE] group-hover:bg-jva-blue-500 group-hover:text-white': selectedOption?.id !== item.id},
+                        ]"
+                        :custom-theme="true"
+                      >
+                        {{ item.formattedScore }}
+                      </Tag>
+                    </div>
+                  </template>
+                </Combobox>
+              </FormControl>
+            </div>
+            <FormHelperText class="!mt-4">
               <span>Nous vous suggérons automatiquement une activité adaptée au contenu de votre mission !</span>
               <span v-if="activitiesClassifier?.code === 200">
                 Astuce : les pourcentages indiquent le niveau de pertinence de la recommandation
               </span>
             </FormHelperText>
-          </FormControl>
+          </template>
+
           <FormControl
             label="Pré-requis pour réaliser la mission"
             html-for="prerequisites"
@@ -640,6 +681,7 @@ export default {
         domaine_id: this.mission.template?.domaine_id || this.mission.domaine_id,
         domaine_secondary_id: this.mission.template?.domaine_secondary_id || this.mission.domaine_secondary_id,
         activity_id: this.mission.template?.activity_id || this.mission.activity_id,
+        activity_secondary_id: this.mission.template?.activity_secondary_id || this.mission.activity_secondary_id,
         objectif: this.mission.template?.objectif || this.mission.objectif,
         description: this.mission.template?.description || this.mission.description,
         illustrations: this.mission.illustrations || [],
