@@ -68,7 +68,12 @@
               Ma disponibilité
             </div>
             <div class="text-lg mt-4">
-              {{ commitmentLabel }}
+              <template v-if="profile.commitment__duration">
+                {{ commitmentLabel }}
+              </template>
+              <template v-else>
+                Non renseignée
+              </template>
             </div>
             <div class="flex gap-3 flex-wrap my-4">
               <Tag v-for="(item,i) in profile.disponibilities" :key="i">
@@ -88,12 +93,10 @@
 <script>
 import { cloneDeep } from 'lodash'
 import Tag from '@/components/dsfr/Tag.vue'
-// import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
     Tag
-    // Link
   },
   props: {
     profile: {

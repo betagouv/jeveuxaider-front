@@ -22,19 +22,20 @@
               <FormLabel html-for="frequence" required size="xl">
                 Combien de temps pourriez-vous allouer à des actions de bénévolat&nbsp;?
               </FormLabel>
-              <div class="mt-4 flex flex-col sm:flex-row gap-4 lg:gap-6 sm:items-center">
+              <div class="mt-4 flex flex-col sm:flex-row gap-4 lg:gap-6">
                 <div class="lg:w-1/2">
                   <SelectAdvanced
                     v-model="form.commitment__duration"
                     name="commitment__duration"
                     placeholder="Durée"
                     :options="$labels.duration"
+                    @blur="validate('commitment__duration')"
                   />
                   <FormError v-if="errors.commitment__duration">
                     {{ errors.commitment__time_period }}
                   </FormError>
                 </div>
-                <div class="flex-none text-lg font-semibold">
+                <div class="flex-none text-lg font-semibold sm:mt-2">
                   par
                 </div>
                 <div class="lg:w-1/2">
@@ -43,6 +44,7 @@
                     name="commitment__time_period"
                     placeholder="Fréquence"
                     :options="$labels.time_period"
+                    @blur="validate('commitment__time_period')"
                   />
                   <FormError v-if="errors.commitment__time_period">
                     {{ errors.commitment__time_period }}
@@ -66,6 +68,7 @@
                   variant="button"
                   :options="$labels.disponibilities"
                   class="mt-6"
+                  @updated="validate('disponibilities')"
                 />
               </FormControl>
             </div>
@@ -146,7 +149,7 @@
 
 <script>
 import { cloneDeep } from 'lodash'
-import { object, array } from 'yup'
+import { object, array, string } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
@@ -175,6 +178,8 @@ export default {
       activitiesOptions: activitiesOptions.sort((a, b) =>
         a.name.localeCompare(b.name)),
       formSchema: object({
+        commitment__duration: string().nullable().required('Merci de choisir une durée'),
+        commitment__time_period: string().nullable().required('Merci de choisir une fréquence'),
         disponibilities: array().transform(v => (!v ? [] : v)).test(
           'test-disponibilities-required',
           'Merci de sélectionner au moins 1 disponibilité',

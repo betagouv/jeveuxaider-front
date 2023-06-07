@@ -67,6 +67,7 @@ export default {
       }
 
       this.$emit('input', this.modelValue)
+      this.$emit('updated', this.modelValue)
     }
   }
 }
