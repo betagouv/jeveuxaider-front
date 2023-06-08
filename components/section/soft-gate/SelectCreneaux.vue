@@ -7,9 +7,13 @@
     </div>
     <div class="mx-auto">
       <AccordionsGroup class="px-4 sm:px-0 bg-white">
-        <Accordion v-for="date in datesPaginated" :key="date.id">
+        <Accordion
+          v-for="date in datesPaginated"
+          :key="date.id"
+          title-color-class="bg-white hover:bg-white active:bg-white"
+        >
           <template slot="title">
-            <CheckCircleSolidIcon v-if="selectedSlots.filter(selectedSlot => selectedSlot.date == date.id).length > 0" class="text-jva-green-500 mr-2 h-5 w-5" />
+            <CheckCircleSolidIcon v-if="selectedSlots.filter(selectedSlot => selectedSlot.date == date.id).length > 0" class="text-jva-green-500 mr-2 h-5 w-5 inline" />
             <span class="first-letter:uppercase">{{ $dayjs(date.id).format('dddd D MMMM') }}</span>
           </template>
           <div class="flex flex-wrap -mx-1">

@@ -4,8 +4,8 @@
       <button
         :class="[
           'fr-accordion__btn',
-          'hover:bg-[#F6F6F6] active:bg-[#EDEDED]',
-          { 'variant-big !px-2 !py-4 md:!px-4 md:!py-6 lg:!px-6 lg:!py-8 font-bold !text-lg md:!text-xl lg:!text-2xl lg:!leading-9': titleVariant === 'xxl' }
+          { 'variant-big !px-2 !py-4 md:!px-4 md:!py-6 lg:!px-6 lg:!py-8 font-bold !text-lg md:!text-xl lg:!text-2xl lg:!leading-9': titleVariant === 'xxl' },
+          titleColorClass
         ]"
         :aria-expanded="isOpen"
         :aria-controls="`accordion-${uuid}`"
@@ -67,6 +67,10 @@ export default {
     titleEmoji: {
       type: String,
       default: null
+    },
+    titleColorClass: {
+      type: String,
+      default: 'hover:bg-[#F6F6F6] active:bg-[#EDEDED]'
     }
   },
   data () {
