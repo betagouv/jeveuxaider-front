@@ -62,7 +62,7 @@
 
     <div v-if="mission.publics_beneficiaires?.length" class="mt-10">
       <HrTitle>
-        Publics aidés
+        {{ mission.publics_beneficiaires.length | pluralize('Public aidé', 'Publics aidés', false) }}
       </HrTitle>
       <div class="flex flex-wrap gap-2">
         <Badge
@@ -77,42 +77,45 @@
       </div>
     </div>
 
-    <div v-if="activity" class="mt-10">
+    <div v-if="activities?.length" class="mt-10">
       <HrTitle>
-        Activité
+        {{ activities.length | pluralize('Activité', 'Activités', false) }}
       </HrTitle>
-      <Badge as="p">
-        {{ activity.name }}
-      </Badge>
+      <div class="flex flex-wrap gap-2">
+        <Badge v-for="activity in activities" :key="activity.id" as="p">
+          {{ activity.name }}
+        </Badge>
+      </div>
     </div>
 
     <div v-if="mission.skills?.length" class="mt-10">
       <HrTitle>
-        Compétences recherchées
+        {{ mission.skills.length | pluralize('Compétence recherchée', 'Compétences recherchées', false) }}
       </HrTitle>
-      <ul class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-2">
         <Badge
           v-for="(skill, key) in mission.skills"
           :key="key"
           :no-icon="true"
           type="new"
-          as="li"
+          as="p"
         >
           {{ skill.name }}
         </Badge>
-      </ul>
+      </div>
     </div>
 
     <template v-if="['admin'].includes($store.getters.contextRole)">
       <div v-if="mission.tags?.length" class="mt-10">
         <HrTitle>
-          Tags
+          {{ mission.tags.length | pluralize('Tag', 'Tags', false) }}
         </HrTitle>
         <div class="flex flex-wrap gap-2">
           <Badge
             v-for="(tag, key) in mission.tags"
             :key="key"
             :no-icon="true"
+            as="p"
           >
             {{ tag.name }}
           </Badge>

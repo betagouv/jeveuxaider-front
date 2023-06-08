@@ -93,74 +93,30 @@
                   label="Activité principale"
                   html-for="activity_id"
                 >
-                  <Combobox
+                  <ComboboxActivities
                     v-model="form.activity_id"
-                    :value="form.activity_id"
                     name="activity_id"
-                    placeholder="Sélectionner une activité"
                     :options="activities"
-                    clearable
-                    attribute-key="id"
-                    attribute-label="name"
                     :loading="activitiesClassifierLoading"
-                  >
-                    <template
-                      v-if="activitiesClassifier?.code === 200"
-                      #option="{ item, attributeLabel, selectedOption, highlightIndex, index }"
-                    >
-                      <div class="w-full flex justify-between">
-                        <div>{{ item[attributeLabel] }}</div>
-                        <Tag
-                          size="sm"
-                          class="ml-2 !transition-none"
-                          :class="[
-                            {'!bg-jva-blue-500 !text-white': (selectedOption?.id === item.id || highlightIndex == index)},
-                            {'text-[#161616] bg-[#EEEEEE] group-hover:bg-jva-blue-500 group-hover:text-white': selectedOption?.id !== item.id},
-                          ]"
-                          :custom-theme="true"
-                        >
-                          {{ item.formattedScore }}
-                        </Tag>
-                      </div>
-                    </template>
-                  </Combobox>
+                    :activities-classifier="activitiesClassifier"
+                    @input="onInputActivity"
+                  />
                 </FormControl>
                 <FormControl
                   v-if="activities.length"
                   label="Activité secondaire"
                   html-for="activity_secondary_id"
                 >
-                  <Combobox
+                  <ComboboxActivities
+                    ref="comboboxSecondaryActivity"
                     v-model="form.activity_secondary_id"
-                    :value="form.activity_secondary_id"
                     name="activity_secondary_id"
-                    placeholder="Sélectionner une activité"
-                    :options="activities"
-                    clearable
-                    attribute-key="id"
-                    attribute-label="name"
+                    :options="activities.filter(
+                      (option) => option.id != form.activity_id
+                    )"
                     :loading="activitiesClassifierLoading"
-                  >
-                    <template
-                      v-if="activitiesClassifier?.code === 200"
-                      #option="{ item, attributeLabel, selectedOption, highlightIndex, index }"
-                    >
-                      <div class="w-full flex justify-between">
-                        <div>{{ item[attributeLabel] }}</div>
-                        <Tag
-                          size="sm"
-                          class="ml-2 !transition-none"
-                          :class="[
-                            {'!bg-jva-blue-500 !text-white': (selectedOption?.id === item.id || highlightIndex == index)},
-                            {'text-[#161616] bg-[#EEEEEE] group-hover:bg-jva-blue-500 group-hover:text-white': selectedOption?.id !== item.id},
-                          ]"
-                          :custom-theme="true"
-                        >
-                          {{ item.formattedScore }}
-                        </Tag>
-                      </div>
-                    </template>
-                  </Combobox>
+                    :activities-classifier="activitiesClassifier"
+                  />
                 </FormControl>
               </div>
               <FormHelperText class="!mt-4">
@@ -252,14 +208,14 @@ import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import ButtonsSubmitFormMissionTemplate from '@/components/custom/ButtonsSubmitFormMissionTemplate.vue'
 import activitiesClassifierMixin from '@/mixins/activitiesClassifier'
-import Tag from '@/components/dsfr/Tag.vue'
 import AlgoliaTermsInput from '@/components/section/search/AlgoliaTermsInput'
+import ComboboxActivities from '@/components/custom/ComboboxActivities.vue'
 
 export default {
   components: {
     ButtonsSubmitFormMissionTemplate,
-    Tag,
-    AlgoliaTermsInput
+    AlgoliaTermsInput,
+    ComboboxActivities
   },
   mixins: [FormErrors, FormUploads, activitiesClassifierMixin],
   props: {
@@ -328,6 +284,11 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    onInputActivity (payload) {
+      if (payload && this.form.activity_secondary_id === payload) {
+        this.$refs.comboboxSecondaryActivity?.$refs?.combobox?.reset()
+      }
     }
   }
 }
