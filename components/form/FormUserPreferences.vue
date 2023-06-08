@@ -10,11 +10,11 @@
         </div>
         <div class="mt-12 space-y-8">
           <div class="flex lg:space-x-10 items-center">
-            <div class="w-[90px]">
+            <div class="hidden lg:block w-[90px]">
               <img
                 src="/images/icons/calendar.svg"
                 alt=""
-                class="hidden lg:block flex-none"
+                class=""
                 data-not-lazy
               >
             </div>
@@ -77,11 +77,10 @@
       </div>
       <div class="pt-8 lg:pt-14">
         <div class="flex lg:space-x-10 items-center">
-          <div class="w-[90px]">
+          <div class="hidden lg:block  w-[90px]">
             <img
               src="/images/icons/send-mail.svg"
               alt=""
-              class="hidden lg:block flex-none"
               data-not-lazy
             >
           </div>
