@@ -29,6 +29,7 @@
               placeholder="Champ"
               name="field"
               :options="conditionFieldOptions"
+              options-class="!min-w-[230px]"
             />
           </FormControl>
           <FormControl
@@ -51,6 +52,7 @@
               placeholder="Valeur"
               name="value"
               :options="fieldResolver(condition.name).options"
+              options-class="!min-w-[300px]"
             />
             <Input
               v-if="fieldResolver(condition.name).type === 'input'"
