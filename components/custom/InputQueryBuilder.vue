@@ -33,20 +33,17 @@
           </FormControl>
           <FormControl
             html-for="operand"
-            class="max-w-[90px]"
+            class="max-w-[110px]"
           >
             <SelectAdvanced
               v-model="condition.operand"
               name="operand"
-              :options="[
-                {key: '=', label: '='},
-                {key: '!=', label: '!='}
-              ]"
+              :options="operandResolver(condition.name)"
             />
           </FormControl>
           <FormControl
             html-for="value"
-            class="max-w-[224px]"
+            class="flex-1"
           >
             <SelectAdvanced
               v-if="fieldResolver(condition.name).type === 'select'"
@@ -142,7 +139,11 @@ export default {
   },
   data () {
     return {
-      query: this.modelValue
+      query: this.modelValue,
+      operands: [
+        { key: '=', label: '=' },
+        { key: '!=', label: '!=' }
+      ]
     }
   },
   watch: {
@@ -156,6 +157,10 @@ export default {
   methods: {
     fieldResolver (key) {
       return this.conditionFieldOptions.find(option => option.key === key)
+    },
+    operandResolver (key) {
+      const fieldConfig = this.conditionFieldOptions.find(option => option.key === key)
+      return fieldConfig.includesOperands ? this.operands.concat(fieldConfig.includesOperands) : this.operands
     },
     addGroup (operator) {
       this.query.splice(this.query.length, 0, {

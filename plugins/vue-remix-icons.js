@@ -71,6 +71,7 @@ import RiUserStarLine from 'vue-remix-icons/icons/RiUserStarLine.vue'
 import RiArrowUpLine from 'vue-remix-icons/icons/RiArrowUpLine.vue'
 
 const components = {
+  RiPencilLine,
   RiUserStarLine,
   RiAdminLine,
   RiFlashlightLine,
@@ -131,7 +132,6 @@ const components = {
   RiDownloadLine,
   RiDownload2Line,
   RiEyeLine,
-  RiPencilLine,
   RiDeleteBinLine,
   RiFileCopyLine,
   RiEqualizerFill,

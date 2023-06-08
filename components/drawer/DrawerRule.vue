@@ -59,8 +59,13 @@
         </Box>
       </div>
       <div class="">
-        <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
-          Résultats
+        <div class="text-sm flex justify-between px-2 mb-2 items-center">
+          <div class="uppercase font-semibold text-gray-600">
+            Éléments à traiter
+          </div>
+          <Link :to="`/admin/settings/rules/${rule.id}/pending-items`" icon="ChevronRightIcon">
+            Voir les résultats
+          </Link>
         </div>
         <Box variant="flat" padding="xs">
           <DescriptionList v-if="rule.totalItems !== false">
