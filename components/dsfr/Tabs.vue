@@ -3,7 +3,8 @@
     <div
       :class="[
         'relative',
-        { 'shadow-right': true }
+        { 'shadow-left': hasShadowLeft },
+        { 'shadow-right': hasShadowRight },
       ]"
     >
       <ul
@@ -13,6 +14,7 @@
           'flex items-stretch overflow-x-auto px-3 py-1',
           tabswrapperClass
         ]"
+        @scroll="onScroll"
       >
         <li
           v-for="(tab, i) in tabs"
@@ -103,13 +105,25 @@ export default {
   },
   data () {
     return {
-      selectedKey: this.selectedTabKey ? this.selectedTabKey : this.tabs[0].key
+      selectedKey: this.selectedTabKey ? this.selectedTabKey : this.tabs[0].key,
+      hasShadowRight: false,
+      hasShadowLeft: false
+    }
+  },
+  computed: {
+    firstTabKey () {
+      return this.tabs[0]?.key
+    },
+    lastTabKey () {
+      return this.tabs[this.tabs.length - 1]?.key
     }
   },
   mounted () {
     this.$refs[`tab-${this.selectedKey}`]?.[0]?.scrollIntoView({
+      inline: 'center',
       block: 'nearest'
     })
+    this.onScroll()
   },
   methods: {
     handleTabClick (tab) {
@@ -119,6 +133,21 @@ export default {
         this.selectedKey = tab.key
       }
       this.$emit('selected', tab)
+    },
+    isElementInViewport (el) {
+      const rect = el.getBoundingClientRect()
+      return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      )
+    },
+    onScroll () {
+      const elFirst = this.$refs[`tab-${this.firstTabKey}`]?.[0]
+      this.hasShadowLeft = elFirst && !this.isElementInViewport(elFirst)
+      const elLast = this.$refs[`tab-${this.lastTabKey}`]?.[0]
+      this.hasShadowRight = elLast && !this.isElementInViewport(elLast)
     }
   }
 }
@@ -135,9 +164,20 @@ button {
   }
 }
 
-/* .shadow-right::before {
+.shadow-left::before,
+.shadow-right::after {
   content: '';
-  background: linear-gradient(to right, transparent, #D4D4D4);
-  @apply w-4 h-full absolute top-0 right-0 pointer-events-none;
-} */
+  height: calc(100% - 8px);
+  @apply w-4 absolute top-1 pointer-events-none;
+}
+
+.shadow-left::before {
+  background: linear-gradient(to right, #F9F6F2, transparent);
+  @apply left-0;
+}
+
+.shadow-right::after {
+  background: linear-gradient(to right, transparent, #F9F6F2);
+  @apply right-0;
+}
 </style>
