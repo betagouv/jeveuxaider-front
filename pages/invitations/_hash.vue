@@ -68,6 +68,10 @@ export default {
       console.log(err)
     })
 
+    if (!invitation) {
+      return error({ statusCode: 404, message: 'Cette invitation n\'est plus disponible' })
+    }
+
     if (store.getters.isLogged) {
       if (store.getters.profile.email !== invitation.email) {
         return error({ statusCode: 403 })
