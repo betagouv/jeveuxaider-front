@@ -1,46 +1,54 @@
 <template>
   <div>
-    <ul
-      role="tablist"
-      :aria-label="name"
+    <div
       :class="[
-        'flex items-stretch overflow-x-auto px-3 py-1',
-        tabswrapperClass
+        'relative',
+        { 'shadow-right': true }
       ]"
     >
-      <li
-        v-for="(tab, i) in tabs"
-        :key="i"
-        role="presentation"
+      <ul
+        role="tablist"
+        :aria-label="name"
+        :class="[
+          'flex items-stretch overflow-x-auto px-3 py-1',
+          tabswrapperClass
+        ]"
       >
-        <template v-if="tab">
-          <button
-            :id="`tabpanel-${uuid}-${tab.key}`"
-            :key="tab.key"
-            :class="[
-              'inline-flex items-center justify-center transition mx-1 px-4 py-2 border border-b-0 border-t-2 flex-none whitespace-nowrap',
-              {'bg-[#E3E3FD] border-[#E3E3FD] sm:hover:border-[#C1C1FB] sm:hover:bg-[#C1C1FB] active:bg-[#ADADF9] active:border-[#ADADF9]': tab.key !== selectedKey},
-              {'bg-white text-jva-blue-500 border-t-jva-blue-500 border-b-white sm:hover:bg-[#F6F6F6] active:bg-[#EDEDED]': tab.key === selectedKey},
-            ]"
-            role="tab"
-            :aria-selected="tab.key === selectedKey || 'false'"
-            :aria-controls="`tabpanel-${uuid}-${tab.key}-panel`"
-            @click="handleTabClick(tab)"
-          >
-            <component
-              :is="tab.icon"
-              v-if="tab.icon"
+        <li
+          v-for="(tab, i) in tabs"
+          :key="i"
+          role="presentation"
+        >
+          <template v-if="tab">
+            <button
+              :id="`tabpanel-${uuid}-${tab.key}`"
+              :ref="`tab-${tab.key}`"
+              :key="tab.key"
               :class="[
-                'fill-current flex-none mr-2',
-                'ml-[0.125rem]',
-                'w-4 h-4',
+                'inline-flex items-center justify-center transition mx-1 px-4 py-2 border border-b-0 border-t-2 flex-none whitespace-nowrap',
+                {'bg-[#E3E3FD] border-[#E3E3FD] sm:hover:border-[#C1C1FB] sm:hover:bg-[#C1C1FB] active:bg-[#ADADF9] active:border-[#ADADF9]': tab.key !== selectedKey},
+                {'bg-white text-jva-blue-500 border-t-jva-blue-500 border-b-white sm:hover:bg-[#F6F6F6] active:bg-[#EDEDED]': tab.key === selectedKey},
               ]"
-            />
-            <span class="font-bold">{{ tab.content }}</span>
-          </button>
-        </template>
-      </li>
-    </ul>
+              role="tab"
+              :aria-selected="tab.key === selectedKey || 'false'"
+              :aria-controls="`tabpanel-${uuid}-${tab.key}-panel`"
+              @click="handleTabClick(tab)"
+            >
+              <component
+                :is="tab.icon"
+                v-if="tab.icon"
+                :class="[
+                  'fill-current flex-none mr-2',
+                  'ml-[0.125rem]',
+                  'w-4 h-4',
+                ]"
+              />
+              <span class="font-bold">{{ tab.content }}</span>
+            </button>
+          </template>
+        </li>
+      </ul>
+    </div>
 
     <template v-for="(tab) in tabs">
       <template v-if="tab">
@@ -98,6 +106,11 @@ export default {
       selectedKey: this.selectedTabKey ? this.selectedTabKey : this.tabs[0].key
     }
   },
+  mounted () {
+    this.$refs[`tab-${this.selectedKey}`]?.[0]?.scrollIntoView({
+      block: 'nearest'
+    })
+  },
   methods: {
     handleTabClick (tab) {
       if (tab.to) {
@@ -121,4 +134,10 @@ button {
     outline-offset: 2px;
   }
 }
+
+/* .shadow-right::before {
+  content: '';
+  background: linear-gradient(to right, transparent, #D4D4D4);
+  @apply w-4 h-full absolute top-0 right-0 pointer-events-none;
+} */
 </style>
