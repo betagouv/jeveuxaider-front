@@ -17,10 +17,14 @@
           <div class="flex-1">
             <div class="text-xl text-black font-bold">
               <template v-if="hasParticipations">
-                {{ $store.state.auth.user.statistics?.participations_count|pluralize('mission réalisée', 'missions réalisées') }}
+                <nuxt-link to="/profile/missions" class="flex justify-between items-center group">
+                  <span class="group-hover:underline">
+                    {{ $store.state.auth.user.statistics?.participations_count|pluralize('mission', 'missions') }}</span>
+                  <RiArrowRightSLine class="h-4 group-hover:h-5 transition-all" />
+                </nuxt-link>
               </template>
               <template v-else>
-                Aucune mission réalisée
+                Aucune mission
               </template>
             </div>
           </div>
@@ -38,17 +42,17 @@
           </div>
           <div class="flex-1">
             <div class="text-xl font-bold">
-              Recevoir des sollicitations
+              Recevoir des propositions
             </div>
             <div class="flex items-center space-x-6 mt-4">
+              <div class="flex-1 text-lg">
+                Recevez par e-mail des suggestions de missions
+              </div>
               <Toggle
                 v-model="form.is_visible"
                 @checked="handleProfileVisible()"
                 @unchecked="handleProfileInvisible()"
               />
-              <div class="flex-1 text-lg">
-                Recevez par e-mail des propositions de missions
-              </div>
             </div>
           </div>
         </div>
