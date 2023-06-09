@@ -144,16 +144,17 @@
                 class="hidden lg:block h-auto flex-none w-[100px] object-contain object-left"
                 data-not-lazy
               >
-              <div>
+              <div class="w-full lg:w-[520px]">
                 <Toggle
                   v-model="form.service_civique"
-                  class="flex-1"
+                  class="lg:w-full"
+                  position="right"
                   label="Êtes-vous volontaire en Service Civique ?"
                   :description="form.service_civique ? 'Oui, je suis volontaire' : 'Non, je ne suis pas volontaire'"
                 />
               </div>
             </div>
-            <div v-if="form.service_civique" class="max-w-xl lg:pl-[228px]">
+            <div v-if="form.service_civique" class="max-w-xl lg:pl-[144px]">
               <FormControl
                 label="Date de début de votre Service Civique"
                 html-for="service_civique_completion_date"
@@ -179,16 +180,17 @@
                 class="hidden lg:block h-auto flex-none w-[100px] object-contain object-left"
                 data-not-lazy
               >
-              <div>
+              <div class="w-full lg:w-[520px]">
                 <Toggle
                   v-model="form.cej"
-                  class="flex-1"
+                  class="lg:w-full"
+                  position="right"
                   label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
                   :description="form.cej ? 'Oui, je suis en Contrat d\'Engagement Jeune' : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'"
                 />
               </div>
             </div>
-            <div v-if="form.cej" class="max-w-xl lg:pl-[228px]">
+            <div v-if="form.cej" class="max-w-xl lg:pl-[144px]">
               <FormControl v-if="form.cej" label="Email de votre conseiller CEJ" html-for="cej_email_adviser" :error="errors.cej_email_adviser" required>
                 <template #afterLabel>
                   <span
