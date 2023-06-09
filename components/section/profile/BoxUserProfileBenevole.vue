@@ -20,7 +20,7 @@
                 <nuxt-link to="/profile/missions" class="flex justify-between items-center group">
                   <span class="group-hover:underline">
                     {{ $store.state.auth.user.statistics?.participations_count|pluralize('mission', 'missions') }}</span>
-                  <RiArrowRightSLine class="h-4 group-hover:h-5 transition-all" />
+                  <RiArrowRightSLine class="h-5 group-hover:h-6 transition-all" />
                 </nuxt-link>
               </template>
               <template v-else>
