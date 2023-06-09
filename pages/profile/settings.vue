@@ -21,7 +21,7 @@
               <FormPassword class="mt-8" />
             </div>
             <div class="pt-8 lg:pt-14">
-              <div class="border p-8">
+              <div class="sm:border sm:p-8">
                 <Heading as="h2" :level="2" class="mb-8">
                   Désinscription
                 </Heading>
