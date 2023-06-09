@@ -2,7 +2,7 @@
   <form
     id="form"
     class="gap-8 grid grid-cols-1"
-    @submit.prevent="onSubmit"
+    @submit.prevent="handleSubmit"
   >
     <FormControl
       label="Mot de passe actuel"
@@ -89,7 +89,7 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
+    handleSubmit () {
       if (this.loading) {
         return
       }
