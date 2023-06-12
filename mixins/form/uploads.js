@@ -77,6 +77,11 @@ export default {
         })
 
         await Promise.all(promises)
+
+        // reset
+        this.uploads.add = []
+        this.uploads.update = []
+        this.uploads.delete = []
       }
     }
   }

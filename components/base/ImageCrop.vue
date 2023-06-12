@@ -138,6 +138,14 @@ export default {
       manipulations: this.defaultValue?.manipulation ?? {}
     }
   },
+  watch: {
+    defaultValue (newDefaultValue) {
+      this.files = newDefaultValue?.urls ? [newDefaultValue] : []
+      this.previewSrcset = newDefaultValue?.urls?.[this.previewConversion] ?? newDefaultValue?.urls?.original
+      this.originalSrc = newDefaultValue?.urls?.original
+      this.manipulations = newDefaultValue?.manipulation ?? {}
+    }
+  },
   methods: {
     onUploadAdd (files) {
       const errors = []
