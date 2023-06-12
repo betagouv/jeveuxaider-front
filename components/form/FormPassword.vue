@@ -48,23 +48,37 @@
     </FormControl>
     <div class="hidden sm:block pt-8 lg:pt-14">
       <div class="text-center">
-        <Button size="lg" variant="primary" :loading="loading" @click.native="handleSubmit()">
+        <Button
+          size="lg"
+          variant="primary"
+          :loading="loading"
+          :disabled="!formIsDirty"
+          @click.native="handleSubmit()"
+        >
           Mettre à jour
         </Button>
       </div>
     </div>
-    <div
-      :class="[
-        'sm:hidden fixed bottom-0 p-4 bg-white z-50 w-full left-0 right-0',
-      ]"
-      style="box-shadow: 0 25px 20px 30px rgb(0 0 0 / 25%);"
-    >
-      <div class="">
-        <Button size="lg" class="w-full" variant="primary" :loading="loading" @click.native="handleSubmit()">
+    <transition name="fade">
+      <div
+        v-if="formIsDirty"
+        :class="[
+          'sm:hidden fixed bottom-0 p-3 bg-white z-50 w-full left-0 right-0',
+        ]"
+        style="box-shadow: 0 25px 20px 30px rgb(0 0 0 / 25%);"
+      >
+        <Button
+          size="lg"
+          class="w-full"
+          variant="primary"
+          :loading="loading"
+          :disabled="!formIsDirty"
+          @click.native="handleSubmit()"
+        >
           Mettre à jour
         </Button>
       </div>
-    </div>
+    </transition>
   </form>
 </template>
 <script>
@@ -85,7 +99,17 @@ export default {
         current_password: string().required('Merci de saisir votre mot de passe'),
         password: string().min(8).required('Un nouveau mot de passe est requis'),
         password_confirmation: string().required('Une confirmation de mot de passe est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
-      })
+      }),
+      formIsDirty: false
+    }
+  },
+  watch: {
+    form: {
+      deep: true,
+      async handler (newForm) {
+        this.formIsDirty = await this.formSchema.isValid(newForm)
+        this.$emit('change', this.formIsDirty)
+      }
     }
   },
   methods: {

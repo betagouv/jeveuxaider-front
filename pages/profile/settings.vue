@@ -9,7 +9,20 @@
     <ModalUnregisterUser :is-open="showAlertUnsubscribe" @cancel="showAlertUnsubscribe = false" @close="showAlertUnsubscribe = false" />
 
     <div class="flex flex-col pb-12 gap-12">
-      <SectionHeading title="Mes paramètres de compte" />
+      <SectionHeading title="Mes paramètres de compte">
+        <template #action>
+          <Button
+            class="hidden lg:flex"
+            size="lg"
+            variant="primary"
+            :loading="loading"
+            :disabled="!formIsDirty"
+            @click.native="handleSubmit($event)"
+          >
+            Mettre à jour
+          </Button>
+        </template>
+      </SectionHeading>
 
       <UserProfileTabs selected-tab-key="settings">
         <div class="bg-white px-6 py-8 lg:px-12 lg:py-14">
@@ -18,7 +31,7 @@
               <Heading as="h2" :level="2">
                 Modification de votre mot de passe
               </Heading>
-              <FormPassword class="mt-8" />
+              <FormPassword ref="form" class="mt-8" @change="onChange($event)" />
             </div>
             <div class="pt-8 lg:pt-14">
               <div class="sm:border sm:p-8">
@@ -62,15 +75,23 @@ export default {
   middleware: 'authenticated',
   data () {
     return {
-      showAlertUnsubscribe: false
+      showAlertUnsubscribe: false,
+      loading: false,
+      formIsDirty: false
     }
   },
   methods: {
-
+    async handleSubmit (payload) {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      await this.$refs.form.handleSubmit(payload)
+      this.loading = false
+    },
+    onChange (formIsDirty) {
+      this.formIsDirty = formIsDirty
+    }
   }
 }
 </script>
-
-<style>
-
-</style>

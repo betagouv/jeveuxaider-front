@@ -215,29 +215,43 @@
       </div>
       <div class="hidden sm:block pt-8 lg:pt-14">
         <div class="text-center">
-          <Button size="lg" variant="primary" :loading="loading" @click.native="handleSubmit()">
+          <Button
+            size="lg"
+            variant="primary"
+            :loading="loading"
+            :disabled="!formIsDirty"
+            @click.native="handleSubmit()"
+          >
             Mettre à jour
           </Button>
         </div>
       </div>
-      <div
-        :class="[
-          'sm:hidden fixed bottom-0 p-4 bg-white z-50 w-full left-0 right-0',
-        ]"
-        style="box-shadow: 0 25px 20px 30px rgb(0 0 0 / 25%);"
-      >
-        <div class="">
-          <Button size="lg" class="w-full" variant="primary" :loading="loading" @click.native="handleSubmit()">
+      <transition name="fade">
+        <div
+          v-if="formIsDirty"
+          :class="[
+            'sm:hidden fixed bottom-0 p-3 bg-white z-50 w-full left-0 right-0',
+          ]"
+          style="box-shadow: 0 25px 20px 30px rgb(0 0 0 / 25%);"
+        >
+          <Button
+            size="lg"
+            class="w-full"
+            variant="primary"
+            :loading="loading"
+            :disabled="!formIsDirty"
+            @click.native="handleSubmit()"
+          >
             Mettre à jour
           </Button>
         </div>
-      </div>
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEqual } from 'lodash'
 import { string, object, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
@@ -297,8 +311,8 @@ export default {
           then: schema => schema.required("L'email de votre conseiller CEJ est obligatoire")
         }),
         service_civique_completion_date: date().nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null))
-      })
-
+      }),
+      formIsDirty: false
     }
   },
   computed: {
@@ -314,6 +328,20 @@ export default {
     'form.cej' (val) {
       if (!val) {
         this.form.cej_email_adviser = null
+      }
+    },
+    form: {
+      deep: true,
+      handler (newForm) {
+        this.formIsDirty = !isEqual(newForm, this.profile)
+        this.$emit('change', this.formIsDirty)
+      }
+    },
+    uploads: {
+      deep: true,
+      handler (newUploads) {
+        this.formIsDirty = newUploads.add.length || newUploads.update.length || newUploads.delete.length
+        this.$emit('change', this.formIsDirty)
       }
     }
   },
@@ -351,7 +379,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
