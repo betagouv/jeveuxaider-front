@@ -90,8 +90,8 @@
               class="flex-1"
               position="right"
               size="xl"
-              label="Recevoir directement des solicitations par des organisations"
-              description="Recevez par e-mail des propositions de missions de bénévolat"
+              label="Recevoir des propositions de missions par les organisations"
+              description="Recevez par e-mail des suggestions de missions de bénévolat"
             />
           </div>
         </div>

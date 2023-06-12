@@ -45,7 +45,8 @@
                   'w-4 h-4',
                 ]"
               />
-              <span class="font-bold">{{ tab.content }}</span>
+              <span class="font-bold hidden sm:inline">{{ tab.content }}</span>
+              <span class="font-bold inline sm:hidden">{{ tab.contentMobile || tab.content }}</span>
             </button>
           </template>
         </li>

@@ -27,15 +27,15 @@ export default {
   computed: {
     tabs () {
       return [
-        { key: 'profil', content: 'Mon profil', to: '/profile/edit' },
-        { key: 'preferences', content: 'Mes préférences de missions', to: '/profile/preferences' },
+        { key: 'profil', content: 'Mon profil', contentMobile: 'Profil', to: '/profile/edit' },
+        { key: 'preferences', content: 'Mes préférences de missions', contentMobile: 'Préférences', to: '/profile/preferences' },
         [
           'referent',
           'responsable'
         ].includes(this.$store.getters.contextRole)
-          ? { key: 'notifications', content: 'Mes notifications', to: '/profile/notifications' }
+          ? { key: 'notifications', content: 'Mes notifications', contentMobile: 'Notifications', to: '/profile/notifications' }
           : null,
-        { key: 'settings', content: 'Mes paramètres de compte', to: '/profile/settings' }
+        { key: 'settings', content: 'Mes paramètres de compte', contentMobile: 'Paramètres', to: '/profile/settings' }
       ]
     }
   }

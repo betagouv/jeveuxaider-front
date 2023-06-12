@@ -32,7 +32,7 @@ export default {
             icon: '✍',
             iconVariant: 'warning',
             title: `Votre profil est incomplet (${action.completion_rate}%)`,
-            subtitle: `Complétez votre profil: ${action.value.map(item => this.$options.filters.label(item, 'profile_fields')).join(', ')}`,
+            subtitle: `Complétez votre profil : ${action.value.map(item => this.$options.filters.label(item, 'profile_fields')).join(', ')}`,
             link: '/profile/edit'
           }
         case 'profile_without_activities':
