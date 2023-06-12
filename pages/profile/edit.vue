@@ -15,7 +15,7 @@
             variant="primary"
             :loading="loading"
             :disabled="!formIsDirty"
-            @click.native="handleSubmit($event)"
+            @click.native="submitForm"
           >
             Mettre à jour
           </Button>
@@ -23,7 +23,12 @@
       </SectionHeading>
 
       <UserProfileTabs selected-tab-key="profil">
-        <FormUserProfile ref="form" :profile="profile" @change="onChange($event)" />
+        <FormUserProfile
+          ref="form"
+          :profile="profile"
+          @change="formIsDirty = $event"
+          @submit="fetchProfile"
+        />
       </UserProfileTabs>
     </div>
   </div>
@@ -34,6 +39,7 @@ import FormUserProfile from '@/components/form/FormUserProfile.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
 import Button from '@/components/dsfr/Button.vue'
+import MixinFormDirtyState from '@/mixins/form/dirty-state.js'
 
 export default {
   components: {
@@ -42,31 +48,31 @@ export default {
     UserProfileTabs,
     Button
   },
+  mixins: [MixinFormDirtyState],
   middleware: 'authenticated',
   async asyncData ({ $axios, error, store }) {
     const { data: profile } = await $axios.get(`/profiles/${store.state.auth.user.profile.id}`)
-
     return {
       profile
     }
   },
   data () {
     return {
-      loading: false,
-      formIsDirty: false
+      loading: false
     }
   },
   methods: {
-    async handleSubmit (payload) {
+    async fetchProfile () {
+      const { data: profile } = await this.$axios.get(`/profiles/${this.$store.state.auth.user.profile.id}`)
+      this.profile = profile
+    },
+    async submitForm () {
       if (this.loading) {
         return
       }
       this.loading = true
-      await this.$refs.form.handleSubmit(payload)
+      await this.$refs.form.handleSubmit()
       this.loading = false
-    },
-    onChange (formIsDirty) {
-      this.formIsDirty = formIsDirty
     }
   }
 }

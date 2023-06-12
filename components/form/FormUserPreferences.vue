@@ -227,12 +227,20 @@ export default {
     }
   },
   watch: {
+    profile: {
+      deep: true,
+      handler (profile) {
+        this.form = cloneDeep(profile)
+      }
+    },
     form: {
       deep: true,
       handler (newForm) {
         this.formIsDirty = !isEqual(newForm, this.profile)
-        this.$emit('change', this.formIsDirty)
       }
+    },
+    formIsDirty () {
+      this.$emit('change', this.formIsDirty)
     }
   },
   methods: {
@@ -248,6 +256,8 @@ export default {
             id: this.$store.getters.profile.id,
             ...this.form
           })
+          this.formIsDirty = false
+          this.$emit('submit')
           this.$toast.success('Modifications enregistrées')
         })
         .catch((errors) => {

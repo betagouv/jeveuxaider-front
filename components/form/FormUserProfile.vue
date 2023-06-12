@@ -10,6 +10,7 @@
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
           <FormControl class="md:col-span-2" label="Photo de profil" html-for="avatar">
+            <!-- :key="form.avatar?.updated_at ?? 'imageCrop'" -->
             <ImageCrop
               :default-value="form.avatar"
               :preview-width="100"
@@ -325,6 +326,12 @@ export default {
     }
   },
   watch: {
+    profile: {
+      deep: true,
+      handler (profile) {
+        this.form = cloneDeep(profile)
+      }
+    },
     'form.cej' (val) {
       if (!val) {
         this.form.cej_email_adviser = null
@@ -334,15 +341,16 @@ export default {
       deep: true,
       handler (newForm) {
         this.formIsDirty = !isEqual(newForm, this.profile)
-        this.$emit('change', this.formIsDirty)
       }
     },
     uploads: {
       deep: true,
       handler (newUploads) {
-        this.formIsDirty = newUploads.add.length || newUploads.update.length || newUploads.delete.length
-        this.$emit('change', this.formIsDirty)
+        this.formIsDirty = !!(newUploads.add.length || newUploads.update.length || newUploads.delete.length)
       }
+    },
+    formIsDirty () {
+      this.$emit('change', this.formIsDirty)
     }
   },
   methods: {
@@ -367,6 +375,8 @@ export default {
             id: this.$store.getters.profile.id,
             ...this.form
           })
+          this.formIsDirty = false
+          this.$emit('submit')
           this.$toast.success('Modifications enregistrées')
         })
         .catch((errors) => {

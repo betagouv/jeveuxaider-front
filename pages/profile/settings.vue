@@ -16,8 +16,8 @@
             size="lg"
             variant="primary"
             :loading="loading"
-            :disabled="!formIsDirty"
-            @click.native="handleSubmit($event)"
+            :disabled="!canSubmitForm"
+            @click.native="handleSubmit"
           >
             Mettre à jour
           </Button>
@@ -31,7 +31,7 @@
               <Heading as="h2" :level="2">
                 Modification de votre mot de passe
               </Heading>
-              <FormPassword ref="form" class="mt-8" @change="onChange($event)" />
+              <FormPassword ref="form" class="mt-8" @change="onChange" />
             </div>
             <div class="pt-8 lg:pt-14">
               <div class="sm:border sm:p-8">
@@ -63,6 +63,7 @@ import ModalUnregisterUser from '~/components/modal/ModalUnregisterUser.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
 import Button from '@/components/dsfr/Button.vue'
+import MixinFormDirtyState from '@/mixins/form/dirty-state.js'
 
 export default {
   components: {
@@ -72,25 +73,27 @@ export default {
     UserProfileTabs,
     Button
   },
+  mixins: [MixinFormDirtyState],
   middleware: 'authenticated',
   data () {
     return {
       showAlertUnsubscribe: false,
       loading: false,
-      formIsDirty: false
+      canSubmitForm: false
     }
   },
   methods: {
-    async handleSubmit (payload) {
+    async handleSubmit () {
       if (this.loading) {
         return
       }
       this.loading = true
-      await this.$refs.form.handleSubmit(payload)
+      await this.$refs.form.handleSubmit()
       this.loading = false
     },
-    onChange (formIsDirty) {
-      this.formIsDirty = formIsDirty
+    onChange ($event) {
+      this.formIsDirty = $event.isDirty
+      this.canSubmitForm = $event.isValid
     }
   }
 }

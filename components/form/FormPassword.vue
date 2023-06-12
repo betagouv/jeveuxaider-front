@@ -52,7 +52,7 @@
           size="lg"
           variant="primary"
           :loading="loading"
-          :disabled="!formIsDirty"
+          :disabled="!formIsValid"
           @click.native="handleSubmit()"
         >
           Mettre à jour
@@ -61,7 +61,7 @@
     </div>
     <transition name="fade">
       <div
-        v-if="formIsDirty"
+        v-if="formIsValid"
         :class="[
           'sm:hidden fixed bottom-0 p-3 bg-white z-50 w-full left-0 right-0',
         ]"
@@ -72,7 +72,7 @@
           class="w-full"
           variant="primary"
           :loading="loading"
-          :disabled="!formIsDirty"
+          :disabled="!formIsValid"
           @click.native="handleSubmit()"
         >
           Mettre à jour
@@ -82,6 +82,7 @@
   </form>
 </template>
 <script>
+import { isEqual } from 'lodash'
 import { string, object, ref } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import Button from '@/components/dsfr/Button.vue'
@@ -94,22 +95,29 @@ export default {
   data () {
     return {
       loading: false,
-      form: {},
+      form: { current_password: '', password: '', password_confirmation: '' },
       formSchema: object({
         current_password: string().required('Merci de saisir votre mot de passe'),
         password: string().min(8).required('Un nouveau mot de passe est requis'),
         password_confirmation: string().required('Une confirmation de mot de passe est requise').oneOf([ref('password'), null], 'Le mot de passe n\'est pas identique')
       }),
-      formIsDirty: false
+      formIsDirty: false,
+      formIsValid: false
     }
   },
   watch: {
     form: {
       deep: true,
       async handler (newForm) {
-        this.formIsDirty = await this.formSchema.isValid(newForm)
-        this.$emit('change', this.formIsDirty)
+        this.formIsValid = await this.formSchema.isValid(newForm)
+        this.formIsDirty = !isEqual(newForm, { current_password: '', password: '', password_confirmation: '' })
       }
+    },
+    formIsDirty (newVal, oldVal) {
+      this.$emit('change', { isDirty: this.formIsDirty, isValid: this.formIsValid })
+    },
+    formIsValid (newVal, oldVal) {
+      this.$emit('change', { isDirty: this.formIsDirty, isValid: this.formIsValid })
     }
   },
   methods: {
@@ -124,7 +132,11 @@ export default {
           this.loading = true
           await this.$axios.post('/user/password', this.form)
           this.$toast.success('Votre mot de passe a bien été modifié !')
+          this.formIsDirty = false
+          this.formIsValid = false
           this.$emit('submited', this.form)
+          // reset
+          this.form = { current_password: '', password: '', password_confirmation: '' }
         })
         .catch((errors) => {
           this.setErrors(errors)
