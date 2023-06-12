@@ -8,6 +8,7 @@
       ]"
     >
       <ul
+        ref="tablist"
         role="tablist"
         :aria-label="name"
         :class="[
@@ -120,11 +121,9 @@ export default {
     }
   },
   mounted () {
-    this.$refs[`tab-${this.selectedKey}`]?.[0]?.scrollIntoView({
-      inline: 'center',
-      block: 'nearest'
-    })
-    this.onScroll()
+    if (this.isElementInViewport(this.$refs.tablist)) {
+      this.scrollSelectedTabIntoView({ behavior: 'auto' })
+    }
   },
   methods: {
     handleTabClick (tab) {
@@ -132,6 +131,7 @@ export default {
         this.$router.push(tab.to)
       } else {
         this.selectedKey = tab.key
+        this.scrollSelectedTabIntoView({ behavior: 'smooth' })
       }
       this.$emit('selected', tab)
     },
@@ -149,6 +149,14 @@ export default {
       this.hasShadowLeft = elFirst && !this.isElementInViewport(elFirst)
       const elLast = this.$refs[`tab-${this.lastTabKey}`]?.[0]
       this.hasShadowRight = elLast && !this.isElementInViewport(elLast)
+    },
+    scrollSelectedTabIntoView ({ behavior }) {
+      this.$refs[`tab-${this.selectedKey}`]?.[0]?.scrollIntoView({
+        inline: 'center',
+        block: 'nearest',
+        behavior
+      })
+      this.onScroll()
     }
   }
 }
@@ -172,11 +180,11 @@ button {
   @apply w-4 absolute top-1 pointer-events-none;
 }
 
+/* @todo: props pour gérer la couleur */
 .shadow-left::before {
   background: linear-gradient(to right, #F9F6F2, transparent);
   @apply left-0;
 }
-
 .shadow-right::after {
   background: linear-gradient(to right, transparent, #F9F6F2);
   @apply right-0;
