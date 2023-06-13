@@ -21,11 +21,11 @@
       <DisclosureModerationAI :organisation="organisation" />
       <DisclosureWarningWords :organisation="organisation" />
 
-      <Disclosure v-if="organisationHasDuplicates">
+      <Disclosure v-if="organisationHasDuplicatesRna">
         <template #button="{ isOpen }">
           <div class="flex font-semibold text-sm items-center group">
             <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
-              <RiAlertFill class="h-5 w-5 text-[#FA7A35] fill-current mr-2" aria-hidden="true" /> Potentiel doublon : {{ duplicatesOrganisations.total }}
+              <RiAlertFill class="h-5 w-5 text-[#C9191E] fill-current mr-2" aria-hidden="true" /> Potention doublon - RNA : {{ duplicatesRnaOrganisations.total }}
             </div>
             <div class="w-full border-t mt-1 mx-2" />
             <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
@@ -33,7 +33,39 @@
           </div>
         </template>
         <div class="ml-7 mt-3 text-sm text-gray-500 space-y-2">
-          <div>{{ duplicatesOrganisations.total }} organisation(s) validée(s) avec un nom similaire.</div>
+          <div>{{ duplicatesRnaOrganisations.total|pluralize('organisation') }} avec le même RNA.</div>
+          <div>
+            <nuxt-link
+              v-for="item in duplicatesRnaOrganisations.data"
+              :key="item.id"
+              :to="`/admin/organisations/${item.id}`"
+              class="flex hover:underline hover:text-jva-blue-500"
+              target="_blank"
+            >
+              #{{ item.id }} - {{ item.name }} ›
+            </nuxt-link>
+          </div>
+          <div>
+            <nuxt-link class="underline" :to="`/admin/organisations?filter[search]=${organisation.rna}`" target="_blank">
+              Visualiser les potentiels doublons ›
+            </nuxt-link>
+          </div>
+        </div>
+      </Disclosure>
+
+      <Disclosure v-if="organisationHasDuplicates">
+        <template #button="{ isOpen }">
+          <div class="flex font-semibold text-sm items-center group">
+            <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
+              <RiAlertFill class="h-5 w-5 text-[#FA7A35] fill-current mr-2" aria-hidden="true" /> Potentiel doublon - Nom : {{ duplicatesOrganisations.total }}
+            </div>
+            <div class="w-full border-t mt-1 mx-2" />
+            <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+            <PlusCircleIcon v-else class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
+          </div>
+        </template>
+        <div class="ml-7 mt-3 text-sm text-gray-500 space-y-2">
+          <div>{{ duplicatesOrganisations.total|pluralize('organisation validée', 'organisations validées') }} avec un nom similaire.</div>
           <div>
             <nuxt-link
               v-for="algoliaOrganisation in duplicatesOrganisations.data"
@@ -108,6 +140,7 @@ export default {
     this.loading = true
     await Promise.all([
       this.fetchAlgoliaOrganisations(),
+      this.fetchOrganisationsByRNA(),
       this.fetchAIReportScore()
     ]).finally(() => {
       this.loading = false

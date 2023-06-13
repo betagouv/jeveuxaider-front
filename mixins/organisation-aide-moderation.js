@@ -20,14 +20,16 @@ export default {
         'cdd',
         'contrat'
       ],
-      duplicatesOrganisations: []
+      duplicatesOrganisations: null,
+      duplicatesRnaOrganisations: null
     }
   },
   computed: {
     hasResults () {
       return this.hasError ||
       this.needRNA ||
-      this.organisationHasDuplicates
+      this.organisationHasDuplicates ||
+      this.organisationHasDuplicatesRna
     },
     hasError () {
       return this.$store.getters['aideModeration/isAICompliant'] === false ||
@@ -35,6 +37,9 @@ export default {
     },
     needRNA () {
       return this.organisation.statut_juridique == 'Association' && !this.organisation.rna
+    },
+    organisationHasDuplicatesRna () {
+      return this.duplicatesRnaOrganisations?.total > 0
     },
     organisationHasDuplicates () {
       return this.duplicatesOrganisations?.total > 0
@@ -68,6 +73,18 @@ export default {
         filters: `id != ${this.organisation.id}`
       })
       this.duplicatesOrganisations = response
+    },
+    async fetchOrganisationsByRNA () {
+      if (this.organisation.statut_juridique == 'Association' && this.organisation.rna) {
+        const { data: response } = await this.$axios.get('/structures', {
+          params: {
+            'filter[search]': this.organisation.rna,
+            'filter[exclude]': this.organisation.id
+          }
+        })
+        console.log('fetchOrganisationsByRNA', response)
+        this.duplicatesRnaOrganisations = response
+      }
     }
   }
 }
