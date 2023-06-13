@@ -19,7 +19,7 @@
         </Heading>
         <p class="mt-4 text-[#666666] text-xl leading-7 text-center">
           Suggérées d’après
-          <Link to="/profile/edit">
+          <Link to="/profile/preferences">
             vos préférences
           </Link> ›
         </p>
@@ -40,7 +40,7 @@
             </Heading>
             <p id="label-slideshow-preferences-action" class="text-[#666666] text-xl leading-7">
               <span>Missions sélectionnées d’après vos </span>
-              <Link to="/profile/edit">
+              <Link to="/profile/preferences">
                 affinités et disponibilités
               </Link> ›
             </p>
