@@ -75,14 +75,13 @@ export default {
       this.duplicatesOrganisations = response
     },
     async fetchOrganisationsByRNA () {
-      if (this.organisation.statut_juridique == 'Association' && this.organisation.rna) {
+      if (this.organisation.statut_juridique == 'Association' && this.organisation.rna && this.organisation.rna != 'N/A') {
         const { data: response } = await this.$axios.get('/structures', {
           params: {
             'filter[search]': this.organisation.rna,
             'filter[exclude]': this.organisation.id
           }
         })
-        console.log('fetchOrganisationsByRNA', response)
         this.duplicatesRnaOrganisations = response
       }
     }
