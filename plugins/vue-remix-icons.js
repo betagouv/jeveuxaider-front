@@ -74,6 +74,7 @@ import RiHeartLine from 'vue-remix-icons/icons/RiHeartLine.vue'
 
 const components = {
   RiArrowRightSLine,
+  RiPencilLine,
   RiUserStarLine,
   RiAdminLine,
   RiFlashlightLine,
@@ -134,7 +135,6 @@ const components = {
   RiDownloadLine,
   RiDownload2Line,
   RiEyeLine,
-  RiPencilLine,
   RiDeleteBinLine,
   RiFileCopyLine,
   RiEqualizerFill,

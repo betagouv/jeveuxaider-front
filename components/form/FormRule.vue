@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
-      <div class="lg:col-span-3 space-y-12">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div class="lg:col-span-8 space-y-12">
         <Box>
           <Heading :level="3" class="mb-8">
             Paramétrages
@@ -28,13 +28,7 @@
             >
               <InputQueryBuilder
                 :model-value="form.conditions"
-                :condition-field-options="[
-                  {key:'missions.domaine_id', label: 'Domaine principal', type: 'select', options: $labels.domaines},
-                  {key:'missions.domaine_secondary_id', label: 'Domaine secondaire', type: 'select', options: $labels.domaines},
-                  {key:'missions.activity_id', label: 'Activité', type: 'select', options: activitiesOptions},
-                  {key:'missions.template_id', label: 'Modèle de mission', type: 'input'},
-                  {key:'missions.state', label: 'Statut', type: 'select', options: $labels.mission_workflow_states},
-                ]"
+                :condition-field-options="conditionsOptions"
                 @update:modelValue="newValue => form.conditions = newValue"
               />
             </FormControl>
@@ -66,7 +60,7 @@
           </div>
         </Box>
       </div>
-      <div class="lg:col-span-2 space-y-8">
+      <div class="lg:col-span-4 space-y-8">
         <Box padding="sm">
           <Heading :level="3" class="mb-8">
             Informations
@@ -138,7 +132,23 @@ export default {
         action_key: string().required('Préciser l\'action à exécuter'),
         action_value: string().required('Préciser la valeur à exécuter')
       }),
-      activitiesOptions
+      activitiesOptions: activitiesOptions.sort((a, b) =>
+        a.name.localeCompare(b.name))
+    }
+  },
+  computed: {
+    conditionsOptions () {
+      return [
+        { key: 'missions.domaine_id', label: 'Domaine principal', type: 'select', options: this.$labels.domaines },
+        { key: 'missions.domaine_secondary_id', label: 'Domaine secondaire', type: 'select', options: this.$labels.domaines },
+        { key: 'missions.activity_id', label: 'Activité', type: 'select', options: activitiesOptions },
+        { key: 'missions.template_id', label: 'Modèle de mission', type: 'input' },
+        { key: 'missions.state', label: 'Statut', type: 'select', options: this.$labels.mission_workflow_states },
+        { key: 'missions.publics_beneficiaires', label: 'Publics aidés', type: 'select', options: this.$labels.mission_publics_beneficiaires },
+        { key: 'missions.publics_volontaires', label: 'Mission ouverte aux', type: 'select', options: this.$labels.mission_publics_volontaires },
+        { key: 'missions.name', label: 'Nom de la mission', type: 'input', includesOperands: [{ key: 'ilike', label: 'Contient' }] }
+      ].sort((a, b) =>
+        a.label.localeCompare(b.label))
     }
   },
   methods: {

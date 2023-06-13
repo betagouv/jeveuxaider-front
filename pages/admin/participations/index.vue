@@ -206,6 +206,17 @@
         @processed="onBulkOperationProcessed"
       />
 
+      <Pagination
+        v-if="!bulkOperationIsActive"
+        class="mt-12"
+        variant="light"
+        align="right"
+        :current-page="queryResult.current_page"
+        :total-rows="queryResult.total"
+        :per-page="queryResult.per_page"
+        @page-change="onPageChange"
+      />
+
       <div class="my-6 space-y-4">
         <div
           v-for="(participation, index) in queryResult.data"
@@ -230,6 +241,7 @@
       </div>
 
       <Pagination
+        v-if="!bulkOperationIsActive"
         class="mt-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"

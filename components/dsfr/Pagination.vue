@@ -1,6 +1,18 @@
 <template>
-  <nav v-if="totalRows" role="navigation" class="fr-pagination flex" aria-label="Pagination">
-    <div class="flex-1">
+  <nav
+    v-if="totalRows"
+    role="navigation"
+    class="fr-pagination flex"
+    aria-label="Pagination"
+    :class="[
+      {'flex justify-end': align === 'right' }
+    ]"
+  >
+    <div
+      :class="[
+        {'flex-1': variant === 'full' }
+      ]"
+    >
       <button
         :class="[
           'fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label',
@@ -11,7 +23,9 @@
         role="link"
         @click="$emit('page-change', currentPage - 1)"
       >
-        Précédent
+        <template v-if="variant === 'full'">
+          Précédent
+        </template>
       </button>
     </div>
 
@@ -66,7 +80,12 @@
       </template>
     </div>
 
-    <div class="flex-1 flex justify-end">
+    <div
+      class="flex justify-end"
+      :class="[
+        {'flex-1': variant === 'full' }
+      ]"
+    >
       <button
         :class="[
           'fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label',
@@ -77,7 +96,9 @@
         :disabled="currentPage >= (totalRows / perPage)"
         @click="$emit('page-change', currentPage + 1)"
       >
-        Suivant
+        <template v-if="variant === 'full'">
+          Suivant
+        </template>
       </button>
     </div>
   </nav>
@@ -88,6 +109,14 @@ import '@gouvfr/dsfr/dist/component/pagination/pagination.main.min.css'
 
 export default {
   props: {
+    variant: {
+      type: String,
+      default: 'full'
+    },
+    align: {
+      type: String,
+      default: 'center'
+    },
     currentPage: {
       default: 1,
       type: [Number, String]
@@ -175,7 +204,7 @@ export default {
 
 <style lang="postcss" scoped>
 .fr-pagination__link {
-  @apply hover:bg-[#F6F6F6] active:bg-[#EDEDED];
+  @apply hover:underline;
 }
 .fr-pagination__link[aria-current] {
   @apply text-white bg-jva-blue-500 hover:bg-jva-blue-800 active:bg-jva-blue-900;

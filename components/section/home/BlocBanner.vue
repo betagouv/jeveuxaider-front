@@ -132,10 +132,10 @@
           <picture data-not-lazy>
             <source srcset="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" media="(max-width: 640px)">
             <img
-              src="/images/home/trombi-desktop-strip-2.png"
+              src="/images/home/trombi-desktop-strip-2a.png"
               srcset="
-                /images/home/trombi-desktop-strip-2.webp, /images/home/trombi-desktop-strip-2@2x.webp 2x,
-                /images/home/trombi-desktop-strip-2.png, /images/home/trombi-desktop-strip-2@2x.png 2x
+                /images/home/trombi-desktop-strip-2a.webp, /images/home/trombi-desktop-strip-2a@2x.webp 2x,
+                /images/home/trombi-desktop-strip-2a.png, /images/home/trombi-desktop-strip-2a@2x.png 2x
               "
               alt=""
               width="193"
@@ -164,10 +164,10 @@
       <!-- MOBILE -->
       <img
         srcset="
-          /images/home/trombinoscope-mobile.webp, /images/home/trombinoscope-mobile@2x.webp 2x,
-          /images/home/trombinoscope-mobile.png, /images/home/trombinoscope-mobile@2x.png 2x
+          /images/home/trombinoscope-mobile-2.webp, /images/home/trombinoscope-mobile-2@2x.webp 2x,
+          /images/home/trombinoscope-mobile-2.png, /images/home/trombinoscope-mobile-2@2x.png 2x
         "
-        src="/images/home/trombinoscope-mobile.png"
+        src="/images/home/trombinoscope-mobile-2.png"
         alt=""
         width="425"
         height="250"
