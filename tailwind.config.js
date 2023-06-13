@@ -83,6 +83,7 @@ module.exports = {
           900: '#2323ff'
         },
         'jva-green': {
+          300: '#639F6A',
           400: '#C9F2EA',
           500: '#09AC8C',
           600: '#0BBF9C'

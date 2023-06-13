@@ -2,7 +2,7 @@
   <div class="sticky top-[-56px] pointer-events-none">
     <div class="h-[56px]" />
     <div class="flex justify-end">
-      <div class="inline-flex items-center leading-none py-4 pl-8 bg-[#F9F6F2] rounded-bl-3xl mr-[-1px] pointer-events-auto">
+      <div class="inline-flex items-center leading-none py-4 pl-8  rounded-bl-3xl mr-[-1px] pointer-events-auto">
         <div class="text-gray-600">
           {{ operations.length|pluralize('sélectionnée') }}
         </div>

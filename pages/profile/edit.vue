@@ -7,44 +7,51 @@
       ]"
     />
     <div class="flex flex-col pb-12 gap-12">
-      <SectionHeading :title="$store.state.auth.user.profile.full_name">
+      <SectionHeading title="Mon profil">
         <template #action>
-          <div class="hidden lg:block space-x-2 flex-shrink-0">
-            <Button
-              type="submit"
-              variant="green"
-              size="xl"
-              :loading="loading"
-              @click.native="handleSubmit"
-            >
-              Enregistrer
-            </Button>
-          </div>
+          <Button
+            class="hidden lg:flex"
+            size="lg"
+            variant="primary"
+            :loading="loading"
+            :disabled="!formIsDirty"
+            @click.native="submitForm"
+          >
+            Mettre à jour
+          </Button>
         </template>
-      </Sectionheading>
+      </SectionHeading>
 
-      <FormProfile
-        ref="form"
-        :profile="profile"
-        @role-changed="handleRoleChanged()"
-      />
+      <UserProfileTabs selected-tab-key="profil">
+        <FormUserProfile
+          ref="form"
+          :profile="profile"
+          @change="formIsDirty = $event"
+          @submit="fetchProfile"
+        />
+      </UserProfileTabs>
     </div>
   </div>
 </template>
 
 <script>
-import FormProfile from '@/components/form/FormProfile.vue'
+import FormUserProfile from '@/components/form/FormUserProfile.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
+import Button from '@/components/dsfr/Button.vue'
+import MixinFormDirtyState from '@/mixins/form/dirty-state.js'
 
 export default {
   components: {
-    FormProfile,
-    Breadcrumb
+    FormUserProfile,
+    Breadcrumb,
+    UserProfileTabs,
+    Button
   },
+  mixins: [MixinFormDirtyState],
   middleware: 'authenticated',
   async asyncData ({ $axios, error, store }) {
     const { data: profile } = await $axios.get(`/profiles/${store.state.auth.user.profile.id}`)
-
     return {
       profile
     }
@@ -55,17 +62,17 @@ export default {
     }
   },
   methods: {
-    async handleSubmit () {
+    async fetchProfile () {
+      const { data: profile } = await this.$axios.get(`/profiles/${this.$store.state.auth.user.profile.id}`)
+      this.profile = profile
+    },
+    async submitForm () {
       if (this.loading) {
         return
       }
       this.loading = true
       await this.$refs.form.handleSubmit()
       this.loading = false
-    },
-    async handleRoleChanged () {
-      const { data: profile } = await this.$axios.get(`/profiles/${this.profile.id}`)
-      this.profile = profile
     }
   }
 }

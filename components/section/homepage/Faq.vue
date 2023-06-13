@@ -14,11 +14,11 @@
         <Tabs
           name="Catégories de faq"
           :tabs="[
-            { content: 'Bénévoles' },
-            { content: 'Organisation' },
+            { key: 'benevoles', content: 'Bénévoles' },
+            { key: 'organisation', content: 'Organisation' },
           ]"
         >
-          <div slot="tab-0" class="px-4 py-8">
+          <div slot="tab-benevoles" class="px-4 py-8">
             <AccordionsGroup>
               <Accordion>
                 <template slot="title">
@@ -89,7 +89,7 @@
             </AccordionsGroup>
           </div>
 
-          <div slot="tab-1" class="px-4 py-8">
+          <div slot="tab-organisation" class="px-4 py-8">
             <AccordionsGroup>
               <Accordion>
                 <template slot="title">

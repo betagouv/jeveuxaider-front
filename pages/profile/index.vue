@@ -35,9 +35,7 @@
       <LePetitMot />
     </template>
     <template #right>
-      <BoxDisponibilities :profile="{...$store.state.auth.user.profile, user: $store.state.auth.user }" />
-
-      <BoxInformations :profile="{...$store.state.auth.user.profile, user: $store.state.auth.user }" />
+      <BoxUserProfileBenevole :profile="$store.state.auth.user.profile" />
 
       <HelpCenter />
     </template>
@@ -48,8 +46,7 @@
 import MixinAction from '@/mixins/action'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import LePetitMot from '@/components/section/dashboard/LePetitMot'
-import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
-import BoxInformations from '@/components/section/profile/BoxInformations'
+import BoxUserProfileBenevole from '@/components/section/profile/BoxUserProfileBenevole'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import Button from '@/components/dsfr/Button.vue'
 
@@ -57,8 +54,7 @@ export default {
   components: {
     HelpCenter,
     LePetitMot,
-    BoxDisponibilities,
-    BoxInformations,
+    BoxUserProfileBenevole,
     Breadcrumb,
     Button
   },

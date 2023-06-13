@@ -6,6 +6,7 @@ import Vue from 'vue'
 import RiSearchLine from 'vue-remix-icons/icons/RiSearchLine.vue'
 import RiSearchEyeFill from 'vue-remix-icons/icons/RiSearchEyeFill.vue'
 import RiArrowRightLine from 'vue-remix-icons/icons/RiArrowRightLine.vue'
+import RiArrowRightSLine from 'vue-remix-icons/icons/RiArrowRightSLine.vue'
 import RiArrowDownSLine from 'vue-remix-icons/icons/RiArrowDownSLine.vue'
 import RiArrowDownLine from 'vue-remix-icons/icons/RiArrowDownLine.vue'
 import RiAddLine from 'vue-remix-icons/icons/RiAddLine.vue'
@@ -69,8 +70,10 @@ import RiFlashlightLine from 'vue-remix-icons/icons/RiFlashlightLine.vue'
 import RiAdminLine from 'vue-remix-icons/icons/RiAdminLine.vue'
 import RiUserStarLine from 'vue-remix-icons/icons/RiUserStarLine.vue'
 import RiArrowUpLine from 'vue-remix-icons/icons/RiArrowUpLine.vue'
+import RiHeartLine from 'vue-remix-icons/icons/RiHeartLine.vue'
 
 const components = {
+  RiArrowRightSLine,
   RiPencilLine,
   RiUserStarLine,
   RiAdminLine,
@@ -136,7 +139,8 @@ const components = {
   RiFileCopyLine,
   RiEqualizerFill,
   RiPauseCircleLine,
-  RiPlayCircleLine
+  RiPlayCircleLine,
+  RiHeartLine
 }
 
 Object.entries(components).forEach(([name, component]) => {

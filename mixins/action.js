@@ -31,9 +31,17 @@ export default {
           return {
             icon: '✍',
             iconVariant: 'warning',
-            title: 'Votre profil est <b>incomplet</b>',
-            subtitle: 'Mettez à jour vos informations afin de permettre aux organisations de vous proposer directement des missions.',
+            title: `Votre profil est incomplet (${action.completion_rate}%)`,
+            subtitle: `Complétez votre profil : ${action.value.map(item => this.$options.filters.label(item, 'profile_fields')).join(', ')}`,
             link: '/profile/edit'
+          }
+        case 'profile_without_activities':
+          return {
+            icon: '✊',
+            iconVariant: 'warning',
+            title: 'Vous n’avez pas défini de préférences d’activités',
+            subtitle: 'Utiles pour vous suggérer des missions en fonction de vos préférences',
+            link: '/profile/preferences'
           }
         case 'search_missions':
           return {

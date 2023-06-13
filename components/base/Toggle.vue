@@ -1,19 +1,38 @@
 <template>
   <div
-    class="flex items-center justify-between gap-4"
+    class="flex items-center justify-between"
     :class="[
-      {'flex-row-reverse': position === 'left'}
+      {'flex-row-reverse': position === 'left'},
+      {'gap-8': label }
     ]"
   >
     <span class="flex-grow flex flex-col">
-      <span v-if="label" id="availability-label" class="block text-sm text-black" v-html="label" />
-      <span v-if="description" id="availability-description" class="text-sm text-gray-500" v-html="description" />
+      <span
+        v-if="label"
+        id="availability-label"
+        class="block font-bold text-black"
+        :class="[
+          {'text-lg': size === 'lg'},
+          {'text-xl': size === 'xl'}
+        ]"
+        v-html="label"
+      />
+      <span
+        v-if="description"
+        id="availability-description"
+        class="mt-2 text-[#666666]"
+        :class="[
+          {'text-md': size === 'lg'},
+          {'text-lg': size === 'xl'}
+        ]"
+        v-html="description"
+      />
     </span>
     <button
       type="button"
       class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200"
       :class="[
-        selected ?'bg-jva-blue-500': 'bg-gray-200'
+        selected ? 'bg-jva-green-300': 'bg-gray-200'
       ]"
       role="switch"
       aria-checked="false"
@@ -28,8 +47,8 @@
           selected ? 'translate-x-5': 'translate-x-0'
         ]"
       >
-        <CheckIcon v-if="selected" class="h-3 text-jva-blue-500" />
-        <XIcon v-else class="h-3 text-gray-400" />
+        <CheckIcon v-if="selected" class="h-3 text-jva-green-300" />
+        <!-- <XIcon v-else class="h-3 text-gray-400" /> -->
       </span>
     </button>
   </div>
@@ -53,6 +72,10 @@ export default {
     position: {
       type: String,
       default: 'left'
+    },
+    size: {
+      type: String,
+      default: 'lg'
     }
   },
   data () {

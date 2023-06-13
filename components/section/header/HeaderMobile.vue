@@ -105,8 +105,8 @@
                     <div class="border-t my-2" />
 
                     <NavItem
-                      v-for="link in secondaryNavigation"
-                      :key="link.name"
+                      v-for="(link,i) in secondaryNavigation"
+                      :key="`secondary-menu-items-${i}`"
                       :href="link.href"
                       :to="link.to"
                       :target="link.target"
@@ -122,8 +122,8 @@
                     <div class="border-t my-2" />
 
                     <NavItem
-                      v-for="link in tertiaryNavigation"
-                      :key="link.name"
+                      v-for="(link,i) in tertiaryNavigation"
+                      :key="`tertiary-menu-items-${i}`"
                       :href="link.href"
                       :to="link.to"
                       :target="link.target"
@@ -242,6 +242,7 @@ export default {
       return [
         { name: 'Mon espace', to: '/profile', isActive: this.isActiveLink('/profile', true) },
         { name: 'Mes missions', to: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
+
         { name: 'La tournée d\'été ☀️', href: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/' },
         { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', target: '_blank' }
       ]
@@ -254,7 +255,8 @@ export default {
       }
       return [
         { name: 'Mon espace', to: '/profile', isActive: this.isActiveLink('/profile', true) },
-        { name: 'Mes missions', to: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
+        { name: 'Mon profil', to: '/profile/edit', isActive: this.isActiveLink('profile/edit') },
+        { name: 'Mes préférences de missions', to: '/profile/preferences', isActive: this.isActiveLink('profile/preferences') },
         { name: 'Mes paramètres', to: '/profile/settings', isActive: this.isActiveLink('profile/settings') },
         { name: 'Se déconnecter', click: () => this.$store.dispatch('auth/logout') }
       ]

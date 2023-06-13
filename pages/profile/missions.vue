@@ -10,7 +10,7 @@
     </template>
     <template #header>
       <SectionHeading
-        :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(queryResult.total, 'participation', 'participations', false)}`"
+        :title="`${$options.filters.formatNumber(queryResult.total)} ${$options.filters.pluralize(queryResult.total, 'mission', 'missions', false)}`"
         :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`"
       >
         <template #action>

@@ -1,5 +1,12 @@
 <template>
-  <label :for="htmlFor" class="block text-xs uppercase font-bold text-gray-700 mb-2 relative">
+  <label
+    :for="htmlFor"
+    class="block  font-bold  mb-2 relative"
+    :class="[
+      {'text-xs uppercase text-gray-700': size === 'xs'},
+      {'text-xl normal-case text-black': size === 'xl'}
+    ]"
+  >
     <slot />
     <span v-if="required" class="text-[#E2011C]">
       *
@@ -13,7 +20,11 @@ export default {
   props: {
     htmlFor: { type: String, default: null },
     suffix: { type: String, default: null },
-    required: { type: Boolean, default: false }
+    required: { type: Boolean, default: false },
+    size: {
+      type: String,
+      default: 'xs'
+    }
   }
 }
 </script>

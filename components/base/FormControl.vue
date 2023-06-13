@@ -1,6 +1,13 @@
 <template>
   <div class="w-full">
-    <FormLabel v-if="label" :html-for="htmlFor" :suffix="labelSuffix" :required="required" class="mb-2">
+    <FormLabel
+      v-if="label"
+      :html-for="htmlFor"
+      :size="labelSize"
+      :suffix="labelSuffix"
+      :required="required"
+      class="mb-2"
+    >
       {{ label }}
       <slot name="afterLabel" />
     </FormLabel>
@@ -26,6 +33,7 @@ export default {
     success: { type: String, default: null },
     label: { type: String, default: null },
     labelSuffix: { type: String, default: null },
+    labelSize: { type: String, default: 'xs' },
     required: { type: Boolean, default: false }
   }
 }

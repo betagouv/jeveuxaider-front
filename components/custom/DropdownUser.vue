@@ -27,34 +27,39 @@
     </template>
 
     <template #items>
-      <div class="w-[316px]">
+      <div class="w-[330px] py-4 ">
         <DropdownOptionsItem @click.native="handleClick('/profile')">
-          <div class="flex items-center justify-center space-x-2">
+          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
             <RiListUnordered class="h-[17px] w-auto fill-current" /> <span>Mon espace</span>
           </div>
         </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="handleClick('/profile/missions')">
-          <div class="flex items-center justify-center space-x-2">
+          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
             <RiCalendarEventLine class="h-[17px] w-auto fill-current" /> <span>Mes missions</span>
           </div>
         </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="handleClick('/profile/edit')">
-          <div class="flex items-center justify-center space-x-2">
+          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
             <RiUserLine class="h-[17px] w-auto fill-current" /> <span>Mon profil</span>
           </div>
         </DropdownOptionsItem>
-        <DropdownOptionsItem v-if="['referent','responsable'].includes($store.getters.contextRole)" @click.native="handleClick('/profile/preferences')">
-          <div class="flex items-center justify-center space-x-2">
-            <RiNotification3Line class="h-[17px] w-auto fill-current" /> <span>Mes préférences</span>
+        <DropdownOptionsItem @click.native="handleClick('/profile/preferences')">
+          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
+            <RiHeartLine class="h-[17px] w-auto fill-current" /> <span>Mes préférences de missions</span>
+          </div>
+        </DropdownOptionsItem>
+        <DropdownOptionsItem v-if="['referent','responsable'].includes($store.getters.contextRole)" @click.native="handleClick('/profile/notifications')">
+          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
+            <RiNotification3Line class="h-[17px] w-auto fill-current" /> <span>Mes notifications</span>
           </div>
         </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="handleClick('/profile/settings')">
-          <div class="flex items-center justify-center space-x-2">
-            <RiUserSettingsLine class="h-[17px] w-auto fill-current" /> <span>Mes paramètres</span>
+          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
+            <RiSettings4Line class="h-[17px] w-auto fill-current" /> <span>Mes paramètres</span>
           </div>
         </DropdownOptionsItem>
         <DropdownOptionsItem @click.native="handleClick('logout')">
-          <div class="flex items-center justify-center space-x-2 text-[#C9191E]">
+          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium text-[#C9191E]">
             <RiLogoutBoxRLine class="h-[17px] w-auto fill-current" /> <span>Déconnexion</span>
           </div>
         </DropdownOptionsItem>
@@ -75,6 +80,7 @@ export default {
         case '/profile/missions':
         case '/profile/settings':
         case '/profile/preferences':
+        case '/profile/notifications':
         case '/profile/edit':
           this.$router.push(action)
           break

@@ -2,7 +2,7 @@
   <div>
     <div
       :class="[
-        'flex flex-wrap gap-2',
+        'flex flex-wrap gap-4',
         wrapperClass
       ]"
     >
@@ -67,6 +67,7 @@ export default {
       }
 
       this.$emit('input', this.modelValue)
+      this.$emit('updated', this.modelValue)
     }
   }
 }
