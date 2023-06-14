@@ -71,8 +71,10 @@ import RiAdminLine from 'vue-remix-icons/icons/RiAdminLine.vue'
 import RiUserStarLine from 'vue-remix-icons/icons/RiUserStarLine.vue'
 import RiArrowUpLine from 'vue-remix-icons/icons/RiArrowUpLine.vue'
 import RiHeartLine from 'vue-remix-icons/icons/RiHeartLine.vue'
+import RiShieldUserLine from 'vue-remix-icons/icons/RiShieldUserLine.vue'
 
 const components = {
+  RiShieldUserLine,
   RiArrowRightSLine,
   RiPencilLine,
   RiUserStarLine,
