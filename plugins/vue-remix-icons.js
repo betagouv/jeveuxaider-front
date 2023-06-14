@@ -75,8 +75,10 @@ import RiShieldUserLine from 'vue-remix-icons/icons/RiShieldUserLine.vue'
 import RiMailFill from 'vue-remix-icons/icons/RiMailFill.vue'
 import RiPhoneLine from 'vue-remix-icons/icons/RiPhoneLine.vue'
 import RiSuitcaseFill from 'vue-remix-icons/icons/RiSuitcaseFill.vue'
+import RiGroupFill from 'vue-remix-icons/icons/RiGroupFill.vue'
 
 const components = {
+  RiGroupFill,
   RiSuitcaseFill,
   RiPhoneLine,
   RiMailFill,

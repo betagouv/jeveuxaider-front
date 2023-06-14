@@ -1,13 +1,14 @@
 <template>
-  <div class="mb-auto divide-y">
+  <div class="mb-auto flex flex-col gap-4 lg:gap-6 mt-6">
     <div
       v-for="message in messages"
       :key="message.id"
-      class="p-8"
+      class=""
     >
       <MessageChat
         v-if="message.type === 'chat'"
         :message="message"
+        class="max-w-[548px] w-full"
       />
       <MessageParticipationContextual
         v-if="conversation.conversable_type == 'App\\Models\\Participation' && message.type === 'contextual'"

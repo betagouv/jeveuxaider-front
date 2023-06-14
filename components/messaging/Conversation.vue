@@ -2,7 +2,7 @@
   <div class="flex flex-col h-full ">
     <slot name="header" />
 
-    <ContainerScrollable class="flex-1" :reverse="true" @scroll="onScroll">
+    <ContainerScrollable class="flex-1 p-4 lg:p-6" :reverse="true" @scroll="onScroll">
       <ConversationMessages :messages="messages" />
       <slot name="scroll-container-top" />
     </ContainerScrollable>

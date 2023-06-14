@@ -1,8 +1,10 @@
 <template>
   <div class="text-center">
-    <div>{{ $dayjs(message.created_at).format('D MMM HH[h]mm') }}</div>
+    <div class="text-xs text-[#666666]">
+      {{ $dayjs(message.created_at).format('D MMM HH[h]mm') }}
+    </div>
     <div v-if="badge">
-      <span>La participation est</span>
+      <span class="text-[#161616] font-bold">La participation est</span>
       <Badge
         size="sm"
         :type="badge.type"
