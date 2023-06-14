@@ -2,7 +2,12 @@
   <Conversation>
     <template #header>
       <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
-      <ConversationContextualActionParticipation />
+      <template v-if="userVariant === 'responsable'">
+        <ConversationContextualResponsableActionParticipation />
+      </template>
+      <template v-if="userVariant === 'benevole'">
+        <ConversationContextualBenevoleActionParticipation />
+      </template>
     </template>
 
     <template #scroll-container-top>
@@ -13,14 +18,16 @@
 
 <script>
 import ConversationRecipientUser from '@/components/messaging/ConversationRecipientUser.vue'
-import ConversationContextualActionParticipation from '@/components/messaging/ConversationContextualActionParticipation.vue'
+import ConversationContextualResponsableActionParticipation from '@/components/messaging/ConversationContextualResponsableActionParticipation.vue'
+import ConversationContextualBenevoleActionParticipation from '@/components/messaging/ConversationContextualBenevoleActionParticipation.vue'
 import CardInfosMission from '@/components/messaging/CardInfosMission.vue'
 import Conversation from '@/components/messaging/Conversation.vue'
 
 export default {
   components: {
     ConversationRecipientUser,
-    ConversationContextualActionParticipation,
+    ConversationContextualResponsableActionParticipation,
+    ConversationContextualBenevoleActionParticipation,
     CardInfosMission,
     Conversation
   },
