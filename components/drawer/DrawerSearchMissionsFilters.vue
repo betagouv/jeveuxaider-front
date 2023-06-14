@@ -29,23 +29,14 @@
       </div>
       <MinorsMobileFilter />
     </div>
-    <!-- @todo: remplacer par activities.name -->
     <FacetFilter
-      show-more
-      facet-name="activity.name"
-      label="Activités"
-      :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('activity.name')"
-      legend="Filtrer par type d'activité"
-    />
-    <!-- <FacetFilter
       show-more
       facet-name="activities.name"
       label="Activités"
       :show-more-limit="3"
       :facets="$store.getters['algoliaSearch/facetResults']('activities.name')"
       legend="Filtrer par type d'activité"
-    /> -->
+    />
     <FacetFilter
       show-more
       facet-name="structure.name"

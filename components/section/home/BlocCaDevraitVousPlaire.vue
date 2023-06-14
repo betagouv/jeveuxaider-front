@@ -112,7 +112,7 @@ export default {
         : this.allActivities.filter(activity => activity.popular === true)
     },
     facetFilterActivities () {
-      return this.activities.map(activity => `activity.name:${activity.name}`)
+      return this.activities.map(activity => `activities.name:${activity.name}`)
     },
     numericFiltersCommitmentTotal () {
       const commitmentTotal = this.$store.getters.profile.commitment__total ?? 4

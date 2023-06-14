@@ -23,7 +23,7 @@
       class="pb-12 bg-[#fafaff]"
     >
       <AlgoliaSearch
-        :initial-filters="`activity.name:&quot;${activity.name}&quot;`"
+        :initial-filters="`activities.name:&quot;${activity.name}&quot;`"
         :initial-hits-per-page="6"
         no-header
         no-filters
@@ -66,7 +66,7 @@ export default {
       return `/missions-benevolat?activity.name=${encodeURIComponent(this.activity.name)}`
     },
     filters () {
-      return `activity.name:"${this.activity.name}"`
+      return `activities.name:"${this.activity.name}"`
     }
   }
 }

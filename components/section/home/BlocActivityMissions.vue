@@ -36,7 +36,7 @@
               aroundPrecision: 2000,
               aroundLatLngViaIP: true,
               aroundRadius: 'all',
-              facetFilters: [`activity.name:${activity.name}`],
+              facetFilters: [`activities.name:${activity.name}`],
             }"
             @slide-click="onSlideClick(activity)"
           />

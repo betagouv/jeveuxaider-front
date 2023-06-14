@@ -66,12 +66,12 @@
                 `publisher_name:J'agis pour la nature`
               ],
               [
-                'activity.name:Travaux manuels',
-                'activity.name:Actions de sensibilisation',
-                'activity.name:Vie citoyenne',
-                'activity.name:Ramassage de déchets',
-                'activity.name:Aménagement d\'espaces naturels',
-                'activity.name:Soins aux animaux',
+                'activities.name:Travaux manuels',
+                'activities.name:Actions de sensibilisation',
+                'activities.name:Vie citoyenne',
+                'activities.name:Ramassage de déchets',
+                'activities.name:Aménagement d\'espaces naturels',
+                'activities.name:Soins aux animaux',
               ]
             ],
             aroundLatLngViaIP: true,
