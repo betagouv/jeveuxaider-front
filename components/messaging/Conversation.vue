@@ -2,12 +2,17 @@
   <div class="flex flex-col h-full ">
     <slot name="header" />
 
-    <ContainerScrollable class="flex-1 p-4 lg:p-6" :reverse="true" @scroll="onScroll">
+    <ContainerScrollable
+      class="flex-1 p-4 lg:p-6"
+      :reverse="true"
+      scrollbar-class="pr-4"
+      @scroll="onScroll"
+    >
       <ConversationMessages :messages="messages" />
       <slot name="scroll-container-top" />
     </ContainerScrollable>
 
-    <ConversationForm />
+    <ConversationForm class="border-t" @submit="onSubmit" />
   </div>
 </template>
 
@@ -50,10 +55,13 @@ export default {
     }
   },
   methods: {
+    onSubmit (payload) {
+      this.messages.push(payload)
+    },
     onScroll ({ target: { scrollTop, clientHeight, scrollHeight } }) {
       // Il faut prendre en compte la taille du slot header,
       // plus une marge pour éviter le content shift au scroll
-      const offset = 400
+      const offset = 379
       const isBottom = Math.ceil(Math.abs(scrollTop) + clientHeight) >= (scrollHeight - offset)
       if (this.currentPage < this.lastPage && isBottom && !this.loading) {
         this.$fetch()

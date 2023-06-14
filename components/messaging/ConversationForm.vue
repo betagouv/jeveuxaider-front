@@ -1,16 +1,32 @@
 <template>
-  <form id="form-message" novalidate class="bg-green-200" @submit.prevent="handleSubmit">
-    <input v-model="message" type="text" placeholder="Écrivez votre message ici">
-    <button type="submit" form-id="form-message">
-      Envoyer
-    </button>
-  </form>
+  <div class="px-4 py-2 lg:px-6 lg:py-4">
+    <form id="form-message" novalidate class="flex gap-4 items-end justify-center">
+      <client-only>
+        <TextareaAutosize
+          v-model="message"
+          placeholder="Écrivez un message"
+          rows="1"
+          :max-height="120"
+          class="m-auto w-full !outline-none leading-tight border-0 custom-scrollbar"
+        />
+      </client-only>
+      <Button class="flex-none" icon="RiSendPlaneFill" :loading="loading" @click.native="handleSubmit">
+        Envoyer
+      </Button>
+    </form>
+  </div>
 </template>
 
 <script>
+import Button from '@/components/dsfr/Button.vue'
+
 export default {
+  components: {
+    Button
+  },
   data () {
     return {
+      loading: false,
       message: ''
     }
   },
@@ -20,13 +36,23 @@ export default {
     }
   },
   methods: {
-    async handleSubmit () {
+    reset () {
+      this.message = ''
+    },
+    handleSubmit () {
+      if (this.loading) {
+        return
+      }
       if (this.message.trim().length) {
-        await this.$axios.post(`/conversationsv2/${this.conversation.id}/messages`, {
+        this.loading = true
+        this.$axios.post(`/conversationsv2/${this.conversation.id}/messages`, {
           content: this.message
-        }).catch(() => {})
-
-        await this.$store.dispatch('messaging2/refreshConversationInConversations', this.conversation.id)
+        }).then((response) => {
+          this.$emit('submit', response.data)
+          this.reset()
+        }).catch(() => {}).finally(() => {
+          this.loading = false
+        })
       }
     }
   }

@@ -121,8 +121,12 @@ export default {
           return 'La candidature est déclinée'
         case 'Annulée':
           return 'La candidature est annulée'
+        case 'En cours de traitement':
+          return 'La candidature est en cours de traitement'
+        case 'En attente de validation':
+          return 'La candidature est en attente de validation'
         default:
-          return 'La candidature est '
+          return ''
       }
     },
     mission () {

@@ -14,7 +14,7 @@
         {{ badge.label }}
       </Badge>
     </div>
-    <div v-if="message.contextual_reason && message.contextual_reason != 'other'" class="">
+    <div v-if="message.contextual_reason && message.contextual_reason != 'other'" class="text-sm text-[#666666]">
       <template v-if="message.contextual_state == 'Refusée'">
         {{ message.contextual_reason|label('participation_declined_reasons') }}
       </template>

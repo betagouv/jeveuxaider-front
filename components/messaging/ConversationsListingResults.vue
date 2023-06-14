@@ -1,22 +1,24 @@
 <template>
   <ContainerScrollable
-    :class="[{'hidden lg:block': $route.name == 'messages-id'}, 'h-full divide-y']"
+    :class="[{'hidden lg:block': $route.name == 'messages-id'}, 'h-full']"
     @scroll="onScroll"
   >
-    <nuxt-link
-      v-for="conversation in $store.getters['messaging2/conversations']"
-      :key="conversation.id"
-      :to="`/messages/${conversation.id}`"
-      class="block border-l-4 border-white cursor-pointer hover:bg-[#F5F5FE hover:border-[#6A6AF4]"
-      :class="[
-        { '!border-[#6A6AF4] bg-[#F5F5FE]': conversation.id == $route.params.id }
-      ]"
-    >
-      <component
-        :is="retrieveComponent(conversation)"
-        :conversation="conversation"
-      />
-    </nuxt-link>
+    <div class="divide-y">
+      <nuxt-link
+        v-for="conversation in $store.getters['messaging2/conversations']"
+        :key="conversation.id"
+        :to="`/messages/${conversation.id}`"
+        class="block border-l-4 border-l-white cursor-pointer hover:bg-[#F5F5FE hover:border-l-[#6A6AF4]"
+        :class="[
+          { '!border-l-[#6A6AF4] bg-[#F5F5FE]': conversation.id == $route.params.id }
+        ]"
+      >
+        <component
+          :is="retrieveComponent(conversation)"
+          :conversation="conversation"
+        />
+      </nuxt-link>
+    </div>
   </ContainerScrollable>
 </template>
 
