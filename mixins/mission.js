@@ -18,12 +18,21 @@ export default {
         this.mission?.template?.activity
       )
     },
-    activityId () {
+    activitySecondary () {
       return (
-        this.mission?.activity_id ??
-        this.mission?.template?.activity_id
+        this.mission?.activity_secondary ??
+        this.mission?.template?.activity_secondary
       )
     },
+    activities () {
+      return [this.activity, this.activitySecondary].filter(Boolean)
+    },
+    // activityId () {
+    //   return (
+    //     this.mission?.activity_id ??
+    //     this.mission?.template?.activity_id
+    //   )
+    // },
     thumbnail () {
       return this.mission.provider == 'api_engagement'
         ? this.thumbnailApi

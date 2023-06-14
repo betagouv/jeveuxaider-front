@@ -142,6 +142,7 @@ export default {
         { key: 'missions.domaine_id', label: 'Domaine principal', type: 'select', options: this.$labels.domaines },
         { key: 'missions.domaine_secondary_id', label: 'Domaine secondaire', type: 'select', options: this.$labels.domaines },
         { key: 'missions.activity_id', label: 'Activité', type: 'select', options: activitiesOptions },
+        { key: 'missions.activity_secondary_id', label: 'Activité secondaire', type: 'select', options: activitiesOptions },
         { key: 'missions.template_id', label: 'Modèle de mission', type: 'input' },
         { key: 'missions.state', label: 'Statut', type: 'select', options: this.$labels.mission_workflow_states },
         { key: 'missions.publics_beneficiaires', label: 'Publics aidés', type: 'select', options: this.$labels.mission_publics_beneficiaires },

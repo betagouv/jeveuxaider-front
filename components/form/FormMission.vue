@@ -112,50 +112,47 @@
               placeholder="Incitez les bénévoles à candidater ..."
             />
           </FormControl>
-          <FormControl
-            v-if="activities.length"
-            label="Activité"
-            html-for="activity_id"
-          >
-            <Combobox
-              v-model="form.activity_id"
-              :value="form.activity_id"
-              name="activity_id"
-              placeholder="Sélectionner une activité"
-              :options="activities"
-              clearable
-              attribute-key="id"
-              attribute-label="name"
-              :disabled="Boolean(mission.template)"
-              :loading="activitiesClassifierLoading"
-            >
-              <template
-                v-if="activitiesClassifier?.code === 200"
-                #option="{ item, attributeLabel, selectedOption, highlightIndex, index }"
+          <template v-if="activities.length">
+            <div class="grid grid-cols-2 gap-4">
+              <FormControl
+                label="Activité principale"
+                html-for="activity_id"
               >
-                <div class="w-full flex justify-between">
-                  <div>{{ item[attributeLabel] }}</div>
-                  <Tag
-                    size="sm"
-                    class="ml-2 !transition-none"
-                    :class="[
-                      {'!bg-jva-blue-500 !text-white': (selectedOption?.id === item.id || highlightIndex == index)},
-                      {'text-[#161616] bg-[#EEEEEE] group-hover:bg-jva-blue-500 group-hover:text-white': selectedOption?.id !== item.id},
-                    ]"
-                    :custom-theme="true"
-                  >
-                    {{ item.formattedScore }}
-                  </Tag>
-                </div>
-              </template>
-            </Combobox>
-            <FormHelperText class="mt-2 !mb-0">
+                <ComboboxActivities
+                  v-model="form.activity_id"
+                  name="activity_id"
+                  :options="activities"
+                  :disabled="Boolean(mission.template)"
+                  :loading="activitiesClassifierLoading"
+                  :activities-classifier="activitiesClassifier"
+                  @input="onInputActivity"
+                />
+              </FormControl>
+              <FormControl
+                label="Activité secondaire"
+                html-for="activity_secondary_id"
+              >
+                <ComboboxActivities
+                  ref="comboboxSecondaryActivity"
+                  v-model="form.activity_secondary_id"
+                  name="activity_secondary_id"
+                  :options="activities.filter(
+                    (option) => option.id != form.activity_id
+                  )"
+                  :disabled="Boolean(mission.template)"
+                  :loading="activitiesClassifierLoading"
+                  :activities-classifier="activitiesClassifier"
+                />
+              </FormControl>
+            </div>
+            <FormHelperText class="!mt-4">
               <span>Nous vous suggérons automatiquement une activité adaptée au contenu de votre mission !</span>
               <span v-if="activitiesClassifier?.code === 200">
                 Astuce : les pourcentages indiquent le niveau de pertinence de la recommandation
               </span>
             </FormHelperText>
-          </FormControl>
+          </template>
+
           <FormControl
             label="Pré-requis pour réaliser la mission"
             html-for="prerequisites"
@@ -601,19 +598,19 @@ import FormErrors from '@/mixins/form/errors'
 import AlgoliaSkillsInput from '@/components/section/search/AlgoliaSkillsSearch'
 import AlgoliaTermsInput from '@/components/section/search/AlgoliaTermsInput'
 import FormMissionParameters from '~/components/form/FormMissionParameters.vue'
-import Tag from '@/components/dsfr/Tag.vue'
 import activitiesClassifierMixin from '@/mixins/activitiesClassifier'
 import DsfrLink from '@/components/dsfr/Link.vue'
 import PrerequisitesInput from '@/components/custom/PrerequisitesInput'
+import ComboboxActivities from '@/components/custom/ComboboxActivities.vue'
 
 export default {
   components: {
     FormMissionParameters,
     AlgoliaSkillsInput,
     AlgoliaTermsInput,
-    Tag,
     DsfrLink,
-    PrerequisitesInput
+    PrerequisitesInput,
+    ComboboxActivities
   },
   mixins: [inputGeo, FormErrors, activitiesClassifierMixin],
   props: {
@@ -640,6 +637,7 @@ export default {
         domaine_id: this.mission.template?.domaine_id || this.mission.domaine_id,
         domaine_secondary_id: this.mission.template?.domaine_secondary_id || this.mission.domaine_secondary_id,
         activity_id: this.mission.template?.activity_id || this.mission.activity_id,
+        activity_secondary_id: this.mission.template?.activity_secondary_id || this.mission.activity_secondary_id,
         objectif: this.mission.template?.objectif || this.mission.objectif,
         description: this.mission.template?.description || this.mission.description,
         illustrations: this.mission.illustrations || [],
@@ -992,6 +990,11 @@ export default {
     },
     stringContainsPhone (string) {
       return (/(?:(?:(?:\+|00)33[ ]?(?:\(0\)[ ]?)?)|0){1}[1-9]{1}([ .-]?)(?:\d{2}\1?){3}\d{2}/).test(string)
+    },
+    onInputActivity (payload) {
+      if (payload && this.form.activity_secondary_id === payload) {
+        this.$refs.comboboxSecondaryActivity?.$refs?.combobox?.reset()
+      }
     }
   }
 }
