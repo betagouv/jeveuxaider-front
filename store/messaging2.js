@@ -1,13 +1,15 @@
 export const state = () => ({
   conversations: [],
   activeConversation: {},
-  unreadMessagesCount: 0
+  unreadMessagesCount: 0,
+  isCurrentUserInConversation: false
 })
 
 export const getters = {
   conversations: state => state.conversations,
   activeConversation: state => state.activeConversation,
-  unreadMessagesCount: state => state.unreadMessagesCount
+  unreadMessagesCount: state => state.unreadMessagesCount,
+  isCurrentUserInConversation: (state, getters, rootState) => state.activeConversation?.users.filter(user => user.id === rootState.auth.user.id).length
 }
 
 export const mutations = {

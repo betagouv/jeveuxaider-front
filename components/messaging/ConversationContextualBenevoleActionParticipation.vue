@@ -16,6 +16,7 @@
         v-if="needTestimonial"
         type="tertiary-no-outline"
         size="lg"
+        @click.native.stop="showTestimonialOverlay = true"
       >
         Laisser un témoignage
       </Button>
@@ -126,7 +127,7 @@ export default {
         case 'En attente de validation':
           return 'La candidature est en attente de validation'
         default:
-          return ''
+          return this.participation.state
       }
     },
     mission () {
@@ -175,14 +176,13 @@ export default {
       return ['En attente de validation', 'En cours de traitement'].includes(this.participation.state)
     },
     canCancel () {
-      if (['Annulée', 'Refusée'].includes(this.participation.state)) {
+      if (['Annulée', 'Validée', 'Refusée'].includes(this.participation.state)) {
         return false
       }
       return !this.participationShouldBeDone
     },
     canArchive () {
-      // @TODO
-      return true
+      return this.$store.getters['messaging2/isCurrentUserInConversation']
     }
   },
   methods: {

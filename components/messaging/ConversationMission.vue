@@ -1,7 +1,7 @@
 <template>
   <Conversation>
     <template #header>
-      <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
+      <ConversationRecipientResponsable :user="recipientUser" />
       <ConversationContextualActionMission />
     </template>
 
@@ -12,14 +12,14 @@
 </template>
 
 <script>
-import ConversationRecipientUser from '@/components/messaging/ConversationRecipientUser.vue'
+import ConversationRecipientResponsable from '~/components/messaging/ConversationRecipientResponsable.vue'
 import ConversationContextualActionMission from '@/components/messaging/ConversationContextualActionMission.vue'
 import CardInfosMission from '@/components/messaging/CardInfosMission.vue'
 import Conversation from '@/components/messaging/Conversation.vue'
 
 export default {
   components: {
-    ConversationRecipientUser,
+    ConversationRecipientResponsable,
     ConversationContextualActionMission,
     CardInfosMission,
     Conversation

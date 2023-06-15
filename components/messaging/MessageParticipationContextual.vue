@@ -13,6 +13,7 @@
       >
         {{ badge.label }}
       </Badge>
+      <span v-if="badge.append" class="ml-2 text-[#161616] font-bold">{{ badge.append }}</span>
     </div>
     <div v-if="message.contextual_reason && message.contextual_reason != 'other'" class="text-sm text-[#666666]">
       <template v-if="message.contextual_state == 'Refusée'">
@@ -43,9 +44,11 @@ export default {
       switch (this.message.contextual_state) {
         case 'Validée':
           return { type: 'success', label: 'Validée' }
+        case 'Validée par bénévole':
+          return { type: 'success', label: 'Validée', append: 'par le bénévole' }
         case 'Annulée':
         case 'Annulée par bénévole':
-          return { type: 'error', label: 'Annulée' }
+          return { type: 'error', label: 'Annulée', append: 'par le bénévole' }
         case 'En attente de validation':
           return { type: 'warning', label: 'En attente de validation' }
         case 'En cours de traitement':

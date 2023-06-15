@@ -8,15 +8,17 @@
         v-if="canValidate"
         type="tertiary-no-outline"
         size="lg"
+        @click.native.stop="showValidateParticipationModal = true"
       >
         Valider
       </Button>
       <Button
-        v-if="canCancel"
+        v-if="canRefuse"
         type="tertiary-no-outline"
         size="lg"
+        @click.native.stop="showRefuseParticipationModal = true"
       >
-        Annuler
+        Décliner
       </Button>
       <Dropdown ref="dropdownUser">
         <template #button>
@@ -33,12 +35,12 @@
 
         <template #items>
           <div class="w-[300px] py-4">
-            <DropdownOptionsItem v-if="canRefuse" @click.native="handleRefuseParticipation">
+            <DropdownOptionsItem v-if="['En attente de validation'].includes(participation.state)" @click.native.stop="showInProgressParticipationModal = true">
               <div class="px-4 text-base font-medium">
-                Décliner la candidature
+                Passer en cours de traitement
               </div>
             </DropdownOptionsItem>
-            <DropdownOptionsItem v-if="canCancel" @click.native="handleCancelParticipation">
+            <DropdownOptionsItem v-if="canCancel" @click.native.stop="showCancelParticipationModal = true">
               <div class="px-4 text-base font-medium">
                 Annuler la candidature
               </div>
@@ -61,6 +63,14 @@ import Button from '@/components/dsfr/Button.vue'
 export default {
   components: {
     Button
+  },
+  data () {
+    return {
+      showInProgressParticipationModal: false,
+      showCancelParticipationModal: false,
+      showValidateParticipationModal: false,
+      showRefuseParticipationModal: false
+    }
   },
   computed: {
     conversation () {
@@ -88,14 +98,13 @@ export default {
       return ['En attente de validation', 'En cours de traitement'].includes(this.participation.state)
     },
     canRefuse () {
-      return !['Refusée'].includes(this.participation.state)
+      return !['Refusée', 'Annulée'].includes(this.participation.state)
     },
     canCancel () {
       return !['Annulée'].includes(this.participation.state)
     },
     canArchive () {
-      // @TODO
-      return true
+      return this.$store.getters['messaging2/isCurrentUserInConversation']
     }
   },
   methods: {
@@ -103,6 +112,9 @@ export default {
       // @TODO
     },
     handleCancelParticipation () {
+      // @TODO
+    },
+    handleValidateParticipation () {
       // @TODO
     },
     handleArchive () {

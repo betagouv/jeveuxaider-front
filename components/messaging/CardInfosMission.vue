@@ -5,7 +5,7 @@
         La mission</span>
     </div>
     <div class="p-4 lg:p-6 flex-1 flex flex-col gap-4 border border-gray-300 border-l-4 border-l-jva-blue-500">
-      <div class="flex items-center">
+      <div class="flex items-center gap-4">
         <div class="text-xl font-bold">
           {{ mission.name }}
         </div>
@@ -26,7 +26,7 @@
             {{ mission.city }} ({{ mission.zip }})
           </p>
         </div>
-        <div class="flex space-x-1 truncate text-sm text-cool-gray-500">
+        <div v-if="showPlacesLeft" class="flex space-x-1 truncate text-sm text-cool-gray-500">
           <RiGroupFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p class="truncate leading-none">
             {{ mission.places_left | pluralize('place restante', 'places restantes') }}
@@ -54,6 +54,10 @@ export default {
     mission: {
       type: Object,
       required: true
+    },
+    showPlacesLeft: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

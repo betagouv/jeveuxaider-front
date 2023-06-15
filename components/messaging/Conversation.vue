@@ -12,7 +12,7 @@
       <slot name="scroll-container-top" />
     </ContainerScrollable>
 
-    <ConversationForm class="border-t" @submit="onSubmit" />
+    <ConversationForm v-if="$store.getters['messaging2/isCurrentUserInConversation']" class="border-t" @submit="onSubmit" />
   </div>
 </template>
 

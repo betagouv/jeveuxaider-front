@@ -1,23 +1,29 @@
 <template>
   <Conversation>
     <template #header>
-      <ConversationRecipientUser :user="recipientUser" :variant="userVariant" />
       <template v-if="userVariant === 'responsable'">
-        <ConversationContextualResponsableActionParticipation />
+        <ConversationRecipientResponsable :user="recipientUser" />
+        <ConversationContextualBenevoleActionParticipation />
       </template>
       <template v-if="userVariant === 'benevole'">
-        <ConversationContextualBenevoleActionParticipation />
+        <ConversationRecipientBenevole :user="recipientUser" />
+        <ConversationContextualResponsableActionParticipation />
       </template>
     </template>
 
     <template #scroll-container-top>
-      <CardInfosMission v-if="conversation.conversable.mission" :mission="conversation.conversable.mission" />
+      <CardInfosMission
+        v-if="conversation.conversable.mission"
+        :mission="conversation.conversable.mission"
+        :show-places-left="userVariant === 'responsable'"
+      />
     </template>
   </Conversation>
 </template>
 
 <script>
-import ConversationRecipientUser from '@/components/messaging/ConversationRecipientUser.vue'
+import ConversationRecipientBenevole from '@/components/messaging/ConversationRecipientBenevole.vue'
+import ConversationRecipientResponsable from '@/components/messaging/ConversationRecipientResponsable.vue'
 import ConversationContextualResponsableActionParticipation from '@/components/messaging/ConversationContextualResponsableActionParticipation.vue'
 import ConversationContextualBenevoleActionParticipation from '@/components/messaging/ConversationContextualBenevoleActionParticipation.vue'
 import CardInfosMission from '@/components/messaging/CardInfosMission.vue'
@@ -25,7 +31,8 @@ import Conversation from '@/components/messaging/Conversation.vue'
 
 export default {
   components: {
-    ConversationRecipientUser,
+    ConversationRecipientBenevole,
+    ConversationRecipientResponsable,
     ConversationContextualResponsableActionParticipation,
     ConversationContextualBenevoleActionParticipation,
     CardInfosMission,
@@ -39,7 +46,7 @@ export default {
       return this.conversation.users.filter(user => user.id != this.$store.getters.profile.user_id)[0]
     },
     userVariant () {
-      return this.conversation.conversable.profile_id == this.$store.getters.profile.id ? 'benevole' : 'responsable'
+      return this.conversation.conversable.profile_id == this.$store.getters.profile.id ? 'responsable' : 'benevole'
     }
   }
 }
