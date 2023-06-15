@@ -54,7 +54,7 @@
       <p>{{ $store.getters.profile.first_name }}, merci pour votre aide.</p>
       <p>Veuillez confirmer votre participation à la mission <strong>{{ participation.mission.name }}</strong>. {{ participation.mission.responsable.full_name }} de <strong>{{ participation.mission.structure.name }}</strong> sera notifié.</p>
     </AlertDialog>
-    <ModalParticipationCancel
+    <ModalParticipationCancelByBenevole
       :participation="participation"
       :is-open="showCancelParticipationModal"
       @cancel="showCancelParticipationModal = false"
@@ -71,13 +71,13 @@
 
 <script>
 import Button from '@/components/dsfr/Button.vue'
-import ModalParticipationCancel from '@/components/modal/ModalParticipationCancel.vue'
+import ModalParticipationCancelByBenevole from '@/components/modal/ModalParticipationCancelByBenevole.vue'
 import TestimonialOverlay from '@/components/section/TestimonialOverlay.vue'
 
 export default {
   components: {
     Button,
-    ModalParticipationCancel,
+    ModalParticipationCancelByBenevole,
     TestimonialOverlay
   },
   props: {

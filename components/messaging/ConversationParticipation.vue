@@ -1,11 +1,11 @@
 <template>
   <Conversation>
     <template #header>
-      <template v-if="userVariant === 'responsable'">
+      <template v-if="isCurrentUserBenevole">
         <ConversationRecipientResponsable :user="recipientUser" />
         <ConversationContextualBenevoleActionParticipation />
       </template>
-      <template v-if="userVariant === 'benevole'">
+      <template v-if="isCurrentUserResponsable">
         <ConversationRecipientBenevole :user="recipientUser" />
         <ConversationContextualResponsableActionParticipation />
       </template>
@@ -15,7 +15,7 @@
       <CardInfosMission
         v-if="conversation.conversable.mission"
         :mission="conversation.conversable.mission"
-        :show-places-left="userVariant === 'responsable'"
+        :show-places-left="isCurrentUserResponsable"
       />
     </template>
   </Conversation>
@@ -28,6 +28,7 @@ import ConversationContextualResponsableActionParticipation from '@/components/m
 import ConversationContextualBenevoleActionParticipation from '@/components/messaging/ConversationContextualBenevoleActionParticipation.vue'
 import CardInfosMission from '@/components/messaging/CardInfosMission.vue'
 import Conversation from '@/components/messaging/Conversation.vue'
+import MixinConversationParticipation from '@/mixins/conversation/participation'
 
 export default {
   components: {
@@ -38,15 +39,13 @@ export default {
     CardInfosMission,
     Conversation
   },
+  mixins: [MixinConversationParticipation],
   computed: {
     conversation () {
       return this.$store.getters['messaging2/activeConversation']
     },
     recipientUser () {
       return this.conversation.users.filter(user => user.id != this.$store.getters.profile.user_id)[0]
-    },
-    userVariant () {
-      return this.conversation.conversable.profile_id == this.$store.getters.profile.id ? 'responsable' : 'benevole'
     }
   }
 }

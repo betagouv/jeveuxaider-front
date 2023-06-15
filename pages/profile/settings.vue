@@ -59,7 +59,7 @@
 
 <script>
 import FormPassword from '@/components/form/FormPassword.vue'
-import ModalUnregisterUser from '~/components/modal/ModalUnregisterUser.vue'
+import ModalUnregisterUser from '@/components/modal/ModalUnregisterUser.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
 import Button from '@/components/dsfr/Button.vue'

@@ -7,7 +7,7 @@
       @selected="handleSelected($event)"
     />
 
-    <ModalParticipationDecline
+    <ModalParticipationDeclineByResponsable
       :participation="participation"
       :is-open="showModalDecline"
       @cancel="showModalDecline = false"
@@ -17,11 +17,11 @@
 </template>
 
 <script>
-import ModalParticipationDecline from '@/components/modal/ModalParticipationDecline.vue'
+import ModalParticipationDeclineByResponsable from '@/components/modal/ModalParticipationDeclineByResponsable.vue'
 
 export default {
   components: {
-    ModalParticipationDecline
+    ModalParticipationDeclineByResponsable
   },
   props: {
     value: {

@@ -54,16 +54,52 @@
         </template>
       </Dropdown>
     </div>
+    <AlertDialog
+      theme="warning"
+      title="Changement de statut"
+      text="Vous êtes sur le point de passer la candidature en cours de traitement"
+      :is-open="showInProgressParticipationModal"
+      @confirm="handleInProgressParticipation()"
+      @cancel="showInProgressParticipationModal = false"
+    />
+    <AlertDialog
+      theme="warning"
+      title="Changement de statut"
+      text="Vous êtes sur le point de valider la candidature"
+      :is-open="showValidateParticipationModal"
+      @confirm="handleValidateParticipation()"
+      @cancel="showValidateParticipationModal = false"
+    />
+
+    <AlertDialog
+      theme="warning"
+      title="Changement de statut"
+      text="Vous êtes sur le point d'annuler la candidature"
+      :is-open="showCancelParticipationModal"
+      @confirm="handleCancelParticipation()"
+      @cancel="showCancelParticipationModal = false"
+    />
+
+    <ModalParticipationDeclineByResponsable
+      :participation="participation"
+      :is-open="showRefuseParticipationModal"
+      @cancel="showRefuseParticipationModal = false"
+      @confirm="handleRefuseParticipation"
+    />
   </div>
 </template>
 
 <script>
 import Button from '@/components/dsfr/Button.vue'
+import MixinConversationParticipation from '@/mixins/conversation/participation'
+import ModalParticipationDeclineByResponsable from '@/components/modal/ModalParticipationDeclineByResponsable.vue'
 
 export default {
   components: {
-    Button
+    Button,
+    ModalParticipationDeclineByResponsable
   },
+  mixins: [MixinConversationParticipation],
   data () {
     return {
       showInProgressParticipationModal: false,
@@ -73,12 +109,6 @@ export default {
     }
   },
   computed: {
-    conversation () {
-      return this.$store.getters['messaging2/activeConversation']
-    },
-    participation () {
-      return this.conversation.conversable
-    },
     label () {
       if (this.canValidate) {
         return 'Souhaitez-vous valider cette candidature ?'
@@ -98,27 +128,58 @@ export default {
       return ['En attente de validation', 'En cours de traitement'].includes(this.participation.state)
     },
     canRefuse () {
-      return !['Refusée', 'Annulée'].includes(this.participation.state)
+      return !['Refusée', 'Validée', 'Annulée'].includes(this.participation.state)
     },
     canCancel () {
       return !['Annulée'].includes(this.participation.state)
-    },
-    canArchive () {
-      return this.$store.getters['messaging2/isCurrentUserInConversation']
     }
   },
   methods: {
-    handleRefuseParticipation () {
-      // @TODO
+    handleInProgressParticipation () {
+      this.$axios.put(`/participations/${this.participation.id}`, {
+        ...this.participation,
+        state: 'En cours de traitement'
+      })
+        .catch(() => {})
+        .then(async (res) => {
+          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.conversation.id)
+          this.showInProgressParticipationModal = false
+        })
+    },
+    handleRefuseParticipation (payload) {
+      console.log('handleRefuseParticipation', payload)
+      this.$axios.put(`/participations/${this.participation.id}/decline`, payload)
+        .catch(() => {})
+        .then(async (res) => {
+          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.conversation.id)
+          this.showRefuseParticipationModal = false
+        })
     },
     handleCancelParticipation () {
-      // @TODO
+      this.$axios.put(`/participations/${this.participation.id}`, {
+        ...this.participation,
+        state: 'Annulée'
+      })
+        .catch(() => {})
+        .then(async (res) => {
+          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.conversation.id)
+          this.showCancelParticipationModal = false
+        })
     },
     handleValidateParticipation () {
-      // @TODO
-    },
-    handleArchive () {
-      // @TODO
+      this.$axios.put(`/participations/${this.participation.id}`, {
+        ...this.participation,
+        state: 'Validée'
+      })
+        .catch(() => {})
+        .then(async (res) => {
+          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.conversation.id)
+          this.showValidateParticipationModal = false
+        })
     }
   }
 }

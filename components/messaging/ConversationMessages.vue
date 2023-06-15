@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-auto flex flex-col gap-4 lg:gap-6 mt-6">
+  <div class="mb-auto flex flex-col gap-6 lg:gap-8 mt-8">
     <div
       v-for="message in messages"
       :key="message.id"
@@ -27,13 +27,13 @@ export default {
     MessageChat,
     MessageParticipationContextual
   },
-  props: {
-    messages: { type: Array, required: true }
-  },
   data () {
     return {}
   },
   computed: {
+    messages () {
+      return this.$store.getters['messaging2/activeConversationMessages']
+    },
     conversation () {
       return this.$store.getters['messaging2/activeConversation']
     }

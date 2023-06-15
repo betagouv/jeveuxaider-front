@@ -549,7 +549,7 @@ import { string, object, array } from 'yup'
 import inputGeo from '@/mixins/input-geo'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
-import ModalUnregisterOrganisation from '~/components/modal/ModalUnregisterOrganisation.vue'
+import ModalUnregisterOrganisation from '@/components/modal/ModalUnregisterOrganisation.vue'
 
 export default {
   components: {

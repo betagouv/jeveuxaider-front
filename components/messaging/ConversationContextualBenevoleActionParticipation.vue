@@ -53,6 +53,11 @@
                 Archiver la conversation
               </div>
             </DropdownOptionsItem>
+            <DropdownOptionsItem v-if="canUnarchive" @click.native.stop="handleUnarchive">
+              <div class="px-4 text-base font-medium">
+                Désarchiver la conversation
+              </div>
+            </DropdownOptionsItem>
           </div>
         </template>
       </Dropdown>
@@ -67,7 +72,7 @@
       <p>{{ $store.getters.profile.first_name }}, merci pour votre aide.</p>
       <p>Veuillez confirmer votre participation à la mission <strong>{{ participation.mission.name }}</strong>. {{ participation.mission.responsable.full_name }} de <strong>{{ participation.mission.structure.name }}</strong> sera notifié.</p>
     </AlertDialog>
-    <ModalParticipationCancel
+    <ModalParticipationCancelByBenevole
       :participation="participation"
       :is-open="showCancelParticipationModal"
       @cancel="showCancelParticipationModal = false"
@@ -84,15 +89,17 @@
 
 <script>
 import Button from '@/components/dsfr/Button.vue'
-import ModalParticipationCancel from '@/components/modal/ModalParticipationCancel.vue'
+import ModalParticipationCancelByBenevole from '@/components/modal/ModalParticipationCancelByBenevole.vue'
 import TestimonialOverlay from '@/components/section/TestimonialOverlay.vue'
+import MixinConversationParticipation from '@/mixins/conversation/participation'
 
 export default {
   components: {
     Button,
-    ModalParticipationCancel,
+    ModalParticipationCancelByBenevole,
     TestimonialOverlay
   },
+  mixins: [MixinConversationParticipation],
   data () {
     return {
       showCancelParticipationModal: false,
@@ -102,12 +109,6 @@ export default {
     }
   },
   computed: {
-    conversation () {
-      return this.$store.getters['messaging2/activeConversation']
-    },
-    participation () {
-      return this.conversation.conversable
-    },
     label () {
       if (this.participationShouldBeDone) {
         return 'Avez-vous réalisé la mission ?'
@@ -130,48 +131,6 @@ export default {
           return this.participation.state
       }
     },
-    mission () {
-      return this.participation.mission
-    },
-    hasCreneaux () {
-      return this.participation.slots?.length > 0
-    },
-    isMissionRecurrent () {
-      return this.participation.mission.date_type === 'recurring'
-    },
-    isMissionPonctual () {
-      return this.participation.mission.date_type === 'ponctual'
-    },
-    participationShouldBeDone () {
-      if (!['En attente de validation', 'En cours de traitement'].includes(this.participation.state)) {
-        return false
-      }
-
-      // Si créneaux avec une date passée
-      if (this.hasCreneaux && this.participation.slots.filter(slot => this.$dayjs().startOf('day').isAfter(slot.date)).length > 0) {
-        return true
-      }
-
-      // Si date de fin passée et mission ponctuel
-      if (this.isMissionPonctual && this.mission.end_date && this.$dayjs().startOf('day').isAfter(this.mission.end_date)) {
-        return true
-      }
-
-      // Si pas date de fin et date de début passée et mission ponctuel
-      if (this.isMissionPonctual && !this.mission.end_date && this.$dayjs().startOf('day').isAfter(this.mission.start_date)) {
-        return true
-      }
-
-      // Si date de participation créée depuis plus de 2 mois et mission recurrente
-      if (this.isMissionRecurrent && this.mission.start_date && this.$dayjs().startOf('day').subtract(1, 'month').isAfter(this.participation.created_at)) {
-        return true
-      }
-
-      return false
-    },
-    needTestimonial () {
-      return this.participation.state === 'Validée' && this.mission.state === 'Terminée' && !this.participation.temoignage && !this.isTestimonialSubmitted
-    },
     canValidate () {
       return ['En attente de validation', 'En cours de traitement'].includes(this.participation.state)
     },
@@ -180,28 +139,24 @@ export default {
         return false
       }
       return !this.participationShouldBeDone
-    },
-    canArchive () {
-      return this.$store.getters['messaging2/isCurrentUserInConversation']
     }
   },
   methods: {
-    handleArchive () {
-      // @TODO
-    },
     handleConfirmCancelParticipation (payload) {
       this.$axios.put(`/participations/${this.participation.id}/cancel-by-benevole`, payload)
         .catch(() => {})
-        .then((res) => {
-          this.$emit('updated', res.data)
+        .then(async (res) => {
+          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.conversation.id)
           this.showCancelParticipationModal = false
         })
     },
     handleConfirmValidateParticipation (payload) {
       this.$axios.put(`/participations/${this.participation.id}/validate-by-benevole`, payload)
         .catch(() => {})
-        .then((res) => {
-          this.$emit('updated', res.data)
+        .then(async (res) => {
+          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.conversation.id)
           this.showValidateParticipationModal = false
         })
     },

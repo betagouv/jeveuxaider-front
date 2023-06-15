@@ -7,7 +7,7 @@
       Annuler ma participation
     </Button>
 
-    <ModalParticipationCancel
+    <ModalParticipationCancelByBenevole
       :participation="participation"
       :is-open="showModal"
       @cancel="showModal = false"
@@ -17,11 +17,11 @@
 </template>
 
 <script>
-import ModalParticipationCancel from '@/components/modal/ModalParticipationCancel.vue'
+import ModalParticipationCancelByBenevole from '@/components/modal/ModalParticipationCancelByBenevole.vue'
 
 export default {
   components: {
-    ModalParticipationCancel
+    ModalParticipationCancelByBenevole
   },
   props: {
     participation: {

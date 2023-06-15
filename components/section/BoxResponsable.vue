@@ -100,7 +100,7 @@
 
 <script>
 import ModalSendMessage from '@/components/modal/ModalSendMessage.vue'
-import ModalResponsableSetMissionsIsActive from '~/components/modal/ModalResponsableSetMissionsIsActive.vue'
+import ModalResponsableSetMissionsIsActive from '@/components/modal/ModalResponsableSetMissionsIsActive.vue'
 import Tag from '@/components/dsfr/Tag.vue'
 
 export default {

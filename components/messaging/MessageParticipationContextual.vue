@@ -42,6 +42,8 @@ export default {
   computed: {
     badge () {
       switch (this.message.contextual_state) {
+        case 'Refusée':
+          return { type: 'error', label: 'Refusée' }
         case 'Validée':
           return { type: 'success', label: 'Validée' }
         case 'Validée par bénévole':

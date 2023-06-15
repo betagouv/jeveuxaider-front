@@ -3,12 +3,23 @@
     <slot name="header" />
 
     <ContainerScrollable
-      class="flex-1 p-4 lg:p-6"
+      class="flex-1 p-6 lg:p-8"
       :reverse="true"
-      scrollbar-class="pr-4"
+      scrollbar-class="pr-6"
       @scroll="onScroll"
     >
-      <ConversationMessages :messages="messages" />
+      <ConversationMessages />
+
+      <div v-if="$store.getters['messaging2/hasActiveConversationMoreMessages']" class="flex justify-center mt-8">
+        <Button
+          :loading="loadingPreviousMessages"
+          type="secondary"
+          size="sm"
+          @click.native="handleFetchPreviousMessages"
+        >
+          Charger les messages précédents
+        </Button>
+      </div>
       <slot name="scroll-container-top" />
     </ContainerScrollable>
 
@@ -19,53 +30,41 @@
 <script>
 import ConversationForm from '@/components/messaging/ConversationForm.vue'
 import ConversationMessages from '@/components/messaging/ConversationMessages.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
     ConversationForm,
-    ConversationMessages
+    ConversationMessages,
+    Button
   },
   data () {
     return {
-      loading: true,
-      currentPage: 0,
-      lastPage: null,
-      messages: []
+      loadingPreviousMessages: false
     }
-  },
-  async fetch () {
-    this.loading = true
-    const { data: messages } = await this.$axios.get(`/conversationsv2/${this.conversation.id}/messages`, {
-      params: { page: this.currentPage + 1 }
-    })
-
-    this.currentPage = messages.current_page
-    this.lastPage = messages.last_page
-
-    this.messages = [
-      ...messages.data?.reverse(),
-      ...this.messages
-    ]
-
-    this.loading = false
   },
   computed: {
-    conversation () {
-      return this.$store.getters['messaging2/activeConversation']
-    }
+  },
+  async mounted () {
+    await this.$store.dispatch('messaging2/fetchConversationMessages', this.$route.params.id)
   },
   methods: {
-    onSubmit (payload) {
-      this.messages.push(payload)
+    async onSubmit () {
+      await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.$route.params.id)
+    },
+    async handleFetchPreviousMessages () {
+      this.loadingPreviousMessages = true
+      await this.$store.dispatch('messaging2/fetchOldConversationMessages', this.$route.params.id)
+      this.loadingPreviousMessages = false
     },
     onScroll ({ target: { scrollTop, clientHeight, scrollHeight } }) {
       // Il faut prendre en compte la taille du slot header,
       // plus une marge pour éviter le content shift au scroll
-      const offset = 379
-      const isBottom = Math.ceil(Math.abs(scrollTop) + clientHeight) >= (scrollHeight - offset)
-      if (this.currentPage < this.lastPage && isBottom && !this.loading) {
-        this.$fetch()
-      }
+      // const offset = 379
+      // const isBottom = Math.ceil(Math.abs(scrollTop) + clientHeight) >= (scrollHeight - offset)
+      // if (this.currentPage < this.lastPage && isBottom && !this.loading) {
+      //   this.$store.dispatch('messaging2/fetchOldConversationMessages', this.$route.params.id)
+      // }
     }
   }
 }
