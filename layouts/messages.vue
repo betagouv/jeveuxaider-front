@@ -3,7 +3,10 @@
     <div class="h-full flex flex-col">
       <Header full-width />
       <div class="flex h-full bg-white overflow-hidden">
-        <ConversationsListingResults class="w-full lg:max-w-[492px] lg:flex-none lg:border-r" />
+        <div class="w-full lg:max-w-[492px] lg:flex-none lg:border-r">
+          <ConversationsListingResults />
+        </div>
+
         <Nuxt class="flex-1" />
       </div>
       <portal-target name="body-end" multiple />

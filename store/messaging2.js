@@ -1,5 +1,7 @@
 export const state = () => ({
   conversations: [],
+  conversationCurrentPage: 1,
+  hasMoreConversations: false,
   activeConversation: {},
   activeConversationMessages: [],
   hasActiveConversationMoreMessages: false,
@@ -10,6 +12,8 @@ export const state = () => ({
 
 export const getters = {
   conversations: state => state.conversations,
+  conversationCurrentPage: state => state.conversationCurrentPage,
+  hasMoreConversations: state => state.hasMoreConversations,
   activeConversation: state => state.activeConversation,
   activeConversationMessages: state => state.activeConversationMessages,
   hasActiveConversationMoreMessages: state => state.hasActiveConversationMoreMessages,
@@ -21,6 +25,15 @@ export const getters = {
 export const mutations = {
   setConversations: (state, conversations) => {
     state.conversations = conversations
+  },
+  setHasMoreConversations: (state, payload) => {
+    state.hasMoreConversations = payload
+  },
+  incrementConversationCurrentPage: (state) => {
+    state.conversationCurrentPage += 1
+  },
+  pushConversationInConversations: (state, payload) => {
+    state.conversations.push(payload)
   },
   setActiveConversation: (state, payload) => {
     state.activeConversation = payload
@@ -49,6 +62,33 @@ export const mutations = {
 }
 
 export const actions = {
+
+  // CONVERSATIONS
+  async fetchConversations ({ state, commit }, params) {
+    console.log('fetchConversations', params)
+    const { data: conversations } = await this.$axios.get('/conversationsv2', {
+      params: { ...params }
+    })
+    commit('setConversations', conversations.data)
+    commit('setHasMoreConversations', conversations.last_page !== conversations.current_page)
+  },
+  async fetchMoreConversations ({ state, commit }, params) {
+    console.log('fetchMoreConversations', params)
+
+    commit('incrementConversationCurrentPage')
+    const { data: moreConversations } = await this.$axios.get('/conversationsv2', {
+      params: {
+        ...params,
+        page: state.conversationCurrentPage
+      }
+    })
+    moreConversations?.data.forEach((conversation) => {
+      commit('pushConversationInConversations', conversation)
+    })
+    commit('setHasMoreConversations', moreConversations.last_page !== moreConversations.current_page)
+  },
+
+  // CONVERSATION MESSAGES
   async fetchConversationMessages ({ state, commit }, conversationId) {
     const { data: messages } = await this.$axios.get(`/conversationsv2/${conversationId}/messages`)
     commit('setActiveConversationMessages', messages.data?.reverse())
@@ -90,6 +130,8 @@ export const actions = {
 
     commit('refreshConversationInConversations', conversation)
   },
+
+  // USER
   async getUserUnreadMessagesCount ({ commit }) {
     const { data: count } = await this.$axios.get('user/unread-messages')
     commit('setUnreadMessagesCount', count)
