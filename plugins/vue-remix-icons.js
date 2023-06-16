@@ -79,8 +79,12 @@ import RiGroupFill from 'vue-remix-icons/icons/RiGroupFill.vue'
 import RiSendPlaneFill from 'vue-remix-icons/icons/RiSendPlaneFill.vue'
 import RiFolderWarningLine from 'vue-remix-icons/icons/RiFolderWarningLine.vue'
 import RiMailUnreadLine from 'vue-remix-icons/icons/RiMailUnreadLine.vue'
+import RiArchiveLine from 'vue-remix-icons/icons/RiArchiveLine.vue'
+import RiMessage3Line from 'vue-remix-icons/icons/RiMessage3Line.vue'
 
 const components = {
+  RiMessage3Line,
+  RiArchiveLine,
   RiMailUnreadLine,
   RiSendPlaneFill,
   RiGroupFill,
