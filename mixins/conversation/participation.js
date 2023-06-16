@@ -68,11 +68,13 @@ export default {
     }
   },
   methods: {
-    handleArchive () {
-      // @TODO
+    async handleArchive () {
+      await this.$axios.post(`/conversations/${this.conversation.id}/archive`)
+      this.$store.dispatch('messaging2/selectNextActiveConversation')
     },
-    handleUnarchive () {
-      // @TODO
+    async handleUnarchive () {
+      await this.$axios.post(`/conversations/${this.conversation.id}/unarchive`)
+      this.$store.dispatch('messaging2/selectNextActiveConversation')
     }
   }
 }

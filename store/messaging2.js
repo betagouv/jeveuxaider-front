@@ -77,6 +77,10 @@ export const mutations = {
   },
   toggleShowFilters (state) {
     state.showFilters = !state.showFilters
+  },
+  removeConversationFromConversations (state, payload) {
+    const index = state.conversations.findIndex(conversation => conversation.id == payload.id)
+    state.conversations.splice(index, 1)
   }
 }
 
@@ -151,5 +155,22 @@ export const actions = {
   async getUserUnreadMessagesCount ({ commit }) {
     const { data: count } = await this.$axios.get('user/unread-messages')
     commit('setUnreadMessagesCount', count)
+  },
+
+  selectNextActiveConversation ({ state, commit }) {
+    const activeConversationIndex = state.conversations.findIndex(conversation => conversation.id === state.activeConversation.id)
+    let nextConversationId = null
+
+    if (state.conversations.length > (activeConversationIndex + 1)) {
+      nextConversationId = state.conversations[activeConversationIndex + 1]?.id
+    } else {
+      nextConversationId = state.conversations[activeConversationIndex - 1]?.id
+    }
+    if (nextConversationId) {
+      this.app.router.push(`/messages/${nextConversationId}`)
+    } else {
+      this.app.router.push('/messages')
+    }
+    commit('removeConversationFromConversations', state.activeConversation)
   }
 }
