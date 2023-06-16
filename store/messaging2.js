@@ -1,36 +1,52 @@
 export const state = () => ({
   conversations: [],
-  conversationCurrentPage: 1,
+  conversationsQueryParams: {
+    'filter[type]': 'all',
+    'filter[search]': null,
+    page: 1
+  },
   hasMoreConversations: false,
   activeConversation: {},
   activeConversationMessages: [],
   hasActiveConversationMoreMessages: false,
   unreadMessagesCount: 0,
   isCurrentUserInConversation: false,
-  isConversationArchivedForCurrentUser: false
+  isConversationArchivedForCurrentUser: false,
+  showFilters: false
 })
 
 export const getters = {
   conversations: state => state.conversations,
-  conversationCurrentPage: state => state.conversationCurrentPage,
+  conversationsQueryParams: state => state.conversationsQueryParams,
   hasMoreConversations: state => state.hasMoreConversations,
   activeConversation: state => state.activeConversation,
   activeConversationMessages: state => state.activeConversationMessages,
   hasActiveConversationMoreMessages: state => state.hasActiveConversationMoreMessages,
   unreadMessagesCount: state => state.unreadMessagesCount,
   isCurrentUserInConversation: (state, getters, rootState) => state.activeConversation?.users.filter(user => user.id === rootState.auth.user.id).length,
-  isConversationArchivedForCurrentUser: (state, getters, rootState) => !state.activeConversation?.users.filter(user => user.id === rootState.auth.user.id)[0]?.pivot.status
+  isConversationArchivedForCurrentUser: (state, getters, rootState) => !state.activeConversation?.users.filter(user => user.id === rootState.auth.user.id)[0]?.pivot.status,
+  showFilters: state => state.showFilters
 }
 
 export const mutations = {
   setConversations: (state, conversations) => {
     state.conversations = conversations
   },
+  setConversationsQueryParams: (state, payload) => {
+    state.conversationsQueryParams = payload
+  },
+  // updateConversationsQueryParam: (state, payload) => {
+  //   console.log('updateConversationsQueryParam', payload.filterName, payload.filterValue)
+  //   state.conversationsQueryParams = {
+  //     ...state.conversationsQueryParams,
+  //     [payload.filterName]: payload.filterValue
+  //   }
+  // },
   setHasMoreConversations: (state, payload) => {
     state.hasMoreConversations = payload
   },
-  incrementConversationCurrentPage: (state) => {
-    state.conversationCurrentPage += 1
+  incrementConversationQueryParamsPage: (state) => {
+    state.conversationsQueryParams.page += 1
   },
   pushConversationInConversations: (state, payload) => {
     state.conversations.push(payload)
@@ -58,29 +74,29 @@ export const mutations = {
 
     const index = state.conversations.findIndex(conversation => conversation.id == payload.id)
     state.conversations.splice(index, 1, payload)
+  },
+  toggleShowFilters (state) {
+    state.showFilters = !state.showFilters
   }
 }
 
 export const actions = {
 
   // CONVERSATIONS
-  async fetchConversations ({ state, commit }, params) {
-    console.log('fetchConversations', params)
+  async fetchConversations ({ state, commit }) {
+    console.log('fetchConversations', state.conversationsQueryParams)
     const { data: conversations } = await this.$axios.get('/conversationsv2', {
-      params: { ...params }
+      params: state.conversationsQueryParams
     })
     commit('setConversations', conversations.data)
     commit('setHasMoreConversations', conversations.last_page !== conversations.current_page)
   },
-  async fetchMoreConversations ({ state, commit }, params) {
-    console.log('fetchMoreConversations', params)
+  async fetchMoreConversations ({ state, commit }) {
+    console.log('fetchMoreConversations', state.conversationsQueryParams)
 
-    commit('incrementConversationCurrentPage')
+    commit('incrementConversationQueryParamsPage')
     const { data: moreConversations } = await this.$axios.get('/conversationsv2', {
-      params: {
-        ...params,
-        page: state.conversationCurrentPage
-      }
+      params: state.conversationsQueryParams
     })
     moreConversations?.data.forEach((conversation) => {
       commit('pushConversationInConversations', conversation)

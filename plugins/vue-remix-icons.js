@@ -77,8 +77,11 @@ import RiPhoneLine from 'vue-remix-icons/icons/RiPhoneLine.vue'
 import RiSuitcaseFill from 'vue-remix-icons/icons/RiSuitcaseFill.vue'
 import RiGroupFill from 'vue-remix-icons/icons/RiGroupFill.vue'
 import RiSendPlaneFill from 'vue-remix-icons/icons/RiSendPlaneFill.vue'
+import RiFolderWarningLine from 'vue-remix-icons/icons/RiFolderWarningLine.vue'
+import RiMailUnreadLine from 'vue-remix-icons/icons/RiMailUnreadLine.vue'
 
 const components = {
+  RiMailUnreadLine,
   RiSendPlaneFill,
   RiGroupFill,
   RiSuitcaseFill,
@@ -152,7 +155,8 @@ const components = {
   RiEqualizerFill,
   RiPauseCircleLine,
   RiPlayCircleLine,
-  RiHeartLine
+  RiHeartLine,
+  RiFolderWarningLine
 }
 
 Object.entries(components).forEach(([name, component]) => {

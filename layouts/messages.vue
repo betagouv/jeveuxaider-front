@@ -3,8 +3,9 @@
     <div class="h-full flex flex-col">
       <Header full-width />
       <div class="flex h-full bg-white overflow-hidden">
-        <div class="w-full lg:max-w-[492px] lg:flex-none lg:border-r">
-          <ConversationsListingResults />
+        <div class="w-full lg:max-w-[530px] flex lg:flex-none lg:border-r">
+          <ConversationsTabs class="w-[80px] border-r" />
+          <ConversationsListingResults class="flex-1 min-w-0" />
         </div>
 
         <Nuxt class="flex-1" />
@@ -17,12 +18,14 @@
 <script>
 import Header from '@/components/layout/Header.vue'
 import ConversationsListingResults from '~/components/messaging/ConversationsListingResults.vue'
+import ConversationsTabs from '~/components/messaging/ConversationsTabs.vue'
 
 export default {
   name: 'MessagesLayout',
   components: {
     Header,
-    ConversationsListingResults
+    ConversationsListingResults,
+    ConversationsTabs
   },
   middleware: 'authenticated',
   data () {
@@ -32,6 +35,13 @@ export default {
     bodyAttrs: {
       class: 'full-height-layout'
     }
+  },
+  computed: {
+
+  },
+  methods: {
+
   }
+
 }
 </script>

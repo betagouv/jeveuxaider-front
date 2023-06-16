@@ -1,55 +1,66 @@
 <template>
   <div class="h-full flex flex-col">
-    <div class="p-6 lg:p-8 border-b">
-      <Input
-        name="search"
-        placeholder="Recherche par mots clés..."
-        icon="SearchIcon"
-        variant="transparent"
-        :value="$route.query['filter[search]']"
-        clearable
-        @input="changeFilter('filter[search]', $event)"
-      />
-    </div>
-    <ContainerScrollable
-      :class="[{'hidden lg:block': $route.name == 'messages-id'}, 'flex-1']"
-      @scroll="onScroll"
-    >
-      <div class="divide-y">
-        <nuxt-link
-          v-for="conversation in $store.getters['messaging2/conversations']"
-          :key="conversation.id"
-          :to="`/messages/${conversation.id}`"
-          class="block border-l-4 border-l-white cursor-pointer hover:bg-[#F5F5FE hover:border-l-[#6A6AF4]"
-          :class="[
-            { '!border-l-[#6A6AF4] bg-[#F5F5FE]': conversation.id == $route.params.id }
-          ]"
-        >
-          <component
-            :is="retrieveComponent(conversation)"
-            :conversation="conversation"
+    <template v-if="$store.getters['messaging2/showFilters']">
+      <ConversationsFilters />
+    </template>
+    <template v-else>
+      <div class="p-6 lg:p-8 border-b">
+        <div class="flex gap-6 items-center">
+          <Input
+            name="search"
+            placeholder="Recherche par mots clés..."
+            icon="SearchIcon"
+            variant="transparent"
+            clearable
+            class="flex-1"
+            :value="$store.getters['messaging2/conversationsQueryParams']['filter[search]']"
+            @input="handleSearchInput"
           />
-        </nuxt-link>
+
+          <RiEqualizerFill class="h-8 w-8 fill-current text-jva-blue-500 cursor-pointer" @click.native="$store.commit('messaging2/toggleShowFilters')" />
+        </div>
       </div>
-      <div v-if="$store.getters['messaging2/hasMoreConversations']" class="flex justify-center mb-8 border-t pt-8">
-        <Button
-          :loading="loadingMoreConversations"
-          type="secondary"
-          size="sm"
-          @click.native="handleFetchMoreConversations"
-        >
-          Charger plus de conversations
-        </Button>
-      </div>
-    </ContainerScrollable>
+      <ContainerScrollable
+        :class="[{'hidden lg:block': $route.name == 'messages-id'}, 'flex-1']"
+        @scroll="onScroll"
+      >
+        <div class="divide-y">
+          <nuxt-link
+            v-for="conversation in $store.getters['messaging2/conversations']"
+            :key="conversation.id"
+            :to="`/messages/${conversation.id}`"
+            class="block border-l-4 border-l-white cursor-pointer hover:bg-[#F5F5FE hover:border-l-[#6A6AF4]"
+            :class="[
+              { '!border-l-[#6A6AF4] bg-[#F5F5FE]': conversation.id == $route.params.id }
+            ]"
+          >
+            <component
+              :is="retrieveComponent(conversation)"
+              :conversation="conversation"
+            />
+          </nuxt-link>
+        </div>
+        <div v-if="$store.getters['messaging2/hasMoreConversations']" class="flex justify-center mb-8 border-t pt-8">
+          <Button
+            :loading="loadingMoreConversations"
+            type="secondary"
+            size="sm"
+            @click.native="handleFetchMoreConversations"
+          >
+            Charger plus de conversations
+          </Button>
+        </div>
+      </ContainerScrollable>
+    </template>
   </div>
 </template>
 
 <script>
+import { debounce } from 'lodash'
 import ConversationTeaserParticipation from '@/components/messaging/ConversationTeaserParticipation.vue'
 import ConversationTeaserMission from '@/components/messaging/ConversationTeaserMission.vue'
 import ConversationTeaserOrganisation from '@/components/messaging/ConversationTeaserOrganisation.vue'
-import QueryBuilder from '@/mixins/query-builder'
+import ConversationsFilters from '@/components/messaging/ConversationsFilters.vue'
 import Button from '@/components/dsfr/Button.vue'
 
 export default {
@@ -57,42 +68,38 @@ export default {
     ConversationTeaserParticipation,
     ConversationTeaserMission,
     ConversationTeaserOrganisation,
+    ConversationsFilters,
     Button
   },
-  mixins: [QueryBuilder],
   data () {
     return {
       loadingMoreConversations: false
-      // filters: [],
-      // currentPage: 1,
-      // lastPage: null
     }
   },
   async fetch () {
-    console.log('this.$route.query', this.$route.query)
-    await this.$store.dispatch('messaging2/fetchConversations', { ...this.$route.query })
-  },
-  // watch: {
-  //   async '$store.state.messaging2.activeConversation' (newConversation, oldConversation) {
-  //     // @TODO à quoi ça sert ?
-  //     // if (oldConversation.id) {
-  //     //   await this.$store.dispatch('messaging2/refreshConversationInConversations', oldConversation.id)
-  //     // }
-  //   }
-  //   // filters () {
-  //   //   this.conversations = []
-  //   // }
-  // },
-  watch: {
-    '$route.query': '$fetch'
+    await this.$store.dispatch('messaging2/fetchConversations')
   },
   beforeDestroy () {
     this.$store.commit('messaging2/setConversations', [])
   },
   methods: {
+    handleSearchInput ($event) {
+      if (this.timeout) {
+        this.timeout.cancel()
+      }
+      this.timeout = debounce(() => {
+        this.$store.commit('messaging2/setConversationsQueryParams', {
+          ...this.$store.getters['messaging2/conversationsQueryParams'],
+          'filter[search]': $event,
+          page: 1
+        })
+        this.$fetch()
+      }, 500)
+      this.timeout()
+    },
     async handleFetchMoreConversations () {
       this.loadingMoreConversations = true
-      await this.$store.dispatch('messaging2/fetchMoreConversations', { ...this.$route.query })
+      await this.$store.dispatch('messaging2/fetchMoreConversations')
       this.loadingMoreConversations = false
     },
     retrieveComponent (conversation) {
