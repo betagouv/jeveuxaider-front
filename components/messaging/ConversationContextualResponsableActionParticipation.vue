@@ -50,6 +50,11 @@
                 Archiver la conversation
               </div>
             </DropdownOptionsItem>
+            <DropdownOptionsItem v-if="canUnarchive" @click.native.stop="handleUnarchive">
+              <div class="px-4 text-base font-medium">
+                Désarchiver la conversation
+              </div>
+            </DropdownOptionsItem>
           </div>
         </template>
       </Dropdown>

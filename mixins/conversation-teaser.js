@@ -11,9 +11,6 @@ export default {
       })
     },
     hasUnreadMessage () {
-      if (this.currentUserInConversation?.pivot.read_at == null) {
-        return true
-      }
       if (this.$dayjs(this.currentUserInConversation?.pivot.read_at).isSame(this.$dayjs(this.conversation.updated_at))) {
         return false
       }
