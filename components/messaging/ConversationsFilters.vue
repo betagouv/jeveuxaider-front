@@ -15,7 +15,7 @@
         html-for="participations_states"
       >
         <CheckboxGroup
-          v-model="form.participations_states"
+          v-model="form['filter[participations_state]']"
           name="participations_states"
           variant="button"
           :options="$labels.participation_workflow_states"
@@ -26,7 +26,7 @@
         html-for="mission_name"
       >
         <Input
-          v-model="form.mission_name"
+          v-model="form['filter[missions_name]']"
           name="mission_name"
           placeholder="Recherche par mots clés"
         />
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { cloneDeep } from 'lodash'
 import Button from '@/components/dsfr/Button.vue'
 
 export default {
@@ -55,12 +56,16 @@ export default {
   data () {
     return {
       loading: false,
-      form: {}
+      form: cloneDeep(this.$store.getters['messaging2/conversationsQueryParams'])
     }
   },
   methods: {
     handleSubmit () {
-      console.log('handlesubmit', this.form)
+      this.$store.commit('messaging2/setConversationsQueryParams', {
+        ...this.form,
+        page: 1
+      })
+      this.$store.dispatch('messaging2/fetchConversations')
       this.$store.commit('messaging2/toggleShowFilters')
     }
   }

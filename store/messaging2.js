@@ -35,13 +35,6 @@ export const mutations = {
   setConversationsQueryParams: (state, payload) => {
     state.conversationsQueryParams = payload
   },
-  // updateConversationsQueryParam: (state, payload) => {
-  //   console.log('updateConversationsQueryParam', payload.filterName, payload.filterValue)
-  //   state.conversationsQueryParams = {
-  //     ...state.conversationsQueryParams,
-  //     [payload.filterName]: payload.filterValue
-  //   }
-  // },
   setHasMoreConversations: (state, payload) => {
     state.hasMoreConversations = payload
   },
@@ -81,6 +74,9 @@ export const mutations = {
   removeConversationFromConversations (state, payload) {
     const index = state.conversations.findIndex(conversation => conversation.id == payload.id)
     state.conversations.splice(index, 1)
+  },
+  setShowFilters (state, payload) {
+    state.showFilters = payload
   }
 }
 
@@ -90,7 +86,10 @@ export const actions = {
   async fetchConversations ({ state, commit }) {
     console.log('fetchConversations', state.conversationsQueryParams)
     const { data: conversations } = await this.$axios.get('/conversationsv2', {
-      params: state.conversationsQueryParams
+      params: {
+        ...state.conversationsQueryParams,
+        page: 1
+      }
     })
     commit('setConversations', conversations.data)
     commit('setHasMoreConversations', conversations.last_page !== conversations.current_page)

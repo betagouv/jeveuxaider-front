@@ -42,11 +42,9 @@ export default {
   methods: {
     changeType (type) {
       this.$store.commit('messaging2/setConversationsQueryParams', {
-        ...this.$store.getters['messaging2/conversationsQueryParams'],
-        'filter[type]': type,
-        page: 1
+        'filter[type]': type
       })
-
+      this.$store.commit('messaging2/setShowFilters', false)
       this.$store.dispatch('messaging2/fetchConversations')
     }
   }
