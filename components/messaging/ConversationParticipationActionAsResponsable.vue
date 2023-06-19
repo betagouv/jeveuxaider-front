@@ -153,7 +153,6 @@ export default {
         })
     },
     handleRefuseParticipation (payload) {
-      console.log('handleRefuseParticipation', payload)
       this.$axios.put(`/participations/${this.participation.id}/decline`, payload)
         .catch(() => {})
         .then(async (res) => {

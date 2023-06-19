@@ -9,7 +9,7 @@
         <div class="text-xl font-bold">
           {{ organisation.name }}
         </div>
-        <nuxt-link v-if="isAssociation" :to="organisation.full_url" target="_blank">
+        <nuxt-link :to="`/admin/organisations/${organisation.id}`" target="_blank">
           <RiExternalLinkLine class="text-jva-blue-500 fill-current h-6 w-6" />
         </nuxt-link>
       </div>
@@ -32,7 +32,7 @@
       </div>
       <div class="flex space-x-1 items-center text-sm text-cool-gray-500">
         <p class="">
-          {{ organisation.description }}
+          {{ organisation.description || 'Aucune description' }}
         </p>
       </div>
     </div>

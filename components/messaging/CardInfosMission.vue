@@ -9,7 +9,7 @@
         <div class="text-xl font-bold">
           {{ mission.name }}
         </div>
-        <nuxt-link :to="mission.full_url" target="_blank">
+        <nuxt-link v-if="!['volontaire'].includes($store.getters.contextRole)" :to="`/admin/missions/${mission.id}`" target="_blank">
           <RiExternalLinkLine class="text-jva-blue-500 fill-current h-6 w-6" />
         </nuxt-link>
       </div>
