@@ -63,7 +63,7 @@ export default {
         case 'En cours de traitement':
           return 'L’organisation est en cours de traitement'
         default:
-          return ''
+          return this.organisation.state
       }
     }
   },

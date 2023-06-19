@@ -14,9 +14,7 @@
       @confirm="handleConfirmDialog()"
     />
     <ModalMissionReport
-      v-if="missionStats"
       :mission="mission"
-      :mission-stats="missionStats"
       :is-open="showModalReport"
       @cancel="showModalReport = false"
       @confirm="handleConfirmDialog()"

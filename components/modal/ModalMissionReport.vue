@@ -58,10 +58,6 @@ export default {
     mission: {
       type: Object,
       required: true
-    },
-    missionStats: {
-      type: Object,
-      required: true
     }
   }
 }

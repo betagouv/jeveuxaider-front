@@ -1,21 +1,74 @@
 <template>
-  <div class=" bg-pink-200">
-    <div>Mission state {{ mission.state }}</div>
-  <!-- Bouton [VALIDER] si en attente de validation / En cours de traitement -->
-  <!-- Sinon on affiche le statut et on laisse que le bouton Autres -->
-  <!-- Autre : En cours de traitement / Signaler / Mettre hors ligne -->
+  <div class="p-4 lg:p-6 flex justify-between items-center bg-jva-blue-500 text-white">
+    <div class="text-xl font-bold">
+      {{ label }}
+    </div>
+    <div class="flex space-x-4 items-center">
+      <Dropdown ref="dropdownUser">
+        <template #button>
+          <Button
+            type="transparent"
+            size="lg"
+            icon="RiArrowDownSLine"
+            icon-position="right"
+            class="hover:bg-jva-blue-300"
+          >
+            Autre
+          </Button>
+        </template>
+
+        <template #items>
+          <div class="w-[300px] py-4">
+            <DropdownOptionsItem v-if="canArchive" @click.native="handleArchive">
+              <div class="px-4 text-base font-medium">
+                Archiver la conversation
+              </div>
+            </DropdownOptionsItem>
+            <DropdownOptionsItem v-if="canUnarchive" @click.native.stop="handleUnarchive">
+              <div class="px-4 text-base font-medium">
+                Désarchiver la conversation
+              </div>
+            </DropdownOptionsItem>
+          </div>
+        </template>
+      </Dropdown>
+    </div>
   </div>
 </template>
 
 <script>
+import Button from '@/components/dsfr/Button.vue'
+import MixinConversationMission from '@/mixins/conversation/mission'
+
 export default {
-  computed: {
-    conversation () {
-      return this.$store.getters['messaging2/activeConversation']
-    },
-    mission () {
-      return this.conversation.conversable
+  components: {
+    Button
+  },
+  mixins: [MixinConversationMission],
+  data () {
+    return {
     }
+  },
+  computed: {
+    label () {
+      switch (this.mission.state) {
+        case 'Brouillon':
+          return 'La mission est en brouillon'
+        case 'Validée':
+          return 'La mission est validée'
+        case 'Signalée':
+          return 'La mission est signalée'
+        case 'En attente de validation':
+          return 'La mission est en attente de validation'
+        case 'En cours de traitement':
+          return 'La mission est en cours de traitement'
+        default:
+          return this.mission.state
+      }
+    }
+  },
+  methods: {
+
   }
 }
 </script>
