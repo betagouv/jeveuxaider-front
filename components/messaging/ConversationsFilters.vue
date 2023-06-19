@@ -2,7 +2,7 @@
   <div class="grid grid-cols-1 gap-12 p-6 lg:p-8">
     <div class="flex space-x-6 items-center">
       <RiArrowLeftLine
-        class="h-8 w-8 fill-current text-jva-blue-500 cursor-pointer"
+        class="h-8 w-8 fill-current text-jva-blue-500 hover:text-jva-blue-300 cursor-pointer"
         @click.native="$store.commit('messaging2/toggleShowFilters')"
       />
       <div class="text-2xl font-bold">
@@ -29,9 +29,10 @@
           v-model="form['filter[missions_name]']"
           name="mission_name"
           placeholder="Recherche par mots clés"
+          clearable
         />
       </FormControl>
-      <div>
+      <div class="flex flex-col items-center justify-center">
         <Button
           :loading="loading"
           type="primary"
@@ -40,6 +41,9 @@
         >
           Appliquer les filtres
         </Button>
+        <Link v-if="$store.getters['messaging2/activeFiltersCount'] > 0" class="mt-1" @click.native="resetForm">
+          Réinitialiser
+        </Link>
       </div>
     </div>
   </div>
@@ -48,10 +52,12 @@
 <script>
 import { cloneDeep } from 'lodash'
 import Button from '@/components/dsfr/Button.vue'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
-    Button
+    Button,
+    Link
   },
   data () {
     return {
@@ -60,6 +66,14 @@ export default {
     }
   },
   methods: {
+    resetForm () {
+      console.log('resetForm')
+      this.form = {
+        ...this.form,
+        'filter[participations_state]': [],
+        'filter[missions_name]': null
+      }
+    },
     handleSubmit () {
       this.$store.commit('messaging2/setConversationsQueryParams', {
         ...this.form,

@@ -1,39 +1,44 @@
 <template>
   <Conversation>
     <template #header>
-      <ConversationRecipientResponsable :user="recipientUser" />
-      <ConversationContextualActionOrganisation />
+      <template v-if="isCurrentUserResponsable">
+        <ConversationRecipientReferentOrAdmin :user="recipientUser" />
+        <ConversationOrganisationActionAsResponsable />
+      </template>
+      <template v-if="isCurrentUserReferentOrAdmin">
+        <ConversationRecipientResponsable :user="recipientUser" show-private-infos />
+        <ConversationOrganisationActionAsReferent />
+      </template>
     </template>
 
     <template #scroll-container-top>
-      <CardInfosOrganisation v-if="conversation.conversable" :organisation="conversation.conversable" />
+      <CardInfosOrganisation />
     </template>
   </Conversation>
 </template>
 
 <script>
+import ConversationRecipientReferentOrAdmin from '~/components/messaging/ConversationRecipientReferentOrAdmin.vue'
 import ConversationRecipientResponsable from '~/components/messaging/ConversationRecipientResponsable.vue'
 import CardInfosOrganisation from '~/components/messaging/CardInfosOrganisation.vue'
-import ConversationContextualActionOrganisation from '@/components/messaging/ConversationContextualActionOrganisation.vue'
+import ConversationOrganisationActionAsReferent from '~/components/messaging/ConversationOrganisationActionAsReferent.vue'
+import ConversationOrganisationActionAsResponsable from '~/components/messaging/ConversationOrganisationActionAsResponsable.vue'
 import Conversation from '@/components/messaging/Conversation.vue'
+import MixinConversationOrganisation from '@/mixins/conversation/organisation'
 
 export default {
   components: {
+    ConversationRecipientReferentOrAdmin,
     ConversationRecipientResponsable,
     CardInfosOrganisation,
-    ConversationContextualActionOrganisation,
+    ConversationOrganisationActionAsReferent,
+    ConversationOrganisationActionAsResponsable,
     Conversation
   },
+  mixins: [MixinConversationOrganisation],
   computed: {
-    conversation () {
-      return this.$store.getters['messaging2/activeConversation']
-    },
     recipientUser () {
       return this.conversation.users.filter(user => user.id != this.$store.getters.profile.user_id)[0]
-    },
-    userVariant () {
-      // TODO variant referent / responsable / admin
-      return 'referent'
     }
   },
   methods: {}

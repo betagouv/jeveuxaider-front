@@ -17,40 +17,54 @@
             @input="handleSearchInput"
           />
 
-          <RiEqualizerFill class="h-8 w-8 fill-current text-jva-blue-500 cursor-pointer" @click.native="$store.commit('messaging2/toggleShowFilters')" />
+          <div class="relative cursor-pointer text-jva-blue-500 hover:text-jva-blue-300" @click="$store.commit('messaging2/toggleShowFilters')">
+            <RiEqualizerFill class="h-8 w-8 fill-current " />
+            <div v-if="$store.getters['messaging2/activeFiltersCount']" class="absolute -top-2 -right-2 bg-[#e41e3f] px-1.5 py-0.5 rounded-full text-white font-bold text-xxs min-w-[20px] inline-flex justify-center">
+              {{ $store.getters['messaging2/activeFiltersCount'] }}
+            </div>
+          </div>
         </div>
       </div>
-      <ContainerScrollable
-        :class="[{'hidden lg:block': $route.name == 'messages-id'}, 'flex-1']"
-        @scroll="onScroll"
-      >
-        <div class="divide-y">
-          <nuxt-link
-            v-for="conversation in $store.getters['messaging2/conversations']"
-            :key="conversation.id"
-            :to="`/messages/${conversation.id}`"
-            class="block border-l-4 border-l-white cursor-pointer hover:bg-[#F5F5FE hover:border-l-[#6A6AF4]"
-            :class="[
-              { '!border-l-[#6A6AF4] bg-[#F5F5FE]': conversation.id == $route.params.id }
-            ]"
-          >
-            <component
-              :is="retrieveComponent(conversation)"
-              :conversation="conversation"
-            />
-          </nuxt-link>
+      <template v-if="$store.getters['messaging2/hasConversationsResults']">
+        <ContainerScrollable
+          :class="[{'hidden lg:block': $route.name == 'messages-id'}, 'flex-1']"
+          @scroll="onScroll"
+        >
+          <div class="divide-y">
+            <nuxt-link
+              v-for="conversation in $store.getters['messaging2/conversations']"
+              :key="conversation.id"
+              :to="`/messages/${conversation.id}`"
+              class="block border-l-4 border-l-white cursor-pointer hover:bg-[#F5F5FE hover:border-l-[#6A6AF4]"
+              :class="[
+                { '!border-l-[#6A6AF4] bg-[#F5F5FE]': conversation.id == $route.params.id }
+              ]"
+            >
+              <component
+                :is="retrieveComponent(conversation)"
+                :conversation="conversation"
+              />
+            </nuxt-link>
+          </div>
+          <div v-if="$store.getters['messaging2/hasMoreConversations']" class="flex justify-center mb-8 border-t pt-8">
+            <Button
+              :loading="loadingMoreConversations"
+              type="secondary"
+              size="sm"
+              @click.native="handleFetchMoreConversations"
+            >
+              Charger plus de conversations
+            </Button>
+          </div>
+        </ContainerScrollable>
+      </template>
+      <template v-else>
+        <div class="flex justify-center items-center flex-1">
+          <div class="text-gray-400">
+            Aucun message
+          </div>
         </div>
-        <div v-if="$store.getters['messaging2/hasMoreConversations']" class="flex justify-center mb-8 border-t pt-8">
-          <Button
-            :loading="loadingMoreConversations"
-            type="secondary"
-            size="sm"
-            @click.native="handleFetchMoreConversations"
-          >
-            Charger plus de conversations
-          </Button>
-        </div>
-      </ContainerScrollable>
+      </template>
     </template>
   </div>
 </template>

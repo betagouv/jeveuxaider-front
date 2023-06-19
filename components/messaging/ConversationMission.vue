@@ -1,39 +1,40 @@
 <template>
   <Conversation>
     <template #header>
-      <ConversationRecipientResponsable :user="recipientUser" />
-      <ConversationContextualActionMission />
+      <template v-if="isCurrentUserResponsable">
+        <ConversationRecipientReferentOrAdmin :user="recipientUser" />
+        <ConversationMissionActionAsResponsable />
+      </template>
+      <template v-if="isCurrentUserReferentOrAdmin">
+        <ConversationRecipientResponsable :user="recipientUser" />
+        <ConversationMissionActionAsReferent />
+      </template>
     </template>
 
     <template #scroll-container-top>
-      <CardInfosMission v-if="conversation.conversable" :mission="conversation.conversable" />
+      <CardInfosMission v-if="mission" :mission="mission" />
     </template>
   </Conversation>
 </template>
 
 <script>
 import ConversationRecipientResponsable from '~/components/messaging/ConversationRecipientResponsable.vue'
-import ConversationContextualActionMission from '@/components/messaging/ConversationContextualActionMission.vue'
+import ConversationMissionActionAsReferent from '~/components/messaging/ConversationMissionActionAsReferent.vue'
 import CardInfosMission from '@/components/messaging/CardInfosMission.vue'
 import Conversation from '@/components/messaging/Conversation.vue'
+import MixinConversationMission from '@/mixins/conversation/mission'
 
 export default {
   components: {
     ConversationRecipientResponsable,
-    ConversationContextualActionMission,
+    ConversationMissionActionAsReferent,
     CardInfosMission,
     Conversation
   },
+  mixins: [MixinConversationMission],
   computed: {
-    conversation () {
-      return this.$store.getters['messaging2/activeConversation']
-    },
     recipientUser () {
       return this.conversation.users.filter(user => user.id != this.$store.getters.profile.user_id)[0]
-    },
-    userVariant () {
-      // TODO variant referent / responsable / admin
-      return 'referent'
     }
   },
   methods: {}

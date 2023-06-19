@@ -5,6 +5,7 @@ export const state = () => ({
     'filter[search]': null,
     page: 1
   },
+  hasConversationsResults: false,
   hasMoreConversations: false,
   activeConversation: {},
   activeConversationMessages: [],
@@ -19,13 +20,24 @@ export const getters = {
   conversations: state => state.conversations,
   conversationsQueryParams: state => state.conversationsQueryParams,
   hasMoreConversations: state => state.hasMoreConversations,
+  hasConversationsResults: state => state.hasMoreConversations || state.conversations.length > 0,
   activeConversation: state => state.activeConversation,
   activeConversationMessages: state => state.activeConversationMessages,
   hasActiveConversationMoreMessages: state => state.hasActiveConversationMoreMessages,
   unreadMessagesCount: state => state.unreadMessagesCount,
   isCurrentUserInConversation: (state, getters, rootState) => state.activeConversation?.users.filter(user => user.id === rootState.auth.user.id).length,
   isConversationArchivedForCurrentUser: (state, getters, rootState) => !state.activeConversation?.users.filter(user => user.id === rootState.auth.user.id)[0]?.pivot.status,
-  showFilters: state => state.showFilters
+  showFilters: state => state.showFilters,
+  activeFiltersCount: (state) => {
+    let count = 0
+    const wildwardFilters = ['filter[type]', 'filter[search]', 'page']
+    for (const [key, value] of Object.entries(state.conversationsQueryParams)) {
+      if (!wildwardFilters.includes(key) && value?.length > 0) {
+        count += 1
+      }
+    }
+    return count
+  }
 }
 
 export const mutations = {
@@ -84,7 +96,6 @@ export const actions = {
 
   // CONVERSATIONS
   async fetchConversations ({ state, commit }) {
-    console.log('fetchConversations', state.conversationsQueryParams)
     const { data: conversations } = await this.$axios.get('/conversationsv2', {
       params: {
         ...state.conversationsQueryParams,
@@ -95,8 +106,6 @@ export const actions = {
     commit('setHasMoreConversations', conversations.last_page !== conversations.current_page)
   },
   async fetchMoreConversations ({ state, commit }) {
-    console.log('fetchMoreConversations', state.conversationsQueryParams)
-
     commit('incrementConversationQueryParamsPage')
     const { data: moreConversations } = await this.$axios.get('/conversationsv2', {
       params: state.conversationsQueryParams
@@ -137,16 +146,12 @@ export const actions = {
     }
   },
   async refreshActiveConversation ({ state, commit }, conversationId) {
-    console.log('refreshActiveConversation', conversationId)
     const { data: conversation } = await this.$axios.get(`/conversationsv2/${conversationId}`)
-    console.log('refreshActiveConversation conversation', conversation)
-
     commit('setActiveConversation', conversation)
     commit('refreshConversationInConversations', conversation)
   },
   async refreshConversationInConversations ({ state, commit }, conversationId) {
     const { data: conversation } = await this.$axios.get(`/conversationsv2/${conversationId}`)
-
     commit('refreshConversationInConversations', conversation)
   },
 

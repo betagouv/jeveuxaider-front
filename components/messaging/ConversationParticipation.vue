@@ -3,11 +3,11 @@
     <template #header>
       <template v-if="isCurrentUserBenevole">
         <ConversationRecipientResponsable :user="recipientUser" />
-        <ConversationContextualBenevoleActionParticipation />
+        <ConversationParticipationActionAsBenevole />
       </template>
       <template v-if="isCurrentUserResponsable">
         <ConversationRecipientBenevole :user="recipientUser" />
-        <ConversationContextualResponsableActionParticipation />
+        <ConversationParticipationActionAsResponsable />
       </template>
     </template>
 
@@ -24,8 +24,8 @@
 <script>
 import ConversationRecipientBenevole from '@/components/messaging/ConversationRecipientBenevole.vue'
 import ConversationRecipientResponsable from '@/components/messaging/ConversationRecipientResponsable.vue'
-import ConversationContextualResponsableActionParticipation from '@/components/messaging/ConversationContextualResponsableActionParticipation.vue'
-import ConversationContextualBenevoleActionParticipation from '@/components/messaging/ConversationContextualBenevoleActionParticipation.vue'
+import ConversationParticipationActionAsResponsable from '~/components/messaging/ConversationParticipationActionAsResponsable.vue'
+import ConversationParticipationActionAsBenevole from '~/components/messaging/ConversationParticipationActionAsBenevole.vue'
 import CardInfosMission from '@/components/messaging/CardInfosMission.vue'
 import Conversation from '@/components/messaging/Conversation.vue'
 import MixinConversationParticipation from '@/mixins/conversation/participation'
@@ -34,8 +34,8 @@ export default {
   components: {
     ConversationRecipientBenevole,
     ConversationRecipientResponsable,
-    ConversationContextualResponsableActionParticipation,
-    ConversationContextualBenevoleActionParticipation,
+    ConversationParticipationActionAsResponsable,
+    ConversationParticipationActionAsBenevole,
     CardInfosMission,
     Conversation
   },

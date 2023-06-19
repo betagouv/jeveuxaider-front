@@ -42,7 +42,8 @@ export default {
   methods: {
     changeType (type) {
       this.$store.commit('messaging2/setConversationsQueryParams', {
-        'filter[type]': type
+        'filter[type]': type,
+        page: 1
       })
       this.$store.commit('messaging2/setShowFilters', false)
       this.$store.dispatch('messaging2/fetchConversations')
