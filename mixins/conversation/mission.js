@@ -16,7 +16,7 @@ export default {
       return this.$store.getters['messaging2/activeConversation']
     },
     mission () {
-      return this.conversation.conversable
+      return this.conversation.conversable_type === 'App\\Models\\Participation' ? this.conversation.conversable.mission : this.conversation.conversable
     },
     formattedDates () {
       const startDate = this.mission.start_date
@@ -32,6 +32,12 @@ export default {
       }
 
       return `À partir du ${this.$dayjs(startDate).format('D MMMM YYYY')}`
+    },
+    formattedCommitment () {
+      if (this.mission.commitment__time_period) {
+        return `${this.$options.filters.label(this.mission.commitment__duration, 'duration')} par ${this.$options.filters.label(this.mission.commitment__time_period, 'time_period')}`
+      }
+      return this.mission.commitment__duration ? this.$options.filters.label(this.mission.commitment__duration, 'duration') : null
     },
     canArchive () {
       return this.$store.getters['messaging2/isCurrentUserInConversation'] && !this.$store.getters['messaging2/isConversationArchivedForCurrentUser']

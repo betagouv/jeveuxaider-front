@@ -41,7 +41,7 @@
           </p>
         </div>
         <div class="flex space-x-1 items-center truncate text-sm text-cool-gray-500">
-          <RiCalendarEventFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+          <RiTimeFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p class="truncate leading-none">
             {{ formattedCommitment || 'Engagement non spécifié' }}
           </p>

@@ -3,11 +3,11 @@
     <template #header>
       <template v-if="isCurrentUserBenevole">
         <ConversationRecipientResponsable :user="recipientUser" />
-        <ConversationParticipationActionAsBenevole />
+        <ConversationParticipationActionAsBenevole v-if="conversation.conversable_type === 'App\\Models\\Participation'" />
       </template>
       <template v-if="isCurrentUserResponsable">
         <ConversationRecipientBenevole :user="recipientUser" />
-        <ConversationParticipationActionAsResponsable />
+        <ConversationParticipationActionAsResponsable v-if="conversation.conversable_type === 'App\\Models\\Participation'" />
       </template>
     </template>
 

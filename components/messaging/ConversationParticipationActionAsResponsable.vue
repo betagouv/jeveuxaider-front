@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 lg:p-6 flex justify-between items-center bg-jva-blue-500 text-white">
+  <div v-if="participation" class="p-4 lg:p-6 flex justify-between items-center bg-jva-blue-500 text-white">
     <div class="text-xl font-bold">
       {{ label }}
     </div>

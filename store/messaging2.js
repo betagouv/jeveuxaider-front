@@ -1,4 +1,5 @@
 export const state = () => ({
+  isConversationsLoading: true,
   conversations: [],
   conversationsQueryParams: {
     'filter[type]': 'all',
@@ -17,6 +18,7 @@ export const state = () => ({
 })
 
 export const getters = {
+  isConversationsLoading: state => state.isConversationsLoading,
   conversations: state => state.conversations,
   conversationsQueryParams: state => state.conversationsQueryParams,
   hasMoreConversations: state => state.hasMoreConversations,
@@ -41,6 +43,9 @@ export const getters = {
 }
 
 export const mutations = {
+  setIsConversationsLoading: (state, payload) => {
+    state.isConversationsLoading = payload
+  },
   setConversations: (state, conversations) => {
     state.conversations = conversations
   },
@@ -96,6 +101,7 @@ export const actions = {
 
   // CONVERSATIONS
   async fetchConversations ({ state, commit }) {
+    commit('setIsConversationsLoading', true)
     const { data: conversations } = await this.$axios.get('/conversationsv2', {
       params: {
         ...state.conversationsQueryParams,
@@ -103,16 +109,19 @@ export const actions = {
       }
     })
     commit('setConversations', conversations.data)
+    commit('setIsConversationsLoading', false)
     commit('setHasMoreConversations', conversations.last_page !== conversations.current_page)
   },
   async fetchMoreConversations ({ state, commit }) {
     commit('incrementConversationQueryParamsPage')
+    commit('setIsConversationsLoading', true)
     const { data: moreConversations } = await this.$axios.get('/conversationsv2', {
       params: state.conversationsQueryParams
     })
     moreConversations?.data.forEach((conversation) => {
       commit('pushConversationInConversations', conversation)
     })
+    commit('setIsConversationsLoading', false)
     commit('setHasMoreConversations', moreConversations.last_page !== moreConversations.current_page)
   },
 

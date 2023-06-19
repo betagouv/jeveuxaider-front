@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full flex flex-col">
+  <div class="relative h-full flex flex-col">
     <template v-if="$store.getters['messaging2/showFilters']">
       <ConversationsFilters />
     </template>
@@ -25,6 +25,7 @@
           </div>
         </div>
       </div>
+
       <template v-if="$store.getters['messaging2/hasConversationsResults']">
         <ContainerScrollable
           :class="[{'hidden lg:block': $route.name == 'messages-id'}, 'flex-1']"
@@ -65,6 +66,11 @@
           </div>
         </div>
       </template>
+      <template v-if="$store.getters['messaging2/isConversationsLoading']">
+        <div class="absolute z-20 h-full flex-1 flex items-center justify-center w-full">
+          <SpinIcon class="animate-spin h-10 w-10 text-jva-blue-500" />
+        </div>
+      </template>
     </template>
   </div>
 </template>
@@ -76,6 +82,7 @@ import ConversationTeaserMission from '@/components/messaging/ConversationTeaser
 import ConversationTeaserOrganisation from '@/components/messaging/ConversationTeaserOrganisation.vue'
 import ConversationsFilters from '@/components/messaging/ConversationsFilters.vue'
 import Button from '@/components/dsfr/Button.vue'
+import SpinIcon from '@/components/icon/SpinIcon'
 
 export default {
   components: {
@@ -83,7 +90,8 @@ export default {
     ConversationTeaserMission,
     ConversationTeaserOrganisation,
     ConversationsFilters,
-    Button
+    Button,
+    SpinIcon
   },
   data () {
     return {
