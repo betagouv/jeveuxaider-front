@@ -33,11 +33,19 @@
           </p>
         </div>
       </div>
-      <div class="flex space-x-1 items-center truncate text-sm text-cool-gray-500">
-        <RiMapPin2Fill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
-        <p class="truncate leading-none">
-          Du <span class="font-semibold">XXX</span> au <span class="font-semibold">YYY</span>
-        </p>
+      <div class="flex space-x-4 items-center">
+        <div class="flex space-x-1 items-center truncate text-sm text-cool-gray-500">
+          <RiCalendarEventFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+          <p class="truncate leading-none">
+            {{ formattedDates || 'Dates non spécifiées' }}
+          </p>
+        </div>
+        <div class="flex space-x-1 items-center truncate text-sm text-cool-gray-500">
+          <RiCalendarEventFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+          <p class="truncate leading-none">
+            {{ formattedCommitment || 'Engagement non spécifié' }}
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -45,16 +53,14 @@
 
 <script>
 import Badge from '@/components/dsfr/Badge.vue'
+import MixinConversationMission from '@/mixins/conversation/mission'
 
 export default {
   components: {
     Badge
   },
+  mixins: [MixinConversationMission],
   props: {
-    mission: {
-      type: Object,
-      required: true
-    },
     showPlacesLeft: {
       type: Boolean,
       default: false

@@ -37,6 +37,11 @@
                 Signaler cette organisation
               </div>
             </DropdownOptionsItem>
+            <DropdownOptionsItem @click.native.stop="$router.push(`/admin/organisations/${organisation.id}`)">
+              <div class="px-4 text-base font-medium">
+                Modifier cette organisation
+              </div>
+            </DropdownOptionsItem>
             <DropdownOptionsItem v-if="canArchive" @click.native="handleArchive">
               <div class="px-4 text-base font-medium">
                 Archiver la conversation

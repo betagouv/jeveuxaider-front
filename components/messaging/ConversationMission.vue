@@ -12,7 +12,7 @@
     </template>
 
     <template #scroll-container-top>
-      <CardInfosMission v-if="mission" :mission="mission" />
+      <CardInfosMission />
     </template>
   </Conversation>
 </template>

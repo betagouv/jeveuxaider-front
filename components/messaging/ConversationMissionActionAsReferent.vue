@@ -37,6 +37,11 @@
                 Signaler cette mission
               </div>
             </DropdownOptionsItem>
+            <DropdownOptionsItem @click.native.stop="$router.push(`/admin/missions/${mission.id}`)">
+              <div class="px-4 text-base font-medium">
+                Modifier cette mission
+              </div>
+            </DropdownOptionsItem>
             <DropdownOptionsItem v-if="canArchive" @click.native="handleArchive">
               <div class="px-4 text-base font-medium">
                 Archiver la conversation

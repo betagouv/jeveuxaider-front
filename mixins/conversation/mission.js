@@ -18,6 +18,21 @@ export default {
     mission () {
       return this.conversation.conversable
     },
+    formattedDates () {
+      const startDate = this.mission.start_date
+      const endDate = this.mission.end_date
+      if (!startDate) {
+        return
+      }
+      if (startDate && endDate) {
+        if (this.$dayjs(startDate).isSame(this.$dayjs(endDate))) {
+          return `Le ${this.$dayjs(startDate).format('D MMMM YYYY')}`
+        }
+        return `Du ${this.$dayjs(startDate).format('D MMMM YYYY')} au ${this.$dayjs(endDate).format('D MMMM YYYY')}`
+      }
+
+      return `À partir du ${this.$dayjs(startDate).format('D MMMM YYYY')}`
+    },
     canArchive () {
       return this.$store.getters['messaging2/isCurrentUserInConversation'] && !this.$store.getters['messaging2/isConversationArchivedForCurrentUser']
     },
