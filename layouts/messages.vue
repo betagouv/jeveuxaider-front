@@ -3,7 +3,7 @@
     <div class="h-full flex flex-col">
       <Header full-width />
       <div class="flex h-full bg-white overflow-hidden">
-        <div class="w-full lg:max-w-[530px] flex lg:flex-none lg:border-r">
+        <div class="w-full md:max-w-[530px] flex md:flex-none md:border-r">
           <ConversationsTabs class="w-[80px] border-r" />
           <ConversationsListingResults class="flex-1 min-w-0" />
         </div>

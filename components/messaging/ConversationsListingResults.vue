@@ -28,7 +28,7 @@
 
       <template v-if="$store.getters['messaging2/hasConversationsResults']">
         <ContainerScrollable
-          :class="[{'hidden lg:block': $route.name == 'messages-id'}, 'flex-1']"
+          :class="[{'hidden md:block': $route.name == 'messages-id'}, 'flex-1']"
           @scroll="onScroll"
         >
           <div class="divide-y">

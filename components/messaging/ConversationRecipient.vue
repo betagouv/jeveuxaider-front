@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-between">
-    <div class="p-4 lg:p-6 flex flex-col gap-4">
+    <div class="p-6 lg:px-8 lg:py-[26px] flex flex-col gap-4">
       <div class="flex items-center gap-4">
         <div class="text-2xl font-bold">
           {{ title }}
