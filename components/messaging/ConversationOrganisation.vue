@@ -3,10 +3,17 @@
     <template #header>
       <template v-if="isCurrentUserResponsable">
         <ConversationRecipientReferentOrAdmin :user="recipientUser" />
-        <ConversationOrganisationActionAsResponsable v-if="conversation.conversable_type === 'App\\Models\\Structure'" />
       </template>
       <template v-if="isCurrentUserReferentOrAdmin">
         <ConversationRecipientResponsable :user="recipientUser" show-private-infos />
+      </template>
+    </template>
+
+    <template #actions>
+      <template v-if="isCurrentUserResponsable">
+        <ConversationOrganisationActionAsResponsable v-if="conversation.conversable_type === 'App\\Models\\Structure'" />
+      </template>
+      <template v-if="isCurrentUserReferentOrAdmin">
         <ConversationOrganisationActionAsReferent v-if="conversation.conversable_type === 'App\\Models\\Structure'" />
       </template>
     </template>

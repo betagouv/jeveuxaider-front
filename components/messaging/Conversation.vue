@@ -1,6 +1,21 @@
 <template>
-  <div class="flex flex-col h-full ">
-    <slot name="header" />
+  <div class="flex flex-col h-full">
+    <div class="flex items-center">
+      <div
+        :class="[
+          'px-4',
+          {'block lg:hidden': $route.params.id}
+        ]"
+      >
+        <RiArrowLeftLine
+          class="h-8 w-8 fill-current text-jva-blue-500 hover:text-jva-blue-300 cursor-pointer"
+          @click.native="$router.push('/messages')"
+        />
+      </div>
+      <slot name="header" />
+    </div>
+
+    <slot name="actions" />
 
     <ContainerScrollable
       class="flex-1 p-6 lg:p-8"

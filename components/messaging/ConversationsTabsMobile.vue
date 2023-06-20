@@ -1,5 +1,5 @@
 <template>
-  <div class="flex lg:flex-col bg-[#F9F6F2] text-xs text-center items-center justify-start">
+  <div class="flex bg-[#F9F6F2] text-xs text-center items-center justify-start">
     <div
       v-for="tab in computedTabs"
       :key="tab.key"

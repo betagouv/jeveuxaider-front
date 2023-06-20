@@ -2,13 +2,19 @@
   <div class="overflow-hidden h-full">
     <div class="h-full flex flex-col">
       <Header full-width />
-      <div class="flex h-full bg-white overflow-hidden">
-        <div class="w-full md:max-w-[530px] flex md:flex-none md:border-r">
-          <ConversationsTabs class="w-[80px] border-r" />
-          <ConversationsListingResults class="flex-1 min-w-0" />
+
+      <div class="flex flex-col bg-white overflow-hidden lg:flex-row h-full">
+        <div
+          :class="[
+            'w-full h-full lg:max-w-[530px] lg:border-r lg:flex flex-1',
+            {'hidden': $route.params.id}
+          ]"
+        >
+          <ConversationsTabs class="fixed bottom-0 block w-full z-20 border-t lg:relative lg:block lg:w-[80px] lg:border-r" />
+          <ConversationsListingResults class="flex-1 min-w-0 pb-[76px] lg:pb-0" />
         </div>
 
-        <Nuxt class="flex-1" />
+        <Nuxt v-if="$route.params.id" class="flex-1" />
       </div>
       <portal-target name="body-end" multiple />
     </div>
@@ -17,8 +23,8 @@
 
 <script>
 import Header from '@/components/layout/Header.vue'
-import ConversationsListingResults from '~/components/messaging/ConversationsListingResults.vue'
-import ConversationsTabs from '~/components/messaging/ConversationsTabs.vue'
+import ConversationsListingResults from '@/components/messaging/ConversationsListingResults.vue'
+import ConversationsTabs from '@/components/messaging/ConversationsTabs.vue'
 
 export default {
   name: 'MessagesLayout',
