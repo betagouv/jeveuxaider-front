@@ -12,11 +12,11 @@
     <div class="grid grid-cols-1 gap-12">
       <FormControl
         label="Statut de la participation"
-        html-for="participation_states"
+        html-for="participation_state"
       >
         <CheckboxGroup
-          v-model="form['filter[participation_states]']"
-          name="participation_states"
+          v-model="form['filter[participation_state]']"
+          name="participation_state"
           variant="button"
           :options="$labels.participation_workflow_states"
         />
@@ -81,7 +81,7 @@ export default {
       console.log('resetForm')
       this.form = {
         ...this.form,
-        'filter[participation_states]': [],
+        'filter[participation_state]': [],
         'filter[structure_name]': null,
         'filter[mission_name]': null
       }

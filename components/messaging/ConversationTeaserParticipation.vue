@@ -24,7 +24,7 @@
 
 <script>
 import ConversationTeaser from '@/components/messaging/ConversationTeaser.vue'
-import ConversationTeaserMixin from '@/mixins/conversation-teaser.js'
+import MixinConversation from '@/mixins/conversation.js'
 import Badge from '@/components/dsfr/Badge.vue'
 
 export default {
@@ -32,7 +32,7 @@ export default {
     ConversationTeaser,
     Badge
   },
-  mixins: [ConversationTeaserMixin],
+  mixins: [MixinConversation],
   props: {
     conversation: { type: Object, required: true }
   },

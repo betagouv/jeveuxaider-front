@@ -24,13 +24,13 @@
 
 <script>
 import ConversationTeaser from '@/components/messaging/ConversationTeaser.vue'
-import ConversationTeaserMixin from '@/mixins/conversation-teaser.js'
+import MixinConversation from '@/mixins/conversation.js'
 
 export default {
   components: {
     ConversationTeaser
   },
-  mixins: [ConversationTeaserMixin],
+  mixins: [MixinConversation],
   props: {
     conversation: { type: Object, required: true }
   },

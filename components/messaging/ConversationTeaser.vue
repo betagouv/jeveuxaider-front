@@ -45,10 +45,10 @@
 </template>
 
 <script>
-import ConversationTeaserMixin from '@/mixins/conversation-teaser.js'
+import MixinConversation from '@/mixins/conversation.js'
 
 export default {
-  mixins: [ConversationTeaserMixin],
+  mixins: [MixinConversation],
   props: {
     conversation: { type: Object, required: true }
   },

@@ -68,7 +68,7 @@
       :organisation="organisation"
       :is-open="showValidateOrganisationModal"
       @cancel="showValidateOrganisationModal = false"
-      @confirm="handleValidatetOrganisation()"
+      @confirm="handleValidateOrganisation()"
     />
     <ModalOrganisationReport
       :organisation="organisation"

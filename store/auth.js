@@ -22,7 +22,7 @@ export const actions = {
       })
     if (res?.data) {
       commit('setUser', res.data)
-      await dispatch('messaging/fetchUnreadMessages', null, { root: true })
+      await dispatch('messaging2/getUserUnreadMessagesCount', null, { root: true })
     }
   },
   async login ({ commit, dispatch }, form) {

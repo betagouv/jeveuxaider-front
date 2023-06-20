@@ -74,14 +74,12 @@ export const mutations = {
     state.activeConversationMessages.unshift(payload)
   },
   setUnreadMessagesCount: (state, payload) => {
-    state.activeConversation = payload
+    state.unreadMessagesCount = payload
   },
   setHasActiveConversationMoreMessages: (state, payload) => {
     state.hasActiveConversationMoreMessages = payload
   },
   refreshConversationInConversations (state, payload) {
-    console.log('refreshConversationInConversations', payload)
-
     const index = state.conversations.findIndex(conversation => conversation.id == payload.id)
     state.conversations.splice(index, 1, payload)
   },
@@ -94,6 +92,14 @@ export const mutations = {
   },
   setShowFilters (state, payload) {
     state.showFilters = payload
+  },
+  setActiveConversationAsRead (state, payload) {
+    const index = state.conversations.findIndex(conversation => conversation.id == payload.id)
+    state.conversations.splice(index, 1, {
+      ...payload,
+      is_read: true
+    })
+    state.unreadMessagesCount = state.unreadMessagesCount > 0 ? state.unreadMessagesCount -= 1 : 0
   }
 }
 
@@ -164,12 +170,6 @@ export const actions = {
     commit('refreshConversationInConversations', conversation)
   },
 
-  // USER
-  async getUserUnreadMessagesCount ({ commit }) {
-    const { data: count } = await this.$axios.get('user/unread-messages')
-    commit('setUnreadMessagesCount', count)
-  },
-
   selectNextActiveConversation ({ state, commit }) {
     const activeConversationIndex = state.conversations.findIndex(conversation => conversation.id === state.activeConversation.id)
     let nextConversationId = null
@@ -185,5 +185,11 @@ export const actions = {
       this.app.router.push('/messages')
     }
     commit('removeConversationFromConversations', state.activeConversation)
+  },
+
+  // USER
+  async getUserUnreadMessagesCount ({ commit }) {
+    const { data: count } = await this.$axios.get('user/unread-messages')
+    commit('setUnreadMessagesCount', count)
   }
 }

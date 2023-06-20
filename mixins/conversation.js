@@ -11,6 +11,9 @@ export default {
       })
     },
     hasUnreadMessage () {
+      if (this.conversation.is_read === true) {
+        return false // Simulate click on concersation teaser
+      }
       if (this.$dayjs(this.currentUserInConversation?.pivot.read_at).isSame(this.$dayjs(this.conversation.updated_at))) {
         return false
       }

@@ -23,6 +23,10 @@ export default {
 
     store.commit('messaging2/setActiveConversation', conversation)
 
+    if (!store.state.auth.isImpersonate) {
+      store.commit('messaging2/setActiveConversationAsRead', conversation)
+    }
+
     return {
       conversation
     }
@@ -40,6 +44,9 @@ export default {
       }
       return null
     }
+  },
+  methods: {
+
   }
 }
 </script>

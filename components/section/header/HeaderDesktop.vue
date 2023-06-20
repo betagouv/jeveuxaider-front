@@ -72,7 +72,7 @@
             </button>
           </template>
           <template #items>
-            <template v-if="$store.getters.roles" class="w-80">
+            <template v-if="$store.getters.roles">
               <div class="w-80">
                 <DropdownOptionsItem
                   v-for="role,index in $store.getters.roles"
@@ -173,7 +173,7 @@ export default {
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' },
-        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessages'] }
+        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging2/unreadMessagesCount'] }
       ]
     },
     secondaryNavigation () {

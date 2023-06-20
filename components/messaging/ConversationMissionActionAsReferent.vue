@@ -60,7 +60,7 @@
       :mission="mission"
       :is-open="showValidateMissionModal"
       @cancel="showValidateMissionModal = false"
-      @confirm="handleValidatetMission()"
+      @confirm="handleValidateMission()"
     />
     <ModalMissionReport
       :mission="mission"
