@@ -40,6 +40,7 @@
               :class="[
                 { '!border-l-[#6A6AF4] bg-[#F5F5FE]': conversation.id == $route.params.id }
               ]"
+              @click.native="handleConversationTeaserClick(conversation)"
             >
               <component
                 :is="retrieveComponent(conversation)"
@@ -142,6 +143,15 @@ export default {
       //   this.filters.page = this.currentPage + 1
       //   this.$fetch()
       // }
+    },
+    handleConversationTeaserClick (conversation) {
+      const userReadAt = new Date(conversation?.users.filter(user => user.id === this.$store.state.auth.user.id)[0]?.pivot.read_at)
+      const conversationUpdatedAt = new Date(conversation.updated_at)
+      if (!this.$store.state.auth.isImpersonate) {
+        if (userReadAt < conversationUpdatedAt) {
+          this.$store.commit('messaging2/decrementUnreadMessagesCount')
+        }
+      }
     }
   }
 }

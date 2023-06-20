@@ -99,6 +99,8 @@ export const mutations = {
       ...payload,
       is_read: true
     })
+  },
+  decrementUnreadMessagesCount (state) {
     state.unreadMessagesCount = state.unreadMessagesCount > 0 ? state.unreadMessagesCount -= 1 : 0
   }
 }

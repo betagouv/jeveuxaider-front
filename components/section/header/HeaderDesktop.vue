@@ -247,6 +247,11 @@ export default {
       this.showMobileMenu = false
     }
   },
+  created () {
+    if (this.$store.getters.isLogged) {
+      this.$store.dispatch('messaging2/getUserUnreadMessagesCount')
+    }
+  },
   methods: {
     async switchRole (role) {
       await this.$store.dispatch('auth/updateUser', {
