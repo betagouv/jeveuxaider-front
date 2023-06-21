@@ -60,7 +60,7 @@ export default {
         if (this.message.contextual_state == 'Désinscription') {
           message += '<br><span class="font-light text-sm"> Désinscription de l\'utilisateur</span>'
         }
-        if (this.message.contextual_reason === 'not_legally_resident_or_younger_than_16') {
+        if (this.message.contextual_reason === 'not_regular_resident_or_younger_than_16') {
           message += '<br><span class="font-light text-sm">L\'utilisateur ne réside pas sur le territoire français ou est agé de moins de 16 ans'
         }
       }

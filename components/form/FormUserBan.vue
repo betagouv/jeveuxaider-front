@@ -9,7 +9,7 @@
     </FormControl>
 
     <div
-      v-if="form.reason == 'not_legally_resident_or_younger_than_16'"
+      v-if="form.reason == 'not_regular_resident_or_younger_than_16'"
     >
       <RiInformationFill width="18" height="18" class="inline-flex mr-1 text-jva-blue-500 fill-current" />
       <span class="text-sm text-gray-600">
