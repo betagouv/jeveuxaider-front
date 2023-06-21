@@ -53,7 +53,24 @@
         </Button>
       </div>
       <div class="border-t -mx-6 my-6" />
-      <BoxUserBlock v-if="['admin'].includes($store.getters.contextRole) && profile.user.context_role === 'volontaire'" :user="profile.user" class="mb-8" @update="$fetch" />
+      <BoxUserBan
+        v-if="['admin'].includes($store.getters.contextRole) && profile.user.context_role === 'volontaire'"
+        ref="boxUserBan"
+        :user="profile.user"
+        class="mb-8"
+        @update="$fetch"
+      >
+        <template #action="{ loading }">
+          <Link
+            v-if="!profile.user.is_banned"
+            :disabled="loading"
+            class="text-jva-blue-500 ml-auto"
+            @click.native="$refs.boxUserBan.showModal = true"
+          >
+            Bloquer l'utilisateur
+          </Link>
+        </template>
+      </BoxUserBan>
       <BoxRoles v-if="['admin', 'referent', 'referent_regional'].includes($store.getters.contextRole) && profile" :user-id="profile.user_id" class="mb-8" />
       <BoxActions v-if="$store.getters.contextRole === 'admin'" class="mb-8" :profile="profile" />
       <BoxDisponibilities class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
@@ -80,9 +97,10 @@ import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
 import BoxActions from '@/components/section/profile/BoxActions'
 import BoxUtm from '@/components/section/BoxUtm'
 import Tag from '@/components/dsfr/Tag'
+import Link from '@/components/dsfr/Link'
 import Button from '@/components/dsfr/Button.vue'
 import BoxRoles from '@/components/section/profile/BoxRoles'
-import BoxUserBlock from '@/components/section/profile/BoxUserBlock.vue'
+import BoxUserBan from '@/components/section/profile/BoxUserBan.vue'
 
 export default {
   components: {
@@ -96,7 +114,8 @@ export default {
     Button,
     BoxActions,
     BoxRoles,
-    BoxUserBlock
+    BoxUserBan,
+    Link
   },
   props: {
     profileId: {

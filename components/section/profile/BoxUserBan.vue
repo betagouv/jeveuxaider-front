@@ -4,6 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         Statut
       </div>
+      <slot name="action" :loading="loading" />
     </div>
     <Box variant="flat" padding="xs" class="m-[-1px]">
       <DescriptionList>
@@ -12,9 +13,6 @@
         >
           <div class="flex flex-wrap">
             {{ labelStatus }}
-            <Link v-if="!user.is_banned" :disabled="loading" class="text-jva-blue-500 ml-auto" @click.native="showModal = true">
-              Bloquer l'utilisateur
-            </Link>
           </div>
         </DescriptionListItem>
         <DescriptionListItem v-if="user.is_banned" term="Raison" :description="labelReason" />
@@ -32,12 +30,10 @@
 
 <script>
 import ModalUserBan from '@/components/modal/ModalUserBan.vue'
-import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
-    ModalUserBan,
-    Link
+    ModalUserBan
   },
   props: {
     user: {
@@ -66,7 +62,6 @@ export default {
   methods: {
     async handleUserBanConfirm ($event) {
       this.loading = true
-      console.log('handleUserBanConfirm', $event)
       await this.$axios.post(`/users/${this.user.id}/ban`, { ...$event }).catch(() => {})
       this.$emit('update')
       this.loading = false
