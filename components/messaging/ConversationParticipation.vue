@@ -19,7 +19,7 @@
     </template>
 
     <template #scroll-container-top>
-      <div class="my-10">
+      <div v-if="participation?.slots" class="my-10">
         <div class="font-semibold text-center mb-2">
           Le bénévole a précisé être disponible à ces dates
         </div>
