@@ -25,6 +25,19 @@
           {{ user.profile.type | label('profile_type') }}
         </p>
       </div>
+      <div v-if="user.profile.service_civique" class="flex space-x-1 truncate text-sm text-cool-gray-500">
+        <img
+          src="/images/logo-service-civique-favicon.png"
+          srcset="/images/logo-service-civique-favicon.png, /images/logo-service-civique-favicon@2x.png 2x"
+          alt="Service Civique"
+          title="Service Civique"
+          class="w-[8px] h-[15px] flex-none"
+          data-not-lazy
+        >
+        <p class="truncate leading-none">
+          Service Civique
+        </p>
+      </div>
     </div>
   </ConversationRecipient>
 </template>

@@ -45,7 +45,7 @@
                 Signaler cette mission
               </div>
             </DropdownOptionsItem>
-            <DropdownOptionsItem @click.native.stop="$router.push(`/admin/missions/${mission.id}`)">
+            <DropdownOptionsItem @click.native.stop="$router.push(`/admin/missions/${mission.id}/edit`)">
               <div class="px-4 text-base font-medium">
                 Modifier cette mission
               </div>

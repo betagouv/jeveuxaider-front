@@ -45,7 +45,7 @@
                 Signaler cette organisation
               </div>
             </DropdownOptionsItem>
-            <DropdownOptionsItem @click.native.stop="$router.push(`/admin/organisations/${organisation.id}`)">
+            <DropdownOptionsItem @click.native.stop="$router.push(`/admin/organisations/${organisation.id}/edit`)">
               <div class="px-4 text-base font-medium">
                 Modifier cette organisation
               </div>
