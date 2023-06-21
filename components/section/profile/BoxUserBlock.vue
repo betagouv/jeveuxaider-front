@@ -10,12 +10,14 @@
         <DescriptionListItem
           term="État"
         >
-          <div>{{ labelStatus }}</div>
-          <Link v-if="!user.is_blocked" :disabled="loading" class="text-jva-blue-500" @click.native="showModal = true">
-            Bloquer l'utilisateur
-          </Link>
+          <div class="flex flex-wrap">
+            {{ labelStatus }}
+            <Link v-if="!user.is_banned" :disabled="loading" class="text-jva-blue-500 ml-auto" @click.native="showModal = true">
+              Bloquer l'utilisateur
+            </Link>
+          </div>
         </DescriptionListItem>
-        <DescriptionListItem v-if="user.is_blocked" term="Raison" :description="labelReason" />
+        <DescriptionListItem v-if="user.is_banned" term="Raison" :description="labelReason" />
       </DescriptionList>
     </Box>
 
@@ -51,12 +53,12 @@ export default {
   },
   computed: {
     labelStatus () {
-      return this.user.is_blocked ? 'Bloqué' : 'Actif'
+      return this.user.is_banned ? 'Bloqué' : 'Actif'
     },
     labelReason () {
       return this.$options.filters
         .label(
-          this.user.is_blocked_reason,
+          this.user.is_banned_reason,
           'user_ban_reasons'
         )
     }
