@@ -17,7 +17,7 @@
           <slot name="badges" />
         </div>
       </div>
-      <div class="flex gap-4 items-center">
+      <div class="flex flex-wrap gap-4 items-center">
         <slot />
       </div>
     </div>

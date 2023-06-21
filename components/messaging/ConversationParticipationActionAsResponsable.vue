@@ -8,6 +8,7 @@
         v-if="canValidate"
         type="tertiary-no-outline"
         size="lg"
+        class="hidden lg:flex"
         @click.native.stop="showValidateParticipationModal = true"
       >
         Valider
@@ -16,6 +17,7 @@
         v-if="canRefuse"
         type="tertiary-no-outline"
         size="lg"
+        class="hidden lg:flex"
         @click.native.stop="showRefuseParticipationModal = true"
       >
         Décliner
@@ -45,6 +47,16 @@
             <DropdownOptionsItem v-if="['En attente de validation'].includes(participation.state)" @click.native.stop="showInProgressParticipationModal = true">
               <div class="px-4 text-base font-medium">
                 Passer en cours de traitement
+              </div>
+            </DropdownOptionsItem>
+            <DropdownOptionsItem v-if="canValidate" @click.native.stop="showValidateParticipationModal = true">
+              <div class="px-4 text-base font-medium">
+                Valider la candidature
+              </div>
+            </DropdownOptionsItem>
+            <DropdownOptionsItem v-if="canRefuse" @click.native.stop="showRefuseParticipationModal = true">
+              <div class="px-4 text-base font-medium">
+                Décliner la candidature
               </div>
             </DropdownOptionsItem>
             <DropdownOptionsItem v-if="canCancel" @click.native.stop="showCancelParticipationModal = true">
