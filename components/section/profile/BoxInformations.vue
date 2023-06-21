@@ -5,7 +5,7 @@
         {{ title }}
       </div>
       <slot v-if="showAction" name="action">
-        <Link v-if="showAction" :to="linkAction" icon="ChevronRightIcon">
+        <Link v-if="showAction" :to="linkAction" class="text-jva-blue-500">
           {{ linkLabel }}
         </Link>
       </slot>
@@ -42,7 +42,12 @@
 </template>
 
 <script>
+import Link from '@/components/dsfr/Link'
+
 export default {
+  components: {
+    Link
+  },
   props: {
     profile: {
       type: Object,

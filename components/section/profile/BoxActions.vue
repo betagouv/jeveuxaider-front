@@ -4,7 +4,7 @@
       <div v-if="showTitle" class="uppercase font-semibold text-gray-600">
         Actions
       </div>
-      <Link :to="`/admin/other/logs?filter[search]=${profile.email}`" icon="ChevronRightIcon">
+      <Link :to="`/admin/other/logs?filter[search]=${profile.email}`" class="text-jva-blue-500">
         {{ linkLabel }}
       </Link>
     </div>
@@ -20,7 +20,12 @@
 </template>
 
 <script>
+import Link from '@/components/dsfr/Link'
+
 export default {
+  components: {
+    Link
+  },
   props: {
     profile: {
       type: Object,

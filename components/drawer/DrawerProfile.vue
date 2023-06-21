@@ -80,7 +80,7 @@
       <BoxTerritoires v-if="profile.user.territoires" :territoires="profile.user.territoires" class="mb-8" />
       <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" class="mb-8" />
       <div class="flex justify-center mt-10 mb-10">
-        <Link :to="`/admin/utilisateurs/${profile.id}`" class="uppercase font-semibold text-sm hover:underline">
+        <Link :to="`/admin/utilisateurs/${profile.id}`" class="uppercase font-semibold text-sm text-jva-blue-500">
           Détails de l'utilisateur
         </Link>
       </div>
