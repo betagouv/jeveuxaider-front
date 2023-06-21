@@ -3,7 +3,7 @@
     <div class="text-xs text-[#666666]">
       {{ $dayjs(message.created_at).format('D MMM HH[h]mm') }}
     </div>
-    <div v-if="badge" class="text-sm lg:text-base">
+    <div v-if="badge" class="">
       <span class="text-[#161616] font-bold">La participation est</span>
       <Badge
         size="sm"

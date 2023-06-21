@@ -19,6 +19,22 @@
     </template>
 
     <template #scroll-container-top>
+      <div class="my-10">
+        <div class="font-semibold text-center mb-2">
+          Le bénévole a précisé être disponible à ces dates
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-2">
+          <Badge
+            v-for="(date) in participation.slots"
+            :key="date.id"
+            size="md"
+            no-icon
+          >
+            {{ $dayjs(date.date).format('dddd D MMMM') }}<span class="font-normal text-gray-600"> : {{ date.slots.map(slot => $options.filters.label(slot, 'slots')).join(', ') }}</span>
+          </Badge>
+        </div>
+      </div>
+
       <CardInfosMission
         :show-places-left="isCurrentUserResponsable"
       />
@@ -34,6 +50,7 @@ import ConversationParticipationActionAsBenevole from '~/components/messaging/Co
 import CardInfosMission from '@/components/messaging/CardInfosMission.vue'
 import Conversation from '@/components/messaging/Conversation.vue'
 import MixinConversationParticipation from '@/mixins/conversation/participation'
+import Badge from '@/components/dsfr/Badge.vue'
 
 export default {
   components: {
@@ -42,7 +59,8 @@ export default {
     ConversationParticipationActionAsResponsable,
     ConversationParticipationActionAsBenevole,
     CardInfosMission,
-    Conversation
+    Conversation,
+    Badge
   },
   mixins: [MixinConversationParticipation],
   computed: {

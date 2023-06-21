@@ -10,7 +10,7 @@
   >
     <div v-if="isOpen" class="fixed z-50 inset-0 overflow-y-auto overscroll-contain" aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <FocusLoop :is-visible="isOpen" @keydown.native.esc="$emit('close')">
-        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 sm:text-center sm:block sm:p-0">
           <div
             class="fixed inset-0 bg-opacity-75 transition-opacity"
             aria-hidden="true"
@@ -42,7 +42,7 @@
                       <RiCloseFill class="h-6 w-6 fill-current cursor-pointer" />
                     </button>
                   </div>
-                  <div class="sm:flex sm:items-start">
+                  <div class="flex items-center">
                     <div
                       v-if="icon || theme"
                       class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10"
@@ -67,7 +67,7 @@
                     <div
                       :class="[
                         {'sm:ml-4': theme || icon},
-                        'mt-3 text-center sm:mt-0 sm:text-left min-w-0 w-full'
+                        'mt-3 sm:mt-0 min-w-0 w-full'
                       ]"
                     >
                       <h3
@@ -85,7 +85,7 @@
                 </div>
                 <slot />
               </div>
-              <div v-if="!hideFooter" class="bg-gray-50 px-8 py-6 sm:px-12 flex justify-center lg:justify-end">
+              <div v-if="!hideFooter" class="bg-gray-50 px-8 py-6 sm:px-12 flex items-center justify-end">
                 <slot name="footer">
                   <Button variant="white" @click.native="$emit('close')">
                     Fermer

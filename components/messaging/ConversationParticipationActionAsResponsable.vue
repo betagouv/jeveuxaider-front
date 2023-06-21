@@ -44,22 +44,22 @@
 
         <template #items>
           <div class="w-[300px] py-4">
-            <DropdownOptionsItem v-if="['En attente de validation'].includes(participation.state)" @click.native.stop="showInProgressParticipationModal = true">
+            <DropdownOptionsItem v-if="!['En cours de traitement'].includes(participation.state)" @click.native.stop="showInProgressParticipationModal = true">
               <div class="px-4 text-base font-medium">
                 Passer en cours de traitement
               </div>
             </DropdownOptionsItem>
-            <DropdownOptionsItem v-if="canValidate" @click.native.stop="showValidateParticipationModal = true">
+            <DropdownOptionsItem v-if="!['Validée'].includes(participation.state)" @click.native.stop="showValidateParticipationModal = true">
               <div class="px-4 text-base font-medium">
                 Valider la candidature
               </div>
             </DropdownOptionsItem>
-            <DropdownOptionsItem v-if="canRefuse" @click.native.stop="showRefuseParticipationModal = true">
+            <DropdownOptionsItem v-if="!['Refusée'].includes(participation.state)" @click.native.stop="showRefuseParticipationModal = true">
               <div class="px-4 text-base font-medium">
                 Décliner la candidature
               </div>
             </DropdownOptionsItem>
-            <DropdownOptionsItem v-if="canCancel" @click.native.stop="showCancelParticipationModal = true">
+            <DropdownOptionsItem v-if="!['Annulée'].includes(participation.state)" @click.native.stop="showCancelParticipationModal = true">
               <div class="px-4 text-base font-medium">
                 Annuler la candidature
               </div>
