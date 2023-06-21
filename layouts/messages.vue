@@ -16,6 +16,7 @@
 
         <Nuxt v-if="$route.params.id" class="flex-1" />
       </div>
+      <portal-target name="drawer" class="relative z-20" multiple />
       <portal-target name="body-end" multiple />
     </div>
   </div>

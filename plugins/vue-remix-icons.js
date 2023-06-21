@@ -82,8 +82,10 @@ import RiMailUnreadLine from 'vue-remix-icons/icons/RiMailUnreadLine.vue'
 import RiArchiveLine from 'vue-remix-icons/icons/RiArchiveLine.vue'
 import RiMessage3Line from 'vue-remix-icons/icons/RiMessage3Line.vue'
 import RiMore2Line from 'vue-remix-icons/icons/RiMore2Line.vue'
+import RiFileUserLine from 'vue-remix-icons/icons/RiFileUserLine.vue'
 
 const components = {
+  RiFileUserLine,
   RiMore2Line,
   RiMessage3Line,
   RiArchiveLine,
