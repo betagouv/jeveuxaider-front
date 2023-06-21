@@ -6,7 +6,7 @@
     :href="to"
     :type="isSubmit ? 'submit' : (tag === 'button' ? 'button' : null)"
     :class="[
-      'font-medium border transition',
+      'font-medium border transition flex-none',
       'inline-flex items-center justify-center whitespace-pre-wrap',
 
       {'px-3 py-1 text-sm min-h-[34px]': size === 'sm'},

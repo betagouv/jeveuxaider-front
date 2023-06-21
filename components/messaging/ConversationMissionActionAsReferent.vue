@@ -1,28 +1,36 @@
 <template>
-  <div class="p-4 lg:p-6 flex justify-between items-center bg-jva-blue-500 text-white">
-    <div class="text-xl font-bold">
+  <div class="p-4 lg:p-6 flex gap-4 lg:gap-6 justify-between items-center bg-jva-blue-500 text-white">
+    <div class="text-lg lg:text-xl font-bold">
       {{ label }}
     </div>
-    <div class="flex space-x-4 items-center">
+    <div class="flex flex-shrink-0 gap-4 items-center">
       <Button
         v-if="canValidate"
         type="tertiary-no-outline"
         size="lg"
+        class="hidden lg:flex"
         @click.native.stop="showValidateMissionModal = true"
       >
         Valider
       </Button>
-      <Dropdown ref="dropdownUser">
+      <Dropdown ref="dropdownActions" class="flex-none">
         <template #button>
           <Button
             type="transparent"
             size="lg"
             icon="RiArrowDownSLine"
             icon-position="right"
-            class="hover:bg-jva-blue-300"
+            class="hidden lg:flex hover:bg-jva-blue-300"
           >
             Autre
           </Button>
+          <Button
+            type="transparent"
+            size="md"
+            icon="RiMore2Line"
+            icon-only
+            class="flex lg:hidden hover:bg-jva-blue-300"
+          />
         </template>
 
         <template #items>

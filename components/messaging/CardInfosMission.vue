@@ -7,7 +7,7 @@
     </div>
     <div class="p-4 lg:p-6 flex-1 flex flex-col gap-4 border border-gray-300 border-l-4 border-l-jva-blue-500">
       <div class="flex items-center gap-4">
-        <div class="text-xl font-bold">
+        <div class="text-lg lg:text-xl font-bold">
           {{ mission.name }}
         </div>
         <nuxt-link v-if="!['volontaire'].includes($store.getters.contextRole)" :to="`/admin/missions/${mission.id}`" target="_blank">

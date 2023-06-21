@@ -1,11 +1,11 @@
 <template>
   <div class="flex justify-between">
-    <div class="p-6 lg:px-8 lg:py-[26px] flex flex-col gap-4">
-      <div class="flex items-center gap-4">
-        <div class="text-2xl font-bold">
+    <div class="p-4 lg:px-8 lg:py-[26px] flex flex-col gap-2 lg:gap-4">
+      <div class="flex items-center gap-2 lg:gap-4">
+        <div class="text-xl lg:text-2xl font-bold">
           {{ title }}
         </div>
-        <div class="flex space-x-2">
+        <div class="flex gap-2">
           <Badge
             v-if="$store.getters['messaging2/isConversationArchivedForCurrentUser']"
             size="sm"
@@ -17,7 +17,7 @@
           <slot name="badges" />
         </div>
       </div>
-      <div class="flex space-x-4 items-center">
+      <div class="flex gap-4 items-center">
         <slot />
       </div>
     </div>

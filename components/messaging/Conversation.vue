@@ -3,7 +3,7 @@
     <div class="flex items-center">
       <div
         :class="[
-          'px-4',
+          'pl-4',
           {'block lg:hidden': $route.params.id}
         ]"
       >

@@ -26,7 +26,7 @@
             {'border-[#EDEDED] bg-[#F6F6F6] !rounded-bl-none': !isFromMe},
           ]"
         >
-          <div class="text-black whitespace-pre-line">
+          <div class="text-sm lg:text-base text-black whitespace-pre-line">
             {{ message.content }}
           </div>
         </div>
