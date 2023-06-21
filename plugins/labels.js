@@ -407,5 +407,8 @@ const labels = {
   rule_actions: [
     { key: 'mission_attach_tag', label: 'Ajouter un tag à la mission' },
     { key: 'mission_detach_tag', label: 'Retirer un tag à la mission' }
+  ],
+  user_ban_reasons: [
+    { key: 'not_legally_resident_or_younger_than_16', label: 'Le bénévole ne réside pas régulièrement en France ou est âgé de moins de 16 ans' }
   ]
 }

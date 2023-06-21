@@ -23,6 +23,7 @@
             icon="RiEyeLine"
             size="sm"
             tabindex="-1"
+            icon-class="!mr-1"
           >
             Détails
           </Button>
@@ -34,6 +35,7 @@
             icon="RiPencilLine"
             size="sm"
             tabindex="-1"
+            icon-class="!mr-1"
           >
             Modifier
           </Button>
@@ -44,12 +46,14 @@
           type="tertiary"
           size="sm"
           icon="RiProfileLine"
+          icon-class="!mr-1"
           @click.native="handleImpersonate()"
         >
           Prendre sa place
         </Button>
       </div>
       <div class="border-t -mx-6 my-6" />
+      <BoxUserBlock v-if="['admin'].includes($store.getters.contextRole) && profile.user.context_role === 'volontaire'" :user="profile.user" class="mb-8" @update="$fetch" />
       <BoxRoles v-if="['admin', 'referent', 'referent_regional'].includes($store.getters.contextRole) && profile" :user-id="profile.user_id" class="mb-8" />
       <BoxActions v-if="$store.getters.contextRole === 'admin'" class="mb-8" :profile="profile" />
       <BoxDisponibilities class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
@@ -78,6 +82,7 @@ import BoxUtm from '@/components/section/BoxUtm'
 import Tag from '@/components/dsfr/Tag'
 import Button from '@/components/dsfr/Button.vue'
 import BoxRoles from '@/components/section/profile/BoxRoles'
+import BoxUserBlock from '@/components/section/profile/BoxUserBlock.vue'
 
 export default {
   components: {
@@ -90,7 +95,8 @@ export default {
     Tag,
     Button,
     BoxActions,
-    BoxRoles
+    BoxRoles,
+    BoxUserBlock
   },
   props: {
     profileId: {

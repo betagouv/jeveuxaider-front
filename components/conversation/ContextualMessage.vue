@@ -40,6 +40,9 @@ export default {
         case 'Refusée':
           message = 'La participation a été déclinée'
           break
+        case 'Automatiquement déclinée par la plateforme':
+          message = 'La participation a été déclinée automatiquement par la plateforme.'
+          break
         default:
           message = `Le nouveau statut de la participation est :<br> ${this.message.contextual_state}`
       }
@@ -56,6 +59,9 @@ export default {
         }
         if (this.message.contextual_state == 'Désinscription') {
           message += '<br><span class="font-light text-sm"> Désinscription de l\'utilisateur</span>'
+        }
+        if (this.message.contextual_reason === 'not_legally_resident_or_younger_than_16') {
+          message += '<br><span class="font-light text-sm">L\'utilisateur ne réside pas sur le territoire français ou est agé de moins de 16 ans'
         }
       }
       return message
