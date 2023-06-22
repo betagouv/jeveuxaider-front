@@ -2,7 +2,7 @@
   <div class="flex items-stretch gap-4">
     <div
       :class="[
-        'px-6 flex items-center border-r',
+        'px-4 lg:px-6 flex items-center border-r',
         {'block lg:hidden': $route.params.id}
       ]"
     >

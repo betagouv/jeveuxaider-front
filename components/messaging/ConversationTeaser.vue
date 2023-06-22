@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 pr-[10px] lg:p-6">
+  <div class="p-4 lg:p-6">
     <div class="flex">
       <Avatar
         v-for="(recipient, i) in recipients.slice(0, 3)"

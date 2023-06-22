@@ -4,7 +4,7 @@
       <ConversationsFilters />
     </template>
     <template v-else>
-      <div class="p-6 lg:p-8 border-b">
+      <div class="p-4 lg:p-8 border-b">
         <div class="flex gap-6 items-center">
           <Input
             name="search"
@@ -36,7 +36,7 @@
               v-for="conversation in $store.getters['messaging2/conversations']"
               :key="conversation.id"
               :to="`/messages/${conversation.id}`"
-              class="block border-l-4 border-l-white cursor-pointer hover:bg-[#F5F5FE hover:border-l-[#6A6AF4]"
+              class="block lg:border-l-4 lg:border-l-white cursor-pointer hover:bg-[#F5F5FE lg:hover:border-l-[#6A6AF4]"
               :class="[
                 { '!border-l-[#6A6AF4] bg-[#F5F5FE]': conversation.id == $route.params.id }
               ]"

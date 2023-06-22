@@ -11,14 +11,14 @@
           En quelques mots
         </div>
         <div class="text-cool-gray-500">
-          {{ profile.description }}
+          {{ profile.description || 'Non rempli' }}
         </div>
       </div>
-      <div v-if="profile.activities?.length" class="py-8">
+      <div class="py-8">
         <div class="text-xl font-bold text-gray-900 mb-4">
           Activités
         </div>
-        <ul class="flex flex-wrap gap-2">
+        <ul v-if="profile.activities?.length" class="flex flex-wrap gap-2">
           <Badge
             v-for="(activity, key) in profile.activities"
             :key="key"
@@ -28,12 +28,15 @@
             {{ activity.name }}
           </Badge>
         </ul>
+        <div v-else class="text-cool-gray-500">
+          Aucune sélectionnée
+        </div>
       </div>
-      <div v-if="profile.skills?.length" class="py-8">
+      <div class="py-8">
         <div class="text-xl font-bold text-gray-900 mb-4">
           Compétences
         </div>
-        <ul class="flex flex-wrap gap-2">
+        <ul v-if="profile.skills?.length" class="flex flex-wrap gap-2">
           <Badge
             v-for="(skill, key) in profile.skills"
             :key="key"
@@ -44,6 +47,9 @@
             {{ skill.name }}
           </Badge>
         </ul>
+        <div v-else class="text-cool-gray-500">
+          Aucune sélectionnée
+        </div>
       </div>
     </div>
   </Drawer>

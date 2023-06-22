@@ -11,7 +11,7 @@
           ]"
         >
           <ConversationsTabs class="fixed bottom-0 block w-full z-20 border-t lg:relative lg:block lg:w-[80px] lg:border-r" />
-          <ConversationsListingResults class="flex-1 min-w-0 pb-[76px] lg:pb-0" />
+          <ConversationsListingResults class="flex-1 min-w-0 pb-[61px] lg:pb-0" />
         </div>
 
         <Nuxt v-if="$route.params.id" class="flex-1" />

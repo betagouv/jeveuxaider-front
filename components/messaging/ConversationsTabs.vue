@@ -4,7 +4,7 @@
       v-for="tab in computedTabs"
       :key="tab.key"
       :class="[
-        'py-4 cursor-pointer w-full hover:bg-white',
+        'py-2 lg:py-4 cursor-pointer w-full hover:bg-white',
         {'bg-white text-jva-blue-500': tab.key === $store.getters['messaging2/conversationsQueryParams']['filter[type]']},
         {'text-gray-600': tab.key !== $store.getters['messaging2/conversationsQueryParams']['filter[type]']}
       ]"
