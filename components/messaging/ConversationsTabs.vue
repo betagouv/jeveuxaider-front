@@ -5,8 +5,8 @@
       :key="tab.key"
       :class="[
         'py-2 lg:py-4 cursor-pointer w-full hover:bg-white',
-        {'bg-white text-jva-blue-500': tab.key === $store.getters['messaging2/conversationsQueryParams']['filter[type]']},
-        {'text-gray-600': tab.key !== $store.getters['messaging2/conversationsQueryParams']['filter[type]']}
+        {'bg-white text-jva-blue-500': tab.key === $store.getters['messaging/conversationsQueryParams']['filter[type]']},
+        {'text-gray-600': tab.key !== $store.getters['messaging/conversationsQueryParams']['filter[type]']}
       ]"
       @click="changeType(tab.key)"
     >
@@ -41,12 +41,12 @@ export default {
   },
   methods: {
     changeType (type) {
-      this.$store.commit('messaging2/setConversationsQueryParams', {
+      this.$store.commit('messaging/setConversationsQueryParams', {
         'filter[type]': type,
         page: 1
       })
-      this.$store.commit('messaging2/setShowFilters', false)
-      this.$store.dispatch('messaging2/fetchConversations')
+      this.$store.commit('messaging/setShowFilters', false)
+      this.$store.dispatch('messaging/fetchConversations')
     }
   }
 }

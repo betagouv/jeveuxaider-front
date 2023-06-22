@@ -46,9 +46,10 @@ export default {
           return { type: 'error', label: 'Refusée' }
         case 'Validée':
           return { type: 'success', label: 'Validée' }
-        case 'Validée par bénévole':
+        case 'Validée par le bénévole':
           return { type: 'success', label: 'Validée', append: 'par le bénévole' }
         case 'Annulée':
+          return { type: 'error', label: 'Annulée' }
         case 'Annulée par bénévole':
           return { type: 'error', label: 'Annulée', append: 'par le bénévole' }
         case 'En attente de validation':
@@ -56,7 +57,7 @@ export default {
         case 'En cours de traitement':
           return { type: 'warning', label: 'En cours de traitement' }
         default:
-          return null
+          return { type: 'warning', label: this.message.contextual_state }
       }
     }
   }

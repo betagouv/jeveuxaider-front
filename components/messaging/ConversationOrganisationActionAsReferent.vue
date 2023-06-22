@@ -137,7 +137,7 @@ export default {
         state: 'Validée'
       })
         .then(async (res) => {
-          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging/refreshActiveConversation', this.conversation.id)
           this.showValidateOrganisationModal = false
         })
         .catch(() => {})
@@ -148,7 +148,7 @@ export default {
         state: 'Signalée'
       })
         .then(async (res) => {
-          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging/refreshActiveConversation', this.conversation.id)
           this.showReportOrganisationModal = false
         })
         .catch(() => {})

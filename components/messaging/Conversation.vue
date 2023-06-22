@@ -11,7 +11,7 @@
     >
       <ConversationMessages />
 
-      <div v-if="$store.getters['messaging2/hasActiveConversationMoreMessages']" class="flex justify-center mt-8">
+      <div v-if="$store.getters['messaging/hasActiveConversationMoreMessages']" class="flex justify-center mt-8">
         <Button
           :loading="loadingPreviousMessages"
           type="secondary"
@@ -24,7 +24,7 @@
       <slot name="scroll-container-top" />
     </ContainerScrollable>
 
-    <ConversationForm v-if="$store.getters['messaging2/isCurrentUserInConversation']" class="border-t" @submit="onSubmit" />
+    <ConversationForm v-if="$store.getters['messaging/isCurrentUserInConversation']" class="border-t" @submit="onSubmit" />
   </div>
 </template>
 
@@ -47,15 +47,15 @@ export default {
   computed: {
   },
   async mounted () {
-    await this.$store.dispatch('messaging2/fetchConversationMessages', this.$route.params.id)
+    await this.$store.dispatch('messaging/fetchConversationMessages', this.$route.params.id)
   },
   methods: {
     async onSubmit () {
-      await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.$route.params.id)
+      await this.$store.dispatch('messaging/fetchNewConversationMessages', this.$route.params.id)
     },
     async handleFetchPreviousMessages () {
       this.loadingPreviousMessages = true
-      await this.$store.dispatch('messaging2/fetchOldConversationMessages', this.$route.params.id)
+      await this.$store.dispatch('messaging/fetchOldConversationMessages', this.$route.params.id)
       this.loadingPreviousMessages = false
     },
     onScroll ({ target: { scrollTop, clientHeight, scrollHeight } }) {
@@ -64,7 +64,7 @@ export default {
       // const offset = 379
       // const isBottom = Math.ceil(Math.abs(scrollTop) + clientHeight) >= (scrollHeight - offset)
       // if (this.currentPage < this.lastPage && isBottom && !this.loading) {
-      //   this.$store.dispatch('messaging2/fetchOldConversationMessages', this.$route.params.id)
+      //   this.$store.dispatch('messaging/fetchOldConversationMessages', this.$route.params.id)
       // }
     }
   }

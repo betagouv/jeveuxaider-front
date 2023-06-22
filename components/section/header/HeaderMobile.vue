@@ -178,7 +178,7 @@ export default {
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' },
-        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging2/unreadMessagesCount'] }
+        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessagesCount'] }
       ]
     },
     secondaryNavigation () {

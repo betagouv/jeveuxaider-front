@@ -48,14 +48,11 @@ export default {
       if (payload.key == 'Refusée') {
         this.showModalDecline = true
       } else {
-        this.$store.commit('messaging/incrementNewMessagesCount')
         this.$emit('selected', payload)
       }
     },
     handleConfirmDecline (payload) {
       this.$emit('selected', { key: 'Refusée', form: payload })
-      const nbNewMessages = payload.content?.trim().length ? 2 : 1
-      this.$store.commit('messaging/incrementNewMessagesCount', nbNewMessages)
       this.showModalDecline = false
     }
   }

@@ -20,7 +20,7 @@
       >
         Laisser un témoignage
       </Button>
-      <Button
+      <!-- <Button
         v-if="canCancel"
         type="tertiary-no-outline"
         size="lg"
@@ -28,7 +28,7 @@
         @click.native.stop="showCancelParticipationModal = true"
       >
         Annuler
-      </Button>
+      </Button> -->
       <Dropdown ref="dropdownActions" class="flex-none">
         <template #button>
           <Button
@@ -146,7 +146,7 @@ export default {
       if (['Annulée', 'Validée', 'Refusée'].includes(this.participation.state)) {
         return false
       }
-      return !this.participationShouldBeDone
+      return true
     }
   },
   methods: {
@@ -154,8 +154,8 @@ export default {
       this.$axios.put(`/participations/${this.participation.id}/cancel-by-benevole`, payload)
         .catch(() => {})
         .then(async (res) => {
-          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
-          await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.conversation.id)
+          await this.$store.dispatch('messaging/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging/fetchNewConversationMessages', this.conversation.id)
           this.showCancelParticipationModal = false
         })
     },
@@ -163,8 +163,8 @@ export default {
       this.$axios.put(`/participations/${this.participation.id}/validate-by-benevole`, payload)
         .catch(() => {})
         .then(async (res) => {
-          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
-          await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.conversation.id)
+          await this.$store.dispatch('messaging/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging/fetchNewConversationMessages', this.conversation.id)
           this.showValidateParticipationModal = false
         })
     },

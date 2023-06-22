@@ -15,16 +15,16 @@ export default {
   },
   layout: 'messages',
   async asyncData ({ store, error, $api, params, $axios }) {
-    const { data: conversation } = await $axios.get(`/conversationsv2/${params.id}`)
+    const { data: conversation } = await $axios.get(`/conversations/${params.id}`)
 
     if (!conversation) {
       return error({ statusCode: 403 })
     }
 
-    store.commit('messaging2/setActiveConversation', conversation)
+    store.commit('messaging/setActiveConversation', conversation)
 
     if (!store.state.auth.isImpersonate) {
-      store.commit('messaging2/setActiveConversationAsRead', conversation)
+      store.commit('messaging/setActiveConversationAsRead', conversation)
     }
 
     return {

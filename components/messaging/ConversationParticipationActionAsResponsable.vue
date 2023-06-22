@@ -166,8 +166,8 @@ export default {
       })
         .catch(() => {})
         .then(async (res) => {
-          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
-          await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.conversation.id)
+          await this.$store.dispatch('messaging/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging/fetchNewConversationMessages', this.conversation.id)
           this.showInProgressParticipationModal = false
         })
     },
@@ -175,8 +175,8 @@ export default {
       this.$axios.put(`/participations/${this.participation.id}/decline`, payload)
         .catch(() => {})
         .then(async (res) => {
-          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
-          await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.conversation.id)
+          await this.$store.dispatch('messaging/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging/fetchNewConversationMessages', this.conversation.id)
           this.showRefuseParticipationModal = false
         })
     },
@@ -187,8 +187,8 @@ export default {
       })
         .catch(() => {})
         .then(async (res) => {
-          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
-          await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.conversation.id)
+          await this.$store.dispatch('messaging/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging/fetchNewConversationMessages', this.conversation.id)
           this.showCancelParticipationModal = false
         })
     },
@@ -199,8 +199,8 @@ export default {
       })
         .catch(() => {})
         .then(async (res) => {
-          await this.$store.dispatch('messaging2/refreshActiveConversation', this.conversation.id)
-          await this.$store.dispatch('messaging2/fetchNewConversationMessages', this.conversation.id)
+          await this.$store.dispatch('messaging/refreshActiveConversation', this.conversation.id)
+          await this.$store.dispatch('messaging/fetchNewConversationMessages', this.conversation.id)
           this.showValidateParticipationModal = false
         })
     }

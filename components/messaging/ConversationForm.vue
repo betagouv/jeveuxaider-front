@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     conversation () {
-      return this.$store.getters['messaging2/activeConversation']
+      return this.$store.getters['messaging/activeConversation']
     }
   },
   methods: {
@@ -45,7 +45,7 @@ export default {
       }
       if (this.message.trim().length) {
         this.loading = true
-        this.$axios.post(`/conversationsv2/${this.conversation.id}/messages`, {
+        this.$axios.post(`/conversations/${this.conversation.id}/messages`, {
           content: this.message
         }).then((response) => {
           this.$emit('submit', response.data)

@@ -13,7 +13,7 @@ export default {
       return this.$store.getters.contextRole === 'responsable'
     },
     conversation () {
-      return this.$store.getters['messaging2/activeConversation']
+      return this.$store.getters['messaging/activeConversation']
     },
     mission () {
       return this.conversation.conversable_type === 'App\\Models\\Participation' ? this.conversation.conversable.mission : this.conversation.conversable
@@ -40,20 +40,20 @@ export default {
       return this.mission.commitment__duration ? this.$options.filters.label(this.mission.commitment__duration, 'duration') : null
     },
     canArchive () {
-      return this.$store.getters['messaging2/isCurrentUserInConversation'] && !this.$store.getters['messaging2/isConversationArchivedForCurrentUser']
+      return this.$store.getters['messaging/isCurrentUserInConversation'] && !this.$store.getters['messaging/isConversationArchivedForCurrentUser']
     },
     canUnarchive () {
-      return this.$store.getters['messaging2/isCurrentUserInConversation'] && this.$store.getters['messaging2/isConversationArchivedForCurrentUser']
+      return this.$store.getters['messaging/isCurrentUserInConversation'] && this.$store.getters['messaging/isConversationArchivedForCurrentUser']
     }
   },
   methods: {
     async handleArchive () {
       await this.$axios.post(`/conversations/${this.conversation.id}/archive`)
-      this.$store.dispatch('messaging2/selectNextActiveConversation')
+      this.$store.dispatch('messaging/selectNextActiveConversation')
     },
     async handleUnarchive () {
       await this.$axios.post(`/conversations/${this.conversation.id}/unarchive`)
-      this.$store.dispatch('messaging2/selectNextActiveConversation')
+      this.$store.dispatch('messaging/selectNextActiveConversation')
     }
   }
 }

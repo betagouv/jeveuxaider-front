@@ -1,6 +1,6 @@
 <template>
   <div class="relative h-full flex flex-col">
-    <template v-if="$store.getters['messaging2/showFilters']">
+    <template v-if="$store.getters['messaging/showFilters']">
       <ConversationsFilters />
     </template>
     <template v-else>
@@ -13,27 +13,27 @@
             variant="transparent"
             clearable
             class="flex-1"
-            :value="$store.getters['messaging2/conversationsQueryParams']['filter[search]']"
+            :value="$store.getters['messaging/conversationsQueryParams']['filter[search]']"
             @input="handleSearchInput"
           />
 
-          <div class="relative cursor-pointer text-jva-blue-500 hover:text-jva-blue-300" @click="$store.commit('messaging2/toggleShowFilters')">
+          <div class="relative cursor-pointer text-jva-blue-500 hover:text-jva-blue-300" @click="$store.commit('messaging/toggleShowFilters')">
             <RiEqualizerFill class="h-8 w-8 fill-current " />
-            <div v-if="$store.getters['messaging2/activeFiltersCount']" class="absolute -top-2 -right-2 bg-[#e41e3f] px-1.5 py-0.5 rounded-full text-white font-bold text-xxs min-w-[20px] inline-flex justify-center">
-              {{ $store.getters['messaging2/activeFiltersCount'] }}
+            <div v-if="$store.getters['messaging/activeFiltersCount']" class="absolute -top-2 -right-2 bg-[#e41e3f] px-1.5 py-0.5 rounded-full text-white font-bold text-xxs min-w-[20px] inline-flex justify-center">
+              {{ $store.getters['messaging/activeFiltersCount'] }}
             </div>
           </div>
         </div>
       </div>
 
-      <template v-if="$store.getters['messaging2/hasConversationsResults']">
+      <template v-if="$store.getters['messaging/hasConversationsResults']">
         <ContainerScrollable
           :class="['flex-1']"
           @scroll="onScroll"
         >
           <div class="divide-y">
             <nuxt-link
-              v-for="conversation in $store.getters['messaging2/conversations']"
+              v-for="conversation in $store.getters['messaging/conversations']"
               :key="conversation.id"
               :to="`/messages/${conversation.id}`"
               class="block lg:border-l-4 lg:border-l-white cursor-pointer hover:bg-[#F5F5FE] lg:hover:border-l-[#6A6AF4]"
@@ -48,7 +48,7 @@
               />
             </nuxt-link>
           </div>
-          <div v-if="$store.getters['messaging2/hasMoreConversations']" class="flex justify-center mb-8 border-t pt-8">
+          <div v-if="$store.getters['messaging/hasMoreConversations']" class="flex justify-center mb-8 border-t pt-8">
             <Button
               :loading="loadingMoreConversations"
               type="secondary"
@@ -67,7 +67,7 @@
           </div>
         </div>
       </template>
-      <template v-if="$store.getters['messaging2/isConversationsLoading']">
+      <template v-if="$store.getters['messaging/isConversationsLoading']">
         <div class="absolute z-20 h-full flex-1 flex items-center justify-center w-full">
           <SpinIcon class="animate-spin h-10 w-10 text-jva-blue-500" />
         </div>
@@ -100,10 +100,10 @@ export default {
     }
   },
   async fetch () {
-    await this.$store.dispatch('messaging2/fetchConversations')
+    await this.$store.dispatch('messaging/fetchConversations')
   },
   beforeDestroy () {
-    this.$store.commit('messaging2/setConversations', [])
+    this.$store.commit('messaging/setConversations', [])
   },
   methods: {
     handleSearchInput ($event) {
@@ -111,8 +111,8 @@ export default {
         this.timeout.cancel()
       }
       this.timeout = debounce(() => {
-        this.$store.commit('messaging2/setConversationsQueryParams', {
-          ...this.$store.getters['messaging2/conversationsQueryParams'],
+        this.$store.commit('messaging/setConversationsQueryParams', {
+          ...this.$store.getters['messaging/conversationsQueryParams'],
           'filter[search]': $event,
           page: 1
         })
@@ -122,7 +122,7 @@ export default {
     },
     async handleFetchMoreConversations () {
       this.loadingMoreConversations = true
-      await this.$store.dispatch('messaging2/fetchMoreConversations')
+      await this.$store.dispatch('messaging/fetchMoreConversations')
       this.loadingMoreConversations = false
     },
     retrieveComponent (conversation) {
@@ -149,7 +149,7 @@ export default {
       const conversationUpdatedAt = new Date(conversation.updated_at)
       if (!this.$store.state.auth.isImpersonate) {
         if (userReadAt < conversationUpdatedAt) {
-          this.$store.commit('messaging2/decrementUnreadMessagesCount')
+          this.$store.commit('messaging/decrementUnreadMessagesCount')
         }
       }
     }

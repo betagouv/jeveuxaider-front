@@ -18,7 +18,7 @@
         </div>
         <div class="flex gap-2">
           <Badge
-            v-if="$store.getters['messaging2/isConversationArchivedForCurrentUser']"
+            v-if="$store.getters['messaging/isConversationArchivedForCurrentUser']"
             size="sm"
             type="info"
             no-icon

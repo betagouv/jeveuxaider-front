@@ -13,7 +13,7 @@ export default {
       return this.conversation.conversable.profile_id !== this.$store.getters.profile.id
     },
     conversation () {
-      return this.$store.getters['messaging2/activeConversation']
+      return this.$store.getters['messaging/activeConversation']
     },
     participation () {
       return this.conversation.conversable
@@ -61,20 +61,20 @@ export default {
       return this.participation.state === 'Validée' && this.mission.state === 'Terminée' && !this.participation.temoignage && !this.isTestimonialSubmitted
     },
     canArchive () {
-      return this.$store.getters['messaging2/isCurrentUserInConversation'] && !this.$store.getters['messaging2/isConversationArchivedForCurrentUser']
+      return this.$store.getters['messaging/isCurrentUserInConversation'] && !this.$store.getters['messaging/isConversationArchivedForCurrentUser']
     },
     canUnarchive () {
-      return this.$store.getters['messaging2/isCurrentUserInConversation'] && this.$store.getters['messaging2/isConversationArchivedForCurrentUser']
+      return this.$store.getters['messaging/isCurrentUserInConversation'] && this.$store.getters['messaging/isConversationArchivedForCurrentUser']
     }
   },
   methods: {
     async handleArchive () {
       await this.$axios.post(`/conversations/${this.conversation.id}/archive`)
-      this.$store.dispatch('messaging2/selectNextActiveConversation')
+      this.$store.dispatch('messaging/selectNextActiveConversation')
     },
     async handleUnarchive () {
       await this.$axios.post(`/conversations/${this.conversation.id}/unarchive`)
-      this.$store.dispatch('messaging2/selectNextActiveConversation')
+      this.$store.dispatch('messaging/selectNextActiveConversation')
     }
   }
 }

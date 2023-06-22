@@ -32,10 +32,10 @@ export default {
   },
   computed: {
     messages () {
-      return this.$store.getters['messaging2/activeConversationMessages']
+      return this.$store.getters['messaging/activeConversationMessages']
     },
     conversation () {
-      return this.$store.getters['messaging2/activeConversation']
+      return this.$store.getters['messaging/activeConversation']
     }
   },
   methods: {}

@@ -3,7 +3,7 @@
     <div class="flex space-x-6 items-center">
       <RiArrowLeftLine
         class="h-8 w-8 fill-current text-jva-blue-500 hover:text-jva-blue-300 cursor-pointer"
-        @click.native="$store.commit('messaging2/toggleShowFilters')"
+        @click.native="$store.commit('messaging/toggleShowFilters')"
       />
       <div class="text-xl lg:text-2xl font-bold">
         Filtrer les conversations
@@ -56,7 +56,7 @@
           >
             Appliquer les filtres
           </Button>
-          <Link v-if="$store.getters['messaging2/activeFiltersCount'] > 0" class="mt-1" @click.native="resetForm">
+          <Link v-if="$store.getters['messaging/activeFiltersCount'] > 0" class="mt-1" @click.native="resetForm">
             Réinitialiser
           </Link>
         </div>
@@ -78,7 +78,7 @@ export default {
   data () {
     return {
       loading: false,
-      form: cloneDeep(this.$store.getters['messaging2/conversationsQueryParams'])
+      form: cloneDeep(this.$store.getters['messaging/conversationsQueryParams'])
     }
   },
   methods: {
@@ -92,12 +92,12 @@ export default {
       }
     },
     handleSubmit () {
-      this.$store.commit('messaging2/setConversationsQueryParams', {
+      this.$store.commit('messaging/setConversationsQueryParams', {
         ...this.form,
         page: 1
       })
-      this.$store.dispatch('messaging2/fetchConversations')
-      this.$store.commit('messaging2/toggleShowFilters')
+      this.$store.dispatch('messaging/fetchConversations')
+      this.$store.commit('messaging/toggleShowFilters')
     }
   }
 }
