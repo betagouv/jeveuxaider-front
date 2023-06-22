@@ -5,7 +5,7 @@
         <div class="uppercase font-semibold text-gray-600">
           Territoire
         </div>
-        <Link :to="`/admin/contenus/territoires/${territoire.id}`" icon="ChevronRightIcon">
+        <Link :to="`/admin/contenus/territoires/${territoire.id}`" class="text-jva-blue-500">
           Consulter
         </Link>
       </div>
@@ -23,7 +23,12 @@
 </template>
 
 <script>
+import Link from '@/components/dsfr/Link'
+
 export default {
+  components: {
+    Link
+  },
   props: {
     territoires: {
       type: Array,

@@ -4,7 +4,11 @@
       <div class="uppercase font-semibold text-gray-600">
         Réseau
       </div>
-      <Link v-if="['admin', 'referent'].includes($store.getters.contextRole)" :to="`/admin/contenus/reseaux/${reseau.id}`" icon="ChevronRightIcon">
+      <Link
+        v-if="['admin', 'referent'].includes($store.getters.contextRole)"
+        :to="`/admin/contenus/reseaux/${reseau.id}`"
+        class="text-jva-blue-500"
+      >
         Consulter
       </Link>
     </div>
@@ -17,7 +21,12 @@
 </template>
 
 <script>
+import Link from '@/components/dsfr/Link'
+
 export default {
+  components: {
+    Link
+  },
   props: {
     reseau: {
       type: Object,

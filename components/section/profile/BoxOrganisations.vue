@@ -5,7 +5,7 @@
         <div class="uppercase font-semibold text-gray-600">
           Organisation
         </div>
-        <Link :to="`/admin/organisations/${organisation.id}`" icon="ChevronRightIcon">
+        <Link :to="`/admin/organisations/${organisation.id}`" class="text-jva-blue-500">
           Consulter
         </Link>
       </div>
@@ -21,7 +21,12 @@
 </template>
 
 <script>
+import Link from '@/components/dsfr/Link'
+
 export default {
+  components: {
+    Link
+  },
   props: {
     structures: {
       type: Array,

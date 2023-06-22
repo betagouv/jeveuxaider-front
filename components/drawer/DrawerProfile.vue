@@ -23,6 +23,7 @@
             icon="RiEyeLine"
             size="sm"
             tabindex="-1"
+            icon-class="!mr-1"
           >
             Détails
           </Button>
@@ -34,6 +35,7 @@
             icon="RiPencilLine"
             size="sm"
             tabindex="-1"
+            icon-class="!mr-1"
           >
             Modifier
           </Button>
@@ -44,12 +46,31 @@
           type="tertiary"
           size="sm"
           icon="RiProfileLine"
+          icon-class="!mr-1"
           @click.native="handleImpersonate()"
         >
           Prendre sa place
         </Button>
       </div>
       <div class="border-t -mx-6 my-6" />
+      <BoxUserBan
+        v-if="['admin'].includes($store.getters.contextRole) && profile.user.context_role === 'volontaire'"
+        ref="boxUserBan"
+        :user="profile.user"
+        class="mb-8"
+        @update="$fetch"
+      >
+        <template #action="{ loading }">
+          <Link
+            v-if="!profile.user.banned_at"
+            :disabled="loading"
+            class="text-jva-blue-500 ml-auto"
+            @click.native="$refs.boxUserBan.showModal = true"
+          >
+            Bloquer l'utilisateur
+          </Link>
+        </template>
+      </BoxUserBan>
       <BoxRoles v-if="['admin', 'referent', 'referent_regional'].includes($store.getters.contextRole) && profile" :user-id="profile.user_id" class="mb-8" />
       <BoxActions v-if="$store.getters.contextRole === 'admin'" class="mb-8" :profile="profile" />
       <BoxDisponibilities class="mb-8" :profile="profile" :link-action="`/admin/utilisateurs/${profile.id}`" link-label="Consulter" />
@@ -59,7 +80,7 @@
       <BoxTerritoires v-if="profile.user.territoires" :territoires="profile.user.territoires" class="mb-8" />
       <BoxReseau v-if="profile.reseau" :reseau="profile.reseau" class="mb-8" />
       <div class="flex justify-center mt-10 mb-10">
-        <Link :to="`/admin/utilisateurs/${profile.id}`" class="uppercase font-semibold text-sm hover:underline">
+        <Link :to="`/admin/utilisateurs/${profile.id}`" class="uppercase font-semibold text-sm text-jva-blue-500">
           Détails de l'utilisateur
         </Link>
       </div>
@@ -76,8 +97,10 @@ import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
 import BoxActions from '@/components/section/profile/BoxActions'
 import BoxUtm from '@/components/section/BoxUtm'
 import Tag from '@/components/dsfr/Tag'
+import Link from '@/components/dsfr/Link'
 import Button from '@/components/dsfr/Button.vue'
 import BoxRoles from '@/components/section/profile/BoxRoles'
+import BoxUserBan from '@/components/section/profile/BoxUserBan.vue'
 
 export default {
   components: {
@@ -90,7 +113,9 @@ export default {
     Tag,
     Button,
     BoxActions,
-    BoxRoles
+    BoxRoles,
+    BoxUserBan,
+    Link
   },
   props: {
     profileId: {
