@@ -4,7 +4,7 @@
     <slot name="actions" />
 
     <ContainerScrollable
-      class="flex-1 p-4 lg:p-8"
+      class="flex-1 p-4 lg:p-6"
       :reverse="true"
       scrollbar-class="pr-4 lg:pr-6"
       @scroll="onScroll"
