@@ -62,7 +62,7 @@
       >
         <template #action="{ loading }">
           <Link
-            v-if="!profile.user.is_banned"
+            v-if="!profile.user.banned_at"
             :disabled="loading"
             class="text-jva-blue-500 ml-auto"
             @click.native="$refs.boxUserBan.showModal = true"

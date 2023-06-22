@@ -15,7 +15,7 @@
             {{ labelStatus }}
           </div>
         </DescriptionListItem>
-        <DescriptionListItem v-if="user.is_banned" term="Raison" :description="labelReason" />
+        <DescriptionListItem v-if="user.banned_at" term="Raison" :description="labelReason" />
       </DescriptionList>
     </Box>
 
@@ -49,12 +49,12 @@ export default {
   },
   computed: {
     labelStatus () {
-      return this.user.is_banned ? 'Bloqué' : 'Actif'
+      return this.user.banned_at ? 'Bloqué' : 'Actif'
     },
     labelReason () {
       return this.$options.filters
         .label(
-          this.user.is_banned_reason,
+          this.user.banned_reason,
           'user_ban_reasons'
         )
     }
