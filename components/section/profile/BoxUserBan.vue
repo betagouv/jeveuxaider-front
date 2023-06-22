@@ -21,19 +21,28 @@
 
     <ModalUserBan
       :user="user"
-      :is-open="showModal"
-      @cancel="showModal = false"
+      :is-open="showModalBan"
+      @cancel="showModalBan = false"
       @confirm="handleUserBanConfirm"
+    />
+
+    <ModalUserUnban
+      :user="user"
+      :is-open="showModalUnban"
+      @cancel="showModalUnban = false"
+      @confirm="handleUserUnbanConfirm"
     />
   </div>
 </template>
 
 <script>
 import ModalUserBan from '@/components/modal/ModalUserBan.vue'
+import ModalUserUnban from '@/components/modal/ModalUserUnban.vue'
 
 export default {
   components: {
-    ModalUserBan
+    ModalUserBan,
+    ModalUserUnban
   },
   props: {
     user: {
@@ -43,7 +52,8 @@ export default {
   },
   data () {
     return {
-      showModal: false,
+      showModalBan: false,
+      showModalUnban: false,
       loading: false
     }
   },
@@ -65,7 +75,14 @@ export default {
       await this.$axios.post(`/users/${this.user.id}/ban`, { ...$event }).catch(() => {})
       this.$emit('update')
       this.loading = false
-      this.showModal = false
+      this.showModalBan = false
+    },
+    async handleUserUnbanConfirm ($event) {
+      this.loading = true
+      await this.$axios.post(`/users/${this.user.id}/unban`).catch(() => {})
+      this.$emit('update')
+      this.loading = false
+      this.showModalUnban = false
     }
   }
 }

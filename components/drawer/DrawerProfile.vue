@@ -65,9 +65,17 @@
             v-if="!profile.user.banned_at"
             :disabled="loading"
             class="text-jva-blue-500 ml-auto"
-            @click.native="$refs.boxUserBan.showModal = true"
+            @click.native="$refs.boxUserBan.showModalBan = true"
           >
             Bloquer l'utilisateur
+          </Link>
+          <Link
+            v-else
+            :disabled="loading"
+            class="text-jva-blue-500 ml-auto"
+            @click.native="$refs.boxUserBan.showModalUnban = true"
+          >
+            Débloquer l'utilisateur
           </Link>
         </template>
       </BoxUserBan>
