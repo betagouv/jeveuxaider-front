@@ -1,5 +1,5 @@
 <template>
-  <ConversationRecipient :title="user.profile.full_name">
+  <ConversationRecipient :title="`${user.profile.first_name} ${user.profile.last_name[0]}.`">
     <template #badges>
       <Badge
         size="sm"
@@ -11,15 +11,9 @@
     </template>
     <div v-dragscroll.x class="flex gap-4 items-center overflow-hidden whitespace-nowrap">
       <div class="flex gap-1 items-center text-sm text-cool-gray-500">
-        <RiMailFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+        <RiTimeFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
         <p class="">
-          {{ user.profile.email }}
-        </p>
-      </div>
-      <div v-if="user.profile.mobile" class="flex gap-1 items-center text-sm text-cool-gray-500">
-        <RiPhoneLine class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
-        <p class="">
-          {{ user.profile.mobile }}
+          {{ $dayjs($store.getters['messaging/activeConversation'].created_at).format('DD/MM/YYYY à H:m') }}
         </p>
       </div>
     </div>

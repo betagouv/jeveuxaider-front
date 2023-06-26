@@ -83,8 +83,10 @@ import RiArchiveLine from 'vue-remix-icons/icons/RiArchiveLine.vue'
 import RiMessage3Line from 'vue-remix-icons/icons/RiMessage3Line.vue'
 import RiMore2Line from 'vue-remix-icons/icons/RiMore2Line.vue'
 import RiFileUserLine from 'vue-remix-icons/icons/RiFileUserLine.vue'
+import RiCakeFill from 'vue-remix-icons/icons/RiCakeFill.vue'
 
 const components = {
+  RiCakeFill,
   RiFileUserLine,
   RiMore2Line,
   RiMessage3Line,

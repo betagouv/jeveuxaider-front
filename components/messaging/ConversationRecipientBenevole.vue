@@ -3,6 +3,12 @@
     <ConversationRecipient :title="user.profile.full_name">
       <div v-dragscroll.x class="flex gap-4 items-center overflow-hidden whitespace-nowrap">
         <div class="flex gap-1 items-center text-sm text-cool-gray-500">
+          <RiTimeFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+          <p class="">
+            {{ $dayjs($store.getters['messaging/activeConversation'].created_at).format('DD/MM/YYYY à H:m') }}
+          </p>
+        </div>
+        <!-- <div class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiMailFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p class="">
             {{ user.profile.email }}
@@ -12,6 +18,12 @@
           <RiPhoneLine class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p class="">
             {{ user.profile.mobile }}
+          </p>
+        </div> -->
+        <div v-if="user.profile.birthday" class="flex gap-1 items-center text-sm text-cool-gray-500">
+          <RiCakeFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+          <p class="">
+            {{ $dayjs(user.profile.birthday).fromNow('year') }}
           </p>
         </div>
         <div v-if="user.profile.zip" class="flex gap-1 items-center text-sm text-cool-gray-500">
@@ -37,6 +49,12 @@
           >
           <p class="">
             Service Civique
+          </p>
+        </div>
+        <div v-if="user.profile.cej" class="flex gap-1 items-center text-sm text-cool-gray-500">
+          <RiFlagLine class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+          <p class="">
+            Jeune en CEJ
           </p>
         </div>
       </div>

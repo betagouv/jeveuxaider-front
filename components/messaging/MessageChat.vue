@@ -26,9 +26,11 @@
             {'border-[#EDEDED] bg-[#F6F6F6] !rounded-bl-none': !isFromMe},
           ]"
         >
-          <div class="text-black whitespace-pre-line">
-            {{ message.content }}
-          </div>
+          <nl2br
+            tag="p"
+            :text="message.content"
+            class-name="text-black break-word"
+          />
         </div>
         <div
           :class="[

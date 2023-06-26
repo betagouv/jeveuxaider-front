@@ -2,7 +2,7 @@
   <Drawer :is-open="Boolean(profileId)" @close="$emit('close')">
     <template #title>
       <Heading v-if="profile" :level="3">
-        À propos de {{ profile.first_name }} {{ profile.last_name[0] }}
+        À propos de {{ profile.first_name }} {{ profile.last_name }}
       </Heading>
     </template>
     <div v-if="profile" class="grid grid-cols-1 border px-8 divide-y mt-8">
@@ -14,9 +14,11 @@
           <DescriptionListItem term="Email" :description="profile.email" />
           <DescriptionListItem term="Mobile" :description="profile.mobile" />
           <DescriptionListItem term="Téléphone" :description="profile.phone" />
-          <DescriptionListItem term="Départemen" :description="`${profile.department} - ${$options.filters.label(profile.department,'departments')}`" />
+          <DescriptionListItem term="Âge" :description="$dayjs(profile.birthday).fromNow('year')" />
+          <DescriptionListItem term="Département" :description="`${profile.department} - ${$options.filters.label(profile.department,'departments')}`" />
           <DescriptionListItem term="Code postal" :description="profile.zip" />
           <DescriptionListItem term="Profession" :description="$options.filters.label(profile.type,'profile_type')" />
+          <DescriptionListItem term="Disponibilités" :description="formattedCommitment" />
         </DescriptionList>
       </div>
       <div class="py-8">
@@ -96,7 +98,12 @@ export default {
     this.loading = false
   },
   computed: {
-
+    formattedCommitment () {
+      if (this.profile.commitment__time_period) {
+        return `${this.$options.filters.label(this.profile.commitment__duration, 'duration')} par ${this.$options.filters.label(this.profile.commitment__time_period, 'time_period')}`
+      }
+      return this.profile.commitment__duration ? this.$options.filters.label(this.profile.commitment__duration, 'duration') : null
+    }
   },
   watch: {
     profileId: '$fetch'
