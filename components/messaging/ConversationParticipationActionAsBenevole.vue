@@ -53,7 +53,7 @@
           <div class="w-[300px] py-4">
             <DropdownOptionsItem v-if="canCancel" @click.native.stop="showCancelParticipationModal = true">
               <div class="px-4 text-base font-medium">
-                Annuler la candidature
+                Annuler la participation
               </div>
             </DropdownOptionsItem>
             <DropdownOptionsItem v-if="canArchive" @click.native.stop="handleArchive">
@@ -126,15 +126,15 @@ export default {
       }
       switch (this.participation.state) {
         case 'Validée':
-          return 'La candidature est validée'
+          return 'La participation est validée'
         case 'Refusée':
-          return 'La candidature est déclinée'
+          return 'La participation est déclinée'
         case 'Annulée':
-          return 'La candidature est annulée'
+          return 'La participation est annulée'
         case 'En cours de traitement':
-          return 'La candidature est en cours de traitement'
+          return 'La participation est en cours de traitement'
         case 'En attente de validation':
-          return 'La candidature est en attente de validation'
+          return 'La participation est en attente de validation'
         default:
           return this.participation.state
       }

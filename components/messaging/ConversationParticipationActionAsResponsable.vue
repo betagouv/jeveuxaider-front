@@ -51,17 +51,17 @@
             </DropdownOptionsItem>
             <DropdownOptionsItem v-if="!['Validée'].includes(participation.state)" @click.native.stop="showValidateParticipationModal = true">
               <div class="px-4 text-base font-medium">
-                Valider la candidature
+                Valider la participation
               </div>
             </DropdownOptionsItem>
             <DropdownOptionsItem v-if="!['Refusée'].includes(participation.state)" @click.native.stop="showRefuseParticipationModal = true">
               <div class="px-4 text-base font-medium">
-                Décliner la candidature
+                Décliner la participation
               </div>
             </DropdownOptionsItem>
             <DropdownOptionsItem v-if="!['Annulée'].includes(participation.state)" @click.native.stop="showCancelParticipationModal = true">
               <div class="px-4 text-base font-medium">
-                Annuler la candidature
+                Annuler la participation
               </div>
             </DropdownOptionsItem>
             <DropdownOptionsItem v-if="canArchive" @click.native="handleArchive">
@@ -135,15 +135,15 @@ export default {
   computed: {
     label () {
       if (this.canValidate) {
-        return 'Souhaitez-vous valider cette candidature ?'
+        return 'Souhaitez-vous valider cette participation ?'
       }
       switch (this.participation.state) {
         case 'Validée':
-          return 'La candidature est validée'
+          return 'La participation est validée'
         case 'Refusée':
-          return 'La candidature est déclinée'
+          return 'La participation est déclinée'
         case 'Annulée':
-          return 'La candidature est annulée'
+          return 'La participation est annulée'
         default:
           return ''
       }

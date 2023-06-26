@@ -33,7 +33,12 @@ export default {
   computed: {
     computedTabs () {
       if (this.$store.getters.contextRole === 'responsable') {
-        return this.tabs.concat({ key: 'participations_to_be_treated', label: 'À traiter', icon: 'RiFolderWarningLine' })
+        return [
+          { key: 'all', label: 'Tous', icon: 'RiMessage3Line' },
+          { key: 'unread', label: 'Non lus', icon: 'RiMailUnreadLine' },
+          { key: 'participations_to_be_treated', label: 'À traiter', icon: 'RiFolderWarningLine' },
+          { key: 'archived', label: 'Archivés', icon: 'RiArchiveLine' }
+        ]
       } else {
         return this.tabs
       }
