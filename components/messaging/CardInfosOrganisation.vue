@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="flex space-x-1 items-center text-sm text-cool-gray-500">
-        <p class=" line-clamp-3 ">
+        <p class="line-clamp-3">
           {{ organisation.description || 'Aucune description' }}
         </p>
       </div>

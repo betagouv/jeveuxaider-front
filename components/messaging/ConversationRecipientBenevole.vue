@@ -3,9 +3,9 @@
     <ConversationRecipient :title="user.profile.full_name">
       <div v-dragscroll.x class="flex gap-4 items-center overflow-hidden whitespace-nowrap">
         <div class="flex gap-1 items-center text-sm text-cool-gray-500">
-          <RiTimeFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+          <RiChatHistoryFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p class="">
-            {{ $dayjs($store.getters['messaging/activeConversation'].created_at).format('DD/MM/YYYY à H:m') }}
+            {{ $dayjs($store.getters['messaging/activeConversation'].created_at).format('D MMM YYYY • HH[h]mm') }}
           </p>
         </div>
         <!-- <div class="flex gap-1 items-center text-sm text-cool-gray-500">

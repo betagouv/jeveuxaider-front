@@ -1,6 +1,6 @@
 <template>
-  <div class="h-full flex flex-col gap-12 p-4 lg:p-8">
-    <div class="flex space-x-6 items-center">
+  <div class="h-full flex flex-col">
+    <div class="flex space-x-6 items-center p-4 lg:p-8">
       <RiArrowLeftLine
         class="h-8 w-8 fill-current text-jva-blue-500 hover:text-jva-blue-300 cursor-pointer"
         @click.native="$store.commit('messaging/toggleShowFilters')"
@@ -11,7 +11,7 @@
     </div>
 
     <ContainerScrollable
-      class="-mx-2"
+      class="-mx-2 flex-1 p-4 lg:px-8 lg:py-4"
       scrollbar-class="pr-4 lg:pr-6"
     >
       <div class="px-2 grid grid-cols-1 gap-6 lg:gap-8">
@@ -60,21 +60,25 @@
             clearable
           />
         </FormControl>
-        <div class="flex flex-col items-center justify-center">
-          <Button
-            :loading="loading"
-            type="primary"
-            size="md"
-            @click.native="handleSubmit"
-          >
-            Appliquer les filtres
-          </Button>
-          <Link v-if="$store.getters['messaging/activeFiltersCount'] > 0" class="mt-1" @click.native="resetForm">
-            Réinitialiser
-          </Link>
-        </div>
       </div>
     </ContainerScrollable>
+
+    <div class="flex items-center justify-between border-t p-4 lg:px-8 lg:py-4">
+      <div>
+        <Link v-if="$store.getters['messaging/activeFiltersCount'] > 0" @click.native="resetForm">
+          Réinitialiser
+        </Link>
+      </div>
+      <Button
+        :loading="loading"
+        type="primary"
+        size="md"
+        class=" justify-self-end"
+        @click.native="handleSubmit"
+      >
+        Appliquer les filtres
+      </Button>
+    </div>
   </div>
 </template>
 
@@ -96,7 +100,6 @@ export default {
   },
   methods: {
     resetForm () {
-      console.log('resetForm')
       this.form = {
         ...this.form,
         'filter[participation_state]': [],
@@ -104,6 +107,7 @@ export default {
         'filter[mission_name]': null,
         'filter[mission_zip_city]': null
       }
+      this.handleSubmit()
     },
     handleSubmit () {
       this.$store.commit('messaging/setConversationsQueryParams', {

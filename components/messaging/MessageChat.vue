@@ -38,7 +38,7 @@
             {'text-right': isFromMe},
           ]"
         >
-          {{ $dayjs(message.created_at).format('D MMM HH[h]mm') }}
+          {{ $dayjs(message.created_at).format('D MMM • HH[h]mm') }}
         </div>
       </div>
     </div>
