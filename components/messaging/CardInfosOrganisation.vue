@@ -14,7 +14,7 @@
           <RiExternalLinkLine class="text-jva-blue-500 fill-current h-6 w-6" />
         </nuxt-link>
       </div>
-      <div class="flex flex-wrap space-x-4 items-center">
+      <div class="flex flex-wrap gap-4 items-center">
         <Badge>
           {{ organisation.statut_juridique | label('structure_legal_status') }}
         </Badge>
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="flex space-x-1 items-center text-sm text-cool-gray-500">
-        <p class="">
+        <p class=" line-clamp-3 ">
           {{ organisation.description || 'Aucune description' }}
         </p>
       </div>
