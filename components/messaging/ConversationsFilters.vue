@@ -11,9 +11,10 @@
     </div>
 
     <ContainerScrollable
+      class="-mx-2"
       scrollbar-class="pr-4 lg:pr-6"
     >
-      <div class="grid grid-cols-1 gap-12">
+      <div class="px-2 grid grid-cols-1 gap-6 lg:gap-8">
         <FormControl
           label="Statut de la participation"
           html-for="participation_state"
@@ -26,6 +27,7 @@
           />
         </FormControl>
         <FormControl
+          v-if="!['responsable'].includes($store.getters.contextRole)"
           label="Nom de l’organisation"
           html-for="structure_name"
         >
@@ -44,6 +46,17 @@
             v-model="form['filter[mission_name]']"
             name="mission_name"
             placeholder="Recherche par mots clés"
+            clearable
+          />
+        </FormControl>
+        <FormControl
+          label="Lieu de la mission"
+          html-for="mission_zip_city"
+        >
+          <Input
+            v-model="form['filter[mission_zip_city]']"
+            name="mission_zip_city"
+            placeholder="Code postal ou ville"
             clearable
           />
         </FormControl>
@@ -88,7 +101,8 @@ export default {
         ...this.form,
         'filter[participation_state]': [],
         'filter[structure_name]': null,
-        'filter[mission_name]': null
+        'filter[mission_name]': null,
+        'filter[mission_zip_city]': null
       }
     },
     handleSubmit () {

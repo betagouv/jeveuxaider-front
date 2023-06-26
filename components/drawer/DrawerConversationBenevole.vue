@@ -8,6 +8,19 @@
     <div v-if="profile" class="grid grid-cols-1 border px-8 divide-y mt-8">
       <div class="py-8">
         <div class="text-xl font-bold text-gray-900 mb-4">
+          Informations
+        </div>
+        <DescriptionList>
+          <DescriptionListItem term="Email" :description="profile.email" />
+          <DescriptionListItem term="Mobile" :description="profile.mobile" />
+          <DescriptionListItem term="Téléphone" :description="profile.phone" />
+          <DescriptionListItem term="Départemen" :description="`${profile.department} - ${$options.filters.label(profile.department,'departments')}`" />
+          <DescriptionListItem term="Code postal" :description="profile.zip" />
+          <DescriptionListItem term="Profession" :description="$options.filters.label(profile.type,'profile_type')" />
+        </DescriptionList>
+      </div>
+      <div class="py-8">
+        <div class="text-xl font-bold text-gray-900 mb-4">
           En quelques mots
         </div>
         <div class="text-cool-gray-500">

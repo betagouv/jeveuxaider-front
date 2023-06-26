@@ -8,7 +8,7 @@
         <div class="flex gap-6 items-center">
           <Input
             name="search"
-            placeholder="Recherche par mots clés..."
+            placeholder="Recherche par noms, emails..."
             icon="SearchIcon"
             variant="transparent"
             clearable
