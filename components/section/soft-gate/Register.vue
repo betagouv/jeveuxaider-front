@@ -11,6 +11,21 @@
     <div class="mx-auto max-w-md">
       <form id="inscription" class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2" @submit.prevent="onSubmit">
         <FormControl
+          label="Email"
+          html-for="email"
+          required
+          :error="errors.email"
+          class="lg:col-span-2"
+        >
+          <Input
+            v-model="form.email"
+            type="email"
+            name="email"
+            placeholder="jean.dupont@gmail.com"
+            @blur="validate('email')"
+          />
+        </FormControl>
+        <FormControl
           label="Prénom"
           html-for="first_name"
           required
@@ -36,20 +51,7 @@
             @blur="validate('last_name')"
           />
         </FormControl>
-        <FormControl
-          label="Email"
-          html-for="email"
-          required
-          :error="errors.email"
-        >
-          <Input
-            v-model="form.email"
-            type="email"
-            name="email"
-            placeholder="jean.dupont@gmail.com"
-            @blur="validate('email')"
-          />
-        </FormControl>
+
         <FormControl
           label="Code postal"
           html-for="zip"
@@ -63,6 +65,23 @@
             maxlength="5"
             placeholder="56000"
             @blur="validate('zip')"
+          />
+        </FormControl>
+        <FormControl
+          label="Pays de résidence"
+          html-for="country"
+          required
+          :error="errors.country"
+        >
+          <SelectAdvanced
+            v-model="form.country"
+            name="country"
+            placeholder="Sélectionner un pays"
+            :options="[{code: 'FR', name: 'France'}, ...countries]"
+            attribute-key="code"
+            attribute-label="name"
+            autocomplete="ctry"
+            @blur="validate('country')"
           />
         </FormControl>
         <FormControl
@@ -198,6 +217,7 @@ import FormErrors from '@/mixins/form/errors'
 import Heading from '@/components/dsfr/Heading.vue'
 import Button from '@/components/dsfr/Button.vue'
 import Link from '@/components/dsfr/Link.vue'
+import countries from '@/assets/countries.json'
 
 export default {
   name: 'SoftGateRegister',
@@ -220,13 +240,15 @@ export default {
         ...this.datas,
         utm_source: this.$cookies.get('utm_source'),
         utm_campaign: this.$cookies.get('utm_campaign'),
-        utm_medium: this.$cookies.get('utm_medium')
+        utm_medium: this.$cookies.get('utm_medium'),
+        country: 'FR'
       },
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
         mobile: string().min(10).matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect').required('Un téléphone mobile est requis'),
         zip: string().min(5).required('Un code postal est requis'),
+        country: string().required('Un pays est requis'),
         birthday: date().required("Une date d'anniversaire est requise").nullable().transform(v => (v instanceof Date && !isNaN(v) ? v : null)),
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
         password: string().min(8).required('Un mot de passe est requis'),
@@ -235,7 +257,8 @@ export default {
           is: true,
           then: schema => schema.required("L'email de votre conseiller CEJ est obligatoire")
         })
-      })
+      }),
+      countries
     }
   },
   computed: {
