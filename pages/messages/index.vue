@@ -19,9 +19,6 @@ export default {
   data () {
     return {}
   },
-  computed: {},
-  created () {
-    console.log('created', this.$store.getters['messaging/conversations'])
-  }
+  computed: {}
 }
 </script>
