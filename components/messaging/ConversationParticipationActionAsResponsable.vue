@@ -20,7 +20,7 @@
         class="hidden lg:flex"
         @click.native.stop="showRefuseParticipationModal = true"
       >
-        Décliner
+        Refuser
       </Button>
       <Dropdown ref="dropdownActions" class="flex-none">
         <template #button>
@@ -56,7 +56,7 @@
             </DropdownOptionsItem>
             <DropdownOptionsItem v-if="!['Refusée'].includes(participation.state)" @click.native.stop="showRefuseParticipationModal = true">
               <div class="px-4 text-base font-medium">
-                Décliner la participation
+                Refuser la participation
               </div>
             </DropdownOptionsItem>
             <DropdownOptionsItem v-if="!['Annulée'].includes(participation.state)" @click.native.stop="showCancelParticipationModal = true">

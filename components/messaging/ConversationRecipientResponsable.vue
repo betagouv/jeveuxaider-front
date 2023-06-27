@@ -1,5 +1,5 @@
 <template>
-  <ConversationRecipient :title="name">
+  <ConversationRecipient :title="user.profile.full_name">
     <div v-dragscroll.x class="flex gap-4 items-center overflow-hidden whitespace-nowrap">
       <div class="flex gap-1 items-center text-sm text-cool-gray-500">
         <RiChatHistoryFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
@@ -49,12 +49,6 @@ export default {
     }
   },
   computed: {
-    name () {
-      if (this.showPrivateInfos) {
-        return this.user.profile.full_name
-      }
-      return `${this.user.profile.first_name} ${this.user.profile.last_name[0]}.`
-    },
     responsableStructure () {
       return this.user.structures.length ? this.user.structures[0] : null
     }

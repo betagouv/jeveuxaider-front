@@ -36,7 +36,7 @@ export default {
         return [
           { key: 'all', label: 'Tous', icon: 'RiMessage3Line' },
           { key: 'unread', label: 'Non lus', icon: 'RiMailUnreadLine' },
-          { key: 'participations_to_be_treated', label: 'À traiter', icon: 'RiFolderWarningLine' },
+          { key: 'participations_to_be_treated', label: 'Prioritaires', icon: 'RiFolderWarningLine' },
           { key: 'archived', label: 'Archivés', icon: 'RiArchiveLine' }
         ]
       } else {
