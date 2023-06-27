@@ -66,10 +66,6 @@ export default {
         if (this.message.contextual_reason === 'younger_than_16') {
           message += '<br><span class="font-light text-sm">L\'utilisateur est agé de moins de 16 ans'
         }
-        // @todo: delete
-        if (this.message.contextual_reason === 'not_regular_resident_or_younger_than_16') {
-          message += '<br><span class="font-light text-sm">L\'utilisateur ne réside pas sur le territoire français ou est agé de moins de 16 ans'
-        }
       }
       return message
     }
