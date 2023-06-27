@@ -409,6 +409,7 @@ const labels = {
     { key: 'mission_detach_tag', label: 'Retirer un tag à la mission' }
   ],
   user_ban_reasons: [
-    { key: 'not_regular_resident_or_younger_than_16', label: 'Le bénévole ne réside pas régulièrement en France ou est âgé de moins de 16 ans' }
+    { key: 'not_regular_resident', label: 'Le bénévole ne réside pas régulièrement en France' },
+    { key: 'younger_than_16', label: 'Le bénévole est âgé de moins de 16 ans' }
   ]
 }
