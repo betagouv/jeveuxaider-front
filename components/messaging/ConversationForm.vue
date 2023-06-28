@@ -10,9 +10,11 @@
           class="m-auto w-full !outline-none leading-tight border-0 custom-scrollbar truncate"
         />
       </client-only>
-      <Button class="flex-none" icon="RiSendPlaneFill" :loading="loading" @click.native="handleSubmit">
+      <Button class="flex-none hidden lg:inline-flex" icon="RiSendPlaneFill" :loading="loading" @click.native="handleSubmit">
         Envoyer
       </Button>
+
+      <Button class="flex-none lg:hidden" icon="RiSendPlaneFill" icon-only :loading="loading" @click.native="handleSubmit" />
     </form>
   </div>
 </template>

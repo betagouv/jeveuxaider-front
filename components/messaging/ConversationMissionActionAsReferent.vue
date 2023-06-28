@@ -111,6 +111,8 @@ export default {
           return 'La mission est en attente de validation'
         case 'En cours de traitement':
           return 'La mission est en cours de traitement'
+        case 'Terminée':
+          return 'La mission est terminée'
         default:
           return this.mission.state
       }
