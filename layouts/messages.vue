@@ -14,7 +14,7 @@
           <ConversationsListingResults class="flex-1 min-w-0 pb-[61px] lg:pb-0" />
         </div>
 
-        <Nuxt v-if="$route.params.id" class="flex-1" />
+        <Nuxt class="flex-1" />
       </div>
       <portal-target name="drawer" class="relative z-20" multiple />
       <portal-target name="body-end" multiple />

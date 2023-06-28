@@ -61,6 +61,7 @@
     "vue-dragscroll": "^3.0.1",
     "vue-in-viewport-mixin": "^2.0.2",
     "vue-instantsearch": "^3.5.0",
+    "vue-mq": "^1.0.1",
     "vue-nl2br": "^0.1.2",
     "vue-observe-visibility": "^1.0.0",
     "vue-remix-icons": "^2.0.3",
