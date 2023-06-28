@@ -9,11 +9,14 @@
     </FormControl>
 
     <div
-      v-if="form.reason == 'not_regular_resident_or_younger_than_16'"
+      v-if="['not_regular_resident', 'younger_than_16'].includes(form.reason)"
     >
       <RiInformationFill width="18" height="18" class="inline-flex mr-1 text-jva-blue-500 fill-current" />
-      <span class="text-sm text-gray-600">
-        Toutes les participations du bénévole seront annulées avec comme motif "Utilisateur ne résidant pas sur le territoire français ou ayant moins de 16 ans". Le bénévole sera notifié par email.
+      <span v-if="['not_regular_resident'].includes(form.reason)" class="text-sm text-gray-600">
+        Toutes les participations du bénévole seront annulées avec comme motif "Utilisateur ne résidant pas sur le territoire français". Le bénévole sera notifié par email.
+      </span>
+      <span v-if="['younger_than_16'].includes(form.reason)" class="text-sm text-gray-600">
+        Toutes les participations du bénévole seront annulées avec comme motif "Utilisateur ayant moins de 16 ans". Le bénévole sera notifié par email.
       </span>
     </div>
   </form>
