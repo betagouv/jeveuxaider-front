@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-full">
+  <div class="flex flex-col h-full min-w-0">
     <slot name="header" />
     <slot name="actions" />
 

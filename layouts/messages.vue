@@ -6,7 +6,7 @@
       <div class="flex flex-col bg-white overflow-hidden lg:flex-row h-full">
         <div
           :class="[
-            'w-full h-full lg:max-w-[530px] lg:border-r lg:flex flex-1',
+            'w-full h-full lg:w-[530px] lg:flex-none lg:border-r lg:flex flex-1',
             {'hidden': $route.params.id}
           ]"
         >
