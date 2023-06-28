@@ -53,7 +53,6 @@ export default {
         'filters[slug][$eq]': 'charte-de-bon-fonctionnement',
         'populate[zone][populate]': '*',
         'populate[seo][populate][image][populate]': '*'
-
       })
     if (response.data.length) {
       return {

@@ -1,6 +1,6 @@
 <template>
   <DsfrTabs
-    name="NAME"
+    :name="name"
     :tabs="tabs"
     :tabpanel-class="tabpanelClass"
     :selected-tab-key="selectedTabKey"
@@ -22,6 +22,10 @@ export default {
     selectedTabKey: {
       type: String,
       required: true
+    },
+    name: {
+      type: String,
+      default: 'tabs-with-router'
     },
     tabs: {
       type: Array,

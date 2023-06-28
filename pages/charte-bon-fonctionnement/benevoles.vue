@@ -14,7 +14,6 @@
             { key: 'responsables', content: 'Pour les responsables', contentMobile: 'Responsables', to: '/charte-bon-fonctionnement/responsables' },
             { key: 'benevoles', content: 'Pour les bénévoles', contentMobile: 'Bénévoles', to: '/charte-bon-fonctionnement/benevoles' }
           ]"
-          tabpanel-class="!p-0"
           selected-tab-key="benevoles"
         >
           <Box class="p-8 md:p-12 xl:p-16" :padding="false" :variant="false">
@@ -53,7 +52,6 @@ export default {
         'filters[slug][$eq]': 'charte-de-bon-fonctionnement-pour-les-benevoles',
         'populate[zone][populate]': '*',
         'populate[seo][populate][image][populate]': '*'
-
       })
     if (response.data.length) {
       return {
