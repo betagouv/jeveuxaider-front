@@ -124,7 +124,7 @@ export default {
         window.plausible('Homepage - Clique - Activités', {
           props: { isLogged: this.$store.getters.isLogged }
         })
-      this.$router.push(`/missions-benevolat?activity.name=${activity.name}`)
+      this.$router.push(`/missions-benevolat?activities.name=${activity.name}`)
     }
   }
 }

@@ -237,7 +237,7 @@ export default {
           }
         })
 
-      const url = this.activity ? `/missions-benevolat?activity.name=${encodeURIComponent(this.activity.name)}` : `/missions-benevolat?domaines=${encodeURIComponent(this.domaine.name)}`
+      const url = this.activity ? `/missions-benevolat?activities.name=${encodeURIComponent(this.activity.name)}` : `/missions-benevolat?domaines=${encodeURIComponent(this.domaine.name)}`
       this.$router.push(url)
     }
   }

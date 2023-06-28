@@ -133,9 +133,9 @@ export default {
     link () {
       const encodedActivity = encodeURIComponent(this.activity.name)
       if (this.department) {
-        return `/missions-benevolat?activity.name=${encodedActivity}&department_name=${this.departmentName}`
+        return `/missions-benevolat?activities.name=${encodedActivity}&department_name=${this.departmentName}`
       }
-      return `/missions-benevolat?activity.name=${encodedActivity}`
+      return `/missions-benevolat?activities.name=${encodedActivity}`
     },
     onClick () {
       this.$router.push(this.link())

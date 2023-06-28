@@ -83,7 +83,7 @@ export default {
             isLogged: this.$store.getters.isLogged
           }
         })
-      this.$router.push(`/missions-benevolat?activity.name=${encodeURIComponent(this.activity.name)}`)
+      this.$router.push(`/missions-benevolat?activities.name=${encodeURIComponent(this.activity.name)}`)
     },
     onSlideClick (activity) {
       window.plausible &&

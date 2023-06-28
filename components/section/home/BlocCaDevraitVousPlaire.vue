@@ -123,7 +123,7 @@ export default {
       filters.push(`commitment__total=<%3D${this.$store.getters.profile.commitment__total ?? '4'}`)
       filters.push(`duration=${this.$store.getters.profile.commitment__duration ?? 'half_day'}`)
       filters.push(`time_period=${this.$store.getters.profile.commitment__time_period ?? 'year'}`)
-      filters.push(`activity.name=${this.activities.map(activity => encodeURIComponent(activity.name)).join('|')}`)
+      filters.push(`activities.name=${this.activities.map(activity => encodeURIComponent(activity.name)).join('|')}`)
       return filters.join('&')
     }
   },

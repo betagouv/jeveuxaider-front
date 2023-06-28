@@ -21,7 +21,7 @@
               :key="activity.key"
             >
               <nuxt-link
-                :to="`/missions-benevolat?activity.name=${activity.name}`"
+                :to="`/missions-benevolat?activities.name=${activity.name}`"
                 class="inline-flex p-4 lg:px-8 lg:py-5 bg-white shadow lg:shadow-xl text-xl lg:text-[22px] font-bold w-full sm:w-auto hover:bg-[#F6F6F6]"
               >
                 <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
