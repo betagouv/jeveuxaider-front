@@ -20,7 +20,12 @@
         {{ message.contextual_reason|label('participation_declined_reasons') }}
       </template>
       <template v-if="message.contextual_state == 'Annulée par bénévole'">
-        {{ message.contextual_reason|label('participation_canceled_by_benevole_reasons') }}
+        <template v-if="message.contextual_reason == 'user_unsubscribed'">
+          L'utilisateur s'est désinscrit de la plateforme
+        </template>
+        <template v-else>
+          {{ message.contextual_reason|label('participation_canceled_by_benevole_reasons') }}
+        </template>
       </template>
       <template v-if="message.contextual_state == 'Désinscription'">
         L'utilisateur s'est désinscrit de la plateforme
@@ -72,7 +77,7 @@ export default {
         case 'Automatiquement déclinée par la plateforme':
           return { prepend: 'La participation a été automatiquement', type: 'error', label: 'Refusée', append: 'par la plateforme' }
         default:
-          return { type: 'warning', label: this.message.contextual_state }
+          return { prepend: 'La participation a été', type: 'warning', label: this.message.contextual_state }
       }
     }
   }

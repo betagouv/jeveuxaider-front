@@ -75,8 +75,8 @@
                         id="modal-title"
                         :class="[
                           'text-2xl leading-8 font-bold text-gray-900',
-                          { 'mt-1': icon || theme },
-                          { 'mb-4': $slots.default }
+                          { '': icon || theme },
+                          { '': $slots.default }
                         ]"
                         v-html="title"
                       />

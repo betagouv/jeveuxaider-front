@@ -10,11 +10,12 @@ export default {
   components: {},
   layout: 'messages',
   async asyncData ({ $axios, params, error, store, redirect }) {
-    const { data: conversation } = await $axios.get('/user/last-read-conversation')
-    if (conversation) {
-      redirect(`/messages/${conversation.id}`)
+    if (!store.state.auth.isImpersonate) {
+      const { data: conversation } = await $axios.get('/user/last-read-conversation')
+      if (conversation) {
+        redirect(`/messages/${conversation.id}`)
+      }
     }
-    return conversation
   },
   data () {
     return {}
