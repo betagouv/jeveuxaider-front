@@ -46,7 +46,7 @@ export default {
       }
 
       // Si pas date de fin et date de début passée et mission ponctuel
-      if (this.isMissionPonctual && !this.mission.end_date && this.$dayjs().startOf('day').isAfter(this.mission.start_date)) {
+      if (this.isMissionPonctual && !this.mission.end_date && this.$dayjs().startOf('day').isAfter(this.mission.start_date) && this.$dayjs().startOf('day').subtract(1, 'month').isAfter(this.participation.created_at)) {
         return true
       }
 
