@@ -141,7 +141,7 @@ export default {
         case 'Validée':
           return 'La participation est validée'
         case 'Refusée':
-          return 'La participation est déclinée'
+          return 'La participation est refusée'
         case 'Annulée':
           return 'La participation est annulée'
         default:
