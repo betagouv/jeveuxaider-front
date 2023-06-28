@@ -10,8 +10,18 @@
             {'hidden': $route.params.id}
           ]"
         >
-          <ConversationsTabs class="fixed bottom-0 block w-full z-20 border-t lg:relative lg:block lg:w-[80px] lg:border-r" />
-          <ConversationsListingResults class="flex-1 min-w-0 pb-[61px] lg:pb-0" />
+          <ConversationsTabs
+            :class="[
+              'fixed bottom-0 w-full z-20 border-t lg:relative lg:w-[80px] lg:border-r',
+              {'hidden lg:block': $store.getters['messaging/showFilters']}
+            ]"
+          />
+          <ConversationsListingResults
+            :class="[
+              'flex-1 min-w-0',
+              {'pb-[61px] lg:pb-0': !$store.getters['messaging/showFilters'] }
+            ]"
+          />
         </div>
 
         <Nuxt class="flex-1" />
