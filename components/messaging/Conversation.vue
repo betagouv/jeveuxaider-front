@@ -4,9 +4,9 @@
     <slot name="actions" />
 
     <ContainerScrollable
-      class="flex-1 p-4 lg:p-6"
+      class="flex-1 pl-4 lg:pl-6"
       :reverse="true"
-      scrollbar-class="pr-4 lg:pr-6"
+      scrollbar-class="pr-4 lg:pr-6 py-4 lg:py-6"
       @scroll="onScroll"
     >
       <ConversationMessages />
@@ -21,10 +21,11 @@
           Charger les messages précédents
         </Button>
       </div>
+
       <slot name="scroll-container-top" />
     </ContainerScrollable>
 
-    <ConversationForm v-if="$store.getters['messaging/isCurrentUserInConversation']" class="border-t" @submit="onSubmit" />
+    <ConversationForm v-if="$store.getters['messaging/isCurrentUserInConversation']" @submit="onSubmit" />
   </div>
 </template>
 

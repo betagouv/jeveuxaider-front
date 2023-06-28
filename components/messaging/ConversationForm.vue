@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 py-2 lg:px-6 lg:py-4">
+  <div class="lg:px-6 lg:py-4 border-t">
     <form id="form-message" novalidate class="flex gap-4 items-end justify-center">
       <client-only>
         <TextareaAutosize
@@ -10,11 +10,23 @@
           class="m-auto w-full !outline-none leading-tight border-0 custom-scrollbar truncate"
         />
       </client-only>
-      <Button class="flex-none hidden lg:inline-flex" icon="RiSendPlaneFill" :loading="loading" @click.native="handleSubmit">
+
+      <Button
+        class="flex-none hidden lg:inline-flex"
+        icon="RiSendPlaneFill"
+        :loading="loading"
+        @click.native="handleSubmit"
+      >
         Envoyer
       </Button>
 
-      <Button class="flex-none lg:hidden" icon="RiSendPlaneFill" icon-only :loading="loading" @click.native="handleSubmit" />
+      <Button
+        class="flex-none lg:hidden"
+        icon="RiSendPlaneFill"
+        icon-only
+        :loading="loading"
+        @click.native="handleSubmit"
+      />
     </form>
   </div>
 </template>
@@ -60,7 +72,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

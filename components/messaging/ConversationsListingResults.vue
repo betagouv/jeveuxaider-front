@@ -18,7 +18,7 @@
           />
 
           <div class="relative cursor-pointer text-jva-blue-500 hover:text-jva-blue-300" @click="$store.commit('messaging/toggleShowFilters')">
-            <RiEqualizerFill class="h-8 w-8 fill-current " />
+            <RiEqualizerFill class="h-6 w-6 lg:h-8 lg:w-8 fill-current" />
             <div v-if="$store.getters['messaging/activeFiltersCount']" class="absolute -top-2 -right-2 bg-[#e41e3f] px-1.5 py-0.5 rounded-full text-white font-bold text-xxs min-w-[20px] inline-flex justify-center">
               {{ $store.getters['messaging/activeFiltersCount'] }}
             </div>

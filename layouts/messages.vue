@@ -24,7 +24,7 @@
           />
         </div>
 
-        <Nuxt class="flex-1" />
+        <Nuxt class="lg:flex-1" />
       </div>
       <portal-target name="drawer" class="relative z-20" multiple />
       <portal-target name="body-end" multiple />

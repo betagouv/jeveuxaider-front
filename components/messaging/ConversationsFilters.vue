@@ -11,8 +11,8 @@
     </div>
 
     <ContainerScrollable
-      class="-mx-2 flex-1 p-4 lg:px-8 lg:py-4"
-      scrollbar-class="pr-4 lg:pr-6"
+      class="flex-1 pl-4 lg:pl-6"
+      scrollbar-class="pr-4 lg:pr-6 py-4 lg:py-6"
     >
       <div class="px-2 grid grid-cols-1 gap-6 lg:gap-8">
         <FormControl
