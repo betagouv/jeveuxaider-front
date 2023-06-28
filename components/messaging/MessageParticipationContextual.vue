@@ -4,7 +4,7 @@
       {{ $dayjs(message.created_at).format('D MMM HH[h]mm') }}
     </div>
     <div v-if="badge" class="">
-      <span class="text-[#161616] font-bold">La participation est</span>
+      <span class="text-[#161616] font-bold">{{ badge.prepend }}</span>
       <Badge
         size="sm"
         :type="badge.type"
@@ -21,6 +21,17 @@
       </template>
       <template v-if="message.contextual_state == 'Annulée par bénévole'">
         {{ message.contextual_reason|label('participation_canceled_by_benevole_reasons') }}
+      </template>
+      <template v-if="message.contextual_state == 'Désinscription'">
+        L'utilisateur s'est désinscrit de la plateforme
+      </template>
+      <template v-if="message.contextual_state == 'Automatiquement déclinée par la plateforme'">
+        <template v-if="message.contextual_reason == 'not_regular_resident'">
+          L'utilisateur ne réside pas sur le territoire français
+        </template>
+        <template v-if="message.contextual_reason == 'younger_than_16'">
+          L'utilisateur est agé de moins de 16 ans
+        </template>
       </template>
     </div>
   </div>
@@ -43,19 +54,23 @@ export default {
     badge () {
       switch (this.message.contextual_state) {
         case 'Refusée':
-          return { type: 'error', label: 'Refusée' }
+          return { prepend: 'La participation a été', type: 'error', label: 'Refusée' }
         case 'Validée':
-          return { type: 'success', label: 'Validée' }
+          return { prepend: 'La participation a été', type: 'success', label: 'Validée' }
         case 'Validée par le bénévole':
-          return { type: 'success', label: 'Validée', append: 'par le bénévole' }
+          return { prepend: 'La participation a été', type: 'success', label: 'Validée', append: 'par le bénévole' }
         case 'Annulée':
-          return { type: 'error', label: 'Annulée' }
+          return { prepend: 'La participation a été', type: 'error', label: 'Annulée' }
         case 'Annulée par bénévole':
-          return { type: 'error', label: 'Annulée', append: 'par le bénévole' }
+          return { prepend: 'La participation a été', type: 'error', label: 'Annulée', append: 'par le bénévole' }
         case 'En attente de validation':
-          return { type: 'warning', label: 'En attente de validation' }
+          return { prepend: 'La participation est', type: 'warning', label: 'En attente de validation' }
         case 'En cours de traitement':
-          return { type: 'warning', label: 'En cours de traitement' }
+          return { prepend: 'La participation est', type: 'warning', label: 'En cours de traitement' }
+        case 'Désinscription':
+          return { prepend: 'La participation a été', type: 'error', label: 'Annulée' }
+        case 'Automatiquement déclinée par la plateforme':
+          return { prepend: 'La participation a été automatiquement', type: 'error', label: 'Refusée', append: 'par la plateforme' }
         default:
           return { type: 'warning', label: this.message.contextual_state }
       }
