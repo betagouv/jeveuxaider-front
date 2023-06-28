@@ -143,7 +143,7 @@ export default {
       return ['En attente de validation', 'En cours de traitement'].includes(this.participation.state)
     },
     canCancel () {
-      if (['Annulée', 'Validée', 'Refusée'].includes(this.participation.state)) {
+      if (['Annulée', 'Refusée'].includes(this.participation.state)) {
         return false
       }
       return true
