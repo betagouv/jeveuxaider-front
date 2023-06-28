@@ -102,7 +102,7 @@ export default {
       return this.participationShouldBeDone || this.needTestimonial || this.canCancelParticipation
     },
     canCancelParticipation () {
-      if (['Annulée', 'Validée', 'Refusée'].includes(this.participation.state)) {
+      if (['Annulée', 'Refusée'].includes(this.participation.state)) {
         return false
       }
       return !this.participationShouldBeDone
