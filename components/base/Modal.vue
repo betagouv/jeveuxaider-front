@@ -45,7 +45,7 @@
                   <div class="flex items-center">
                     <div
                       v-if="icon || theme"
-                      class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10"
+                      class="mx-auto flex-shrink-0 flex items-center justify-stretch h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10"
                     >
                       <component
                         :is="icon"
@@ -66,8 +66,8 @@
                     </div>
                     <div
                       :class="[
-                        {'sm:ml-4': theme || icon},
-                        'mt-3 sm:mt-0 min-w-0 w-full'
+                        {'sm:ml-2': theme || icon},
+                        'min-w-0 w-full'
                       ]"
                     >
                       <h3
@@ -75,8 +75,6 @@
                         id="modal-title"
                         :class="[
                           'text-2xl leading-8 font-bold text-gray-900',
-                          { '': icon || theme },
-                          { '': $slots.default }
                         ]"
                         v-html="title"
                       />

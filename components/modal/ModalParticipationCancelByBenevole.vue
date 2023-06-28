@@ -35,7 +35,7 @@
           Retour
         </Button>
         <Button @click.native="handleSubmit">
-          Confirmer l'annulation
+          Confirmer
         </Button>
       </template>
     </Modal>

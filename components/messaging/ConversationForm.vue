@@ -7,7 +7,7 @@
           placeholder="Écrivez un message"
           rows="1"
           :max-height="120"
-          class="m-auto w-full !outline-none leading-tight border-0 custom-scrollbar"
+          class="m-auto w-full !outline-none leading-tight border-0 custom-scrollbar truncate"
         />
       </client-only>
       <Button class="flex-none" icon="RiSendPlaneFill" :loading="loading" @click.native="handleSubmit">

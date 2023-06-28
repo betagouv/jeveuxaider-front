@@ -3,7 +3,7 @@
     <template v-if="needTestimonial">
       <div class="flex justify-between items-center">
         <div class="text-sm font-bold text-black">
-          Comment s'est déroulée la mission ?
+          Comment s'est déroulée la mission ?
         </div>
         <div class="flex justify-end gap-2">
           <Button type="tertiary" size="sm" @click.native.stop="showTestimonialOverlay = true">
@@ -15,7 +15,7 @@
     <template v-if="participationShouldBeDone">
       <div class="flex justify-between items-center">
         <div class="text-sm font-bold text-black">
-          Avez-vous réalisé la mission ?
+          Avez-vous réalisé la mission ?
         </div>
         <div class="flex justify-end gap-2">
           <Button
@@ -35,7 +35,7 @@
     <template v-if="canCancelParticipation">
       <div class="flex justify-between items-center">
         <div class="text-sm font-bold text-black">
-          Vous ne souhaitez plus participer ?
+          Vous ne souhaitez plus participer ?
         </div>
         <div class="flex justify-end gap-2">
           <Button type="tertiary" size="sm" @click.native.stop="showCancelParticipationModal = true">

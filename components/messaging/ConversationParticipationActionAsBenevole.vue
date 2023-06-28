@@ -1,6 +1,6 @@
 <template>
-  <div class="p-4 lg:p-6 flex gap-4 lg:gap-6 justify-between items-center bg-jva-blue-500 text-white">
-    <div class="text-lg lg:text-xl font-bold">
+  <div class="p-4 lg:p-6 flex gap-4 lg:gap-6 justify-between items-center bg-jva-blue-500 text-white flex-wrap">
+    <div class="text-lg lg:text-xl font-bold flex-1">
       {{ label }}
     </div>
     <div class="flex flex-shrink-0 gap-4 items-center">
@@ -8,6 +8,7 @@
         v-if="participationShouldBeDone"
         type="tertiary-no-outline"
         size="lg"
+        class="hidden lg:flex"
         @click.native.stop="showValidateParticipationModal = true"
       >
         Oui
@@ -16,19 +17,12 @@
         v-if="needTestimonial"
         type="tertiary-no-outline"
         size="lg"
+        class="hidden lg:flex"
         @click.native.stop="showTestimonialOverlay = true"
       >
         Laisser un témoignage
       </Button>
-      <!-- <Button
-        v-if="canCancel"
-        type="tertiary-no-outline"
-        size="lg"
-        class="hidden lg:flex"
-        @click.native.stop="showCancelParticipationModal = true"
-      >
-        Annuler
-      </Button> -->
+
       <Dropdown ref="dropdownActions" class="flex-none">
         <template #button>
           <Button
@@ -50,7 +44,17 @@
         </template>
 
         <template #items>
-          <div class="w-[300px] py-4">
+          <div class="w-full sm:w-[300px] py-1 sm:py-4">
+            <DropdownOptionsItem v-if="participationShouldBeDone" class="lg:hidden" @click.native.stop="showValidateParticipationModal = true">
+              <div class="px-4 text-base font-medium">
+                Oui, je valide ma participation
+              </div>
+            </DropdownOptionsItem>
+            <DropdownOptionsItem v-if="needTestimonial" class="lg:hidden" @click.native.stop="showTestimonialOverlay = true">
+              <div class="px-4 text-base font-medium">
+                Laisser un témoignage
+              </div>
+            </DropdownOptionsItem>
             <DropdownOptionsItem v-if="canCancel" @click.native.stop="showCancelParticipationModal = true">
               <div class="px-4 text-base font-medium">
                 Annuler la participation
@@ -119,10 +123,10 @@ export default {
   computed: {
     label () {
       if (this.participationShouldBeDone) {
-        return 'Avez-vous réalisé la mission ?'
+        return 'Avez-vous réalisé la mission ?'
       }
       if (this.needTestimonial) {
-        return 'Comment s\'est déroulée la mission ?'
+        return 'Comment s\'est déroulée la mission ?'
       }
       switch (this.participation.state) {
         case 'Validée':
