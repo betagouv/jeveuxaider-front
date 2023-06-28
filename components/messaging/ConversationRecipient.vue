@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-stretch gap-4">
+  <div class="flex items-stretch">
     <div
       :class="[
         'px-4 lg:px-6 flex items-center border-r',
@@ -11,8 +11,8 @@
         @click.native="$router.push('/messages')"
       />
     </div>
-    <div class="p-4 lg:px-8 lg:py-[25px] flex-1 flex flex-col gap-1 lg:gap-2 overflow-hidden">
-      <div class="flex items-center gap-2 lg:gap-4">
+    <div class="py-4 lg:py-[25px] flex-1 flex flex-col gap-1 lg:gap-2 min-w-0">
+      <div class="px-4 lg:px-8 flex items-center gap-2 lg:gap-4">
         <div class="text-xl lg:text-2xl font-bold">
           {{ title }}
         </div>
@@ -28,6 +28,7 @@
           <slot name="badges" />
         </div>
       </div>
+
       <slot />
     </div>
     <slot name="right" />
