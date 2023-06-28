@@ -1,7 +1,5 @@
 <template>
-  <div class="hidden lg:block">
-    <div />
-  </div>
+  <div />
 </template>
 
 <script>
@@ -9,17 +7,20 @@
 export default {
   components: {},
   layout: 'messages',
-  async asyncData ({ $axios, params, error, store, redirect }) {
-    if (!store.state.auth.isImpersonate) {
-      const { data: conversation } = await $axios.get('/user/last-read-conversation')
-      if (conversation) {
-        redirect(`/messages/${conversation.id}`)
-      }
+  mounted () {
+    if (this.$mq == 'xl') {
+      this.getLastReadConversation()
     }
   },
-  data () {
-    return {}
-  },
-  computed: {}
+  methods: {
+    async getLastReadConversation () {
+      if (!this.$store.state.auth.isImpersonate) {
+        const { data: conversation } = await this.$axios.get('/user/last-read-conversation')
+        if (conversation) {
+          this.$router.push(`/messages/${conversation.id}`)
+        }
+      }
+    }
+  }
 }
 </script>

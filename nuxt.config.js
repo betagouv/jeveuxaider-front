@@ -66,7 +66,8 @@ export default {
     { src: '~/plugins/utm.js', mode: 'client' },
     { src: '~/plugins/vue-chart.js', mode: 'client' },
     '~/plugins/vue-remix-icons.js',
-    { src: '~/plugins/vue-svg-gauge.js', mode: 'client' }
+    { src: '~/plugins/vue-svg-gauge.js', mode: 'client' },
+    { src: '~/plugins/vue-mq.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
