@@ -235,6 +235,14 @@ export default {
             subtitle: action.value > 1 ? 'À la fin de sa mission, passer les volontaires SNU en statut “mission effectuée” et renseigner le nombre d’heure effectué !' : 'À la fin de sa mission, passer le volontaire SNU en statut “mission effectuée” et renseigner le nombre d’heure effectué !',
             href: action.href
           }
+        case 'has_not_agreed_benevole_terms':
+          return {
+            icon: '📋',
+            iconVariant: 'warning',
+            title: '<b>Charte de bon fonctionnement</b>',
+            subtitle: 'Merci de signer notre charte de bon fonctionnement',
+            link: '/profile/charte-bon-fonctionnement'
+          }
       }
     }
   }
