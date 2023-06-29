@@ -7,7 +7,7 @@
           placeholder="Écrivez un message"
           rows="1"
           :max-height="120"
-          class="m-auto w-full !outline-none leading-tight border-0 custom-scrollbar truncate"
+          class="m-auto w-full !outline-none leading-tight border-0 custom-scrollbar"
         />
       </client-only>
 
