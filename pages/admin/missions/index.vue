@@ -22,11 +22,11 @@
           @selected="onSelectOrganisation"
         />
         <SelectAdvanced
-          v-if="responsables.length && ['admin'].includes($store.getters.contextRole)"
+          v-if="responsablesStructures.length && ['admin'].includes($store.getters.contextRole)"
           :key="`responsable-${$route.fullPath}`"
           name="responsable"
           placeholder="Responsable"
-          :options="responsables"
+          :options="responsablesStructures"
           :value="$route.query['filter[ofResponsable]']"
           variant="transparent"
           attribute-key="id"
@@ -243,18 +243,29 @@
             Toutes
           </Tag>
 
-          <Tag
-            v-if="['responsable'].includes($store.getters.contextRole)"
+          <FilterSelectAdvanced
+            v-if="['responsable'].includes($store.getters.contextRole) && responsables.length"
             :key="`responsable-id-${$route.fullPath}`"
-            as="button"
-            size="md"
-            context="selectable"
-            :is-selected="$route.query['filter[responsable.id]'] && $route.query['filter[responsable.id]'] == $store.getters.profile.id"
-            is-selected-class="border-gray-50 bg-gray-50"
-            @click.native="changeFilter('filter[responsable.id]', $store.getters.profile.id.toString())"
-          >
-            Mes missions
-          </Tag>
+            name="responsable.id"
+            placeholder="Tous les responsables"
+            :options="responsables"
+            attribute-key="id"
+            attribute-label="full_name"
+            :value="$route.query['filter[responsable.id]']"
+            clearable
+            @input="changeFilter('filter[responsable.id]', $event)"
+          />
+
+          <!-- <FilterInputAutocomplete
+            v-if="['admin'].includes($store.getters.contextRole)"
+            :value="$route.query['filter[responsable.email]']"
+            label="Tous les responsables"
+            name="autocomplete"
+            :options="autocompleteOptionsResponsables"
+            attribute-label="full_name"
+            @fetch-suggestions="onFetchSuggestionsResponsables"
+            @selected="changeFilter('filter[responsable.email]', $event ? $event.email : undefined)"
+          /> -->
 
           <Tag
             :key="`state-en-attente-validation-${$route.fullPath}`"
@@ -381,6 +392,12 @@ export default {
       return error({ statusCode: 403 })
     }
 
+    let responsables = []
+    if (store.getters.contextRole === 'responsable' && store.getters.contextableId) {
+      const responsablesResponse = await $axios.get(`/structures/${store.getters.contextableId}/responsables`)
+      responsables = responsablesResponse?.data.map(user => user.profile) ?? []
+    }
+
     const { data: activities } = await $axios.get('/activities', {
       params: {
         pagination: 999,
@@ -389,7 +406,8 @@ export default {
     })
 
     return {
-      activities: activities.data
+      activities: activities.data,
+      responsables
     }
   },
   data () {
@@ -403,7 +421,8 @@ export default {
       drawerMissionId: null,
       autocompleteOptionsOrga: [],
       tags: [],
-      responsables: []
+      responsablesStructures: [],
+      autocompleteOptionsResponsables: []
     }
   },
   watch: {
@@ -421,6 +440,16 @@ export default {
     this.tags = data.data.map((tag) => { return { key: tag.id, label: tag.name } })
   },
   methods: {
+    async onFetchSuggestionsResponsables (value) {
+      const res = await this.$axios.get('/profiles', {
+        params: {
+          'filter[search]': value,
+          'filter[user.role]': 'responsable',
+          pagination: 6
+        }
+      })
+      this.autocompleteOptionsResponsables = res.data.data
+    },
     async onFetchSuggestionsOrga (value) {
       const res = await this.$axios.get('/structures', {
         params: {
@@ -432,12 +461,12 @@ export default {
     },
     async fetchResponsablesForAdmins (organisationId, oldOrganisationId) {
       if (!organisationId) {
-        this.responsables = []
+        this.responsablesStructures = []
         return
       }
       if (organisationId !== oldOrganisationId) {
         const { data: responsables } = await this.$axios.get(`/structures/${organisationId}/responsables`)
-        this.responsables = responsables?.map(user => user.profile) ?? []
+        this.responsablesStructures = responsables?.map(user => user.profile) ?? []
       }
     },
     async onSelectOrganisation ($event) {
