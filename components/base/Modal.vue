@@ -160,3 +160,9 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.min-h-screen {
+  min-height: 100dvh;
+}
+</style>
