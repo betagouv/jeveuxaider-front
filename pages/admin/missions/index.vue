@@ -54,6 +54,14 @@
           clearable
           @input="changeFilter('filter[department]', $event)"
         />
+        <Input
+          v-if="['responsable'].includes($store.getters.contextRole)"
+          name="zip"
+          placeholder="Code Postal"
+          variant="transparent"
+          :value="$route.query['filter[zip]']"
+          @input="changeFilter('filter[zip]', $event)"
+        />
         <SelectAdvanced
           :key="`domaine-${$route.fullPath}`"
           name="domaine"
