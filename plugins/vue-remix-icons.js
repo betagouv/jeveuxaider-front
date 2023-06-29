@@ -71,8 +71,35 @@ import RiAdminLine from 'vue-remix-icons/icons/RiAdminLine.vue'
 import RiUserStarLine from 'vue-remix-icons/icons/RiUserStarLine.vue'
 import RiArrowUpLine from 'vue-remix-icons/icons/RiArrowUpLine.vue'
 import RiHeartLine from 'vue-remix-icons/icons/RiHeartLine.vue'
+import RiShieldUserLine from 'vue-remix-icons/icons/RiShieldUserLine.vue'
+import RiMailFill from 'vue-remix-icons/icons/RiMailFill.vue'
+import RiPhoneLine from 'vue-remix-icons/icons/RiPhoneLine.vue'
+import RiSuitcaseFill from 'vue-remix-icons/icons/RiSuitcaseFill.vue'
+import RiGroupFill from 'vue-remix-icons/icons/RiGroupFill.vue'
+import RiSendPlaneFill from 'vue-remix-icons/icons/RiSendPlaneFill.vue'
+import RiFolderWarningLine from 'vue-remix-icons/icons/RiFolderWarningLine.vue'
+import RiMailUnreadLine from 'vue-remix-icons/icons/RiMailUnreadLine.vue'
+import RiArchiveLine from 'vue-remix-icons/icons/RiArchiveLine.vue'
+import RiMessage3Line from 'vue-remix-icons/icons/RiMessage3Line.vue'
+import RiMore2Line from 'vue-remix-icons/icons/RiMore2Line.vue'
+import RiFileUserLine from 'vue-remix-icons/icons/RiFileUserLine.vue'
+import RiCakeFill from 'vue-remix-icons/icons/RiCakeFill.vue'
+import RiChatHistoryFill from 'vue-remix-icons/icons/RiChatHistoryFill.vue'
 
 const components = {
+  RiChatHistoryFill,
+  RiCakeFill,
+  RiFileUserLine,
+  RiMore2Line,
+  RiMessage3Line,
+  RiArchiveLine,
+  RiMailUnreadLine,
+  RiSendPlaneFill,
+  RiGroupFill,
+  RiSuitcaseFill,
+  RiPhoneLine,
+  RiMailFill,
+  RiShieldUserLine,
   RiArrowRightSLine,
   RiPencilLine,
   RiUserStarLine,
@@ -140,7 +167,8 @@ const components = {
   RiEqualizerFill,
   RiPauseCircleLine,
   RiPlayCircleLine,
-  RiHeartLine
+  RiHeartLine,
+  RiFolderWarningLine
 }
 
 Object.entries(components).forEach(([name, component]) => {

@@ -4,13 +4,13 @@
       v-scroll-lock="isOpen"
       :is-open="isOpen"
       theme="warning"
-      title="Décliner la participation"
+      title="Refuser la participation"
       :prevent-click-outside="true"
       @close="$emit('cancel')"
     >
       <div class="space-y-4">
         <div>
-          Vous êtes sur le point de décliner la participation de {{ participation.profile.full_name }}.
+          Vous êtes sur le point de refuser la participation de {{ participation.profile.full_name }}.
         </div>
 
         <FormParticipationDecline @confirm="$emit('confirm', $event)" />

@@ -1,16 +1,19 @@
 <template>
-  <ConversationPage />
+  <component :is="as" />
 </template>
 
 <script>
-import ConversationPage from '@/components/conversation/Page.vue'
+import ConversationParticipation from '@/components/messaging/ConversationParticipation.vue'
+import ConversationOrganisation from '@/components/messaging/ConversationOrganisation.vue'
+import ConversationMission from '@/components/messaging/ConversationMission.vue'
 
 export default {
   components: {
-    ConversationPage
+    ConversationParticipation,
+    ConversationOrganisation,
+    ConversationMission
   },
   layout: 'messages',
-  middleware: ['authenticated', 'agreedResponsableTerms'],
   async asyncData ({ store, error, $api, params, $axios }) {
     const { data: conversation } = await $axios.get(`/conversations/${params.id}`)
 
@@ -18,18 +21,32 @@ export default {
       return error({ statusCode: 403 })
     }
 
-    store.commit('messaging/setConversation', conversation)
-    store.commit('messaging/replaceConversationInConversations', conversation)
-    store.dispatch('messaging/fetchUnreadMessages')
-  },
-  mounted () {
-    if (this.$store.getters['messaging/isMobile']) {
-      this.$store.commit('messaging/setShowPanelLeft', false)
+    store.commit('messaging/setActiveConversation', conversation)
+
+    if (!store.state.auth.isImpersonate) {
+      store.commit('messaging/setActiveConversationAsRead', conversation)
     }
-    this.$store.commit('messaging/setShowPanelCenter', true)
+
+    return {
+      conversation
+    }
   },
-  beforeDestroy () {
-    this.$store.commit('messaging/setNewMessagesCount', 0)
+  computed: {
+    as () {
+      if (this.conversation.conversable_type == 'App\\Models\\Participation') {
+        return 'ConversationParticipation'
+      }
+      if (this.conversation.conversable_type == 'App\\Models\\Mission') {
+        return 'ConversationMission'
+      }
+      if (this.conversation.conversable_type == 'App\\Models\\Structure') {
+        return 'ConversationOrganisation'
+      }
+      return null
+    }
+  },
+  methods: {
+
   }
 }
 </script>

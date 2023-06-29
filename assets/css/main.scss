@@ -235,6 +235,7 @@ body.full-height-layout {
 }
 
 .custom-scrollbar-gray {
+  // scroll-padding-right: 12px;
   &::-webkit-scrollbar-track {
     border-radius: 10px;
     @apply bg-gray-100;

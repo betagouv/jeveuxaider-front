@@ -1,44 +1,26 @@
 <template>
-  <ConversationPage v-if="conversationIsSet" />
+  <div />
 </template>
 
 <script>
-import ConversationPage from '@/components/conversation/Page.vue'
 
 export default {
-  components: {
-    ConversationPage
-  },
+  components: {},
   layout: 'messages',
-  middleware: ['authenticated', 'agreedResponsableTerms'],
-  data () {
-    return {
-      conversationIsSet: false
+  mounted () {
+    if (this.$mq == 'xl') {
+      this.getLastReadConversation()
     }
   },
-  computed: {
-    conversation () {
-      return this.$store.getters['messaging/conversations']
-        ? this.$store.getters['messaging/conversations'][0]
-        : null
-    }
-  },
-  watch: {
-    conversation: {
-      immediate: true,
-      async handler () {
-        if (this.conversation && !this.conversationIsSet) {
-          const { data: conversation } = await this.$axios.get(`/conversations/${this.conversation.id}`)
-          this.$store.commit('messaging/setConversation', conversation)
-          this.$store.commit('messaging/replaceConversationInConversations', conversation)
-          this.$store.dispatch('messaging/fetchUnreadMessages')
-          this.conversationIsSet = true
+  methods: {
+    async getLastReadConversation () {
+      if (!this.$store.state.auth.isImpersonate) {
+        const { data: conversation } = await this.$axios.get('/user/last-read-conversation')
+        if (conversation) {
+          this.$router.push(`/messages/${conversation.id}`)
         }
       }
     }
-  },
-  beforeDestroy () {
-    this.$store.commit('messaging/setNewMessagesCount', 0)
   }
 }
 </script>

@@ -1,0 +1,46 @@
+<template>
+  <ConversationRecipient :title="`${user.profile.first_name} ${user.profile.last_name[0]}.`">
+    <template #badges>
+      <Badge
+        size="sm"
+        no-icon
+        class="hidden lg:flex"
+      >
+        {{ user.context_role | label('roles') }}
+      </Badge>
+    </template>
+    <div v-dragscroll.x class="px-4 lg:px-8 flex gap-4 items-center overflow-hidden whitespace-nowrap">
+      <div class="flex gap-1 items-center text-sm text-cool-gray-500">
+        <RiChatHistoryFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+        <p class="">
+          {{ $dayjs($store.getters['messaging/activeConversation'].created_at).format('D MMM YYYY • HH[h]mm') }}
+        </p>
+      </div>
+    </div>
+  </ConversationRecipient>
+</template>
+
+<script>
+import ConversationRecipient from '@/components/messaging/ConversationRecipient.vue'
+import Badge from '@/components/dsfr/Badge.vue'
+
+export default {
+  components: {
+    ConversationRecipient,
+    Badge
+  },
+  props: {
+    user: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+
+  }
+}
+</script>
+
+<style>
+
+</style>

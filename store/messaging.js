@@ -1,113 +1,197 @@
 export const state = () => ({
+  isConversationsLoading: true,
   conversations: [],
-  conversation: {},
-  messages: [],
-  newMessagesCount: 0,
-  showPanelLeft: true,
-  showPanelCenter: false,
-  showPanelRight: false,
-  isMobile: true,
-  isDesktop: false,
-  unreadMessages: 0
+  conversationsQueryParams: {
+    'filter[type]': 'all',
+    'filter[search]': null,
+    page: 1
+  },
+  hasConversationsResults: false,
+  hasMoreConversations: false,
+  activeConversation: {},
+  activeConversationMessages: [],
+  hasActiveConversationMoreMessages: false,
+  unreadMessagesCount: 0,
+  isCurrentUserInConversation: false,
+  isConversationArchivedForCurrentUser: false,
+  showFilters: false
 })
 
 export const getters = {
+  isConversationsLoading: state => state.isConversationsLoading,
   conversations: state => state.conversations,
-  conversation: state => state.conversation,
-  conversable: state => state.conversation.conversable,
-  messages: state => state.messages,
-  newMessagesCount: state => state.newMessagesCount,
-  isMobile: state => state.isMobile,
-  isDesktop: state => state.isDesktop,
-  showPanelLeft: state => state.showPanelLeft,
-  showPanelCenter: state => state.showPanelCenter,
-  showPanelRight: state => state.showPanelRight,
-  unreadMessages: state => state.unreadMessages,
-  recipient (state, getters, root) {
-    return state.conversation.users.filter((user) => {
-      return user.id != root.auth.user.id
-    })[0]
-  },
-  isRecipientReferent (state, getters) {
-    return getters.recipient.roles.filter(role => role.key == 'referent').length > 0
-  },
-  isRecipientAdmin (state, getters) {
-    return getters.recipient.roles.filter(role => role.key == 'admin').length > 0
+  conversationsQueryParams: state => state.conversationsQueryParams,
+  hasMoreConversations: state => state.hasMoreConversations,
+  hasConversationsResults: state => state.hasMoreConversations || state.conversations.length > 0,
+  activeConversation: state => state.activeConversation,
+  activeConversationMessages: state => state.activeConversationMessages,
+  hasActiveConversationMoreMessages: state => state.hasActiveConversationMoreMessages,
+  unreadMessagesCount: state => state.unreadMessagesCount,
+  isCurrentUserInConversation: (state, getters, rootState) => state.activeConversation?.users.filter(user => user.id === rootState.auth.user.id).length,
+  isConversationArchivedForCurrentUser: (state, getters, rootState) => !state.activeConversation?.users.filter(user => user.id === rootState.auth.user.id)[0]?.pivot.status,
+  showFilters: state => state.showFilters,
+  activeFiltersCount: (state) => {
+    let count = 0
+    const wildwardFilters = ['filter[type]', 'filter[search]', 'page']
+    for (const [key, value] of Object.entries(state.conversationsQueryParams)) {
+      if (!wildwardFilters.includes(key) && value?.length > 0) {
+        count += 1
+      }
+    }
+    return count
   }
 }
 
 export const mutations = {
+  setIsConversationsLoading: (state, payload) => {
+    state.isConversationsLoading = payload
+  },
   setConversations: (state, conversations) => {
     state.conversations = conversations
   },
-  setConversation: (state, payload) => {
-    state.conversation = payload
+  setConversationsQueryParams: (state, payload) => {
+    state.conversationsQueryParams = payload
   },
-  setConversable: (state, payload) => {
-    state.conversation.conversable = payload
+  setHasMoreConversations: (state, payload) => {
+    state.hasMoreConversations = payload
   },
-  removeConversationInConversations (state, payload) {
-    state.conversations.splice(
-      state.conversations.findIndex(
-        conversation => conversation.id == payload.id
-      ),
-      1
-    )
+  incrementConversationQueryParamsPage: (state) => {
+    state.conversationsQueryParams.page += 1
   },
-  replaceConversationInConversations (state, payload) {
-    state.conversations.splice(
-      state.conversations.findIndex(
-        conversation => conversation.id == payload.id
-      ),
-      1,
-      payload
-    )
+  pushConversationInConversations: (state, payload) => {
+    state.conversations.push(payload)
   },
-  setMessages: (state, messages) => {
-    state.messages = messages
+  setActiveConversation: (state, payload) => {
+    state.activeConversation = payload
   },
-  setNewMessagesCount: (state, count) => {
-    state.newMessagesCount = count
+  setActiveConversationMessages: (state, payload) => {
+    state.activeConversationMessages = payload
   },
-  incrementNewMessagesCount: (state, count = 1) => {
-    state.newMessagesCount = state.newMessagesCount + count
+  pushNewMessageInActiveConversationMessages: (state, payload) => {
+    state.activeConversationMessages.push(payload)
   },
-  setIsMobile: (state, isMobile) => {
-    state.isMobile = isMobile
+  unshiftOldMessageInActiveConversationMessages: (state, payload) => {
+    state.activeConversationMessages.unshift(payload)
   },
-  setIsDesktop: (state, isDesktop) => {
-    state.isDesktop = isDesktop
+  setUnreadMessagesCount: (state, payload) => {
+    state.unreadMessagesCount = payload
   },
-  setShowPanelLeft: (state, showPanelLeft) => {
-    state.showPanelLeft = showPanelLeft
+  setHasActiveConversationMoreMessages: (state, payload) => {
+    state.hasActiveConversationMoreMessages = payload
   },
-  setShowPanelCenter: (state, showPanelCenter) => {
-    state.showPanelCenter = showPanelCenter
+  refreshConversationInConversations (state, payload) {
+    const index = state.conversations.findIndex(conversation => conversation.id == payload.id)
+    state.conversations.splice(index, 1, payload)
   },
-  setShowPanelRight: (state, showPanelRight) => {
-    state.showPanelRight = showPanelRight
+  toggleShowFilters (state) {
+    state.showFilters = !state.showFilters
   },
-  reset: (state) => {
-    state.conversations = []
-    state.conversation = {}
-    state.messages = []
-    state.newMessagesCount = 0
-    state.unreadMessages = 0
+  removeConversationFromConversations (state, payload) {
+    const index = state.conversations.findIndex(conversation => conversation.id == payload.id)
+    state.conversations.splice(index, 1)
   },
-  setUnreadMessages: (state, unreadMessages) => {
-    state.unreadMessages = unreadMessages
+  setShowFilters (state, payload) {
+    state.showFilters = payload
+  },
+  setActiveConversationAsRead (state, payload) {
+    const index = state.conversations.findIndex(conversation => conversation.id == payload.id)
+    state.conversations.splice(index, 1, {
+      ...payload,
+      is_read: true
+    })
+  },
+  decrementUnreadMessagesCount (state) {
+    state.unreadMessagesCount = state.unreadMessagesCount > 0 ? state.unreadMessagesCount -= 1 : 0
   }
 }
 
 export const actions = {
-  async refreshConversation ({ state, commit }, payload) {
-    const { data: conversation } = await this.$axios.get(`/conversations/${payload.id}`)
 
-    commit('setConversation', conversation)
-    commit('replaceConversationInConversations', conversation)
+  // CONVERSATIONS
+  async fetchConversations ({ state, commit }) {
+    commit('setIsConversationsLoading', true)
+    const { data: conversations } = await this.$axios.get('/conversations', {
+      params: {
+        ...state.conversationsQueryParams,
+        page: 1
+      }
+    })
+    commit('setConversations', conversations.data)
+    commit('setIsConversationsLoading', false)
+    commit('setHasMoreConversations', conversations.last_page !== conversations.current_page)
   },
-  async fetchUnreadMessages ({ commit }) {
-    const { data: unreadMessages } = await this.$axios.get('user/unread-messages')
-    commit('setUnreadMessages', unreadMessages)
+  async fetchMoreConversations ({ state, commit }) {
+    commit('incrementConversationQueryParamsPage')
+    commit('setIsConversationsLoading', true)
+    const { data: moreConversations } = await this.$axios.get('/conversations', {
+      params: state.conversationsQueryParams
+    })
+    moreConversations?.data.forEach((conversation) => {
+      commit('pushConversationInConversations', conversation)
+    })
+    commit('setIsConversationsLoading', false)
+    commit('setHasMoreConversations', moreConversations.last_page !== moreConversations.current_page)
+  },
+
+  // CONVERSATION MESSAGES
+  async fetchConversationMessages ({ state, commit }, conversationId) {
+    const { data: messages } = await this.$axios.get(`/conversations/${conversationId}/messages`)
+    commit('setActiveConversationMessages', messages.data?.reverse())
+    commit('setHasActiveConversationMoreMessages', messages.last_page !== 1)
+  },
+  async fetchNewConversationMessages ({ state, commit }, conversationId) {
+    const lastMessage = state.activeConversationMessages?.slice(-1)[0]
+    if (lastMessage) {
+      const { data: newMessages } = await this.$axios.get(`/conversations/${conversationId}/messages`, {
+        params: { 'filter[after_message_id]': lastMessage.id }
+      })
+      newMessages?.data.forEach((message) => {
+        commit('pushNewMessageInActiveConversationMessages', message)
+      })
+    }
+  },
+  async fetchOldConversationMessages ({ state, commit }, conversationId) {
+    const firstMessage = state.activeConversationMessages[0]
+    if (firstMessage) {
+      const { data: oldMessages } = await this.$axios.get(`/conversations/${conversationId}/messages`, {
+        params: { 'filter[before_message_id]': firstMessage.id }
+      })
+      oldMessages?.data.forEach((message) => {
+        commit('unshiftOldMessageInActiveConversationMessages', message)
+      })
+      commit('setHasActiveConversationMoreMessages', oldMessages.last_page !== 1)
+    }
+  },
+  async refreshActiveConversation ({ state, commit }, conversationId) {
+    const { data: conversation } = await this.$axios.get(`/conversations/${conversationId}`)
+    commit('setActiveConversation', conversation)
+    commit('refreshConversationInConversations', conversation)
+  },
+  async refreshConversationInConversations ({ state, commit }, conversationId) {
+    const { data: conversation } = await this.$axios.get(`/conversations/${conversationId}`)
+    commit('refreshConversationInConversations', conversation)
+  },
+
+  selectNextActiveConversation ({ state, commit }) {
+    const activeConversationIndex = state.conversations.findIndex(conversation => conversation.id === state.activeConversation.id)
+    let nextConversationId = null
+
+    if (state.conversations.length > (activeConversationIndex + 1)) {
+      nextConversationId = state.conversations[activeConversationIndex + 1]?.id
+    } else {
+      nextConversationId = state.conversations[activeConversationIndex - 1]?.id
+    }
+    if (nextConversationId) {
+      this.app.router.push(`/messages/${nextConversationId}`)
+    } else {
+      this.app.router.push('/messages')
+    }
+    commit('removeConversationFromConversations', state.activeConversation)
+  },
+
+  // USER
+  async getUserUnreadMessagesCount ({ commit }) {
+    const { data: count } = await this.$axios.get('user/unread-messages')
+    commit('setUnreadMessagesCount', count)
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div id="header-banner">
     <Banner v-if="$store.state.auth.isImpersonate" icon="RiProfileLine" type="warning">
-      Attention ! Vous vous faites passer pour <span class="font-bold">{{ $store.getters.profile.full_name }}</span>
+      Attention ! Vous vous faites passer pour <span class="font-bold">{{ $store.getters.profile?.full_name }}</span>
       <template #action>
         <Link
           icon="RiArrowRightLine"
@@ -11,32 +11,6 @@
         </Link>
       </template>
     </Banner>
-
-    <!-- <div v-if="isBenevoleOrNotLogged" class="relative z-30 bg-[#F75C5D] text-white cursor-pointer" @click="onClick">
-      <div class="container py-3">
-        <div class="flex items-center justify-between flex-wrap">
-          <div class="w-full flex-1 flex items-center">
-            <SpeakerphoneIcon
-              class="hidden sm:block h-5 w-5 flex-none"
-            />
-            <p class="ml-3">
-              <strong>Décembre ensemble :</strong> donnons du temps contre l’isolement
-            </p>
-          </div>
-          <div class="flex-shrink-0 ml-4">
-            <Link
-              icon="RiArrowRightLine"
-              class="hidden sm:block"
-            >
-              Trouver une mission
-            </Link>
-            <ArrowRightIcon
-              class="sm:hidden h-5 w-5 flex-none"
-            />
-          </div>
-        </div>
-      </div>
-    </div> -->
 
     <Banner v-if="$store.state.settings.general.maintenance_mode_active" icon="RiSettings4Line">
       Le site est en mode maintenance, seuls les admins peuvent y accéder !
@@ -50,7 +24,7 @@
       </template>
     </Banner>
 
-    <Banner v-if="isResponsable && totalPendingParticipationsActions > 0" type="error">
+    <Banner v-if="showBannerResponsablePendingParticipations" type="error">
       Vous avez {{ $options.filters.pluralize(totalPendingParticipationsActions, 'participation', 'participations') }} en cours de modération. Merci de mettre à jour le statut des candidatures reçues.
       <template #action>
         <Link
@@ -94,6 +68,12 @@ export default {
     },
     isImpersonate () {
       return this.$cookies.get('access-token-impersonate')
+    },
+    showBannerResponsablePendingParticipations () {
+      if (['messages', 'messages-id'].includes(this.$route.name)) {
+        return false
+      }
+      return this.isResponsable && this.totalPendingParticipationsActions > 0
     },
     isResponsable () {
       return this.$store.getters.currentRole?.key === 'responsable'

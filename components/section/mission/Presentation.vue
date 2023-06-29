@@ -42,7 +42,7 @@
         :alt="mission.responsable.full_name"
         class="inline-flex w-7 h-7 rounded-full border-2 border-gray-200"
       >
-      <span class="text-black"> {{ mission.responsable.full_name }} </span>
+      <span class="text-black"> {{ mission.responsable.first_name }} {{ mission.responsable.last_name[0] }}. </span>
       <span class="lowercase"> de {{ mission.structure.statut_juridique|label('structure_legal_status')|prefix }} </span>
 
       <Link

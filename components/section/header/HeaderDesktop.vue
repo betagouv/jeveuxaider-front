@@ -33,9 +33,11 @@
             :click="link.click"
             class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1 relative"
           >
-            <div v-if="link.count" class="absolute -top-1.5 -right-1 bg-[#e41e3f] px-1.5 py-0.5 rounded-full text-white font-bold text-xxs min-w-[20px] inline-flex justify-center">
-              {{ link.count > 99 ? "99+" : link.count }}
-            </div>
+            <client-only>
+              <div v-if="link.count" class="absolute -top-1.5 -right-1 bg-[#e41e3f] px-1.5 py-0.5 rounded-full text-white font-bold text-xxs min-w-[20px] inline-flex justify-center">
+                {{ link.count > 99 ? "99+" : link.count }}
+              </div>
+            </client-only>
             <component :is="link.icon" class="flex-shrink-0 mr-3 h-4 w-4" aria-hidden="true" />
             {{ link.name }}
           </NavItem>
@@ -72,7 +74,7 @@
             </button>
           </template>
           <template #items>
-            <template v-if="$store.getters.roles" class="w-80">
+            <template v-if="$store.getters.roles">
               <div class="w-80">
                 <DropdownOptionsItem
                   v-for="role,index in $store.getters.roles"
@@ -173,7 +175,7 @@ export default {
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' },
-        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessages'] }
+        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessagesCount'] }
       ]
     },
     secondaryNavigation () {
@@ -245,6 +247,11 @@ export default {
   watch: {
     $route () {
       this.showMobileMenu = false
+    }
+  },
+  created () {
+    if (this.$store.getters.isLogged) {
+      this.$store.dispatch('messaging/getUserUnreadMessagesCount')
     }
   },
   methods: {

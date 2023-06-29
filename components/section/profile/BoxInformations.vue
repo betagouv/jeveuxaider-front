@@ -16,7 +16,6 @@
         <DescriptionListItem v-if="profile.user?.regions_as_referent && profile.user.regions_as_referent.length > 0" term="Référent rég." :description="profile.user.regions_as_referent[0].name" />
         <DescriptionListItem v-if="$store.getters.contextRole === 'admin'" term="User ID" :description="profile.user_id" />
         <DescriptionListItem term="Crée le" :description="$dayjs(profile.created_at).format('D MMMM YYYY à HH:mm')" />
-        <!-- todo timeago il y a -->
         <DescriptionListItem v-if="profile.user" term="Der. connexion" :description="profile.user.last_online_at ? $dayjs(profile.user.last_online_at).fromNow() : null" />
         <DescriptionListItem term="Nom" :description="profile.full_name" />
         <DescriptionListItem term="Email" :description="profile.email" />
@@ -24,7 +23,8 @@
         <DescriptionListItem term="Profession" :description="$options.filters.label(profile.type,'profile_type')" />
         <DescriptionListItem term="Mobile" :description="profile.mobile" />
         <DescriptionListItem term="Téléphone" :description="profile.phone" />
-        <DescriptionListItem term="Date de naissance" :description="profile.birthday" />
+        <DescriptionListItem term="Âge" :description="$dayjs(profile.birthday).fromNow('year')" />
+        <DescriptionListItem term="Disponibilités" :description="formattedCommitment" />
         <DescriptionListItem
           v-if="profile.activities"
           term="Activités"
@@ -80,6 +80,14 @@ export default {
     boxPadding: {
       type: [String, Boolean],
       default: 'xs'
+    }
+  },
+  computed: {
+    formattedCommitment () {
+      if (this.profile.commitment__time_period) {
+        return `${this.$options.filters.label(this.profile.commitment__duration, 'duration')} par ${this.$options.filters.label(this.profile.commitment__time_period, 'time_period')}`
+      }
+      return this.profile.commitment__duration ? this.$options.filters.label(this.profile.commitment__duration, 'duration') : null
     }
   }
 }

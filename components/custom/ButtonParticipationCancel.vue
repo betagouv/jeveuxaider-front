@@ -7,7 +7,7 @@
       Annuler ma participation
     </Button>
 
-    <ModalParticipationCancel
+    <ModalParticipationCancelByBenevole
       :participation="participation"
       :is-open="showModal"
       @cancel="showModal = false"
@@ -17,11 +17,11 @@
 </template>
 
 <script>
-import ModalParticipationCancel from '@/components/modal/ModalParticipationCancel.vue'
+import ModalParticipationCancelByBenevole from '@/components/modal/ModalParticipationCancelByBenevole.vue'
 
 export default {
   components: {
-    ModalParticipationCancel
+    ModalParticipationCancelByBenevole
   },
   props: {
     participation: {
@@ -42,8 +42,6 @@ export default {
       }
       this.loading = true
       const { data: participation } = await this.$axios.put(`/participations/${this.participation.id}/cancel-by-benevole`, payload).catch(() => {})
-      const nbNewMessages = payload.content?.trim().length ? 2 : 1
-      this.$store.commit('messaging/incrementNewMessagesCount', nbNewMessages)
       this.$emit('update', participation)
       this.loading = false
       this.showModal = false

@@ -3,7 +3,7 @@
     <template v-if="needTestimonial">
       <div class="flex justify-between items-center">
         <div class="text-sm font-bold text-black">
-          Comment s'est déroulée la mission ?
+          Comment s'est déroulée la mission ?
         </div>
         <div class="flex justify-end gap-2">
           <Button type="tertiary" size="sm" @click.native.stop="showTestimonialOverlay = true">
@@ -15,7 +15,7 @@
     <template v-if="participationShouldBeDone">
       <div class="flex justify-between items-center">
         <div class="text-sm font-bold text-black">
-          Avez-vous réalisé la mission ?
+          Avez-vous réalisé la mission ?
         </div>
         <div class="flex justify-end gap-2">
           <Button
@@ -35,7 +35,7 @@
     <template v-if="canCancelParticipation">
       <div class="flex justify-between items-center">
         <div class="text-sm font-bold text-black">
-          Vous ne souhaitez plus participer ?
+          Vous ne souhaitez plus participer ?
         </div>
         <div class="flex justify-end gap-2">
           <Button type="tertiary" size="sm" @click.native.stop="showCancelParticipationModal = true">
@@ -54,7 +54,7 @@
       <p>{{ $store.getters.profile.first_name }}, merci pour votre aide.</p>
       <p>Veuillez confirmer votre participation à la mission <strong>{{ participation.mission.name }}</strong>. {{ participation.mission.responsable.full_name }} de <strong>{{ participation.mission.structure.name }}</strong> sera notifié.</p>
     </AlertDialog>
-    <ModalParticipationCancel
+    <ModalParticipationCancelByBenevole
       :participation="participation"
       :is-open="showCancelParticipationModal"
       @cancel="showCancelParticipationModal = false"
@@ -71,13 +71,13 @@
 
 <script>
 import Button from '@/components/dsfr/Button.vue'
-import ModalParticipationCancel from '@/components/modal/ModalParticipationCancel.vue'
+import ModalParticipationCancelByBenevole from '@/components/modal/ModalParticipationCancelByBenevole.vue'
 import TestimonialOverlay from '@/components/section/TestimonialOverlay.vue'
 
 export default {
   components: {
     Button,
-    ModalParticipationCancel,
+    ModalParticipationCancelByBenevole,
     TestimonialOverlay
   },
   props: {
@@ -102,7 +102,7 @@ export default {
       return this.participationShouldBeDone || this.needTestimonial || this.canCancelParticipation
     },
     canCancelParticipation () {
-      if (['Annulée', 'Validée', 'Refusée'].includes(this.participation.state)) {
+      if (['Annulée', 'Refusée'].includes(this.participation.state)) {
         return false
       }
       return !this.participationShouldBeDone
@@ -131,8 +131,8 @@ export default {
         return true
       }
 
-      // Si pas date de fin et date de début passée et mission ponctuel
-      if (this.isMissionPonctual && !this.mission.end_date && this.$dayjs().startOf('day').isAfter(this.mission.start_date)) {
+      // Si pas date de fin et date de début passée et mission ponctuel et participation plus d'1 mois
+      if (this.isMissionPonctual && !this.mission.end_date && this.$dayjs().startOf('day').isAfter(this.mission.start_date) && this.$dayjs().startOf('day').subtract(1, 'month').isAfter(this.participation.created_at)) {
         return true
       }
 
