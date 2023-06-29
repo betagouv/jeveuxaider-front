@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 lg:p-6 flex gap-4 lg:gap-6 justify-between items-center bg-jva-blue-500 text-white flex-wrap">
+  <div class="p-4 lg:p-6 flex gap-4 lg:gap-6 justify-between items-center bg-jva-blue-500 text-white">
     <div class="text-lg lg:text-xl font-bold">
       {{ label }}
     </div>
