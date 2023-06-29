@@ -95,10 +95,12 @@ export const mutations = {
   },
   setActiveConversationAsRead (state, payload) {
     const index = state.conversations.findIndex(conversation => conversation.id == payload.id)
-    state.conversations.splice(index, 1, {
-      ...payload,
-      is_read: true
-    })
+    if (index !== -1) {
+      state.conversations.splice(index, 1, {
+        ...payload,
+        is_read: true
+      })
+    }
   },
   decrementUnreadMessagesCount (state) {
     state.unreadMessagesCount = state.unreadMessagesCount > 0 ? state.unreadMessagesCount -= 1 : 0
