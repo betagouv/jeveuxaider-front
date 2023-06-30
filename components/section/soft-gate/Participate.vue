@@ -59,7 +59,7 @@ export default {
       loading: false,
       selectedMission: this.$store.state.softGate.selectedMission,
       form: {
-        content: `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. \nJe me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
+        content: `Bonjour ${this.$store.state.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. Je me tiens disponible pour échanger et débuter la mission 🙂\n${this.$store.state.auth.user.profile.first_name}`
       },
       formSchema: object({
         content: string().min(10, 'Votre message est trop court').required('Un message est requis')

@@ -240,7 +240,7 @@ export default {
             icon: '📋',
             iconVariant: 'warning',
             title: '<b>Charte de bon fonctionnement</b>',
-            subtitle: 'Merci de signer notre charte de bon fonctionnement',
+            subtitle: 'Merci de prendre connaissance de ces quelques règles et de les accepter !',
             link: '/profile/charte-bon-fonctionnement'
           }
       }
