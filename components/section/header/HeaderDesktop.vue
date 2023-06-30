@@ -250,9 +250,6 @@ export default {
     }
   },
   created () {
-    if (this.$store.getters.isLogged) {
-      this.$store.dispatch('messaging/getUserUnreadMessagesCount')
-    }
   },
   methods: {
     async switchRole (role) {
