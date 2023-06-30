@@ -27,7 +27,7 @@
                 Partagez la mission autour de vous
               </div>
 
-              <div class="flex justify-center space-x-3 my-10">
+              <div class="flex justify-center flex-wrap space-x-3 my-10">
                 <ShareFacebook />
                 <ShareTwitter :message="message" />
                 <ShareLinkedin :message="message" />

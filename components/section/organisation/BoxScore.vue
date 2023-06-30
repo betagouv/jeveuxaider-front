@@ -6,7 +6,7 @@
         :class="[{
           'rounded-lg': variant === 'shadow'
         }]"
-        class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px] overflow-hidden"
+        class="grid grid-cols-2 border bg-gray-200 gap-[1px] overflow-hidden"
       >
         <div class="col-span-2 bg-white p-6">
           <client-only>
@@ -22,10 +22,9 @@
                 base-color="#F1F2F9"
                 :scale-interval="0"
                 gauge-color="#F95A5C"
-                class="mx-auto"
-                style="width: 350px; height: 224px;"
+                class="mx-auto gauge-score"
               />
-              <div class="absolute flex flex-col justify-center items-center top-[60px] left-1/2 transform -translate-x-1/2 h-[224px] w-[224px] text-center border border-[#F1F2F9] rounded-full">
+              <div class="absolute flex flex-col justify-center items-center top-[30px] lg:top-[60px] left-1/2 transform -translate-x-1/2 h-[224px] w-[224px] text-center lg:border border-[#F1F2F9] rounded-full">
                 <div class="font-bold text-5xl tracking-tight">
                   <span>{{ score.total_points }}</span>
                   <span class="mx-1">/</span>
@@ -159,3 +158,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.gauge-score {
+  max-width: 350px;
+  height: auto;
+  width: 100%;
+}
+</style>
