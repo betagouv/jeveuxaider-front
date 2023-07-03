@@ -187,7 +187,7 @@ export default {
           { name: 'Bénévolat près de chez moi', to: '/missions-benevolat', isActive: this.isBenevolatPresDeChezMoiActiveLink() },
           { name: 'À distance', to: '/missions-benevolat?type=Mission%20à%20distance', isActive: this.isBenevolatADistanceActiveLink() },
           { name: 'Associations', to: '/organisations', isActive: this.isActiveLink('/organisations') },
-          { name: 'La tournée d\'été ☀️', href: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/' },
+          // { name: 'La tournée d\'été ☀️', href: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/' },
           { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/', target: '_blank' }
         ]
       } else if (this.$store.getters.currentRole?.key === 'admin') {
@@ -243,7 +243,7 @@ export default {
         { name: 'Mon espace', to: '/profile', isActive: this.isActiveLink('/profile', true) },
         { name: 'Mes missions', to: '/profile/missions', isActive: this.isActiveLink('profile/missions') },
 
-        { name: 'La tournée d\'été ☀️', href: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/' },
+        // { name: 'La tournée d\'été ☀️', href: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/' },
         { name: 'Centre d\'aide', href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/', target: '_blank' }
       ]
     },

@@ -18,7 +18,7 @@
             <span>Rejoignez la tournée d’été</span>
           </Heading>
           <p :id="`label-missions-operation-${uuid}`" class="text-xl text-[#3A3A3A] xl:text-[24px] xl:leading-[38px]">
-            Et si nous rendions la promesse de l'été, ses fêtes et ses échappées accessible au plus grand nombre grâce au bénévolat ? C'est le défi de la tournée d'été : une boucle joyeuse tournée vers les autres. Rejoignez le mouvement !
+            Et si nous rendions la promesse de l'été, ses fêtes et ses échappées accessible au plus grand nombre grâce au bénévolat ? C'est le défi de la tournée d'été : une boucle joyeuse tournée vers les autres.
           </p>
         </div>
         <img
@@ -33,7 +33,7 @@
         <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8 mb-4 lg:mb-8 xl:mb-14">
           <div class="">
             <p class="font-bold text-xl lg:text-2xl xl:text-[32px] xl:leading-[40px]">
-              Campagne nationale du 1er au 30 juin 2023
+              Rejoignez le mouvement
             </p>
           </div>
           <div class="hidden lg:block flex-none">
