@@ -1,10 +1,10 @@
 <template>
-  <div class="p-[85px] max-w-4xl">
-    <QuizSearchBuilderStep0 v-if="$store.getters['quiz/step'] === 0" />
-    <QuizSearchBuilderStep1 v-if="$store.getters['quiz/step'] === 1" />
-    <QuizSearchBuilderStep2 v-if="$store.getters['quiz/step'] === 2" />
-    <QuizSearchBuilderStep3 v-if="$store.getters['quiz/step'] === 3" />
-    <QuizSearchBuilderStep4 v-if="$store.getters['quiz/step'] === 4" />
+  <div class="max-w-4xl flex-1">
+    <QuizSearchBuilderStep0 v-if="step === 0" />
+    <QuizSearchBuilderStep1 v-if="step === 1" />
+    <QuizSearchBuilderStep2 v-if="step === 2" />
+    <QuizSearchBuilderStep3 v-if="step === 3" />
+    <QuizSearchBuilderStep4 v-if="step === 4" />
   </div>
 </template>
 
@@ -24,6 +24,11 @@ export default {
     QuizSearchBuilderStep4
   },
   layout: 'quiz',
+  computed: {
+    step () {
+      return this.$store.getters['quiz/step']
+    }
+  },
   mounted () {
     // plausible tracking
   }

@@ -4,6 +4,9 @@
       <RiArrowLeftLine class="w-4 h-4 fill-current" />
       <span>Étape précédente</span>
     </div>
+    <div class="text-[22px] font-bold mb-2">
+      {{ title }}
+    </div>
     <div class="flex items-center gap-2">
       <div
         v-for="(step, index) in stepsLength"
@@ -28,7 +31,20 @@ export default {
     }
   },
   computed: {
-
+    title () {
+      switch (this.$store.getters['quiz/step']) {
+        case 1:
+          return 'Type de mission'
+        case 2:
+          return 'Lieu de la mission'
+        case 3:
+          return 'Disponibilités'
+        case 4:
+          return 'Activités'
+        default:
+          return ''
+      }
+    }
   },
   methods: {
     isStepActive (index) {

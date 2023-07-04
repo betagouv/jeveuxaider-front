@@ -1,11 +1,11 @@
 export const state = () => ({
   step: 0,
-  response: {}
+  query: {}
 })
 
 export const getters = {
   step: state => state.step,
-  response: state => state.response
+  query: state => state.query
 }
 
 export const mutations = {
@@ -18,8 +18,8 @@ export const mutations = {
   previousStep: (state) => {
     state.step -= 1
   },
-  setResponse: (state, payload) => {
-    state.response = payload
+  setQuery: (state, payload) => {
+    state.query = payload
   }
 }
 
