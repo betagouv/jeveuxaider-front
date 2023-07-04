@@ -1,10 +1,10 @@
 <template>
-  <div class="px-16 py-8">
+  <div class="px-8 py-4 lg:px-16 lg:py-8">
     <div class="flex gap-2 items-center mb-2 text-sm cursor-pointer hover:text-gray-600" @click="onPreviousStepClick">
       <RiArrowLeftLine class="w-4 h-4 fill-current" />
       <span>Étape précédente</span>
     </div>
-    <div class="text-[22px] font-bold mb-2">
+    <div class="text-lg lg-text-[22px] font-bold mb-2">
       {{ title }}
     </div>
     <div class="flex items-center gap-2">

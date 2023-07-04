@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col lg:flex-row h-screen bg-white min-h-[800px]">
+  <div class="flex flex-col lg:flex-row h-screen bg-white lg:min-h-[800px]">
     <div
       :class="[
         'hidden lg:block w-[700px]',
@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <main id="main" class="flex flex-col flex-1 ">
+    <main id="main" class="flex flex-col flex-1">
       <QuizSteps v-if="$store.getters['quiz/step'] > 0" class="bg-[#F9F6F2]" />
       <Nuxt class="flex-1 bg-white" />
     </main>

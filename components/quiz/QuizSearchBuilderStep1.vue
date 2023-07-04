@@ -1,6 +1,6 @@
 <template>
-  <div class="px-[64px] py-[48px] lg:px-[80px] lg:py-[56px]">
-    <div class="text-[40px] text-black font-bold mb-12 leading-snug">
+  <div class="px-[32px] py-[24px] lg:px-[80px] lg:py-[56px]">
+    <div class="text-[28px] lg:text-[40px] text-black font-bold mb-8 lg:mb-12 leading-snug">
       Où souhaitez-vous réaliser votre mission de bénévolat ?
     </div>
     <div class="max-w-lg flex flex-col gap-6">

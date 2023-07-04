@@ -1,13 +1,13 @@
 <template>
-  <div class="px-[85px] pt-[80px] h-full flex flex-col">
-    <div class="flex-1">
-      <div class="text-xl text-[#ED7A5A] font-bold uppercase mb-4">
+  <div class="lg:px-[85px] lg:pt-[80px] h-full flex flex-col">
+    <div class="flex-1 px-[32px] pt-[32px] lg:px-0 lg:pt-0">
+      <div class="text-lg lg:text-xl text-[#ED7A5A] font-bold uppercase mb-4">
         Le bénévolat et vous
       </div>
-      <div class="text-[56px] text-black font-bold mb-12 leading-tight">
+      <div class="text-[32px] lg:text-[56px] text-black font-bold mb-12 leading-tight">
         Trouvez en quelques clics votre prochaine mission de bénévolat
       </div>
-      <div class="flex items-center gap-8">
+      <div class="flex flex-col lg:flex-row lg:items-center gap-8">
         <Button
           size="lg"
           icon="RiArrowRightLine"
