@@ -40,7 +40,7 @@ export default {
     selectableActivitiesIds: {
       type: Array,
       default () {
-        return [1, 2, 3]
+        return [35, 16, 12, 10, 1, 33, 39, 38, 11, 5]
       }
     }
   },
@@ -63,9 +63,6 @@ export default {
   },
   methods: {
     handleClick () {
-      console.log('selectedActivities', this.selectedActivities)
-      console.log('selectedActivitiesNames', this.selectedActivitiesNames)
-
       this.$store.commit('quiz/setQuery', {
         ...this.$store.getters['quiz/query'],
         'activities.name': this.selectedActivitiesNames.map(activity => activity.name).join('|')

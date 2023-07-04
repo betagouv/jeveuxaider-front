@@ -60,7 +60,12 @@ export default {
         ...this.$store.getters['quiz/query'],
         type: value
       })
-      this.$store.commit('quiz/nextStep')
+
+      if (value === 'Mission en présentiel') {
+        this.$store.commit('quiz/nextStep')
+      } else {
+        this.$store.commit('quiz/setStep', 3)
+      }
     }
   }
 }

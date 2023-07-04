@@ -10,7 +10,11 @@
         @click.native="onClickAroundMe"
       >
         <template #icon>
-          <IconMap />
+          <RiLoader5Line
+            v-if="geolocationLoading"
+            class="animate-spin h-[56px] w-[56px] text-gray-400 fill-current"
+          />
+          <IconMap v-else />
         </template>
       </QuizOption>
       <QuizOption
@@ -42,6 +46,7 @@ import IconFrance from '@/static/images/icons/dsfr/france-localization.svg?inlin
 import IconMap from '@/static/images/icons/dsfr/map.svg?inline'
 import QuizOption from '@/components/quiz/QuizOption.vue'
 import inputGeo from '@/mixins/input-geo'
+import Toast from '@/components/base/Toast'
 
 export default {
   components: {
@@ -52,7 +57,12 @@ export default {
   mixins: [inputGeo],
   data () {
     return {
-
+      geolocationLoading: false,
+      geolocationOptions: {
+        enableHighAccuracy: true,
+        timeout: 50000,
+        maximumAge: 120
+      }
     }
   },
   computed: {
@@ -62,15 +72,34 @@ export default {
   },
   methods: {
     onClickAroundMe () {
-      // @TODO
+      this.geolocationLoading = true
+      navigator.geolocation.getCurrentPosition(this.onSuccessGeolocation, this.onErrorGeolocation)
+    },
+    onSuccessGeolocation (data) {
+      console.log('onSuccessGeolocation', data)
+      this.geolocationLoading = false
+      this.$store.commit('algoliaSearch/setNavigatorGeolocation', data)
       this.$store.commit('quiz/nextStep')
+    },
+    onErrorGeolocation () {
+      this.$toast.info({
+        component: Toast,
+        props: {
+          message: "Vous avez bloqué l'accès votre position",
+          errors: [
+            "À droite de la barre d'adresse, appuyez sur l'icône de localisation",
+            "Puis sélectionnez: Toujours autoriser l'accès à votre position"
+          ]
+        }
+      })
+      this.geolocationLoading = false
     },
     handleSelectedGeo (item) {
       if (item) {
         this.$store.commit('quiz/setQuery', {
           ...this.$store.getters['quiz/query'],
           city: item.city,
-          aroundLatLng: `${item.coordinates[0]},${item.coordinates[1]}`
+          aroundLatLng: `${item.coordinates[1]},${item.coordinates[0]}`
         })
       }
       this.$store.commit('quiz/nextStep')

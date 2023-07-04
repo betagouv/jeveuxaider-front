@@ -9,7 +9,7 @@
         description="C’est déjà beaucoup 😇"
         @click.native="onClickOption({
           commitment__total: '<=7',
-          duration: null,
+          duration: 'day',
           time_period: null
         })"
       >
@@ -22,7 +22,7 @@
         description="Wahou 👏"
         @click.native="onClickOption({
           commitment__total: '<=35',
-          duration: null,
+          duration: '5_days',
           time_period: null
         })"
       >
