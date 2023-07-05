@@ -61,6 +61,15 @@ export default {
         type: value
       })
 
+      window.plausible &&
+        window.plausible('Quiz - Step 1', {
+          props: {
+            isLogged: this.$store.getters.isLogged,
+            quizPath: this.$route.path,
+            value
+          }
+        })
+
       if (value === 'Mission en présentiel') {
         this.$store.commit('quiz/nextStep')
       } else {

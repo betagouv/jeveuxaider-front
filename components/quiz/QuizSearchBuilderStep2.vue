@@ -79,7 +79,7 @@ export default {
       console.log('onSuccessGeolocation', data)
       this.geolocationLoading = false
       this.$store.commit('algoliaSearch/setNavigatorGeolocation', data)
-      this.$store.commit('quiz/nextStep')
+      this.onNextStep('Autour de moi')
     },
     onErrorGeolocation () {
       this.$toast.info({
@@ -102,6 +102,18 @@ export default {
           aroundLatLng: `${item.coordinates[1]},${item.coordinates[0]}`
         })
       }
+      this.onNextStep(item.city)
+    },
+    onNextStep (value) {
+      window.plausible &&
+        window.plausible('Quiz - Step 2', {
+          props: {
+            isLogged: this.$store.getters.isLogged,
+            quizPath: this.$route.path,
+            value
+          }
+        })
+
       this.$store.commit('quiz/nextStep')
     }
   }

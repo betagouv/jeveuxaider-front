@@ -68,9 +68,25 @@ export default {
         'activities.name': this.selectedActivitiesNames.map(activity => activity.name).join('|')
       })
 
+      window.plausible &&
+        window.plausible('Quiz - Step 4', {
+          props: {
+            isLogged: this.$store.getters.isLogged,
+            quizPath: this.$route.path,
+            value: this.selectedActivitiesNames?.length
+          }
+        })
+
+      this.$cookies.set('utm_source', 'quiz')
+      this.$cookies.set('utm_campaign', this.$route.path)
+
       this.$router.push({
         path: '/missions-benevolat',
-        query: this.$store.getters['quiz/query']
+        query: {
+          ...this.$store.getters['quiz/query'],
+          utm_source: 'quiz',
+          utm_campaign: this.$route.path
+        }
       })
     }
   }

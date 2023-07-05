@@ -12,7 +12,7 @@
           size="lg"
           icon="RiArrowRightLine"
           icon-position="right"
-          @click.native="$store.commit('quiz/nextStep')"
+          @click.native="onNextStep"
         >
           Suivez le guide
         </Button>
@@ -59,6 +59,19 @@ export default {
   },
   mounted () {
     // console.log('route', this.$route)
+  },
+  methods: {
+    onNextStep () {
+      window.plausible &&
+        window.plausible('Quiz - Step 0', {
+          props: {
+            isLogged: this.$store.getters.isLogged,
+            quizPath: this.$route.path
+          }
+        })
+
+      this.$store.commit('quiz/nextStep')
+    }
   }
 }
 </script>

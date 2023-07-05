@@ -72,6 +72,16 @@ export default {
         ...this.$store.getters['quiz/query'],
         ...options
       })
+
+      window.plausible &&
+        window.plausible('Quiz - Step 3', {
+          props: {
+            isLogged: this.$store.getters.isLogged,
+            quizPath: this.$route.path,
+            value: options
+          }
+        })
+
       this.$store.commit('quiz/nextStep')
     }
   }
