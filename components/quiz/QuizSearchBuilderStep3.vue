@@ -1,5 +1,5 @@
 <template>
-  <QuizStep :title="title" :slogan="slogan">
+  <QuizStep :title="title" :slogan="slogan" :picture="picture">
     <div class="max-w-lg flex flex-col gap-6">
       <QuizOption
         title="Quelques heures"
@@ -67,6 +67,10 @@ export default {
     slogan: {
       type: String,
       default: null
+    },
+    picture: {
+      type: String,
+      required: true
     }
   },
   mounted () {

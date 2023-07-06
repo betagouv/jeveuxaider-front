@@ -8,8 +8,8 @@
       ]"
     >
       <img
-        :src="`/images/quiz/quiz-step-${$store.getters['quiz/step']}.jpg`"
-        :srcset="`/images/quiz/quiz-step-${$store.getters['quiz/step']}@2x.jpg 2x`"
+        :src="`/images/quiz/${picture}.jpg`"
+        :srcset="`/images/quiz/${picture}@2x.jpg 2x`"
         alt=""
         :class="[
           'object-cover w-[700px] h-full ',
@@ -85,6 +85,10 @@ export default {
     slogan: {
       type: String,
       default: null
+    },
+    picture: {
+      type: String,
+      required: true
     }
   }
 }
