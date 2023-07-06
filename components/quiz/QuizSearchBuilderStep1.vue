@@ -1,8 +1,5 @@
 <template>
-  <div class="px-[32px] py-[24px] lg:px-[80px] lg:py-[56px]">
-    <div class="text-[28px] lg:text-[40px] text-black font-bold mb-8 lg:mb-12 leading-snug">
-      Où souhaitez-vous réaliser votre mission de bénévolat ?
-    </div>
+  <QuizStep :title="title" :slogan="slogan">
     <div class="max-w-lg flex flex-col gap-6">
       <QuizOption
         title="Près de chez moi"
@@ -32,10 +29,11 @@
         </template>
       </QuizOption>
     </div>
-  </div>
+  </QuizStep>
 </template>
 
 <script>
+import QuizStep from '@/components/quiz/QuizStep.vue'
 import QuizOption from '@/components/quiz/QuizOption.vue'
 import IconAvatar from '@/static/images/icons/dsfr/avatar.svg?inline'
 import IconFrance from '@/static/images/icons/dsfr/france-localization.svg?inline'
@@ -43,13 +41,21 @@ import IconMap from '@/static/images/icons/dsfr/map.svg?inline'
 
 export default {
   components: {
+    QuizStep,
     QuizOption,
     IconAvatar,
     IconFrance,
     IconMap
   },
   props: {
-
+    title: {
+      type: String,
+      required: true
+    },
+    slogan: {
+      type: String,
+      default: null
+    }
   },
   created () {
     // console.log('route', this.$route)

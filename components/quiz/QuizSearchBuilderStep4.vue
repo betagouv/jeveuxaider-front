@@ -1,8 +1,5 @@
 <template>
-  <div class="px-[32px] py-[24px] lg:px-[80px] lg:py-[56px]">
-    <div class="text-[28px] lg:text-[40px] text-black font-bold mb-8 lg:mb-12 leading-snug">
-      Sélectionnez les activités pour lesquelles vous souhaitez aider
-    </div>
+  <QuizStep :title="title" :slogan="slogan">
     <div class="mb-12">
       <TagsGroup
         v-model="selectedActivities"
@@ -23,20 +20,30 @@
         Continuer
       </Button>
     </div>
-  </div>
+  </QuizStep>
 </template>
 
 <script>
+import QuizStep from '@/components/quiz/QuizStep.vue'
 import activities from '@/assets/activities.json'
 import TagsGroup from '@/components/dsfr/TagsGroup.vue'
 import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
+    QuizStep,
     TagsGroup,
     Button
   },
   props: {
+    title: {
+      type: String,
+      required: true
+    },
+    slogan: {
+      type: String,
+      default: null
+    },
     selectableActivitiesIds: {
       type: Array,
       default () {

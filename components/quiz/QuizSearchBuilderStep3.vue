@@ -1,8 +1,5 @@
 <template>
-  <div class="px-[32px] py-[24px] lg:px-[80px] lg:py-[56px]">
-    <div class="text-[28px] lg:text-[40px] text-black font-bold mb-8 lg:mb-12 leading-snug">
-      Combien de temps pourriez-vous dédier à une mission de bénévolat ?
-    </div>
+  <QuizStep :title="title" :slogan="slogan">
     <div class="max-w-lg flex flex-col gap-6">
       <QuizOption
         title="Quelques heures"
@@ -44,10 +41,11 @@
         </template>
       </QuizOption>
     </div>
-  </div>
+  </QuizStep>
 </template>
 
 <script>
+import QuizStep from '@/components/quiz/QuizStep.vue'
 import QuizOption from '@/components/quiz/QuizOption.vue'
 import IconSuccess from '@/static/images/icons/dsfr/success.svg?inline'
 import IconCalendar from '@/static/images/icons/dsfr/calendar.svg?inline'
@@ -55,13 +53,21 @@ import IconHealth from '@/static/images/icons/dsfr/health.svg?inline'
 
 export default {
   components: {
+    QuizStep,
     QuizOption,
     IconSuccess,
     IconCalendar,
     IconHealth
   },
   props: {
-
+    title: {
+      type: String,
+      required: true
+    },
+    slogan: {
+      type: String,
+      default: null
+    }
   },
   mounted () {
     // console.log('route', this.$route)
