@@ -9,7 +9,7 @@
         is-model
       />
     </div>
-    <div class="flex items-center gap-8">
+    <div class="flex flex-col lg:flex-row items-center gap-8">
       <Button
         size="lg"
         icon="RiArrowRightLine"
@@ -17,8 +17,17 @@
         :disabled="selectedActivities.length === 0"
         @click.native="handleClick"
       >
-        Continuer
+        {{ selectedActivities.length|pluralize('sélectionnée') }}
       </Button>
+      <Link
+        size="lg"
+        icon="RiArrowRightLine"
+        icon-position="right"
+        type="secondary"
+        @click.native="handleClick"
+      >
+        Toutes les activités
+      </Link>
     </div>
   </QuizStep>
 </template>
@@ -28,12 +37,14 @@ import QuizStep from '@/components/quiz/QuizStep.vue'
 import activities from '@/assets/activities.json'
 import TagsGroup from '@/components/dsfr/TagsGroup.vue'
 import Button from '@/components/dsfr/Button.vue'
+import Link from '@/components/dsfr/Link.vue'
 
 export default {
   components: {
     QuizStep,
     TagsGroup,
-    Button
+    Button,
+    Link
   },
   props: {
     title: {
