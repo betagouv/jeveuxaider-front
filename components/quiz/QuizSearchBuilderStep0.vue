@@ -1,14 +1,17 @@
 <template>
   <QuizStep :title="title" :slogan="slogan" :picture="picture" :mobile-picture="mobilePicture">
     <div class="flex flex-col lg:flex-row lg:items-center gap-8">
-      <Button
-        size="lg"
-        icon="RiArrowRightLine"
-        icon-position="right"
-        @click.native="onNextStep"
-      >
-        {{ buttonLabel }}
-      </Button>
+      <div>
+        <Button
+          size="lg"
+          icon="RiArrowRightLine"
+          icon-position="right"
+          class=""
+          @click.native="onNextStep"
+        >
+          {{ buttonLabel }}
+        </Button>
+      </div>
       <slot name="button-right" />
     </div>
     <slot name="bottom" />

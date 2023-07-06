@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col lg:flex-row h-screen bg-white lg:min-h-[800px]">
+  <div class="flex flex-col lg:flex-row h-screen bg-white lg:min-h-[895px]">
     <div
       :class="[
         'hidden relative lg:block w-[700px]',
@@ -55,7 +55,7 @@
         <div
           v-if="mobilePicture"
           :class="[
-            'block relative lg:hidden h-[225px] w-full overflow-hidden',
+            'block relative lg:hidden h-[225px] overflow-hidden',
           ]"
         >
           <img
@@ -63,7 +63,7 @@
             :srcset="`/images/quiz/${mobilePicture}@2x.jpg 2x`"
             alt=""
             :class="[
-              'object-cover w-full',
+              'object-cover h-full w-full',
             ]"
           >
         </div>
