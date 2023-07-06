@@ -1,5 +1,5 @@
 <template>
-  <QuizStep :title="title" :slogan="slogan" :picture="picture">
+  <QuizStep :title="title" :slogan="slogan" :picture="picture" :mobile-picture="mobilePicture">
     <div class="flex flex-col lg:flex-row lg:items-center gap-8">
       <Button
         size="lg"
@@ -34,6 +34,10 @@ export default {
       default: null
     },
     picture: {
+      type: String,
+      required: true
+    },
+    mobilePicture: {
       type: String,
       required: true
     },

@@ -98,7 +98,7 @@ export default {
       this.$toast.info({
         component: Toast,
         props: {
-          message: "Vous avez bloqué l'accès votre position",
+          message: "Vous avez bloqué l'accès à votre position",
           errors: [
             "À droite de la barre d'adresse, appuyez sur l'icône de localisation",
             "Puis sélectionnez: Toujours autoriser l'accès à votre position"

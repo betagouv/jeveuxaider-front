@@ -5,6 +5,7 @@
       title="Trouvez en quelques clics votre prochaine mission de bénévolat"
       slogan="Le bénévolat et vous"
       picture="quiz-step-0"
+      mobile-picture="quiz-step-0-mobile"
     >
       <template #button-right>
         <div class="text-[#666666] text-xl">
