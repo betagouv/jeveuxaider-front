@@ -51,7 +51,11 @@ export default {
       return index < this.$store.getters['quiz/step']
     },
     onPreviousStepClick () {
-      this.$store.commit('quiz/previousStep')
+      if (this.$store.getters['quiz/step'] === 3 && this.$store.getters['quiz/query']?.type !== 'Mission en présentiel') {
+        this.$store.commit('quiz/setStep', 1)
+      } else {
+        this.$store.commit('quiz/previousStep')
+      }
     },
     onStepClick (index) {
       if (this.isStepActive(index)) {
