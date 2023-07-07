@@ -4,6 +4,7 @@
       <QuizOption
         title="Quelques heures"
         description="C’est déjà beaucoup 😇"
+        :selected="$store.getters['quiz/query']?.commitment__total === '<=7'"
         @click.native="onClickOption({
           commitment__total: '<=7',
           duration: 'day',
@@ -17,6 +18,7 @@
       <QuizOption
         title="Quelques jours"
         description="Wahou 👏"
+        :selected="$store.getters['quiz/query']?.commitment__total === '<=35'"
         @click.native="onClickOption({
           commitment__total: '<=35',
           duration: '5_days',
@@ -30,6 +32,7 @@
       <QuizOption
         title="De manière récurrente"
         description="Vous êtes formidable 🤩"
+        :selected="$store.getters['quiz/query']?.commitment__total === '<=84'"
         @click.native="onClickOption({
           commitment__total: '<=84',
           duration: 'day',

@@ -4,6 +4,7 @@
       <QuizOption
         title="Autour de moi"
         description="Via la géolocalisation de votre navigateur"
+        :selected="$store.getters['quiz/navigatorGeolocationSelected']"
         @click.native="onClickAroundMe"
       >
         <template #icon>
@@ -17,11 +18,13 @@
       <QuizOption
         title="Ville ou code postal"
         :selectable="false"
+        :selected="$store.getters['quiz/query']?.aroundLatLng ? true : false"
       >
         <template #icon>
           <IconFrance />
         </template>
         <InputAutocomplete
+          :value="$store.getters['quiz/query'].city"
           icon="LocationMarkerIcon"
           name="adress"
           placeholder="Renseignez une ville ou un code postal"
@@ -85,12 +88,14 @@ export default {
   },
   methods: {
     onClickAroundMe () {
+      this.resetCityAndCoordinates()
       this.geolocationLoading = true
       navigator.geolocation.getCurrentPosition(this.onSuccessGeolocation, this.onErrorGeolocation)
     },
     onSuccessGeolocation (data) {
-      console.log('onSuccessGeolocation', data)
+      // console.log('onSuccessGeolocation', data)
       this.geolocationLoading = false
+      this.$store.commit('quiz/setNavigatorGeolocationSelected', true)
       this.$store.commit('algoliaSearch/setNavigatorGeolocation', data)
       this.onNextStep('Autour de moi')
     },
@@ -105,17 +110,28 @@ export default {
           ]
         }
       })
+      this.$store.commit('quiz/setNavigatorGeolocationSelected', false)
       this.geolocationLoading = false
     },
     handleSelectedGeo (item) {
+      this.$store.commit('quiz/setNavigatorGeolocationSelected', false)
       if (item) {
         this.$store.commit('quiz/setQuery', {
           ...this.$store.getters['quiz/query'],
           city: item.city,
           aroundLatLng: `${item.coordinates[1]},${item.coordinates[0]}`
         })
+        this.onNextStep(item.city)
+      } else {
+        this.resetCityAndCoordinates()
       }
-      this.onNextStep(item.city)
+    },
+    resetCityAndCoordinates () {
+      this.$store.commit('quiz/setQuery', {
+        ...this.$store.getters['quiz/query'],
+        city: null,
+        aroundLatLng: null
+      })
     },
     onNextStep (value) {
       window.plausible &&

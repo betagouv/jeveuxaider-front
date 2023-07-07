@@ -4,6 +4,7 @@
       <QuizOption
         title="Près de chez moi"
         description="Sur le terrain, proche de chez vous"
+        :selected="$store.getters['quiz/query']?.type === 'Mission en présentiel'"
         @click.native="onClickOption('Mission en présentiel')"
       >
         <template #icon>
@@ -13,6 +14,7 @@
       <QuizOption
         title="Depuis chez moi"
         description="De votre côté en toute autonomie"
+        :selected="$store.getters['quiz/query']?.type === 'Mission à distance'"
         @click.native="onClickOption('Mission à distance')"
       >
         <template #icon>
@@ -22,6 +24,7 @@
       <QuizOption
         title="Peu importe"
         description="En présentiel ou en télébénévolat"
+        :selected="$store.getters['quiz/query']?.type === ''"
         @click.native="onClickOption('')"
       >
         <template #icon>

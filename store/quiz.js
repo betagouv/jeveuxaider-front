@@ -1,11 +1,13 @@
 export const state = () => ({
   step: 0,
-  query: {}
+  query: {},
+  navigatorGeolocationSelected: false
 })
 
 export const getters = {
   step: state => state.step,
-  query: state => state.query
+  query: state => state.query,
+  navigatorGeolocationSelected: state => state.navigatorGeolocationSelected
 }
 
 export const mutations = {
@@ -20,6 +22,9 @@ export const mutations = {
   },
   setQuery: (state, payload) => {
     state.query = payload
+  },
+  setNavigatorGeolocationSelected: (state, payload) => {
+    state.navigatorGeolocationSelected = payload
   }
 }
 

@@ -2,9 +2,9 @@
   <div class="flex flex-col lg:flex-row h-screen bg-white lg:min-h-[895px]">
     <div
       :class="[
-        'hidden relative lg:block w-[700px]',
+        'hidden relative lg:block',
         {'w-[489px]':$store.getters['quiz/step'] === 0 },
-        {'w-[700px]':$store.getters['quiz/step'] > 0 }
+        {'w-[600px]':$store.getters['quiz/step'] > 0 }
       ]"
     >
       <img
@@ -12,15 +12,17 @@
         :srcset="`/images/quiz/${picture}@2x.jpg 2x`"
         alt=""
         :class="[
-          'object-cover w-[700px] h-full ',
+          'object-cover w-[600px] h-full ',
         ]"
       >
-      <div v-if="$store.getters['quiz/step'] > 0" class="absolute bottom-14 left-14">
-        <Heading as="h2" size="alt-lg" color="text-white">
-          <span class="block">Liberté<span class="text-jva-orange-300">.</span></span>
-          <span class="block">Égalité<span class="text-jva-orange-300">.</span></span>
-          <span class="block">Je veux aider<span class="text-jva-orange-300">.</span></span>
-        </Heading>
+      <div v-if="$store.getters['quiz/step'] > 0" class="h-screen absolute top-0 left-0 w-full">
+        <div class="flex flex-col justify-end h-screen p-14">
+          <Heading as="h2" size="alt-lg" color="text-white">
+            <span class="block">Liberté<span class="text-jva-orange-300">.</span></span>
+            <span class="block">Égalité<span class="text-jva-orange-300">.</span></span>
+            <span class="block">Je veux aider<span class="text-jva-orange-300">.</span></span>
+          </Heading>
+        </div>
       </div>
     </div>
 

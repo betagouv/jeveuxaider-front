@@ -2,7 +2,9 @@
   <div
     :class="[
       'group flex gap-4 lg:gap-6 p-4 lg:p-6 border ',
-      {'hover:bg-gray-50 cursor-pointer': selectable}]"
+      {'cursor-pointer': selectable},
+      {'hover:bg-gray-50 cursor-pointer': selectable && !selected},
+      {'bg-[#F3F4FE] border-[#000091]': selected}]"
   >
     <div class="border-r pr-3 lg:pr-6">
       <slot name="icon" />
@@ -33,6 +35,10 @@ export default {
     selectable: {
       type: Boolean,
       default: true
+    },
+    selected: {
+      type: Boolean,
+      default: null
     }
   }
 }

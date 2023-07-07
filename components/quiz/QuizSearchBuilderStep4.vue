@@ -24,7 +24,7 @@
         icon="RiArrowRightLine"
         icon-position="right"
         type="secondary"
-        @click.native="handleClick"
+        @click.native="handleClickAll"
       >
         Toutes les activités
       </Link>
@@ -84,6 +84,24 @@ export default {
     // console.log('route', this.$route)
   },
   methods: {
+    handleClickAll () {
+      this.selectedActivities = []
+      this.$store.commit('quiz/setQuery', {
+        ...this.$store.getters['quiz/query'],
+        'activities.name': null
+      })
+
+      window.plausible &&
+        window.plausible('Quiz - Step 4', {
+          props: {
+            isLogged: this.$store.getters.isLogged,
+            quizPath: this.$route.path,
+            value: 'All'
+          }
+        })
+
+      this.setCookieAndRedirect()
+    },
     handleClick () {
       this.$store.commit('quiz/setQuery', {
         ...this.$store.getters['quiz/query'],
@@ -98,7 +116,9 @@ export default {
             value: this.selectedActivitiesNames?.length
           }
         })
-
+      this.setCookieAndRedirect()
+    },
+    setCookieAndRedirect () {
       this.$cookies.set('utm_source', 'quiz')
       this.$cookies.set('utm_campaign', this.$route.path)
 
