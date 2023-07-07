@@ -34,9 +34,9 @@
         description="Vous êtes formidable 🤩"
         :selected="$store.getters['quiz/query']?.commitment__total === '<=84'"
         @click.native="onClickOption({
-          commitment__total: '<=84',
+          commitment__total: '<=364',
           duration: 'day',
-          time_period: 'month'
+          time_period: 'week'
         })"
       >
         <template #icon>

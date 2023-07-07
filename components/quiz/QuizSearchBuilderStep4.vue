@@ -17,7 +17,7 @@
         :disabled="selectedActivities.length === 0"
         @click.native="handleClick"
       >
-        {{ selectedActivities.length|pluralize('sélectionnée') }}
+        Voir ma sélection
       </Button>
       <Link
         size="lg"
