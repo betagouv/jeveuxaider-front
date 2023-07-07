@@ -69,7 +69,7 @@ export default {
   data () {
     return {
       activities,
-      selectedActivities: []
+      selectedActivities: [...this.$store.getters['quiz/activitiesSelected']]
     }
   },
   computed: {
@@ -81,11 +81,12 @@ export default {
     }
   },
   mounted () {
-    // console.log('route', this.$route)
+    //
   },
   methods: {
     handleClickAll () {
       this.selectedActivities = []
+      this.$store.commit('quiz/setActivitiesSelected', [])
       this.$store.commit('quiz/setQuery', {
         ...this.$store.getters['quiz/query'],
         'activities.name': null
@@ -103,6 +104,8 @@ export default {
       this.setCookieAndRedirect()
     },
     handleClick () {
+      this.$store.commit('quiz/setActivitiesSelected', this.selectedActivities)
+
       this.$store.commit('quiz/setQuery', {
         ...this.$store.getters['quiz/query'],
         'activities.name': this.selectedActivitiesNames.map(activity => activity.name).join('|')
