@@ -12,6 +12,7 @@
           v-for="notification in notifications"
           :key="notification.id"
           :notification="notification"
+          variant="dropdown"
         />
         <div class="p-4 text-center">
           <Link class="text-sm" icon="ChevronRightIcon" @click.native="goToNotifications">

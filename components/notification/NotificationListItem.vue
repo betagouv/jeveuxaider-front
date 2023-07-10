@@ -1,13 +1,25 @@
 <template>
   <div
-    class="p-4 flex gap-4 items-center cursor-pointer hover:bg-gray-50"
+    class="p-4 flex gap-4 items-center justify-between cursor-pointer hover:bg-gray-50"
     @click="handleClick(notification)"
   >
     <div>
-      <div class="text-sm text-black">
-        {{ message }}
-      </div>
-      <div class="text-xs">
+      <div
+        v-if="message"
+        :class="[
+          'text-black',
+          {'text-base mb-2': variant === 'card'},
+          {'text-sm': variant === 'dropdown'}
+        ]"
+        v-html="$options.filters.marked(message)"
+      />
+      <div
+        :class="[
+          'text-gray-600 first-letter:uppercase',
+          {'text-sm': variant === 'card'},
+          {'text-xs': variant === 'dropdown'}
+        ]"
+      >
         {{ $dayjs(notification.created_at).fromNow() }}
       </div>
     </div>
@@ -25,24 +37,43 @@ export default {
     notification: {
       type: Object,
       required: true
+    },
+    variant: {
+      type: String,
+      default: 'dropdown' // dropdown, card
     }
   },
   computed: {
     message () {
       switch (this.notification.type) {
+        case 'App\\Notifications\\ParticipationCreated':
+          return `Votre demande de participation a bien été enregistrée pour la mission **${this.notification.data.mission_name}**`
         case 'App\\Notifications\\ResetPassword':
-          return 'Une demande de réinitialisation de votre mot de passe a été effectuée'
+          return 'Une demande de **réinitialisation de votre mot de passe** a été effectuée'
         default:
           return this.notification.type
       }
     }
+
   },
   methods: {
     handleClick (notification) {
-      this.markNotificationAsRead(notification)
+      const redirection = this.redirectionResolver(notification)
+      if (this.notification.read_at === null) {
+        this.$store.dispatch('notifications/markNotificationAsRead', notification)
+        this.$emit('refetch')
+      }
+      if (redirection) {
+        this.$router.push(redirection)
+      }
     },
-    async markNotificationAsRead (notification) {
-      await this.$axios.get(`/user/notifications/${notification.id}/mark-as-read`)
+    redirectionResolver () {
+      switch (this.notification.type) {
+        case 'App\\Notifications\\ParticipationCreated':
+          return `/messages/${this.notification.data.conversation_id}`
+        default:
+          return null
+      }
     }
   }
 }
