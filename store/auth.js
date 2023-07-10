@@ -22,6 +22,7 @@ export const actions = {
       })
     if (res?.data) {
       commit('setUser', res.data)
+      dispatch('notifications/fetchNotifications', null, { root: true })
       await dispatch('messaging/getUserUnreadMessagesCount', null, { root: true })
     }
   },

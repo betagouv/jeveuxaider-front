@@ -23,7 +23,7 @@
           >
         </nuxt-link>
       </div>
-      <nav role="navigation" class="flex gap-8">
+      <nav role="navigation" class="flex items-center gap-8">
         <div class="flex divide-x divide-gray-200">
           <NavItem
             v-for="link in primaryNavigation"
@@ -42,7 +42,12 @@
             {{ link.name }}
           </NavItem>
         </div>
-        <DropdownUser v-if="$store.getters.isLogged" class="" />
+
+        <template v-if="$store.getters.isLogged">
+          <DropdownUserNotifications />
+          <DropdownUser />
+        </template>
+
         <template v-if="!$store.getters.isLogged">
           <DsfrButton type="tertiary" size="sm" icon="UserIcon" @click="$router.push('/login')">
             Mon compte
@@ -144,12 +149,14 @@
 import { CalendarIcon, SearchIcon, ChatAltIcon } from '@vue-hero-icons/outline'
 import { FocusLoop } from '@vue-a11y/focus-loop'
 import DropdownUser from '@/components/custom/DropdownUser'
+import DropdownUserNotifications from '@/components/custom/DropdownUserNotifications'
 import DsfrButton from '@/components/dsfr/Button.vue'
 import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 
 export default {
   components: {
     DropdownUser,
+    DropdownUserNotifications,
     DsfrButton,
     FocusLoop,
     HeaderBanner
