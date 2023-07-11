@@ -144,8 +144,7 @@ export default {
       this.setCookieAndRedirect()
     },
     setCookieAndRedirect () {
-      this.$cookies.set('utm_source', 'quiz')
-      this.$cookies.set('utm_campaign', this.$route.path)
+      this.$cookies.set('utm_medium', this.$route.path)
 
       this.$router.push({
         path: '/missions-benevolat',
