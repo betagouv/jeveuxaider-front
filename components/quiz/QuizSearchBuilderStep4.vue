@@ -138,7 +138,7 @@ export default {
           props: {
             isLogged: this.$store.getters.isLogged,
             quizPath: this.$route.path,
-            value: this.selectedActivitiesNames
+            value: this.selectedActivitiesNames.map(activity => activity.name).join('|')
           }
         })
       this.setCookieAndRedirect()
