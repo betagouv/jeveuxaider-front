@@ -31,8 +31,11 @@ export default {
     }
   },
   computed: {
+    currentStep () {
+      return this.$route.query?.step ? parseInt(this.$route.query?.step) : 0
+    },
     title () {
-      switch (this.$store.getters['quiz/step']) {
+      switch (this.currentStep) {
         case 1:
           return 'Type de mission'
         case 2:
@@ -48,18 +51,18 @@ export default {
   },
   methods: {
     isStepActive (index) {
-      return index < this.$store.getters['quiz/step']
+      return index < this.currentStep
     },
     onPreviousStepClick () {
-      if (this.$store.getters['quiz/step'] === 3 && this.$store.getters['quiz/query']?.type !== 'Mission en présentiel') {
-        this.$store.commit('quiz/setStep', 1)
+      if (this.currentStep === 3 && this.$route.query?.type !== 'Mission en présentiel') {
+        this.$router.push({ query: { ...this.$route.query, step: 1 } })
       } else {
-        this.$store.commit('quiz/previousStep')
+        this.$router.push({ query: { ...this.$route.query, step: this.currentStep - 1 } })
       }
     },
     onStepClick (index) {
       if (this.isStepActive(index)) {
-        this.$store.commit('quiz/setStep', index + 1)
+        this.$router.push({ query: { ...this.$route.query, step: index + 1 } })
       }
     }
   }

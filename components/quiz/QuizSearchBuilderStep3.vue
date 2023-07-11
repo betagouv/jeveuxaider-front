@@ -4,7 +4,7 @@
       <QuizOption
         title="Quelques heures"
         description="C’est déjà beaucoup 😇"
-        :selected="$store.getters['quiz/query']?.commitment__total === '<=7'"
+        :selected="$route.query?.commitment__total === '<=7'"
         @click.native="onClickOption({
           commitment__total: '<=7',
           duration: 'day',
@@ -18,7 +18,7 @@
       <QuizOption
         title="Quelques jours"
         description="Wahou 👏"
-        :selected="$store.getters['quiz/query']?.commitment__total === '<=35'"
+        :selected="$route.query?.commitment__total === '<=35'"
         @click.native="onClickOption({
           commitment__total: '<=35',
           duration: '5_days',
@@ -32,7 +32,7 @@
       <QuizOption
         title="De manière récurrente"
         description="Vous êtes formidable 🤩"
-        :selected="$store.getters['quiz/query']?.commitment__total === '<=84'"
+        :selected="$route.query?.commitment__total === '<=84'"
         @click.native="onClickOption({
           commitment__total: '<=364',
           duration: 'day',
@@ -76,26 +76,18 @@ export default {
       required: true
     }
   },
-  mounted () {
-    // console.log('route', this.$route)
-  },
   methods: {
     onClickOption (options) {
-      this.$store.commit('quiz/setQuery', {
-        ...this.$store.getters['quiz/query'],
-        ...options
-      })
-
       window.plausible &&
         window.plausible('Quiz - Step 3', {
           props: {
             isLogged: this.$store.getters.isLogged,
             quizPath: this.$route.path,
-            value: options
+            value: options.commitment__total
           }
         })
 
-      this.$store.commit('quiz/nextStep')
+      this.$router.push({ query: { ...this.$route.query, step: 4, ...options } })
     }
   }
 }

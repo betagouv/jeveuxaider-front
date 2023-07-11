@@ -4,7 +4,7 @@
       <QuizOption
         title="Autour de moi"
         description="Via la géolocalisation de votre navigateur"
-        :selected="$store.getters['quiz/navigatorGeolocationSelected']"
+        :selected="$route.query?.geolocalisation === 'true'"
         @click.native="onClickAroundMe"
       >
         <template #icon>
@@ -18,13 +18,13 @@
       <QuizOption
         title="Ville ou code postal"
         :selectable="false"
-        :selected="$store.getters['quiz/query']?.aroundLatLng ? true : false"
+        :selected="$route.query?.aroundLatLng ? true : false"
       >
         <template #icon>
           <IconFrance />
         </template>
         <InputAutocomplete
-          :value="$store.getters['quiz/query'].city"
+          :value="$route.query.city"
           icon="LocationMarkerIcon"
           name="adress"
           placeholder="Renseignez une ville ou un code postal"
@@ -83,9 +83,6 @@ export default {
   },
   computed: {
   },
-  mounted () {
-    // console.log('route', this.$route)
-  },
   methods: {
     onClickAroundMe () {
       this.resetCityAndCoordinates()
@@ -93,11 +90,10 @@ export default {
       navigator.geolocation.getCurrentPosition(this.onSuccessGeolocation, this.onErrorGeolocation)
     },
     onSuccessGeolocation (data) {
-      // console.log('onSuccessGeolocation', data)
+      console.log('onSuccessGeolocation', data)
       this.geolocationLoading = false
-      this.$store.commit('quiz/setNavigatorGeolocationSelected', true)
       this.$store.commit('algoliaSearch/setNavigatorGeolocation', data)
-      this.onNextStep('Autour de moi')
+      this.onNextStep({ geolocalisation: true })
     },
     onErrorGeolocation () {
       this.$toast.info({
@@ -110,27 +106,28 @@ export default {
           ]
         }
       })
-      this.$store.commit('quiz/setNavigatorGeolocationSelected', false)
       this.geolocationLoading = false
     },
     handleSelectedGeo (item) {
-      this.$store.commit('quiz/setNavigatorGeolocationSelected', false)
       if (item) {
-        this.$store.commit('quiz/setQuery', {
-          ...this.$store.getters['quiz/query'],
+        this.onNextStep({
           city: item.city,
-          aroundLatLng: `${item.coordinates[1]},${item.coordinates[0]}`
+          aroundLatLng: `${item.coordinates[1]},${item.coordinates[0]}`,
+          geolocalisation: null
         })
-        this.onNextStep(item.city)
       } else {
         this.resetCityAndCoordinates()
       }
     },
     resetCityAndCoordinates () {
-      this.$store.commit('quiz/setQuery', {
-        ...this.$store.getters['quiz/query'],
-        city: null,
-        aroundLatLng: null
+      console.log('resetCityAndCoordinates')
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          city: null,
+          aroundLatLng: null,
+          geolocalisation: null
+        }
       })
     },
     onNextStep (value) {
@@ -143,7 +140,7 @@ export default {
           }
         })
 
-      this.$store.commit('quiz/nextStep')
+      this.$router.push({ query: { ...this.$route.query, step: 3, ...value } })
     }
   }
 }

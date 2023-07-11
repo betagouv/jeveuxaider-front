@@ -59,22 +59,57 @@ export default {
       type: String,
       required: true
     },
-    selectableActivitiesIds: {
+    selectableActivitiesProcheDeChezMoiIds: {
       type: Array,
       default () {
-        return [35, 16, 12, 10, 1, 33, 39, 38, 11, 5]
+        return [
+          10, // Mentorat & Parrainage
+          8, // Lutte contre l’isolement
+          6, // Animation / loisirs
+          17, // Soutien scolaire et formati
+          24, // Communication
+          11, // Evènementiel
+          28, // Distribution
+          4, // Alphabétisation
+          19, // Actions de sensibilisation
+          22 // Travaux manuels
+        ]
+      }
+    },
+    selectableActivitiesADistanceIds: {
+      type: Array,
+      default () {
+        return [
+          24, // Communication
+          8, // Lutte contre l’isolement
+          26, // Recherche de partenariats
+          39, // Informatique
+          10, // Mentorat & Parrainage
+          30, // Gestion financière / comptabilité
+          19, // Actions de sensibilisation
+          11, // Evènementiel
+          38, // Gestion des ressources humaines
+          31 // Gestion administrative
+        ]
       }
     }
   },
   data () {
     return {
       activities,
-      selectedActivities: [...this.$store.getters['quiz/activitiesSelected']]
+      selectedActivities: []
     }
   },
   computed: {
+    selectableActivitiesResolverIds () {
+      if (this.$route.query?.type === 'Mission à distance') {
+        return this.selectableActivitiesADistanceIds
+      } else {
+        return this.selectableActivitiesProcheDeChezMoiIds
+      }
+    },
     selectableActivities () {
-      return this.activities.filter(item => this.selectableActivitiesIds.includes(item.id))
+      return this.activities.filter(item => this.selectableActivitiesResolverIds.includes(item.id))
     },
     selectedActivitiesNames () {
       return this.activities.filter(item => this.selectedActivities.flatMap(element => element.id).includes(item.id))
@@ -86,12 +121,6 @@ export default {
   methods: {
     handleClickAll () {
       this.selectedActivities = []
-      this.$store.commit('quiz/setActivitiesSelected', [])
-      this.$store.commit('quiz/setQuery', {
-        ...this.$store.getters['quiz/query'],
-        'activities.name': null
-      })
-
       window.plausible &&
         window.plausible('Quiz - Step 4', {
           props: {
@@ -104,19 +133,12 @@ export default {
       this.setCookieAndRedirect()
     },
     handleClick () {
-      this.$store.commit('quiz/setActivitiesSelected', this.selectedActivities)
-
-      this.$store.commit('quiz/setQuery', {
-        ...this.$store.getters['quiz/query'],
-        'activities.name': this.selectedActivitiesNames.map(activity => activity.name).join('|')
-      })
-
       window.plausible &&
         window.plausible('Quiz - Step 4', {
           props: {
             isLogged: this.$store.getters.isLogged,
             quizPath: this.$route.path,
-            value: this.selectedActivitiesNames?.length
+            value: this.selectedActivitiesNames
           }
         })
       this.setCookieAndRedirect()
@@ -128,7 +150,8 @@ export default {
       this.$router.push({
         path: '/missions-benevolat',
         query: {
-          ...this.$store.getters['quiz/query'],
+          ...this.$route.query,
+          'activities.name': this.selectedActivitiesNames.map(activity => activity.name).join('|'),
           utm_source: 'quiz',
           utm_campaign: this.$route.path
         }

@@ -4,7 +4,7 @@
       <QuizOption
         title="Près de chez moi"
         description="Sur le terrain, proche de chez vous"
-        :selected="$store.getters['quiz/query']?.type === 'Mission en présentiel'"
+        :selected="$route.query?.type === 'Mission en présentiel'"
         @click.native="onClickOption('Mission en présentiel')"
       >
         <template #icon>
@@ -14,7 +14,7 @@
       <QuizOption
         title="Depuis chez moi"
         description="De votre côté en toute autonomie"
-        :selected="$store.getters['quiz/query']?.type === 'Mission à distance'"
+        :selected="$route.query?.type === 'Mission à distance'"
         @click.native="onClickOption('Mission à distance')"
       >
         <template #icon>
@@ -24,8 +24,8 @@
       <QuizOption
         title="Peu importe"
         description="En présentiel ou en télébénévolat"
-        :selected="$store.getters['quiz/query']?.type === ''"
-        @click.native="onClickOption('')"
+        :selected="$route.query?.type === null"
+        @click.native="onClickOption(null)"
       >
         <template #icon>
           <IconFrance />
@@ -64,16 +64,8 @@ export default {
       required: true
     }
   },
-  created () {
-    // console.log('route', this.$route)
-  },
   methods: {
     onClickOption (value) {
-      this.$store.commit('quiz/setQuery', {
-        ...this.$store.getters['quiz/query'],
-        type: value
-      })
-
       window.plausible &&
         window.plausible('Quiz - Step 1', {
           props: {
@@ -84,9 +76,9 @@ export default {
         })
 
       if (value === 'Mission en présentiel') {
-        this.$store.commit('quiz/nextStep')
+        this.$router.push({ query: { ...this.$route.query, step: 2, type: value } })
       } else {
-        this.$store.commit('quiz/setStep', 3)
+        this.$router.push({ query: { ...this.$route.query, step: 3, type: value } })
       }
     }
   }

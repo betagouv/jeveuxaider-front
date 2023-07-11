@@ -49,9 +49,6 @@ export default {
       default: 'Suivez le guide'
     }
   },
-  mounted () {
-    // console.log('route', this.$route)
-  },
   methods: {
     onNextStep () {
       window.plausible &&
@@ -62,7 +59,7 @@ export default {
           }
         })
 
-      this.$store.commit('quiz/nextStep')
+      this.$router.push({ query: { ...this.$route.query, step: 1 } })
     }
   }
 }

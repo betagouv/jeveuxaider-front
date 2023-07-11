@@ -3,8 +3,8 @@
     <div
       :class="[
         'hidden relative lg:block',
-        {'w-[489px]':$store.getters['quiz/step'] === 0 },
-        {'w-[600px]':$store.getters['quiz/step'] > 0 }
+        {'w-[489px]':currentStep === 0 },
+        {'w-[600px]':currentStep > 0 }
       ]"
     >
       <img
@@ -15,7 +15,7 @@
           'object-cover w-[600px] h-full ',
         ]"
       >
-      <div v-if="$store.getters['quiz/step'] > 0" class="h-screen absolute top-0 left-0 w-full">
+      <div v-if="currentStep > 0" class="h-screen absolute top-0 left-0 w-full">
         <div class="flex flex-col justify-end h-screen p-14">
           <Heading as="h2" size="alt-lg" color="text-white">
             <span class="block">Liberté<span class="text-jva-orange-300">.</span></span>
@@ -27,7 +27,7 @@
     </div>
 
     <main id="main" class="flex flex-col flex-1">
-      <template v-if="$store.getters['quiz/step'] === 0">
+      <template v-if="currentStep === 0">
         <div
           class="flex justify-start items-center relative px-6 py-4 lg:p-6 h-[94px] lg:h-[116px] border-b"
         >
@@ -70,7 +70,7 @@
           >
         </div>
       </template>
-      <QuizSteps v-if="$store.getters['quiz/step'] > 0" class="bg-[#F9F6F2]" />
+      <QuizSteps v-if="currentStep > 0" class="bg-[#F9F6F2]" />
       <div class="max-w-4xl flex flex-col flex-1 bg-white">
         <div class="flex flex-col flex-1 px-[32px] py-[24px] lg:px-[80px] lg:py-[56px]">
           <div v-if="slogan" class="text-lg lg:text-xl text-[#ED7A5A] font-bold uppercase mb-4">
@@ -79,8 +79,8 @@
           <div
             :class="[
               'text-black font-bold mb-8 lg:mb-12 leading-snug',
-              {'text-[32px] lg:text-[56px]': $store.getters['quiz/step'] === 0},
-              {'text-[28px] lg:text-[40px]': $store.getters['quiz/step'] > 0}
+              {'text-[32px] lg:text-[56px]': currentStep === 0},
+              {'text-[28px] lg:text-[40px]': currentStep > 0}
             ]"
           >
             {{ title }}
@@ -88,7 +88,7 @@
           <slot />
         </div>
       </div>
-      <slot v-if="$store.getters['quiz/step'] === 0" name="bottom">
+      <slot v-if="currentStep === 0" name="bottom">
         <div class="hidden lg:block px-[32px] lg:px-[80px]">
           <picture aria-hidden="true" class="">
             <source
@@ -144,6 +144,11 @@ export default {
     mobilePicture: {
       type: String,
       default: null
+    }
+  },
+  computed: {
+    currentStep () {
+      return this.$route.query?.step ? parseInt(this.$route.query?.step) : 0
     }
   }
 }
