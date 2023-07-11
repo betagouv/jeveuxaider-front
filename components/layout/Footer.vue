@@ -2,7 +2,22 @@
   <footer role="contentinfo" class="relative z-1 border-t-2 border-[#000091]">
     <div class="bg-gray-50 py-8">
       <div class="container">
-        <div class="grid grid-cols-1 md:grid-cols-5 text-xs gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-6 text-xs gap-8">
+          <div>
+            <div class="font-bold mb-8">
+              Les activités bénévoles
+            </div>
+            <div class="grid grid-cols-1 gap-4">
+              <nuxt-link
+                v-for="activity in activities"
+                :key="activity.name"
+                :to="activity.url"
+                class="hover:underline text-gray-600 truncate"
+              >
+                {{ activity.name }}
+              </nuxt-link>
+            </div>
+          </div>
           <div class="md:col-span-2">
             <div class="font-bold mb-8">
               Le bénévolat en France
@@ -12,9 +27,9 @@
                 v-for="city in cities"
                 :key="city.name"
                 :to="city.url"
-                class="hover:underline text-gray-600"
+                class="hover:underline text-gray-600 truncate"
               >
-                {{ city.name }}
+                Bénévolat {{ city.name }}
               </nuxt-link>
             </div>
           </div>
@@ -150,6 +165,44 @@ export default {
   },
   data () {
     return {
+      activities: [
+        {
+          name: 'Maraude',
+          url: '/activites/maraude'
+        },
+        {
+          name: 'Soins aux animaux',
+          url: '/activites/soins-aux-animaux'
+        },
+        {
+          name: 'Alphabétisation',
+          url: '/activites/alphabetisation-apprentissage-du-francais-fle'
+        },
+        {
+          name: 'Ramassage de déchets',
+          url: '/activites/ramassage-de-dechets'
+        },
+        {
+          name: 'Soutien scolaire',
+          url: '/activites/soutien-scolaire-et-formation'
+        },
+        {
+          name: 'Aides aux démarches administrative',
+          url: '/activites/aide-aux-demarches-administratives'
+        },
+        {
+          name: 'Droit et conseil juridique',
+          url: '/activites/droit-et-conseil-juridique'
+        },
+        {
+          name: 'Ecoute / Aide psychologique',
+          url: '/activites/ecoute-aide-psychologique'
+        },
+        {
+          name: 'Événementiel',
+          url: '/activites/evenementiel'
+        }
+      ],
       cities: [
         {
           name: 'Paris',
