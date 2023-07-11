@@ -15,9 +15,8 @@
         :class="[
           'h-[8px] w-[130px]',
           {'bg-[#EEE4D9]': !isStepActive(index)},
-          {'bg-jva-blue-500 cursor-pointer': isStepActive(index)}
+          {'bg-jva-blue-500': isStepActive(index)}
         ]"
-        @click="onStepClick(index)"
       />
     </div>
   </div>
@@ -54,11 +53,12 @@ export default {
       return index < this.currentStep
     },
     onPreviousStepClick () {
-      if (this.currentStep === 3 && this.$route.query?.type !== 'Mission en présentiel') {
-        this.$router.push({ query: { ...this.$route.query, step: 1 } })
-      } else {
-        this.$router.push({ query: { ...this.$route.query, step: this.currentStep - 1 } })
-      }
+      this.$router.back()
+      // if (this.currentStep === 3 && this.$route.query?.type !== 'Mission en présentiel') {
+      //   this.$router.push({ query: { ...this.$route.query, step: 1 } })
+      // } else {
+      //   this.$router.push({ query: { ...this.$route.query, step: this.currentStep - 1 } })
+      // }
     },
     onStepClick (index) {
       if (this.isStepActive(index)) {

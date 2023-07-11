@@ -152,8 +152,7 @@ export default {
         query: {
           ...this.$route.query,
           'activities.name': this.selectedActivitiesNames.map(activity => activity.name).join('|'),
-          utm_source: 'quiz',
-          utm_campaign: this.$route.path
+          utm_medium: this.$route.path
         }
       })
     }
