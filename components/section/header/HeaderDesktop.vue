@@ -44,6 +44,9 @@
         </div>
 
         <template v-if="$store.getters.isLogged">
+          <nuxt-link to="/messages">
+            <RiMailLine class="w-[20px] text-[#9CA3AF] fill-current hover:scale-105" />
+          </nuxt-link>
           <DropdownUserNotifications />
           <DropdownUser />
         </template>
@@ -146,7 +149,7 @@
 </template>
 
 <script>
-import { CalendarIcon, SearchIcon, ChatAltIcon } from '@vue-hero-icons/outline'
+import { CalendarIcon, SearchIcon } from '@vue-hero-icons/outline'
 import { FocusLoop } from '@vue-a11y/focus-loop'
 import DropdownUser from '@/components/custom/DropdownUser'
 import DropdownUserNotifications from '@/components/custom/DropdownUserNotifications'
@@ -181,8 +184,8 @@ export default {
         ]
       }
       return [
-        { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' },
-        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessagesCount'] }
+        { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' }
+        // { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessagesCount'] }
       ]
     },
     secondaryNavigation () {

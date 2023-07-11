@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-4 flex gap-4 items-center justify-between cursor-pointer hover:bg-gray-50"
+    class="p-4 lg:p-6 flex gap-4 lg:gap-6 items-center justify-between cursor-pointer hover:bg-gray-50"
     @click="handleClick(notification)"
   >
     <div>
@@ -23,11 +23,13 @@
         {{ $dayjs(notification.created_at).fromNow() }}
       </div>
     </div>
-    <div
-      v-if="notification.read_at === null"
-      aria-label="Message non lu"
-      class="flex-none w-3 h-3 bg-[#F95A5C] rounded-full"
-    />
+    <div class="w-3">
+      <div
+        v-if="notification.read_at === null"
+        aria-label="Notification non lue"
+        class="flex-none w-3 h-3 bg-[#F95A5C] rounded-full"
+      />
+    </div>
   </div>
 </template>
 
@@ -59,12 +61,12 @@ export default {
   methods: {
     handleClick (notification) {
       const redirection = this.redirectionResolver(notification)
+      if (redirection) {
+        this.$router.push(redirection)
+      }
       if (this.notification.read_at === null) {
         this.$store.dispatch('notifications/markNotificationAsRead', notification)
         this.$emit('refetch')
-      }
-      if (redirection) {
-        this.$router.push(redirection)
       }
     },
     redirectionResolver () {

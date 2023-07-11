@@ -2,19 +2,19 @@
   <Dropdown ref="dropdownUserNotifications">
     <template #button>
       <button class="group">
-        <RiNotification3Line class="h-[24px] text-jva-blue-500 fill-current hover:scale-105" />
+        <RiNotification2Line class="w-[20px] text-[#9CA3AF] fill-current hover:scale-105" />
       </button>
     </template>
 
     <template #items>
-      <div class="w-[330px] grid grid-cols-1 divide-y divide-y-[#ECECEC] ">
+      <div class="w-[350px] grid grid-cols-1 divide-y divide-y-[#ECECEC] ">
         <NotificationListItem
           v-for="notification in notifications"
           :key="notification.id"
           :notification="notification"
           variant="dropdown"
         />
-        <div class="p-4 text-center">
+        <div class="p-4 lg:p-6 text-center">
           <Link class="text-sm" icon="ChevronRightIcon" @click.native="goToNotifications">
             Voir toutes les notifications
           </Link>

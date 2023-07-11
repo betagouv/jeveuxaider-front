@@ -56,6 +56,7 @@ import RiLogoutBoxRLine from 'vue-remix-icons/icons/RiLogoutBoxRLine.vue'
 import RiCalendarEventLine from 'vue-remix-icons/icons/RiCalendarEventLine.vue'
 import RiUserSettingsLine from 'vue-remix-icons/icons/RiUserSettingsLine.vue'
 import RiUserLine from 'vue-remix-icons/icons/RiUserLine.vue'
+import RiNotification2Line from 'vue-remix-icons/icons/RiNotification2Line.vue'
 import RiNotification3Line from 'vue-remix-icons/icons/RiNotification3Line.vue'
 import RiArrowLeftLine from 'vue-remix-icons/icons/RiArrowLeftLine.vue'
 import RiHistoryLine from 'vue-remix-icons/icons/RiHistoryLine.vue'
@@ -72,6 +73,7 @@ import RiUserStarLine from 'vue-remix-icons/icons/RiUserStarLine.vue'
 import RiArrowUpLine from 'vue-remix-icons/icons/RiArrowUpLine.vue'
 import RiHeartLine from 'vue-remix-icons/icons/RiHeartLine.vue'
 import RiShieldUserLine from 'vue-remix-icons/icons/RiShieldUserLine.vue'
+import RiMailLine from 'vue-remix-icons/icons/RiMailLine.vue'
 import RiMailFill from 'vue-remix-icons/icons/RiMailFill.vue'
 import RiPhoneLine from 'vue-remix-icons/icons/RiPhoneLine.vue'
 import RiSuitcaseFill from 'vue-remix-icons/icons/RiSuitcaseFill.vue'
@@ -98,6 +100,7 @@ const components = {
   RiGroupFill,
   RiSuitcaseFill,
   RiPhoneLine,
+  RiMailLine,
   RiMailFill,
   RiShieldUserLine,
   RiArrowRightSLine,
@@ -115,6 +118,7 @@ const components = {
   RiHistoryLine,
   RiArrowRightLine,
   RiArrowLeftLine,
+  RiNotification2Line,
   RiNotification3Line,
   RiUserSettingsLine,
   RiUserLine,
