@@ -1,5 +1,5 @@
 <template>
-  <Dropdown ref="dropdownUserNotifications">
+  <Dropdown ref="dropdownUserNotifications" menu-button-class="leading-3">
     <template #button>
       <button class="group">
         <BellIcon class="text-[#9CA3AF] group-hover:scale-105" />
@@ -8,19 +8,28 @@
     </template>
 
     <template #items>
-      <div class="w-[350px] grid grid-cols-1 divide-y divide-y-[#ECECEC] ">
-        <NotificationListItem
-          v-for="notification in notifications"
-          :key="notification.id"
-          :notification="notification"
-          variant="dropdown"
-        />
-        <div class="p-4 lg:p-6 text-center">
-          <Link class="text-sm" icon="ChevronRightIcon" @click.native="goToNotifications">
-            Voir toutes les notifications
-          </Link>
+      <template v-if="notifications.length > 0">
+        <div class="w-[350px] grid grid-cols-1 divide-y divide-y-[#ECECEC]">
+          <div class="max-h-[300px] grid grid-cols-1 divide-y divide-y-[#ECECEC] overflow-y-scroll">
+            <NotificationListItem
+              v-for="notification in notifications"
+              :key="notification.id"
+              :notification="notification"
+              variant="dropdown"
+            />
+          </div>
+          <div class="p-4 lg:p-6 text-center">
+            <Link class="text-sm" icon="ChevronRightIcon" @click.native="goToNotifications">
+              Voir toutes les notifications
+            </Link>
+          </div>
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <div class="w-[350px] text-gray-400 p-4 text-sm text-center">
+          Aucune notification
+        </div>
+      </template>
     </template>
   </Dropdown>
 </template>
