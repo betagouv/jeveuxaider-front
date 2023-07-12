@@ -47,7 +47,8 @@ import {
   PlusCircleIcon,
   MinusCircleIcon,
   TagIcon,
-  StarIcon
+  StarIcon,
+  BellIcon
 } from '@vue-hero-icons/outline'
 import {
   InformationCircleIcon as InformationCircleSolidIcon,
@@ -67,6 +68,7 @@ import {
 } from '@vue-hero-icons/solid'
 
 const components = {
+  BellIcon,
   HandIcon,
   LocationMarkerSolidIcon,
   DesktopComputerIcon,

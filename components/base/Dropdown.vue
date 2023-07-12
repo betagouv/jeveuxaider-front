@@ -2,7 +2,7 @@
   <div v-click-outside="() => show = false" class="relative inline-block text-left">
     <div
       id="menu-button"
-      class="cursor-pointer"
+      class="cursor-pointer leading-3"
       :aria-expanded="show"
       aria-haspopup="true"
 

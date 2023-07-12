@@ -24,6 +24,7 @@ export const actions = {
       commit('setUser', res.data)
       dispatch('notifications/fetchNotifications', null, { root: true })
       await dispatch('messaging/getUserUnreadMessagesCount', null, { root: true })
+      await dispatch('notifications/getUserUnreadNotificationsCount', null, { root: true })
     }
   },
   async login ({ commit, dispatch }, form) {

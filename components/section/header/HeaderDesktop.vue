@@ -34,7 +34,7 @@
             class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1 relative"
           >
             <client-only>
-              <div v-if="link.count" class="absolute -top-1.5 -right-1 bg-[#e41e3f] px-1.5 py-0.5 rounded-full text-white font-bold text-xxs min-w-[20px] inline-flex justify-center">
+              <div v-if="link.count" class="absolute -top-1.5 -right-1 bg-[#FF463D] px-1.5 py-0.5 rounded-full text-white font-bold text-xxs min-w-[20px] inline-flex justify-center">
                 {{ link.count > 99 ? "99+" : link.count }}
               </div>
             </client-only>
@@ -44,9 +44,12 @@
         </div>
 
         <template v-if="$store.getters.isLogged">
-          <nuxt-link to="/messages">
-            <RiMailLine class="w-[20px] text-[#9CA3AF] fill-current hover:scale-105" />
-          </nuxt-link>
+          <div class="relative">
+            <nuxt-link to="/messages" class="group">
+              <MailIcon class="text-[#9CA3AF] group-hover:scale-105" />
+              <div v-if="$store.getters['messaging/unreadMessagesCount']" class="group-hover:scale-105 absolute top-[-1px] right-[-3px] bg-[#FF463D] rounded-full w-[10px] h-[10px]" />
+            </nuxt-link>
+          </div>
           <DropdownUserNotifications />
           <DropdownUser />
         </template>

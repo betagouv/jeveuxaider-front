@@ -66,6 +66,7 @@ export default {
       }
       if (this.notification.read_at === null) {
         this.$store.dispatch('notifications/markNotificationAsRead', notification)
+        this.$store.commit('notifications/decrementUnreadNotificationsCount')
         this.$emit('refetch')
       }
     },

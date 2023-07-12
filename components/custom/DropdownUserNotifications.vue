@@ -2,7 +2,8 @@
   <Dropdown ref="dropdownUserNotifications">
     <template #button>
       <button class="group">
-        <RiNotification2Line class="w-[20px] text-[#9CA3AF] fill-current hover:scale-105" />
+        <BellIcon class="text-[#9CA3AF] group-hover:scale-105" />
+        <div v-if="$store.getters['notifications/unreadNotificationsCount']" class="group-hover:scale-105 absolute top-[-1px] right-[0px] bg-[#FF463D] rounded-full w-[10px] h-[10px]" />
       </button>
     </template>
 
