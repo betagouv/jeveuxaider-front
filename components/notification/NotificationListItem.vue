@@ -7,7 +7,7 @@
       <div
         v-if="variant === 'card'"
         :class="[
-          'text-gray-600 text-sm',
+          'text-gray-500 text-sm mb-2 font-semibold uppercase',
         ]"
       >
         {{ contexte }}
@@ -23,7 +23,7 @@
       />
       <div
         :class="[
-          'text-gray-600 first-letter:uppercase',
+          'text-gray-500 first-letter:uppercase italic',
           {'text-sm': variant === 'card'},
           {'text-xs': variant === 'dropdown'}
         ]"
@@ -62,7 +62,11 @@ export default {
         case 'App\\Notifications\\ParticipationValidated':
         case 'App\\Notifications\\ParticipationDeclined':
         case 'App\\Notifications\\ParticipationCanceled':
-          return this.notification.data.mission_name
+          return this.notification.data.structure_name
+        case 'App\\Notifications\\StructureSubmitted':
+          return this.notification.data.structure_name
+        case 'App\\Notifications\\DocumentSubmitted':
+          return 'Ressources'
         case 'App\\Notifications\\ResetPassword':
           return 'Sécurité'
         default:
@@ -74,9 +78,9 @@ export default {
         case 'App\\Notifications\\ParticipationWaitingValidation':
           return `**${this.notification.data.benevole_first_name} ${this.notification.data.benevole_last_name}** a candidaté à une mission`
         case 'App\\Notifications\\ParticipationCreated':
-          return 'Votre demande de participation a bien été enregistrée'
+          return 'Votre demande de participation **a bien été enregistrée**'
         case 'App\\Notifications\\ParticipationBeingProcessed':
-          return 'Votre demande de participation est **en cours de traitement**'
+          return 'Votre demande de participation **est en cours de traitement**'
         case 'App\\Notifications\\ParticipationValidated':
           return 'Votre demande de participation **a été validée**'
         case 'App\\Notifications\\ParticipationDeclined':
@@ -85,6 +89,10 @@ export default {
           return 'Votre demande de participation **a été refusée**'
         case 'App\\Notifications\\ResetPassword':
           return 'Une demande de **réinitialisation de votre mot de passe** a été effectuée'
+        case 'App\\Notifications\\DocumentSubmitted':
+          return `Une **nouvelle ressource** est accessible dans **votre espace** (${this.notification.data.ressource_title})`
+        case 'App\\Notifications\\StructureSubmitted':
+          return 'Une **nouvelle structure** dans votre département est **en attente de validation**'
         default:
           return this.notification.type
       }
@@ -111,6 +119,10 @@ export default {
         case 'App\\Notifications\\ParticipationWaitingValidation':
         case 'App\\Notifications\\ParticipationCreated':
           return `/messages/${this.notification.data.conversation_id}`
+        case 'App\\Notifications\\StructureSubmitted':
+          return `/admin/organisations/${this.notification.data.structure_id}`
+        case 'App\\Notifications\\DocumentSubmitted':
+          return '/admin/ressources'
         default:
           return null
       }
