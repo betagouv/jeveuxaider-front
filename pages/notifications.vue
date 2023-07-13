@@ -51,7 +51,7 @@
 
       <div class="my-8 grid grid-cols-1 gap-8">
         <div v-for="notifications,key in resultsGroupedByDays" :key="key">
-          <h3 class="text-xl text-gray-700 font-bold mb-2 first-letter:uppercase">
+          <h3 class="text-xl lg:text-2xl text-gray-900 font-bold mb-2 lg:mb-4 first-letter:uppercase">
             {{ $dayjs(key).format('dddd D MMMM YYYY') }}
           </h3>
           <div class="grid grid-cols-1 gap-2">
