@@ -3,11 +3,22 @@
     class="p-4 lg:p-6 flex gap-4 lg:gap-6 items-center justify-between cursor-pointer hover:bg-gray-50"
     @click="handleClick(notification)"
   >
-    <div class="">
+    <div class="w-[24px]">
+      🙁
+    </div>
+    <div
+      :class="[
+        'overflow-x-hidden',
+        {'': variant === 'card'},
+        {'w-[253px]': variant === 'dropdown'}
+      ]"
+    >
       <div
-        v-if="variant === 'card'"
+        v-if="contexte"
         :class="[
-          'text-gray-500 text-sm mb-2 font-semibold uppercase',
+          'text-[#666666] text-sm truncate',
+          {'mb-4': variant === 'card'},
+          {' mb-2': variant === 'dropdown'}
         ]"
       >
         {{ contexte }}
@@ -16,26 +27,26 @@
         v-if="message"
         :class="[
           'text-black',
-          {'text-base mb-2': variant === 'card'},
-          {'text-sm': variant === 'dropdown'}
+          {'text-lg mb-4': variant === 'card'},
+          {'text-base mb-2': variant === 'dropdown'}
         ]"
         v-html="$options.filters.marked(message)"
       />
       <div
         :class="[
-          'text-gray-500 first-letter:uppercase italic',
+          'text-gray-600 first-letter:uppercase',
           {'text-sm': variant === 'card'},
-          {'text-xs': variant === 'dropdown'}
+          {'text-sm': variant === 'dropdown'}
         ]"
       >
         {{ $dayjs(notification.created_at).fromNow() }}
       </div>
     </div>
-    <div class="w-3">
+    <div class="w-[12px]">
       <div
         v-if="notification.read_at === null"
         aria-label="Notification non lue"
-        class="flex-none w-3 h-3 bg-[#F95A5C] rounded-full"
+        class="flex-none w-[12px] h-[12px] bg-[#FF463D] rounded-full"
       />
     </div>
   </div>
@@ -56,21 +67,17 @@ export default {
   computed: {
     contexte () {
       switch (this.notification.type) {
-        case 'App\\Notifications\\ParticipationWaitingValidation':
         case 'App\\Notifications\\ParticipationCreated':
         case 'App\\Notifications\\ParticipationBeingProcessed':
         case 'App\\Notifications\\ParticipationValidated':
         case 'App\\Notifications\\ParticipationDeclined':
         case 'App\\Notifications\\ParticipationCanceled':
-          return this.notification.data.structure_name
         case 'App\\Notifications\\StructureSubmitted':
           return this.notification.data.structure_name
         case 'App\\Notifications\\DocumentSubmitted':
-          return 'Ressources'
-        case 'App\\Notifications\\ResetPassword':
-          return 'Sécurité'
+          return this.notification.data.ressource_title
         default:
-          return this.notification.type
+          return null
       }
     },
     message () {
@@ -90,9 +97,9 @@ export default {
         case 'App\\Notifications\\ResetPassword':
           return 'Une demande de **réinitialisation de votre mot de passe** a été effectuée'
         case 'App\\Notifications\\DocumentSubmitted':
-          return `Une **nouvelle ressource** est accessible dans **votre espace** (${this.notification.data.ressource_title})`
+          return 'Une **nouvelle ressource** est accessible dans **votre espace**'
         case 'App\\Notifications\\StructureSubmitted':
-          return 'Une **nouvelle structure** dans votre département est **en attente de validation**'
+          return 'Une nouvelle organisation est **en attente de validation** dans votre département'
         default:
           return this.notification.type
       }
