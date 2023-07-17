@@ -239,16 +239,16 @@ export default {
           return {
             icon: '📋',
             iconVariant: 'warning',
-            title: '<b>Charte de bon fonctionnement</b>',
-            subtitle: 'Merci de prendre connaissance de ces quelques règles et de les accepter !',
+            title: '<b>Acceptez la charte de bon fonctionnement</b>',
+            subtitle: 'Quelques règles utiles pour assurer une bonne utilisation de la plateforme',
             link: '/profile/charte-bon-fonctionnement'
           }
         case 'has_agreed_benevole_terms':
           return {
             icon: '📋',
             iconVariant: 'info',
-            title: '<b>Charte de bon fonctionnement</b>',
-            subtitle: 'Consultez ici les règles de bon fonctionnement 😉',
+            title: '<b>Retrouvez la charte de bon fonctionnement ici</b>',
+            subtitle: 'Quelques règles utiles pour assurer une bonne utilisation de la plateforme',
             link: '/profile/charte-bon-fonctionnement'
           }
       }
