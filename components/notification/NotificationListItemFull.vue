@@ -33,7 +33,7 @@
       <div
         v-if="notificationResolver.message"
         :class="[
-          'text-black text-lg mb-4',
+          'text-black text-xl mb-4',
         ]"
         v-html="$options.filters.marked(notificationResolver.message)"
       />
