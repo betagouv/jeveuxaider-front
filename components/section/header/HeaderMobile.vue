@@ -258,7 +258,13 @@ export default {
         { name: 'Mon profil', to: '/profile/edit', isActive: this.isActiveLink('profile/edit') },
         { name: 'Mes préférences de missions', to: '/profile/preferences', isActive: this.isActiveLink('profile/preferences') },
         { name: 'Mes paramètres', to: '/profile/settings', isActive: this.isActiveLink('profile/settings') },
-        { name: 'Se déconnecter', click: () => this.$store.dispatch('auth/logout') }
+        {
+          name: 'Se déconnecter',
+          click: async () => {
+            await this.$store.dispatch('auth/logout')
+            this.showMobileMenu = false
+          }
+        }
       ]
     }
   },
