@@ -243,6 +243,14 @@ export default {
             subtitle: 'Merci de prendre connaissance de ces quelques règles et de les accepter !',
             link: '/profile/charte-bon-fonctionnement'
           }
+        case 'has_agreed_benevole_terms':
+          return {
+            icon: '📋',
+            iconVariant: 'info',
+            title: '<b>Charte de bon fonctionnement</b>',
+            subtitle: 'Consultez ici les règles de bon fonctionnement 😉',
+            link: '/profile/charte-bon-fonctionnement'
+          }
       }
     }
   }
