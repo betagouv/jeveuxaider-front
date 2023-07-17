@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden h-full" style="max-height: 100dvh;">
+  <div class="overflow-hidden h-full" style="min-height: 100dvh;">
     <div class="h-full flex flex-col">
       <Header full-width />
 
