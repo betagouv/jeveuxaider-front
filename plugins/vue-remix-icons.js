@@ -87,8 +87,10 @@ import RiMore2Line from 'vue-remix-icons/icons/RiMore2Line.vue'
 import RiFileUserLine from 'vue-remix-icons/icons/RiFileUserLine.vue'
 import RiCakeFill from 'vue-remix-icons/icons/RiCakeFill.vue'
 import RiChatHistoryFill from 'vue-remix-icons/icons/RiChatHistoryFill.vue'
+import RiTeamLine from 'vue-remix-icons/icons/RiTeamLine.vue'
 
 const components = {
+  RiTeamLine,
   RiChatHistoryFill,
   RiCakeFill,
   RiFileUserLine,

@@ -55,11 +55,10 @@
             {{ $dayjs(key).format('dddd D MMMM YYYY') }}
           </h3>
           <div class="grid grid-cols-1 gap-2">
-            <NotificationListItem
+            <NotificationListItemFull
               v-for="notification in notifications"
               :key="notification.id"
               :notification="notification"
-              variant="card"
               class="bg-white"
               @refetch="$fetch()"
             />
@@ -85,7 +84,7 @@
 import _ from 'lodash'
 import HelpCenter from '@/components/section/dashboard/HelpCenter'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
-import NotificationListItem from '@/components/notification/NotificationListItem.vue'
+import NotificationListItemFull from '@/components/notification/NotificationListItemFull.vue'
 import QueryBuilder from '@/mixins/query-builder'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
@@ -95,7 +94,7 @@ export default {
   components: {
     HelpCenter,
     Breadcrumb,
-    NotificationListItem,
+    NotificationListItemFull,
     SearchFilters,
     Pagination,
     Tag

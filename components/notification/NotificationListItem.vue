@@ -5,9 +5,9 @@
   >
     <div
       :class="[
-        'w-[24px]',
-        {'text-2xl': variant === 'card'},
-        {'text-lg': variant === 'dropdown'}
+        '',
+        {'w-[30px] text-3xl': variant === 'card'},
+        {'w-[24px] text-lg': variant === 'dropdown'}
       ]"
     >
       {{ notificationResolver.emoji }}
@@ -20,9 +20,9 @@
       ]"
     >
       <div
-        v-if="notificationResolver.contexte"
+        v-if="notificationResolver.contexte && variant === 'card'"
         :class="[
-          'text-[#666666] text-sm truncate flex items-center gap-2',
+          'text-[#666666] text-sm flex items-center truncate gap-2',
           {'mb-4': variant === 'card'},
           {'mb-2': variant === 'dropdown'}
         ]"
@@ -30,9 +30,11 @@
         <component
           :is="notificationResolver.contexteIcon"
           v-if="notificationResolver.contexteIcon"
-          class="h-4 fill-current"
+          class="w-4 fill-current flex-none"
         />
-        {{ notificationResolver.contexte }}
+        <span class="truncate">
+          {{ notificationResolver.contexte }}
+        </span>
       </div>
       <div
         v-if="notificationResolver.message"
@@ -43,6 +45,47 @@
         ]"
         v-html="$options.filters.marked(notificationResolver.message)"
       />
+
+      <template v-if="showBenevole && variant === 'card'">
+        <div class="flex items-center gap-4 lg:gap-6 mb-4">
+          <div>
+            <Avatar
+              :img-srcset="
+                notification.data.benevole_picture?.thumbSmall
+              "
+              :img-src="notification.data.benevole_picture?.original"
+              :initials="`${notification.data.benevole_first_name[0]}${notification.data.benevole_last_name[0]}`"
+              class="transition transform group-hover:scale-110"
+              size="xs"
+            />
+          </div>
+          <div class="">
+            <div class="text-lg font-bold">
+              {{ notification.data.benevole_first_name }} {{ notification.data.benevole_last_name }}
+            </div>
+            <div class="flex gap-4 items-center overflow-hidden whitespace-nowrap">
+              <div v-if=" notification.data.benevole_birthday" class="flex gap-1 items-center text-sm text-cool-gray-500">
+                <RiCakeFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+                <p class="">
+                  {{ $dayjs( notification.data.benevole_birthday).fromNow('year') }}
+                </p>
+              </div>
+              <div v-if=" notification.data.benevole_zip" class="flex gap-1 items-center text-sm text-cool-gray-500">
+                <RiMapPin2Fill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+                <p class="">
+                  {{ notification.data.benevole_zip }}
+                </p>
+              </div>
+              <div v-if=" notification.data.benevole_type" class="flex gap-1 items-center text-sm text-cool-gray-500">
+                <RiSuitcaseFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
+                <p class="">
+                  {{ notification.data.benevole_type | label('profile_type') }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
       <div
         :class="[
           'text-gray-600 first-letter:uppercase',
@@ -76,6 +119,14 @@ export default {
     }
   },
   computed: {
+    showBenevole () {
+      switch (this.notification.type) {
+        case 'App\\Notifications\\ParticipationWaitingValidation':
+          return true
+        default:
+          return false
+      }
+    },
     notificationResolver () {
       switch (this.notification.type) {
         case 'App\\Notifications\\ParticipationCreated':
@@ -86,6 +137,68 @@ export default {
             contexte: this.notification.data.structure_name,
             redirection: `/messages/${this.notification.data.conversation_id}`
           }
+        case 'App\\Notifications\\ParticipationBeingProcessed':
+          return {
+            emoji: '⏱️',
+            message: 'Votre demande de participation **est en cours de traitement**',
+            contexteIcon: 'RiBuildingFill',
+            contexte: this.notification.data.structure_name,
+            redirection: `/messages/${this.notification.data.conversation_id}`
+          }
+        case 'App\\Notifications\\ParticipationValidated':
+          return {
+            emoji: '😇',
+            message: 'Votre demande de participation **a été validée**',
+            contexteIcon: 'RiBuildingFill',
+            contexte: this.notification.data.structure_name,
+            redirection: `/messages/${this.notification.data.conversation_id}`
+          }
+        case 'App\\Notifications\\ParticipationDeclined':
+          return {
+            emoji: '🙁',
+            message: 'Votre demande de participation **a été refusée**',
+            contexteIcon: 'RiBuildingFill',
+            contexte: this.notification.data.structure_name,
+            redirection: `/messages/${this.notification.data.conversation_id}`
+          }
+        case 'App\\Notifications\\ParticipationCanceled':
+          return {
+            emoji: '🙁',
+            message: 'Votre demande de participation **a été annulée**',
+            contexteIcon: 'RiBuildingFill',
+            contexte: this.notification.data.structure_name,
+            redirection: `/messages/${this.notification.data.conversation_id}`
+          }
+        case 'App\\Notifications\\DocumentSubmitted':
+          return {
+            emoji: '📥',
+            message: 'Une **nouvelle ressource** est accessible dans **votre espace**',
+            contexteIcon: 'RiDownload2Line',
+            contexte: this.notification.data.ressource_title,
+            redirection: '/admin/ressources'
+          }
+        case 'App\\Notifications\\StructureSubmitted':
+          return {
+            emoji: '🏫',
+            message: 'Une nouvelle organisation est **en attente de validation** dans votre département',
+            contexteIcon: 'RiBuildingFill',
+            contexte: this.notification.data.structure_name,
+            redirection: `/admin/organisations/${this.notification.data.structure_id}`
+          }
+        case 'App\\Notifications\\ParticipationWaitingValidation':
+          return {
+            emoji: '✊',
+            message: 'Vous avez une **nouvelle demande de participation**',
+            contexteIcon: 'RiTeamLine',
+            contexte: this.notification.data.mission_name,
+            redirection: `/messages/${this.notification.data.conversation_id}`
+          }
+        case 'App\\Notifications\\ResetPassword':
+          return {
+            emoji: '🔐',
+            message: 'Une demande de **réinitialisation de votre mot de passe** a été effectuée',
+            redirection: null
+          }
         default:
           return {
             emoji: '✊',
@@ -95,65 +208,6 @@ export default {
           }
       }
     }
-    // emoji () {
-    //   switch (this.notification.type) {
-    //     case 'App\\Notifications\\ParticipationCreated':
-    //       return '🙂'
-    //     case 'App\\Notifications\\ParticipationBeingProcessed':
-    //       return '🙂'
-    //     case 'App\\Notifications\\ParticipationValidated':
-    //       return '🙂'
-    //     case 'App\\Notifications\\ParticipationDeclined':
-    //       return '🙂'
-    //     case 'App\\Notifications\\ParticipationCanceled':
-    //       return '🙂'
-    //     case 'App\\Notifications\\StructureSubmitted':
-    //       return '🙂'
-    //     case 'App\\Notifications\\DocumentSubmitted':
-    //       return '🙂'
-    //     default:
-    //       return '🙂'
-    //   }
-    // },
-    // contexte () {
-    //   switch (this.notification.type) {
-    //     case 'App\\Notifications\\ParticipationCreated':
-    //     case 'App\\Notifications\\ParticipationBeingProcessed':
-    //     case 'App\\Notifications\\ParticipationValidated':
-    //     case 'App\\Notifications\\ParticipationDeclined':
-    //     case 'App\\Notifications\\ParticipationCanceled':
-    //     case 'App\\Notifications\\StructureSubmitted':
-    //       return this.notification.data.structure_name
-    //     case 'App\\Notifications\\DocumentSubmitted':
-    //       return this.notification.data.ressource_title
-    //     default:
-    //       return null
-    //   }
-    // },
-    // message () {
-    //   switch (this.notification.type) {
-    //     case 'App\\Notifications\\ParticipationWaitingValidation':
-    //       return `**${this.notification.data.benevole_first_name} ${this.notification.data.benevole_last_name}** a candidaté à une mission`
-    //     case 'App\\Notifications\\ParticipationCreated':
-    //       return 'Votre demande de participation **a bien été enregistrée**'
-    //     case 'App\\Notifications\\ParticipationBeingProcessed':
-    //       return 'Votre demande de participation **est en cours de traitement**'
-    //     case 'App\\Notifications\\ParticipationValidated':
-    //       return 'Votre demande de participation **a été validée**'
-    //     case 'App\\Notifications\\ParticipationDeclined':
-    //       return 'Votre demande de participation **a été déclinée**'
-    //     case 'App\\Notifications\\ParticipationCanceled':
-    //       return 'Votre demande de participation **a été refusée**'
-    //     case 'App\\Notifications\\ResetPassword':
-    //       return 'Une demande de **réinitialisation de votre mot de passe** a été effectuée'
-    //     case 'App\\Notifications\\DocumentSubmitted':
-    //       return 'Une **nouvelle ressource** est accessible dans **votre espace**'
-    //     case 'App\\Notifications\\StructureSubmitted':
-    //       return 'Une nouvelle organisation est **en attente de validation** dans votre département'
-    //     default:
-    //       return this.notification.type
-    //   }
-    // }
   },
   methods: {
     handleClick (notification) {
@@ -166,23 +220,6 @@ export default {
         this.$emit('refetch')
       }
     }
-    // redirectionResolver () {
-    //   switch (this.notification.type) {
-    //     case 'App\\Notifications\\ParticipationCanceled':
-    //     case 'App\\Notifications\\ParticipationValidated':
-    //     case 'App\\Notifications\\ParticipationDeclined':
-    //     case 'App\\Notifications\\ParticipationBeingProcessed':
-    //     case 'App\\Notifications\\ParticipationWaitingValidation':
-    //     case 'App\\Notifications\\ParticipationCreated':
-    //       return `/messages/${this.notification.data.conversation_id}`
-    //     case 'App\\Notifications\\StructureSubmitted':
-    //       return `/admin/organisations/${this.notification.data.structure_id}`
-    //     case 'App\\Notifications\\DocumentSubmitted':
-    //       return '/admin/ressources'
-    //     default:
-    //       return null
-    //   }
-    // }
   }
 }
 </script>

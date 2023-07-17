@@ -20,12 +20,11 @@
           </div>
         </div>
         <template v-if="notifications.length > 0">
-          <div class="max-h-[350px] grid grid-cols-1 divide-y divide-y-[#ECECEC] overflow-y-scroll">
-            <NotificationListItem
+          <div class="max-h-[350px] grid grid-cols-1 divide-y divide-y-[#ECECEC] overflow-y-auto">
+            <NotificationListItemTeaser
               v-for="notification in notifications"
               :key="notification.id"
               :notification="notification"
-              variant="dropdown"
             />
           </div>
         </template>
@@ -40,11 +39,11 @@
 </template>
 
 <script>
-import NotificationListItem from '@/components/notification/NotificationListItem.vue'
+import NotificationListItemTeaser from '@/components/notification/NotificationListItemTeaser.vue'
 
 export default {
   components: {
-    NotificationListItem
+    NotificationListItemTeaser
   },
   computed: {
     notifications () {
