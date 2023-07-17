@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-4 lg:p-6 flex gap-4 lg:gap-6 items-center cursor-pointer hover:bg-gray-50"
+    class="p-4 lg:p-6 flex gap-4 lg:gap-6 items-center cursor-pointer bg-white shadow-md hover:bg-gray-50"
     @click="handleClick(notification)"
   >
     <div
@@ -115,6 +115,8 @@ export default {
     showBenevole () {
       switch (this.notification.type) {
         case 'App\\Notifications\\ParticipationWaitingValidation':
+        case 'App\\Notifications\\ParticipationBenevoleValidated':
+        case 'App\\Notifications\\ParticipationBenevoleCanceled':
           return true
         default:
           return false

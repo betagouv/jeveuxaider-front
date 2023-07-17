@@ -74,6 +74,22 @@ export default {
             contexte: this.notification.data.mission_name,
             redirection: `/messages/${this.notification.data.conversation_id}`
           }
+        case 'App\\Notifications\\ParticipationBenevoleValidated':
+          return {
+            emoji: '👏🏻',
+            message: 'Le bénévole **a validé** sa participation',
+            contexteIcon: 'RiTeamLine',
+            contexte: this.notification.data.mission_name,
+            redirection: `/messages/${this.notification.data.conversation_id}`
+          }
+        case 'App\\Notifications\\ParticipationBenevoleCanceled':
+          return {
+            emoji: '😔',
+            message: 'Le bénévole **a annulé** sa participation',
+            contexteIcon: 'RiTeamLine',
+            contexte: this.notification.data.mission_name,
+            redirection: `/messages/${this.notification.data.conversation_id}`
+          }
         case 'App\\Notifications\\MissionBeingProcessed':
           return {
             emoji: '⏳',
@@ -97,6 +113,18 @@ export default {
             contexteIcon: 'RiTeamLine',
             contexte: this.notification.data.mission_name,
             redirection: `/admin/missions/${this.notification.data.mission_id}`
+          }
+        case 'App\\Notifications\\ResponsableMissionsReactivated':
+          return {
+            emoji: '🥳',
+            message: 'Vos missions sont **de nouveau actives**',
+            redirection: '/admin/missions'
+          }
+        case 'App\\Notifications\\ResponsableMissionsDeactivated':
+          return {
+            emoji: '😢',
+            message: 'Vos missions ont été **désactivée**',
+            redirection: '/admin/missions'
           }
         case 'App\\Notifications\\MissionSignaled':
           return {
@@ -122,6 +150,38 @@ export default {
             contexte: this.notification.data.mission_name,
             redirection: `/admin/missions/${this.notification.data.mission_id}`
           }
+        case 'App\\Notifications\\StructureBeingProcessed':
+          return {
+            emoji: '⏳',
+            message: 'Votre organisation est **en cours de traitement**',
+            contexteIcon: 'RiBuildingFill',
+            contexte: this.notification.data.structure_name,
+            redirection: `/admin/organisations/${this.notification.data.structure_id}`
+          }
+        case 'App\\Notifications\\StructureSignaled':
+          return {
+            emoji: '🙁',
+            message: 'Votre organisation a **été signalée**',
+            contexteIcon: 'RiBuildingFill',
+            contexte: this.notification.data.structure_name,
+            redirection: `/admin/organisations/${this.notification.data.structure_id}`
+          }
+        case 'App\\Notifications\\StructureValidated':
+          return {
+            emoji: '👍',
+            message: 'Votre organisation a **été validée**',
+            contexteIcon: 'RiBuildingFill',
+            contexte: this.notification.data.structure_name,
+            redirection: `/admin/organisations/${this.notification.data.structure_id}`
+          }
+        case 'App\\Notifications\\StructureSwitchResponsable':
+          return {
+            emoji: '✊',
+            message: `${this.notification.data.old_responsable_first_name} ${this.notification.data.old_responsable_last_name} vous a **confié la gestion de ses missions**`,
+            contexteIcon: 'RiBuildingFill',
+            contexte: this.notification.data.structure_name,
+            redirection: '/admin/missions'
+          }
         case 'App\\Notifications\\ResetPassword':
           return {
             emoji: '🔐',
@@ -142,6 +202,7 @@ export default {
     handleClick (notification) {
       if (this.notificationResolver.redirection) {
         this.$router.push(this.notificationResolver.redirection)
+        this.$emit('close')
       }
       if (this.notification.read_at === null && !this.$store.state.auth.isImpersonate) {
         this.$store.dispatch('notifications/markNotificationAsRead', notification)

@@ -25,6 +25,7 @@
               v-for="notification in notifications"
               :key="notification.id"
               :notification="notification"
+              @close="$refs.dropdownUserNotifications.close()"
             />
           </div>
         </template>

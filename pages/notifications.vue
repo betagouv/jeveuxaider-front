@@ -54,12 +54,11 @@
           <h3 class="text-xl lg:text-2xl text-gray-900 font-bold mb-2 lg:mb-4 first-letter:uppercase">
             {{ $dayjs(key).format('dddd D MMMM YYYY') }}
           </h3>
-          <div class="grid grid-cols-1 gap-2">
+          <div class="grid grid-cols-1 gap-4">
             <NotificationListItemFull
               v-for="notification in notifications"
               :key="notification.id"
               :notification="notification"
-              class="bg-white"
               @refetch="$fetch()"
             />
           </div>
