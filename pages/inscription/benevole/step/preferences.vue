@@ -32,7 +32,7 @@
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
           <FormControl label="Quelles activités de bénévolat pourraient vous intéresser ?" html-for="activites">
             <div class="bg-white border">
-              <AccordionsGroup>
+              <AccordionsGroup class="px-4 sm:px-0 bg-white">
                 <Accordion :initial-is-open="true">
                   <template slot="title">
                     Activités les plus populaires
