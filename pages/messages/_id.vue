@@ -25,6 +25,7 @@ export default {
 
     if (!store.state.auth.isImpersonate) {
       store.commit('messaging/setActiveConversationAsRead', conversation)
+      await store.dispatch('messaging/getUserUnreadMessagesCount')
     }
 
     return {
