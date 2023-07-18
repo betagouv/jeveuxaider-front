@@ -68,7 +68,7 @@ export default {
           }
         case 'App\\Notifications\\ParticipationWaitingValidation':
           return {
-            emoji: '👊',
+            emoji: '👋',
             message: 'Vous avez une **nouvelle demande de participation**',
             contexteIcon: 'RiTeamLine',
             contexte: this.notification.data.mission_name,
@@ -176,7 +176,7 @@ export default {
           }
         case 'App\\Notifications\\StructureSwitchResponsable':
           return {
-            emoji: '✊',
+            emoji: '👋',
             message: `${this.notification.data.old_responsable_first_name} ${this.notification.data.old_responsable_last_name} vous a **confié la gestion de ses missions**`,
             contexteIcon: 'RiBuildingFill',
             contexte: this.notification.data.structure_name,
@@ -190,7 +190,7 @@ export default {
           }
         default:
           return {
-            emoji: '✊',
+            emoji: '👋',
             message: 'Nouvelle notification',
             contexte: this.notification.type,
             redirection: null
