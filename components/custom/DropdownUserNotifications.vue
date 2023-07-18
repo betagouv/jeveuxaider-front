@@ -30,7 +30,7 @@
           </div>
         </template>
         <template v-else>
-          <div class="text-gray-400 p-4 text-sm text-center">
+          <div class="text-gray-400 p-8 text-sm text-center">
             Aucune notification
           </div>
         </template>
