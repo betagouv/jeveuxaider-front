@@ -35,7 +35,7 @@
               class="inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full"
             >
               <div class="bg-white p-8 sm:p-12">
-                <div class="mb-6">
+                <div class="mb-6" :style="!hideClose ? 'width:calc(100% - 40px)' : null">
                   <div class="hidden sm:block absolute top-0 right-0 p-8 sm:p-12">
                     <button v-if="!hideClose" type="button" class="bg-white text-gray-400 hover:text-gray-700" @click="$emit('close')">
                       <span class="sr-only">Close</span>
