@@ -5,7 +5,7 @@
   >
     <div
       :class="[
-        'w-[30px] text-3xl',
+        'w-[24px] lg:w-[30px] text-xl lg:text-3xl',
       ]"
     >
       {{ notificationResolver.emoji }}
@@ -18,7 +18,7 @@
       <div
         v-if="notificationResolver.contexte"
         :class="[
-          'text-[#666666] text-sm flex items-center truncate gap-2 mb-4',
+          'text-[#666666] text-xs lg:text-sm flex items-center truncate gap-2 mb-4',
         ]"
       >
         <component
@@ -33,7 +33,7 @@
       <div
         v-if="notificationResolver.message"
         :class="[
-          'text-black text-xl mb-4',
+          'text-black text-base lg:text-xl mb-4',
         ]"
         v-html="$options.filters.marked(notificationResolver.message)"
       />
@@ -56,19 +56,19 @@
               {{ notification.data.benevole_first_name }} {{ notification.data.benevole_last_name }}
             </div>
             <div class="flex gap-4 items-center overflow-hidden whitespace-nowrap">
-              <div v-if=" notification.data.benevole_birthday" class="flex gap-1 items-center text-sm text-cool-gray-500">
+              <div v-if="notification.data.benevole_birthday" class="flex gap-1 items-center text-sm text-cool-gray-500">
                 <RiCakeFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
-                <p class="">
+                <p class="leading-none">
                   {{ $dayjs( notification.data.benevole_birthday).fromNow('year') }}
                 </p>
               </div>
-              <div v-if=" notification.data.benevole_zip" class="flex gap-1 items-center text-sm text-cool-gray-500">
+              <div v-if="notification.data.benevole_zip" class="flex gap-1 items-center text-sm text-cool-gray-500">
                 <RiMapPin2Fill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
                 <p class="">
                   {{ notification.data.benevole_zip }}
                 </p>
               </div>
-              <div v-if=" notification.data.benevole_type" class="flex gap-1 items-center text-sm text-cool-gray-500">
+              <div v-if="notification.data.benevole_type" class="flex gap-1 items-center text-sm text-cool-gray-500">
                 <RiSuitcaseFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
                 <p class="">
                   {{ notification.data.benevole_type | label('profile_type') }}
@@ -80,7 +80,7 @@
       </template>
       <div
         :class="[
-          'text-sm text-gray-600 first-letter:uppercase',
+          'text-xs lg:text-sm text-gray-600 first-letter:uppercase',
         ]"
       >
         {{ $dayjs(notification.created_at).fromNow() }}

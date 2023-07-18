@@ -9,7 +9,7 @@
       />
     </template>
     <template #header>
-      <SectionHeading title="Vos dernières notifications 📣" :secondary-title="`Bonjour ${$store.state.auth.user.profile.first_name }`" />
+      <SectionHeading title="Vos notifications" />
     </template>
     <template #left>
       <SearchFilters class="">
@@ -47,9 +47,21 @@
             Non lues
           </Tag>
         </template>
+        <template #sorts>
+          <Button
+            v-if="$store.getters['notifications/unreadNotificationsCount'] > 0"
+            type="tertiary"
+            size="sm"
+            :loading="loadingMarlAllAsRead"
+            icon="RiCheckLine"
+            @click="markAllAsRead()"
+          >
+            Tout marquer comme lu
+          </Button>
+        </template>
       </SearchFilters>
 
-      <div class="my-8 grid grid-cols-1 gap-8">
+      <div class="grid grid-cols-1 gap-6 lg:gap-8">
         <div v-for="notifications,key in resultsGroupedByDays" :key="key">
           <h3 class="text-xl lg:text-2xl text-gray-900 font-bold mb-2 lg:mb-4 first-letter:uppercase">
             {{ $dayjs(key).format('dddd D MMMM YYYY') }}
@@ -66,7 +78,6 @@
       </div>
 
       <Pagination
-        class="mt-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
@@ -74,7 +85,7 @@
       />
     </template>
     <template #right>
-      <HelpCenter />
+      <HelpCenter class="lg:sticky lg:top-12" />
     </template>
   </Container2Cols>
 </template>
@@ -88,6 +99,7 @@ import QueryBuilder from '@/mixins/query-builder'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Tag from '@/components/dsfr/Tag.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
@@ -96,12 +108,14 @@ export default {
     NotificationListItemFull,
     SearchFilters,
     Pagination,
-    Tag
+    Tag,
+    Button
   },
   mixins: [QueryBuilder],
   middleware: 'authenticated',
   data () {
     return {
+      loadingMarlAllAsRead: false,
       endpoint: '/user/notifications'
     }
   },
@@ -117,7 +131,13 @@ export default {
     }
   },
   methods: {
-
+    async markAllAsRead () {
+      this.loadingMarlAllAsRead = true
+      await this.$axios.post('/user/notifications/mark-all-as-read')
+      this.loadingMarlAllAsRead = false
+      this.$fetch()
+      this.$store.dispatch('notifications/getUserUnreadNotificationsCount')
+    }
   }
 }
 </script>
