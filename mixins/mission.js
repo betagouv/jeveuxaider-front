@@ -1,3 +1,5 @@
+import activitiesJson from '@/assets/activities.json'
+
 export default {
   computed: {
     domaine () {
@@ -13,26 +15,16 @@ export default {
       )
     },
     activity () {
-      return (
-        this.mission?.activity ??
-        this.mission?.template?.activity
-      )
+      const activity = this.mission?.activity ?? this.mission?.template?.activity
+      return activitiesJson.find(activityJson => activityJson.id === activity?.id)
     },
     activitySecondary () {
-      return (
-        this.mission?.activity_secondary ??
-        this.mission?.template?.activity_secondary
-      )
+      const activity = this.mission?.activity_secondary ?? this.mission?.template?.activity_secondary
+      return activitiesJson.find(activityJson => activityJson.id === activity?.id)
     },
     activities () {
       return [this.activity, this.activitySecondary].filter(Boolean)
     },
-    // activityId () {
-    //   return (
-    //     this.mission?.activity_id ??
-    //     this.mission?.template?.activity_id
-    //   )
-    // },
     thumbnail () {
       return this.mission.provider == 'api_engagement'
         ? this.thumbnailApi

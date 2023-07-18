@@ -82,9 +82,13 @@
         {{ activities.length | pluralize('Activité', 'Activités', false) }}
       </HrTitle>
       <div class="flex flex-wrap gap-2">
-        <Badge v-for="activity in activities" :key="activity.id" as="p">
-          {{ activity.name }}
-        </Badge>
+        <template v-for="activity in activities" :to="activity.full_url">
+          <nuxt-link v-if="activity.full_url" :key="activity.id" :to="activity.full_url">
+            <Badge>
+              {{ activity.name }}
+            </Badge>
+          </nuxt-link>
+        </template>
       </div>
     </div>
 
