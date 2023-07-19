@@ -12,9 +12,13 @@
           {{ buttonLabel }}
         </Button>
       </div>
-      <slot name="button-right" />
+      <div class="text-[#666666] text-xl">
+        Plus de <span class="font-bold">{{ missionsCount }} missions disponibles</span>
+      </div>
     </div>
-    <slot name="bottom" />
+    <template #bottom>
+      <slot name="bottom" />
+    </template>
   </QuizStep>
 </template>
 
@@ -47,6 +51,10 @@ export default {
     buttonLabel: {
       type: String,
       default: 'Suivez le guide'
+    },
+    missionsCount: {
+      type: String,
+      default: '30 000'
     }
   },
   methods: {

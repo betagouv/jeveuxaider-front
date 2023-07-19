@@ -3,38 +3,11 @@
     <QuizSearchBuilderStep0
       v-if="currentStep === 0"
       title="Trouvez en quelques clics votre prochaine mission de bénévolat"
-      slogan="Le bénévolat et vous"
+      slogan="Rendons l’éducation accessible à tous"
       picture="quiz-step-0"
       mobile-picture="quiz-step-0-mobile"
-    >
-      <template #bottom>
-        <div class="hidden lg:block px-[32px] lg:px-[80px]">
-          <picture aria-hidden="true" class="">
-            <source
-              srcset="
-          /images/home/trombi-organisations.webp, /images/home/trombi-organisations@2x.webp 2x,
-          /images/home/trombi-organisations.png, /images/home/trombi-organisations@2x.png 2x
-        "
-              media="(max-width: 640px)"
-            >
-            <source
-              srcset="
-          /images/home/trombi-organisations-desktop.webp, /images/home/trombi-organisations-desktop@2x.webp 2x,
-          /images/home/trombi-organisations-desktop.png, /images/home/trombi-organisations-desktop@2x.png 2x
-        "
-              media="(min-width: 640px)"
-            >
-            <img
-              src="/images/home/trombi-organisations.png"
-              alt=""
-              width="425"
-              height="188"
-              class="object-cover object-top w-full h-[170px] sm:h-[240px] sm:px-8 md:px-0 max-w-none md:w-[500px] lg:w-[650px] xl:w-[738px] xl:h-[292px]"
-            >
-          </picture>
-        </div>
-      </template>
-    </QuizSearchBuilderStep0>
+      missions-count="3 000"
+    />
     <QuizSearchBuilderStep1
       v-if="currentStep === 1"
       title="Où souhaitez-vous réaliser votre mission de bénévolat ?"
@@ -54,6 +27,8 @@
       v-if="currentStep === 4"
       title="Sélectionnez les activités pour lesquelles vous souhaitez aider"
       picture="quiz-step-4"
+      :selectable-activities-proche-de-chez-moi-ids="[10,17,6,4,39,19,8,15,37,34]"
+      :selectable-activities-a-distance-ids="[10,17,6,4,39,19,8,15,37,34]"
       @selected="redirect"
     />
   </div>
@@ -89,6 +64,7 @@ export default {
         query: {
           ...this.$route.query,
           ...payload,
+          tags: 'Septembre pour Apprendre',
           utm_medium: this.$route.path
         }
       })

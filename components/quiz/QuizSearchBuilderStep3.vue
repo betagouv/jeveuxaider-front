@@ -12,7 +12,7 @@
         })"
       >
         <template #icon>
-          <IconSuccess />
+          <IconSuccess class="w-[56px] h-[56px]" />
         </template>
       </QuizOption>
       <QuizOption
@@ -26,7 +26,7 @@
         })"
       >
         <template #icon>
-          <IconCalendar />
+          <IconCalendar class="w-[56px] h-[56px]" />
         </template>
       </QuizOption>
       <QuizOption
@@ -40,7 +40,21 @@
         })"
       >
         <template #icon>
-          <IconHealth />
+          <IconHealth class="w-[56px] h-[56px]" />
+        </template>
+      </QuizOption>
+      <QuizOption
+        title="Peu importe"
+        description="Cela dépend de la mission 🤗"
+        :selected="$route.query?.commitment__total === null"
+        @click.native="onClickOption({
+          commitment__total: null,
+          duration: null,
+          time_period: null
+        })"
+      >
+        <template #icon>
+          <IconPeuImporte class="w-[56px] h-[56px]" />
         </template>
       </QuizOption>
     </div>
@@ -53,6 +67,7 @@ import QuizOption from '@/components/quiz/QuizOption.vue'
 import IconSuccess from '@/static/images/icons/dsfr/success.svg?inline'
 import IconCalendar from '@/static/images/icons/dsfr/calendar.svg?inline'
 import IconHealth from '@/static/images/icons/dsfr/health.svg?inline'
+import IconPeuImporte from '@/static/images/icons/dsfr/peu_importe.svg?inline'
 
 export default {
   components: {
@@ -60,7 +75,8 @@ export default {
     QuizOption,
     IconSuccess,
     IconCalendar,
-    IconHealth
+    IconHealth,
+    IconPeuImporte
   },
   props: {
     title: {

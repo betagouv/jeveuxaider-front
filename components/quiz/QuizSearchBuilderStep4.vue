@@ -130,7 +130,9 @@ export default {
           }
         })
 
-      this.setCookieAndRedirect()
+      this.$emit('selected', {
+        'activities.name': this.selectedActivitiesNames.map(activity => activity.name).join('|')
+      })
     },
     handleClick () {
       window.plausible &&
@@ -141,18 +143,8 @@ export default {
             value: this.selectedActivitiesNames.map(activity => activity.name).join('|')
           }
         })
-      this.setCookieAndRedirect()
-    },
-    setCookieAndRedirect () {
-      this.$cookies.set('utm_medium', this.$route.path)
-
-      this.$router.push({
-        path: '/missions-benevolat',
-        query: {
-          ...this.$route.query,
-          'activities.name': this.selectedActivitiesNames.map(activity => activity.name).join('|'),
-          utm_medium: this.$route.path
-        }
+      this.$emit('selected', {
+        'activities.name': this.selectedActivitiesNames.map(activity => activity.name).join('|')
       })
     }
   }
