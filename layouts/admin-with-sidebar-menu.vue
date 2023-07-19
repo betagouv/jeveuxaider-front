@@ -33,6 +33,7 @@ import Footer from '@/components/layout/Footer.vue'
 import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin'
 import SecondaryMenuResponsable from '@/components/menu/SecondaryMenuResponsable'
 import SecondaryMenuTeteDeReseau from '@/components/menu/SecondaryMenuTeteDeReseau'
+import MixinPlausible from '@/mixins/plausible.js'
 
 export default {
   name: 'Dashboard',
@@ -43,10 +44,7 @@ export default {
     SecondaryMenuResponsable,
     SecondaryMenuTeteDeReseau
   },
+  mixins: [MixinPlausible],
   middleware: 'authenticated'
 }
 </script>
-
-<style scoped>
-
-</style>
