@@ -20,7 +20,7 @@ export default {
           }
         case 'App\\Notifications\\ParticipationValidated':
           return {
-            emoji: '😇',
+            emoji: '🥳',
             message: 'Votre demande de participation **a été validée**',
             contexteIcon: 'RiBuildingFill',
             contexte: this.notification.data.structure_name,
@@ -123,7 +123,7 @@ export default {
         case 'App\\Notifications\\ResponsableMissionsDeactivated':
           return {
             emoji: '😢',
-            message: 'Vos missions ont été **désactivée**',
+            message: 'Vos missions ont été **désactivées**',
             redirection: '/admin/missions'
           }
         case 'App\\Notifications\\MissionSignaled':
