@@ -8,7 +8,7 @@ export default {
             message: 'Votre demande de participation **a bien été enregistrée**',
             contexteIcon: 'RiBuildingFill',
             contexte: this.notification.data.structure_name,
-            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : 'messages'
+            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : '/messages'
           }
         case 'App\\Notifications\\ParticipationBeingProcessed':
           return {
@@ -16,7 +16,7 @@ export default {
             message: 'Votre demande de participation **est en cours de traitement**',
             contexteIcon: 'RiBuildingFill',
             contexte: this.notification.data.structure_name,
-            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : 'messages'
+            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : '/messages'
           }
         case 'App\\Notifications\\ParticipationValidated':
           return {
@@ -24,7 +24,7 @@ export default {
             message: 'Votre demande de participation **a été validée**',
             contexteIcon: 'RiBuildingFill',
             contexte: this.notification.data.structure_name,
-            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : 'messages'
+            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : '/messages'
           }
         case 'App\\Notifications\\ParticipationDeclined':
           return {
@@ -32,7 +32,7 @@ export default {
             message: 'Votre demande de participation **a été refusée**',
             contexteIcon: 'RiBuildingFill',
             contexte: this.notification.data.structure_name,
-            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : 'messages'
+            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : '/messages'
           }
         case 'App\\Notifications\\ParticipationCanceled':
           return {
@@ -40,7 +40,7 @@ export default {
             message: 'Votre demande de participation **a été annulée**',
             contexteIcon: 'RiBuildingFill',
             contexte: this.notification.data.structure_name,
-            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : 'messages'
+            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : '/messages'
           }
         case 'App\\Notifications\\DocumentSubmitted':
           return {
@@ -72,7 +72,7 @@ export default {
             message: 'Vous avez une **nouvelle demande de participation**',
             contexteIcon: 'RiTeamLine',
             contexte: this.notification.data.mission_name,
-            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : 'messages'
+            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : '/messages'
           }
         case 'App\\Notifications\\ParticipationBenevoleValidated':
           return {
@@ -80,7 +80,7 @@ export default {
             message: 'Le bénévole **a validé** sa participation',
             contexteIcon: 'RiTeamLine',
             contexte: this.notification.data.mission_name,
-            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : 'messages'
+            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : '/messages'
           }
         case 'App\\Notifications\\ParticipationBenevoleCanceled':
           return {
@@ -88,7 +88,7 @@ export default {
             message: 'Le bénévole **a annulé** sa participation',
             contexteIcon: 'RiTeamLine',
             contexte: this.notification.data.mission_name,
-            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : 'messages'
+            redirection: this.notification.data.conversation_id ? `/messages/${this.notification.data.conversation_id}` : '/messages'
           }
         case 'App\\Notifications\\MissionBeingProcessed':
           return {
