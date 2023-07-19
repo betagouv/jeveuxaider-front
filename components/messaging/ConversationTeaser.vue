@@ -20,7 +20,7 @@
           <div
             v-if="hasUnreadMessage"
             aria-label="Message non lu"
-            class="flex-none w-3 h-3 ml-2 mr-auto bg-[#F95A5C] rounded-full"
+            class="flex-none w-3 h-3 ml-2 mr-auto bg-[#FF463D] rounded-full"
           />
 
           <!-- Badge Desktop -->

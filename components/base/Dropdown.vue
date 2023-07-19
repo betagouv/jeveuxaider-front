@@ -3,9 +3,9 @@
     <div
       id="menu-button"
       class="cursor-pointer"
+      :class="menuButtonClass"
       :aria-expanded="show"
       aria-haspopup="true"
-
       @keydown="onKeydown"
       @click="show = !show"
       @keydown.esc="show = false"
@@ -44,6 +44,10 @@
 <script>
 export default {
   props: {
+    menuButtonClass: {
+      type: String,
+      default: null
+    },
     position: {
       type: String,
       default: 'right'

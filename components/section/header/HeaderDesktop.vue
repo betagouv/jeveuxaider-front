@@ -23,7 +23,7 @@
           >
         </nuxt-link>
       </div>
-      <nav role="navigation" class="flex gap-8">
+      <nav role="navigation" class="flex items-center gap-8">
         <div class="flex divide-x divide-gray-200">
           <NavItem
             v-for="link in primaryNavigation"
@@ -33,16 +33,22 @@
             :click="link.click"
             class="flex items-center text-jva-blue-500 font-medium hover:underline px-3 text-sm py-1 relative"
           >
-            <client-only>
-              <div v-if="link.count" class="absolute -top-1.5 -right-1 bg-[#e41e3f] px-1.5 py-0.5 rounded-full text-white font-bold text-xxs min-w-[20px] inline-flex justify-center">
-                {{ link.count > 99 ? "99+" : link.count }}
-              </div>
-            </client-only>
             <component :is="link.icon" class="flex-shrink-0 mr-3 h-4 w-4" aria-hidden="true" />
             {{ link.name }}
           </NavItem>
         </div>
-        <DropdownUser v-if="$store.getters.isLogged" class="" />
+
+        <template v-if="$store.getters.isLogged">
+          <div class="relative">
+            <nuxt-link to="/messages" class="group">
+              <MailIcon class="text-jva-blue-500 h-[22px] group-hover:scale-105" />
+              <div v-if="$store.getters['messaging/unreadMessagesCount']" class="group-hover:scale-105 absolute top-[-1px] right-[-3px] border border-white bg-[#FF463D] rounded-full w-[10px] h-[10px]" />
+            </nuxt-link>
+          </div>
+          <DropdownUserNotifications />
+          <DropdownUser />
+        </template>
+
         <template v-if="!$store.getters.isLogged">
           <DsfrButton type="tertiary" size="sm" icon="UserIcon" @click="$router.push('/login')">
             Mon compte
@@ -141,15 +147,17 @@
 </template>
 
 <script>
-import { CalendarIcon, SearchIcon, ChatAltIcon } from '@vue-hero-icons/outline'
+import { CalendarIcon, SearchIcon } from '@vue-hero-icons/outline'
 import { FocusLoop } from '@vue-a11y/focus-loop'
 import DropdownUser from '@/components/custom/DropdownUser'
+import DropdownUserNotifications from '@/components/custom/DropdownUserNotifications'
 import DsfrButton from '@/components/dsfr/Button.vue'
 import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 
 export default {
   components: {
     DropdownUser,
+    DropdownUserNotifications,
     DsfrButton,
     FocusLoop,
     HeaderBanner
@@ -174,8 +182,8 @@ export default {
         ]
       }
       return [
-        { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' },
-        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessagesCount'] }
+        { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' }
+        // { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessagesCount'] }
       ]
     },
     secondaryNavigation () {

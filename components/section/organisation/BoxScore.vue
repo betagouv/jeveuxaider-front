@@ -21,7 +21,7 @@
                 :inner-radius="90"
                 base-color="#F1F2F9"
                 :scale-interval="0"
-                gauge-color="#F95A5C"
+                gauge-color="#FF463D"
                 class="mx-auto gauge-score"
               />
               <div class="absolute flex flex-col justify-center items-center top-[30px] lg:top-[60px] left-1/2 transform -translate-x-1/2 h-[224px] w-[224px] text-center lg:border border-[#F1F2F9] rounded-full">
@@ -30,7 +30,7 @@
                   <span class="mx-1">/</span>
                   <span>100</span>
                 </div>
-                <div class="text-[#F95A5C] text-sm font-bold mt-2">
+                <div class="text-[#FF463D] text-sm font-bold mt-2">
                   Score d'engagement <br> et de réactivité
                 </div>
                 <Link class="text-xs mt-2" @click.native="showModalScoreDetails = true">

@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-1 gap-4">
     <slot />
-    <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start">
+    <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
       <div
         :class="[
           hasPrefiltersSlot ? 'flex gap-3 text-sm flex-wrap items-center' : '',
@@ -11,7 +11,7 @@
       </div>
       <div
         :class="[
-          hasSortstSlot ? 'hidden lg:flex gap-3 text-sm flex-wrap items-center justify-end' : '',
+          hasSortstSlot ? 'lg:flex gap-3 text-sm flex-wrap items-center justify-end' : '',
         ]"
       >
         <slot name="sorts" />

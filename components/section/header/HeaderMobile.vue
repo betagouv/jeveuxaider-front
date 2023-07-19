@@ -144,15 +144,13 @@
 </template>
 
 <script>
-import { CalendarIcon, SearchIcon, ChatAltIcon } from '@vue-hero-icons/outline'
+import { CalendarIcon, SearchIcon, ChatAltIcon, BellIcon } from '@vue-hero-icons/outline'
 import { FocusLoop } from '@vue-a11y/focus-loop'
-import DropdownUser from '@/components/custom/DropdownUser'
 import DsfrButton from '@/components/dsfr/Button.vue'
 import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 
 export default {
   components: {
-    DropdownUser,
     DsfrButton,
     FocusLoop,
     HeaderBanner
@@ -178,7 +176,8 @@ export default {
       }
       return [
         { name: 'Trouver une mission', icon: SearchIcon, to: '/missions-benevolat' },
-        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessagesCount'] }
+        { name: 'Messagerie', to: '/messages', icon: ChatAltIcon, count: this.$store.getters['messaging/unreadMessagesCount'] },
+        { name: 'Notifications', to: '/notifications', icon: BellIcon, count: this.$store.getters['notifications/unreadNotificationsCount'] }
       ]
     },
     secondaryNavigation () {
