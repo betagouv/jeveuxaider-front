@@ -3,8 +3,10 @@
 </template>
 
 <script>
+import MixinPlausible from '@/mixins/plausible.js'
 
 export default {
-  name: 'QuizLayout'
+  name: 'QuizLayout',
+  mixins: [MixinPlausible]
 }
 </script>

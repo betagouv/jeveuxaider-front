@@ -185,16 +185,15 @@ export default {
       })
     },
     async handleClickCard (item) {
-      window.plausible &&
-        window.plausible('Click Card Missions - Liste résultat', {
-          props: {
-            isLogged: this.$store.getters.isLogged,
-            isFromApi: item.provider === 'api_engagement',
-            isRegistrationOpen: item.is_registration_open,
-            hasPlacesLeft: item.has_places_left,
-            isOutdated: item.is_outdated
-          }
-        })
+      this.$plausible.trackEvent('Click Card Missions - Liste résultat', {
+        props: {
+          isLogged: this.$store.getters.isLogged,
+          isFromApi: item.provider === 'api_engagement',
+          isRegistrationOpen: item.is_registration_open,
+          hasPlacesLeft: item.has_places_left,
+          isOutdated: item.is_outdated
+        }
+      })
       await this.$gtm.push({ event: 'benevole-clic-carte-mission' })
     }
   }

@@ -288,8 +288,7 @@ export default {
         .then(async () => {
           await this.$store.dispatch('auth/registerVolontaire', this.form)
           await this.$gtm.push({ event: 'benevole-inscription-soft-gate' })
-          window.plausible &&
-                window.plausible('Soft Gate - Étape 2 - Inscription')
+          this.$plausible.trackEvent('Soft Gate - Étape 2 - Inscription')
 
           this.$emit('next')
         })

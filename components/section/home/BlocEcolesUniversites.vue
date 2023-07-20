@@ -50,10 +50,9 @@ export default {
   },
   methods: {
     handleClick () {
-      window.plausible &&
-        window.plausible('Click CTA - Homepage - Acteurs - Encouragez le bénévolat étudiant', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Click CTA - Homepage - Acteurs - Encouragez le bénévolat étudiant', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
       this.$router.push('/inscription/responsable')
     }
   }

@@ -66,14 +66,13 @@ export default {
   },
   methods: {
     onClickOption (value) {
-      window.plausible &&
-        window.plausible('Quiz - Step 1', {
-          props: {
-            isLogged: this.$store.getters.isLogged,
-            quizPath: this.$route.path,
-            value
-          }
-        })
+      this.$plausible.trackEvent('Quiz - Step 1', {
+        props: {
+          isLogged: this.$store.getters.isLogged,
+          quizPath: this.$route.path,
+          value
+        }
+      })
 
       if (value === 'Mission en présentiel') {
         this.$router.push({ query: { ...this.$route.query, step: 2, type: value } })

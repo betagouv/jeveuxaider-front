@@ -121,28 +121,26 @@ export default {
   methods: {
     handleClickAll () {
       this.selectedActivities = []
-      window.plausible &&
-        window.plausible('Quiz - Step 4', {
-          props: {
-            isLogged: this.$store.getters.isLogged,
-            quizPath: this.$route.path,
-            value: 'All'
-          }
-        })
+      this.$plausible.trackEvent('Quiz - Step 4', {
+        props: {
+          isLogged: this.$store.getters.isLogged,
+          quizPath: this.$route.path,
+          value: 'All'
+        }
+      })
 
       this.$emit('selected', {
         'activities.name': this.selectedActivitiesNames.map(activity => activity.name).join('|')
       })
     },
     handleClick () {
-      window.plausible &&
-        window.plausible('Quiz - Step 4', {
-          props: {
-            isLogged: this.$store.getters.isLogged,
-            quizPath: this.$route.path,
-            value: this.selectedActivitiesNames.map(activity => activity.name).join('|')
-          }
-        })
+      this.$plausible.trackEvent('Quiz - Step 4', {
+        props: {
+          isLogged: this.$store.getters.isLogged,
+          quizPath: this.$route.path,
+          value: this.selectedActivitiesNames.map(activity => activity.name).join('|')
+        }
+      })
       this.$emit('selected', {
         'activities.name': this.selectedActivitiesNames.map(activity => activity.name).join('|')
       })

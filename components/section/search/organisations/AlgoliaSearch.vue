@@ -128,10 +128,9 @@ export default {
       })
     },
     handleClickCard (organisation) {
-      window.plausible &&
-        window.plausible('Click Card Organisations - Liste résultat', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Click Card Organisations - Liste résultat', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
     }
   }
 }

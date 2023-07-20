@@ -52,18 +52,16 @@
 </template>
 
 <script>
+import MixinPlausible from '@/mixins/plausible.js'
 
 export default {
-  components: {
-
-  },
+  mixins: [MixinPlausible],
   props: {
     error: {
       type: Object,
       default: null
     }
   },
-
   methods: {
     back () {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')

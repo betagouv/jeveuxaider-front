@@ -24,10 +24,9 @@ export default {
   },
   methods: {
     onClick () {
-      window.plausible &&
-        window.plausible('Click CTA - Mission API Engagement', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Click CTA - Mission API Engagement', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
 
       window.open(this.url, '_blank').focus()
     }

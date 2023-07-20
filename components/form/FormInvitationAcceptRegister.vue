@@ -97,7 +97,7 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           await this.$axios.post(`/invitations/${this.invitation.token}/register`, this.form)
-          window.plausible && window.plausible('Inscription depuis une invitation')
+          this.$plausible.trackEvent('Inscription depuis une invitation')
           await this.$store.dispatch('auth/login', this.form)
           this.$emit('submitted')
         })

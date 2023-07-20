@@ -139,10 +139,9 @@ export default {
       this.loading = true
       await this.$axios.put(`/structures/${this.form.id}`, this.form)
       await this.uploadFiles('structure', this.form.id)
-      window.plausible &&
-        window.plausible(
-          'Inscription responsable - Étape 5 - Votre organisation en images'
-        )
+      this.$plausible.trackEvent(
+        'Inscription responsable - Étape 5 - Votre organisation en images'
+      )
       if (this.form.territoire) {
         this.$router.push(
           '/inscription/responsable/step/collectivite-confirmation'

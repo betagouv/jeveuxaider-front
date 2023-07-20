@@ -225,8 +225,7 @@ export default {
             id: this.$store.getters.profile.id,
             ...this.form
           })
-          window.plausible &&
-            window.plausible('Inscription bénévole - Étape 2 - Profil')
+          this.$plausible.trackEvent('Inscription bénévole - Étape 2 - Profil')
           this.$router.push('/inscription/benevole/step/preferences')
         })
         .catch((errors) => {

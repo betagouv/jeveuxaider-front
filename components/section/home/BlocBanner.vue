@@ -211,10 +211,9 @@ export default {
   },
   methods: {
     handleClick () {
-      window.plausible &&
-        window.plausible('Click CTA - Homepage', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Click CTA - Homepage', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
       this.$router.push('/missions-benevolat')
     }
   }
