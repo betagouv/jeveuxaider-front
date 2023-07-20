@@ -193,10 +193,9 @@ export default {
   },
   methods: {
     goTo (url) {
-      window.plausible &&
-        window.plausible('Click Module de don - Page Orga', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Click Module de don - Page Orga', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
       window.open(url, '_blank')
     }
   }

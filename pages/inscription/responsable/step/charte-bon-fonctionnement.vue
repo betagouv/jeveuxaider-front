@@ -239,8 +239,7 @@ export default {
       const dateFeatureLaunch = this.$dayjs('2023-04-18 17:00:00').utc(true)
       const userCreatedAt = this.$dayjs(this.$store.state.auth.user?.created_at).utc(true)
       if (userCreatedAt.isAfter(dateFeatureLaunch)) {
-        window.plausible &&
-          window.plausible('Inscription responsable - CTA - Charte bon fonctionnement')
+        this.$plausible.trackEvent('Inscription responsable - CTA - Charte bon fonctionnement')
       }
 
       this.$router.push(this.$route.query?.redirect || '/inscription/responsable/step/profile')

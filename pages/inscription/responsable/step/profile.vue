@@ -165,8 +165,7 @@ export default {
             id: this.$store.getters.profile.id,
             ...this.form
           })
-          window.plausible &&
-            window.plausible('Inscription responsable - Étape 2 - Profil')
+          this.$plausible.trackEvent('Inscription responsable - Étape 2 - Profil')
           this.$router.push('/inscription/responsable/step/organisation')
         })
         .catch((errors) => {

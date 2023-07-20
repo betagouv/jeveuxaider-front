@@ -238,10 +238,9 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           await this.$axios.put(`/structures/${this.form.id}`, this.form)
-          window.plausible &&
-            window.plausible(
-              'Inscription responsable - Étape 4 - Quelques mots sur l’organisation'
-            )
+          this.$plausible.trackEvent(
+            'Inscription responsable - Étape 4 - Quelques mots sur l’organisation'
+          )
           if (this.form.statut_juridique === 'Collectivité') {
             this.$router.push('/inscription/responsable/step/collectivite')
           } else {

@@ -110,17 +110,15 @@ export default {
       this.$refs.slideshowOperation.next()
     },
     onViewMoreClick () {
-      window.plausible &&
-        window.plausible('Homepage - CTA - Plus de missions - Opé nationale', {
-          props: { isLogged: this.$store.getters.isLogged, operation: 'Printemps pour la planète' }
-        })
+      this.$plausible.trackEvent('Homepage - CTA - Plus de missions - Opé nationale', {
+        props: { isLogged: this.$store.getters.isLogged, operation: 'Printemps pour la planète' }
+      })
       this.$router.push('/missions-benevolat?publisher_name=J%27agis%20pour%20la%20nature%7CJeVeuxAider.gouv.fr&activities.name=Travaux%20manuels%7CActions%20de%20sensibilisation%7CVie%20citoyenne%7CRamassage%20de%20d%C3%A9chets%7CAm%C3%A9nagement%20d%27espaces%20naturels%7CSoins%20aux%20animaux&domaines=Protection%20de%20la%20nature')
     },
     onSlideClick () {
-      window.plausible &&
-        window.plausible('Homepage - Clique - Mission opé nationale', {
-          props: { isLogged: this.$store.getters.isLogged, operation: 'Printemps pour la planète' }
-        })
+      this.$plausible.trackEvent('Homepage - Clique - Mission opé nationale', {
+        props: { isLogged: this.$store.getters.isLogged, operation: 'Printemps pour la planète' }
+      })
     }
   }
 }

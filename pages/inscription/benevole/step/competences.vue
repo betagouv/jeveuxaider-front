@@ -129,8 +129,7 @@ export default {
         ...this.form
       })
       this.loading = false
-      window.plausible &&
-        window.plausible('Inscription bénévole - Étape 4 - Compétences')
+      this.$plausible.trackEvent('Inscription bénévole - Étape 4 - Compétences')
       this.$router.push('/profile')
     }
   }

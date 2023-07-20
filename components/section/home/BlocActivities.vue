@@ -120,10 +120,9 @@ export default {
       }
     },
     onClick (activity) {
-      window.plausible &&
-        window.plausible('Homepage - Clique - Activités', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Homepage - Clique - Activités', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
       this.$router.push(`/missions-benevolat?activities.name=${activity.name}`)
     }
   }
