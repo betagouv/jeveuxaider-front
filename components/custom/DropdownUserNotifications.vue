@@ -1,9 +1,9 @@
 <template>
   <Dropdown ref="dropdownUserNotifications" menu-button-class="leading-3">
     <template #button>
-      <button class="group">
+      <button class="group p-1">
         <BellIcon class="text-jva-blue-500 h-[22px] group-hover:scale-105" />
-        <div v-if="$store.getters['notifications/unreadNotificationsCount']" class="group-hover:scale-105 absolute top-[-1px] right-[0px] border border-white bg-[#FF463D] rounded-full w-[10px] h-[10px]" />
+        <div v-if="$store.getters['notifications/unreadNotificationsCount']" class="group-hover:scale-105 absolute top-[2px] right-[2px] border border-white bg-[#FF463D] rounded-full w-[10px] h-[10px]" />
       </button>
     </template>
 
