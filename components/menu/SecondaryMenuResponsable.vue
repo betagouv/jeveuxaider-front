@@ -18,7 +18,7 @@
             {{ item.label }}
           </h3>
           <div class="mt-1 space-y-1" :aria-labelledby="item.label">
-            <nuxt-link v-for="link, index in item.childrens" :key="index" :to="link.to" class="group flex items-center py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+            <nuxt-link v-for="link, index in item.childrens" :key="index" :to="link.to" class="group flex items-center py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900">
               <span class="truncate">
                 {{ link.label }}
               </span>

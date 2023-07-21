@@ -21,12 +21,12 @@
             <div class="mt-1 space-y-1" :aria-labelledby="item.label">
               <template v-for="link, index in item.childrens">
                 <template v-if="link">
-                  <nuxt-link v-if="link.to" :key="index" :to="link.to" class="group flex items-center py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                  <nuxt-link v-if="link.to" :key="index" :to="link.to" class="group flex items-center py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900">
                     <span class="truncate">
                       {{ link.label }}
                     </span>
                   </nuxt-link>
-                  <a v-else-if="link.href" :key="index" :href="link.href" target="_blank" class="group flex items-center py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50">
+                  <a v-else-if="link.href" :key="index" :href="link.href" target="_blank" class="group flex items-center py-2 text-sm font-medium text-gray-600 rounded-md hover:text-gray-900">
                     <span class="truncate">
                       {{ link.label }}
                     </span>
