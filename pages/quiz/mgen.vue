@@ -30,7 +30,7 @@
     <QuizSearchBuilderStep4
       v-if="currentStep === 4"
       title="Sélectionnez les activités pour lesquelles vous souhaitez aider"
-      picture="quiz-step-4"
+      picture="quiz-mgen-step-4"
       :logos="logos"
       :selectable-activities-proche-de-chez-moi-ids="[10,17,6,4,39,19,8,15,37,34]"
       :selectable-activities-a-distance-ids="[10,17,6,4,39,19,8,15,37,34]"
