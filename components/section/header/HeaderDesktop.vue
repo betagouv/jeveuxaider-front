@@ -23,7 +23,7 @@
           >
         </nuxt-link>
       </div>
-      <nav role="navigation" class="flex items-center gap-8">
+      <nav role="navigation" class="flex items-center gap-6">
         <div class="flex divide-x divide-gray-200">
           <NavItem
             v-for="link in primaryNavigation"
@@ -40,13 +40,13 @@
 
         <template v-if="$store.getters.isLogged">
           <div class="relative">
-            <nuxt-link to="/messages" class="group">
+            <nuxt-link to="/messages" class="group flex p-1">
               <MailIcon class="text-jva-blue-500 h-[22px] group-hover:scale-105" />
-              <div v-if="$store.getters['messaging/unreadMessagesCount']" class="group-hover:scale-105 absolute top-[-1px] right-[-3px] border border-white bg-[#FF463D] rounded-full w-[10px] h-[10px]" />
+              <div v-if="$store.getters['messaging/unreadMessagesCount']" class="group-hover:scale-105 absolute top-[2px] right-[2px] border border-white bg-[#FF463D] rounded-full w-[10px] h-[10px]" />
             </nuxt-link>
           </div>
           <DropdownUserNotifications />
-          <DropdownUser />
+          <DropdownUser class="lg:ml-2" />
         </template>
 
         <template v-if="!$store.getters.isLogged">

@@ -597,15 +597,14 @@ export default {
 
   },
   mounted () {
-    window.plausible &&
-      window.plausible('Mission - Visite', {
-        props: {
-          isFromApi: this.mission.isFromApi ?? false,
-          isRegistrationOpen: this.mission.is_registration_open,
-          hasPlacesLeft: this.mission.has_places_left,
-          isOutdated: this.hasExpired
-        }
-      })
+    this.$plausible.trackEvent('Mission - Visite', {
+      props: {
+        isFromApi: this.mission.isFromApi ?? false,
+        isRegistrationOpen: this.mission.is_registration_open,
+        hasPlacesLeft: this.mission.has_places_left,
+        isOutdated: this.hasExpired
+      }
+    })
   },
   methods: {
     handleVisibilityFixedCtaMobile (isVisible, entry) {

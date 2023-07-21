@@ -41,9 +41,11 @@
 </template>
 
 <script>
+import MixinPlausible from '@/mixins/plausible.js'
 
 export default {
   name: 'RegisterStepsLayout',
+  mixins: [MixinPlausible],
   middleware: 'authenticated',
   head: {
     bodyAttrs: {

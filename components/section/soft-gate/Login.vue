@@ -99,7 +99,7 @@ export default {
           } else {
             this.$emit('next')
           }
-          window.plausible && window.plausible('Soft Gate - Étape 2 - Login')
+          this.$plausible.trackEvent('Soft Gate - Étape 2 - Login')
         })
         .catch((errors) => {
           this.setErrors(errors)

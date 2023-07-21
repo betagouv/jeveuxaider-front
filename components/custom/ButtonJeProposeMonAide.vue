@@ -45,10 +45,9 @@ export default {
         return
       }
 
-      window.plausible &&
-        window.plausible('Click CTA - Mission', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Click CTA - Mission', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
       this.$store.commit('softGate/showOverlay')
       this.$store.commit('softGate/setSelectedMission', this.mission)
     }

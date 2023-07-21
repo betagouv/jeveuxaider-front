@@ -24,11 +24,13 @@
 
 <script>
 import TemoignageSteps from '@/components/section/temoignage/Steps.vue'
+import MixinPlausible from '@/mixins/plausible.js'
 
 export default {
   name: 'TemoignageLayout',
   components: {
     TemoignageSteps
-  }
+  },
+  mixins: [MixinPlausible]
 }
 </script>

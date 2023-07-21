@@ -37,6 +37,7 @@ import Header from '@/components/layout/Header.vue'
 import ConversationsListingResults from '@/components/messaging/ConversationsListingResults.vue'
 import ConversationsTabs from '@/components/messaging/ConversationsTabs.vue'
 import MixinUsetiful from '@/mixins/usetiful.client.js'
+import MixinPlausible from '@/mixins/plausible.js'
 
 export default {
   name: 'MessagesLayout',
@@ -45,7 +46,7 @@ export default {
     ConversationsListingResults,
     ConversationsTabs
   },
-  mixins: [MixinUsetiful],
+  mixins: [MixinUsetiful, MixinPlausible],
   middleware: 'authenticated',
   data () {
     return {}

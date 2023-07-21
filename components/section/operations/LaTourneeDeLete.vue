@@ -96,17 +96,15 @@ export default {
       this.$refs.slideshowOperation.next()
     },
     onViewMoreClick () {
-      window.plausible &&
-        window.plausible('Homepage - CTA - Plus de missions - Opé nationale', {
-          props: { isLogged: this.$store.getters.isLogged, operation: "La tournée de l'été" }
-        })
+      this.$plausible.trackEvent('Homepage - CTA - Plus de missions - Opé nationale', {
+        props: { isLogged: this.$store.getters.isLogged, operation: "La tournée de l'été" }
+      })
       this.$router.push('/missions-benevolat?tags=La%20tournée%20d%27été')
     },
     onSlideClick () {
-      window.plausible &&
-        window.plausible('Homepage - Clique - Mission opé nationale', {
-          props: { isLogged: this.$store.getters.isLogged, operation: "La tournée de l'été" }
-        })
+      this.$plausible.trackEvent('Homepage - Clique - Mission opé nationale', {
+        props: { isLogged: this.$store.getters.isLogged, operation: "La tournée de l'été" }
+      })
     }
   }
 }

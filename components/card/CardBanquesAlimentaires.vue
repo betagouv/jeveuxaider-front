@@ -61,10 +61,9 @@ export default {
   },
   methods: {
     onClickBACollecte () {
-      window.plausible &&
-        window.plausible('Click CTA - Collecte BA - Card Missions Prioritaires', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Click CTA - Collecte BA - Card Missions Prioritaires', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
     }
   }
 }

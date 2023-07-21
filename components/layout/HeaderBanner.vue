@@ -103,16 +103,6 @@ export default {
     '$store.state.auth.user.id' () {
       this.$fetch()
     }
-  },
-  methods: {
-    onClick () {
-      console.log('onClick')
-      window.plausible &&
-        window.plausible('Click CTA - Decembre Ensemble - Bandeau', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
-      window.location = '/missions-benevolat?tags=Décembre%20ensemble&utm_medium=JVA_CLIC_BANDEAU'
-    }
   }
 }
 </script>

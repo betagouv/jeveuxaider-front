@@ -56,10 +56,9 @@ export default {
   methods: {
     onClick () {
       console.log('CLICK')
-      window.plausible &&
-        window.plausible('Click CTA - Collecte nationale Restos du Coeur - Card', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Click CTA - Collecte nationale Restos du Coeur - Card', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
       window.location = '/missions-benevolat?tags=Collecte%20nationale%20des%20Restos%20du%20Cœur&utm_medium=JVA_CLIC_CARD'
     }
   }

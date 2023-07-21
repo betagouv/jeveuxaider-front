@@ -14,12 +14,14 @@
 <script>
 import Footer from '@/components/layout/Footer.vue'
 import HeaderBanner from '@/components/layout/HeaderBanner.vue'
+import MixinPlausible from '@/mixins/plausible.js'
 
 export default {
   components: {
     HeaderBanner,
     Footer
-  }
+  },
+  mixins: [MixinPlausible]
 }
 </script>
 

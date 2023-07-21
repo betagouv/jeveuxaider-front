@@ -84,10 +84,9 @@ export default {
           })
           .finally(() => {
             this.loading = false
-            window.plausible &&
-              window.plausible('Homepage - CTA - Email', {
-                props: { isLogged: this.$store.getters.isLogged }
-              })
+            this.$plausible.trackEvent('Homepage - CTA - Email', {
+              props: { isLogged: this.$store.getters.isLogged }
+            })
           })
       } else {
         this.error = "L'email renseigné n'est pas valide"

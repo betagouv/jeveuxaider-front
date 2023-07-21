@@ -593,7 +593,7 @@ export default {
               ? this.form.structure
               : null
           })
-          window.plausible && window.plausible('Inscription responsable - Étape 1 - Création de compte')
+          this.$plausible.trackEvent('Inscription responsable - Étape 1 - Création de compte')
           await this.$gtm.push({ event: 'inscription-responsable' })
           this.$router.push({
             path: '/inscription/responsable/step/charte-bon-fonctionnement'

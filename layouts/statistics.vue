@@ -29,6 +29,7 @@
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
 import SecondaryMenuStatistics from '@/components/menu/SecondaryMenuStatistics'
+import MixinPlausible from '@/mixins/plausible.js'
 
 export default {
   name: 'Dashboard',
@@ -37,6 +38,7 @@ export default {
     Footer,
     SecondaryMenuStatistics
   },
+  mixins: [MixinPlausible],
   middleware: 'authenticated'
 }
 </script>

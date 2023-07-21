@@ -433,10 +433,9 @@ export default {
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           await this.$axios.put(`/structures/${this.form.id}`, this.form)
-          window.plausible &&
-            window.plausible(
-              'Inscription responsable - Étape 3 - Informations sur l’organisation'
-            )
+          this.$plausible.trackEvent(
+            'Inscription responsable - Étape 3 - Informations sur l’organisation'
+          )
           this.$router.push('/inscription/responsable/step/organisation-details')
         })
         .catch((errors) => {

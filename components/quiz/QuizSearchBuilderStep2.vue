@@ -137,14 +137,13 @@ export default {
       })
     },
     onNextStep (value) {
-      window.plausible &&
-        window.plausible('Quiz - Step 2', {
-          props: {
-            isLogged: this.$store.getters.isLogged,
-            quizPath: this.$route.path,
-            value
-          }
-        })
+      this.$plausible.trackEvent('Quiz - Step 2', {
+        props: {
+          isLogged: this.$store.getters.isLogged,
+          quizPath: this.$route.path,
+          value
+        }
+      })
 
       this.$router.push({ query: { ...this.$route.query, step: 3, ...value } })
     }

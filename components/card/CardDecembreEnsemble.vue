@@ -57,10 +57,9 @@ export default {
   },
   methods: {
     onClick () {
-      window.plausible &&
-        window.plausible('Click CTA - Decembre Ensemble - Card', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Click CTA - Decembre Ensemble - Card', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
       console.log('onClick')
       window.location = '/missions-benevolat?tags=Décembre%20ensemble&utm_medium=JVA_CLIC_CARD'
     }

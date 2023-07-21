@@ -102,17 +102,15 @@ export default {
       this.$refs.slideshowPopulaire.next()
     },
     onViewMoreClick () {
-      window.plausible &&
-        window.plausible('Homepage - CTA - Plus de missions - Mission populaire', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Homepage - CTA - Plus de missions - Mission populaire', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
       this.$router.push(`/missions-benevolat?${this.searchPageWithFilters}`)
     },
     onSlideClick () {
-      window.plausible &&
-        window.plausible('Homepage - Clique - Mission populaire', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Homepage - Clique - Mission populaire', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
     }
   }
 }

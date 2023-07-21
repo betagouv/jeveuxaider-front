@@ -73,10 +73,9 @@ export default {
   },
   methods: {
     handleClick () {
-      window.plausible &&
-        window.plausible('Homepage - CTA - Inscrire organisation - Bas de page', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Homepage - CTA - Inscrire organisation - Bas de page', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
       this.$router.push('/inscription/responsable')
     }
   }

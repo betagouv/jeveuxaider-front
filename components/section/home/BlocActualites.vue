@@ -105,10 +105,9 @@ export default {
       this.$refs.slideshowArticles.next()
     },
     onSlideClick () {
-      window.plausible &&
-        window.plausible('Homepage - Clique - Article du blog', {
-          props: { isLogged: this.$store.getters.isLogged }
-        })
+      this.$plausible.trackEvent('Homepage - Clique - Article du blog', {
+        props: { isLogged: this.$store.getters.isLogged }
+      })
     }
   }
 }
