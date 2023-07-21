@@ -1,5 +1,11 @@
 <template>
-  <QuizStep :title="title" :slogan="slogan" :picture="picture" :mobile-picture="mobilePicture">
+  <QuizStep
+    :title="title"
+    :slogan="slogan"
+    :picture="picture"
+    :mobile-picture="mobilePicture"
+    :logos="logos"
+  >
     <div class="flex flex-col lg:flex-row lg:items-center gap-8">
       <div>
         <Button
@@ -55,6 +61,12 @@ export default {
     missionsCount: {
       type: String,
       default: '30 000'
+    },
+    logos: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   methods: {

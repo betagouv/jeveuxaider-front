@@ -4,29 +4,34 @@
       v-if="currentStep === 0"
       title="Trouvez en quelques clics votre prochaine mission de bénévolat"
       slogan="Rendons l’éducation accessible à tous"
-      picture="quiz-step-0"
-      mobile-picture="quiz-step-0-mobile"
+      picture="quiz-mgen-step-0"
+      mobile-picture="quiz-mgen-step-0-mobile"
       missions-count="3 000"
+      :logos="logos"
     />
     <QuizSearchBuilderStep1
       v-if="currentStep === 1"
       title="Où souhaitez-vous réaliser votre mission de bénévolat ?"
-      picture="quiz-step-1"
+      picture="quiz-mgen-step-1"
+      :logos="logos"
     />
     <QuizSearchBuilderStep2
       v-if="currentStep === 2"
       title="Précisez où souhaitez-vous réaliser votre mission ?"
-      picture="quiz-step-2"
+      picture="quiz-mgen-step-2"
+      :logos="logos"
     />
     <QuizSearchBuilderStep3
       v-if="currentStep === 3"
       title="Combien de temps pourriez-vous dédier à une mission de bénévolat ?"
-      picture="quiz-step-3"
+      picture="quiz-mgen-step-3"
+      :logos="logos"
     />
     <QuizSearchBuilderStep4
       v-if="currentStep === 4"
       title="Sélectionnez les activités pour lesquelles vous souhaitez aider"
       picture="quiz-step-4"
+      :logos="logos"
       :selectable-activities-proche-de-chez-moi-ids="[10,17,6,4,39,19,8,15,37,34]"
       :selectable-activities-a-distance-ids="[10,17,6,4,39,19,8,15,37,34]"
       @selected="redirect"
@@ -50,6 +55,14 @@ export default {
     QuizSearchBuilderStep4
   },
   layout: 'quiz',
+  data () {
+    return {
+      logos: [
+        { name: 'quiz-logo-mgen.svg', alt: 'MGEN' },
+        { name: 'quiz-logo-septembre-pour-apprendre.svg', alt: 'Septembre pour Apprendre' }
+      ]
+    }
+  },
   computed: {
     currentStep () {
       return this.$route.query?.step ? parseInt(this.$route.query?.step) : 0

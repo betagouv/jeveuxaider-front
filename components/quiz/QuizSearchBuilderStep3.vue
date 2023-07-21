@@ -1,5 +1,5 @@
 <template>
-  <QuizStep :title="title" :slogan="slogan" :picture="picture">
+  <QuizStep :title="title" :slogan="slogan" :picture="picture" :logos="logos">
     <div class="max-w-lg flex flex-col gap-6">
       <QuizOption
         title="Quelques heures"
@@ -90,6 +90,12 @@ export default {
     picture: {
       type: String,
       required: true
+    },
+    logos: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   methods: {

@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-col lg:flex-row h-screen bg-white lg:min-h-[895px]">
+  <div class="flex flex-col lg:flex-row h-screen bg-white lg:overflow-hidden">
     <div
       :class="[
         'hidden relative lg:block',
-        {'w-[489px]':currentStep === 0 },
-        {'w-[600px]':currentStep > 0 }
+        {'w-[489px]': currentStep === 0 },
+        {'w-[600px]': currentStep > 0 }
       ]"
     >
       <img
@@ -12,21 +12,38 @@
         :srcset="`/images/quiz/${picture}@2x.jpg 2x`"
         alt=""
         :class="[
-          'object-cover w-[600px] h-full ',
+          'object-cover w-[600px] h-full',
         ]"
       >
-      <div v-if="currentStep > 0" class="h-screen absolute top-0 left-0 w-full">
-        <div class="flex flex-col justify-end h-screen p-14">
-          <Heading as="h2" size="alt-lg" color="text-white">
-            <span class="block">Liberté<span class="text-jva-orange-300">.</span></span>
-            <span class="block">Égalité<span class="text-jva-orange-300">.</span></span>
-            <span class="block">Je veux aider<span class="text-jva-orange-300">.</span></span>
-          </Heading>
+
+      <template v-if="logos.length > 0">
+        <div
+          :class="[
+            'flex gap-4 justify-center items-center h-[195px] p-8 absolute bottom-0 left-0 right-0 z-10 bg-black bg-opacity-20',
+          ]"
+        >
+          <img
+            v-for="logo,i in logos"
+            :key="i"
+            :src="`/images/quiz/${logo.name}`"
+            :alt="logo.alt"
+            :class="[
+              logo.class,
+              'h-[140px] w-auto',
+            ]"
+          >
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <Heading v-if="currentStep > 0" as="h2" size="alt-lg" color="text-white absolute bottom-0 left-0 right-0 p-14">
+          <span class="block">Liberté<span class="text-jva-orange-300">.</span></span>
+          <span class="block">Égalité<span class="text-jva-orange-300">.</span></span>
+          <span class="block">Je veux aider<span class="text-jva-orange-300">.</span></span>
+        </Heading>
+      </template>
     </div>
 
-    <main id="main" class="flex flex-col flex-1">
+    <main id="main" class="flex flex-col flex-1 lg:overflow-auto">
       <template v-if="currentStep === 0">
         <div
           class="flex justify-start items-center relative px-6 py-4 lg:p-6 h-[94px] lg:h-[116px] border-b"
@@ -68,6 +85,29 @@
               'object-cover h-full w-full',
             ]"
           >
+          <template v-if="logos.length > 0">
+            <div
+              class="inline-block absolute bottom-0 right-0 z-10"
+              style="background: url('/images/quiz/bg-logos-container.png')"
+            >
+              <div
+                :class="[
+                  'p-4 flex gap-4 justify-center items-center h-[84px]',
+                ]"
+              >
+                <img
+                  v-for="logo,i in logos"
+                  :key="i"
+                  :src="`/images/quiz/${logo.name}`"
+                  :alt="logo.alt"
+                  :class="[
+                    logo.class,
+                    'h-[59px] w-auto',
+                  ]"
+                >
+              </div>
+            </div>
+          </template>
         </div>
       </template>
       <QuizSteps v-if="currentStep > 0" class="bg-[#F9F6F2]" />
@@ -118,6 +158,12 @@ export default {
     mobilePicture: {
       type: String,
       default: null
+    },
+    logos: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   computed: {

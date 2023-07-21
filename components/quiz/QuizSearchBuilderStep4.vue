@@ -1,5 +1,5 @@
 <template>
-  <QuizStep :title="title" :slogan="slogan" :picture="picture">
+  <QuizStep :title="title" :slogan="slogan" :picture="picture" :logos="logos">
     <div class="mb-12">
       <TagsGroup
         v-model="selectedActivities"
@@ -58,6 +58,12 @@ export default {
     picture: {
       type: String,
       required: true
+    },
+    logos: {
+      type: Array,
+      default: () => {
+        return []
+      }
     },
     selectableActivitiesProcheDeChezMoiIds: {
       type: Array,
