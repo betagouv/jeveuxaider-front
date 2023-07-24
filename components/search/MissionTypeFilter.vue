@@ -17,6 +17,13 @@ export default {
       value: this.$route?.query?.type ?? 'Mission en présentiel'
     }
   },
+  watch: {
+    '$route.query.type' (newVal) {
+      if (!newVal) {
+        this.value = 'Mission en présentiel'
+      }
+    }
+  },
   methods: {
     handleClickTab (payload) {
       if (payload == 'Mission à distance') {
