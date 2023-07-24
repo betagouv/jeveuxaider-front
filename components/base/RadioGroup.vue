@@ -9,6 +9,7 @@
         v-for="(option, index) in options"
         :key="option.key"
         v-model="selected"
+        :default-value="value"
         :variant="variant"
         :option="option"
         :class="[

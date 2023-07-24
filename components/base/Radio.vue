@@ -6,6 +6,7 @@
       :value="option.key"
       :class="[{'sr-only': variant === 'tabs'}]"
       aria-labelledby="label"
+      :checked="defaultValue == option.key"
       @input="$emit('input', option.key)"
     >
     <span
@@ -20,7 +21,8 @@
 export default {
   props: {
     option: { type: Object, required: true },
-    variant: { type: String, default: 'radio', validator: s => ['radios', 'tabs'].includes(s) }
+    variant: { type: String, default: 'radio', validator: s => ['radios', 'tabs'].includes(s) },
+    defaultValue: { type: [String, Number, Boolean], default: null }
   }
 }
 </script>
