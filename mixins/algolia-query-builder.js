@@ -16,31 +16,6 @@ export default {
         params: this.$store.state.algoliaSearch.searchParameters
       }]
 
-      // Pour récupérer le bon nb de missions à distance, query sans la geolocalisation
-      if (this.$store.state.algoliaSearch.indexKey === 'missionsIndex') {
-        const paramsWithoutGeo = {
-          ...this.$store.state.algoliaSearch.searchParameters,
-          numericFilters: this.$store.state.algoliaSearch.searchParameters.numericFilters.filter(f => f !== 'is_autonomy=1'),
-          aroundLatLngViaIP: false,
-          aroundLatLng: '',
-          aroundRadius: 'all',
-          facetFilters: this.activeFacets.filter(facetFilter => facetFilter[0].split(':')[0] != 'type'),
-          facets: ['type'],
-          filters: this.$store.state.algoliaSearch.initialFilters,
-          hitsPerPage: 1,
-          attributesToRetrieve: [],
-          attributesToSnippet: [],
-          attributesToHighlight: [],
-          clickAnalytics: false,
-          analytics: false
-        }
-
-        queries.push({
-          indexName: this.$store.state.algoliaSearch.indexName,
-          params: paramsWithoutGeo
-        })
-      }
-
       this.activeFacets.forEach((facetFilter) => {
         const facetName = facetFilter[0].split(':')[0]
         queries.push({
@@ -71,10 +46,7 @@ export default {
       const { results } = await this.$algolia.multipleQueries(queries, params)
 
       this.$store.commit('algoliaSearch/setResults', results[0])
-      if (this.$store.state.algoliaSearch.indexKey === 'missionsIndex') {
-        this.$store.commit('algoliaSearch/setNbMissionsDistance', results[1].facets.type?.['Mission à distance'] ?? 0)
-      }
-      const facetResults = this.$store.state.algoliaSearch.indexKey === 'missionsIndex' ? results.slice(2) : results.slice(1)
+      const facetResults = results.slice(1)
       this.$store.commit('algoliaSearch/setFacetsResults', facetResults)
     },
     async searchForFacetValues (facetName, facetQuery) {

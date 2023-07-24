@@ -11,30 +11,7 @@
             'missions disponibles',
             false
           )}`"
-        >
-          <template #action>
-            <div class="hidden sm:block flex-none">
-              <TabsFacetFilter
-                filter-name="type"
-                :tabs="[
-                  {
-                    icon: 'RiMapPinFill',
-                    filterValue: 'Mission en présentiel',
-                    current: !$route.query['type'],
-                    label: 'Près de chez moi',
-                    sublabel: `${$options.filters.formatNumber($store.getters['algoliaSearch/nbMissionsPresentiel'])} ${$options.filters.pluralize($store.getters['algoliaSearch/nbMissionsPresentiel'], 'mission', 'missions', false)}`
-                  },
-                  {
-                    icon: 'RiComputerFill',
-                    filterValue: 'Mission à distance',
-                    label: 'Depuis chez moi',
-                    sublabel: `${$options.filters.formatNumber($store.state.algoliaSearch.nbMissionsDistance)} ${$options.filters.pluralize($store.state.algoliaSearch.nbMissionsDistance, 'mission', 'missions', false)}`
-                  }
-                ]"
-              />
-            </div>
-          </template>
-        </Sectionheading>
+        />
 
         <template v-if="!noFilters">
           <MobileFilters class="sm:hidden" />
@@ -91,7 +68,6 @@
 
 <script>
 import CardMission from '@/components/card/CardMission.vue'
-import TabsFacetFilter from '~/components/section/search/TabsFacetFilter.vue'
 import AlgoliaMissionsQueryBuilder from '@/mixins/algolia-missions-query-builder'
 import PrimaryFilters from '~/components/section/search/missions/PrimaryFilters.vue'
 import SecondaryFilters from '~/components/section/search/missions/SecondaryFilters.vue'
@@ -103,7 +79,6 @@ import Link from '@/components/dsfr/Link.vue'
 export default {
   components: {
     CardMission,
-    TabsFacetFilter,
     PrimaryFilters,
     SecondaryFilters,
     PromoteMissionDistance,
