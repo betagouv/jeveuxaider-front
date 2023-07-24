@@ -1,20 +1,23 @@
 <template>
-  <div class="bg-white px-6 sm:py-6 shadow-xl grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:!divide-x">
-    <div class="py-6 sm:py-0 sm:pb-6 sm:pr-6 lg:pb-0 xl:px-6">
+  <div class="bg-white px-6 sm:py-6 lg:px-8 xl:px-12 shadow-xl grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 lg:!divide-x">
+    <div class="pr-6 pb-6 border-b lg:border-b-0 lg:pb-0 lg:pr-8">
+      <MissionTypeFilter />
+    </div>
+    <div class="pl-6 pb-6 border-l border-b lg:border-b-0 lg:pb-0 lg:px-8">
       <div class="text-[#7B7B7B] mb-1">
-        Localisation
+        Lieu de la mission
       </div>
       <div class="">
         <LocalisationFilter v-if="!$route.query.type || $route.query.type == 'Mission en présentiel'" label="Localisation" />
         <div v-else>
           <div class="flex space-x-2 items-center">
             <RiComputerFill class="h-4 w-4 flex-none transition-opacity opacity-25 group-hover:opacity-100" />
-            <span class="font-bold">Depuis chez moi</span>
+            <span class="font-bold truncate">À distance</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
+    <div class="pr-6 pt-6 lg:pt-0 lg:px-8">
       <div class="text-[#7B7B7B] mb-1">
         Activités
       </div>
@@ -38,7 +41,7 @@
         </template>
       </FacetFilterToggle>
     </div>
-    <div class="py-6 sm:py-0 sm:pt-6 sm:pr-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
+    <div class="px-6 pt-6 border-l lg:border-l-0 lg:pt-0 lg:px-8">
       <div class="text-[#7B7B7B] mb-1">
         Disponibilités
       </div>
@@ -56,7 +59,7 @@
         </template>
       </CommitmentFilter>
     </div>
-    <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
+    <div class="hidden xl:block pl-6 pt-6 lg:pt-0 xl:pl-8">
       <div class="text-[#7B7B7B] mb-1">
         Recherche
       </div>
@@ -71,13 +74,15 @@ import LocalisationFilter from '~/components/search/LocalisationFilter.vue'
 import CommitmentFilter from '~/components/section/search/CommitmentFilter.vue'
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import SearchFilter from '@/components/search/SearchFilter.vue'
+import MissionTypeFilter from '@/components/search/MissionTypeFilter.vue'
 
 export default {
   components: {
     FacetFilterToggle,
     CommitmentFilter,
     LocalisationFilter,
-    SearchFilter
+    SearchFilter,
+    MissionTypeFilter
   },
   mixins: [AlgoliaQueryBuilder]
 }
