@@ -24,7 +24,7 @@
                 gauge-color="#FF463D"
                 class="mx-auto gauge-score"
               />
-              <div class="absolute flex flex-col justify-center items-center top-[30px] lg:top-[60px] left-1/2 transform -translate-x-1/2 h-[224px] w-[224px] text-center lg:border border-[#F1F2F9] rounded-full">
+              <div class="absolute flex flex-col justify-center items-center top-[30px] lg:top-[60px] left-1/2 transform -translate-x-1/2 h-[224px] w-[224px] text-center">
                 <div class="font-bold text-5xl tracking-tight">
                   <span>{{ score.total_points }}</span>
                   <span class="mx-1">/</span>
