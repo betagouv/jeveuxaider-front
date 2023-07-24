@@ -8,7 +8,7 @@
       ]"
       tabpanel-class="py-4 bg-white"
       tabswrapper-class="!px-2 !text-[15px] xs:!px-3 xs:!text-base"
-      :selected-tab="selectedTab"
+      :selected-tab-key="selectedTabKey"
       @selected="onTabSelect"
     >
       <div slot="tab-onsite">
@@ -95,8 +95,8 @@ export default {
     }
   },
   computed: {
-    selectedTab () {
-      return this.$route.query.type === 'Mission à distance' ? 1 : 0
+    selectedTabKey () {
+      return this.$route.query.type === 'Mission à distance' ? 'remote' : 'onsite'
     }
   },
   methods: {
