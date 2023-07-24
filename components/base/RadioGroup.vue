@@ -4,7 +4,7 @@
       Choisir une option
     </legend>
 
-    <div class="flex" :class="[{'flex-col space-y-1': variant === 'radios'}]">
+    <div class="flex" :class="[{'flex-col': variant === 'radios'}]">
       <Radio
         v-for="(option, index) in options"
         :key="option.key"
