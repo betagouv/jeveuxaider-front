@@ -1,8 +1,9 @@
 <template>
   <div>
     <Toggle
+      size="md"
       :value="isAutonomy"
-      label="Mission à réaliser de votre côté sans présence obligatoire."
+      label="Missions à réaliser de votre côté sans présence obligatoire"
       @input="handleToggle"
     />
   </div>

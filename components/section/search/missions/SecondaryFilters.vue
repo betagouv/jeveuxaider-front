@@ -177,6 +177,8 @@
 
         <MinorsFilter v-if="filter === 'is_minors'" :key="i" />
 
+        <PonctualFilter v-if="filter === 'is_ponctual'" :key="i" />
+
         <FacetFilterToggle
           v-if="filter === 'publisher_name'"
           :key="i"
@@ -231,6 +233,7 @@ import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import AutonomyFilter from '~/components/section/search/AutonomyFilter.vue'
 import MinorsFilter from '~/components/section/search/MinorsFilter.vue'
+import PonctualFilter from '~/components/section/search/PonctualFilter.vue'
 import Link from '@/components/dsfr/Link.vue'
 import Tag from '@/components/dsfr/Tag.vue'
 
@@ -240,7 +243,8 @@ export default {
     AutonomyFilter,
     MinorsFilter,
     Link,
-    Tag
+    Tag,
+    PonctualFilter
   },
   mixins: [AlgoliaQueryBuilder],
   props: {
@@ -258,11 +262,20 @@ export default {
     activeFilters () {
       this.sanitizeQuery()
       let filters = Object.keys(this.$route.query).filter(f => f && this.filtersName.includes(f) && f !== 'page')
+
       const publicsVolontaires = this.$route.query?.publics_volontaires?.split('|')
       if (publicsVolontaires?.includes('Mineurs')) {
         filters.push('is_minors')
         if (publicsVolontaires.length === 1) {
           filters = filters.filter(f => f !== 'publics_volontaires')
+        }
+      }
+
+      const dateTypes = this.$route.query?.date_type?.split('|')
+      if (dateTypes?.includes('ponctual')) {
+        filters.push('is_ponctual')
+        if (dateTypes.length === 1) {
+          filters = filters.filter(f => f !== 'date_type')
         }
       }
       return filters || []

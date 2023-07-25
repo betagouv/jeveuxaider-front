@@ -5,30 +5,14 @@
         Filtres de recherche
       </div>
     </template>
-    <div class="space-y-2">
-      <div class="relative font-medium text-[15px]">
-        Mots-clés
-      </div>
-      <SearchFilter />
-    </div>
+
     <div class="space-y-2">
       <div class="relative font-medium text-[15px]">
         Disponibilités
       </div>
       <CommitmentMobileFilter />
     </div>
-    <div v-if="isPresentiel" class="space-y-2">
-      <div class="relative font-medium text-[15px]">
-        En autonomie
-      </div>
-      <AutonomyMobileFilter />
-    </div>
-    <div class="space-y-2">
-      <div class="relative font-medium text-[15px]">
-        Mineurs
-      </div>
-      <MinorsMobileFilter />
-    </div>
+
     <FacetFilter
       show-more
       facet-name="activities.name"
@@ -37,6 +21,28 @@
       :facets="$store.getters['algoliaSearch/facetResults']('activities.name')"
       legend="Filtrer par type d'activité"
     />
+
+    <div v-if="isPresentiel" class="space-y-2">
+      <div class="relative font-medium text-[15px]">
+        En autonomie
+      </div>
+      <AutonomyMobileFilter />
+    </div>
+
+    <div class="space-y-2">
+      <div class="relative font-medium text-[15px]">
+        Missions courtes
+      </div>
+      <PonctualMobileFilter />
+    </div>
+
+    <div class="space-y-2">
+      <div class="relative font-medium text-[15px]">
+        Mineurs
+      </div>
+      <MinorsMobileFilter />
+    </div>
+
     <FacetFilter
       show-more
       facet-name="structure.name"
@@ -45,14 +51,7 @@
       :facets="$store.getters['algoliaSearch/facetResults']('structure.name')"
       legend="Filtrer par organisation"
     />
-    <FacetFilter
-      show-more
-      facet-name="tags"
-      label="Opérations nationales"
-      :show-more-limit="3"
-      :facets="$store.getters['algoliaSearch/facetResults']('tags')"
-      legend="Filtrer par opération nationale"
-    />
+
     <FacetFilter
       show-more
       facet-name="publics_beneficiaires"
@@ -61,6 +60,16 @@
       :facets="$store.getters['algoliaSearch/facetResults']('publics_beneficiaires')"
       legend="Filtrer par public aidé"
     />
+
+    <FacetFilter
+      show-more
+      facet-name="tags"
+      label="Opérations nationales"
+      :show-more-limit="3"
+      :facets="$store.getters['algoliaSearch/facetResults']('tags')"
+      legend="Filtrer par opération nationale"
+    />
+
     <FacetFilter
       show-more
       facet-name="domaines"
@@ -69,6 +78,7 @@
       :facets="$store.getters['algoliaSearch/facetResults']('domaines')"
       legend="Filtrer par domaine d'action"
     />
+
     <FacetFilter
       show-more
       facet-name="structure.reseaux.name"
@@ -77,6 +87,7 @@
       :facets="$store.getters['algoliaSearch/facetResults']('structure.reseaux.name')"
       legend="Filtrer par réseau"
     />
+
     <FacetFilter
       show-more
       facet-name="department_name"
@@ -85,6 +96,7 @@
       :facets="$store.getters['algoliaSearch/facetResults']('department_name')"
       legend="Filtrer par département"
     />
+
     <FacetFilter
       show-more
       facet-name="template_subtitle"
@@ -93,6 +105,7 @@
       :facets="$store.getters['algoliaSearch/facetResults']('template_subtitle')"
       legend="Filtrer par type de mission"
     />
+
     <FacetFilter
       show-more
       facet-name="publisher_name"
@@ -101,6 +114,13 @@
       :facets="$store.getters['algoliaSearch/facetResults']('publisher_name')"
       legend="Filtrer par plateforme"
     />
+
+    <div class="space-y-2">
+      <div class="relative font-medium text-[15px]">
+        Mots-clés
+      </div>
+      <SearchFilter />
+    </div>
 
     <template #footer>
       <div
@@ -138,6 +158,7 @@ import SearchFilter from '@/components/search/SearchFilter.vue'
 import CommitmentMobileFilter from '~/components/section/search/CommitmentMobileFilter.vue'
 import AutonomyMobileFilter from '~/components/section/search/AutonomyMobileFilter.vue'
 import MinorsMobileFilter from '~/components/section/search/MinorsMobileFilter.vue'
+import PonctualMobileFilter from '~/components/section/search/PonctualMobileFilter.vue'
 import Link from '@/components/dsfr/Link.vue'
 import Button from '@/components/dsfr/Button.vue'
 
@@ -149,7 +170,8 @@ export default {
     AutonomyMobileFilter,
     MinorsMobileFilter,
     Link,
-    Button
+    Button,
+    PonctualMobileFilter
   },
   mixins: [AlgoliaMissionsQueryBuilder],
   props: {

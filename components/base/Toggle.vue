@@ -10,10 +10,11 @@
       <span
         v-if="label"
         id="availability-label"
-        class="block font-bold text-black"
+        class="block text-black"
         :class="[
-          {'text-lg': size === 'lg'},
-          {'text-xl': size === 'xl'}
+          {'text-base font-medium': size === 'md'},
+          {'text-lg font-bold': size === 'lg'},
+          {'text-xl font-bold': size === 'xl'}
         ]"
         v-html="label"
       />
@@ -22,7 +23,8 @@
         id="availability-description"
         class="mt-2 text-[#666666]"
         :class="[
-          {'text-md': size === 'lg'},
+          {'text-sm': size === 'md'},
+          {'text-base': size === 'lg'},
           {'text-lg': size === 'xl'}
         ]"
         v-html="description"

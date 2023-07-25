@@ -3,9 +3,10 @@
     <AlgoliaSearch
       :secondary-filters="[
         'is_autonomy',
+        'structure.name',
+        'is_ponctual',
         'publics_beneficiaires',
         'is_minors',
-        'structure.name',
         'tags',
         'domaines',
         'structure.reseaux.name',
