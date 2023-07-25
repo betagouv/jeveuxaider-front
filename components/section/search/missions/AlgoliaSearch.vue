@@ -14,12 +14,9 @@
         />
 
         <template v-if="!noFilters">
-          <MobileFilters class="sm:hidden" />
-
-          <div class="hidden sm:flex sm:flex-col relative z-10">
-            <PrimaryFilters />
-            <SecondaryFilters :filters-name="secondaryFilters" />
-          </div>
+          <MobileFilters />
+          <PrimaryFilters />
+          <SecondaryFilters :filters-name="secondaryFilters" />
         </template>
 
         <div v-if="$store.state.algoliaSearch.results.nbHits == 0" class="text-center">

@@ -12,12 +12,9 @@
           )}`"
         />
 
-        <MobileFilters class="sm:hidden" />
-
-        <div class="hidden sm:flex sm:flex-col relative z-10">
-          <PrimaryFilters />
-          <SecondaryFilters :filters-name="secondaryFilters" />
-        </div>
+        <MobileFilters />
+        <PrimaryFilters />
+        <SecondaryFilters :filters-name="secondaryFilters" />
 
         <div v-if="$store.state.algoliaSearch.results.nbHits == 0" class="text-center">
           Il n'y a aucun résultat avec les filtres actuels.<br>

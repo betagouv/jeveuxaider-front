@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sm:hidden">
     <div class="bg-white border p-4 flex items-center divide-x">
       <LocalisationSuggestions
         class="w-full pr-4 mr-auto"

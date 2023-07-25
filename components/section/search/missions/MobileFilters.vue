@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sm:hidden">
     <Tabs
       name="Près de chez moi ou depuis chez moi"
       :tabs="[

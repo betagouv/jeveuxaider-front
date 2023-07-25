@@ -1,6 +1,6 @@
 <template>
-  <div class="lg:flex justify-between items-center mt-8 lg:mb-4">
-    <div class="hidden sm:flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
+  <div class="hidden sm:block lg:flex justify-between items-baseline !mt-8 lg:!mb-4">
+    <div class="flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
       <template v-for="filter,i in filtersName">
         <FacetFilterToggle
           v-if="filter === 'publics_beneficiaires'"
@@ -127,7 +127,7 @@
       </template>
     </div>
 
-    <div class="hidden sm:flex lg:items-center lg:justify-center mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
+    <div class="flex mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
       <Link
         :class="['text-jva-blue-500', {'pointer-events-none opacity-0': !hasActiveFilters}]"
         @click.native="deleteAllFilters()"
