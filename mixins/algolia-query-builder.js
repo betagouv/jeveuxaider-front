@@ -16,6 +16,28 @@ export default {
         params: this.$store.state.algoliaSearch.searchParameters
       }]
 
+      const isMissionEnPresentiel = this.$store.state.algoliaSearch.indexKey === 'missionsIndex' && (this.$route.query?.type === 'Mission en présentiel' || !this.$route.query.type)
+
+      // Pour récupérer les missions à distance
+      if (isMissionEnPresentiel) {
+        const searchParametersForRemote = {
+          ...this.$store.state.algoliaSearch.searchParameters,
+          numericFilters: this.$store.state.algoliaSearch.searchParameters.numericFilters.filter(f => f !== 'is_autonomy=1'),
+          aroundLatLngViaIP: false,
+          aroundLatLng: '',
+          aroundRadius: 'all',
+          facetFilters: [
+            ...this.activeFacets.filter(facetFilter => facetFilter[0].split(':')[0] != 'type'),
+            'type:Mission à distance'
+          ]
+        }
+
+        queries.push({
+          indexName: this.$store.state.algoliaSearch.indexName,
+          params: searchParametersForRemote
+        })
+      }
+
       this.activeFacets.forEach((facetFilter) => {
         const facetName = facetFilter[0].split(':')[0]
         queries.push({
@@ -24,13 +46,7 @@ export default {
             ...this.$store.state.algoliaSearch.searchParameters,
             facetFilters: this.activeFacets.filter(facetFilter => facetFilter[0].split(':')[0] != facetName),
             facets: [facetName],
-            filters: this.$store.state.algoliaSearch.initialFilters,
-            hitsPerPage: 1,
-            attributesToRetrieve: [],
-            attributesToSnippet: [],
-            attributesToHighlight: [],
-            clickAnalytics: false,
-            analytics: false
+            filters: this.$store.state.algoliaSearch.initialFilters
           }
         })
       })
@@ -46,7 +62,10 @@ export default {
       const { results } = await this.$algolia.multipleQueries(queries, params)
 
       this.$store.commit('algoliaSearch/setResults', results[0])
-      const facetResults = results.slice(1)
+      if (isMissionEnPresentiel) {
+        console.log('@todo RESULTS FOR DISTANCE', results[1])
+      }
+      const facetResults = isMissionEnPresentiel ? results.slice(2) : results.slice(1)
       this.$store.commit('algoliaSearch/setFacetsResults', facetResults)
     },
     async searchForFacetValues (facetName, facetQuery) {
