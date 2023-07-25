@@ -4,15 +4,16 @@
     class="hidden sm:block lg:sticky lg:top-[-1px] z-30"
   >
     <div
-      class="bg-white px-6 sm:py-6 lg:px-8 xl:px-12 shadow-xl"
-      :class="[{'apply-full-bleed': isPinned}]"
+      class="bg-white shadow-xl lg:py-6"
+      :class="[{'full-bleed': isPinned}]"
     >
-      <div class="lg:max-w-[896px] xl:max-w-[1188px] mx-auto">
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 lg:!divide-x">
-          <div class="pr-6 pb-6 border-b lg:border-b-0 lg:pb-0 lg:pr-8">
+      <div class="lg:max-w-[960px] xl:max-w-[1284px] mx-auto">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 lg:!divide-x xl:grid-cols-5">
+          <div :class="[spacingClasses, 'border-b lg:border-b-0']">
             <MissionTypeFilter />
           </div>
-          <div class="pl-6 pb-6 border-l border-b lg:border-b-0 lg:pb-0 lg:px-8">
+
+          <div :class="[spacingClasses, 'border-l border-b lg:border-b-0']">
             <div class="text-[#7B7B7B] mb-1">
               Lieu de la mission
             </div>
@@ -26,7 +27,8 @@
               </div>
             </div>
           </div>
-          <div class="pr-6 pt-6 lg:pt-0 lg:px-8">
+
+          <div :class="[spacingClasses]">
             <div class="text-[#7B7B7B] mb-1">
               Activités
             </div>
@@ -50,7 +52,8 @@
               </template>
             </FacetFilterToggle>
           </div>
-          <div class="px-6 pt-6 border-l lg:border-l-0 lg:pt-0 lg:px-8">
+
+          <div :class="[spacingClasses, 'border-l lg:border-l-0']">
             <div class="text-[#7B7B7B] mb-1">
               Disponibilités
             </div>
@@ -68,7 +71,8 @@
               </template>
             </CommitmentFilter>
           </div>
-          <div class="hidden xl:block pl-6 pt-6 lg:pt-0 xl:pl-8">
+
+          <div :class="[spacingClasses, 'hidden xl:block']">
             <div class="text-[#7B7B7B] mb-1">
               Recherche
             </div>
@@ -99,7 +103,8 @@ export default {
   mixins: [AlgoliaQueryBuilder],
   data () {
     return {
-      isPinned: false
+      isPinned: false,
+      spacingClasses: 'px-6 py-6 lg:py-0 lg:px-10 xl:px-12'
     }
   },
   mounted () {
@@ -113,7 +118,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.apply-full-bleed {
+.full-bleed {
   @screen lg {
     width: 100dvw;
     position: relative;

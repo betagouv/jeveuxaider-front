@@ -4,12 +4,12 @@
     class="hidden sm:block lg:sticky lg:top-[-1px] z-30"
   >
     <div
-      class="bg-white px-6 sm:py-6 lg:px-8 xl:px-12 shadow-xl"
-      :class="[{'apply-full-bleed': isPinned}]"
+      class="bg-white shadow-xl lg:py-6"
+      :class="[{'full-bleed': isPinned}]"
     >
-      <div class="lg:max-w-[896px] xl:max-w-[1188px] mx-auto">
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 lg:!divide-x">
-          <div class="py-6 sm:py-0 sm:pb-6 sm:pr-6 lg:pb-0 xl:px-6">
+      <div class="lg:max-w-[960px] xl:max-w-[1284px] mx-auto">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 lg:!divide-x">
+          <div :class="[spacingClasses, 'border-b lg:border-b-0']">
             <div class="text-gray-500 mb-1">
               Localisation
             </div>
@@ -17,7 +17,7 @@
               <LocalisationFilter label="Saisissez votre ville" />
             </div>
           </div>
-          <div class="py-6 sm:py-0 sm:pb-6 lg:pb-0 lg:px-6 sm:!border-l sm:pl-6 lg:!border-l-0">
+          <div :class="[spacingClasses, 'border-l border-b lg:border-b-0']">
             <div class="text-gray-500 mb-1">
               Activités
             </div>
@@ -41,7 +41,7 @@
               </template>
             </FacetFilterToggle>
           </div>
-          <div class="py-6 sm:py-0 sm:pt-6 sm:pr-6 lg:pt-0 lg:px-6 sm:!border-t lg:!border-t-0">
+          <div :class="[spacingClasses, '']">
             <div class="text-gray-500 mb-1">
               Publics aidés
             </div>
@@ -65,7 +65,7 @@
               </template>
             </FacetFilterToggle>
           </div>
-          <div class="py-6 sm:py-0 sm:pt-6 lg:pt-0 lg:px-6 sm:!border-l sm:!border-t lg:!border-t-0 sm:pl-6 lg:!border-l-0">
+          <div :class="[spacingClasses, 'border-l lg:border-l-0']">
             <div class="text-gray-500 mb-1">
               Recherche
             </div>
@@ -92,7 +92,8 @@ export default {
   mixins: [AlgoliaQueryBuilder],
   data () {
     return {
-      isPinned: false
+      isPinned: false,
+      spacingClasses: 'px-6 py-6 lg:py-0 lg:px-10 xl:px-12'
     }
   },
   mounted () {
@@ -106,7 +107,7 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.apply-full-bleed {
+.full-bleed {
   @screen lg {
     width: 100dvw;
     position: relative;
