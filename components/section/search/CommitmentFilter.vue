@@ -10,7 +10,7 @@
       <div
         v-if="isOpen"
         v-click-outside="() => isOpen = false"
-        class="mt-2 absolute z-20 bg-white border shadow-xl text-[15px] w-[350px]"
+        class="mt-2 absolute right-0 xl:right-auto z-20 bg-white border shadow-xl text-[15px] w-[350px]"
         @keydown.esc="isOpen = false"
       >
         <div class="p-4 space-y-3">
