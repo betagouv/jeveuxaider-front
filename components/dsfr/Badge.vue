@@ -58,7 +58,7 @@ export default {
     },
     type: {
       type: String,
-      default: 'default',
+      default: null,
       validator: t => ['success', 'error', 'info', 'warning', 'new', 'default'].includes(t)
     },
     noIcon: {

@@ -40,6 +40,15 @@
           Id: {{ mission.id }}
         </div>
       </template>
+      <template v-else>
+        <DsfrBadge
+          v-if="mission.date_type === 'ponctual'"
+          size="sm"
+          class="absolute top-4 left-4 shadow-lg bg-[#FEECC2] text-[#716043]"
+        >
+          Mission courte
+        </DsfrBadge>
+      </template>
     </div>
 
     <div class="m-8 flex-1 flex flex-col items-start">
