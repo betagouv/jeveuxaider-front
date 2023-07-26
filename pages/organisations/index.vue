@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-6 sm:mt-10">
+  <div class="mt-6 sm:mt-12">
     <AlgoliaSearch
       :secondary-filters="['domaines.name', 'reseaux.name', 'department_name', 'statut_juridique']"
     />

@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-6 sm:mt-10">
+  <div class="mt-6 sm:mt-12">
     <AlgoliaSearch
       :secondary-filters="[
         'is_autonomy',
