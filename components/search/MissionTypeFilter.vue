@@ -21,6 +21,8 @@ export default {
     '$route.query.type' (newVal) {
       if (!newVal) {
         this.value = 'Mission en présentiel'
+      } else {
+        this.value = newVal
       }
     }
   },
