@@ -10,6 +10,7 @@
         class="w-full h-full object-cover"
         width="300"
         height="143"
+        :data-not-lazy="!lazyLoading"
         @error="onImgError"
       >
 
@@ -186,6 +187,10 @@ export default {
     showTags: {
       type: Boolean,
       default: false
+    },
+    lazyLoading: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
