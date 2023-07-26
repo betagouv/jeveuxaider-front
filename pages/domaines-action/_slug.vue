@@ -182,6 +182,7 @@
     <AlgoliaSearch
       id="recherche"
       :initial-filters="`domaines:&quot;${domaine.name}&quot;`"
+      :with-slideshow-remote="true"
       :secondary-filters="['structure.name','publics_beneficiaires', 'structure.reseaux.name', 'department_name', 'template_subtitle']"
       class="my-8 sm:my-16 lg:my-24"
     />

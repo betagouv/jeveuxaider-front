@@ -29,30 +29,22 @@
           </Link>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto">
-          <template v-for="item, i in $store.state.algoliaSearch.results.hits">
-            <nuxt-link
-              :key="item.id"
-              class="flex min-w-0 transition"
-              :to="
-                item.provider == 'api_engagement'
-                  ? `/missions-benevolat/${item.id}`
-                  : `/missions-benevolat/${item.id}/${item.slug}`
-              "
-              @click.native="handleClickCard(item)"
-            >
-              <CardMission :mission="item" />
-            </nuxt-link>
+        <template v-if="withSlideshowRemote && $route.query.type !== 'Mission à distance' && $store.state.algoliaSearch.searchParameters.page === 0">
+          <GridResults :hits="$store.state.algoliaSearch.results.hits.slice(0, 6)" />
+          <BlocSlideshowRemote />
+          <GridResults :hits="$store.state.algoliaSearch.results.hits.slice(6, $store.state.algoliaSearch.results.hits.length)" />
+        </template>
+        <GridResults v-else :hits="$store.state.algoliaSearch.results.hits" />
 
-            <PromoteMissionDistance v-if="i === 6 && $route.query.type !== 'Mission à distance'" :key="i" />
-          </template>
-        </div>
+        <BlocSlideshowRemote
+          v-if="withSlideshowRemote && $route.query.type !== 'Mission à distance' && $store.state.algoliaSearch.results?.nbPages === Number($route.query?.page)"
+        />
 
         <Pagination
           v-if="!noPagination"
           :current-page="$store.state.algoliaSearch.results.page + 1"
           :total-rows="$store.state.algoliaSearch.results.nbHits > 1000 ? 1000 : $store.state.algoliaSearch.results.nbHits"
-          :per-page="$route.query.type === 'Mission à distance' ? 18 : 17"
+          :per-page="18"
           :max-pages="10"
           :with-first-page="false"
           :with-last-page="false"
@@ -64,24 +56,24 @@
 </template>
 
 <script>
-import CardMission from '@/components/card/CardMission.vue'
 import AlgoliaMissionsQueryBuilder from '@/mixins/algolia-missions-query-builder'
 import PrimaryFilters from '~/components/section/search/missions/PrimaryFilters.vue'
 import SecondaryFilters from '~/components/section/search/missions/SecondaryFilters.vue'
 import MobileFilters from '~/components/section/search/missions/MobileFilters.vue'
-import PromoteMissionDistance from '~/components/section/search/PromoteMissionDistance.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Link from '@/components/dsfr/Link.vue'
+import GridResults from '@/components/section/search/missions/GridResults.vue'
+import BlocSlideshowRemote from '@/components/section/search/missions/BlocSlideshowRemote.vue'
 
 export default {
   components: {
-    CardMission,
     PrimaryFilters,
     SecondaryFilters,
-    PromoteMissionDistance,
     MobileFilters,
     Pagination,
-    Link
+    Link,
+    GridResults,
+    BlocSlideshowRemote
   },
   mixins: [AlgoliaMissionsQueryBuilder],
   props: {
@@ -114,6 +106,10 @@ export default {
       default: false
     },
     noPagination: {
+      type: Boolean,
+      default: false
+    },
+    withSlideshowRemote: {
       type: Boolean,
       default: false
     }
@@ -155,18 +151,6 @@ export default {
         path: this.$route.path,
         query: { ...this.$route.query, page }
       })
-    },
-    async handleClickCard (item) {
-      this.$plausible.trackEvent('Click Card Missions - Liste résultat', {
-        props: {
-          isLogged: this.$store.getters.isLogged,
-          isFromApi: item.provider === 'api_engagement',
-          isRegistrationOpen: item.is_registration_open,
-          hasPlacesLeft: item.has_places_left,
-          isOutdated: item.is_outdated
-        }
-      })
-      await this.$gtm.push({ event: 'benevole-clic-carte-mission' })
     }
   }
 }

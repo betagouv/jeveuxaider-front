@@ -14,6 +14,7 @@
         'template_subtitle',
         'publisher_name'
       ]"
+      :with-slideshow-remote="true"
     />
   </div>
 </template>

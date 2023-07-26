@@ -34,14 +34,7 @@ export default {
         facets: ['*'],
         filters: this.$store.state.algoliaSearch.initialFilters,
         numericFilters: this.activeNumericFilters,
-        hitsPerPage: this.hitsPerPage
-      }
-    },
-    hitsPerPage () {
-      if (this.$store.state.algoliaSearch.hitsPerPage) {
-        return this.$store.state.algoliaSearch.hitsPerPage
-      } else {
-        return this.$route.query.type === 'Mission à distance' ? 18 : 17
+        hitsPerPage: this.$store.state.algoliaSearch?.hitsPerPage ?? 18
       }
     },
     activeFacets () {
