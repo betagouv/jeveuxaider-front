@@ -126,7 +126,7 @@ export default {
 
 <style lang="postcss" scoped>
 .slide-wrapper {
-  @apply !flex flex-col h-full max-w-[323px] transition;
+  @apply !flex flex-col h-full max-w-[320px] transition;
   width: calc(100vw - 64px) !important; /* To let the next slide appear */
 }
 </style>

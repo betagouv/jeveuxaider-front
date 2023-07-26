@@ -616,7 +616,7 @@ export default {
 
 <style lang="postcss" scoped>
   .card--mission--wrapper {
-    @apply !flex flex-col h-full max-w-[323px] transition;
+    @apply !flex flex-col h-full max-w-[320px] transition;
     width: calc(100vw - 64px) !important;
     @apply w-full;
   }
