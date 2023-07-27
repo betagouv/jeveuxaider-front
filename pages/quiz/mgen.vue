@@ -4,33 +4,33 @@
       v-if="currentStep === 0"
       title="Trouvez en quelques clics votre prochaine mission de bénévolat"
       slogan="Rendons l’éducation accessible à tous"
-      picture="quiz-mgen-step-0"
-      mobile-picture="quiz-mgen-step-0-mobile"
+      picture="quiz-mgen-step-0-min"
+      mobile-picture="quiz-mgen-step-0-mobile-min"
       missions-count="3 000"
       :logos="logos"
     />
     <QuizSearchBuilderStep1
       v-if="currentStep === 1"
       title="Où souhaitez-vous réaliser votre mission de bénévolat ?"
-      picture="quiz-mgen-step-1"
+      picture="quiz-mgen-step-1-min"
       :logos="logos"
     />
     <QuizSearchBuilderStep2
       v-if="currentStep === 2"
       title="Précisez où souhaitez-vous réaliser votre mission ?"
-      picture="quiz-mgen-step-2"
+      picture="quiz-mgen-step-2-min"
       :logos="logos"
     />
     <QuizSearchBuilderStep3
       v-if="currentStep === 3"
       title="Combien de temps pourriez-vous dédier à une mission de bénévolat ?"
-      picture="quiz-mgen-step-3"
+      picture="quiz-mgen-step-3-min"
       :logos="logos"
     />
     <QuizSearchBuilderStep4
       v-if="currentStep === 4"
       title="Sélectionnez les activités pour lesquelles vous souhaitez aider"
-      picture="quiz-mgen-step-4"
+      picture="quiz-mgen-step-4-min"
       :logos="logos"
       :selectable-activities-proche-de-chez-moi-ids="[10,17,6,4,39,19,8,15,37,34]"
       :selectable-activities-a-distance-ids="[10,17,6,4,39,19,8,15,37,34]"
