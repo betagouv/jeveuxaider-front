@@ -1,5 +1,5 @@
 <template>
-  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto">
     <nuxt-link
       v-for="hit in hits"
       :key="hit.id"
