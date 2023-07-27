@@ -1,7 +1,7 @@
 <template>
   <div
     ref="primaryFilters"
-    class="hidden sm:block lg:sticky lg:top-[-1px] z-30"
+    class="hidden sm:block lg:sticky lg:top-[-1px] z-10"
   >
     <div
       class="bg-white shadow-xl lg:py-6"
@@ -124,12 +124,12 @@ export default {
 <style lang="postcss" scoped>
 .full-bleed {
   @screen lg {
-    width: 100dvw;
+    width: 100vw;
     position: relative;
     left: 50%;
     right: 50%;
-    margin-left: -50dvw;
-    margin-right: -50dvw;
+    margin-left: -50vw;
+    margin-right: -50vw;
   }
 }
 </style>
