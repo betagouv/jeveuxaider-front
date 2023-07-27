@@ -183,7 +183,18 @@
       id="recherche"
       :initial-filters="`domaines:&quot;${domaine.name}&quot;`"
       :with-slideshow-remote="true"
-      :secondary-filters="['structure.name','publics_beneficiaires', 'structure.reseaux.name', 'department_name', 'template_subtitle']"
+      :secondary-filters="[
+        'is_autonomy',
+        'structure.name',
+        'is_ponctual',
+        'publics_beneficiaires',
+        'is_minors',
+        'tags',
+        'structure.reseaux.name',
+        'department_name',
+        'template_subtitle',
+        'publisher_name'
+      ]"
       class="my-8 sm:my-16 lg:my-24"
     />
 
