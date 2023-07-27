@@ -13,13 +13,13 @@
           <p class="">
             {{ user.profile.email }}
           </p>
-        </div>
+        </div> -->
         <div v-if="user.profile.mobile" class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiPhoneLine class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p class="">
             {{ user.profile.mobile }}
           </p>
-        </div> -->
+        </div>
         <div v-if="user.profile.birthday" class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiCakeFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p class="">
