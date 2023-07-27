@@ -1,14 +1,16 @@
 <template>
-  <div class="sm:hidden">
+  <div class="sticky top-[-45px] z-10 sm:hidden">
     <Tabs
+      ref="mobileFilters"
       name="Près de chez moi ou depuis chez moi"
       :tabs="[
         { key: 'onsite', content: 'Prés de chez moi', slug: 'onsite' },
         { key: 'remote', content: 'Depuis chez moi', slug: 'remote' },
       ]"
-      tabpanel-class="py-4 bg-white"
+      :tabpanel-class="['py-4 bg-white tab-panel', {'!border-white': isPinned}]"
       tabswrapper-class="!px-2 !text-[15px] xs:!px-3 xs:!text-base"
       :selected-tab-key="selectedTabKey"
+      :class="[{'full-bleed shadow-xl': isPinned}]"
       @selected="onTabSelect"
     >
       <div slot="tab-onsite">
@@ -91,13 +93,23 @@ export default {
   data () {
     return {
       isFiltersOpen: false,
-      isGeolocFilterActive: false
+      isGeolocFilterActive: false,
+      isPinned: false,
+      tabswrapperEl: undefined
     }
   },
   computed: {
     selectedTabKey () {
       return this.$route.query.type === 'Mission à distance' ? 'remote' : 'onsite'
     }
+  },
+  mounted () {
+    this.tabswrapperEl = this.$refs.mobileFilters.$el.querySelector('ul[role="tablist"]')
+    this.onScroll()
+    window.addEventListener('scroll', this.onScroll)
+  },
+  beforeDestroy () {
+    window.removeEventListener('scroll', this.onScroll)
   },
   methods: {
     onTabSelect (tab) {
@@ -121,7 +133,29 @@ export default {
       await this.$nextTick()
       const button = this.selectedTab === 0 ? this.$refs.buttonFilterOnsite : this.$refs.buttonFilterRemote
       button.focus()
+    },
+    onScroll () {
+      this.isPinned = this.tabswrapperEl.getBoundingClientRect().y === -45
     }
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.full-bleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.tab-panel > div {
+  max-width: 309px;
+  margin: auto;
+  @screen xs {
+    max-width: 359px;
+  }
+}
+</style>
