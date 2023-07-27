@@ -93,15 +93,19 @@ export default {
   data () {
     return {
       isPinned: false,
+      isPinnedObserver: null,
       spacingClasses: 'px-6 py-6 lg:py-0 lg:px-10 xl:px-12'
     }
   },
   mounted () {
-    const observer = new IntersectionObserver(
+    this.isPinnedObserver = new IntersectionObserver(
       ([e]) => { this.isPinned = e.intersectionRatio < 1 },
       { threshold: [1] }
     )
-    observer.observe(this.$refs.primaryFilters)
+    this.isPinnedObserver.observe(this.$refs.primaryFilters)
+  },
+  beforeDestroy () {
+    this.isPinnedObserver.disconnect()
   }
 }
 </script>
