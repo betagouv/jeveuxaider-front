@@ -1,46 +1,13 @@
 <template>
   <div>
-    <!-- PRESENTATION -->
+    <Header :organisation="organisation" />
     <Presentation
       :organisation="organisation"
       :src-set="image1"
-    >
-      <footer
-        slot="anchors"
-        class="grid divide-x divide-gray-200 text-center border-t"
-        :class="[
-          { 'grid-cols-3': missions.data.length && organisation.donation },
-          {
-            'grid-cols-2':
-              (missions.data.length && !organisation.donation) ||
-              (organisation.donation && !missions.data.length),
-          },
-        ]"
-      >
-        <button
-          v-if="missions.data.length"
-          v-scroll-to="'#missions'"
-          class="footer--button"
-        >
-          Devenir bénévole
-        </button>
-
-        <button
-          v-if="organisation.donation"
-          v-scroll-to="'#faire-un-don'"
-          class="footer--button"
-        >
-          Faire un don
-        </button>
-
-        <button v-scroll-to="'#infos'" class="footer--button">
-          Infos pratiques
-        </button>
-      </footer>
-    </Presentation>
+    />
 
     <!-- DETAILS -->
-    <Details :organisation="organisation" :src-set="image2">
+    <!-- <Details :organisation="organisation" :src-set="image2">
       <p
         v-if="organisation.places_left > 0"
         class="text-2xl sm:text-4xl font-extrabold text-white mb-8 tracking-tight"
@@ -50,10 +17,10 @@
             | pluralize('bénévole recherché', 'bénévoles recherchés')
         }}
       </p>
-    </Details>
+    </Details> -->
 
     <!-- MISSIONS -->
-    <div v-if="missions.data.length" id="missions" class="pt-16 pb-32">
+    <!-- <div v-if="missions.data.length" id="missions" class="pt-16 pb-32">
       <div class="container px-4 mx-auto">
         <h2
           class="text-center mb-12 text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter text-gray-900"
@@ -87,39 +54,41 @@
           </nuxt-link>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- TESTIMONIALS -->
-    <Testimonials
+    <!-- <Testimonials
       :model="organisation"
       model-type="organisation"
-    />
+    /> -->
 
     <!-- FAIRE UN DON -->
-    <Donation :organisation="organisation" />
+    <!-- <Donation :organisation="organisation" /> -->
 
     <!-- CONTACT -->
-    <Contact :organisation="organisation" />
+    <!-- <Contact :organisation="organisation" /> -->
   </div>
 </template>
 
 <script>
+import Header from '@/components/section/organisation/Header'
 import Presentation from '@/components/section/organisation/Presentation'
-import Details from '@/components/section/organisation/Details'
-import Contact from '@/components/section/organisation/Contact'
-import Donation from '@/components/section/organisation/Donation'
-import CardMission from '@/components/card/CardMission'
+// import Details from '@/components/section/organisation/Details'
+// import Contact from '@/components/section/organisation/Contact'
+// import Donation from '@/components/section/organisation/Donation'
+// import CardMission from '@/components/card/CardMission'
 import MixinOrganisation from '@/mixins/organisation'
-import Testimonials from '@/components/section/temoignage/Testimonials'
+// import Testimonials from '@/components/section/temoignage/Testimonials'
 
 export default {
   components: {
-    Presentation,
-    Details,
-    Contact,
-    Donation,
-    CardMission,
-    Testimonials
+    Header,
+    Presentation
+    // Details,
+    // Contact,
+    // Donation,
+    // CardMission,
+    // Testimonials
   },
   mixins: [MixinOrganisation],
   layout: 'default-without-header',

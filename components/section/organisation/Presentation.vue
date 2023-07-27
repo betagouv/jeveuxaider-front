@@ -1,62 +1,28 @@
 <template>
   <div class="relative bg-white lg:grid lg:grid-cols-2">
-    <!-- LEFT -->
     <div class="col-span-2 lg:col-span-1">
-      <header class="border-b flex justify-between items-stretch">
-        <div class="p-4 border-r flex items-center">
-          <img src="@/assets/images/marianne-logo.svg" width="55" class="my-auto">
-        </div>
-
-        <div class="p-4 flex items-center">
-          <span class="text-xs uppercase text-gray-500 mr-3">
-            Encouragé par
-          </span>
-          <nuxt-link to="/">
-            <img
-              src="@/assets/images/jeveuxaider-logo.svg"
-              alt=""
-              width="140"
-            >
-          </nuxt-link>
-        </div>
-      </header>
-
       <div class="max-w-3xl lg:ml-auto">
         <div class="px-4 pb-8 md:p-8 lg:pt-6 xl:p-16 xl:pt-8">
-          <Breadcrumb
-            class="md:!py-2"
-            :links="[{ text: organisation.name }]"
-          />
-
-          <img
-            v-if="organisation.logo"
-            :srcset="organisation.logo.urls.large"
-            :alt="organisation.name"
-            class="my-8 h-auto"
-            style="max-width: 16rem; max-height: 120px"
-            @error="onLogoError"
-          >
-
           <h1
-            class="mt-2 text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter text-gray-900"
+            class="mt-2 text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter text-gray-900 font-bold"
           >
-            <p>Découvrez {{ organisation.statut_juridique|label('structure_legal_status', 'label2') }}</p>
-            <span class="font-extrabold">{{ organisation.name }}</span>
+            <p>Découvrez l’association</p>
+            <span>{{ organisation.name }}</span>
           </h1>
-
-          <div
-            class="h-[2.5px] w-16 my-10"
-            :style="`background-color: ${organisation.color ? organisation.color : '#B91C1C'}`"
-          />
-
-          <TextFormatted :max-lines="2" :text="organisation.description" class="text-cool-gray-500 text-lg" />
+          <p class="text-2xl">
+            Rejoignez le mouvement <span class="font-bold">{{ organisation.name }}</span> et ses XX missions de bénévolat réalisables en <span class="font-bold">présentiel</span> ou en <span class="font-bold">télébénévolat</span>.
+          </p>
+          <nuxt-link :to="`/missions-benevolat?structure.name=${organisation.name}`">
+            <Button size="lg">
+              Trouvez une mission de bénévolat
+            </Button>
+          </nuxt-link>
+          <p class="text-lg">
+            Plus de <span class="font-bold">XXX bénévoles</span> recherchés
+          </p>
         </div>
       </div>
-
-      <slot name="anchors" />
     </div>
-
-    <!-- RIGHT -->
     <div>
       <img
         :srcset="srcSet"
@@ -68,11 +34,11 @@
 </template>
 
 <script>
-import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import Button from '@/components/dsfr/Button.vue'
 
 export default {
   components: {
-    Breadcrumb
+    Button
   },
   props: {
     organisation: {
@@ -84,15 +50,7 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-      expandDescription: false
-    }
-  },
   methods: {
-    onLogoError ($event) {
-      $event.target.remove()
-    },
     onIllustrationError ($event) {
       $event.target.srcset = '/images/organisation-default-2.webp'
     }
