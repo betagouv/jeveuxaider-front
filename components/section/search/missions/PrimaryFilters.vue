@@ -105,7 +105,7 @@ export default {
     return {
       isPinned: false,
       isPinnedObserver: null,
-      spacingClasses: 'px-6 py-6 lg:py-0 lg:px-10 xl:px-12'
+      spacingClasses: 'px-6 py-6 lg:py-0'
     }
   },
   mounted () {
