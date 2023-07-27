@@ -5,19 +5,11 @@
       :organisation="organisation"
       :src-set="image1"
     />
-
-    <!-- DETAILS -->
-    <!-- <Details :organisation="organisation" :src-set="image2">
-      <p
-        v-if="organisation.places_left > 0"
-        class="text-2xl sm:text-4xl font-extrabold text-white mb-8 tracking-tight"
-      >
-        {{
-          organisation.places_left
-            | pluralize('bénévole recherché', 'bénévoles recherchés')
-        }}
-      </p>
-    </Details> -->
+    <Details
+      :organisation="organisation"
+      :src-set="image2"
+      class="bg-[#F3EDE5]"
+    />
 
     <!-- MISSIONS -->
     <!-- <div v-if="missions.data.length" id="missions" class="pt-16 pb-32">
@@ -73,7 +65,7 @@
 <script>
 import Header from '@/components/section/organisation/Header'
 import Presentation from '@/components/section/organisation/Presentation'
-// import Details from '@/components/section/organisation/Details'
+import Details from '@/components/section/organisation/Details'
 // import Contact from '@/components/section/organisation/Contact'
 // import Donation from '@/components/section/organisation/Donation'
 // import CardMission from '@/components/card/CardMission'
@@ -83,8 +75,8 @@ import MixinOrganisation from '@/mixins/organisation'
 export default {
   components: {
     Header,
-    Presentation
-    // Details,
+    Presentation,
+    Details
     // Contact,
     // Donation,
     // CardMission,

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="break-word whitespace-pre-line overflow-hidden formatted-text leading-7"
+      class="break-word whitespace-pre-line overflow-hidden formatted-text"
       v-html="isExpanded ? text : textHtml"
     />
     <Link
