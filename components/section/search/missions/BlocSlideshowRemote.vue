@@ -124,6 +124,7 @@ export default {
 :deep(.slick-list) {
   @screen lg {
     overflow: hidden !important;
+    @apply -m-1 p-1; /* to handle outline on focus */
   }
 }
 
