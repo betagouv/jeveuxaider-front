@@ -4,8 +4,8 @@
       v-if="currentStep === 0"
       title="Trouvez en quelques clics votre prochaine mission de bénévolat"
       slogan="Le bénévolat et vous"
-      picture="quiz-step-0"
-      mobile-picture="quiz-step-0-mobile"
+      picture="quiz-step-0-min"
+      mobile-picture="quiz-step-0-mobile-min"
     >
       <template #bottom>
         <div class="hidden lg:block px-[32px] lg:px-[80px]">
@@ -38,22 +38,22 @@
     <QuizSearchBuilderStep1
       v-if="currentStep === 1"
       title="Où souhaitez-vous réaliser votre mission de bénévolat ?"
-      picture="quiz-step-1"
+      picture="quiz-step-1-min"
     />
     <QuizSearchBuilderStep2
       v-if="currentStep === 2"
       title="Précisez où souhaitez-vous réaliser votre mission ?"
-      picture="quiz-step-2"
+      picture="quiz-step-2-min"
     />
     <QuizSearchBuilderStep3
       v-if="currentStep === 3"
       title="Combien de temps pourriez-vous dédier à une mission de bénévolat ?"
-      picture="quiz-step-3"
+      picture="quiz-step-3-min"
     />
     <QuizSearchBuilderStep4
       v-if="currentStep === 4"
       title="Sélectionnez les activités pour lesquelles vous souhaitez aider"
-      picture="quiz-step-4"
+      picture="quiz-step-4-min"
       @selected="redirect"
     />
   </div>
