@@ -30,6 +30,10 @@ export default async function (to, from, savedPosition) {
   }
 
   if (to.query?.page && (!from.query?.page || to.query.page != from.query.page)) {
+    const el = document.querySelector('#recherche')
+    if (el) {
+      return { x: 0, y: el.offsetTop }
+    }
     return { x: 0, y: 0 }
   }
 }
