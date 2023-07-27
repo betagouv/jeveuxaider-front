@@ -76,6 +76,7 @@ import RiShieldUserLine from 'vue-remix-icons/icons/RiShieldUserLine.vue'
 import RiMailLine from 'vue-remix-icons/icons/RiMailLine.vue'
 import RiMailFill from 'vue-remix-icons/icons/RiMailFill.vue'
 import RiPhoneLine from 'vue-remix-icons/icons/RiPhoneLine.vue'
+import RiPhoneFill from 'vue-remix-icons/icons/RiPhoneFill.vue'
 import RiSuitcaseFill from 'vue-remix-icons/icons/RiSuitcaseFill.vue'
 import RiGroupFill from 'vue-remix-icons/icons/RiGroupFill.vue'
 import RiSendPlaneFill from 'vue-remix-icons/icons/RiSendPlaneFill.vue'
@@ -92,6 +93,7 @@ import RiLink from 'vue-remix-icons/icons/RiLink.vue'
 
 const components = {
   RiLink,
+  RiPhoneFill,
   RiTeamLine,
   RiChatHistoryFill,
   RiCakeFill,

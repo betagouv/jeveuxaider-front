@@ -10,6 +10,7 @@
       :src-set="image2"
       class="bg-[#F3EDE5]"
     />
+    <BlocOrganisationMissions :organisation="organisation" />
 
     <!-- MISSIONS -->
     <!-- <div v-if="missions.data.length" id="missions" class="pt-16 pb-32">
@@ -66,6 +67,7 @@
 import Header from '@/components/section/organisation/Header'
 import Presentation from '@/components/section/organisation/Presentation'
 import Details from '@/components/section/organisation/Details'
+import BlocOrganisationMissions from '@/components/section/organisation/BlocOrganisationMissions'
 // import Contact from '@/components/section/organisation/Contact'
 // import Donation from '@/components/section/organisation/Donation'
 // import CardMission from '@/components/card/CardMission'
@@ -76,7 +78,8 @@ export default {
   components: {
     Header,
     Presentation,
-    Details
+    Details,
+    BlocOrganisationMissions
     // Contact,
     // Donation,
     // CardMission,
@@ -162,30 +165,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-* {
-  @apply border-gray-200;
-}
-
-.card--mission--wrapper {
-  width: 100%;
-  @apply border-0 shadow-none p-0 mb-6;
-  @screen sm {
-    width: 330px;
-    @apply m-3 flex flex-col;
-  }
-}
-
-.gradient {
-  background: linear-gradient(
-    to bottom,
-    #ffffff 43.75%,
-    rgba(255, 255, 255, 0) 100%
-  );
-}
-
-.card--don {
-  max-width: 1038px;
-}
-</style>
