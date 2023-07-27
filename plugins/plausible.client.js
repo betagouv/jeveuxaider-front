@@ -5,7 +5,10 @@ export default ({ $config }, inject) => {
     domain: $config.plausible.site_id
     // trackLocalhost: true
   })
-  plausible.enableAutoOutboundTracking()
+
+  // Breaks target="_blank"
+  // https://github.com/plausible/plausible-tracker/issues/12
+  // plausible.enableAutoOutboundTracking()
 
   // Inject $plausible in Vue, context and store.
   inject('plausible', plausible)
