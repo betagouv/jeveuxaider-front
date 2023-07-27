@@ -4,7 +4,7 @@
       <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
         <div class="">
           <Heading as="h2" size="alt-sm" class="mb-6 md:mb-2">
-            Devenez bénévole chez {{ organisation.name }}
+            {{ title }}
           </Heading>
         </div>
         <div class="hidden lg:block flex-none">
@@ -30,10 +30,7 @@
         <AlgoliaSlideshowMissions
           ref="slideshowOrganisationMissions"
           aria-labelledby="label-slideshow-organisation-missions"
-          :search-parameters="{
-            hitsPerPage: 6,
-            facetFilters: [`structure.name:${organisation.name}`],
-          }"
+          :search-parameters="searchParameters"
           @slide-click="onSlideClick"
         />
       </div>
@@ -43,7 +40,7 @@
           Plus de missions
         </Button>
       </div>
-      <div class="mt-8 flex flex-col xl:flex-row space-y-6 xl:space-y-0 xl:space-x-6">
+      <div v-if="showDisponibilities" class="mt-8 flex flex-col xl:flex-row space-y-6 xl:space-y-0 xl:space-x-6">
         <p class="font-bold text-xl xl:text-2xl">
           Quelles sont vos disponibilités ?
         </p>
@@ -73,6 +70,7 @@ import Button from '@/components/dsfr/Button.vue'
 import Heading from '@/components/dsfr/Heading.vue'
 import Tag from '@/components/dsfr/Tag.vue'
 import AlgoliaSlideshowMissions from '@/components/section/search/missions/AlgoliaSlideshowMissions.vue'
+import uuid from '@/mixins/uuid'
 
 export default {
   components: {
@@ -81,10 +79,23 @@ export default {
     Tag,
     AlgoliaSlideshowMissions
   },
+  mixins: [uuid],
   props: {
     organisation: {
       type: Object,
       required: true
+    },
+    title: {
+      type: String,
+      required: true
+    },
+    searchParameters: {
+      type: Object,
+      required: true
+    },
+    showDisponibilities: {
+      type: Boolean,
+      default: false
     }
   },
   data () {

@@ -66,34 +66,38 @@
           >
           <div class="absolute bottom-7 left-7">
             <div class="flex space-x-4">
-              <nuxt-link
+              <a
                 v-if="organisation.website"
-                :to="organisation.website"
+                :href="organisation.website"
+                target="_blank"
                 class="bg-white hover:bg-blue-50 text-jva-blue-500 h-12 w-12 flex items-center justify-center"
               >
                 <RiLink class="h-6 w-6 fill-current" />
-              </nuxt-link>
-              <nuxt-link
+              </a>
+              <a
                 v-if="organisation.facebook"
-                :to="organisation.facebook"
+                target="_blank"
+                :href="organisation.facebook"
                 class="bg-white hover:bg-blue-50 text-jva-blue-500 h-12 w-12 flex items-center justify-center"
               >
                 <RiFacebookCircleFill class="h-6 w-6 fill-current" />
-              </nuxt-link>
-              <nuxt-link
+              </a>
+              <a
                 v-if="organisation.twitter"
-                :to="organisation.twitter"
+                target="_blank"
+                :href="organisation.twitter"
                 class="bg-white hover:bg-blue-50 text-jva-blue-500 h-12 w-12 flex items-center justify-center"
               >
                 <RiTwitterFill class="h-6 w-6 fill-current" />
-              </nuxt-link>
-              <nuxt-link
+              </a>
+              <a
                 v-if="organisation.instagram"
-                :to="organisation.instagram"
+                target="_blank"
+                :href="organisation.instagram"
                 class="bg-white hover:bg-blue-50 text-jva-blue-500 h-12 w-12 flex items-center justify-center"
               >
                 <RiInstagramFill class="h-6 w-6 fill-current" />
-              </nuxt-link>
+              </a>
             </div>
           </div>
         </div>

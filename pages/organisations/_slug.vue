@@ -10,44 +10,28 @@
       :src-set="image2"
       class="bg-[#F3EDE5]"
     />
-    <BlocOrganisationMissions :organisation="organisation" />
+    <SlideshowOrganisationMissions
+      :organisation="organisation"
+      title="Missions en présentiel"
+      :search-parameters="{
+        hitsPerPage: 6,
+        facetFilters: [`structure.name:${organisation.name}`],
+      }"
+      :show-disponibilities="true"
+    />
 
-    <!-- MISSIONS -->
-    <!-- <div v-if="missions.data.length" id="missions" class="pt-16 pb-32">
-      <div class="container px-4 mx-auto">
-        <h2
-          class="text-center mb-12 text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter text-gray-900"
-        >
-          <span>Trouvez une mission dans {{ organisation.statut_juridique|label('structure_legal_status', 'label2') }} </span>
-          <br class="hidden xl:block">
-          <span class="font-extrabold">{{ organisation.name }}</span>
-        </h2>
-
-        <div class="flex flex-wrap justify-center">
-          <nuxt-link
-            v-for="mission in missions.data"
-            :key="mission.id"
-            class="card--mission--wrapper"
-            :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
-          >
-            <CardMission :mission="mission" />
-          </nuxt-link>
-        </div>
-
-        <div class="text-center mt-6">
-          <nuxt-link
-            :to="`/missions-benevolat?structure.name=${organisation.name}`"
-          >
-            <button
-              class="uppercase shadow-lg text-sm font-bold rounded-full text-gray-500 bg-white py-3 px-8 hover:scale-105 transform transition"
-              tabindex="-1"
-            >
-              Plus de missions
-            </button>
-          </nuxt-link>
-        </div>
-      </div>
-    </div> -->
+    <SlideshowOrganisationMissions
+      class="bg-[#F3EDE5]"
+      :organisation="organisation"
+      title="Missions à distance"
+      :search-parameters="{
+        hitsPerPage: 6,
+        facetFilters: [
+          `structure.name:${organisation.name}`,
+          'type:Mission à distance'
+        ],
+      }"
+    />
 
     <!-- TESTIMONIALS -->
     <!-- <Testimonials
@@ -67,10 +51,9 @@
 import Header from '@/components/section/organisation/Header'
 import Presentation from '@/components/section/organisation/Presentation'
 import Details from '@/components/section/organisation/Details'
-import BlocOrganisationMissions from '@/components/section/organisation/BlocOrganisationMissions'
+import SlideshowOrganisationMissions from '@/components/section/organisation/SlideshowOrganisationMissions'
 // import Contact from '@/components/section/organisation/Contact'
 // import Donation from '@/components/section/organisation/Donation'
-// import CardMission from '@/components/card/CardMission'
 import MixinOrganisation from '@/mixins/organisation'
 // import Testimonials from '@/components/section/temoignage/Testimonials'
 
@@ -79,7 +62,7 @@ export default {
     Header,
     Presentation,
     Details,
-    BlocOrganisationMissions
+    SlideshowOrganisationMissions
     // Contact,
     // Donation,
     // CardMission,
@@ -100,15 +83,8 @@ export default {
       return error({ statusCode: 404 })
     }
 
-    const { data: missions } = await $axios.get(`/structures/${organisation.id}/available-missions`, {
-      append: 'domaines',
-      pagination: 6,
-      sort: '-places_left'
-    })
-
     return {
-      organisation,
-      missions
+      organisation
     }
   },
   head () {
