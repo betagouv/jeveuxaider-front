@@ -1,27 +1,27 @@
 <template>
   <div class="py-28">
     <div class="container grid grid-cols-1 gap-12">
+      <h2
+        class="text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter"
+      >
+        <span class="relative">
+          <span class="font-bold">{{ organisation.name }}</span> en quelques mots
+          <img
+            src="/images/home/sparkle-left.svg"
+            alt=""
+            width="61"
+            height="67"
+            aria-hidden="true"
+            class="absolute top-[-23px] left-[-47px] pointer-events-none"
+          >
+        </span><br>
+      </h2>
       <div class="grid grid-cols-12 gap-12">
         <div class="col-span-7">
-          <h2
-            class="mb-7 text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter"
-          >
-            <span class="relative">
-              <span class="font-bold">{{ organisation.name }}</span> en quelques mots
-              <img
-                src="/images/home/sparkle-left.svg"
-                alt=""
-                width="61"
-                height="67"
-                aria-hidden="true"
-                class="absolute top-[-23px] left-[-47px] pointer-events-none"
-              >
-            </span><br>
-          </h2>
-          <TextFormatted :max-lines="2" :text="organisation.description" class="text-2xl leading-10" />
+          <TextFormatted :max-lines="6" :text="organisation.description" class="text-2xl leading-10" />
         </div>
 
-        <div class="col-span-5 grid grid-cols-1 gap-10">
+        <div class="col-span-5 grid grid-cols-1 gap-10 border-l border-l-[#DBD5CE] pl-10">
           <div class="">
             <h3 class="text-2xl font-bold mb-4">
               Publics aidés
@@ -31,6 +31,8 @@
                 v-for="option,i in organisation.publics_beneficiaires"
                 :key="i"
                 size="md"
+                :custom-theme="true"
+                class="text-jva-blue-500 bg-[#E3E3FD]"
               >
                 {{ option | label('mission_publics_beneficiaires') }}
               </Tag>
@@ -45,6 +47,8 @@
                 v-for="domaine,i in organisation.domaines"
                 :key="i"
                 size="md"
+                :custom-theme="true"
+                :class="`${domaineBackgroundColor(domaine.id)} text-white`"
               >
                 {{ $options.filters.label(domaine.id, 'domaines') }}
               </Tag>
@@ -114,11 +118,13 @@
 
 <script>
 import Tag from '@/components/dsfr/Tag.vue'
+import MixinDomaines from '@/mixins/domaines'
 
 export default {
   components: {
     Tag
   },
+  mixins: [MixinDomaines],
   props: {
     organisation: {
       type: Object,
@@ -132,9 +138,6 @@ export default {
   methods: {
     onIllustrationError ($event) {
       $event.target.srcset = '/images/organisation-default-1.webp'
-    },
-    goTo (url) {
-      window.open(url, '_blank')
     }
   }
 }

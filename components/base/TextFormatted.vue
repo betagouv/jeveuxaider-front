@@ -1,21 +1,23 @@
 <template>
-  <div>
+  <div v-if="text">
     <div
+      v-snip="{ lines, onSnipped }"
       class="break-word whitespace-pre-line overflow-hidden formatted-text"
-      v-html="isExpanded ? text : textHtml"
-    />
+    >
+      <div v-html="text" />
+    </div>
     <Link
-      v-if="needClip && !isExpanded"
+      v-if="hasEllipsis"
       class="text-jva-blue-500 mt-4"
       @click.stop.native="readMore()"
     >
-      Lire plus
+      {{ readMoreLabel }}
     </Link>
   </div>
 </template>
 
 <script>
-import clip from 'text-clipper'
+// import clip from 'text-clipper'
 import Link from '@/components/dsfr/Link.vue'
 
 export default {
@@ -30,24 +32,29 @@ export default {
     maxLines: {
       type: [Number, Boolean],
       default: false
+    },
+    readMoreLabel: {
+      type: String,
+      default: 'En lire plus'
     }
   },
   data () {
     return {
-      isExpanded: false
+      hasEllipsis: false,
+      showAll: false
     }
   },
   computed: {
-    textHtml () {
-      return this.maxLines ? clip(this.text, undefined, { html: true, maxLines: this.maxLines }) : this.text
-    },
-    needClip () {
-      return this.textHtml && this.textHtml !== this.text
+    lines () {
+      return this.showAll ? 0 : this.maxLines
     }
   },
   methods: {
+    onSnipped (newState) {
+      this.hasEllipsis = newState.hasEllipsis
+    },
     readMore () {
-      this.isExpanded = true
+      this.showAll = true
     }
   }
 }

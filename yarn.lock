@@ -6301,6 +6301,11 @@ js-base64@^2.1.9:
   resolved "https://registry.npmjs.org/js-base64/-/js-base64-2.6.4.tgz"
   integrity sha512-pZe//GGmwJndub7ZghVHz7vjb2LgC1m8B07Au3eYqeqv9emhESByMXxaEgkUkEqJe87oBbSniGYoQNIBklc7IQ==
 
+js-snip@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/js-snip/-/js-snip-1.2.0.tgz#fd3daf3a31abee98a284d94e64b669d1c8bee526"
+  integrity sha512-zGBNAM0xTHPNWXxwQipjER1sAvHYaXy8aOOV1EuOEErhyB+gLv+j/OZbhUvaGG5sMoCK8CsHD0ZX3UpgKTk05g==
+
 js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
@@ -10719,6 +10724,13 @@ vue-slick-carousel@^1.0.6:
     lodash.pick "^4.4.0"
     resize-observer-polyfill "1.5.1"
     vue "^2.6.10"
+
+vue-snip@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/vue-snip/-/vue-snip-2.0.1.tgz#cc7399edb929c8f00986fa86329bb5d47617861d"
+  integrity sha512-d4cH1Hq5behslipCQ3Bj0LRCiWhqS5pZsmx+98Xm+ZIxp/VwIbX4KE+/2v8Xc4c/GYQwGo7qvL0j8MOhE5Md7A==
+  dependencies:
+    js-snip "^1.2.0"
 
 vue-star-rating@^1.7.0:
   version "1.7.0"

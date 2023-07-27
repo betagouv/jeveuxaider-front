@@ -95,7 +95,7 @@ export default {
     context: {
       type: [String, null],
       default: null,
-      validator: c => ['clickable', 'selectable'].includes(c)
+      validator: c => ['clickable', 'selectable', 'deletable'].includes(c)
     },
     icon: {
       // See vue-remix-icons.js
