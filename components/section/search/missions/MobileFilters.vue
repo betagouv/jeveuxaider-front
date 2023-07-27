@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-[-45px] z-10 sm:hidden">
+  <div class="sticky top-[-46px] z-10 sm:hidden">
     <Tabs
       ref="mobileFilters"
       name="Près de chez moi ou depuis chez moi"
@@ -135,7 +135,7 @@ export default {
       button.focus()
     },
     onScroll () {
-      this.isPinned = this.tabswrapperEl.getBoundingClientRect().y === -45
+      this.isPinned = this.tabswrapperEl.getBoundingClientRect().y === -46
     }
   }
 }
