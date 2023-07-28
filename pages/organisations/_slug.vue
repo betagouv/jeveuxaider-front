@@ -11,25 +11,60 @@
       class="bg-[#F3EDE5]"
     />
     <SlideshowOrganisationMissions
+      v-if="organisation.statistics.missions_available_presentiel_count > 0"
       :organisation="organisation"
-      title="Missions en présentiel"
+      title="Missions sur le terrain"
       :search-parameters="{
         hitsPerPage: 6,
-        facetFilters: [`structure.name:${organisation.name}`],
+        facetFilters: [
+          `structure.name:${organisation.name}`,
+          'type:Mission en présentiel'
+        ],
       }"
       :show-disponibilities="true"
+      :redirect-parameters="{
+        'structure.name': organisation.name,
+      }"
     />
 
     <SlideshowOrganisationMissions
+      v-if="organisation.statistics.missions_available_distance_count > 0"
       class="bg-[#F3EDE5]"
       :organisation="organisation"
-      title="Missions à distance"
+      title="Depuis chez moi"
       :search-parameters="{
         hitsPerPage: 6,
         facetFilters: [
           `structure.name:${organisation.name}`,
           'type:Mission à distance'
         ],
+      }"
+      :redirect-parameters="{
+        'structure.name': organisation.name,
+        'type': 'Mission à distance'
+      }"
+    />
+
+    <OrganisationActivities
+      :title="`Au programme des activités bénévoles proposées chez ${organisation.name}`"
+      :activities="activities"
+      :redirect-parameters="{
+        'structure.name': organisation.name
+      }"
+    />
+
+    <SlideshowOrganisationMissions
+      class="bg-[#F3EDE5]"
+      :organisation="organisation"
+      title="Missions similaires disponibles"
+      :search-parameters="{
+        hitsPerPage: 6,
+        facetFilters: [
+          facetFiltersActivities,
+        ],
+      }"
+      :redirect-parameters="{
+        'activities.name': activities.map(a => a.name).join('|')
       }"
     />
 
@@ -52,6 +87,7 @@ import Header from '@/components/section/organisation/Header'
 import Presentation from '@/components/section/organisation/Presentation'
 import Details from '@/components/section/organisation/Details'
 import SlideshowOrganisationMissions from '@/components/section/organisation/SlideshowOrganisationMissions'
+import OrganisationActivities from '@/components/section/OrganisationActivities'
 // import Contact from '@/components/section/organisation/Contact'
 // import Donation from '@/components/section/organisation/Donation'
 import MixinOrganisation from '@/mixins/organisation'
@@ -62,7 +98,8 @@ export default {
     Header,
     Presentation,
     Details,
-    SlideshowOrganisationMissions
+    SlideshowOrganisationMissions,
+    OrganisationActivities
     // Contact,
     // Donation,
     // CardMission,
@@ -83,8 +120,11 @@ export default {
       return error({ statusCode: 404 })
     }
 
+    const { data: activities } = await $axios.get(`/structures/${organisation.id}/activities`)
+
     return {
-      organisation
+      organisation,
+      activities
     }
   },
   head () {
@@ -129,6 +169,9 @@ export default {
       return this.organisation?.override_image2?.urls.large ??
         this.organisation?.illustrations?.[1]?.urls.large ??
         '/images/organisation-default-2.webp'
+    },
+    facetFiltersActivities () {
+      return this.activities.map(a => `activities.name:${a.name}`)
     }
   },
   methods: {

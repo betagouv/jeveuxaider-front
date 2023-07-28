@@ -105,32 +105,37 @@
           <div class="p-10 bg-white shadow-2xl">
             <IconPeuImporte class="-mt-3 w-[80px] h-[80px]" />
             <div class="text-5xl font-bold">
-              XXX
+              {{ organisation.missions_available_count }}
             </div>
             <div class="text-2xl font-bold">
-              missions de bénévolat
+              {{ $options.filters.pluralize(organisation.missions_available_count, 'mission', 'missions', false) }} de bénévolat
             </div>
             <div class="text-[#666666]">
               sur JeVeuxAider.gouv.fr
             </div>
           </div>
           <div class="p-10 bg-white shadow-2xl">
-            <div class="flex mb-4">
-              <img
-                v-for="(portrait, index) in portraits"
-                :key="index"
-                :src="portrait"
-                alt=""
-                :class="[{ '-ml-2': index !== 0 }]"
-                class="portrait rounded-full"
-                style="width: 52px"
-              >
-            </div>
+            <template v-if="participationsCount === 0">
+              <IconSuccess class="-mt-3 w-[80px] h-[80px]" />
+            </template>
+            <template v-else>
+              <div class="flex mb-4">
+                <img
+                  v-for="(portrait, index) in portraits"
+                  :key="index"
+                  :src="portrait"
+                  alt=""
+                  :class="[{ '-ml-2': index !== 0 }]"
+                  class="portrait rounded-full"
+                  style="width: 52px"
+                >
+              </div>
+            </template>
             <div class="text-5xl font-bold">
               {{ participationsCount }}
             </div>
             <div class="text-2xl font-bold">
-              bénévoles déjà passés par là
+              {{ $options.filters.pluralize(participationsCount, 'bénévole déjà passé', 'bénévoles déjà passés', false) }} par là
             </div>
             <div class="text-[#666666]">
               grâce à JeVeuxAider.gouv.fr
@@ -157,7 +162,9 @@
                   <RiMailFill class="mt-1 w-[16px] text-[#929292] fill-current" />
                 </div>
                 <div class="flex-1">
-                  <Link>{{ organisation.email || 'Non renseigné' }}</Link>
+                  <Link>
+                    <span class="break-all">{{ organisation.email || 'Non renseigné' }}</span>
+                  </Link>
                 </div>
               </div>
               <div class="flex space-x-2">
@@ -191,11 +198,13 @@
 import Tag from '@/components/dsfr/Tag.vue'
 import MixinDomaines from '@/mixins/domaines'
 import IconPeuImporte from '@/static/images/icons/dsfr/peu_importe.svg?inline'
+import IconSuccess from '@/static/images/icons/dsfr/success.svg?inline'
 
 export default {
   components: {
     Tag,
-    IconPeuImporte
+    IconPeuImporte,
+    IconSuccess
   },
   mixins: [MixinDomaines],
   props: {
@@ -210,7 +219,7 @@ export default {
   },
   computed: {
     participationsCount () {
-      return 345
+      return this.organisation.participations_count
     },
     portraits () {
       const portraits = []

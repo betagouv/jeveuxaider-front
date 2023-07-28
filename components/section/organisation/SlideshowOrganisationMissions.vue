@@ -93,6 +93,10 @@ export default {
       type: Object,
       required: true
     },
+    redirectParameters: {
+      type: Object,
+      required: true
+    },
     showDisponibilities: {
       type: Boolean,
       default: false
@@ -124,7 +128,13 @@ export default {
           organisation: this.organisation.name
         }
       })
-      this.$router.push(`/missions-benevolat?structure.name=${this.organisation.name}&commitment__total=<%3D4&duration=half_day&time_period=year`)
+
+      this.$router.push({
+        path: '/missions-benevolat',
+        query: {
+          ...this.redirectParameters
+        }
+      })
     },
     onSlideClick () {
       this.$plausible.trackEvent('Association - Clique - Missions', {

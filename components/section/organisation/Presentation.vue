@@ -20,7 +20,26 @@
             <span>{{ organisation.name }}</span>
           </h1>
           <p class="text-2xl leading-10 mb-8">
-            Rejoignez le mouvement <span class="font-bold">{{ organisation.name }}</span> et ses XX missions de bénévolat réalisables en <span class="font-bold">présentiel</span> ou en <span class="font-bold">télébénévolat</span>.
+            Rejoignez le mouvement <span class="font-bold">{{ organisation.name }}</span>
+            <template v-if="organisation.missions_available_count > 1">
+              <span> et ses {{ organisation.missions_available_count }} missions de bénévolat réalisables</span>
+            </template>
+            <template v-else>
+              et ses missions
+            </template>
+            <template v-if="hasMissionsDistanceAndPresentiel">
+              <span> en <span class="font-bold">présentiel</span> ou en <span class="font-bold">télébénévolat</span></span>.
+            </template>
+            <template v-else>
+              <template v-if="hasMissionsDistance">
+                <span> en <span class="font-bold">télébénévolat</span>.
+                </span>
+              </template>
+              <template v-if="hasMissionsPresentiel">
+                <span> en <span class="font-bold">présentiel</span>.
+                </span>
+              </template>
+            </template>
           </p>
           <nuxt-link :to="`/missions-benevolat?structure.name=${organisation.name}`">
             <Button size="lg">
@@ -28,7 +47,7 @@
             </Button>
           </nuxt-link>
           <p class="text-lg mt-4">
-            Plus de <span class="font-bold">XXX bénévoles</span> recherchés
+            Plus de <span class="font-bold">{{ organisation.places_left }} bénévoles</span> recherchés
           </p>
         </div>
       </div>
@@ -58,6 +77,17 @@ export default {
     srcSet: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    hasMissionsDistanceAndPresentiel () {
+      return this.organisation.statistics.missions_available_distance_count > 0 && this.organisation.statistics.missions_available_presentiel_count > 0
+    },
+    hasMissionsDistance () {
+      return this.organisation.statistics.missions_available_distance_count
+    },
+    hasMissionsPresentiel () {
+      return this.organisation.statistics.missions_available_presentiel_count
     }
   },
   methods: {
