@@ -45,7 +45,7 @@
         <template v-if="mission.date_type === 'ponctual'">
           <DsfrBadge
             size="sm"
-            class="absolute top-4 left-4 shadow-lg bg-[#FEECC2] text-[#716043]"
+            class="absolute top-4 left-4 shadow-lg !bg-[#FEECC2] !text-[#716043]"
           >
             {{ (!$store.getters.isLogged || $store.state.auth.user?.statistics?.participations_count === 0) && mission.structure?.score >= 80 ? 'Idéale pour débuter' : 'Mission courte' }}
           </DsfrBadge>
