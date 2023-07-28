@@ -1,14 +1,16 @@
 <template>
-  <div>
+  <div class="sticky top-[-46px] z-10 sm:hidden">
     <Tabs
+      ref="mobileFilters"
       name="Près de chez moi ou depuis chez moi"
       :tabs="[
         { key: 'onsite', content: 'Prés de chez moi', slug: 'onsite' },
         { key: 'remote', content: 'Depuis chez moi', slug: 'remote' },
       ]"
-      tabpanel-class="py-4 bg-white"
+      :tabpanel-class="['py-4 bg-white tab-panel', {'!border-white': isPinned}]"
       tabswrapper-class="!px-2 !text-[15px] xs:!px-3 xs:!text-base"
-      :selected-tab="selectedTab"
+      :selected-tab-key="selectedTabKey"
+      :class="[{'full-bleed shadow-xl': isPinned}]"
       @selected="onTabSelect"
     >
       <div slot="tab-onsite">
@@ -91,13 +93,21 @@ export default {
   data () {
     return {
       isFiltersOpen: false,
-      isGeolocFilterActive: false
+      isGeolocFilterActive: false,
+      isPinned: false,
+      tabswrapperBoundingClientRect: undefined
     }
   },
   computed: {
-    selectedTab () {
-      return this.$route.query.type === 'Mission à distance' ? 1 : 0
+    selectedTabKey () {
+      return this.$route.query.type === 'Mission à distance' ? 'remote' : 'onsite'
     }
+  },
+  mounted () {
+    this.handleSticky()
+  },
+  beforeDestroy () {
+    window.removeEventListener('scroll', this.onScroll)
   },
   methods: {
     onTabSelect (tab) {
@@ -121,7 +131,48 @@ export default {
       await this.$nextTick()
       const button = this.selectedTab === 0 ? this.$refs.buttonFilterOnsite : this.$refs.buttonFilterRemote
       button.focus()
+    },
+    handleSticky () {
+      this.tabswrapperBoundingClientRect = this.$refs.mobileFilters.$el.querySelector('ul[role="tablist"]').getBoundingClientRect()
+      if (this.tabswrapperBoundingClientRect.height === 0) {
+        return
+      }
+
+      this.tabswrapperElY = this.tabswrapperBoundingClientRect.top + window.scrollY
+      this.onScroll()
+
+      let timeout
+      window.addEventListener('scroll', () => {
+        if (timeout) {
+          window.cancelAnimationFrame(timeout)
+        }
+        timeout = window.requestAnimationFrame(() => {
+          this.onScroll()
+        })
+      }, false)
+    },
+    onScroll () {
+      this.isPinned = (window.visualViewport.pageTop - (this.tabswrapperBoundingClientRect.height - 4)) >= this.tabswrapperElY
     }
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+.full-bleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.tab-panel > div {
+  max-width: 309px;
+  margin: auto;
+  @screen xs {
+    max-width: 359px;
+  }
+}
+</style>

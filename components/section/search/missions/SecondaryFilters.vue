@@ -1,6 +1,6 @@
 <template>
-  <div class="lg:flex justify-between items-center mt-8 lg:mb-4">
-    <div class="hidden sm:flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
+  <div class="hidden sm:block lg:flex justify-between items-baseline !mt-8 lg:!mb-4">
+    <div class="flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
       <template v-for="filter,i in visibleFilters">
         <AutonomyFilter v-if="filter === 'is_autonomy'" :key="i" />
 
@@ -177,6 +177,8 @@
 
         <MinorsFilter v-if="filter === 'is_minors'" :key="i" />
 
+        <PonctualFilter v-if="filter === 'is_ponctual'" :key="i" />
+
         <FacetFilterToggle
           v-if="filter === 'publisher_name'"
           :key="i"
@@ -215,7 +217,7 @@
       />
     </div>
 
-    <div class="hidden sm:flex lg:items-center lg:justify-center mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
+    <div class="flex mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
       <Link
         :class="['text-jva-blue-500', {'pointer-events-none opacity-0': !hasActiveFilters}]"
         @click.native="deleteAllFilters()"
@@ -231,6 +233,7 @@ import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue
 import AlgoliaQueryBuilder from '@/mixins/algolia-query-builder'
 import AutonomyFilter from '~/components/section/search/AutonomyFilter.vue'
 import MinorsFilter from '~/components/section/search/MinorsFilter.vue'
+import PonctualFilter from '~/components/section/search/PonctualFilter.vue'
 import Link from '@/components/dsfr/Link.vue'
 import Tag from '@/components/dsfr/Tag.vue'
 
@@ -240,7 +243,8 @@ export default {
     AutonomyFilter,
     MinorsFilter,
     Link,
-    Tag
+    Tag,
+    PonctualFilter
   },
   mixins: [AlgoliaQueryBuilder],
   props: {
@@ -258,11 +262,20 @@ export default {
     activeFilters () {
       this.sanitizeQuery()
       let filters = Object.keys(this.$route.query).filter(f => f && this.filtersName.includes(f) && f !== 'page')
+
       const publicsVolontaires = this.$route.query?.publics_volontaires?.split('|')
       if (publicsVolontaires?.includes('Mineurs')) {
         filters.push('is_minors')
         if (publicsVolontaires.length === 1) {
           filters = filters.filter(f => f !== 'publics_volontaires')
+        }
+      }
+
+      const dateTypes = this.$route.query?.date_type?.split('|')
+      if (dateTypes?.includes('ponctual')) {
+        filters.push('is_ponctual')
+        if (dateTypes.length === 1) {
+          filters = filters.filter(f => f !== 'date_type')
         }
       }
       return filters || []

@@ -89,7 +89,7 @@ export default {
       required: true
     },
     tabpanelClass: {
-      type: String,
+      type: [String, Array],
       default: ''
     },
     // selectedTab: {
@@ -101,7 +101,7 @@ export default {
       default: null
     },
     tabswrapperClass: {
-      type: String,
+      type: [String, Array],
       default: ''
     }
   },

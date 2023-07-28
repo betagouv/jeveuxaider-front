@@ -1,11 +1,5 @@
 <template>
-  <div>
-    <div class="container md:px-8">
-      <Breadcrumb
-        :links="[{ text: 'Organisations' }]"
-      />
-    </div>
-
+  <div class="mt-6 sm:mt-12">
     <AlgoliaSearch
       :secondary-filters="['domaines.name', 'reseaux.name', 'department_name', 'statut_juridique']"
     />
@@ -14,12 +8,10 @@
 
 <script>
 import AlgoliaSearch from '~/components/section/search/organisations/AlgoliaSearch.vue'
-import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    AlgoliaSearch,
-    Breadcrumb
+    AlgoliaSearch
   },
   middleware: 'search',
   data () {

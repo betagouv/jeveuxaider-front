@@ -1,8 +1,9 @@
 <template>
   <div>
     <Toggle
+      size="md"
       :value="isMinors"
-      label="Mission ouverte aux mineurs"
+      label="Missions ouvertes aux mineurs"
       @input="handleToggle"
     />
   </div>

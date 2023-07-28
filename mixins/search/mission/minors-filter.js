@@ -10,7 +10,7 @@ export default {
       }
       let publicsVolontaires = this.$route.query?.publics_volontaires?.split('|') ?? []
 
-      if (!this.isMinor && !publicsVolontaires.includes('Mineurs')) {
+      if (!publicsVolontaires.includes('Mineurs')) {
         publicsVolontaires.push('Mineurs')
       } else {
         publicsVolontaires = publicsVolontaires.filter(value => value !== 'Mineurs')

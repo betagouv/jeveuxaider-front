@@ -79,6 +79,9 @@ export default {
 
       let $multiplier = 1
       switch (this.commitment__time_period) {
+        case 'day':
+          $multiplier = 365
+          break
         case 'week':
           $multiplier = 52
           break

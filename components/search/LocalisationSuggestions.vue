@@ -8,17 +8,17 @@
     <button
       v-if="!isGeolocFilterActive"
       ref="fakeInput"
-      class="flex space-x-3 items-center text-gray-900 truncate"
+      class="flex space-x-3 items-center text-gray-900 truncate w-full"
       @click="handleFakeInputClick"
     >
       <RiMapPin2Fill class="h-5 w-5 flex-none fill-current text-gray-400" />
-      <div v-if="!$route.query.city && $store.state.algoliaSearch.navigatorGeolocation" class="truncate font-bold w-full">
+      <div v-if="!$route.query.city && $store.state.algoliaSearch.navigatorGeolocation" class="truncate font-bold w-full text-left">
         Autour de moi
       </div>
-      <div v-else-if="!$route.query.city && $store.state.algoliaSearch.results.aroundLatLng" class="truncate italic pr-[1px] text-[#888888] w-full">
+      <div v-else-if="!$route.query.city && $store.state.algoliaSearch.results.aroundLatLng" class="truncate italic pr-[1px] text-[#888888] w-full text-left">
         Ville ou code postal
       </div>
-      <div v-else class="font-bold truncate w-full">
+      <div v-else class="font-bold truncate w-full text-left">
         {{ $route.query.city }}
       </div>
       <RiLoader5Line

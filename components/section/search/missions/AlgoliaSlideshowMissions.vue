@@ -18,9 +18,13 @@
             ? `/missions-benevolat/${mission.id}`
             : `/missions-benevolat/${mission.id}/${mission.slug}`
         "
-        @click.native="$emit('slide-click')"
+        @click.native="$emit('slide-click', mission)"
       >
-        <CardMission :mission="mission" />
+        <!-- No lazy loading to prevent hickups during animations -->
+        <CardMission
+          :lazy-loading="false"
+          :mission="mission"
+        />
       </nuxt-link>
     </Slideshow>
   </div>
@@ -54,9 +58,9 @@ export default {
   },
   fetchOnServer: false,
   async fetch () {
-    const { hits } = await this.$algolia.missionsIndex.search('', this.searchParameters)
-    this.missions = hits
-    this.$emit('results', this.missions)
+    const response = await this.$algolia.missionsIndex.search('', this.searchParameters)
+    this.missions = response.hits
+    this.$emit('results', response)
   },
   methods: {
     previous () {
@@ -71,7 +75,7 @@ export default {
 
 <style lang="postcss" scoped>
 .slide-wrapper {
-  @apply !flex flex-col h-full max-w-[323px] transition;
+  @apply !flex flex-col h-full max-w-[320px] transition;
   width: calc(100vw - 64px) !important; /* To let the next slide appear */
 }
 </style>

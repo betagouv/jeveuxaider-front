@@ -8,7 +8,6 @@ export const state = () => ({
   aroundLatLng: null,
   navigatorGeolocation: null,
   loadingNavigatorGeolocation: false,
-  nbMissionsDistance: 0,
   availableFacets: [],
   availableNumericFilters: [],
   searchParameters: {}
@@ -24,7 +23,6 @@ export const mutations = {
   setAroundLatLng: (state, payload) => { state.aroundLatLng = payload },
   setNavigatorGeolocation: (state, payload) => { state.navigatorGeolocation = payload },
   setLoadingNavigatorGeolocation: (state, payload) => { state.loadingNavigatorGeolocation = payload },
-  setNbMissionsDistance: (state, payload) => { state.nbMissionsDistance = payload },
   setAvailableFacets: (state, payload) => { state.availableFacets = payload },
   setAvailableNumericFilters: (state, payload) => { state.availableNumericFilters = payload },
   setSearchParameters: (state, payload) => { state.searchParameters = payload }
@@ -46,11 +44,5 @@ export const getters = {
   facetResults: state => (facetName) => {
     return state.facetsResults.find(facetResults => !!facetResults.facets[facetName])?.facets[facetName] ??
     state.results?.facets[facetName] ?? {}
-  },
-  nbMissionsPresentiel: (state, getters) => {
-    if (state.indexKey !== 'missionsIndex') {
-      return 0
-    }
-    return getters.facetResults('type')?.['Mission en présentiel'] ?? 0
   }
 }

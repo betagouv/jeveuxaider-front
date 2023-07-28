@@ -10,6 +10,7 @@
         class="w-full h-full object-cover"
         width="300"
         height="143"
+        :data-not-lazy="!lazyLoading"
         @error="onImgError"
       >
 
@@ -39,6 +40,16 @@
         <div v-if="['admin', 'referent', 'referent_regional'].includes($store.getters.contextRole)" class="text-white absolute bottom-1 right-2 text-xs text-shadow">
           Id: {{ mission.id }}
         </div>
+      </template>
+      <template v-else>
+        <template v-if="mission.date_type === 'ponctual'">
+          <DsfrBadge
+            size="sm"
+            class="absolute top-4 left-4 shadow-lg bg-[#FEECC2] text-[#716043]"
+          >
+            {{ (!$store.getters.isLogged || $store.state.auth.user?.statistics?.participations_count === 0) && mission.structure?.score >= 80 ? 'Idéale pour débuter' : 'Mission courte' }}
+          </DsfrBadge>
+        </template>
       </template>
     </div>
 
@@ -176,6 +187,10 @@ export default {
     showTags: {
       type: Boolean,
       default: false
+    },
+    lazyLoading: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {

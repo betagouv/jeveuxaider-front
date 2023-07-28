@@ -9,7 +9,7 @@ export default {
       lang: 'fr'
     },
     bodyAttrs: {
-      class: 'text-base leading-normal'
+      class: 'text-base leading-normal overflow-x-hidden'
     },
     meta: [
       { charset: 'utf-8' },

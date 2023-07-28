@@ -1,15 +1,12 @@
 <template>
-  <div>
-    <div class="container md:px-8">
-      <Breadcrumb :links="[{ text: 'Missions de bénévolat' }]" />
-    </div>
-
+  <div class="mt-6 sm:mt-12">
     <AlgoliaSearch
       :secondary-filters="[
         'is_autonomy',
+        'structure.name',
+        'is_ponctual',
         'publics_beneficiaires',
         'is_minors',
-        'structure.name',
         'tags',
         'domaines',
         'structure.reseaux.name',
@@ -17,18 +14,17 @@
         'template_subtitle',
         'publisher_name'
       ]"
+      :with-slideshow-remote="true"
     />
   </div>
 </template>
 
 <script>
 import AlgoliaSearch from '~/components/section/search/missions/AlgoliaSearch.vue'
-import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {
   components: {
-    AlgoliaSearch,
-    Breadcrumb
+    AlgoliaSearch
   },
   middleware: 'search',
   data () {
