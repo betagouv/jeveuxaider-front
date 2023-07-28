@@ -118,7 +118,10 @@ export default {
     await this.search()
   },
   watch: {
-    $route: '$fetch'
+    $route () {
+      this.$fetch()
+      this.handleNavigatorGeolocation()
+    }
   },
   created () {
     this.$store.commit('algoliaSearch/setIndexKey', 'missionsIndex')
@@ -135,12 +138,7 @@ export default {
     this.$store.commit('algoliaSearch/setSearchParameters', this.searchParameters)
   },
   mounted () {
-    if (navigator.geolocation && !this.$store.state.algoliaSearch.aroundLatLng && !this.$store.state.algoliaSearch.navigatorGeolocation) {
-      if (!this.$route.query.aroundLatLng) {
-        this.$store.commit('algoliaSearch/setLoadingNavigatorGeolocation', true)
-      }
-      navigator.geolocation.getCurrentPosition(this.onNavigatorGeolocation, this.onNavigatorGeolocationError)
-    }
+    this.handleNavigatorGeolocation()
   },
   beforeDestroy () {
     this.$store.dispatch('algoliaSearch/reset')
@@ -151,6 +149,14 @@ export default {
         path: this.$route.path,
         query: { ...this.$route.query, page }
       })
+    },
+    handleNavigatorGeolocation () {
+      if (navigator.geolocation && !this.$store.state.algoliaSearch.navigatorGeolocation && !this.$store.state.algoliaSearch.aroundLatLng && !this.$store.state.algoliaSearch.searchParameters?.aroundLatLng) {
+        if (!this.$route.query.aroundLatLng) {
+          this.$store.commit('algoliaSearch/setLoadingNavigatorGeolocation', true)
+        }
+        navigator.geolocation.getCurrentPosition(this.onNavigatorGeolocation, this.onNavigatorGeolocationError)
+      }
     }
   }
 }
