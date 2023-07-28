@@ -83,7 +83,12 @@
     /> -->
 
     <!-- FAIRE UN DON -->
-    <!-- <Donation :organisation="organisation" /> -->
+    <SectionDonation
+      v-if="organisation.donation"
+      :destinataire="organisation.name"
+      :url="organisation.donation"
+      class="bg-[#F3EDE5]"
+    />
 
     <!-- CONTACT -->
     <!-- <Contact :organisation="organisation" /> -->
@@ -97,7 +102,7 @@ import Details from '@/components/section/organisation/Details'
 import SectionSlideshowMissions from '@/components/section/search/SectionSlideshowMissions'
 import OrganisationActivities from '@/components/section/OrganisationActivities'
 // import Contact from '@/components/section/organisation/Contact'
-// import Donation from '@/components/section/organisation/Donation'
+import SectionDonation from '@/components/section/SectionDonation'
 import MixinOrganisation from '@/mixins/organisation'
 // import Testimonials from '@/components/section/temoignage/Testimonials'
 
@@ -107,9 +112,9 @@ export default {
     Presentation,
     Details,
     SectionSlideshowMissions,
-    OrganisationActivities
+    OrganisationActivities,
     // Contact,
-    // Donation,
+    SectionDonation
     // CardMission,
     // Testimonials
   },
