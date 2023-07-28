@@ -3,7 +3,7 @@
     <div class="container">
       <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
         <div class="">
-          <Heading as="h2" size="alt-sm" class="mb-6 md:mb-2">
+          <Heading as="h3" size="alt-sm" class="mb-6 md:mb-2">
             {{ title }}
           </Heading>
         </div>

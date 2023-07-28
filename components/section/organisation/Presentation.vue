@@ -1,8 +1,8 @@
 <template>
   <div class="relative bg-white lg:grid lg:grid-cols-2">
     <div class="col-span-2 lg:col-span-1 flex flex-col items-center justify-center">
-      <div class="max-w-3xl lg:ml-auto">
-        <div class="px-4 pb-8 md:p-8 lg:pt-6 xl:p-16 xl:pt-8">
+      <div class="px-4 lg:px-0 lg:max-w-3xl lg:ml-auto">
+        <div class="p-6 py-8 lg:p-8">
           <h1
             class="mb-8 text-3xl lg:text-[56px] sm:!leading-[1.1] tracking-tighter font-bold"
           >
@@ -11,18 +11,16 @@
               <img
                 src="/images/home/sparkle-right.svg"
                 alt=""
-                width="61"
-                height="67"
                 aria-hidden="true"
-                class="absolute top-[-14px] right-[-47px] pointer-events-none"
+                class="absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] top-[-9px] right-[-30px] lg:top-[-14px] lg:right-[-47px] pointer-events-none"
               >
             </span><br>
             <span>{{ organisation.name }}</span>
           </h1>
-          <p class="text-2xl leading-10 mb-8">
+          <p class="text-lg lg:text-2xl lg:leading-10 mb-8">
             Rejoignez le mouvement <span class="font-bold">{{ organisation.name }}</span>
             <template v-if="organisation.missions_available_count > 1">
-              <span> et ses {{ organisation.missions_available_count }} missions de bénévolat réalisables</span>
+              <span> et ses {{ organisation.missions_available_count|formatNumber }} missions de bénévolat réalisables</span>
             </template>
             <template v-else>
               et ses missions
@@ -43,12 +41,12 @@
           </p>
           <nuxt-link :to="`/missions-benevolat?structure.name=${organisation.name}`">
             <Button size="lg">
-              Trouvez une mission de bénévolat
+              Trouvez une mission <span class="hidden sm:inline">de bénévolat</span>
             </Button>
           </nuxt-link>
-          <p class="text-lg mt-4">
+          <p class="text-base lg:text-lg mt-4">
             <template v-if="organisation.places_left > 0">
-              Plus de <span class="font-bold">{{ organisation.places_left|pluralize('bénévole') }}</span> {{ organisation.places_left|pluralize('recherché', 'recherchés', false) }}
+              Plus de <span class="font-bold">{{ organisation.places_left|formatNumber }} {{ organisation.places_left|pluralize('bénévole','bénévoles', false) }}</span> {{ organisation.places_left|pluralize('recherché', 'recherchés', false) }}
             </template>
             <temoignage v-else>
               Plus de place disponible
@@ -57,7 +55,7 @@
         </div>
       </div>
     </div>
-    <div>
+    <div class="hidden lg:block">
       <img
         :srcset="srcSet"
         class="min-h-[700px] w-auto object-cover"

@@ -1,11 +1,14 @@
 <template>
   <div v-if="facetActivities.length > 0" class="bg-jva-orange-300 py-12 xl:py-24 overflow-hidden">
     <div class="container">
-      <div class="flex flex-col lg:gap-6 xl:gap-8">
-        <div class="max-w-4xl">
-          <Heading as="h2" size="alt-sm" class="mb-6 md:mb-2" color="text-[#522F29]">
+      <div class="flex flex-col gap-6 xl:gap-8">
+        <div class="lg:max-w-4xl">
+          <Heading as="h2" size="alt-sm" class="hidden sm:block mb-6 md:mb-2" color="text-[#522F29]">
             {{ title }}
           </Heading>
+          <h2 class="text-4xl font-bold sm:hidden">
+            Au programme
+          </h2>
         </div>
         <div class="flex flex-wrap gap-8">
           <div

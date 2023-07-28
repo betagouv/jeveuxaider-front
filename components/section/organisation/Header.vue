@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white shadow-xl border-b">
-    <div class="flex items-center space-x-12">
-      <div class=" py-4 px-10">
+    <div class="flex items-center justify-between lg:justify-start space-x-6 lg:space-x-12">
+      <div class="py-4 px-4 lg:px-10">
         <img
           src="@/assets/images/republique-francaise-logo.svg"
           alt="République Française"
@@ -11,7 +11,7 @@
           data-not-lazy
         >
       </div>
-      <div class=" py-4 px-10">
+      <div class="hidden lg:block py-4 px-10">
         <img
           v-if="organisation.logo"
           :srcset="organisation.logo.urls.large"
@@ -19,12 +19,12 @@
           class="w-auto h-[40px]"
         >
       </div>
-      <div class="flex-1">
+      <div class="hidden lg:block flex-1">
         MENU @TODO
       </div>
-      <div class="py-4 px-10  justify-self-end">
+      <div class="py-4 px-10 justify-self-end">
         <div class="flex items-center">
-          <span class="text-[#5B71B9] mr-3">
+          <span class="hidden sm:inline text-[#5B71B9] mr-3">
             Encouragé par
           </span>
           <nuxt-link to="/">

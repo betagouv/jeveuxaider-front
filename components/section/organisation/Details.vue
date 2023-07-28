@@ -1,5 +1,5 @@
 <template>
-  <div class="py-28">
+  <div class="py-8 lg:py-28">
     <div class="container grid grid-cols-1">
       <h2
         class="text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter"
@@ -9,19 +9,17 @@
           <img
             src="/images/home/sparkle-left.svg"
             alt=""
-            width="61"
-            height="67"
             aria-hidden="true"
-            class="absolute top-[-23px] left-[-47px] pointer-events-none"
+            class="absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] top-[-12px] left-[-22px] lg:top-[-12px] lg:left-[-47px] pointer-events-none"
           >
         </span><br>
       </h2>
-      <div class="mt-12 grid grid-cols-12 gap-12">
-        <div class="col-span-7">
-          <TextFormatted :max-lines="6" :text="organisation.description" class="text-2xl leading-10" />
+      <div class="mt-6 lg:mt-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
+        <div class="lg:col-span-7">
+          <TextFormatted :max-lines="6" :text="organisation.description" class="text-lg lg:text-2xl lg:leading-10" />
         </div>
 
-        <div class="col-span-5 grid grid-cols-1 gap-10 border-l border-l-[#DBD5CE] pl-10">
+        <div class="lg:col-span-5 grid grid-cols-1 gap-6 lg:gap-10 lg:border-l border-l-[#DBD5CE] lg:pl-10">
           <div class="">
             <h3 class="text-2xl font-bold mb-4">
               Publics aidés
@@ -57,11 +55,11 @@
         </div>
       </div>
 
-      <div class="mt-24 grid grid-cols-2 gap-10">
+      <div class="mt-8 lg:mt-24 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
         <div class="relative">
           <img
             :srcset="srcSet"
-            class="min-h-[630px] h-full w-auto object-cover"
+            class="min-h-[250px] lg:min-h-[630px] h-full w-auto object-cover"
             @error="onIllustrationError"
           >
           <div class="absolute bottom-7 left-7">
@@ -101,11 +99,11 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
           <div class="p-10 bg-white shadow-2xl">
             <IconPeuImporte class="-mt-3 w-[80px] h-[80px]" />
             <div class="text-5xl font-bold">
-              {{ organisation.missions_available_count }}
+              {{ organisation.missions_available_count|formatNumber }}
             </div>
             <div class="text-2xl font-bold">
               {{ $options.filters.pluralize(organisation.missions_available_count, 'mission', 'missions', false) }} de bénévolat
@@ -132,7 +130,7 @@
               </div>
             </template>
             <div class="text-5xl font-bold">
-              {{ participationsCount }}
+              {{ participationsCount|formatNumber }}
             </div>
             <div class="text-2xl font-bold">
               {{ $options.filters.pluralize(participationsCount, 'bénévole déjà passé', 'bénévoles déjà passés', false) }} par là

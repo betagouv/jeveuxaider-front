@@ -1,12 +1,12 @@
 <template>
-  <div id="faire-un-don" class="py-12 xl:py-24 overflow-hidden">
+  <div id="faire-un-don" class="py-8 lg:py-24 overflow-hidden">
     <div class="container">
       <Heading as="h2" size="alt-lg" class="text-center">
         <span>Liberté<span class="text-jva-orange-300">.</span></span>
         <span> Égalité<span class="text-jva-orange-300">.</span></span>
         <span> Je veux aider<span class="text-jva-orange-300">.</span></span>
       </Heading>
-      <div class="bg-white shadow-xl mt-24 flex">
+      <div class="bg-white shadow-xl mt-12 lg:mt-24 flex flex-col sm:flex-row">
         <div class="relative flex-1">
           <img
             src="/images/organisations/donation.jpg"
@@ -14,7 +14,7 @@
             class="absolute object-cover w-full h-full z-10"
             alt=""
           >
-          <div class="relative p-20 text-white z-20">
+          <div class="relative p-6 lg:p-20 text-white z-20">
             <h2
               class="font-bold mb-6 text-3xl tracking-tight sm:text-5xl sm:!leading-[1.1] lg:text-[72px]"
             >
@@ -23,7 +23,7 @@
               </span>
             </h2>
 
-            <p class="text-[32px] max-w-xl mb-6">
+            <p class="text-lg lg:text-[32px] lg:max-w-xl mb-6 lg:mb-8">
               Plus que jamais,<br>
               l'organisation {{ destinataire }} a besoin de votre générosité
             </p>
@@ -35,11 +35,11 @@
               icon="RiExternalLinkLine"
               @click="redirect"
             >
-              Faire un don <span v-if="organisme">sur {{ organisme.name }}</span>
+              Faire un don <span v-if="organisme" class="hidden sm:inline">sur {{ organisme.name }}</span>
             </Button>
           </div>
         </div>
-        <div v-if="organisme" class="w-[375px] flex items-center justify-center">
+        <div v-if="organisme" class="w-[200px] mx-auto lg:w-[375px] p-6 sm:p-0 flex items-center justify-center">
           <img
             :src="organisme.logo"
             :alt="organisme.name"
