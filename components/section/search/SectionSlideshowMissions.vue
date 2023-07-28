@@ -11,7 +11,7 @@
           <div class="flex space-x-2">
             <SlideshowArrows
               button-class="hover:bg-[#F6F6F6]"
-              ref-name="slideshowOrganisationMissions"
+              ref-name="slideshowMissions"
               :refs="$refs"
               @previous="handleSlideshowPreviousClick"
               @next="handleSlideshowNextClick"
@@ -28,7 +28,7 @@
       </div>
       <div class="mt-12 xl:mt-20">
         <AlgoliaSlideshowMissions
-          ref="slideshowOrganisationMissions"
+          ref="slideshowMissions"
           aria-labelledby="label-slideshow-organisation-missions"
           :search-parameters="searchParameters"
           @slide-click="onSlideClick"
@@ -45,20 +45,15 @@
           Quelles sont vos disponibilités ?
         </p>
         <div class="flex flex-wrap gap-4">
-          <nuxt-link
-            v-for="link,i in links"
+          <Tag
+            v-for="diponibility,i in disponibilities"
             :key="i"
-            :to="link.to"
-            class="rounded-full"
-            @click.native="onDisponibilityClick()"
+            size="md"
+            context="clickable"
+            @click.native="onDisponibilityClick(diponibility)"
           >
-            <Tag
-              size="md"
-              context="clickable"
-            >
-              {{ link.label }}
-            </Tag>
-          </nuxt-link>
+            {{ diponibility.label }}
+          </Tag>
         </div>
       </div>
     </div>
@@ -97,6 +92,10 @@ export default {
       type: Object,
       required: true
     },
+    plausibleParameters: {
+      type: Object,
+      default: () => {}
+    },
     showDisponibilities: {
       type: Boolean,
       default: false
@@ -104,28 +103,45 @@ export default {
   },
   data () {
     return {
-      links: [
-        { label: '1 heure', to: `/missions-benevolat?structure.name=${this.organisation.name}&commitment__total=<%3D1&duration=1_hour&time_period=year` },
-        { label: '2 heures', to: `/missions-benevolat?structure.name=${this.organisation.name}&commitment__total=<%3D2&duration=2_hours&time_period=year` },
-        { label: 'Une demi-journée', to: `/missions-benevolat?structure.name=${this.organisation.name}&commitment__total=<%3D4&duration=half_day&time_period=year` },
-        { label: '1 jour', to: `/missions-benevolat?structure.name=${this.organisation.name}&commitment__total=<%3D7&duration=day&time_period=year` },
-        { label: '2 jours', to: `/missions-benevolat?structure.name=${this.organisation.name}&commitment__total=<%3D14&duration=2_days&time_period=year` },
-        { label: '3 jours', to: `/missions-benevolat?structure.name=${this.organisation.name}&commitment__total=<%3D21&duration=3_days&time_period=year` }
+      disponibilities: [
+        {
+          label: '1 heure par mois',
+          parameters: {
+            commitment__total: '<12',
+            duration: '1_hour',
+            time_period: 'month'
+          }
+        },
+        {
+          label: 'Une demi-journée par mois',
+          parameters: {
+            commitment__total: '<48',
+            duration: 'half_day',
+            time_period: 'month'
+          }
+        },
+        {
+          label: '1 jour par mois',
+          parameters: {
+            commitment__total: '<84',
+            duration: 'day',
+            time_period: 'month'
+          }
+        }
       ]
     }
   },
   methods: {
     handleSlideshowPreviousClick () {
-      this.$refs.slideshowOrganisationMissions.previous()
+      this.$refs.slideshowMissions.previous()
     },
     handleSlideshowNextClick () {
-      this.$refs.slideshowOrganisationMissions.next()
+      this.$refs.slideshowMissions.next()
     },
     onViewMoreClick () {
       this.$plausible.trackEvent('Association - CTA - Plus de missions', {
         props: {
-          isLogged: this.$store.getters.isLogged,
-          organisation: this.organisation.name
+          ...this.plausibleParameters
         }
       })
 
@@ -139,16 +155,22 @@ export default {
     onSlideClick () {
       this.$plausible.trackEvent('Association - Clique - Missions', {
         props: {
-          isLogged: this.$store.getters.isLogged,
-          organisation: this.organisation.name
+          ...this.plausibleParameters
         }
       })
     },
-    onDisponibilityClick () {
+    onDisponibilityClick (diponibility) {
       this.$plausible.trackEvent('Association - CTA - Disponibilités - Missions', {
         props: {
-          isLogged: this.$store.getters.isLogged,
-          organisation: this.organisation.name
+          ...this.plausibleParameters,
+          commitment__total: diponibility.parameters.commitment__total
+        }
+      })
+      this.$router.push({
+        path: '/missions-benevolat',
+        query: {
+          ...this.redirectParameters,
+          ...diponibility.parameters
         }
       })
     }

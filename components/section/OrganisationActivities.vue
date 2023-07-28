@@ -40,7 +40,7 @@ export default {
       required: true
     },
     activities: {
-      type: Object,
+      type: Array,
       required: true
     },
     redirectParameters: {

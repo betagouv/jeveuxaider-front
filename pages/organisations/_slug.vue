@@ -10,7 +10,7 @@
       :src-set="image2"
       class="bg-[#F3EDE5]"
     />
-    <SlideshowOrganisationMissions
+    <SectionSlideshowMissions
       v-if="organisation.statistics.missions_available_presentiel_count > 0"
       :organisation="organisation"
       title="Missions sur le terrain"
@@ -25,9 +25,13 @@
       :redirect-parameters="{
         'structure.name': organisation.name,
       }"
+      :plausible-parameters="{
+        isLogged: $store.getters.isLogged,
+        organisation: organisation.name
+      }"
     />
 
-    <SlideshowOrganisationMissions
+    <SectionSlideshowMissions
       v-if="organisation.statistics.missions_available_distance_count > 0"
       class="bg-[#F3EDE5]"
       :organisation="organisation"
@@ -43,6 +47,10 @@
         'structure.name': organisation.name,
         'type': 'Mission à distance'
       }"
+      :plausible-parameters="{
+        isLogged: $store.getters.isLogged,
+        organisation: organisation.name
+      }"
     />
 
     <OrganisationActivities
@@ -53,7 +61,7 @@
       }"
     />
 
-    <SlideshowOrganisationMissions
+    <SectionSlideshowMissions
       class="bg-[#F3EDE5]"
       :organisation="organisation"
       title="Missions similaires disponibles"
@@ -86,7 +94,7 @@
 import Header from '@/components/section/organisation/Header'
 import Presentation from '@/components/section/organisation/Presentation'
 import Details from '@/components/section/organisation/Details'
-import SlideshowOrganisationMissions from '@/components/section/organisation/SlideshowOrganisationMissions'
+import SectionSlideshowMissions from '@/components/section/search/SectionSlideshowMissions'
 import OrganisationActivities from '@/components/section/OrganisationActivities'
 // import Contact from '@/components/section/organisation/Contact'
 // import Donation from '@/components/section/organisation/Donation'
@@ -98,7 +106,7 @@ export default {
     Header,
     Presentation,
     Details,
-    SlideshowOrganisationMissions,
+    SectionSlideshowMissions,
     OrganisationActivities
     // Contact,
     // Donation,

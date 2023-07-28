@@ -47,7 +47,12 @@
             </Button>
           </nuxt-link>
           <p class="text-lg mt-4">
-            Plus de <span class="font-bold">{{ organisation.places_left }} bénévoles</span> recherchés
+            <template v-if="organisation.places_left > 0">
+              Plus de <span class="font-bold">{{ organisation.places_left|pluralize('bénévole') }}</span> {{ organisation.places_left|pluralize('recherché', 'recherchés', false) }}
+            </template>
+            <temoignage v-else>
+              Plus de place disponible
+            </temoignage>
           </p>
         </div>
       </div>
