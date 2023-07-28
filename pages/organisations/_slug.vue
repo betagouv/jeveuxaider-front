@@ -76,22 +76,17 @@
       }"
     />
 
-    <!-- TESTIMONIALS -->
-    <!-- <Testimonials
-      :model="organisation"
-      model-type="organisation"
-    /> -->
+    <SectionTemoignages
+      v-if="testimonials.length > 0"
+      :testimonials="testimonials"
+    />
 
-    <!-- FAIRE UN DON -->
     <SectionDonation
       v-if="organisation.donation"
       :destinataire="organisation.name"
       :url="organisation.donation"
       class="bg-[#F3EDE5]"
     />
-
-    <!-- CONTACT -->
-    <!-- <Contact :organisation="organisation" /> -->
   </div>
 </template>
 
@@ -101,10 +96,9 @@ import Presentation from '@/components/section/organisation/Presentation'
 import Details from '@/components/section/organisation/Details'
 import SectionSlideshowMissions from '@/components/section/search/SectionSlideshowMissions'
 import OrganisationActivities from '@/components/section/OrganisationActivities'
-// import Contact from '@/components/section/organisation/Contact'
 import SectionDonation from '@/components/section/SectionDonation'
+import SectionTemoignages from '@/components/section/SectionTemoignages'
 import MixinOrganisation from '@/mixins/organisation'
-// import Testimonials from '@/components/section/temoignage/Testimonials'
 
 export default {
   components: {
@@ -113,10 +107,8 @@ export default {
     Details,
     SectionSlideshowMissions,
     OrganisationActivities,
-    // Contact,
-    SectionDonation
-    // CardMission,
-    // Testimonials
+    SectionDonation,
+    SectionTemoignages
   },
   mixins: [MixinOrganisation],
   layout: 'default-without-header',
@@ -134,10 +126,12 @@ export default {
     }
 
     const { data: activities } = await $axios.get(`/structures/${organisation.id}/activities`)
+    const { data: testimonials } = await $axios.get(`/temoignages/organisations/${organisation.id}`)
 
     return {
       organisation,
-      activities
+      activities,
+      testimonials
     }
   },
   head () {
