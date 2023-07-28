@@ -95,7 +95,7 @@ export default {
       isFiltersOpen: false,
       isGeolocFilterActive: false,
       isPinned: false,
-      tabswrapperEl: undefined
+      tabswrapperBoundingClientRect: undefined
     }
   },
   computed: {
@@ -104,9 +104,7 @@ export default {
     }
   },
   mounted () {
-    this.tabswrapperEl = this.$refs.mobileFilters.$el.querySelector('ul[role="tablist"]')
-    this.onScroll()
-    window.addEventListener('scroll', this.onScroll)
+    this.handleSticky()
   },
   beforeDestroy () {
     window.removeEventListener('scroll', this.onScroll)
@@ -134,8 +132,27 @@ export default {
       const button = this.selectedTab === 0 ? this.$refs.buttonFilterOnsite : this.$refs.buttonFilterRemote
       button.focus()
     },
+    handleSticky () {
+      this.tabswrapperBoundingClientRect = this.$refs.mobileFilters.$el.querySelector('ul[role="tablist"]').getBoundingClientRect()
+      if (this.tabswrapperBoundingClientRect.height === 0) {
+        return
+      }
+
+      this.tabswrapperElY = this.tabswrapperBoundingClientRect.top + window.scrollY
+      this.onScroll()
+
+      let timeout
+      window.addEventListener('scroll', () => {
+        if (timeout) {
+          window.cancelAnimationFrame(timeout)
+        }
+        timeout = window.requestAnimationFrame(() => {
+          this.onScroll()
+        })
+      }, false)
+    },
     onScroll () {
-      this.isPinned = this.tabswrapperEl.getBoundingClientRect().y === -46
+      this.isPinned = (window.visualViewport.pageTop - (this.tabswrapperBoundingClientRect.height - 4)) >= this.tabswrapperElY
     }
   }
 }
