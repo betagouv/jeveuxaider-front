@@ -26,7 +26,9 @@ export default async function (to, from, savedPosition) {
     if (!el) {
       return
     }
-    return { x: 0, y: el.offsetTop, behavior: 'smooth' }
+    const offsetAnchor = el.dataset?.offsetAnchor || 0
+    console.log('offsetAnchor', offsetAnchor)
+    return { x: 0, y: el.offsetTop + Number(offsetAnchor), behavior: 'smooth' }
   }
 
   if (to.query?.page && (!from.query?.page || to.query.page != from.query.page)) {

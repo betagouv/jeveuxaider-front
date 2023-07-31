@@ -76,10 +76,6 @@ export default {
   },
   mixins: [uuid],
   props: {
-    organisation: {
-      type: Object,
-      required: true
-    },
     title: {
       type: String,
       required: true
@@ -144,7 +140,6 @@ export default {
           ...this.plausibleParameters
         }
       })
-
       this.$router.push({
         path: '/missions-benevolat',
         query: {

@@ -23,7 +23,7 @@
               </span>
             </h2>
 
-            <p class="text-lg lg:text-[32px] lg:max-w-xl mb-6 lg:mb-8">
+            <p class="text-lg lg:text-[32px] lg:max-w-xl lg:leading-10 mb-6 lg:mb-8">
               Plus que jamais,<br>
               l'organisation {{ destinataire }} a besoin de votre générosité
             </p>

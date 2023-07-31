@@ -10,7 +10,7 @@
             src="/images/home/sparkle-left.svg"
             alt=""
             aria-hidden="true"
-            class="absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] top-[-12px] left-[-22px] lg:top-[-12px] lg:left-[-47px] pointer-events-none"
+            class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] top-[-12px] left-[-22px] lg:top-[-12px] lg:left-[-47px] pointer-events-none"
           >
         </span><br>
       </h2>
@@ -102,7 +102,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
           <div class="p-10 bg-white shadow-2xl">
             <IconPeuImporte class="-mt-3 w-[80px] h-[80px]" />
-            <div class="text-5xl font-bold">
+            <div class="text-4xl lg:text-5xl font-bold">
               {{ organisation.missions_available_count|formatNumber }}
             </div>
             <div class="text-2xl font-bold">
@@ -129,7 +129,7 @@
                 >
               </div>
             </template>
-            <div class="text-5xl font-bold">
+            <div class="text-4xl lg:text-5xl font-bold">
               {{ participationsCount|formatNumber }}
             </div>
             <div class="text-2xl font-bold">

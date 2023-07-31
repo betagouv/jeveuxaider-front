@@ -1,92 +1,98 @@
 <template>
   <div>
-    <Header :organisation="organisation" />
-    <Presentation
-      :organisation="organisation"
-      :src-set="image1"
-    />
-    <Details
-      :organisation="organisation"
-      :src-set="image2"
-      class="bg-[#F3EDE5]"
-    />
-    <SectionSlideshowMissions
-      v-if="organisation.statistics.missions_available_presentiel_count > 0"
-      :organisation="organisation"
-      title="Missions sur le terrain"
-      :search-parameters="{
-        hitsPerPage: 6,
-        facetFilters: [
-          `structure.name:${organisation.name}`,
-          'type:Mission en présentiel'
-        ],
-      }"
-      :show-disponibilities="true"
-      :redirect-parameters="{
-        'structure.name': organisation.name,
-      }"
-      :plausible-parameters="{
-        isLogged: $store.getters.isLogged,
-        organisation: organisation.name
-      }"
-    />
+    <Header :organisation="organisation" class="lg:fixed z-30 lg:w-full" />
+    <div id="presentation" class="relative lg:pt-[98px]">
+      <Presentation
+        :organisation="organisation"
+        :src-set="image1"
+      />
+      <Details
+        :organisation="organisation"
+        :src-set="image2"
+        class="bg-[#F3EDE5]"
+      />
+      <div id="missions" :data-offset-anchor="-98">
+        <SectionSlideshowMissions
+          v-if="organisation.statistics.missions_available_presentiel_count > 0"
+          :organisation="organisation"
+          title="Missions sur le terrain"
+          :search-parameters="{
+            hitsPerPage: 6,
+            facetFilters: [
+              `structure.name:${organisation.name}`,
+              'type:Mission en présentiel'
+            ],
+          }"
+          :show-disponibilities="true"
+          :redirect-parameters="{
+            'structure.name': organisation.name,
+          }"
+          :plausible-parameters="{
+            isLogged: $store.getters.isLogged,
+            organisation: organisation.name
+          }"
+        />
 
-    <SectionSlideshowMissions
-      v-if="organisation.statistics.missions_available_distance_count > 0"
-      class="bg-[#F3EDE5]"
-      :organisation="organisation"
-      title="Depuis chez moi"
-      :search-parameters="{
-        hitsPerPage: 6,
-        facetFilters: [
-          `structure.name:${organisation.name}`,
-          'type:Mission à distance'
-        ],
-      }"
-      :redirect-parameters="{
-        'structure.name': organisation.name,
-        'type': 'Mission à distance'
-      }"
-      :plausible-parameters="{
-        isLogged: $store.getters.isLogged,
-        organisation: organisation.name
-      }"
-    />
+        <SectionSlideshowMissions
+          v-if="organisation.statistics.missions_available_distance_count > 0"
+          class="bg-[#F3EDE5]"
+          :organisation="organisation"
+          title="Depuis chez moi"
+          :search-parameters="{
+            hitsPerPage: 6,
+            facetFilters: [
+              `structure.name:${organisation.name}`,
+              'type:Mission à distance'
+            ],
+          }"
+          :redirect-parameters="{
+            'structure.name': organisation.name,
+            'type': 'Mission à distance'
+          }"
+          :plausible-parameters="{
+            isLogged: $store.getters.isLogged,
+            organisation: organisation.name
+          }"
+        />
 
-    <OrganisationActivities
-      :title="`Au programme des activités bénévoles proposées chez ${organisation.name}`"
-      :activities="activities"
-      :redirect-parameters="{
-        'structure.name': organisation.name
-      }"
-    />
+        <OrganisationActivities
+          :title="`Au programme des activités bénévoles proposées chez ${organisation.name}`"
+          :activities="activities"
+          :redirect-parameters="{
+            'structure.name': organisation.name
+          }"
+        />
 
-    <SectionSlideshowMissions
-      class="bg-[#F3EDE5]"
-      :organisation="organisation"
-      title="Missions similaires disponibles"
-      :search-parameters="{
-        hitsPerPage: 6,
-        facetFilters: [
-          facetFiltersActivities,
-        ],
-      }"
-      :redirect-parameters="{
-        'activities.name': activities.map(a => a.name).join('|')
-      }"
-    />
+        <SectionSlideshowMissions
+          class="bg-[#F3EDE5]"
+          :organisation="organisation"
+          title="Missions similaires disponibles"
+          :search-parameters="{
+            hitsPerPage: 6,
+            facetFilters: [
+              facetFiltersActivities,
+            ],
+          }"
+          :redirect-parameters="{
+            'activities.name': activities.map(a => a.name).join('|')
+          }"
+        />
+      </div>
 
-    <SectionTemoignages
-      v-if="testimonials.length > 0"
-      :testimonials="testimonials"
-    />
+      <SectionTemoignages
+        v-if="testimonials.length > 0"
+        :testimonials="testimonials"
+      />
 
-    <SectionDonation
-      v-if="organisation.donation"
-      :destinataire="organisation.name"
-      :url="organisation.donation"
-      class="bg-[#F3EDE5]"
-    />
+      <SectionDonation
+        v-if="organisation.donation"
+        id="donation"
+        :data-offset-anchor="-98"
+        :destinataire="organisation.name"
+        :url="organisation.donation"
+        class="bg-[#F3EDE5]"
+      />
+    </div>
   </div>
 </template>
 

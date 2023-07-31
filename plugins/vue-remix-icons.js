@@ -90,8 +90,12 @@ import RiCakeFill from 'vue-remix-icons/icons/RiCakeFill.vue'
 import RiChatHistoryFill from 'vue-remix-icons/icons/RiChatHistoryFill.vue'
 import RiTeamLine from 'vue-remix-icons/icons/RiTeamLine.vue'
 import RiLink from 'vue-remix-icons/icons/RiLink.vue'
+import RiMoneyEuroCircleLine from 'vue-remix-icons/icons/RiMoneyEuroCircleLine.vue'
+import RiBuildingLine from 'vue-remix-icons/icons/RiBuildingLine.vue'
 
 const components = {
+  RiBuildingLine,
+  RiMoneyEuroCircleLine,
   RiLink,
   RiPhoneFill,
   RiTeamLine,

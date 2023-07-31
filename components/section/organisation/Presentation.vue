@@ -2,7 +2,7 @@
   <div class="relative bg-white lg:grid lg:grid-cols-2">
     <div class="col-span-2 lg:col-span-1 flex flex-col items-center justify-center">
       <div class="px-4 lg:px-0 lg:max-w-3xl lg:ml-auto">
-        <div class="p-6 py-8 lg:p-8">
+        <div class="py-8 lg:p-8">
           <h1
             class="mb-8 text-3xl lg:text-[56px] sm:!leading-[1.1] tracking-tighter font-bold"
           >
@@ -12,7 +12,7 @@
                 src="/images/home/sparkle-right.svg"
                 alt=""
                 aria-hidden="true"
-                class="absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] top-[-9px] right-[-30px] lg:top-[-14px] lg:right-[-47px] pointer-events-none"
+                class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] top-[-9px] right-[-30px] lg:top-[-14px] lg:right-[-47px] pointer-events-none"
               >
             </span><br>
             <span>{{ organisation.name }}</span>
