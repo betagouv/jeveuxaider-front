@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-[320px] overflow-hidden shadow-lg cursor-pointer group transition flex flex-col"
+    class="max-w-[320px] overflow-hidden shadow-lg cursor-pointer group transition flex flex-col bg-white"
   >
     <div
       v-if="stateText"

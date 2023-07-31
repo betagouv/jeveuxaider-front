@@ -20,7 +20,7 @@
               @click="onClick(activity)"
             >
               <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
-              <span class="ml-3">{{ activity.name }}</span>
+              <span class="ml-3">{{ activity.name }} {{ activity.count }}</span>
             </button>
           </div>
         </div>

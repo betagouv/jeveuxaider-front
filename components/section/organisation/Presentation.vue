@@ -7,7 +7,7 @@
             class="mb-8 text-3xl lg:text-[56px] sm:!leading-[1.1] tracking-tighter font-bold"
           >
             <span class="relative">
-              <span>Découvrez l’association</span>
+              <span class="font-semibold">Découvrez l’association</span>
               <img
                 src="/images/home/sparkle-right.svg"
                 alt=""
@@ -39,11 +39,9 @@
               </template>
             </template>
           </p>
-          <nuxt-link :to="`/missions-benevolat?structure.name=${organisation.name}`">
-            <Button size="lg">
-              Trouvez une mission <span class="hidden sm:inline">de bénévolat</span>
-            </Button>
-          </nuxt-link>
+          <Button size="lg" @click="onClickFindMissions">
+            Trouvez une mission <span class="hidden sm:inline">de bénévolat</span>
+          </Button>
           <p class="text-base lg:text-lg mt-4">
             <template v-if="organisation.places_left > 0">
               Plus de <span class="font-bold">{{ organisation.places_left|formatNumber }} {{ organisation.places_left|pluralize('bénévole','bénévoles', false) }}</span> {{ organisation.places_left|pluralize('recherché', 'recherchés', false) }}
@@ -80,6 +78,10 @@ export default {
     srcSet: {
       type: String,
       required: true
+    },
+    redirectParameters: {
+      type: Object,
+      required: true
     }
   },
   computed: {
@@ -96,6 +98,14 @@ export default {
   methods: {
     onIllustrationError ($event) {
       $event.target.srcset = '/images/organisation-default-2.webp'
+    },
+    onClickFindMissions () {
+      this.$router.push({
+        path: '/missions-benevolat',
+        query: {
+          ...this.redirectParameters
+        }
+      })
     }
   }
 }

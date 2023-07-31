@@ -5,6 +5,9 @@
       <Presentation
         :organisation="organisation"
         :src-set="image1"
+        :redirect-parameters="{
+          'structure.name': organisation.name,
+        }"
       />
       <Details
         :organisation="organisation"
@@ -55,7 +58,7 @@
           }"
         />
 
-        <OrganisationActivities
+        <MissionsActivities
           :title="`Au programme des activités bénévoles proposées chez ${organisation.name}`"
           :activities="activities"
           :redirect-parameters="{
@@ -101,7 +104,7 @@ import Header from '@/components/section/organisation/Header'
 import Presentation from '@/components/section/organisation/Presentation'
 import Details from '@/components/section/organisation/Details'
 import SectionSlideshowMissions from '@/components/section/search/SectionSlideshowMissions'
-import OrganisationActivities from '@/components/section/OrganisationActivities'
+import MissionsActivities from '@/components/section/MissionsActivities'
 import SectionDonation from '@/components/section/SectionDonation'
 import SectionTemoignages from '@/components/section/SectionTemoignages'
 import MixinOrganisation from '@/mixins/organisation'
@@ -112,7 +115,7 @@ export default {
     Presentation,
     Details,
     SectionSlideshowMissions,
-    OrganisationActivities,
+    MissionsActivities,
     SectionDonation,
     SectionTemoignages
   },
