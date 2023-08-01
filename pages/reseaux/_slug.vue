@@ -75,7 +75,8 @@
           :search-parameters="{
             hitsPerPage: 6,
             facetFilters: [
-              facetFiltersActivities,
+              activities.map(a => `activities.name:${a.name}`),
+              `structure.reseaux.name:-${reseau.name}`,
             ],
           }"
           :redirect-parameters="{
@@ -176,9 +177,6 @@ export default {
       return this.reseau?.override_image2?.urls.large ??
         this.reseau?.illustrations?.[1]?.urls.large ??
         '/images/organisation-default-2.webp'
-    },
-    facetFiltersActivities () {
-      return this.activities.map(a => `activities.name:${a.name}`)
     }
   },
   methods: {

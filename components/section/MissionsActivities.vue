@@ -16,7 +16,7 @@
             :key="i"
           >
             <button
-              class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow xl:shadow-xl text-lg  xl:text-[22px] font-bold w-full sm:w-auto sm:hover:bg-[#F6F6F6] transition text-left"
+              class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow xl:shadow-xl text-lg xl:text-[22px] font-bold w-full sm:w-auto sm:hover:bg-[#F6F6F6] transition text-left"
               @click="onClick(activity)"
             >
               <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>

@@ -5,14 +5,14 @@
         class="text-3xl sm:text-5xl sm:!leading-[1.1] tracking-tighter"
       >
         <span class="relative">
-          <span class="font-bold">{{ organisation.name }}</span> en quelques mots
+          <span class="font-bold">{{ organisation.name }}</span>
           <img
             src="/images/home/sparkle-left.svg"
             alt=""
             aria-hidden="true"
-            class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] top-[-12px] left-[-22px] lg:top-[-12px] lg:left-[-47px] pointer-events-none"
+            class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] top-[-12px] left-[-22px] lg:top-[-25px] lg:left-[-47px] pointer-events-none"
           >
-        </span><br>
+        </span> en quelques mots
       </h2>
       <div class="mt-6 lg:mt-12 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
         <div class="lg:col-span-7">
