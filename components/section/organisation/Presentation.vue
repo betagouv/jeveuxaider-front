@@ -7,7 +7,7 @@
             class="mb-8 text-3xl lg:text-[56px] sm:!leading-[1.1] tracking-tighter font-bold"
           >
             <span class="relative">
-              <span class="font-semibold">Découvrez l’association</span>
+              <span class="font-semibold">{{ suffixTitle }}</span>
               <img
                 src="/images/home/sparkle-right.svg"
                 alt=""
@@ -71,6 +71,10 @@ export default {
     Button
   },
   props: {
+    suffixTitle: {
+      type: String,
+      default: 'Découvrez l’association'
+    },
     organisation: {
       type: Object,
       required: true

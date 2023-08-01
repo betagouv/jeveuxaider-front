@@ -152,7 +152,7 @@
         </div>
         <template #footer>
           <div
-            class="border-t font-semibold  text-sm text-center py-4"
+            class="border-t font-semibold text-sm text-center py-4"
             :class="[
               territoire.is_published && territoire.state === 'validated' ? 'text-gray-900' : 'text-gray-400'
             ]"

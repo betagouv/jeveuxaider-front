@@ -20,7 +20,7 @@
               @click="onClick(activity)"
             >
               <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
-              <span class="ml-3">{{ activity.name }} {{ activity.count }}</span>
+              <span class="ml-3">{{ activity.name }}</span>
             </button>
           </div>
         </div>
@@ -59,7 +59,12 @@ export default {
   },
   computed: {
     facetActivities () {
-      return this.allActivities.filter(activity => this.activities.map(a => a.id).includes(activity.id))
+      return this.activities.map((activity) => {
+        return {
+          ...activity,
+          ...this.allActivities.find(item => item.id === activity.id)
+        }
+      })
     }
   },
   methods: {

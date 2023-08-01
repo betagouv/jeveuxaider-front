@@ -3,6 +3,7 @@
     <Header :organisation="reseau" class="lg:fixed z-30 lg:w-full" />
     <div id="presentation" class="relative lg:pt-[98px]">
       <Presentation
+        suffix-title="Découvrez le réseau"
         :organisation="reseau"
         :src-set="image1"
         :redirect-parameters="{
