@@ -101,13 +101,17 @@ export default {
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          this.$store.dispatch('temoignage/nextStep')
-
           await this.$axios.post('/temoignages', {
             ...this.form,
             participation_id: this.notificationTemoignage.participation_id
           })
-          this.$emit('submit', this.form)
+            .then(() => {
+              this.$emit('submit', this.form)
+              this.$store.dispatch('temoignage/nextStep')
+            })
+            .catch((errors) => {
+              this.setErrors(errors)
+            })
         })
         .catch((errors) => {
           this.setErrors(errors)

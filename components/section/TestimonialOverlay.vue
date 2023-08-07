@@ -208,8 +208,13 @@ export default {
             ...this.form,
             participation_id: this.participation.id
           })
-          this.currentStepIndex++
-          this.testimonialHasBeenCreated = true
+            .then(() => {
+              this.currentStepIndex++
+              this.testimonialHasBeenCreated = true
+            })
+            .catch((errors) => {
+              this.setErrors(errors)
+            })
         })
         .catch((errors) => {
           this.setErrors(errors)
