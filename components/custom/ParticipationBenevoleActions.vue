@@ -1,11 +1,11 @@
 <template>
-  <div v-if="showActions" class="p-6">
+  <div v-if="showActions" class="p-6 space-y-2">
     <template v-if="needTestimonial">
-      <div class="flex justify-between items-center">
+      <div class="sm:flex justify-between items-center">
         <div class="text-sm font-bold text-black">
           Comment s'est déroulée la mission ?
         </div>
-        <div class="flex justify-end gap-2">
+        <div class="flex sm:justify-end gap-2">
           <Button type="tertiary" size="sm" @click.native.stop="showTestimonialOverlay = true">
             Laisser un témoignage
           </Button>
@@ -13,11 +13,11 @@
       </div>
     </template>
     <template v-if="participationShouldBeDone">
-      <div class="flex justify-between items-center">
+      <div class="sm:flex justify-between items-center">
         <div class="text-sm font-bold text-black">
           Avez-vous réalisé la mission ?
         </div>
-        <div class="flex justify-end gap-2">
+        <div class="flex sm:justify-end gap-2">
           <Button
             icon="RiCheckLine"
             type="tertiary"
@@ -33,11 +33,11 @@
       </div>
     </template>
     <template v-if="canCancelParticipation">
-      <div class="flex justify-between items-center">
+      <div class="sm:flex justify-between items-center">
         <div class="text-sm font-bold text-black">
           Vous ne souhaitez plus participer ?
         </div>
-        <div class="flex justify-end gap-2">
+        <div class="flex sm:justify-end gap-2">
           <Button type="tertiary" size="sm" @click.native.stop="showCancelParticipationModal = true">
             Annuler ma participation
           </Button>
