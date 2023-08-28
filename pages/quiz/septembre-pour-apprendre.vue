@@ -3,58 +3,37 @@
     <QuizSearchBuilderStep0
       v-if="currentStep === 0"
       title="Trouvez en quelques clics votre prochaine mission de bénévolat"
-      slogan="Le bénévolat et vous"
-      picture="quiz-step-0-min"
-      missions-count="15 000"
-      mobile-picture="quiz-step-0-mobile-min"
-    >
-      <template #bottom>
-        <div class="hidden lg:block px-[32px] lg:px-[80px]">
-          <picture aria-hidden="true" class="">
-            <source
-              srcset="
-          /images/home/trombi-organisations.webp, /images/home/trombi-organisations@2x.webp 2x,
-          /images/home/trombi-organisations.png, /images/home/trombi-organisations@2x.png 2x
-        "
-              media="(max-width: 640px)"
-            >
-            <source
-              srcset="
-          /images/home/trombi-organisations-desktop.webp, /images/home/trombi-organisations-desktop@2x.webp 2x,
-          /images/home/trombi-organisations-desktop.png, /images/home/trombi-organisations-desktop@2x.png 2x
-        "
-              media="(min-width: 640px)"
-            >
-            <img
-              src="/images/home/trombi-organisations.png"
-              alt=""
-              width="425"
-              height="188"
-              class="object-cover object-top w-full h-[170px] sm:h-[240px] sm:px-8 md:px-0 max-w-none md:w-[500px] lg:w-[650px] xl:w-[738px] xl:h-[292px]"
-            >
-          </picture>
-        </div>
-      </template>
-    </QuizSearchBuilderStep0>
+      slogan="Rendons l’éducation accessible à tous"
+      picture="quiz-mgen-step-0-min"
+      mobile-picture="quiz-mgen-step-0-mobile-min"
+      missions-count="3 000"
+      :logos="logos"
+    />
     <QuizSearchBuilderStep1
       v-if="currentStep === 1"
       title="Où souhaitez-vous réaliser votre mission de bénévolat ?"
-      picture="quiz-step-1-min"
+      picture="quiz-mgen-step-1-min"
+      :logos="logos"
     />
     <QuizSearchBuilderStep2
       v-if="currentStep === 2"
       title="Précisez où souhaitez-vous réaliser votre mission ?"
-      picture="quiz-step-2-min"
+      picture="quiz-mgen-step-2-min"
+      :logos="logos"
     />
     <QuizSearchBuilderStep3
       v-if="currentStep === 3"
       title="Combien de temps pourriez-vous dédier à une mission de bénévolat ?"
-      picture="quiz-step-3-min"
+      picture="quiz-mgen-step-3-min"
+      :logos="logos"
     />
     <QuizSearchBuilderStep4
       v-if="currentStep === 4"
       title="Sélectionnez les activités pour lesquelles vous souhaitez aider"
-      picture="quiz-step-4-min"
+      picture="quiz-mgen-step-4-min"
+      :logos="logos"
+      :selectable-activities-proche-de-chez-moi-ids="[10,17,6,4,39,19,8,15,37,34]"
+      :selectable-activities-a-distance-ids="[10,17,6,4,39,19,8,15,37,34]"
       @selected="redirect"
     />
   </div>
@@ -76,6 +55,13 @@ export default {
     QuizSearchBuilderStep4
   },
   layout: 'quiz',
+  data () {
+    return {
+      logos: [
+        { name: 'quiz-logo-septembre-pour-apprendre.svg', alt: 'Septembre pour Apprendre' }
+      ]
+    }
+  },
   computed: {
     currentStep () {
       return this.$route.query?.step ? parseInt(this.$route.query?.step) : 0
@@ -90,6 +76,7 @@ export default {
         query: {
           ...this.$route.query,
           ...payload,
+          tags: 'Septembre pour Apprendre',
           utm_medium: this.$route.path
         }
       })
