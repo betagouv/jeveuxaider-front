@@ -197,6 +197,14 @@ export default {
           is_updated: true
         },
         {
+          tab: 'benevoles',
+          key: 'user_banned_inappropriate_behavior',
+          label: 'Vous avez été automatiquement désinscrit de la plateforme JeVeuxAider.gouv.fr',
+          description: 'Notification envoyée au bénévole quand un administrateur bloque son compte car il a eu un comportement inapproprié',
+          tags: ['app-benevole-banni-comportement-inadapte'],
+          is_updated: true
+        },
+        {
           tab: 'responsables',
           key: 'responsable_mission_deactivated',
           label: 'Votre mission a été désactivée',

@@ -410,6 +410,7 @@ const labels = {
   ],
   user_ban_reasons: [
     { key: 'not_regular_resident', label: 'Le bénévole ne réside pas régulièrement en France' },
-    { key: 'younger_than_16', label: 'Le bénévole est âgé de moins de 16 ans' }
+    { key: 'younger_than_16', label: 'Le bénévole est âgé de moins de 16 ans' },
+    { key: 'inappropriate_behavior', label: 'Le bénévole a un comportement inadapté (insulte, propos discriminatoires / racistes, …)' }
   ]
 }

@@ -9,7 +9,7 @@
     </FormControl>
 
     <div
-      v-if="['not_regular_resident', 'younger_than_16'].includes(form.reason)"
+      v-if="['not_regular_resident', 'younger_than_16', 'inappropriate_behavior'].includes(form.reason)"
     >
       <RiInformationFill width="18" height="18" class="inline-flex mr-1 text-jva-blue-500 fill-current" />
       <span v-if="['not_regular_resident'].includes(form.reason)" class="text-sm text-gray-600">
@@ -17,6 +17,9 @@
       </span>
       <span v-if="['younger_than_16'].includes(form.reason)" class="text-sm text-gray-600">
         Toutes les participations du bénévole seront annulées avec comme motif "Utilisateur ayant moins de 16 ans". Le bénévole sera notifié par email.
+      </span>
+      <span v-if="['inappropriate_behavior'].includes(form.reason)" class="text-sm text-gray-600">
+        Toutes les participations en cours du bénévole seront annulées avec comme motif "Utilisateur ayant un comportement inadapté". Le bénévole sera notifié par email.
       </span>
     </div>
   </form>

@@ -37,6 +37,9 @@
         <template v-if="message.contextual_reason == 'younger_than_16'">
           L'utilisateur est agé de moins de 16 ans
         </template>
+        <template v-if="message.contextual_reason == 'inappropriate_behavior'">
+          L'utilisateur a un comportement inadapté (insulte, propos discriminatoires / racistes, …)
+        </template>
       </template>
     </div>
   </div>
