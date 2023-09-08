@@ -18,7 +18,11 @@ export default {
         'snu',
         'stage',
         'cdd',
-        'contrat'
+        'contrat',
+        'dieu',
+        'spirituel',
+        'église',
+        'chrétien'
       ]
     }
   },
