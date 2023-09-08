@@ -19,7 +19,7 @@
         </Button>
       </div>
       <div class="text-[#666666] text-xl">
-        Plus de <span class="font-bold">{{ missionsCount }} missions disponibles partout en france</span>
+        Plus de <span class="font-bold">{{ missionsCount }} missions disponibles partout en France</span>
       </div>
     </div>
     <template #bottom>
