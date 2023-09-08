@@ -6,7 +6,7 @@
     :mobile-picture="mobilePicture"
     :logos="logos"
   >
-    <div class="flex flex-col lg:flex-row lg:items-center gap-8">
+    <div class="flex flex-col lg:flex-row lg:flex-wrap lg:items-center gap-8">
       <div>
         <Button
           size="lg"
@@ -19,7 +19,7 @@
         </Button>
       </div>
       <div class="text-[#666666] text-xl">
-        Plus de <span class="font-bold">{{ missionsCount }} missions disponibles</span>
+        Plus de <span class="font-bold">{{ missionsCount }} missions disponibles partout en france</span>
       </div>
     </div>
     <template #bottom>

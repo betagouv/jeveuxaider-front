@@ -111,8 +111,8 @@
         </div>
       </template>
       <QuizSteps v-if="currentStep > 0" class="bg-[#F9F6F2]" />
-      <div class="max-w-4xl flex flex-col flex-1 bg-white">
-        <div class="flex flex-col flex-1 px-[32px] py-[24px] lg:px-[80px] lg:py-[56px]">
+      <div class="lg:max-w-4xl flex flex-col flex-1 bg-white">
+        <div class="flex flex-col flex-1 px-[32px] py-[24px] lg:pl-[80px] lg:py-[56px]">
           <div v-if="slogan" class="text-lg lg:text-xl text-[#ED7A5A] font-bold uppercase mb-4">
             {{ slogan }}
           </div>
