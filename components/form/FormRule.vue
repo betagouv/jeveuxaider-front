@@ -222,10 +222,10 @@ export default {
           key: 'missions.name',
           label: 'Nom de la mission',
           type: 'input',
-          includesOperands: [{ key: 'ilike', label: 'Contient' }],
           operands: [
             { key: '=', label: '=' },
-            { key: '!=', label: '!=' }
+            { key: '!=', label: '!=' },
+            { key: 'ilike', label: 'Contient' }
           ]
         },
         {
