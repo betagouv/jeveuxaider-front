@@ -39,27 +39,37 @@
             <SelectAdvanced
               v-model="condition.operand"
               name="operand"
-              :options="operandResolver(condition.name)"
+              :options="fieldResolver(condition.name).operands"
             />
           </FormControl>
           <FormControl
             html-for="value"
             class="flex-1"
           >
-            <SelectAdvanced
-              v-if="fieldResolver(condition.name).type === 'select'"
-              v-model="condition.value"
-              placeholder="Valeur"
-              name="value"
-              :options="fieldResolver(condition.name).options"
-              options-class="!min-w-[300px]"
-            />
-            <Input
-              v-if="fieldResolver(condition.name).type === 'input'"
-              v-model="condition.value"
-              placeholder="Valeur"
-              name="value"
-            />
+            <template v-if="fieldResolver(condition.name).type === 'select'">
+              <SelectAdvanced
+                v-model="condition.value"
+                :placeholder="fieldResolver(condition.name).placeholder ?? 'Valeur'"
+                name="value"
+                :options="fieldResolver(condition.name).options"
+                options-class="!min-w-[300px]"
+              />
+            </template>
+            <template v-if="fieldResolver(condition.name).type === 'input'">
+              <Input
+                v-model="condition.value"
+                :placeholder="fieldResolver(condition.name).placeholder ?? 'Valeur'"
+                name="value"
+              />
+            </template>
+            <template v-if="fieldResolver(condition.name).type === 'date'">
+              <Input
+                v-model="condition.value"
+                type="date"
+                :placeholder="fieldResolver(condition.name).placeholder ?? 'Valeur'"
+                name="value"
+              />
+            </template>
           </FormControl>
           <div class="flex-none w-[20px]">
             <XIcon v-if="cIndex > 0" class="flex-none hover:text-red-600 h-4 w-4 cursor-pointer" @click="removeCondition(group, cIndex)" />
@@ -141,11 +151,7 @@ export default {
   },
   data () {
     return {
-      query: this.modelValue,
-      operands: [
-        { key: '=', label: '=' },
-        { key: '!=', label: '!=' }
-      ]
+      query: this.modelValue
     }
   },
   watch: {
@@ -159,10 +165,6 @@ export default {
   methods: {
     fieldResolver (key) {
       return this.conditionFieldOptions.find(option => option.key === key)
-    },
-    operandResolver (key) {
-      const fieldConfig = this.conditionFieldOptions.find(option => option.key === key)
-      return fieldConfig.includesOperands ? this.operands.concat(fieldConfig.includesOperands) : this.operands
     },
     addGroup (operator) {
       this.query.splice(this.query.length, 0, {

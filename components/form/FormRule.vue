@@ -139,15 +139,128 @@ export default {
   computed: {
     conditionsOptions () {
       return [
-        { key: 'missions.domaine_id', label: 'Domaine principal', type: 'select', options: this.$labels.domaines },
-        { key: 'missions.domaine_secondary_id', label: 'Domaine secondaire', type: 'select', options: this.$labels.domaines },
-        { key: 'missions.activity_id', label: 'Activité', type: 'select', options: activitiesOptions },
-        { key: 'missions.activity_secondary_id', label: 'Activité secondaire', type: 'select', options: activitiesOptions },
-        { key: 'missions.template_id', label: 'Modèle de mission', type: 'input' },
-        { key: 'missions.state', label: 'Statut', type: 'select', options: this.$labels.mission_workflow_states },
-        { key: 'missions.publics_beneficiaires', label: 'Publics aidés', type: 'select', options: this.$labels.mission_publics_beneficiaires },
-        { key: 'missions.publics_volontaires', label: 'Mission ouverte aux', type: 'select', options: this.$labels.mission_publics_volontaires },
-        { key: 'missions.name', label: 'Nom de la mission', type: 'input', includesOperands: [{ key: 'ilike', label: 'Contient' }] }
+        {
+          key: 'missions.domaine_id',
+          label: 'Domaine principal',
+          type: 'select',
+          options: this.$labels.domaines,
+          operands: [
+            { key: '=', label: '=' },
+            { key: '!=', label: '!=' }
+          ]
+        },
+        {
+          key: 'missions.domaine_secondary_id',
+          label: 'Domaine secondaire',
+          type: 'select',
+          options: this.$labels.domaines,
+          operands: [
+            { key: '=', label: '=' },
+            { key: '!=', label: '!=' }
+          ]
+        },
+        {
+          key: 'missions.activity_id',
+          label: 'Activité',
+          type: 'select',
+          options: activitiesOptions,
+          operands: [
+            { key: '=', label: '=' },
+            { key: '!=', label: '!=' }
+          ]
+        },
+        {
+          key: 'missions.activity_secondary_id',
+          label: 'Activité secondaire',
+          type: 'select',
+          options: activitiesOptions,
+          operands: [
+            { key: '=', label: '=' },
+            { key: '!=', label: '!=' }
+          ]
+        },
+        {
+          key: 'missions.template_id',
+          label: 'Modèle de mission',
+          type: 'input',
+          operands: [
+            { key: '=', label: '=' },
+            { key: '!=', label: '!=' }
+          ]
+        },
+        {
+          key: 'missions.state',
+          label: 'Statut',
+          type: 'select',
+          options: this.$labels.mission_workflow_states,
+          operands: [
+            { key: '=', label: '=' },
+            { key: '!=', label: '!=' }
+          ]
+        },
+        {
+          key: 'missions.publics_beneficiaires',
+          label: 'Publics aidés',
+          type: 'select',
+          options: this.$labels.mission_publics_beneficiaires,
+          operands: [
+            { key: '=', label: '=' },
+            { key: '!=', label: '!=' }
+          ]
+        },
+        {
+          key: 'missions.publics_volontaires',
+          label: 'Mission ouverte aux',
+          type: 'select',
+          options: this.$labels.mission_publics_volontaires,
+          operands: [
+            { key: '=', label: '=' },
+            { key: '!=', label: '!=' }
+          ]
+        },
+        {
+          key: 'missions.name',
+          label: 'Nom de la mission',
+          type: 'input',
+          includesOperands: [{ key: 'ilike', label: 'Contient' }],
+          operands: [
+            { key: '=', label: '=' },
+            { key: '!=', label: '!=' }
+          ]
+        },
+        {
+          key: 'missions.reseau_id',
+          label: 'Réseau',
+          type: 'input',
+          placeholder: 'ID du réseau',
+          operands: [
+            { key: '=', label: '=' }
+          ]
+        },
+        {
+          key: 'missions.start_date',
+          label: 'Date de début',
+          type: 'date',
+          operands: [
+            { key: '=', label: '=' },
+            { key: '>', label: '>' },
+            { key: '>=', label: '>=' },
+            { key: '<', label: '<' },
+            { key: '<=', label: '<=' }
+          ]
+        },
+        {
+          key: 'missions.end_date',
+          label: 'Date de fin',
+          type: 'date',
+          operands: [
+            { key: '=', label: '=' },
+            { key: '>', label: '>' },
+            { key: '>=', label: '>=' },
+            { key: '<', label: '<' },
+            { key: '<=', label: '<=' }
+          ]
+        }
       ].sort((a, b) =>
         a.label.localeCompare(b.label))
     }
