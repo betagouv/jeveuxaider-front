@@ -1,0 +1,454 @@
+@import './_fonts.css';
+
+html {
+  color: #161616;
+  @apply antialiased bg-[#F9F6F2] h-full;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-in-enter-active {
+  transition: opacity 0.25s;
+}
+.fade-in-enter-from,
+.fade-in-leave-to {
+  opacity: 0;
+}
+
+.v-popper__popper {
+  display: block !important;
+  z-index: 500;
+  font-size: 12px;
+  max-width: 276px;
+  &[aria-hidden='true'] {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.15s, visibility 0.15s;
+  }
+  &[aria-hidden='false'] {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.15s;
+  }
+  &.v-popper--theme-white {
+    @apply drop-shadow-lg;
+
+    max-width: 228px;
+    .v-popper__inner {
+      @apply bg-white text-gray-600 rounded-lg p-3 flex;
+      &::before {
+        content: '';
+        width: 18px;
+        position: relative;
+        display: block;
+        flex: none;
+        margin-right: 8px;
+        background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%23ACB9DB%22%3E%0A%20%20%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M18%2010a8%208%200%2011-16%200%208%208%200%200116%200zm-7-4a1%201%200%2011-2%200%201%201%200%20012%200zM9%209a1%201%200%20000%202v3a1%201%200%20001%201h1a1%201%200%20100-2v-3a1%201%200%2000-1-1H9z%22%20clip-rule%3D%22evenodd%22%20%2F%3E%0A%3C%2Fsvg%3E');
+        background-position: 0px 1px;
+        background-repeat: no-repeat;
+      }
+    }
+    .v-popper__arrow-outer {
+      border-color: white;
+    }
+  }
+  &.v-popper--theme-dsfr,
+  &.v-popper--theme-tooltip {
+    .v-popper__inner {
+      color: white;
+      border-radius: 8px;
+      padding: 16px;
+      @apply bg-[#E3E3FD] text-black shadow-lg;
+    }
+    .v-popper__arrow-outer {
+      border-color: #e3e3fd;
+    }
+  }
+}
+
+.algolia-facet {
+  input[type='checkbox'] {
+    @apply rounded-sm h-5 w-5 bg-white border-none;
+  }
+
+  input[type='checkbox']:checked {
+    @apply bg-[#e6eaf5];
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='%235b71b9' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e");
+    &:hover {
+      @apply bg-[#e6eaf5];
+    }
+  }
+
+  label {
+    @apply text-sm font-medium text-cool-gray-600 overflow-hidden ml-3 relative flex items-center cursor-pointer hover:text-gray-900;
+    width: 100%;
+    &.is-refined {
+      @apply text-gray-900 font-semibold;
+    }
+  }
+  .count {
+    @apply text-cool-gray-600 ml-auto pl-3;
+  }
+}
+
+.break-word {
+  word-break: break-word !important;
+}
+
+.wysiwyg-field {
+  ol {
+    list-style: decimal;
+    padding-left: 24px;
+    margin-bottom: 24px;
+  }
+  ul {
+    list-style: disc;
+    padding-left: 24px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    @apply text-3xl font-bold mt-12 mb-6 text-gray-900;
+  }
+  div > h2:first-of-type {
+    @apply mt-0;
+  }
+  h3 {
+    @apply text-xl font-extrabold mt-12 mb-6 text-gray-900;
+  }
+}
+
+/* CkEditor 5 */
+body {
+  --ck-border-radius: 0px;
+  --ck-color-base-border: rgb(212, 212, 212);
+  --ck-color-toolbar-border: rgb(212, 212, 212);
+  --ck-inner-shadow: none;
+  --ck-color-base-active-focus: #070191;
+  --ck-color-focus-border: #070191;
+  --ck-focus-ring: 2px solid #070191;
+}
+.ck-powered-by-balloon {
+  display: none !important;
+}
+
+body.full-height-layout {
+  height: 100%;
+  height: 100dvh;
+  #__nuxt,
+  #__layout {
+    @apply h-full;
+    > div {
+      @apply h-full;
+    }
+  }
+}
+
+.safari-fix-scale {
+  position: relative;
+  z-index: 1;
+}
+
+.custom-scrollbar {
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgba(30, 66, 59, 0.15);
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    @apply bg-jva-blue-500;
+  }
+}
+
+.custom-scrollbar-gray {
+  /* scroll-padding-right: 12px; */
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    @apply bg-gray-100;
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    @apply bg-gray-300;
+  }
+}
+
+.masonry-cols-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: masonry;
+}
+
+::placeholder {
+  font-style: italic;
+  color: #888888 !important;
+}
+
+.uf-slideout-inner,
+.uf-bubble,
+.uf-modal-inner {
+  @apply !hidden sm:!block !border !border-gray-200 !shadow-2xl !rounded-2xl;
+  .uf-free-badge {
+    display: none !important;
+  }
+  .uf-actions,
+  .uf-content {
+    padding: 24px !important;
+  }
+  .uf-title {
+    padding: 24px 24px 0 !important;
+  }
+  .uf-close-button {
+    top: 15px !important;
+    svg {
+      margin-left: 8px;
+    }
+  }
+  .uf-button {
+    @apply inline-flex items-center border shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 hover:shadow-lg hover:scale-105 transform transition disabled:opacity-25 disabled:cursor-not-allowed text-cool-gray-700 bg-white hover:bg-cool-gray-50 border-cool-gray-300 focus:ring-cool-gray-500 px-4 py-2 rounded-md;
+  }
+  .uf-button-primary {
+    @apply text-white bg-jva-blue-500 hover:bg-jva-blue-500 border-transparent focus:ring-jva-blue-500;
+  }
+  ol {
+    list-style: decimal;
+    padding-left: 24px;
+    margin-bottom: 24px;
+  }
+  ul {
+    list-style: disc;
+    padding-left: 24px;
+    margin-bottom: 24px;
+  }
+  * {
+    @apply !font-sans;
+  }
+}
+.uf-slideout {
+  padding: 32px !important;
+}
+
+.uf-bubble {
+  .pointer::before {
+    @apply !shadow-sm !border-0;
+  }
+}
+
+* {
+  outline: none;
+  &:focus-visible {
+    outline-style: solid;
+    outline-color: #0a76f6;
+    outline-width: 2px;
+    outline-offset: 2px;
+  }
+}
+
+/* tailwind override */
+[type='text']:focus,
+[type='email']:focus,
+[type='url']:focus,
+[type='password']:focus,
+[type='number']:focus,
+[type='date']:focus,
+[type='datetime-local']:focus,
+[type='month']:focus,
+[type='search']:focus,
+[type='tel']:focus,
+[type='time']:focus,
+[type='week']:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
+  border-color: inherit;
+  box-shadow: none;
+  outline-style: solid;
+  outline-color: #0a76f6;
+  outline-width: 2px;
+  outline-offset: 2px;
+}
+
+.formatted-text {
+  word-break: normal;
+  overflow-wrap: break-word;
+
+  > *:not(:last-child) {
+    @apply mb-6;
+  }
+
+  ul {
+    @apply list-disc;
+  }
+
+  ol {
+    @apply list-decimal;
+  }
+
+  ul,
+  ol {
+    @apply pl-6;
+
+    li {
+      @apply pl-2;
+    }
+  }
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-[#161616] font-bold;
+    &:not(:first-child) {
+      @apply mt-12;
+    }
+  }
+
+  h2 {
+    @apply text-[28px] leading-9 lg:text-[32px] lg:leading-10;
+  }
+
+  h3 {
+    @apply text-2xl lg:text-[28px] lg:leading-9;
+  }
+
+  h4 {
+    @apply text-[22px] leading-7 lg:text-2xl lg:leading-8;
+  }
+
+  h5 {
+    @apply text-xl leading-7 lg:text-[22px] lg:leading-7;
+  }
+
+  h6 {
+    @apply text-lg leading-6 lg:text-xl lg:leading-7;
+  }
+
+  [href] {
+    text-rendering: optimizeLegibility;
+    background-image: linear-gradient(0deg, currentColor, currentColor),
+      linear-gradient(0deg, currentColor, currentColor);
+    background-position: 0 100%, 0 calc(100% - 0.0625em);
+    background-repeat: no-repeat, no-repeat;
+    background-size: 0 0.125em, 100% 0.0625em;
+  }
+
+  a[href]:hover {
+    background-size: 100% 0.125em, 100% 0.0625em;
+  }
+
+  a[href]:active {
+    background-color: #ededed;
+  }
+
+  [target='_blank']::after {
+    flex: 0 0 auto;
+    display: inline-block;
+    vertical-align: calc((0.75em - 1rem) * 0.5);
+    background-color: currentColor;
+    width: 1rem;
+    height: 1rem;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    --icon-size: 1rem;
+    -webkit-mask-image: url('@/node_modules/@gouvfr/dsfr/dist/icons/system/external-link-line.svg');
+    mask-image: url('@/node_modules/@gouvfr/dsfr/dist/icons/system/external-link-line.svg');
+    content: '';
+    margin-left: 0.25rem;
+  }
+}
+
+.Vue-Toastification__toast {
+  border-radius: 0 !important;
+  @apply !font-sans;
+}
+
+.vc-container {
+  font-family: Marianne, -apple-system !important;
+  border-color: rgba(212, 212, 212, 1) !important;
+  border-radius: 0 !important;
+}
+.vc-title {
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  text-transform: capitalize !important;
+  color: black !important;
+  text-transform: uppercase !important;
+}
+.vc-weekday {
+  color: rgba(105, 105, 116, 1) !important;
+}
+.vc-arrow {
+  border-radius: 0 !important;
+  color: black !important;
+}
+.vc-arrow:hover {
+  border-radius: 0 !important;
+  color: black !important;
+  background-color: rgb(245, 245, 245) !important;
+}
+
+.vc-day {
+  width: 47px !important;
+  height: 38px !important;
+}
+
+.vc-day .vc-day-content {
+  width: 44px !important;
+  height: 35px !important;
+  font-size: 16px !important;
+  border-radius: 0 !important;
+}
+
+.vc-day .vc-highlight {
+  border-radius: 0 !important;
+  width: 44px !important;
+  height: 35px !important;
+}
+
+.vc-day .vc-day-content.is-highlight {
+  color: white !important;
+  font-weight: bold !important;
+  background-color: #070191 !important;
+}
+
+.vc-day .vc-day-content.is-disabled,
+.vc-day .vc-day-content.is-disabled.is-highlight {
+  background-color: white !important;
+  color: rgb(167, 167, 176) !important;
+  font-weight: 500 !important;
+  cursor: not-allowed !important;
+}
+
+.vc-day .vc-day-content:hover,
+.vc-day .vc-day-content:focus {
+  background-color: rgb(18, 18, 255) !important;
+  color: white !important;
+  font-weight: bold !important;
+  border-radius: 0 !important;
+}
+
+.vc-day .vc-day-content.is-disabled:hover,
+.vc-day .vc-day-content.is-disabled:focus {
+  background-color: white !important;
+  color: rgb(167, 167, 176) !important;
+  font-weight: 500 !important;
+}
+
+.vue-focus-loop {
+  height: 100%;
+  > div:nth-child(2) {
+    height: 100%;
+  }
+}
