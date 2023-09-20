@@ -25,7 +25,7 @@
         <template #button="{ isOpen }">
           <div class="flex font-semibold text-sm items-center group">
             <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">
-              <RiAlertFill class="h-5 w-5 text-[#C9191E] fill-current mr-2" aria-hidden="true" /> Potention doublon - RNA : {{ duplicatesRnaOrganisations.total }}
+              <RiAlertFill class="h-5 w-5 text-[#C9191E] fill-current mr-2" aria-hidden="true" /> Potentiel doublon - RNA : {{ duplicatesRnaOrganisations.total }}
             </div>
             <div class="w-full border-t mt-1 mx-2" />
             <MinusCircleIcon v-if="isOpen" class="text-gray-400 group-hover:text-gray-600 h-5 w-5 flex-shrink-0 mt-0.5" />
