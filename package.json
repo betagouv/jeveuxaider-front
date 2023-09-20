@@ -1,5 +1,9 @@
 {
   "name": "jeveuxaider-nuxt3",
+  "engines": {
+    "node": "16",
+    "npm": "8"
+  },
   "private": true,
   "scripts": {
     "build": "nuxt build",
