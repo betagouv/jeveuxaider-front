@@ -218,7 +218,7 @@ export default defineNuxtComponent({
     }
 
     return {
-      mission,
+      mission: toRef(mission),
       missionStats,
     }
   },

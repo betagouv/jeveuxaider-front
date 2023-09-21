@@ -18,13 +18,15 @@
             <h2
               class="font-bold mb-6 text-3xl tracking-tight sm:text-5xl sm:!leading-[1.1] lg:text-[72px]"
             >
-              <span>Faites un don</span> <br class="hidden xl:block" />
-              <span> à {{ destinataire }} </span>
+              <span>Faites un don</span>
+              <!-- <br class="hidden xl:block" />
+              <span> à {{ destinataire }} </span> -->
             </h2>
 
             <p class="text-lg lg:text-[32px] lg:max-w-xl lg:leading-10 mb-6 lg:mb-8">
               Plus que jamais,<br />
-              l'organisation {{ destinataire }} a besoin de votre générosité
+              l'organisation <span class="font-bold">{{ destinataire }}</span> a besoin de votre
+              générosité
             </p>
 
             <DsfrButton
