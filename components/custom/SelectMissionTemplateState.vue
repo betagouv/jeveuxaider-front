@@ -8,6 +8,7 @@
 
 <script>
 export default defineNuxtComponent({
+  emits: ['selected'],
   props: {
     modelValue: {
       type: String,

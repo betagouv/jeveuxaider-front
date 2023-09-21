@@ -165,10 +165,10 @@
               @selected="handleChangeState($event)"
             />
 
-            <!-- <BoxAideModeration
+            <BoxAideModeration
               v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
               :organisation="organisation"
-            /> -->
+            />
 
             <div>
               <div
@@ -376,7 +376,7 @@ export default defineNuxtComponent({
     }
 
     return {
-      organisation,
+      organisation: toRef(organisation),
       googlePlacesKey: runtimeConfig.public.google.places,
     }
   },

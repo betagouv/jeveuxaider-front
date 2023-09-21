@@ -165,9 +165,9 @@
             :class="[
               'p-4 hover:bg-gray-50 hover:text-jva-blue-500 ml-auto flex items-center',
               {
-                'text-jva-blue-500 bg-gray-50 font-medium': isActiveLink(
-                  '/admin/(settings|contenus|scripts|taxonomies)/*'
-                ),
+                'text-jva-blue-500 bg-gray-50 font-medium':
+                  isActiveLink('/admin/(settings|contenus|scripts|taxonomies)/*') ||
+                  isActiveLink('/admin'),
               },
             ]"
           >

@@ -115,7 +115,7 @@ export default defineNuxtComponent({
   methods: {
     async handleSubmit(endpoint, payload = {}) {
       this.state = 'processing'
-      const { data: batchId } = await apiFetch(endpoint, {
+      const batchId = await apiFetch(endpoint, {
         method: 'POST',
         body: {
           ...payload,

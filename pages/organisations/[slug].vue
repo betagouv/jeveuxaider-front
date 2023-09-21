@@ -14,7 +14,7 @@
         <SectionSlideshowMissions
           v-if="organisation.statistics.missions_available_presentiel_count > 0"
           :organisation="organisation"
-          title="Missions sur le terrain"
+          title="Missions disponibles"
           :search-parameters="{
             hitsPerPage: 6,
             facetFilters: [`structure.name:${organisation.name}`, 'type:Mission en présentiel'],
@@ -82,6 +82,8 @@
         :url="organisation.donation"
         class="bg-[#F3EDE5] scroll-mt-24"
       />
+
+      <SectionRejoignezLeMouvement id="join" class="bg-white" />
     </div>
   </div>
 </template>
@@ -93,6 +95,7 @@ import Details from '@/components/section/organisation/Details'
 import SectionSlideshowMissions from '@/components/section/search/SectionSlideshowMissions'
 import MissionsActivities from '@/components/section/MissionActivities.vue'
 import SectionDonation from '@/components/section/SectionDonation'
+import SectionRejoignezLeMouvement from '@/components/section/RejoignezLeMouvement'
 import SectionTemoignages from '@/components/section/SectionTemoignages'
 import MixinOrganisation from '@/mixins/organisation'
 

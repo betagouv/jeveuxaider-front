@@ -30,6 +30,7 @@
 
 <script>
 export default defineNuxtComponent({
+  emits: ['selected'],
   components: {},
   props: {
     organisation: {

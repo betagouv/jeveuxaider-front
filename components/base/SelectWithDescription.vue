@@ -86,6 +86,7 @@
 
 <script>
 export default defineNuxtComponent({
+  emits: ['selected'],
   props: {
     options: {
       type: Array,

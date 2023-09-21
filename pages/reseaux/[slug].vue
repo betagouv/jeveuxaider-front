@@ -14,7 +14,7 @@
         <SectionSlideshowMissions
           v-if="reseau.statistics.missions_available_presentiel_count > 0"
           :organisation="reseau"
-          title="Missions sur le terrain"
+          title="Missions disponibles"
           :search-parameters="{
             hitsPerPage: 6,
             facetFilters: [`structure.reseaux.name:${reseau.name}`, 'type:Mission en présentiel'],

@@ -251,7 +251,7 @@ export default defineNuxtComponent({
     const stats = await apiFetch(`/territoires/${route.params.id}/statistics`)
 
     return {
-      territoire,
+      territoire: toRef(territoire),
       stats,
     }
   },
@@ -278,6 +278,7 @@ export default defineNuxtComponent({
       this.queryInvitations = queryInvitations
     },
     async handleChangeState(option) {
+      console.log('handleChangeState', option)
       await apiFetch(`/territoires/${this.territoire.id}`, {
         method: 'PUT',
         body: {

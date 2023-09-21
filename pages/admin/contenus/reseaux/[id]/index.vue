@@ -332,7 +332,7 @@ export default defineNuxtComponent({
     }
 
     return {
-      reseau,
+      reseau: toRef(reseau),
       googlePlacesKey: runtimeConfig.public.google.places,
     }
   },

@@ -103,58 +103,63 @@
           </div>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
-          <div class="p-10 bg-white shadow-2xl">
-            <IconPeuImporte class="-mt-3 w-[80px] h-[80px]" />
-            <div class="text-4xl lg:text-5xl font-bold">
-              {{ $numeral(organisation.missions_available_count) }}
-            </div>
-            <div class="text-2xl font-bold">
-              {{
-                $filters.pluralize(
-                  organisation.missions_available_count,
-                  'mission',
-                  'missions',
-                  false
-                )
-              }}
-              de bénévolat
-            </div>
-            <div class="text-[#666666]">sur JeVeuxAider.gouv.fr</div>
-          </div>
-          <div class="p-10 bg-white shadow-2xl">
-            <template v-if="participationsCount === 0">
-              <IconSuccess class="-mt-3 w-[80px] h-[80px]" />
-            </template>
-            <template v-else>
-              <div class="flex mb-4">
-                <img
-                  v-for="(portrait, index) in portraits"
-                  :key="index"
-                  :src="portrait"
-                  alt=""
-                  :class="[{ '-ml-2': index !== 0 }]"
-                  class="portrait rounded-full"
-                  style="width: 52px"
-                />
+          <template v-if="!hasNoMissionAvailableAndNoParticipation">
+            <div class="p-10 bg-white shadow-2xl">
+              <DsfrPeuImporteIcon class="-mt-3 w-[80px] h-[80px]" />
+              <div class="text-4xl lg:text-5xl font-bold">
+                {{ $numeral(organisation.missions_available_count) }}
               </div>
-            </template>
-            <div class="text-4xl lg:text-5xl font-bold">
-              {{ $numeral(participationsCount) }}
+              <div class="text-2xl font-bold">
+                {{
+                  $filters.pluralize(
+                    organisation.missions_available_count,
+                    'mission',
+                    'missions',
+                    false
+                  )
+                }}
+                de bénévolat
+              </div>
+              <div class="text-[#666666]">sur JeVeuxAider.gouv.fr</div>
             </div>
-            <div class="text-2xl font-bold">
-              {{
-                $filters.pluralize(
-                  participationsCount,
-                  'bénévole déjà passé',
-                  'bénévoles déjà passés',
-                  false
-                )
-              }}
-              par là
+            <div class="p-10 bg-white shadow-2xl">
+              <template v-if="participationsCount === 0">
+                <DsfrHealthIcon class="-mt-3 w-[80px] h-[80px]" />
+              </template>
+              <template v-else>
+                <div class="flex mb-4">
+                  <img
+                    v-for="(portrait, index) in portraits"
+                    :key="index"
+                    :src="portrait"
+                    alt=""
+                    :class="[{ '-ml-2': index !== 0 }]"
+                    class="portrait rounded-full"
+                    style="width: 52px"
+                  />
+                </div>
+              </template>
+              <div class="text-4xl lg:text-5xl font-bold">
+                {{ $numeral(participationsCount) }}
+              </div>
+              <div class="text-2xl font-bold">
+                {{
+                  $filters.pluralize(
+                    participationsCount,
+                    'bénévole déjà passé',
+                    'bénévoles déjà passés',
+                    false
+                  )
+                }}
+                par là
+              </div>
+              <div class="text-[#666666]">grâce à JeVeuxAider.gouv.fr</div>
             </div>
-            <div class="text-[#666666]">grâce à JeVeuxAider.gouv.fr</div>
-          </div>
-          <div class="p-10 bg-white shadow-2xl">
+          </template>
+          <div
+            class="p-10 bg-white shadow-2xl"
+            :class="[{ 'col-span-2': hasNoMissionAvailableAndNoParticipation }]"
+          >
             <div class="text-2xl font-bold">Informations</div>
             <div class="mt-4 flex flex-col gap-4">
               <div class="flex space-x-3">
@@ -171,9 +176,10 @@
                   <RiMailFill class="mt-1 w-[16px] text-[#929292] fill-current" />
                 </div>
                 <div class="flex-1">
-                  <Link>
-                    <span class="break-all">{{ organisation.email || 'Non renseigné' }}</span>
-                  </Link>
+                  <BaseLink v-if="organisation.email" class="break-all">{{
+                    organisation.email
+                  }}</BaseLink>
+                  <p v-else>Non renseigné</p>
                 </div>
               </div>
               <div class="flex space-x-2">
@@ -186,7 +192,10 @@
               </div>
             </div>
           </div>
-          <div class="bg-white shadow-2xl">
+          <div
+            class="bg-white shadow-2xl"
+            :class="[{ 'col-span-2': hasNoMissionAvailableAndNoParticipation }]"
+          >
             <iframe
               width="100%"
               height="100%"
@@ -206,14 +215,14 @@
 <script>
 import Tag from '@/components/dsfr/Tag.vue'
 import MixinDomaines from '@/mixins/domaines'
-import IconPeuImporte from '@/components/icon/dsfr/PeuImporte.vue'
-import IconSuccess from '@/components/icon/dsfr/Success.vue'
+import DsfrHealthIcon from '@/components/icon/dsfr/Health.vue'
+import DsfrPeuImporteIcon from '@/components/icon/dsfr/PeuImporte.vue'
 
 export default defineNuxtComponent({
   components: {
+    DsfrHealthIcon,
+    DsfrPeuImporteIcon,
     Tag,
-    IconPeuImporte,
-    IconSuccess,
   },
   mixins: [MixinDomaines],
   props: {
@@ -234,6 +243,12 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    hasNoMissionAvailableAndNoParticipation() {
+      return (
+        this.organisation.participations_count === 0 &&
+        this.organisation.missions_available_count === 0
+      )
+    },
     participationsCount() {
       return this.organisation.participations_count
     },
