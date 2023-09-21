@@ -22,3 +22,6 @@ debug.log
 .DS_Store
 /thunder-tests
 /.vscode/tasks.json
+
+.npmrc
+.eslintcache
