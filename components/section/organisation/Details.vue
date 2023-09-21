@@ -102,7 +102,7 @@
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
           <div class="p-10 bg-white shadow-2xl">
-            <IconPeuImporte class="-mt-3 w-[80px] h-[80px]" />
+            <DsfrPeuImporteIcon class="-mt-3 w-[80px] h-[80px]" />
             <div class="text-4xl lg:text-5xl font-bold">
               {{ $numeral(organisation.missions_available_count) }}
             </div>
@@ -121,7 +121,7 @@
           </div>
           <div class="p-10 bg-white shadow-2xl">
             <template v-if="participationsCount === 0">
-              <IconSuccess class="-mt-3 w-[80px] h-[80px]" />
+              <DsfrHealthIcon class="-mt-3 w-[80px] h-[80px]" />
             </template>
             <template v-else>
               <div class="flex mb-4">
@@ -169,9 +169,10 @@
                   <RiMailFill class="mt-1 w-[16px] text-[#929292] fill-current" />
                 </div>
                 <div class="flex-1">
-                  <Link>
-                    <span class="break-all">{{ organisation.email || 'Non renseigné' }}</span>
-                  </Link>
+                  <BaseLink v-if="organisation.email" class="break-all">{{
+                    organisation.email
+                  }}</BaseLink>
+                  <p v-else>Non renseigné</p>
                 </div>
               </div>
               <div class="flex space-x-2">
@@ -204,14 +205,14 @@
 <script>
 import Tag from '@/components/dsfr/Tag.vue'
 import MixinDomaines from '@/mixins/domaines'
-import IconPeuImporte from '@/components/icon/dsfr/PeuImporte.vue'
-import IconSuccess from '@/components/icon/dsfr/Success.vue'
+import DsfrHealthIcon from '@/components/icon/dsfr/Health.vue'
+import DsfrPeuImporteIcon from '@/components/icon/dsfr/PeuImporte.vue'
 
 export default defineNuxtComponent({
   components: {
+    DsfrHealthIcon,
+    DsfrPeuImporteIcon,
     Tag,
-    IconPeuImporte,
-    IconSuccess,
   },
   mixins: [MixinDomaines],
   props: {
