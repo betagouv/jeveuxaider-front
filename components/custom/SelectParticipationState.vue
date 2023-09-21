@@ -20,6 +20,7 @@
 import ModalParticipationDeclineByResponsable from '@/components/modal/ModalParticipationDeclineByResponsable.vue'
 
 export default defineNuxtComponent({
+  emits: ['selected'],
   components: {
     ModalParticipationDeclineByResponsable,
   },

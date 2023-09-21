@@ -36,6 +36,7 @@ import ModalMissionValidate from '@/components/modal/ModalMissionValidate.vue'
 import ModalMissionReport from '@/components/modal/ModalMissionReport.vue'
 
 export default defineNuxtComponent({
+  emits: ['selected'],
   components: {
     ModalMissionValidate,
     ModalMissionReport,
