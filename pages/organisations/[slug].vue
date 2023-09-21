@@ -14,7 +14,7 @@
         <SectionSlideshowMissions
           v-if="organisation.statistics.missions_available_presentiel_count > 0"
           :organisation="organisation"
-          title="Missions sur le terrain"
+          title="Missions disponibles"
           :search-parameters="{
             hitsPerPage: 6,
             facetFilters: [`structure.name:${organisation.name}`, 'type:Mission en présentiel'],
