@@ -59,7 +59,9 @@
       </div>
     </div>
     <div class="hidden lg:block">
-      <img
+      <NuxtImg
+        ref="illustration"
+        src="/images/organisation-default-2.webp"
         :srcset="srcSet"
         class="min-h-[700px] w-auto object-cover"
         @error="onIllustrationError"
@@ -103,8 +105,8 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    onIllustrationError($event) {
-      $event.target.srcset = '/images/organisation-default-2.webp'
+    onIllustrationError() {
+      this.$refs.illustration.$el.srcset = '/images/organisation-default-2.webp'
     },
     onClickFindMissions() {
       this.$router.push({

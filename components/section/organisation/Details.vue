@@ -58,7 +58,9 @@
 
       <div class="mt-8 lg:mt-24 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
         <div class="relative">
-          <img
+          <NuxtImg
+            ref="illustration"
+            src="/images/organisation-default-1.webp"
             :srcset="srcSet"
             class="min-h-[250px] lg:min-h-[630px] h-full w-auto object-cover"
             @error="onIllustrationError"
@@ -256,8 +258,8 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    onIllustrationError($event) {
-      $event.target.srcset = '/images/organisation-default-1.webp'
+    onIllustrationError() {
+      this.$refs.illustration.$el.srcset = '/images/organisation-default-1.webp'
     },
   },
 })

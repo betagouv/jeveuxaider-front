@@ -36,6 +36,7 @@
     "@gouvfr/dsfr": "1.9.3",
     "@gtm-support/vue-gtm": "^2.1.0",
     "@heroicons/vue": "^2.0.18",
+    "@nuxt/image": "^1.0.0-rc.2",
     "@pinia/nuxt": "^0.4.11",
     "@popperjs/core": "^2.11.8",
     "@vue-a11y/focus-loop": "^1.1.0",

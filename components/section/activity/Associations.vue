@@ -22,14 +22,16 @@
             </h2>
 
             <div class="mt-12 grid grid-cols-2 gap-8">
-              <img
+              <NuxtImg
+                :ref="`media-${media.id}`"
                 v-for="media in activity.promoted_organisations"
                 :key="media.id"
                 class="mx-auto lg:mx-0 my-auto w-full sm:w-auto h-20 object-contain"
                 :alt="media.name"
-                :srcset="media.urls.small"
+                :src="media.urls.original"
+                srcset="media.urls.small"
                 style="max-width: 130px"
-                @error="$event.target.remove()"
+                @error="$refs[`media-${media.id}`][0]?.$el.remove()"
               />
             </div>
           </div>

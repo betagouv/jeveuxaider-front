@@ -28,12 +28,14 @@
 
     <div v-if="territoire.type == 'city' && logo" class="bg-white pt-12">
       <div class="container">
-        <img
+        <NuxtImg
+          ref="logo"
+          :src="territoire.logo?.urls.original"
           :srcset="logo"
           :alt="territoire.name"
           class="mx-auto"
           style="max-height: 110px"
-          @error="$event.target.remove()"
+          @error="$refs.logo.$el.remove()"
         />
       </div>
     </div>

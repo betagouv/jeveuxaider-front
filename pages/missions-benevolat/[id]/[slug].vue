@@ -122,7 +122,8 @@
           class="overflow-hidden mt-8 lg:w-96 lg:mt-0 z-20 flex-shrink-0 sticky top-8"
           :padding="false"
         >
-          <img
+          <NuxtImg
+            ref="illustration"
             :srcset="illustrationSrcset"
             :src="illustrationSrc"
             sizes="(min-width: 1024px) 384px, 100vw"
@@ -134,7 +135,7 @@
             width="761"
             height="363"
             @error="
-              $event.target.srcset =
+              $refs.illustration.$el.srcset =
                 '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
             "
           />
@@ -146,7 +147,8 @@
             :to="`/organisations/${mission.structure.slug}`"
             class="left-1/2 absolute -translate-x-1/2 -translate-y-2/3 bg-white shadow-lg p-3 h-[64px] flex"
           >
-            <img
+            <NuxtImg
+              ref="logoOrganisation"
               sizes="120px"
               :srcset="mission.structure.logo.urls.small"
               :src="mission.structure.logo.urls.original"
@@ -156,7 +158,7 @@
                 { grayscale: !canRegister && !userParticipation },
               ]"
               style="max-width: 120px"
-              @error="$event.target.remove()"
+              @error="$refs.logoOrganisation.$el.parentElement.remove()"
             />
           </component>
 

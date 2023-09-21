@@ -56,7 +56,9 @@
             class="overflow-hidden mt-6 lg:w-96 lg:mt-0 z-20 flex-shrink-0 sticky top-6 lg:text-center"
             :padding="false"
           >
-            <img
+            <NuxtImg
+              ref="thumbnailApi"
+              src="/images/card-thumbnail-default.jpg"
               :srcset="thumbnailApi"
               sizes="(min-width: 1024px) 384px, 100vw"
               alt="Organisation"
@@ -236,8 +238,8 @@ export default defineNuxtComponent({
     })
   },
   methods: {
-    onImgError($event) {
-      $event.target.srcset =
+    onImgError() {
+      this.$refs.thumbnailApi.$el.srcset =
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     },
   },

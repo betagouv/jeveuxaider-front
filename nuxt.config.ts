@@ -116,6 +116,7 @@ export default defineNuxtConfig({
     'floating-vue/nuxt',
     'nuxt-simple-sitemap',
     'nuxt-lodash',
+    '@nuxt/image',
   ],
 
   // https://nuxt.com/docs/guide/directory-structure/plugins#plugin-registration-order

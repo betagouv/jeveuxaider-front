@@ -1,12 +1,12 @@
 <template>
   <div>
+    <ModalUnregisterOrganisation
+      :structure="structure"
+      :is-open="showAlert"
+      @cancel="showAlert = false"
+      @close="showAlert = false"
+    />
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
-      <ModalUnregisterOrganisation
-        :structure="structure"
-        :is-open="showAlert"
-        @cancel="showAlert = false"
-        @close="showAlert = false"
-      />
       <div class="lg:col-span-3 space-y-12">
         <BaseBox>
           <BaseHeading :level="3" class="mb-8"> Informations générales </BaseHeading>
@@ -379,7 +379,7 @@
 
             <BaseFormControl label="Visuels d'illustration" html-for="illustrations">
               <component
-                :is="form.reseaux.length ? 'MediaPickerReseau' : 'MediaPickerDomaine'"
+                :is="mediaPickerComponent"
                 v-if="
                   $stores.auth.contextRole === 'admin' ||
                   (!form.override_image1 && !form.override_image2)
@@ -600,6 +600,11 @@ export default defineNuxtComponent({
     },
     mediaPickerDomaineIds() {
       return this.form.domaines.map((domaine) => domaine.id)
+    },
+    mediaPickerComponent() {
+      return this.form.reseaux.length
+        ? resolveComponent('BaseMediaPickerReseau')
+        : resolveComponent('BaseMediaPickerDomaine')
     },
   },
   methods: {

@@ -12,7 +12,7 @@
       { 'bg-white ': backgroundColor == 'white' && !sources },
     ]"
   >
-    <img
+    <NuxtImg
       v-if="sources"
       :srcset="sources"
       :src="imgSrc"

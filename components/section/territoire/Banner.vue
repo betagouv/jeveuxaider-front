@@ -6,15 +6,16 @@
         media="(min-width: 768px) and (max-width: 1024px)"
         :srcset="territoire.banner.urls.tablet"
       />
-      <img
-        :srcset="territoire.banner.urls.mobile"
+      <NuxtImg
+        ref="banner"
         :src="territoire.banner.urls.original"
+        :srcset="territoire.banner.urls.mobile"
         sizes="100w"
         :alt="`Bénévolat ${territoire.name}`"
         width="425"
         height="572"
         class="banner absolute object-cover object-center w-full h-full"
-        @error="$event.target.remove()"
+        @error="$refs.banner.$el.remove()"
       />
     </picture>
 

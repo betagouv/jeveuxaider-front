@@ -15,7 +15,8 @@
       {{ stateText }}
     </div>
     <div class="h-36 overflow-hidden mt-[-28px]">
-      <img
+      <NuxtImg
+        ref="image"
         class="object-cover h-full w-full group-hover:scale-105 transition"
         :srcset="imageSrcset"
         :src="imageSrc"
@@ -66,8 +67,8 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    onImgError($event) {
-      $event.target.srcset =
+    onImgError() {
+      this.$refs.image.$el.srcset =
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     },
   },

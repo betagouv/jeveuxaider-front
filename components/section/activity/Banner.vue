@@ -6,7 +6,8 @@
         media="(min-width: 768px) and (max-width: 1024px)"
         :srcset="activity.banner.urls.tablet"
       />
-      <img
+      <NuxtImg
+        ref="banner"
         :srcset="activity.banner.urls.mobile"
         :src="activity.banner.urls.original"
         sizes="100w"
@@ -14,7 +15,7 @@
         width="425"
         height="572"
         class="banner absolute object-cover object-center w-full h-full"
-        @error="$event.target.remove()"
+        @error="$refs.banner.$el.remove()"
       />
     </picture>
 

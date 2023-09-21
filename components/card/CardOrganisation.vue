@@ -3,7 +3,9 @@
     class="card--organisation h-auto flex flex-col flex-1 bg-white overflow-hidden safari-fix-scale border border-[#E5E5E5]"
   >
     <div class="thumbnail--wrapper relative">
-      <img
+      <NuxtImg
+        ref="image1"
+        src="/images/card-thumbnail-default.jpg"
         :srcset="image1"
         sizes="300px"
         class="w-full h-full object-cover"
@@ -182,8 +184,8 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    onImgError($event) {
-      $event.target.srcset =
+    onImgError() {
+      this.$refs.image1.$el.srcset =
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
     },
   },
