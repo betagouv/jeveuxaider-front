@@ -124,12 +124,7 @@ export default defineNuxtConfig({
   ],
 
   // https://nuxt.com/docs/guide/directory-structure/plugins#plugin-registration-order
-  plugins: [
-    '~/plugins/stores.ts',
-    '~/plugins/labels.ts',
-    '~/plugins/filters.ts',
-    // { src: '~/plugins/utm.js', mode: 'client' },
-  ],
+  plugins: ['~/plugins/stores.ts', '~/plugins/labels.ts', '~/plugins/filters.ts'],
 
   build: {
     transpile: ['vue-toastification', 'plausible-tracker'],
@@ -205,6 +200,7 @@ export default defineNuxtConfig({
     '/dashboard/reseaux/**': { redirect: '/admin/contenus/reseaux' },
     '/inscription/organisation': { redirect: '/inscription/responsable' },
     '/statistiques': { redirect: '/stats' },
+    '/admin/**': { ssr: false },
   },
 
   lodash: {
