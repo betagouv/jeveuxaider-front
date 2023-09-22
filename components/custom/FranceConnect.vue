@@ -37,24 +37,20 @@ export default defineNuxtComponent({
     // @todo tester
     if (this.$route.query.state && this.$route.query.code) {
       this.$emit('loading', true)
-      const { data } =
-        (await useApiFetch) <
-        any >
-        ('/franceconnect/login-callback',
-        {
-          params: {
-            state: this.$route.query.state,
-            code: this.$route.query.code,
-          },
-        })
+      const data = await apiFetch('/franceconnect/login-callback', {
+        params: {
+          state: this.$route.query.state,
+          code: this.$route.query.code,
+        },
+      })
 
-      if (data.value) {
+      if (data) {
         let cookieAccessToken = useCookie('access-token', {
           maxAge: 3600 * 24 * 365,
           path: '/',
           secure: document.location.hostname !== 'localhost', // true doesn't work on localhost and safari
         })
-        cookieAccessToken.value = data.value.access_token
+        cookieAccessToken.value = data.access_token
 
         this.$gtm.trackEvent({ event: 'user-login' })
 
