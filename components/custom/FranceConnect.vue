@@ -50,7 +50,7 @@ export default defineNuxtComponent({
           path: '/',
           secure: document.location.hostname !== 'localhost', // true doesn't work on localhost and safari
         })
-        cookieAccessToken.value = data.access_token
+        cookieAccessToken.value = data.accessToken
 
         this.$gtm.trackEvent({ event: 'user-login' })
 
