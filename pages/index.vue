@@ -6,7 +6,7 @@
       <SeptembrePourApprendre />
       <BlocProfileActivities />
       <BlocTemoignages />
-      <BlocActualites v-if="$stores.settings.general.blog_active" />
+      <BlocActualites v-if="$stores.settings.general?.blog_active" />
       <BlocNewsletter />
     </template>
     <template v-if="!$stores.auth.isLogged">
@@ -21,7 +21,7 @@
       <BlocMissionsCourtes />
       <BlocActionsBenevolesPopulaires />
       <BlocTemoignages />
-      <BlocActualites v-if="$stores.settings.general.blog_active" />
+      <BlocActualites v-if="$stores.settings.general?.blog_active" />
       <BlocActeursEngagement />
       <BlocNewsletter />
       <BlocFaq />

@@ -2,7 +2,7 @@
   "name": "jeveuxaider",
   "engines": {
     "node": "18",
-    "npm": "9"
+    "npm": "8"
   },
   "private": true,
   "scripts": {

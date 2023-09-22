@@ -10,7 +10,7 @@
       </template>
     </BaseBanner>
 
-    <BaseBanner v-if="$stores.settings.general.maintenance_mode_active" icon="RiSettings4Line">
+    <BaseBanner v-if="$stores.settings.general?.maintenance_mode_active" icon="RiSettings4Line">
       Le site est en mode maintenance, seuls les admins peuvent y accéder !
       <template #action>
         <DsfrLink icon="RiArrowRightLine" to="/admin/settings/general"> Gérer </DsfrLink>
