@@ -1,7 +1,7 @@
 <template>
   <div>
     <BlocBanner />
-    <template v-if="$stores.auth.isLogged">
+    <!-- <template v-if="$stores.auth.isLogged">
       <BlocCaDevraitVousPlaire />
       <SeptembrePourApprendre />
       <BlocProfileActivities />
@@ -25,25 +25,25 @@
       <BlocActeursEngagement />
       <BlocNewsletter />
       <BlocFaq />
-    </template>
+    </template> -->
   </div>
 </template>
 
 <script>
 import BlocBanner from '@/components/section/home/BlocBanner.vue'
-import BlocInscriptionBenevole from '@/components/section/home/BlocInscriptionBenevole.vue'
-import BlocInscriptionResponsable from '@/components/section/home/BlocInscriptionResponsable.vue'
-import BlocActivities from '@/components/section/home/BlocActivities.vue'
-import BlocCaDevraitVousPlaire from '@/components/section/home/BlocCaDevraitVousPlaire.vue'
-import SeptembrePourApprendre from '@/components/section/operations/SeptembrePourApprendre.vue'
-import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
-import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
-import BlocTemoignages from '@/components/section/home/BlocTemoignages.vue'
-import BlocActualites from '@/components/section/home/BlocActualites.vue'
-import BlocActeursEngagement from '@/components/section/home/BlocActeursEngagement.vue'
-import BlocNewsletter from '@/components/section/home/BlocNewsletter.vue'
-import BlocFaq from '@/components/section/home/BlocFaq.vue'
-import BlocProfileActivities from '@/components/section/home/BlocProfileActivities.vue'
+// import BlocInscriptionBenevole from '@/components/section/home/BlocInscriptionBenevole.vue'
+// import BlocInscriptionResponsable from '@/components/section/home/BlocInscriptionResponsable.vue'
+// import BlocActivities from '@/components/section/home/BlocActivities.vue'
+// import BlocCaDevraitVousPlaire from '@/components/section/home/BlocCaDevraitVousPlaire.vue'
+// import SeptembrePourApprendre from '@/components/section/operations/SeptembrePourApprendre.vue'
+// import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
+// import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
+// import BlocTemoignages from '@/components/section/home/BlocTemoignages.vue'
+// import BlocActualites from '@/components/section/home/BlocActualites.vue'
+// import BlocActeursEngagement from '@/components/section/home/BlocActeursEngagement.vue'
+// import BlocNewsletter from '@/components/section/home/BlocNewsletter.vue'
+// import BlocFaq from '@/components/section/home/BlocFaq.vue'
+// import BlocProfileActivities from '@/components/section/home/BlocProfileActivities.vue'
 
 export default defineNuxtComponent({
   setup() {
@@ -78,19 +78,19 @@ export default defineNuxtComponent({
   },
   components: {
     BlocBanner,
-    BlocInscriptionBenevole,
-    BlocInscriptionResponsable,
-    BlocActivities,
-    BlocCaDevraitVousPlaire,
-    BlocMissionsCourtes,
-    BlocActionsBenevolesPopulaires,
-    BlocTemoignages,
-    BlocActualites,
-    BlocActeursEngagement,
-    BlocNewsletter,
-    BlocFaq,
-    BlocProfileActivities,
-    SeptembrePourApprendre,
+    // BlocInscriptionBenevole,
+    // BlocInscriptionResponsable,
+    // BlocActivities,
+    // BlocCaDevraitVousPlaire,
+    // BlocMissionsCourtes,
+    // BlocActionsBenevolesPopulaires,
+    // BlocTemoignages,
+    // BlocActualites,
+    // BlocActeursEngagement,
+    // BlocNewsletter,
+    // BlocFaq,
+    // BlocProfileActivities,
+    // SeptembrePourApprendre,
   },
 })
 </script>
