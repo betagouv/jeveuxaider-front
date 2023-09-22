@@ -50,9 +50,9 @@
 
 <script>
 import MixinAction from '@/mixins/action'
-import HelpCenter from '@/components/section/dashboard/HelpCenter'
-import LePetitMot from '@/components/section/dashboard/LePetitMot'
-import BoxUserProfileBenevole from '@/components/section/profile/BoxUserProfileBenevole'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
+import LePetitMot from '@/components/section/dashboard/LePetitMot.vue'
+import BoxUserProfileBenevole from '@/components/section/profile/BoxUserProfileBenevole.vue'
 
 export default defineNuxtComponent({
   components: {

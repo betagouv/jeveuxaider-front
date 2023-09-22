@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import DrawerNotification from '@/components/drawer/DrawerNotification'
+import DrawerNotification from '@/components/drawer/DrawerNotification.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import DsfrBadge from '@/components/dsfr/Badge.vue'
 import DsfrTabs from '@/components/dsfr/Tabs.vue'

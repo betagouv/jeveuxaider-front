@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import ActivityBanner from '@/components/section/activity/Banner'
-import Search from '@/components/section/activity/Search'
-import Promote from '@/components/section/activity/Promote'
-import Associations from '@/components/section/activity/Associations'
-import Engagement from '@/components/section/activity/Engagement'
-import Subscribe from '@/components/section/activity/Subscribe'
+import ActivityBanner from '@/components/section/activity/Banner.vue'
+import Search from '@/components/section/activity/Search.vue'
+import Promote from '@/components/section/activity/Promote.vue'
+import Associations from '@/components/section/activity/Associations.vue'
+import Engagement from '@/components/section/activity/Engagement.vue'
+import Subscribe from '@/components/section/activity/Subscribe.vue'
 
 export default defineNuxtComponent({
   components: {

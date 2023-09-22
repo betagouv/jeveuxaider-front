@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import DoughnutChart from '@/components/chart/DoughnutChart'
+import DoughnutChart from '@/components/chart/DoughnutChart.vue'
 import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
 export default defineNuxtComponent({

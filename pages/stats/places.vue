@@ -38,8 +38,8 @@ import PlacesByOrganisations from '@/components/statistics/PlacesByOrganisations
 import PlacesByMissions from '@/components/statistics/PlacesByMissions.vue'
 import PlacesByDomaines from '@/components/statistics/PlacesByDomaines.vue'
 import PlacesByActivities from '@/components/statistics/PlacesByActivities.vue'
-import PlacesStatistics from '@/components/statistics/PlacesStatistics'
-import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
+import PlacesStatistics from '@/components/statistics/PlacesStatistics.vue'
+import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

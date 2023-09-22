@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import AlgoliaSearch from '~/components/section/search/missions/AlgoliaSearch.vue'
+import AlgoliaSearch from '@/components/section/search/missions/AlgoliaSearch.vue'
 
 export default defineNuxtComponent({
   components: {

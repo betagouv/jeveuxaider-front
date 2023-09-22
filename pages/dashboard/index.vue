@@ -263,13 +263,13 @@
 
 <script>
 import MixinAction from '@/mixins/action'
-import HelpCenter from '@/components/section/dashboard/HelpCenter'
-import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
-import GuideLinks from '@/components/section/dashboard/GuideLinks'
-import LePetitMot from '@/components/section/dashboard/LePetitMot'
-import CardStatistic from '@/components/card/CardStatistic'
-import CardTemoignage from '@/components/card/CardTemoignage'
-import ButtonCreateMission from '@/components/custom/ButtonCreateMission'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
+import MoreNumbers from '@/components/section/dashboard/MoreNumbers.vue'
+import GuideLinks from '@/components/section/dashboard/GuideLinks.vue'
+import LePetitMot from '@/components/section/dashboard/LePetitMot.vue'
+import CardStatistic from '@/components/card/CardStatistic.vue'
+import CardTemoignage from '@/components/card/CardTemoignage.vue'
+import ButtonCreateMission from '@/components/custom/ButtonCreateMission.vue'
 import BoxScore from '@/components/section/organisation/BoxScore.vue'
 
 export default defineNuxtComponent({

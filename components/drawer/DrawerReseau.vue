@@ -62,12 +62,12 @@
 </template>
 
 <script>
-import BoxInformations from '@/components/section/reseau/BoxInformations'
-import BoxMission from '@/components/section/reseau/BoxMission'
-import BoxAntenne from '@/components/section/reseau/BoxAntenne'
-import BoxParticipation from '@/components/section/reseau/BoxParticipation'
-import BoxResponsable from '@/components/section/BoxResponsable'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import BoxInformations from '@/components/section/reseau/BoxInformations.vue'
+import BoxMission from '@/components/section/reseau/BoxMission.vue'
+import BoxAntenne from '@/components/section/reseau/BoxAntenne.vue'
+import BoxParticipation from '@/components/section/reseau/BoxParticipation.vue'
+import BoxResponsable from '@/components/section/BoxResponsable.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 
 export default defineNuxtComponent({
   components: {

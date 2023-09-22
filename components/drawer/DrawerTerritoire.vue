@@ -76,12 +76,12 @@
 </template>
 
 <script>
-import BoxInformations from '@/components/section/territoire/BoxInformations'
-import BoxMission from '@/components/section/territoire/BoxMission'
-import BoxParticipation from '@/components/section/territoire/BoxParticipation'
-import BoxResponsable from '@/components/section/BoxResponsable'
-import SelectTerritoireState from '@/components/custom/SelectTerritoireState'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import BoxInformations from '@/components/section/territoire/BoxInformations.vue'
+import BoxMission from '@/components/section/territoire/BoxMission.vue'
+import BoxParticipation from '@/components/section/territoire/BoxParticipation.vue'
+import BoxResponsable from '@/components/section/BoxResponsable.vue'
+import SelectTerritoireState from '@/components/custom/SelectTerritoireState.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 import MixinTerritoire from '@/mixins/territoire'
 
 export default defineNuxtComponent({

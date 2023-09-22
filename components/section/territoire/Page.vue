@@ -50,13 +50,13 @@
 </template>
 
 <script>
-import TerritoireBanner from '@/components/section/territoire/Banner'
-import Search from '@/components/section/territoire/Search'
-import Promote from '@/components/section/territoire/Promote'
-import Cities from '@/components/section/territoire/Cities'
-import Associations from '@/components/section/territoire/Associations'
-import Engagement from '@/components/section/territoire/Engagement'
-import Subscribe from '@/components/section/territoire/Subscribe'
+import TerritoireBanner from '@/components/section/territoire/Banner.vue'
+import Search from '@/components/section/territoire/Search.vue'
+import Promote from '@/components/section/territoire/Promote.vue'
+import Cities from '@/components/section/territoire/Cities.vue'
+import Associations from '@/components/section/territoire/Associations.vue'
+import Engagement from '@/components/section/territoire/Engagement.vue'
+import Subscribe from '@/components/section/territoire/Subscribe.vue'
 
 export default defineNuxtComponent({
   components: {

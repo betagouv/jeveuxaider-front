@@ -61,14 +61,14 @@
 
 <script>
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
-import TopitoAdmins from '~/components/section/admin/TopitoAdmins.vue'
-import TopitoReferents from '~/components/section/admin/TopitoReferents.vue'
+import TopitoAdmins from '@/components/section/admin/TopitoAdmins.vue'
+import TopitoReferents from '@/components/section/admin/TopitoReferents.vue'
 import MissionsTrending from '@/components/section/admin/MissionsTrending.vue'
 import OrganisationsTrending from '@/components/section/admin/OrganisationsTrending.vue'
-import PlausiblePageViews from '~/components/section/admin/PlausiblePageViews.vue'
-import Goals from '~/components/section/admin/Goals.vue'
+import PlausiblePageViews from '@/components/section/admin/PlausiblePageViews.vue'
+import Goals from '@/components/section/admin/Goals.vue'
 import Heading from '@/components/dsfr/Heading.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 
 export default defineNuxtComponent({
   components: {

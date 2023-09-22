@@ -57,12 +57,12 @@
 </template>
 
 <script>
-import BoxInformationsProfile from '@/components/section/profile/BoxInformations'
-import BoxInformationsMission from '@/components/section/mission/BoxInformations'
-import BoxResponsable from '@/components/section/BoxResponsable'
-import BoxOrganisation from '@/components/section/mission/BoxOrganisation'
-import BoxInformations from '@/components/section/temoignage/BoxInformations'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import BoxInformationsProfile from '@/components/section/profile/BoxInformations.vue'
+import BoxInformationsMission from '@/components/section/mission/BoxInformations.vue'
+import BoxResponsable from '@/components/section/BoxResponsable.vue'
+import BoxOrganisation from '@/components/section/mission/BoxOrganisation.vue'
+import BoxInformations from '@/components/section/temoignage/BoxInformations.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 
 export default defineNuxtComponent({
   components: {

@@ -20,8 +20,8 @@
 
 <script>
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
-import OverviewReferents from '@/components/numbers/OverviewReferents'
-import OverviewResponsables from '@/components/numbers/OverviewResponsables'
+import OverviewReferents from '@/components/numbers/OverviewReferents.vue'
+import OverviewResponsables from '@/components/numbers/OverviewResponsables.vue'
 
 export default defineNuxtComponent({
   components: {

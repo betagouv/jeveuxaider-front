@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import FormActivity from '@/components/form/FormActivity'
+import FormActivity from '@/components/form/FormActivity.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

@@ -131,7 +131,7 @@
 <script>
 import QueryBuilder from '@/mixins/query-builder'
 import MixinInvitation from '@/mixins/invitation'
-import FormInvitation from '@/components/form/FormInvitation'
+import FormInvitation from '@/components/form/FormInvitation.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import DsfrButton from '@/components/dsfr/Button.vue'

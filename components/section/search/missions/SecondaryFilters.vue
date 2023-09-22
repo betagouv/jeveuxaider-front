@@ -229,10 +229,10 @@
 </template>
 
 <script>
-import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue'
-import AutonomyFilter from '~/components/section/search/AutonomyFilter.vue'
-import MinorsFilter from '~/components/section/search/MinorsFilter.vue'
-import PonctualFilter from '~/components/section/search/PonctualFilter.vue'
+import FacetFilterToggle from '@/components/section/search/FacetFilterToggle.vue'
+import AutonomyFilter from '@/components/section/search/AutonomyFilter.vue'
+import MinorsFilter from '@/components/section/search/MinorsFilter.vue'
+import PonctualFilter from '@/components/section/search/PonctualFilter.vue'
 
 export default defineNuxtComponent({
   components: {

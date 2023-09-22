@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import FormInvitation from '@/components/form/FormInvitation'
+import FormInvitation from '@/components/form/FormInvitation.vue'
 
 export default defineNuxtComponent({
   components: {

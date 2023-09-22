@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import BoxInformations from '@/components/section/logs/BoxInformations'
-import BoxChanges from '@/components/section/logs/BoxChanges'
+import BoxInformations from '@/components/section/logs/BoxInformations.vue'
+import BoxChanges from '@/components/section/logs/BoxChanges.vue'
 
 export default defineNuxtComponent({
   components: {

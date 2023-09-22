@@ -211,8 +211,8 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import Card from '@/components/card/Card'
-import DrawerTerritoire from '@/components/drawer/DrawerTerritoire'
+import Card from '@/components/card/Card.vue'
+import DrawerTerritoire from '@/components/drawer/DrawerTerritoire.vue'
 import MixinExport from '@/mixins/export'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 

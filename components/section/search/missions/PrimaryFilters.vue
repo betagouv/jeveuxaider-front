@@ -103,9 +103,9 @@
 </template>
 
 <script>
-import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue'
-import LocalisationFilter from '~/components/search/LocalisationFilter.vue'
-import CommitmentFilter from '~/components/section/search/CommitmentFilter.vue'
+import FacetFilterToggle from '@/components/section/search/FacetFilterToggle.vue'
+import LocalisationFilter from '@/components/search/LocalisationFilter.vue'
+import CommitmentFilter from '@/components/section/search/CommitmentFilter.vue'
 import SearchFilter from '@/components/search/SearchFilter.vue'
 import MissionTypeFilter from '@/components/search/MissionTypeFilter.vue'
 

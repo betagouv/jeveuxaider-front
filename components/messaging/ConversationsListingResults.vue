@@ -86,7 +86,7 @@ import ConversationTeaserParticipation from '@/components/messaging/Conversation
 import ConversationTeaserMission from '@/components/messaging/ConversationTeaserMission.vue'
 import ConversationTeaserOrganisation from '@/components/messaging/ConversationTeaserOrganisation.vue'
 import ConversationsFilters from '@/components/messaging/ConversationsFilters.vue'
-import SpinIcon from '@/components/icon/SpinIcon'
+import SpinIcon from '@/components/icon/SpinIcon.vue'
 
 export default defineNuxtComponent({
   components: {

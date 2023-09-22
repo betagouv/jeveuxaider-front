@@ -91,7 +91,7 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import HelpCenter from '@/components/section/dashboard/HelpCenter'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
 import CardParticipation from '@/components/card/CardParticipation.vue'
 
 export default defineNuxtComponent({

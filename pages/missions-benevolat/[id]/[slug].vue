@@ -436,15 +436,15 @@
 </template>
 
 <script>
-import CardMission from '~/components/card/CardMission'
+import CardMission from '@/components/card/CardMission.vue'
 import PresentielOrDistance from '@/components/section/mission/PresentielOrDistance.vue'
 import Presentation from '@/components/section/mission/Presentation.vue'
 import Details from '@/components/section/mission/Details.vue'
 import ButtonJeProposeMonAide from '@/components/custom/ButtonJeProposeMonAide.vue'
 import MixinMission from '@/mixins/mission'
-import Testimonials from '@/components/section/temoignage/Testimonials'
+import Testimonials from '@/components/section/temoignage/Testimonials.vue'
 import MixinHotjar from '@/mixins/hotjar.client.js'
-import LoadingIndicator from '@/components/custom/LoadingIndicator'
+import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
 import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({

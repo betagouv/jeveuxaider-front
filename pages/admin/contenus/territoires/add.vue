@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import FormTerritoire from '~/components/form/FormTerritoire'
+import FormTerritoire from '@/components/form/FormTerritoire.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

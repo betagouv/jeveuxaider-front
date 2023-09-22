@@ -51,7 +51,7 @@
 <script>
 import OrganisationsWaitingByDepartments from '@/components/numbers/OrganisationsWaitingByDepartments.vue'
 import OrganisationsInProgressByDepartments from '@/components/numbers/OrganisationsInProgressByDepartments.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

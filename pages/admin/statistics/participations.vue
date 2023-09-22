@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import ParticipationsStatistics from '@/components/numbers/ParticipationsStatistics.vue'
 import ParticipationsByDate from '@/components/numbers/ParticipationsByDate.vue'
 import ParticipationsByStates from '@/components/numbers/ParticipationsByStates.vue'
@@ -56,7 +56,7 @@ import ParticipationsByOrganisations from '@/components/numbers/ParticipationsBy
 import ParticipationsByDomaines from '@/components/numbers/ParticipationsByDomaines.vue'
 import ParticipationsByReseaux from '@/components/numbers/ParticipationsByReseaux.vue'
 import ParticipationsByActivities from '@/components/numbers/ParticipationsByActivities.vue'
-import ParticipationsConversionByDate from '~/components/numbers/ParticipationsConversionByDate.vue'
+import ParticipationsConversionByDate from '@/components/numbers/ParticipationsConversionByDate.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

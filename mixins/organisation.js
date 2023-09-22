@@ -13,8 +13,7 @@ export default {
     },
     hasPageOnline() {
       return (
-        this.organisation.statut_juridique == 'Association' &&
-        this.organisation.state === 'Validée'
+        this.organisation.statut_juridique == 'Association' && this.organisation.state === 'Validée'
       )
     },
     canEditStatut() {

@@ -49,9 +49,9 @@
 </template>
 
 <script>
-import ParticipationsWaitingByOrganisations from '~/components/numbers/ParticipationsWaitingByOrganisations.vue'
-import ParticipationsInProgressByOrganisations from '~/components/numbers/ParticipationsInProgressByOrganisations.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import ParticipationsWaitingByOrganisations from '@/components/numbers/ParticipationsWaitingByOrganisations.vue'
+import ParticipationsInProgressByOrganisations from '@/components/numbers/ParticipationsInProgressByOrganisations.vue'
+import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

@@ -148,8 +148,8 @@
 </template>
 
 <script>
-import DisclosureModerationAI from '~/components/section/organisation/DisclosureModerationAI.vue'
-import DisclosureWarningWords from '~/components/section/organisation/DisclosureWarningWords.vue'
+import DisclosureModerationAI from '@/components/section/organisation/DisclosureModerationAI.vue'
+import DisclosureWarningWords from '@/components/section/organisation/DisclosureWarningWords.vue'
 import MixinAideModeration from '@/mixins/organisation-aide-moderation'
 
 export default defineNuxtComponent({

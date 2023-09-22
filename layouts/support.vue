@@ -26,7 +26,7 @@
 <script>
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
-import SecondaryMenuSupport from '@/components/menu/SecondaryMenuSupport'
+import SecondaryMenuSupport from '@/components/menu/SecondaryMenuSupport.vue'
 import MixinPlausible from '@/mixins/plausible.js'
 
 export default defineNuxtComponent({

@@ -1,7 +1,7 @@
 import { useGtm } from '@gtm-support/vue-gtm'
 import { defineStore } from 'pinia'
-import { useNotificationsStore } from '~/store/notifications'
-import { useMessagingStore } from '~/store/messaging'
+import { useNotificationsStore } from '@/store/notifications'
+import { useMessagingStore } from '@/store/messaging'
 
 type TypeRole = {
   key: string

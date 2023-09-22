@@ -182,7 +182,7 @@ import QueryBuilder from '@/mixins/query-builder'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Tag from '@/components/dsfr/Tag.vue'
 import DrawerProfile from '@/components/drawer/DrawerProfile.vue'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import QueryResultSummary from '@/components/custom/QueryResultSummary.vue'
 

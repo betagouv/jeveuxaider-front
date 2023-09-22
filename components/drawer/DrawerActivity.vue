@@ -55,10 +55,10 @@
 </template>
 
 <script>
-import BoxInformations from '@/components/section/activity/BoxInformations'
-import BoxMission from '@/components/section/activity/BoxMission'
-import BoxParticipation from '@/components/section/activity/BoxParticipation'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import BoxInformations from '@/components/section/activity/BoxInformations.vue'
+import BoxMission from '@/components/section/activity/BoxMission.vue'
+import BoxParticipation from '@/components/section/activity/BoxParticipation.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 
 export default defineNuxtComponent({
   emits: ['loaded', 'close', 'refetch'],

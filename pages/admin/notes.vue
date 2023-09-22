@@ -102,14 +102,14 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import HelpCenter from '@/components/section/dashboard/HelpCenter'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import CardNote from '@/components/card/CardNote.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Tag from '@/components/dsfr/Tag.vue'
-import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
-import GuideLinks from '@/components/section/dashboard/GuideLinks'
+import MoreNumbers from '@/components/section/dashboard/MoreNumbers.vue'
+import GuideLinks from '@/components/section/dashboard/GuideLinks.vue'
 
 export default defineNuxtComponent({
   components: {

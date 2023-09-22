@@ -373,9 +373,9 @@
 import { string, object, ref, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import Emailable from '@/mixins/emailable.client'
-import FranceConnect from '@/components/custom/FranceConnect'
-import Temoignages from '@/components/section/homepage/Temoignages'
-import CarouselLogos from '@/components/section/inscription/CarouselLogos'
+import FranceConnect from '@/components/custom/FranceConnect.vue'
+import Temoignages from '@/components/section/homepage/Temoignages.vue'
+import CarouselLogos from '@/components/section/inscription/CarouselLogos.vue'
 import countries from '@/assets/countries.json'
 import { useToast } from 'vue-toastification'
 

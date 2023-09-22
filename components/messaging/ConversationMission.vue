@@ -29,10 +29,10 @@
 </template>
 
 <script>
-import ConversationRecipientReferentOrAdmin from '~/components/messaging/ConversationRecipientReferentOrAdmin.vue'
-import ConversationRecipientResponsable from '~/components/messaging/ConversationRecipientResponsable.vue'
-import ConversationMissionActionAsReferent from '~/components/messaging/ConversationMissionActionAsReferent.vue'
-import ConversationMissionActionAsResponsable from '~/components/messaging/ConversationMissionActionAsResponsable.vue'
+import ConversationRecipientReferentOrAdmin from '@/components/messaging/ConversationRecipientReferentOrAdmin.vue'
+import ConversationRecipientResponsable from '@/components/messaging/ConversationRecipientResponsable.vue'
+import ConversationMissionActionAsReferent from '@/components/messaging/ConversationMissionActionAsReferent.vue'
+import ConversationMissionActionAsResponsable from '@/components/messaging/ConversationMissionActionAsResponsable.vue'
 import CardInfosMission from '@/components/messaging/CardInfosMission.vue'
 import Conversation from '@/components/messaging/Conversation.vue'
 import MixinConversationMission from '@/mixins/conversation/mission'

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import FormMissionTemplate from '~/components/form/FormMissionTemplate.vue'
+import FormMissionTemplate from '@/components/form/FormMissionTemplate.vue'
 import ButtonsSubmitFormMissionTemplate from '@/components/custom/ButtonsSubmitFormMissionTemplate.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 

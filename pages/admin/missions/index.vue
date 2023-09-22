@@ -406,7 +406,7 @@ import DrawerMission from '@/components/drawer/DrawerMission.vue'
 import MixinExport from '@/mixins/export'
 import BoxContext from '@/components/section/BoxContext.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
-import ButtonCreateMission from '@/components/custom/ButtonCreateMission'
+import ButtonCreateMission from '@/components/custom/ButtonCreateMission.vue'
 
 export default defineNuxtComponent({
   components: {

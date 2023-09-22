@@ -132,7 +132,7 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import DrawerRule from '@/components/drawer/DrawerRule'
+import DrawerRule from '@/components/drawer/DrawerRule.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default defineNuxtComponent({

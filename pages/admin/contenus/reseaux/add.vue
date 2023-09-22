@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import FormReseau from '~/components/form/FormReseau'
+import FormReseau from '@/components/form/FormReseau.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

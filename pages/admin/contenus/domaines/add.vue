@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import FormDomaine from '@/components/form/FormDomaine'
+import FormDomaine from '@/components/form/FormDomaine.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

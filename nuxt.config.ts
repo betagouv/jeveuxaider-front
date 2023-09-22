@@ -9,11 +9,15 @@ export default defineNuxtConfig({
     // },
   },
 
+  // experimental: {
+  //   emitRouteChunkError: 'automatic',
+  // },
+
   runtimeConfig: {
     strapi: {
       // on server
       token: process.env.STRAPI_TOKEN,
-      url: `${process.env.STRAPI_URL}`,
+      url: process.env.STRAPI_URL,
     },
 
     public: {
@@ -26,7 +30,7 @@ export default defineNuxtConfig({
       strapi: {
         // on client
         token: process.env.STRAPI_TOKEN,
-        url: `${process.env.STRAPI_URL}`,
+        url: process.env.STRAPI_URL,
       },
       blog: {
         restApiUrl: process.env.BLOG_REST_API_URL,
@@ -120,12 +124,7 @@ export default defineNuxtConfig({
   ],
 
   // https://nuxt.com/docs/guide/directory-structure/plugins#plugin-registration-order
-  plugins: [
-    '~/plugins/stores.ts',
-    '~/plugins/labels.ts',
-    '~/plugins/filters.ts',
-    // { src: '~/plugins/utm.js', mode: 'client' },
-  ],
+  plugins: ['~/plugins/stores.ts', '~/plugins/labels.ts', '~/plugins/filters.ts'],
 
   build: {
     transpile: ['vue-toastification', 'plausible-tracker'],
@@ -201,6 +200,7 @@ export default defineNuxtConfig({
     '/dashboard/reseaux/**': { redirect: '/admin/contenus/reseaux' },
     '/inscription/organisation': { redirect: '/inscription/responsable' },
     '/statistiques': { redirect: '/stats' },
+    '/admin/**': { ssr: false },
   },
 
   lodash: {

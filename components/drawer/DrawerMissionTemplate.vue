@@ -71,11 +71,11 @@
 </template>
 
 <script>
-import BoxInformations from '@/components/section/mission-template/BoxInformations'
-import BoxReseau from '@/components/section/mission-template/BoxReseau'
-import BoxMission from '@/components/section/mission-template/BoxMission'
-import BoxParticipation from '@/components/section/mission-template/BoxParticipation'
-import SelectMissionTemplateState from '@/components/custom/SelectMissionTemplateState'
+import BoxInformations from '@/components/section/mission-template/BoxInformations.vue'
+import BoxReseau from '@/components/section/mission-template/BoxReseau.vue'
+import BoxMission from '@/components/section/mission-template/BoxMission.vue'
+import BoxParticipation from '@/components/section/mission-template/BoxParticipation.vue'
+import SelectMissionTemplateState from '@/components/custom/SelectMissionTemplateState.vue'
 import MixinMissionTemplate from '@/mixins/mission-template'
 
 export default defineNuxtComponent({

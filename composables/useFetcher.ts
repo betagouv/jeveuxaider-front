@@ -1,4 +1,4 @@
-import { useAuthStore } from '~/store/auth'
+import { useAuthStore } from '@/store/auth'
 import { useToast } from 'vue-toastification'
 import ComponentToast from '@/components/Toast.vue'
 

@@ -139,7 +139,7 @@
 </template>
 
 <script>
-import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue'
+import FacetFilterToggle from '@/components/section/search/FacetFilterToggle.vue'
 
 export default defineNuxtComponent({
   components: {

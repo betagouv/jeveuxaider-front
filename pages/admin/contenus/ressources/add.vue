@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import FormRessource from '@/components/form/FormRessource'
+import FormRessource from '@/components/form/FormRessource.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default {

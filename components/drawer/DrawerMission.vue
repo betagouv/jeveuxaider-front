@@ -147,18 +147,18 @@
 </template>
 
 <script>
-import SelectMissionState from '@/components/custom/SelectMissionState'
-import BoxDates from '@/components/section/mission/BoxDates'
-import BoxPlace from '@/components/section/mission/BoxPlace'
-import BoxResponsable from '@/components/section/BoxResponsable'
-import BoxOrganisation from '@/components/section/mission/BoxOrganisation'
-import BoxInformations from '@/components/section/mission/BoxInformations'
+import SelectMissionState from '@/components/custom/SelectMissionState.vue'
+import BoxDates from '@/components/section/mission/BoxDates.vue'
+import BoxPlace from '@/components/section/mission/BoxPlace.vue'
+import BoxResponsable from '@/components/section/BoxResponsable.vue'
+import BoxOrganisation from '@/components/section/mission/BoxOrganisation.vue'
+import BoxInformations from '@/components/section/mission/BoxInformations.vue'
 import MixinMission from '@/mixins/mission'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
-import ButtonMissionDuplicate from '@/components/custom/ButtonMissionDuplicate'
-import BoxReferents from '@/components/section/BoxReferents'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
+import ButtonMissionDuplicate from '@/components/custom/ButtonMissionDuplicate.vue'
+import BoxReferents from '@/components/section/BoxReferents.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
-import LoadingIndicator from '@/components/custom/LoadingIndicator'
+import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
 import ModalMissionToggleIsActive from '@/components/modal/ModalMissionToggleIsActive.vue'
 
 export default defineNuxtComponent({
