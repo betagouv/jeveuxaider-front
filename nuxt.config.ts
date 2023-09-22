@@ -9,9 +9,9 @@ export default defineNuxtConfig({
     // },
   },
 
-  experimental: {
-    emitRouteChunkError: false,
-  },
+  // experimental: {
+  //   emitRouteChunkError: 'automatic',
+  // },
 
   runtimeConfig: {
     strapi: {
