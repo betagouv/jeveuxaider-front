@@ -70,7 +70,7 @@
 
 <script>
 import History from '@/components/section/History'
-import OnlineIndicator from '~/components/custom/OnlineIndicator'
+import OnlineIndicator from '@/components/custom/OnlineIndicator'
 import BoxInformations from '@/components/section/activity/BoxInformations'
 import BoxMission from '@/components/section/activity/BoxMission'
 import BoxParticipation from '@/components/section/activity/BoxParticipation'

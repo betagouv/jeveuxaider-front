@@ -46,8 +46,8 @@
 <script>
 import ConversationRecipientBenevole from '@/components/messaging/ConversationRecipientBenevole.vue'
 import ConversationRecipientResponsable from '@/components/messaging/ConversationRecipientResponsable.vue'
-import ConversationParticipationActionAsResponsable from '~/components/messaging/ConversationParticipationActionAsResponsable.vue'
-import ConversationParticipationActionAsBenevole from '~/components/messaging/ConversationParticipationActionAsBenevole.vue'
+import ConversationParticipationActionAsResponsable from '@/components/messaging/ConversationParticipationActionAsResponsable.vue'
+import ConversationParticipationActionAsBenevole from '@/components/messaging/ConversationParticipationActionAsBenevole.vue'
 import CardInfosMission from '@/components/messaging/CardInfosMission.vue'
 import Conversation from '@/components/messaging/Conversation.vue'
 import MixinConversationParticipation from '@/mixins/conversation/participation'

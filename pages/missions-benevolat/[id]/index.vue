@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import MissionApiPage from '~/components/custom/MissionApiPage'
+import MissionApiPage from '@/components/custom/MissionApiPage'
 
 export default defineNuxtComponent({
   components: {

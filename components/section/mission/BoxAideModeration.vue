@@ -125,8 +125,8 @@
 </template>
 
 <script>
-import DisclosureWarningWords from '~/components/section/mission/DisclosureWarningWords.vue'
-import DisclosureModerationAI from '~/components/section/mission/DisclosureModerationAI.vue'
+import DisclosureWarningWords from '@/components/section/mission/DisclosureWarningWords.vue'
+import DisclosureModerationAI from '@/components/section/mission/DisclosureModerationAI.vue'
 import MixinAideModeration from '@/mixins/mission-aide-moderation'
 
 export default defineNuxtComponent({

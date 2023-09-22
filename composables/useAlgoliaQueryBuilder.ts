@@ -1,5 +1,5 @@
 import { SearchIndex } from 'algoliasearch'
-import { useAlgoliaSearchStore } from '~/store/algoliaSearch'
+import { useAlgoliaSearchStore } from '@/store/algoliaSearch'
 
 export const useAlgoliaQueryBuilder = () => {
   return {

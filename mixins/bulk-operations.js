@@ -1,19 +1,19 @@
-import BulkOperationActions from '~/components/bulk-operation/BulkOperationActions.vue'
-import BulkOperationCheckbox from '~/components/bulk-operation/BulkOperationCheckbox.vue'
+import BulkOperationActions from '@/components/bulk-operation/BulkOperationActions.vue'
+import BulkOperationCheckbox from '@/components/bulk-operation/BulkOperationCheckbox.vue'
 
 export default {
   components: {
     BulkOperationActions,
-    BulkOperationCheckbox
+    BulkOperationCheckbox,
   },
-  data () {
+  data() {
     return {
-      operations: []
+      operations: [],
     }
   },
   computed: {
-    bulkOperationIsActive () {
+    bulkOperationIsActive() {
       return this.operations.length > 0
-    }
-  }
+    },
+  },
 }

@@ -63,9 +63,9 @@
 
 <script>
 import CardOrganisation from '@/components/card/CardOrganisation.vue'
-import PrimaryFilters from '~/components/section/search/organisations/PrimaryFilters.vue'
-import SecondaryFilters from '~/components/section/search/organisations/SecondaryFilters.vue'
-import MobileFilters from '~/components/section/search/organisations/MobileFilters.vue'
+import PrimaryFilters from '@/components/section/search/organisations/PrimaryFilters.vue'
+import SecondaryFilters from '@/components/section/search/organisations/SecondaryFilters.vue'
+import MobileFilters from '@/components/section/search/organisations/MobileFilters.vue'
 
 export default defineNuxtComponent({
   components: {

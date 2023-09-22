@@ -80,8 +80,8 @@
 </template>
 
 <script>
-import FacetFilterToggle from '~/components/section/search/FacetFilterToggle.vue'
-import LocalisationFilter from '~/components/search/LocalisationFilter.vue'
+import FacetFilterToggle from '@/components/section/search/FacetFilterToggle.vue'
+import LocalisationFilter from '@/components/search/LocalisationFilter.vue'
 import SearchFilter from '@/components/search/SearchFilter.vue'
 
 export default defineNuxtComponent({

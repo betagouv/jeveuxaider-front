@@ -15,7 +15,7 @@
 
 <script>
 import MessageChat from '@/components/messaging/MessageChat.vue'
-import MessageParticipationContextual from '~/components/messaging/MessageParticipationContextual.vue'
+import MessageParticipationContextual from '@/components/messaging/MessageParticipationContextual.vue'
 
 export default defineNuxtComponent({
   components: {

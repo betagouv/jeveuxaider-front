@@ -1,13 +1,13 @@
-import { useAuthStore } from '~/store/auth'
-import { useSettingsStore } from '~/store/settings'
-import { useNotificationsStore } from '~/store/notifications'
-import { useMessagingStore } from '~/store/messaging'
-import { useStatisticsStore } from '~/store/statistics'
-import { useTemoignageStore } from '~/store/temoignage'
-import { useMissionShareStore } from '~/store/missionShare'
-import { useAideModerationStore } from '~/store/aideModeration'
-import { useAlgoliaSearchStore } from '~/store/algoliaSearch'
-import { useSoftGateStore } from '~/store/softGate'
+import { useAuthStore } from '@/store/auth'
+import { useSettingsStore } from '@/store/settings'
+import { useNotificationsStore } from '@/store/notifications'
+import { useMessagingStore } from '@/store/messaging'
+import { useStatisticsStore } from '@/store/statistics'
+import { useTemoignageStore } from '@/store/temoignage'
+import { useMissionShareStore } from '@/store/missionShare'
+import { useAideModerationStore } from '@/store/aideModeration'
+import { useAlgoliaSearchStore } from '@/store/algoliaSearch'
+import { useSoftGateStore } from '@/store/softGate'
 
 export default defineNuxtPlugin(async () => {
   const storeAuth = useAuthStore()

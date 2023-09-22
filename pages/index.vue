@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import BlocBanner from '~/components/section/home/BlocBanner.vue'
-import BlocInscriptionBenevole from '~/components/section/home/BlocInscriptionBenevole.vue'
-import BlocInscriptionResponsable from '~/components/section/home/BlocInscriptionResponsable.vue'
+import BlocBanner from '@/components/section/home/BlocBanner.vue'
+import BlocInscriptionBenevole from '@/components/section/home/BlocInscriptionBenevole.vue'
+import BlocInscriptionResponsable from '@/components/section/home/BlocInscriptionResponsable.vue'
 import BlocActivities from '@/components/section/home/BlocActivities.vue'
 import BlocCaDevraitVousPlaire from '@/components/section/home/BlocCaDevraitVousPlaire.vue'
 import SeptembrePourApprendre from '@/components/section/operations/SeptembrePourApprendre.vue'

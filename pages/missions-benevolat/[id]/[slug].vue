@@ -436,7 +436,7 @@
 </template>
 
 <script>
-import CardMission from '~/components/card/CardMission'
+import CardMission from '@/components/card/CardMission'
 import PresentielOrDistance from '@/components/section/mission/PresentielOrDistance.vue'
 import Presentation from '@/components/section/mission/Presentation.vue'
 import Details from '@/components/section/mission/Details.vue'

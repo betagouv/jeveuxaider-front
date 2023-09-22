@@ -612,7 +612,7 @@
 import { string, object, number, date, array, ref } from 'yup'
 import inputGeo from '@/mixins/input-geo'
 import FormErrors from '@/mixins/form/errors'
-import FormMissionParameters from '~/components/form/FormMissionParameters.vue'
+import FormMissionParameters from '@/components/form/FormMissionParameters.vue'
 import activitiesClassifierMixin from '@/mixins/activitiesClassifier'
 import PrerequisitesInput from '@/components/custom/PrerequisitesInput'
 import ComboboxActivities from '@/components/custom/ComboboxActivities.vue'

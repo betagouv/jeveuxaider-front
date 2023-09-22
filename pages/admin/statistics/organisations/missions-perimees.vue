@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import MissionsOutdatedByOrganisations from '~/components/numbers/MissionsOutdatedByOrganisations.vue'
+import MissionsOutdatedByOrganisations from '@/components/numbers/MissionsOutdatedByOrganisations.vue'
 import FiltersStatistics from '@/components/custom/FiltersStatistics'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 

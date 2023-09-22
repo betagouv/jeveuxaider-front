@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import FacetFilter from '~/components/section/search/FacetFilter.vue'
+import FacetFilter from '@/components/section/search/FacetFilter.vue'
 import SearchFilter from '@/components/search/SearchFilter.vue'
 
 export default defineNuxtComponent({

@@ -73,9 +73,9 @@
 </template>
 
 <script>
-import PrimaryFilters from '~/components/section/search/missions/PrimaryFilters.vue'
-import SecondaryFilters from '~/components/section/search/missions/SecondaryFilters.vue'
-import MobileFilters from '~/components/section/search/missions/MobileFilters.vue'
+import PrimaryFilters from '@/components/section/search/missions/PrimaryFilters.vue'
+import SecondaryFilters from '@/components/section/search/missions/SecondaryFilters.vue'
+import MobileFilters from '@/components/section/search/missions/MobileFilters.vue'
 import GridResults from '@/components/section/search/missions/GridResults.vue'
 import BlocSlideshowRemote from '@/components/section/search/missions/BlocSlideshowRemote.vue'
 

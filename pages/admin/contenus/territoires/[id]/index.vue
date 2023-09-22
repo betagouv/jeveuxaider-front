@@ -196,7 +196,7 @@
 
 <script>
 import History from '@/components/section/History'
-import OnlineIndicator from '~/components/custom/OnlineIndicator'
+import OnlineIndicator from '@/components/custom/OnlineIndicator'
 import BoxInformations from '@/components/section/territoire/BoxInformations'
 import BoxMission from '@/components/section/territoire/BoxMission'
 import BoxParticipation from '@/components/section/territoire/BoxParticipation'

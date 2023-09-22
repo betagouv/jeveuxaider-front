@@ -127,8 +127,8 @@
 
 <script>
 import CardStatistic from '@/components/card/CardStatistic'
-import ScoreMixin from '~/mixins/score'
-import ScoreDetails from '~/components/section/organisation/ScoreDetails.vue'
+import ScoreMixin from '@/mixins/score'
+import ScoreDetails from '@/components/section/organisation/ScoreDetails.vue'
 import GaugeChart from '@/components/chart/GaugeChart.vue'
 
 export default defineNuxtComponent({

@@ -157,7 +157,7 @@ import BoxAideModeration from '@/components/section/mission/BoxAideModeration.vu
 import History from '@/components/section/History.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import MixinMission from '@/mixins/mission'
-import OnlineIndicator from '~/components/custom/OnlineIndicator'
+import OnlineIndicator from '@/components/custom/OnlineIndicator'
 import SelectMissionState from '@/components/custom/SelectMissionState'
 import BoxReferents from '@/components/section/BoxReferents'
 import BoxNotes from '@/components/custom/BoxNotes'

@@ -1,4 +1,4 @@
-import { useAlgoliaSearchStore } from '~/store/algoliaSearch'
+import { useAlgoliaSearchStore } from '@/store/algoliaSearch'
 
 export const useAlgoliaMissionsQueryBuilder = () => {
   const {

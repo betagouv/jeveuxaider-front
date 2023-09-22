@@ -145,7 +145,7 @@ import Presentation from '@/components/section/mission/Presentation.vue'
 import PresentielOrDistance from '@/components/section/mission/PresentielOrDistance.vue'
 import ButtonJeProposeMonAideApiEngagement from '@/components/custom/ButtonJeProposeMonAideApiEngagement.vue'
 import MixinMission from '@/mixins/mission'
-import CardMission from '~/components/card/CardMission'
+import CardMission from '@/components/card/CardMission'
 import { v4 as uuidv4 } from 'uuid'
 
 export default defineNuxtComponent({
