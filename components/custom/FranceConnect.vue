@@ -34,7 +34,6 @@ export default defineNuxtComponent({
     },
   },
   async mounted() {
-    // @todo tester
     if (this.$route.query.state && this.$route.query.code) {
       this.$emit('loading', true)
       const data = await apiFetch('/franceconnect/login-callback', {
@@ -61,7 +60,6 @@ export default defineNuxtComponent({
     }
   },
   methods: {
-    // @todo tester
     async handleClickFranceConnect() {
       const data = await apiFetch('/franceconnect/login-authorize')
       if (data) {

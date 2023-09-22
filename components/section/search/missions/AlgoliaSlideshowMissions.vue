@@ -23,7 +23,6 @@
           "
           @click.native="$emit('slide-click', mission)"
         >
-          <!-- No lazy loading to prevent hickups during animations -->
           <CardMission class="h-full" :lazy-loading="false" :mission="mission" />
         </NuxtLink>
       </swiper-slide>

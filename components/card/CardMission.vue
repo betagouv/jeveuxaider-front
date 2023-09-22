@@ -12,7 +12,7 @@
         class="w-full h-full object-cover"
         width="300"
         height="143"
-        :data-not-lazy="!lazyLoading"
+        :loading="lazyLoading ? 'lazy' : undefined"
         @error="onImgError"
       />
 
@@ -189,7 +189,7 @@ export default defineNuxtComponent({
     },
     lazyLoading: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   computed: {
