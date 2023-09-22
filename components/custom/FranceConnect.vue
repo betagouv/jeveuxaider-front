@@ -67,9 +67,9 @@ export default defineNuxtComponent({
   methods: {
     // @todo tester
     async handleClickFranceConnect() {
-      const { data } = await useApiFetch('/franceconnect/login-authorize')
-      if (data.value) {
-        navigateTo(data.value)
+      const data = await apiFetch('/franceconnect/login-authorize')
+      if (data) {
+        navigateTo(data, { external: true })
       }
     },
   },
