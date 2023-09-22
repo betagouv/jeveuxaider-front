@@ -145,7 +145,7 @@ const isActiveFilter = (name: string, value: any) => {
   return !!(route.query[name] && (route.query[name] as string).split('|').includes(value))
 }
 
-const onNavigatorGeolocation = async (data: any, activeFacets: any[], searchParameters: any) => {
+const onNavigatorGeolocation = async (data: any) => {
   const algoliaSearchStore = useAlgoliaSearchStore()
   const { $plausible } = useNuxtApp()
 

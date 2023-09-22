@@ -8,9 +8,9 @@
     >
       <slot
         name="button"
-        :isOpen="isOpen"
-        :activeValuesCount="activeValuesCount"
-        :firstValueSelected="firstValueSelected"
+        :is-open="isOpen"
+        :active-values-count="activeValuesCount"
+        :first-value-selected="firstValueSelected"
       >
         Toggle facet
       </slot>
@@ -188,6 +188,9 @@ export default defineNuxtComponent({
   },
   watch: {
     async isOpen(newVal) {
+      if (!this.$refs.scrollContainer) {
+        return
+      }
       if (newVal) {
         await this.$nextTick()
         this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
@@ -198,12 +201,15 @@ export default defineNuxtComponent({
       }
     },
     async facetHits() {
-      if (this.isOpen) {
+      if (this.isOpen && this.$refs.scrollContainer) {
         await this.$nextTick()
         this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
       }
     },
-    async $route() {
+    async $route(newVal, oldVal) {
+      if (newVal.name !== oldVal.name) {
+        return
+      }
       if (this.facetHits && this.facetQuery) {
         const res = await this.searchForFacetValues(this.facetName, this.facetQuery)
         this.facetHits = res.facetHits

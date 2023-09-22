@@ -21,7 +21,7 @@ export const useAlgoliaMissionsQueryBuilder = () => {
       await search()
     },
     onNavigatorGeolocation: async (data: any) => {
-      await onNavigatorGeolocation(data, getActiveFacets(), getSearchParameters())
+      await onNavigatorGeolocation(data)
       algoliaSearchStore.searchParameters = getSearchParameters()
       algoliaSearchStore.activeFacets = getActiveFacets()
       await search()

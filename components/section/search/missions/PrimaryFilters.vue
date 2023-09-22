@@ -33,25 +33,36 @@
               :facets="$stores.algoliaSearch.facetResults('activities.name')"
               legend="Filtrer par type d'activité"
             >
-              <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
-                <button
-                  :aria-expanded="isOpen || 'false'"
-                  class="w-full flex space-x-2 items-center justify-between group"
-                >
-                  <div class="flex space-x-2 items-center truncate">
-                    <RiBookmark3Fill
-                      class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none"
-                    />
-                    <span v-if="!firstValueSelected" class="italic pr-[1px] text-[#888888]"
-                      >Toutes</span
-                    >
-                    <span v-else class="font-bold truncate">
-                      {{ firstValueSelected
-                      }}<span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+              <template #button="props">
+                <!--
+                  v-show au lieu de v-if
+                  https://github.com/vuejs/core/issues/5657
+                -->
+                <div>
+                  <button
+                    :aria-expanded="props?.isOpen || 'false'"
+                    class="w-full flex space-x-2 items-center justify-between group"
+                  >
+                    <span class="flex space-x-2 items-center truncate">
+                      <RiBookmark3Fill
+                        class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none"
+                      />
+                      <span
+                        v-show="!props?.firstValueSelected"
+                        class="italic pr-[1px] text-[#888888]"
+                      >
+                        Toutes
+                      </span>
+                      <span v-show="props?.firstValueSelected" class="font-bold truncate">
+                        <span>{{ props?.firstValueSelected }}</span>
+                        <span v-show="props?.activeValuesCount > 1"
+                          >, +{{ props?.activeValuesCount - 1 }}</span
+                        >
+                      </span>
                     </span>
-                  </div>
-                  <RiArrowDownSLine class="text-[#7B7B7B] h-4 w-4 group-hover:text-gray-900" />
-                </button>
+                    <RiArrowDownSLine class="text-[#7B7B7B] h-4 w-4 group-hover:text-gray-900" />
+                  </button>
+                </div>
               </template>
             </FacetFilterToggle>
           </div>
