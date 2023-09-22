@@ -9,15 +9,15 @@ export default defineNuxtConfig({
     // },
   },
 
-  experimental: {
-    emitRouteChunkError: 'automatic',
-  },
+  // experimental: {
+  //   emitRouteChunkError: 'automatic',
+  // },
 
   runtimeConfig: {
     strapi: {
       // on server
       token: process.env.STRAPI_TOKEN,
-      url: `${process.env.STRAPI_URL}`,
+      url: process.env.STRAPI_URL,
     },
 
     public: {
@@ -30,7 +30,7 @@ export default defineNuxtConfig({
       strapi: {
         // on client
         token: process.env.STRAPI_TOKEN,
-        url: `${process.env.STRAPI_URL}`,
+        url: process.env.STRAPI_URL,
       },
       blog: {
         restApiUrl: process.env.BLOG_REST_API_URL,
