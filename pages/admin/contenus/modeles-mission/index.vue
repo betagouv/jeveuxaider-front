@@ -192,8 +192,8 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import Card from '@/components/card/Card'
-import DrawerMissionTemplate from '@/components/drawer/DrawerMissionTemplate'
+import Card from '@/components/card/Card.vue'
+import DrawerMissionTemplate from '@/components/drawer/DrawerMissionTemplate.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'

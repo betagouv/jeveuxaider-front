@@ -308,21 +308,21 @@
 </template>
 
 <script>
-import History from '@/components/section/History'
+import History from '@/components/section/History.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import MixinOrganisation from '@/mixins/organisation'
-import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks'
-import BoxInformations from '@/components/section/organisation/BoxInformations'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
-import CardStatistic from '@/components/card/CardStatistic'
-import FormInvitation from '@/components/form/FormInvitation'
-import FormAddResponsable from '@/components/form/FormAddResponsable'
-import BoxInvitations from '@/components/section/BoxInvitations'
-import SelectOrganisationState from '@/components/custom/SelectOrganisationState'
-import BoxReferents from '@/components/section/BoxReferents'
-import BoxReseau from '@/components/section/organisation/BoxReseau'
-import BoxNotes from '@/components/custom/BoxNotes'
-import BoxMember from '@/components/section/BoxMember'
+import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks.vue'
+import BoxInformations from '@/components/section/organisation/BoxInformations.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
+import CardStatistic from '@/components/card/CardStatistic.vue'
+import FormInvitation from '@/components/form/FormInvitation.vue'
+import FormAddResponsable from '@/components/form/FormAddResponsable.vue'
+import BoxInvitations from '@/components/section/BoxInvitations.vue'
+import SelectOrganisationState from '@/components/custom/SelectOrganisationState.vue'
+import BoxReferents from '@/components/section/BoxReferents.vue'
+import BoxReseau from '@/components/section/organisation/BoxReseau.vue'
+import BoxNotes from '@/components/custom/BoxNotes.vue'
+import BoxMember from '@/components/section/BoxMember.vue'
 import BoxScore from '@/components/section/organisation/BoxScore.vue'
 import BoxAideModeration from '@/components/section/organisation/BoxAideModeration.vue'
 
@@ -401,7 +401,7 @@ export default defineNuxtComponent({
 
       apiFetch('/invitations', {
         params: {
-          'filter[of_structure]': this.organisation.id,
+          'filter[of_structure]': route.params.id,
           pagination: 999,
         },
       }).then((response) => {
@@ -413,6 +413,7 @@ export default defineNuxtComponent({
       })
     },
     async refetch() {
+      console.log('refetch')
       const organisation = await apiFetch(`/structures/${this.organisation.id}`)
       this.organisation = organisation
       const responsables = await apiFetch(`/structures/${this.organisation.id}/responsables`)

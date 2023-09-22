@@ -285,14 +285,14 @@
 
 <script>
 import MixinReseau from '@/mixins/reseau'
-import History from '@/components/section/History'
-import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks'
-import FormInvitation from '@/components/form/FormInvitation'
-import FormAddResponsable from '@/components/form/FormAddResponsable'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
-import BoxInvitations from '@/components/section/BoxInvitations'
-import CardStatistic from '@/components/card/CardStatistic'
-import BoxAntenne from '@/components/section/reseau/BoxAntenne'
+import History from '@/components/section/History.vue'
+import DomainsPublicsLinks from '@/components/section/organisation/DomainsPublicsLinks.vue'
+import FormInvitation from '@/components/form/FormInvitation.vue'
+import FormAddResponsable from '@/components/form/FormAddResponsable.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
+import BoxInvitations from '@/components/section/BoxInvitations.vue'
+import CardStatistic from '@/components/card/CardStatistic.vue'
+import BoxAntenne from '@/components/section/reseau/BoxAntenne.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

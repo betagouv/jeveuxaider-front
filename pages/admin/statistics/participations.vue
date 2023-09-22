@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import ParticipationsStatistics from '@/components/numbers/ParticipationsStatistics.vue'
 import ParticipationsByDate from '@/components/numbers/ParticipationsByDate.vue'
 import ParticipationsByStates from '@/components/numbers/ParticipationsByStates.vue'

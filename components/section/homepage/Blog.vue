@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import CardArticle from '@/components/card/CardArticle'
+import CardArticle from '@/components/card/CardArticle.vue'
 import uuid from '@/mixins/uuid'
 
 export default defineNuxtComponent({

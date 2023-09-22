@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import OverviewApiEngagementSortant from '@/components/numbers/OverviewApiEngagementSortant.vue'
 import OverviewApiEngagementSortantDetails from '@/components/numbers/OverviewApiEngagementSortantDetails.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'

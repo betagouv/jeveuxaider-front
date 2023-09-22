@@ -54,9 +54,9 @@
 </template>
 
 <script>
-import BoxInformations from '@/components/section/domaine/BoxInformations'
-import BoxMission from '@/components/section/domaine/BoxMission'
-import BoxParticipation from '@/components/section/domaine/BoxParticipation'
+import BoxInformations from '@/components/section/domaine/BoxInformations.vue'
+import BoxMission from '@/components/section/domaine/BoxMission.vue'
+import BoxParticipation from '@/components/section/domaine/BoxParticipation.vue'
 
 export default defineNuxtComponent({
   emits: ['loaded', 'close', 'refetch'],

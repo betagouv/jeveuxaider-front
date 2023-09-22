@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import FormTerm from '@/components/form/FormTerm'
+import FormTerm from '@/components/form/FormTerm.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

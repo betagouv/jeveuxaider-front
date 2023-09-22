@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import TerritoirePage from '@/components/section/territoire/Page'
+import TerritoirePage from '@/components/section/territoire/Page.vue'
 
 export default defineNuxtComponent({
   components: {

@@ -130,7 +130,7 @@ import ShareFacebook from '@/components/share/Facebook.vue'
 import ShareTwitter from '@/components/share/Twitter.vue'
 import ShareLinkedin from '@/components/share/Linkedin.vue'
 // import ShareMail from '@/components/share/Mail.vue'
-import ShareWhatsApp from '@/components/share/WhatsApp'
+import ShareWhatsApp from '@/components/share/WhatsApp.vue'
 
 export default defineNuxtComponent({
   name: 'TestimonialOverlay',

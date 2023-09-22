@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import CardStatistic from '@/components/card/CardStatistic'
+import CardStatistic from '@/components/card/CardStatistic.vue'
 import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
 export default defineNuxtComponent({

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics'
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
 export default defineNuxtComponent({
   components: {

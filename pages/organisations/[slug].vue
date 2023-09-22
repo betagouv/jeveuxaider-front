@@ -89,14 +89,14 @@
 </template>
 
 <script>
-import Header from '@/components/section/organisation/Header'
-import Presentation from '@/components/section/organisation/Presentation'
-import Details from '@/components/section/organisation/Details'
-import SectionSlideshowMissions from '@/components/section/search/SectionSlideshowMissions'
+import Header from '@/components/section/organisation/Header.vue'
+import Presentation from '@/components/section/organisation/Presentation.vue'
+import Details from '@/components/section/organisation/Details.vue'
+import SectionSlideshowMissions from '@/components/section/search/SectionSlideshowMissions.vue'
 import MissionsActivities from '@/components/section/MissionActivities.vue'
-import SectionDonation from '@/components/section/SectionDonation'
-import SectionRejoignezLeMouvement from '@/components/section/RejoignezLeMouvement'
-import SectionTemoignages from '@/components/section/SectionTemoignages'
+import SectionDonation from '@/components/section/SectionDonation.vue'
+import SectionRejoignezLeMouvement from '@/components/section/RejoignezLeMouvement.vue'
+import SectionTemoignages from '@/components/section/SectionTemoignages.vue'
 import MixinOrganisation from '@/mixins/organisation'
 
 export default defineNuxtComponent({

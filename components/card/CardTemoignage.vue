@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 
 export default defineNuxtComponent({
   components: {

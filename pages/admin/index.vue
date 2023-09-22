@@ -68,7 +68,7 @@ import OrganisationsTrending from '@/components/section/admin/OrganisationsTrend
 import PlausiblePageViews from '@/components/section/admin/PlausiblePageViews.vue'
 import Goals from '@/components/section/admin/Goals.vue'
 import Heading from '@/components/dsfr/Heading.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 
 export default defineNuxtComponent({
   components: {

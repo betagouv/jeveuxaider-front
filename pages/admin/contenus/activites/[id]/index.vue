@@ -69,14 +69,14 @@
 </template>
 
 <script>
-import History from '@/components/section/History'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
-import BoxInformations from '@/components/section/activity/BoxInformations'
-import BoxMission from '@/components/section/activity/BoxMission'
-import BoxParticipation from '@/components/section/activity/BoxParticipation'
-import Banner from '@/components/section/activity/Banner'
-import Associations from '@/components/section/activity/Associations'
-import Engagement from '@/components/section/activity/Engagement'
+import History from '@/components/section/History.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
+import BoxInformations from '@/components/section/activity/BoxInformations.vue'
+import BoxMission from '@/components/section/activity/BoxMission.vue'
+import BoxParticipation from '@/components/section/activity/BoxParticipation.vue'
+import Banner from '@/components/section/activity/Banner.vue'
+import Associations from '@/components/section/activity/Associations.vue'
+import Engagement from '@/components/section/activity/Engagement.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

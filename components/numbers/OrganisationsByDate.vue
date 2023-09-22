@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import BarChart from '@/components/chart/BarChart'
-import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics'
+import BarChart from '@/components/chart/BarChart.vue'
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 
 export default defineNuxtComponent({
   components: { BarChart, BoxHeadingStatistics },

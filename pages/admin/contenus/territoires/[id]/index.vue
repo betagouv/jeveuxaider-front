@@ -195,19 +195,19 @@
 </template>
 
 <script>
-import History from '@/components/section/History'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
-import BoxInformations from '@/components/section/territoire/BoxInformations'
-import BoxMission from '@/components/section/territoire/BoxMission'
-import BoxParticipation from '@/components/section/territoire/BoxParticipation'
-import Banner from '@/components/section/territoire/Banner'
-import Associations from '@/components/section/territoire/Associations'
-import Engagement from '@/components/section/territoire/Engagement'
-import BoxInvitations from '@/components/section/BoxInvitations'
-import FormInvitation from '@/components/form/FormInvitation'
-import FormAddResponsable from '@/components/form/FormAddResponsable'
+import History from '@/components/section/History.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
+import BoxInformations from '@/components/section/territoire/BoxInformations.vue'
+import BoxMission from '@/components/section/territoire/BoxMission.vue'
+import BoxParticipation from '@/components/section/territoire/BoxParticipation.vue'
+import Banner from '@/components/section/territoire/Banner.vue'
+import Associations from '@/components/section/territoire/Associations.vue'
+import Engagement from '@/components/section/territoire/Engagement.vue'
+import BoxInvitations from '@/components/section/BoxInvitations.vue'
+import FormInvitation from '@/components/form/FormInvitation.vue'
+import FormAddResponsable from '@/components/form/FormAddResponsable.vue'
 import MixinTerritoire from '@/mixins/territoire'
-import SelectTerritoireState from '@/components/custom/SelectTerritoireState'
+import SelectTerritoireState from '@/components/custom/SelectTerritoireState.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

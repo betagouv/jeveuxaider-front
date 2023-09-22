@@ -55,14 +55,14 @@
 </template>
 
 <script>
-import OverviewOrganisations from '@/components/statistics/OverviewOrganisations'
-import OverviewMissions from '@/components/statistics/OverviewMissions'
-import OverviewParticipations from '@/components/statistics/OverviewParticipations'
-import OverviewQuickGlance from '@/components/statistics/OverviewQuickGlance'
-import OverviewUtilisateurs from '@/components/statistics/OverviewUtilisateurs'
-import OverviewPlaces from '@/components/statistics/OverviewPlaces'
-// import OverviewAPIEngagement from '@/components/statistics/OverviewAPIEngagement'
-import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
+import OverviewOrganisations from '@/components/statistics/OverviewOrganisations.vue'
+import OverviewMissions from '@/components/statistics/OverviewMissions.vue'
+import OverviewParticipations from '@/components/statistics/OverviewParticipations.vue'
+import OverviewQuickGlance from '@/components/statistics/OverviewQuickGlance.vue'
+import OverviewUtilisateurs from '@/components/statistics/OverviewUtilisateurs.vue'
+import OverviewPlaces from '@/components/statistics/OverviewPlaces.vue'
+// import OverviewAPIEngagement from '@/components/statistics/OverviewAPIEngagement.vue'
+import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic.vue'
 
 export default defineNuxtComponent({
   components: {

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import SpinIcon from '@/components/icon/SpinIcon'
+import SpinIcon from '@/components/icon/SpinIcon.vue'
 
 export default defineNuxtComponent({
   components: {

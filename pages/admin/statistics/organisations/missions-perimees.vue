@@ -49,7 +49,7 @@
 
 <script>
 import MissionsOutdatedByOrganisations from '@/components/numbers/MissionsOutdatedByOrganisations.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

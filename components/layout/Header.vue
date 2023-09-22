@@ -31,8 +31,8 @@
 import HeaderBanner from '@/components/layout/HeaderBanner.vue'
 import HeaderMobile from '@/components/section/header/HeaderMobile.vue'
 import HeaderDesktop from '@/components/section/header/HeaderDesktop.vue'
-import LazySoftGateOverlay from '@/components/section/SoftGateOverlay'
-import LazyMissionShareOverlay from '@/components/section/MissionShareOverlay'
+import LazySoftGateOverlay from '@/components/section/SoftGateOverlay.vue'
+import LazyMissionShareOverlay from '@/components/section/MissionShareOverlay.vue'
 
 export default defineNuxtComponent({
   components: {

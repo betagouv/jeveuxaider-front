@@ -169,16 +169,16 @@
 
 <script>
 import History from '@/components/section/History.vue'
-import BoxInformations from '@/components/section/profile/BoxInformations'
-import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities'
-import BoxReseau from '@/components/section/profile/BoxReseau'
-import BoxTerritoires from '@/components/section/profile/BoxTerritoires'
-import BoxOrganisations from '@/components/section/profile/BoxOrganisations'
-import BoxActions from '@/components/section/profile/BoxActions'
-import BoxUtm from '@/components/section/BoxUtm'
+import BoxInformations from '@/components/section/profile/BoxInformations.vue'
+import BoxDisponibilities from '@/components/section/profile/BoxDisponibilities.vue'
+import BoxReseau from '@/components/section/profile/BoxReseau.vue'
+import BoxTerritoires from '@/components/section/profile/BoxTerritoires.vue'
+import BoxOrganisations from '@/components/section/profile/BoxOrganisations.vue'
+import BoxActions from '@/components/section/profile/BoxActions.vue'
+import BoxUtm from '@/components/section/BoxUtm.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import Tag from '@/components/dsfr/Tag.vue'
-import BoxRoles from '@/components/section/profile/BoxRoles'
+import BoxRoles from '@/components/section/profile/BoxRoles.vue'
 
 export default defineNuxtComponent({
   components: {

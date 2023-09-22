@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic'
+import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic.vue'
 // import ApiEngagementStatistics from '@/components/statistics/ApiEngagementStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 

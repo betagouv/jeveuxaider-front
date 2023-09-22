@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import LoadingIndicator from '@/components/custom/LoadingIndicator'
+import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
 import MixinAideModeration from '@/mixins/mission-aide-moderation'
 
 export default defineNuxtComponent({

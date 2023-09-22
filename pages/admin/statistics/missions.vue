@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import MissionsStatistics from '@/components/numbers/MissionsStatistics.vue'
 import MissionsByDate from '@/components/numbers/MissionsByDate.vue'
 import MissionsByStates from '@/components/numbers/MissionsByStates.vue'

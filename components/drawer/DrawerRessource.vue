@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import BoxInformations from '@/components/section/ressource/BoxInformations'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import BoxInformations from '@/components/section/ressource/BoxInformations.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 
 export default defineNuxtComponent({
   components: {

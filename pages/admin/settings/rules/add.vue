@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import FormRule from '@/components/form/FormRule'
+import FormRule from '@/components/form/FormRule.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

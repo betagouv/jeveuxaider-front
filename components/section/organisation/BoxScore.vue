@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import CardStatistic from '@/components/card/CardStatistic'
+import CardStatistic from '@/components/card/CardStatistic.vue'
 import ScoreMixin from '@/mixins/score'
 import ScoreDetails from '@/components/section/organisation/ScoreDetails.vue'
 import GaugeChart from '@/components/chart/GaugeChart.vue'

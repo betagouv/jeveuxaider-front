@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics'
+import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import UtilisateursStatistics from '@/components/numbers/UtilisateursStatistics.vue'
 import UtilisateursByDate from '@/components/numbers/UtilisateursByDate.vue'
 import UtilisateursByDomaines from '@/components/numbers/UtilisateursByDomaines.vue'

@@ -136,8 +136,8 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import Card from '@/components/card/Card'
-import DrawerReseau from '@/components/drawer/DrawerReseau'
+import Card from '@/components/card/Card.vue'
+import DrawerReseau from '@/components/drawer/DrawerReseau.vue'
 import MixinExport from '@/mixins/export'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'

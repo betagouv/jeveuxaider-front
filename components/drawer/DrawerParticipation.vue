@@ -64,14 +64,14 @@
 </template>
 
 <script>
-import SelectParticipationState from '@/components/custom/SelectParticipationState'
+import SelectParticipationState from '@/components/custom/SelectParticipationState.vue'
 import MixinParticipation from '@/mixins/participation'
-import BoxInformationsProfile from '@/components/section/profile/BoxInformations'
-import BoxInformationsMission from '@/components/section/mission/BoxInformations'
-import BoxResponsable from '@/components/section/BoxResponsable'
-import BoxUtm from '@/components/section/BoxUtm'
+import BoxInformationsProfile from '@/components/section/profile/BoxInformations.vue'
+import BoxInformationsMission from '@/components/section/mission/BoxInformations.vue'
+import BoxResponsable from '@/components/section/BoxResponsable.vue'
+import BoxUtm from '@/components/section/BoxUtm.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
-import LoadingIndicator from '@/components/custom/LoadingIndicator'
+import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
 
 export default defineNuxtComponent({
   components: {

@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import BoxItem from '@/components/section/inscription/BoxItem'
+import BoxItem from '@/components/section/inscription/BoxItem.vue'
 
 export default defineNuxtComponent({
   name: 'Inscription',

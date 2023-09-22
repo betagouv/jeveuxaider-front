@@ -405,10 +405,10 @@
 
 <script>
 import { string, object, ref, date } from 'yup'
-import BoxItem from '@/components/section/inscription/BoxItem'
+import BoxItem from '@/components/section/inscription/BoxItem.vue'
 import FormErrors from '@/mixins/form/errors'
 import Emailable from '@/mixins/emailable.client'
-import FormLeadReseau from '@/components/form/FormLeadReseau'
+import FormLeadReseau from '@/components/form/FormLeadReseau.vue'
 import DsfrButton from '@/components/dsfr/Button.vue'
 
 export default defineNuxtComponent({

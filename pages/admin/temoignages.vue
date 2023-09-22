@@ -118,9 +118,9 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import HelpCenter from '@/components/section/dashboard/HelpCenter'
-import GuideLinks from '@/components/section/dashboard/GuideLinks'
-import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
+import GuideLinks from '@/components/section/dashboard/GuideLinks.vue'
+import MoreNumbers from '@/components/section/dashboard/MoreNumbers.vue'
 import CardTemoignage from '@/components/card/CardTemoignage.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import DrawerTemoignage from '@/components/drawer/DrawerTemoignage.vue'

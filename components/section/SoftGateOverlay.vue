@@ -80,14 +80,14 @@
 
 <script>
 import { FocusLoop } from '@vue-a11y/focus-loop'
-import SoftGateEmail from '@/components/section/soft-gate/Email'
-import SoftGateLogin from '@/components/section/soft-gate/Login'
-import SoftGateRegister from '@/components/section/soft-gate/Register'
-import SoftGateAntiFlood from '@/components/section/soft-gate/AntiFlood'
-import SoftGateParticipate from '@/components/section/soft-gate/Participate'
-import SoftGateSelectCreneaux from '@/components/section/soft-gate/SelectCreneaux'
-import SoftGateShare from '@/components/section/soft-gate/Share'
-import SoftGatePrerequisites from '@/components/section/soft-gate/Prerequisites'
+import SoftGateEmail from '@/components/section/soft-gate/Email.vue'
+import SoftGateLogin from '@/components/section/soft-gate/Login.vue'
+import SoftGateRegister from '@/components/section/soft-gate/Register.vue'
+import SoftGateAntiFlood from '@/components/section/soft-gate/AntiFlood.vue'
+import SoftGateParticipate from '@/components/section/soft-gate/Participate.vue'
+import SoftGateSelectCreneaux from '@/components/section/soft-gate/SelectCreneaux.vue'
+import SoftGateShare from '@/components/section/soft-gate/Share.vue'
+import SoftGatePrerequisites from '@/components/section/soft-gate/Prerequisites.vue'
 
 export default defineNuxtComponent({
   name: 'SoftGateOverlay',

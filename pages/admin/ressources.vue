@@ -72,9 +72,9 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import HelpCenter from '@/components/section/dashboard/HelpCenter'
-import GuideLinks from '@/components/section/dashboard/GuideLinks'
-import MoreNumbers from '@/components/section/dashboard/MoreNumbers'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
+import GuideLinks from '@/components/section/dashboard/GuideLinks.vue'
+import MoreNumbers from '@/components/section/dashboard/MoreNumbers.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 

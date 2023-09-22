@@ -158,7 +158,7 @@
 
 <script>
 import QueryBuilder from '@/mixins/query-builder'
-import DrawerTerm from '@/components/drawer/DrawerTerm'
+import DrawerTerm from '@/components/drawer/DrawerTerm.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 
 export default defineNuxtComponent({

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import LoadingIndicator from '@/components/custom/LoadingIndicator'
+import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
 
 export default defineNuxtComponent({
   components: {

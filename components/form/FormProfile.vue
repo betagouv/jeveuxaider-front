@@ -484,7 +484,7 @@ import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
 import activitiesOptions from '@/assets/activities.json'
-import FormProfileRole from '@/components/form/FormProfileRole'
+import FormProfileRole from '@/components/form/FormProfileRole.vue'
 
 export default defineNuxtComponent({
   components: {

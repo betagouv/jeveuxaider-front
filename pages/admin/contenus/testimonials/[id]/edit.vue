@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import FormTemoignage from '@/components/form/FormTemoignage'
+import FormTemoignage from '@/components/form/FormTemoignage.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({

@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import CardDomaine from '@/components/card/CardDomaine'
+import CardDomaine from '@/components/card/CardDomaine.vue'
 import uuid from '@/mixins/uuid'
 
 export default defineNuxtComponent({

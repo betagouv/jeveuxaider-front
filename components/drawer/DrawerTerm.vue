@@ -50,9 +50,9 @@
 </template>
 
 <script>
-import BoxInformations from '@/components/section/term/BoxInformations'
-// import BoxLiaisons from '@/components/section/term/BoxLiaisons'
-import OnlineIndicator from '@/components/custom/OnlineIndicator'
+import BoxInformations from '@/components/section/term/BoxInformations.vue'
+// import BoxLiaisons from '@/components/section/term/BoxLiaisons.vue'
+import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 
 export default defineNuxtComponent({
   components: {

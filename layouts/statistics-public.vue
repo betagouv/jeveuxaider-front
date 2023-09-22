@@ -25,7 +25,7 @@
 <script>
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
-import SecondaryMenuStatisticsPublic from '@/components/menu/SecondaryMenuStatisticsPublic'
+import SecondaryMenuStatisticsPublic from '@/components/menu/SecondaryMenuStatisticsPublic.vue'
 import MixinPlausible from '@/mixins/plausible.js'
 
 export default {

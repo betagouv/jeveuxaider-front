@@ -614,7 +614,7 @@ import inputGeo from '@/mixins/input-geo'
 import FormErrors from '@/mixins/form/errors'
 import FormMissionParameters from '@/components/form/FormMissionParameters.vue'
 import activitiesClassifierMixin from '@/mixins/activitiesClassifier'
-import PrerequisitesInput from '@/components/custom/PrerequisitesInput'
+import PrerequisitesInput from '@/components/custom/PrerequisitesInput.vue'
 import ComboboxActivities from '@/components/custom/ComboboxActivities.vue'
 
 export default defineNuxtComponent({

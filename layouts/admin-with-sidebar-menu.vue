@@ -9,12 +9,8 @@
         <aside class="relative lg:col-span-1">
           <div class="lg:block">
             <SecondaryMenuAdmin v-if="$stores.auth.contextRole === 'admin'" />
-            <SecondaryMenuResponsable
-              v-if="$stores.auth.contextRole === 'responsable'"
-            />
-            <SecondaryMenuTeteDeReseau
-              v-if="$stores.auth.contextRole === 'tete_de_reseau'"
-            />
+            <SecondaryMenuResponsable v-if="$stores.auth.contextRole === 'responsable'" />
+            <SecondaryMenuTeteDeReseau v-if="$stores.auth.contextRole === 'tete_de_reseau'" />
           </div>
         </aside>
         <div class="lg:col-span-4 min-w-0">
@@ -31,9 +27,9 @@
 <script>
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
-import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin'
-import SecondaryMenuResponsable from '@/components/menu/SecondaryMenuResponsable'
-import SecondaryMenuTeteDeReseau from '@/components/menu/SecondaryMenuTeteDeReseau'
+import SecondaryMenuAdmin from '@/components/menu/SecondaryMenuAdmin.vue'
+import SecondaryMenuResponsable from '@/components/menu/SecondaryMenuResponsable.vue'
+import SecondaryMenuTeteDeReseau from '@/components/menu/SecondaryMenuTeteDeReseau.vue'
 import MixinPlausible from '@/mixins/plausible.js'
 
 export default {
