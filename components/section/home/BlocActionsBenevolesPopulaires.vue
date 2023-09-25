@@ -87,8 +87,8 @@ export default defineNuxtComponent({
   },
   methods: {
     async fetch() {
-      const organisations = await apiFetch('/organisations/popular')
-      this.organisations = organisations
+      const data = await apiFetch('/organisations/popular')
+      this.organisations = data.organisations
     },
     handleSlideshowPreviousClick() {
       this.$refs.slideshowPopulaire.previous()
