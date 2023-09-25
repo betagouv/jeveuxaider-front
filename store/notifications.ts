@@ -38,8 +38,8 @@ export const useNotificationsStore = defineStore('notifications', {
     },
     // @todo: à tester
     async getUserUnreadNotificationsCount() {
-      const { data, error } = await useApiFetch<any>(`user/unread-notifications`)
-      this.unreadNotificationsCount = data.value.count
+      const data: any = await apiFetch(`user/unread-notifications`)
+      this.unreadNotificationsCount = data.count
     },
   },
 })

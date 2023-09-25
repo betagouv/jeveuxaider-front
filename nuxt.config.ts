@@ -155,6 +155,7 @@ export default defineNuxtConfig({
         // manifest[key].dynamicImports = []
         manifest[key].prefetch = false
         manifest[key].preload = false
+        manifest[key].isDynamicEntry = false
       }
       console.log('manifest', manifest)
     },
