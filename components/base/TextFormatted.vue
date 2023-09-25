@@ -5,6 +5,7 @@
       :class="[
         'break-word whitespace-pre-line formatted-text',
         { 'clamped-content': !forceExpansion },
+        { 'ios-safari': iosSafari },
       ]"
       v-html="text"
     />
@@ -39,10 +40,12 @@ export default defineNuxtComponent({
     return {
       isClamped: true,
       forceExpansion: false,
+      iosSafari: false,
     }
   },
   mounted() {
     this.setIsClamped()
+    this.checkSafariIos()
     let timeout
     window.addEventListener(
       'resize',
@@ -67,6 +70,12 @@ export default defineNuxtComponent({
         (!this.forceExpansion && el.offsetHeight < el.scrollHeight) ||
         el.offsetWidth < el.scrollWidth
     },
+    checkSafariIos() {
+      var ua = window.navigator.userAgent
+      var iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i)
+      var webkit = !!ua.match(/WebKit/i)
+      this.iosSafari = iOS && webkit && !ua.match(/CriOS/i)
+    },
   },
 })
 </script>
@@ -77,5 +86,10 @@ export default defineNuxtComponent({
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: v-bind(maxLines);
+
+  /* iOS safari fallback, as it does not handle mutiple lines clamp correctly */
+  &.ios-safari:deep(*) {
+    display: inline;
+  }
 }
 </style>
