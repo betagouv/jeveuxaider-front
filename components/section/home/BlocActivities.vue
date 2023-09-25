@@ -45,9 +45,8 @@
             <div id="slideshowActivitiesArrows" />
           </div>
         </div>
-        <div class="mt-12">
+        <div :key="chunkSize" class="mt-12">
           <BaseSlideshow
-            :key="chunkSize"
             navigation-id="slideshowActivitiesArrows"
             navigation-variant="brown"
             navigation-button-class="hover:bg-[#EA9680]"
