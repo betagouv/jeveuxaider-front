@@ -28,6 +28,7 @@
       </div>
       <div class="flex gap-2 mt-4">
         <nuxt-link
+          no-prefetch
           :to="`/admin/contenus/modeles-mission/${missionTemplate.id}/edit`"
           class="inline-flex"
         >

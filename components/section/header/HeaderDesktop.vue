@@ -15,7 +15,7 @@
         />
       </div>
       <div class="flex items-center flex-1 pl-6">
-        <nuxt-link to="/" aria-label="Page d'accueil">
+        <nuxt-link no-prefetch to="/" aria-label="Page d'accueil">
           <img
             src="@/assets/images/jeveuxaider-logo.svg"
             alt=""
@@ -43,7 +43,7 @@
 
         <template v-if="$stores.auth.isLogged">
           <div class="relative">
-            <nuxt-link to="/messages" class="group flex p-1">
+            <nuxt-link no-prefetch to="/messages" class="group flex p-1">
               <EnvelopeIcon class="text-jva-blue-500 h-[22px] group-hover:scale-105" />
               <div
                 v-if="$stores.messaging.unreadMessagesCount"

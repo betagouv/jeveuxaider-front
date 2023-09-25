@@ -142,7 +142,11 @@
     </div>
 
     <div v-if="sent === false" class="container mt-4 text-center">
-      <nuxt-link to="/inscription/responsable" class="text-sm text-white hover:underline">
+      <nuxt-link
+        no-prefetch
+        to="/inscription/responsable"
+        class="text-sm text-white hover:underline"
+      >
         Retour
       </nuxt-link>
     </div>

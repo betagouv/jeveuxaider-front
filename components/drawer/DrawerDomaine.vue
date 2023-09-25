@@ -11,13 +11,14 @@
     />
     <template #title>
       <BaseHeading v-if="domaine" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="domaine.full_url" class="hover:underline" target="_blank">
+        <nuxt-link no-prefetch :to="domaine.full_url" class="hover:underline" target="_blank">
           {{ domaine.name }}
         </nuxt-link>
       </BaseHeading>
     </template>
     <template v-if="domaine">
       <nuxt-link
+        no-prefetch
         class="inline-flex items-center space-x-2 mt-2"
         target="_blank"
         :to="domaine.full_url"
@@ -34,7 +35,11 @@
         <RiExternalLinkLine class="h-4 w-4" />
       </nuxt-link>
       <div class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/contenus/domaines/${domaine.id}/edit`" class="inline-flex">
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/contenus/domaines/${domaine.id}/edit`"
+          class="inline-flex"
+        >
           <BaseButton variant="white" size="sm" icon="RiPencilLine"> Modifier </BaseButton>
         </nuxt-link>
         <BaseButton

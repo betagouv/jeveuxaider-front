@@ -125,6 +125,7 @@
             </div>
           </div>
           <nuxt-link
+            no-prefetch
             v-if="organisation?.permissions?.canUpdate"
             :to="`/admin/organisations/${organisation.id}/edit`"
           >

@@ -3,6 +3,7 @@
     class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-6 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto"
   >
     <nuxt-link
+      no-prefetch
       v-for="hit in hits"
       :key="hit.id"
       class="flex min-w-0 transition"

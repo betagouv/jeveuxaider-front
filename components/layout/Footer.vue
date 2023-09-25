@@ -6,100 +6,129 @@
           <div>
             <div class="font-bold mb-8">Les activités bénévoles</div>
             <div class="grid grid-cols-1 gap-4">
-              <nuxt-link class="link" to="/activites/maraude">Maraude</nuxt-link>
-              <nuxt-link class="link" to="/activites/soins-aux-animaux"
+              <nuxt-link no-prefetch class="link" to="/activites/maraude">Maraude</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/activites/soins-aux-animaux"
                 >Soins aux animaux</nuxt-link
               >
-              <nuxt-link class="link" to="/activites/alphabetisation-apprentissage-du-francais-fle"
+              <nuxt-link
+                no-prefetch
+                class="link"
+                to="/activites/alphabetisation-apprentissage-du-francais-fle"
                 >Alphabétisation</nuxt-link
               >
-              <nuxt-link class="link" to="/activites/ramassage-de-dechets"
+              <nuxt-link no-prefetch class="link" to="/activites/ramassage-de-dechets"
                 >Ramassage de déchets</nuxt-link
               >
-              <nuxt-link class="link" to="/activites/soutien-scolaire-et-formation"
+              <nuxt-link no-prefetch class="link" to="/activites/soutien-scolaire-et-formation"
                 >Soutien scolaire</nuxt-link
               >
-              <nuxt-link class="link" to="/activites/aide-aux-demarches-administratives"
+              <nuxt-link no-prefetch class="link" to="/activites/aide-aux-demarches-administratives"
                 >Aides aux démarches administrative</nuxt-link
               >
-              <nuxt-link class="link" to="/activites/droit-et-conseil-juridique"
+              <nuxt-link no-prefetch class="link" to="/activites/droit-et-conseil-juridique"
                 >Droit et conseil juridique</nuxt-link
               >
-              <nuxt-link class="link" to="/activites/ecoute-aide-psychologique"
+              <nuxt-link no-prefetch class="link" to="/activites/ecoute-aide-psychologique"
                 >Ecoute / Aide psychologique</nuxt-link
               >
-              <nuxt-link class="link" to="/activites/evenementiel">Événementiel</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/activites/evenementiel"
+                >Événementiel</nuxt-link
+              >
             </div>
           </div>
           <div class="md:col-span-2">
             <div class="font-bold mb-8">Le bénévolat en France</div>
             <div class="grid grid-cols-2 gap-4">
-              <nuxt-link class="link" to="/villes/paris">Bénévolat Paris</nuxt-link>
-              <nuxt-link class="link" to="/villes/lille">Bénévolat Lille</nuxt-link>
-              <nuxt-link class="link" to="/villes/rouen">Bénévolat Rouen</nuxt-link>
-              <nuxt-link class="link" to="/villes/toulouse">Bénévolat Toulouse</nuxt-link>
-              <nuxt-link class="link" to="/villes/rennes">Bénévolat Rennes</nuxt-link>
-              <nuxt-link class="link" to="/villes/grenoble">Bénévolat Grenoble</nuxt-link>
-              <nuxt-link class="link" to="/villes/lyon">Bénévolat Lyon</nuxt-link>
-              <nuxt-link class="link" to="/villes/montpellier">Bénévolat Montpellier</nuxt-link>
-              <nuxt-link class="link" to="/villes/tours">Bénévolat Tours</nuxt-link>
-              <nuxt-link class="link" to="/villes/marseille">Bénévolat Marseille</nuxt-link>
-              <nuxt-link class="link" to="/villes/strasbourg">Bénévolat Strasbourg</nuxt-link>
-              <nuxt-link class="link" to="/villes/dijon">Bénévolat Dijon</nuxt-link>
-              <nuxt-link class="link" to="/villes/bordeaux">Bénévolat Bordeaux</nuxt-link>
-              <nuxt-link class="link" to="/villes/angers">Bénévolat Angers</nuxt-link>
-              <nuxt-link class="link" to="/villes/nancy">Bénévolat Nancy</nuxt-link>
-              <nuxt-link class="link" to="/villes/nantes">Bénévolat Nantes</nuxt-link>
-              <nuxt-link class="link" to="/villes/nice">Bénévolat Nice</nuxt-link>
-              <nuxt-link class="link" to="/villes/caen">Bénévolat Caen</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/paris">Bénévolat Paris</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/lille">Bénévolat Lille</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/rouen">Bénévolat Rouen</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/toulouse"
+                >Bénévolat Toulouse</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/villes/rennes">Bénévolat Rennes</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/grenoble"
+                >Bénévolat Grenoble</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/villes/lyon">Bénévolat Lyon</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/montpellier"
+                >Bénévolat Montpellier</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/villes/tours">Bénévolat Tours</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/marseille"
+                >Bénévolat Marseille</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/villes/strasbourg"
+                >Bénévolat Strasbourg</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/villes/dijon">Bénévolat Dijon</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/bordeaux"
+                >Bénévolat Bordeaux</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/villes/angers">Bénévolat Angers</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/nancy">Bénévolat Nancy</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/nantes">Bénévolat Nantes</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/nice">Bénévolat Nice</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/villes/caen">Bénévolat Caen</nuxt-link>
             </div>
           </div>
 
           <div class="md:col-span-2">
             <div class="font-bold mb-8">Organisations populaires</div>
             <div class="grid grid-cols-2 gap-4">
-              <nuxt-link class="link" to="/organisations/2747-makesense">Makesense</nuxt-link>
-              <nuxt-link class="link" to="/organisations/5265-article-1">Article 1</nuxt-link>
-              <nuxt-link class="link" to="/organisations/6144-avdtm-explorjob"
+              <nuxt-link no-prefetch class="link" to="/organisations/2747-makesense"
+                >Makesense</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/organisations/5265-article-1"
+                >Article 1</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/organisations/6144-avdtm-explorjob"
                 >AVDTM - ExplorJob</nuxt-link
               >
-              <nuxt-link class="link" to="/organisations/1784-jobirl">JobIRL</nuxt-link>
-              <nuxt-link class="link" to="/organisations/7198-lobby-des-consciences"
+              <nuxt-link no-prefetch class="link" to="/organisations/1784-jobirl">JobIRL</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/organisations/7198-lobby-des-consciences"
                 >Lobby des Consciences</nuxt-link
               >
-              <nuxt-link class="link" to="/organisations/6638-entraide-scolaire-amicale"
+              <nuxt-link no-prefetch class="link" to="/organisations/6638-entraide-scolaire-amicale"
                 >Entraide Scolaire Amicale</nuxt-link
               >
-              <nuxt-link class="link" to="/organisations/5605-emmaus-connect-paris"
+              <nuxt-link no-prefetch class="link" to="/organisations/5605-emmaus-connect-paris"
                 >Emmaüs Connect - Paris</nuxt-link
               >
-              <nuxt-link class="link" to="/organisations/5575-singa">Singa</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/organisations/5575-singa">Singa</nuxt-link>
               <nuxt-link
+                no-prefetch
                 class="link"
                 to="/organisations/8818-secours-catholique-delegation-du-val-de-marne"
                 >Secours Catholique - Délégation du Val de Marne</nuxt-link
               >
-              <nuxt-link class="link" to="/organisations/8507-etendart">Etendart</nuxt-link>
-              <nuxt-link class="link" to="/organisations/7490-1-lettre-1-sourire"
+              <nuxt-link no-prefetch class="link" to="/organisations/8507-etendart"
+                >Etendart</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/organisations/7490-1-lettre-1-sourire"
                 >1 Lettre 1 Sourire</nuxt-link
               >
               <nuxt-link
+                no-prefetch
                 class="link"
                 to="/organisations/8281-association-solidarite-universelle-monde"
                 >Association Solidarité Universelle Monde</nuxt-link
               >
-              <nuxt-link class="link" to="/organisations/7159-restos-du-coeur"
+              <nuxt-link no-prefetch class="link" to="/organisations/7159-restos-du-coeur"
                 >Restos du coeur</nuxt-link
               >
-              <nuxt-link class="link" to="/organisations/7330-apprentis-dauteuil"
+              <nuxt-link no-prefetch class="link" to="/organisations/7330-apprentis-dauteuil"
                 >Apprentis d'Auteuil</nuxt-link
               >
-              <nuxt-link class="link" to="/organisations/97-entourage">Entourage</nuxt-link>
-              <nuxt-link class="link" to="/organisations/4561-mon-emile-association"
+              <nuxt-link no-prefetch class="link" to="/organisations/97-entourage"
+                >Entourage</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/organisations/4561-mon-emile-association"
                 >Mon Emile Association</nuxt-link
               >
-              <nuxt-link class="link" to="/organisations/6484-coallia">Coallia</nuxt-link>
-              <nuxt-link class="link" to="/organisations/6875-le-bon-samaritain"
+              <nuxt-link no-prefetch class="link" to="/organisations/6484-coallia"
+                >Coallia</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/organisations/6875-le-bon-samaritain"
                 >Le Bon Samaritain</nuxt-link
               >
             </div>
@@ -110,7 +139,7 @@
               <a class="link" target="_blank" href="https://reserve-civique.crisp.help/fr/"
                 >Centre d'aide</a
               >
-              <nuxt-link class="link" to="/charte-reserve-civique"
+              <nuxt-link no-prefetch class="link" to="/charte-reserve-civique"
                 >Charte de la Réserve Civique</nuxt-link
               >
               <a
@@ -149,7 +178,7 @@
                 href="https://www.jeveuxaider.gouv.fr/engagement/ecoles-et-universites/"
                 >Écoles et Universités</a
               >
-              <nuxt-link class="link" to="/stats">Statistiques</nuxt-link>
+              <nuxt-link no-prefetch class="link" to="/stats">Statistiques</nuxt-link>
             </div>
           </div>
         </div>
@@ -159,7 +188,11 @@
     <div class="bg-white py-8">
       <div class="container">
         <div class="lg:flex">
-          <nuxt-link to="/" class="flex flex-col gap-4 sm:gap-6 sm:flex-row lg:gap-8 xl:gap-12">
+          <nuxt-link
+            no-prefetch
+            to="/"
+            class="flex flex-col gap-4 sm:gap-6 sm:flex-row lg:gap-8 xl:gap-12"
+          >
             <img
               src="@/assets/images/republique-francaise-logo.svg"
               alt="République Française"
@@ -202,31 +235,37 @@
         <div class="text-gray-600 text-xs">
           <div class="divide-x">
             <nuxt-link
+              no-prefetch
               class="pl-0 cursor-pointer hover:underline pr-3 my-1 inline-block"
               to="/accessibilite"
               >Accessibilité : partiellement conforme</nuxt-link
             >
             <nuxt-link
+              no-prefetch
               class="cursor-pointer hover:underline px-3 my-1 inline-block"
               to="/politique-de-confidentialite"
               >Données personnelles</nuxt-link
             >
             <nuxt-link
+              no-prefetch
               class="cursor-pointer hover:underline px-3 my-1 inline-block"
               to="/mentions-legales"
               >Mentions légales</nuxt-link
             >
             <nuxt-link
+              no-prefetch
               class="cursor-pointer hover:underline px-3 my-1 inline-block"
               to="/conditions-generales-d-utilisation"
               >CGU</nuxt-link
             >
             <nuxt-link
+              no-prefetch
               class="cursor-pointer hover:underline px-3 my-1 inline-block"
               to="/charte-bon-fonctionnement/responsables"
               >Charte de bon fonctionnement</nuxt-link
             >
             <nuxt-link
+              no-prefetch
               class="cursor-pointer hover:underline px-3 my-1 inline-block"
               to="/plan-du-site"
               >Plan du site</nuxt-link

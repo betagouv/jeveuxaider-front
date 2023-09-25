@@ -24,6 +24,7 @@
         <template v-if="participation.conversation && canEditStatut">
           <div class="border-t -mx-6 my-6" />
           <nuxt-link
+            no-prefetch
             :to="`/messages/${participation.conversation.id}`"
             class="text-jva-blue-500 flex items-center text-sm font-bold"
           >

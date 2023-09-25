@@ -2,7 +2,7 @@
   <div class="w-full lg:min-h-screen flex flex-col lg:flex-row">
     <div class="bg-white lg:w-1/3">
       <div class="p-6 lg:p-12 border-b border-cool-gray-100 text-center">
-        <NuxtLink to="/" class="inline-block">
+        <NuxtLink no-prefetch to="/" class="inline-block">
           <img
             src="@/assets/images/jeveuxaider-logo.svg"
             alt=""
@@ -20,11 +20,7 @@
       <img
         class="z-1 object-cover absolute h-screen lg:h-auto w-full max-h-full object-top"
         alt="JeVeuxAider.gouv.fr"
-        srcset="
-          /images/bg-jva.webp,
-          /images/bg-jva@2x.webp 2x,
-          /images/bg-jva.jpg
-        "
+        srcset="/images/bg-jva.webp, /images/bg-jva@2x.webp 2x, /images/bg-jva.jpg"
         data-not-lazy
       />
 

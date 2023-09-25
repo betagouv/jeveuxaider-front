@@ -125,6 +125,7 @@
                 Vous êtes une organisation ?
               </p>
               <nuxt-link
+                no-prefetch
                 to="/inscription/responsable"
                 class="mt-4 w-full flex justify-center py-3 px-4 text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white transition"
               >
@@ -139,6 +140,7 @@
                 Vous êtes une collectivité territoriale ?
               </p>
               <nuxt-link
+                no-prefetch
                 to="/inscription/responsable?orga_type=Collectivité"
                 class="mt-4 w-full flex justify-center py-3 px-4 text-lg shadow-sm font-bold text-[#1f0391] bg-[#c3ddfd] hover:shadow-lg hover:text-gray-800 hover:border-transparent hover:bg-white transition"
               >

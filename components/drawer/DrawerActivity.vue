@@ -12,6 +12,7 @@
     <template #title>
       <BaseHeading v-if="activity" :level="3" class="text-jva-blue-500">
         <nuxt-link
+          no-prefetch
           :to="`/admin/contenus/activites/${activityId}`"
           class="hover:underline"
           target="_blank"
@@ -23,10 +24,14 @@
     <template v-if="activity">
       <OnlineIndicator :published="activity.is_published" :link="activity.full_url" class="mt-2" />
       <div class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/contenus/activites/${activity.id}`" class="inline-flex">
+        <nuxt-link no-prefetch :to="`/admin/contenus/activites/${activity.id}`" class="inline-flex">
           <BaseButton variant="white" size="sm" icon="RiEyeLine"> Détails </BaseButton>
         </nuxt-link>
-        <nuxt-link :to="`/admin/contenus/activites/${activity.id}/edit`" class="inline-flex">
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/contenus/activites/${activity.id}/edit`"
+          class="inline-flex"
+        >
           <BaseButton variant="white" size="sm" icon="RiPencilLine"> Modifier </BaseButton>
         </nuxt-link>
         <BaseButton

@@ -24,6 +24,7 @@
             <template v-for="(link, index) in item.childrens" :key="index">
               <div>
                 <nuxt-link
+                  no-prefetch
                   v-if="link.to"
                   :to="link.to"
                   class="group inline-flex items-center py-2 text-sm font-medium text-gray-600 hover:text-gray-900"

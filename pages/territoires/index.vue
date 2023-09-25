@@ -83,6 +83,7 @@
 
               <div class="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <nuxt-link
+                  no-prefetch
                   v-for="territory in territoriesByGroup(group)"
                   :key="territory.id"
                   :to="territory.full_url"

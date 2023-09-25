@@ -25,6 +25,7 @@
         </div>
 
         <nuxt-link
+          no-prefetch
           class="rounded-full bg-[#FFD500] text-[#070191] hover:scale-105 !outline-none focus:scale-105 transition px-8 py-3 transform shadow-xl inline-flex font-extrabold text-sm sm:text-base"
           to="/missions-benevolat?search=chaleur"
         >

@@ -11,6 +11,7 @@
           {{ mission.name }}
         </div>
         <nuxt-link
+          no-prefetch
           :to="
             !['volontaire'].includes($stores.auth.contextRole)
               ? `/admin/missions/${mission.id}`

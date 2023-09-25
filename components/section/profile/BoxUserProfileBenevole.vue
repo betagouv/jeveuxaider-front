@@ -10,7 +10,11 @@
           <div class="flex-1">
             <div class="text-xl text-black font-bold">
               <template v-if="hasParticipations">
-                <nuxt-link to="/profile/missions" class="flex justify-between items-center group">
+                <nuxt-link
+                  no-prefetch
+                  to="/profile/missions"
+                  class="flex justify-between items-center group"
+                >
                   <span class="group-hover:underline">
                     {{
                       $filters.pluralize(

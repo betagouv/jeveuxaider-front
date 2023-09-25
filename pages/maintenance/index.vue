@@ -5,20 +5,13 @@
     >
       <div class="py-16">
         <div class="text-center">
-          <p
-            class="text-sm font-semibold text-jva-blue-600 uppercase tracking-wide"
-          >
-            Maintenance
-          </p>
-          <Heading as="h1" :level="1">
-            Le plateforme est en maintenance
-          </Heading>
+          <p class="text-sm font-semibold text-jva-blue-600 uppercase tracking-wide">Maintenance</p>
+          <Heading as="h1" :level="1"> Le plateforme est en maintenance </Heading>
           <p class="mt-2 text-base text-gray-500">
-            Nous procédons à quelques ajustements. Merci de revenir dans
-            quelques instants...
+            Nous procédons à quelques ajustements. Merci de revenir dans quelques instants...
           </p>
           <div v-if="!$stores.auth.isLogged" class="mt-6">
-            <nuxt-link to="/maintenance/admin">
+            <nuxt-link no-prefetch to="/maintenance/admin">
               Accès administrateurs<span aria-hidden="true"> &rarr;</span>
             </nuxt-link>
           </div>

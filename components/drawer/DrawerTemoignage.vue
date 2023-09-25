@@ -9,7 +9,11 @@
     <div v-if="temoignage">
       <OnlineIndicator :published="temoignage.is_published" class="mt-2" />
       <div v-if="['admin'].includes($stores.auth.contextRole)" class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/contenus/testimonials/${temoignage.id}/edit`" class="inline-flex">
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/contenus/testimonials/${temoignage.id}/edit`"
+          class="inline-flex"
+        >
           <BaseButton variant="white" size="sm" icon="RiPencilLine"> Modifier </BaseButton>
         </nuxt-link>
         <BaseButton

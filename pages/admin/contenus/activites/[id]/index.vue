@@ -30,7 +30,7 @@
               <OnlineIndicator :published="activity.is_published" :link="activity.full_url" />
             </div>
           </div>
-          <nuxt-link :to="`/admin/contenus/activites/${activity.id}/edit`">
+          <nuxt-link no-prefetch :to="`/admin/contenus/activites/${activity.id}/edit`">
             <BaseButton icon="RiPencilLine"> Modifier </BaseButton>
           </nuxt-link>
         </div>

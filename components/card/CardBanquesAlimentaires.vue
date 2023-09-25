@@ -32,6 +32,7 @@
         </div>
 
         <nuxt-link
+          no-prefetch
           to="/missions-benevolat?tags=Collecte%20nationale%20des%20Banques%20Alimentaires"
           @click="onClickBACollecte"
         >

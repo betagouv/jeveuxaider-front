@@ -102,6 +102,7 @@
               class="card--mission--wrapper"
             >
               <nuxt-link
+                no-prefetch
                 :to="`/missions-benevolat/${similarMission.id}/${similarMission.slug}`"
                 @click.native="onClickSimilarMission"
                 class="h-full"

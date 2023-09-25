@@ -78,7 +78,7 @@
                 <p>Vous pouvez désormais vous connecter avec vos nouveaux identifiants.</p>
               </div>
 
-              <NuxtLink :to="`/login?email=${$route.query.email}`">
+              <NuxtLink no-prefetch :to="`/login?email=${$route.query.email}`">
                 <BaseButton full size="xl" class="mt-8"> Se connecter </BaseButton>
               </NuxtLink>
             </div>

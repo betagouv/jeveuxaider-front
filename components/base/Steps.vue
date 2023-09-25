@@ -15,7 +15,7 @@
                 style="top: 1rem; left: 1rem"
                 aria-hidden="true"
               />
-              <nuxt-link :to="step.href" class="relative flex items-center group">
+              <nuxt-link no-prefetch :to="step.href" class="relative flex items-center group">
                 <span class="h-9 flex items-center">
                   <div
                     class="relative z-10 w-8 h-8 flex items-center justify-center bg-jva-blue-500 rounded-full group-hover:bg-[#1f0391]"
@@ -92,6 +92,7 @@
               <div class="h-0.5 w-full bg-jva-blue-500" />
             </div>
             <nuxt-link
+              no-prefetch
               :to="step.href"
               class="relative w-8 h-8 flex items-center justify-center bg-jva-blue-500 rounded-full hover:bg-jva-blue-400"
             >

@@ -23,13 +23,14 @@
           />
         </div>
         <div class="menu-links flex gap-6 h-full">
-          <nuxt-link to="#presentation" class="flex items-center space-x-2">
+          <nuxt-link no-prefetch to="#presentation" class="flex items-center space-x-2">
             <RiBuildingLine class="h-4 fill-current flex-none" /> <span>Présentation</span>
           </nuxt-link>
-          <nuxt-link to="#missions" class="flex items-center space-x-4">
+          <nuxt-link no-prefetch to="#missions" class="flex items-center space-x-4">
             <RiTeamLine class="h-4 fill-current flex-none" /> <span>Missions de bénévolat</span>
           </nuxt-link>
           <nuxt-link
+            no-prefetch
             v-if="organisation.donation"
             to="#donation"
             class="flex items-center space-x-4"
@@ -41,7 +42,7 @@
       <div class="py-4 px-10 justify-self-end">
         <div class="flex items-center">
           <span class="hidden xl:inline text-[#5B71B9] mr-3"> Encouragé par </span>
-          <nuxt-link to="/">
+          <nuxt-link no-prefetch to="/">
             <img src="@/assets/images/jeveuxaider-logo.svg" alt="" width="193" />
           </nuxt-link>
         </div>

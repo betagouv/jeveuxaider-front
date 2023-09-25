@@ -9,7 +9,7 @@
   >
     <ol class="h-12 w-full max-w-full overflow-x-auto whitespace-nowrap flex items-center">
       <li>
-        <nuxt-link to="/">
+        <nuxt-link no-prefetch to="/">
           <HomeIcon
             class="w-3 h-3"
             :class="[
@@ -39,7 +39,12 @@
             ]"
           />
 
-          <nuxt-link v-if="item.link" :to="item.link" class="inline-flex h-full items-center">
+          <nuxt-link
+            no-prefetch
+            v-if="item.link"
+            :to="item.link"
+            class="inline-flex h-full items-center"
+          >
             <span class="truncate max-w-xs">{{ item.label }}</span>
           </nuxt-link>
 

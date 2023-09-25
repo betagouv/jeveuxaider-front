@@ -11,7 +11,7 @@
     />
     <template #title>
       <BaseHeading v-if="mission" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/missions/${missionId}`" class="hover:underline">
+        <nuxt-link no-prefetch :to="`/admin/missions/${missionId}`" class="hover:underline">
           {{ mission.name }}
         </nuxt-link>
       </BaseHeading>
@@ -26,13 +26,13 @@
         class="mt-2"
       />
       <div class="flex flex-wrap gap-1 mt-4">
-        <nuxt-link :to="`/admin/missions/${mission.id}`">
+        <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}`">
           <DsfrButton type="tertiary" icon="RiEyeLine" size="sm" tabindex="-1" icon-class="!mr-1">
             Détails
           </DsfrButton>
         </nuxt-link>
 
-        <nuxt-link :to="`/admin/missions/${mission.id}/edit`">
+        <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/edit`">
           <DsfrButton
             type="tertiary"
             icon="RiPencilLine"

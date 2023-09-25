@@ -107,6 +107,7 @@
             </div>
           </div>
           <nuxt-link
+            no-prefetch
             v-if="['admin'].includes($stores.auth.contextRole)"
             :to="`/admin/contenus/reseaux/${reseau.id}/edit`"
           >

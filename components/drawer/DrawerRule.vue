@@ -40,7 +40,7 @@
         >
           Exécuter
         </BaseButton>
-        <nuxt-link :to="`/admin/settings/rules/${rule.id}/edit`" class="inline-flex">
+        <nuxt-link no-prefetch :to="`/admin/settings/rules/${rule.id}/edit`" class="inline-flex">
           <BaseButton variant="white" size="sm" icon="RiPencilLine"> Modifier </BaseButton>
         </nuxt-link>
         <BaseButton

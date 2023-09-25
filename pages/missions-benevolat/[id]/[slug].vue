@@ -104,6 +104,7 @@
               </p>
 
               <NuxtLink
+                no-prefetch
                 v-if="
                   mission.structure.statut_juridique == 'Association' &&
                   mission.structure.state == 'Validée'
@@ -360,6 +361,7 @@
               class="card--mission--wrapper"
             >
               <NuxtLink
+                no-prefetch
                 :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
                 @click.native="onClickSimilarMission"
                 class="h-full"

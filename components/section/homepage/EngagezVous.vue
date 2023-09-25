@@ -8,6 +8,7 @@
           class="max-w-3xl lg:max-w-[500px] mx-auto lg:ml-0 flex flex-wrap gap-4 items-center justify-center lg:justify-start"
         >
           <nuxt-link
+            no-prefetch
             v-for="(city, index) in cities"
             :key="index"
             :to="city.url"

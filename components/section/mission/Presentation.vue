@@ -103,7 +103,12 @@
       </BaseHrTitle>
       <div class="flex flex-wrap gap-2">
         <template v-for="activity in activities" :to="activity.full_url">
-          <nuxt-link v-if="activity.full_url" :key="activity.id" :to="activity.full_url">
+          <nuxt-link
+            no-prefetch
+            v-if="activity.full_url"
+            :key="activity.id"
+            :to="activity.full_url"
+          >
             <DsfrBadge>
               {{ activity.name }}
             </DsfrBadge>

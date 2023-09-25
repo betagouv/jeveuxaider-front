@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link v-if="to" :to="to" :target="target">
+  <nuxt-link no-prefetch v-if="to" :to="to" :target="target">
     <slot />
   </nuxt-link>
   <a v-else-if="href" :href="href" :target="target">

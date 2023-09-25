@@ -38,7 +38,7 @@
             Trouvez dès maintenant votre prochaine mission
           </div>
 
-          <nuxt-link to="/missions-benevolat">
+          <nuxt-link no-prefetch to="/missions-benevolat">
             <BaseButton id="search" size="xl" rounded variant="green">
               Trouver une mission
             </BaseButton>

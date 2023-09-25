@@ -17,7 +17,7 @@
     >
       <ol class="fr-breadcrumb__list">
         <li class="relative bottom-[5px]">
-          <nuxt-link to="/" :class="['!bg-none', colorClass]" title="accueil">
+          <nuxt-link no-prefetch to="/" :class="['!bg-none', colorClass]" title="accueil">
             <RiHome4Line class="w-[13px] h-[13px] inline fill-current" />
           </nuxt-link>
         </li>
