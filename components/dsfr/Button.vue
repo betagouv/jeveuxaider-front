@@ -43,6 +43,7 @@
       },
     ]"
     :disabled="disabled"
+    no-prefetch
   >
     <component
       :is="iconOrLoading"

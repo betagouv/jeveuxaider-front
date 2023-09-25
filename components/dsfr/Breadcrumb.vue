@@ -31,6 +31,7 @@
             ]"
             :to="link.to"
             :aria-current="index === links.length - 1 ? 'page' : undefined"
+            no-prefetch
           >
             {{ $filters.clamp(link.text, 120) }}
           </component>
