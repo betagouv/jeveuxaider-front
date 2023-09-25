@@ -81,20 +81,26 @@
               <nuxt-link no-prefetch class="link" to="/organisations/5265-article-1"
                 >Article 1</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/6144-avdtm-explorjob"
+              <nuxt-link
+                no-prefetch
+                class="link"
+                to="/organisations/6144-explorjob-association-avdtm"
                 >AVDTM - ExplorJob</nuxt-link
               >
               <nuxt-link no-prefetch class="link" to="/organisations/1784-jobirl">JobIRL</nuxt-link>
-              <nuxt-link no-prefetch class="link" to="/organisations/7198-lobby-des-consciences"
+              <nuxt-link
+                no-prefetch
+                class="link"
+                to="/organisations/7198-lobby-des-consciences-antenne-nationale"
                 >Lobby des Consciences</nuxt-link
               >
               <nuxt-link no-prefetch class="link" to="/organisations/6638-entraide-scolaire-amicale"
                 >Entraide Scolaire Amicale</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/5605-emmaus-connect-paris"
+              <nuxt-link no-prefetch class="link" to="/organisations/5605-emmaus-connect"
                 >Emmaüs Connect - Paris</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/5575-singa">Singa</nuxt-link>
+              <!-- <nuxt-link no-prefetch class="link" to="/organisations/5575-singa">Singa</nuxt-link> -->
               <nuxt-link
                 no-prefetch
                 class="link"
@@ -113,7 +119,10 @@
                 to="/organisations/8281-association-solidarite-universelle-monde"
                 >Association Solidarité Universelle Monde</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/7159-restos-du-coeur"
+              <nuxt-link
+                no-prefetch
+                class="link"
+                to="/organisations/7159-restos-du-coeur-mandelieu-la-napoule"
                 >Restos du coeur</nuxt-link
               >
               <nuxt-link no-prefetch class="link" to="/organisations/7330-apprentis-dauteuil"
