@@ -35,6 +35,7 @@
         <template v-if="organisationStats.participations_state['En attente de validation'] > 0">
           <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
           <nuxt-link
+            no-prefetch
             :to="`/admin/participations?filter[mission.structure.name]=${organisation.name}&filter[mission.structure.id]=${organisation.id}&filter[state]=En attente de validation`"
             class="flex justify-center items-center text-sm text-jva-orange-500 font-medium"
           >

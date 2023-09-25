@@ -35,7 +35,7 @@
               />
             </div>
           </div>
-          <nuxt-link :to="`/admin/missions/${mission.id}/edit`">
+          <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/edit`">
             <BaseButton icon="RiPencilLine"> Modifier </BaseButton>
           </nuxt-link>
         </div>

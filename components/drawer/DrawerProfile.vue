@@ -2,7 +2,7 @@
   <BaseDrawer :is-open="Boolean(profileId)" @close="$emit('close')">
     <template #title>
       <BaseHeading v-if="profile" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/utilisateurs/${profileId}`" class="hover:underline">
+        <nuxt-link no-prefetch :to="`/admin/utilisateurs/${profileId}`" class="hover:underline">
           {{ profile.full_name }}
         </nuxt-link>
       </BaseHeading>
@@ -17,13 +17,13 @@
         </DsfrTag>
       </div>
       <div class="mt-2 flex flex-wrap gap-1">
-        <nuxt-link :to="`/admin/utilisateurs/${profile.id}`">
+        <nuxt-link no-prefetch :to="`/admin/utilisateurs/${profile.id}`">
           <DsfrButton type="tertiary" icon="RiEyeLine" size="sm" tabindex="-1" icon-class="!mr-1">
             Détails
           </DsfrButton>
         </nuxt-link>
 
-        <nuxt-link :to="`/admin/utilisateurs/${profile.id}/edit`">
+        <nuxt-link no-prefetch :to="`/admin/utilisateurs/${profile.id}/edit`">
           <DsfrButton
             type="tertiary"
             icon="RiPencilLine"

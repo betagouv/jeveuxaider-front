@@ -42,6 +42,7 @@
           </div>
           <div>
             <nuxt-link
+              no-prefetch
               v-for="item in duplicatesRnaOrganisations.data"
               :key="item.id"
               :to="`/admin/organisations/${item.id}`"
@@ -53,6 +54,7 @@
           </div>
           <div>
             <nuxt-link
+              no-prefetch
               class="underline"
               :to="`/admin/organisations?filter[search]=${organisation.rna}`"
               target="_blank"
@@ -94,6 +96,7 @@
           </div>
           <div>
             <nuxt-link
+              no-prefetch
               v-for="algoliaOrganisation in duplicatesOrganisations.data"
               :key="algoliaOrganisation.id"
               :to="`/admin/organisations/${algoliaOrganisation.id}`"
@@ -105,6 +108,7 @@
           </div>
           <div>
             <nuxt-link
+              no-prefetch
               class="underline"
               :to="`/organisations?search=${organisation.name}`"
               target="_blank"

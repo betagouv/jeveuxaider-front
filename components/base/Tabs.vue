@@ -21,6 +21,7 @@
           aria-label="Tabs"
         >
           <nuxt-link
+            no-prefetch
             v-for="tab in filteredTabs"
             :key="tab.name"
             :to="tab.to"

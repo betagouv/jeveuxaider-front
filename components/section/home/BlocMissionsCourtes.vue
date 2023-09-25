@@ -50,6 +50,7 @@
         <p class="text-white font-bold text-xl xl:text-2xl">Quelles sont vos disponibilités ?</p>
         <div class="flex flex-wrap gap-4">
           <nuxt-link
+            no-prefetch
             v-for="(link, i) in links"
             :key="i"
             :to="link.to"

@@ -2,7 +2,7 @@
   <BaseDrawer :is-open="Boolean(activityLogId)" @close="$emit('close')">
     <template #title>
       <BaseHeading v-if="profile" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/utilisateurs/${profile.id}`" class="hover:underline">
+        <nuxt-link no-prefetch :to="`/admin/utilisateurs/${profile.id}`" class="hover:underline">
           {{ profile.full_name }}
         </nuxt-link>
       </BaseHeading>

@@ -8,6 +8,7 @@
       :target="to ? (external ? '_blank' : '_self') : undefined"
       class="flex items-center space-x-2 cursor-pointer hover:underline focus:underline transition focus:outline-none"
       :class="[{ 'flex-row-reverse': iconPosition == 'left' }, linkClass]"
+      no-prefetch
     >
       <slot />
       <component :is="icon" v-if="icon" class="h-3" :class="[iconClass]" />

@@ -12,6 +12,7 @@
     <template #title>
       <BaseHeading v-if="reseau" :level="3" class="text-jva-blue-500">
         <nuxt-link
+          no-prefetch
           :to="`/admin/contenus/reseaux/${reseauId}`"
           class="hover:underline"
           target="_blank"
@@ -23,10 +24,14 @@
     <template v-if="reseau">
       <OnlineIndicator :published="reseau.is_published" :link="reseau.full_url" class="mt-2" />
       <div class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/contenus/reseaux/${reseau.id}`" class="inline-flex">
+        <nuxt-link no-prefetch :to="`/admin/contenus/reseaux/${reseau.id}`" class="inline-flex">
           <BaseButton variant="white" size="sm" icon="RiEyeLine"> Détails </BaseButton>
         </nuxt-link>
-        <nuxt-link :to="`/admin/contenus/reseaux/${reseau.id}/edit`" class="inline-flex">
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/contenus/reseaux/${reseau.id}/edit`"
+          class="inline-flex"
+        >
           <BaseButton variant="white" size="sm" icon="RiPencilLine"> Modifier </BaseButton>
         </nuxt-link>
         <BaseButton

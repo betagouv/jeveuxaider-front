@@ -12,6 +12,7 @@
 
         <div class="mt-12 flex flex-wrap gap-4 items-center justify-center">
           <nuxt-link
+            no-prefetch
             v-for="city in cities"
             :key="city.zipcode"
             class="leading-none truncate px-8 py-4 rounded-full text-sm shadow-md font-extrabold tracking-wide uppercase bg-white text-gray-800 transform transition hover:scale-105"

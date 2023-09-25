@@ -12,7 +12,7 @@
     </div>
     <BaseHeading as="h2" :level="3" :class="[{ 'sm:pr-6': infosBulle }]">
       <template v-if="link">
-        <nuxt-link :to="link" class="hover:text-jva-blue-500">
+        <nuxt-link no-prefetch :to="link" class="hover:text-jva-blue-500">
           {{ title }}
         </nuxt-link>
       </template>

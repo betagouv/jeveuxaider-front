@@ -17,7 +17,11 @@
     <template v-if="ressource">
       <OnlineIndicator :published="ressource.is_published" class="mt-2" />
       <div class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/contenus/ressources/${ressource.id}/edit`" class="inline-flex">
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/contenus/ressources/${ressource.id}/edit`"
+          class="inline-flex"
+        >
           <BaseButton variant="white" size="sm" icon="RiPencilLine"> Modifier </BaseButton>
         </nuxt-link>
         <BaseButton

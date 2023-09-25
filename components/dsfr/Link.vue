@@ -6,6 +6,7 @@
     :href="isExternal && to ? to : undefined"
     :to="!isExternal && to ? to : undefined"
     :title="title || $slots.default?.[0]?.text?.trim()"
+    no-prefetch
   >
     <component
       :is="icon"

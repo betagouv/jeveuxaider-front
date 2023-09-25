@@ -29,6 +29,7 @@
           class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 lg:gap-6 xl:gap-8 xl:max-w-5xl mx-auto"
         >
           <NuxtLink
+            no-prefetch
             v-for="item in $stores.algoliaSearch.results.hits"
             :key="item.id"
             class="flex min-w-0 transition"

@@ -229,7 +229,11 @@
             </div>
             <div class="text-sm">
               Vous pouvez
-              <nuxt-link class="underline" :to="`/admin/organisations/${structureId}#membres`">
+              <nuxt-link
+                no-prefetch
+                class="underline"
+                :to="`/admin/organisations/${structureId}#membres`"
+              >
                 ajouter un nouveau membre
               </nuxt-link>
               à votre équipe pour vous répartir la publication de mission.

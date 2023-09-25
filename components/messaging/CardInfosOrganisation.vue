@@ -12,7 +12,7 @@
         <div class="text-xl font-bold">
           {{ organisation.name }}
         </div>
-        <nuxt-link :to="`/admin/organisations/${organisation.id}`" target="_blank">
+        <nuxt-link no-prefetch :to="`/admin/organisations/${organisation.id}`" target="_blank">
           <RiExternalLinkLine class="text-jva-blue-500 fill-current h-6 w-6" />
         </nuxt-link>
       </div>

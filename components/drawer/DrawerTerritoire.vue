@@ -12,6 +12,7 @@
     <template #title>
       <BaseHeading v-if="territoire" :level="3" class="text-jva-blue-500">
         <nuxt-link
+          no-prefetch
           :to="`/admin/contenus/territoires/${territoireId}`"
           class="hover:underline"
           target="_blank"
@@ -27,10 +28,18 @@
         class="mt-2"
       />
       <div class="flex gap-2 mt-4">
-        <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}`" class="inline-flex">
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/contenus/territoires/${territoire.id}`"
+          class="inline-flex"
+        >
           <BaseButton variant="white" size="sm" icon="RiEyeLine"> Détails </BaseButton>
         </nuxt-link>
-        <nuxt-link :to="`/admin/contenus/territoires/${territoire.id}/edit`" class="inline-flex">
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/contenus/territoires/${territoire.id}/edit`"
+          class="inline-flex"
+        >
           <BaseButton variant="white" size="sm" icon="RiPencilLine"> Modifier </BaseButton>
         </nuxt-link>
         <BaseButton

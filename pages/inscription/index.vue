@@ -19,7 +19,7 @@
       <div
         class="flex flex-col space-y-4 items-center justify-center mt-12 mb-12 md:flex-row md:space-x-6 md:space-y-0"
       >
-        <nuxt-link to="/inscription/benevole" class="w-full md:w-auto">
+        <nuxt-link no-prefetch to="/inscription/benevole" class="w-full md:w-auto">
           <BoxItem
             icon="💪"
             title="Je veux devenir<br><strong>bénévole</strong>"
@@ -27,7 +27,7 @@
           />
         </nuxt-link>
         <div class="text-white text-lg">ou</div>
-        <nuxt-link to="/inscription/responsable" class="w-full md:w-auto">
+        <nuxt-link no-prefetch to="/inscription/responsable" class="w-full md:w-auto">
           <BoxItem
             icon="📢"
             title="Je veux publier<br><strong>des missions</strong>"

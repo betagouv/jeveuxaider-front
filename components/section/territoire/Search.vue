@@ -30,7 +30,7 @@
 
       <div class="container mx-auto px-4">
         <div v-if="moreLink" class="text-center mt-6">
-          <nuxt-link :to="moreLink">
+          <nuxt-link no-prefetch :to="moreLink">
             <button
               class="leading-none uppercase shadow-lg text-xs font-extrabold rounded-full text-gray-500 bg-white py-4 px-8 hover:scale-105 transform transition will-change-transform"
             >

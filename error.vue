@@ -36,7 +36,7 @@
     </template>
 
     <div class="flex flex-col items-center">
-      <nuxt-link to="/">
+      <nuxt-link no-prefetch to="/">
         <BaseButton>Revenir en lieu sûr</BaseButton>
       </nuxt-link>
 

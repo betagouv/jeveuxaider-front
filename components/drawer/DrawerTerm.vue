@@ -3,6 +3,7 @@
     <template #title>
       <BaseHeading v-if="term" :level="3" class="text-jva-blue-500">
         <nuxt-link
+          no-prefetch
           :to="`/admin/taxonomies/${$route.params.slug}/${termId}/edit?redirect=/admin/taxonomies/${$route.params.slug}`"
           class="hover:underline"
         >
@@ -14,6 +15,7 @@
       <OnlineIndicator :published="term.is_published" class="mt-2" />
       <div class="flex gap-2 mt-4">
         <nuxt-link
+          no-prefetch
           :to="`/admin/taxonomies/${$route.params.slug}/${term.id}/edit?redirect=/admin/taxonomies/${$route.params.slug}`"
           class="inline-flex"
         >

@@ -22,6 +22,7 @@
 
     <div class="my-4">
       <nuxt-link
+        no-prefetch
         :to="`/password-reset?email=${form.email}`"
         class="text-jva-blue-500 text-sm hover:underline"
       >

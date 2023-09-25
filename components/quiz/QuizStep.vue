@@ -59,7 +59,7 @@
             />
           </div>
           <div class="flex items-center flex-1 pl-6">
-            <nuxt-link to="/" aria-label="Page d'accueil">
+            <nuxt-link no-prefetch to="/" aria-label="Page d'accueil">
               <img
                 src="@/assets/images/jeveuxaider-logo.svg"
                 alt=""

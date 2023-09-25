@@ -81,6 +81,7 @@
             </div>
           </div>
           <nuxt-link
+            no-prefetch
             v-if="canManageTerritoire"
             :to="`/admin/contenus/territoires/${territoire.id}/edit`"
           >

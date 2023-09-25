@@ -15,6 +15,7 @@
     >
       <swiper-slide v-for="mission in missions" :key="mission.id" class="slide-wrapper">
         <NuxtLink
+          no-prefetch
           class="h-full"
           :to="
             mission.provider == 'api_engagement'

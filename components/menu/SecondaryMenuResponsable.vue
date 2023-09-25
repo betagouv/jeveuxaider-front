@@ -22,6 +22,7 @@
           </h3>
           <div class="mt-1 space-y-1" :aria-labelledby="item.label">
             <nuxt-link
+              no-prefetch
               v-for="(link, index) in item.childrens"
               :key="index"
               :to="link.to"

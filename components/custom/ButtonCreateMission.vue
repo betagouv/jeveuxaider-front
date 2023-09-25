@@ -50,6 +50,7 @@
           Retour
         </button>
         <nuxt-link
+          no-prefetch
           :to="`/admin/organisations/${$stores.auth.currentRole.contextable_id}/missions/add`"
         >
           <DsfrButton> J’ai compris </DsfrButton>
@@ -97,6 +98,7 @@
           Retour
         </button>
         <nuxt-link
+          no-prefetch
           :to="`/admin/organisations/${$stores.auth.currentRole.contextable_id}/missions/add`"
         >
           <DsfrButton> J’ai compris </DsfrButton>

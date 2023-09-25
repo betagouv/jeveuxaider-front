@@ -248,7 +248,7 @@
         </template>
         <template #bottom>
           <div class="mt-8 text-center">
-            <nuxt-link to="/admin/participations">
+            <nuxt-link no-prefetch to="/admin/participations">
               <DsfrButton type="secondary"> Traiter les participations </DsfrButton>
             </nuxt-link>
           </div>

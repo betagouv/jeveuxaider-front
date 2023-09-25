@@ -36,6 +36,7 @@
         <BaseContainerScrollable :class="['flex-1']">
           <div class="divide-y">
             <nuxt-link
+              no-prefetch
               v-for="conversation in $stores.messaging.conversations"
               :key="conversation.id"
               :to="`/messages/${conversation.id}`"

@@ -11,7 +11,11 @@
     />
     <template #title>
       <BaseHeading v-if="organisation" :level="3" class="text-jva-blue-500">
-        <nuxt-link :to="`/admin/organisations/${organisationId}`" class="hover:underline">
+        <nuxt-link
+          no-prefetch
+          :to="`/admin/organisations/${organisationId}`"
+          class="hover:underline"
+        >
           {{ organisation.name }}
         </nuxt-link>
       </BaseHeading>

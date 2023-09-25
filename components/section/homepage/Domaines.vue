@@ -22,7 +22,7 @@
           :slides-are-links="true"
           :aria-labelledby="`label-domaines-action-${uuid}`"
         >
-          <nuxt-link
+          <nuxt-link no-prefetch
             v-for="domaine in domaines"
             :key="domaine.id"
             class="card--domaine--wrapper"

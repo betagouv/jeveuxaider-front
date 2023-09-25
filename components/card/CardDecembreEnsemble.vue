@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <nuxt-link to="/missions-benevolat?tags=Décembre%20ensemble" @click="onClick">
+        <nuxt-link no-prefetch to="/missions-benevolat?tags=Décembre%20ensemble" @click="onClick">
           <DsfrButton type="tertiary-no-outline" tabindex="-1" @click="onClick">
             Je trouve une mission
           </DsfrButton>

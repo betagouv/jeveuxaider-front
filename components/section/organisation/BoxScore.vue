@@ -113,7 +113,7 @@
                 </div>
               </div>
               <div class="text-center">
-                <nuxt-link to="/admin/participations">
+                <nuxt-link no-prefetch to="/admin/participations">
                   <DsfrButton type="secondary"> Traiter les participations </DsfrButton>
                 </nuxt-link>
               </div>
