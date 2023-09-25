@@ -37,7 +37,7 @@
 
           <BaseFormControl label="Visuels d'illustration" html-for="illustrations">
             <component
-              :is="form.reseaux.length ? 'MediaPickerReseau' : 'MediaPickerDomaine'"
+              :is="mediaPickerComponent"
               :reseaux="form.reseaux"
               :domaine-ids="mediaPickerDomaineIds"
               :defaults="form.illustrations"
@@ -116,6 +116,11 @@ export default defineNuxtComponent({
   computed: {
     mediaPickerDomaineIds() {
       return this.form.domaines?.map((domaine) => domaine.id)
+    },
+    mediaPickerComponent() {
+      return this.form.reseaux.length
+        ? resolveComponent('BaseMediaPickerReseau')
+        : resolveComponent('BaseMediaPickerDomaine')
     },
   },
   methods: {
