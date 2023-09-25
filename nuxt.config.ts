@@ -150,6 +150,15 @@ export default defineNuxtConfig({
         (p) => !pluginExcludes.some((pluginExclude) => p.src.includes(pluginExclude))
       )
     },
+    'build:manifest'(manifest) {
+      console.log('manifest', manifest)
+      for (const key in manifest) {
+        // or other logic
+        manifest[key].dynamicImports = []
+        // manifest[key].prefetch = false
+        // manifest[key].preload = false
+      }
+    },
   },
 
   vue: {
