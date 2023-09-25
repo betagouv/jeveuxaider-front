@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center">
+  <div class="flex flex-col justify-center h-screen">
     <div class="py-12 px-4 relative w-full lg:inset-y-0 text-center z-10">
       <div class="flex-shrink-0 flex justify-center mb-12">
         <NuxtLink no-prefetch to="/">
@@ -71,9 +71,9 @@ import FormErrors from '@/mixins/form/errors'
 
 export default defineNuxtComponent({
   mixins: [FormErrors],
-  layout: 'empty',
   setup() {
     definePageMeta({
+      layout: 'empty',
       middleware: ['guest'],
     })
   },
