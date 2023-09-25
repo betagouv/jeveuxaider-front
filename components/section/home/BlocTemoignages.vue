@@ -16,7 +16,6 @@
       </div>
       <div class="mt-12">
         <BaseSlideshow
-          :key="slideshowTemoignagesKey"
           navigation-id="slideshowTemoignagesArrows"
           navigation-variant="white"
           navigation-button-class="hover:bg-[#6666EA]"
@@ -55,10 +54,6 @@ import CardQuote from '@/components/card/CardQuote.vue'
 export default defineNuxtComponent({
   components: {
     CardQuote,
-  },
-  mounted() {
-    // @todo
-    this.slideshowTemoignagesKey++
   },
   data() {
     return {
@@ -184,7 +179,6 @@ export default defineNuxtComponent({
           },
         },
       ],
-      slideshowTemoignagesKey: 0,
     }
   },
 })
