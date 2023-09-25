@@ -151,13 +151,12 @@ export default defineNuxtConfig({
       )
     },
     'build:manifest'(manifest) {
-      console.log('manifest', manifest)
       for (const key in manifest) {
-        // or other logic
-        manifest[key].dynamicImports = []
-        // manifest[key].prefetch = false
-        // manifest[key].preload = false
+        // manifest[key].dynamicImports = []
+        manifest[key].prefetch = false
+        manifest[key].preload = false
       }
+      console.log('manifest', manifest)
     },
   },
 
