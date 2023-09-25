@@ -18,6 +18,9 @@
           :search-parameters="{
             hitsPerPage: 6,
             facetFilters: [`structure.reseaux.name:${reseau.name}`, 'type:Mission en présentiel'],
+            aroundPrecision: 2000,
+            aroundLatLngViaIP: true,
+            aroundRadius: 'all',
           }"
           :show-disponibilities="true"
           :redirect-parameters="{
@@ -66,6 +69,9 @@
               activities.map((a) => `activities.name:${a.name}`),
               `structure.reseaux.name:-${reseau.name}`,
             ],
+            aroundPrecision: 2000,
+            aroundLatLngViaIP: true,
+            aroundRadius: 'all',
           }"
           :redirect-parameters="{
             'activities.name': activities.map((a) => a.name).join('|'),

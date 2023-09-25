@@ -47,6 +47,7 @@ import QuizOption from '@/components/quiz/QuizOption.vue'
 import inputGeo from '@/mixins/input-geo'
 import DsfrFranceIcon from '@/components/icon/dsfr/France.vue'
 import DsfrMapIcon from '@/components/icon/dsfr/Map.vue'
+import Toast from '@/components/Toast.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -54,6 +55,7 @@ export default defineNuxtComponent({
     QuizOption,
     DsfrFranceIcon,
     DsfrMapIcon,
+    Toast,
   },
   mixins: [inputGeo],
   props: {

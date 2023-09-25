@@ -27,7 +27,9 @@
             <RiBuildingLine class="h-4 fill-current flex-none" /> <span>Présentation</span>
           </nuxt-link>
           <nuxt-link no-prefetch to="#missions" class="flex items-center space-x-4">
-            <RiTeamLine class="h-4 fill-current flex-none" /> <span>Missions de bénévolat</span>
+            <RiTeamLine class="h-4 fill-current flex-none" />
+            <span class="hidden xl:inline">Missions de bénévolat</span>
+            <span class="xl:hidden">Missions</span>
           </nuxt-link>
           <nuxt-link
             no-prefetch
@@ -35,7 +37,8 @@
             to="#donation"
             class="flex items-center space-x-4"
           >
-            <RiMoneyEuroCircleLine class="h-4 fill-current flex-none" /> <span>Faire un don</span>
+            <RiMoneyEuroCircleLine class="h-4 fill-current flex-none" />
+            <span>Faire un don</span>
           </nuxt-link>
         </div>
       </div>

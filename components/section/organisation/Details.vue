@@ -171,7 +171,7 @@
                   <p>{{ organisation.full_address || 'Non renseigné' }}</p>
                 </div>
               </div>
-              <div class="flex space-x-2">
+              <div v-if="organisation.email" class="flex space-x-2">
                 <div class="w-[20px]">
                   <RiMailFill class="mt-1 w-[16px] text-[#929292] fill-current" />
                 </div>
@@ -182,7 +182,7 @@
                   <p v-else>Non renseigné</p>
                 </div>
               </div>
-              <div class="flex space-x-2">
+              <div v-if="organisation.phone" class="flex space-x-2">
                 <div class="w-[20px]">
                   <RiPhoneFill class="mt-1 w-[16px] text-[#929292] fill-current" />
                 </div>
