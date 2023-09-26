@@ -138,7 +138,7 @@ export default defineNuxtComponent({
     },
     async onReachEnd() {
       await nextTick()
-      if (this.swiperInstance.slides) {
+      if (this.swiperInstance?.slides) {
         this.currentSlideIndex = this.swiperInstance.slides.length - 1
       }
     },
