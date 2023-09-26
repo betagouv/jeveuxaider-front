@@ -199,7 +199,7 @@ export default defineNuxtComponent({
         this.timeout.cancel()
       }
       this.timeout = _debounce(() => {
-        if (!this.searchValue || this.searchValue?.length < 3) {
+        if (!this.searchValue || this.searchValue?.trim().length < 3) {
           if (this.searchValue === '') {
             this.fetchSuggestions = []
           }

@@ -9,7 +9,7 @@ export default {
   },
   methods: {
     async onFetchGeoSuggestions(value) {
-      if (!value || value.length < 3) {
+      if (!value || value.trim().length < 3) {
         return
       }
 
