@@ -57,7 +57,7 @@
             class="border border-r-0 p-2 flex"
             @click="handlePreviousPage"
           >
-            <ChevronLeftIcon class="h-4 w-4" />
+            <RiArrowLeftLine class="h-4 w-4 fill-current" />
           </div>
           <div
             :class="[
@@ -68,7 +68,7 @@
             class="border p-2 flex"
             @click="handleNextPage"
           >
-            <ChevronRightIcon class="h-4 w-4" />
+            <RiArrowRightLine class="h-4 w-4 fill-current" />
           </div>
         </div>
         <div
@@ -87,9 +87,11 @@
             :disabled="selectedSlots.length == 0"
             size="lg"
             class="sm:ml-4 flex items-center"
+            icon="RiArrowRightSLine"
+            icon-position="right"
             @click.native="handleSubmit"
           >
-            Continuer <RiArrowRightSLine class="h-4 w-4 ml-2" />
+            Continuer
           </DsfrButton>
         </div>
       </div>
