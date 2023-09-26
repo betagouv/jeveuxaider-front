@@ -17,7 +17,7 @@
       >
         <div class="col-span-2 bg-white p-6">
           <div class="relative mt-8 mb-20 w-full">
-            <GaugeChart v-if="score.total_points" :value="score.total_points" />
+            <GaugeChart v-if="score.total_points >= 0" :value="score.total_points" />
 
             <div
               class="absolute flex flex-col justify-center items-center top-[30px] lg:top-[60px] left-1/2 transform -translate-x-1/2 h-[224px] w-[224px] text-center"
