@@ -4,11 +4,22 @@ export default {
       autocompleteOptions: [],
     }
   },
+  computed: {
+    safeValue() {},
+  },
   methods: {
     async onFetchGeoSuggestions(value) {
       if (!value || value.length < 3) {
-        return []
+        return
       }
+
+      // First character must be a letter or a number to avoid error 400
+      var re = new RegExp(/^[a-z0-9]$/i)
+      if (!re.test(value[0])) {
+        this.autocompleteOptions = []
+        return
+      }
+
       const response = await $fetch('https://api-adresse.data.gouv.fr/search', {
         params: {
           q: value,

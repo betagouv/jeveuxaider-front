@@ -205,6 +205,14 @@ export default defineNuxtComponent({
           }
           return
         }
+
+        // First character must be a letter or a number to avoid error 400
+        var re = new RegExp(/^[a-z0-9]$/i)
+        if (!re.test(this.searchValue[0])) {
+          this.fetchSuggestions = []
+          return
+        }
+
         this.fetchGeoSuggestions()
       }, 275)
       this.timeout()
