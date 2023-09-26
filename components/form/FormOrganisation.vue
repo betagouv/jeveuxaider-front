@@ -644,7 +644,7 @@ export default defineNuxtComponent({
       if (item) {
         const index = this.form.reseaux.findIndex((reseau) => reseau.id == item.id)
         if (index === -1) {
-          this.for.reseaux = [...this.form.reseaux, item]
+          this.form.reseaux = [...this.form.reseaux, item]
         }
       }
     },
