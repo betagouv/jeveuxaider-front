@@ -249,7 +249,7 @@ export default defineNuxtComponent({
     async handleFakeInputClick() {
       this.isGeolocFilterActive = true
       await this.$nextTick()
-      this.$refs.facetSearch.$refs.input?.focus()
+      this.$refs.facetSearch?.$refs.input?.focus()
     },
     async handleCloseSuggestions() {
       this.isGeolocFilterActive = false
