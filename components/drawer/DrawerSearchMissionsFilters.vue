@@ -114,11 +114,11 @@
       <div
         :class="[
           'p-4 flex items-center space-x-3',
-          nbMobileSecondaryFilters > 0 ? 'justify-between' : 'justify-end',
+          getNbMobileSecondaryFilters() > 0 ? 'justify-between' : 'justify-end',
         ]"
       >
         <DsfrLink
-          v-if="nbMobileSecondaryFilters > 0"
+          v-if="getNbMobileSecondaryFilters() > 0"
           @click.native="deleteAllFiltersExceptLocalisation()"
         >
           Réinitialiser
@@ -153,6 +153,12 @@ export default defineNuxtComponent({
     AutonomyMobileFilter,
     MinorsMobileFilter,
     PonctualMobileFilter,
+  },
+  setup() {
+    const { getNbMobileSecondaryFilters } = useAlgoliaMissionsQueryBuilder()
+    return {
+      getNbMobileSecondaryFilters,
+    }
   },
   props: {
     isOpen: { type: Boolean, default: false },
