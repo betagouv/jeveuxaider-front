@@ -123,17 +123,24 @@ export default defineNuxtComponent({
       this.swiperInstance.slideNext()
     },
     onActiveIndexChange() {
-      this.currentSlideIndex = this.swiperInstance?.activeIndex
+      if (this.swiperInstance) {
+        this.currentSlideIndex = this.swiperInstance.activeIndex
+      }
     },
     onFromEdge() {
-      const nbSlides = this.swiperInstance?.slides.length
+      if (!this.swiperInstance) {
+        return
+      }
+      const nbSlides = this.swiperInstance.slides.length
       if (this.currentSlideIndex === nbSlides - 1) {
         this.currentSlideIndex = this.currentSlideIndex - 1
       }
     },
     async onReachEnd() {
       await nextTick()
-      this.currentSlideIndex = this.swiperInstance?.slides.length - 1
+      if (this.swiperInstance.slides) {
+        this.currentSlideIndex = this.swiperInstance.slides.length - 1
+      }
     },
   },
   async mounted() {
