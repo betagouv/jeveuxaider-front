@@ -1,8 +1,8 @@
 {
   "name": "jeveuxaider",
   "engines": {
-    "node": "18",
-    "npm": "8"
+    "node": "20",
+    "npm": "10"
   },
   "private": true,
   "scripts": {
