@@ -1,6 +1,11 @@
 <template>
   <div class="lg:px-6 lg:py-4 border-t">
-    <form id="form-message" novalidate class="flex gap-4 items-end justify-center">
+    <form
+      id="form-message"
+      novalidate
+      class="flex gap-4 items-end justify-center"
+      @submit.prevent="handleSubmit"
+    >
       <BaseTextareaAutosize
         v-model="message"
         placeholder="Écrivez un message"
