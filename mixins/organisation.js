@@ -24,8 +24,8 @@ export default {
       )
       switch (this.$stores.auth.contextRole) {
         case 'admin':
-          return true
         case 'referent':
+          return true
         case 'referent_regional':
           return (
             !!rolesWhoCanEdit.includes(this.$stores.auth.contextRole) &&

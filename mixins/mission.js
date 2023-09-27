@@ -9,19 +9,13 @@ export default {
       return this.mission?.domaine_id ?? this.mission?.template?.domaine_id
     },
     activity() {
-      const activity =
-        this.mission?.activity ?? this.mission?.template?.activity
-      return activitiesJson.find(
-        (activityJson) => activityJson.id === activity?.id
-      )
+      const activity = this.mission?.activity ?? this.mission?.template?.activity
+      return activitiesJson.find((activityJson) => activityJson.id === activity?.id)
     },
     activitySecondary() {
       const activity =
-        this.mission?.activity_secondary ??
-        this.mission?.template?.activity_secondary
-      return activitiesJson.find(
-        (activityJson) => activityJson.id === activity?.id
-      )
+        this.mission?.activity_secondary ?? this.mission?.template?.activity_secondary
+      return activitiesJson.find((activityJson) => activityJson.id === activity?.id)
     },
     activities() {
       return [this.activity, this.activitySecondary].filter(Boolean)
@@ -89,7 +83,13 @@ export default {
         'mission_workflow_states',
         'roles'
       )
-      return !!rolesWhoCanEdit?.includes(this.$stores.auth.contextRole)
+      switch (this.$stores.auth.contextRole) {
+        case 'admin':
+        case 'referent':
+          return true
+        default:
+          return !!rolesWhoCanEdit?.includes(this.$stores.auth.contextRole)
+      }
     },
     missionCity() {
       if (this.mission.city?.startsWith('Paris ')) {
@@ -120,10 +120,7 @@ export default {
         return false
       }
 
-      if (
-        this.mission.state === 'Validée' &&
-        this.mission.structure.state === 'Validée'
-      ) {
+      if (this.mission.state === 'Validée' && this.mission.structure.state === 'Validée') {
         return true
       }
 
@@ -139,9 +136,9 @@ export default {
         if (this.$dayjs(startDate).isSame(this.$dayjs(endDate))) {
           return `Le ${this.$dayjs(startDate).format('D MMMM YYYY')}`
         }
-        return `Du ${this.$dayjs(startDate).format(
+        return `Du ${this.$dayjs(startDate).format('D MMMM YYYY')} au ${this.$dayjs(endDate).format(
           'D MMMM YYYY'
-        )} au ${this.$dayjs(endDate).format('D MMMM YYYY')}`
+        )}`
       }
 
       return `À partir du ${this.$dayjs(startDate).format('D MMMM YYYY')}`
@@ -175,10 +172,7 @@ export default {
         return `${this.$filters.label(
           this.mission.commitment__duration,
           'duration'
-        )} par ${this.$filters.label(
-          this.mission.commitment__time_period,
-          'time_period'
-        )}`
+        )} par ${this.$filters.label(this.mission.commitment__time_period, 'time_period')}`
       }
       return this.mission.commitment__duration
         ? this.$filters.label(this.mission.commitment__duration, 'duration')
@@ -255,12 +249,8 @@ export default {
       })
 
       const url = this.activity
-        ? `/missions-benevolat?activities.name=${encodeURIComponent(
-            this.activity.name
-          )}`
-        : `/missions-benevolat?domaines=${encodeURIComponent(
-            this.domaine.name
-          )}`
+        ? `/missions-benevolat?activities.name=${encodeURIComponent(this.activity.name)}`
+        : `/missions-benevolat?domaines=${encodeURIComponent(this.domaine.name)}`
       this.$router.push(url)
     },
   },
