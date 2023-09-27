@@ -51,7 +51,11 @@
             />
           </BaseFormControl>
 
-          <BaseFormControl label="SIRET" html-for="siret">
+          <BaseFormControl
+            label="SIRET"
+            html-for="siret"
+            :required="form.statut_juridique === 'Organisation privée'"
+          >
             <BaseInput v-model="form.siret" name="siret" placeholder="Ex: 784 671 695 00087" />
           </BaseFormControl>
 
@@ -383,6 +387,14 @@ export default defineNuxtComponent({
         schema = schema.concat(
           object({
             publics_beneficiaires: array().min(1, 'Au moins 1 public bénéficiaire'),
+          })
+        )
+      }
+
+      if (this.form.statut_juridique === 'Organisation privée') {
+        schema = schema.concat(
+          object({
+            siret: string().required('Un SIRET est requis'),
           })
         )
       }

@@ -577,6 +577,7 @@ const labels: TypeLabels = {
     { key: 'phone', label: 'Téléphone public' },
     { key: 'website', label: 'Site internet' },
     { key: 'domaines', label: 'Domaines' },
+    { key: 'siret', label: 'SIRET' },
   ],
   reseau_fields: [
     { key: 'description', label: 'Description' },

@@ -9,9 +9,7 @@ export default {
     formattedActions() {
       const mergedActions = [...this.actions, ...this.snuActions]
       return mergedActions
-        .filter((item) =>
-          Array.isArray(item.value) ? item.value.length : item.value
-        )
+        .filter((item) => (Array.isArray(item.value) ? item.value.length : item.value))
         .map((item) => {
           return {
             ...item,
@@ -46,8 +44,7 @@ export default {
             icon: '✊',
             iconVariant: 'warning',
             title: 'Vous n’avez pas défini de préférences d’activités',
-            subtitle:
-              'Utiles pour vous suggérer des missions en fonction de vos préférences',
+            subtitle: 'Utiles pour vous suggérer des missions en fonction de vos préférences',
             link: '/profile/preferences',
           }
         case 'search_missions':
@@ -55,8 +52,7 @@ export default {
             icon: '🔍',
             iconVariant: 'info',
             title: 'Trouvez votre prochaine mission',
-            subtitle:
-              'Vous avez du temps libre et souhaitez contribuer à la solidarité ?',
+            subtitle: 'Vous avez du temps libre et souhaitez contribuer à la solidarité ?',
             link: '/missions-benevolat',
           }
         case 'organisations_waiting_validation':
@@ -69,8 +65,7 @@ export default {
               'organisations',
               false
             )}</b> en attente de validation`,
-            subtitle:
-              "Elles n'attendent que vous pour pouvoir publier leurs missions !",
+            subtitle: "Elles n'attendent que vous pour pouvoir publier leurs missions !",
             link: '/admin/organisations?filter[state]=En attente de validation',
           }
         case 'organisations_in_progress':
@@ -83,8 +78,7 @@ export default {
               'organisations',
               false
             )}</b> en cours de traitement`,
-            subtitle:
-              "Elles n'attendent que vous pour pouvoir publier leurs missions !",
+            subtitle: "Elles n'attendent que vous pour pouvoir publier leurs missions !",
             link: '/admin/organisations?filter[state]=En cours de traitement',
           }
         case 'organisation_signaled':
@@ -121,8 +115,7 @@ export default {
               'territoires',
               false
             )}</b> en attente de validation`,
-            subtitle:
-              'Des collectivités territoriales souhaitent créer leur page',
+            subtitle: 'Des collectivités territoriales souhaitent créer leur page',
             link: '/admin/contenus/territoires?filter[state]=waiting',
           }
         case 'organisation_incomplete':
@@ -130,8 +123,11 @@ export default {
             icon: '✍',
             iconVariant: 'warning',
             title: 'Votre organisation est <b>incomplète</b>',
-            subtitle:
-              'Complétez les informations manquantes pour gagner en visibilité !',
+            // subtitle:
+            //   'Complétez les informations manquantes pour gagner en visibilité !',
+            subtitle: `Complétez les informations manquantes: ${action.value
+              .map((item) => this.$filters.label(item, 'structure_fields'))
+              .join(', ')}`,
             link: `/admin/organisations/${this.$stores.auth.currentRole.contextable_id}/edit`,
           }
         case 'organisation_brouillon_incomplete':
@@ -153,8 +149,7 @@ export default {
               'missions',
               false
             )}</b> en attente de validation`,
-            subtitle:
-              "Modérez les missions proposées afin qu'elles soient publiées.",
+            subtitle: "Modérez les missions proposées afin qu'elles soient publiées.",
             link: '/admin/missions?filter[state]=En attente de validation',
           }
         case 'missions_in_progress':
@@ -167,8 +162,7 @@ export default {
               'missions',
               false
             )}</b> en cours de traitement`,
-            subtitle:
-              "Modérez les missions proposées afin qu'elles soient publiées.",
+            subtitle: "Modérez les missions proposées afin qu'elles soient publiées.",
             link: '/admin/missions?filter[state]=En cours de traitement',
           }
         case 'missions_outdated':
@@ -181,8 +175,7 @@ export default {
               'missions',
               false
             )}</b> dont la date de fin est passée`,
-            subtitle:
-              "N'oubliez pas de mettre à jour les dates de vos missions.",
+            subtitle: "N'oubliez pas de mettre à jour les dates de vos missions.",
             link: '/admin/missions?filter[date]=over&filter[state]=Validée',
           }
         case 'mission_template_new':
@@ -199,8 +192,7 @@ export default {
             icon: '🗂',
             iconVariant: 'info',
             title: 'Gérez vos modèles de mission',
-            subtitle:
-              'Notre équipe se tient à votre disposition pour vous accompagner !',
+            subtitle: 'Notre équipe se tient à votre disposition pour vous accompagner !',
             link: '/admin/contenus/modeles-mission',
           }
         case 'mission_new':
@@ -368,8 +360,7 @@ export default {
             icon: '📋',
             iconVariant: 'warning',
             title: '<b>Acceptez la charte de bon fonctionnement</b>',
-            subtitle:
-              'Quelques règles utiles pour assurer une bonne utilisation de la plateforme',
+            subtitle: 'Quelques règles utiles pour assurer une bonne utilisation de la plateforme',
             link: '/profile/charte-bon-fonctionnement',
           }
         case 'has_agreed_benevole_terms':
@@ -377,8 +368,7 @@ export default {
             icon: '📋',
             iconVariant: 'info',
             title: '<b>Retrouvez la charte de bon fonctionnement ici</b>',
-            subtitle:
-              'Quelques règles utiles pour assurer une bonne utilisation de la plateforme',
+            subtitle: 'Quelques règles utiles pour assurer une bonne utilisation de la plateforme',
             link: '/profile/charte-bon-fonctionnement',
           }
       }
