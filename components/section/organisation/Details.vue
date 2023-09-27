@@ -146,12 +146,11 @@
                 {{
                   $filters.pluralize(
                     participationsCount,
-                    'bénévole déjà passé',
-                    'bénévoles déjà passés',
+                    'bénévole s’est mobilisé',
+                    'bénévoles se sont mobilisés',
                     false
                   )
                 }}
-                par là
               </div>
               <div class="text-[#666666]">grâce à JeVeuxAider.gouv.fr</div>
             </div>

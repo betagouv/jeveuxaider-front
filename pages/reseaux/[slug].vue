@@ -8,13 +8,14 @@
         :redirect-parameters="{
           'structure.reseaux.name': reseau.name,
         }"
+        suffixTitle="Découvrez le réseau"
       />
       <Details :organisation="reseau" :src-set="image2" class="bg-[#F3EDE5]" />
       <div id="missions" :data-offset-anchor="-98">
         <SectionSlideshowMissions
           v-if="reseau.statistics.missions_available_presentiel_count > 0"
           :organisation="reseau"
-          title="Missions disponibles"
+          title="Missions sur le terrain"
           :search-parameters="{
             hitsPerPage: 6,
             facetFilters: [`structure.reseaux.name:${reseau.name}`, 'type:Mission en présentiel'],
@@ -36,7 +37,7 @@
           v-if="reseau.statistics.missions_available_distance_count > 0"
           class="bg-[#F3EDE5]"
           :organisation="reseau"
-          title="Depuis chez moi"
+          title="Missions à distance"
           :search-parameters="{
             hitsPerPage: 6,
             facetFilters: [`structure.reseaux.name:${reseau.name}`, 'type:Mission à distance'],

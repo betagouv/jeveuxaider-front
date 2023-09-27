@@ -26,8 +26,8 @@
             </span>
           </h2>
           <p class="text-2xl lg:text-[28px] text-[#3A3A3A] mt-10 leading-10">
-            Déjà plus de <span class="font-bold">460 000 inscrits </span>sur la première
-            <span class="font-bold">plateforme nationale de l’engagement.</span>
+            Déjà plus de <span class="font-bold">460 000 inscrits </span>sur la
+            <span class="font-bold">plateforme publique de l’engagement.</span>
           </p>
           <DsfrButton size="lg" class="mt-10" @click="$router.push('/')">
             Découvrir JeVeuxAider.gouv.fr

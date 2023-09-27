@@ -14,7 +14,7 @@
         <SectionSlideshowMissions
           v-if="organisation.statistics.missions_available_presentiel_count > 0"
           :organisation="organisation"
-          title="Missions disponibles"
+          title="Missions sur le terrain"
           :search-parameters="{
             hitsPerPage: 6,
             facetFilters: [`structure.name:${organisation.name}`, 'type:Mission en présentiel'],
@@ -32,11 +32,11 @@
           }"
         />
 
-        <!-- <SectionSlideshowMissions
+        <SectionSlideshowMissions
           v-if="organisation.statistics.missions_available_distance_count > 0"
           class="bg-[#F3EDE5]"
           :organisation="organisation"
-          title="Depuis chez moi"
+          title="Missions à distance"
           :search-parameters="{
             hitsPerPage: 6,
             facetFilters: [`structure.name:${organisation.name}`, 'type:Mission à distance'],
@@ -49,7 +49,7 @@
             isLogged: $stores.auth.isLogged,
             organisation: organisation.name,
           }"
-        /> -->
+        />
 
         <MissionsActivities
           :title="`Au programme des activités bénévoles proposées chez ${organisation.name}`"

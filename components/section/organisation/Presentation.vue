@@ -1,7 +1,7 @@
 <template>
   <div class="relative bg-white lg:grid lg:grid-cols-2">
     <div class="col-span-2 lg:col-span-1 flex flex-col items-center justify-center">
-      <div class="px-4 lg:px-0 lg:max-w-3xl lg:ml-auto">
+      <div class="px-4 lg:px-0 lg:max-w-3xl lg:ml-auto lg:w-full">
         <div class="py-8 lg:p-8">
           <h1 class="mb-8 text-3xl lg:text-[56px] sm:!leading-[1.1] tracking-tighter font-bold">
             <span class="relative">
@@ -23,7 +23,7 @@
                 réalisables</span
               >
             </template>
-            <template v-else> et ses missions </template>
+            <template v-else>. </template>
             <template v-if="hasMissionsDistanceAndPresentiel">
               <span>
                 en <span class="font-bold">présentiel</span> ou en
@@ -40,7 +40,7 @@
             </template>
           </p>
           <DsfrButton size="lg" @click="onClickFindMissions">
-            Trouvez une mission <span class="hidden sm:inline">de bénévolat</span>
+            Trouver une mission <span class="hidden sm:inline">de bénévolat</span>
           </DsfrButton>
           <p class="text-base lg:text-lg mt-4">
             <template v-if="organisation.places_left > 0">
@@ -53,7 +53,6 @@
               >
               {{ $filters.pluralize(organisation.places_left, 'recherché', 'recherchés', false) }}
             </template>
-            <template v-else> Plus de place disponible </template>
           </p>
         </div>
       </div>
@@ -109,12 +108,18 @@ export default defineNuxtComponent({
       this.$refs.illustration.$el.srcset = '/images/organisation-default-2.webp'
     },
     onClickFindMissions() {
-      this.$router.push({
-        path: '/missions-benevolat',
-        query: {
-          ...this.redirectParameters,
-        },
-      })
+      if (this.organisation.missions_available_count > 1) {
+        this.$router.push({
+          path: '/missions-benevolat',
+          query: {
+            ...this.redirectParameters,
+          },
+        })
+      } else {
+        this.$router.push({
+          path: '/missions-benevolat',
+        })
+      }
     },
   },
 })
