@@ -13,14 +13,14 @@
         <div class="hidden lg:block flex-none">
           <div class="flex space-x-2">
             <div id="slideshowArticlesArrows" />
-            <DsfrButton
-              to="https://www.jeveuxaider.gouv.fr/engagement/actualites/"
-              :is-external="true"
+            <NuxtLink
+              no-prefetch
+              to="https://www.jeveuxaider.gouv.fr/engagement/category/actualite/"
               class="flex-none"
-              type="secondary"
+              target="_blank"
             >
-              Plus d’articles
-            </DsfrButton>
+              <DsfrButton type="secondary" class="h-full"> Plus d’articles </DsfrButton>
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -43,13 +43,13 @@
         </BaseSlideshow>
       </div>
       <div class="lg:hidden mt-8 text-center">
-        <DsfrButton
-          to="https://www.jeveuxaider.gouv.fr/engagement/actualites/"
-          :is-external="true"
-          type="tertiary"
+        <NuxtLink
+          no-prefetch
+          to="https://www.jeveuxaider.gouv.fr/engagement/category/actualite/"
+          target="_blank"
         >
-          Plus d’articles
-        </DsfrButton>
+          <DsfrButton type="tertiary"> Plus d’articles </DsfrButton>
+        </NuxtLink>
       </div>
     </div>
   </div>
