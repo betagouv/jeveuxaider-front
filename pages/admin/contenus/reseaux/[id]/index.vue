@@ -322,7 +322,7 @@ export default defineNuxtComponent({
     }
 
     if ($stores.auth.contextRole == 'tete_de_reseau') {
-      if ($stores.auth.contextableId != params.id) {
+      if ($stores.auth.contextableId != route.params.id) {
         return showError({ statusCode: 403 })
       }
     }
