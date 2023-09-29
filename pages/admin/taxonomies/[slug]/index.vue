@@ -1,6 +1,6 @@
 <template>
   <div v-if="vocabulary" class="flex flex-col gap-8">
-    <DrawerTerm :term-id="drawerTermId" @close="drawerTermId = null" />
+    <DrawerTerm :term-id="drawerTermId" @close="drawerTermId = null" @deleted="fetch()" />
     <ClientOnly>
       <Teleport to="#teleport-breadcrumb">
         <DsfrBreadcrumb

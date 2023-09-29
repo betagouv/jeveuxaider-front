@@ -85,7 +85,7 @@ export default defineNuxtComponent({
               body: this.form,
             })
           } else {
-            await this.apiFetch(`/vocabularies/${this.vocabulary}/terms`, {
+            await apiFetch(`/vocabularies/${this.vocabulary}/terms`, {
               method: 'POST',
               body: this.form,
             })

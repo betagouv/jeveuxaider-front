@@ -62,6 +62,7 @@ export default defineNuxtComponent({
     // BoxLiaisons,
     OnlineIndicator,
   },
+  emits: ['deleted', 'loaded', 'close'],
   props: {
     termId: {
       type: Number,
@@ -88,8 +89,12 @@ export default defineNuxtComponent({
     async handleDelete() {
       await apiFetch(`/terms/${this.termId}`, {
         method: 'DELETE',
-      }).catch((err) => console.log(err))
-      this.$router.go()
+      })
+        .then((response) => {
+          this.$emit('deleted')
+          this.$emit('close')
+        })
+        .catch((err) => console.log(err))
     },
   },
 })
