@@ -17,8 +17,11 @@
           </h1>
           <p class="text-lg lg:text-2xl lg:leading-10 mb-8">
             Rejoignez le mouvement <span class="font-bold">{{ organisation.name }}</span>
-            <template v-if="organisation.missions_available_count > 1">
-              <span>
+            <template v-if="organisation.missions_available_count >= 1">
+              <span v-if="organisation.missions_available_count === 1">
+                et sa mission de bénévolat réalisable</span
+              >
+              <span v-else>
                 et ses {{ $numeral(organisation.missions_available_count) }} missions de bénévolat
                 réalisables</span
               >
