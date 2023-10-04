@@ -1,6 +1,8 @@
 <template>
   <div class="container px-4 py-2 lg:px-12 lg:py-7">
-    <div class="flex items-center justify-between border-b pt-6 pb-10">
+    <div
+      class="flex flex-col lg:flex-row lg:items-center lg:justify-between border-b pt-6 pb-10 gap-4"
+    >
       <DsfrHeading as="h1" size="xl">Gestions des modèles de messages</DsfrHeading>
       <DsfrButton icon="RiAddLine" to="/messages/modeles/add">Nouveau modèle</DsfrButton>
     </div>
@@ -10,7 +12,7 @@
         <div v-if="queryResult.total" class="grid grid-cols-1 divide-y my-12">
           <BaseDisclosure v-for="messageTemplate in queryResult.data" :key="messageTemplate.id">
             <template #button="{ isOpen }">
-              <div class="flex items-center justify-between group py-4">
+              <div class="flex items-center justify-between group py-6">
                 <div class="font-semibold text-md text-jva-blue-500 group-hover:text-jva-blue-400">
                   {{ messageTemplate.name }}
                 </div>
@@ -26,7 +28,7 @@
             </template>
             <FormMessageTemplate
               :ref="`form-${messageTemplate.id}`"
-              class="my-8"
+              class="pt-2 pb-10"
               :message-template="messageTemplate"
               @refetch="fetch()"
             />

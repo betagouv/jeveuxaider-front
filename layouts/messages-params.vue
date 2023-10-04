@@ -4,12 +4,9 @@
       <HeaderMessagerie />
 
       <div class="flex flex-col bg-white overflow-hidden lg:flex-row h-full">
-        <div :class="['w-full h-full lg:w-[80px] lg:flex-none lg:flex flex-1']">
+        <div :class="['lg:w-[80px] lg:flex-none lg:flex']">
           <ConversationsTabs
-            :class="[
-              'fixed bottom-0 w-full z-20 lg:relative lg:w-[80px] lg:border-r',
-              { 'hidden lg:block': $stores.messaging.showFilters },
-            ]"
+            :class="['fixed bottom-0 w-full z-20 lg:relative lg:w-[80px] lg:border-r']"
           />
         </div>
 

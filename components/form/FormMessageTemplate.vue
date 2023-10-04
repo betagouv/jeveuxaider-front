@@ -15,7 +15,7 @@
           label="Rendre le modèle collaboratif"
           description="Les co-gestionnaires de mon organisation pourront modifier le modèle"
         />
-        <div v-if="form.id" class="flex-none flex gap-4">
+        <div v-if="form.id" class="flex-none flex flex-wrap gap-4">
           <DsfrButton @click="handleSubmitAndClose" type="tertiary" icon="RiSaveLine"
             >Enregistrer</DsfrButton
           >

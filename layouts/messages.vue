@@ -54,6 +54,10 @@ export default {
   data() {
     return {}
   },
+  created() {
+    // @TODO if not volontaire
+    this.$stores.messaging.fetchMessageTemplates()
+  },
   computed: {},
   methods: {},
 }
