@@ -4,7 +4,7 @@
       <div class="space-y-6">
         <BaseFormControl html-for="name" label="Nom du modèle" required :error="errors.name">
           <BaseInput v-model="form.name" name="name" />
-          <BaseFormHelperText v-if="form.id">
+          <BaseFormHelperText v-if="form.id" class="mt-1">
             Créé par {{ form.user.profile.full_name }} le {{ form.created_at }}
           </BaseFormHelperText>
         </BaseFormControl>
@@ -30,10 +30,16 @@
       <div>
         <BaseFormControl html-for="message" label="Message" required :error="errors.message">
           <BaseTextarea v-model="form.message" name="message" />
-          <BaseFormHelperText>
-            N’hésitez pas à utiliser les balises dynamiques suivantes : [prenom] [nom]
-            [nom_de_la_mission] [ville_de_la_mission] [nom_organisation] [date_publication_mission]
-            [date_candidature]
+          <BaseFormHelperText class="mt-1">
+            N’hésitez pas à utiliser les balises dynamiques suivantes :
+
+            <span
+              v-for="token in tokens"
+              :key="token"
+              @click.native="appendTokenToMessage(token)"
+              class="text-jva-blue-500 hover:text-jva-blue-400 cursor-pointer"
+              >{{ token }}</span
+            >
           </BaseFormHelperText>
         </BaseFormControl>
       </div>
@@ -59,6 +65,15 @@ export default defineNuxtComponent({
     return {
       loading: false,
       form: { ...this.messageTemplate },
+      tokens: [
+        '[benevole_prenom]',
+        '[benevole_nom]',
+        '[benevole_date_candidature]',
+        '[mission_nom]',
+        '[mission_ville]',
+        '[mission_date_publication]',
+        '[organisation_nom]',
+      ],
       formSchema: object({
         name: string().min(3, 'Le nom est trop court').required('Le nom est requis'),
         message: string().min(3, 'Le message est trop court').required('Le message est requis'),
@@ -74,6 +89,13 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    appendTokenToMessage(token) {
+      if (this.form.message) {
+        this.form.message += ' ' + token
+      } else {
+        this.form.message = token
+      }
+    },
     async handleSubmitAndClose() {
       await this.handleSubmit(this.form)
       this.$emit('refetch')
