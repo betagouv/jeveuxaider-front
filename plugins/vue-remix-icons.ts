@@ -102,8 +102,10 @@ import RiArrowLeftSLine from 'vue-remix-icons/icons/ri-arrow-left-s-line.vue'
 import RiPriceTag3Line from 'vue-remix-icons/icons/ri-price-tag-3-line.vue'
 import RiSubstractLine from 'vue-remix-icons/icons/ri-subtract-line.vue'
 import RiSurveyLine from 'vue-remix-icons/icons/ri-survey-line.vue'
+import RiSaveLine from 'vue-remix-icons/icons/ri-save-line.vue'
 
 const components = {
+  RiSaveLine,
   RiSurveyLine,
   RiSubstractLine,
   RiPriceTag3Line,

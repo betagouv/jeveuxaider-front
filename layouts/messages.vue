@@ -12,7 +12,7 @@
         >
           <ConversationsTabs
             :class="[
-              'fixed bottom-0 w-full z-20 border-t lg:relative lg:w-[80px] lg:border-r',
+              'fixed bottom-0 w-full z-20 lg:relative lg:w-[80px] lg:border-r',
               { 'hidden lg:block': $stores.messaging.showFilters },
             ]"
           />

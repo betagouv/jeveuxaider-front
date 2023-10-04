@@ -7,13 +7,15 @@
         <div :class="['w-full h-full lg:w-[80px] lg:flex-none lg:flex flex-1']">
           <ConversationsTabs
             :class="[
-              'fixed bottom-0 w-full z-20 border-t lg:relative lg:w-[80px] lg:border-r',
+              'fixed bottom-0 w-full z-20 lg:relative lg:w-[80px] lg:border-r',
               { 'hidden lg:block': $stores.messaging.showFilters },
             ]"
           />
         </div>
 
-        <NuxtPage class="lg:flex-1" />
+        <BaseContainerScrollable :class="['flex-1']">
+          <NuxtPage class="lg:flex-1" />
+        </BaseContainerScrollable>
       </div>
 
       <div id="teleport-drawer" class="relative z-20"></div>

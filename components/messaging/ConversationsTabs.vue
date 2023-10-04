@@ -69,6 +69,9 @@ export default defineNuxtComponent({
   },
   methods: {
     changeType(type) {
+      if (this.$route.name === 'messages-modeles') {
+        this.$router.push('/messages')
+      }
       this.$stores.messaging.conversationsQueryParams = {
         'filter[type]': type,
         page: 1,
