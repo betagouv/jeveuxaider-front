@@ -4,20 +4,12 @@
       <HeaderMessagerie />
 
       <div class="flex flex-col bg-white overflow-hidden lg:flex-row h-full">
-        <div
-          :class="[
-            'w-full h-full lg:w-[530px] lg:flex-none lg:border-r lg:flex flex-1',
-            { hidden: $route.params.id },
-          ]"
-        >
+        <div :class="['w-full h-full lg:w-[80px] lg:flex-none lg:flex flex-1']">
           <ConversationsTabs
             :class="[
               'fixed bottom-0 w-full z-20 border-t lg:relative lg:w-[80px] lg:border-r',
               { 'hidden lg:block': $stores.messaging.showFilters },
             ]"
-          />
-          <ConversationsListingResults
-            :class="['flex-1 min-w-0', { 'pb-[61px] lg:pb-0': !$stores.messaging.showFilters }]"
           />
         </div>
 
@@ -32,7 +24,6 @@
 
 <script>
 import HeaderMessagerie from '@/components/layout/HeaderMessagerie.vue'
-import ConversationsListingResults from '@/components/messaging/ConversationsListingResults.vue'
 import ConversationsTabs from '@/components/messaging/ConversationsTabs.vue'
 import MixinUsetiful from '@/mixins/usetiful.client.js'
 import MixinPlausible from '@/mixins/plausible.js'
@@ -40,7 +31,6 @@ import MixinPlausible from '@/mixins/plausible.js'
 export default {
   components: {
     HeaderMessagerie,
-    ConversationsListingResults,
     ConversationsTabs,
   },
   mixins: [MixinUsetiful, MixinPlausible],

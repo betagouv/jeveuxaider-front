@@ -18,6 +18,23 @@
       <component :is="tab.icon" class="h-6 w-6 fill-current inline" />
       <div>{{ tab.label }}</div>
     </div>
+    <nuxt-link
+      no-prefetch
+      to="/messages/modeles"
+      v-if="$stores.auth.contextRole === 'responsable'"
+      :class="[
+        'py-2 lg:py-4 cursor-pointer w-full hover:bg-white',
+        {
+          'bg-white text-jva-blue-500': $route.name === 'modele',
+        },
+        {
+          'text-gray-600': $route.name === 'modele',
+        },
+      ]"
+    >
+      <RiSurveyLine class="h-6 w-6 fill-current inline" />
+      <div>Modèles</div>
+    </nuxt-link>
   </div>
 </template>
 
