@@ -16,7 +16,7 @@
       </DsfrHeading>
       <p class="text-xl leading-7 mb-6 xl:mb-10 text-center">
         Tous les acteurs du bénévolat vous attendent sur la
-        <strong>plateforme publique de l’engagement</strong>.
+        <strong>plateforme publique du bénévolat</strong>.
       </p>
       <div class="text-center mb-8 xl:mb-12">
         <DsfrButton class="xl:px-6 xl:py-3 xl:text-lg" @click="handleClick()">
