@@ -4,7 +4,7 @@
       id="form-message"
       novalidate
       class="flex gap-4 items-end justify-center"
-      @submit.prevent="handleSubmit"
+      @submit.prevent="handleSubmitt"
     >
       <BaseTextareaAutosize
         v-model="message"
@@ -23,44 +23,6 @@
         Envoyer
       </DsfrButton>
 
-      <BaseDropdown
-        v-if="$stores.auth.contextRole !== 'volontaire'"
-        ref="dropdownActions"
-        class="flex-none"
-        position-class="origin-top-right bottom-14 right-0"
-      >
-        <template #button>
-          <DsfrButton
-            type="transparent"
-            icon="RiArrowUpSLine"
-            icon-position="right"
-            class="hidden lg:flex"
-          >
-            Modèle
-          </DsfrButton>
-          <DsfrButton
-            type="transparent"
-            size="md"
-            icon="RiMore2Line"
-            icon-only
-            class="flex lg:hidden"
-          />
-        </template>
-
-        <template #items>
-          <div class="w-[300px] py-4">
-            <div class="">Valider cette mission</div>
-            <div
-              class=""
-              v-for="messageTemplate in $stores.messaging.messageTemplates"
-              :key="messageTemplate.id"
-            >
-              {{ messageTemplate.name }}
-            </div>
-          </div>
-        </template>
-      </BaseDropdown>
-
       <DsfrButton
         class="flex-none lg:hidden"
         icon="RiSendPlaneFill"
@@ -68,21 +30,36 @@
         :loading="loading"
         @click.native="handleSubmit"
       />
+
+      <ButtonSelectMessageTemplate
+        v-if="canUseMessageTemplate"
+        @selected="handleMessageTemplateSelected"
+      />
     </form>
   </div>
 </template>
 
 <script>
+import ButtonSelectMessageTemplate from '@/components/custom/ButtonSelectMessageTemplate.vue'
+
 export default defineNuxtComponent({
   emits: ['submit'],
+  components: {
+    ButtonSelectMessageTemplate,
+  },
   data() {
     return {
       loading: false,
       message: '',
-      messageTemplates: [],
     }
   },
   computed: {
+    canUseMessageTemplate() {
+      if (this.$stores.auth.contextRole === 'volontaire') {
+        return false
+      }
+      return this.conversation.conversable_type == 'App\\Models\\Participation'
+    },
     conversation() {
       return this.$stores.messaging.activeConversation
     },
@@ -90,6 +67,12 @@ export default defineNuxtComponent({
   methods: {
     reset() {
       this.message = ''
+    },
+    handleMessageTemplateSelected(payload) {
+      this.message = payload
+    },
+    handleSubmitt() {
+      console.log('formulaire soumis')
     },
     handleSubmit() {
       if (this.loading) {

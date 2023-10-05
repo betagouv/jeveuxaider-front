@@ -37,7 +37,7 @@
               v-for="token in tokens"
               :key="token"
               @click.native="appendTokenToMessage(token)"
-              class="text-jva-blue-500 hover:text-jva-blue-400 cursor-pointer"
+              class="text-jva-blue-500 hover:text-jva-blue-400 cursor-pointer mr-1"
               >{{ token }}</span
             >
           </BaseFormHelperText>
@@ -68,11 +68,13 @@ export default defineNuxtComponent({
       tokens: [
         '[benevole_prenom]',
         '[benevole_nom]',
-        '[benevole_date_candidature]',
         '[mission_nom]',
         '[mission_ville]',
-        '[mission_date_publication]',
+        '[mission_date_debut]',
+        '[mission_date_fin]',
         '[organisation_nom]',
+        '[responsable_prenom]',
+        '[responsable_nom]',
       ],
       formSchema: object({
         name: string().min(3, 'Le nom est trop court').required('Le nom est requis'),
