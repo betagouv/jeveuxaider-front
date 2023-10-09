@@ -11,7 +11,7 @@
         icon-position="right"
         class="hidden lg:flex"
       >
-        Modèle
+        Modèles
       </DsfrButton>
       <DsfrButton
         type="transparent"
