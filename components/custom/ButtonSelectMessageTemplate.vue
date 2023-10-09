@@ -44,7 +44,7 @@
         <div class="border-t border-[#DDDDDD] pt-3 mt-3">
           <NuxtLink
             to="/messages/modeles"
-            class="text-[#161616] text-sm cursor-pointer hover:text-jva-blue-500 flex items-center space-x-3"
+            class="text-[#161616] text-sm cursor-pointer hover:text-jva-blue-500 flex items-center space-x-3 hover:font-semibold"
             ><RiTodoLine class="h-4 w-4 fill-current" /> <span>Gestion des modèles</span></NuxtLink
           >
         </div>
