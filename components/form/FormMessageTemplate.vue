@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <div class="space-y-6">
         <BaseFormControl html-for="name" label="Nom du modèle" required :error="errors.name">
-          <BaseInput v-model="form.name" name="name" />
+          <BaseInput v-model="form.name" name="name" placeholder="" />
           <BaseFormHelperText v-if="form.id" class="mt-1">
             Créé par {{ form.user.profile.full_name }} le {{ form.created_at }}
           </BaseFormHelperText>
@@ -48,9 +48,14 @@
         </div>
       </div>
       <div>
-        <BaseFormControl html-for="message" label="Message" required :error="errors.message">
+        <BaseFormControl
+          html-for="message"
+          label="Corps du message"
+          required
+          :error="errors.message"
+        >
           <BaseTextarea v-model="form.message" name="message" />
-          <BaseFormHelperText v-if="$stores.auth.contextRole === 'responsable'" class="mt-1">
+          <BaseFormHelperText v-if="$stores.auth.contextRole === 'responsable'" class="mt-2">
             N’hésitez pas à utiliser les balises dynamiques suivantes :
 
             <span
