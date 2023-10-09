@@ -50,7 +50,7 @@
       <div>
         <BaseFormControl html-for="message" label="Message" required :error="errors.message">
           <BaseTextarea v-model="form.message" name="message" />
-          <BaseFormHelperText class="mt-1">
+          <BaseFormHelperText v-if="$stores.auth.contextRole === 'responsable'" class="mt-1">
             N’hésitez pas à utiliser les balises dynamiques suivantes :
 
             <span
