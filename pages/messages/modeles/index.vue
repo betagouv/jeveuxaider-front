@@ -16,14 +16,23 @@
                 <div class="font-semibold text-md text-jva-blue-500 group-hover:text-jva-blue-400">
                   {{ messageTemplate.name }}
                 </div>
-                <RiArrowUpSLine
-                  v-if="isOpen"
-                  class="text-jva-blue-500 group-hover:text-jva-blue-400 fill-current h-5 w-5 flex-shrink-0 mt-0.5"
-                />
-                <RiArrowDownSLine
-                  v-else
-                  class="text-jva-blue-500 group-hover:text-jva-blue-400 fill-current h-5 w-5 flex-shrink-0 mt-0.5"
-                />
+                <div class="flex items-center space-x-4">
+                  <div
+                    v-if="messageTemplate.is_shared"
+                    class="flex items-center space-x-2 text-[#3A3A3A]"
+                  >
+                    <RiTeamLine class="h-4 w-4 fill-current" />
+                    <span class="font-medium">Collaboratif</span>
+                  </div>
+                  <RiArrowUpSLine
+                    v-if="isOpen"
+                    class="text-jva-blue-500 group-hover:text-jva-blue-400 fill-current h-5 w-5 flex-shrink-0 mt-0.5"
+                  />
+                  <RiArrowDownSLine
+                    v-else
+                    class="text-jva-blue-500 group-hover:text-jva-blue-400 fill-current h-5 w-5 flex-shrink-0 mt-0.5"
+                  />
+                </div>
               </div>
             </template>
             <FormMessageTemplate
@@ -34,7 +43,16 @@
             />
           </BaseDisclosure>
         </div>
-        <div v-else>No result</div>
+        <div v-else class="h-[300px] flex flex-col items-center justify-center">
+          <div class="text-lg text-gray-400 font-semibold">
+            Créer votre premier modèle de message
+          </div>
+          <div class="mt-6">
+            <DsfrButton icon="RiAddLine" to="/messages/modeles/add" type="secondary"
+              >Créer un modèle</DsfrButton
+            >
+          </div>
+        </div>
       </template>
     </div>
   </div>

@@ -19,10 +19,30 @@
           <DsfrButton @click="handleSubmitAndClose" type="tertiary" icon="RiSaveLine"
             >Enregistrer</DsfrButton
           >
-          <DsfrButton @click="handleDuplicate" type="tertiary" icon="RiFileCopyLine"
+          <BaseAlertDialog
+            theme="warning"
+            title="Dupliquer le modèle"
+            :text="`Vous êtes sur le point de dupliquer le modèle <b>${form.name}</b>`"
+            :is-open="showDuplicateAlert"
+            @confirm="handleDuplicate"
+            @cancel="showDuplicateAlert = false"
+          />
+          <DsfrButton @click="showDuplicateAlert = true" type="tertiary" icon="RiFileCopyLine"
             >Dupliquer</DsfrButton
           >
-          <DsfrButton v-if="canDelete" @click="handleDelete" type="tertiary" icon="RiDeleteBinLine"
+          <BaseAlertDialog
+            theme="warning"
+            title="Supprimer le modèle"
+            :text="`Vous êtes sur le point de supprimer le modèle <b>${form.name}</b>`"
+            :is-open="showDeleteAlert"
+            @confirm="handleDelete"
+            @cancel="showDeleteAlert = false"
+          />
+          <DsfrButton
+            v-if="canDelete"
+            @click="showDeleteAlert = true"
+            type="tertiary"
+            icon="RiDeleteBinLine"
             >Supprimer</DsfrButton
           >
         </div>
@@ -65,6 +85,8 @@ export default defineNuxtComponent({
     return {
       loading: false,
       form: { ...this.messageTemplate },
+      showDuplicateAlert: false,
+      showDeleteAlert: false,
       tokens: [
         '[benevole_prenom]',
         '[benevole_nom]',
@@ -84,7 +106,15 @@ export default defineNuxtComponent({
   },
   computed: {
     canShare() {
-      return this.$stores.auth.contextRole === 'responsable'
+      if (this.$stores.auth.contextRole !== 'responsable') {
+        return false
+      }
+
+      if (!this.form.id) {
+        return true
+      }
+
+      return this.messageTemplate.user_id === this.$stores.auth.user.id
     },
     canDelete() {
       return this.messageTemplate.user_id === this.$stores.auth.user.id
