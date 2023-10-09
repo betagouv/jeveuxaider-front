@@ -24,7 +24,10 @@
 
     <template #items>
       <div class="w-[350px] p-4">
-        <template v-if="$stores.messaging.messageTemplates.length > 0">
+        <div
+          v-if="$stores.messaging.messageTemplates.length > 0"
+          class="border-b border-[#DDDDDD] pb-3 mb-3"
+        >
           <div class="text-gray-500 text-xs font-bold uppercase mb-3">
             Utiliser un modèle de message
           </div>
@@ -40,8 +43,8 @@
               </div>
             </div>
           </BaseContainerScrollable>
-        </template>
-        <div class="border-t border-[#DDDDDD] pt-3 mt-3">
+        </div>
+        <div class="">
           <NuxtLink
             to="/messages/modeles"
             class="text-[#161616] text-sm cursor-pointer hover:text-jva-blue-500 flex items-center space-x-3 hover:font-semibold"
