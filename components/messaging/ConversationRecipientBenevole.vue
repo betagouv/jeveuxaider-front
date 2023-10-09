@@ -13,12 +13,12 @@
             }}
           </p>
         </div>
-        <!-- <div class="flex gap-1 items-center text-sm text-cool-gray-500">
+        <div class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiMailFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>
             {{ user.profile.email }}
           </p>
-        </div> -->
+        </div>
         <div v-if="user.profile.mobile" class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiPhoneLine class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>
