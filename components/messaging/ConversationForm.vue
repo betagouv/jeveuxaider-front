@@ -27,6 +27,7 @@
         class="flex-none lg:hidden"
         icon="RiSendPlaneFill"
         icon-only
+        type="primary"
         :loading="loading"
         @click.native="handleSubmit"
       />
@@ -55,10 +56,7 @@ export default defineNuxtComponent({
   },
   computed: {
     canUseMessageTemplate() {
-      if (this.$stores.auth.contextRole === 'volontaire') {
-        return false
-      }
-      return this.conversation.conversable_type == 'App\\Models\\Participation'
+      return ['responsable', 'referent', 'admin'].includes(this.$stores.auth.contextRole)
     },
     conversation() {
       return this.$stores.messaging.activeConversation

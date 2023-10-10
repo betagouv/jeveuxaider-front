@@ -5,21 +5,10 @@
     position-class="origin-top-right bottom-14 right-0"
   >
     <template #button>
-      <DsfrButton
-        type="transparent"
-        icon="RiArrowUpSLine"
-        icon-position="right"
-        class="hidden lg:flex"
-      >
+      <DsfrButton type="transparent" icon="RiTodoLine" icon-position="left" class="hidden lg:flex">
         Modèles
       </DsfrButton>
-      <DsfrButton
-        type="transparent"
-        size="md"
-        icon="RiMore2Line"
-        icon-only
-        class="flex lg:hidden"
-      />
+      <DsfrButton type="transparent" icon="RiTodoLine" icon-only class="flex lg:hidden" />
     </template>
 
     <template #items>

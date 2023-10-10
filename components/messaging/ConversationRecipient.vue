@@ -4,7 +4,7 @@
       :class="['px-4 lg:px-6 flex items-center border-r', { 'block lg:hidden': $route.params.id }]"
     >
       <RiArrowLeftLine
-        class="h-8 w-8 fill-current text-jva-blue-500 hover:text-jva-blue-300 cursor-pointer"
+        class="h-6 w-6 lg:h-8 lg:w-8 fill-current text-jva-blue-500 hover:text-jva-blue-300 cursor-pointer"
         @click.native="$router.push('/messages')"
       />
     </div>
