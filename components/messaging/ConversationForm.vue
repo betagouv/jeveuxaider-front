@@ -1,9 +1,9 @@
 <template>
-  <div class="lg:px-6 lg:py-4 border-t">
+  <div class="py-1 px-1 lg:px-6 lg:py-4 border-t">
     <form
       id="form-message"
       novalidate
-      class="flex gap-4 items-end justify-center"
+      class="flex gap-2 lg:gap-4 items-end justify-center"
       @submit.prevent="handleSubmitt"
     >
       <BaseTextareaAutosize

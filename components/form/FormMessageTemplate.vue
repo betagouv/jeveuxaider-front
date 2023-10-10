@@ -5,7 +5,8 @@
         <BaseFormControl html-for="name" label="Nom du modèle" required :error="errors.name">
           <BaseInput v-model="form.name" name="name" placeholder="" />
           <BaseFormHelperText v-if="form.id" class="mt-1">
-            Créé par {{ form.user.profile.full_name }} le {{ form.created_at }}
+            Créé par {{ form.user.profile.full_name }} le
+            {{ $dayjs(form.created_at).format('d MMMM YYYY à HH:mm') }}
           </BaseFormHelperText>
         </BaseFormControl>
         <BaseToggle
@@ -79,7 +80,7 @@ import FormErrors from '@/mixins/form/errors'
 export default defineNuxtComponent({
   components: {},
   mixins: [FormErrors],
-  emits: ['refetch'],
+  emits: ['refetch', 'change'],
   props: {
     messageTemplate: {
       type: Object,
@@ -107,7 +108,19 @@ export default defineNuxtComponent({
         name: string().min(3, 'Le nom est trop court').required('Le nom est requis'),
         message: string().min(3, 'Le message est trop court').required('Le message est requis'),
       }),
+      formIsDirty: false,
     }
+  },
+  watch: {
+    form: {
+      deep: true,
+      handler(newForm) {
+        this.formIsDirty = !_isEqual(newForm, this.profile)
+      },
+    },
+    formIsDirty() {
+      this.$emit('change', this.formIsDirty)
+    },
   },
   computed: {
     canShare() {

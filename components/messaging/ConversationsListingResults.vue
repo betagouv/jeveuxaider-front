@@ -4,7 +4,7 @@
       <ConversationsFilters />
     </template>
     <template v-else>
-      <div class="p-4 lg:p-8 border-b">
+      <div class="p-4 lg:py-4 lg:px-6 border-b">
         <div class="flex gap-6 items-center">
           <BaseInput
             name="search"

@@ -3,9 +3,15 @@
     <div class="py-12">
       <BaseSectionHeading title="Création d'un nouveau modèle de message">
         <template #action>
-          <BaseButton size="xl" variant="green" :loading="loading" @click.native="handleSubmit">
+          <DsfrButton
+            size="lg"
+            variant="primary"
+            :loading="loading"
+            :disabled="!formIsDirty"
+            @click.native="handleSubmit()"
+          >
             Enregistrer
-          </BaseButton>
+          </DsfrButton>
         </template>
       </BaseSectionHeading>
 
@@ -15,6 +21,7 @@
         :message-template="{
           user_id: $stores.auth.user.id,
         }"
+        @change="formIsDirty = true"
       />
     </div>
   </div>
@@ -42,6 +49,7 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
+      formIsDirty: false,
     }
   },
   methods: {

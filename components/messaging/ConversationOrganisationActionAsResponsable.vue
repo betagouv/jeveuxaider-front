@@ -1,16 +1,13 @@
 <template>
   <div
-    class="p-4 lg:p-6 flex gap-4 lg:gap-6 justify-between items-center bg-jva-blue-500 text-white"
+    class="p-4 lg:py-4 lg:px-6 flex gap-4 lg:gap-6 justify-between items-center bg-jva-blue-500 text-white"
   >
-    <div class="text-lg lg:text-xl font-bold">
-      {{ label }}
-    </div>
+    <div class="text-base lg:text-xl font-bold truncate">{{ label }}</div>
     <div class="flex flex-shrink-0 gap-4 items-center">
       <BaseDropdown ref="dropdownActions" class="flex-none">
         <template #button>
           <DsfrButton
             type="transparent"
-            size="lg"
             icon="RiArrowDownSLine"
             icon-position="right"
             class="hidden lg:flex hover:bg-jva-blue-300"
@@ -19,7 +16,6 @@
           </DsfrButton>
           <DsfrButton
             type="transparent"
-            size="md"
             icon="RiMore2Line"
             icon-only
             class="flex lg:hidden hover:bg-jva-blue-300"
