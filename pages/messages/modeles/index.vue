@@ -3,7 +3,7 @@
     <div
       class="flex flex-col lg:flex-row lg:items-center lg:justify-between border-b pt-6 pb-10 gap-4"
     >
-      <DsfrHeading as="h1" size="xl">Gestions des modèles de messages</DsfrHeading>
+      <DsfrHeading as="h1" size="xl">Gestion des modèles de messages</DsfrHeading>
       <DsfrButton icon="RiAddLine" to="/messages/modeles/add">Nouveau modèle</DsfrButton>
     </div>
     <div>

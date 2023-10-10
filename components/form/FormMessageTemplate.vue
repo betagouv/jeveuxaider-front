@@ -56,9 +56,8 @@
           :error="errors.message"
         >
           <BaseTextarea v-model="form.message" name="message" />
-          <BaseFormHelperText v-if="$stores.auth.contextRole === 'responsable'" class="mt-2">
+          <BaseFormHelperText class="mt-2">
             N’hésitez pas à utiliser les balises dynamiques suivantes :
-
             <span
               v-for="token in tokens"
               :key="token"
@@ -93,17 +92,6 @@ export default defineNuxtComponent({
       form: { ...this.messageTemplate },
       showDuplicateAlert: false,
       showDeleteAlert: false,
-      tokens: [
-        '[benevole_prenom]',
-        '[benevole_nom]',
-        '[mission_nom]',
-        '[mission_ville]',
-        '[mission_date_debut]',
-        '[mission_date_fin]',
-        '[organisation_nom]',
-        '[responsable_prenom]',
-        '[responsable_nom]',
-      ],
       formSchema: object({
         name: string().min(3, 'Le nom est trop court').required('Le nom est requis'),
         message: string().min(3, 'Le message est trop court').required('Le message est requis'),
@@ -123,6 +111,34 @@ export default defineNuxtComponent({
     },
   },
   computed: {
+    tokens() {
+      switch (this.$stores.auth.contextRole) {
+        case 'responsable':
+          return [
+            '[destinataire_prenom]',
+            '[destinataire_nom]',
+            '[mission_nom]',
+            '[mission_ville]',
+            '[mission_date_debut]',
+            '[mission_date_fin]',
+            '[organisation_nom]',
+            '[utilisateur_prenom]',
+            '[utilisateur_nom]',
+          ]
+        case 'referent':
+        case 'admin':
+          return [
+            '[destinataire_prenom]',
+            '[destinataire_nom]',
+            '[organisation_nom]',
+            '[mission_nom]',
+            '[utilisateur_prenom]',
+            '[utilisateur_nom]',
+          ]
+        default:
+          return []
+      }
+    },
     canShare() {
       if (this.$stores.auth.contextRole !== 'responsable') {
         return false
@@ -141,7 +157,7 @@ export default defineNuxtComponent({
   methods: {
     appendTokenToMessage(token) {
       if (this.form.message) {
-        this.form.message += ' ' + token
+        this.form.message += token
       } else {
         this.form.message = token
       }

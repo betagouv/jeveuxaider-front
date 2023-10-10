@@ -55,21 +55,74 @@ export default defineNuxtComponent({
     conversation() {
       return this.$stores.messaging.activeConversation
     },
+    recipientUser() {
+      return this.conversation.users.filter(
+        (user) => user.id != this.$stores.auth.profile.user_id
+      )[0]
+    },
     tokens() {
       return {
-        '[benevole_prenom]': this.conversation.conversable.profile.first_name,
-        '[benevole_nom]': this.conversation.conversable.profile.last_name,
-        '[mission_nom]': this.conversation.conversable.mission.name,
-        '[mission_ville]': this.conversation.conversable.mission.city,
-        '[mission_date_debut]': this.$dayjs(
-          this.conversation.conversable.mission.start_date
-        ).format('D MMMM YYYY'),
-        '[mission_date_fin]': this.$dayjs(this.conversation.conversable.mission.end_date).format(
-          'D MMMM YYYY'
-        ),
-        '[organisation_nom]': this.conversation.conversable.mission.structure.name,
-        '[responsable_prenom]': this.conversation.conversable.mission.responsable.first_name,
-        '[responsable_nom]': this.conversation.conversable.mission.responsable.last_name,
+        '[destinataire_prenom]': this.recipientUser.profile.first_name,
+        '[destinataire_nom]': this.recipientUser.profile.last_name,
+        '[mission_nom]': this.tokenMissionNomResolver,
+        '[mission_ville]': this.tokenMissionVilleResolver,
+        '[mission_date_debut]': this.tokenMissionDateDebutResolver,
+        '[mission_date_fin]': this.tokenMissionDateFinResolver,
+        '[organisation_nom]': this.tokenOrganisationNomResolver,
+        '[utilisateur_prenom]': this.$stores.auth.user.profile.first_name,
+        '[utilisateur_nom]': this.$stores.auth.user.profile.last_name,
+      }
+    },
+    tokenOrganisationNomResolver() {
+      switch (this.conversation.conversable_type) {
+        case 'App\\Models\\Participation':
+          return this.conversation.conversable.mission.structure.name
+        case 'App\\Models\\Mission':
+          return this.conversation.conversable.structure.name
+        case 'App\\Models\\Structure':
+          return this.conversation.conversable.name
+        default:
+          return ''
+      }
+    },
+    tokenMissionNomResolver() {
+      switch (this.conversation.conversable_type) {
+        case 'App\\Models\\Participation':
+          return this.conversation.conversable.mission.name
+        case 'App\\Models\\Mission':
+          return this.conversation.conversable.name
+        default:
+          return ''
+      }
+    },
+    tokenMissionVilleResolver() {
+      switch (this.conversation.conversable_type) {
+        case 'App\\Models\\Participation':
+          return this.conversation.conversable.mission.city
+        case 'App\\Models\\Mission':
+          return this.conversation.conversable.city
+        default:
+          return ''
+      }
+    },
+    tokenMissionDateDebutResolver() {
+      switch (this.conversation.conversable_type) {
+        case 'App\\Models\\Participation':
+          return this.$dayjs(this.conversation.conversable.mission.start_date).format('D MMMM YYYY')
+        case 'App\\Models\\Mission':
+          return this.$dayjs(this.conversation.conversable.start_date).format('D MMMM YYYY')
+        default:
+          return ''
+      }
+    },
+    tokenMissionDateFinResolver() {
+      switch (this.conversation.conversable_type) {
+        case 'App\\Models\\Participation':
+          return this.$dayjs(this.conversation.conversable.mission.end_date).format('D MMMM YYYY')
+        case 'App\\Models\\Mission':
+          return this.$dayjs(this.conversation.conversable.end_date).format('D MMMM YYYY')
+        default:
+          return ''
       }
     },
   },
