@@ -81,7 +81,7 @@
             <p
               class="pt-10 pb-16 lg:pb-0 leading-10 text-3xl sm:text-4xl font-medium text-white sm:mt-5"
             >
-              <b class="font-bold">460 000 bénévoles</b> inscrits
+              <b class="font-bold">510 000 bénévoles</b> inscrits
             </p>
           </div>
           <div class="lg:col-span-6">
