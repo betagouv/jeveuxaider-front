@@ -122,8 +122,8 @@ export default defineNuxtComponent({
             '[mission_date_debut]',
             '[mission_date_fin]',
             '[organisation_nom]',
-            '[utilisateur_prenom]',
-            '[utilisateur_nom]',
+            '[expediteur_prenom]',
+            '[expediteur_nom]',
           ]
         case 'referent':
         case 'admin':
@@ -132,8 +132,8 @@ export default defineNuxtComponent({
             '[destinataire_nom]',
             '[organisation_nom]',
             '[mission_nom]',
-            '[utilisateur_prenom]',
-            '[utilisateur_nom]',
+            '[expediteur_prenom]',
+            '[expediteur_nom]',
           ]
         default:
           return []
