@@ -7,7 +7,7 @@
       <span
         v-if="label"
         id="availability-label"
-        class="block text-black"
+        class="block font-bold relative text-xs uppercase text-gray-700"
         :class="[
           { 'text-base font-medium': size === 'md' },
           { 'text-lg font-bold': size === 'lg' },
@@ -18,7 +18,7 @@
       <span
         v-if="description"
         id="availability-description"
-        class="mt-2 text-[#666666]"
+        class="mt-2 text-gray-600 text-sm"
         :class="[
           { 'text-sm': size === 'md' },
           { 'text-base': size === 'lg' },

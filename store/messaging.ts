@@ -20,6 +20,7 @@ export const useMessagingStore = defineStore({
     hasActiveConversationMoreMessages: boolean
     unreadMessagesCount: number
     showFilters: boolean
+    messageTemplates: MessageTemplate[]
   } => ({
     isConversationsLoading: true,
     conversations: [],
@@ -34,6 +35,7 @@ export const useMessagingStore = defineStore({
     hasActiveConversationMoreMessages: false,
     unreadMessagesCount: 0,
     showFilters: false,
+    messageTemplates: [],
   }),
   getters: {
     hasConversationsResults: (state) =>
@@ -185,6 +187,12 @@ export const useMessagingStore = defineStore({
     removeConversationFromConversations(payload: Conversation) {
       const index = this.conversations.findIndex((conversation) => conversation.id == payload.id)
       this.conversations.splice(index, 1)
+    },
+    async fetchMessageTemplates() {
+      const { data, error } = await useApiFetch<QueryBuilderResponse>('/message-templates')
+      if (data.value) {
+        this.messageTemplates = data.value.data
+      }
     },
   },
 })

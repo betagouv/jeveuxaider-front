@@ -26,10 +26,7 @@
         v-if="show"
         :class="[
           'absolute mt-2 shadow-xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30',
-          {
-            'origin-top-right right-0': position == 'right',
-            'origin-top-left left-0': position == 'left',
-          },
+          positionClass,
         ]"
         role="menu"
         aria-orientation="vertical"
@@ -51,9 +48,9 @@ export default defineNuxtComponent({
       type: String,
       default: null,
     },
-    position: {
+    positionClass: {
       type: String,
-      default: 'right',
+      default: 'origin-top-right right-0',
     },
   },
   data() {

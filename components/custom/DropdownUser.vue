@@ -1,7 +1,7 @@
 <template>
   <BaseDropdown ref="dropdownUser">
     <template #button>
-      <button class="group flex items-center gap-3 w-48 rounded-full">
+      <button class="group flex items-center gap-3 lg:w-48 rounded-full">
         <BaseAvatar
           v-if="$stores.auth.user.profile"
           :img-srcset="
@@ -15,7 +15,7 @@
           size="xs"
         />
 
-        <div class="overflow-hidden text-left">
+        <div class="hidden lg:block overflow-hidden text-left">
           <div class="text-sm font-bold truncate">
             {{ $stores.auth.user.profile.first_name }}
           </div>
@@ -28,7 +28,7 @@
           </div>
         </div>
 
-        <RiArrowDownSLine class="h-4 ml-auto flex-none mr-[-6px]" />
+        <RiArrowDownSLine class="hidden lg:block h-4 ml-auto flex-none mr-[-6px]" />
       </button>
     </template>
 

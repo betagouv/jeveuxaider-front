@@ -4,7 +4,7 @@
     :to="tag.name === 'NuxtLink' ? to : undefined"
     :target="to && isExternal ? '_blank' : undefined"
     :href="tag.name === 'a' ? to : undefined"
-    :type="isSubmit ? 'submit' : tag.name === 'button' ? 'button' : undefined"
+    :type="isSubmit ? 'submit' : 'button'"
     :class="[
       'font-medium border transition flex-none',
       'inline-flex items-center justify-center whitespace-pre-wrap',

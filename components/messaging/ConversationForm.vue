@@ -1,10 +1,10 @@
 <template>
-  <div class="lg:px-6 lg:py-4 border-t">
+  <div class="py-1 px-1 lg:px-6 lg:py-4 border-t">
     <form
       id="form-message"
       novalidate
-      class="flex gap-4 items-end justify-center"
-      @submit.prevent="handleSubmit"
+      class="flex gap-2 lg:gap-4 items-end justify-center"
+      @submit.prevent="handleSubmitt"
     >
       <BaseTextareaAutosize
         v-model="message"
@@ -27,16 +27,27 @@
         class="flex-none lg:hidden"
         icon="RiSendPlaneFill"
         icon-only
+        type="primary"
         :loading="loading"
         @click.native="handleSubmit"
+      />
+
+      <ButtonSelectMessageTemplate
+        v-if="canUseMessageTemplate"
+        @selected="handleMessageTemplateSelected"
       />
     </form>
   </div>
 </template>
 
 <script>
+import ButtonSelectMessageTemplate from '@/components/custom/ButtonSelectMessageTemplate.vue'
+
 export default defineNuxtComponent({
   emits: ['submit'],
+  components: {
+    ButtonSelectMessageTemplate,
+  },
   data() {
     return {
       loading: false,
@@ -44,6 +55,9 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    canUseMessageTemplate() {
+      return ['responsable', 'referent', 'admin'].includes(this.$stores.auth.contextRole)
+    },
     conversation() {
       return this.$stores.messaging.activeConversation
     },
@@ -51,6 +65,12 @@ export default defineNuxtComponent({
   methods: {
     reset() {
       this.message = ''
+    },
+    handleMessageTemplateSelected(payload) {
+      this.message = payload
+    },
+    handleSubmitt() {
+      console.log('formulaire soumis')
     },
     handleSubmit() {
       if (this.loading) {

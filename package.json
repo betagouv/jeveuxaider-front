@@ -61,6 +61,7 @@
     "vue-advanced-cropper": "^2.8.8",
     "vue-autosuggest": "^2.2.0",
     "vue-chartjs": "^5.2.0",
+    "vue-content-loader": "^2.0.1",
     "vue-dragscroll": "^4.0.5",
     "vue-remix-icons": "^3.4.0",
     "vue-scrollto": "^2.20.0",

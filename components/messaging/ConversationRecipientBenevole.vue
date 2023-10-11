@@ -3,7 +3,7 @@
     <ConversationRecipient :title="user.profile.full_name">
       <div
         v-dragscroll.x
-        class="px-4 lg:px-8 flex gap-4 items-center overflow-hidden whitespace-nowrap"
+        class="px-4 lg:px-6 flex gap-4 items-center overflow-hidden whitespace-nowrap"
       >
         <div class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiChatHistoryFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
@@ -13,12 +13,12 @@
             }}
           </p>
         </div>
-        <!-- <div class="flex gap-1 items-center text-sm text-cool-gray-500">
+        <div class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiMailFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>
             {{ user.profile.email }}
           </p>
-        </div> -->
+        </div>
         <div v-if="user.profile.mobile" class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiPhoneLine class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>
