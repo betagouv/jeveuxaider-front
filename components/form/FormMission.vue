@@ -661,7 +661,7 @@ export default defineNuxtComponent({
         autonomy_zips: this.mission.autonomy_zips || [],
         tags: this.mission?.tags?.length ? this.mission?.tags : this.mission.template?.tags || [],
         date_type: this.mission.date_type || 'ponctual',
-        is_active: this.mission.is_active || true,
+        is_active: this.mission.is_active ?? true,
       },
       formSchema: object({
         name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
