@@ -313,9 +313,7 @@ export default defineNuxtComponent({
             {
               method: 'DELETE',
               body: {
-                data: {
-                  new_responsable_id: this.form.responsable_id,
-                },
+                new_responsable_id: this.form.responsable_id,
               },
             }
           )
