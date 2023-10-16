@@ -16,6 +16,7 @@
       ]"
       :with-slideshow-remote="true"
     />
+    <SectionSearchBlocFaq />
   </div>
 </template>
 

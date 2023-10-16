@@ -104,7 +104,10 @@
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
           <template v-if="!hasNoMissionAvailableAndNoParticipation">
-            <div class="p-10 bg-white shadow-2xl">
+            <div
+              class="group p-10 bg-white shadow-2xl cursor-pointer"
+              @click="$router.push(`/missions-benevolat?structure.name=${organisation.name}`)"
+            >
               <DsfrPeuImporteIcon class="-mt-3 w-[80px] h-[80px]" />
               <div class="text-4xl lg:text-5xl font-bold">
                 {{ $numeral(organisation.missions_available_count) }}
@@ -120,7 +123,11 @@
                 }}
                 de bénévolat
               </div>
-              <div class="text-[#666666]">sur JeVeuxAider.gouv.fr</div>
+              <div class="">
+                <DsfrLink icon="RiArrowRightSLine" class="text-jva-blue-500"
+                  >sur JeVeuxAider.gouv.fr </DsfrLink
+                >
+              </div>
             </div>
             <div class="p-10 bg-white shadow-2xl">
               <template v-if="participationsCount === 0">
