@@ -7,13 +7,31 @@
           :aria-describedby="`${option.key}-description`"
           :name="option.key"
           type="checkbox"
-          class="focus:ring-jva-blue-500 h-4 w-4 text-jva-blue-500 border border-gray-500 rounded"
+          :class="[
+            'focus:ring-jva-blue-500  text-jva-blue-500 border border-gray-500 rounded cursor-pointer',
+            {
+              'h-3 w-3': size == 'xs',
+              'h-4 w-4': size == 'md',
+              'h-6 w-6': size == 'lg',
+            },
+          ]"
           :checked="checked"
           @change="toggleChecked()"
         />
       </div>
-      <div class="ml-3 text-sm">
-        <label :for="option.key" class="font-medium text-gray-700">{{ option.label }}</label>
+      <div class="ml-3 text-sm text-left">
+        <label
+          :for="option.key"
+          :class="[
+            'relative font-normal -top-1 text-[#161616] cursor-pointer',
+            {
+              'text-base': size == 'xs',
+              'text-base': size == 'md',
+              'text-lg': size == 'lg',
+            },
+          ]"
+          >{{ option.label }}</label
+        >
         <p v-if="option.description" :id="`${option.key}-description`" class="text-gray-500">
           {{ option.description }}
         </p>
@@ -47,7 +65,9 @@
             {
               'px-2 py-1': size == 'xs',
               'px-2.5 py-1.5': size == 'md',
+              'px-3 py-2': size == 'md',
             },
+            classCheckboxLabel,
           ]"
           tabindex="0"
           @keypress.space.prevent="toggleChecked()"
@@ -68,7 +88,7 @@ export default defineNuxtComponent({
     size: {
       type: String,
       default: 'md',
-      validator: (s) => ['xs', 'md'].includes(s),
+      validator: (s) => ['xs', 'md', 'lg'].includes(s),
     },
     variant: {
       type: String,

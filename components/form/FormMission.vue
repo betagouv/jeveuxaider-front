@@ -1088,6 +1088,9 @@ export default defineNuxtComponent({
         this.$refs.comboboxSecondaryActivity?.$refs?.combobox?.reset()
       }
     },
+    onEnter(payload) {
+      //   console.log('onEnter', payload)
+    },
   },
 })
 </script>

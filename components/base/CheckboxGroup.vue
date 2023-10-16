@@ -13,6 +13,7 @@
         :key="option.key"
         :option="option"
         class="relative flex items-start m-1"
+        :size="size"
         :is-checked="
           isModel ? value.some((item) => item.id == option.key) : value.includes(option.key)
         "
@@ -40,6 +41,11 @@ export default defineNuxtComponent({
     },
     isModel: { type: Boolean, default: false },
     classCheckbox: { type: String, default: '' },
+    size: {
+      type: String,
+      default: 'md',
+      validator: (s) => ['xs', 'md', 'lg'].includes(s),
+    },
   },
   computed: {
     value() {
