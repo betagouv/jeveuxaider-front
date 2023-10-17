@@ -19,12 +19,12 @@
 
     <BaseBanner v-if="showBannerResponsablePendingParticipations" type="error">
       Vous avez
-      {{ $filters.pluralize(totalPendingParticipationsActions, 'participation', 'participations') }}
-      en cours de modération. Merci de mettre à jour le statut des candidatures reçues.
+      {{ $filters.pluralize(nbParticipationNeedToBeTreated, 'participation', 'participations') }}
+      à traiter en priorité. Merci de mettre à jour le statut des candidatures reçues.
       <template #action>
         <DsfrLink
           icon="RiArrowRightLine"
-          :to="`/admin/participations?filter[is_state_pending]=true&filter[ofResponsable]=${$stores.auth.profile.id}`"
+          :to="`/admin/participations?filter[need_to_be_treated]=true&filter[ofResponsable]=${$stores.auth.profile.id}`"
         >
           Traiter les participations
         </DsfrLink>
@@ -59,23 +59,15 @@ export default defineNuxtComponent({
       if (['messages', 'messages-id'].includes(this.$route.name)) {
         return false
       }
-      return this.isResponsable && this.totalPendingParticipationsActions > 0
+      return this.isResponsable && this.nbParticipationNeedToBeTreated > 0
     },
     isResponsable() {
       return this.$stores.auth.currentRole?.key === 'responsable'
     },
-    totalPendingParticipationsActions() {
-      return this.nbWaitingParticipations + this.nbInProgressParticipations
-    },
-    nbWaitingParticipations() {
+    nbParticipationNeedToBeTreated() {
       return (
-        this.userActions?.find((action) => action.type === 'participations_waiting_validation')
+        this.userActions?.find((action) => action.type === 'participations_need_to_be_treated')
           ?.value ?? 0
-      )
-    },
-    nbInProgressParticipations() {
-      return (
-        this.userActions?.find((action) => action.type === 'participations_in_progress')?.value ?? 0
       )
     },
     isBenevoleOrNotLogged() {
