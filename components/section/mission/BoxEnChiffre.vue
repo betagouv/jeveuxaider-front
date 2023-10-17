@@ -39,7 +39,7 @@
         >
           <div class="w-16">
             <img
-              :src="stat.logo ?? '/images/logo-api-engagement.png'"
+              :src="stat.logo ?? '/images/logo-api-engagement.svg'"
               :class="[
                 stat.name == 'Linkedin' ? 'h-6 w-6' : 'h-12 w-12',
                 { '-m-2': stat.name == 'API engagement' },
