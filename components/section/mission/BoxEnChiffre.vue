@@ -39,18 +39,19 @@
         >
           <div class="w-16">
             <img
-              :src="stat.logo"
+              :src="stat.logo ?? '/images/logo-api-engagement.png'"
               :class="[
                 stat.name == 'Linkedin' ? 'h-6 w-6' : 'h-12 w-12',
                 { '-m-2': stat.name == 'API engagement' },
                 { 'ml-[-2px]': stat.name == 'Bouygues Telecom' },
                 { 'ml-[-3px]': stat.name == 'oneheart' },
+                { '!h-8 !w-8': !stat.logo },
               ]"
               class="object-contain"
             />
           </div>
           <div>
-            <div class="font-semibold">{{ stat.doc_count }} visites</div>
+            <div class="font-semibold">{{ $filters.pluralize(stat.doc_count, 'visite') }}</div>
             <div class="text-gray-500 text-xs">Via {{ stat.name }}</div>
           </div>
         </div>
