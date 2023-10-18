@@ -35,7 +35,7 @@
                 v-model="form.statut_juridique"
                 name="statut_juridique"
                 placeholder="Sélectionnez votre statut juridique"
-                :options="$labels.structure_legal_status"
+                :options="statutJuridiqueOptions"
                 @blur="validate('statut_juridique')"
               />
             </BaseFormControl>
@@ -605,6 +605,17 @@ export default defineNuxtComponent({
       return this.form.reseaux.length
         ? resolveComponent('BaseMediaPickerReseau')
         : resolveComponent('BaseMediaPickerDomaine')
+    },
+    statutJuridiqueOptions() {
+      const options = this.$labels.structure_legal_status
+
+      if (this.structure.statut_juridique == 'Autre') {
+        const optionAutre = options.find((item) => item.key === 'Autre')
+        Object.assign(optionAutre, { ...optionAutre, disabled: true })
+        return options
+      }
+
+      return options.filter((item) => item.key != 'Autre')
     },
   },
   methods: {
