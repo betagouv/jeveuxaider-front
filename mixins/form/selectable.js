@@ -14,9 +14,7 @@ export default {
     selectedOption: {
       get() {
         return this.modelValue
-          ? this.options.find(
-              (item) => item[this.attributeKey] == this.modelValue
-            )
+          ? this.options.find((item) => item[this.attributeKey] == this.modelValue)
           : null
       },
       set(newItem) {
@@ -101,19 +99,31 @@ export default {
           this.highlightIndex = 0
         }
 
+        if (this.options.every((item) => item.disabled)) {
+          return
+        }
+
+        let offset = 1
         if (e.key === 'ArrowDown') {
-          if (this.highlightIndex + 1 === this.options.length) {
-            this.highlightIndex = 0
-          } else {
-            this.highlightIndex += 1
+          let index =
+            this.highlightIndex + offset > this.options.length - 1 ? -1 : this.highlightIndex
+          while (this.options[index + offset]?.disabled) {
+            offset += 1
+            if (index + offset > this.options.length - 1) {
+              index = -1
+              offset = 1
+            }
           }
+          this.highlightIndex = index + offset
         }
         if (e.key === 'ArrowUp') {
-          if (this.highlightIndex === 0) {
-            this.highlightIndex = this.options.length - 1
-          } else {
-            this.highlightIndex -= 1
+          let index = this.highlightIndex - offset < 0 ? this.options.length : this.highlightIndex
+          while (this.options[index - offset]?.disabled) {
+            offset += 1
+            index = index - offset < 0 ? this.options.length : index
           }
+
+          this.highlightIndex = index - offset
         }
 
         this.highlightScrollIntoView()

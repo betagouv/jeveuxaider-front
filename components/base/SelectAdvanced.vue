@@ -79,6 +79,7 @@
             {
               'bg-[#F0F0FF]': selectedOption && item[attributeKey] == selectedOption[attributeKey],
             },
+            { 'pointer-events-none text-gray-500': item.disabled },
           ]"
           role="option"
           :aria-selected="
