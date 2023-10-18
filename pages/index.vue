@@ -76,7 +76,7 @@ export default defineNuxtComponent({
         {
           hid: 'google-site-verification',
           name: 'google-site-verification',
-          content: 'DISnitZp80zFZ1haUqW6hK0',
+          content: 'DISnitZp80zFZ1haUqW6hK05-JxAx5myd4DfCST2JAo',
         },
       ],
     })
