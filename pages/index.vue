@@ -73,6 +73,11 @@ export default defineNuxtComponent({
           name: 'facebook-domain-verification',
           content: '8jnmyx2s1iopvryhthxappg6b3tryp',
         },
+        {
+          hid: 'google-site-verification',
+          name: 'google-site-verification',
+          content: 'DISnitZp80zFZ1haUqW6hK0',
+        },
       ],
     })
   },
