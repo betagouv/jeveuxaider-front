@@ -12,10 +12,10 @@
       clearable
       :is-active="modelValue ? true : false"
       class="max-w-[300px]"
-      @keydown.native="onKeydown"
-      @click.native="!disabled ? (showOptions = !showOptions) : null"
-      @keydown.native.tab="showOptions = false"
-      @keydown.native.esc="showOptions = false"
+      @keydown="onKeydown"
+      @click="!disabled ? (showOptions = !showOptions) : null"
+      @keydown.tab="showOptions = false"
+      @keydown.esc="showOptions = false"
       @clear="reset()"
     >
       <span class="truncate">{{
@@ -47,6 +47,7 @@
                   'bg-[#F0F0FF]':
                     selectedOption && item[attributeKey] == selectedOption[attributeKey],
                 },
+                { 'pointer-events-none text-gray-500': item.disabled },
               ]"
               @click="handleSelectOption(item)"
             >
