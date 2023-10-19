@@ -140,7 +140,8 @@
         <div class="ml-7 mt-3 text-sm text-gray-500">
           Le numéro RNA n'a pas été communiqué
           <template v-if="organisation.is_alsace_moselle">
-            car le responsable a précisé être une association de droit local (Alsace-Moselle) </template
+            car le responsable a précisé être une association de droit local
+            (Alsace-Moselle)</template
           >.
         </div>
       </BaseDisclosure>
