@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div v-if="organisation" class="relative">
     <client-only>
       <ClientOnly>
         <Teleport to="#teleport-sidebar">
@@ -141,7 +141,7 @@ export default defineNuxtComponent({
     const organisation = await apiFetch(`/structures/${$stores.auth.currentRole.contextable_id}`)
 
     if (!organisation.territoire) {
-      navigateTo('/dashboard')
+      return await navigateTo('/dashboard')
     }
 
     return {

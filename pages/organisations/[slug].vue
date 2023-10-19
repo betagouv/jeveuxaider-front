@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="organisation">
     <Header :organisation="organisation" class="lg:fixed z-30 lg:w-full" />
     <div id="presentation" class="relative lg:pt-[98px]">
       <Presentation
@@ -158,7 +158,7 @@ export default defineNuxtComponent({
     })
 
     if (/^\d+$/.test(route.params.slug)) {
-      navigateTo(`/organisations/${organisation.value.slug}`, 301)
+      return await navigateTo(`/organisations/${organisation.value.slug}`, 301)
     }
 
     let activities = []

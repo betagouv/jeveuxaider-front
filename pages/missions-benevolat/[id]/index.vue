@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="mission">
     <MissionApiPage v-if="mission.isFromApi" :mission="mission" />
     <div v-else>Redirection en cours</div>
   </div>
@@ -29,7 +29,7 @@ export default defineNuxtComponent({
         const query = new URLSearchParams(route.query)
         urlWithSlug = `${urlWithSlug}?${query.toString()}`
       }
-      navigateTo(urlWithSlug, 301)
+      return await navigateTo(urlWithSlug, 301)
     }
 
     useHead({

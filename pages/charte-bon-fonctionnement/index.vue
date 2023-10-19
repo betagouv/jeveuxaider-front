@@ -4,8 +4,8 @@
 
 <script>
 export default {
-  setup() {
-    navigateTo('/charte-bon-fonctionnement/responsables', { redirectCode: 301 })
+  async setup() {
+    return await navigateTo('/charte-bon-fonctionnement/responsables', { redirectCode: 301 })
   },
 }
 </script>
