@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default defineNuxtComponent({
   props: {
     mission: {
@@ -80,7 +82,8 @@ export default defineNuxtComponent({
   methods: {
     async fetch() {
       const runtimeConfig = useRuntimeConfig()
-      const plausibleStats = await $fetch('https://plausible.io/api/v1/stats/aggregate', {
+
+      const plausibleStats = await axios.get('https://plausible.io/api/v1/stats/aggregate', {
         headers: {
           Authorization: `Bearer ${runtimeConfig.public.plausible.token}`,
         },
@@ -92,7 +95,7 @@ export default defineNuxtComponent({
           date: `2018-01-01,${this.$dayjs().format('YYYY-MM-DD')}`,
         },
       })
-      this.plausibleStats = plausibleStats
+      this.plausibleStats = plausibleStats.data
 
       const apiEngagementStats = await apiFetch(`/apiengagement/mymission/${this.mission.id}`)
       this.apiEngagementStats = apiEngagementStats.mission?.stats

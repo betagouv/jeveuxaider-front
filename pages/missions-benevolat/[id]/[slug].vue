@@ -449,6 +449,7 @@ import Testimonials from '@/components/section/temoignage/Testimonials.vue'
 import MixinHotjar from '@/mixins/hotjar.client.js'
 import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
 import { v4 as uuidv4 } from 'uuid'
+import axios from 'axios'
 
 export default defineNuxtComponent({
   components: {
@@ -649,10 +650,18 @@ export default defineNuxtComponent({
       this.loading = false
     },
     async fetchStructureScore() {
-      this.structureScore = await apiFetch(`/structures/${this.mission?.structure_id}/score`)
+      const runtimeConfig = useRuntimeConfig()
+      const structureScore = await axios.get(
+        `${runtimeConfig.public.apiUrl}/api/structures/${this.mission?.structure_id}/score`
+      )
+      this.structureScore = structureScore.data
     },
     async fetchSimilarMissions() {
-      this.similarMissions = await apiFetch(`/missions/${this.mission?.id}/similar`)
+      const runtimeConfig = useRuntimeConfig()
+      const similarMissions = await axios.get(
+        `${runtimeConfig.public.apiUrl}/api/missions/${this.mission?.id}/similar`
+      )
+      this.similarMissions = similarMissions.data
     },
     async fetchUserParticipation() {
       const { participation } = await apiFetch(
