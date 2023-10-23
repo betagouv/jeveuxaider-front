@@ -4,7 +4,7 @@
       <span class="lg:-rotate-90 whitespace-nowrap uppercase text-jva-blue-500"> La mission </span>
     </div>
     <div
-      class="p-4 lg:p-6 flex-1 flex flex-col gap-4 border border-gray-300 border-l-4 border-l-jva-blue-500"
+      class="p-4 lg:p-6 flex-1 flex flex-col gap-4 border border-gray-300 border-l-4 border-l-jva-blue-500 min-w-0"
     >
       <div class="flex items-center gap-4">
         <div class="text-lg lg:text-xl font-bold">
@@ -28,11 +28,11 @@
           Mission en présentiel
         </DsfrBadge>
         <div
-          v-if="mission.zip && mission.type == 'Mission en présentiel'"
+          v-if="mission.type == 'Mission en présentiel' && lieu"
           class="flex space-x-1 items-center truncate text-sm text-cool-gray-500"
         >
           <RiMapPin2Fill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
-          <p class="truncate leading-none">{{ mission.city }} ({{ mission.zip }})</p>
+          <p class="truncate leading-none">{{ lieu }}</p>
         </div>
         <div v-if="showPlacesLeft" class="flex space-x-1 truncate text-sm text-cool-gray-500">
           <RiGroupFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
@@ -70,6 +70,12 @@ export default defineNuxtComponent({
       default: false,
     },
   },
-  computed: {},
+  computed: {
+    lieu() {
+      return this.mission.is_autonomy
+        ? this.mission.autonomy_zips?.map((item) => `${item.city} (${item.zip})`).join(', ')
+        : `${this.mission.city} (${this.mission.zip})`
+    },
+  },
 })
 </script>
