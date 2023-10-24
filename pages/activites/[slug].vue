@@ -64,7 +64,8 @@ export default defineNuxtComponent({
       return error({ statusCode: 403 })
     }
 
-    const title = activity.value.metatags?.properties?.title ?? `Bénévolat ${activity.value.name}`
+    const title =
+      activity.value.metatags?.properties?.title ?? `Faire du bénévolat ${activity.value.name}`
     useHead({
       title: `${title} | JeVeuxAider.gouv.fr`,
       link: [
@@ -79,7 +80,7 @@ export default defineNuxtComponent({
           name: 'description',
           content:
             activity.value.metatags?.properties?.description ??
-            `Trouvez une mission de bénévolat ${activity.value.name} parmi les missions actuellement disponibles et faites vivre l'engagement de chacun pour tous`,
+            `Devenez bénévole en ${activity.value.name} et réalisez des missions dans une association près de chez vous en quelques clics`,
         },
         {
           hid: 'og:image',
