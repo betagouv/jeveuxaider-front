@@ -641,13 +641,15 @@ export default defineNuxtComponent({
   },
   methods: {
     async fetch() {
-      this.loading = true
-      const promises = [this.fetchStructureScore(), this.fetchSimilarMissions()]
-      if (this.$stores.auth.isLogged) {
-        promises.push(this.fetchUserParticipation())
+      if (process.client) {
+        this.loading = true
+        const promises = [this.fetchStructureScore(), this.fetchSimilarMissions()]
+        if (this.$stores.auth.isLogged) {
+          promises.push(this.fetchUserParticipation())
+        }
+        await Promise.all(promises)
+        this.loading = false
       }
-      await Promise.all(promises)
-      this.loading = false
     },
     async fetchStructureScore() {
       const runtimeConfig = useRuntimeConfig()

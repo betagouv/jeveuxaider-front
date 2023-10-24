@@ -57,7 +57,9 @@ export default defineNuxtComponent({
     }
   },
   created() {
-    this.fetch()
+    if (process.client) {
+      this.fetch()
+    }
   },
   computed: {
     facetFilterOrganisationsNames() {

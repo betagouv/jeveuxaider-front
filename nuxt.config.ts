@@ -208,6 +208,11 @@ export default defineNuxtConfig({
     '/inscription/organisation': { redirect: '/inscription/responsable' },
     '/statistiques': { redirect: '/stats' },
     '/admin/**': { ssr: false },
+    '/support/**': { ssr: false },
+    '/stats/**': { ssr: false },
+    '/dasboard/**': { ssr: false },
+    '/profile/**': { ssr: false },
+    '/messages/**': { ssr: false },
   },
 
   lodash: {
