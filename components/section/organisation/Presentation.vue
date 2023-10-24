@@ -42,11 +42,35 @@
               </template>
             </template>
           </p>
-          <DsfrButton size="lg" @click="onClickFindMissions">
-            Trouver une mission <span class="hidden sm:inline">de bénévolat</span>
-          </DsfrButton>
-          <p class="text-base lg:text-lg mt-4">
-            <template v-if="organisation.places_left > 0">
+          <div class="hidden sm:block">
+            <DsfrButton size="lg" @click="onClickFindMissions">
+              Trouver une mission <span class="hidden sm:inline">de bénévolat</span>
+            </DsfrButton>
+            <p class="text-base lg:text-lg mt-4">
+              <template v-if="organisation.places_left > 0">
+                Plus de
+                <span class="font-bold"
+                  >{{ $numeral(organisation.places_left) }}
+                  {{
+                    $filters.pluralize(organisation.places_left, 'bénévole', 'bénévoles', false)
+                  }}</span
+                >
+                {{ $filters.pluralize(organisation.places_left, 'recherché', 'recherchés', false) }}
+              </template>
+            </p>
+          </div>
+
+          <!-- CTA MOBILE -->
+          <div
+            :class="[
+              'sm:hidden fixed bottom-0 px-4 py-4 bg-white z-50 w-full left-0 right-0 text-center',
+            ]"
+            style="box-shadow: 0 25px 20px 30px rgb(0 0 0 / 25%)"
+          >
+            <DsfrButton size="lg" class="w-full" @click="onClickFindMissions">
+              Trouver une mission
+            </DsfrButton>
+            <div v-if="organisation.places_left > 0" class="mt-1 text-sm font-normal text-center">
               Plus de
               <span class="font-bold"
                 >{{ $numeral(organisation.places_left) }}
@@ -55,8 +79,8 @@
                 }}</span
               >
               {{ $filters.pluralize(organisation.places_left, 'recherché', 'recherchés', false) }}
-            </template>
-          </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
