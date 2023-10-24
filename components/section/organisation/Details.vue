@@ -104,10 +104,7 @@
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10">
           <template v-if="!hasNoMissionAvailableAndNoParticipation">
-            <div
-              class="group p-10 bg-white shadow-2xl cursor-pointer"
-              @click="$router.push(`/missions-benevolat?structure.name=${organisation.name}`)"
-            >
+            <div class="group p-10 bg-white shadow-2xl cursor-pointer" @click="onClickFindMissions">
               <DsfrPeuImporteIcon class="-mt-3 w-[80px] h-[80px]" />
               <div class="text-4xl lg:text-5xl font-bold">
                 {{ $numeral(organisation.missions_available_count) }}
@@ -249,6 +246,12 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    hasMissionsDistance() {
+      return this.organisation.statistics.missions_available_distance_count
+    },
+    hasMissionsPresentiel() {
+      return this.organisation.statistics.missions_available_presentiel_count
+    },
     hasNoMissionAvailableAndNoParticipation() {
       return (
         this.organisation.participations_count === 0 &&
@@ -281,6 +284,18 @@ export default defineNuxtComponent({
   methods: {
     onIllustrationError() {
       this.$refs.illustration.$el.srcset = '/images/organisation-default-1.webp'
+    },
+    onClickFindMissions() {
+      this.$router.push({
+        path: '/missions-benevolat',
+        query: {
+          'structure.name': this.organisation.name,
+          type:
+            this.hasMissionsDistance && !this.hasMissionsPresentiel
+              ? 'Mission à distance'
+              : undefined,
+        },
+      })
     },
   },
 })
