@@ -1,7 +1,7 @@
 <template>
   <div class="relative bg-white lg:grid lg:grid-cols-2">
-    <div class="col-span-2 lg:col-span-1 flex flex-col items-center justify-center">
-      <div class="px-4 lg:px-0 lg:max-w-3xl lg:ml-auto lg:w-full">
+    <div class="container col-span-2 lg:col-span-1 flex flex-col items-center justify-center">
+      <div class="lg:max-w-3xl lg:ml-auto lg:w-full">
         <div class="py-8 lg:p-8">
           <h1 class="mb-8 text-3xl lg:text-[56px] sm:!leading-[1.1] tracking-tighter font-bold">
             <span class="relative">
