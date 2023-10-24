@@ -3,7 +3,7 @@
     <BoxHeadingStatistics
       title="Répartition des participations par activité"
       class="mb-6"
-      infos-bulle="Répartition des participations validées sur la période par activité"
+      infos-bulle="Répartition des participations sur la période par activité"
     />
     <BaseStackedList v-if="items" :divided="false">
       <BaseStackedListItem

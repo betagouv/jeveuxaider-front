@@ -3,7 +3,7 @@
     <BoxHeadingStatistics
       title="Répartition des participations par domaine d’action"
       class="mb-6"
-      infos-bulle="Répartition des participations validées sur la période par domaine d'action"
+      infos-bulle="Répartition des participations sur la période par domaine d'action"
     />
     <div v-if="items" class="flex flex-col gap-2">
       <ListItemCount
