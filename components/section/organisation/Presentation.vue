@@ -111,18 +111,12 @@ export default defineNuxtComponent({
       this.$refs.illustration.$el.srcset = '/images/organisation-default-2.webp'
     },
     onClickFindMissions() {
-      if (this.organisation.missions_available_count >= 1) {
-        this.$router.push({
-          path: '/missions-benevolat',
-          query: {
-            ...this.redirectParameters,
-          },
-        })
-      } else {
-        this.$router.push({
-          path: '/missions-benevolat',
-        })
-      }
+      this.$router.push({
+        path: '/missions-benevolat',
+        query: {
+          ...this.redirectParameters,
+        },
+      })
     },
   },
 })

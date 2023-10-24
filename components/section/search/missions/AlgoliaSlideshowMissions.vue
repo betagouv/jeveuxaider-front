@@ -68,7 +68,7 @@ export default defineNuxtComponent({
   async setup(props, { emit }) {
     const { $algolia } = useNuxtApp()
     const response = await $algolia.missionsIndex.search('', props.searchParameters)
-    emit('results', response.hits)
+    emit('results', response)
     return {
       missions: response.hits,
     }
