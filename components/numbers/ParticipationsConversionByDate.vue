@@ -3,6 +3,7 @@
     <BoxHeadingStatistics
       title="Participations validées par rapport aux mises en relation"
       class="mb-6"
+      no-period
     />
     <div class="w-full">
       <BarChart
@@ -30,18 +31,24 @@ export default defineNuxtComponent({
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,
-        scales: {
-          x: {
-            stacked: true,
-          },
-          y: {
-            stacked: true,
-          },
-        },
         plugins: {
           legend: {
-            display: false,
             position: 'bottom',
+            onClick: (evt, legendItem, legend) => {
+              let newVal = !legendItem.hidden
+              legend.chart.data.datasets.forEach((dataset) => {
+                if (dataset.label === legendItem.text) {
+                  dataset.hidden = newVal
+                }
+              })
+              legend.chart.update()
+            },
+            labels: {
+              filter: (legendItem, chartData) => {
+                let entries = chartData.datasets.map((e) => e.label)
+                return entries.indexOf(legendItem.text) === legendItem.datasetIndex
+              },
+            },
           },
           datalabels: {
             color: 'white',
@@ -51,15 +58,15 @@ export default defineNuxtComponent({
             formatter(value, ctx) {
               const datasets = ctx.chart.data.datasets
               if (datasets[ctx.datasetIndex] != null) {
-                const barTotal = datasets
-                  .map(function (x) {
-                    return x.data[ctx.dataIndex]
-                  })
-                  .reduce((a, b) => a + b, 0)
-                return datasets.indexOf(ctx.dataset) === 0
-                  ? ((value * 100) / barTotal).toFixed(0) + '%'
-                  : ''
+                const dataset = datasets[ctx.datasetIndex]
+                if (ctx.datasetIndex % 2 === 0) {
+                  return `${(
+                    (value * 100) /
+                    (value + datasets[ctx.datasetIndex + 1]['data'][ctx.dataIndex])
+                  ).toFixed(0)}%`
+                }
               }
+              return ''
             },
           },
         },
@@ -74,36 +81,64 @@ export default defineNuxtComponent({
       this.loading = true
       await apiFetch('/charts/participations-conversion-by-date', {
         params: this.$stores.statistics.params,
-      }).then((response) => {
+      }).then((data) => {
         this.loading = false
-        const colors = ['#FF9A7B', pattern.draw('weave', '#FFBDA9')]
-        this.chartDatasets = []
 
-        Object.entries(response).forEach(([key, dataset], index) =>
-          this.chartDatasets.push({
-            label: key,
-            data: dataset,
+        // Extract the labels (months) from the data
+        const months = [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ]
+
+        const colors = [
+          '#fb7185',
+
+          pattern.draw('dot', '#fb7185'),
+          '#e879f9',
+
+          pattern.draw('dot', '#e879f9'),
+          '#a78bfa',
+
+          pattern.draw('dot', '#a78bfa'),
+          '#818cf8',
+
+          pattern.draw('dot', '#818cf8'),
+          '#138bdf8',
+
+          pattern.draw('dot', '#138bdf8'),
+        ]
+
+        // Extract the years from the data
+        const legends = Object.keys(data)
+
+        // Create datasets for "Validées" and "Autres statuts"
+        const datasets = legends.map((legend, index) => {
+          let year = legend.split(' - ')[0]
+          return {
+            label: year,
+            data: data[legend],
             backgroundColor: colors[index],
-          })
-        )
+            stack: year,
+            hidden: ![
+              this.$dayjs().subtract(1, 'year').year().toString(),
+              this.$dayjs().year().toString(),
+            ].includes(year),
+          }
+        })
 
-        this.chartDatasets.push()
         this.chartData = {
-          labels: [
-            'Jan.',
-            'Fév.',
-            'Mars',
-            'Avr.',
-            'Mai',
-            'Juin',
-            'Juil.',
-            'Aout',
-            'Sept.',
-            'Oct.',
-            'Nov.',
-            'Déc.',
-          ],
-          datasets: this.chartDatasets,
+          labels: months,
+          datasets: datasets,
         }
       })
     },
