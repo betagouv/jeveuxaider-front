@@ -53,6 +53,7 @@ export default defineNuxtComponent({
           datalabels: {
             color: 'white',
             font: {
+              size: 9,
               weight: 'bold',
             },
             formatter(value, ctx) {
