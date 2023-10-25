@@ -10,7 +10,14 @@
         }"
         suffixTitle="Découvrez le réseau"
       />
-      <Details :organisation="reseau" :src-set="image2" class="bg-[#F3EDE5]" />
+      <Details
+        :organisation="reseau"
+        :src-set="image2"
+        class="bg-[#F3EDE5]"
+        :redirect-parameters="{
+          'structure.reseaux.name': reseau.name,
+        }"
+      />
       <div id="missions" :data-offset-anchor="-98">
         <SectionSlideshowMissions
           v-if="reseau.statistics.missions_available_presentiel_count > 0"
