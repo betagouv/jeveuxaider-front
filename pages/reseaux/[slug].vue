@@ -109,7 +109,6 @@ import SectionSlideshowMissions from '@/components/section/search/SectionSlidesh
 import MissionsActivities from '@/components/section/MissionActivities.vue'
 import SectionDonation from '@/components/section/SectionDonation.vue'
 import SectionTemoignages from '@/components/section/SectionTemoignages.vue'
-import MixinOrganisation from '@/mixins/organisation'
 
 export default defineNuxtComponent({
   components: {
@@ -121,7 +120,6 @@ export default defineNuxtComponent({
     SectionDonation,
     SectionTemoignages,
   },
-  mixins: [MixinOrganisation],
   async setup() {
     definePageMeta({
       layout: 'default-without-header',
@@ -168,7 +166,7 @@ export default defineNuxtComponent({
       const { data } = await useApiFetch(`/temoignages/reseaux/${reseau.value.id}`)
       testimonials = data
     }
-    Promise.all([fetchActivities(), fetchTestimonials()])
+    await Promise.all([fetchActivities(), fetchTestimonials()])
 
     return {
       reseau,

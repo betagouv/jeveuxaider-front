@@ -1,5 +1,5 @@
 <template>
-  <div v-if="facetActivities.length > 0" class="bg-jva-orange-300 py-12 xl:py-24 overflow-hidden">
+  <div v-if="facetHits.length > 0" class="bg-jva-orange-300 py-12 xl:py-24 overflow-hidden">
     <div class="container">
       <div class="flex flex-col lg:gap-6 xl:gap-8">
         <div class="max-w-4xl">
@@ -8,7 +8,7 @@
           </DsfrHeading>
         </div>
         <div class="flex flex-wrap gap-8">
-          <div v-for="(activity, i) in facetActivities" :key="i">
+          <div v-for="(activity, i) in facetHits" :key="i">
             <button
               class="inline-flex p-4 xl:px-8 xl:py-5 bg-white shadow xl:shadow-xl text-lg xl:text-[22px] font-bold w-full sm:w-auto sm:hover:bg-[#F6F6F6] transition text-left"
               @click="onClick(activity)"
@@ -27,6 +27,7 @@
 import activities from '@/assets/activities.json'
 
 export default defineNuxtComponent({
+  emits: ['facet-hits'],
   props: {
     title: {
       type: String,
@@ -48,15 +49,11 @@ export default defineNuxtComponent({
     }
   },
   created() {
-    this.fetch()
+    if (process.client) {
+      this.fetch()
+    }
   },
-  computed: {
-    facetActivities() {
-      return this.activities.filter((activity) =>
-        this.facetHits.map((a) => a.value).includes(activity.id.toString())
-      )
-    },
-  },
+  computed: {},
   methods: {
     async fetch() {
       const { facetHits } = await this.$algolia.missionsIndex.searchForFacetValues(
@@ -64,7 +61,15 @@ export default defineNuxtComponent({
         '',
         this.searchParameters
       )
-      this.facetHits = facetHits
+
+      const facetHitsFullMerged = facetHits.map((facetActivity) => {
+        return {
+          ...facetActivity,
+          ...this.activities.find((item) => item.id.toString() === facetActivity.value),
+        }
+      })
+      this.facetHits = facetHitsFullMerged
+      this.$emit('facet-hits', facetHitsFullMerged)
     },
     onClick(activity) {
       this.$router.push({
