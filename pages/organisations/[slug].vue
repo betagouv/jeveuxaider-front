@@ -9,7 +9,14 @@
           'structure.name': organisation.name,
         }"
       />
-      <Details :organisation="organisation" :src-set="image2" class="bg-[#F3EDE5]" />
+      <Details
+        :organisation="organisation"
+        :src-set="image2"
+        class="bg-[#F3EDE5]"
+        :redirect-parameters="{
+          'structure.name': organisation.name,
+        }"
+      />
       <div id="missions" class="scroll-mt-24">
         <SectionSlideshowMissions
           v-if="organisation.statistics.missions_available_presentiel_count > 0"

@@ -237,6 +237,10 @@ export default defineNuxtComponent({
       type: String,
       required: true,
     },
+    redirectParameters: {
+      type: Object,
+      required: true,
+    },
   },
   setup() {
     const runtimeConfig = useRuntimeConfig()
@@ -289,7 +293,7 @@ export default defineNuxtComponent({
       this.$router.push({
         path: '/missions-benevolat',
         query: {
-          'structure.name': this.organisation.name,
+          ...this.redirectParameters,
           type:
             this.hasMissionsDistance && !this.hasMissionsPresentiel
               ? 'Mission à distance'
