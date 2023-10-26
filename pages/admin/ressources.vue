@@ -14,44 +14,108 @@
     </template>
     <template #left>
       <BaseBox>
-        <Heading as="h2" :level="2" class="mb-8 font-extrabold"> Guides, webinaires, etc. </Heading>
-        <BaseInput
-          name="search"
-          placeholder="Recherche par mots clés..."
-          icon="RiSearchLine"
-          variant="transparent"
-          :modelValue="$route.query['filter[search]']"
-          clearable
-          @update:modelValue="changeFilter('filter[search]', $event)"
-        />
-        <BaseStackedList class="mt-8">
-          <template v-if="queryResult.data && queryResult.data.length">
-            <BaseStackedListItem
-              v-for="(ressource, i) in queryResult.data"
-              :key="i"
-              arrow
-              @click.native="handleClickRessource(ressource)"
+        <BaseHeading as="h2" :level="2" class="mb-8 font-extrabold">
+          Guides, webinaires, etc.
+        </BaseHeading>
+
+        <SearchFilters class="my-8">
+          <BaseInput
+            name="search"
+            placeholder="Recherche par mots clés..."
+            icon="RiSearchLine"
+            variant="transparent"
+            :modelValue="$route.query['filter[search]']"
+            clearable
+            @update:modelValue="changeFilter('filter[search]', $event)"
+          />
+
+          <template #prefilters>
+            <DsfrTag
+              :key="`toutes-${$route.fullPath}`"
+              as="button"
+              size="md"
+              context="selectable"
+              :is-selected="hasActiveFilters()"
+              is-selected-class="border-gray-50 bg-gray-50"
+              @click.native="deleteAllFilters"
             >
-              <div class="cursor-pointer">
-                <div class="font-bold">
-                  {{ ressource.title }}
+              Toutes
+            </DsfrTag>
+            <DsfrTag
+              :key="`type-file-${$route.fullPath}`"
+              as="button"
+              size="md"
+              context="selectable"
+              :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'file'"
+              is-selected-class="border-gray-50 bg-gray-50"
+              @click.native="changeFilter('filter[type]', 'file')"
+            >
+              Fichiers
+            </DsfrTag>
+            <DsfrTag
+              :key="`type-link-${$route.fullPath}`"
+              as="button"
+              size="md"
+              context="selectable"
+              :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'link'"
+              is-selected-class="border-gray-50 bg-gray-50"
+              @click.native="changeFilter('filter[type]', 'link')"
+            >
+              Liens
+            </DsfrTag>
+          </template>
+        </SearchFilters>
+
+        <div class="mt-8">
+          <ListLoader v-if="queryLoading" class="py-12" />
+          <template v-else>
+            <div
+              v-if="queryResult.data && queryResult.data.length"
+              class="grid grid-cols-1 divide-y"
+            >
+              <div
+                v-for="(ressource, i) in queryResult.data"
+                :key="i"
+                class="flex items-center px-4 py-8 gap-12"
+              >
+                <div class="flex-1">
+                  <div class="font-bold text-lg leading-6">
+                    {{ ressource.title }}
+                  </div>
+                  <BaseTextFormatted
+                    :max-lines="2"
+                    :text="ressource.description"
+                    class="text-[#808191] mt-4 leading-6"
+                    read-more-label="Plus de détails"
+                  />
                 </div>
-                <div class="text-gray-500 text-sm hover:text-gray-700">
+                <div class="">
                   <template v-if="ressource.type === 'link'">
-                    Lien externe
-                    <RiExternalLinkLine class="h-3 w-3 inline-block" />
+                    <DsfrButton
+                      icon="RiExternalLinkLine"
+                      type="secondary"
+                      icon-only
+                      @click="handleClickRessource(ressource)"
+                    />
                   </template>
                   <template v-if="ressource.type === 'file' && ressource.file">
-                    {{ ressource.file.file_name }}
+                    <DsfrButton
+                      icon="RiFileDownloadLine"
+                      type="secondary"
+                      icon-only
+                      @click="handleClickRessource(ressource)"
+                    />
                   </template>
                 </div>
               </div>
-            </BaseStackedListItem>
+            </div>
+            <div v-else>
+              <div class="h-[300px] flex flex-col items-center justify-center">
+                <div class="text-lg text-gray-400 font-semibold">Aucune ressource disponible</div>
+              </div>
+            </div>
           </template>
-          <template v-else>
-            <div class="text-gray-700 text-base">Aucun résultat</div>
-          </template>
-        </BaseStackedList>
+        </div>
 
         <Pagination
           class="mt-8"
@@ -77,6 +141,8 @@ import GuideLinks from '@/components/section/dashboard/GuideLinks.vue'
 import MoreNumbers from '@/components/section/dashboard/MoreNumbers.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import SearchFilters from '@/components/custom/SearchFilters.vue'
+import { ListLoader } from 'vue-content-loader'
 
 export default defineNuxtComponent({
   components: {
@@ -85,6 +151,8 @@ export default defineNuxtComponent({
     MoreNumbers,
     Pagination,
     Breadcrumb,
+    SearchFilters,
+    ListLoader,
   },
   mixins: [QueryBuilder],
   middleware: ['authenticated', 'agreedResponsableTerms'],

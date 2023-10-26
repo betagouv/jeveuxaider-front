@@ -104,8 +104,10 @@ import RiSubstractLine from 'vue-remix-icons/icons/ri-subtract-line.vue'
 import RiSurveyLine from 'vue-remix-icons/icons/ri-survey-line.vue'
 import RiSaveLine from 'vue-remix-icons/icons/ri-save-line.vue'
 import RiTodoLine from 'vue-remix-icons/icons/ri-todo-line.vue'
+import RiFileDownloadLine from 'vue-remix-icons/icons/ri-file-download-line.vue'
 
 const components = {
+  RiFileDownloadLine,
   RiTodoLine,
   RiSaveLine,
   RiSurveyLine,
