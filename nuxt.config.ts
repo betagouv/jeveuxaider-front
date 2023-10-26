@@ -1,4 +1,5 @@
 import ckeditor5 from '@ckeditor/vite-plugin-ckeditor5'
+import flareSourcemapUploader from '@flareapp/vite-plugin-sourcemap-uploader'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -130,8 +131,14 @@ export default defineNuxtConfig({
     transpile: ['vue-toastification', 'plausible-tracker'],
   },
 
+  sourcemap: true,
   vite: {
-    plugins: [ckeditor5({ theme: require.resolve('@ckeditor/ckeditor5-theme-lark') })],
+    plugins: [
+      ckeditor5({ theme: require.resolve('@ckeditor/ckeditor5-theme-lark') }),
+      flareSourcemapUploader({
+        key: process.env.FLARE_KEY,
+      }),
+    ],
   },
 
   dayjs: {
