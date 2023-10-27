@@ -14,6 +14,7 @@
       v-if="isClamped && !forceExpansion"
       class="text-jva-blue-500 mt-4"
       @click.stop.native="forceExpansion = true"
+      icon="RiArrowDownSLine"
     >
       {{ readMoreLabel }}
     </DsfrLink>
