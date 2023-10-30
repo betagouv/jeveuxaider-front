@@ -18,10 +18,17 @@
     </div>
     <div class="mx-auto max-w-sm">
       <form id="form" class="space-y-8 my-8" @submit.prevent="onSubmit">
-        <BaseFormControl label="Votre message" html-for="content" required :error="errors.content">
+        <BaseFormControl
+          label="Votre message"
+          labelSuffix="(100 caractères min.)"
+          html-for="content"
+          required
+          :error="errors.content"
+        >
           <BaseTextarea
             v-model="form.content"
             name="content"
+            placeholder="Vos motivations en quelques mots"
             :rows="7"
             @blur="validate('content')"
           />
@@ -42,15 +49,20 @@ import FormErrors from '@/mixins/form/errors'
 export default defineNuxtComponent({
   name: 'SoftGateParticipate',
   mixins: [FormErrors],
+  emits: ['next'],
   data() {
     return {
       loading: false,
       selectedMission: this.$stores.softGate.selectedMission,
       form: {
-        content: `Bonjour ${this.$stores.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. Je me tiens disponible pour échanger et débuter la mission 🙂\n${this.$stores.auth.user.profile.first_name}`,
+        content: !this.$stores.softGate.selectedMission?.is_motivation_required
+          ? `Bonjour ${this.$stores.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. Je me tiens disponible pour échanger et débuter la mission 🙂\n${this.$stores.auth.user.profile.first_name}`
+          : null,
       },
       formSchema: object({
-        content: string().min(10, 'Votre message est trop court').required('Un message est requis'),
+        content: string()
+          .min(100, 'Votre message est trop court (100 caractères min.)')
+          .required('Un message est requis'),
       }),
     }
   },
@@ -68,6 +80,7 @@ export default defineNuxtComponent({
       if (this.loading) {
         return
       }
+
       this.loading = true
       this.formSchema
         .validate(this.form, { abortEarly: false })
@@ -86,8 +99,14 @@ export default defineNuxtComponent({
           })
 
           window.apieng && window.apieng('trackApplication')
-          this.$plausible.trackEvent('Soft Gate - Étape 3 - Demande de participation')
-          await this.$gtm.trackEvent({
+          this.$plausible.trackEvent('Soft Gate - Étape 3 - Demande de participation', {
+            props: {
+              hasSlots: this.$stores.softGate.selectedMission?.dates?.length > 0,
+              isMotivationRequired: this.$stores.softGate.selectedMission?.is_motivation_required,
+            },
+          })
+
+          await this.$gtm?.trackEvent({
             event: 'benevole-participation-soft-gate',
           })
           this.$toast.success(

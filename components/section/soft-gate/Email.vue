@@ -65,7 +65,7 @@ export default defineNuxtComponent({
           if (profile) {
             this.$emit('login', profile)
           } else {
-            this.$gtm.trackEvent({ event: 'benevole-email-register-soft-gate' })
+            this.$gtm?.trackEvent({ event: 'benevole-email-register-soft-gate' })
             apiFetch('/sendinblue/contact', {
               method: 'POST',
               body: {

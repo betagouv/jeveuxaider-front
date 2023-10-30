@@ -616,7 +616,7 @@ export default defineNuxtComponent({
             structure_api: this.form.structure.rna ? this.form.structure : null,
           })
           this.$plausible.trackEvent('Inscription responsable - Étape 1 - Création de compte')
-          await this.$gtm.trackEvent({ event: 'inscription-responsable' })
+          await this.$gtm?.trackEvent({ event: 'inscription-responsable' })
           this.$router.push({
             path: '/inscription/responsable/step/charte-bon-fonctionnement',
           })

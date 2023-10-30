@@ -51,7 +51,7 @@ export default defineNuxtComponent({
         })
         cookieAccessToken.value = data.accessToken
 
-        this.$gtm.trackEvent({ event: 'user-login' })
+        this.$gtm?.trackEvent({ event: 'user-login' })
 
         await nextTick() // wait for cookie
         await this.$stores.auth.fetchUser()

@@ -43,7 +43,7 @@ export default defineNuxtComponent({
           isOutdated: item.is_outdated,
         },
       })
-      await this.$gtm.trackEvent({ event: 'benevole-clic-carte-mission' })
+      await this.$gtm?.trackEvent({ event: 'benevole-clic-carte-mission' })
     },
   },
 })

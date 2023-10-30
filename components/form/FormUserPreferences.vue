@@ -75,14 +75,15 @@
             <img src="/images/icons/send-mail.svg" alt="" data-not-lazy />
           </div>
           <div>
-            <BaseToggle
-              v-model="form.is_visible"
-              class="flex-1"
-              position="right"
-              size="xl"
-              label="Recevoir des propositions de missions par les organisations"
-              description="Recevez par e-mail des suggestions de missions de bénévolat"
-            />
+            <div class="block font-bold mb-2 relative text-xl normal-case text-black">
+              Recevoir des propositions de missions par les organisations
+            </div>
+            <div class="text-[#3A3A3A]">
+              Recevez par e-mail des suggestions de missions de bénévolat
+            </div>
+          </div>
+          <div>
+            <BaseToggle v-model="form.is_visible" size="xl" />
           </div>
         </div>
       </div>
