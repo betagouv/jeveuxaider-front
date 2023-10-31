@@ -153,7 +153,7 @@ export default defineNuxtComponent({
     const { $stores } = useNuxtApp()
 
     if (!['referent', 'responsable'].includes($stores.auth.contextRole)) {
-      return error({ statusCode: 403 })
+      return showError({ statusCode: 403 })
     }
 
     const profile = await apiFetch(`/profiles/${$stores.auth.user.profile.id}`)

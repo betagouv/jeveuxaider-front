@@ -61,7 +61,7 @@ export default defineNuxtComponent({
       })
     }
     if ($stores.auth.contextRole !== 'admin' && !activity.value.is_published) {
-      return error({ statusCode: 403 })
+      return showError({ statusCode: 403 })
     }
 
     const title =

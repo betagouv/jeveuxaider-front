@@ -154,7 +154,7 @@ export default defineNuxtComponent({
     const route = useRoute()
 
     if (!$stores.auth.currentRole || $stores.auth.currentRole.contextable_type !== 'structure') {
-      return error({ statusCode: 403 })
+      return showError({ statusCode: 403 })
     }
 
     const structure = await apiFetch(`/structures/${route.params.id}`)

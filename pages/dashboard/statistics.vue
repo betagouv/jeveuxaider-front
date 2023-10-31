@@ -29,7 +29,7 @@ export default defineNuxtComponent({
         stores.auth.contextRole
       )
     ) {
-      return error({ statusCode: 403 })
+      return showError({ statusCode: 403 })
     }
   },
 })
