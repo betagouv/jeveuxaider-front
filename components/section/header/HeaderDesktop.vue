@@ -72,7 +72,7 @@
         <BaseDropdown
           v-if="$stores.auth.roles && $stores.auth.roles.length > 1"
           ref="switchRole"
-          position="left"
+          positionClass="origin-top-left left-0"
           class="h-full"
         >
           <template #button>
