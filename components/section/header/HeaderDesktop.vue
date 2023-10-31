@@ -254,11 +254,11 @@ export default defineNuxtComponent({
             to: '/organisations',
             isActive: this.isActiveLink('/organisations'),
           },
-          // {
-          //   name: '✏️ Septembre pour Apprendre',
-          //   href: 'https://www.jeveuxaider.gouv.fr/engagement/septembre-pour-apprendre/',
-          //   target: '_blank',
-          // },
+          {
+            name: 'Banques alimentaires 🛒',
+            href: 'https://www.jeveuxaider.gouv.fr/engagement/banques-alimentaires/',
+            target: '_blank',
+          },
           {
             name: "Centre d'aide",
             href: 'https://reserve-civique.crisp.help/fr/',
@@ -443,11 +443,11 @@ export default defineNuxtComponent({
           to: '/profile/missions',
           isActive: this.isActiveLink('profile/missions'),
         },
-        // {
-        //   name: '✏️ Septembre pour Apprendre',
-        //   href: 'https://www.jeveuxaider.gouv.fr/engagement/septembre-pour-apprendre/',
-        //   target: '_blank',
-        // },
+        {
+          name: 'Banques alimentaires 🛒',
+          href: 'https://www.jeveuxaider.gouv.fr/engagement/banques-alimentaires/',
+          target: '_blank',
+        },
         {
           name: "Centre d'aide",
           href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/',

@@ -3,7 +3,7 @@
     <BlocBanner />
     <template v-if="$stores.auth.isLogged">
       <BlocCaDevraitVousPlaire />
-      <SeptembrePourApprendre />
+      <BanquesAlimentaires />
       <BlocProfileActivities />
       <BlocTemoignages />
       <BlocActualites v-if="$stores.settings.general?.blog_active" />
@@ -17,7 +17,7 @@
         <BlocInscriptionResponsable />
       </div>
       <BlocActivities />
-      <SeptembrePourApprendre />
+      <BanquesAlimentaires />
       <BlocMissionsCourtes />
       <BlocActionsBenevolesPopulaires />
       <BlocTemoignages />
@@ -35,7 +35,7 @@ import BlocInscriptionBenevole from '@/components/section/home/BlocInscriptionBe
 import BlocInscriptionResponsable from '@/components/section/home/BlocInscriptionResponsable.vue'
 import BlocActivities from '@/components/section/home/BlocActivities.vue'
 import BlocCaDevraitVousPlaire from '@/components/section/home/BlocCaDevraitVousPlaire.vue'
-import SeptembrePourApprendre from '@/components/section/operations/SeptembrePourApprendre.vue'
+import BanquesAlimentaires from '@/components/section/operations/BanquesAlimentaires.vue'
 import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
 import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
 import BlocTemoignages from '@/components/section/home/BlocTemoignages.vue'
@@ -95,7 +95,7 @@ export default defineNuxtComponent({
     BlocNewsletter,
     BlocFaq,
     BlocProfileActivities,
-    SeptembrePourApprendre,
+    BanquesAlimentaires,
   },
 })
 </script>
