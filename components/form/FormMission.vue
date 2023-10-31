@@ -460,15 +460,15 @@
       </BaseBox>
       <BaseBox v-if="form.type === 'Mission en présentiel'" :padding="false">
         <div class="px-6 py-8 xl:py-10 xl:px-8">
-          <div class="flex space-x-6">
+          <div class="flex items-center space-x-6 mb-8">
             <img
               src="@/assets/images/snu-logo.png"
               alt="SNU"
               title="SNU"
-              class="hidden lg:block h-10 lg:mt-2"
+              class="hidden lg:block h-10"
               data-not-lazy
             />
-            <BaseHeading :level="3" class="mb-8">
+            <BaseHeading :level="3" class="">
               Proposer cette mission aux jeunes volontaires du Service National Universel
             </BaseHeading>
           </div>
@@ -493,35 +493,33 @@
               />
             </BaseFormControl>
           </div>
+          <div class="flex justify-between mt-10">
+            <DsfrButton
+              to="https://www.youtube.com/watch?v=2LlYM9C693E"
+              icon="RiPlayCircleLine"
+              type="secondary"
+              is-external
+              >Le SNU en 30 secondes</DsfrButton
+            >
+            <DsfrButton
+              icon="RiExternalLinkLine"
+              type="secondary"
+              is-external
+              to="https://www.snu.gouv.fr/le-service-national-universel-29"
+              >En savoir plus</DsfrButton
+            >
+          </div>
         </div>
-        <div class="bg-gray-50">
-          <div class="flex divide-x">
-            <div class="py-5 w-1/2 text-center">
-              <BaseLink
-                to="https://www.youtube.com/watch?v=2LlYM9C693E"
-                icon="RiPlayCircleLine"
-                icon-class="h-5 mr-2"
-                icon-position="left"
-                class="flex justify-center !text-gray-900 text-sm"
-                target="_blank"
-                external
-              >
-                Le SNU en 30 secondes
-              </BaseLink>
-            </div>
-            <div class="py-5 w-1/2">
-              <BaseLink
-                to="https://www.snu.gouv.fr/le-service-national-universel-29"
-                target="_blank"
-                external
-                icon="RiExternalLinkLine"
-                icon-class="h-5 mr-2"
-                icon-position="left"
-                class="flex justify-center !text-gray-900 text-sm"
-              >
-                En savoir plus
-              </BaseLink>
-            </div>
+      </BaseBox>
+      <BaseBox :padding="false">
+        <div class="px-6 py-8 xl:py-10 xl:px-8">
+          <BaseHeading :level="3" class="mb-8"> Motivation du bénévole </BaseHeading>
+          <div class="space-y-8">
+            <BaseToggle
+              v-model="form.is_motivation_required"
+              label="Rendre obligatoire la rédaction d‘un <strong>message personnel de motivation</strong> lors de la candidature (100 caractères minimum)"
+              description=""
+            />
           </div>
         </div>
       </BaseBox>

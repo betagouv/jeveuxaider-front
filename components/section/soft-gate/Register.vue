@@ -280,7 +280,7 @@ export default defineNuxtComponent({
             utm_campaign: useCookie('utm_campaign')?.value,
             utm_medium: useCookie('utm_medium')?.value,
           })
-          await this.$gtm.trackEvent({
+          await this.$gtm?.trackEvent({
             event: 'benevole-inscription-soft-gate',
           })
           this.$plausible.trackEvent('Soft Gate - Étape 2 - Inscription')

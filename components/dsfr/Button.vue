@@ -3,11 +3,13 @@
     :is="tag"
     :to="tag.name === 'NuxtLink' ? to : undefined"
     :target="to && isExternal ? '_blank' : undefined"
-    :href="tag.name === 'a' ? to : undefined"
+    :href="tag === 'a' ? to : undefined"
     :type="isSubmit ? 'submit' : 'button'"
     :class="[
       'font-medium border transition flex-none',
       'inline-flex items-center justify-center whitespace-pre-wrap',
+
+      disabled ? 'cursor-not-allowed' : 'cursor-pointer',
 
       { 'px-3 py-1 text-sm min-h-[34px]': size === 'sm' },
       { 'px-4 py-2 text-base min-h-[42px]': size === 'md' },
@@ -30,16 +32,14 @@
           type === 'tertiary-no-outline',
       },
       { 'bg-transparent': type === 'transparent' },
-
       {
-        'cursor-not-allowed !bg-[#E5E5E5] text-[#929292]': disabled && type === 'primary',
+        '!bg-[#E5E5E5] text-[#929292]': disabled && type === 'primary',
       },
       {
-        'cursor-not-allowed !border-[#E5E5E5] text-[#929292]':
-          disabled && ['secondary', 'tertiary'].includes(type),
+        '!border-[#E5E5E5] text-[#929292]': disabled && ['secondary', 'tertiary'].includes(type),
       },
       {
-        'cursor-not-allowed text-[#929292]': disabled && type === 'tertiary-no-outline',
+        'text-[#929292]': disabled && type === 'tertiary-no-outline',
       },
     ]"
     :disabled="disabled"
