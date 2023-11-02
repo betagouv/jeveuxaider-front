@@ -7,7 +7,6 @@
       :model-config="modelConfig"
       :min-date="minDate"
       :attributes="attributes"
-      timezone="utc"
       @popoverWillShow="$emit('popoverWillShow', $refs.datePicker)"
     >
       <template #default="data">
