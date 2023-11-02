@@ -2,11 +2,11 @@
   <label class="flex items-baseline cursor-pointer" :class="[{ 'space-x-2': variant !== 'tabs' }]">
     <input
       type="radio"
-      name="option"
+      :name="name"
       :value="option.key"
       :class="[{ 'sr-only': variant === 'tabs' }, { 'dsfr-theme': variant === 'radios' }]"
       aria-labelledby="label"
-      :checked="defaultValue == option.key"
+      :checked="checked"
       @input="$emit('update:modelValue', option.key)"
     />
     <span
@@ -22,7 +22,10 @@
 
 <script>
 export default defineNuxtComponent({
+  emits: ['update:modelValue'],
   props: {
+    name: { type: String, required: true },
+    checked: { type: Boolean, default: false },
     option: { type: Object, required: true },
     variant: { type: String, default: 'radios', validator: (s) => ['radios', 'tabs'].includes(s) },
     defaultValue: { type: [String, Number, Boolean], default: null },

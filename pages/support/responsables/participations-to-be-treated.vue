@@ -116,21 +116,23 @@
             class="hover:cursor-pointer"
             @click.native="drawerProfileId = item.profile_id"
           >
-            <BaseTableRowCell>
+            <BaseTableRowCell class="max-w-[300px]">
               <div class="flex">
                 <BaseAvatar
                   :initials="item.first_name[0] + item.last_name[0]"
                   size="sm"
                   class="mr-4"
                 />
-                <div>
-                  <div class="text-gray-900 font-semibold">
+                <div class="truncate">
+                  <div class="text-gray-900 font-semibold truncate">
                     {{ item.first_name }} {{ item.last_name }}
                   </div>
-                  <div class="text-xs">
+                  <div class="text-xs truncate">
                     {{ item.email }}
                   </div>
-                  <div class="text-xs">{{ item.structure_name }} #{{ item.structure_id }}</div>
+                  <div class="text-xs truncate">
+                    {{ item.structure_name }} #{{ item.structure_id }}
+                  </div>
                 </div>
               </div>
             </BaseTableRowCell>

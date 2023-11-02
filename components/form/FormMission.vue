@@ -280,7 +280,7 @@
               v-model="form.type"
               :options="$labels.mission_types"
               variant="tabs"
-              @updated="handleTypeChange"
+              @update:modelValue="handleTypeChange"
             />
             <template v-if="isDistance">
               <div class="text-sm text-gray-600 leading-relaxed mt-4">
