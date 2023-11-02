@@ -48,7 +48,7 @@ export default defineNuxtComponent({
   },
   methods: {
     highlightBlacklistedWordInSentence(sentence) {
-      const regex = new RegExp(`(${this.blacklistedWords.join('|')})`, 'gi')
+      const regex = new RegExp(`\\b(${this.blacklistedWords.join('|')})\\b`, 'gi')
       return sentence.replace(regex, '<span class="bg-yellow-300 text-gray-900">$1</span>')
     },
   },
