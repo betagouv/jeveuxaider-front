@@ -299,7 +299,7 @@ export default defineNuxtComponent({
         {
           tab: 'responsables',
           key: 'responsable_organisation_signaled',
-          label: 'Votre organisation ne peut pas publier de missions sur JeVeuxAider.gouv.fr',
+          label: 'Votre organisation a été signalée',
           description: 'Notification envoyée au responsable lorsque son organisation est signalée',
           tags: ['app-responsable-organisation-signalee'],
           types: ['Notification'],
@@ -431,7 +431,7 @@ export default defineNuxtComponent({
         {
           tab: 'responsables',
           key: 'responsable_participations_need_to_be_treated',
-          label: 'XX bénévoles attendent une réponse au plus vite ! 🙌',
+          label: 'Vous avez X participations à traiter en priorité ! 🙌',
           description:
             'Rappel envoyé au responsable si des participations doivent être traitées en priorité',
           tags: ['app-responsable-rappel-participations-a-traiter-en-priorite'],
