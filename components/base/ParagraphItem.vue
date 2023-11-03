@@ -11,6 +11,7 @@
           v-model="form[field.key]"
           :placeholder="field.placeholder"
           :name="field.key"
+          :toolbar="['bold', 'italic', '|', 'bulletedList', 'numberedList', '|', 'link']"
           @update:modelValue="onInput"
         />
       </template>
