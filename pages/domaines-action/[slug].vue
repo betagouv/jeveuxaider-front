@@ -43,9 +43,14 @@
       ]"
       class="my-8 sm:my-16 lg:my-24"
     />
+    <SectionPartenairesEngagementSousToutesSesFormes
+      :partenaires="partenaires"
+      :title="`L‘engagement pour ${suffixeTitle} sous toutes ses formes`"
+    />
     <SectionFaqParagraph
+      v-if="domaine.faq"
       :paragraphs="domaine.faq"
-      :title="`Le bénévolat pour ${this.suffixeTitle}`"
+      :title="`Le bénévolat pour ${suffixeTitle}`"
     />
   </div>
 </template>
@@ -69,11 +74,6 @@ export default defineNuxtComponent({
       `/domaines/${route.params.slug}`
     )
 
-    if (errorDomaine.value) {
-      showError({
-        statusCode: errorStatistics.value.statusCode,
-      })
-    }
     if (!domaine.value) {
       return showError({ statusCode: 404 })
     }
@@ -84,6 +84,7 @@ export default defineNuxtComponent({
     const { data: statistics, error: errorStatistics } = await useApiFetch(
       `/domaines/${domaine.value.id}/statistics`
     )
+
     if (errorStatistics.value) {
       showError({
         statusCode: errorStatistics.value.statusCode,
@@ -123,13 +124,13 @@ export default defineNuxtComponent({
       return this.domaine?.banner?.urls?.large ?? '/images/organisation-default-1.webp'
     },
     suffixeTitle() {
-      switch (this.domaine.id) {
+      switch (this.domaine?.id) {
         case 1:
           return 'la santé'
         case 2:
           return 'la prévention et la protection'
         case 3:
-          return ' l‘art et la culture'
+          return 'l‘art et la culture'
         case 4:
           return 'le sport'
         case 5:
@@ -147,8 +148,14 @@ export default defineNuxtComponent({
         case 11:
           return 'le bénévolat de compétences'
         default:
-          return this.domaine.name
+          return this.domaine?.name
       }
+    },
+    partenaires() {
+      return [
+        { key: 'service-civique', link: '#' },
+        { key: 'volontariat-international', link: '#' },
+      ]
     },
   },
 })

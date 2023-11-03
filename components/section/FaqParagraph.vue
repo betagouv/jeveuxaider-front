@@ -1,16 +1,20 @@
 <template>
-  <div class="bg-white pb-12 md:pb-20">
+  <div v-if="paragraphs.length > 0" class="bg-white pb-12 md:pb-20">
     <div class="container">
-      <DsfrHeading as="h2" size="alt-md" class="py-16 xl:pt-24 xl:pb-24 text-center">
+      <DsfrHeading
+        as="h2"
+        size="alt-md"
+        class="py-16 xl:pt-24 xl:pb-24 text-center max-w-[900px] mx-auto"
+      >
         <span class="relative">
           <span>{{ title }}</span>
           <img
-            src="/images/home/sparkle-right.svg"
+            src="/images/home/sparkle-left.svg"
             alt=""
             width="40"
             height="43"
             aria-hidden="true"
-            class="absolute right-[-22px] top-[35px] xxs:top-[40px] sm:top-[-10px] w-8 xl:w-[50px] xl:right-[-40px] xl:top-[-20px] pointer-events-none"
+            class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] top-[-12px] left-[-22px] lg:top-[-25px] lg:left-[-47px] pointer-events-none"
           />
         </span>
       </DsfrHeading>

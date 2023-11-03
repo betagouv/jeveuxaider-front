@@ -1,0 +1,74 @@
+<template>
+  <div v-if="partenaires.length > 0" class="bg-[#F3EDE5] pb-12 md:pb-20">
+    <div class="container">
+      <DsfrHeading
+        as="h2"
+        size="alt-md"
+        class="py-16 xl:pt-24 xl:pb-24 text-center max-w-[1000px] mx-auto"
+      >
+        <span class="relative">
+          <span>{{ title }}</span>
+          <img
+            src="/images/home/sparkle-left.svg"
+            alt=""
+            width="40"
+            height="43"
+            aria-hidden="true"
+            class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] top-[-12px] left-[-22px] lg:top-[-25px] lg:left-[-47px] pointer-events-none"
+          />
+        </span>
+      </DsfrHeading>
+      <div class="flex flex-wrap justify-center gap-8">
+        <template v-for="(partenaire, index) in partenaires" :key="index">
+          <DsfrVisitCard
+            v-if="partenaire.key === 'service-civique'"
+            title="Service Civique"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
+            :link="partenaire.link"
+            class="w-[384px]"
+          >
+            <template #icon>
+              <img
+                src="/images/logos/service-civique.svg"
+                alt="Service Civique"
+                title="Service Civique"
+                class="w-[50px] flex-none"
+              />
+            </template>
+          </DsfrVisitCard>
+          <DsfrVisitCard
+            v-if="partenaire.key === 'volontariat-international'"
+            title="Volontariat International"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
+            :link="partenaire.link"
+            class="w-[384px]"
+          >
+            <template #icon>
+              <img
+                src="/images/logos/volontariat-international.webp"
+                alt="Volontariat International"
+                title="Volontariat International"
+                class="w-[68px] flex-none"
+              />
+            </template>
+          </DsfrVisitCard>
+        </template>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default defineNuxtComponent({
+  props: {
+    title: {
+      type: String,
+      default: 'L‘engagement sous toutes ses formes',
+    },
+    partenaires: {
+      type: Array,
+      default: () => [],
+    },
+  },
+})
+</script>
