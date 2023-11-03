@@ -100,10 +100,6 @@ export default defineNuxtComponent({
         path: '/missions-benevolat',
         query: {
           ...this.redirectParameters,
-          type:
-            this.hasMissionsDistance && !this.hasMissionsPresentiel
-              ? 'Mission à distance'
-              : undefined,
         },
       })
     },

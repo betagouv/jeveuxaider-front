@@ -82,7 +82,7 @@
         <div class="p-10 bg-white shadow-2xl">
           <div class="text-2xl font-bold text-center">En partenariat</div>
           <div class="mt-4 border-t pt-4">
-            <BaseContainerScrollable class="h-[500px]">
+            <BaseContainerScrollable class="lg:h-[500px]">
               <div
                 v-for="media in domaine.logos_partenaires"
                 :key="media.id"
@@ -165,10 +165,6 @@ export default defineNuxtComponent({
         path: '/missions-benevolat',
         query: {
           ...this.redirectParameters,
-          type:
-            this.hasMissionsDistance && !this.hasMissionsPresentiel
-              ? 'Mission à distance'
-              : undefined,
         },
       })
     },

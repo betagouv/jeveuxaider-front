@@ -36,6 +36,7 @@ export type TypeVocabulary =
   | 'rule_events'
   | 'rule_actions'
   | 'user_ban_reasons'
+  | 'faq_tabs'
 
 type TypeLabels = {
   [Key in TypeVocabulary]: {
@@ -819,6 +820,10 @@ const labels: TypeLabels = {
       label:
         'Le bénévole a un comportement inadapté (insulte, propos discriminatoires / racistes, …)',
     },
+  ],
+  faq_tabs: [
+    { key: 'benevole', label: 'Pour les bénévoles' },
+    { key: 'organisation', label: 'Pour les organisations' },
   ],
 }
 

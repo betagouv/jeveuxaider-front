@@ -23,6 +23,15 @@
           @update:modelValue="onInput"
         />
       </template>
+      <template v-if="field.type === 'select'">
+        <BaseSelectAdvanced
+          v-model="form[field.key]"
+          :placeholder="field.placeholder"
+          :options="field.options"
+          :name="field.key"
+          @update:modelValue="onInput"
+        />
+      </template>
       <template v-if="field.type === 'textarea'">
         <BaseTextarea
           v-model="form[field.key]"

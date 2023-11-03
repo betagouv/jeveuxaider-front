@@ -3,7 +3,7 @@
     <Presentation
       :domaine="domaine"
       :src-set="image1"
-      :places-left="statistics?.places_left"
+      :places-left="statistics?.places_left_count"
       :redirect-parameters="{
         domaines: domaine.name,
       }"
@@ -16,7 +16,7 @@
       }"
     />
     <SectionAlgoliaFacetsActivities
-      :title="`Au programme des activités bénévoles pour ${domaine.name}`"
+      :title="`Au programme des activités bénévoles pour ${suffixeTitle}`"
       :redirect-parameters="{
         domaines: domaine.name,
       }"
@@ -42,6 +42,10 @@
         'publisher_name',
       ]"
       class="my-8 sm:my-16 lg:my-24"
+    />
+    <SectionFaqParagraph
+      :paragraphs="domaine.faq"
+      :title="`Le bénévolat pour ${this.suffixeTitle}`"
     />
   </div>
 </template>
@@ -86,35 +90,20 @@ export default defineNuxtComponent({
       })
     }
 
-    let domaineSeo
-    switch (domaine.value.name) {
-      case 'Solidarité et insertion':
-        domaineSeo = " la solidarité et l'insertion sociale"
-        break
-      case 'Protection de la nature':
-        domaineSeo = "la protection de la nature et l'environnement."
-        break
-      case 'Santé pour tous':
-        domaineSeo = 'la santé'
-        break
-      case 'Éducation pour tous':
-        domaineSeo = "la solidarité et l'insertion"
-        break
-    }
-
+    const title = domaine.value.metatags?.properties?.title ?? domaine.value.title
     useHead({
-      title: `Devenez bénévole dans une association pour ${domaineSeo} | Je Veux Aider`,
+      title: `${title} | JeVeuxAider.gouv.fr`,
       link: [
         {
           rel: 'canonical',
-          href: `https://www.jeveuxaider.gouv.fr/domaines-action/${domaine.value.slug}`,
+          href: `https://www.jeveuxaider.gouv.fr${domaine.value.full_url}`,
         },
       ],
       meta: [
         {
           hid: 'description',
           name: 'description',
-          content: `Des milliers de places sont disponibles dans des associations pour ${domaineSeo}. Trouvez la mission qui vous correspond, sur le terrain ou à distance, partout en France, dès 16 ans.`,
+          content: domaine.value.metatags?.properties?.description ?? domaine.value.description,
         },
         {
           hid: 'og:image',
@@ -133,13 +122,34 @@ export default defineNuxtComponent({
     image1() {
       return this.domaine?.banner?.urls?.large ?? '/images/organisation-default-1.webp'
     },
-    // image2() {
-    //   return (
-    //     this.organisation?.override_image2?.urls.large ??
-    //     this.organisation?.illustrations?.[1]?.urls.large ??
-    //     '/images/organisation-default-2.webp'
-    //   )
-    // },
+    suffixeTitle() {
+      switch (this.domaine.id) {
+        case 1:
+          return 'la santé'
+        case 2:
+          return 'la prévention et la protection'
+        case 3:
+          return ' l‘art et la culture'
+        case 4:
+          return 'le sport'
+        case 5:
+          return 'la Covid-19'
+        case 6:
+          return 'la coopération internationale'
+        case 7:
+          return 'la solidarité et l‘insertion'
+        case 8:
+          return 'la mémoire et la citoyenneté'
+        case 9:
+          return 'l‘éducation'
+        case 10:
+          return 'la protection de la nature'
+        case 11:
+          return 'le bénévolat de compétences'
+        default:
+          return this.domaine.name
+      }
+    },
   },
 })
 </script>
