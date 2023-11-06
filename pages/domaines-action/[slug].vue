@@ -44,13 +44,13 @@
       class="my-8 sm:my-16 lg:my-24"
     />
     <SectionPartenairesEngagementSousToutesSesFormes
-      :partenaires="partenaires"
-      :title="`L‘engagement pour ${suffixeTitle} sous toutes ses formes`"
+      :partenaires="$labels.domaines.find((item) => item.key === domaine.id)?.partenaires"
+      :title="$labels.domaines.find((item) => item.key === domaine.id)?.engagementTitle"
     />
     <SectionFaqParagraph
       v-if="domaine.faq"
       :paragraphs="domaine.faq"
-      :title="`Le bénévolat pour ${suffixeTitle}`"
+      :title="$labels.domaines.find((item) => item.key === domaine.id)?.benevolatTitle"
     />
   </div>
 </template>
@@ -150,12 +150,6 @@ export default defineNuxtComponent({
         default:
           return this.domaine?.name
       }
-    },
-    partenaires() {
-      return [
-        { key: 'service-civique', link: '#' },
-        { key: 'volontariat-international', link: '#' },
-      ]
     },
   },
 })

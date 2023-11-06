@@ -26,6 +26,7 @@
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
             :link="partenaire.link"
             class="w-[384px]"
+            @click="onClick(partenaire)"
           >
             <template #icon>
               <img
@@ -37,17 +38,18 @@
             </template>
           </DsfrVisitCard>
           <DsfrVisitCard
-            v-if="partenaire.key === 'volontariat-international'"
-            title="Volontariat International"
+            v-if="partenaire.key === 'france-volontaire'"
+            title="France Volontaire"
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
             :link="partenaire.link"
             class="w-[384px]"
+            @click="onClick(partenaire)"
           >
             <template #icon>
               <img
                 src="/images/logos/volontariat-international.webp"
-                alt="Volontariat International"
-                title="Volontariat International"
+                alt="France Volontaire"
+                title="France Volontaire"
                 class="w-[68px] flex-none"
               />
             </template>
@@ -68,6 +70,15 @@ export default defineNuxtComponent({
     partenaires: {
       type: Array,
       default: () => [],
+    },
+  },
+  methods: {
+    onClick(partenaire) {
+      this.$plausible.trackEvent('Engagement CTA sous toutes ses formes', {
+        props: { title: this.title, partenaire: partenaire.key },
+      })
+
+      window.open(partenaire.link, '_blank').focus()
     },
   },
 })

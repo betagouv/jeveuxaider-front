@@ -12,14 +12,14 @@
           />
         </span>
       </h2>
-      <div class="mt-6 lg:mt-12">
+      <div class="mt-6 lg:mt-10">
         <p class="text-lg lg:text-2xl lg:leading-10">
           Sur l’ensemble du territoire français, des milliers de bénévoles et d’organisations se
           sont déjà ralliés à JeVeuxAider.gouv.fr pour soutenir ce domaine d'action.
         </p>
       </div>
 
-      <div class="mt-8 lg:mt-24 grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-10">
+      <div class="mt-8 lg:mt-16 grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-10">
         <div class="grid grid-cols-2 gap-0 lg:col-span-2">
           <div v-for="media in images" :key="media.id">
             <NuxtImg
@@ -68,9 +68,9 @@
           <div class="group p-10 bg-white shadow-2xl cursor-pointer" @click="onClickFindMissions">
             <DsfrPeuImporteIcon class="-mt-3 w-[80px] h-[80px]" />
             <div class="text-4xl lg:text-5xl font-bold">
-              {{ $numeral(statistics.structures_count) }}
+              {{ $numeral(statistics.missions_available_count) }}
             </div>
-            <div class="text-2xl font-bold">organisations inscrites</div>
+            <div class="text-2xl font-bold">missions disponibles</div>
             <div class="">
               <DsfrLink icon="RiArrowRightSLine" class="text-jva-blue-500"
                 >sur JeVeuxAider.gouv.fr </DsfrLink
@@ -101,6 +101,18 @@
           </div>
         </div>
       </div>
+
+      <SectionAlgoliaFacetsCities
+        title="Où trouver une mission"
+        :redirect-parameters="{
+          domaines: domaine.name,
+        }"
+        :search-parameters="{
+          filters: `domaines:&quot;${domaine.name}&quot;`,
+          maxFacetHits: 8,
+        }"
+        class="mt-8 lg:mt-12"
+      />
     </div>
   </div>
 </template>

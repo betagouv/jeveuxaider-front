@@ -3,20 +3,37 @@
     class="relative lg:grid lg:grid-cols-2"
     :class="$filters.label(domaine.id, 'domaines', 'bg')"
   >
-    <div class="container col-span-2 lg:col-span-1 flex flex-col items-center justify-center">
-      <div class="lg:max-w-3xl lg:ml-auto lg:w-full">
-        <div class="py-8 lg:p-8">
-          <h1
-            class="text-white relative mb-8 text-3xl lg:text-[56px] sm:!leading-[1.1] tracking-tighter font-bold"
-          >
-            <span> {{ domaine.title }}</span>
-            <img
-              src="/images/home/sparkle-left.svg"
-              alt=""
-              aria-hidden="true"
-              class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] top-[-9px] left-[-30px] lg:top-[-38px] lg:left-[-45px] pointer-events-none"
-            />
-          </h1>
+    <div class="container col-span-2 lg:col-span-1 flex flex-col items-center">
+      <div class="lg:max-w-3xl lg:ml-auto lg:w-full lg:mb-12">
+        <div class="lg:px-8">
+          <DsfrBreadcrumb
+            theme="white"
+            :links="[
+              {
+                text: 'Domaines d‘action',
+              },
+              {
+                text: domaine.name,
+              },
+            ]"
+          />
+        </div>
+
+        <div class="pb-8 lg:px-8">
+          <div class="mb-8">
+            <h1
+              class="text-white inline relative text-3xl lg:text-[56px] sm:!leading-[1.1] tracking-tighter font-bold"
+            >
+              <span> {{ domaine.title }}</span>
+              <img
+                src="/images/home/sparkle-right.svg"
+                alt=""
+                aria-hidden="true"
+                class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] lg:bottom-[30px] lg:right-[-50px] pointer-events-none"
+              />
+            </h1>
+          </div>
+
           <p class="text-white text-lg lg:text-2xl lg:leading-10 mb-8">
             {{ domaine.description }}
           </p>
@@ -63,7 +80,7 @@
         ref="illustration"
         src="/images/organisation-default-2.webp"
         :srcset="srcSet"
-        class="min-h-[700px] w-auto object-cover"
+        class="min-h-[700px] w-auto object-cover h-full"
         @error="onIllustrationError"
       />
     </div>
