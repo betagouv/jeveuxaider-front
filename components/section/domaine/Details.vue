@@ -79,27 +79,7 @@
           </div>
         </div>
 
-        <div class="p-10 bg-white shadow-2xl">
-          <div class="text-2xl font-bold text-center">En partenariat</div>
-          <div class="mt-4 border-t pt-4">
-            <BaseContainerScrollable class="lg:h-[500px]">
-              <div
-                v-for="media in domaine.logos_partenaires"
-                :key="media.id"
-                class="py-4 flex justify-center"
-              >
-                <NuxtImg
-                  ref="logo"
-                  class="h-14 object-contain"
-                  alt="logo-partenaire-domaine"
-                  :src="media.urls.original"
-                  :srcset="media.urls.small"
-                  @error="$refs.logo.$el.remove()"
-                />
-              </div>
-            </BaseContainerScrollable>
-          </div>
-        </div>
+        <SectionDomainePartenaires :domaine="domaine" />
       </div>
 
       <SectionAlgoliaFacetsCities
@@ -109,7 +89,7 @@
         }"
         :search-parameters="{
           filters: `domaines:&quot;${domaine.name}&quot;`,
-          maxFacetHits: 8,
+          maxFacetHits: 7,
         }"
         class="mt-8 lg:mt-12"
       />

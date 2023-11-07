@@ -29,7 +29,7 @@
                 src="/images/home/sparkle-right.svg"
                 alt=""
                 aria-hidden="true"
-                class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[61px] lg:h-[67px] lg:bottom-[30px] lg:right-[-50px] pointer-events-none"
+                class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[50px] lg:h-[51px] lg:bottom-[35px] lg:right-[-40px] pointer-events-none"
               />
             </h1>
           </div>
