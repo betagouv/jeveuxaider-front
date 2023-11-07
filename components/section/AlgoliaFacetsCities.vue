@@ -4,16 +4,18 @@
       <div class="text-lg font-bold text-[#161616]">
         {{ title }}
       </div>
-      <DsfrTag
-        v-for="(city, i) in facetHits"
-        :key="i"
-        @click="onClick(city)"
-        size="md"
-        :custom-theme="true"
-        class="text-jva-blue-500 bg-[#E3E3FD]"
-      >
-        {{ city.value }}
-      </DsfrTag>
+      <div class="flex flex-wrap items-center gap-4 lg:gap-8">
+        <DsfrTag
+          v-for="(city, i) in facetHits"
+          :key="i"
+          @click="onClick(city)"
+          size="md"
+          :custom-theme="true"
+          class="text-jva-blue-500 bg-[#E3E3FD]"
+        >
+          {{ city.value }}
+        </DsfrTag>
+      </div>
     </div>
   </div>
 </template>
