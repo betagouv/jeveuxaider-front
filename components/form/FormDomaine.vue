@@ -98,6 +98,7 @@
                     { key: 'organisation', label: 'Pour les organisations' },
                   ],
                 },
+                { key: 'weight', label: 'Poids', type: 'number' },
                 {
                   key: 'description',
                   label: 'Description',

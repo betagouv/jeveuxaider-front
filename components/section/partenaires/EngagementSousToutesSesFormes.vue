@@ -1,10 +1,10 @@
 <template>
-  <div v-if="partenaires.length > 0" class="bg-[#F3EDE5] pb-12 md:pb-20">
+  <div v-if="partenaires.length > 0" class="bg-[#F3EDE5] pb-12 md:pb-24">
     <div class="container">
       <DsfrHeading
         as="h2"
         size="alt-md"
-        class="py-16 xl:pt-24 xl:pb-24 text-center max-w-[1000px] mx-auto"
+        class="py-16 xl:pt-24 xl:pb-20 text-center max-w-[1000px] mx-auto"
       >
         <span class="relative">
           <span>{{ title }}</span>

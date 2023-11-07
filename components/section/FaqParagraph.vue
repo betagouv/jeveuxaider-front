@@ -22,15 +22,8 @@
         <template v-for="tab in tabs" :key="tab.key" v-slot:[`tab-${tab.key}`]>
           <div class="px-4 py-8">
             <DsfrAccordionsGroup>
-              <DsfrAccordion
-                v-for="(paragraph, index) in paragraphs.filter(
-                  (paragraph) => paragraph.tab === tab.key
-                )"
-                :key="index"
-              >
-                <template #title>
-                  {{ paragraph.question }}
-                </template>
+              <DsfrAccordion v-for="(paragraph, index) in questionsByTabs(tab)" :key="index">
+                <template #title> {{ paragraph.question }} </template>
                 <div class="formatted-text mb-6" v-html="paragraph.description" />
               </DsfrAccordion>
             </DsfrAccordionsGroup>
@@ -60,6 +53,18 @@ export default defineNuxtComponent({
         key: tab,
         content: this.$labels.faq_tabs.find((item) => item.key === tab)?.label,
       }))
+    },
+  },
+  methods: {
+    questionsByTabs(tab) {
+      const questions = this.paragraphs
+        .map((item) => ({
+          ...item,
+          weight: item?.weight || 0,
+        }))
+        .filter((paragraph) => paragraph.tab === tab.key)
+
+      return questions.sort((a, b) => a.weight - b.weight)
     },
   },
 })

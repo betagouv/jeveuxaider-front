@@ -24,6 +24,15 @@
           @update:modelValue="onInput"
         />
       </template>
+      <template v-if="field.type === 'number'">
+        <BaseInput
+          v-model="form[field.key]"
+          :placeholder="field.placeholder"
+          :name="field.key"
+          type="number"
+          @update:modelValue="onInput"
+        />
+      </template>
       <template v-if="field.type === 'select'">
         <BaseSelectAdvanced
           v-model="form[field.key]"
