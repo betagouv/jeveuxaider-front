@@ -517,7 +517,7 @@
           <div class="space-y-8">
             <BaseToggle
               v-model="form.is_motivation_required"
-              label="Rendre obligatoire la rédaction d‘un <strong>message personnel de motivation</strong> lors de la candidature (100 caractères minimum)"
+              label="Rendre obligatoire la rédaction d‘un <strong>message personnel de motivation</strong> lors de la participation (100 caractères minimum)"
               description=""
             />
           </div>
@@ -662,7 +662,10 @@ export default defineNuxtComponent({
         is_active: this.mission.is_active ?? true,
       },
       formSchema: object({
-        name: string().min(3, 'Le titre est trop court').required('Le titre est requis'),
+        name: string()
+          .min(3, 'Le titre est trop court')
+          .matches(/^(Je|J'|J‘|J’)/, 'Le titre de la mission doit commencer par "Je" ou "J‘"')
+          .required('Le titre est requis'),
         domaine_id: number().nullable().required('Le domaine principal est requis'),
         objectif: string()
           .required('La présentation est requise')

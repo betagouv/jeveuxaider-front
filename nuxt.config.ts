@@ -88,6 +88,8 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'og:site_name', content: 'JeVeuxAider.gouv.fr' },
+        { name: 'alternateName', content: 'JVA' },
         {
           hid: 'description',
           name: 'description',

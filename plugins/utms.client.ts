@@ -21,10 +21,10 @@ export default defineNuxtPlugin((nuxtApp) => {
   }
   if (route.query.utm_campaign) {
     const utmCampaign = useCookie('utm_campaign', cookiesOptions)
-    utmCampaign.value = extractCookieValue(route.query.utm_source)
+    utmCampaign.value = extractCookieValue(route.query.utm_campaign)
   }
   if (route.query.utm_medium) {
     const utmMedium = useCookie('utm_medium', cookiesOptions)
-    utmMedium.value = extractCookieValue(route.query.utm_source)
+    utmMedium.value = extractCookieValue(route.query.utm_medium)
   }
 })
