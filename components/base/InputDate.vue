@@ -3,10 +3,10 @@
     <v-date-picker
       ref="datePicker"
       v-model="date"
+      mode="date"
       :is-required="required"
       :model-config="modelConfig"
       :min-date="minDate"
-      timezone="utc"
       :attributes="attributes"
       @popoverWillShow="$emit('popoverWillShow', $refs.datePicker)"
     >
