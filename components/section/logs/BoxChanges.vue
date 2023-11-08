@@ -245,6 +245,10 @@ export default defineNuxtComponent({
           return 'SEO'
         case 'is_active':
           return 'Actif'
+        case 'is_registration_open':
+          return 'Inscription ouverte'
+        case 'activity_secondary_id':
+          return 'Activité secondaire'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },
