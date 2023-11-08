@@ -664,7 +664,7 @@ export default defineNuxtComponent({
       formSchema: object({
         name: string()
           .min(3, 'Le titre est trop court')
-          .matches(/^(Je|J'|J‘)/, 'Le titre de la mission doit commencer par "Je" ou "J‘"')
+          .matches(/^(Je|J'|J‘|J’)/, 'Le titre de la mission doit commencer par "Je" ou "J‘"')
           .required('Le titre est requis'),
         domaine_id: number().nullable().required('Le domaine principal est requis'),
         objectif: string()
