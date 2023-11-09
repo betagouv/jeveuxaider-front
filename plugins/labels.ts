@@ -387,7 +387,7 @@ const labels: TypeLabels = {
       partenaires: [
         {
           key: 'service-civique',
-          link: 'https://www.service-civique.gouv.fr/trouver-ma-mission?orderby_field=PUBLISHDATE&orderby_direction=DESC&first=10&page=1&theme=culture-et-loisirs',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cb9eb424c28f2c1499094',
         },
         { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
       ],
@@ -405,7 +405,7 @@ const labels: TypeLabels = {
       partenaires: [
         {
           key: 'service-civique',
-          link: 'https://www.service-civique.gouv.fr/trouver-ma-mission?orderby_field=PUBLISHDATE&orderby_direction=DESC&first=10&page=1',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cba175fdeb9fef2f22aaf',
         },
         { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
       ],
@@ -423,7 +423,7 @@ const labels: TypeLabels = {
       partenaires: [
         {
           key: 'service-civique',
-          link: 'https://www.service-civique.gouv.fr/trouver-ma-mission?orderby_field=PUBLISHDATE&orderby_direction=DESC&first=10&page=1&theme=developpement-international-et-aide-humanitaire',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cba569dd37caad1882c87',
         },
         { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
       ],
@@ -441,7 +441,7 @@ const labels: TypeLabels = {
       partenaires: [
         {
           key: 'service-civique',
-          link: 'https://www.service-civique.gouv.fr/trouver-ma-mission?orderby_field=PUBLISHDATE&orderby_direction=DESC&first=10&page=1&theme=education-pour-tous',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cba9c5fdeb9fef2f23037',
         },
         { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
       ],
@@ -459,7 +459,7 @@ const labels: TypeLabels = {
       partenaires: [
         {
           key: 'service-civique',
-          link: 'https://www.service-civique.gouv.fr/trouver-ma-mission?orderby_field=PUBLISHDATE&orderby_direction=DESC&first=10&page=1&theme=citoyennete-europeenne',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cba809dd37caad1882fb5',
         },
         { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
       ],
@@ -477,7 +477,7 @@ const labels: TypeLabels = {
       partenaires: [
         {
           key: 'service-civique',
-          link: 'https://www.service-civique.gouv.fr/trouver-ma-mission?orderby_field=PUBLISHDATE&orderby_direction=DESC&first=10&page=1',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cba175fdeb9fef2f22aaf',
         },
         { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
       ],
@@ -495,7 +495,7 @@ const labels: TypeLabels = {
       partenaires: [
         {
           key: 'service-civique',
-          link: 'https://www.service-civique.gouv.fr/trouver-ma-mission?orderby_field=PUBLISHDATE&orderby_direction=DESC&first=10&page=1&theme=environnement',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cb9c55fdeb9fef2f22353',
         },
         { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
       ],
@@ -513,7 +513,7 @@ const labels: TypeLabels = {
       partenaires: [
         {
           key: 'service-civique',
-          link: 'https://www.service-civique.gouv.fr/trouver-ma-mission?orderby_field=PUBLISHDATE&orderby_direction=DESC&first=10&page=1&theme=sante',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cbad59dd37caad18832c3',
         },
         { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
       ],
@@ -531,7 +531,7 @@ const labels: TypeLabels = {
       partenaires: [
         {
           key: 'service-civique',
-          link: 'https://www.service-civique.gouv.fr/trouver-ma-mission?orderby_field=PUBLISHDATE&orderby_direction=DESC&first=10&page=1&theme=solidarite',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cbaff424c28f2c149a286',
         },
         { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
       ],
@@ -549,7 +549,7 @@ const labels: TypeLabels = {
       partenaires: [
         {
           key: 'service-civique',
-          link: 'https://www.service-civique.gouv.fr/trouver-ma-mission?orderby_field=PUBLISHDATE&orderby_direction=DESC&first=10&page=1&theme=sport',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cbb22424c28f2c149a649',
         },
         { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
       ],
