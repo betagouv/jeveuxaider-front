@@ -197,30 +197,28 @@ export default defineNuxtComponent({
       }
     },
     formattedDate() {
-      const startDate = this.mission.start_date
-      const endDate = this.mission.end_date
+      const startDate = this.$dayjs(this.mission.start_date)
+      const endDate = this.$dayjs(this.mission.end_date)
 
       if (!endDate) {
         return null
       }
 
-      if (this.$dayjs(endDate).diff(this.$dayjs(startDate), 'year') > 1) {
+      if (endDate.diff(startDate, 'year') > 1) {
         return null
       }
 
-      if (this.$dayjs(startDate).isSame(this.$dayjs(endDate))) {
-        return `Le <b>${this.$dayjs(startDate).format('D MMMM YYYY')}</b>`
+      if (startDate.isSame(endDate)) {
+        return `Le <b>${startDate.format('D MMMM YYYY')}</b>`
       }
 
-      if (this.$dayjs(startDate).isSame(this.$dayjs(endDate), 'year')) {
-        return `Du <b>${this.$dayjs(startDate).format('D MMMM')}</b> au <b>${this.$dayjs(
-          endDate
-        ).format('D MMMM YYYY')}</b>`
+      if (startDate.isSame(endDate, 'year')) {
+        return `Du <b>${startDate.format('D MMMM')}</b> au <b>${endDate.format('D MMMM YYYY')}</b>`
       }
 
-      return `Du <b>${this.$dayjs(startDate).format('D MMMM YYYY')}</b> au <b>${this.$dayjs(
-        endDate
-      ).format('D MMMM YYYY')}</b>`
+      return `Du <b>${startDate.format('D MMMM YYYY')}</b> au <b>${endDate.format(
+        'D MMMM YYYY'
+      )}</b>`
     },
     breadcrumbTitle() {
       return this.mission.city
