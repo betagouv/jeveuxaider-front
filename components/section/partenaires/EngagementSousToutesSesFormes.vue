@@ -23,7 +23,7 @@
           <DsfrVisitCard
             v-if="partenaire.key === 'service-civique'"
             title="Service Civique"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
+            description="Engagez-vous dans une mission du Service Civique, aidez-vous vous-même et les autres, tout en étant indemnisé !"
             :link="partenaire.link"
             class="w-[384px]"
             @click="onClick(partenaire)"
@@ -40,7 +40,7 @@
           <DsfrVisitCard
             v-if="partenaire.key === 'france-volontaire'"
             title="France Volontaire"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed"
+            description="Vous souhaitez vous rendre utile et découvrir le monde ? Trouvez votre mission de volontariat international."
             :link="partenaire.link"
             class="w-[384px]"
             @click="onClick(partenaire)"
