@@ -130,7 +130,12 @@ export default defineNuxtConfig({
   plugins: ['~/plugins/stores.ts', '~/plugins/labels.ts', '~/plugins/filters.ts'],
 
   build: {
-    transpile: ['vue-toastification', 'plausible-tracker', 'dayjs'],
+    transpile: [
+      'vue-toastification',
+      'plausible-tracker',
+      // correct wrong locale in SSR
+      ({ isDev }) => !isDev && 'dayjs',
+    ],
   },
 
   sourcemap: true,
