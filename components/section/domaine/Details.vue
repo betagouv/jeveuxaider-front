@@ -83,7 +83,7 @@
       </div>
 
       <SectionAlgoliaFacetsCities
-        title="Où trouver une mission"
+        title="Où trouver une mission ?"
         :redirect-parameters="{
           domaines: domaine.name,
         }"
