@@ -216,7 +216,10 @@ export default defineNuxtComponent({
           label: 'Réseau',
           type: 'input',
           placeholder: 'ID du réseau',
-          operands: [{ key: '=', label: '=' }],
+          operands: [
+            { key: '=', label: '=' },
+            { key: '!=', label: '!=' },
+          ],
         },
         {
           key: 'missions.start_date',

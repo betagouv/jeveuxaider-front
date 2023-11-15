@@ -117,8 +117,8 @@
                     </li>
                     <li>
                       Choisissez une structure : vous pouvez effectuer votre bénévolat au sein d’une
-                      association, d’une collectivité ou d’une organisation publique. 11 200
-                      structures sont inscrites sur le site. C’est vaste. Demandez-vous ce qui
+                      association, d’une collectivité ou d’une organisation publique. 12 750
+                      organisations sont inscrites sur le site. C’est vaste. Demandez-vous ce qui
                       compte pour vous : taille humaine, ambiance, secteur, public aidé. Les
                       témoignages de bénévoles et la présentation de l’organisme sont là pour vous
                       aider à faire votre choix. Vous pouvez aussi compléter avec vos propres

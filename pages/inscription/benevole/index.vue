@@ -344,7 +344,7 @@
           id="label-carousel-logos-inscription-benevoles"
           class="text-center leading-8 pb-8 text-gray-900 font-medium text-3xl px-4"
         >
-          Plus de <b class="font-bold">11 200 organisations</b> ont déjà rejoint JeVeuxAider.gouv.fr
+          Plus de <b class="font-bold">12 750 organisations</b> ont déjà rejoint JeVeuxAider.gouv.fr
         </h3>
         <CarouselLogos />
       </div>
