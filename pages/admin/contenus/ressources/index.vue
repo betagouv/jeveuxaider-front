@@ -87,8 +87,7 @@
     <BaseTable v-if="queryResult.total">
       <BaseTableHead>
         <BaseTableHeadCell>Nom</BaseTableHeadCell>
-        <BaseTableHeadCell center> Référents </BaseTableHeadCell>
-        <BaseTableHeadCell center> Responsables </BaseTableHeadCell>
+        <BaseTableHeadCell> En ligne </BaseTableHeadCell>
       </BaseTableHead>
       <BaseTableBody>
         <BaseTableRow
@@ -101,19 +100,13 @@
             <div class="font-medium text-gray-900 truncate">
               {{ ressource.title }}
             </div>
-            <div class="text-gray-500">
-              {{ ressource.is_published ? 'En ligne' : 'Hors ligne' }}
+            <div class="flex gap-2 flex-wrap mt-1">
+              <DsfrTag v-if="ressource.roles.includes('referent')">Référents</DsfrTag>
+              <DsfrTag v-if="ressource.roles.includes('responsable')">Responsables</DsfrTag>
             </div>
           </BaseTableRowCell>
-          <BaseTableRowCell center>
-            <template v-if="ressource.roles.includes('referent')">
-              <RiCheckLine class="h-5 w-5 mx-auto fill-current" />
-            </template>
-          </BaseTableRowCell>
-          <BaseTableRowCell center>
-            <template v-if="ressource.roles.includes('responsable')">
-              <RiCheckLine class="h-5 w-5 mx-auto fill-current" />
-            </template>
+          <BaseTableRowCell>
+            <CustomOnlineIndicator :published="ressource.is_published" />
           </BaseTableRowCell>
         </BaseTableRow>
       </BaseTableBody>

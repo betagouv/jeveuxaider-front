@@ -161,6 +161,7 @@ export default defineNuxtComponent({
       loading: false,
       endpoint: '/documents',
       queryParams: {
+        'filter[is_published]': true,
         include: 'file',
       },
       drawerRessourceId: null,
