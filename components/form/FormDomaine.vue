@@ -195,9 +195,9 @@
             </div> -->
               <BaseImageCrop
                 :default-value="form.banner"
-                :ratio="1600 / 600"
-                :min-width="1600"
-                :preview-width="235"
+                :ratio="1680 / 1400"
+                :min-width="1680"
+                :preview-width="270"
                 :upload-max-size="2000000"
                 @add="addFiles({ files: [$event], collection: 'domaine__banner' })"
                 @delete="deleteFile($event)"
