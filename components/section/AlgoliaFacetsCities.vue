@@ -8,7 +8,6 @@
         <DsfrTag
           v-for="(city, i) in facetHits"
           :key="i"
-          @click="onClick(city)"
           size="md"
           :custom-theme="true"
           class="text-jva-blue-500 bg-[#E3E3FD]"
@@ -61,15 +60,6 @@ export default defineNuxtComponent({
 
       this.facetHits = facetHits
       this.$emit('facet-hits', facetHits)
-    },
-    onClick(city) {
-      this.$router.push({
-        path: '/missions-benevolat',
-        query: {
-          ...this.redirectParameters,
-          city: city.value,
-        },
-      })
     },
   },
 })
