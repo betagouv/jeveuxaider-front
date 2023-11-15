@@ -25,8 +25,7 @@
           :class="[
             'relative font-normal -top-1 text-[#161616] cursor-pointer',
             {
-              'text-base': size == 'xs',
-              'text-base': size == 'md',
+              'text-base': ['xs', 'md'].includes(size),
               'text-lg': size == 'lg',
             },
           ]"

@@ -22,7 +22,7 @@
     "@tailwindcss/forms": "^0.5.4",
     "@types/node": "^18.17.3",
     "@types/numeral": "^2.0.2",
-    "dayjs-nuxt": "^1.1.2",
+    "dayjs-nuxt": "^2",
     "nuxt": "^3.7.1",
     "nuxt-lodash": "^2.5.0",
     "nuxt-simple-sitemap": "^3.3.3",
