@@ -36,6 +36,7 @@ export type TypeVocabulary =
   | 'rule_events'
   | 'rule_actions'
   | 'user_ban_reasons'
+  | 'faq_tabs'
 
 type TypeLabels = {
   [Key in TypeVocabulary]: {
@@ -375,84 +376,183 @@ const labels: TypeLabels = {
   domaines: [
     {
       key: 3,
+      title: 'Engagez vous pour l’art et la culture',
+      engagementTitle: 'L’engagement pour l’art et la culture sous toutes ces formes',
+      benevolatTitle: 'Le bénévolat pour l’art et la culture',
       label: 'Art et Culture pour tous',
       icon: '/images/icons/domaine-art-culture-pour-tous.svg',
       color: 'text-domaine-culture',
       bg: 'bg-domaine-culture',
       emoji: '🎨',
+      partenaires: [
+        {
+          key: 'service-civique',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cb9eb424c28f2c1499094',
+        },
+        { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
+      ],
     },
     {
       key: 11,
+      title: 'Engagez vous pour le bénévolat de compétences',
+      engagementTitle: 'Le bénévolat de compétences sous toutes ces formes',
+      benevolatTitle: 'Le bénévolat pour le bénévolat de compétences',
       label: 'Bénévolat de compétences',
       icon: '/images/icons/domaine-benevolat-de-competences.svg',
       color: 'text-domaine-benevolat-competences',
       bg: 'bg-domaine-benevolat-competences',
       emoji: '💼',
+      partenaires: [
+        {
+          key: 'service-civique',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cba175fdeb9fef2f22aaf',
+        },
+        { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
+      ],
     },
     {
       key: 6,
+      title: 'Engagez vous pour la coopération internationale',
+      engagementTitle: 'L’engagement pour la coopération internationale sous toutes ces formes',
+      benevolatTitle: 'Le bénévolat pour la coopération internationale',
       label: 'Coopération internationale',
       icon: '/images/icons/domaine-cooperation-internationale.svg',
       color: 'text-domaine-cooperation',
       bg: 'bg-domaine-cooperation',
       emoji: '🌍',
+      partenaires: [
+        {
+          key: 'service-civique',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cba569dd37caad1882c87',
+        },
+        { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
+      ],
     },
     {
       key: 9,
+      title: 'Engagez vous pour l’éducation pour tous',
+      engagementTitle: 'L’engagement pour l’éducation sous toutes ces formes',
+      benevolatTitle: 'Le bénévolat pour l’éducation',
       label: 'Éducation pour tous',
       icon: '/images/icons/domaine-education-pour-tous.svg',
       color: 'text-domaine-education',
       bg: 'bg-domaine-education',
       emoji: '📚',
+      partenaires: [
+        {
+          key: 'service-civique',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cba9c5fdeb9fef2f23037',
+        },
+        { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
+      ],
     },
     {
       key: 8,
+      title: 'Engagez vous pour la mémoire et la citoyenneté',
+      engagementTitle: 'L’engagement pour la mémoire et citoyenneté sous toutes ces formes',
+      benevolatTitle: 'Le bénévolat pour la mémoire et la citoyenneté',
       label: 'Mémoire et citoyenneté',
       icon: '/images/icons/domaine-memoire-citoyennete.svg',
       color: 'text-domaine-memoire',
       bg: 'bg-domaine-memoire',
       emoji: '📯',
+      partenaires: [
+        {
+          key: 'service-civique',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cba809dd37caad1882fb5',
+        },
+        { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
+      ],
     },
-    // { key: 5, label: 'Mobilisation covid-19', icon: '/images/icons/domaine-covid.svg', color: 'text-domaine-covid', bg: 'bg-domaine-covid', emoji: '😷' },
     {
       key: 2,
+      title: 'Engagez vous pour la prévention et la protection',
+      engagementTitle: 'L’engagement pour la prévention et protection sous toutes ces formes',
+      benevolatTitle: 'Le bénévolat pour la prévention et protection',
       label: 'Prévention et protection',
       icon: '/images/icons/domaine-prevention-protection.svg',
       color: 'text-domaine-prevention',
       bg: 'bg-domaine-prevention',
       emoji: '🚨',
+      partenaires: [
+        {
+          key: 'service-civique',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cba175fdeb9fef2f22aaf',
+        },
+        { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
+      ],
     },
     {
       key: 10,
+      title: 'Engagez vous pour la protection de la nature',
+      engagementTitle: 'L’engagement pour la nature sous toutes ces formes',
+      benevolatTitle: 'Le bénévolat pour la protection de la nature',
       label: 'Protection de la nature',
       icon: '/images/icons/domaine-protection-nature.svg',
       color: 'text-domaine-nature',
       bg: 'bg-domaine-nature',
       emoji: '🌿',
+      partenaires: [
+        {
+          key: 'service-civique',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cb9c55fdeb9fef2f22353',
+        },
+        { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
+      ],
     },
     {
       key: 1,
+      title: 'Engagez vous pour la santé pour tous',
+      engagementTitle: 'L’engagement pour la santé sous toutes ces formes',
+      benevolatTitle: 'Le bénévolat pour la santé',
       label: 'Santé pour tous',
       icon: '/images/icons/domaine-sante-pour-tous.svg',
       color: 'text-domaine-sante',
       bg: 'bg-domaine-sante',
       emoji: '💊',
+      partenaires: [
+        {
+          key: 'service-civique',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cbad59dd37caad18832c3',
+        },
+        { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
+      ],
     },
     {
       key: 7,
+      title: 'Engagez vous pour la solidarité et l’insertion',
+      engagementTitle: 'L’engagement pour la solidarité sous toutes ces formes',
+      benevolatTitle: 'Le bénévolat pour la solidarité',
       label: 'Solidarité et Insertion',
       icon: '/images/icons/domaine-solidarite-insertion.svg',
       color: 'text-domaine-solidarite',
       bg: 'bg-domaine-solidarite',
       emoji: '🍲',
+      partenaires: [
+        {
+          key: 'service-civique',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cbaff424c28f2c149a286',
+        },
+        { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
+      ],
     },
     {
       key: 4,
+      title: 'Engagez vous pour le sport pour tous',
+      engagementTitle: 'L’engagement pour le sport sous toutes ces formes',
+      benevolatTitle: 'Le bénévolat pour le sport',
       label: 'Sport pour tous',
       icon: '/images/icons/domaine-sport-pour-tous.svg',
       color: 'text-domaine-sport',
       bg: 'bg-domaine-sport',
       emoji: '🏀',
+      partenaires: [
+        {
+          key: 'service-civique',
+          link: 'http://api.api-engagement.beta.gouv.fr/r/campaign/654cbb22424c28f2c149a649',
+        },
+        { key: 'france-volontaire', link: 'https://france-volontaires.org/offres-de-missions/' },
+      ],
     },
   ],
   roles: [
@@ -819,6 +919,10 @@ const labels: TypeLabels = {
       label:
         'Le bénévole a un comportement inadapté (insulte, propos discriminatoires / racistes, …)',
     },
+  ],
+  faq_tabs: [
+    { key: 'benevole', label: 'Pour les bénévoles' },
+    { key: 'organisation', label: 'Pour les organisations' },
   ],
 }
 

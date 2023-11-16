@@ -82,17 +82,53 @@
             />
           </div>
         </BaseBox>
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8"> FAQ </BaseHeading>
+          <BaseFormControl label="Eléments de la FAQ" html-for="faq">
+            <BaseParagraph
+              :schema="[
+                { key: 'question', label: 'Question', type: 'text' },
+                {
+                  key: 'tab',
+                  label: 'Onglet',
+                  type: 'select',
+                  placeholder: 'Choisissez une option',
+                  options: [
+                    { key: 'benevole', label: 'Pour les bénévoles' },
+                    { key: 'organisation', label: 'Pour les organisations' },
+                  ],
+                },
+                { key: 'weight', label: 'Position', type: 'number' },
+                {
+                  key: 'description',
+                  label: 'Description',
+                  type: 'richtext',
+                },
+              ]"
+              :items="form.faq"
+              @add="onParagraphAddItem('faq', $event)"
+              @update="onParagraphUpdateItem('faq', $event)"
+              @remove="onParagraphRemoveItem('faq', $event)"
+            />
+          </BaseFormControl>
+        </BaseBox>
       </div>
       <div class="lg:col-span-2 space-y-8">
         <BaseBox padding="sm">
           <BaseHeading :level="3" class="mb-8"> Paramètres </BaseHeading>
           <div class="space-y-12">
-            <BaseToggle
-              v-model="form.published"
-              :label="form.published ? 'En ligne' : 'Hors ligne'"
-              description="Pour rendre la page accessible de tous"
-            />
+            <BaseToggle v-model="form.published" label="Mettre la page en ligne" />
           </div>
+        </BaseBox>
+        <BaseBox padding="sm">
+          <BaseHeading :level="3" class="mb-8"> Metadonnées </BaseHeading>
+          <Metatags
+            :metas="form.metatags"
+            :placeholders="{
+              title: form.title || '[Titre de la page]',
+              description: form.description || '[Description du domaine]',
+            }"
+          />
         </BaseBox>
         <BaseBox padding="sm">
           <BaseHeading :level="3" class="mb-8"> Organisations partenaires </BaseHeading>
@@ -159,9 +195,9 @@
             </div> -->
               <BaseImageCrop
                 :default-value="form.banner"
-                :ratio="1600 / 600"
-                :min-width="1600"
-                :preview-width="235"
+                :ratio="1680 / 1400"
+                :min-width="1680"
+                :preview-width="270"
                 :upload-max-size="2000000"
                 @add="addFiles({ files: [$event], collection: 'domaine__banner' })"
                 @delete="deleteFile($event)"
@@ -207,9 +243,15 @@
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
+import FormParagraphs from '@/mixins/form/paragraphs'
+import FormMetatags from '@/mixins/form/metatags'
+import Metatags from '@/components/custom/Metatags.vue'
 
 export default defineNuxtComponent({
-  mixins: [FormErrors, FormUploads],
+  components: {
+    Metatags,
+  },
+  mixins: [FormErrors, FormUploads, FormParagraphs, FormMetatags],
   middleware: 'admin',
   props: {
     domaine: {
@@ -249,7 +291,12 @@ export default defineNuxtComponent({
             })
             this.form.id = domaine.id
           }
-          await this.uploadFiles('domaine', this.form.id)
+
+          await Promise.all([
+            this.uploadFiles('domaine', this.form.id),
+            this.handleMetatags('domaine', this.form.id),
+          ])
+
           this.$router.push('/admin/contenus/domaines')
         })
         .catch((errors) => {
