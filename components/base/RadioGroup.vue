@@ -7,7 +7,6 @@
         v-for="(option, index) in options"
         :key="option.key"
         :checked="option.key == modelValue"
-        v-model="modelValue"
         :variant="variant"
         :option="option"
         :name="uuid"
@@ -32,7 +31,7 @@
             '!border-l-0': variant === 'tabs' && index == options.length - 1 && options.length > 2,
           },
         ]"
-        @update:modelValue="onUpdateValue"
+        @update="onUpdateValue"
       />
     </div>
   </fieldset>

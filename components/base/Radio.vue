@@ -7,7 +7,7 @@
       :class="[{ 'sr-only': variant === 'tabs' }, { 'dsfr-theme': variant === 'radios' }]"
       aria-labelledby="label"
       :checked="checked"
-      @input="$emit('update:modelValue', option.key)"
+      @input="$emit('update', option.key)"
     />
     <span
       :class="[
@@ -22,13 +22,12 @@
 
 <script>
 export default defineNuxtComponent({
-  emits: ['update:modelValue'],
+  emits: ['update'],
   props: {
     name: { type: String, required: true },
     checked: { type: Boolean, default: false },
     option: { type: Object, required: true },
     variant: { type: String, default: 'radios', validator: (s) => ['radios', 'tabs'].includes(s) },
-    defaultValue: { type: [String, Number, Boolean], default: null },
   },
 })
 </script>
