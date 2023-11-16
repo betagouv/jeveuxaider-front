@@ -23,7 +23,7 @@
           <DsfrVisitCard
             v-if="partenaire.key === 'service-civique'"
             title="Service Civique"
-            description="Développez vos compétences et soyez utiles aux autres tout en étant rémunéré."
+            description="Développez vos compétences et soyez utile aux autres tout en étant rémunéré."
             :link="partenaire.link"
             class="w-[384px]"
             @click="onClick(partenaire)"
