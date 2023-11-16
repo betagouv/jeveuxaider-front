@@ -1,6 +1,7 @@
 <template>
-  <div class="mt-6 sm:mt-12">
+  <div class="mt-6">
     <AlgoliaSearch
+      id="recherche"
       :secondary-filters="[
         'is_autonomy',
         'structure.name',
@@ -15,6 +16,7 @@
         'publisher_name',
       ]"
       :with-slideshow-remote="true"
+      class="pt-2 sm:pt-6"
     />
     <SectionSearchBlocFaq />
   </div>

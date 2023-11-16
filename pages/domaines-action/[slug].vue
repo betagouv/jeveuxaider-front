@@ -41,7 +41,7 @@
         'template_subtitle',
         'publisher_name',
       ]"
-      class="my-8 sm:my-16 lg:my-24"
+      class="py-4 my-4 sm:py-8 sm:my-8 lg:py-12 lg:my-12"
     />
     <SectionPartenairesEngagementSousToutesSesFormes
       :partenaires="$labels.domaines.find((item) => item.key === domaine.id)?.partenaires"

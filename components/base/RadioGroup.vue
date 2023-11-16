@@ -6,8 +6,8 @@
       <BaseRadio
         v-for="(option, index) in options"
         :key="option.key"
-        :checked="option.key == value"
-        v-model="value"
+        :checked="option.key == modelValue"
+        v-model="modelValue"
         :variant="variant"
         :option="option"
         :name="uuid"
@@ -18,11 +18,11 @@
           },
           {
             'bg-jva-blue-600 border-transparent text-white hover:bg-jva-blue-500 nicochecked':
-              variant === 'tabs' && option.key == value,
+              variant === 'tabs' && option.key == modelValue,
           },
           {
             'bg-white border-gray-200 text-gray-900 hover:bg-gray-50 ninotchecked':
-              variant === 'tabs' && option.key != value,
+              variant === 'tabs' && option.key != modelValue,
           },
           { '!border-r-0': variant === 'tabs' && index == 0 },
           {
@@ -54,7 +54,6 @@ export default defineNuxtComponent({
   },
   data() {
     return {
-      value: this.modelValue,
       uuid: uuidv4(),
     }
   },

@@ -63,6 +63,12 @@ export default defineNuxtComponent({
   components: {
     AlgoliaSlideshowMissions,
   },
+  props: {
+    scrollToId: {
+      type: String,
+      default: 'recherche',
+    },
+  },
   setup() {
     const { getActiveFacets } = useAlgoliaMissionsQueryBuilder()
     return {
@@ -98,7 +104,7 @@ export default defineNuxtComponent({
         },
       })
       window.scrollTo({
-        top: document.getElementById('contenuprincipal').offsetTop,
+        top: document.getElementById(this.scrollToId).offsetTop,
       })
     },
     onSlideClick(item) {
