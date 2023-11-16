@@ -377,7 +377,7 @@ const labels: TypeLabels = {
     {
       key: 3,
       title: 'Engagez vous pour l’art et la culture',
-      engagementTitle: 'L’engagement pour l’art et la culture sous toutes ces formes',
+      engagementTitle: 'L’engagement pour l’art et la culture sous toutes ses formes',
       benevolatTitle: 'Le bénévolat pour l’art et la culture',
       label: 'Art et Culture pour tous',
       icon: '/images/icons/domaine-art-culture-pour-tous.svg',
@@ -395,7 +395,7 @@ const labels: TypeLabels = {
     {
       key: 11,
       title: 'Engagez vous pour le bénévolat de compétences',
-      engagementTitle: 'Le bénévolat de compétences sous toutes ces formes',
+      engagementTitle: 'Le bénévolat de compétences sous toutes ses formes',
       benevolatTitle: 'Le bénévolat pour le bénévolat de compétences',
       label: 'Bénévolat de compétences',
       icon: '/images/icons/domaine-benevolat-de-competences.svg',
@@ -413,7 +413,7 @@ const labels: TypeLabels = {
     {
       key: 6,
       title: 'Engagez vous pour la coopération internationale',
-      engagementTitle: 'L’engagement pour la coopération internationale sous toutes ces formes',
+      engagementTitle: 'L’engagement pour la coopération internationale sous toutes ses formes',
       benevolatTitle: 'Le bénévolat pour la coopération internationale',
       label: 'Coopération internationale',
       icon: '/images/icons/domaine-cooperation-internationale.svg',
@@ -431,7 +431,7 @@ const labels: TypeLabels = {
     {
       key: 9,
       title: 'Engagez vous pour l’éducation pour tous',
-      engagementTitle: 'L’engagement pour l’éducation sous toutes ces formes',
+      engagementTitle: 'L’engagement pour l’éducation sous toutes ses formes',
       benevolatTitle: 'Le bénévolat pour l’éducation',
       label: 'Éducation pour tous',
       icon: '/images/icons/domaine-education-pour-tous.svg',
@@ -449,7 +449,7 @@ const labels: TypeLabels = {
     {
       key: 8,
       title: 'Engagez vous pour la mémoire et la citoyenneté',
-      engagementTitle: 'L’engagement pour la mémoire et citoyenneté sous toutes ces formes',
+      engagementTitle: 'L’engagement pour la mémoire et citoyenneté sous toutes ses formes',
       benevolatTitle: 'Le bénévolat pour la mémoire et la citoyenneté',
       label: 'Mémoire et citoyenneté',
       icon: '/images/icons/domaine-memoire-citoyennete.svg',
@@ -467,7 +467,7 @@ const labels: TypeLabels = {
     {
       key: 2,
       title: 'Engagez vous pour la prévention et la protection',
-      engagementTitle: 'L’engagement pour la prévention et protection sous toutes ces formes',
+      engagementTitle: 'L’engagement pour la prévention et protection sous toutes ses formes',
       benevolatTitle: 'Le bénévolat pour la prévention et protection',
       label: 'Prévention et protection',
       icon: '/images/icons/domaine-prevention-protection.svg',
@@ -485,7 +485,7 @@ const labels: TypeLabels = {
     {
       key: 10,
       title: 'Engagez vous pour la protection de la nature',
-      engagementTitle: 'L’engagement pour la nature sous toutes ces formes',
+      engagementTitle: 'L’engagement pour la nature sous toutes ses formes',
       benevolatTitle: 'Le bénévolat pour la protection de la nature',
       label: 'Protection de la nature',
       icon: '/images/icons/domaine-protection-nature.svg',
@@ -503,7 +503,7 @@ const labels: TypeLabels = {
     {
       key: 1,
       title: 'Engagez vous pour la santé pour tous',
-      engagementTitle: 'L’engagement pour la santé sous toutes ces formes',
+      engagementTitle: 'L’engagement pour la santé sous toutes ses formes',
       benevolatTitle: 'Le bénévolat pour la santé',
       label: 'Santé pour tous',
       icon: '/images/icons/domaine-sante-pour-tous.svg',
@@ -521,7 +521,7 @@ const labels: TypeLabels = {
     {
       key: 7,
       title: 'Engagez vous pour la solidarité et l’insertion',
-      engagementTitle: 'L’engagement pour la solidarité sous toutes ces formes',
+      engagementTitle: 'L’engagement pour la solidarité sous toutes ses formes',
       benevolatTitle: 'Le bénévolat pour la solidarité',
       label: 'Solidarité et Insertion',
       icon: '/images/icons/domaine-solidarite-insertion.svg',
@@ -539,7 +539,7 @@ const labels: TypeLabels = {
     {
       key: 4,
       title: 'Engagez vous pour le sport pour tous',
-      engagementTitle: 'L’engagement pour le sport sous toutes ces formes',
+      engagementTitle: 'L’engagement pour le sport sous toutes ses formes',
       benevolatTitle: 'Le bénévolat pour le sport',
       label: 'Sport pour tous',
       icon: '/images/icons/domaine-sport-pour-tous.svg',
