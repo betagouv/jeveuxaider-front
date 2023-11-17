@@ -14,8 +14,8 @@
       </h2>
       <div class="mt-6 lg:mt-10">
         <p class="text-lg lg:text-2xl lg:leading-10">
-          Sur l’ensemble du territoire français, des milliers de bénévoles et d’organisations se
-          sont déjà ralliés à JeVeuxAider.gouv.fr pour soutenir ce domaine d'action.
+          Sur l’ensemble du territoire français, des milliers de bénévoles et d’organisations ont
+          déjà rejoint JeVeuxAider.gouv.fr pour soutenir ce domaine d'action.
         </p>
       </div>
 
@@ -56,8 +56,8 @@
               {{
                 $filters.pluralize(
                   statistics.participations_count,
-                  'bénévole déjà engagé',
-                  'bénévoles déjà engagés',
+                  'bénévole mobilisé',
+                  'bénévoles mobilisés',
                   false
                 )
               }}

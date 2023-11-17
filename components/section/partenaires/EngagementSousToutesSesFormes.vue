@@ -39,7 +39,7 @@
           </DsfrVisitCard>
           <DsfrVisitCard
             v-if="partenaire.key === 'france-volontaire'"
-            title="France Volontaire"
+            title="France Volontaires"
             description="Agissez en faveur du développement et de la solidarité partout dans le monde !"
             :link="partenaire.link"
             class="w-[384px]"
