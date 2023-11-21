@@ -274,12 +274,17 @@ export default defineNuxtComponent({
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await this.$stores.auth.registerVolontaire({
-            ...this.form,
-            utm_source: useCookie('utm_source')?.value,
-            utm_campaign: useCookie('utm_campaign')?.value,
-            utm_medium: useCookie('utm_medium')?.value,
-          })
+          try {
+            await this.$stores.auth.registerVolontaire({
+              ...this.form,
+              utm_source: useCookie('utm_source')?.value,
+              utm_campaign: useCookie('utm_campaign')?.value,
+              utm_medium: useCookie('utm_medium')?.value,
+            })
+          } catch (errors) {
+            return
+          }
+
           await this.$gtm?.trackEvent({
             event: 'benevole-inscription-soft-gate',
           })

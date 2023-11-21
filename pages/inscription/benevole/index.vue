@@ -471,7 +471,13 @@ export default defineNuxtComponent({
             toast.error('Votre adresse mail comporte une erreur')
             return
           }
-          await this.$stores.auth.registerVolontaire(this.form)
+
+          try {
+            await this.$stores.auth.registerVolontaire(this.form)
+          } catch (errors) {
+            return
+          }
+
           await this.$gtm?.trackEvent({ event: 'benevole-inscription' })
           this.$plausible.trackEvent('Inscription bénévole - Étape 1 - Création de compte')
           this.$router.push('/inscription/benevole/step/profile')

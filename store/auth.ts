@@ -185,7 +185,7 @@ export const useAuthStore = defineStore({
         ) {
           navigateTo(`/login?email=${form.email}`)
         }
-        return error.value
+        throw error.value
       }
 
       await this.login({ email: form.email, password: form.password })
