@@ -380,6 +380,9 @@ import CarouselLogos from '@/components/section/inscription/CarouselLogos.vue'
 import countries from '@/assets/countries.json'
 import { useToast } from 'vue-toastification'
 
+const errorIsOldEnoughErrorMessage =
+  'JeVeuxAider.gouv.fr est ouvert aux personnes de plus de 16 ans'
+
 export default defineNuxtComponent({
   components: {
     FranceConnect,
@@ -444,6 +447,12 @@ export default defineNuxtComponent({
         country: string().required('Un pays est requis'),
         birthday: date()
           .required("Une date d'anniversaire est requise")
+          .test('is-old-enough', errorIsOldEnoughErrorMessage, function (value) {
+            const today = new Date()
+            const birthDate = new Date(value)
+            const age = today.getFullYear() - birthDate.getFullYear()
+            return age >= 16
+          })
           .nullable()
           .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
@@ -475,6 +484,8 @@ export default defineNuxtComponent({
           try {
             await this.$stores.auth.registerVolontaire(this.form)
           } catch (errors) {
+            // Errors are here handled by useFetcher
+            this.resetErrors()
             return
           }
 
@@ -483,6 +494,14 @@ export default defineNuxtComponent({
           this.$router.push('/inscription/benevole/step/profile')
         })
         .catch((errors) => {
+          if (errors.errors?.length === 1 && errors.errors[0] === errorIsOldEnoughErrorMessage) {
+            // Custom toast
+            this.setErrors(errors, false)
+            const toast = useToast()
+            toast.error(errorIsOldEnoughErrorMessage)
+            return
+          }
+
           this.setErrors(errors)
         })
         .finally(() => {

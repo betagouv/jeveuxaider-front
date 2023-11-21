@@ -201,8 +201,11 @@
 <script>
 import { string, object, ref, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
-
 import countries from '@/assets/countries.json'
+import { useToast } from 'vue-toastification'
+
+const errorIsOldEnoughErrorMessage =
+  'JeVeuxAider.gouv.fr est ouvert aux personnes de plus de 16 ans'
 
 export default defineNuxtComponent({
   name: 'SoftGateRegister',
@@ -231,6 +234,12 @@ export default defineNuxtComponent({
         country: string().required('Un pays est requis'),
         birthday: date()
           .required("Une date d'anniversaire est requise")
+          .test('is-old-enough', errorIsOldEnoughErrorMessage, function (value) {
+            const today = new Date()
+            const birthDate = new Date(value)
+            const age = today.getFullYear() - birthDate.getFullYear()
+            return age >= 16
+          })
           .nullable()
           .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
@@ -282,6 +291,8 @@ export default defineNuxtComponent({
               utm_medium: useCookie('utm_medium')?.value,
             })
           } catch (errors) {
+            // Errors are here handled by useFetcher
+            this.resetErrors()
             return
           }
 
@@ -293,6 +304,14 @@ export default defineNuxtComponent({
           this.$emit('next')
         })
         .catch((errors) => {
+          if (errors.errors?.length === 1 && errors.errors[0] === errorIsOldEnoughErrorMessage) {
+            // Custom toast
+            this.setErrors(errors, false)
+            const toast = useToast()
+            toast.error(errorIsOldEnoughErrorMessage)
+            return
+          }
+
           this.setErrors(errors)
         })
         .finally(() => {

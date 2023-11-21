@@ -10,7 +10,6 @@ export default {
   methods: {
     setErrors(errors, showToast = true) {
       this.resetErrors()
-      // console.log(errors.errors)
       errors?.inner?.forEach((error) => {
         this.errors[error.path] = error.message
       })
