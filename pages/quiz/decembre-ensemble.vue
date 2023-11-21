@@ -84,7 +84,7 @@ export default defineNuxtComponent({
         query: {
           ...this.$route.query,
           ...payload,
-          tags: 'Décembre ensemble',
+          tags: 'Décembre ensemble 2023',
           utm_medium: this.$route.path,
         },
       })
