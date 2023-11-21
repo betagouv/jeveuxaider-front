@@ -17,7 +17,7 @@
       <template v-if="logos.length > 0">
         <div
           :class="[
-            'flex gap-4 justify-center items-center h-[195px] p-8 absolute bottom-0 left-0 right-0 z-10 bg-black bg-opacity-20',
+            'flex gap-4 justify-end items-center h-[195px] p-8 absolute bottom-0 left-0 right-0 z-10',
           ]"
         >
           <img
@@ -79,10 +79,7 @@
             :class="['object-cover h-full w-full']"
           />
           <template v-if="logos.length > 0">
-            <div
-              class="inline-block absolute bottom-0 right-0 z-10"
-              style="background: url('/images/quiz/bg-logos-container.png')"
-            >
+            <div class="inline-block absolute bottom-0 right-0 z-10">
               <div :class="['p-4 flex gap-4 justify-center items-center h-[84px]']">
                 <img
                   v-for="(logo, i) in logos"

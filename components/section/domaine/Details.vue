@@ -20,7 +20,7 @@
       </div>
 
       <div class="mt-8 lg:mt-16 grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-10">
-        <div class="grid grid-cols-2 gap-0 lg:col-span-2">
+        <div class="grid grid-cols-2 gap-1 lg:col-span-2">
           <div v-for="media in images" :key="media.id">
             <NuxtImg
               ref="carousel"
