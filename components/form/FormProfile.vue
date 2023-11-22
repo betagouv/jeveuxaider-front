@@ -629,13 +629,14 @@ export default defineNuxtComponent({
               return
             }
           }
+
           await this.uploadFiles('profile', this.form.id)
+
           if (this.form.id === this.$stores.auth.user.profile.id) {
             await this.$stores.auth.updateProfile({
               id: this.$stores.auth.profile.id,
               ...this.form,
             })
-            // this.loading = false
             this.$router.push('/profile')
           } else {
             await apiFetch(`/profiles/${this.form.id}`, {
@@ -645,11 +646,9 @@ export default defineNuxtComponent({
             this.$router.push(`/admin/utilisateurs/${this.form.id}`)
           }
           this.$toast.success('Modifications enregistrées')
-          // this.$emit('submited', this.form)
         })
         .catch((errors) => {
           this.setErrors(errors)
-          // throw new Error('error')
         })
         .finally(() => {
           this.loading = false

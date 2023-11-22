@@ -92,7 +92,6 @@ export default defineNuxtComponent({
     InputQueryBuilder,
   },
   mixins: [FormErrors],
-  middleware: 'admin',
   props: {
     rule: {
       type: Object,

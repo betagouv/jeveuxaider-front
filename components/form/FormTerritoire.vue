@@ -226,7 +226,6 @@ import MixinInputGeo from '@/mixins/input-geo'
 
 export default defineNuxtComponent({
   mixins: [FormErrors, FormUploads, FormParagraphs, MixinInputGeo],
-  middleware: 'admin',
   props: {
     territoire: {
       type: Object,

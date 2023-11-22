@@ -70,7 +70,6 @@ import FormErrors from '@/mixins/form/errors'
 
 export default defineNuxtComponent({
   mixins: [FormErrors],
-  middleware: 'admin',
   props: {
     temoignage: {
       type: Object,

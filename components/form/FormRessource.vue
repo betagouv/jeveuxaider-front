@@ -122,7 +122,6 @@ import FormUploads from '@/mixins/form/uploads'
 export default defineNuxtComponent({
   emits: ['submitted'],
   mixins: [FormErrors, FormUploads],
-  middleware: 'admin',
   props: {
     ressource: {
       type: Object,

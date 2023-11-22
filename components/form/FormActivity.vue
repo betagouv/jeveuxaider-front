@@ -157,7 +157,6 @@ export default defineNuxtComponent({
     Metatags,
   },
   mixins: [FormErrors, FormUploads, FormParagraphs, FormMetatags],
-  middleware: 'admin',
   props: {
     activity: {
       type: Object,
