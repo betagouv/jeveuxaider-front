@@ -160,7 +160,7 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
 
-    const profile = await apiFetch(`/profiles/${$stores.auth.user.profile.id}`)
+    const { data: profile } = await useApiFetch(`/profiles/${$stores.auth.user.profile.id}`)
 
     return {
       form: profile,
