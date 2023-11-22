@@ -34,35 +34,37 @@
 <script>
 import FormUserPreferences from '@/components/form/FormUserPreferences.vue'
 import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
-import MixinFormDirtyState from '@/mixins/form/dirty-state.js'
 
 export default defineNuxtComponent({
   components: {
     FormUserPreferences,
     UserProfileTabs,
   },
-  mixins: [MixinFormDirtyState],
   async setup() {
     definePageMeta({
       middleware: ['authenticated'],
     })
 
     const { $stores } = useNuxtApp()
-    const profile = await apiFetch(`/profiles/${$stores.auth.user.profile.id}`)
+    const { data: profile, refresh: refreshProfile } = await useApiFetch(
+      `/profiles/${$stores.auth.user.profile.id}`
+    )
 
     return {
       profile,
+      refreshProfile,
     }
   },
   data() {
     return {
       loading: false,
+      formIsDirty: false,
     }
   },
   methods: {
     async fetchProfile() {
-      const profile = await apiFetch(`/profiles/${this.$stores.auth.user.profile.id}`)
-      this.profile = profile
+      await this.refreshProfile()
+      this.formIsDirty = false
     },
     async submitForm() {
       if (this.loading) {
@@ -72,6 +74,11 @@ export default defineNuxtComponent({
       await this.$refs.form.handleSubmit()
       this.loading = false
     },
+  },
+  beforeRouteLeave(to, from) {
+    if (this.formIsDirty) {
+      return window.confirm('Vous avez des modifications non enregistrées.\r\nQuitter quand-même ?')
+    }
   },
 })
 </script>

@@ -219,8 +219,8 @@ export default defineNuxtComponent({
   watch: {
     profile: {
       deep: true,
-      handler(profile) {
-        this.form = _cloneDeep(profile)
+      handler(newProfile) {
+        this.form = _cloneDeep(newProfile)
       },
     },
     form: {

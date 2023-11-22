@@ -66,7 +66,6 @@
 import FormPassword from '@/components/form/FormPassword.vue'
 import ModalUnregisterUser from '@/components/modal/ModalUnregisterUser.vue'
 import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
-import MixinFormDirtyState from '@/mixins/form/dirty-state.js'
 
 export default defineNuxtComponent({
   components: {
@@ -74,7 +73,6 @@ export default defineNuxtComponent({
     ModalUnregisterUser,
     UserProfileTabs,
   },
-  mixins: [MixinFormDirtyState],
   setup() {
     definePageMeta({
       middleware: ['authenticated'],

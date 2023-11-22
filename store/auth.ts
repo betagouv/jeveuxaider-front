@@ -167,7 +167,7 @@ export const useAuthStore = defineStore({
       })
 
       if (error.value) {
-        return error.value
+        throw error.value
       }
 
       await this.fetchUser()

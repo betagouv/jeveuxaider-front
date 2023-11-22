@@ -481,13 +481,7 @@ export default defineNuxtComponent({
             return
           }
 
-          try {
-            await this.$stores.auth.registerVolontaire(this.form)
-          } catch (errors) {
-            // Errors are here handled by useFetcher
-            this.resetErrors()
-            return
-          }
+          await this.$stores.auth.registerVolontaire(this.form)
 
           await this.$gtm?.trackEvent({ event: 'benevole-inscription' })
           this.$plausible.trackEvent('Inscription bénévole - Étape 1 - Création de compte')

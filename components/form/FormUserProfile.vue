@@ -251,6 +251,7 @@ import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
 
 export default defineNuxtComponent({
+  emits: ['change', 'submit'],
   mixins: [FormErrors, FormUploads, Emailable],
   props: {
     profile: {
@@ -307,23 +308,31 @@ export default defineNuxtComponent({
           .nullable()
           .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
       }),
-      formIsDirty: false,
     }
   },
   computed: {
     canViewScAndCej() {
-      if (this.form.birthday) {
+      if (this.form?.birthday) {
         const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
         return userAge >= 16 && userAge <= 30
       }
       return false
     },
+    formIsDirty() {
+      const isUploadsDirty = !!(
+        this.uploads.add.length ||
+        this.uploads.update.length ||
+        this.uploads.delete.length
+      )
+      const isFormDirty = !_isEqual(this.form, this.profile)
+      return isUploadsDirty || isFormDirty
+    },
   },
   watch: {
     profile: {
       deep: true,
-      handler(profile) {
-        this.form = _cloneDeep(profile)
+      handler(newProfile) {
+        this.form = _cloneDeep(newProfile)
       },
     },
     'form.cej'(val) {
@@ -331,24 +340,8 @@ export default defineNuxtComponent({
         this.form.cej_email_adviser = null
       }
     },
-    form: {
-      deep: true,
-      handler(newForm) {
-        this.formIsDirty = !_isEqual(newForm, this.profile)
-      },
-    },
-    uploads: {
-      deep: true,
-      handler(newUploads) {
-        this.formIsDirty = !!(
-          newUploads.add.length ||
-          newUploads.update.length ||
-          newUploads.delete.length
-        )
-      },
-    },
-    formIsDirty() {
-      this.$emit('change', this.formIsDirty)
+    formIsDirty(newVal) {
+      this.$emit('change', newVal)
     },
   },
   methods: {
@@ -360,7 +353,7 @@ export default defineNuxtComponent({
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.form.email !== this.profile.email) {
+          if (this.form.email !== this.profile?.email) {
             const isEmailValid = await this.emailableValidation()
             if (!isEmailValid) {
               this.errors.email = 'Votre adresse mail comporte une erreur'
@@ -373,7 +366,6 @@ export default defineNuxtComponent({
             id: this.$stores.auth.profile.id,
             ...this.form,
           })
-          this.formIsDirty = false
           this.$emit('submit')
           this.$toast.success('Modifications enregistrées')
         })
