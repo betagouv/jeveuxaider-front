@@ -281,6 +281,8 @@
                 :key="responsable.id"
                 :responsable="responsable.profile"
                 :organisation="organisation"
+                :conversable="organisation"
+                conversable-type="App\Models\Structure"
                 @updated="fetch"
                 @removed="fetch"
               />

@@ -130,6 +130,7 @@
               :responsable="mission.responsable"
               :conversable-id="mission.id"
               conversable-type="App\Models\Mission"
+              :conversable="mission"
             />
             <BoxOrganisation :organisation="mission.structure" />
           </div>

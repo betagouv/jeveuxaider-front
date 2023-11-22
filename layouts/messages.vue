@@ -1,6 +1,15 @@
 <template>
   <div class="overflow-hidden h-full">
     <div class="h-full flex flex-col">
+      <BaseBanner v-if="$stores.auth.isImpersonate" icon="RiProfileLine" type="warning">
+        Attention ! Vous vous faites passer pour
+        <span class="font-bold">{{ $stores.auth.profile?.full_name }}</span>
+        <template #action>
+          <DsfrLink icon="RiArrowRightLine" @click.native="$stores.auth.stopImpersonate()">
+            Reprendre ma place
+          </DsfrLink>
+        </template>
+      </BaseBanner>
       <HeaderMessagerie />
 
       <div class="flex flex-col bg-white overflow-hidden lg:flex-row h-full">

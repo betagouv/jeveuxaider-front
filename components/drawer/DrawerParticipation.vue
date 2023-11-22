@@ -53,12 +53,7 @@
             </BaseLink>
           </template>
         </BoxInformationsMission>
-        <BoxResponsable
-          :responsable="participation.mission.responsable"
-          :conversable-id="participation.id"
-          :conversable="participation"
-          conversable-type="App\Models\Participation"
-        />
+        <BoxResponsable :responsable="participation.mission.responsable" />
       </div>
     </template>
   </BaseDrawer>

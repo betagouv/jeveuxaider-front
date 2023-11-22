@@ -170,7 +170,7 @@ export const useMessagingStore = defineStore({
     },
     async getUserUnreadMessagesCount() {
       const { data, error } = await useApiFetch<any>('user/unread-messages')
-      this.unreadMessagesCount = data.value.count
+      this.unreadMessagesCount = data?.value?.count
     },
     toggleShowFilters() {
       this.showFilters = !this.showFilters

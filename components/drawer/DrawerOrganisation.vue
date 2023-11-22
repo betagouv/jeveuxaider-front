@@ -107,6 +107,7 @@
           :responsable="responsable.profile"
           :conversable-id="organisation.id"
           conversable-type="App\Models\Structure"
+          :conversable="organisation"
           @updated="fetch"
         />
         <BoxReseau
