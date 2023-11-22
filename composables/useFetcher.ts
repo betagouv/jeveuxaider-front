@@ -26,7 +26,6 @@ export function useApiFetchOptions(url: any, opts: any) {
   }
 
   return {
-    key: url,
     baseURL: config.public.apiBaseUrl,
     onRequest({ options }: { options: any }) {
       options.headers = {
