@@ -28,7 +28,7 @@
       <slot name="scroll-container-top" />
     </BaseContainerScrollable>
 
-    <ConversationForm v-if="$stores.messaging.isCurrentUserInConversation" @submit="onSubmit" />
+    <ConversationForm v-if="canWriteMessage" @submit="onSubmit" />
   </div>
 </template>
 
@@ -46,7 +46,11 @@ export default defineNuxtComponent({
       loadingPreviousMessages: false,
     }
   },
-  computed: {},
+  computed: {
+    canWriteMessage() {
+      return this.$stores.messaging.isCurrentUserInConversation && !this.$stores.auth.isImpersonate
+    },
+  },
   async setup() {
     const route = useRoute()
     const { $stores } = useNuxtApp()

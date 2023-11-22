@@ -76,6 +76,7 @@
           <ModalSendMessage
             :is-open="showModalSendMessage"
             :to-user="responsable"
+            :conversable="conversable"
             :conversable-id="conversableId"
             :conversable-type="conversableType"
             @cancel="showModalSendMessage = false"
@@ -146,6 +147,10 @@ export default defineNuxtComponent({
     },
     conversableType: {
       type: String,
+      default: null,
+    },
+    conversable: {
+      type: Object,
       default: null,
     },
   },

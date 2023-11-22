@@ -68,19 +68,22 @@
       />
     </BaseDescriptionList>
     <template v-if="['admin', 'referent'].includes($stores.auth.contextRole)">
-      <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
-      <div class="flex justify-center text-sm">
-        <BaseLink @click.native="handleClickSendMessage">
-          <RiMessage3Line class="h-4 w-4 mr-2" /> Envoyer un message
-        </BaseLink>
-        <ModalSendMessage
-          :is-open="showModalSendMessage"
-          :to-user="responsable"
-          :conversable-id="organisation.id"
-          conversable-type="App\Models\Structure"
-          @cancel="showModalSendMessage = false"
-        />
-      </div>
+      <template v-if="conversable">
+        <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
+        <div class="flex justify-center text-sm">
+          <BaseLink @click.native="handleClickSendMessage">
+            <RiMessage3Line class="h-4 w-4 mr-2" /> Envoyer un message
+          </BaseLink>
+          <ModalSendMessage
+            :is-open="showModalSendMessage"
+            :to-user="responsable"
+            :conversable="conversable"
+            :conversable-id="organisation.id"
+            conversable-type="App\Models\Structure"
+            @cancel="showModalSendMessage = false"
+          />
+        </div>
+      </template>
     </template>
 
     <template
@@ -152,6 +155,10 @@ export default defineNuxtComponent({
     responsable: {
       type: Object,
       required: true,
+    },
+    conversable: {
+      type: Object,
+      default: null,
     },
   },
   data() {
