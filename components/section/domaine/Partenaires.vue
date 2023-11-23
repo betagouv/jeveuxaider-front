@@ -361,15 +361,6 @@
                 title="Secours Catholique Caritas France"
               />
             </a>
-
-            <a href="https://www.croix-rouge.fr/" target="_blank">
-              <NuxtImg
-                class="h-16"
-                alt="Croix-Rouge Française"
-                src="/images/domaines-logos/logo-croix-rouge.svg"
-                title="Croix-Rouge Française"
-              />
-            </a>
           </template>
           <!-- Mémoire et Citoyenneté -->
           <template v-if="domaine.id === 8">
