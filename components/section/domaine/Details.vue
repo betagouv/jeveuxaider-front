@@ -31,7 +31,6 @@
               sizes="(min-width: 1024px) 16.666vw, (min-width: 768px) 33.333vw, 50vw"
               height="430"
               width="430"
-              @error="$refs.carousel.$el.remove()"
             />
           </div>
         </div>

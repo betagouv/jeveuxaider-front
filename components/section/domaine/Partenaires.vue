@@ -159,12 +159,28 @@
           </template>
           <!-- Sport pour tous -->
           <template v-if="domaine.id === 4">
-            <a href="https://www.paris2024.org/fr/" target="_blank">
+            <a href="https://www.sportspourtous.org/" target="_blank">
               <NuxtImg
-                class="h-32"
-                alt="JO Paris 2024"
-                src="/images/domaines-logos/logo-jo-paris-2024.svg"
-                title="JO Paris 2024"
+                class="h-12"
+                alt="Fédération Fraçaise Sports pour Tous"
+                src="/images/domaines-logos/logo-sportspourtous.png"
+                title="Fédération Fraçaise Sports pour Tous"
+              />
+            </a>
+            <a href="https://www.athle.fr/" target="_blank">
+              <NuxtImg
+                class="h-12"
+                alt="Fédération Français d’Athlétisme"
+                src="/images/domaines-logos/logo-athle.png"
+                title="Fédération Français d’Athlétisme"
+              />
+            </a>
+            <a href="https://www.handisport.org/" target="_blank">
+              <NuxtImg
+                class="h-14"
+                alt="Fédération Française Handisport"
+                src="/images/domaines-logos/logo-handisport.png"
+                title="Fédération Française Handisport"
               />
             </a>
             <a href="https://www.ufolep.org/" target="_blank">
@@ -177,10 +193,10 @@
             </a>
             <a href="https://sportadapte.fr/" target="_blank">
               <NuxtImg
-                class="h-40"
-                alt="FÉDÉRATION FRANÇAISE DU SPORT ADAPTÉ"
-                src="/images/domaines-logos/logo-ffsa.png"
-                title="FÉDÉRATION FRANÇAISE DU SPORT ADAPTÉ"
+                class="h-14"
+                alt="Fédération francaise du sport adapté"
+                src="/images/domaines-logos/logo-ffsa2.png"
+                title="Fédération francaise du sport adapté"
               />
             </a>
             <a href="https://www.lechappeebelledonne.com/" target="_blank">
@@ -191,14 +207,7 @@
                 title="L'échappée Belle"
               />
             </a>
-            <a href="https://www.sportspourtous.org/" target="_blank">
-              <NuxtImg
-                class="h-12"
-                alt="Fédération Fraçaise Sports pour Tous"
-                src="/images/domaines-logos/logo-sportspourtous.png"
-                title="Fédération Fraçaise Sports pour Tous"
-              />
-            </a>
+
             <a href="https://www.courtside.co/" target="_blank">
               <NuxtImg
                 class="h-16"
@@ -280,6 +289,30 @@
           </template>
           <!-- Solidarité et insertion -->
           <template v-if="domaine.id === 7">
+            <a href="https://www.entourage.social/" target="_blank">
+              <NuxtImg
+                class="h-20"
+                alt="Entourage"
+                src="/images/domaines-logos/logo-entourage.png"
+                title="Entourage"
+              />
+            </a>
+            <a href="https://www.apf-francehandicap.org/" target="_blank">
+              <NuxtImg
+                class="h-20"
+                alt="APF France Handicap"
+                src="/images/domaines-logos/logo-apf.png"
+                title="APF France Handicap"
+              />
+            </a>
+            <a href="https://www.lacloche.org/" target="_blank">
+              <NuxtImg
+                class="h-20"
+                alt="La Cloche"
+                src="/images/domaines-logos/logo-la-cloche.png"
+                title="La Cloche"
+              />
+            </a>
             <a href="https://www.ssvp.fr/" target="_blank">
               <NuxtImg
                 class="h-14"
@@ -306,7 +339,7 @@
             </a>
             <a href="https://www.armeedusalut.fr/" target="_blank">
               <NuxtImg
-                class=""
+                class="h-20"
                 alt="Armée du Salut"
                 src="/images/domaines-logos/logo-armee-du-salut.png"
                 title="Armée du Salut"
@@ -326,14 +359,6 @@
                 alt="Secours Catholique Caritas France"
                 src="/images/domaines-logos/logo-secours-catholique.svg"
                 title="Secours Catholique Caritas France"
-              />
-            </a>
-            <a href="https://www.croix-rouge.fr/" target="_blank">
-              <NuxtImg
-                class="h-16"
-                alt="Croix-Rouge Française"
-                src="/images/domaines-logos/logo-croix-rouge.svg"
-                title="Croix-Rouge Française"
               />
             </a>
           </template>
@@ -422,6 +447,22 @@
                 title="ZUPDECO"
               />
             </a>
+            <a href="https://lementorat.fr/" target="_blank">
+              <NuxtImg
+                class="h-14"
+                alt="Collectif Mentorat"
+                src="/images/domaines-logos/logo-collectif-mentorat.png"
+                title="Collectif Mentorat"
+              />
+            </a>
+            <a href="https://afs.fr/" target="_blank">
+              <NuxtImg
+                class="h-24"
+                alt="AFS Vivre Sans Frontière"
+                src="/images/domaines-logos/logo-afs.png"
+                title="AFS Vivre Sans Frontière"
+              />
+            </a>
             <a href="https://energiejeunes.fr/" target="_blank">
               <NuxtImg
                 class="h-20"
@@ -455,6 +496,14 @@
                 alt="Ademe"
                 src="/images/domaines-logos/ademe.svg"
                 title="Ademe"
+              />
+            </a>
+            <a class="hidden" href="#" target="_blank">
+              <NuxtImg
+                class="h-28"
+                alt="Missions pour la planète"
+                src="/images/domaines-logos/logo-missions-pour-la-planete.png"
+                title="Missions pour la planète"
               />
             </a>
             <a href="https://mtaterre.fr/" target="_blank">
