@@ -322,7 +322,7 @@
                         <DsfrLink to="/charte-reserve-civique" class="font-medium text-gray-900">
                           <span>charte</span>
                         </DsfrLink>
-                        de JeVeuxAider.gouv.fr.
+                        de la Réserve Civique.
                         <br /><br />
                         Déjà inscrit ?
                         <DsfrLink to="/login" class="font-medium text-gray-900">

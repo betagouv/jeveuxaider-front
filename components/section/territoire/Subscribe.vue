@@ -77,14 +77,14 @@
 
           <p class="text-gray-600 text-sm mt-6 sm:max-w-md md:max-w-lg lg:max-w-full">
             En m'inscrivant j'accepte la
-            <DsfrLink to="/charte-reserve-civique">
+            <DsfrLink to="/politique-de-confidentialite">
               <strong>politique de confidentialité</strong>
             </DsfrLink>
             et la
-            <DsfrLink to="/politique-de-confidentialite">
+            <DsfrLink to="/charte-reserve-civique">
               <strong>charte</strong>
             </DsfrLink>
-            de JeVeuxAider.gouv.fr
+            de la Réserve Civique.
           </p>
         </div>
       </div>

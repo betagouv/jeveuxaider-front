@@ -84,7 +84,7 @@
             <DsfrLink to="/politique-de-confidentialite">
               <strong>charte</strong>
             </DsfrLink>
-            de JeVeuxAider.gouv.fr
+            de la Réserve Civique.
           </p>
         </div>
       </div>

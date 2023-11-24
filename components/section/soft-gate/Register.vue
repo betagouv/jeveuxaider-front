@@ -191,7 +191,7 @@
           >
             charte
           </DsfrLink>
-          <span> de JeVeuxAider.gouv.fr</span>
+          <span> de la Réserve Civique.</span>
         </p>
       </div>
     </div>
