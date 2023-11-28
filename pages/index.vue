@@ -3,6 +3,7 @@
     <BlocBanner />
     <template v-if="$stores.auth.isLogged">
       <BlocCaDevraitVousPlaire />
+      <!-- <DecembreEnsemble /> -->
       <BanquesAlimentaires />
       <MissionsPourLaPlanete class="hidden" />
       <BlocProfileActivities />
@@ -18,6 +19,7 @@
         <BlocInscriptionResponsable />
       </div>
       <BlocActivities />
+      <!-- <DecembreEnsemble /> -->
       <BanquesAlimentaires />
       <MissionsPourLaPlanete class="hidden" />
       <BlocMissionsCourtes />
@@ -38,6 +40,7 @@ import BlocInscriptionResponsable from '@/components/section/home/BlocInscriptio
 import BlocActivities from '@/components/section/home/BlocActivities.vue'
 import BlocCaDevraitVousPlaire from '@/components/section/home/BlocCaDevraitVousPlaire.vue'
 import BanquesAlimentaires from '@/components/section/operations/BanquesAlimentaires.vue'
+import DecembreEnsemble from '@/components/section/operations/DecembreEnsemble.vue'
 import BlocMissionsCourtes from '@/components/section/home/BlocMissionsCourtes.vue'
 import BlocActionsBenevolesPopulaires from '@/components/section/home/BlocActionsBenevolesPopulaires.vue'
 import BlocTemoignages from '@/components/section/home/BlocTemoignages.vue'
@@ -100,6 +103,7 @@ export default defineNuxtComponent({
     BlocProfileActivities,
     BanquesAlimentaires,
     MissionsPourLaPlanete,
+    DecembreEnsemble,
   },
 })
 </script>

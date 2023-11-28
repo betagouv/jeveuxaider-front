@@ -240,6 +240,11 @@ export default defineNuxtComponent({
             href: 'https://www.jeveuxaider.gouv.fr/engagement/banques-alimentaires/',
             target: '_blank',
           },
+          // {
+          //   name: 'Décembre Ensemble 🤲🏻',
+          //   href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
+          //   target: '_blank',
+          // },
           {
             name: "Centre d'aide",
             href: 'https://reserve-civique.crisp.help/fr/',
