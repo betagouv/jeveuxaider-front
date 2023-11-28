@@ -31,7 +31,7 @@ export default {
       this.formSchema
         .validateAt(field, this.form)
         .then(() => {
-          delete this.errors.field
+          this.errors[field] = ''
         })
         .catch((error) => {
           this.errors[field] = error.message

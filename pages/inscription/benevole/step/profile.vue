@@ -141,7 +141,7 @@
               <BaseInput
                 v-model="form.cej_email_adviser"
                 name="cej_email_adviser"
-                placeholder="jean.dupont@gmail.com"
+                placeholder="Saisissez l'email de votre conseiller CEJ"
                 @blur="validate('cej_email_adviser')"
               />
             </BaseFormControl>
@@ -216,7 +216,43 @@ export default defineNuxtComponent({
           .email("Le format de l'email est incorrect")
           .when('cej', {
             is: true,
-            then: (schema) => schema.required("L'email de votre conseiller CEJ est obligatoire"),
+            then: (schema) =>
+              schema
+                .required("L'email de votre conseiller CEJ est obligatoire")
+                .test(
+                  'email-extension',
+                  'Le mail doit être celui de votre conseiller. Il ne doit pas être une adresse personnelle.',
+                  (value) => {
+                    if (!value) {
+                      return true
+                    }
+                    const forbiddenExtensions = [
+                      'gmail.com',
+                      'icloud.com',
+                      'outlook.com',
+                      'orange.fr',
+                      'wanadoo.fr',
+                      'hotmail.com',
+                      'hotmail.fr',
+                      'free.fr',
+                      'sfr.fr',
+                      'laposte.net',
+                    ]
+                    const emailParts = value.split('@')
+                    const emailExtension = emailParts[1]
+                    return !forbiddenExtensions.includes(emailExtension)
+                  }
+                )
+                .test(
+                  'no-current-user-email',
+                  "Vous devez saisir l'email de votre conseiller CEJ et non le vôtre",
+                  (value) => {
+                    if (!value || !this.$stores.auth.isLogged) {
+                      return true
+                    }
+                    return value !== this.$stores.auth.profile.email
+                  }
+                ),
           }),
         service_civique_completion_date: date()
           .nullable()
