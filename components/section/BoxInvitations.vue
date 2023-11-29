@@ -49,7 +49,7 @@
                 <BaseButton size="xs" variant="white" icon="RiSettings4Line" />
               </template>
               <template #items>
-                <div class="w-56 divide-y">
+                <div class="w-56">
                   <BaseDropdownOptionsItem size="sm" @click.native="handleCopy(invitation)">
                     Copier le lien d'invitation
                   </BaseDropdownOptionsItem>

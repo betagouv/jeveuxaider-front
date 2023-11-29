@@ -36,7 +36,7 @@
 
               <div v-if="note.permissions.canUpdate">
                 <RiPencilLine
-                  class="h-4 w-4 text-gray-500 cursor-pointer hover:text-gray-900"
+                  class="h-4 w-4 text-gray-500 cursor-pointer hover:text-gray-900 fill-current"
                   @click="handleUpdate(note)"
                 />
               </div>
