@@ -255,15 +255,10 @@ export default defineNuxtComponent({
             isActive: this.isActiveLink('/organisations'),
           },
           {
-            name: 'Banques alimentaires 🛒',
-            href: 'https://www.jeveuxaider.gouv.fr/engagement/banques-alimentaires/',
-            target: '_blank',
+             name: 'Décembre Ensemble 🤲🏻',
+             href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
+             target: '_blank',
           },
-          // {
-          //   name: 'Décembre Ensemble 🤲🏻',
-          //   href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
-          //   target: '_blank',
-          // },
           {
             name: "Centre d'aide",
             href: 'https://reserve-civique.crisp.help/fr/',
@@ -449,15 +444,10 @@ export default defineNuxtComponent({
           isActive: this.isActiveLink('profile/missions'),
         },
         {
-          name: 'Banques alimentaires 🛒',
-          href: 'https://www.jeveuxaider.gouv.fr/engagement/banques-alimentaires/',
-          target: '_blank',
+             name: 'Décembre Ensemble 🤲🏻',
+             href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
+             target: '_blank',
         },
-        // {
-        //     name: 'Décembre Ensemble 🤲🏻',
-        //     href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
-        //     target: '_blank',
-        //   },
         {
           name: "Centre d'aide",
           href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/',
