@@ -240,6 +240,11 @@
         <template #action>
           <div class="flex space-x-2">
             <DsfrButton
+              v-if="
+                ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+                  $stores.auth.contextRole
+                )
+              "
               type="secondary"
               icon="RiDownload2Line"
               :loading="exportLoading"

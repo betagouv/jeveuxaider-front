@@ -140,7 +140,10 @@
         <template #action>
           <div class="flex space-x-2">
             <DsfrButton
-              v-if="!bulkOperationIsActive"
+              v-if="
+                !bulkOperationIsActive &&
+                ['responsable', 'tete_de_reseau'].includes($stores.auth.contextRole)
+              "
               type="secondary"
               icon="RiDownload2Line"
               :loading="exportLoading"

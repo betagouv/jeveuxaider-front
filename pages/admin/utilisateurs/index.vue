@@ -128,8 +128,12 @@
         :loading="queryLoading"
       >
         <template #action>
-          <div v-if="$stores.auth.profile.can_export_profiles" class="flex space-x-2">
+          <div class="flex space-x-2">
             <DsfrButton
+              v-if="
+                ['referent'].includes($stores.auth.contextRole) &&
+                $stores.auth.profile.can_export_profiles
+              "
               type="secondary"
               icon="RiDownload2Line"
               :loading="exportLoading"
@@ -258,7 +262,7 @@ export default defineNuxtComponent({
       middleware: ['authenticated'],
     })
 
-    if (!['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)) {
+    if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
       return showError({ statusCode: 403 })
     }
   },

@@ -195,7 +195,7 @@ export default defineNuxtComponent({
         case 'email':
           return 'E-mail'
         case 'can_export_profiles':
-          return 'Peut exporter les profils'
+          return 'Peut exporter les utilisateurs'
         case 'referent_department':
           return 'Référent départemental'
         case 'referent_region':

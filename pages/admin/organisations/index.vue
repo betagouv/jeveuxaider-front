@@ -75,6 +75,7 @@
         <template #action>
           <div>
             <DsfrButton
+              v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
               type="secondary"
               icon="RiDownload2Line"
               :loading="exportLoading"
