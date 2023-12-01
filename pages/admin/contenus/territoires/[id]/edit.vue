@@ -2,7 +2,10 @@
   <div class="container">
     <Breadcrumb
       :links="[
-        { text: 'Administration', to: '/admin' },
+        {
+          text: 'Administration',
+          to: $stores.auth.contextRole === 'admin' ? '/admin/contenus/territoires' : null,
+        },
         {
           text: 'Territoires',
           to: $stores.auth.contextRole === 'admin' ? '/admin/contenus/territoires' : null,

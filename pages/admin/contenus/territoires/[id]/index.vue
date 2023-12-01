@@ -2,7 +2,10 @@
   <div class="container">
     <Breadcrumb
       :links="[
-        { text: 'Administration', to: '/admin' },
+        {
+          text: 'Administration',
+          to: $stores.auth.contextRole === 'admin' ? '/admin/contenus/territoires' : null,
+        },
         {
           text: 'Territoires',
           to: $stores.auth.contextRole === 'admin' ? '/admin/contenus/territoires' : null,
@@ -55,6 +58,12 @@
         <BaseBox class="overflow-hidden" :padding="false">
           <Banner :territoire="territoire" :show-breadcrumb="false" :show-search="false" />
         </BaseBox>
+        <BoxInformations
+          :territoire="territoire"
+          :show-title="false"
+          box-variant="shadow"
+          box-padding="lg"
+        />
         <BaseBox class="overflow-hidden" :padding="false">
           <Associations :territoire="territoire" />
         </BaseBox>
@@ -120,7 +129,7 @@
                 class="mt-4"
                 @selected="handleChangeState($event)"
               />
-              <BoxInformations :territoire="territoire" />
+
               <BoxMission :territoire="territoire" :stats="stats" />
               <BoxParticipation :territoire="territoire" :stats="stats" />
             </div>

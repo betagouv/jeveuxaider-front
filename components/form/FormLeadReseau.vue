@@ -176,6 +176,7 @@ export default defineNuxtComponent({
         nb_antennes: number().required(),
         nb_employees: number().required(),
         nb_volunteers: number().required(),
+        description: string().required(),
       }),
     }
   },

@@ -1,7 +1,9 @@
 <template>
   <div>
-    <div class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">Informations</div>
-    <BaseBox variant="flat" padding="xs">
+    <div v-if="showTitle" class="uppercase text-sm font-semibold text-gray-600 px-2 mb-2">
+      Informations
+    </div>
+    <BaseBox :variant="boxVariant" :padding="boxPadding">
       <BaseDescriptionList>
         <BaseDescriptionListItem
           term="Crée le"
@@ -55,6 +57,18 @@ export default defineNuxtComponent({
     territoire: {
       type: Object,
       required: true,
+    },
+    showTitle: {
+      type: Boolean,
+      default: false,
+    },
+    boxVariant: {
+      type: String,
+      default: 'flat',
+    },
+    boxPadding: {
+      type: String,
+      default: 'xs',
     },
   },
 })

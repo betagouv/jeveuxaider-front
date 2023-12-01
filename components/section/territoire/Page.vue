@@ -41,7 +41,7 @@
     </div>
 
     <Search :territoire="territoire" />
-    <Promote :territoire="territoire" class="mb-24" />
+    <Promote :territoire="territoire" class="pb-24" />
     <Cities v-if="territoire.type == 'city'" :territoire="territoire" :cities="cities" />
     <Associations :territoire="territoire" />
     <Engagement :territoire="territoire" />
