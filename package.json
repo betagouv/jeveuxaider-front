@@ -65,6 +65,7 @@
     "vue-chartjs": "^5.2.0",
     "vue-content-loader": "^2.0.1",
     "vue-dragscroll": "^4.0.5",
+    "vue-json-pretty": "^2.2.4",
     "vue-remix-icons": "^3.4.0",
     "vue-scrollto": "^2.20.0",
     "vue-slick-carousel": "^1.0.6",

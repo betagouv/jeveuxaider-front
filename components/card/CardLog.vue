@@ -13,7 +13,13 @@
           <div>
             <div>
               <template v-if="log.causer">
-                <span class="font-bold">{{ log.causer?.profile.full_name }}</span>
+                <span class="font-bold">{{ log.causer?.profile.full_name }} </span>
+                <template v-if="log.log_name === 'export'">
+                  {{ action }}
+                  <span class="font-bold">
+                    {{ log.properties?.items_count }} {{ log.properties?.type }}</span
+                  >
+                </template>
                 <template v-if="log.subject_type === 'App\\Models\\Structure'">
                   {{ action }} la structure
                   <span class="font-bold">{{ log?.data?.subject_title }}</span>
@@ -103,6 +109,9 @@ export default defineNuxtComponent({
       }
       if (this.log.description === 'duplicated') {
         return 'a dupliqué'
+      }
+      if (this.log.log_name === 'export') {
+        return 'a exporté'
       }
       return this.log.description
     },

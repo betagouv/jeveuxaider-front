@@ -7823,6 +7823,11 @@ vue-dragscroll@^4.0.5:
   dependencies:
     vue "^3.2.37"
 
+vue-json-pretty@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/vue-json-pretty/-/vue-json-pretty-2.2.4.tgz#4c82fa78aeb987460c727c3b31e45a58f58d9c95"
+  integrity sha512-JX80b3QDrspcH43C53CdtYeq/froApQGSV5y43bEMWFj2LGOxB96aH1VmvrFA21nD1WTP6nwfFMQqGXuS4jyFQ==
+
 vue-observe-visibility@^2.0.0-alpha.1:
   version "2.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/vue-observe-visibility/-/vue-observe-visibility-2.0.0-alpha.1.tgz#1e4eda7b12562161d58984b7e0dea676d83bdb13"

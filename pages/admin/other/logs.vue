@@ -65,6 +65,7 @@
             { key: 'updated', label: 'Modification' },
             { key: 'duplicated', label: 'Duplication' },
             { key: 'deleted', label: 'Suppression' },
+            { key: 'exported', label: 'Export' },
           ]"
           :modelValue="$route.query['filter[description]']"
           clearable

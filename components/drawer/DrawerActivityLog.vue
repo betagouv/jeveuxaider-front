@@ -24,6 +24,11 @@
       <div class="border-t -mx-6 my-6" />
       <BoxInformations class="mb-8" :activity-log="activityLog" />
       <BoxChanges class="mb-8" :activity-log="activityLog" />
+      <BoxJson
+        class="mb-8"
+        v-if="activityLog.log_name === 'export'"
+        :json="activityLog.properties"
+      />
       <div class="flex justify-center mb-10">
         <BaseLink v-if="url" :to="url" class="uppercase font-semibold text-sm hover:underline">
           Accéder à l'élément
@@ -36,11 +41,13 @@
 <script>
 import BoxInformations from '@/components/section/logs/BoxInformations.vue'
 import BoxChanges from '@/components/section/logs/BoxChanges.vue'
+import BoxJson from '@/components/section/logs/BoxJson.vue'
 
 export default defineNuxtComponent({
   components: {
     BoxInformations,
     BoxChanges,
+    BoxJson,
   },
   props: {
     activityLogId: {
