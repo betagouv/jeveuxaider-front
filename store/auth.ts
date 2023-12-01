@@ -145,17 +145,30 @@ export const useAuthStore = defineStore({
       cookieAccessTokenImpersonate.value = null
       this.user = null
     },
-    async updateUser(attributes: Partial<User>) {
-      const { data: user, error } = await useApiFetch<User>(`/user`, {
+    async switchRole(attributes: Partial<User>) {
+      const { data: user, error } = await useApiFetch<User>(`/user/switch-role`, {
         method: 'PUT',
         body: {
-          ...this.user,
           ...attributes,
         },
       })
 
       if (error.value) {
-        return error.value
+        throw error.value
+      }
+
+      this.user = user.value
+    },
+    async updateUser(attributes: Partial<User>) {
+      const { data: user, error } = await useApiFetch<User>(`/user`, {
+        method: 'PUT',
+        body: {
+          ...attributes,
+        },
+      })
+
+      if (error.value) {
+        throw error.value
       }
 
       this.user = user.value
