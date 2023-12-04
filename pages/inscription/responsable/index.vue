@@ -635,16 +635,21 @@ export default defineNuxtComponent({
       }
       this.loading = true
       this.form.structure.statut_juridique = this.$route.query.orga_type
-      const response = await apiFetch('/structure', this.form.structure, {
+      const response = await apiFetch('/structure', {
         method: 'POST',
+        body: this.form.structure,
       })
       if (response) {
-        await this.$stores.auth.updateUser({
-          context_role: 'responsable',
-          contextable_type: 'structure',
-          contextable_id: response.id,
-        })
-        this.$router.push('/inscription/responsable/step/organisation')
+        await this.$stores.auth
+          .switchRole({
+            context_role: 'responsable',
+            contextable_type: 'structure',
+            contextable_id: response.id,
+          })
+          .then(() => {
+            this.$router.push('/inscription/responsable/step/organisation')
+          })
+          .catch(() => {})
       }
       this.loading = false
     },

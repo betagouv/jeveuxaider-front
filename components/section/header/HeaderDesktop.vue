@@ -255,9 +255,9 @@ export default defineNuxtComponent({
             isActive: this.isActiveLink('/organisations'),
           },
           {
-             name: 'Décembre Ensemble 🤲🏻',
-             href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
-             target: '_blank',
+            name: 'Décembre Ensemble 🤲🏻',
+            href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
+            target: '_blank',
           },
           {
             name: "Centre d'aide",
@@ -444,9 +444,9 @@ export default defineNuxtComponent({
           isActive: this.isActiveLink('profile/missions'),
         },
         {
-             name: 'Décembre Ensemble 🤲🏻',
-             href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
-             target: '_blank',
+          name: 'Décembre Ensemble 🤲🏻',
+          href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
+          target: '_blank',
         },
         {
           name: "Centre d'aide",
@@ -464,19 +464,22 @@ export default defineNuxtComponent({
   created() {},
   methods: {
     async switchRole(role) {
-      await this.$stores.auth.updateUser({
-        context_role: role.key,
-        contextable_type: role.contextable_type ?? null,
-        contextable_id: role.contextable_id ?? null,
-      })
+      await this.$stores.auth
+        .switchRole({
+          context_role: role.key,
+          contextable_type: role.contextable_type ?? null,
+          contextable_id: role.contextable_id ?? null,
+        })
+        .then(() => {
+          this.$refs.switchRole.show = false
 
-      this.$refs.switchRole.show = false
-
-      if (this.$route.name === 'dashboard') {
-        window.location.reload(true)
-      } else {
-        this.$router.push('/dashboard')
-      }
+          if (this.$route.name === 'dashboard') {
+            window.location.reload(true)
+          } else {
+            this.$router.push('/dashboard')
+          }
+        })
+        .catch(() => {})
     },
     isActiveLink(regex, exact = false) {
       return exact ? this.$route.path === regex : RegExp(regex).test(this.$route.path)
