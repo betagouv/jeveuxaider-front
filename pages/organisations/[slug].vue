@@ -133,6 +133,13 @@ export default defineNuxtComponent({
 
     const { data: organisation, error } = await useApiFetch(`/associations/${route.params.slug}`)
 
+    if (error.value) {
+      showError({
+        statusCode: error.value.statusCode,
+        statusMessage: error.value.statusMessage,
+      })
+    }
+
     const status =
       organisation.value.statut_juridique !== 'Autre' ? organisation.value.statut_juridique : ''
 
