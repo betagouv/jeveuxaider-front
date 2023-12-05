@@ -137,8 +137,8 @@
           <template v-if="$route.hash === '#responsables'">
             <div class="space-y-4">
               <BoxInvitations
-                v-if="canManageTerritoire && queryInvitations && queryInvitations.data.length > 0"
-                :invitations="queryInvitations.data"
+                v-if="canManageTerritoire && queryInvitations && queryInvitations.length > 0"
+                :invitations="queryInvitations"
                 @updated="fetch()"
               />
               <BaseBox
@@ -279,12 +279,7 @@ export default defineNuxtComponent({
   },
   methods: {
     async fetch() {
-      const queryInvitations = await apiFetch('/invitations', {
-        params: {
-          'filter[of_territoire]': this.territoire.id,
-          pagination: 999,
-        },
-      })
+      const queryInvitations = await apiFetch(`/territoires/${this.territoire.id}/invitations`)
       this.queryInvitations = queryInvitations
     },
     async handleChangeState(option) {

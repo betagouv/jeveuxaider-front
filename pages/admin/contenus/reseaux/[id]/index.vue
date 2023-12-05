@@ -142,9 +142,9 @@
             <div class="space-y-8">
               <BoxAntenne :reseau="reseau" :stats="stats" @updated="fetch()" />
               <BoxInvitations
-                v-if="queryInvitationsAntennes && queryInvitationsAntennes.data.length > 0"
+                v-if="queryInvitationsAntennes && queryInvitationsAntennes.length > 0"
                 class="!mt-4"
-                :invitations="queryInvitationsAntennes.data"
+                :invitations="queryInvitationsAntennes"
                 @updated="fetch()"
               />
               <div>
@@ -226,8 +226,8 @@
           <template v-if="$route.hash === '#responsables'">
             <div class="space-y-2">
               <BoxInvitations
-                v-if="queryInvitations && queryInvitations.data.length > 0"
-                :invitations="queryInvitations.data"
+                v-if="queryInvitations && queryInvitations.length > 0"
+                :invitations="queryInvitations"
                 @updated="fetch()"
               />
               <BaseBox
@@ -366,21 +366,13 @@ export default defineNuxtComponent({
       this.stats = stats
     },
     async fetchReseauInvitations() {
-      const queryInvitations = await apiFetch('/invitations', {
-        params: {
-          'filter[of_reseau]': this.reseau.id,
-          pagination: 999,
-        },
-      })
+      const queryInvitations = await apiFetch(`/reseaux/${this.reseau.id}/invitations-responsables`)
       this.queryInvitations = queryInvitations
     },
     async fetchReseauAntennesInvitations() {
-      const queryInvitationsAntennes = await apiFetch('/invitations', {
-        params: {
-          'filter[of_reseau_and_role_antenne]': this.reseau.id,
-          pagination: 999,
-        },
-      })
+      const queryInvitationsAntennes = await apiFetch(
+        `/reseaux/${this.reseau.id}/invitations-antennes`
+      )
       this.queryInvitationsAntennes = queryInvitationsAntennes
     },
     async refetch() {

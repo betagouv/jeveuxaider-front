@@ -52,32 +52,32 @@
     <BaseTable v-if="queryResult.total" :overflow="false">
       <BaseTableHead>
         <BaseTableHeadCell>E-mail</BaseTableHeadCell>
-        <!-- <BaseTableHeadCell center> Rôle </BaseTableHeadCell> -->
-        <BaseTableHeadCell center> Contexte </BaseTableHeadCell>
-        <BaseTableHeadCell center> Envoyé le </BaseTableHeadCell>
-        <BaseTableHeadCell center> Action </BaseTableHeadCell>
+        <BaseTableHeadCell> Contexte </BaseTableHeadCell>
+        <BaseTableHeadCell> Invité par </BaseTableHeadCell>
+        <BaseTableHeadCell> Envoyé le </BaseTableHeadCell>
+        <BaseTableHeadCell> Action </BaseTableHeadCell>
       </BaseTableHead>
       <BaseTableBody>
         <BaseTableRow v-for="invitation in queryResult.data" :key="invitation.id">
-          <BaseTableRowCell>
-            <div class="font-medium text-gray-900">
+          <BaseTableRowCell class="max-w-[350px]">
+            <div class="font-medium text-gray-900 truncate">
               {{ invitation.email }}
             </div>
             <div class="text-gray-500">
               {{ roleLabel(invitation.role) }}
             </div>
           </BaseTableRowCell>
-          <!-- <BaseTableRowCell center>
-            <div class="text-gray-500">
-              {{ roleLabel(invitation.role) }}
-            </div>
-          </BaseTableRowCell> -->
-          <BaseTableRowCell>
-            <div class="text-gray-500">
+          <BaseTableRowCell class="max-w-[200px]">
+            <div class="text-gray-500 whitespace-pre-wrap">
               {{ roleContext(invitation) }}
             </div>
           </BaseTableRowCell>
-          <BaseTableRowCell center>
+          <BaseTableRowCell class="max-w-[200px]">
+            <div class="text-gray-500">
+              {{ invitation.user.profile.full_name }}
+            </div>
+          </BaseTableRowCell>
+          <BaseTableRowCell>
             <div class="text-gray-500">
               {{ $dayjs(invitation.last_sent_at).format('D MMM YYYY') }}
             </div>
@@ -85,7 +85,7 @@
           <BaseTableRowCell center>
             <BaseDropdown :ref="`dropdown-${invitation.id}`">
               <template #button>
-                <BaseButton size="xs" variant="white"> Action </BaseButton>
+                <BaseButton size="xs" variant="white" icon="RiSettings4Line" />
               </template>
               <template #items>
                 <div class="w-56 py-2">
@@ -159,6 +159,7 @@ export default defineNuxtComponent({
       showAlertDeleted: false,
       queryParams: {
         'filter[role]': 'referent_departemental,referent_regional,responsable_antenne',
+        include: 'user.profile',
       },
     }
   },

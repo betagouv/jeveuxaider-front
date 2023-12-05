@@ -41,7 +41,8 @@
                 {{ invitation.properties.antenne_name }}
               </div>
               <div class="text-gray-400 text-xs italic">
-                Le {{ $dayjs(invitation.last_sent_at).format('D MMM YYYY') }}
+                Invité par {{ invitation.user.profile.full_name }} le
+                {{ $dayjs(invitation.last_sent_at).format('D MMM YYYY') }}
               </div>
             </div>
             <BaseDropdown :ref="`dropdown-${invitation.id}`">

@@ -272,8 +272,8 @@
           <template v-if="$route.hash === '#membres'">
             <div class="space-y-2">
               <BoxInvitations
-                v-if="queryInvitations && queryInvitations.data.length > 0"
-                :invitations="queryInvitations.data"
+                v-if="queryInvitations && queryInvitations.length > 0"
+                :invitations="queryInvitations"
                 @updated="fetch"
               />
               <BoxMember
@@ -287,7 +287,13 @@
                 @removed="fetch"
               />
               <div class="space-x-2">
-                <BaseButton variant="white" @click.native="showDrawerInvitation = true">
+                <BaseButton
+                  v-if="
+                    ['admin', 'responsable', 'tete_de_reseau'].includes($stores.auth.contextRole)
+                  "
+                  variant="white"
+                  @click.native="showDrawerInvitation = true"
+                >
                   <RiUserFill class="h-4 w-4 mr-2" /> Inviter un membre
                 </BaseButton>
                 <BaseButton
@@ -402,14 +408,11 @@ export default defineNuxtComponent({
         this.organisationStats = response
       })
 
-      apiFetch('/invitations', {
-        params: {
-          'filter[of_structure]': route.params.id,
-          pagination: 999,
-        },
-      }).then((response) => {
-        this.queryInvitations = response
-      })
+      if (['admin', 'responsable'].includes(this.$stores.auth.contextRole)) {
+        apiFetch(`/structures/${route.params.id}/invitations`).then((response) => {
+          this.queryInvitations = response
+        })
+      }
 
       apiFetch(`/structures/${route.params.id}/responsables`).then((response) => {
         this.responsables = response
