@@ -48,6 +48,7 @@
         // Colors
         { 'text-white': backgroundColor == 'blue' },
         { 'text-gray-700': backgroundColor == 'white' },
+        'fill-current',
       ]"
     />
   </div>
