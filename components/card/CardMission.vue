@@ -8,7 +8,7 @@
         v-if="thumbnail && domainId"
         src="/images/card-thumbnail-default.jpg"
         :srcset="thumbnail"
-        :alt="$filters.label(domainId, 'domaines')"
+        :alt="$filters.label(domainId, 'domaines')?.toString()"
         class="w-full h-full object-cover"
         width="300"
         height="143"
