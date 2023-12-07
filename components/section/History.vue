@@ -15,7 +15,7 @@
         padding="xs"
       >
         <div class="font-medium">
-          {{ activity.data.full_name }}
+          {{ activity.causer?.profile.full_name }}
         </div>
         <div class="text-gray-500 mb-4">
           {{ formatActionLabel(activity) }}
@@ -109,6 +109,7 @@ export default defineNuxtComponent({
           'filter[log_name]': 'default',
           'filter[subject_id]': this.modelId,
           'filter[subject_type]': this.modelType,
+          include: 'causer,causer.profile',
           pagination: 10,
           page: this.page,
         },

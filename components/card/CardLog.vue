@@ -20,14 +20,17 @@
                     {{ log.properties?.items_count }} {{ log.properties?.type }}</span
                   >
                 </template>
+
                 <template v-if="log.subject_type === 'App\\Models\\Structure'">
                   {{ action }} la structure
-                  <span class="font-bold">{{ log?.data?.subject_title }}</span>
+                  <span class="font-bold">{{ log?.subject?.name }}</span>
                 </template>
+
                 <template v-if="log.subject_type === 'App\\Models\\Mission'">
                   {{ action }} la mission
-                  <span class="font-bold">{{ log?.data?.subject_title }}</span>
+                  <span class="font-bold">{{ log?.subject?.name }}</span>
                 </template>
+
                 <template v-if="log.subject_type === 'App\\Models\\Participation'">
                   <template v-if="log.description === 'created'">
                     a candidaté à la mission
@@ -35,15 +38,17 @@
                   </template>
                   <template v-if="log.description === 'updated'">
                     modifié la candidature de
-                    <span class="font-bold">{{ log?.data?.subject_title }}</span>
+                    <span class="font-bold">{{ log?.causer?.profile.full_name }}</span>
                     sur la mission
                     <span class="font-bold">{{ log?.subject?.mission?.name }}</span>
                   </template>
                 </template>
+
                 <template v-if="log.subject_type === 'App\\Models\\Profile'">
                   {{ action }} le compte
-                  <span class="font-bold">{{ log?.data?.subject_title }}</span>
+                  <span class="font-bold">{{ log?.subject?.full_name }}</span>
                 </template>
+
                 <template v-if="log.subject_type === 'App\\Models\\Rule'">
                   <template v-if="log.description === 'created'">
                     a créé la règle
@@ -61,12 +66,29 @@
                 </template>
               </template>
               <template v-else>
-                <template v-if="log.subject_type === 'App\\Models\\Profile'">
-                  <span class="font-bold">{{ log?.data?.subject_title }}</span>
+                <template
+                  v-if="
+                    log.subject_type === 'App\\Models\\Profile' && log.description === 'created'
+                  "
+                >
+                  <span class="font-bold">{{ log?.subject?.full_name }}</span>
                   a crée son compte
+                </template>
+
+                <template
+                  v-else-if="
+                    log.subject_type === 'App\\Models\\Mission' &&
+                    log.description === 'updated' &&
+                    log.properties?.attributes?.automatically_closed_at
+                  "
+                >
+                  <span class="font-bold">[AUTO]</span>
+                  a automatiquement clôturé la mission
+                  <span class="font-bold">{{ log?.subject?.name }}</span>
                 </template>
               </template>
             </div>
+
             <div class="text-sm text-gray-600">
               {{
                 $dayjs().to($dayjs(log.created_at)).charAt(0).toUpperCase() +
@@ -74,6 +96,7 @@
               }}
             </div>
           </div>
+
           <div class="ml-4">
             <DsfrBadge size="sm" type="info" no-icon>
               {{ subjectTypeLabel }}
