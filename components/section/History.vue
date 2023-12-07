@@ -109,6 +109,7 @@ export default defineNuxtComponent({
           'filter[log_name]': 'default',
           'filter[subject_id]': this.modelId,
           'filter[subject_type]': this.modelType,
+          'filter[description]': 'created,updated',
           include: 'causer,causer.profile',
           pagination: 10,
           page: this.page,

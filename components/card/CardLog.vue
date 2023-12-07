@@ -38,7 +38,7 @@
                   </template>
                   <template v-if="log.description === 'updated'">
                     modifié la candidature de
-                    <span class="font-bold">{{ log?.causer?.profile.full_name }}</span>
+                    <span class="font-bold">{{ log?.subject?.profile?.full_name }}</span>
                     sur la mission
                     <span class="font-bold">{{ log?.subject?.mission?.name }}</span>
                   </template>
