@@ -86,6 +86,19 @@
                   a automatiquement clôturé la mission
                   <span class="font-bold">{{ log?.subject?.name }}</span>
                 </template>
+
+                <template
+                  v-else-if="
+                    log.subject_type === 'App\\Models\\Participation' &&
+                    log.description === 'updated' &&
+                    log.event === 'updated - auto closed'
+                  "
+                >
+                  <span class="font-bold">[AUTO]</span>
+                  a automatiquement refusé la candidature de
+                  <span class="font-bold">{{ log?.subject?.profile?.full_name }}</span>
+                  suite à la clôture de la mission
+                </template>
               </template>
             </div>
 
