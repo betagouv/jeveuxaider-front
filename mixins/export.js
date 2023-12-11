@@ -5,28 +5,26 @@ export default {
       exportLoading: false,
     }
   },
-  computed: {
-    exportFilename() {
-      const date = this.$dayjs().format('YYYY-MM-DD-HH-mm-ss')
+  computed: {},
+  methods: {
+    exportFilename(date) {
       switch (this.exportEndpoint) {
         case '/export/structures':
-          return `jva-structures-${date}.csv`
+          return `jva-structures-${date}.xlsx`
         case '/export/missions':
-          return `jva-missions-${date}.csv`
+          return `jva-missions-${date}.xlsx`
         case '/export/participations':
-          return `jva-participations-${date}.csv`
+          return `jva-participations-${date}.xlsx`
         case '/export/profiles':
-          return `jva-utilisateurs-${date}.csv`
+          return `jva-utilisateurs-${date}.xlsx`
         case '/export/territoires':
-          return `jva-territoires-${date}.csv`
+          return `jva-territoires-${date}.xlsx`
         case '/export/reseaux':
-          return `jva-reseaux-${date}.csv`
+          return `jva-reseaux-${date}.xlsx`
         default:
-          return 'jva-export.csv'
+          return 'jva-export.xlsx'
       }
     },
-  },
-  methods: {
     async handleExport() {
       if (this.exportLoading || !this.exportEndpoint) {
         return
@@ -38,9 +36,11 @@ export default {
         .then((response) => {
           const fileURL = window.URL.createObjectURL(new Blob([response]))
           const fileLink = document.createElement('a')
+          const date = this.$dayjs().format('YYYY-MM-DD-HH-mm-ss')
+          const filename = this.exportFilename(date)
 
           fileLink.href = fileURL
-          fileLink.setAttribute('download', this.exportFilename)
+          fileLink.setAttribute('download', filename)
           document.body.appendChild(fileLink)
 
           fileLink.click()
