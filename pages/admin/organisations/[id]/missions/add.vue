@@ -20,114 +20,129 @@
             >
             de Jeveuxaider.gouv.fr
           </div>
-          <div v-if="step == 2">
+          <div v-if="step == 2 && !loadingFetch">
             <ButtonsSubmitFormMission
               class="hidden lg:flex"
               :structure="structure"
-              :template-id="template_id"
-              :loading="loading"
+              :template-id="mission.template?.id"
+              :loading="loadingSubmit"
               @submitted="handleSubmit($event)"
             />
           </div>
         </template>
       </BaseSectionHeading>
 
-      <div
-        v-if="step == 1"
-        class="flex flex-wrap grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-8"
-      >
+      <TransitionGroup name="fade-in">
         <div
-          v-for="domaine in $labels.domaines"
-          :key="domaine.key"
-          class="shadow-lg py-6 px-14 text-center flex flex-col items-center justify-center cursor-pointer"
-          :class="[
-            domaine.key == $route.query.domaine
-              ? 'text-white bg-jva-blue-500'
-              : 'hover:bg-jva-blue-500 hover:text-white bg-white',
-          ]"
-          @click="onclickDomaine(domaine.key)"
+          key="choose-domain"
+          v-if="step == 1"
+          class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-8"
         >
-          <div class="text-4xl mb-2">
-            {{ domaine.emoji }}
-          </div>
-          <div class="leading-tight font-bold">
-            {{ domaine.label }}
-          </div>
-        </div>
-      </div>
-
-      <div v-if="step == 1 && domaine_id" id="templates" class="border-t mt-10">
-        <BaseHeading :level="3" class="mt-6"> Sélectionnez un modèle de mission </BaseHeading>
-        <div class="text-gray-500 mt-2 mb-6">
-          En utilisant un modèle déjà existant, votre mission sera publiée sans besoin de
-          validation.
-        </div>
-        <div class="grid grid-cols-4 gap-6">
-          <Card
-            title="Personnalisez votre mission"
-            description="L'intégralité des champs sont éditables. Votre mission sera publiée dans un délai de 5 à 7 jours, après modération par un référent départemental."
-            image-srcset="/images/missions/card-add.png"
-            state-text="Validation par un référent"
-            state-style="warning"
-            class="bg-white"
-            @click.native="onSelectTemplate()"
+          <div
+            v-for="domaine in $labels.domaines"
+            :key="domaine.key"
+            class="shadow-lg py-6 px-14 text-center flex flex-col items-center justify-center cursor-pointer"
+            :class="[
+              domaine.key == $route.query.domaine
+                ? 'text-white bg-jva-blue-500'
+                : 'hover:bg-jva-blue-500 hover:text-white bg-white',
+            ]"
+            @click="onclickDomaine(domaine.key)"
           >
-            <template #footer>
-              <div
-                class="border-t text-jva-blue-500 font-semibold text-center py-4 group-hover:bg-jva-blue-500 group-hover:text-white"
-              >
-                Choisir
-              </div>
-            </template>
-          </Card>
-          <Card
-            v-for="missionTemplate in templates"
-            :key="missionTemplate.id"
-            :title="missionTemplate.title"
-            state-style="success"
-            state-text="Validation automatique"
-            :description="missionTemplate.subtitle"
-            :image-srcset="missionTemplate.photo ? missionTemplate.photo.urls.card : undefined"
-            :image-src="missionTemplate.photo ? missionTemplate.photo.urls.original : undefined"
-            class="bg-white"
-            @click.native="onSelectTemplate(missionTemplate)"
-          >
-            <template #badges>
-              <div v-if="missionTemplate.reseau" class="mb-2">
-                <BaseBadge color="gray-light">
-                  {{ missionTemplate.reseau.name }}
-                </BaseBadge>
-              </div>
-            </template>
-            <template #footer>
-              <div
-                class="border-t text-jva-blue-500 font-semibold text-center py-4 group-hover:bg-jva-blue-500 group-hover:text-white"
-              >
-                Choisir
-              </div>
-            </template>
-          </Card>
+            <div class="text-4xl mb-2">
+              {{ domaine.emoji }}
+            </div>
+            <div class="leading-tight font-bold">
+              {{ domaine.label }}
+            </div>
+          </div>
         </div>
-      </div>
 
-      <FormMission
-        v-if="step == 2"
-        :key="`form-mission-${$route.fullPath}`"
-        ref="form"
-        :mission="mission"
-        :structure="structure"
-        class="mt-8"
-      />
+        <div
+          key="choose-template"
+          v-if="step == 1 && domaine_id"
+          id="templates"
+          class="border-t mt-10"
+        >
+          <BaseHeading :level="3" class="mt-6"> Sélectionnez un modèle de mission </BaseHeading>
+          <div class="text-gray-500 mt-2 mb-6">
+            En utilisant un modèle déjà existant, votre mission sera publiée sans besoin de
+            validation.
+          </div>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <Card
+              title="Personnalisez votre mission"
+              description="L'intégralité des champs sont éditables. Votre mission sera publiée dans un délai de 5 à 7 jours, après modération par un référent départemental."
+              image-srcset="/images/missions/card-add.png"
+              state-text="Validation par un référent"
+              state-style="warning"
+              class="bg-white"
+              @click.native="onSelectTemplate()"
+            >
+              <template #footer>
+                <div
+                  class="border-t text-jva-blue-500 font-semibold text-center py-4 group-hover:bg-jva-blue-500 group-hover:text-white"
+                >
+                  Choisir
+                </div>
+              </template>
+            </Card>
+            <TransitionGroup name="fade-in">
+              <Card
+                v-for="missionTemplate in templates"
+                :key="missionTemplate.id"
+                :title="missionTemplate.title"
+                state-style="success"
+                state-text="Validation automatique"
+                :description="missionTemplate.subtitle"
+                :image-srcset="missionTemplate.photo ? missionTemplate.photo.urls.card : undefined"
+                :image-src="missionTemplate.photo ? missionTemplate.photo.urls.original : undefined"
+                class="bg-white"
+                @click.native="onSelectTemplate(missionTemplate)"
+              >
+                <template #badges>
+                  <div v-if="missionTemplate.reseau" class="mb-2">
+                    <BaseBadge color="gray-light">
+                      {{ missionTemplate.reseau.name }}
+                    </BaseBadge>
+                  </div>
+                </template>
+                <template #footer>
+                  <div
+                    class="border-t text-jva-blue-500 font-semibold text-center py-4 group-hover:bg-jva-blue-500 group-hover:text-white"
+                  >
+                    Choisir
+                  </div>
+                </template>
+              </Card>
+            </TransitionGroup>
+          </div>
+        </div>
 
-      <div v-if="step == 2" class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
-        <ButtonsSubmitFormMission
-          class="flex"
+        <FormMission
+          v-if="step == 2 && !loadingFetch"
+          ref="form"
+          :mission="mission"
           :structure="structure"
-          :template-id="template_id"
-          :loading="loading"
-          @submitted="handleSubmit($event)"
+          class="mt-8"
+          key="form-mission"
         />
-      </div>
+        <ListLoader key="list-loader" v-if="step == 2 && loadingFetch" class="py-12" />
+
+        <div
+          v-if="step == 2 && !loadingFetch"
+          key="submit-button"
+          class="border-t my-8 pt-8 lg:pt-12 lg:my-12"
+        >
+          <ButtonsSubmitFormMission
+            class="flex"
+            :structure="structure"
+            :template-id="mission.template?.id"
+            :loading="loadingSubmit"
+            @submitted="handleSubmit($event)"
+          />
+        </div>
+      </TransitionGroup>
     </div>
   </div>
 </template>
@@ -137,6 +152,7 @@ import Card from '@/components/card/Card.vue'
 import FormMission from '@/components/form/FormMission.vue'
 import ButtonsSubmitFormMission from '@/components/custom/ButtonsSubmitFormMission.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import { ListLoader } from 'vue-content-loader'
 
 export default defineNuxtComponent({
   components: {
@@ -144,6 +160,7 @@ export default defineNuxtComponent({
     FormMission,
     ButtonsSubmitFormMission,
     Breadcrumb,
+    ListLoader,
   },
   async setup() {
     definePageMeta({
@@ -157,8 +174,8 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
 
-    const structure = await apiFetch(`/structures/${route.params.id}`)
-    if (!structure) {
+    const { data: structure, error } = await useApiFetch(`/structures/${route.params.id}`)
+    if (error.value) {
       return showError({ statusCode: 403 })
     }
 
@@ -180,7 +197,8 @@ export default defineNuxtComponent({
   },
   data() {
     return {
-      loading: false,
+      loadingFetch: true,
+      loadingSubmit: false,
       template_id: parseInt(this.$route.query.template) || null,
       domaine_id: parseInt(this.$route.query.domaine) || null,
       templates: [],
@@ -194,36 +212,55 @@ export default defineNuxtComponent({
     },
   },
   watch: {
-    $route: 'fetch',
+    '$route.query': {
+      immediate: true,
+      async handler() {
+        await this.fetch()
+      },
+    },
   },
   methods: {
     async fetch() {
+      this.loadingFetch = true
       this.domaine_id = parseInt(this.$route.query.domaine) || null
       this.template_id = parseInt(this.$route.query.template) || null
+      const promises = []
 
       if (this.domaine_id) {
         this.mission.domaine_id = this.domaine_id
-        const templates = await apiFetch('/mission-templates', {
-          params: {
-            'filter[domaine.id]': this.domaine_id,
-            'filter[published]': 1,
-            'filter[state]': 'validated',
-            'filter[with_reseaux]': this.structure.reseaux?.length
-              ? this.structure.reseaux.map((reseau) => reseau.id).join(',')
-              : 'empty',
-            pagination: 99,
-            include: 'photo,reseau',
-            sort: 'reseau_id',
-          },
-        })
-        this.templates = templates.data
+        promises.push(this.fetchDomaineTemplates())
       }
       if (this.template_id) {
-        const template = await apiFetch(`/mission-templates/${this.template_id}`)
-        this.mission.template = template
+        promises.push(this.fetchTemplate())
       }
+
+      await Promise.all(promises)
+      this.loadingFetch = false
+    },
+    async fetchDomaineTemplates() {
+      await apiFetch('/mission-templates', {
+        params: {
+          'filter[domaine.id]': this.domaine_id,
+          'filter[published]': 1,
+          'filter[state]': 'validated',
+          'filter[with_reseaux]': this.structure.reseaux?.length
+            ? this.structure.reseaux.map((reseau) => reseau.id).join(',')
+            : 'empty',
+          pagination: 99,
+          include: 'photo,reseau',
+          sort: 'reseau_id',
+        },
+      }).then((templates) => {
+        this.templates = templates.data
+      })
+    },
+    async fetchTemplate() {
+      await apiFetch(`/mission-templates/${this.template_id}`).then((template) => {
+        this.mission.template = template
+      })
     },
     onclickDomaine(domaineId) {
+      this.templates = []
       this.$router.push({
         path: this.$route.path,
         query: { ...this.$route.query, domaine: domaineId },
@@ -231,34 +268,26 @@ export default defineNuxtComponent({
       })
     },
     async onSelectTemplate(missionTemplate) {
+      const query = {}
       if (missionTemplate) {
-        const template = await apiFetch(`/mission-templates/${missionTemplate.id}`)
-        this.mission.template = template
-        this.$router.push({
-          path: this.$route.path,
-          query: {
-            ...this.$route.query,
-            template: missionTemplate.id,
-            step: 2,
-          },
-        })
+        query.template = missionTemplate.id
       } else {
         this.mission.template = null
-        this.$router.push({
-          path: this.$route.path,
-          query: { ...this.$route.query, domaine: this.domaine_id, step: 2 },
-        })
+        query.domaine = this.domaine_id
       }
 
-      window.scrollTo(0, 0)
+      this.$router.push({
+        path: this.$route.path,
+        query: { ...this.$route.query, step: 2, ...query },
+      })
     },
     async handleSubmit(payload) {
-      if (this.loading) {
+      if (this.loadingSubmit) {
         return
       }
-      this.loading = true
+      this.loadingSubmit = true
       await this.$refs.form.handleSubmit(payload)
-      this.loading = false
+      this.loadingSubmit = false
     },
   },
 })
