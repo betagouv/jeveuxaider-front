@@ -408,7 +408,7 @@ export default defineNuxtComponent({
         this.organisationStats = response
       })
 
-      if (['admin', 'responsable'].includes(this.$stores.auth.contextRole)) {
+      if (['admin', 'responsable', 'tete_de_reseau'].includes(this.$stores.auth.contextRole)) {
         apiFetch(`/structures/${route.params.id}/invitations`).then((response) => {
           this.queryInvitations = response
         })
