@@ -69,7 +69,7 @@ export default {
       return `${filepath}.webp, ${filepath}@2x.webp 2x, ${filepath}.jpg, ${filepath}@2x.jpg 2x`
     },
     hasPageOnline() {
-      if (!this.mission.structure) {
+      if (!this.mission?.structure) {
         return false
       }
       return (
@@ -87,6 +87,11 @@ export default {
         case 'admin':
         case 'referent':
           return true
+        case 'responsable':
+          if (this.mission.state === 'Brouillon' && this.mission.template_id) {
+            return false
+          }
+          return !!rolesWhoCanEdit?.includes(this.$stores.auth.contextRole)
         default:
           return !!rolesWhoCanEdit?.includes(this.$stores.auth.contextRole)
       }
