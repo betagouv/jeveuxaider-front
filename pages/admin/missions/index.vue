@@ -247,6 +247,7 @@
               "
               type="secondary"
               icon="RiDownload2Line"
+              :disabled="queryResult?.total === 0"
               :loading="exportLoading"
               @click.native="handleExport"
             >
