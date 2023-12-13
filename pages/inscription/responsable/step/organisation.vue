@@ -46,7 +46,7 @@
               name="statut_juridique"
               placeholder="Sélectionnez votre statut juridique"
               :options="$labels.structure_legal_status"
-              disabled
+              :disabled="form.reseaux.length === 0"
               @blur="validate('statut_juridique')"
             />
           </BaseFormControl>

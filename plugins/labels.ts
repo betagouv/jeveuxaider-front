@@ -283,6 +283,7 @@ const labels: TypeLabels = {
       label: "Établissement de santé privé d'intérêt collectif",
     },
     { key: 'Entreprise agréée ESUS', label: 'Entreprise agréée ESUS' },
+    { key: 'Fondation', label: 'Fondation' },
     { key: 'Autre', label: 'Autre' },
   ],
   structure_workflow_states: [

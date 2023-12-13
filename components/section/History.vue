@@ -176,6 +176,8 @@ export default defineNuxtComponent({
           return 'Template de mission'
         case 'statut_juridique':
           return 'Statut juridique'
+        case 'structure_privee_type':
+          return 'Type organisation privée'
         case 'city':
           return 'Ville'
         case 'dates_infos':
@@ -268,6 +270,8 @@ export default defineNuxtComponent({
           return 'Inscription ouverte'
         case 'activity_secondary_id':
           return 'Activité secondaire'
+        case 'is_alsace_moselle':
+          return 'Alsace Moselle'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },
