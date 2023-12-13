@@ -7,7 +7,7 @@
       <div class="lg:max-w-3xl lg:ml-auto lg:w-full lg:mb-12">
         <div class="lg:px-8">
           <DsfrBreadcrumb
-            theme="white"
+            :theme="[2, 3, 4, 7, 9, 10].includes(domaine.id) ? 'black' : 'white'"
             :links="[
               {
                 text: 'Domaines d‘action',
@@ -22,7 +22,10 @@
         <div class="pb-8 lg:px-8">
           <div class="mb-8">
             <h1
-              class="text-white inline relative text-3xl lg:text-[56px] sm:!leading-[1.1] tracking-tighter font-bold"
+              :class="[
+                domaineTextColor(domaine.id),
+                'inline relative text-3xl lg:text-[56px] sm:!leading-[1.1] tracking-tighter font-bold',
+              ]"
             >
               <span> {{ domaine.title }}</span>
               <img
@@ -34,14 +37,14 @@
             </h1>
           </div>
 
-          <p class="text-white text-lg lg:text-2xl lg:leading-10 mb-8">
+          <p :class="[domaineTextColor(domaine.id), 'text-lg lg:text-2xl lg:leading-10 mb-8']">
             {{ domaine.description }}
           </p>
           <div class="hidden sm:block">
             <DsfrButton size="lg" @click="onClickFindMissions" type="tertiary">
               Trouver une mission <span class="hidden sm:inline">de bénévolat</span>
             </DsfrButton>
-            <p class="text-base text-white lg:text-lg mt-4">
+            <p :class="[domaineTextColor(domaine.id), 'text-base lg:text-lg mt-4']">
               <template v-if="placesLeft > 0">
                 Plus de
                 <span class="font-bold"
@@ -88,7 +91,10 @@
 </template>
 
 <script>
+import MixinDomaines from '@/mixins/domaines'
+
 export default defineNuxtComponent({
+  mixins: [MixinDomaines],
   props: {
     domaine: {
       type: Object,

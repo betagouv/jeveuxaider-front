@@ -111,13 +111,16 @@
         @click.native="drawerActivityId = activity.id"
       >
         <template #badges>
-          <div v-if="activity.domaines.length" class="mb-2 flex gap-2">
-            <BaseBadge class="uppercase" :color="activity.domaines[0].id">
+          <div v-if="activity.domaines.length" class="mb-4 flex gap-2 mt-2">
+            <DsfrTag
+              :custom-theme="true"
+              :class="`${domaineBackgroundColor(activity.domaines[0].id)} text-white`"
+            >
               {{ activity.domaines[0].name }}
-            </BaseBadge>
-            <BaseBadge v-if="activity.domaines.length - 1 > 0" color="gray-light">
+            </DsfrTag>
+            <DsfrTag v-if="activity.domaines.length - 1 > 0" color="gray-light">
               +{{ activity.domaines.length - 1 }}
-            </BaseBadge>
+            </DsfrTag>
           </div>
         </template>
         <div class="mt-4 text-[13px] text-gray-500">
@@ -154,6 +157,7 @@ import DrawerActivity from '@/components/drawer/DrawerActivity.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import MixinDomaines from '@/mixins/domaines'
 
 export default defineNuxtComponent({
   components: {
@@ -163,7 +167,7 @@ export default defineNuxtComponent({
     Pagination,
     Breadcrumb,
   },
-  mixins: [QueryBuilder],
+  mixins: [QueryBuilder, MixinDomaines],
   setup() {
     definePageMeta({
       layout: 'admin-with-sidebar-menu',

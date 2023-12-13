@@ -54,7 +54,7 @@ export default defineNuxtComponent({
     theme: {
       type: String,
       default: 'default',
-      validator: (t) => ['default', 'white'].includes(t),
+      validator: (t) => ['default', 'white', 'black'].includes(t),
     },
   },
   data() {
@@ -65,7 +65,14 @@ export default defineNuxtComponent({
   },
   computed: {
     colorClass() {
-      return this.theme === 'white' ? 'text-white' : 'text-[#666666] hover:text-gray-700'
+      switch (this.theme) {
+        case 'white':
+          return 'text-white'
+        case 'black':
+          return 'text-black'
+        default:
+          return 'text-[#666666] hover:text-gray-700'
+      }
     },
   },
   methods: {
