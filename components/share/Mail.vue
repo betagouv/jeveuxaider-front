@@ -28,7 +28,7 @@ export default defineNuxtComponent({
       type: String,
       default() {
         const router = useRouter()
-        return router.currentRoute.fullPath
+        return router.currentRoute.value.fullPath
       },
     },
     subject: {

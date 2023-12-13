@@ -14,16 +14,18 @@
             Parmi les autres thématiques qui vous touchent
           </DsfrHeading>
           <div class="flex flex-wrap gap-4 sm:gap-6 xl:gap-8 mt-12">
-            <div v-for="activity in profileActivitiesRemaining" :key="activity.key">
-              <nuxt-link
-                no-prefetch
-                :to="`/missions-benevolat?activities.name=${activity.name}`"
-                class="inline-flex p-4 lg:px-8 lg:py-5 bg-white shadow lg:shadow-xl text-xl lg:text-[22px] font-bold w-full sm:w-auto hover:bg-[#F6F6F6]"
-              >
-                <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
-                <span class="ml-3">{{ activity.name }}</span>
-              </nuxt-link>
-            </div>
+            <ClientOnly>
+              <div v-for="(activity, i) in profileActivitiesRemaining" :key="activity.key">
+                <nuxt-link
+                  no-prefetch
+                  :to="`/missions-benevolat?activities.name=${activity.name}`"
+                  class="inline-flex p-4 lg:px-8 lg:py-5 bg-white shadow lg:shadow-xl text-xl lg:text-[22px] font-bold w-full sm:w-auto hover:bg-[#F6F6F6]"
+                >
+                  <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
+                  <span class="ml-3">{{ activity.name }}</span>
+                </nuxt-link>
+              </div>
+            </ClientOnly>
           </div>
         </div>
         <div v-if="otherActivitiesFromDomains.length > 0">
@@ -31,24 +33,26 @@
             Ces sujets devraient également vous parler
           </DsfrHeading>
           <div class="flex flex-wrap gap-4 sm:gap-6 xl:gap-8 mt-12">
-            <div
-              v-for="activity in otherActivitiesFromDomains"
-              :key="activity.key"
-              class="inline-flex border border-[#CECECE] text-lg xl:text-xl font-bold w-full sm:w-auto"
-            >
-              <div class="p-4 xl:px-8 xl:py-5 mr-auto">
-                <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
-                <span class="ml-3">{{ activity.name }}</span>
-              </div>
-              <button
-                v-if="!attachedActivities.includes(activity.key)"
-                class="flex-none flex justify-center items-center border-l border-[#CECECE] w-[50px] sm:w-[72px] cursor-pointer hover:bg-[#F9F9F9]"
-                aria-label="Ajouter"
-                @click="attachActivityToProfile(activity)"
+            <ClientOnly>
+              <div
+                v-for="activity in otherActivitiesFromDomains"
+                :key="activity.key"
+                class="inline-flex border border-[#CECECE] text-lg xl:text-xl font-bold w-full sm:w-auto"
               >
-                <RiAddLine class="fill-current w-[20px] h-[20px]" />
-              </button>
-            </div>
+                <div class="p-4 xl:px-8 xl:py-5 mr-auto">
+                  <span aria-hidden="true" class="flex-none">{{ activity.icon }}</span>
+                  <span class="ml-3">{{ activity.name }}</span>
+                </div>
+                <button
+                  v-if="!attachedActivities.includes(activity.key)"
+                  class="flex-none flex justify-center items-center border-l border-[#CECECE] w-[50px] sm:w-[72px] cursor-pointer hover:bg-[#F9F9F9]"
+                  aria-label="Ajouter"
+                  @click="attachActivityToProfile(activity)"
+                >
+                  <RiAddLine class="fill-current w-[20px] h-[20px]" />
+                </button>
+              </div>
+            </ClientOnly>
           </div>
         </div>
       </div>
