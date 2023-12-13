@@ -64,8 +64,9 @@ export default {
     return {}
   },
   created() {
-    // @TODO if not volontaire
-    this.$stores.messaging.fetchMessageTemplates()
+    if (this.$stores.auth.contextRole !== 'volontaire') {
+      this.$stores.messaging.fetchMessageTemplates()
+    }
   },
   computed: {},
   methods: {},

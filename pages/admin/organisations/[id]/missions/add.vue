@@ -256,6 +256,10 @@ export default defineNuxtComponent({
     },
     async fetchTemplate() {
       await apiFetch(`/mission-templates/${this.template_id}`).then((template) => {
+        if (!template.published || template.state !== 'validated') {
+          return showError({ statusCode: 403 })
+        }
+
         this.mission.template = template
       })
     },
