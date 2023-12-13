@@ -21,7 +21,7 @@ export default defineNuxtComponent({
       if (!this.$stores.auth.isImpersonate) {
         const response = await apiFetch('/user/last-read-conversation')
         if (response.last_read_conversation) {
-          this.$router.push(`/messages/${response.last_read_conversation.id}`)
+          navigateTo(`/messages/${response.last_read_conversation.id}`, { replace: true })
         }
       }
     },
