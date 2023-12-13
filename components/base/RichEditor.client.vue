@@ -21,6 +21,7 @@ import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold'
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic'
 import List from '@ckeditor/ckeditor5-list/src/list'
 import Link from '@ckeditor/ckeditor5-link/src/link'
+import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat'
 
 const props = defineProps({
   modelValue: String,
@@ -32,7 +33,7 @@ const { modelValue, disabled, toolbar, placeholder } = toRefs(props)
 
 const editorConfig = {
   placeholder: placeholder.value ?? '',
-  plugins: [Essentials, Paragraph, Bold, Italic, List, Link],
+  plugins: [Essentials, Paragraph, Bold, Italic, List, Link, Autoformat],
   toolbar: toolbar.value?.length
     ? toolbar.value
     : ['bold', 'italic', '|', 'bulletedList', 'numberedList'],
