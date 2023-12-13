@@ -5,8 +5,7 @@ export default {
         case 'App\\Notifications\\ParticipationCreated':
           return {
             emoji: '✊',
-            message:
-              'Votre demande de participation **a bien été enregistrée**',
+            message: 'Votre demande de participation **a bien été enregistrée**',
             contexteIcon: 'RiBuildingFill',
             contexte: this.notification.data.structure_name,
             redirection: this.notification.data.conversation_id
@@ -16,8 +15,7 @@ export default {
         case 'App\\Notifications\\ParticipationBeingProcessed':
           return {
             emoji: '⏳',
-            message:
-              'Votre demande de participation **est en cours de traitement**',
+            message: 'Votre demande de participation **est en cours de traitement**',
             contexteIcon: 'RiBuildingFill',
             contexte: this.notification.data.structure_name,
             redirection: this.notification.data.conversation_id
@@ -57,8 +55,7 @@ export default {
         case 'App\\Notifications\\DocumentSubmitted':
           return {
             emoji: '📥',
-            message:
-              'Une **nouvelle ressource** est accessible dans **votre espace**',
+            message: 'Une **nouvelle ressource** est accessible dans **votre espace**',
             contexteIcon: 'RiDownload2Line',
             contexte: this.notification.data.ressource_title,
             redirection: '/admin/ressources',
@@ -205,8 +202,13 @@ export default {
         case 'App\\Notifications\\ResetPassword':
           return {
             emoji: '🔐',
-            message:
-              'Une demande de **réinitialisation de votre mot de passe** a été effectuée',
+            message: 'Une demande de **réinitialisation de votre mot de passe** a été effectuée',
+            redirection: null,
+          }
+        case 'App\\Notifications\\StructureUnsubscribed':
+          return {
+            emoji: '👋🏻',
+            message: 'Votre organisation a été **désinscrite**',
             redirection: null,
           }
         default:
@@ -225,10 +227,7 @@ export default {
         this.$router.push(this.notificationResolver.redirection)
         this.$emit('close')
       }
-      if (
-        this.notification.read_at === null &&
-        !this.$stores.auth.isImpersonate
-      ) {
+      if (this.notification.read_at === null && !this.$stores.auth.isImpersonate) {
         this.$stores.notifications.markNotificationAsRead(notification)
         this.$stores.notifications.decrementUnreadNotificationsCount()
         this.$emit('refetch')
