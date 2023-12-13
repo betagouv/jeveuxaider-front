@@ -306,6 +306,15 @@ export default defineNuxtComponent({
         },
         {
           tab: 'responsables',
+          key: 'responsable_structure_unsubscribed',
+          label: 'Votre organisation a été désinscrite',
+          description: 'Notification envoyée à tous les membres de la structure',
+          tags: ['app-responsable-organisation-desinscrite'],
+          types: ['Notification'],
+          is_updated: true,
+        },
+        {
+          tab: 'responsables',
           key: 'responsable_mission_created',
           label: '😊 Merci d’avoir proposé une mission ! ',
           description:
