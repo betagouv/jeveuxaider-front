@@ -384,6 +384,7 @@ const labels: TypeLabels = {
       icon: '/images/icons/domaine-art-culture-pour-tous.svg',
       color: 'text-domaine-culture',
       bg: 'bg-domaine-culture',
+      textColor: 'text-black',
       emoji: '🎨',
       partenaires: [
         {
@@ -402,6 +403,7 @@ const labels: TypeLabels = {
       icon: '/images/icons/domaine-benevolat-de-competences.svg',
       color: 'text-domaine-benevolat-competences',
       bg: 'bg-domaine-benevolat-competences',
+      textColor: 'text-white',
       emoji: '💼',
       partenaires: [
         {
@@ -420,6 +422,7 @@ const labels: TypeLabels = {
       icon: '/images/icons/domaine-cooperation-internationale.svg',
       color: 'text-domaine-cooperation',
       bg: 'bg-domaine-cooperation',
+      textColor: 'text-white',
       emoji: '🌍',
       partenaires: [
         {
@@ -438,6 +441,7 @@ const labels: TypeLabels = {
       icon: '/images/icons/domaine-education-pour-tous.svg',
       color: 'text-domaine-education',
       bg: 'bg-domaine-education',
+      textColor: 'text-black',
       emoji: '📚',
       partenaires: [
         {
@@ -456,6 +460,7 @@ const labels: TypeLabels = {
       icon: '/images/icons/domaine-memoire-citoyennete.svg',
       color: 'text-domaine-memoire',
       bg: 'bg-domaine-memoire',
+      textColor: 'text-white',
       emoji: '📯',
       partenaires: [
         {
@@ -474,6 +479,7 @@ const labels: TypeLabels = {
       icon: '/images/icons/domaine-prevention-protection.svg',
       color: 'text-domaine-prevention',
       bg: 'bg-domaine-prevention',
+      textColor: 'text-black',
       emoji: '🚨',
       partenaires: [
         {
@@ -492,6 +498,7 @@ const labels: TypeLabels = {
       icon: '/images/icons/domaine-protection-nature.svg',
       color: 'text-domaine-nature',
       bg: 'bg-domaine-nature',
+      textColor: 'text-black',
       emoji: '🌿',
       partenaires: [
         {
@@ -510,6 +517,7 @@ const labels: TypeLabels = {
       icon: '/images/icons/domaine-sante-pour-tous.svg',
       color: 'text-domaine-sante',
       bg: 'bg-domaine-sante',
+      textColor: 'text-white',
       emoji: '💊',
       partenaires: [
         {
@@ -528,6 +536,7 @@ const labels: TypeLabels = {
       icon: '/images/icons/domaine-solidarite-insertion.svg',
       color: 'text-domaine-solidarite',
       bg: 'bg-domaine-solidarite',
+      textColor: 'text-black',
       emoji: '🍲',
       partenaires: [
         {
@@ -546,6 +555,7 @@ const labels: TypeLabels = {
       icon: '/images/icons/domaine-sport-pour-tous.svg',
       color: 'text-domaine-sport',
       bg: 'bg-domaine-sport',
+      textColor: 'text-black',
       emoji: '🏀',
       partenaires: [
         {
