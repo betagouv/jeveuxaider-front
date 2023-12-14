@@ -56,7 +56,16 @@ export default defineNuxtComponent({
   },
   computed: {
     canUseMessageTemplate() {
+      if (this.isBenevoleInParticipation) {
+        return false
+      }
       return ['responsable', 'referent', 'admin'].includes(this.$stores.auth.contextRole)
+    },
+    isBenevoleInParticipation() {
+      return (
+        this.conversation.conversable_type === 'App\\Models\\Participation' &&
+        this.conversation.conversable.profile_id === this.$stores.auth.profile.id
+      )
     },
     conversation() {
       return this.$stores.messaging.activeConversation
@@ -70,7 +79,7 @@ export default defineNuxtComponent({
       this.message = payload
     },
     handleSubmitt() {
-      console.log('formulaire soumis')
+      // console.log('formulaire soumis')
     },
     handleSubmit() {
       if (this.loading) {
