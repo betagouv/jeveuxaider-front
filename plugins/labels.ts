@@ -284,7 +284,7 @@ const labels: TypeLabels = {
     },
     { key: 'Entreprise agréée ESUS', label: 'Entreprise agréée ESUS' },
     { key: 'Fondation', label: 'Fondation' },
-    { key: 'Fond de dotation', label: 'Fond de dotation' },
+    { key: 'Fonds de dotation', label: 'Fonds de dotation' },
     { key: 'Autre', label: 'Autre' },
   ],
   structure_workflow_states: [
