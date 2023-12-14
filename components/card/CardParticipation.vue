@@ -136,6 +136,21 @@
               </div>
             </div>
           </div>
+          <div
+            v-if="showTags && canSeeTags && participation.tags?.length > 0"
+            class="flex space-x-4 items-center"
+          >
+            <RiPriceTag3Fill class="w-4 h-4 text-[#666666] fill-current" />
+            <div class="flex flex-wrap gap-2">
+              <div
+                v-for="(tag, index) in participation.tags"
+                :key="tag.id"
+                class="text-xs text-[#161616] px-3 py-1 rounded-full bg-[#eeeeee]"
+              >
+                {{ tag.name }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -166,6 +181,10 @@ export default defineNuxtComponent({
       type: String,
       default: 'benevole',
     },
+    showTags: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     mission() {
@@ -178,6 +197,11 @@ export default defineNuxtComponent({
     },
     isBenevole() {
       return this.participation.profile_id == this.$stores.auth.profile.id
+    },
+    canSeeTags() {
+      return ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+        this.$stores.auth.contextRole
+      )
     },
     badgeTypeParticipationSate() {
       switch (this.participation.state) {

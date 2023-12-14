@@ -271,6 +271,7 @@
             :participation="participation"
             @click.native="drawerParticipationId = participation.id"
             @refetch="fetch()"
+            show-tags
           />
         </div>
       </div>
@@ -346,7 +347,8 @@ export default defineNuxtComponent({
       endpoint: '/participations',
       exportEndpoint: '/export/participations',
       queryParams: {
-        include: 'conversation.latestMessage,profile.avatar,mission.responsable,mission.structure',
+        include:
+          'conversation.latestMessage,profile.avatar,mission.responsable,mission.structure,tags',
       },
       drawerParticipationId: null,
       autocompleteOptionsOrga: [],
