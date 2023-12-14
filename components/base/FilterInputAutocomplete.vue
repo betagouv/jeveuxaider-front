@@ -10,7 +10,7 @@
       clearable
       icon="RiArrowDownSLine"
       icon-position="right"
-      :is-active="value ? true : false"
+      :is-active="modelValue ? true : false"
       class="max-w-[300px]"
       @keydown.native="onKeydown"
       @click.native="toggleOpen"
@@ -81,7 +81,7 @@ export default defineNuxtComponent({
   },
   props: {
     emits: ['selected', 'fetch-suggestions', 'add'],
-    value: { type: String, default: null },
+    modelValue: { type: String, default: null },
     placeholder: { type: String, default: null },
     labelEmpty: { type: String, default: 'Aucun résultat' },
     name: { type: String, required: true },
@@ -105,12 +105,12 @@ export default defineNuxtComponent({
       showOptions: false,
       highlightIndex: null,
       selectedOption: null,
-      searchTerm: this.value,
+      searchTerm: this.modelValue,
     }
   },
   computed: {
     computedValue() {
-      return this.value ? this.value : this.label
+      return this.modelValue ? this.modelValue : this.label
     },
   },
   methods: {
