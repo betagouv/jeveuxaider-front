@@ -5,6 +5,7 @@
         <component :is="icon" class="h-4 w-4 text-gray-400 fill-current" />
       </div>
       <input
+        ref="input"
         :id="name"
         :value.trim="modelValue"
         :name="name"
@@ -36,7 +37,7 @@
           inputClass,
         ]"
         :aria-required="ariaRequired"
-        :autocomplete="autocomplete || 'one-time-code'"
+        :autocomplete="autocomplete || 'off'"
         @input="$emit('update:modelValue', $event.target.value)"
         @blur="$emit('blur')"
         @keypress.space="onKeypressSpace"
@@ -105,6 +106,9 @@ export default defineNuxtComponent({
     }
   },
   methods: {
+    focus() {
+      this.$refs.input.focus()
+    },
     onKeypressSpace(event) {
       if (this.type === 'email') {
         event.preventDefault()

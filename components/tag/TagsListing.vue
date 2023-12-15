@@ -7,11 +7,12 @@
         size="md"
         as="button"
         :context="canManageTags ? 'deletable' : 'default'"
-        @click="onDeleteClick(tag)"
+        @delete="onDeleteClick(tag)"
       >
         {{ tag.name }}
       </DsfrTag>
     </div>
+    <div v-else-if="!canManageTags" class="text-gray-300 mt-2">Aucune étiquette</div>
     <template v-if="canManageTags && taggable">
       <SelectTags
         v-model="tags"
@@ -55,7 +56,6 @@ export default defineNuxtComponent({
   },
   methods: {
     onDeleteClick(tag) {
-      console.log('onDeleteClick', tag.id)
       this.detachTag(tag.id)
     },
     async attachTag(payload) {

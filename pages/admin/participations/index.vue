@@ -5,6 +5,7 @@
       @close="drawerParticipationId = null"
       @updated="onDrawerUpdated()"
       @refetch="fetch()"
+      @refreshed-tags="onRefreshedTags"
     />
 
     <template #breadcrumb>
@@ -385,6 +386,11 @@ export default defineNuxtComponent({
   methods: {
     onDrawerUpdated() {
       this.fetch()
+    },
+    onRefreshedTags(tags) {
+      this.queryResult.data.find(
+        (participation) => participation.id === this.drawerParticipationId
+      ).tags = tags
     },
     async onFetchSuggestionsOrga(value) {
       const organisations = await apiFetch('/structures', {

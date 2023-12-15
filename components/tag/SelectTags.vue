@@ -20,12 +20,12 @@
       <div
         v-show="showOptions"
         :class="[
-          'absolute w-full z-50 mt-2 pb-4 bg-white border border-gray-200 shadow-md overflow-hidden min-w-[300px]',
+          'absolute w-full z-50 mt-2 pt-4 bg-white border border-gray-200 shadow-md overflow-hidden min-w-[300px]',
           optionsClass,
         ]"
       >
-        <FacetSearch v-model="searchTerm" @update:modelValue="handleInput" class="p-4" />
-        <BaseContainerScrollable v-if="filteredOptions.length > 0" class="h-[200px] pr-4">
+        <FacetSearch v-model="searchTerm" @update:modelValue="handleInput" class="px-4" />
+        <BaseContainerScrollable v-if="filteredOptions.length > 0" class="h-[200px] py-4 pr-4">
           <BaseCheckbox
             v-for="option in filteredOptions"
             :key="option.key"
@@ -33,15 +33,20 @@
             :is-checked="modelValue.some((item) => item.id == option.key)"
             @checked="attachTag"
             @unchecked="detachTag"
-            class="px-4"
+            class="pt-1 pl-4 pr-2"
           />
         </BaseContainerScrollable>
         <div class="p-4" v-else>
           <div class="text-gray-300">Aucune étiquette</div>
         </div>
-        <div class="border-t">
-          <div @click="showModal = true" class="hover:text-jva-blue-500">
-            <RiTodoLine class="h-4 w-4 fill-current" /> <span>Gestion des étiquettes</span>
+        <div class="px-4">
+          <div class="border-t">
+            <div
+              @click="showModal = true"
+              class="py-4 flex items-center cursor-pointer text-sm space-x-4 hover:text-jva-blue-500"
+            >
+              <RiTodoLine class="h-4 w-4 fill-current" /> <span>Gestion des étiquettes</span>
+            </div>
           </div>
         </div>
       </div>
@@ -111,6 +116,9 @@ export default defineNuxtComponent({
       this.searchTerm = value
     },
     clickedOutside() {
+      if (this.showModal) {
+        return
+      }
       this.showOptions = false
     },
   },
