@@ -61,8 +61,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="hasActiveFilters()"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="hasActiveFilters()"
           @click.native="deleteAllFilters"
         >
           Tous
@@ -73,10 +72,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
-            $route.query['filter[type]'] && $route.query['filter[type]'] == 'department'
-          "
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="$route.query['filter[type]'] && $route.query['filter[type]'] == 'department'"
           @click.native="changeFilter('filter[type]', 'department')"
         >
           Départements
@@ -87,8 +83,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'city'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="$route.query['filter[type]'] && $route.query['filter[type]'] == 'city'"
           @click.native="changeFilter('filter[type]', 'city')"
         >
           Villes
@@ -99,10 +94,9 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[is_published]', 'true')"
         >
           En ligne
@@ -113,10 +107,9 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[is_published]', 'false')"
         >
           Hors ligne

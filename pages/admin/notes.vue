@@ -31,8 +31,7 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="hasActiveFilters()"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="hasActiveFilters()"
               @click.native="deleteAllFilters"
             >
               Toutes
@@ -43,8 +42,7 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="$route.query['filter[mine]'] && $route.query['filter[mine]'] == '1'"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="$route.query['filter[mine]'] && $route.query['filter[mine]'] == '1'"
               @click.native="changeFilter('filter[mine]', '1')"
             >
               Mes notes
@@ -55,10 +53,9 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="
+              :is-active="
                 $route.query['filter[type]'] && $route.query['filter[type]'] == 'organisations'
               "
-              is-selected-class="border-gray-50 bg-gray-50"
               @click.native="changeFilter('filter[type]', 'organisations')"
             >
               Organisations
@@ -69,10 +66,9 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="
+              :is-active="
                 $route.query['filter[type]'] && $route.query['filter[type]'] == 'missions'
               "
-              is-selected-class="border-gray-50 bg-gray-50"
               @click.native="changeFilter('filter[type]', 'missions')"
             >
               Missions

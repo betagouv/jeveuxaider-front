@@ -136,20 +136,16 @@
               </div>
             </div>
           </div>
-          <div
-            v-if="showTags && canSeeTags && participation.tags?.length > 0"
-            class="flex space-x-4 items-center"
-          >
-            <RiPriceTag3Fill class="w-4 h-4 text-[#666666] fill-current" />
-            <div class="flex flex-wrap gap-2">
-              <div
-                v-for="(tag, index) in participation.tags"
-                :key="tag.id"
-                class="text-xs text-[#161616] px-3 py-1 rounded-full bg-[#eeeeee]"
-              >
-                {{ tag.name }}
-              </div>
-            </div>
+        </div>
+        <div
+          v-if="showTags && canSeeTags && participation.tags?.length > 0"
+          class="flex-none flex space-x-4 items-center"
+        >
+          <RiPriceTag3Fill class="w-4 h-4 text-[#666666] fill-current" />
+          <div class="flex flex-wrap gap-2">
+            <DsfrTag v-for="(tag, index) in participation.tags" :key="tag.id" size="md" as="button">
+              {{ tag.name }}
+            </DsfrTag>
           </div>
         </div>
       </div>

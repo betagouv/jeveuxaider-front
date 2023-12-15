@@ -212,7 +212,7 @@
         :icon-only="true"
         size="md"
         as="button"
-        title="afficher plus de filtres"
+        title="Afficher plus de filtres"
         @click.native="showAllFilters = true"
       />
     </div>

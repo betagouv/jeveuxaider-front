@@ -47,8 +47,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="hasActiveFilters()"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="hasActiveFilters()"
           @click.native="deleteAllFilters"
         >
           Toutes
@@ -59,10 +58,9 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 1
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[is_published]', 1)"
         >
           En ligne
@@ -73,10 +71,9 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 0
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[is_published]', 0)"
         >
           Hors ligne

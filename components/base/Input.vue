@@ -36,7 +36,7 @@
           inputClass,
         ]"
         :aria-required="ariaRequired"
-        :autocomplete="autocomplete || 'off'"
+        :autocomplete="autocomplete || 'one-time-code'"
         @input="$emit('update:modelValue', $event.target.value)"
         @blur="$emit('blur')"
         @keypress.space="onKeypressSpace"

@@ -44,8 +44,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="hasActiveFilters()"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="hasActiveFilters()"
             @click.native="deleteAllFilters"
           >
             Toutes
@@ -56,8 +55,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="$route.query['filter[state]'] == 'Validée'"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="$route.query['filter[state]'] == 'Validée'"
             @click.native="changeFilter('filter[state]', 'Validée')"
           >
             Validées

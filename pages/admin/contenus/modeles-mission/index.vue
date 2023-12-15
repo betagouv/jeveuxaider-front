@@ -51,8 +51,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="hasActiveFilters()"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="hasActiveFilters()"
           @click.native="deleteAllFilters"
         >
           Tous
@@ -63,10 +62,9 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[published]'] && $route.query['filter[published]'] == 'true'
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[published]', 'true')"
         >
           En ligne
@@ -77,10 +75,9 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[published]'] && $route.query['filter[published]'] == 'false'
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[published]', 'false')"
         >
           Hors ligne
@@ -92,10 +89,9 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[with_reseau]'] && $route.query['filter[with_reseau]'] == 'yes'
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[with_reseau]', 'yes')"
         >
           Réseaux

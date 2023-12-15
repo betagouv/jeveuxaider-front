@@ -4,46 +4,40 @@
     :type="as === 'button' ? 'button' : null"
     :class="[
       'tag inline-flex items-center justify-center rounded-full max-w-full relative transition',
-
       { 'px-2 py-0.5 text-xs h-6': size == 'sm' },
       { 'px-3 py-1 text-sm h-8': size == 'md' },
-
-      { 'text-[#161616] bg-[#EEEEEE]': !customTheme && !context },
-
       {
-        'cursor-pointer': ['clickable', 'selectable', 'deletable'].includes(context),
+        'text-[#161616] bg-[#EEEEEE]': context === 'unclickable',
       },
-
       {
-        'text-jva-blue-500 bg-[#E3E3FD] hover:bg-[#C1C1FB] active:bg-[#ADADF9]':
-          (context === 'clickable' && !isActive) || (context === 'selectable' && !isSelected),
+        'text-jva-blue-500 bg-[#E3E3FD] hover:bg-[#C1C1FB] active:bg-[#ADADF9] cursor-pointer':
+          ['clickable', 'selectable'].includes(context) && !isActive,
       },
-
-      { selected: isSelected },
-
       {
-        'bg-jva-blue-500 text-white hover:bg-[#1212FF] active:bg-[#2323FF]': isSelected || isActive,
+        'bg-jva-blue-500 text-white hover:bg-[#1212FF] active:bg-[#2323FF]':
+          ['clickable', 'selectable'].includes(context) && isActive,
+      },
+      {
+        'bg-jva-blue-500 text-white cursor-pointer hover:bg-[#1212FF]': context === 'deletable',
       },
     ]"
-    :aria-pressed="isSelected"
+    :aria-pressed="isActive"
   >
-    <component
-      :is="iconComponent"
-      v-if="icon && iconPosition === 'left'"
-      :class="[
-        'flex-none',
-
-        { 'fill-current': iconFillCurrent },
-
-        { 'w-3 h-3': size === 'sm' },
-        { 'w-4 h-4': size === 'md' },
-
-        { 'ml-[-0.09375rem]': size === 'sm' },
-        { 'ml-[-0.125rem]': size === 'md' },
-        { 'mr-[-0.09375rem]': size === 'sm' && iconOnly },
-        { 'mr-[-0.125rem]': size === 'md' && iconOnly },
-      ]"
-    />
+    <template v-if="icon && iconPosition === 'left'">
+      <component
+        :is="iconComponent"
+        :class="[
+          'flex-none',
+          { 'fill-current': iconFillCurrent },
+          { 'w-3 h-3': size === 'sm' },
+          { 'w-4 h-4': size === 'md' },
+          { 'ml-[-0.09375rem]': size === 'sm' },
+          { 'ml-[-0.125rem]': size === 'md' },
+          { 'mr-[-0.09375rem]': size === 'sm' && iconOnly },
+          { 'mr-[-0.125rem]': size === 'md' && iconOnly },
+        ]"
+      />
+    </template>
 
     <span
       v-if="!iconOnly"
@@ -60,30 +54,42 @@
       <slot />
     </span>
 
-    <component
-      :is="iconOrClearable"
-      v-if="icon && iconPosition === 'right'"
-      :class="[
-        'flex-none',
-        { 'fill-current': iconFillCurrent },
-        { 'w-3 h-3': size === 'sm' },
-        { 'w-4 h-4': size === 'md' },
-        { 'mr-[-0.09375rem]': size === 'sm' },
-        { 'mr-[-0.125rem]': size === 'md' },
-        { 'ml-[-0.09375rem]': size === 'sm' && iconOnly },
-        { 'ml-[-0.125rem]': size === 'md' && iconOnly },
-        { 'pointer-events-none': clearable && !isActive },
-      ]"
-      @click.native.stop="isActive ? $emit('clear') : $emit('icon-right-click')"
-    />
+    <template v-if="icon && iconPosition === 'right'">
+      <component
+        :is="iconComponentResolver"
+        :class="[
+          'flex-none fill-current',
+          { 'w-3 h-3': size === 'sm' },
+          { 'w-4 h-4': size === 'md' },
+          { 'mr-[-0.09375rem]': size === 'sm' },
+          { 'mr-[-0.125rem]': size === 'md' },
+          { 'ml-[-0.09375rem]': size === 'sm' && iconOnly },
+          { 'ml-[-0.125rem]': size === 'md' && iconOnly },
+          { 'pointer-events-none': clearable && !isActive },
+        ]"
+        @click.native.stop="isActive ? $emit('clear') : $emit('icon-right-click')"
+      />
+    </template>
 
-    <RiCheckboxCircleLine
-      v-if="isSelected"
-      :class="[
-        'absolute top-[-6px] right-[-6px] w-[18px] h-[18px] fill-current border-2 rounded-full text-jva-blue-500',
-        isSelectedClass,
-      ]"
-    />
+    <template v-if="context === 'deletable'">
+      <RiCloseFill
+        :class="[
+          'flex-none fill-current',
+          { 'w-3 h-3 ml-1 mr-[-0.09375rem]': size === 'sm' },
+          { 'w-4 h-4 ml-1 mr-[-0.125rem]': size === 'md' },
+        ]"
+        @click.native.stop="$emit('delete')"
+      />
+    </template>
+
+    <template v-if="context === 'selectable' && isActive">
+      <RiCheckboxCircleLine
+        :class="[
+          'absolute top-[-6px] right-[-6px] w-[18px] h-[18px] fill-current border-2 rounded-full text-jva-blue-500',
+          'border-gray-50 bg-gray-50',
+        ]"
+      />
+    </template>
   </component>
 </template>
 
@@ -92,7 +98,7 @@ export default defineNuxtComponent({
   props: {
     as: {
       type: String,
-      default: 'span',
+      default: 'span', // span | button | label
     },
     size: {
       type: String,
@@ -104,7 +110,7 @@ export default defineNuxtComponent({
     },
     context: {
       type: [String, null],
-      default: null,
+      default: 'unclickable', // unclickable | clickable | selectable | deletable
     },
     icon: {
       type: [String, null],
@@ -118,30 +124,27 @@ export default defineNuxtComponent({
       type: Boolean,
       default: false,
     },
-    iconFillCurrent: {
-      type: Boolean,
-      default: true,
-    },
     isSelected: {
       type: Boolean,
       default: false,
     },
-    isSelectedClass: {
-      type: String,
-      default: 'border-white bg-white',
-    },
+    // isSelectedClass: {
+    //   type: String,
+    //   default: 'border-white bg-white',
+    // },
     isActive: {
-      type: Boolean,
-      default: false,
-    },
-    customTheme: {
       type: Boolean,
       default: false,
     },
   },
   computed: {
-    iconOrClearable() {
-      return this.isActive ? resolveComponent('RiCloseFill') : resolveComponent(this.icon)
+    iconComponentResolver() {
+      switch (this.context) {
+        case 'selectable':
+        case 'clickable':
+          return this.isActive ? resolveComponent('RiCloseFill') : resolveComponent(this.icon)
+      }
+      return resolveComponent(this.icon)
     },
     iconComponent() {
       return resolveComponent(this.icon)

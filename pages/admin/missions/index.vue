@@ -274,8 +274,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="hasActiveFilters()"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="hasActiveFilters()"
             @click.native="deleteAllFilters"
           >
             Toutes
@@ -310,11 +309,10 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="
+            :is-active="
               $route.query['filter[state]'] &&
               $route.query['filter[state]'] == 'En attente de validation'
             "
-            is-selected-class="border-gray-50 bg-gray-50"
             @click.native="changeFilter('filter[state]', 'En attente de validation')"
           >
             En attente de validation
@@ -325,10 +323,9 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="
+            :is-active="
               $route.query['filter[available]'] && $route.query['filter[available]'] == 'available'
             "
-            is-selected-class="border-gray-50 bg-gray-50"
             @click.native="changeFilter('filter[available]', 'available')"
           >
             En ligne
@@ -340,11 +337,10 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="
+            :is-active="
               $route.query['filter[is_snu_mig_compatible]'] &&
               $route.query['filter[is_snu_mig_compatible]'] == 'true'
             "
-            is-selected-class="border-gray-50 bg-gray-50"
             @click.native="changeFilter('filter[is_snu_mig_compatible]', 'true')"
           >
             SNU/MIG
@@ -356,11 +352,10 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="
+            :is-active="
               $route.query['filter[publics_volontaires]'] &&
               $route.query['filter[publics_volontaires]'] == 'Mineurs'
             "
-            is-selected-class="border-gray-50 bg-gray-50"
             @click.native="changeFilter('filter[publics_volontaires]', 'Mineurs')"
           >
             Ouverte aux mineurs

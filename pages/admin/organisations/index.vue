@@ -103,8 +103,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="hasActiveFilters()"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="hasActiveFilters()"
             @click.native="deleteAllFilters"
           >
             Toutes
@@ -115,11 +114,10 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="
+            :is-active="
               $route.query['filter[state]'] &&
               $route.query['filter[state]'] == 'En attente de validation'
             "
-            is-selected-class="border-gray-50 bg-gray-50"
             @click.native="changeFilter('filter[state]', 'En attente de validation')"
           >
             En attente de validation
@@ -130,11 +128,10 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="
+            :is-active="
               $route.query['filter[state]'] &&
               $route.query['filter[state]'] == 'En cours de traitement'
             "
-            is-selected-class="border-gray-50 bg-gray-50"
             @click.native="changeFilter('filter[state]', 'En cours de traitement')"
           >
             En cours de traitement

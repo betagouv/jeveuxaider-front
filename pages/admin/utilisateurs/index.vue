@@ -161,8 +161,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="hasActiveFilters()"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="hasActiveFilters()"
             @click.native="deleteAllFilters"
           >
             Tous
@@ -173,8 +172,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="$route.query['filter[user.role]'] == 'referent'"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="$route.query['filter[user.role]'] == 'referent'"
             @click.native="changeFilter('filter[user.role]', 'referent')"
           >
             Référents départementaux
@@ -185,8 +183,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="$route.query['filter[user.role]'] == 'responsable'"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="$route.query['filter[user.role]'] == 'responsable'"
             @click.native="changeFilter('filter[user.role]', 'responsable')"
           >
             Responsables d'organisations
@@ -197,8 +194,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="$route.query['filter[user.role]'] == 'tete_de_reseau'"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="$route.query['filter[user.role]'] == 'tete_de_reseau'"
             @click.native="changeFilter('filter[user.role]', 'tete_de_reseau')"
           >
             Têtes de réseau
