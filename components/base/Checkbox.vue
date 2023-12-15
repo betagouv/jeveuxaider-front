@@ -78,7 +78,7 @@
 
 <script>
 export default defineNuxtComponent({
-  emits: ['change'],
+  emits: ['change', 'checked', 'unchecked'],
   props: {
     option: { type: Object, required: true },
     isChecked: { type: Boolean, default: false },
@@ -107,6 +107,11 @@ export default defineNuxtComponent({
   methods: {
     toggleChecked() {
       this.checked = !this.checked
+      if (this.checked) {
+        this.$emit('checked', this.option.key)
+      } else {
+        this.$emit('unchecked', this.option.key)
+      }
       this.$emit('change', this.option.key)
     },
   },

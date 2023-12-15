@@ -33,23 +33,16 @@
         </template>
         <div class="border-t -mx-6 my-6" />
         <div class="text-sm uppercase font-semibold text-gray-600">Étiquettes</div>
-        <div class="flex flex-wrap gap-2 mt-2">
-          <DsfrTag
-            v-for="(tag, index) in participation.tags"
-            :key="tag.id"
-            size="md"
-            as="button"
-            context="deletable"
-          >
-            {{ tag.name }}
-          </DsfrTag>
-          <TagManager
-            :tags="participation.tags"
-            :taggable-id="participation.id"
-            taggable-type="App\Models\Participation"
-            :endpoint="`/structures/${participation.mission.structure_id}/tags`"
-          />
-        </div>
+
+        <TagsListing
+          :tags="participation.tags"
+          taggable
+          :taggable-options="{
+            id: participation.id,
+            type: 'App\\Models\\Participation',
+            endpoint: `/structures/${participation.mission.structure_id}/tags`,
+          }"
+        />
 
         <div class="border-t -mx-6 my-6" />
         <HistoryStateChanges
@@ -88,6 +81,7 @@ import BoxResponsable from '@/components/section/BoxResponsable.vue'
 import BoxUtm from '@/components/section/BoxUtm.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
+import TagsListing from '@/components/tag/TagsListing.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -98,6 +92,7 @@ export default defineNuxtComponent({
     BoxResponsable,
     BoxUtm,
     HistoryStateChanges,
+    TagsListing,
   },
   mixins: [MixinParticipation],
   props: {
@@ -112,6 +107,7 @@ export default defineNuxtComponent({
       participation: null,
     }
   },
+
   watch: {
     participationId: 'fetch',
   },

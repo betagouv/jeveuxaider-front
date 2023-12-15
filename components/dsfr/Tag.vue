@@ -7,7 +7,7 @@
       { 'px-2 py-0.5 text-xs h-6': size == 'sm' },
       { 'px-3 py-1 text-sm h-8': size == 'md' },
       {
-        'text-[#161616] bg-[#EEEEEE]': context === 'unclickable',
+        'text-[#161616] bg-[#EEEEEE]': context === 'default',
       },
       {
         'text-jva-blue-500 bg-[#E3E3FD] hover:bg-[#C1C1FB] active:bg-[#ADADF9] cursor-pointer':
@@ -25,7 +25,7 @@
   >
     <template v-if="icon && iconPosition === 'left'">
       <component
-        :is="iconComponent"
+        :is="leftIconComponentResolver"
         :class="[
           'flex-none',
           { 'fill-current': iconFillCurrent },
@@ -56,7 +56,7 @@
 
     <template v-if="icon && iconPosition === 'right'">
       <component
-        :is="iconComponentResolver"
+        :is="rightIconComponentResolver"
         :class="[
           'flex-none fill-current',
           { 'w-3 h-3': size === 'sm' },
@@ -95,6 +95,7 @@
 
 <script>
 export default defineNuxtComponent({
+  emits: ['clear', 'delete', 'icon-right-click'],
   props: {
     as: {
       type: String,
@@ -110,7 +111,7 @@ export default defineNuxtComponent({
     },
     context: {
       type: [String, null],
-      default: 'unclickable', // unclickable | clickable | selectable | deletable
+      default: 'default', // default | clickable | selectable | deletable
     },
     icon: {
       type: [String, null],
@@ -138,7 +139,7 @@ export default defineNuxtComponent({
     },
   },
   computed: {
-    iconComponentResolver() {
+    rightIconComponentResolver() {
       switch (this.context) {
         case 'selectable':
         case 'clickable':
@@ -146,7 +147,7 @@ export default defineNuxtComponent({
       }
       return resolveComponent(this.icon)
     },
-    iconComponent() {
+    leftIconComponentResolver() {
       return resolveComponent(this.icon)
     },
   },
