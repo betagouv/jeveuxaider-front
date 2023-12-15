@@ -40,8 +40,10 @@
           :taggable-options="{
             id: participation.id,
             type: 'App\\Models\\Participation',
-            endpoint: `/structures/${participation.mission.structure_id}/tags`,
+            tags_endpoint: `/structures/${participation.mission.structure_id}/tags`,
+            taggable_endpoint: `/participations/${participation.id}/tags`,
           }"
+          @refeshed-tags="onRefreshedTags"
         />
 
         <div class="border-t -mx-6 my-6" />
@@ -121,6 +123,9 @@ export default defineNuxtComponent({
       this.participation = participation
       this.loading = false
       this.$emit('loaded', participation)
+    },
+    onRefreshedTags(payload) {
+      this.participation.tags = payload
     },
     async handleChangeState(payload) {
       this.participation.state = payload.key

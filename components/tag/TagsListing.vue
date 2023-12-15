@@ -1,19 +1,25 @@
 <template>
-  <div class="flex flex-wrap gap-2 mt-2">
-    <DsfrTag
-      v-for="(tag, index) in tags"
-      :key="tag.id"
-      size="md"
-      as="button"
-      :context="canManageTags ? 'deletable' : 'default'"
-    >
-      {{ tag.name }}
-    </DsfrTag>
+  <div class="">
+    <div v-if="tags.length > 0" class="flex flex-wrap gap-2 mt-2">
+      <DsfrTag
+        v-for="(tag, index) in tags"
+        :key="tag.id"
+        size="md"
+        as="button"
+        :context="canManageTags ? 'deletable' : 'default'"
+        @click="onDeleteClick(tag)"
+      >
+        {{ tag.name }}
+      </DsfrTag>
+    </div>
     <template v-if="canManageTags && taggable">
       <SelectTags
-        :taggable-id="taggableOptions.id"
-        :taggable-type="taggableOptions.type"
-        :endpoint="taggableOptions.endpoint"
+        v-model="tags"
+        :taggableOptions="taggableOptions"
+        @updated="$emit('updated')"
+        @attach-tag="attachTag"
+        @detach-tag="detachTag"
+        class="mt-2"
       />
     </template>
   </div>
@@ -23,6 +29,7 @@
 import SelectTags from '@/components/tag/SelectTags.vue'
 
 export default defineNuxtComponent({
+  emits: ['refeshed-tags'],
   components: { SelectTags },
   props: {
     tags: {
@@ -41,10 +48,33 @@ export default defineNuxtComponent({
   data() {
     return {}
   },
-
   computed: {
     canManageTags() {
-      return ['admin', 'responsable'].includes(this.$stores.auth.contextRole)
+      return ['responsable'].includes(this.$stores.auth.contextRole)
+    },
+  },
+  methods: {
+    onDeleteClick(tag) {
+      console.log('onDeleteClick', tag.id)
+      this.detachTag(tag.id)
+    },
+    async attachTag(payload) {
+      const { tags } = await apiFetch(
+        `${this.taggableOptions.taggable_endpoint}/${payload}/attach`,
+        {
+          method: 'POST',
+        }
+      )
+      this.$emit('refeshed-tags', tags)
+    },
+    async detachTag(payload) {
+      const { tags } = await apiFetch(
+        `${this.taggableOptions.taggable_endpoint}/${payload}/detach`,
+        {
+          method: 'POST',
+        }
+      )
+      this.$emit('refeshed-tags', tags)
     },
   },
 })

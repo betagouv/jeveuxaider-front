@@ -36,33 +36,39 @@
             class="px-4"
           />
         </BaseContainerScrollable>
-        <div class="p-4" v-else>Aucune étiquette</div>
+        <div class="p-4" v-else>
+          <div class="text-gray-300">Aucune étiquette</div>
+        </div>
+        <div class="border-t">
+          <div @click="showModal = true" class="hover:text-jva-blue-500">
+            <RiTodoLine class="h-4 w-4 fill-current" /> <span>Gestion des étiquettes</span>
+          </div>
+        </div>
       </div>
     </transition>
+    <ModalTagsManager
+      :is-open="showModal"
+      :taggableOptions="taggableOptions"
+      @cancel="showModal = false"
+    />
   </div>
 </template>
 
 <script>
 import TagEditableItem from '@/components/tag/TagEditableItem.vue'
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
+import ModalTagsManager from '@/components/modal/ModalTagsManager.vue'
 
 export default defineNuxtComponent({
   components: {
     TagEditableItem,
     FacetSearch,
+    ModalTagsManager,
   },
   props: {
     modelValue: { type: Array, default: () => [] },
-    taggableType: {
-      type: String,
-      required: true,
-    },
-    taggableId: {
-      type: Number,
-      required: true,
-    },
-    endpoint: {
-      type: String,
+    taggableOptions: {
+      type: Object,
       required: true,
     },
     optionsClass: { type: String, default: '' },
@@ -74,6 +80,7 @@ export default defineNuxtComponent({
       searchTerm: '',
       options: [],
       selectedOptions: this.modelValue || [],
+      showModal: false,
     }
   },
   created() {
@@ -88,13 +95,13 @@ export default defineNuxtComponent({
   },
   methods: {
     attachTag(payload) {
-      console.log('attachTag', payload)
+      this.$emit('attach-tag', payload)
     },
     detachTag(payload) {
-      console.log('detachTag', payload)
+      this.$emit('detach-tag', payload)
     },
     async fetchOptions() {
-      const options = await apiFetch(this.endpoint)
+      const options = await apiFetch(this.taggableOptions.tags_endpoint)
       this.options = options.map((option) => ({ ...option, key: option.id, label: option.name }))
     },
     toggleOpen() {
