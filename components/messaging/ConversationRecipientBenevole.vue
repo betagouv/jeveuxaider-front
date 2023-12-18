@@ -5,14 +5,14 @@
         v-dragscroll.x
         class="px-4 lg:px-6 flex gap-4 items-center overflow-hidden whitespace-nowrap"
       >
-        <div class="flex gap-1 items-center text-sm text-cool-gray-500">
+        <!-- <div class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiChatHistoryFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>
             {{
               $dayjs($stores.messaging.activeConversation.created_at).format('D MMM YYYY • HH[h]mm')
             }}
           </p>
-        </div>
+        </div> -->
         <div class="flex gap-1 items-center text-sm text-cool-gray-500">
           <RiMailFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>
@@ -67,14 +67,25 @@
           <RiFlagLine class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
           <p>Jeune en CEJ</p>
         </div>
+        <div class="flex gap-1 items-center">
+          <DsfrLink @click="drawerProfileId = user.profile.id" class="text-jva-blue-500 text-sm"
+            >Plus de détails</DsfrLink
+          >
+        </div>
       </div>
+      <div class=""></div>
       <template #right>
-        <div
-          class="border-l px-6 lg:px-8 flex flex-col justify-center items-center text-jva-blue-500 hover:text-jva-blue-300"
-          @click="drawerProfileId = user.profile.id"
-        >
-          <RiFileUserLine class="h-7 w-7 fill-current cursor-pointer" />
-          <div class="text-sm">Infos</div>
+        <div class="px-4 flex flex-col justify-center items-center">
+          <SelectTags
+            v-model="participation.tags"
+            :taggableOptions="taggableOptions"
+            @updated="$emit('updated')"
+            @attach-tag="attachTag"
+            @detach-tag="detachTag"
+            class="mt-2"
+            label="Attribuer une étiquette"
+            options-class="right-0 "
+          />
         </div>
       </template>
     </ConversationRecipient>
@@ -86,6 +97,7 @@
 import { dragscroll } from 'vue-dragscroll'
 import ConversationRecipient from '@/components/messaging/ConversationRecipient.vue'
 import MixinConversationParticipation from '@/mixins/conversation/participation'
+import SelectTags from '@/components/tag/SelectTags.vue'
 
 export default defineNuxtComponent({
   directives: {
@@ -93,6 +105,7 @@ export default defineNuxtComponent({
   },
   components: {
     ConversationRecipient,
+    SelectTags,
   },
   mixins: [MixinConversationParticipation],
   props: {
@@ -106,8 +119,35 @@ export default defineNuxtComponent({
       drawerProfileId: null,
     }
   },
-  computed: {},
+  computed: {
+    taggableOptions() {
+      return {
+        id: this.participation?.id,
+        type: 'App\\Models\\Participation',
+        tags_endpoint: `/structures/${this.participation?.mission.structure_id}/tags`,
+        taggable_endpoint: `/participations/${this.participation?.id}/tags`,
+      }
+    },
+  },
   methods: {
+    async attachTag(payload) {
+      const { tags } = await apiFetch(
+        `${this.taggableOptions.taggable_endpoint}/${payload}/attach`,
+        {
+          method: 'POST',
+        }
+      )
+      this.$emit('refreshed-tags', tags)
+    },
+    async detachTag(payload) {
+      const { tags } = await apiFetch(
+        `${this.taggableOptions.taggable_endpoint}/${payload}/detach`,
+        {
+          method: 'POST',
+        }
+      )
+      this.$emit('refreshed-tags', tags)
+    },
     handlClick() {
       this.showDrawerBenevole = true
     },

@@ -43,7 +43,7 @@
             tags_endpoint: `/structures/${participation.mission.structure_id}/tags`,
             taggable_endpoint: `/participations/${participation.id}/tags`,
           }"
-          @refeshed-tags="onRefreshedTags"
+          @refreshed-tags="onRefreshedTags"
         />
 
         <div class="border-t -mx-6 my-6" />

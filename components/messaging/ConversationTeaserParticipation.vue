@@ -15,6 +15,21 @@
         {{ getPlaceMission(conversation) }}
       </p>
     </div>
+    <div
+      v-if="canSeeTags && conversation.conversable?.tags?.length > 0"
+      class="flex-none flex space-x-4 items-center mt-4"
+    >
+      <div class="flex flex-wrap gap-2 max-w-full">
+        <DsfrTag
+          v-for="(tag, index) in conversation.conversable?.tags"
+          :key="tag.id"
+          size="sm"
+          as="button"
+        >
+          {{ tag.name }}
+        </DsfrTag>
+      </div>
+    </div>
   </ConversationTeaser>
 </template>
 
@@ -31,6 +46,11 @@ export default defineNuxtComponent({
     conversation: { type: Object, required: true },
   },
   computed: {
+    canSeeTags() {
+      return ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+        this.$stores.auth.contextRole
+      )
+    },
     badgeType() {
       switch (this.conversation.conversable?.state) {
         case 'Validée':

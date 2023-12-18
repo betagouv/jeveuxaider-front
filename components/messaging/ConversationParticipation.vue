@@ -5,7 +5,7 @@
         <ConversationRecipientResponsable :user="recipientUser" />
       </template>
       <template v-if="isCurrentUserResponsable">
-        <ConversationRecipientBenevole :user="benevoleUser" />
+        <ConversationRecipientBenevole :user="benevoleUser" @refreshed-tags="onRefreshedTags" />
       </template>
     </template>
 
@@ -70,6 +70,12 @@ export default defineNuxtComponent({
     },
     benevoleUser() {
       return this.conversation.users.find((user) => user.id == this.participation.profile.user_id)
+    },
+  },
+  methods: {
+    onRefreshedTags(tags) {
+      this.conversation.conversable.tags = tags
+      this.$stores.messaging.refreshConversationInConversations(this.conversation)
     },
   },
 })

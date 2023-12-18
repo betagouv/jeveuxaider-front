@@ -1,5 +1,5 @@
 <template>
-  <div v-click-outside="clickedOutside" class="relative">
+  <div v-click-outside="clickedOutside" class="relative inline-block">
     <DsfrTag
       :tabindex="!disabled && '0'"
       as="button"
@@ -14,7 +14,7 @@
       @keydown.native.esc="showOptions = false"
       @clear="reset()"
     >
-      Ajouter une étiquette
+      {{ label }}
     </DsfrTag>
     <transition name="fade-in">
       <div
@@ -45,7 +45,7 @@
               @click="showModal = true"
               class="py-4 flex items-center cursor-pointer text-sm space-x-4 hover:text-jva-blue-500"
             >
-              <RiTodoLine class="h-4 w-4 fill-current" /> <span>Gestion des étiquettes</span>
+              <RiPriceTag3Line class="h-4 w-4 fill-current" /> <span>Gestion des étiquettes</span>
             </div>
           </div>
         </div>
@@ -72,6 +72,7 @@ export default defineNuxtComponent({
   },
   props: {
     modelValue: { type: Array, default: () => [] },
+    label: { type: String, default: 'Ajouter une étiquette' },
     taggableOptions: {
       type: Object,
       required: true,

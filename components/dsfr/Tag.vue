@@ -27,8 +27,7 @@
       <component
         :is="leftIconComponentResolver"
         :class="[
-          'flex-none',
-          { 'fill-current': iconFillCurrent },
+          'flex-none fill-current',
           { 'w-3 h-3': size === 'sm' },
           { 'w-4 h-4': size === 'md' },
           { 'ml-[-0.09375rem]': size === 'sm' },

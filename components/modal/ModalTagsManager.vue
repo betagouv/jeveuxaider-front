@@ -6,7 +6,7 @@
         :is-open="isOpen"
         title="Gestion des étiquettes"
         :prevent-click-outside="true"
-        icon="RiTodoLine"
+        icon="RiPriceTag3Line"
         @close="handleCancel()"
       >
         <div class="">

@@ -30,7 +30,7 @@
 import SelectTags from '@/components/tag/SelectTags.vue'
 
 export default defineNuxtComponent({
-  emits: ['refeshed-tags'],
+  emits: ['refreshed-tags', 'updated'],
   components: { SelectTags },
   props: {
     tags: {
@@ -65,7 +65,7 @@ export default defineNuxtComponent({
           method: 'POST',
         }
       )
-      this.$emit('refeshed-tags', tags)
+      this.$emit('refreshed-tags', tags)
     },
     async detachTag(payload) {
       const { tags } = await apiFetch(
@@ -74,7 +74,7 @@ export default defineNuxtComponent({
           method: 'POST',
         }
       )
-      this.$emit('refeshed-tags', tags)
+      this.$emit('refreshed-tags', tags)
     },
   },
 })
