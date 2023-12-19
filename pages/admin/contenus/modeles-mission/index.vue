@@ -122,12 +122,12 @@
 
         <template v-if="$stores.auth.contextRole === 'admin'">
           <BaseFilterInputAutocomplete
-            :modelValue="$route.query['filter[reseau.name]']"
+            v-model="selectedReseau"
             label="Tous les réseaux"
-            name="autocomplete"
+            name="autocomplete-reseau"
             :options="autocompleteOptionsReseau"
             @fetch-suggestions="onFetchSuggestionsReseau"
-            @selected="changeFilter('filter[reseau.name]', $event ? $event.name : undefined)"
+            @selected="onSelectReseau"
           />
         </template>
       </template>
@@ -219,6 +219,14 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
   },
+  computed: {
+    selectedReseau() {
+      return {
+        key: Number(this.$route.query['filter[reseau.id]']) || undefined,
+        label: this.$route.query['filter[reseau.name]'],
+      }
+    },
+  },
   data() {
     return {
       loading: false,
@@ -240,6 +248,26 @@ export default defineNuxtComponent({
         },
       })
       this.autocompleteOptionsReseau = reseaux.data
+    },
+    async onSelectReseau($event) {
+      const queryReseauName =
+        $event !== null && this.$route.query['filter[reseau.name]'] !== $event?.name
+          ? $event.name
+          : undefined
+      const queryReseauId =
+        $event !== null && Number(this.$route.query['filter[reseau.id]']) !== $event?.id
+          ? $event.id
+          : undefined
+
+      await this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.$route.query,
+          page: undefined,
+          'filter[reseau.name]': queryReseauName,
+          'filter[reseau.id]': queryReseauId,
+        },
+      })
     },
   },
 })

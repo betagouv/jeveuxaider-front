@@ -148,7 +148,7 @@ export default {
         if (filterQueryValues.includes(filterValue) || filterQueryValues === filterValue) {
           // L'option est déjà filtrée, on la retire
           this.deleteFilter(filterName, filterValue, multiple)
-        } else if (filterValue === '' || filterValue === null) {
+        } else if (['', null, undefined].includes(filterValue)) {
           this.deleteFilter(filterName, filterValue, multiple)
         } else {
           this.addFilter(filterName, filterValue, multiple)

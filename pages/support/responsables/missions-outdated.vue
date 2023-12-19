@@ -42,12 +42,12 @@
           Tous
         </Tag>
         <BaseFilterInputAutocomplete
-          :value="$route.query['organisation']"
+          v-model="selectedOrganisation"
           label="Toutes les organisations"
-          name="autocomplete"
+          name="autocomplete-organisation"
           :options="autocompleteOptionsOrganisations"
           @fetch-suggestions="onFetchSuggestionsOrganisations"
-          @selected="changeFilter('organisation', $event?.id)"
+          @selected="onSelectOrganisation"
         />
         <Tag
           :key="`online-${$route.fullPath}`"
@@ -171,6 +171,14 @@ export default defineNuxtComponent({
       middleware: ['admin'],
     })
   },
+  computed: {
+    selectedOrganisation() {
+      return {
+        key: Number(this.$route.query['organisation_id']) || undefined,
+        label: this.$route.query['organisation_name'],
+      }
+    },
+  },
   data() {
     return {
       endpoint: '/support/responsables/missions-outdated',
@@ -179,7 +187,6 @@ export default defineNuxtComponent({
       autocompleteOptionsOrganisations: [],
     }
   },
-  computed: {},
   methods: {
     async onFetchSuggestionsOrganisations(value) {
       const organisations = await apiFetch('/structures', {
@@ -190,8 +197,26 @@ export default defineNuxtComponent({
       })
       this.autocompleteOptionsOrganisations = organisations.data
     },
+    async onSelectOrganisation($event) {
+      const queryOrganisationName =
+        $event !== null && this.$route.query['organisation_name'] !== $event?.name
+          ? $event.name
+          : undefined
+      const queryOrganisationId =
+        $event !== null && Number(this.$route.query['organisation_id']) !== $event?.id
+          ? $event.id
+          : undefined
+
+      await this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.$route.query,
+          page: undefined,
+          organisation_name: queryOrganisationName,
+          organisation_id: queryOrganisationId,
+        },
+      })
+    },
   },
 })
 </script>
-
-<style></style>

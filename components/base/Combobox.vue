@@ -48,11 +48,12 @@
           v-for="(item, index) in filteredOptions"
           :key="index"
           :ref="`option_${index}`"
-          class="relative flex justify-between items-center text-sm px-8 py-2 pr-10 cursor-pointer hover:bg-[#F0F0FF] focus:outline-none text-[#3A3A3A] focus:bg-[#F0F0FF] group"
+          class="relative flex justify-between items-center text-sm px-8 py-2 pr-2 cursor-pointer hover:bg-[#F0F0FF] focus:outline-none text-[#3A3A3A] focus:bg-[#F0F0FF] group"
           :class="[
             { 'bg-[#F0F0FF]': highlightIndex == index },
             {
-              'bg-[#F0F0FF]': selectedOption && item[attributeKey] == selectedOption[attributeKey],
+              'bg-[#F0F0FF] !pr-8':
+                selectedOption && item[attributeKey] == selectedOption[attributeKey],
             },
           ]"
           @click="handleSelectOption(item)"
