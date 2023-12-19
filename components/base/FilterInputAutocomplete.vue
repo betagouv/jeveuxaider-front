@@ -11,7 +11,7 @@
       icon="RiArrowDownSLine"
       icon-position="right"
       :is-active="typeof modelValue === 'string' ? !!modelValue : !!modelValue.key"
-      class="max-w-[300px]"
+      class="!max-w-[300px]"
       @click="toggleOpen"
       @keydown.enter="toggleOpen"
       @keydown.esc="showOptions = false"
@@ -44,7 +44,7 @@
               ref="scrollContainer"
               class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2"
             >
-              <ul class="mt-1">
+              <ul class="mt-2 px-2">
                 <li
                   v-for="(item, index) in options"
                   :key="`${item[attributeKey]}_${index}`"

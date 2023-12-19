@@ -11,7 +11,7 @@
       icon-position="right"
       clearable
       :is-active="modelValue ? true : false"
-      class="max-w-[300px]"
+      class="!max-w-[300px]"
       @keydown="onKeydown"
       @click="!disabled ? (showOptions = !showOptions) : null"
       @keydown.tab="showOptions = false"
@@ -31,11 +31,14 @@
         ]"
         @focusout="showOptions = false"
       >
+        <div class="p-2 font-medium">
+          {{ placeholder }}
+        </div>
         <div
           ref="scrollContainer"
           class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray"
         >
-          <ul class="py-2">
+          <ul class="px-2">
             <li
               v-for="(item, index) in options"
               :key="index"
@@ -86,6 +89,11 @@ export default defineNuxtComponent({
     clearable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     optionsClass: { type: String, default: '' },
+  },
+  data() {
+    return {
+      enableUnselect: true,
+    }
   },
 })
 </script>
