@@ -43,7 +43,7 @@
             tags_endpoint: `/structures/${participation.mission.structure_id}/tags`,
             taggable_endpoint: `/participations/${participation.id}/tags`,
           }"
-          @refreshed-tags="onRefreshedTags"
+          @selected-tags="onSelectedTags"
         />
 
         <div class="border-t -mx-6 my-6" />
@@ -86,7 +86,7 @@ import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
 import TagsListing from '@/components/tag/TagsListing.vue'
 
 export default defineNuxtComponent({
-  emits: ['close', 'updated', 'loaded', 'refreshed-tags'],
+  emits: ['close', 'updated', 'loaded', 'selected-tags'],
   components: {
     LoadingIndicator,
     SelectParticipationState,
@@ -125,9 +125,9 @@ export default defineNuxtComponent({
       this.loading = false
       this.$emit('loaded', participation)
     },
-    onRefreshedTags(payload) {
+    onSelectedTags(payload) {
       this.participation.tags = payload
-      this.$emit('refreshed-tags', payload)
+      this.$emit('selected-tags', payload)
     },
     async handleChangeState(payload) {
       this.participation.state = payload.key

@@ -55,7 +55,7 @@
       :is-open="showModal"
       :taggableOptions="taggableOptions"
       @cancel="showModal = false"
-      @refreshed-tags="onRefreshedTags"
+      @updated-structure-tags="onUpdatedStructureTags"
     />
   </div>
 </template>
@@ -66,6 +66,7 @@ import FacetSearch from '@/components/section/search/FacetSearch.vue'
 import ModalTagsManager from '@/components/modal/ModalTagsManager.vue'
 
 export default defineNuxtComponent({
+  emits: ['update:modelValue', 'attach-tag', 'detach-tag', 'updated-structure-tags'],
   components: {
     TagEditableItem,
     FacetSearch,
@@ -101,8 +102,13 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    onRefreshedTags(tags) {
-      this.options = tags.map((option) => ({ ...option, key: option.id, label: option.name }))
+    onUpdatedStructureTags(structureTags) {
+      this.options = structureTags.map((option) => ({
+        ...option,
+        key: option.id,
+        label: option.name,
+      }))
+      this.$emit('updated-structure-tags', structureTags)
     },
     attachTag(payload) {
       this.$emit('attach-tag', payload)

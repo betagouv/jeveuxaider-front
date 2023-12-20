@@ -20,6 +20,7 @@
         @updated="$emit('updated')"
         @attach-tag="attachTag"
         @detach-tag="detachTag"
+        @updated-structure-tags="onUpdatedStructureTags"
         class="mt-2"
       />
     </template>
@@ -30,7 +31,7 @@
 import SelectTags from '@/components/tag/SelectTags.vue'
 
 export default defineNuxtComponent({
-  emits: ['refreshed-tags', 'updated'],
+  emits: ['updated-structure-tags', 'selected-tags', 'updated'],
   components: { SelectTags },
   props: {
     tags: {
@@ -55,6 +56,10 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    onUpdatedStructureTags(structureTags) {
+      console.log('onUpdatedStructureTags', structureTags)
+      this.$emit('updated-structure-tags', structureTags)
+    },
     onDeleteClick(tag) {
       this.detachTag(tag.id)
     },
@@ -65,7 +70,7 @@ export default defineNuxtComponent({
           method: 'POST',
         }
       )
-      this.$emit('refreshed-tags', tags)
+      this.$emit('selected-tags', tags)
     },
     async detachTag(payload) {
       const { tags } = await apiFetch(
@@ -74,7 +79,7 @@ export default defineNuxtComponent({
           method: 'POST',
         }
       )
-      this.$emit('refreshed-tags', tags)
+      this.$emit('selected-tags', tags)
     },
   },
 })

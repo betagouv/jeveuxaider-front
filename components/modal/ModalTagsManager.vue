@@ -41,22 +41,22 @@
 
         <template #footer>
           <template v-if="mode === 'listing'">
-            <BaseButton class="mr-3" variant="white" @click.stop="onClickAdd">
+            <BaseButton class="mr-3" variant="white" @click.stop="onClickModeAdd">
               Ajouter une étiquette
             </BaseButton>
-            <BaseButton :loading="loading" @click.stop="onClickTerminate"> Terminer </BaseButton>
+            <BaseButton :loading="loading" @click.stop="onActionClose"> Terminer </BaseButton>
           </template>
           <template v-if="mode === 'edit'">
             <BaseButton class="mr-3" variant="white" @click.stop="mode = 'listing'">
               Annuler
             </BaseButton>
-            <BaseButton :loading="loading" @click.stop="onClickSave"> Modifier </BaseButton>
+            <BaseButton :loading="loading" @click.stop="onActionEdit"> Modifier </BaseButton>
           </template>
           <template v-if="mode === 'add'">
             <BaseButton class="mr-3" variant="white" @click.stop="mode = 'listing'">
               Annuler
             </BaseButton>
-            <BaseButton :loading="loading" @click.stop="onSaveNewTag"> Ajouter </BaseButton>
+            <BaseButton :loading="loading" @click.stop="onActionAdd"> Ajouter </BaseButton>
           </template>
         </template>
       </BaseModal>
@@ -69,7 +69,7 @@ import FormErrors from '@/mixins/form/errors'
 import FormStructureTag from '@/components/form/FormStructureTag.vue'
 
 export default defineNuxtComponent({
-  emits: ['cancel', 'refreshed-tags'],
+  emits: ['cancel', 'updated-structure-tags'],
   mixins: [FormErrors],
   components: {
     FormStructureTag,
@@ -102,19 +102,19 @@ export default defineNuxtComponent({
       this.mode = 'listing'
       this.fetch()
     },
-    onClickSave() {
+    onActionEdit() {
       this.$refs.formStructureTag.handleSubmit()
     },
-    onClickTerminate() {
-      // replace tags
-      this.$emit('refreshed-tags', this.tags)
+    onActionClose() {
+      this.mode = 'listing'
+      this.$emit('updated-structure-tags', this.tags)
       this.$emit('cancel')
     },
-    onClickAdd() {
+    onClickModeAdd() {
       this.mode = 'add'
       this.selectedTag = null
     },
-    onSaveNewTag() {
+    onActionAdd() {
       this.$refs.formStructureTag.handleSubmit()
     },
     onSelectTag(tag) {
@@ -127,7 +127,7 @@ export default defineNuxtComponent({
     },
     handleCancel() {
       this.mode = 'listing'
-      this.$emit('refreshed-tags', this.tags)
+      this.$emit('updated-structure-tags', this.tags)
       this.$emit('cancel')
     },
   },
