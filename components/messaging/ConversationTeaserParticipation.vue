@@ -19,7 +19,7 @@
       v-if="canSeeTags && conversation.conversable?.tags?.length > 0"
       class="flex-none flex space-x-4 items-center mt-4"
     >
-      <div class="flex flex-wrap gap-2 max-w-full">
+      <div class="flex flex-wrap gap-2 truncate">
         <DsfrTag
           v-for="(tag, index) in conversation.conversable?.tags"
           :key="tag.id"

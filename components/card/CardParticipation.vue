@@ -139,10 +139,10 @@
         </div>
         <div
           v-if="showTags && canSeeTags && participation.tags?.length > 0"
-          class="flex-none flex space-x-4 items-center"
+          class="flex-none flex space-x-4 items-center max-w-full"
         >
           <RiPriceTag3Fill class="flex-none w-4 h-4 text-[#666666] fill-current" />
-          <div class="flex flex-wrap gap-2">
+          <div class="flex flex-wrap gap-2 truncate">
             <DsfrTag v-for="(tag, index) in participation.tags" :key="tag.id" size="md" as="button">
               {{ tag.name }}
             </DsfrTag>

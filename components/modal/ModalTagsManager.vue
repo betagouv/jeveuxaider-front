@@ -9,27 +9,55 @@
         icon="RiPriceTag3Line"
         @close="handleCancel()"
       >
-        <div class="">
+        <div class="mb-8">
           Vous pouvez créer des étiquettes pour organiser vos participations. Ces étiquettes sont
           communes à tous les membres de votre organisation.
         </div>
-        <BaseContainerScrollable v-if="tags.length > 0" class="h-[340px] mt-8">
-          <div class="flex flex-col gap-2 pl-1 pr-4">
-            <TagEditableItem
-              v-for="tag in tags"
-              :key="tag.id"
-              :tag="tag"
-              :taggableOptions="taggableOptions"
-              @updated="$emit('updated')"
-            />
-          </div>
-        </BaseContainerScrollable>
+        <template v-if="mode === 'listing'">
+          <BaseContainerScrollable class="max-h-[340px]">
+            <div class="flex flex-wrap gap-2 mb-4" v-if="tags.length > 0">
+              <DsfrTag
+                v-for="tag in tags"
+                :key="tag.id"
+                icon="RiPencilLine"
+                icon-position="right"
+                context="clickable"
+                size="md"
+                @click="onSelectTag(tag)"
+              >
+                {{ tag.name }}
+              </DsfrTag>
+            </div>
+          </BaseContainerScrollable>
+        </template>
+        <template v-if="['edit', 'add'].includes(mode)">
+          <FormStructureTag
+            ref="formStructureTag"
+            :tag="selectedTag"
+            :taggable-options="taggableOptions"
+            @submitted="onFormSubmitted"
+          />
+        </template>
 
         <template #footer>
-          <!-- <BaseButton class="mr-3" variant="white" @click.stop="$emit('cancel')">
-            Annuler
-          </BaseButton> -->
-          <BaseButton :loading="loading" @click.stop="$emit('cancel')"> Terminer </BaseButton>
+          <template v-if="mode === 'listing'">
+            <BaseButton class="mr-3" variant="white" @click.stop="onClickAdd">
+              Ajouter une étiquette
+            </BaseButton>
+            <BaseButton :loading="loading" @click.stop="onClickTerminate"> Terminer </BaseButton>
+          </template>
+          <template v-if="mode === 'edit'">
+            <BaseButton class="mr-3" variant="white" @click.stop="mode = 'listing'">
+              Annuler
+            </BaseButton>
+            <BaseButton :loading="loading" @click.stop="onClickSave"> Modifier </BaseButton>
+          </template>
+          <template v-if="mode === 'add'">
+            <BaseButton class="mr-3" variant="white" @click.stop="mode = 'listing'">
+              Annuler
+            </BaseButton>
+            <BaseButton :loading="loading" @click.stop="onSaveNewTag"> Ajouter </BaseButton>
+          </template>
         </template>
       </BaseModal>
     </Teleport>
@@ -38,13 +66,13 @@
 
 <script>
 import FormErrors from '@/mixins/form/errors'
-import SelectAdvancedMessageTemplate from '@/components/custom/SelectAdvancedMessageTemplate.vue'
+import FormStructureTag from '@/components/form/FormStructureTag.vue'
 
 export default defineNuxtComponent({
-  emits: ['cancel'],
+  emits: ['cancel', 'refreshed-tags'],
   mixins: [FormErrors],
   components: {
-    SelectAdvancedMessageTemplate,
+    FormStructureTag,
   },
   props: {
     isOpen: {
@@ -60,22 +88,46 @@ export default defineNuxtComponent({
     return {
       loading: false,
       tags: [],
+      mode: 'listing',
+      selectedTag: null,
     }
   },
   created() {
     this.fetch()
   },
-  computed: {
-    // canUseMessageTemplate() {
-    //   return ['referent', 'admin'].includes(this.$stores.auth.contextRole)
-    // },
-  },
+  computed: {},
   methods: {
+    onFormSubmitted() {
+      this.selectedTag = null
+      this.mode = 'listing'
+      this.fetch()
+    },
+    onClickSave() {
+      this.$refs.formStructureTag.handleSubmit()
+    },
+    onClickTerminate() {
+      // replace tags
+      this.$emit('refreshed-tags', this.tags)
+      this.$emit('cancel')
+    },
+    onClickAdd() {
+      this.mode = 'add'
+      this.selectedTag = null
+    },
+    onSaveNewTag() {
+      this.$refs.formStructureTag.handleSubmit()
+    },
+    onSelectTag(tag) {
+      this.selectedTag = tag
+      this.mode = 'edit'
+    },
     async fetch() {
       const tags = await apiFetch(this.taggableOptions.tags_endpoint)
       this.tags = tags
     },
     handleCancel() {
+      this.mode = 'listing'
+      this.$emit('refreshed-tags', this.tags)
       this.$emit('cancel')
     },
   },

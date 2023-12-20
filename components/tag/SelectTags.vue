@@ -25,7 +25,7 @@
         ]"
       >
         <FacetSearch v-model="searchTerm" @update:modelValue="handleInput" class="px-4" />
-        <BaseContainerScrollable v-if="filteredOptions.length > 0" class="h-[200px] py-4 pr-4">
+        <BaseContainerScrollable v-if="filteredOptions.length > 0" class="max-h-[200px] py-4 pr-4">
           <BaseCheckbox
             v-for="option in filteredOptions"
             :key="option.key"
@@ -55,6 +55,7 @@
       :is-open="showModal"
       :taggableOptions="taggableOptions"
       @cancel="showModal = false"
+      @refreshed-tags="onRefreshedTags"
     />
   </div>
 </template>
@@ -100,6 +101,9 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    onRefreshedTags(tags) {
+      this.options = tags.map((option) => ({ ...option, key: option.id, label: option.name }))
+    },
     attachTag(payload) {
       this.$emit('attach-tag', payload)
     },
