@@ -51,74 +51,81 @@
         </div>
       </div>
     </transition>
-    <ModalTagsManager
-      :is-open="showModal"
-      :taggableOptions="taggableOptions"
-      @cancel="showModal = false"
-      @updated-structure-tags="onUpdatedStructureTags"
-    />
+    <ModalTagsManager :is-open="showModal" @cancel="showModal = false" />
   </div>
 </template>
 
 <script>
-import TagEditableItem from '@/components/tag/TagEditableItem.vue'
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
 import ModalTagsManager from '@/components/modal/ModalTagsManager.vue'
 
 export default defineNuxtComponent({
-  emits: ['update:modelValue', 'attach-tag', 'detach-tag', 'updated-structure-tags'],
+  emits: ['update:modelValue', 'update-selected-tags'],
   components: {
-    TagEditableItem,
     FacetSearch,
     ModalTagsManager,
   },
   props: {
-    modelValue: { type: Array, default: () => [] },
-    label: { type: String, default: 'Ajouter une étiquette' },
-    taggableOptions: {
-      type: Object,
+    modelValue: {
+      type: Array,
+      default: () => [],
+    },
+    structureTagsEndpoint: {
+      type: String,
       required: true,
     },
-    optionsClass: { type: String, default: '' },
-    disabled: { type: Boolean, default: false },
+    taggableEndpoint: {
+      type: String,
+      required: true,
+    },
+    label: {
+      type: String,
+      default: 'Ajouter une étiquette',
+    },
+    options: {
+      type: Array,
+      default: () => [],
+    },
+    optionsClass: {
+      type: String,
+      default: '',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       showOptions: false,
       searchTerm: '',
-      options: [],
       selectedOptions: this.modelValue || [],
       showModal: false,
     }
   },
   created() {
-    this.fetchOptions()
+    this.$stores.structureTags.endpoint = this.structureTagsEndpoint
+    this.$stores.structureTags.fetchOptions()
   },
   computed: {
     filteredOptions() {
-      return this.options.filter((option) =>
+      return this.$stores.structureTags.options.filter((option) =>
         option.label.toLowerCase().includes(this.searchTerm.toLowerCase())
       )
     },
   },
   methods: {
-    onUpdatedStructureTags(structureTags) {
-      this.options = structureTags.map((option) => ({
-        ...option,
-        key: option.id,
-        label: option.name,
-      }))
-      this.$emit('updated-structure-tags', structureTags)
+    async attachTag(structureTagId) {
+      const { tags } = await apiFetch(`${this.taggableEndpoint}/${structureTagId}/attach`, {
+        method: 'POST',
+      })
+      this.$emit('update-selected-tags', tags)
     },
-    attachTag(payload) {
-      this.$emit('attach-tag', payload)
-    },
-    detachTag(payload) {
-      this.$emit('detach-tag', payload)
-    },
-    async fetchOptions() {
-      const options = await apiFetch(this.taggableOptions.tags_endpoint)
-      this.options = options.map((option) => ({ ...option, key: option.id, label: option.name }))
+    async detachTag(structureTagId) {
+      const { tags } = await apiFetch(`${this.taggableEndpoint}/${structureTagId}/detach`, {
+        method: 'POST',
+      })
+      this.$emit('update-selected-tags', tags)
     },
     toggleOpen() {
       this.showOptions = !this.showOptions

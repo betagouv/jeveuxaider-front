@@ -5,7 +5,7 @@
       @close="drawerParticipationId = null"
       @updated="onDrawerUpdated()"
       @refetch="fetch()"
-      @selected-tags="onSelectedTags"
+      @update-selected-tags="onUpdateSelectedTags"
     />
 
     <template #breadcrumb>
@@ -387,7 +387,7 @@ export default defineNuxtComponent({
     onDrawerUpdated() {
       this.fetch()
     },
-    onSelectedTags(tags) {
+    onUpdateSelectedTags(tags) {
       this.queryResult.data.find(
         (participation) => participation.id === this.drawerParticipationId
       ).tags = tags

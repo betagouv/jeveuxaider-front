@@ -75,13 +75,12 @@
       </div>
       <div class=""></div>
       <template #right>
-        <div class="px-4 flex flex-col justify-center items-center">
+        <div v-if="canManageTags" class="px-4 flex flex-col justify-center items-center">
           <SelectTags
             v-model="participation.tags"
-            :taggableOptions="taggableOptions"
-            @updated="$emit('updated')"
-            @attach-tag="attachTag"
-            @detach-tag="detachTag"
+            :structure-tags-endpoint="`/structures/${this.participation?.mission.structure_id}/tags`"
+            :taggable-endpoint="`/participations/${this.participation?.id}/tags`"
+            @update-selected-tags="$emit('update-selected-tags', $event)"
             class="mt-2"
             label="Attribuer une étiquette"
             options-class="right-0 "
@@ -120,34 +119,11 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    taggableOptions() {
-      return {
-        id: this.participation?.id,
-        type: 'App\\Models\\Participation',
-        tags_endpoint: `/structures/${this.participation?.mission.structure_id}/tags`,
-        taggable_endpoint: `/participations/${this.participation?.id}/tags`,
-      }
+    canManageTags() {
+      return ['responsable'].includes(this.$stores.auth.contextRole)
     },
   },
   methods: {
-    async attachTag(payload) {
-      const { tags } = await apiFetch(
-        `${this.taggableOptions.taggable_endpoint}/${payload}/attach`,
-        {
-          method: 'POST',
-        }
-      )
-      this.$emit('refreshed-tags', tags)
-    },
-    async detachTag(payload) {
-      const { tags } = await apiFetch(
-        `${this.taggableOptions.taggable_endpoint}/${payload}/detach`,
-        {
-          method: 'POST',
-        }
-      )
-      this.$emit('refreshed-tags', tags)
-    },
     handlClick() {
       this.showDrawerBenevole = true
     },

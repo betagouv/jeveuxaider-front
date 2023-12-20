@@ -5,7 +5,10 @@
         <ConversationRecipientResponsable :user="recipientUser" />
       </template>
       <template v-if="isCurrentUserResponsable">
-        <ConversationRecipientBenevole :user="benevoleUser" @selected-tags="onSelectedTags" />
+        <ConversationRecipientBenevole
+          :user="benevoleUser"
+          @update-selected-tags="onUpdateSelectedTags"
+        />
       </template>
     </template>
 
@@ -73,7 +76,7 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    onSelectedTags(tags) {
+    onUpdateSelectedTags(tags) {
       this.conversation.conversable.tags = tags
       this.$stores.messaging.refreshConversationInConversations(this.conversation)
     },

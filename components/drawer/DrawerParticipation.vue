@@ -34,16 +34,11 @@
         <div class="border-t -mx-6 my-6" />
         <div class="text-sm uppercase font-semibold text-gray-600">Étiquettes</div>
 
-        <TagsListing
+        <BoxTags
           :tags="participation.tags"
-          taggable
-          :taggable-options="{
-            id: participation.id,
-            type: 'App\\Models\\Participation',
-            tags_endpoint: `/structures/${participation.mission.structure_id}/tags`,
-            taggable_endpoint: `/participations/${participation.id}/tags`,
-          }"
-          @selected-tags="onSelectedTags"
+          :structure-tags-endpoint="`/structures/${participation.mission.structure_id}/tags`"
+          :taggable-endpoint="`/participations/${participation.id}/tags`"
+          @update-selected-tags="onUpdateSelectedTags"
         />
 
         <div class="border-t -mx-6 my-6" />
@@ -83,10 +78,10 @@ import BoxResponsable from '@/components/section/BoxResponsable.vue'
 import BoxUtm from '@/components/section/BoxUtm.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
-import TagsListing from '@/components/tag/TagsListing.vue'
+import BoxTags from '@/components/tag/BoxTags.vue'
 
 export default defineNuxtComponent({
-  emits: ['close', 'updated', 'loaded', 'selected-tags'],
+  emits: ['close', 'updated', 'loaded', 'update-selected-tags'],
   components: {
     LoadingIndicator,
     SelectParticipationState,
@@ -95,7 +90,7 @@ export default defineNuxtComponent({
     BoxResponsable,
     BoxUtm,
     HistoryStateChanges,
-    TagsListing,
+    BoxTags,
   },
   mixins: [MixinParticipation],
   props: {
@@ -125,9 +120,9 @@ export default defineNuxtComponent({
       this.loading = false
       this.$emit('loaded', participation)
     },
-    onSelectedTags(payload) {
+    onUpdateSelectedTags(payload) {
       this.participation.tags = payload
-      this.$emit('selected-tags', payload)
+      this.$emit('update-selected-tags', payload)
     },
     async handleChangeState(payload) {
       this.participation.state = payload.key

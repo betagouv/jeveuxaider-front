@@ -21,7 +21,9 @@
     >
       <div class="flex flex-wrap gap-2 truncate">
         <DsfrTag
-          v-for="(tag, index) in conversation.conversable?.tags"
+          v-for="(tag, index) in $stores.structureTags.resolveTagsName(
+            conversation.conversable?.tags
+          )"
           :key="tag.id"
           size="sm"
           as="button"

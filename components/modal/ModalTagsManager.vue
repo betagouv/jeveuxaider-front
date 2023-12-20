@@ -15,9 +15,9 @@
         </div>
         <template v-if="mode === 'listing'">
           <BaseContainerScrollable class="max-h-[340px]">
-            <div class="flex flex-wrap gap-2 mb-4" v-if="tags.length > 0">
+            <div class="flex flex-wrap gap-2 mb-4" v-if="$stores.structureTags.options.length > 0">
               <DsfrTag
-                v-for="tag in tags"
+                v-for="tag in $stores.structureTags.options"
                 :key="tag.id"
                 icon="RiPencilLine"
                 icon-position="right"
@@ -34,7 +34,6 @@
           <FormStructureTag
             ref="formStructureTag"
             :tag="selectedTag"
-            :taggable-options="taggableOptions"
             @submitted="onFormSubmitted"
           />
         </template>
@@ -69,7 +68,7 @@ import FormErrors from '@/mixins/form/errors'
 import FormStructureTag from '@/components/form/FormStructureTag.vue'
 
 export default defineNuxtComponent({
-  emits: ['cancel', 'updated-structure-tags'],
+  emits: ['cancel'],
   mixins: [FormErrors],
   components: {
     FormStructureTag,
@@ -78,10 +77,6 @@ export default defineNuxtComponent({
     isOpen: {
       type: Boolean,
       default: false,
-    },
-    taggableOptions: {
-      type: Object,
-      required: true,
     },
   },
   data() {
@@ -92,22 +87,17 @@ export default defineNuxtComponent({
       selectedTag: null,
     }
   },
-  created() {
-    this.fetch()
-  },
-  computed: {},
   methods: {
     onFormSubmitted() {
       this.selectedTag = null
       this.mode = 'listing'
-      this.fetch()
+      this.$stores.structureTags.fetchOptions()
     },
     onActionEdit() {
       this.$refs.formStructureTag.handleSubmit()
     },
     onActionClose() {
       this.mode = 'listing'
-      this.$emit('updated-structure-tags', this.tags)
       this.$emit('cancel')
     },
     onClickModeAdd() {
@@ -121,13 +111,8 @@ export default defineNuxtComponent({
       this.selectedTag = tag
       this.mode = 'edit'
     },
-    async fetch() {
-      const tags = await apiFetch(this.taggableOptions.tags_endpoint)
-      this.tags = tags
-    },
     handleCancel() {
       this.mode = 'listing'
-      this.$emit('updated-structure-tags', this.tags)
       this.$emit('cancel')
     },
   },

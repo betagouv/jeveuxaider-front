@@ -19,10 +19,6 @@ export default defineNuxtComponent({
         return {}
       },
     },
-    taggableOptions: {
-      type: Object,
-      required: true,
-    },
   },
   data() {
     return {
@@ -45,12 +41,12 @@ export default defineNuxtComponent({
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           if (this.form.id) {
-            await apiFetch(`${this.taggableOptions.tags_endpoint}/${this.tag.id}`, {
+            await apiFetch(`${this.$stores.structureTags.endpoint}/${this.tag.id}`, {
               method: 'PUT',
               body: this.form,
             })
           } else {
-            await apiFetch(`${this.taggableOptions.tags_endpoint}`, {
+            await apiFetch(`${this.$stores.structureTags.endpoint}`, {
               method: 'POST',
               body: {
                 type: 'participation',
