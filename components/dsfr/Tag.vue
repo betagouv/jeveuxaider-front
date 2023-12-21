@@ -65,6 +65,7 @@
           { 'ml-[-0.09375rem]': size === 'sm' && iconOnly },
           { 'ml-[-0.125rem]': size === 'md' && iconOnly },
           { 'pointer-events-none': clearable && !isActive },
+          iconClass,
         ]"
         @click.native.stop="isActive ? $emit('clear') : $emit('icon-right-click')"
       />
@@ -115,6 +116,10 @@ export default defineNuxtComponent({
     icon: {
       type: [String, null],
       default: null,
+    },
+    iconClass: {
+      type: String,
+      default: '',
     },
     iconPosition: {
       type: String,

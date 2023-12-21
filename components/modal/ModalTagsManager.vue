@@ -23,6 +23,7 @@
                 icon-position="right"
                 context="clickable"
                 size="md"
+                iconClass="pointer-events-none"
                 @click="onSelectTag(tag)"
               >
                 {{ tag.name }}
@@ -37,25 +38,28 @@
             @submitted="onFormSubmitted"
           />
         </template>
+        <template v-if="['edit'].includes(mode)">
+          <DsfrLink class="text-sm mt-2" @click="onActionDelete">Supprimer cet étiquette</DsfrLink>
+        </template>
 
         <template #footer>
           <template v-if="mode === 'listing'">
-            <BaseButton class="mr-3" variant="white" @click.stop="onClickModeAdd">
+            <DsfrButton class="mr-3" type="secondary" @click.stop="onClickModeAdd">
               Ajouter une étiquette
-            </BaseButton>
-            <BaseButton :loading="loading" @click.stop="onActionClose"> Terminer </BaseButton>
+            </DsfrButton>
+            <DsfrButton :loading="loading" @click.stop="onActionClose"> Terminer </DsfrButton>
           </template>
           <template v-if="mode === 'edit'">
-            <BaseButton class="mr-3" variant="white" @click.stop="mode = 'listing'">
-              Annuler
-            </BaseButton>
-            <BaseButton :loading="loading" @click.stop="onActionEdit"> Modifier </BaseButton>
+            <DsfrButton class="mr-3" type="secondary" @click.stop="mode = 'listing'">
+              Retour
+            </DsfrButton>
+            <DsfrButton :loading="loading" @click.stop="onActionEdit"> Modifier </DsfrButton>
           </template>
           <template v-if="mode === 'add'">
-            <BaseButton class="mr-3" variant="white" @click.stop="mode = 'listing'">
-              Annuler
-            </BaseButton>
-            <BaseButton :loading="loading" @click.stop="onActionAdd"> Ajouter </BaseButton>
+            <DsfrButton class="mr-3" type="secondary" @click.stop="mode = 'listing'">
+              Retour
+            </DsfrButton>
+            <DsfrButton :loading="loading" @click.stop="onActionAdd"> Ajouter </DsfrButton>
           </template>
         </template>
       </BaseModal>
@@ -106,6 +110,13 @@ export default defineNuxtComponent({
     },
     onActionAdd() {
       this.$refs.formStructureTag.handleSubmit()
+    },
+    onActionDelete() {
+      if (confirm('Êtes-vous sûr de vouloir supprimer cette étiquette ?')) {
+        this.$stores.structureTags.delete(this.selectedTag)
+        this.mode = 'listing'
+        this.selectedTag = null
+      }
     },
     onSelectTag(tag) {
       this.selectedTag = tag

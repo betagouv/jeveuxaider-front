@@ -26,7 +26,7 @@ export const useStructureTagsStore = defineStore({
         }
       })
     },
-    async fetchOptions(endpoint: string) {
+    async fetchOptions() {
       if (!this.endpoint) {
         return
       }
@@ -37,6 +37,17 @@ export const useStructureTagsStore = defineStore({
           key: option.id,
           label: option.name,
         }))
+      }
+    },
+    async delete(tag: Option) {
+      if (!this.endpoint) {
+        return
+      }
+      const { data, error } = await useApiFetch<any>(`${this.endpoint}/${tag.id}`, {
+        method: 'DELETE',
+      })
+      if (data.value) {
+        this.fetchOptions()
       }
     },
   },

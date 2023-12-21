@@ -66,7 +66,7 @@
       <template v-else>
         <div>La mission n'existe plus</div>
       </template>
-      <div class="col-span-2 px-6 py-10 flex flex-col justify-between gap-6">
+      <div class="col-span-2 px-6 py-8 flex flex-col justify-between gap-6">
         <div class="space-y-6">
           <div class="flex flex-col space-y-4 lg:flex-row lg:space-y-0">
             <div class="flex">
