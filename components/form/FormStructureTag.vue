@@ -49,7 +49,6 @@ export default defineNuxtComponent({
             await apiFetch(`${this.$stores.structureTags.endpoint}`, {
               method: 'POST',
               body: {
-                type: 'participation',
                 name: this.form.name,
               },
             })

@@ -102,6 +102,7 @@ export default defineNuxtComponent({
         'filter[structure_name]': null,
         'filter[mission_name]': null,
         'filter[mission_zip_city]': null,
+        'filter[tags]': null,
       }
       this.handleSubmit()
     },

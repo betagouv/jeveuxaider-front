@@ -39,7 +39,7 @@
     <template v-if="variant == 'button'">
       <div
         :class="[
-          'bg-white hover:bg-jva-blue-100 transition max-w-full ',
+          'bg-white hover:bg-jva-blue-100 transition max-w-full',
           { '!bg-transparent': transparent },
           { 'bg-white': checked },
         ]"

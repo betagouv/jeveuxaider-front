@@ -14,22 +14,27 @@
           communes à tous les membres de votre organisation.
         </div>
         <template v-if="mode === 'listing'">
-          <BaseContainerScrollable class="max-h-[340px]">
-            <div class="flex flex-wrap gap-2 mb-4" v-if="$stores.structureTags.options.length > 0">
-              <DsfrTag
-                v-for="tag in $stores.structureTags.options"
-                :key="tag.id"
-                icon="RiPencilLine"
-                icon-position="right"
-                context="clickable"
-                size="md"
-                iconClass="pointer-events-none"
-                @click="onSelectTag(tag)"
-              >
-                {{ tag.name }}
-              </DsfrTag>
-            </div>
-          </BaseContainerScrollable>
+          <template v-if="editableTags.length > 0">
+            <BaseContainerScrollable scrollbar-class="max-h-[340px]">
+              <div class="flex flex-wrap gap-2 mb-4">
+                <DsfrTag
+                  v-for="tag in editableTags"
+                  :key="tag.id"
+                  icon="RiPencilLine"
+                  icon-position="right"
+                  context="clickable"
+                  size="md"
+                  iconClass="pointer-events-none"
+                  @click="onSelectTag(tag)"
+                >
+                  {{ tag.name }}
+                </DsfrTag>
+              </div>
+            </BaseContainerScrollable>
+          </template>
+          <template v-else>
+            <div class="text-gray-300">Aucune étiquette</div>
+          </template>
         </template>
         <template v-if="['edit', 'add'].includes(mode)">
           <FormStructureTag
@@ -90,6 +95,11 @@ export default defineNuxtComponent({
       mode: 'listing',
       selectedTag: null,
     }
+  },
+  computed: {
+    editableTags() {
+      return this.$stores.structureTags.options.filter((tag) => !tag.is_generic)
+    },
   },
   methods: {
     onFormSubmitted() {

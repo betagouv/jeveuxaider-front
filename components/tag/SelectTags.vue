@@ -20,12 +20,16 @@
       <div
         v-show="showOptions"
         :class="[
-          'absolute w-full z-50 mt-2 pt-4 bg-white border border-gray-200 shadow-md overflow-hidden min-w-[300px]',
+          'absolute w-full z-50 mt-2 pt-4 bg-white border border-gray-200 shadow-md overflow-hidden min-w-[350px]',
           optionsClass,
         ]"
       >
         <FacetSearch v-model="searchTerm" @update:modelValue="handleInput" class="px-4" />
-        <BaseContainerScrollable v-if="filteredOptions.length > 0" class="max-h-[200px] py-4 pr-4">
+        <BaseContainerScrollable
+          v-if="filteredOptions.length > 0"
+          class="py-4 pr-4"
+          scrollbarClass="max-h-[200px]"
+        >
           <BaseCheckbox
             v-for="option in filteredOptions"
             :key="option.key"

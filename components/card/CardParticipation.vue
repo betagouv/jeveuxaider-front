@@ -146,7 +146,7 @@
             <DsfrTag
               v-for="(tag, index) in $stores.structureTags.resolveTagsName(participation.tags)"
               :key="tag.id"
-              size="md"
+              size="sm"
               as="button"
             >
               {{ tag.name }}

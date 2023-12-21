@@ -7,7 +7,7 @@
       { 'px-2 py-0.5 text-xs h-6': size == 'sm' },
       { 'px-3 py-1 text-sm h-8': size == 'md' },
       {
-        'text-[#161616] bg-[#EEEEEE]': context === 'default',
+        'text-[#161616] bg-[#EEEEEE]': context === 'default' && !customTheme,
       },
       {
         'text-jva-blue-500 bg-[#E3E3FD] hover:bg-[#C1C1FB] active:bg-[#ADADF9] cursor-pointer':
@@ -130,6 +130,10 @@ export default defineNuxtComponent({
       default: false,
     },
     isSelected: {
+      type: Boolean,
+      default: false,
+    },
+    customTheme: {
       type: Boolean,
       default: false,
     },

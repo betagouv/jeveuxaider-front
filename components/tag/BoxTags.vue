@@ -21,7 +21,6 @@
         :taggable-endpoint="taggableEndpoint"
         :options="$stores.structureTags.options"
         @update-selected-tags="$emit('update-selected-tags', $event)"
-        @detach-tag="detachTag"
         class="mt-2"
       />
     </template>
