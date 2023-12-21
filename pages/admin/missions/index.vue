@@ -82,255 +82,266 @@
             Toutes
           </DsfrTag>
 
-          <BaseFilterSelectAdvanced
-            v-if="['responsable'].includes($stores.auth.contextRole) && responsables.length"
-            :key="`responsable-id-${$route.fullPath}`"
-            name="responsable.id"
-            placeholder="Tous les responsables"
-            :options="responsables"
-            attribute-key="id"
-            attribute-label="full_name"
-            :modelValue="$route.query['filter[responsable.id]']"
-            clearable
-            @update:modelValue="changeFilter('filter[responsable.id]', $event)"
-          />
+          <template v-for="visibleFilter in visibleFilters" :key="visibleFilter">
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'responsable.id'"
+              name="responsable.id"
+              placeholder="Tous les responsables"
+              :options="responsables"
+              attribute-key="id"
+              attribute-label="full_name"
+              :modelValue="$route.query['filter[responsable.id]']"
+              clearable
+              @update:modelValue="changeFilter('filter[responsable.id]', $event)"
+            />
+
+            <DsfrTag
+              v-if="visibleFilter === 'available'"
+              as="button"
+              size="md"
+              context="selectable"
+              :is-selected="
+                $route.query['filter[available]'] &&
+                $route.query['filter[available]'] == 'available'
+              "
+              is-selected-class="border-gray-50 bg-gray-50"
+              @click.native="changeFilter('filter[available]', 'available')"
+            >
+              En ligne
+            </DsfrTag>
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'place'"
+              :modelValue="$route.query['filter[place]']"
+              name="place"
+              :options="[
+                { key: 'true', label: 'Avec place restante' },
+                { key: 'false', label: 'Sans place restante' },
+              ]"
+              placeholder="Place restante"
+              @update:modelValue="changeFilter('filter[place]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'is_registration_open'"
+              name="inscription"
+              :options="[
+                { key: 'true', label: 'Inscription ouverte' },
+                { key: 'false', label: 'Inscription fermée' },
+              ]"
+              :modelValue="$route.query['filter[is_registration_open]']"
+              placeholder="Inscription"
+              @update:modelValue="changeFilter('filter[is_registration_open]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'date'"
+              :modelValue="$route.query['filter[date]']"
+              name="date"
+              :options="[
+                { key: 'incoming', label: 'À venir' },
+                { key: 'in_progress', label: 'En cours' },
+                { key: 'over', label: 'Passée' },
+              ]"
+              placeholder="Date"
+              @update:modelValue="changeFilter('filter[date]', $event)"
+            />
+
+            <DsfrTag
+              v-if="visibleFilter === 'is_snu_mig_compatible'"
+              as="button"
+              size="md"
+              context="selectable"
+              :is-selected="
+                $route.query['filter[is_snu_mig_compatible]'] &&
+                $route.query['filter[is_snu_mig_compatible]'] == 'true'
+              "
+              is-selected-class="border-gray-50 bg-gray-50"
+              @click.native="changeFilter('filter[is_snu_mig_compatible]', 'true')"
+            >
+              SNU/MIG
+            </DsfrTag>
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'publics_volontaires'"
+              name="publics_volontaires"
+              :options="[{ key: 'Mineurs', label: 'Mineurs' }]"
+              :modelValue="$route.query['filter[publics_volontaires]']"
+              placeholder="Proposé aux"
+              @update:modelValue="changeFilter('filter[publics_volontaires]', $event)"
+            />
+
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'structure.id'"
+              v-model="selectedOrganisation"
+              label="Organisation"
+              name="autocomplete-organisation"
+              :options="autocompleteOptionsOrga"
+              @fetch-suggestions="onFetchSuggestionsOrga"
+              @selected="onSelectOrganisation"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'ofResponsable'"
+              name="responsable"
+              :options="responsablesStructures"
+              :modelValue="$route.query['filter[ofResponsable]']"
+              attribute-key="id"
+              attribute-label="full_name"
+              placeholder="Responsable"
+              @update:modelValue="changeFilter('filter[ofResponsable]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'structure.statut_juridique'"
+              name="statut_juridique"
+              :options="$labels.structure_legal_status"
+              :modelValue="$route.query['filter[structure.statut_juridique]']"
+              placeholder="Statut juridique"
+              @update:modelValue="changeFilter('filter[structure.statut_juridique]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'department'"
+              name="department"
+              :options="
+                $labels.departments.map((option) => {
+                  return {
+                    key: option.key,
+                    label: `${option.key} - ${option.label}`,
+                  }
+                })
+              "
+              :modelValue="$route.query['filter[department]']"
+              placeholder="Département"
+              @update:modelValue="changeFilter('filter[department]', $event)"
+            />
+
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'zip'"
+              :modelValue="$route.query['filter[zip]']"
+              label="Code postal"
+              name="autocomplete-zips"
+              :options="autocompleteOptionsZips"
+              attribute-key="zip"
+              hide-attribute-key
+              attribute-right-label="zip"
+              @fetch-suggestions="onFetchSuggestionsZips"
+              @selected="changeFilter('filter[zip]', $event?.zip)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'ofDomaine'"
+              name="domaine"
+              :options="$labels.domaines"
+              :modelValue="$route.query['filter[ofDomaine]']"
+              placeholder="Domaine d'action"
+              @update:modelValue="changeFilter('filter[ofDomaine]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'ofActivity'"
+              :modelValue="$route.query['filter[ofActivity]']"
+              name="activity_id"
+              :options="activities"
+              attribute-key="id"
+              attribute-label="name"
+              placeholder="Activité"
+              options-class="!min-w-[300px]"
+              @update:modelValue="changeFilter('filter[ofActivity]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'hasCreneaux'"
+              :modelValue="$route.query['filter[hasCreneaux]']"
+              name="creneaux"
+              :options="[
+                { key: 'true', label: 'Avec créneaux' },
+                { key: 'false', label: 'Sans créneaux' },
+              ]"
+              placeholder="Créneaux"
+              @update:modelValue="changeFilter('filter[hasCreneaux]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'is_active'"
+              :modelValue="$route.query['filter[is_active]']"
+              name="is-active"
+              :options="[
+                { key: 'true', label: 'Missions activées' },
+                { key: 'false', label: 'Missions désactivées' },
+              ]"
+              placeholder="État"
+              @update:modelValue="changeFilter('filter[is_active]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'state'"
+              :modelValue="$route.query['filter[state]']"
+              name="state"
+              :options="$labels.mission_workflow_states"
+              placeholder="Statut"
+              @update:modelValue="changeFilter('filter[state]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'publics_beneficiaires'"
+              :modelValue="$route.query['filter[publics_beneficiaires]']"
+              name="publics_beneficiaires"
+              :options="$labels.mission_publics_beneficiaires"
+              placeholder="Publics aidés"
+              options-class="!min-w-[300px]"
+              @update:modelValue="changeFilter('filter[publics_beneficiaires]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'tags'"
+              :modelValue="$route.query['filter[tags]']"
+              name="tags"
+              :options="tags"
+              placeholder="Tags"
+              @update:modelValue="changeFilter('filter[tags]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'type'"
+              :modelValue="$route.query['filter[type]']"
+              name="lieu_type"
+              :options="[
+                { key: 'presentiel', label: 'Mission en présentiel' },
+                { key: 'distance', label: 'Mission à distance' },
+              ]"
+              placeholder="Présentiel / distance"
+              attribute-key="label"
+              @update:modelValue="changeFilter('filter[type]', $event)"
+            />
+
+            <DsfrTag
+              v-if="visibleFilter === 'is_autonomy'"
+              as="button"
+              size="md"
+              context="selectable"
+              :is-selected="
+                $route.query['filter[is_autonomy]'] && $route.query['filter[is_autonomy]'] == 'true'
+              "
+              is-selected-class="border-gray-50 bg-gray-50"
+              @click="changeFilter('filter[is_autonomy]', 'true')"
+            >
+              En autonomie
+            </DsfrTag>
+          </template>
 
           <DsfrTag
-            :key="`available-${$route.fullPath}`"
-            as="button"
+            v-if="visibleFilters.length < allFilters.length"
+            key="view-all-filter"
+            context="clickable"
+            icon="RiAddLine"
+            :icon-only="true"
             size="md"
-            context="selectable"
-            :is-selected="
-              $route.query['filter[available]'] && $route.query['filter[available]'] == 'available'
-            "
-            is-selected-class="border-gray-50 bg-gray-50"
-            @click.native="changeFilter('filter[available]', 'available')"
-          >
-            En ligne
-          </DsfrTag>
-
-          <BaseFilterSelectAdvanced
-            :modelValue="$route.query['filter[place]']"
-            name="place"
-            :options="[
-              { key: 'true', label: 'Avec place restante' },
-              { key: 'false', label: 'Sans place restante' },
-            ]"
-            placeholder="Place restante"
-            @update:modelValue="changeFilter('filter[place]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            name="inscription"
-            :options="[
-              { key: 'true', label: 'Inscription ouverte' },
-              { key: 'false', label: 'Inscription fermée' },
-            ]"
-            :modelValue="$route.query['filter[is_registration_open]']"
-            placeholder="Inscription"
-            @update:modelValue="changeFilter('filter[is_registration_open]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            :modelValue="$route.query['filter[date]']"
-            name="date"
-            :options="[
-              { key: 'incoming', label: 'À venir' },
-              { key: 'in_progress', label: 'En cours' },
-              { key: 'over', label: 'Passée' },
-            ]"
-            placeholder="Date"
-            @update:modelValue="changeFilter('filter[date]', $event)"
-          />
-
-          <!-- @todo : le reste de + -->
-
-          <DsfrTag
-            v-if="['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)"
-            :key="`snu-mig-${$route.fullPath}`"
             as="button"
-            size="md"
-            context="selectable"
-            :is-selected="
-              $route.query['filter[is_snu_mig_compatible]'] &&
-              $route.query['filter[is_snu_mig_compatible]'] == 'true'
-            "
-            is-selected-class="border-gray-50 bg-gray-50"
-            @click.native="changeFilter('filter[is_snu_mig_compatible]', 'true')"
-          >
-            SNU/MIG
-          </DsfrTag>
-
-          <DsfrTag
-            v-if="['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)"
-            :key="`mineurs-${$route.fullPath}`"
-            as="button"
-            size="md"
-            context="selectable"
-            :is-selected="
-              $route.query['filter[publics_volontaires]'] &&
-              $route.query['filter[publics_volontaires]'] == 'Mineurs'
-            "
-            is-selected-class="border-gray-50 bg-gray-50"
-            @click.native="changeFilter('filter[publics_volontaires]', 'Mineurs')"
-          >
-            Ouverte aux mineurs
-          </DsfrTag>
-
-          <BaseFilterInputAutocomplete
-            v-if="['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)"
-            v-model="selectedOrganisation"
-            label="Organisation"
-            name="autocomplete-organisation"
-            :options="autocompleteOptionsOrga"
-            @fetch-suggestions="onFetchSuggestionsOrga"
-            @selected="onSelectOrganisation"
+            title="Afficher plus de filtres"
+            @click="showAllFilters = true"
           />
-
-          <BaseFilterSelectAdvanced
-            v-if="responsablesStructures.length && ['admin'].includes($stores.auth.contextRole)"
-            :key="`responsable-${$route.fullPath}`"
-            name="responsable"
-            :options="responsablesStructures"
-            :modelValue="$route.query['filter[ofResponsable]']"
-            attribute-key="id"
-            attribute-label="full_name"
-            placeholder="Responsable"
-            @update:modelValue="changeFilter('filter[ofResponsable]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            v-if="['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)"
-            key="statut_juridique"
-            name="statut_juridique"
-            :options="$labels.structure_legal_status"
-            :modelValue="$route.query['filter[structure.statut_juridique]']"
-            placeholder="Statut juridique"
-            @update:modelValue="changeFilter('filter[structure.statut_juridique]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            key="department"
-            name="department"
-            :options="
-              $labels.departments.map((option) => {
-                return {
-                  key: option.key,
-                  label: `${option.key} - ${option.label}`,
-                }
-              })
-            "
-            :modelValue="$route.query['filter[department]']"
-            placeholder="Département"
-            @update:modelValue="changeFilter('filter[department]', $event)"
-          />
-
-          <BaseFilterInputAutocomplete
-            :modelValue="$route.query['filter[zip]']"
-            label="Code postal"
-            name="autocomplete-zips"
-            :options="autocompleteOptionsZips"
-            attribute-key="zip"
-            hide-attribute-key
-            attribute-right-label="zip"
-            @fetch-suggestions="onFetchSuggestionsZips"
-            @selected="changeFilter('filter[zip]', $event?.zip)"
-          />
-
-          <BaseFilterSelectAdvanced
-            key="domaine"
-            name="domaine"
-            :options="$labels.domaines"
-            :modelValue="$route.query['filter[ofDomaine]']"
-            placeholder="Domaine d'action"
-            @update:modelValue="changeFilter('filter[ofDomaine]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            :modelValue="$route.query['filter[ofActivity]']"
-            key="activity_id"
-            name="activity_id"
-            :options="activities"
-            attribute-key="id"
-            attribute-label="name"
-            placeholder="Activité"
-            options-class="!min-w-[300px]"
-            @update:modelValue="changeFilter('filter[ofActivity]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            :modelValue="$route.query['filter[hasCreneaux]']"
-            key="creneaux"
-            name="creneaux"
-            :options="[
-              { key: 'true', label: 'Avec créneaux' },
-              { key: 'false', label: 'Sans créneaux' },
-            ]"
-            placeholder="Créneaux"
-            @update:modelValue="changeFilter('filter[hasCreneaux]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            :modelValue="$route.query['filter[is_active]']"
-            name="is-active"
-            :options="[
-              { key: 'true', label: 'Missions activées' },
-              { key: 'false', label: 'Missions désactivées' },
-            ]"
-            placeholder="État"
-            @update:modelValue="changeFilter('filter[is_active]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            :modelValue="$route.query['filter[state]']"
-            name="state"
-            :options="$labels.mission_workflow_states"
-            placeholder="Statut"
-            @update:modelValue="changeFilter('filter[state]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            :modelValue="$route.query['filter[publics_beneficiaires]']"
-            name="publics_beneficiaires"
-            :options="$labels.mission_publics_beneficiaires"
-            placeholder="Publics aidés"
-            options-class="!min-w-[300px]"
-            @update:modelValue="changeFilter('filter[publics_beneficiaires]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            v-if="$stores.auth.contextRole == 'admin'"
-            :modelValue="$route.query['filter[tags]']"
-            name="tags"
-            :options="tags"
-            placeholder="Tags"
-            @update:modelValue="changeFilter('filter[tags]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            :modelValue="$route.query['filter[type]']"
-            name="lieu_type"
-            :options="[
-              { key: 'presentiel', label: 'Mission en présentiel' },
-              { key: 'distance', label: 'Mission à distance' },
-            ]"
-            placeholder="Présentiel / distance"
-            attribute-key="label"
-            @update:modelValue="changeFilter('filter[type]', $event)"
-          />
-
-          <DsfrTag
-            as="button"
-            size="md"
-            context="selectable"
-            :is-selected="
-              $route.query['filter[is_autonomy]'] && $route.query['filter[is_autonomy]'] == 'true'
-            "
-            is-selected-class="border-gray-50 bg-gray-50"
-            @click="changeFilter('filter[is_autonomy]', 'true')"
-          >
-            En autonomie
-          </DsfrTag>
         </template>
       </SearchFilters>
 
@@ -365,6 +376,7 @@ import DrawerMission from '@/components/drawer/DrawerMission.vue'
 import MixinExport from '@/mixins/export'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import ButtonCreateMission from '@/components/custom/ButtonCreateMission.vue'
+import MixinFiltersVisibility from '@/mixins/filters-visibility'
 
 export default defineNuxtComponent({
   components: {
@@ -373,7 +385,7 @@ export default defineNuxtComponent({
     SearchFilters,
     ButtonCreateMission,
   },
-  mixins: [QueryBuilder, MixinExport],
+  mixins: [QueryBuilder, MixinExport, MixinFiltersVisibility],
   async setup() {
     const { $stores } = useNuxtApp()
 
@@ -430,6 +442,42 @@ export default defineNuxtComponent({
         key: Number(this.$route.query['filter[structure.id]']) || undefined,
         label: this.$route.query['organisation_name'],
       }
+    },
+    allFilters() {
+      return [
+        'state',
+        ['responsable'].includes(this.$stores.auth.contextRole) &&
+          this.responsables.length &&
+          'responsable.id',
+        'available',
+        'place',
+        'is_registration_open',
+        'date',
+        'department',
+        'zip',
+        'ofDomaine',
+        'ofActivity',
+        'hasCreneaux',
+        'is_active',
+        'publics_volontaires',
+        'publics_beneficiaires',
+        'type',
+        'is_autonomy',
+        ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
+          'is_snu_mig_compatible',
+        ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
+          'structure.id',
+        this.responsablesStructures.length &&
+          ['admin'].includes(this.$stores.auth.contextRole) &&
+          'ofResponsable',
+        ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
+          'structure.statut_juridique',
+        this.$stores.auth.contextRole == 'admin' && 'tags',
+      ].filter((f) => f)
+    },
+    alwaysVisibleFilters() {
+      // @todo: vérifier qu'en tant que responsable je ne vois que les responsables de ma structure, et que je ne peux pas "forcer le filtre"
+      return ['state', 'responsable.id', 'available', 'place', 'is_registration_open', 'date']
     },
   },
   watch: {

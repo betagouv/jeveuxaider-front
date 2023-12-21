@@ -43,7 +43,6 @@
           <div class="flex gap-3 items-center">
             <span class="text-base">Trier par</span>
             <BaseFilterSelectAdvanced
-              key="sort"
               name="sort"
               :options="[
                 { key: '-created_at', label: 'Date de création' },
@@ -60,7 +59,6 @@
           </div>
 
           <DsfrTag
-            :key="`tous-${$route.fullPath}`"
             as="button"
             size="md"
             context="selectable"
@@ -71,106 +69,123 @@
             Tous
           </DsfrTag>
 
-          <BaseFilterSelectAdvanced
-            :modelValue="$route.query['filter[user.role]']"
-            name="user_role"
-            :options="[
-              { key: 'responsable', label: 'Responsable' },
-              { key: 'responsable_territoire', label: 'Responsable territorial' },
-              { key: 'tete_de_reseau', label: 'Tête de réseau' },
-              { key: 'referent', label: 'Référent départemental' },
-              { key: 'referent_regional', label: 'Référent régional' },
-              { key: 'admin', label: 'Modérateur' },
-            ]"
-            placeholder="Rôle"
-            @update:modelValue="handleRoleChange"
-          />
+          <template v-for="visibleFilter in visibleFilters" :key="visibleFilter">
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'user.role'"
+              :modelValue="$route.query['filter[user.role]']"
+              name="user_role"
+              :options="[
+                { key: 'responsable', label: 'Responsable' },
+                { key: 'responsable_territoire', label: 'Responsable territorial' },
+                { key: 'tete_de_reseau', label: 'Tête de réseau' },
+                { key: 'referent', label: 'Référent départemental' },
+                { key: 'referent_regional', label: 'Référent régional' },
+                { key: 'admin', label: 'Modérateur' },
+              ]"
+              placeholder="Rôle"
+              @update:modelValue="handleRoleChange"
+            />
 
-          <!-- @todo : le reste dans + -->
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'referent_department'"
+              :modelValue="$route.query['filter[referent_department]']"
+              name="referent-department"
+              :options="
+                $labels.departments.map((option) => {
+                  return {
+                    key: option.key,
+                    label: `${option.key} - ${option.label}`,
+                  }
+                })
+              "
+              placeholder="Département du référent"
+              @update:modelValue="changeFilter('filter[referent_department]', $event)"
+            />
 
-          <BaseFilterSelectAdvanced
-            v-if="$route.query['filter[user.role]'] === 'referent'"
-            :modelValue="$route.query['filter[referent_department]']"
-            name="referent-department"
-            :options="
-              $labels.departments.map((option) => {
-                return {
-                  key: option.key,
-                  label: `${option.key} - ${option.label}`,
-                }
-              })
-            "
-            placeholder="Département du référent"
-            @update:modelValue="changeFilter('filter[referent_department]', $event)"
-          />
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'referent_region'"
+              :modelValue="$route.query['filter[referent_region]']"
+              name="referent-region"
+              :options="$labels.regions"
+              placeholder="Région du référent"
+              @update:modelValue="changeFilter('filter[referent_region]', $event)"
+            />
 
-          <BaseFilterSelectAdvanced
-            v-if="$route.query['filter[user.role]'] === 'referent_regional'"
-            :modelValue="$route.query['filter[referent_region]']"
-            name="referent-region"
-            :options="$labels.regions"
-            placeholder="Région du référent"
-            @update:modelValue="changeFilter('filter[referent_region]', $event)"
-          />
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'is_visible'"
+              :modelValue="$route.query['filter[is_visible]']"
+              name="is_visible"
+              :options="[
+                { key: 'true', label: 'Visible' },
+                { key: 'false', label: 'Invisible' },
+              ]"
+              placeholder="Visiblilité dans la recherche"
+              @update:modelValue="changeFilter('filter[is_visible]', $event)"
+            />
 
-          <BaseFilterSelectAdvanced
-            :modelValue="$route.query['filter[is_visible]']"
-            name="is_visible"
-            :options="[
-              { key: 'true', label: 'Visible' },
-              { key: 'false', label: 'Invisible' },
-            ]"
-            placeholder="Visiblilité dans la recherche"
-            @update:modelValue="changeFilter('filter[is_visible]', $event)"
-          />
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'min_participations'"
+              :modelValue="$route.query['filter[min_participations]']"
+              name="min_participations"
+              :options="[
+                { key: 1, label: 'Au moins 1' },
+                { key: 3, label: 'Au moins 3' },
+                { key: 5, label: 'Au moins 5' },
+                { key: 10, label: 'Au moins 10' },
+              ]"
+              placeholder="Participations réalisées"
+              @update:modelValue="changeFilter('filter[min_participations]', $event)"
+            />
 
-          <BaseFilterSelectAdvanced
-            :modelValue="$route.query['filter[min_participations]']"
-            name="min_participations"
-            :options="[
-              { key: 1, label: 'Au moins 1' },
-              { key: 3, label: 'Au moins 3' },
-              { key: 5, label: 'Au moins 5' },
-              { key: 10, label: 'Au moins 10' },
-            ]"
-            placeholder="Participations réalisées"
-            @update:modelValue="changeFilter('filter[min_participations]', $event)"
-          />
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'department'"
+              :modelValue="$route.query['filter[department]']"
+              name="department"
+              :options="
+                $labels.departments.map((option) => {
+                  return {
+                    key: option.key,
+                    label: `${option.key} - ${option.label}`,
+                  }
+                })
+              "
+              placeholder="Département"
+              @update:modelValue="changeFilter('filter[department]', $event)"
+            />
 
-          <BaseFilterSelectAdvanced
-            :modelValue="$route.query['filter[department]']"
-            name="department"
-            :options="
-              $labels.departments.map((option) => {
-                return {
-                  key: option.key,
-                  label: `${option.key} - ${option.label}`,
-                }
-              })
-            "
-            placeholder="Département"
-            @update:modelValue="changeFilter('filter[department]', $event)"
-          />
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'zip'"
+              :modelValue="$route.query['filter[zip]']"
+              label="Code postal"
+              name="autocomplete-zips"
+              :options="autocompleteOptionsZips"
+              attribute-key="zip"
+              hide-attribute-key
+              attribute-right-label="zip"
+              @fetch-suggestions="onFetchSuggestionsZips"
+              @selected="changeFilter('filter[zip]', $event?.zip)"
+            />
 
-          <BaseFilterInputAutocomplete
-            :modelValue="$route.query['filter[zip]']"
-            label="Code postal"
-            name="autocomplete-zips"
-            :options="autocompleteOptionsZips"
-            attribute-key="zip"
-            hide-attribute-key
-            attribute-right-label="zip"
-            @fetch-suggestions="onFetchSuggestionsZips"
-            @selected="changeFilter('filter[zip]', $event?.zip)"
-          />
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'tags' && $stores.auth.contextRole == 'admin'"
+              :modelValue="$route.query['filter[tags]']"
+              name="tags"
+              :options="tags"
+              placeholder="Tags"
+              @update:modelValue="changeFilter('filter[tags]', $event)"
+            />
+          </template>
 
-          <BaseFilterSelectAdvanced
-            v-if="$stores.auth.contextRole == 'admin'"
-            :modelValue="$route.query['filter[tags]']"
-            name="tags"
-            :options="tags"
-            placeholder="Tags"
-            @update:modelValue="changeFilter('filter[tags]', $event)"
+          <DsfrTag
+            v-if="visibleFilters.length < allFilters.length"
+            key="view-all-filter"
+            context="clickable"
+            icon="RiAddLine"
+            :icon-only="true"
+            size="md"
+            as="button"
+            title="Afficher plus de filtres"
+            @click="showAllFilters = true"
           />
         </template>
       </SearchFilters>
@@ -201,6 +216,7 @@ import MixinExport from '@/mixins/export'
 import CardProfile from '@/components/card/CardProfile.vue'
 import DrawerProfile from '@/components/drawer/DrawerProfile.vue'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
+import MixinFiltersVisibility from '@/mixins/filters-visibility'
 
 export default defineNuxtComponent({
   components: {
@@ -208,7 +224,7 @@ export default defineNuxtComponent({
     DrawerProfile,
     SearchFilters,
   },
-  mixins: [QueryBuilder, MixinExport],
+  mixins: [QueryBuilder, MixinExport, MixinFiltersVisibility],
   async setup() {
     const { $stores } = useNuxtApp()
 
@@ -219,6 +235,23 @@ export default defineNuxtComponent({
     if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
       return showError({ statusCode: 403 })
     }
+  },
+  computed: {
+    allFilters() {
+      return [
+        'user.role',
+        this.$route.query['filter[user.role]'] === 'referent' && 'referent_department',
+        this.$route.query['filter[user.role]'] === 'referent_regional' && 'referent_region',
+        'is_visible',
+        'min_participations',
+        'department',
+        'zip',
+        'tags',
+      ].filter((f) => f)
+    },
+    alwaysVisibleFilters() {
+      return ['user.role']
+    },
   },
   data() {
     return {

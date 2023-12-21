@@ -79,48 +79,62 @@
             Toutes
           </DsfrTag>
 
-          <BaseFilterSelectAdvanced
-            key="state"
-            name="state"
-            :options="$labels.structure_workflow_states"
-            :modelValue="$route.query['filter[state]']"
-            placeholder="Statut"
-            @update:modelValue="changeFilter('filter[state]', $event)"
-          />
+          <template v-for="visibleFilter in visibleFilters" :key="visibleFilter">
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'state'"
+              name="state"
+              :options="$labels.structure_workflow_states"
+              :modelValue="$route.query['filter[state]']"
+              placeholder="Statut"
+              @update:modelValue="changeFilter('filter[state]', $event)"
+            />
 
-          <BaseFilterInputAutocomplete
-            v-if="['admin'].includes($stores.auth.contextRole)"
-            v-model="selectedReseau"
-            label="Réseau"
-            name="autocomplete-reseau"
-            :options="autocompleteOptionsReseaux"
-            @fetch-suggestions="onFetchSuggestionsReseaux"
-            @selected="onSelectReseau"
-          />
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'reseaux.id'"
+              v-model="selectedReseau"
+              label="Réseau"
+              name="autocomplete-reseau"
+              :options="autocompleteOptionsReseaux"
+              @fetch-suggestions="onFetchSuggestionsReseaux"
+              @selected="onSelectReseau"
+            />
 
-          <BaseFilterSelectAdvanced
-            key="statut_juridique"
-            name="statut_juridique"
-            :options="$labels.structure_legal_status"
-            :modelValue="$route.query['filter[statut_juridique]']"
-            placeholder="Statut juridique"
-            @update:modelValue="changeFilter('filter[statut_juridique]', $event)"
-          />
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'statut_juridique'"
+              name="statut_juridique"
+              :options="$labels.structure_legal_status"
+              :modelValue="$route.query['filter[statut_juridique]']"
+              placeholder="Statut juridique"
+              @update:modelValue="changeFilter('filter[statut_juridique]', $event)"
+            />
 
-          <BaseFilterSelectAdvanced
-            key="department"
-            name="department"
-            :options="
-              $labels.departments.map((option) => {
-                return {
-                  key: option.key,
-                  label: `${option.key} - ${option.label}`,
-                }
-              })
-            "
-            :modelValue="$route.query['filter[department]']"
-            placeholder="Département"
-            @update:modelValue="changeFilter('filter[department]', $event)"
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'department'"
+              name="department"
+              :options="
+                $labels.departments.map((option) => {
+                  return {
+                    key: option.key,
+                    label: `${option.key} - ${option.label}`,
+                  }
+                })
+              "
+              :modelValue="$route.query['filter[department]']"
+              placeholder="Département"
+              @update:modelValue="changeFilter('filter[department]', $event)"
+            />
+          </template>
+
+          <DsfrTag
+            v-if="visibleFilters.length < allFilters.length"
+            key="view-all-filter"
+            context="clickable"
+            icon="RiAddLine"
+            :icon-only="true"
+            size="md"
+            as="button"
+            title="Afficher plus de filtres"
+            @click="showAllFilters = true"
           />
         </template>
       </SearchFilters>
@@ -157,6 +171,7 @@ import MixinExport from '@/mixins/export'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import MixinFiltersVisibility from '@/mixins/filters-visibility'
 
 export default defineNuxtComponent({
   components: {
@@ -166,7 +181,7 @@ export default defineNuxtComponent({
     Pagination,
     Breadcrumb,
   },
-  mixins: [QueryBuilder, MixinExport],
+  mixins: [QueryBuilder, MixinExport, MixinFiltersVisibility],
   setup() {
     const { $stores } = useNuxtApp()
 
@@ -188,6 +203,17 @@ export default defineNuxtComponent({
         key: Number(this.$route.query['filter[reseaux.id]']) || undefined,
         label: this.$route.query['reseau_name'],
       }
+    },
+    allFilters() {
+      return [
+        'state',
+        ['admin'].includes(this.$stores.auth.contextRole) && 'reseaux.id',
+        'statut_juridique',
+        'department',
+      ].filter((f) => f)
+    },
+    alwaysVisibleFilters() {
+      return this.allFilters
     },
   },
   data() {
