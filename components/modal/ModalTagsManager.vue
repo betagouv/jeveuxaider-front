@@ -14,27 +14,45 @@
           communes à tous les membres de votre organisation.
         </div>
         <template v-if="mode === 'listing'">
-          <template v-if="editableTags.length > 0">
-            <BaseContainerScrollable scrollbar-class="max-h-[340px]">
-              <div class="flex flex-wrap gap-2 mb-4">
-                <DsfrTag
-                  v-for="tag in editableTags"
-                  :key="tag.id"
-                  icon="RiPencilLine"
-                  icon-position="right"
-                  context="clickable"
-                  size="md"
-                  iconClass="pointer-events-none"
-                  @click="onSelectTag(tag)"
-                >
-                  {{ tag.name }}
-                </DsfrTag>
+          <BaseContainerScrollable scrollbar-class="max-h-[340px]">
+            <div class="flex flex-col gap-6">
+              <div class="">
+                <BaseFormLabel suffix="(personnalisables)">Vos étiquettes </BaseFormLabel>
+                <div class="flex flex-wrap gap-2" v-if="editableTags.length > 0">
+                  <DsfrTag
+                    v-for="tag in editableTags"
+                    :key="tag.id"
+                    icon="RiPencilLine"
+                    icon-position="right"
+                    context="clickable"
+                    size="md"
+                    iconClass="pointer-events-none"
+                    @click="onSelectTag(tag)"
+                  >
+                    {{ tag.name }}
+                  </DsfrTag>
+                </div>
+                <template v-else>
+                  <div class="text-gray-400 text-sm">Aucune étiquette</div>
+                </template>
               </div>
-            </BaseContainerScrollable>
-          </template>
-          <template v-else>
-            <div class="text-gray-300">Aucune étiquette</div>
-          </template>
+              <div class="">
+                <BaseFormLabel suffix="(Non personnalisables)"
+                  >Les étiquettes génériques</BaseFormLabel
+                >
+                <div class="flex flex-wrap gap-2">
+                  <DsfrTag
+                    v-for="tag in genericTags"
+                    :key="tag.id"
+                    size="md"
+                    iconClass="pointer-events-none"
+                  >
+                    {{ tag.name }}
+                  </DsfrTag>
+                </div>
+              </div>
+            </div>
+          </BaseContainerScrollable>
         </template>
         <template v-if="['edit', 'add'].includes(mode)">
           <FormStructureTag
@@ -99,6 +117,9 @@ export default defineNuxtComponent({
   computed: {
     editableTags() {
       return this.$stores.structureTags.options.filter((tag) => !tag.is_generic)
+    },
+    genericTags() {
+      return this.$stores.structureTags.options.filter((tag) => tag.is_generic)
     },
   },
   methods: {
