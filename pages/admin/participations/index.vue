@@ -107,8 +107,9 @@
             v-model="selectedOrganisation"
             label="Organisation"
             name="autocomplete-organisation"
-            :options="autocompleteOptionsOrga"
-            @fetch-suggestions="onFetchSuggestionsOrga"
+            :options="autocompleteOptionsOrganisations"
+            :loading="loadingFetchOrganisations"
+            @fetch-suggestions="onFetchSuggestionsOrganisations"
             @selected="onSelectOrganisation"
           />
 
@@ -129,6 +130,7 @@
             label="Mission"
             name="autocomplete-mission"
             :options="autocompleteOptionsMission"
+            :loading="loadingFetchMissions"
             @fetch-suggestions="onFetchSuggestionsMission"
             @selected="onSelectMission"
           />
@@ -164,6 +166,7 @@
             label="Code postal"
             name="autocomplete-zips"
             :options="autocompleteOptionsZips"
+            :loading="loadingFetchZips"
             attribute-key="zip"
             hide-attribute-key
             attribute-right-label="zip"
@@ -332,13 +335,16 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
+      loadingFetchOrganisations: false,
+      loadingFetchMissions: false,
+      loadingFetchZips: false,
       endpoint: '/participations',
       exportEndpoint: '/export/participations',
       queryParams: {
         include: 'conversation.latestMessage,profile.avatar,mission.responsable,mission.structure',
       },
       drawerParticipationId: null,
-      autocompleteOptionsOrga: [],
+      autocompleteOptionsOrganisations: [],
       autocompleteOptionsMission: [],
       autocompleteOptionsZips: [],
       showModalBulkParticipationsValidate: false,
@@ -417,16 +423,19 @@ export default defineNuxtComponent({
     onDrawerUpdated() {
       this.fetch()
     },
-    async onFetchSuggestionsOrga(value) {
+    async onFetchSuggestionsOrganisations(value) {
+      this.loadingFetchOrganisations = true
       const organisations = await apiFetch('/structures', {
         params: {
           'filter[search]': value,
           pagination: 20,
         },
       })
-      this.autocompleteOptionsOrga = organisations.data
+      this.autocompleteOptionsOrganisations = organisations.data
+      this.loadingFetchOrganisations = false
     },
     async onFetchSuggestionsMission(value) {
+      this.loadingFetchMissions = true
       const missions = await apiFetch('/missions', {
         params: {
           'filter[search]': value,
@@ -434,6 +443,7 @@ export default defineNuxtComponent({
         },
       })
       this.autocompleteOptionsMission = missions.data
+      this.loadingFetchMissions = false
     },
     async onFetchSuggestionsZips(value) {
       const trimmedValue = value?.trim()
@@ -449,6 +459,7 @@ export default defineNuxtComponent({
         return
       }
 
+      this.loadingFetchZips = true
       const suggestions = await $fetch('https://api-adresse.data.gouv.fr/search', {
         params: {
           q: trimmedValue,
@@ -465,6 +476,7 @@ export default defineNuxtComponent({
         }
       })
       this.autocompleteOptionsZips = formatOptions
+      this.loadingFetchZips = false
     },
     onBulkOperationProcessed() {
       this.drawerParticipationId = null // Force closing drawer

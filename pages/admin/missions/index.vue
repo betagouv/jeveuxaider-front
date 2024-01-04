@@ -179,6 +179,7 @@
               :options="autocompleteOptionsOrga"
               @fetch-suggestions="onFetchSuggestionsOrga"
               @selected="onSelectOrganisation"
+              :loading="loadingFetchOrganisations"
             />
 
             <BaseFilterSelectAdvanced
@@ -228,6 +229,7 @@
               attribute-right-label="zip"
               @fetch-suggestions="onFetchSuggestionsZips"
               @selected="changeFilter('filter[zip]', $event?.zip)"
+              :loading="loadingFetchZips"
             />
 
             <BaseFilterSelectAdvanced
@@ -424,6 +426,8 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
+      loadingFetchZips: false,
+      loadingFetchOrganisations: false,
       endpoint: '/missions',
       exportEndpoint: '/export/missions',
       queryParams: {
@@ -476,7 +480,6 @@ export default defineNuxtComponent({
       ].filter((f) => f)
     },
     alwaysVisibleFilters() {
-      // @todo: vérifier qu'en tant que responsable je ne vois que les responsables de ma structure, et que je ne peux pas "forcer le filtre"
       return ['state', 'responsable.id', 'available', 'place', 'is_registration_open', 'date']
     },
   },
@@ -503,6 +506,7 @@ export default defineNuxtComponent({
   },
   methods: {
     async onFetchSuggestionsOrga(value) {
+      this.loadingFetchOrganisations = true
       const organisations = await apiFetch('/structures', {
         params: {
           'filter[search]': value,
@@ -510,6 +514,7 @@ export default defineNuxtComponent({
         },
       })
       this.autocompleteOptionsOrga = organisations.data
+      this.loadingFetchOrganisations = false
     },
     async onFetchSuggestionsZips(value) {
       const trimmedValue = value?.trim()
@@ -524,6 +529,8 @@ export default defineNuxtComponent({
         this.autocompleteOptionsZips = []
         return
       }
+
+      this.loadingFetchZips = true
 
       const suggestions = await $fetch('https://api-adresse.data.gouv.fr/search', {
         params: {
@@ -541,6 +548,8 @@ export default defineNuxtComponent({
         }
       })
       this.autocompleteOptionsZips = formatOptions
+
+      this.loadingFetchZips = false
     },
     async fetchResponsablesForAdmins(organisationId, oldOrganisationId) {
       if (!organisationId) {

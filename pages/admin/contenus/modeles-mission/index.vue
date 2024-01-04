@@ -126,6 +126,7 @@
             label="Tous les réseaux"
             name="autocomplete-reseau"
             :options="autocompleteOptionsReseau"
+            :loading="loadingFetchReseaux"
             @fetch-suggestions="onFetchSuggestionsReseau"
             @selected="onSelectReseau"
           />
@@ -230,6 +231,7 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
+      loadingFetchReseaux: true,
       endpoint: '/mission-templates',
       queryParams: {
         include: 'photo,reseau',
@@ -241,13 +243,15 @@ export default defineNuxtComponent({
   },
   methods: {
     async onFetchSuggestionsReseau(value) {
+      this.loadingFetchReseaux = true
       const reseaux = await apiFetch('/reseaux', {
         params: {
           'filter[search]': value,
-          pagination: 6,
+          pagination: 20,
         },
       })
       this.autocompleteOptionsReseau = reseaux.data
+      this.loadingFetchReseaux = false
     },
     async onSelectReseau($event) {
       const queryReseauName =

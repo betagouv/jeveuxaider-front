@@ -46,6 +46,7 @@
           label="Toutes les organisations"
           name="autocomplete-organisation"
           :options="autocompleteOptionsOrganisations"
+          :loading="loadingFetchOrganisations"
           @fetch-suggestions="onFetchSuggestionsOrganisations"
           @selected="onSelectOrganisation"
         />
@@ -201,6 +202,7 @@ export default defineNuxtComponent({
     return {
       endpoint: '/support/responsables/participations-to-be-treated',
       loading: true,
+      loadingFetchOrganisations: false,
       drawerProfileId: null,
       autocompleteOptionsOrganisations: [],
     }
@@ -215,6 +217,7 @@ export default defineNuxtComponent({
   },
   methods: {
     async onFetchSuggestionsOrganisations(value) {
+      this.loadingFetchOrganisations = true
       const organisations = await apiFetch('/structures', {
         params: {
           'filter[search]': value,
@@ -222,6 +225,7 @@ export default defineNuxtComponent({
         },
       })
       this.autocompleteOptionsOrganisations = organisations.data
+      this.loadingFetchOrganisations = false
     },
     async onSelectOrganisation($event) {
       const queryOrganisationName =

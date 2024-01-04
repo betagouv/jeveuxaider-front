@@ -44,48 +44,60 @@
               ref="scrollContainer"
               class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2"
             >
-              <ul class="mt-2 px-2">
-                <li
-                  v-for="(item, index) in options"
-                  :key="`${item[attributeKey]}_${index}`"
-                  :ref="`option_${index}`"
-                  class="relative flex justify-between items-center text-sm px-2 py-2 pr-2 cursor-pointer hover:bg-[#F0F0FF] focus:bg-[#F0F0FF]"
-                  :class="[
-                    { 'bg-[#F0F0FF]': highlightIndex == index },
-                    {
-                      'bg-[#F0F0FF] !pr-8':
+              <transition
+                enter-active-class="duration-200"
+                enter-from-class="opacity-0"
+                enter-to-class="opacity-100"
+                leave-active-class="ease-in duration-200"
+                leave-from-class="opacity-100"
+                leave-to-class="opacity-0"
+                mode="out-in"
+              >
+                <LoadingIndicator v-if="loading" class="m-4" />
+
+                <ul v-else class="mt-2 px-2">
+                  <li
+                    v-for="(item, index) in options"
+                    :key="`${item[attributeKey]}_${index}`"
+                    :ref="`option_${index}`"
+                    class="relative flex justify-between items-center text-sm px-2 py-2 pr-2 cursor-pointer hover:bg-[#F0F0FF] focus:bg-[#F0F0FF]"
+                    :class="[
+                      { 'bg-[#F0F0FF]': highlightIndex == index },
+                      {
+                        'bg-[#F0F0FF] !pr-8':
+                          valueIndexInOptions !== -1 &&
+                          item[attributeKey] === options[valueIndexInOptions][attributeKey],
+                      },
+                    ]"
+                    @click="handleClick(item)"
+                  >
+                    <span class="truncate">
+                      {{ item[attributeLabel] }}
+                    </span>
+
+                    <span class="text-xs text-gray-400 ml-1">
+                      <template v-if="attributeRightLabel">
+                        {{ item[attributeRightLabel] }}
+                      </template>
+
+                      <template v-else-if="!hideAttributeKey">
+                        <small>#</small>{{ item[attributeKey] }}
+                      </template>
+                    </span>
+
+                    <RiCheckLine
+                      v-if="
                         valueIndexInOptions !== -1 &&
-                        item[attributeKey] === options[valueIndexInOptions][attributeKey],
-                    },
-                  ]"
-                  @click="handleClick(item)"
-                >
-                  <span class="truncate">
-                    {{ item[attributeLabel] }}
-                  </span>
-
-                  <span class="text-xs text-gray-400 ml-1">
-                    <template v-if="attributeRightLabel">
-                      {{ item[attributeRightLabel] }}
-                    </template>
-
-                    <template v-else-if="!hideAttributeKey">
-                      <small>#</small>{{ item[attributeKey] }}
-                    </template>
-                  </span>
-
-                  <RiCheckLine
-                    v-if="
-                      valueIndexInOptions !== -1 &&
-                      item[attributeKey] === options[valueIndexInOptions][attributeKey]
-                    "
-                    class="absolute right-2 h-4 fill-current"
-                  />
-                </li>
-                <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
-                  {{ labelEmpty }}
-                </li>
-              </ul>
+                        item[attributeKey] === options[valueIndexInOptions][attributeKey]
+                      "
+                      class="absolute right-2 h-4 fill-current"
+                    />
+                  </li>
+                  <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
+                    {{ labelEmpty }}
+                  </li>
+                </ul>
+              </transition>
             </div>
           </div>
         </FocusLoop>
@@ -97,11 +109,13 @@
 <script>
 import FacetSearch from '@/components/section/search/FacetSearch.vue'
 import { FocusLoop } from '@vue-a11y/focus-loop'
+import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
 
 export default defineNuxtComponent({
   components: {
     FacetSearch,
     FocusLoop,
+    LoadingIndicator,
   },
   props: {
     emits: ['selected', 'fetch-suggestions', 'add'],
@@ -120,6 +134,7 @@ export default defineNuxtComponent({
     disabled: { type: Boolean, default: false },
     label: { type: String, required: true },
     hideAttributeKey: { type: Boolean, default: false },
+    loading: { type: Boolean, default: false },
   },
   data() {
     return {

@@ -159,6 +159,7 @@
               label="Code postal"
               name="autocomplete-zips"
               :options="autocompleteOptionsZips"
+              :loading="loadingFetchZips"
               attribute-key="zip"
               hide-attribute-key
               attribute-right-label="zip"
@@ -256,6 +257,7 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
+      loadingFetchZips: false,
       endpoint: '/profiles',
       exportEndpoint: '/export/profiles',
       queryParams: {
@@ -298,6 +300,7 @@ export default defineNuxtComponent({
         return
       }
 
+      this.loadingFetchZips = true
       const suggestions = await $fetch('https://api-adresse.data.gouv.fr/search', {
         params: {
           q: trimmedValue,
@@ -314,6 +317,7 @@ export default defineNuxtComponent({
         }
       })
       this.autocompleteOptionsZips = formatOptions
+      this.loadingFetchZips = false
     },
   },
 })
