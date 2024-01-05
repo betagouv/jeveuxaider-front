@@ -192,6 +192,7 @@ export default defineNuxtComponent({
     async showOptions(newVal) {
       if (newVal) {
         await this.$nextTick()
+        this.handleOptionsPosition()
         this.$refs.facetSearch.$refs?.input?.focus()
         if (this.valueIndexInOptions !== -1) {
           this.highlightIndex = this.valueIndexInOptions
@@ -217,13 +218,6 @@ export default defineNuxtComponent({
       if (this.showOptions && (this.options.length === 0 || this.shouldRefreshOnNextOpen)) {
         this.shouldRefreshOnNextOpen = false
         this.$emit('fetch-suggestions', this.searchTerm)
-      }
-
-      await this.$nextTick()
-      if (this.showOptions) {
-        const elOptionsX = this.$refs.tag.$el.getBoundingClientRect()?.x
-        const windowCenterX = window.innerWidth / 2
-        this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
       }
     },
     handleInput(value) {
@@ -292,6 +286,11 @@ export default defineNuxtComponent({
       this.$refs[`option_${this.highlightIndex}`]?.[0]?.scrollIntoView({
         block: 'nearest',
       })
+    },
+    handleOptionsPosition() {
+      const elOptionsX = this.$refs.tag.$el.getBoundingClientRect()?.x
+      const windowCenterX = window.innerWidth / 2
+      this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
     },
   },
 })

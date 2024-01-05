@@ -61,8 +61,8 @@
     </span>
 
     <component
-      :is="iconOrClearable"
-      v-if="icon && iconPosition === 'right'"
+      :is="clearable && isActive ? iconClearableComponent : iconComponent"
+      v-if="(icon || (clearable && isActive)) && iconPosition === 'right'"
       :class="[
         'flex-none',
         { 'fill-current': iconFillCurrent },
@@ -139,13 +139,14 @@ export default defineNuxtComponent({
       default: false,
     },
   },
-  computed: {
-    iconOrClearable() {
-      return this.isActive ? resolveComponent('RiCloseFill') : resolveComponent(this.icon)
-    },
-    iconComponent() {
-      return resolveComponent(this.icon)
-    },
+  setup(props) {
+    const iconComponent = props.icon ? resolveComponent(props.icon) : undefined
+    const iconClearableComponent = props.clearable ? resolveComponent('RiCloseFill') : undefined
+
+    return {
+      iconComponent,
+      iconClearableComponent,
+    }
   },
 })
 </script>

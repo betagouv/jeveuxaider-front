@@ -14,7 +14,7 @@
       :is-active="modelValue ? true : false"
       class="!max-w-[300px]"
       @keydown="onKeydown"
-      @click="!disabled ? toggleOpen() : null"
+      @click="!disabled && (showOptions = !showOptions)"
       @keydown.tab="showOptions = false"
       @keydown.esc="showOptions = false"
       @clear="reset()"
@@ -98,15 +98,19 @@ export default defineNuxtComponent({
       optionsPositionClass: '',
     }
   },
-  methods: {
-    async toggleOpen() {
-      this.showOptions = !this.showOptions
-      await this.$nextTick()
-      if (this.showOptions) {
-        const elOptionsX = this.$refs.tag.$el.getBoundingClientRect()?.x
-        const windowCenterX = window.innerWidth / 2
-        this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
+  watch: {
+    async showOptions(newVal) {
+      if (newVal) {
+        await this.$nextTick()
+        this.handleOptionsPosition()
       }
+    },
+  },
+  methods: {
+    handleOptionsPosition() {
+      const elOptionsX = this.$refs.tag.$el.getBoundingClientRect()?.x
+      const windowCenterX = window.innerWidth / 2
+      this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
     },
   },
 })
