@@ -1,6 +1,7 @@
 <template>
   <div v-click-outside="clickedOutside" class="relative">
     <DsfrTag
+      ref="tag"
       :id="name"
       :name="name"
       :tabindex="!disabled && '0'"
@@ -13,7 +14,7 @@
       :is-active="modelValue ? true : false"
       class="!max-w-[300px]"
       @keydown="onKeydown"
-      @click="!disabled ? (showOptions = !showOptions) : null"
+      @click="!disabled ? toggleOpen() : null"
       @keydown.tab="showOptions = false"
       @keydown.esc="showOptions = false"
       @clear="reset()"
@@ -27,6 +28,7 @@
         v-show="showOptions"
         :class="[
           'absolute w-full z-50 mt-2 p-2 bg-white border border-gray-200 shadow-md overflow-hidden min-w-[250px]',
+          optionsPositionClass,
           optionsClass,
         ]"
         @focusout="showOptions = false"
@@ -93,7 +95,19 @@ export default defineNuxtComponent({
   data() {
     return {
       enableUnselect: true,
+      optionsPositionClass: '',
     }
+  },
+  methods: {
+    async toggleOpen() {
+      this.showOptions = !this.showOptions
+      await this.$nextTick()
+      if (this.showOptions) {
+        const elOptionsX = this.$refs.tag.$el.getBoundingClientRect()?.x
+        const windowCenterX = window.innerWidth / 2
+        this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
+      }
+    },
   },
 })
 </script>

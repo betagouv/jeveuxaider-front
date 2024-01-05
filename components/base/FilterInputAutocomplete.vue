@@ -1,6 +1,7 @@
 <template>
   <div v-click-outside="clickedOutside" class="relative">
     <DsfrTag
+      ref="tag"
       :id="name"
       :name="name"
       :tabindex="!disabled && '0'"
@@ -24,6 +25,7 @@
         v-show="showOptions"
         :class="[
           'absolute w-full z-50 mt-2 bg-white border border-gray-200 shadow-md overflow-hidden min-w-[300px]',
+          optionsPositionClass,
           optionsClass,
         ]"
       >
@@ -142,6 +144,7 @@ export default defineNuxtComponent({
       highlightIndex: null,
       searchTerm: typeof this.modelValue === 'string' ? this.modelValue : this.modelValue?.label,
       shouldRefreshOnNextOpen: false,
+      optionsPositionClass: '',
     }
   },
   computed: {
@@ -208,12 +211,19 @@ export default defineNuxtComponent({
       this.showOptions = false
       this.$emit('selected', null)
     },
-    toggleOpen() {
+    async toggleOpen() {
       this.showOptions = !this.showOptions
       // Initialisation
       if (this.showOptions && (this.options.length === 0 || this.shouldRefreshOnNextOpen)) {
         this.shouldRefreshOnNextOpen = false
         this.$emit('fetch-suggestions', this.searchTerm)
+      }
+
+      await this.$nextTick()
+      if (this.showOptions) {
+        const elOptionsX = this.$refs.tag.$el.getBoundingClientRect()?.x
+        const windowCenterX = window.innerWidth / 2
+        this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
       }
     },
     handleInput(value) {
