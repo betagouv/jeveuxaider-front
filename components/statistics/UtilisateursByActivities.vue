@@ -9,8 +9,7 @@
       <ListItemCount
         v-for="item in items"
         :key="item.id"
-        :color="item.domaine_id ? item.domaine_id : 'gray-light'"
-        :label="item.name ? item.name : 'Sans activité'"
+        :label="item.name ? activityLabelWithIconResolver(item.id) : 'Sans activité'"
         :count="item.count"
         :total="total"
         display="count_percent"
@@ -22,6 +21,7 @@
 <script>
 import ListItemCount from '@/components/custom/ListItemCount.vue'
 import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
+import activities from '@/assets/activities.json'
 
 export default defineNuxtComponent({
   components: {
@@ -30,6 +30,7 @@ export default defineNuxtComponent({
   },
   data() {
     return {
+      activities,
       loading: true,
       items: null,
     }
@@ -46,6 +47,9 @@ export default defineNuxtComponent({
         this.loading = false
         this.items = response
       })
+    },
+    activityLabelWithIconResolver(activityId) {
+      return this.activities.find((a) => a.id === activityId)?.label
     },
   },
   computed: {

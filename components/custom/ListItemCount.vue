@@ -1,6 +1,7 @@
 <template>
   <div class="flex gap-2 items-center">
     <div
+      v-if="color"
       class="rounded-lg"
       :class="[
         { 'h-[10px] w-[10px]': size == 'xxs' },
@@ -101,7 +102,7 @@ export default defineNuxtComponent({
     },
     color: {
       type: [String, Number],
-      default: 'gray',
+      default: null,
     },
     label: {
       type: String,
