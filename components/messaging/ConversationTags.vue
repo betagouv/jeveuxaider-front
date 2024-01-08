@@ -11,7 +11,6 @@
       v-for="(tag, index) in $stores.structureTags.resolveTagsName(participation.tags)"
       :key="tag.id"
       size="md"
-      as="button"
       :context="canManageTags ? 'deletable' : 'default'"
       @delete="onDeleteClick(tag)"
     >

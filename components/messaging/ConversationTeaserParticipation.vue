@@ -26,7 +26,6 @@
           )"
           :key="tag.id"
           size="sm"
-          as="button"
         >
           {{ tag.name }}
         </DsfrTag>
