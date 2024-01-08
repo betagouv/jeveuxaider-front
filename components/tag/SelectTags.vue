@@ -41,7 +41,7 @@
           />
         </BaseContainerScrollable>
         <div class="p-4" v-else>
-          <div class="text-gray-300">Aucune étiquette</div>
+          <div class="text-gray-300">Aucun tag</div>
         </div>
         <div class="px-4">
           <div class="border-t">
@@ -49,7 +49,7 @@
               @click="showModal = true"
               class="py-4 flex items-center cursor-pointer text-sm space-x-4 hover:text-jva-blue-500"
             >
-              <RiPriceTag3Line class="h-4 w-4 fill-current" /> <span>Gestion des étiquettes</span>
+              <RiPriceTag3Line class="h-4 w-4 fill-current" /> <span>Gestion des tags</span>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@ export default defineNuxtComponent({
     },
     label: {
       type: String,
-      default: 'Ajouter une étiquette',
+      default: 'Ajouter un tag',
     },
     options: {
       type: Array,

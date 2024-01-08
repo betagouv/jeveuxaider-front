@@ -73,20 +73,6 @@
           >
         </div>
       </div>
-      <div class=""></div>
-      <template #right>
-        <div v-if="canManageTags" class="px-4 flex flex-col justify-center items-center">
-          <SelectTags
-            v-model="participation.tags"
-            :structure-tags-endpoint="`/structures/${this.participation?.mission.structure_id}/tags`"
-            :taggable-endpoint="`/participations/${this.participation?.id}/tags`"
-            @update-selected-tags="$emit('update-selected-tags', $event)"
-            class="mt-2"
-            label="Attribuer une étiquette"
-            options-class="right-0 "
-          />
-        </div>
-      </template>
     </ConversationRecipient>
     <DrawerConversationBenevole :profile-id="drawerProfileId" @close="drawerProfileId = null" />
   </div>
@@ -96,7 +82,6 @@
 import { dragscroll } from 'vue-dragscroll'
 import ConversationRecipient from '@/components/messaging/ConversationRecipient.vue'
 import MixinConversationParticipation from '@/mixins/conversation/participation'
-import SelectTags from '@/components/tag/SelectTags.vue'
 
 export default defineNuxtComponent({
   directives: {
@@ -104,7 +89,6 @@ export default defineNuxtComponent({
   },
   components: {
     ConversationRecipient,
-    SelectTags,
   },
   mixins: [MixinConversationParticipation],
   props: {
@@ -118,11 +102,7 @@ export default defineNuxtComponent({
       drawerProfileId: null,
     }
   },
-  computed: {
-    canManageTags() {
-      return ['responsable'].includes(this.$stores.auth.contextRole)
-    },
-  },
+  computed: {},
   methods: {
     handlClick() {
       this.showDrawerBenevole = true

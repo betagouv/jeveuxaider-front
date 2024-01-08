@@ -4,20 +4,20 @@
       <BaseModal
         v-scroll-lock="isOpen"
         :is-open="isOpen"
-        title="Gestion des étiquettes"
+        title="Gestion des tags"
         :prevent-click-outside="true"
         icon="RiPriceTag3Line"
         @close="handleCancel()"
       >
         <div class="mb-8">
-          Vous pouvez créer des étiquettes pour organiser vos participations. Ces étiquettes sont
-          communes à tous les membres de votre organisation.
+          Vous pouvez créer des tags pour organiser vos participations. Ces tags sont communs à tous
+          les membres de votre organisation.
         </div>
         <template v-if="mode === 'listing'">
           <BaseContainerScrollable scrollbar-class="max-h-[340px]">
             <div class="flex flex-col gap-6">
               <div class="">
-                <BaseFormLabel suffix="(personnalisables)">Vos étiquettes </BaseFormLabel>
+                <BaseFormLabel suffix="(personnalisables)">Liste des tags </BaseFormLabel>
                 <div class="flex flex-wrap gap-2" v-if="editableTags.length > 0">
                   <DsfrTag
                     v-for="tag in editableTags"
@@ -33,13 +33,11 @@
                   </DsfrTag>
                 </div>
                 <template v-else>
-                  <div class="text-gray-400 text-sm">Aucune étiquette</div>
+                  <div class="text-gray-400 text-sm">Aucun tag</div>
                 </template>
               </div>
-              <div class="">
-                <BaseFormLabel suffix="(Non personnalisables)"
-                  >Les étiquettes génériques</BaseFormLabel
-                >
+              <!-- <div class="">
+                <BaseFormLabel suffix="(Non personnalisables)">Les tags génériques</BaseFormLabel>
                 <div class="flex flex-wrap gap-2">
                   <DsfrTag
                     v-for="tag in genericTags"
@@ -50,7 +48,7 @@
                     {{ tag.name }}
                   </DsfrTag>
                 </div>
-              </div>
+              </div> -->
             </div>
           </BaseContainerScrollable>
         </template>
@@ -62,13 +60,13 @@
           />
         </template>
         <template v-if="['edit'].includes(mode)">
-          <DsfrLink class="text-sm mt-2" @click="onActionDelete">Supprimer cet étiquette</DsfrLink>
+          <DsfrLink class="text-sm mt-2" @click="onActionDelete">Supprimer ce tag</DsfrLink>
         </template>
 
         <template #footer>
           <template v-if="mode === 'listing'">
             <DsfrButton class="mr-3" type="secondary" @click.stop="onClickModeAdd">
-              Ajouter une étiquette
+              Ajouter un tag
             </DsfrButton>
             <DsfrButton :loading="loading" @click.stop="onActionClose"> Terminer </DsfrButton>
           </template>
@@ -143,7 +141,7 @@ export default defineNuxtComponent({
       this.$refs.formStructureTag.handleSubmit()
     },
     onActionDelete() {
-      if (confirm('Êtes-vous sûr de vouloir supprimer cette étiquette ?')) {
+      if (confirm('Êtes-vous sûr de vouloir supprimer ce tag ?')) {
         this.$stores.structureTags.delete(this.selectedTag)
         this.mode = 'listing'
         this.selectedTag = null

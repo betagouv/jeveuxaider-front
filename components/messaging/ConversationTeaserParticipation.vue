@@ -49,8 +49,10 @@ export default defineNuxtComponent({
   },
   computed: {
     canSeeTags() {
-      return ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-        this.$stores.auth.contextRole
+      return (
+        ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+          this.$stores.auth.contextRole
+        ) && this.isCurrentUserResponsable
       )
     },
     badgeType() {

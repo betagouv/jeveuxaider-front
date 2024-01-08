@@ -5,10 +5,7 @@
         <ConversationRecipientResponsable :user="recipientUser" />
       </template>
       <template v-if="isCurrentUserResponsable">
-        <ConversationRecipientBenevole
-          :user="benevoleUser"
-          @update-selected-tags="onUpdateSelectedTags"
-        />
+        <ConversationRecipientBenevole :user="benevoleUser" />
       </template>
     </template>
 
@@ -19,6 +16,7 @@
         />
       </template>
       <template v-if="isCurrentUserResponsable">
+        <ConversationTags class="border-t" @update-selected-tags="onUpdateSelectedTags" />
         <ConversationParticipationActionAsResponsable
           v-if="conversation.conversable_type === 'App\\Models\\Participation'"
         />
@@ -51,6 +49,7 @@ import ConversationRecipientBenevole from '@/components/messaging/ConversationRe
 import ConversationRecipientResponsable from '@/components/messaging/ConversationRecipientResponsable.vue'
 import ConversationParticipationActionAsResponsable from '@/components/messaging/ConversationParticipationActionAsResponsable.vue'
 import ConversationParticipationActionAsBenevole from '@/components/messaging/ConversationParticipationActionAsBenevole.vue'
+import ConversationTags from '@/components/messaging/ConversationTags.vue'
 import CardInfosMission from '@/components/messaging/CardInfosMission.vue'
 import Conversation from '@/components/messaging/Conversation.vue'
 import MixinConversationParticipation from '@/mixins/conversation/participation'
@@ -61,6 +60,7 @@ export default defineNuxtComponent({
     ConversationRecipientResponsable,
     ConversationParticipationActionAsResponsable,
     ConversationParticipationActionAsBenevole,
+    ConversationTags,
     CardInfosMission,
     Conversation,
   },

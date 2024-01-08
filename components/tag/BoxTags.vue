@@ -1,5 +1,16 @@
 <template>
   <div class="">
+    <template v-if="canManageTags">
+      <SelectTags
+        ref="selectTags"
+        v-model="tags"
+        :structure-tags-endpoint="structureTagsEndpoint"
+        :taggable-endpoint="taggableEndpoint"
+        :options="$stores.structureTags.options"
+        @update-selected-tags="$emit('update-selected-tags', $event)"
+        class="mt-2"
+      />
+    </template>
     <div v-if="tags.length > 0" class="flex flex-wrap gap-2 mt-2">
       <DsfrTag
         v-for="(tag, index) in $stores.structureTags.resolveTagsName(tags)"
@@ -12,18 +23,7 @@
         {{ tag.name }}
       </DsfrTag>
     </div>
-    <div v-else-if="!canManageTags" class="text-gray-300 mt-2">Aucune étiquette</div>
-    <template v-if="canManageTags">
-      <SelectTags
-        ref="selectTags"
-        v-model="tags"
-        :structure-tags-endpoint="structureTagsEndpoint"
-        :taggable-endpoint="taggableEndpoint"
-        :options="$stores.structureTags.options"
-        @update-selected-tags="$emit('update-selected-tags', $event)"
-        class="mt-2"
-      />
-    </template>
+    <div v-else-if="!canManageTags" class="text-gray-300 mt-2">Aucun tag</div>
   </div>
 </template>
 

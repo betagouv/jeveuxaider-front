@@ -32,7 +32,7 @@
           </nuxt-link>
         </template>
         <div class="border-t -mx-6 my-6" />
-        <div class="text-sm uppercase font-semibold text-gray-600">Étiquettes</div>
+        <div class="text-sm uppercase font-semibold text-gray-600">Tags</div>
 
         <BoxTags
           :tags="participation.tags"

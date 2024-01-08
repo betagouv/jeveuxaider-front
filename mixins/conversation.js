@@ -30,6 +30,15 @@ export default {
       }
       return true
     },
+    isCurrentUserBenevole() {
+      return this.conversation.conversable.profile_id == this.$stores.auth.profile.id
+    },
+    isCurrentUserResponsable() {
+      return (
+        this.conversation.conversable.profile_id &&
+        this.conversation.conversable.profile_id !== this.$stores.auth.profile.id
+      )
+    },
   },
   methods: {
     getPlaceMission(conversation) {

@@ -1,7 +1,12 @@
 <template>
   <div>
-    <BaseFormControl html-for="name" label="Libellé de l'étiquette" required :error="errors.name">
-      <BaseInput v-model="form.name" name="name" placeholder="Saisissez le nom" />
+    <BaseFormControl html-for="name" label="Libellé du tag" required :error="errors.name">
+      <BaseInput v-model="form.name" name="name" placeholder="Saisissez le libellé" />
+      <BaseFormHelperText class="mt-1">
+        Ex: en attente d’une réponse bénévole, en cours d’intégration, en attente d’un retour en
+        interne, en attente d’une formation / rendez-vous, en attente d’inscription en ligne, en
+        attente d’envoi de documents
+      </BaseFormHelperText>
     </BaseFormControl>
   </div>
 </template>
@@ -26,8 +31,8 @@ export default defineNuxtComponent({
       form: { ...this.tag },
       formSchema: object({
         name: string()
-          .min(2, "Le libellé de l'étiquette est trop court")
-          .required("Le libellé de l'étiquette est requis"),
+          .min(2, 'Le libellé du tag est trop court')
+          .required('Le libellé du tag est requis'),
       }),
     }
   },

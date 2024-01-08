@@ -18,7 +18,7 @@
             ['responsable'].includes($stores.auth.contextRole) &&
             $stores.structureTags.options.length > 0
           "
-          label="Étiquettes"
+          label="Tags"
           html-for="tags"
         >
           <BaseCheckboxGroup
