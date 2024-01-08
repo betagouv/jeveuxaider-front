@@ -98,11 +98,10 @@ export default {
         query: { ...this.$route.query, page },
       })
     },
+  },
+  computed: {
     hasActiveFilters() {
-      Object.keys(this.$route.query).forEach((key) =>
-        this.$route.query[key] === undefined ? delete this.$route.query[key] : {}
-      )
-      return Object.keys(this.$route.query).length === 0
+      return Object.keys(this.$route.query).some((q) => q !== 'page')
     },
   },
 }

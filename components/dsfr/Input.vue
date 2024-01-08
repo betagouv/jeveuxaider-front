@@ -93,7 +93,7 @@ export default defineNuxtComponent({
     variant: {
       type: String,
       default: 'default',
-      validator: (i) => ['white'].includes(i),
+      validator: (i) => ['white', 'default'].includes(i),
     },
   },
   methods: {
