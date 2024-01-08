@@ -3,11 +3,7 @@
     <component
       :is="icon"
       v-if="icon && iconPosition === 'left'"
-      :class="[
-        'absolute inset-y-0 left-3 md:left-6 fill-current flex-none my-auto',
-        'w-4 h-4',
-        { 'md:w-6 md:h-6': size === 'xl' },
-      ]"
+      :class="['absolute inset-y-0 left-4 fill-current flex-none my-auto', 'w-4 h-4']"
     />
 
     <input
@@ -15,22 +11,28 @@
       :type="type"
       :placeholder="placeholder"
       :class="[
-        'inner-border border-none rounded-t w-full h-full',
-        { error: error },
-        { success: success },
-
-        { 'size-md': size === 'md' },
-        { 'size-lg py-3': size === 'lg' },
-        { 'size-xl py-6 px-6 sm:text-lg md:text-xl': size === 'xl' },
+        'border-none rounded-t w-full h-full',
 
         {
-          'pl-10': icon && iconPosition === 'left' && ['md', 'lg'].includes(size),
+          'bg-[#EEEEEE] shadow-[inset_0_-2px_0_0_#3A3A3A] focus:!shadow-[inset_0_-2px_0_0_#3A3A3A]':
+            variant === 'default',
         },
         {
-          'pr-10': icon && iconPosition === 'right' && ['md', 'lg'].includes(size),
+          'bg-white shadow-[inset_0_-2px_0_0_#000091] focus:!shadow-[inset_0_-2px_0_0_#000091]':
+            variant === 'white',
         },
-        { 'pl-10 md:pl-16': icon && iconPosition === 'left' && size === 'xl' },
-        { 'pr-10 md:pr-16': icon && iconPosition === 'right' && size === 'xl' },
+
+        { '!shadow-[inset_0_-2px_0_0_#ce0500]': error },
+        { '!shadow-[inset_0_-2px_0_0_#18753c]': success },
+
+        { 'py-3': size === 'lg' },
+
+        {
+          'pl-12': icon && iconPosition === 'left' && ['md', 'lg'].includes(size),
+        },
+        {
+          'pr-12': icon && iconPosition === 'right' && ['md', 'lg'].includes(size),
+        },
 
         inputClass,
       ]"
@@ -41,11 +43,7 @@
     <component
       :is="icon"
       v-if="icon && iconPosition === 'right'"
-      :class="[
-        'absolute inset-y-0 right-3 md:right-6 fill-current flex-none my-auto',
-        'w-4 h-4',
-        { 'md:w-6 md:h-6': size === 'xl' },
-      ]"
+      :class="['absolute inset-y-0 right-4 fill-current flex-none my-auto', 'w-4 h-4']"
     />
   </div>
 </template>
@@ -60,7 +58,7 @@ export default defineNuxtComponent({
     size: {
       type: String,
       default: 'md',
-      validator: (s) => ['md', 'lg', 'xl'].includes(s),
+      validator: (s) => ['md', 'lg'].includes(s),
     },
     error: {
       type: Boolean,
@@ -92,6 +90,11 @@ export default defineNuxtComponent({
       type: String,
       default: '',
     },
+    variant: {
+      type: String,
+      default: 'default',
+      validator: (i) => ['white'].includes(i),
+    },
   },
   methods: {
     onKeypressSpace(event) {
@@ -104,26 +107,12 @@ export default defineNuxtComponent({
 </script>
 
 <style lang="postcss" scoped>
-.inner-border {
-  box-shadow: inset 0 -2px 0 0 #000091;
-  &.error {
-    box-shadow: inset 0 -2px 0 0 #ce0500;
-  }
-  &.success {
-    box-shadow: inset 0 -2px 0 0 #18753c;
-  }
+input {
+  --tw-ring-shadow: 0 0 #000 !important;
 }
 
-input {
-  outline: none;
-  &:focus-visible {
-    outline-style: solid;
-    outline-color: #0a76f6;
-    outline-width: 2px;
-    outline-offset: 2px;
-  }
-  &.size-xl {
-    outline-offset: 4px;
-  }
-}
+/* @todo */
+/* input[type="search"]::-webkit-search-cancel-button {
+
+} */
 </style>

@@ -37,13 +37,12 @@
         </template>
       </BaseSectionHeading>
       <SearchFilters class="mt-8 mb-12">
-        <BaseInput
-          name="search"
+        <DsfrInput
+          type="search"
+          size="lg"
           placeholder="Rechercher une organisation (ville, id, ou rna)"
           icon="RiSearchLine"
-          variant="transparent"
           :modelValue="$route.query['filter[search]']"
-          clearable
           @update:modelValue="changeFilter('filter[search]', $event)"
         />
         <template #prefilters>

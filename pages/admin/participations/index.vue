@@ -39,18 +39,17 @@
           </div>
         </template>
       </BaseSectionHeading>
-      <BaseInput
+      <DsfrInput
         v-if="!bulkOperationIsActive"
-        class="mt-8"
-        name="search"
+        type="search"
+        size="lg"
         placeholder="Recherche par prénom, nom ou e-mail"
         icon="RiSearchLine"
-        variant="transparent"
+        class="mt-8"
         :modelValue="$route.query['filter[search]']"
-        clearable
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
-      <div v-if="!bulkOperationIsActive" class="hidden lg:flex gap-3 mt-4 text-sm flex-wrap">
+      <div v-if="!bulkOperationIsActive" class="hidden lg:flex gap-3 mt-6 text-sm flex-wrap">
         <DsfrTag
           as="button"
           size="md"
@@ -236,7 +235,7 @@
 
       <DsfrPagination
         v-if="!bulkOperationIsActive"
-        class="my-12"
+        class="mt-12 mb-6"
         variant="light"
         align="right"
         :current-page="queryResult.current_page"

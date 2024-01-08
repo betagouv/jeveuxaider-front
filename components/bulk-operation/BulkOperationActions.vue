@@ -1,6 +1,6 @@
 <template>
-  <div class="sticky top-[-152px] pointer-events-none">
-    <div class="h-[152px]" />
+  <div class="sticky top-[-158px] pointer-events-none">
+    <div class="h-[158px]" />
     <div class="flex justify-end">
       <div
         class="inline-flex items-center leading-none py-4 pl-8 rounded-bl-3xl mr-[-1px] pointer-events-auto bg-[#F9F6F2]"
