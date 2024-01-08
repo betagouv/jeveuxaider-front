@@ -19,7 +19,7 @@
       :loading="queryLoading"
     />
 
-    <SearchFilters>
+    <SearchFilters class="mb-4">
       <BaseInput
         name="search"
         placeholder="Recherche par emails..."

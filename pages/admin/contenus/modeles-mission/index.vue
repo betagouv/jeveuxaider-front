@@ -35,7 +35,7 @@
       </template>
     </BaseSectionHeading>
 
-    <SearchFilters>
+    <SearchFilters class="mb-4">
       <BaseInput
         name="search"
         placeholder="Recherche par mots clés..."

@@ -15,7 +15,7 @@
           {{ $numeral(queryResult.total) }}
           {{ $filters.pluralize(queryResult.total, 'note', 'notes', false) }}
         </BaseHeading>
-        <SearchFilters class="mb-8">
+        <SearchFilters class="mb-12">
           <BaseInput
             name="search"
             placeholder="Rechercher par mots clés, nom"

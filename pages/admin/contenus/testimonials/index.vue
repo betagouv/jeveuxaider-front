@@ -20,7 +20,7 @@
       )}`"
       :loading="queryLoading"
     />
-    <SearchFilters>
+    <SearchFilters class="mb-4">
       <BaseInput
         name="search"
         placeholder="Rechercher par mots clés, email, nom"
