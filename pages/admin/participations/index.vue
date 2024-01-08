@@ -236,7 +236,7 @@
 
       <DsfrPagination
         v-if="!bulkOperationIsActive"
-        class="mt-12"
+        class="my-12"
         variant="light"
         align="right"
         :current-page="queryResult.current_page"
@@ -270,7 +270,7 @@
 
       <DsfrPagination
         v-if="!bulkOperationIsActive"
-        class="mt-12"
+        class="my-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"

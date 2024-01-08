@@ -154,7 +154,7 @@
       </div>
 
       <Pagination
-        class="mt-12"
+        class="my-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
