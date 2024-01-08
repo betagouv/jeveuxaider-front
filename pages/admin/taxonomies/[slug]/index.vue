@@ -38,13 +38,12 @@
       </template>
     </BaseSectionHeading>
     <SearchFilters class="mb-4">
-      <BaseInput
-        name="search"
+      <DsfrInput
+        type="search"
+        size="lg"
         placeholder="Recherche par mots clés..."
         icon="RiSearchLine"
-        variant="transparent"
         :modelValue="$route.query['filter[search]']"
-        clearable
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
 

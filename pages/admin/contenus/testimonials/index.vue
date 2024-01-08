@@ -21,13 +21,12 @@
       :loading="queryLoading"
     />
     <SearchFilters class="mb-4">
-      <BaseInput
-        name="search"
+      <DsfrInput
+        type="search"
+        size="lg"
         placeholder="Rechercher par mots clés, email, nom"
         icon="RiSearchLine"
-        variant="transparent"
         :modelValue="$route.query['filter[search]']"
-        clearable
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
