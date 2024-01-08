@@ -402,6 +402,8 @@ export default defineNuxtComponent({
         this.$stores.auth.user.statistics?.participations_need_to_be_treated_count > 0 &&
           'need_to_be_treated',
         'is_state_pending',
+        ['admin'].includes(this.$stores.auth.contextRole) && 'mission.structure.id',
+        ['admin'].includes(this.$stores.auth.contextRole) && 'mission.department',
       ].filter((f) => f)
     },
   },

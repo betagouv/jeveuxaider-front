@@ -250,7 +250,10 @@ export default defineNuxtComponent({
       ].filter((f) => f)
     },
     alwaysVisibleFilters() {
-      return ['user.role']
+      return [
+        'user.role',
+        ['admin'].includes(this.$stores.auth.contextRole) && 'department',
+      ].filter((f) => f)
     },
   },
   data() {
