@@ -20,13 +20,12 @@
     />
 
     <SearchFilters>
-      <BaseInput
-        name="search"
+      <DsfrInput
+        type="search"
+        size="lg"
         placeholder="Recherche par mots clés..."
         icon="RiSearchLine"
-        variant="transparent"
         :modelValue="$route.query['search']"
-        clearable
         @update:modelValue="changeFilter('search', $event)"
       />
       <template #prefilters>
@@ -35,19 +34,20 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="hasActiveFilters()"
+          :is-selected="!hasActiveFilters"
           is-selected-class="border-gray-50 bg-gray-50"
           @click.native="deleteAllFilters"
         >
           Tous
         </Tag>
         <BaseFilterInputAutocomplete
-          :value="$route.query['organisation']"
+          v-model="selectedOrganisation"
           label="Toutes les organisations"
-          name="autocomplete"
+          name="autocomplete-organisation"
           :options="autocompleteOptionsOrganisations"
+          :loading="loadingFetchOrganisations"
           @fetch-suggestions="onFetchSuggestionsOrganisations"
-          @selected="changeFilter('organisation', $event?.id)"
+          @selected="onSelectOrganisation"
         />
         <Tag
           :key="`online-${$route.fullPath}`"
@@ -201,13 +201,22 @@ export default defineNuxtComponent({
     return {
       endpoint: '/support/responsables/participations-to-be-treated',
       loading: true,
+      loadingFetchOrganisations: false,
       drawerProfileId: null,
       autocompleteOptionsOrganisations: [],
     }
   },
-  computed: {},
+  computed: {
+    selectedOrganisation() {
+      return {
+        key: Number(this.$route.query['organisation_id']) || undefined,
+        label: this.$route.query['organisation_name'],
+      }
+    },
+  },
   methods: {
     async onFetchSuggestionsOrganisations(value) {
+      this.loadingFetchOrganisations = true
       const organisations = await apiFetch('/structures', {
         params: {
           'filter[search]': value,
@@ -215,6 +224,27 @@ export default defineNuxtComponent({
         },
       })
       this.autocompleteOptionsOrganisations = organisations.data
+      this.loadingFetchOrganisations = false
+    },
+    async onSelectOrganisation($event) {
+      const queryOrganisationName =
+        $event !== null && this.$route.query['organisation_name'] !== $event?.name
+          ? $event.name
+          : undefined
+      const queryOrganisationId =
+        $event !== null && Number(this.$route.query['organisation_id']) !== $event?.id
+          ? $event.id
+          : undefined
+
+      await this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.$route.query,
+          page: undefined,
+          organisation_name: queryOrganisationName,
+          organisation_id: queryOrganisationId,
+        },
+      })
     },
   },
 })

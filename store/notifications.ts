@@ -24,7 +24,6 @@ export const useNotificationsStore = defineStore('notifications', {
         this.notifications = data.value.data as Notification[]
       }
     },
-    // @todo: à tester
     async markNotificationAsRead(payload: Notification) {
       const { data, error } = await useApiFetch<any>(
         `/user/notifications/${payload.id}/mark-as-read`,
@@ -36,7 +35,6 @@ export const useNotificationsStore = defineStore('notifications', {
         this.refreshNotificationInNotifications(data.value)
       }
     },
-    // @todo: à tester
     async getUserUnreadNotificationsCount() {
       const data: any = await apiFetch(`user/unread-notifications`)
       this.unreadNotificationsCount = data.count

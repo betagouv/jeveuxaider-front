@@ -3,7 +3,7 @@
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
       <div class="uppercase font-semibold text-gray-600">Missions</div>
       <BaseLink
-        :to="`/admin/missions?filter[structure.id]=${organisation.id}&context_name=${organisation.name}`"
+        :to="`/admin/missions?filter[structure.id]=${organisation.id}&organisation_name=${organisation.name}`"
         icon="RiArrowRightSLine"
       >
         Consulter

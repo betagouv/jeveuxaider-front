@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 gap-4">
+  <div class="grid grid-cols-1 gap-6">
     <slot />
     <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
       <div :class="[hasPrefiltersSlot ? 'flex gap-3 text-sm flex-wrap items-center' : '']">

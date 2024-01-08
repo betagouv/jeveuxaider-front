@@ -3,7 +3,7 @@
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
       <div class="uppercase font-semibold text-gray-600">Places</div>
       <BaseLink
-        :to="`/admin/participations?filter[mission.id]=${mission.id}&context_name=${mission.name}`"
+        :to="`/admin/participations?filter[mission.id]=${mission.id}&mission_name=${mission.name}`"
         icon="RiArrowRightSLine"
       >
         Participations

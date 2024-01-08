@@ -30,6 +30,14 @@ export default {
       },
     },
   },
+  watch: {
+    async showOptions(newVal) {
+      if (newVal) {
+        await this.$nextTick()
+        this.highlightScrollIntoView()
+      }
+    },
+  },
   methods: {
     reset() {
       this.highlightIndex = 0

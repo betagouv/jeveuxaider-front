@@ -73,11 +73,12 @@
           v-for="(item, index) in options"
           :key="index"
           :ref="`option_${index}`"
-          class="relative flex justify-between items-center text-sm px-8 py-2 pr-10 cursor-pointer hover:bg-[#F0F0FF] focus:bg-[#F0F0FF]"
+          class="relative flex justify-between items-center text-sm px-8 py-2 pr-2 cursor-pointer hover:bg-[#F0F0FF] focus:bg-[#F0F0FF]"
           :class="[
             { 'bg-[#F0F0FF]': highlightIndex == index },
             {
-              'bg-[#F0F0FF]': selectedOption && item[attributeKey] == selectedOption[attributeKey],
+              'bg-[#F0F0FF] !pr-8':
+                selectedOption && item[attributeKey] == selectedOption[attributeKey],
             },
             { 'pointer-events-none text-gray-500': item.disabled },
           ]"

@@ -15,7 +15,7 @@
         :placeholder="placeholder"
         :class="[
           'border-0 p-0 pl-3 text-base sm:text-sm !outline-none w-full truncate',
-          { 'pr-4': inputValue },
+          { 'pr-5': inputValue },
         ]"
         autocomplete="off"
         :aria-labelledby="ariaLabelledby"

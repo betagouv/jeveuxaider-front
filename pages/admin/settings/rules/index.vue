@@ -30,14 +30,13 @@
       </template>
     </BaseSectionHeading>
 
-    <SearchFilters>
-      <BaseInput
-        name="search"
+    <SearchFilters class="mb-4">
+      <DsfrInput
+        type="search"
+        size="lg"
         placeholder="Recherche par mots clés..."
         icon="RiSearchLine"
-        variant="transparent"
         :modelValue="$route.query['filter[search]']"
-        clearable
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
@@ -46,7 +45,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="hasActiveFilters()"
+          :is-selected="!hasActiveFilters"
           is-selected-class="border-gray-50 bg-gray-50"
           @click.native="deleteAllFilters"
         >

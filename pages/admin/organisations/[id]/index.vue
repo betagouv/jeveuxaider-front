@@ -223,7 +223,7 @@
                       'missions',
                       false
                     )}`"
-                    :link="`/admin/missions?context_name=${organisation.name}&filter[structure.id]=${organisation.id}`"
+                    :link="`/admin/missions?organisation_name=${organisation.name}&filter[structure.id]=${organisation.id}`"
                     link-label="Missions"
                   />
                   <CardStatistic

@@ -20,14 +20,13 @@
       )}`"
       :loading="queryLoading"
     />
-    <SearchFilters>
-      <BaseInput
-        name="search"
+    <SearchFilters class="mb-4">
+      <DsfrInput
+        type="search"
+        size="lg"
         placeholder="Rechercher par mots clés, email, nom"
         icon="RiSearchLine"
-        variant="transparent"
         :modelValue="$route.query['filter[search]']"
-        clearable
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
@@ -36,7 +35,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="hasActiveFilters()"
+          :is-selected="!hasActiveFilters"
           is-selected-class="border-gray-50 bg-gray-50"
           @click.native="deleteAllFilters"
         >
@@ -83,12 +82,13 @@
 
         <template v-if="$stores.auth.contextRole === 'admin'">
           <BaseFilterInputAutocomplete
-            :modelValue="$route.query['filter[organisation]']"
+            v-model="selectedOrganisation"
             label="Toutes les organisations"
-            name="autocomplete"
+            name="autocomplete-organisation"
             :options="autocompleteOptionsOrganisations"
+            :loading="loadingFetchOrganisations"
             @fetch-suggestions="onFetchSuggestionsOrganisations"
-            @selected="changeFilter('filter[organisation]', $event ? $event.name : undefined)"
+            @selected="onSelectOrganisation"
           />
         </template>
       </template>
@@ -149,23 +149,55 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
   },
+  computed: {
+    selectedOrganisation() {
+      return {
+        key: Number(this.$route.query['filter[participation.mission.structure.id]']) || undefined,
+        label: this.$route.query['filter[organisation]'],
+      }
+    },
+  },
   data() {
     return {
       endpoint: '/temoignages',
       queryParams: {},
       drawerTemoignageId: null,
       autocompleteOptionsOrganisations: [],
+      loadingFetchOrganisations: false,
     }
   },
   methods: {
     async onFetchSuggestionsOrganisations(value) {
+      this.loadingFetchOrganisations = true
       const organisations = await apiFetch('/structures', {
         params: {
           'filter[search]': value,
-          pagination: 6,
+          pagination: 20,
         },
       })
       this.autocompleteOptionsOrganisations = organisations.data
+      this.loadingFetchOrganisations = false
+    },
+    async onSelectOrganisation($event) {
+      const queryOrganisationName =
+        $event !== null && this.$route.query['filter[organisation]'] !== $event?.name
+          ? $event.name
+          : undefined
+      const queryOrganisationId =
+        $event !== null &&
+        Number(this.$route.query['filter[participation.mission.structure.id]']) !== $event?.id
+          ? $event.id
+          : undefined
+
+      await this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.$route.query,
+          page: undefined,
+          'filter[organisation]': queryOrganisationName,
+          'filter[participation.mission.structure.id]': queryOrganisationId,
+        },
+      })
     },
   },
 })

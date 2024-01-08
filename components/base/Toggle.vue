@@ -37,7 +37,7 @@
             aria-hidden="true"
             class="relative top-[-1px] left-[-1px] pointer-events-none inline-flex items-center justify-center bg-white border border-jva-blue-500 rounded-full transform ring-0 transition ease-in-out duration-200"
             :class="[
-              selected ? 'translate-x-5' : 'translate-x-0',
+              selected ? 'translate-x-4' : 'translate-x-0',
               { 'h-6 w-6': size === 'md' },
               { 'h-6 w-6': size === 'lg' },
               { 'h-8 w-8': size === 'xl' },
