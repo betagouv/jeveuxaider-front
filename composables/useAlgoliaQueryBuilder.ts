@@ -17,11 +17,7 @@ export const useAlgoliaQueryBuilder = () => {
 
 const hasActiveFilters = () => {
   const route = useRoute()
-
-  Object.keys(route.query).forEach((key) =>
-    route.query[key] === undefined ? delete route.query[key] : {}
-  )
-  return Object.keys(route.query).length !== 0
+  return Object.keys(route.query).some((q) => q !== 'page')
 }
 
 const search = async () => {
