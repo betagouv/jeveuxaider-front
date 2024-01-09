@@ -126,7 +126,7 @@
 
     <div class="flex mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
       <DsfrLink
-        :class="['text-jva-blue-500', { 'pointer-events-none opacity-0': !hasActiveFilters }]"
+        :class="['text-jva-blue-500', { 'pointer-events-none opacity-0': !hasActiveFilters() }]"
         @click.native="deleteAllFilters()"
       >
         Réinitialiser
