@@ -232,6 +232,6 @@ export default defineNuxtComponent({
 
 <style lang="postcss" scoped>
 .custom-scrollbar-gray::-webkit-scrollbar-track {
-  @apply mt-3 mb-2;
+  @apply my-3;
 }
 </style>

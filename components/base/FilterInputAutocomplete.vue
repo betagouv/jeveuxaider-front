@@ -44,7 +44,7 @@
             />
             <div
               ref="scrollContainer"
-              class="max-h-[258px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2"
+              class="max-h-[268px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2"
             >
               <transition
                 enter-active-class="duration-200"
@@ -62,7 +62,7 @@
                     v-for="(item, index) in options"
                     :key="`${item[attributeKey]}_${index}`"
                     :ref="`option_${index}`"
-                    class="relative flex justify-between items-center text-sm px-2 py-2 pr-2 cursor-pointer hover:bg-[#F0F0FF] focus:bg-[#F0F0FF]"
+                    class="relative flex justify-between items-center text-sm px-2 py-[6px] pr-2 cursor-pointer hover:bg-[#F0F0FF] focus:bg-[#F0F0FF]"
                     :class="[
                       { 'bg-[#F0F0FF]': highlightIndex == index },
                       {
