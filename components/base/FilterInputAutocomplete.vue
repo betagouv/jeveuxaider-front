@@ -30,7 +30,7 @@
         ]"
       >
         <FocusLoop :is-visible="showOptions">
-          <div class="p-4">
+          <div class="px-4 pt-4">
             <div class="font-medium">
               {{ label }}
             </div>
@@ -44,7 +44,7 @@
             />
             <div
               ref="scrollContainer"
-              class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2"
+              class="max-h-[258px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2"
             >
               <transition
                 enter-active-class="duration-200"
@@ -57,7 +57,7 @@
               >
                 <LoadingIndicator v-if="loading" class="m-4" />
 
-                <ul v-else class="mt-2 px-2">
+                <ul v-else class="my-2 px-2">
                   <li
                     v-for="(item, index) in options"
                     :key="`${item[attributeKey]}_${index}`"
@@ -295,3 +295,9 @@ export default defineNuxtComponent({
   },
 })
 </script>
+
+<style lang="postcss" scoped>
+.custom-scrollbar-gray::-webkit-scrollbar-track {
+  @apply my-2;
+}
+</style>

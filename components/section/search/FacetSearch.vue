@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="flex items-center relative w-full pb-1 group border-b border-transparent focus-within:border-jva-blue-500 transition-colors"
+      class="flex items-center relative w-full pb-1 group border-b border-gray-300 focus-within:border-jva-blue-500 transition-colors"
     >
       <component
         :is="icon"

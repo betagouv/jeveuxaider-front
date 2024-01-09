@@ -27,20 +27,20 @@
       <div
         v-show="showOptions"
         :class="[
-          'absolute w-full z-50 mt-2 p-2 bg-white border border-gray-200 shadow-md overflow-hidden min-w-[250px]',
+          'absolute w-full z-50 mt-2 px-4 pt-4 bg-white border border-gray-200 shadow-md overflow-hidden min-w-[250px]',
           optionsPositionClass,
           optionsClass,
         ]"
         @focusout="showOptions = false"
       >
-        <div class="p-2 font-medium">
+        <div class="font-medium border-b border-gray-300 pb-2">
           {{ placeholder }}
         </div>
         <div
           ref="scrollContainer"
-          class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray"
+          class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2 py-2"
         >
-          <ul class="px-2">
+          <ul class="mx-2">
             <li
               v-for="(item, index) in options"
               :key="index"
@@ -115,3 +115,9 @@ export default defineNuxtComponent({
   },
 })
 </script>
+
+<style lang="postcss" scoped>
+.custom-scrollbar-gray::-webkit-scrollbar-track {
+  @apply my-2;
+}
+</style>

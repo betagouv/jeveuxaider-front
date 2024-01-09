@@ -26,7 +26,7 @@
         ]"
         @keydown.esc="isOpen = false"
       >
-        <div class="p-4 space-y-3">
+        <div class="px-4 pt-4">
           <div :id="`label-search-${uuid}`" class="font-medium">
             {{ label }}
           </div>
@@ -36,63 +36,57 @@
             v-model="facetQuery"
             :aria-labelledby="`label-search-${uuid}`"
             @update:modelValue="handleChangeSearchFacetValues"
+            class="mt-3"
           />
 
-          <div class="relative overflow-hidden">
-            <div
-              class="absolute custom-gradient bottom-0 w-full pointer-events-none transition duration-500 z-10"
-              :class="[{ 'h-0': isScrollAtBottom }, { 'h-12': !isScrollAtBottom }]"
-            />
-
-            <div
-              ref="scrollContainer"
-              class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray"
-            >
-              <div class="py-1 mr-2 space-y-4 text-sm">
-                <div v-if="[...activeValues, ...inactiveValues].length == 0" class="text-gray-400">
-                  Aucun résultat avec les filtres actuels.
-                </div>
-
-                <fieldset class="relative" style="min-inline-size: auto">
-                  <legend class="sr-only">
-                    {{ legend }}
-                  </legend>
-
-                  <div class="space-y-4">
-                    <div
-                      v-for="facet in [...activeValues, ...inactiveValues]"
-                      :key="facet.value"
-                      :class="[
-                        {
-                          'text-jva-blue-500': isActiveFilter(facetName, facet.value),
-                        },
-                      ]"
-                      class="flex items-center pl-1 group"
-                    >
-                      <input
-                        :id="`facetFilter__${facetName}_${facet.value}`"
-                        :name="`facetFilter__${facetName}_${facet.value}`"
-                        :value="isActiveFilter(facetName, facet.value)"
-                        type="checkbox"
-                        :checked="isActiveFilter(facetName, facet.value)"
-                        class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500 cursor-pointer"
-                        @change="handleFacetToggle(facetName, facet.value)"
-                      />
-                      <label
-                        :for="`facetFilter__${facetName}_${facet.value}`"
-                        class="pl-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500 cursor-pointer"
-                      >
-                        <div class="truncate">
-                          {{ facet.value }}
-                        </div>
-                        <div class="text-gray-600 ml-1 font-light">
-                          {{ facet.count }}
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                </fieldset>
+          <div
+            ref="scrollContainer"
+            class="max-h-[254px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2 py-3"
+          >
+            <div class="py-1 mr-2 space-y-4 text-sm mx-2">
+              <div v-if="[...activeValues, ...inactiveValues].length == 0" class="text-gray-400">
+                Aucun résultat avec les filtres actuels.
               </div>
+
+              <fieldset class="relative" style="min-inline-size: auto">
+                <legend class="sr-only">
+                  {{ legend }}
+                </legend>
+
+                <div class="space-y-4">
+                  <div
+                    v-for="facet in [...activeValues, ...inactiveValues]"
+                    :key="facet.value"
+                    :class="[
+                      {
+                        'text-jva-blue-500': isActiveFilter(facetName, facet.value),
+                      },
+                    ]"
+                    class="flex items-center group"
+                  >
+                    <input
+                      :id="`facetFilter__${facetName}_${facet.value}`"
+                      :name="`facetFilter__${facetName}_${facet.value}`"
+                      :value="isActiveFilter(facetName, facet.value)"
+                      type="checkbox"
+                      :checked="isActiveFilter(facetName, facet.value)"
+                      class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500 cursor-pointer"
+                      @change="handleFacetToggle(facetName, facet.value)"
+                    />
+                    <label
+                      :for="`facetFilter__${facetName}_${facet.value}`"
+                      class="pl-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500 cursor-pointer"
+                    >
+                      <div class="truncate">
+                        {{ facet.value }}
+                      </div>
+                      <div class="text-gray-600 ml-1 font-light">
+                        {{ facet.count }}
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </fieldset>
             </div>
           </div>
         </div>
@@ -146,7 +140,6 @@ export default defineNuxtComponent({
       isOpen: false,
       facetHits: null,
       facetQuery: null,
-      isScrollAtBottom: false,
       uuid: uuidv4(),
     }
   },
@@ -188,22 +181,9 @@ export default defineNuxtComponent({
   },
   watch: {
     async isOpen(newVal) {
-      if (!this.$refs.scrollContainer) {
-        return
-      }
       if (newVal) {
         await this.$nextTick()
-        this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
-        this.$refs.scrollContainer.addEventListener('scroll', this.handleScroll)
         this.$refs.facetSearch.$refs?.input?.focus()
-      } else {
-        this.$refs.scrollContainer.removeEventListener('scroll', this.handleScroll)
-      }
-    },
-    async facetHits() {
-      if (this.isOpen && this.$refs.scrollContainer) {
-        await this.$nextTick()
-        this.isScrollAtBottom = this.$refs.scrollContainer.offsetHeight < 250
       }
     },
     async $route(newVal, oldVal) {
@@ -229,9 +209,6 @@ export default defineNuxtComponent({
       const res = await this.searchForFacetValues(this.facetName, facetQuery)
       this.facetHits = res.facetHits
     },
-    handleScroll({ target: { scrollTop, clientHeight, scrollHeight } }) {
-      this.isScrollAtBottom = scrollTop + clientHeight >= scrollHeight
-    },
     onClickOutside(e) {
       this.isOpen = false
     },
@@ -245,7 +222,7 @@ export default defineNuxtComponent({
 </script>
 
 <style lang="postcss" scoped>
-.custom-gradient {
-  background-image: linear-gradient(180deg, hsla(0, 0%, 100%, 0), #fff);
+.custom-scrollbar-gray::-webkit-scrollbar-track {
+  @apply my-2;
 }
 </style>
