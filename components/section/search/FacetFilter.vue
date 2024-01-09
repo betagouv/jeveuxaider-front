@@ -31,7 +31,7 @@
           <legend class="sr-only">
             {{ legend }}
           </legend>
-          <div class="space-y-4">
+          <div class="space-y-2">
             <div
               v-for="facet in limitedValues"
               :key="facet.value"

@@ -55,7 +55,7 @@
                   {{ legend }}
                 </legend>
 
-                <div class="space-y-4">
+                <div class="space-y-2">
                   <div
                     v-for="facet in [...activeValues, ...inactiveValues]"
                     :key="facet.value"
@@ -223,7 +223,6 @@ export default defineNuxtComponent({
     },
     handleOptionsPosition() {
       const elOptionsX = this.$refs.tag.getBoundingClientRect()?.x
-      console.log('elOptionsX', elOptionsX)
       const windowCenterX = window.innerWidth / 2
       this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
     },
@@ -233,6 +232,6 @@ export default defineNuxtComponent({
 
 <style lang="postcss" scoped>
 .custom-scrollbar-gray::-webkit-scrollbar-track {
-  @apply my-2;
+  @apply mt-3 mb-2;
 }
 </style>
