@@ -1,6 +1,7 @@
 <template>
   <div class="relative">
     <span
+      ref="tag"
       tabindex="-1"
       class="cursor-pointer w-full"
       @click="isOpen = !isOpen"
@@ -22,6 +23,7 @@
         v-click-outside="onClickOutside"
         :class="[
           'mt-2 absolute z-20 bg-white border shadow-xl text-[15px] w-[350px]',
+          optionsPositionClass,
           optionsClass,
         ]"
         @keydown.esc="isOpen = false"
@@ -141,6 +143,7 @@ export default defineNuxtComponent({
       facetHits: null,
       facetQuery: null,
       uuid: uuidv4(),
+      optionsPositionClass: '',
     }
   },
   computed: {
@@ -183,6 +186,7 @@ export default defineNuxtComponent({
     async isOpen(newVal) {
       if (newVal) {
         await this.$nextTick()
+        this.handleOptionsPosition()
         this.$refs.facetSearch.$refs?.input?.focus()
       }
     },
@@ -216,6 +220,12 @@ export default defineNuxtComponent({
       this.isActiveFilter(facetName, facetValue)
         ? await this.deleteFilter(facetName, facetValue, true)
         : await this.addFilter(facetName, facetValue, true)
+    },
+    handleOptionsPosition() {
+      const elOptionsX = this.$refs.tag.getBoundingClientRect()?.x
+      console.log('elOptionsX', elOptionsX)
+      const windowCenterX = window.innerWidth / 2
+      this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
     },
   },
 })
