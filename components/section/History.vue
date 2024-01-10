@@ -99,6 +99,8 @@ export default defineNuxtComponent({
         'api_id',
         'updated_at',
         'commitment__total',
+        'old__format',
+        'is_qpv',
       ]
     },
   },
