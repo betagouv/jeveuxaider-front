@@ -83,6 +83,8 @@ export default defineNuxtComponent({
         'api_id',
         'updated_at',
         'commitment__total',
+        'old__format',
+        'is_qpv',
       ]
     },
     changes() {
@@ -253,6 +255,8 @@ export default defineNuxtComponent({
           return 'Inscription ouverte'
         case 'activity_secondary_id':
           return 'Activité secondaire'
+        case 'prerequisites':
+          return 'Prérequis'
       }
       return property.charAt(0).toUpperCase() + property.slice(1)
     },

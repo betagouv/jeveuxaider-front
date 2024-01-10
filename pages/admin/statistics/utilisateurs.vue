@@ -29,13 +29,13 @@
       <UtilisateursByDate ref="utilisateursByDate" />
       <div class="flex flex-col lg:flex-row gap-12">
         <div class="space-y-12 w-1/2">
-          <UtilisateursByAge ref="utilisateursByAge" />
-          <ParticipationsCanceledByBenevoles ref="participationsCanceledByBenevoles" />
+          <UtilisateursByActivities ref="utilisateursByActivities" />
         </div>
         <div class="space-y-12 w-1/2">
           <UtilisateursWithParticipations ref="utilisateursWithParticipations" />
+          <UtilisateursByAge ref="utilisateursByAge" />
           <ParticipationsDelaysByRegistrations ref="participationsDelaysByRegistrations" />
-          <UtilisateursByDomaines ref="utilisateursByDomaines" />
+          <ParticipationsCanceledByBenevoles ref="participationsCanceledByBenevoles" />
         </div>
       </div>
     </div>
@@ -46,7 +46,7 @@
 import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import UtilisateursStatistics from '@/components/numbers/UtilisateursStatistics.vue'
 import UtilisateursByDate from '@/components/numbers/UtilisateursByDate.vue'
-import UtilisateursByDomaines from '@/components/numbers/UtilisateursByDomaines.vue'
+import UtilisateursByActivities from '@/components/numbers/UtilisateursByActivities.vue'
 import UtilisateursWithParticipations from '@/components/numbers/UtilisateursWithParticipations.vue'
 import ParticipationsCanceledByBenevoles from '@/components/numbers/ParticipationsCanceledByBenevoles.vue'
 import ParticipationsDelaysByRegistrations from '@/components/numbers/ParticipationsDelaysByRegistrations.vue'
@@ -58,7 +58,7 @@ export default defineNuxtComponent({
     FiltersStatistics,
     UtilisateursStatistics,
     UtilisateursByDate,
-    UtilisateursByDomaines,
+    UtilisateursByActivities,
     UtilisateursByAge,
     UtilisateursWithParticipations,
     ParticipationsCanceledByBenevoles,
@@ -86,7 +86,7 @@ export default defineNuxtComponent({
       this.$refs.utilisateursByDate.fetch()
       this.$refs.utilisateursByAge.fetch()
       this.$refs.participationsCanceledByBenevoles.fetch()
-      this.$refs.utilisateursByDomaines.fetch()
+      this.$refs.utilisateursByActivities.fetch()
       this.$refs.utilisateursWithParticipations.fetch()
       this.$refs.participationsDelaysByRegistrations.fetch()
     },

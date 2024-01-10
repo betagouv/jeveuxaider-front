@@ -55,7 +55,6 @@
           :key="i"
           facet-name="reseaux.name"
           label="Réseaux"
-          options-class="right-0 lg:left-0"
           legend="Filtrer par réseau"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
@@ -80,7 +79,6 @@
           :key="i"
           facet-name="department_name"
           label="Départements"
-          options-class="right-0 lg:left-0"
           legend="Filtrer par département"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
@@ -105,7 +103,6 @@
           :key="i"
           facet-name="statut_juridique"
           label="Types d’organisation"
-          options-class="right-0 lg:left-0"
           legend="Filtrer par type d'organisation'"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
@@ -129,7 +126,7 @@
 
     <div class="flex mt-4 lg:mt-0 lg:mr-6 xl:mr-12">
       <DsfrLink
-        :class="['text-jva-blue-500', { 'pointer-events-none opacity-0': !hasActiveFilters }]"
+        :class="['text-jva-blue-500', { 'pointer-events-none opacity-0': !hasActiveFilters() }]"
         @click.native="deleteAllFilters()"
       >
         Réinitialiser

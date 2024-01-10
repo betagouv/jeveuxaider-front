@@ -105,7 +105,6 @@
           :key="i"
           facet-name="structure.reseaux.name"
           label="Réseaux"
-          options-class="right-0 lg:left-0"
           legend="Filtrer par réseau"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
@@ -130,7 +129,6 @@
           :key="i"
           facet-name="department_name"
           label="Départements"
-          options-class="right-0 lg:left-0"
           legend="Filtrer par département"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
@@ -155,7 +153,6 @@
           :key="i"
           facet-name="template_subtitle"
           label="Types de mission"
-          options-class="right-0 lg:left-0"
           legend="Filtrer par type de mission"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
@@ -184,7 +181,6 @@
           :key="i"
           facet-name="publisher_name"
           label="Plateformes"
-          options-class="right-0 lg:left-0"
           legend="Filtrer par plateforme"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="flex items-center relative w-full pb-1 group border-b border-transparent focus-within:border-jva-blue-500 transition-colors"
+      class="flex items-center relative w-full pb-1 group border-b border-gray-300 focus-within:border-jva-blue-500 transition-colors"
     >
       <component
         :is="icon"
@@ -15,7 +15,7 @@
         :placeholder="placeholder"
         :class="[
           'border-0 p-0 pl-3 text-base sm:text-sm !outline-none w-full truncate',
-          { 'pr-4': inputValue },
+          { 'pr-5': inputValue },
         ]"
         autocomplete="off"
         :aria-labelledby="ariaLabelledby"

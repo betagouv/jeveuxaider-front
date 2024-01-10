@@ -18,7 +18,7 @@
           {{ $numeral(queryResult.total) }}
           {{ $filters.pluralize(queryResult.total, 'retour', 'retours', false) }}
         </BaseHeading>
-        <SearchFilters class="mb-8">
+        <SearchFilters class="mb-12">
           <BaseInput
             name="search"
             placeholder="Rechercher par mots clés, email, nom"
@@ -34,7 +34,7 @@
               as="button"
               size="md"
               context="selectable"
-              :is-active="hasActiveFilters()"
+              :is-active="!hasActiveFilters"
               @click.native="deleteAllFilters"
             >
               Tous

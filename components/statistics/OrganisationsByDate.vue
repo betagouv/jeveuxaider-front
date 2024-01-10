@@ -52,7 +52,7 @@ export default defineNuxtComponent({
         params: this.$stores.statistics.params,
       }).then((response) => {
         this.loading = false
-        const colors = ['#fb7185', '#e879f9', '#a78bfa', '#818cf8', '#138bdf8']
+        const colors = ['#fb7185', '#e879f9', '#a78bfa', '#818cf8', '#29C2AF']
         this.chartDatasets = []
         Object.entries(response).forEach(([key, dataset], index) =>
           this.chartDatasets.push({

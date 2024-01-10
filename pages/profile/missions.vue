@@ -44,7 +44,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-active="hasActiveFilters()"
+            :is-active="!hasActiveFilters"
             @click.native="deleteAllFilters"
           >
             Toutes

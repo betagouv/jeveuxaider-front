@@ -1,9 +1,9 @@
 <template>
-  <BaseBox padding="sm" :loading="loading" loading-text="Récupération des activités...">
+  <BaseBox padding="sm" :loading="loading" loading-text="Générations des données...">
     <BoxHeadingStatistics
-      title="Répartition des missions par activités"
+      title="Répartition des activités sélectionnées par les utilisateurs"
       class="mb-6"
-      infos-bulle="Liste des activités les plus utilisées dans les missions validées sur la période"
+      infos-bulle="Répartition des utilisateurs inscrits sur la période par activité"
     />
     <div v-if="items" class="flex flex-col gap-2">
       <ListItemCount
@@ -19,14 +19,14 @@
 </template>
 
 <script>
-import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 import ListItemCount from '@/components/custom/ListItemCount.vue'
+import BoxHeadingStatistics from '@/components/custom/BoxHeadingStatistics.vue'
 import activities from '@/assets/activities.json'
 
 export default defineNuxtComponent({
   components: {
-    BoxHeadingStatistics,
     ListItemCount,
+    BoxHeadingStatistics,
   },
   data() {
     return {
@@ -41,7 +41,7 @@ export default defineNuxtComponent({
   methods: {
     async fetch() {
       this.loading = true
-      await apiFetch('/statistics/public/missions-by-activities', {
+      await apiFetch('/statistics/utilisateurs-by-activities', {
         params: this.$stores.statistics.params,
       }).then((response) => {
         this.loading = false

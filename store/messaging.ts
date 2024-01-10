@@ -7,7 +7,6 @@ interface ConversationsQueryParams {
   page: number
 }
 
-// @todo: à tester
 export const useMessagingStore = defineStore({
   id: 'messaging',
   state: (): {

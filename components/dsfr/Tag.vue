@@ -25,7 +25,7 @@
   >
     <template v-if="icon && iconPosition === 'left'">
       <component
-        :is="leftIconComponentResolver"
+        :is="iconComponent"
         :class="[
           'flex-none fill-current',
           { 'w-3 h-3': size === 'sm' },
@@ -53,9 +53,9 @@
       <slot />
     </span>
 
-    <template v-if="icon && iconPosition === 'right'">
+    <template v-if="(icon || (clearable && isActive)) && iconPosition === 'right'">
       <component
-        :is="rightIconComponentResolver"
+        :is="clearable && isActive ? iconClearableComponent : iconComponent"
         :class="[
           'flex-none fill-current',
           { 'w-3 h-3': size === 'sm' },
@@ -146,18 +146,14 @@ export default defineNuxtComponent({
       default: false,
     },
   },
-  computed: {
-    rightIconComponentResolver() {
-      switch (this.context) {
-        case 'selectable':
-        case 'clickable':
-          return this.isActive ? resolveComponent('RiCloseFill') : resolveComponent(this.icon)
-      }
-      return resolveComponent(this.icon)
-    },
-    leftIconComponentResolver() {
-      return resolveComponent(this.icon)
-    },
+  setup(props) {
+    const iconComponent = props.icon ? resolveComponent(props.icon) : undefined
+    const iconClearableComponent = props.clearable ? resolveComponent('RiCloseFill') : undefined
+
+    return {
+      iconComponent,
+      iconClearableComponent,
+    }
   },
 })
 </script>

@@ -8,118 +8,6 @@ export default {
   created() {
     this.fetch()
   },
-  computed: {
-    context() {
-      if (
-        this.$route.query['filter[mission.structure.name]'] &&
-        this.$route.query['filter[mission.structure.id]']
-      ) {
-        return {
-          name: this.$route.query['filter[mission.structure.name]'],
-          id: this.$route.query['filter[mission.structure.id]'],
-          link: `/admin/organisations/${this.$route.query['filter[mission.structure.id]']}`,
-          type: 'Organisation',
-        }
-      }
-      if (
-        (this.$route.query.context_name || this.$route.query['filter[structure.name]']) &&
-        this.$route.query['filter[structure.id]']
-      ) {
-        return {
-          name: this.$route.query['filter[structure.name]'] ?? this.$route.query.context_name,
-          id: this.$route.query['filter[structure.id]'],
-          link: `/admin/organisations/${this.$route.query['filter[structure.id]']}`,
-          type: 'Organisation',
-          closeContext: this.$route.query.context_name ? () => this.deleteAllFilters() : undefined,
-        }
-      }
-      if (this.$route.query.context_name && this.$route.query['filter[mission.id]']) {
-        return {
-          name: this.$route.query.context_name,
-          id: this.$route.query['filter[mission.id]'],
-          link: `/admin/missions/${this.$route.query['filter[mission.id]']}`,
-          type: 'Mission',
-          closeContext: () => this.deleteAllFilters(),
-        }
-      }
-      if (
-        this.$route.query['filter[structure.reseaux.name]'] &&
-        this.$route.query['filter[structure.reseaux.id]']
-      ) {
-        return {
-          name: this.$route.query['filter[structure.reseaux.name]'],
-          id: this.$route.query['filter[structure.reseaux.id]'],
-          link: `/admin/contenus/reseaux/${this.$route.query['filter[structure.reseaux.id]']}`,
-          type: 'Réseau',
-          closeContext: () => this.deleteAllFilters(),
-        }
-      }
-      if (this.$route.query['filter[reseaux.name]'] && this.$route.query['filter[reseaux.id]']) {
-        return {
-          name: this.$route.query['filter[reseaux.name]'],
-          id: this.$route.query['filter[reseaux.id]'],
-          link: `/admin/contenus/reseaux/${this.$route.query['filter[reseaux.id]']}`,
-          type: 'Réseau',
-          closeContext: () => this.deleteAllFilters(),
-        }
-      }
-      if (this.$route.query.reseau_name && this.$route.query['filter[ofReseau]']) {
-        return {
-          name: this.$route.query.reseau_name,
-          id: this.$route.query['filter[ofReseau]'],
-          link: `/admin/contenus/reseaux/${this.$route.query['filter[ofReseau]']}`,
-          type: 'Réseau',
-          closeContext: () => this.deleteAllFilters(),
-        }
-      }
-      if (this.$route.query.domaine_name && this.$route.query['filter[ofDomaine]']) {
-        return {
-          name: this.$route.query.domaine_name,
-          id: this.$route.query['filter[ofDomaine]'],
-          link: `/admin/contenus/activites/${this.$route.query['filter[ofDomaine]']}`,
-          type: 'Domaine',
-          closeContext: () => this.deleteAllFilters(),
-        }
-      }
-      if (this.$route.query.full_name && this.$route.query['filter[profile.id]']) {
-        return {
-          name: this.$route.query.full_name,
-          id: this.$route.query['filter[profile.id]'],
-          link: `/admin/utilisateurs/${this.$route.query['filter[profile.id]']}`,
-          type: 'Utilisateur',
-          closeContext: () => this.deleteAllFilters(),
-        }
-      }
-      if (this.$route.query.territoire_name && this.$route.query['filter[ofTerritoire]']) {
-        return {
-          name: this.$route.query.territoire_name,
-          id: this.$route.query['filter[ofTerritoire]'],
-          link: `/admin/contenus/territoires/${this.$route.query['filter[ofTerritoire]']}`,
-          type: 'Territoire',
-          closeContext: () => this.deleteAllFilters(),
-        }
-      }
-      if (this.$route.query.template_name && this.$route.query['filter[template.id]']) {
-        return {
-          name: this.$route.query.template_name,
-          id: this.$route.query['filter[template.id]'],
-          link: `/admin/contenus/modeles-mission?filter[search]=${this.$route.query.template_name}`,
-          type: 'Template de mission',
-          closeContext: () => this.deleteAllFilters(),
-        }
-      }
-      if (this.$route.query.template_name && this.$route.query['filter[mission.template.id]']) {
-        return {
-          name: this.$route.query.template_name,
-          id: this.$route.query['filter[mission.template.id]'],
-          link: `/admin/contenus/modeles-mission?filter[search]=${this.$route.query.template_name}`,
-          type: 'Template de mission',
-          closeContext: () => this.deleteAllFilters(),
-        }
-      }
-      return null
-    },
-  },
   watch: {
     $route(newVal, oldVal) {
       if (newVal.name === oldVal.name) {
@@ -135,7 +23,6 @@ export default {
       })
       this.queryResult = response
       this.queryLoading = false
-      // window.scrollTo(0, 0)
     },
     changeFilter(filterName, filterValue, multiple = false) {
       if (this.timeout) {
@@ -148,7 +35,7 @@ export default {
         if (filterQueryValues.includes(filterValue) || filterQueryValues === filterValue) {
           // L'option est déjà filtrée, on la retire
           this.deleteFilter(filterName, filterValue, multiple)
-        } else if (filterValue === '' || filterValue === null) {
+        } else if (['', null, undefined].includes(filterValue)) {
           this.deleteFilter(filterName, filterValue, multiple)
         } else {
           this.addFilter(filterName, filterValue, multiple)
@@ -211,11 +98,10 @@ export default {
         query: { ...this.$route.query, page },
       })
     },
+  },
+  computed: {
     hasActiveFilters() {
-      Object.keys(this.$route.query).forEach((key) =>
-        this.$route.query[key] === undefined ? delete this.$route.query[key] : {}
-      )
-      return Object.keys(this.$route.query).length === 0
+      return Object.keys(this.$route.query).some((q) => q !== 'page')
     },
   },
 }

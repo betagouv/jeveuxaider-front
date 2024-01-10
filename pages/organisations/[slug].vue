@@ -186,7 +186,9 @@ export default defineNuxtComponent({
       testimonials = data
     }
 
-    await Promise.all([fetchActivities(), fetchTestimonials()])
+    if (organisation?.value?.id) {
+      await Promise.all([fetchActivities(), fetchTestimonials()])
+    }
 
     return {
       organisation,

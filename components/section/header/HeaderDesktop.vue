@@ -254,11 +254,11 @@ export default defineNuxtComponent({
             to: '/organisations',
             isActive: this.isActiveLink('/organisations'),
           },
-          {
-            name: 'Décembre Ensemble 🤲🏻',
-            href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
-            target: '_blank',
-          },
+          // {
+          //   name: 'Décembre Ensemble 🤲🏻',
+          //   href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
+          //   target: '_blank',
+          // },
           {
             name: "Centre d'aide",
             href: 'https://reserve-civique.crisp.help/fr/',

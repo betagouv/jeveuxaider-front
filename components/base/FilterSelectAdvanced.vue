@@ -1,6 +1,7 @@
 <template>
   <div v-click-outside="clickedOutside" class="relative">
     <DsfrTag
+      ref="tag"
       :id="name"
       :name="name"
       :tabindex="!disabled && '0'"
@@ -11,9 +12,9 @@
       icon-position="right"
       clearable
       :is-active="modelValue ? true : false"
-      class="max-w-[300px]"
+      class="!max-w-[300px]"
       @keydown="onKeydown"
-      @click="!disabled ? (showOptions = !showOptions) : null"
+      @click="!disabled && (showOptions = !showOptions)"
       @keydown.tab="showOptions = false"
       @keydown.esc="showOptions = false"
       @clear="reset()"
@@ -26,25 +27,29 @@
       <div
         v-show="showOptions"
         :class="[
-          'absolute w-full z-50 mt-2 p-2 bg-white border border-gray-200 shadow-md overflow-hidden min-w-[250px]',
+          'absolute w-full z-50 mt-2 px-4 pt-4 bg-white border border-gray-200 shadow-md overflow-hidden min-w-[250px]',
+          optionsPositionClass,
           optionsClass,
         ]"
         @focusout="showOptions = false"
       >
+        <div class="font-medium border-b border-gray-300 pb-2">
+          {{ placeholder }}
+        </div>
         <div
           ref="scrollContainer"
-          class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray"
+          class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2 py-2"
         >
-          <ul class="py-2">
+          <ul class="mx-2">
             <li
               v-for="(item, index) in options"
               :key="index"
               :ref="`option_${index}`"
-              class="relative flex justify-between items-center text-sm pl-2 py-2 pr-10 cursor-pointer hover:bg-[#F0F0FF] focus:bg-[#F0F0FF]"
+              class="relative flex justify-between items-center text-sm pl-2 py-2 pr-2 cursor-pointer hover:bg-[#F0F0FF] focus:bg-[#F0F0FF]"
               :class="[
                 { 'bg-[#F0F0FF]': highlightIndex == index },
                 {
-                  'bg-[#F0F0FF]':
+                  'bg-[#F0F0FF] !pr-8':
                     selectedOption && item[attributeKey] == selectedOption[attributeKey],
                 },
                 { 'pointer-events-none text-gray-500': item.disabled },
@@ -87,5 +92,32 @@ export default defineNuxtComponent({
     disabled: { type: Boolean, default: false },
     optionsClass: { type: String, default: '' },
   },
+  data() {
+    return {
+      enableUnselect: true,
+      optionsPositionClass: '',
+    }
+  },
+  watch: {
+    async showOptions(newVal) {
+      if (newVal) {
+        await this.$nextTick()
+        this.handleOptionsPosition()
+      }
+    },
+  },
+  methods: {
+    handleOptionsPosition() {
+      const elOptionsX = this.$refs.tag.$el.getBoundingClientRect()?.x
+      const windowCenterX = window.innerWidth / 2
+      this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
+    },
+  },
 })
 </script>
+
+<style lang="postcss" scoped>
+.custom-scrollbar-gray::-webkit-scrollbar-track {
+  @apply my-2;
+}
+</style>

@@ -18,6 +18,7 @@
             aria-label="Adresse email"
             placeholder="Votre adresse électronique"
             input-class="lg:!rounded-none lg:!rounded-tl"
+            variant="white"
           />
           <DsfrButton
             :disabled="loading"
