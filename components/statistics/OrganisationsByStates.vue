@@ -44,7 +44,7 @@
       <ListItemCount
         color="unsubscribed"
         label="Désinscrite"
-        :count="statistics.signaled"
+        :count="statistics.unsubscribed"
         :total="total"
         display="count_percent"
       />
