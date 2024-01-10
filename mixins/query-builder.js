@@ -67,7 +67,7 @@ export default {
         ? this.$route.query[filterName].split(',')
         : []
 
-      if (multiple) {
+      if (multiple && filterValue) {
         filterQueryValues = filterQueryValues.filter((value) => value !== filterValue)
         if (filterQueryValues.length === 0) {
           filterQueryValues = undefined
@@ -75,6 +75,10 @@ export default {
       } else {
         filterQueryValues = undefined
       }
+
+      console.log('filterName', filterValue)
+      console.log('filterQueryValues', filterQueryValues)
+
       this.$router.push({
         path: this.$route.path,
         query: {

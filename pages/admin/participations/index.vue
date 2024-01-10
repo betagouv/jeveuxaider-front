@@ -92,7 +92,7 @@
           <BaseFilterSelectAdvanced
             v-if="visibleFilter === 'ofActivity'"
             :modelValue="$route.query['filter[ofActivity]']"
-            name="activity_id"
+            name="ofActivity"
             :options="activities"
             attribute-key="id"
             attribute-label="name"
@@ -136,16 +136,17 @@
 
           <BaseFilterSelectAdvanced
             v-if="visibleFilter === 'state'"
-            :modelValue="$route.query['filter[state]']"
+            multiple
+            :modelValue="$route.query['filter[state]']?.split(',')"
             name="state"
             :options="$labels.participation_workflow_states"
             placeholder="Statut"
-            @update:modelValue="changeFilter('filter[state]', $event)"
+            @update:modelValue="changeFilter('filter[state]', $event, true)"
           />
 
           <BaseFilterSelectAdvanced
             v-if="visibleFilter === 'mission.department'"
-            name="department"
+            name="mission.department"
             :options="
               $labels.departments.map((option) => {
                 return {
@@ -402,6 +403,7 @@ export default defineNuxtComponent({
         this.$stores.auth.user.statistics?.participations_need_to_be_treated_count > 0 &&
           'need_to_be_treated',
         'is_state_pending',
+        'state',
         ['admin'].includes(this.$stores.auth.contextRole) && 'mission.structure.id',
         ['admin'].includes(this.$stores.auth.contextRole) && 'mission.department',
       ].filter((f) => f)
