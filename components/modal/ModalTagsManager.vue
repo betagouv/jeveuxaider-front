@@ -66,7 +66,7 @@
         <template #footer>
           <template v-if="mode === 'listing'">
             <DsfrButton class="mr-3" type="secondary" @click.stop="onClickModeAdd">
-              Ajouter un tag
+              Créer un tag
             </DsfrButton>
             <DsfrButton :loading="loading" @click.stop="onActionClose"> Terminer </DsfrButton>
           </template>
@@ -80,7 +80,7 @@
             <DsfrButton class="mr-3" type="secondary" @click.stop="mode = 'listing'">
               Retour
             </DsfrButton>
-            <DsfrButton :loading="loading" @click.stop="onActionAdd"> Ajouter </DsfrButton>
+            <DsfrButton :loading="loading" @click.stop="onActionAdd"> Créer </DsfrButton>
           </template>
         </template>
       </BaseModal>

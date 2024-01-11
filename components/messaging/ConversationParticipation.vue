@@ -16,10 +16,10 @@
         />
       </template>
       <template v-if="isCurrentUserResponsable">
-        <ConversationTags class="border-t" @update-selected-tags="onUpdateSelectedTags" />
         <ConversationParticipationActionAsResponsable
           v-if="conversation.conversable_type === 'App\\Models\\Participation'"
         />
+        <ConversationTags class="border-b" @update-selected-tags="onUpdateSelectedTags" />
       </template>
     </template>
 

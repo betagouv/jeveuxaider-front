@@ -46,16 +46,26 @@
         <div class="px-4">
           <div class="border-t">
             <div
-              @click="showModal = true"
+              @click="handleClickHandleTags"
               class="py-4 flex items-center cursor-pointer text-sm space-x-4 hover:text-jva-blue-500"
             >
-              <RiPriceTag3Line class="h-4 w-4 fill-current" /> <span>Gestion des tags</span>
+              <template v-if="$stores.structureTags.options.length > 0">
+                <RiPriceTag3Line class="h-4 w-4 fill-current" /> <span>Gestion des tags</span>
+              </template>
+              <template v-else>
+                <RiPriceTag3Line class="h-4 w-4 fill-current" /> <span>Créer des tags</span>
+              </template>
             </div>
           </div>
         </div>
       </div>
     </transition>
-    <ModalTagsManager :is-open="showModal" @cancel="showModal = false" />
+    <ModalTagsManager
+      ref="modalTagsManager"
+      :is-open="showModal"
+      :mode="modeModal"
+      @cancel="showModal = false"
+    />
   </div>
 </template>
 
@@ -84,7 +94,7 @@ export default defineNuxtComponent({
     },
     label: {
       type: String,
-      default: 'Ajouter un tag',
+      default: 'Attribuer un tag',
     },
     options: {
       type: Array,
@@ -119,6 +129,12 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    handleClickHandleTags() {
+      if (this.$stores.structureTags.options.length === 0) {
+        this.$refs.modalTagsManager.mode = 'add'
+      }
+      this.showModal = true
+    },
     async attachTag(structureTagId) {
       const { tags } = await apiFetch(`${this.taggableEndpoint}/${structureTagId}/attach`, {
         method: 'POST',
@@ -132,6 +148,11 @@ export default defineNuxtComponent({
       this.$emit('update-selected-tags', tags)
     },
     toggleOpen() {
+      // if (this.$stores.structureTags.options.length === 0) {
+      //   this.$refs.modalTagsManager.mode = 'add'
+      //   this.showModal = true
+      // }
+
       this.showOptions = !this.showOptions
     },
     handleInput(value) {
