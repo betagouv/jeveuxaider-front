@@ -3,9 +3,8 @@
     <BaseFormControl html-for="name" label="Libellé du tag" required :error="errors.name">
       <BaseInput v-model="form.name" name="name" placeholder="Saisissez le libellé" />
       <BaseFormHelperText class="mt-1">
-        Ex: en attente d’une réponse bénévole, en cours d’intégration, en attente d’un retour en
-        interne, en attente d’une formation / rendez-vous, en attente d’inscription en ligne, en
-        attente d’envoi de documents
+        Ex: en attente d’une réponse bénévole, en attente d’un retour en interne, en attente d’une
+        formation, en cours d’intégration
       </BaseFormHelperText>
     </BaseFormControl>
   </div>

@@ -1,7 +1,8 @@
 <template>
-  <div v-if="participation" class="p-4 flex flex-wrap gap-2">
+  <div v-if="participation && showTags" class="p-4 flex flex-wrap gap-2">
     <SelectTags
       ref="selectTags"
+      v-if="canManageTags"
       v-model="participation.tags"
       :structure-tags-endpoint="`/structures/${this.participation?.mission.structure_id}/tags`"
       :taggable-endpoint="`/participations/${this.participation?.id}/tags`"
@@ -31,6 +32,9 @@ export default defineNuxtComponent({
   props: {},
   data() {},
   computed: {
+    showTags() {
+      return this.participation.tags.length > 0 || this.canManageTags
+    },
     canManageTags() {
       return ['responsable'].includes(this.$stores.auth.contextRole)
     },

@@ -37,7 +37,7 @@
           <span
             v-tooltip="{
               content:
-                'Cela permet de mieux catégoriser et suivre les participations. 100% personnalisable, mais commun à l’organisation.',
+                'Les tags permettent de mieux catégoriser et suivre les participations. Ils sont totalement personnalisables et sont communs à toute l’organisation.',
             }"
             class="p-1 cursor-help group"
           >
