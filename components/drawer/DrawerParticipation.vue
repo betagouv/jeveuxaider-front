@@ -32,7 +32,20 @@
           </nuxt-link>
         </template>
         <div class="border-t -mx-6 my-6" />
-        <div class="text-sm uppercase font-semibold text-gray-600">Tags</div>
+        <div class="text-sm uppercase font-semibold text-gray-600">
+          <span>Tags</span>
+          <span
+            v-tooltip="{
+              content:
+                'Cela permet de mieux catégoriser et suivre les participations. 100% personnalisable, mais commun à l’organisation.',
+            }"
+            class="p-1 cursor-help group"
+          >
+            <RiInformationLine
+              class="inline h-4 w-4 group-hover:text-gray-900 mb-[2px] fill-current"
+            />
+          </span>
+        </div>
 
         <BoxTags
           :tags="participation.tags"

@@ -13,6 +13,7 @@
         <div class="text-xl lg:text-2xl font-bold">
           {{ title }}
         </div>
+
         <div class="flex gap-2">
           <DsfrBadge
             v-if="

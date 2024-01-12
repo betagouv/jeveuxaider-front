@@ -17,7 +17,7 @@
           <BaseContainerScrollable scrollbar-class="max-h-[340px]">
             <div class="flex flex-col gap-6">
               <div class="">
-                <BaseFormLabel suffix="(personnalisables)">Liste des tags </BaseFormLabel>
+                <BaseFormLabel>Liste des tags </BaseFormLabel>
                 <div class="flex flex-wrap gap-2" v-if="editableTags.length > 0">
                   <DsfrTag
                     v-for="tag in editableTags"
