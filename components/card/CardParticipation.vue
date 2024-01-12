@@ -96,8 +96,14 @@
                     </a>
                   </div>
                 </div>
-                <div class="text-sm text-gray-600 first-letter:uppercase">
-                  {{ $dayjs(participation.created_at).fromNow() }}
+                <div class="flex gap-2 text-sm text-gray-600">
+                  <template v-if="isNewBenevole && display == 'benevole'">
+                    <div class="font-bold">Nouveau sur JeVeuxAider.gouv.fr</div>
+                    <div class="">•</div>
+                  </template>
+                  <div class="first-letter:uppercase">
+                    {{ $dayjs(participation.created_at).fromNow() }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -192,6 +198,11 @@ export default defineNuxtComponent({
         default:
           return 'info'
       }
+    },
+    isNewBenevole() {
+      return this.$dayjs(this.participation.profile.created_at).isAfter(
+        this.$dayjs().subtract(1, 'month')
+      )
     },
   },
 })
