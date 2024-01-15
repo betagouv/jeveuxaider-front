@@ -60,12 +60,7 @@
         </div>
       </div>
     </transition>
-    <ModalTagsManager
-      ref="modalTagsManager"
-      :is-open="showModal"
-      :mode="modeModal"
-      @cancel="showModal = false"
-    />
+    <ModalTagsManager ref="modalTagsManager" :is-open="showModal" @cancel="showModal = false" />
   </div>
 </template>
 

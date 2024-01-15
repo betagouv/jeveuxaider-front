@@ -48,6 +48,7 @@
             { key: 'missions', label: 'Missions' },
             { key: 'participations', label: 'Participations' },
             { key: 'utilisateurs', label: 'Utilisateurs' },
+            { key: 'tags', label: 'Tags' },
             { key: 'rules', label: 'Règles' },
           ]"
           :modelValue="$route.query['filter[type]']"

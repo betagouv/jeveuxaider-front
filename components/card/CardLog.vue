@@ -64,6 +64,21 @@
                     <span class="font-bold">{{ log?.properties?.items_count }} élément(s)</span>
                   </template>
                 </template>
+
+                <template v-if="log.subject_type === 'App\\Models\\StructureTag'">
+                  <template v-if="log.description === 'created'">
+                    a créé le tag
+                    <span class="font-bold">{{ log?.subject?.name }}</span>
+                  </template>
+                  <template v-if="log.description === 'updated'">
+                    a modifié le tag
+                    <span class="font-bold">{{ log?.subject?.name }}</span>
+                  </template>
+                  <template v-if="log.description === 'deleted'">
+                    a supprimé le tag
+                    <span class="font-bold">{{ log?.subject?.name }}</span>
+                  </template>
+                </template>
               </template>
               <template v-else>
                 <template
@@ -163,6 +178,8 @@ export default defineNuxtComponent({
           return 'Utilisateur'
         case 'App\\Models\\Rule':
           return 'Règle'
+        case 'App\\Models\\StructureTag':
+          return 'Tag'
         default:
           return this.log.subject_type
       }
