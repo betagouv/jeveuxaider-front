@@ -55,6 +55,11 @@
         />
 
         <div class="border-t -mx-6 my-6" />
+
+        <BaseAlert v-if="isNewBenevole" class="mb-8">
+          <strong>{{ participation.profile.full_name }}</strong> vient juste d'arriver sur
+          JeVeuxAider.gouv.fr, on compte sur vous pour lui réserver le meilleur accueil 🥰
+        </BaseAlert>
         <HistoryStateChanges
           v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
           :model-id="participation.id"
@@ -121,6 +126,13 @@ export default defineNuxtComponent({
 
   watch: {
     participationId: 'fetch',
+  },
+  computed: {
+    isNewBenevole() {
+      return this.$dayjs(this.participation.profile.created_at).isAfter(
+        this.$dayjs().subtract(1, 'month')
+      )
+    },
   },
   methods: {
     async fetch() {

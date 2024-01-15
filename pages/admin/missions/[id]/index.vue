@@ -59,31 +59,32 @@
                 </p>
                 <p>
                   Pour toute information, veuillez contacter le support à l’adresse
-                  <Link href="\'mailto:support@jeveuxaider.beta.gouv.fr\'">
+                  <a href="mailto:support@jeveuxaider.beta.gouv.fr" target="_blank">
                     support@jeveuxaider.beta.gouv.fr
-                  </Link>
+                  </a>
                 </p>
               </template>
-              <p v-else>
-                La mission est actuellement
-                <strong>{{ mission.is_active ? 'activée' : 'désactivée' }}</strong
-                >.
-              </p>
-            </div>
+              <template v-else>
+                <p>
+                  La mission est actuellement
+                  <strong>{{ mission.is_active ? 'activée' : 'désactivée' }}</strong
+                  >.
+                  <DsfrLink
+                    class="text-jva-blue-500 mt-2"
+                    @click.native="showModalSwitchIsActive = true"
+                  >
+                    {{ mission.is_active ? 'Désactiver la mission' : 'Activer la mission' }}
+                  </DsfrLink>
+                </p>
 
-            <Link
-              v-if="['admin'].includes($stores.auth.contextRole)"
-              class="text-jva-blue-500 mt-2"
-              @click.native="showModalSwitchIsActive = true"
-            >
-              {{ mission.is_active ? 'Désactiver la mission' : 'Activer la mission' }}
-            </Link>
-            <ModalMissionToggleIsActive
-              :mission="mission"
-              :is-open="showModalSwitchIsActive"
-              @cancel="showModalSwitchIsActive = false"
-              @confirm="afterChangeIsActive"
-            />
+                <ModalMissionToggleIsActive
+                  :mission="mission"
+                  :is-open="showModalSwitchIsActive"
+                  @cancel="showModalSwitchIsActive = false"
+                  @confirm="afterChangeIsActive"
+                />
+              </template>
+            </div>
           </div>
         </BaseBox>
 
@@ -163,7 +164,6 @@ import SelectMissionState from '@/components/custom/SelectMissionState.vue'
 import BoxReferents from '@/components/section/BoxReferents.vue'
 import BoxNotes from '@/components/custom/BoxNotes.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
-import Link from '@/components/dsfr/Link.vue'
 import ModalMissionToggleIsActive from '@/components/modal/ModalMissionToggleIsActive.vue'
 
 export default defineNuxtComponent({
@@ -185,7 +185,6 @@ export default defineNuxtComponent({
     BoxNotes,
     Breadcrumb,
     BoxAideModeration,
-    Link,
     ModalMissionToggleIsActive,
   },
   mixins: [MixinMission],
