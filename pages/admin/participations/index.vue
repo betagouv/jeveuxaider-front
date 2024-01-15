@@ -5,6 +5,7 @@
       @close="drawerParticipationId = null"
       @updated="onDrawerUpdated()"
       @refetch="fetch()"
+      @update-selected-tags="onUpdateSelectedTags"
     />
 
     <DsfrBreadcrumb
@@ -54,8 +55,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="!hasActiveFilters"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="!hasActiveFilters"
           @click.native="deleteAllFilters"
         >
           Toutes
@@ -263,6 +263,7 @@
             :participation="participation"
             @click.native="drawerParticipationId = participation.id"
             @refetch="fetch()"
+            show-tags
           />
         </div>
       </div>
@@ -340,7 +341,8 @@ export default defineNuxtComponent({
       endpoint: '/participations',
       exportEndpoint: '/export/participations',
       queryParams: {
-        include: 'conversation.latestMessage,profile.avatar,mission.responsable,mission.structure',
+        include:
+          'conversation.latestMessage,profile.avatar,mission.responsable,mission.structure,tags',
       },
       drawerParticipationId: null,
       autocompleteOptionsOrganisations: [],
@@ -423,6 +425,11 @@ export default defineNuxtComponent({
   methods: {
     onDrawerUpdated() {
       this.fetch()
+    },
+    onUpdateSelectedTags(tags) {
+      this.queryResult.data.find(
+        (participation) => participation.id === this.drawerParticipationId
+      ).tags = tags
     },
     async onFetchSuggestionsOrganisations(value) {
       this.loadingFetchOrganisations = true

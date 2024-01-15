@@ -7,7 +7,7 @@
         as="button"
         context="selectable"
         size="md"
-        :is-selected="
+        :is-active="
           isModel ? value.some((item) => item.id == option.key) : value.includes(option.key)
         "
         @click.native.prevent="onClick(option.key)"

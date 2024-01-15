@@ -3,8 +3,7 @@
     as="button"
     size="md"
     context="selectable"
-    :is-selected="isMinors"
-    is-selected-class="border-gray-50 bg-gray-50"
+    :is-active="isMinors"
     @click.native="handleToggle"
   >
     Ouverte aux mineurs

@@ -35,8 +35,7 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="!hasActiveFilters"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="!hasActiveFilters"
               @click.native="deleteAllFilters"
             >
               Toutes
@@ -46,8 +45,7 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'file'"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="$route.query['filter[type]'] && $route.query['filter[type]'] == 'file'"
               @click.native="changeFilter('filter[type]', 'file')"
             >
               Fichiers
@@ -57,8 +55,7 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'link'"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="$route.query['filter[type]'] && $route.query['filter[type]'] == 'link'"
               @click.native="changeFilter('filter[type]', 'link')"
             >
               Liens

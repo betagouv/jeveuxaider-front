@@ -39,9 +39,9 @@
     <template v-if="variant == 'button'">
       <div
         :class="[
-          'bg-white hover:scale-105 transition',
+          'bg-white hover:bg-jva-blue-100 transition max-w-full',
           { '!bg-transparent': transparent },
-          { '!bg-white': checked },
+          { 'bg-white': checked },
         ]"
       >
         <input
@@ -54,9 +54,8 @@
           tabindex="-1"
           @click="toggleChecked()"
         />
-        <label
-          :for="option.key"
-          class="cursor-pointer text-sm border inline-flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500"
+        <span
+          class="max-w-full text-sm border inline-flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-jva-blue-500"
           :class="[
             checked
               ? 'text-jva-blue-500 border-jva-blue-500 font-bold'
@@ -69,7 +68,10 @@
           ]"
           tabindex="0"
           @keypress.space.prevent="toggleChecked()"
-          >{{ option.label }}</label
+        >
+          <label :for="option.key" class="truncate cursor-pointer" :title="option.label">{{
+            option.label
+          }}</label></span
         >
       </div>
     </template>
@@ -78,7 +80,7 @@
 
 <script>
 export default defineNuxtComponent({
-  emits: ['change'],
+  emits: ['change', 'checked', 'unchecked'],
   props: {
     option: { type: Object, required: true },
     isChecked: { type: Boolean, default: false },
@@ -107,6 +109,11 @@ export default defineNuxtComponent({
   methods: {
     toggleChecked() {
       this.checked = !this.checked
+      if (this.checked) {
+        this.$emit('checked', this.option.key)
+      } else {
+        this.$emit('unchecked', this.option.key)
+      }
       this.$emit('change', this.option.key)
     },
   },

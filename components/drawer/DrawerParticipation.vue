@@ -32,6 +32,29 @@
           </nuxt-link>
         </template>
         <div class="border-t -mx-6 my-6" />
+        <div class="text-sm uppercase font-semibold text-gray-600">
+          <span>Tags</span>
+          <span
+            v-tooltip="{
+              content:
+                'Les tags permettent de mieux catégoriser et suivre les participations. Ils sont totalement personnalisables et sont communs à toute l’organisation.',
+            }"
+            class="p-1 cursor-help group"
+          >
+            <RiInformationLine
+              class="inline h-4 w-4 group-hover:text-gray-900 mb-[2px] fill-current"
+            />
+          </span>
+        </div>
+
+        <BoxTags
+          :tags="participation.tags"
+          :structure-tags-endpoint="`/structures/${participation.mission.structure_id}/tags`"
+          :taggable-endpoint="`/participations/${participation.id}/tags`"
+          @update-selected-tags="onUpdateSelectedTags"
+        />
+
+        <div class="border-t -mx-6 my-6" />
 
         <BaseAlert v-if="isNewBenevole" class="mb-8">
           <strong>{{ participation.profile.full_name }}</strong> vient juste d'arriver sur
@@ -73,8 +96,10 @@ import BoxResponsable from '@/components/section/BoxResponsable.vue'
 import BoxUtm from '@/components/section/BoxUtm.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
+import BoxTags from '@/components/tag/BoxTags.vue'
 
 export default defineNuxtComponent({
+  emits: ['close', 'updated', 'loaded', 'update-selected-tags'],
   components: {
     LoadingIndicator,
     SelectParticipationState,
@@ -83,6 +108,7 @@ export default defineNuxtComponent({
     BoxResponsable,
     BoxUtm,
     HistoryStateChanges,
+    BoxTags,
   },
   mixins: [MixinParticipation],
   props: {
@@ -97,6 +123,7 @@ export default defineNuxtComponent({
       participation: null,
     }
   },
+
   watch: {
     participationId: 'fetch',
   },
@@ -117,6 +144,10 @@ export default defineNuxtComponent({
       this.participation = participation
       this.loading = false
       this.$emit('loaded', participation)
+    },
+    onUpdateSelectedTags(payload) {
+      this.participation.tags = payload
+      this.$emit('update-selected-tags', payload)
     },
     async handleChangeState(payload) {
       this.participation.state = payload.key

@@ -193,5 +193,13 @@ export const useMessagingStore = defineStore({
         this.messageTemplates = data.value.data
       }
     },
+    refreshConversationInConversations(payload: Conversation) {
+      const index = this.conversations.findIndex((conversation) => conversation.id == payload.id)
+      if (index !== -1) {
+        this.conversations.splice(index, 1, {
+          ...payload,
+        })
+      }
+    },
   },
 })

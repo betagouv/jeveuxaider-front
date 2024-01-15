@@ -74,8 +74,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="!hasActiveFilters"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="!hasActiveFilters"
             @click.native="deleteAllFilters"
           >
             Toutes

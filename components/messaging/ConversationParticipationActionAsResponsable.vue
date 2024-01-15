@@ -51,12 +51,14 @@
             <BaseDropdownOptionsItem
               v-if="!['Validée'].includes(participation.state)"
               @click.native.stop="showValidateParticipationModal = true"
+              class="block sm:hidden"
             >
               <div class="px-4 text-base font-medium">Valider la participation</div>
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem
               v-if="!['Refusée'].includes(participation.state)"
               @click.native.stop="showRefuseParticipationModal = true"
+              class="block sm:hidden"
             >
               <div class="px-4 text-base font-medium">Refuser la participation</div>
             </BaseDropdownOptionsItem>

@@ -45,8 +45,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="!hasActiveFilters"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="!hasActiveFilters"
           @click.native="deleteAllFilters"
         >
           Toutes
@@ -57,8 +56,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_active]'] && $route.query['filter[is_active]'] == 1"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="$route.query['filter[is_active]'] && $route.query['filter[is_active]'] == 1"
           @click.native="changeFilter('filter[is_active]', 1)"
         >
           Active
@@ -69,8 +67,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_active]'] && $route.query['filter[is_active]'] == 0"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="$route.query['filter[is_active]'] && $route.query['filter[is_active]'] == 0"
           @click.native="changeFilter('filter[is_active]', 0)"
         >
           Inactive

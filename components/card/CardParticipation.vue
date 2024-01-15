@@ -66,7 +66,7 @@
       <template v-else>
         <div>La mission n'existe plus</div>
       </template>
-      <div class="col-span-2 px-6 py-10 flex flex-col justify-between gap-6">
+      <div class="col-span-2 px-6 py-8 flex flex-col justify-between gap-6">
         <div class="space-y-6">
           <div class="flex flex-col space-y-4 lg:flex-row lg:space-y-0">
             <div class="flex">
@@ -143,6 +143,21 @@
             </div>
           </div>
         </div>
+        <div
+          v-if="showTags && canSeeTags && participation.tags?.length > 0"
+          class="flex-none flex space-x-4 items-center max-w-full"
+        >
+          <RiPriceTag3Fill class="flex-none w-4 h-4 text-[#666666] fill-current" />
+          <div class="flex flex-wrap gap-2 truncate">
+            <DsfrTag
+              v-for="(tag, index) in $stores.structureTags.resolveTagsName(participation.tags)"
+              :key="tag.id"
+              size="sm"
+            >
+              {{ tag.name }}
+            </DsfrTag>
+          </div>
+        </div>
       </div>
     </div>
     <ParticipationBenevoleActions
@@ -172,6 +187,10 @@ export default defineNuxtComponent({
       type: String,
       default: 'benevole',
     },
+    showTags: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     mission() {
@@ -184,6 +203,11 @@ export default defineNuxtComponent({
     },
     isBenevole() {
       return this.participation.profile_id == this.$stores.auth.profile.id
+    },
+    canSeeTags() {
+      return ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+        this.$stores.auth.contextRole
+      )
     },
     badgeTypeParticipationSate() {
       switch (this.participation.state) {
