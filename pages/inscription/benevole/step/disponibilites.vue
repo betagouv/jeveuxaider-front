@@ -15,7 +15,7 @@
         >, faisons connaissance
       </h1>
     </div>
-    <div class="max-w-xl mx-auto">
+    <div class="max-w-2xl mx-auto">
       <div class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center">
         Sélectionnez vos disponibilités
       </div>

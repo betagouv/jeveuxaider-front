@@ -16,9 +16,9 @@
       </h1>
       <div class="text-lg font-medium">Nous sommes ravis de vous compter parmi nos bénévoles.</div>
     </div>
-    <div class="max-w-xl mx-auto">
+    <div class="max-w-2xl mx-auto">
       <div class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center">
-        Vos préférences
+        Sélectionnez vos préférences
       </div>
       <div class="p-8 bg-gray-50 border-t border-gray-200">
         <form id="inscription" class="gap-8 grid grid-cols-1" @submit.prevent="onSubmit">
@@ -26,34 +26,14 @@
             label="Quelles activités de bénévolat pourraient vous intéresser ?"
             html-for="activites"
           >
-            <div class="bg-white border">
-              <DsfrAccordionsGroup class="px-4 sm:px-0 bg-white">
-                <DsfrAccordion :initial-is-open="true">
-                  <template #title> Activités les plus populaires </template>
-
-                  <DsfrTagsGroup
-                    v-model="form.activities"
-                    name="activites"
-                    :options="activitiesOptions.filter((activity) => activity.popular)"
-                    is-model
-                  />
-                </DsfrAccordion>
-                <DsfrAccordion v-for="domain in domainsOptions" :key="domain">
-                  <template #title>
-                    {{ domain }}
-                  </template>
-
-                  <DsfrTagsGroup
-                    v-model="form.activities"
-                    name="activites"
-                    :options="
-                      activitiesOptions.filter((activity) => activity.domain.includes(domain))
-                    "
-                    is-model
-                  />
-                </DsfrAccordion>
-              </DsfrAccordionsGroup>
-            </div>
+            <DsfrTagsGroup
+              v-model="form.activities"
+              name="activites"
+              variant="button"
+              :options="activitiesOptions"
+              is-model
+              class="mt-4"
+            />
           </BaseFormControl>
           <BaseFormControl label="Décrivez vos motivations" html-for="description">
             <BaseTextarea
@@ -120,7 +100,7 @@ export default defineNuxtComponent({
       ],
       form: _cloneDeep(this.$stores.auth.user.profile),
       formSchema: object({}),
-      activitiesOptions,
+      activitiesOptions: activitiesOptions.sort((a, b) => a.name.localeCompare(b.name)),
       domainsOptions: [
         'Art et culture pour tous',
         'Bénévolat de compétences',

@@ -16,7 +16,7 @@
       </h1>
       <div class="text-lg font-medium">Nous sommes ravis de vous compter parmi nos bénévoles.</div>
     </div>
-    <div class="max-w-xl mx-auto">
+    <div class="max-w-2xl mx-auto">
       <div class="px-8 py-8 bg-white text-black text-3xl font-extrabold leading-9 text-center">
         Complétez votre profil
       </div>

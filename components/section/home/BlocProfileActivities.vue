@@ -28,14 +28,14 @@
             </ClientOnly>
           </div>
         </div>
-        <div v-if="otherActivitiesFromDomains.length > 0">
+        <div v-if="otherActivities.length > 0">
           <DsfrHeading as="h3" size="md" with-line>
             Ces sujets devraient également vous parler
           </DsfrHeading>
           <div class="flex flex-wrap gap-4 sm:gap-6 xl:gap-8 mt-12">
             <ClientOnly>
               <div
-                v-for="activity in otherActivitiesFromDomains"
+                v-for="activity in otherActivities"
                 :key="activity.key"
                 class="inline-flex border border-[#CECECE] text-lg xl:text-xl font-bold w-full sm:w-auto"
               >
@@ -70,25 +70,21 @@ export default defineNuxtComponent({
   },
   data() {
     return {
-      activities,
+      activities: activities.sort((a, b) => a.name.localeCompare(b.name)),
       chunkSize: 3,
       attachedActivities: [],
     }
   },
   computed: {
+    profileActivitiesIds() {
+      return this.$stores.auth.profile.activities.map((activity) => {
+        return activity.id
+      })
+    },
     profileActivities() {
-      if (
-        !this.$stores.auth.profile.activities ||
-        this.$stores.auth.profile.activities.length === 0
-      ) {
-        return []
-      }
-      const profileActivitiesIds = this.$stores.auth.profile.activities
-        .slice(0, this.chunkSize)
-        .map((activity) => {
-          return activity.id
-        })
-      return activities.filter((activity) => profileActivitiesIds.includes(activity.key))
+      return activities.filter((activity) =>
+        this.profileActivitiesIds.slice(0, this.chunkSize).includes(activity.key)
+      )
     },
     profileActivitiesRemaining() {
       if (
@@ -104,42 +100,45 @@ export default defineNuxtComponent({
         })
       return activities.filter((activity) => profileActivitiesIds.includes(activity.key))
     },
-    profileDomainsByActivities() {
-      if (
-        !this.$stores.auth.profile.activities ||
-        this.$stores.auth.profile.activities.length === 0
-      ) {
-        return []
-      }
-      const profileActivitiesIds = this.$stores.auth.profile.activities.map((activity) => {
-        return activity.id
-      })
-
-      const activitiesFiltered = activities.filter((activity) =>
-        profileActivitiesIds.includes(activity.key)
-      )
-
-      const domains = []
-      activitiesFiltered.map((activity) => domains.push(activity.domain))
-      return domains.flat()
+    otherActivities() {
+      return activities.filter((activity) => !this.profileActivitiesIds.includes(activity.id))
     },
-    otherActivitiesFromDomains() {
-      if (this.profileDomainsByActivities.length === 0) {
-        return this.activities.filter((activity) => activity.popular)
-      }
-      const profileActivitiesIds = this.$stores.auth.profile.activities.map((activity) => {
-        return activity.id
-      })
-      return activities
-        .filter((activity) => activity.name !== 'Collecte de fonds') // Too much domains
-        .filter((activity) =>
-          activity.domain.some(
-            (i) =>
-              this.profileDomainsByActivities.includes(i) &&
-              !profileActivitiesIds.includes(activity.key)
-          )
-        )
-    },
+    // profileDomainsByActivities() {
+    //   if (
+    //     !this.$stores.auth.profile.activities ||
+    //     this.$stores.auth.profile.activities.length === 0
+    //   ) {
+    //     return []
+    //   }
+    //   const profileActivitiesIds = this.$stores.auth.profile.activities.map((activity) => {
+    //     return activity.id
+    //   })
+
+    //   const activitiesFiltered = activities.filter((activity) =>
+    //     profileActivitiesIds.includes(activity.key)
+    //   )
+
+    //   const domains = []
+    //   activitiesFiltered.map((activity) => domains.push(activity.domain))
+    //   return domains.flat()
+    // },
+    // otherActivitiesFromDomains() {
+    //   if (this.profileDomainsByActivities.length === 0) {
+    //     return this.activities.filter((activity) => activity.popular)
+    //   }
+    //   const profileActivitiesIds = this.$stores.auth.profile.activities.map((activity) => {
+    //     return activity.id
+    //   })
+    //   return activities
+    //     .filter((activity) => activity.name !== 'Collecte de fonds') // Too much domains
+    //     .filter((activity) =>
+    //       activity.domain.some(
+    //         (i) =>
+    //           this.profileDomainsByActivities.includes(i) &&
+    //           !profileActivitiesIds.includes(activity.key)
+    //       )
+    //     )
+    // },
   },
   methods: {
     async attachActivityToProfile(activity) {
