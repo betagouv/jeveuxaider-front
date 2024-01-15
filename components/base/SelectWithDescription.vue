@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div class="inline-flex border border-cool-gray-300 divide-x divide-gray-100">
+    <div class="inline-flex border border-[#DDDDDD] divide-x divide-gray-100">
       <div class="relative z-0 inline-flex divide-x divide-gray-100">
         <div
           :class="[
@@ -22,7 +22,7 @@
         </div>
         <button
           type="button"
-          class="relative inline-flex items-center bg-white p-2 text-sm font-medium text-white hover:bg-gray-100 focus:outline-none focus:z-10 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500"
+          class="relative inline-flex items-center bg-white p-2.5 text-sm font-medium text-white hover:bg-gray-100 focus:outline-none focus:z-10 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500"
           :class="[{ 'p-1': size === 'sm' }, { 'p-2': size === 'md' }]"
           aria-haspopup="listbox"
           aria-expanded="true"
@@ -45,7 +45,7 @@
       <ul
         v-if="show"
         v-click-outside="() => (show = false)"
-        class="origin-top-left absolute z-10 left-0 mt-2 w-72 shadow-lg bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none max-h-80 overscroll-contain overflow-auto"
+        class="origin-top-left absolute z-10 left-0 mt-2 w-72 shadow-lg bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none max-h-[500px] overscroll-contain overflow-auto"
         tabindex="-1"
         role="listbox"
         aria-labelledby="listbox-label"

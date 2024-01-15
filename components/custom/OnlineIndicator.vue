@@ -3,9 +3,12 @@
     <div
       :class="['h-3 w-3 rounded-full flex-none', published ? 'bg-jva-green-500' : 'bg-jva-red-500']"
     />
-    <component :is="component" :to="link" :is-external="true" class="text-sm">
-      {{ published ? publishedLabel : unpublishedLabel }}
-    </component>
+    <div>
+      {{ published ? publishedLabel : unpublishedLabel }} -
+      <component :is="component" :to="link" :is-external="true" class="text-sm">
+        Ouvrir l'aperçu
+      </component>
+    </div>
   </div>
 </template>
 
@@ -22,11 +25,11 @@ export default defineNuxtComponent({
     },
     publishedLabel: {
       type: String,
-      default: 'En ligne',
+      default: 'Publiée',
     },
     unpublishedLabel: {
       type: String,
-      default: 'Hors ligne',
+      default: 'Non publiée',
     },
   },
   computed: {

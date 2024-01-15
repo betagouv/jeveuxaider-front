@@ -5,15 +5,15 @@
         v-scroll-lock="isOpen"
         :is-open="isOpen"
         theme="warning"
-        :title="`${mission.is_active ? 'Désactiver' : 'Activer'} la mission`"
+        :title="`${mission.is_active ? 'Dépublier' : 'Publier'} la mission`"
         :prevent-click-outside="true"
         :hide-close="true"
         @close="$emit('cancel')"
       >
         <div class="formatted-text">
           <p>
-            Vous êtes sur le point
-            {{ mission.is_active ? 'de désactiver' : "d'activer" }} la mission
+            Vous êtes sur le point de
+            {{ mission.is_active ? 'dépublier' : 'publier' }} la mission
             <strong>{{ mission.name }}</strong>
             <span class="text-gray-500">#{{ mission.id }}</span
             >. Le responsable de la mission <strong>{{ mission.responsable.full_name }}</strong> en
@@ -79,7 +79,7 @@ export default defineNuxtComponent({
         },
       }).catch(() => {})
       this.$toast.success(
-        mission.is_active ? 'La mission est désormais active' : 'La mission a été désactivée'
+        mission.is_active ? 'La mission est désormais publiée' : 'La mission a été dépubliée'
       )
       this.loading = false
       this.$emit('confirm', mission)

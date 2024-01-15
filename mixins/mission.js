@@ -258,5 +258,21 @@ export default {
         : `/missions-benevolat?domaines=${encodeURIComponent(this.domaine.name)}`
       this.$router.push(url)
     },
+    async handleChangeIsRegistrationOpen(value) {
+      const mission = await apiFetch(`/missions/${this.mission.id}`, {
+        method: 'PUT',
+        body: {
+          ...this.mission,
+          is_registration_open: value,
+        },
+      }).catch(() => {})
+      this.$toast.success(
+        value
+          ? "Les bénévoles peuvent s'inscrire à cette mission"
+          : "Les bénévoles ne peuvent plus s'inscrire à cette mission"
+      )
+      this.mission.is_registration_open = value
+      this.$emit('updated', mission)
+    },
   },
 }
