@@ -50,48 +50,52 @@
       @keydown.native.esc="handleCloseSuggestions"
     />
 
-    <!-- Transition to avoid missclick due to layout shift -->
     <transition
       enter-active-class="ease-out duration-200"
-      enter-from-class="opacity-0 -translate-y-4 sm:translate-y-0 sm:scale-95"
-      enter-to-class="opacity-100 translate-y-0 sm:scale-100"
-      leave-active-class="tease-in duration-100"
-      leave-from-class="opacity-100 translate-y-0 sm:scale-100"
-      leave-to-class="opacity-0 -translate-y-4 sm:translate-y-0 sm:scale-95"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
     >
-      <div v-if="isGeolocFilterActive" class="flex flex-col py-2 text-sm">
-        <!-- Seulement si geolocalisation par navigateur acceptée -->
-        <button
-          v-if="$stores.algoliaSearch.navigatorGeolocation"
-          :class="[
-            'py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD] -mx-4 px-4',
-            { 'text-jva-blue-500': !$route.query.aroundLatLng },
-          ]"
-          @click="handleSelectedAdress(null)"
-          @keydown.esc="handleCloseSuggestions"
-        >
-          <div>Autour de moi</div>
-        </button>
+      <div v-if="isGeolocFilterActive" class="text-sm">
+        <div class="max-h-[240px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mr-2">
+          <div class="flex flex-col py-4">
+            <!-- Seulement si geolocalisation par navigateur acceptée -->
+            <button
+              v-if="$stores.algoliaSearch.navigatorGeolocation"
+              :class="[
+                'py-[6px] cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD] pr-2',
+                { 'text-jva-blue-500': !$route.query.aroundLatLng },
+              ]"
+              @click="handleSelectedAdress(null)"
+              @keydown.esc="handleCloseSuggestions"
+            >
+              <div>Autour de moi</div>
+            </button>
 
-        <button
-          v-for="suggestion in suggestions"
-          :key="suggestion.id"
-          :class="[
-            'py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD] -mx-4 px-4',
-            {
-              'text-jva-blue-500': $route.query?.aroundLatLng === suggestion.aroundLatLng,
-            },
-          ]"
-          @click="handleSelectedAdress(suggestion)"
-        >
-          <div class="truncate">
-            {{ suggestion.city }}
-          </div>
+            <button
+              v-for="suggestion in suggestions"
+              :key="suggestion.id"
+              :class="[
+                'py-[6px] cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD] pr-2',
+                {
+                  'text-jva-blue-500': $route.query?.aroundLatLng === suggestion.aroundLatLng,
+                },
+              ]"
+              @click="handleSelectedAdress(suggestion)"
+            >
+              <div class="truncate">
+                {{ suggestion.city }}
+              </div>
 
-          <div class="text-gray-600 ml-1 font-light">
-            {{ suggestion.postcode }}
+              <div class="text-gray-600 ml-1 font-light">
+                {{ suggestion.postcode }}
+              </div>
+            </button>
           </div>
-        </button>
+        </div>
+
+        <div class="border-t py-3 flex justify-end">
+          <button class="text-jva-blue-500" @click="isGeolocFilterActive = false">Fermer</button>
+        </div>
       </div>
     </transition>
   </div>
@@ -267,3 +271,9 @@ export default defineNuxtComponent({
   },
 })
 </script>
+
+<style lang="postcss" scoped>
+.custom-scrollbar-gray::-webkit-scrollbar-track {
+  @apply my-2;
+}
+</style>
