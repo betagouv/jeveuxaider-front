@@ -144,6 +144,19 @@
           />
 
           <BaseFilterSelectAdvanced
+            v-if="
+              ['responsable'].includes($stores.auth.contextRole) &&
+              $stores.structureTags.options.length > 0 &&
+              visibleFilter === 'tags'
+            "
+            :modelValue="$route.query['filter[tags]']"
+            name="tags"
+            :options="$stores.structureTags.options"
+            placeholder="Tags"
+            @update:modelValue="changeFilter('filter[tags]', $event)"
+          />
+
+          <BaseFilterSelectAdvanced
             v-if="visibleFilter === 'mission.department'"
             name="department"
             :options="
@@ -325,6 +338,9 @@ export default defineNuxtComponent({
     if ($stores.auth.contextRole === 'responsable' && $stores.auth.contextableId) {
       const response = await apiFetch(`/structures/${$stores.auth.contextableId}/responsables`)
       responsables = response?.map((user) => user.profile) ?? []
+
+      $stores.structureTags.endpoint = `/structures/${$stores.auth.contextableId}/tags`
+      $stores.structureTags.fetchOptions()
     }
 
     return {
@@ -384,6 +400,7 @@ export default defineNuxtComponent({
           'need_to_be_treated',
         'is_state_pending',
         'state',
+        'tags',
         this.activities.length &&
           ['admin', 'referent'].includes(this.$stores.auth.contextRole) &&
           'ofActivity',
@@ -404,6 +421,7 @@ export default defineNuxtComponent({
         this.$stores.auth.user.statistics?.participations_need_to_be_treated_count > 0 &&
           'need_to_be_treated',
         'is_state_pending',
+        'tags',
         ['admin'].includes(this.$stores.auth.contextRole) && 'mission.structure.id',
         ['admin'].includes(this.$stores.auth.contextRole) && 'mission.department',
       ].filter((f) => f)
