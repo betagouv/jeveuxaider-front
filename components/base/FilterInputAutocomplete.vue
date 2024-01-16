@@ -18,7 +18,18 @@
       @keydown.esc="showOptions = false"
       @clear="reset()"
     >
-      {{ valueOrLabelFilter }}
+      <span>
+        <span class="truncate">
+          {{
+            valueOrLabelFilter.split(',').length > 1
+              ? valueOrLabelFilter.split(',')[0]
+              : valueOrLabelFilter
+          }}
+        </span>
+        <span v-if="valueOrLabelFilter.split(',').length > 1"
+          >, +{{ valueOrLabelFilter.split(',').length - 1 }}</span
+        >
+      </span>
     </DsfrTag>
     <transition name="fade-in">
       <div
@@ -77,7 +88,7 @@
                       {{ item[attributeLabel] }}
                     </span>
 
-                    <span class="text-xs text-gray-400 ml-1">
+                    <span class="text-xs text-gray-400 ml-1 flex-none">
                       <template v-if="attributeRightLabel">
                         {{ item[attributeRightLabel] }}
                       </template>
