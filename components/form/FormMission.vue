@@ -659,7 +659,7 @@ export default defineNuxtComponent({
         autonomy_zips: this.mission.autonomy_zips || [],
         tags: this.mission?.tags?.length ? this.mission?.tags : this.mission.template?.tags || [],
         date_type: this.mission.date_type || 'ponctual',
-        is_active: this.mission.is_active ?? true,
+        is_online: this.mission.is_online ?? false,
       },
       formSchema: object({
         name: string()

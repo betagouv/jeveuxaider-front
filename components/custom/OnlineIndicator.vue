@@ -25,11 +25,11 @@ export default defineNuxtComponent({
     },
     publishedLabel: {
       type: String,
-      default: 'Publiée',
+      default: 'En ligne',
     },
     unpublishedLabel: {
       type: String,
-      default: 'Non publiée',
+      default: 'Hors ligne',
     },
   },
   computed: {

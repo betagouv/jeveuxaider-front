@@ -10,30 +10,50 @@
     <ModalMissionToggleIsActive
       v-if="['admin'].includes($stores.auth.contextRole)"
       :mission="mission"
-      :is-open="showModalSwitchIsActive"
-      @cancel="showModalSwitchIsActive = false"
+      :is-open="showModalSwitchIsOnline"
+      @cancel="showModalSwitchIsOnline = false"
       @confirm="afterChangeIsActive"
+    />
+    <BaseAlertDialog
+      v-if="['admin', 'responsable'].includes($stores.auth.contextRole)"
+      theme="danger"
+      title="Supprimer la mission"
+      :text="`Vous êtes sur le point de supprimer la mission ${mission.name}.`"
+      :is-open="showModalDelete"
+      @confirm="handleConfirmDelete()"
+      @cancel="showModalDelete = false"
     />
     <div class="flex justify-between pb-8 mb-8 border-b">
       <div>
         <BaseHeading :level="1" class="mb-4">
           Mission
           <span class="font-normal text-gray-500 text-2xl">#{{ mission.id }}</span>
-        </BaseHeading>
-        <div class="flex items-center space-x-4">
-          <OnlineIndicator
-            :published="mission.is_active"
-            :link="`/missions-benevolat/${mission.id}/${mission.slug}`"
-          />
-          <BaseBadge :color="mission.state">
-            {{ mission.state }}
-          </BaseBadge>
-          <BaseBadge
-            v-if="mission.state == 'Validée'"
-            :color="mission.is_registration_open ? 'gray-light' : 'orange'"
+          <DsfrLink
+            :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
+            :is-external="true"
+            class="text-xs font-normal ml-2"
           >
+            Ouvrir l'aperçu
+          </DsfrLink>
+        </BaseHeading>
+        <div class="flex items-center space-x-3">
+          <DsfrBadge size="sm" :type="badgeTypeMissionSate">
+            {{ mission.state }}
+          </DsfrBadge>
+          <DsfrBadge size="sm" type="gray">
+            <div class="flex items-center">
+              <div
+                :class="[
+                  'h-2 w-2  rounded-full mr-1',
+                  mission.is_online ? 'bg-green-600' : 'bg-red-600',
+                ]"
+              ></div>
+              {{ mission.is_online ? 'En ligne' : 'Hors ligne' }}
+            </div>
+          </DsfrBadge>
+          <DsfrBadge v-if="mission.state == 'Validée' && mission.is_online" size="sm" type="gray">
             {{ mission.is_registration_open ? 'Inscriptions ouvertes' : 'Inscriptions fermées' }}
-          </BaseBadge>
+          </DsfrBadge>
         </div>
       </div>
       <div class="flex space-x-3">
@@ -57,20 +77,20 @@
           <template #items>
             <BaseDropdownOptionsItem
               v-if="['admin'].includes($stores.auth.contextRole) && mission.state == 'Validée'"
-              @click.native="showModalSwitchIsActive = true"
+              @click.native="showModalSwitchIsOnline = true"
             >
               <div class="flex items-center">
                 <div
                   :class="[
                     'h-3 w-3 rounded-full mr-3',
-                    mission.is_active ? 'bg-jva-red-500' : 'bg-jva-green-500',
+                    mission.is_online ? 'bg-jva-red-600' : 'bg-jva-green-600',
                   ]"
                 />
-                {{ mission.is_active ? 'Dépublier' : 'Publier' }}
+                {{ mission.is_online ? 'Mettre hors ligne' : 'Mettre en ligne' }}
               </div>
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem
-              v-if="mission.places_left > 0 && mission.is_active && mission.state == 'Validée'"
+              v-if="mission.places_left > 0 && mission.is_online && mission.state == 'Validée'"
               @click.native="handleChangeIsRegistrationOpen(!mission.is_registration_open)"
             >
               <div
@@ -94,18 +114,32 @@
                 inscriptions
               </div>
             </BaseDropdownOptionsItem>
-            <BaseDropdownOptionsItem v-if="mission.places_left > 0 && mission.is_active">
-              <NuxtLink
-                :to="`/admin/missions/${mission.id}/trouver-des-benevoles`"
-                class="flex items-center"
-              >
-                <RiUserSearch class="h-4 w-4 mr-2 fill-current text-gray-600" /> Trouver des
-                bénévoles
-              </NuxtLink>
+            <NuxtLink
+              v-if="mission.places_left > 0 && mission.is_online"
+              :to="`/admin/missions/${mission.id}/trouver-des-benevoles`"
+            >
+              <BaseDropdownOptionsItem>
+                <div class="flex items-center">
+                  <RiUserSearch class="h-4 w-4 mr-2 fill-current text-gray-600" /> Trouver des
+                  bénévoles
+                </div>
+              </BaseDropdownOptionsItem>
+            </NuxtLink>
+            <BaseDropdownOptionsItem v-if="canDuplicateMission">
+              <ButtonMissionDuplicate
+                :mission-id="mission.id"
+                :mission="mission"
+                theme="link"
+                :canDuplicateMission="canDuplicateMission"
+                :redirectToMission="true"
+              />
             </BaseDropdownOptionsItem>
-            <BaseDropdownOptionsItem>
+            <BaseDropdownOptionsItem
+              v-if="['admin', 'responsable'].includes($stores.auth.contextRole)"
+              @click="() => (showModalDelete = true)"
+            >
               <div class="flex items-center">
-                <RiFileCopyLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Dupliquer
+                <RiDeleteBinLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Supprimer
               </div>
             </BaseDropdownOptionsItem>
           </template>
@@ -126,7 +160,7 @@
       </div>
       <div class="lg:col-span-2 space-y-8">
         <BaseBox
-          v-if="!mission.is_active && mission.state == 'Validée'"
+          v-if="!mission.is_online && mission.state == 'Validée'"
           variant="flat"
           :padding="false"
         >
@@ -134,9 +168,9 @@
             <div class="formatted-text">
               <p>
                 <span aria-hidden="true" class="font-emoji text-2xl mr-2">⚠️</span>
-                La mission <strong>a été désactivée</strong> par un membre du support car vous avez
-                <strong>trop de participations non modérées</strong> (validées ou refusées). Elle
-                n’est plus visible des bénévoles.
+                La mission <strong>a été mise hors ligne</strong> par un membre du support car vous
+                avez <strong>trop de participations non modérées</strong> (validées ou refusées).
+                Elle n’est plus visible des bénévoles.
               </p>
               <p>
                 Pour toute information, veuillez contacter le support à l’adresse
@@ -149,9 +183,11 @@
             <Link
               v-if="['admin'].includes($stores.auth.contextRole)"
               class="text-jva-blue-500 mt-2"
-              @click.native="showModalSwitchIsActive = true"
+              @click.native="showModalSwitchIsOnline = true"
             >
-              {{ mission.is_active ? 'Dépublier la mission' : 'Publier la mission' }}
+              {{
+                mission.is_online ? 'Mettre hors ligne la mission' : 'Mettre en ligne la mission'
+              }}
             </Link>
           </div>
         </BaseBox>
@@ -228,6 +264,7 @@ import BoxNotes from '@/components/custom/BoxNotes.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import Link from '@/components/dsfr/Link.vue'
 import ModalMissionToggleIsActive from '@/components/modal/ModalMissionToggleIsActive.vue'
+import ButtonMissionDuplicate from '@/components/custom/ButtonMissionDuplicate.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -250,6 +287,7 @@ export default defineNuxtComponent({
     BoxAideModeration,
     Link,
     ModalMissionToggleIsActive,
+    ButtonMissionDuplicate,
   },
   mixins: [MixinMission],
   async setup() {
@@ -291,16 +329,19 @@ export default defineNuxtComponent({
   },
   data() {
     return {
-      showModalSwitchIsActive: false,
+      showModalSwitchIsOnline: false,
+      showModalDelete: false,
     }
   },
   methods: {
     async handleChangeState(event) {
       this.mission.state = event.key
-      await apiFetch(`/missions/${this.mission.id}`, {
+      const mission = await apiFetch(`/missions/${this.mission.id}`, {
         method: 'PUT',
         body: this.mission,
       })
+      this.mission.is_online = mission.is_online
+      this.refreshMission()
     },
     handleChangePlace(mission) {
       this.mission.participations_max = mission.participations_max
@@ -309,7 +350,10 @@ export default defineNuxtComponent({
     },
     afterChangeIsActive() {
       this.refreshMission()
-      this.showModalSwitchIsActive = false
+      this.showModalSwitchIsOnline = false
+    },
+    handleDuplicated(mission) {
+      console.log('new mission', mission)
     },
   },
 })

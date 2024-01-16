@@ -13,18 +13,18 @@
         <div class="formatted-text">
           <template v-if="value">
             <p>
-              Vous êtes sur le point d'activer toutes les missions validées gérées par
+              Vous êtes sur le point de mettre en ligne toutes les missions validées gérées par
               <strong>{{ responsable.full_name }}</strong>
               <span class="text-gray-500">#{{ responsable.id }}</span
               >. Les missions seront de nouveau visibles dans la recherche.
             </p>
             <p>
-              Nombre de missions actuellement désactivées :
-              <strong>{{ profileStats?.missions_inactive }}</strong
+              Nombre de missions actuellement hors ligne :
+              <strong>{{ profileStats?.missions_offline }}</strong
               ><br />
 
               <DsfrLink
-                :to="`/admin/missions?filter[responsable.id]=${responsable.id}&filter[is_active]=false`"
+                :to="`/admin/missions?filter[responsable.id]=${responsable.id}&filter[is_online]=false`"
                 target="_blank"
                 class="text-sm"
               >
@@ -34,7 +34,7 @@
           </template>
           <template v-else>
             <p>
-              Vous êtes sur le point de désactiver toutes les missions validées gérées par
+              Vous êtes sur le point de mettre hors ligne toutes les missions validées gérées par
               <strong>{{ responsable.full_name }}</strong>
               <span class="text-gray-500">#{{ responsable.id }}</span
               >. Les missions <strong>n'apparaîtront plus dans la recherche</strong> et il sera
@@ -107,8 +107,8 @@ export default defineNuxtComponent({
     },
     toastMessageSucess() {
       return this.value
-        ? 'Les missions ont bien été activées.'
-        : 'Les missions ont bien été désactivées.'
+        ? 'Les missions ont bien été mises en ligne.'
+        : 'Les missions ont bien été mises hors ligne.'
     },
   },
   methods: {

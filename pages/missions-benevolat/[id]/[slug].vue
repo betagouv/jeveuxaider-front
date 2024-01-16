@@ -1,7 +1,7 @@
 <template>
   <div>
     <ClientOnly>
-      <Teleport v-if="!hasPageOnline" to="#teleport-header-top">
+      <Teleport v-if="!mission.is_online" to="#teleport-header-top">
         <transition name="fade">
           <BaseBanner>
             La mission n'est pas visible car elle est au statut « {{ mission.state }} » et
@@ -478,12 +478,7 @@ export default defineNuxtComponent({
       showError({ statusCode: 404 })
     }
 
-    if (
-      !(
-        mission.value?.structure.state === 'Validée' &&
-        ['Validée', 'Terminée'].includes(mission.value.state)
-      )
-    ) {
+    if (!mission.value.is_online) {
       if (!$stores.auth.isLogged) {
         showError({ statusCode: 403 })
       }

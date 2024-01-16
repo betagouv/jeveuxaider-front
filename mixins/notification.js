@@ -140,7 +140,7 @@ export default {
         case 'App\\Notifications\\ResponsableMissionsDeactivated':
           return {
             emoji: '😢',
-            message: 'Vos missions ont été **désactivées**',
+            message: 'Vos missions ont été **mises hors ligne**',
             redirection: '/admin/missions',
           }
         case 'App\\Notifications\\MissionSignaled':

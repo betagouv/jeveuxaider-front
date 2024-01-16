@@ -22,7 +22,7 @@
     <div v-else>
       <template v-if="mission">
         <OnlineIndicator
-          :published="hasPageOnline"
+          :published="mission.is_online"
           :link="`/missions-benevolat/${mission.id}/${mission.slug}`"
           class="mt-2"
         />
@@ -67,26 +67,26 @@
           <div class="mt-2">
             <p>
               La mission est actuellement
-              <strong>{{ mission.is_active ? 'activée' : 'désactivée' }}</strong
+              <strong>{{ mission.is_online ? 'activée' : 'désactivée' }}</strong
               >.
             </p>
-            <BaseLink class="!inline-flex" @click.native="showModalSwitchIsActive = true">
-              {{ mission.is_active ? 'Désactiver la mission' : 'Activer la mission' }}
+            <BaseLink class="!inline-flex" @click.native="showModalSwitchIsOnline = true">
+              {{ mission.is_online ? 'Désactiver la mission' : 'Activer la mission' }}
             </BaseLink>
             <ModalMissionToggleIsActive
               :mission="mission"
-              :is-open="showModalSwitchIsActive"
-              @cancel="showModalSwitchIsActive = false"
+              :is-open="showModalSwitchIsOnline"
+              @cancel="showModalSwitchIsOnline = false"
               @confirm="afterChangeIsActive()"
             />
           </div>
 
           <div class="border-t -mx-6 my-6" />
         </template>
-        <div v-else-if="!mission.is_active" class="formatted-text">
+        <div v-else-if="!mission.is_online" class="formatted-text">
           <p>
             <span aria-hidden="true" class="font-emoji text-2xl mr-2">⚠️</span> La mission
-            <strong>a été désactivée</strong> par un membre du support car vous avez
+            <strong>a été mise hors ligne</strong> par un membre du support car vous avez
             <strong>trop de participations non modérées</strong> (validées ou refusées). Elle n’est
             plus visible des bénévoles.
           </p>
@@ -193,7 +193,7 @@ export default defineNuxtComponent({
       mission: null,
       missionStats: null,
       loading: false,
-      showModalSwitchIsActive: false,
+      showModalSwitchIsOnline: false,
     }
   },
   watch: {
@@ -225,21 +225,10 @@ export default defineNuxtComponent({
       this.fetch()
       this.$emit('updated')
     },
-    async handleConfirmDelete() {
-      await apiFetch(`/missions/${this.missionId}`, {
-        method: 'DELETE',
-      })
-        .then((res) => {
-          this.showAlert = false
-          this.$emit('close')
-          this.$emit('updated')
-        })
-        .catch(() => {})
-    },
     afterChangeIsActive() {
       this.fetch()
       this.$emit('updated')
-      this.showModalSwitchIsActive = false
+      this.showModalSwitchIsOnline = false
     },
   },
 })

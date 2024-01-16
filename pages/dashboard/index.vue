@@ -14,15 +14,15 @@
       </BaseSectionHeading>
     </template>
     <template #left>
-      <BaseBox v-if="$stores.auth.user.statistics?.missions_inactive_count">
+      <BaseBox v-if="$stores.auth.user.statistics?.missions_offline_count">
         <BaseHeading as="h2" :level="3" class="mb-8">
           <span aria-hidden="true" class="font-emoji text-2xl mr-2">⚠️</span>
           Vous avez
           {{
             $filters.pluralize(
-              $stores.auth.user.statistics?.missions_inactive_count,
-              'mission désactivée',
-              'missions désactivées'
+              $stores.auth.user.statistics?.missions_offline_count,
+              'mission hors ligne',
+              'missions hors ligne'
             )
           }}
           <RiInformationLine
@@ -38,7 +38,7 @@
             Pour
             {{
               $filters.pluralize(
-                $stores.auth.user.statistics?.missions_inactive_count,
+                $stores.auth.user.statistics?.missions_offline_count,
                 'la',
                 'les',
                 false

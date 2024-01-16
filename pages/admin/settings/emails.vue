@@ -228,25 +228,25 @@ export default defineNuxtComponent({
         {
           tab: 'responsables',
           key: 'responsable_mission_deactivated',
-          label: 'Votre mission a été désactivée',
+          label: 'Votre mission a été mise hors ligne',
           description:
-            "Notification envoyée au responsable d'organisation lorsqu'un modérateur désactive l'une de ses missions",
+            "Notification envoyée au responsable d'organisation lorsqu'un modérateur met hors ligne l'une de ses missions",
           tags: ['app-responsable-mission-desactivee'],
           types: ['Notification'],
         },
         {
           tab: 'responsables',
           key: 'responsable_mission_reactivated',
-          label: 'Votre mission est de nouveau active 👏🏻',
+          label: 'Votre mission est de nouveau en ligne 👏🏻',
           description:
-            "Notification envoyée au responsable d'organisation lorsqu'un modérateur réactive l'une de ses missions",
+            "Notification envoyée au responsable d'organisation lorsqu'un modérateur remet en ligne l'une de ses missions",
           tags: ['app-responsable-mission-reactivee'],
           types: ['Notification'],
         },
         {
           tab: 'responsables',
           key: 'responsable_missions_deactivated',
-          label: 'Vos missions ont été désactivées',
+          label: 'Vos missions ont été mises hors ligne',
           description:
             "Notification envoyée au responsable d'organisation lorsqu'un modérateur désactive toutes ses missions",
           tags: ['app-responsable-missions-desactivees'],

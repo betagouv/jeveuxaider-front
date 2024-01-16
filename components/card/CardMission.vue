@@ -18,22 +18,27 @@
 
       <template v-if="showState">
         <div class="custom-gradient absolute inset-0" />
-        <DsfrBadge size="sm" :type="badgeTypeMissionSate" class="absolute top-3 left-3 shadow-lg">
-          {{ mission.state }}
-        </DsfrBadge>
+        <div class="absolute top-3 left-3 flex gap-2 flex-wrap">
+          <DsfrBadge class="shadow-lg" size="sm" :type="badgeTypeMissionSate">
+            {{ mission.state }}
+          </DsfrBadge>
 
-        <DsfrBadge
-          v-if="!mission.is_active"
-          v-tooltip="{
-            content:
-              'Cette mission a été désactivée par un membre du support. Elle n’est plus visible des bénévoles.',
-          }"
-          size="sm"
-          type="warning"
-          class="absolute bottom-3 left-3 shadow-lg"
-        >
-          Mission désactivée
-        </DsfrBadge>
+          <DsfrBadge
+            class="shadow-lg"
+            size="sm"
+            type="gray"
+            v-if="!mission.is_online && mission.state == 'Validée'"
+            v-tooltip="{
+              content:
+                'Cette mission a été mise hors ligne par un membre du support. Elle n’est plus visible des bénévoles.',
+            }"
+          >
+            <div class="flex items-center">
+              <div class="h-2 w-2 rounded-full mr-1 bg-red-600"></div>
+              Hors ligne
+            </div>
+          </DsfrBadge>
+        </div>
 
         <div class="custom-gradient-2 absolute inset-0 pointer-events-none" />
         <div
@@ -280,20 +285,6 @@ export default defineNuxtComponent({
           return DsfrWarningIcon
         default:
           return DsfrInfoIcon
-      }
-    },
-    badgeTypeMissionSate() {
-      switch (this.mission.state) {
-        case 'Validée':
-          return 'success'
-        case 'Signalée':
-        case 'Annulée':
-          return 'error'
-        case 'En attente de validation':
-        case 'En cours de traitement':
-          return 'warning'
-        default:
-          return 'info'
       }
     },
   },

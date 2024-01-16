@@ -194,7 +194,7 @@ export default defineNuxtComponent({
       }
     }
 
-    if (!mission.is_active) {
+    if (!mission.is_online) {
       return showError({ statusCode: 403 })
     }
 

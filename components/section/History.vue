@@ -264,8 +264,8 @@ export default defineNuxtComponent({
           return 'Profile ID'
         case 'mission_id':
           return 'Mission ID'
-        case 'is_active':
-          return 'Actif'
+        case 'is_online':
+          return 'En ligne'
         case 'is_registration_open':
           return 'Inscription ouverte'
         case 'activity_secondary_id':
