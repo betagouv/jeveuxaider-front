@@ -76,7 +76,6 @@
                 :min-value-length="3"
                 @selected="handleSelectedGeo"
                 @add="handleAdd"
-                @keyup.enter="onEnter"
                 @fetch-suggestions="onFetchGeoSuggestions"
               />
               <div v-if="form.zips.length">
@@ -237,6 +236,12 @@ export default defineNuxtComponent({
       },
     },
   },
+  async setup() {
+    const { getMultidistributedCity } = await multidistributedCitiesHelper()
+    return {
+      getMultidistributedCity,
+    }
+  },
   data() {
     return {
       loading: false,
@@ -256,16 +261,22 @@ export default defineNuxtComponent({
     }
   },
   methods: {
-    onEnter() {
-      // console.log('ENTER')
-    },
     onRemovedTagItem(value) {
       this.form.zips = this.form.zips.filter((item) => item !== value)
     },
     handleSelectedGeo(item) {
-      if (item && !this.form.zips.includes(item)) {
-        this.form.zips.push(item.postcode)
+      if (!item) {
+        return
       }
+
+      const zips = item.id.includes('all_zips')
+        ? item.postcodes.flatMap((p) => p.zip.split(','))
+        : item.postcode.split(',')
+      zips.forEach((zip) => {
+        if (!this.form.zips.includes(zip)) {
+          this.form.zips.push(zip)
+        }
+      })
     },
     handleAdd(item) {
       if (item && !this.form.zips.includes(item)) {

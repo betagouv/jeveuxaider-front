@@ -178,8 +178,8 @@ export default defineNuxtComponent({
     async fetchGeoSuggestions() {
       const suggestions = await $fetch('https://api-adresse.data.gouv.fr/search', {
         params: {
-          q: this.searchValue,
-          limit: 5,
+          q: this.searchValue.substring(0, 85),
+          limit: 25,
           type: 'municipality',
         },
       })

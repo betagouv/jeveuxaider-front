@@ -78,6 +78,12 @@ export default defineNuxtComponent({
       },
     },
   },
+  async setup() {
+    const { getMultidistributedCity } = await multidistributedCitiesHelper()
+    return {
+      getMultidistributedCity,
+    }
+  },
   data() {
     return {
       geolocationLoading: false,
@@ -86,6 +92,8 @@ export default defineNuxtComponent({
         timeout: 50000,
         maximumAge: 120,
       },
+      inputGeoType: 'municipality',
+      hideAllZipsOption: true,
     }
   },
   computed: {},
@@ -126,7 +134,6 @@ export default defineNuxtComponent({
       }
     },
     resetCityAndCoordinates() {
-      console.log('resetCityAndCoordinates')
       this.$router.push({
         query: {
           ...this.$route.query,

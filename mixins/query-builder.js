@@ -29,11 +29,9 @@ export default {
         this.timeout.cancel()
       }
       this.timeout = _debounce(() => {
-        const filterQueryValues = this.$route.query[filterName]
-          ? this.$route.query[filterName].split(',')
-          : []
-        if (filterQueryValues.includes(filterValue) || filterQueryValues === filterValue) {
-          // L'option est déjà filtrée, on la retire
+        if (multiple && this.$route.query[filterName]?.split(',')?.includes(filterValue)) {
+          this.deleteFilter(filterName, filterValue, multiple)
+        } else if (!multiple && this.$route.query[filterName] === filterValue) {
           this.deleteFilter(filterName, filterValue, multiple)
         } else if (['', null, undefined].includes(filterValue)) {
           this.deleteFilter(filterName, filterValue, multiple)
@@ -63,23 +61,19 @@ export default {
       })
     },
     deleteFilter(filterName, filterValue, multiple) {
-      let filterQueryValues = this.$route.query[filterName]
-        ? this.$route.query[filterName].split(',')
-        : []
-
+      let filterQuery = !multiple ? undefined : this.$route.query[filterName]?.split(',') ?? []
       if (multiple) {
-        filterQueryValues = filterQueryValues.filter((value) => value !== filterValue)
-        if (filterQueryValues.length === 0) {
-          filterQueryValues = undefined
+        filterQuery = filterQuery?.filter((value) => value !== filterValue)
+        if (filterQuery.length === 0) {
+          filterQuery = undefined
         }
-      } else {
-        filterQueryValues = undefined
       }
+
       this.$router.push({
         path: this.$route.path,
         query: {
           ...this.$route.query,
-          [filterName]: filterQueryValues ? filterQueryValues.join(',') : undefined,
+          [filterName]: filterQuery?.join(','),
           page: undefined,
         },
       })

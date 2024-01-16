@@ -178,7 +178,7 @@
             :loading="loadingFetchZips"
             attribute-key="zip"
             hide-attribute-key
-            attribute-right-label="zip"
+            attribute-right-label="labelRight"
             @fetch-suggestions="onFetchSuggestionsZips"
             @selected="changeFilter('filter[mission.zip]', $event?.zip)"
           />
@@ -340,9 +340,12 @@ export default defineNuxtComponent({
       $stores.structureTags.fetchOptions()
     }
 
+    const { getMultidistributedCity } = await multidistributedCitiesHelper()
+
     return {
       activities: activities.data,
       responsables: responsables,
+      getMultidistributedCity,
     }
   },
   data() {
@@ -500,19 +503,61 @@ export default defineNuxtComponent({
       this.loadingFetchZips = true
       const suggestions = await $fetch('https://api-adresse.data.gouv.fr/search', {
         params: {
-          q: trimmedValue,
-          limit: 5,
+          q: trimmedValue.substring(0, 85),
+          limit: 25,
           type: 'municipality',
         },
       })
 
-      const formatOptions = suggestions.features.map((option) => {
-        return {
-          id: option.properties.id,
-          name: option.properties.city,
-          zip: option.properties.postcode,
-        }
-      })
+      const formatOptions = suggestions.features
+        .flatMap((option) => {
+          const multidistributedCity = this.getMultidistributedCity(
+            option.properties.postcode,
+            option.properties.city
+          )
+          if (multidistributedCity) {
+            return [
+              {
+                id: `${multidistributedCity[0].group}_all_zips`,
+                name: option.properties.city.match(/^([^\d]+)/)?.[1].trim(),
+                zip: multidistributedCity
+                  .map((c) => {
+                    return c.zip
+                  })
+                  .join(','),
+                labelRight: 'Tous les CP',
+              },
+              ...multidistributedCity.map((c) => {
+                return {
+                  id: c.key,
+                  name: c.labelArrondissement ?? c.label,
+                  zip: c.zip,
+                  labelRight: c.zip,
+                }
+              }),
+            ]
+          }
+
+          return {
+            id: option.properties.id,
+            name: option.properties.city,
+            zip: option.properties.postcode,
+            labelRight: option.properties.postcode,
+          }
+        })
+        .reduce((accumulator, currentValue) => {
+          const exists = accumulator.some(
+            (obj) =>
+              !obj.id.includes('all_zips') &&
+              obj.name === currentValue.name &&
+              obj.zip?.endsWith(currentValue.zip)
+          )
+          if (!exists) {
+            accumulator.push(currentValue)
+          }
+          return accumulator
+        }, [])
+
       this.autocompleteOptionsZips = formatOptions
       this.loadingFetchZips = false
     },

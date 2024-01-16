@@ -1,5 +1,5 @@
 <template>
-  <div v-if="organisation" class="relative">
+  <div class="relative">
     <client-only>
       <ClientOnly>
         <Teleport to="#teleport-sidebar">
@@ -144,6 +144,8 @@ export default defineNuxtComponent({
       return await navigateTo('/dashboard')
     }
 
+    const { getMultidistributedCity } = await multidistributedCitiesHelper()
+
     return {
       form: toRef({
         ...organisation.territoire,
@@ -156,6 +158,7 @@ export default defineNuxtComponent({
           ? organisation.department
           : organisation.territoire.department,
       }),
+      getMultidistributedCity,
     }
   },
   data() {
@@ -204,9 +207,18 @@ export default defineNuxtComponent({
       this.form.zips = this.form.zips.filter((item) => item !== value)
     },
     handleSelectedGeo(item) {
-      if (item && !this.form.zips.includes(item)) {
-        this.form.zips.push(item.postcode)
+      if (!item) {
+        return
       }
+
+      const zips = item.id.includes('all_zips')
+        ? item.postcodes.flatMap((p) => p.zip.split(','))
+        : item.postcode.split(',')
+      zips.forEach((zip) => {
+        if (!this.form.zips.includes(zip)) {
+          this.form.zips.push(zip)
+        }
+      })
     },
     onSubmit() {
       if (this.loading) {

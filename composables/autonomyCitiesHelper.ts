@@ -20,8 +20,10 @@ export const autonomyCitiesHelper = async () => {
         const existingCity = accumulator.find((item: any) => item.city === formattedCity)
 
         if (existingCity) {
-          existingCity.zips.push(zip)
-          if (isArrondissement) {
+          if (!existingCity.zips.includes(zip)) {
+            existingCity.zips.push(zip)
+          }
+          if (isArrondissement && !existingCity.arrondissements.includes(arrondissementLabel)) {
             existingCity.arrondissements.push(arrondissementLabel)
           }
         } else {
@@ -43,8 +45,26 @@ export const autonomyCitiesHelper = async () => {
           const sortedArrondissements = group.arrondissements.sort((a: string, b: string) =>
             a.localeCompare(b, 'fr', { numeric: true })
           )
+
           if (group.arrondissements.length > 0) {
-            return `${group.city} (${sortedArrondissements.join(', ')})`
+            let isAllArrondissements = false
+            switch (group.city) {
+              case 'Paris':
+                isAllArrondissements = sortedArrondissements.length === 20
+                break
+              case 'Marseille':
+                isAllArrondissements = sortedArrondissements.length === 16
+                break
+              case 'Lyon':
+                isAllArrondissements = sortedArrondissements.length === 9
+                break
+              default:
+                break
+            }
+
+            return isAllArrondissements
+              ? group.city
+              : `${group.city} (${sortedArrondissements.join(', ')})`
           } else {
             return `${group.city} (${sortedZips.join(', ')})`
           }
