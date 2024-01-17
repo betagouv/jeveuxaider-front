@@ -1,4 +1,5 @@
 export default {
+  emits: ['update:modelValue', 'changed', 'blur'],
   data() {
     return {
       showOptions: false,

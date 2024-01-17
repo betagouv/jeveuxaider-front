@@ -98,11 +98,10 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="
+              :is-active="
                 $route.query['filter[available]'] &&
                 $route.query['filter[available]'] == 'available'
               "
-              is-selected-class="border-gray-50 bg-gray-50"
               @click.native="changeFilter('filter[available]', 'available')"
             >
               En ligne
@@ -150,11 +149,10 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="
+              :is-active="
                 $route.query['filter[is_snu_mig_compatible]'] &&
                 $route.query['filter[is_snu_mig_compatible]'] == 'true'
               "
-              is-selected-class="border-gray-50 bg-gray-50"
               @click.native="changeFilter('filter[is_snu_mig_compatible]', 'true')"
             >
               SNU/MIG
@@ -211,6 +209,7 @@
                   }
                 })
               "
+              :searchable="true"
               :modelValue="$route.query['filter[department]']"
               placeholder="Département"
               @update:modelValue="changeFilter('filter[department]', $event)"
@@ -244,6 +243,7 @@
               :modelValue="$route.query['filter[ofActivity]']"
               name="activity_id"
               :options="activities"
+              :searchable="true"
               attribute-key="id"
               attribute-label="name"
               placeholder="Activité"
@@ -321,10 +321,9 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="
+              :is-active="
                 $route.query['filter[is_autonomy]'] && $route.query['filter[is_autonomy]'] == 'true'
               "
-              is-selected-class="border-gray-50 bg-gray-50"
               @click="changeFilter('filter[is_autonomy]', 'true')"
             >
               En autonomie

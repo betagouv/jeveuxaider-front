@@ -119,6 +119,7 @@
                 })
               "
               :modelValue="$route.query['filter[department]']"
+              :searchable="true"
               placeholder="Département"
               @update:modelValue="changeFilter('filter[department]', $event)"
             />

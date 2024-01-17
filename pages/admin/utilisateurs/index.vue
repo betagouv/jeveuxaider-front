@@ -148,6 +148,7 @@
                 })
               "
               placeholder="Département"
+              :searchable="true"
               @update:modelValue="changeFilter('filter[department]', $event)"
             />
 

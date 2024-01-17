@@ -67,8 +67,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="$route.query['filter[need_to_be_treated]'] == 'true'"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="$route.query['filter[need_to_be_treated]'] == 'true'"
             @click.native="changeFilter('filter[need_to_be_treated]', 'true')"
           >
             ⚠️ À traiter en priorité
@@ -79,11 +78,10 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="
+            :is-active="
               $route.query['filter[is_state_pending]'] &&
               $route.query['filter[is_state_pending]'] == 'true'
             "
-            is-selected-class="border-gray-50 bg-gray-50"
             @click.native="changeFilter('filter[is_state_pending]', 'true')"
           >
             En cours de modération
@@ -97,6 +95,7 @@
             attribute-key="id"
             attribute-label="name"
             placeholder="Activité"
+            :searchable="true"
             options-class="!min-w-[300px]"
             @update:modelValue="changeFilter('filter[ofActivity]', $event)"
           />
@@ -169,6 +168,7 @@
             "
             :modelValue="$route.query['filter[mission.department]']"
             placeholder="Département"
+            :searchable="true"
             @update:modelValue="changeFilter('filter[mission.department]', $event)"
           />
 
