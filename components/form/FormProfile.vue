@@ -461,8 +461,7 @@
           <div class="gap-8 grid grid-cols-1">
             <BaseToggle
               v-model="form.can_export_profiles"
-              :description="form.can_export_profiles ? 'Oui' : 'Non'"
-              label="Export des utilisateurs"
+              label="Export des utilisateurs et des participations"
             />
           </div>
         </BaseBox>

@@ -25,10 +25,7 @@
         <template #action>
           <div class="flex space-x-2">
             <DsfrButton
-              v-if="
-                !bulkOperationIsActive &&
-                ['responsable', 'tete_de_reseau'].includes($stores.auth.contextRole)
-              "
+              v-if="canExport"
               type="secondary"
               icon="RiDownload2Line"
               :disabled="queryResult?.total === 0"
@@ -369,6 +366,21 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    canExport() {
+      if (this.bulkOperationIsActive) {
+        return false
+      }
+      if (['responsable', 'tete_de_reseau'].includes(this.$stores.auth.contextRole)) {
+        return true
+      }
+      if (
+        ['referent'].includes(this.$stores.auth.contextRole) &&
+        this.$stores.auth.profile.can_export_profiles
+      ) {
+        return true
+      }
+      return false
+    },
     canUseBulkOperation() {
       return ['admin', 'responsable'].includes(this.$stores.auth.contextRole)
     },
