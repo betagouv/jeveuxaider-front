@@ -56,7 +56,7 @@
       enter-to-class="opacity-100"
     >
       <div v-if="isGeolocFilterActive" class="text-sm">
-        <div class="max-h-[240px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mr-2">
+        <div class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mr-2">
           <div class="flex flex-col py-4">
             <!-- Seulement si geolocalisation par navigateur acceptée -->
             <button
@@ -68,14 +68,22 @@
               @click="handleSelectedAdress(null)"
               @keydown.esc="handleCloseSuggestions"
             >
-              <div>Autour de moi</div>
+              <div class="truncate">
+                <div class="flex">
+                  <span class="truncate">Autour de moi</span>
+                  <RiCheckLine
+                    v-if="!$route.query.aroundLatLng"
+                    class="ml-1 h-5 fill-current flex-none relative top-[2px]"
+                  />
+                </div>
+              </div>
             </button>
 
             <button
               v-for="suggestion in suggestions"
               :key="suggestion.id"
               :class="[
-                'py-[6px] cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD] pr-2',
+                'py-[6px] cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD] pr-2 relative',
                 {
                   'text-jva-blue-500': $route.query?.aroundLatLng === suggestion.aroundLatLng,
                 },
@@ -83,7 +91,13 @@
               @click="handleSelectedAdress(suggestion)"
             >
               <div class="truncate">
-                {{ suggestion.city }}
+                <div class="flex">
+                  <span class="truncate">{{ suggestion.city }}</span>
+                  <RiCheckLine
+                    v-if="$route.query?.aroundLatLng === suggestion.aroundLatLng"
+                    class="ml-1 h-5 fill-current flex-none relative top-[2px]"
+                  />
+                </div>
               </div>
 
               <div class="text-gray-600 ml-1 font-light">
@@ -93,7 +107,17 @@
           </div>
         </div>
 
-        <div class="border-t py-3 flex justify-end">
+        <div class="border-t py-3 flex justify-between">
+          <button
+            :class="[
+              { 'text-gray-400 pointer-events-none': !$route.query.city },
+              { 'text-jva-blue-500 cursor-pointer': $route.query.city },
+            ]"
+            :disabled="!$route.query.city"
+            @click="handleSelectedAdress(null)"
+          >
+            Réinitialiser
+          </button>
           <button class="text-jva-blue-500" @click="isGeolocFilterActive = false">Fermer</button>
         </div>
       </div>
@@ -109,15 +133,18 @@ export default defineNuxtComponent({
   components: {
     FacetSearch,
   },
-  setup() {
+  async setup() {
     const localisationHistoryCookie = useCookie('localisation-history')
+    const { getMultidistributedCity } = await multidistributedCitiesHelper()
+
     return {
       localisationHistoryCookie,
+      getMultidistributedCity,
     }
   },
   data() {
     return {
-      searchValue: this.$route.query.city,
+      searchValue: '',
       fetchSuggestions: [],
       initialSuggestions: [
         {
@@ -171,9 +198,6 @@ export default defineNuxtComponent({
     },
   },
   watch: {
-    '$route.query.city'(newVal) {
-      this.searchValue = newVal
-    },
     isGeolocFilterActive(newVal) {
       this.$emit('geolocFilterActiveStateToggle', newVal)
     },
@@ -188,13 +212,42 @@ export default defineNuxtComponent({
         },
       })
 
-      const formatOptions = suggestions.features.map((option) => {
-        return {
-          ...option.properties,
-          aroundLatLng: `${option.geometry.coordinates[1]},${option.geometry.coordinates[0]}`,
-          typeLabel: this.$filters.label(option.properties.type, 'geoType'),
-        }
-      })
+      const formatOptions = suggestions.features
+        .flatMap((option) => {
+          const multidistributedCity = this.getMultidistributedCity(
+            option.properties.postcode,
+            option.properties.city
+          )
+          if (multidistributedCity) {
+            return [
+              ...multidistributedCity.map((c) => {
+                return {
+                  id: c.key,
+                  city: c.labelArrondissement ?? c.label,
+                  postcode: c.zip,
+                  typeLabel: c.zip,
+                  aroundLatLng: `${c.latitude},${c.longitude}`,
+                }
+              }),
+            ]
+          }
+
+          return {
+            ...option.properties,
+            aroundLatLng: `${option.geometry.coordinates[1]},${option.geometry.coordinates[0]}`,
+            typeLabel: this.$filters.label(option.properties.type, 'geoType'),
+          }
+        })
+        .reduce((accumulator, currentValue) => {
+          const exists = accumulator.some(
+            (obj) => obj.city === currentValue.city && obj.postcode?.endsWith(currentValue.postcode)
+          )
+          if (!exists) {
+            accumulator.push(currentValue)
+          }
+          return accumulator
+        }, [])
+
       this.fetchSuggestions = formatOptions
     },
     handleInput(payload) {
@@ -233,6 +286,7 @@ export default defineNuxtComponent({
       })
       this.isOpen = false
       this.fetchSuggestions = []
+      this.searchValue = ''
 
       if (suggestion) {
         this.setHistory(suggestion)

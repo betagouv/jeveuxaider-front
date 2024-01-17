@@ -147,10 +147,13 @@ export default defineNuxtComponent({
       required: true,
     },
   },
-  setup() {
+  async setup() {
     const localisationHistoryCookie = useCookie('localisation-history')
+    const { getMultidistributedCity } = await multidistributedCitiesHelper()
+
     return {
       localisationHistoryCookie,
+      getMultidistributedCity,
     }
   },
   data() {
@@ -235,13 +238,42 @@ export default defineNuxtComponent({
         },
       })
 
-      const formatOptions = suggestions.features.map((option) => {
-        return {
-          ...option.properties,
-          aroundLatLng: `${option.geometry.coordinates[1]},${option.geometry.coordinates[0]}`,
-          typeLabel: this.$filters.label(option.properties.type, 'geoType'),
-        }
-      })
+      const formatOptions = suggestions.features
+        .flatMap((option) => {
+          const multidistributedCity = this.getMultidistributedCity(
+            option.properties.postcode,
+            option.properties.city
+          )
+          if (multidistributedCity) {
+            return [
+              ...multidistributedCity.map((c) => {
+                return {
+                  id: c.key,
+                  city: c.labelArrondissement ?? c.label,
+                  postcode: c.zip,
+                  typeLabel: c.zip,
+                  aroundLatLng: `${c.latitude},${c.longitude}`,
+                }
+              }),
+            ]
+          }
+
+          return {
+            ...option.properties,
+            aroundLatLng: `${option.geometry.coordinates[1]},${option.geometry.coordinates[0]}`,
+            typeLabel: this.$filters.label(option.properties.type, 'geoType'),
+          }
+        })
+        .reduce((accumulator, currentValue) => {
+          const exists = accumulator.some(
+            (obj) => obj.city === currentValue.city && obj.postcode?.endsWith(currentValue.postcode)
+          )
+          if (!exists) {
+            accumulator.push(currentValue)
+          }
+          return accumulator
+        }, [])
+
       this.fetchSuggestions = formatOptions
     },
     handleInput(payload) {
