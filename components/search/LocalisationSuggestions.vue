@@ -41,12 +41,7 @@
       :aria-labelledby="`label-search-${uuid}`"
       @focus="isGeolocFilterActive = true"
       @update:modelValue="handleInput"
-      @clear="
-        () => {
-          handleSelectedAdress(null)
-          isGeolocFilterActive = true
-        }
-      "
+      @clear="fetchSuggestions = []"
       @keydown.native.esc="handleCloseSuggestions"
     />
 
@@ -136,10 +131,12 @@ export default defineNuxtComponent({
   async setup() {
     const localisationHistoryCookie = useCookie('localisation-history')
     const { getMultidistributedCity } = await multidistributedCitiesHelper()
+    const { formatAlgoliaGeoSuggestions } = await formatGeoSuggestionsHelper()
 
     return {
       localisationHistoryCookie,
       getMultidistributedCity,
+      formatAlgoliaGeoSuggestions,
     }
   },
   data() {
@@ -212,43 +209,7 @@ export default defineNuxtComponent({
         },
       })
 
-      const formatOptions = suggestions.features
-        .flatMap((option) => {
-          const multidistributedCity = this.getMultidistributedCity(
-            option.properties.postcode,
-            option.properties.city
-          )
-          if (multidistributedCity) {
-            return [
-              ...multidistributedCity.map((c) => {
-                return {
-                  id: c.key,
-                  city: c.labelArrondissement ?? c.label,
-                  postcode: c.zip,
-                  typeLabel: c.zip,
-                  aroundLatLng: `${c.latitude},${c.longitude}`,
-                }
-              }),
-            ]
-          }
-
-          return {
-            ...option.properties,
-            aroundLatLng: `${option.geometry.coordinates[1]},${option.geometry.coordinates[0]}`,
-            typeLabel: this.$filters.label(option.properties.type, 'geoType'),
-          }
-        })
-        .reduce((accumulator, currentValue) => {
-          const exists = accumulator.some(
-            (obj) => obj.city === currentValue.city && obj.postcode?.endsWith(currentValue.postcode)
-          )
-          if (!exists) {
-            accumulator.push(currentValue)
-          }
-          return accumulator
-        }, [])
-
-      this.fetchSuggestions = formatOptions
+      this.fetchSuggestions = this.formatAlgoliaGeoSuggestions(suggestions)
     },
     handleInput(payload) {
       this.searchValue = payload

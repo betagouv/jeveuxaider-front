@@ -341,6 +341,12 @@ export default defineNuxtComponent({
       },
     },
   },
+  async setup() {
+    const { formatInputGeoSuggestions } = await formatGeoSuggestionsHelper()
+    return {
+      formatInputGeoSuggestions,
+    }
+  },
   data() {
     return {
       loading: false,

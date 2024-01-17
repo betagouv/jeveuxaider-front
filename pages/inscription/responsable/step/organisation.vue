@@ -321,11 +321,14 @@ export default defineNuxtComponent({
 
     const organisation = await apiFetch(`/structures/${$stores.auth.currentRole.contextable_id}`)
 
+    const { formatInputGeoSuggestions } = await formatGeoSuggestionsHelper()
+
     return {
       form: toRef({
         ...organisation,
         responsable_fonction: organisation.members[0].pivot.fonction,
       }),
+      formatInputGeoSuggestions,
     }
   },
   data() {

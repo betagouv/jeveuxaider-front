@@ -144,7 +144,7 @@ export default defineNuxtComponent({
       return await navigateTo('/dashboard')
     }
 
-    const { getMultidistributedCity } = await multidistributedCitiesHelper()
+    const { formatInputGeoSuggestions } = await formatGeoSuggestionsHelper()
 
     return {
       form: toRef({
@@ -158,7 +158,7 @@ export default defineNuxtComponent({
           ? organisation.department
           : organisation.territoire.department,
       }),
-      getMultidistributedCity,
+      formatInputGeoSuggestions,
     }
   },
   data() {

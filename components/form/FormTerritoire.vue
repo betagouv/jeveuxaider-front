@@ -237,9 +237,9 @@ export default defineNuxtComponent({
     },
   },
   async setup() {
-    const { getMultidistributedCity } = await multidistributedCitiesHelper()
+    const { formatInputGeoSuggestions } = await formatGeoSuggestionsHelper()
     return {
-      getMultidistributedCity,
+      formatInputGeoSuggestions,
     }
   },
   data() {

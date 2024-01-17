@@ -357,7 +357,6 @@
                 :reset-value-on-select="true"
                 :min-value-length="3"
                 @selected="handleSelectedAutonomyZip"
-                @keyup.enter="onEnter"
                 @fetch-suggestions="onFetchGeoSuggestions"
               />
               <div v-if="form.autonomy_zips && form.autonomy_zips.length">
@@ -637,9 +636,9 @@ export default defineNuxtComponent({
     },
   },
   async setup() {
-    const { getMultidistributedCity } = await multidistributedCitiesHelper()
+    const { formatInputGeoSuggestions } = await formatGeoSuggestionsHelper()
     return {
-      getMultidistributedCity,
+      formatInputGeoSuggestions,
     }
   },
   data() {
@@ -1109,9 +1108,6 @@ export default defineNuxtComponent({
       if (payload && this.form.activity_secondary_id === payload) {
         this.$refs.comboboxSecondaryActivity?.$refs?.combobox?.reset()
       }
-    },
-    onEnter(payload) {
-      //   console.log('onEnter', payload)
     },
   },
 })

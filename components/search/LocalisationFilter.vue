@@ -52,6 +52,7 @@
             placeholder="Renseignez une ville ou un code postal"
             :aria-labelledby="`label-search-${uuid}`"
             @update:modelValue="handleInput"
+            @clear="fetchSuggestions = []"
           />
         </div>
 
@@ -70,7 +71,7 @@
                 <div class="flex items-center">
                   <RiMapPin2Fill
                     :class="[
-                      'flex-none mr-2 transition group-hover:text-jva-blue-500 group-hover:scale-110',
+                      'flex-none mr-2 transition group-hover:text-jva-blue-500 group-hover:scale-110 fill-current',
                       !$route.query.aroundLatLng ? 'text-jva-blue-500' : 'text-gray-400',
                     ]"
                     width="16"
@@ -94,7 +95,7 @@
                 <div class="flex items-center">
                   <RiMapPin2Fill
                     :class="[
-                      'flex-none mr-2 transition group-hover:text-jva-blue-500 group-hover:scale-110',
+                      'flex-none mr-2 transition group-hover:text-jva-blue-500 group-hover:scale-110 fill-current',
                       $route.query?.aroundLatLng === suggestion.aroundLatLng
                         ? 'text-jva-blue-500'
                         : 'text-gray-400',
@@ -123,7 +124,7 @@
               :disabled="!$route.query.city"
               @click="handleSelectedAdress(null)"
             >
-              Effacer
+              Réinitialiser
             </button>
           </div>
         </div>
@@ -150,16 +151,18 @@ export default defineNuxtComponent({
   async setup() {
     const localisationHistoryCookie = useCookie('localisation-history')
     const { getMultidistributedCity } = await multidistributedCitiesHelper()
+    const { formatAlgoliaGeoSuggestions } = await formatGeoSuggestionsHelper()
 
     return {
       localisationHistoryCookie,
       getMultidistributedCity,
+      formatAlgoliaGeoSuggestions,
     }
   },
   data() {
     return {
       isOpen: false,
-      searchValue: this.$route.query.city,
+      searchValue: '',
       fetchSuggestions: [],
       initialSuggestions: [
         {
@@ -212,9 +215,6 @@ export default defineNuxtComponent({
     },
   },
   watch: {
-    '$route.query.city'(newVal) {
-      this.searchValue = newVal
-    },
     async isOpen(isOpen) {
       if (isOpen) {
         await this.$nextTick()
@@ -223,9 +223,6 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    reset() {
-      this.searchValue = null
-    },
     onClickOutside() {
       this.isOpen = false
     },
@@ -238,43 +235,7 @@ export default defineNuxtComponent({
         },
       })
 
-      const formatOptions = suggestions.features
-        .flatMap((option) => {
-          const multidistributedCity = this.getMultidistributedCity(
-            option.properties.postcode,
-            option.properties.city
-          )
-          if (multidistributedCity) {
-            return [
-              ...multidistributedCity.map((c) => {
-                return {
-                  id: c.key,
-                  city: c.labelArrondissement ?? c.label,
-                  postcode: c.zip,
-                  typeLabel: c.zip,
-                  aroundLatLng: `${c.latitude},${c.longitude}`,
-                }
-              }),
-            ]
-          }
-
-          return {
-            ...option.properties,
-            aroundLatLng: `${option.geometry.coordinates[1]},${option.geometry.coordinates[0]}`,
-            typeLabel: this.$filters.label(option.properties.type, 'geoType'),
-          }
-        })
-        .reduce((accumulator, currentValue) => {
-          const exists = accumulator.some(
-            (obj) => obj.city === currentValue.city && obj.postcode?.endsWith(currentValue.postcode)
-          )
-          if (!exists) {
-            accumulator.push(currentValue)
-          }
-          return accumulator
-        }, [])
-
-      this.fetchSuggestions = formatOptions
+      this.fetchSuggestions = this.formatAlgoliaGeoSuggestions(suggestions)
     },
     handleInput(payload) {
       this.searchValue = payload
@@ -311,6 +272,7 @@ export default defineNuxtComponent({
       })
       this.isOpen = false
       this.fetchSuggestions = []
+      this.searchValue = ''
 
       if (suggestion) {
         this.setHistory(suggestion)
