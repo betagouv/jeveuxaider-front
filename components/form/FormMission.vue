@@ -340,7 +340,7 @@
 
           <template v-if="isPresentiel && isAutonomy">
             <BaseFormControl
-              label="Codes postaux de la zone d'intervention (jusqu'à 20)"
+              label="Codes postaux de la zone d'intervention (jusqu'à 25)"
               html-for="autonomy_zips"
               :error="errors.autonomy_zips"
             >
@@ -357,8 +357,7 @@
                 :reset-value-on-select="true"
                 :min-value-length="3"
                 @selected="handleSelectedAutonomyZip"
-                @keyup.enter="onEnter"
-                @fetch-suggestions="onFetchGeoSuggestions"
+                @fetch-suggestions="onFetchGeoSuggestions($event, 'municipality')"
               />
               <div v-if="form.autonomy_zips && form.autonomy_zips.length">
                 <div class="flex flex-wrap gap-2 mt-4">
@@ -412,7 +411,7 @@
               attribute-right-label="typeLabel"
               :min-value-length="3"
               @selected="handleSelectedGeo"
-              @fetch-suggestions="onFetchGeoSuggestions"
+              @fetch-suggestions="onFetchGeoSuggestions($event)"
             />
           </BaseFormControl>
 
@@ -850,7 +849,7 @@ export default defineNuxtComponent({
             // eslint-disable-next-line camelcase
             is: (type, is_autonomy) => type == 'Mission en présentiel' && is_autonomy,
             then: (schema) =>
-              schema.min(1, 'Au moins un code postal requis').max(20, '20 codes postaux maximum'),
+              schema.min(1, 'Au moins un code postal requis').max(25, '25 codes postaux maximum'),
           })
           .when(['type', 'is_autonomy', 'department'], {
             // eslint-disable-next-line camelcase
@@ -948,9 +947,6 @@ export default defineNuxtComponent({
       }
 
       return true
-    },
-    inputGeoType() {
-      return this.isAutonomy ? 'municipality' : undefined
     },
   },
   watch: {
@@ -1058,17 +1054,32 @@ export default defineNuxtComponent({
       if (!this.form.autonomy_zips) {
         this.form.autonomy_zips = []
       }
-      if (
-        selectedItem &&
-        !this.form.autonomy_zips.find((item) => item.zip == selectedItem.postcode)
-      ) {
-        this.form.autonomy_zips.push({
-          zip: selectedItem.postcode,
-          latitude: selectedItem.coordinates[1],
-          longitude: selectedItem.coordinates[0],
-          city: selectedItem.city,
-        })
+      if (!selectedItem) {
+        return
       }
+
+      const zipsObject = selectedItem.id.includes('all_zips')
+        ? selectedItem.postcodes.map((p) => {
+            return { ...p, coordinates: [p.longitude, p.latitude], postcode: p.zip, city: p.label }
+          })
+        : [selectedItem]
+
+      zipsObject.forEach((zipObject) => {
+        zipObject.postcode.split(',').forEach((postcode) => {
+          if (!this.form.autonomy_zips.map((a) => a.zip).includes(postcode)) {
+            const newObject = {
+              zip: postcode,
+              latitude: zipObject.coordinates?.[1],
+              longitude: zipObject.coordinates?.[0],
+              city: zipObject.city,
+            }
+            if (zipObject.arrondissement) {
+              newObject.arrondissement = zipObject.arrondissement
+            }
+            this.form.autonomy_zips.push(newObject)
+          }
+        })
+      })
     },
     onRemovedTagItem(value) {
       this.form.autonomy_zips = this.form.autonomy_zips.filter((item) => item.zip !== value.zip)
@@ -1089,8 +1100,11 @@ export default defineNuxtComponent({
         this.$refs.comboboxSecondaryActivity?.$refs?.combobox?.reset()
       }
     },
-    onEnter(payload) {
-      //   console.log('onEnter', payload)
+    async onFetchGeoSuggestions(payload, inputGeoType) {
+      this.autocompleteOptions = await useGeolocationFetch(payload, {
+        context: 'input',
+        inputGeoType,
+      })
     },
   },
 })

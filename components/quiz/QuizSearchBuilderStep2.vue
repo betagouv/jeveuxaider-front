@@ -96,7 +96,6 @@ export default defineNuxtComponent({
       navigator.geolocation.getCurrentPosition(this.onSuccessGeolocation, this.onErrorGeolocation)
     },
     onSuccessGeolocation(data) {
-      console.log('onSuccessGeolocation', data)
       this.geolocationLoading = false
       this.$stores.algoliaSearch.navigatorGeolocation = data
       this.onNextStep({ geolocalisation: true })
@@ -117,7 +116,7 @@ export default defineNuxtComponent({
     handleSelectedGeo(item) {
       if (item) {
         this.onNextStep({
-          city: item.city,
+          city: item.label,
           aroundLatLng: `${item.coordinates[1]},${item.coordinates[0]}`,
           geolocalisation: null,
         })
@@ -126,7 +125,6 @@ export default defineNuxtComponent({
       }
     },
     resetCityAndCoordinates() {
-      console.log('resetCityAndCoordinates')
       this.$router.push({
         query: {
           ...this.$route.query,
@@ -146,6 +144,13 @@ export default defineNuxtComponent({
       })
 
       this.$router.push({ query: { ...this.$route.query, step: 3, ...value } })
+    },
+    async onFetchGeoSuggestions(payload) {
+      this.autocompleteOptions = await useGeolocationFetch(payload, {
+        context: 'input',
+        inputGeoType: 'municipality',
+        hideAllZipsOption: true,
+      })
     },
   },
 })

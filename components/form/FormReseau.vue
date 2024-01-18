@@ -420,6 +420,11 @@ export default defineNuxtComponent({
       }
       this.form[field].splice(payload.index, 1, payload.media)
     },
+    async onFetchGeoSuggestions(payload) {
+      this.autocompleteOptions = await useGeolocationFetch(payload, {
+        context: 'input',
+      })
+    },
   },
 })
 </script>

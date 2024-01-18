@@ -192,19 +192,15 @@ export default defineNuxtComponent({
       default: false,
     },
   },
+  async setup() {
+    const { formatAutonomyCities } = await autonomyCitiesHelper()
+    return {
+      formatAutonomyCities,
+    }
+  },
   computed: {
     autonomyCities() {
-      if (this.mission.is_autonomy && this.mission.autonomy_zips.length) {
-        return this.mission.autonomy_zips
-          .map((item) => {
-            return item.city.includes(' Arrondissement')
-              ? `${item.city.replace(' Arrondissement', '')}`
-              : `${item.city} (${item.zip})`
-          })
-          .sort((a, b) => a.localeCompare(b, 'fr', { numeric: true }))
-          .join(', ')
-      }
-      return null
+      return this.formatAutonomyCities(this.mission.autonomy_zips)
     },
     placesLeftText() {
       if (!this.mission.is_registration_open) {

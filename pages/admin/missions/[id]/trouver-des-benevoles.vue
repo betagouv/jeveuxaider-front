@@ -198,8 +198,11 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
 
+    const { formatAutonomyCities } = await autonomyCitiesHelper()
+
     return {
       mission,
+      formatAutonomyCities,
     }
   },
   data() {
@@ -218,10 +221,7 @@ export default defineNuxtComponent({
       return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
     },
     autonomyCities() {
-      if (this.mission.is_autonomy && this.mission.autonomy_zips?.length) {
-        return this.mission.autonomy_zips.map((item) => `${item.city} (${item.zip})`).join(', ')
-      }
-      return null
+      return this.formatAutonomyCities(this.mission.autonomy_zips)
     },
   },
   created() {
