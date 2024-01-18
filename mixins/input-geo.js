@@ -5,33 +5,6 @@ export default {
     }
   },
   methods: {
-    async onFetchGeoSuggestions(value) {
-      if (!value || value.trim().length < 3) {
-        return
-      }
-
-      // First character must be a letter or a number to avoid error 400
-      var re = new RegExp(/^[a-z0-9]$/i)
-      if (!re.test(value[0])) {
-        this.autocompleteOptions = []
-        return
-      }
-
-      const response = await $fetch('https://api-adresse.data.gouv.fr/search', {
-        params: {
-          q: value.substring(0, 85),
-          limit: 25,
-          type: this.inputGeoType || undefined,
-        },
-      })
-
-      const formatOptions = this.formatInputGeoSuggestions(response, {
-        hideAllZipsOption: this.hideAllZipsOption,
-        inputGeoType: this.inputGeoType,
-      })
-
-      this.autocompleteOptions = formatOptions
-    },
     clearAddress() {
       this.form.address = null
       this.form.zip = null

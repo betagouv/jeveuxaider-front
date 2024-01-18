@@ -160,7 +160,6 @@ export const formatGeoSuggestionsHelper = async () => {
     return formattedSuggestions
   }
 
-  // @todo: localisationHistoryCookie et computed suggestions
   return {
     formatAlgoliaGeoSuggestions,
     formatFilterGeoSuggestions,

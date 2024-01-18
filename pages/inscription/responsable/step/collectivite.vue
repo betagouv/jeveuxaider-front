@@ -144,8 +144,6 @@ export default defineNuxtComponent({
       return await navigateTo('/dashboard')
     }
 
-    const { formatInputGeoSuggestions } = await formatGeoSuggestionsHelper()
-
     return {
       form: toRef({
         ...organisation.territoire,
@@ -158,7 +156,6 @@ export default defineNuxtComponent({
           ? organisation.department
           : organisation.territoire.department,
       }),
-      formatInputGeoSuggestions,
     }
   },
   data() {
@@ -169,7 +166,6 @@ export default defineNuxtComponent({
         department: string().nullable().required('Un département est requis'),
         zips: array().min(1, 'Merci de renseigner au moins 1 code postal'),
       }),
-      inputGeoType: 'municipality',
     }
   },
   computed: {
@@ -240,6 +236,12 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
+    },
+    async onFetchGeoSuggestions(payload) {
+      this.autocompleteOptions = await useGeolocationFetch(payload, {
+        context: 'input',
+        inputGeoType: 'municipality',
+      })
     },
   },
 })

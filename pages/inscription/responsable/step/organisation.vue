@@ -321,14 +321,11 @@ export default defineNuxtComponent({
 
     const organisation = await apiFetch(`/structures/${$stores.auth.currentRole.contextable_id}`)
 
-    const { formatInputGeoSuggestions } = await formatGeoSuggestionsHelper()
-
     return {
       form: toRef({
         ...organisation,
         responsable_fonction: organisation.members[0].pivot.fonction,
       }),
-      formatInputGeoSuggestions,
     }
   },
   data() {
@@ -450,6 +447,11 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
+    },
+    async onFetchGeoSuggestions(payload) {
+      this.autocompleteOptions = await useGeolocationFetch(payload, {
+        context: 'input',
+      })
     },
   },
 })

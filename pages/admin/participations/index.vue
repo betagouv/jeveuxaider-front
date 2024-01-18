@@ -340,14 +340,9 @@ export default defineNuxtComponent({
       $stores.structureTags.fetchOptions()
     }
 
-    const { getMultidistributedCity } = await multidistributedCitiesHelper()
-    const { formatFilterGeoSuggestions } = await formatGeoSuggestionsHelper()
-
     return {
       activities: activities.data,
       responsables: responsables,
-      getMultidistributedCity,
-      formatFilterGeoSuggestions,
     }
   },
   data() {
@@ -489,29 +484,11 @@ export default defineNuxtComponent({
       this.loadingFetchMissions = false
     },
     async onFetchSuggestionsZips(value) {
-      const trimmedValue = value?.trim()
-      if (!trimmedValue || trimmedValue.length < 3) {
-        this.autocompleteOptionsZips = []
-        return
-      }
-
-      // First character must be a letter or a number to avoid error 400
-      var re = new RegExp(/^[a-z0-9]$/i)
-      if (!re.test(trimmedValue[0])) {
-        this.autocompleteOptionsZips = []
-        return
-      }
-
       this.loadingFetchZips = true
-      const suggestions = await $fetch('https://api-adresse.data.gouv.fr/search', {
-        params: {
-          q: trimmedValue.substring(0, 85),
-          limit: 25,
-          type: 'municipality',
-        },
+      this.autocompleteOptionsZips = await useGeolocationFetch(value, {
+        context: 'filter',
+        inputGeoType: 'municipality',
       })
-
-      this.autocompleteOptionsZips = this.formatFilterGeoSuggestions(suggestions)
       this.loadingFetchZips = false
     },
     onBulkOperationProcessed() {

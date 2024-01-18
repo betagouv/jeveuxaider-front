@@ -545,12 +545,6 @@ export default defineNuxtComponent({
       required: true,
     },
   },
-  async setup() {
-    const { formatInputGeoSuggestions } = await formatGeoSuggestionsHelper()
-    return {
-      formatInputGeoSuggestions,
-    }
-  },
   data() {
     return {
       loading: false,
@@ -670,6 +664,9 @@ export default defineNuxtComponent({
     },
     onMediaPickerChange(payload, field) {
       this.form[field].splice(payload.index, 1, payload.media)
+    },
+    async onFetchGeoSuggestions(payload) {
+      this.autocompleteOptions = await useGeolocationFetch(payload)
     },
   },
 })

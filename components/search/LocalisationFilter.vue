@@ -124,7 +124,7 @@
               :disabled="!$route.query.city"
               @click="handleSelectedAdress(null)"
             >
-              Réinitialiser
+              Effacer
             </button>
           </div>
         </div>
@@ -150,13 +150,8 @@ export default defineNuxtComponent({
   },
   async setup() {
     const localisationHistoryCookie = useCookie('localisation-history')
-    const { getMultidistributedCity } = await multidistributedCitiesHelper()
-    const { formatAlgoliaGeoSuggestions } = await formatGeoSuggestionsHelper()
-
     return {
       localisationHistoryCookie,
-      getMultidistributedCity,
-      formatAlgoliaGeoSuggestions,
     }
   },
   data() {
@@ -226,37 +221,16 @@ export default defineNuxtComponent({
     onClickOutside() {
       this.isOpen = false
     },
-    async fetchGeoSuggestions() {
-      const suggestions = await $fetch('https://api-adresse.data.gouv.fr/search', {
-        params: {
-          q: this.searchValue.substring(0, 85),
-          limit: 25,
-          type: 'municipality',
-        },
-      })
-
-      this.fetchSuggestions = this.formatAlgoliaGeoSuggestions(suggestions)
-    },
     handleInput(payload) {
       this.searchValue = payload
       if (this.timeout) {
         this.timeout.cancel()
       }
-      this.timeout = _debounce(() => {
-        if (this.searchValue?.trim().length < 3) {
-          if (!this.searchValue) {
-            this.fetchSuggestions = []
-          }
-          return
-        }
-        // First character must be a letter or a number to avoid error 400
-        var re = new RegExp(/^[a-z0-9]$/i)
-        if (!re.test(this.searchValue[0])) {
-          this.fetchSuggestions = []
-          return
-        }
-
-        this.fetchGeoSuggestions()
+      this.timeout = _debounce(async () => {
+        this.fetchSuggestions = await useGeolocationFetch(payload, {
+          context: 'algolia',
+          inputGeoType: 'municipality',
+        })
       }, 275)
       this.timeout()
     },

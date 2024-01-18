@@ -236,12 +236,6 @@ export default defineNuxtComponent({
       },
     },
   },
-  async setup() {
-    const { formatInputGeoSuggestions } = await formatGeoSuggestionsHelper()
-    return {
-      formatInputGeoSuggestions,
-    }
-  },
   data() {
     return {
       loading: false,
@@ -257,7 +251,6 @@ export default defineNuxtComponent({
           otherwise: (schema) => schema.nullable(),
         }),
       }),
-      inputGeoType: 'municipality',
     }
   },
   methods: {
@@ -312,6 +305,12 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
+    },
+    async onFetchGeoSuggestions(payload) {
+      this.autocompleteOptions = await useGeolocationFetch(payload, {
+        context: 'input',
+        inputGeoType: 'municipality',
+      })
     },
   },
 })
