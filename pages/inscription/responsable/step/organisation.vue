@@ -448,6 +448,11 @@ export default defineNuxtComponent({
           this.loading = false
         })
     },
+    async onFetchGeoSuggestions(payload) {
+      this.autocompleteOptions = await useGeolocationFetch(payload, {
+        context: 'input',
+      })
+    },
   },
 })
 </script>

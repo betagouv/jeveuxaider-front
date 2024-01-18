@@ -178,7 +178,7 @@
             :loading="loadingFetchZips"
             attribute-key="zip"
             hide-attribute-key
-            attribute-right-label="zip"
+            attribute-right-label="labelRight"
             @fetch-suggestions="onFetchSuggestionsZips"
             @selected="changeFilter('filter[mission.zip]', $event?.zip)"
           />
@@ -484,36 +484,11 @@ export default defineNuxtComponent({
       this.loadingFetchMissions = false
     },
     async onFetchSuggestionsZips(value) {
-      const trimmedValue = value?.trim()
-      if (!trimmedValue || trimmedValue.length < 3) {
-        this.autocompleteOptionsZips = []
-        return
-      }
-
-      // First character must be a letter or a number to avoid error 400
-      var re = new RegExp(/^[a-z0-9]$/i)
-      if (!re.test(trimmedValue[0])) {
-        this.autocompleteOptionsZips = []
-        return
-      }
-
       this.loadingFetchZips = true
-      const suggestions = await $fetch('https://api-adresse.data.gouv.fr/search', {
-        params: {
-          q: trimmedValue,
-          limit: 5,
-          type: 'municipality',
-        },
+      this.autocompleteOptionsZips = await useGeolocationFetch(value, {
+        context: 'filter',
+        inputGeoType: 'municipality',
       })
-
-      const formatOptions = suggestions.features.map((option) => {
-        return {
-          id: option.properties.id,
-          name: option.properties.city,
-          zip: option.properties.postcode,
-        }
-      })
-      this.autocompleteOptionsZips = formatOptions
       this.loadingFetchZips = false
     },
     onBulkOperationProcessed() {

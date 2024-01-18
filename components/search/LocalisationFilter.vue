@@ -52,64 +52,67 @@
             placeholder="Renseignez une ville ou un code postal"
             :aria-labelledby="`label-search-${uuid}`"
             @update:modelValue="handleInput"
+            @clear="fetchSuggestions = []"
           />
         </div>
 
         <div class="text-sm">
-          <div class="flex flex-col py-2">
-            <!-- Seulement si geolocalisation par navigateur acceptée -->
-            <button
-              v-if="$stores.algoliaSearch.navigatorGeolocation"
-              :class="[
-                'px-4 py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD]',
-                { 'text-jva-blue-500': !$route.query.aroundLatLng },
-              ]"
-              @click="handleSelectedAdress(null)"
-            >
-              <div class="flex items-center">
-                <RiMapPin2Fill
-                  :class="[
-                    'flex-none mr-2 transition group-hover:text-jva-blue-500 group-hover:scale-110',
-                    !$route.query.aroundLatLng ? 'text-jva-blue-500' : 'text-gray-400',
-                  ]"
-                  width="16"
-                  height="16"
-                />
-                <div>Autour de moi</div>
-              </div>
-            </button>
-
-            <button
-              v-for="suggestion in suggestions"
-              :key="suggestion.id"
-              :class="[
-                'px-4 py-2 cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD]',
-                {
-                  'text-jva-blue-500': $route.query?.aroundLatLng === suggestion.aroundLatLng,
-                },
-              ]"
-              @click="handleSelectedAdress(suggestion)"
-            >
-              <div class="flex items-center">
-                <RiMapPin2Fill
-                  :class="[
-                    'flex-none mr-2 transition group-hover:text-jva-blue-500 group-hover:scale-110',
-                    $route.query?.aroundLatLng === suggestion.aroundLatLng
-                      ? 'text-jva-blue-500'
-                      : 'text-gray-400',
-                  ]"
-                  width="16"
-                  height="16"
-                />
-                <div class="truncate">
-                  {{ suggestion.city }}
+          <div class="max-h-[268px] overflow-y-auto overscroll-contain custom-scrollbar-gray mr-2">
+            <div class="flex flex-col py-2">
+              <!-- Seulement si geolocalisation par navigateur acceptée -->
+              <button
+                v-if="$stores.algoliaSearch.navigatorGeolocation"
+                :class="[
+                  'px-4 py-[6px] cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD]',
+                  { 'text-jva-blue-500': !$route.query.aroundLatLng },
+                ]"
+                @click="handleSelectedAdress(null)"
+              >
+                <div class="flex items-center">
+                  <RiMapPin2Fill
+                    :class="[
+                      'flex-none mr-2 transition group-hover:text-jva-blue-500 group-hover:scale-110 fill-current',
+                      !$route.query.aroundLatLng ? 'text-jva-blue-500' : 'text-gray-400',
+                    ]"
+                    width="16"
+                    height="16"
+                  />
+                  <div>Autour de moi</div>
                 </div>
-              </div>
+              </button>
 
-              <div class="text-gray-600 ml-1 font-light">
-                {{ suggestion.postcode }}
-              </div>
-            </button>
+              <button
+                v-for="suggestion in suggestions"
+                :key="suggestion.id"
+                :class="[
+                  'px-4 py-[6px] cursor-pointer flex justify-between truncate flex-1 group !outline-none focus-visible:bg-[#E3E3FD]',
+                  {
+                    'text-jva-blue-500': $route.query?.aroundLatLng === suggestion.aroundLatLng,
+                  },
+                ]"
+                @click="handleSelectedAdress(suggestion)"
+              >
+                <div class="flex items-center">
+                  <RiMapPin2Fill
+                    :class="[
+                      'flex-none mr-2 transition group-hover:text-jva-blue-500 group-hover:scale-110 fill-current',
+                      $route.query?.aroundLatLng === suggestion.aroundLatLng
+                        ? 'text-jva-blue-500'
+                        : 'text-gray-400',
+                    ]"
+                    width="16"
+                    height="16"
+                  />
+                  <div class="truncate">
+                    {{ suggestion.city }}
+                  </div>
+                </div>
+
+                <div class="text-gray-600 ml-1 font-light">
+                  {{ suggestion.postcode }}
+                </div>
+              </button>
+            </div>
           </div>
 
           <div class="border-t px-6 py-3 flex justify-end">
@@ -154,7 +157,7 @@ export default defineNuxtComponent({
   data() {
     return {
       isOpen: false,
-      searchValue: this.$route.query.city,
+      searchValue: '',
       fetchSuggestions: [],
       initialSuggestions: [
         {
@@ -207,9 +210,6 @@ export default defineNuxtComponent({
     },
   },
   watch: {
-    '$route.query.city'(newVal) {
-      this.searchValue = newVal
-    },
     async isOpen(isOpen) {
       if (isOpen) {
         await this.$nextTick()
@@ -218,50 +218,19 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    reset() {
-      this.searchValue = null
-    },
     onClickOutside() {
       this.isOpen = false
-    },
-    async fetchGeoSuggestions() {
-      const suggestions = await $fetch('https://api-adresse.data.gouv.fr/search', {
-        params: {
-          q: this.searchValue,
-          limit: 5,
-          type: 'municipality',
-        },
-      })
-
-      const formatOptions = suggestions.features.map((option) => {
-        return {
-          ...option.properties,
-          aroundLatLng: `${option.geometry.coordinates[1]},${option.geometry.coordinates[0]}`,
-          typeLabel: this.$filters.label(option.properties.type, 'geoType'),
-        }
-      })
-      this.fetchSuggestions = formatOptions
     },
     handleInput(payload) {
       this.searchValue = payload
       if (this.timeout) {
         this.timeout.cancel()
       }
-      this.timeout = _debounce(() => {
-        if (this.searchValue?.trim().length < 3) {
-          if (!this.searchValue) {
-            this.fetchSuggestions = []
-          }
-          return
-        }
-        // First character must be a letter or a number to avoid error 400
-        var re = new RegExp(/^[a-z0-9]$/i)
-        if (!re.test(this.searchValue[0])) {
-          this.fetchSuggestions = []
-          return
-        }
-
-        this.fetchGeoSuggestions()
+      this.timeout = _debounce(async () => {
+        this.fetchSuggestions = await useGeolocationFetch(payload, {
+          context: 'algolia',
+          inputGeoType: 'municipality',
+        })
       }, 275)
       this.timeout()
     },
@@ -277,6 +246,7 @@ export default defineNuxtComponent({
       })
       this.isOpen = false
       this.fetchSuggestions = []
+      this.searchValue = ''
 
       if (suggestion) {
         this.setHistory(suggestion)
@@ -303,3 +273,9 @@ export default defineNuxtComponent({
   },
 })
 </script>
+
+<style lang="postcss" scoped>
+.custom-scrollbar-gray::-webkit-scrollbar-track {
+  @apply my-2;
+}
+</style>
