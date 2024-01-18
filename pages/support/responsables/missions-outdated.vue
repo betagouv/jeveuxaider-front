@@ -19,7 +19,7 @@
       secondary-title-bottom="Missions validées dont la date de fin est passée"
     />
 
-    <SearchFilters>
+    <SearchFilters @reset-filters="deleteAllFilters">
       <DsfrInput
         type="search"
         size="lg"
@@ -29,7 +29,7 @@
         @update:modelValue="changeFilter('search', $event)"
       />
       <template #prefilters>
-        <Tag
+        <!-- <Tag
           :key="`toutes-${$route.fullPath}`"
           as="button"
           size="md"
@@ -38,7 +38,7 @@
           @click.native="deleteAllFilters"
         >
           Tous
-        </Tag>
+        </Tag> -->
         <BaseFilterInputAutocomplete
           v-model="selectedOrganisation"
           label="Toutes les organisations"

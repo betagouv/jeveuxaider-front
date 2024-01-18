@@ -18,19 +18,18 @@
           Guides, webinaires, etc.
         </BaseHeading>
 
-        <SearchFilters class="my-8">
-          <BaseInput
-            name="search"
+        <SearchFilters class="my-8" @reset-filters="deleteAllFilters">
+          <DsfrInput
+            type="search"
+            size="lg"
             placeholder="Recherche par mots clés..."
             icon="RiSearchLine"
-            variant="transparent"
             :modelValue="$route.query['filter[search]']"
-            clearable
             @update:modelValue="changeFilter('filter[search]', $event)"
           />
 
           <template #prefilters>
-            <DsfrTag
+            <!-- <DsfrTag
               :key="`toutes-${$route.fullPath}`"
               as="button"
               size="md"
@@ -39,7 +38,7 @@
               @click.native="deleteAllFilters"
             >
               Toutes
-            </DsfrTag>
+            </DsfrTag> -->
             <DsfrTag
               :key="`type-file-${$route.fullPath}`"
               as="button"
@@ -106,11 +105,7 @@
                 </div>
               </div>
             </div>
-            <div v-else>
-              <div class="h-[300px] flex flex-col items-center justify-center">
-                <div class="text-lg text-gray-400 font-semibold">Aucune ressource disponible</div>
-              </div>
-            </div>
+            <CustomEmptyState v-else />
           </template>
         </div>
 

@@ -77,6 +77,9 @@ export default defineNuxtComponent({
   },
   computed: {
     profileActivitiesIds() {
+      if (!this.$stores.auth.profile.activities) {
+        return []
+      }
       return this.$stores.auth.profile.activities.map((activity) => {
         return activity.id
       })
@@ -103,42 +106,6 @@ export default defineNuxtComponent({
     otherActivities() {
       return activities.filter((activity) => !this.profileActivitiesIds.includes(activity.id))
     },
-    // profileDomainsByActivities() {
-    //   if (
-    //     !this.$stores.auth.profile.activities ||
-    //     this.$stores.auth.profile.activities.length === 0
-    //   ) {
-    //     return []
-    //   }
-    //   const profileActivitiesIds = this.$stores.auth.profile.activities.map((activity) => {
-    //     return activity.id
-    //   })
-
-    //   const activitiesFiltered = activities.filter((activity) =>
-    //     profileActivitiesIds.includes(activity.key)
-    //   )
-
-    //   const domains = []
-    //   activitiesFiltered.map((activity) => domains.push(activity.domain))
-    //   return domains.flat()
-    // },
-    // otherActivitiesFromDomains() {
-    //   if (this.profileDomainsByActivities.length === 0) {
-    //     return this.activities.filter((activity) => activity.popular)
-    //   }
-    //   const profileActivitiesIds = this.$stores.auth.profile.activities.map((activity) => {
-    //     return activity.id
-    //   })
-    //   return activities
-    //     .filter((activity) => activity.name !== 'Collecte de fonds') // Too much domains
-    //     .filter((activity) =>
-    //       activity.domain.some(
-    //         (i) =>
-    //           this.profileDomainsByActivities.includes(i) &&
-    //           !profileActivitiesIds.includes(activity.key)
-    //       )
-    //     )
-    // },
   },
   methods: {
     async attachActivityToProfile(activity) {

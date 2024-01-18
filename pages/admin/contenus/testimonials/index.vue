@@ -20,7 +20,7 @@
       )}`"
       :loading="queryLoading"
     />
-    <SearchFilters class="mb-4">
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
       <DsfrInput
         type="search"
         size="lg"
@@ -30,7 +30,7 @@
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Tag
+        <!-- <Tag
           :key="`tous-${$route.fullPath}`"
           as="button"
           size="md"
@@ -39,7 +39,7 @@
           @click.native="deleteAllFilters"
         >
           Tous
-        </Tag>
+        </Tag> -->
 
         <Tag
           :key="`published-${$route.fullPath}`"
@@ -100,6 +100,8 @@
         @click.native="drawerTemoignageId = temoignage.id"
       />
     </div>
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <Pagination
       class="mt-6"

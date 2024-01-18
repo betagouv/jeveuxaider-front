@@ -37,7 +37,7 @@
         </div>
       </template>
     </BaseSectionHeading>
-    <SearchFilters class="mb-4">
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
       <DsfrInput
         type="search"
         size="lg"
@@ -48,7 +48,7 @@
       />
 
       <template #prefilters>
-        <DsfrTag
+        <!-- <DsfrTag
           :key="`toutes-${$route.fullPath}`"
           as="button"
           size="md"
@@ -57,7 +57,7 @@
           @click.native="deleteAllFilters"
         >
           Toutes
-        </DsfrTag>
+        </DsfrTag> -->
 
         <DsfrTag
           :key="`terms-with-related-${$route.fullPath}`"
@@ -139,6 +139,8 @@
         </BaseTableRow>
       </BaseTableBody>
     </BaseTable>
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <DsfrPagination
       class="mt-6"
