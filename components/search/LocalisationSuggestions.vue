@@ -128,7 +128,7 @@ export default defineNuxtComponent({
   components: {
     FacetSearch,
   },
-  async setup() {
+  setup() {
     const localisationHistoryCookie = useCookie('localisation-history')
     return {
       localisationHistoryCookie,

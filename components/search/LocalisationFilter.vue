@@ -148,7 +148,7 @@ export default defineNuxtComponent({
       required: true,
     },
   },
-  async setup() {
+  setup() {
     const localisationHistoryCookie = useCookie('localisation-history')
     return {
       localisationHistoryCookie,
