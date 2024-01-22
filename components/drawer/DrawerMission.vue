@@ -1,14 +1,5 @@
 <template>
   <BaseDrawer :is-open="Boolean(missionId)" @close="$emit('close')">
-    <BaseAlertDialog
-      v-if="mission"
-      theme="danger"
-      title="Supprimer la mission"
-      :text="`Vous êtes sur le point de supprimer la mission ${mission.name}.`"
-      :is-open="showAlert"
-      @confirm="handleConfirmDelete()"
-      @cancel="showAlert = false"
-    />
     <template #title>
       <BaseHeading v-if="mission" :level="3" class="text-jva-blue-500">
         <nuxt-link no-prefetch :to="`/admin/missions/${missionId}`" class="hover:underline">
@@ -21,12 +12,21 @@
     </div>
     <div v-else>
       <template v-if="mission">
-        <OnlineIndicator
-          :published="mission.is_online"
-          :link="`/missions-benevolat/${mission.id}/${mission.slug}`"
-          class="mt-2"
+        <ModalMissionToggleIsActive
+          :mission="mission"
+          :is-open="showModalSwitchIsOnline"
+          @cancel="showModalSwitchIsOnline = false"
+          @confirm="afterChangeIsActive()"
         />
-        <div class="flex flex-wrap gap-1 mt-4">
+        <DsfrLink
+          :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
+          :is-external="true"
+          class="text-xs font-normal"
+        >
+          Voir la mission
+        </DsfrLink>
+        <Badges class="mt-5" :mission="mission" />
+        <div class="flex flex-wrap gap-1 mt-6">
           <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}`">
             <DsfrButton type="tertiary" icon="RiEyeLine" size="sm" tabindex="-1" icon-class="!mr-1">
               Détails
@@ -45,45 +45,32 @@
             </DsfrButton>
           </nuxt-link>
 
-          <ButtonMissionDuplicate
-            v-if="$stores.auth.contextRole === 'responsable'"
-            :mission-id="mission.id"
+          <Actions
             :mission="mission"
-            @duplicated="handleDuplicated($event)"
-          />
-
-          <DsfrButton
-            v-if="['admin', 'responsable'].includes($stores.auth.contextRole)"
-            type="tertiary"
-            icon="RiDeleteBinLine"
-            :icon-only="true"
-            size="sm"
-            @click="() => (showAlert = true)"
+            @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
+            @missionDeleted="handleDeleted()"
+            buttonSize="sm"
           />
         </div>
         <div class="border-t -mx-6 my-6" />
-        <template v-if="['admin'].includes($stores.auth.contextRole) && mission.state == 'Validée'">
-          <div class="text-sm uppercase font-semibold text-gray-600">État de la mission</div>
+        <template
+          v-if="
+            ['admin'].includes($stores.auth.contextRole) &&
+            mission.state == 'Validée' &&
+            mission.is_online == false
+          "
+        >
+          <div class="text-sm uppercase font-semibold text-gray-600">Visibilité de la mission</div>
           <div class="mt-2">
-            <p>
-              La mission est actuellement
-              <strong>{{ mission.is_online ? 'activée' : 'désactivée' }}</strong
-              >.
-            </p>
+            <p>La mission est actuellement hors ligne</p>
             <BaseLink class="!inline-flex" @click.native="showModalSwitchIsOnline = true">
-              {{ mission.is_online ? 'Désactiver la mission' : 'Activer la mission' }}
+              Mettre en ligne la mission
             </BaseLink>
-            <ModalMissionToggleIsActive
-              :mission="mission"
-              :is-open="showModalSwitchIsOnline"
-              @cancel="showModalSwitchIsOnline = false"
-              @confirm="afterChangeIsActive()"
-            />
           </div>
 
           <div class="border-t -mx-6 my-6" />
         </template>
-        <div v-else-if="!mission.is_online" class="formatted-text">
+        <div v-else-if="!mission.is_online && mission.state == 'Validée'" class="formatted-text">
           <p>
             <span aria-hidden="true" class="font-emoji text-2xl mr-2">⚠️</span> La mission
             <strong>a été mise hors ligne</strong> par un membre du support car vous avez
@@ -159,11 +146,12 @@ import BoxOrganisation from '@/components/section/mission/BoxOrganisation.vue'
 import BoxInformations from '@/components/section/mission/BoxInformations.vue'
 import MixinMission from '@/mixins/mission'
 import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
-import ButtonMissionDuplicate from '@/components/custom/ButtonMissionDuplicate.vue'
 import BoxReferents from '@/components/section/BoxReferents.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
 import ModalMissionToggleIsActive from '@/components/modal/ModalMissionToggleIsActive.vue'
+import Badges from '@/components/section/mission/Badges.vue'
+import Actions from '@/components/section/mission/Actions.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -175,10 +163,11 @@ export default defineNuxtComponent({
     BoxOrganisation,
     BoxInformations,
     OnlineIndicator,
-    ButtonMissionDuplicate,
     BoxReferents,
     HistoryStateChanges,
     ModalMissionToggleIsActive,
+    Badges,
+    Actions,
   },
   mixins: [MixinMission],
   props: {
@@ -189,7 +178,6 @@ export default defineNuxtComponent({
   },
   data() {
     return {
-      showAlert: false,
       mission: null,
       missionStats: null,
       loading: false,
@@ -229,6 +217,10 @@ export default defineNuxtComponent({
       this.fetch()
       this.$emit('updated')
       this.showModalSwitchIsOnline = false
+    },
+    handleDeleted() {
+      this.$emit('close')
+      this.$emit('updated')
     },
   },
 })

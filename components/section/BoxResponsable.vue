@@ -27,8 +27,8 @@
             {{
               $filters.pluralize(
                 profileStats.missions_offline,
-                'mission hors ligne',
-                'missions hors ligne'
+                'mission validée mise hors ligne',
+                'missions validées mises hors ligne'
               )
             }}
           </DsfrTag>
@@ -89,7 +89,7 @@
           <div class="border-t -mx-4 xl:-mx-6 my-4" />
           <div class="flex justify-center text-sm">
             <BaseLink @click.native="showModalResponsableSetMissionsActive = true">
-              Activer les missions du responsable
+              Mettre en ligne les missions du responsable
             </BaseLink>
             <ModalResponsableSetMissionsIsActive
               :value="true"
@@ -110,7 +110,7 @@
           <div class="border-t -mx-4 xl:-mx-6 my-4" />
           <div class="flex justify-center text-sm">
             <BaseLink @click.native="showModalResponsableSetMissionsInactive = true">
-              Désactiver les missions du responsable
+              Mettre hors ligne les missions du responsable
             </BaseLink>
             <ModalResponsableSetMissionsIsActive
               :value="false"

@@ -60,7 +60,8 @@ export default defineNuxtComponent({
     type: {
       type: String,
       default: 'default',
-      validator: (t) => ['success', 'error', 'info', 'warning', 'new', 'default'].includes(t),
+      validator: (t) =>
+        ['success', 'error', 'info', 'warning', 'new', 'default', 'gray'].includes(t),
     },
     noIcon: {
       type: Boolean,

@@ -2,6 +2,7 @@
   <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
     <div class="lg:col-span-3 space-y-8">
       <BaseBox>
+        <BaseHeading :level="2" class="mb-8"> {{ mission.name }}</BaseHeading>
         <BaseHeading :level="3" class="mb-8"> Description de la mission </BaseHeading>
         <div class="space-y-10">
           <BaseAlert>

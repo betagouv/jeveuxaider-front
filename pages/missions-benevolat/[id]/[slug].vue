@@ -4,8 +4,16 @@
       <Teleport v-if="!mission.is_online" to="#teleport-header-top">
         <transition name="fade">
           <BaseBanner>
-            La mission n'est pas visible car elle est au statut « {{ mission.state }} » et
-            l'organisation est « {{ mission.structure.state }} »
+            {{
+              mission.state == 'Validée' && mission.structure.state == 'Validée'
+                ? "La mission n'est pas visible car elle a été mise hors ligne par un modérateur"
+                : "La mission n'est pas visible car elle est au statut « " +
+                  mission.state +
+                  " » et l'organisation est « " +
+                  mission.structure.state +
+                  ' »'
+            }}
+
             <template #action>
               <DsfrLink icon="RiArrowRightLine" :to="`/admin/missions?filter[id]=${mission.id}`">
                 Gérer

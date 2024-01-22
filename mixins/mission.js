@@ -287,16 +287,10 @@ export default {
       this.mission.is_registration_open = value
       this.$emit('updated', mission)
     },
-    async handleConfirmDelete() {
-      await apiFetch(`/missions/${this.mission.id}`, {
+    deleteMission() {
+      return apiFetch(`/missions/${this.mission.id}`, {
         method: 'DELETE',
       })
-        .then((res) => {
-          this.showAlert = false
-          this.$emit('close')
-          this.$emit('updated')
-        })
-        .catch(() => {})
     },
   },
 }

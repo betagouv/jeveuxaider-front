@@ -102,8 +102,8 @@ export default defineNuxtComponent({
   computed: {
     modalTitle() {
       return this.value
-        ? 'Activer les missions validées du responsable'
-        : 'Désactiver les missions validées du responsable'
+        ? 'Mettre en ligne les missions validées du responsable'
+        : 'Mettre hors ligne les missions validées du responsable'
     },
     toastMessageSucess() {
       return this.value
@@ -121,7 +121,7 @@ export default defineNuxtComponent({
       await apiFetch(`profiles/${this.responsable.id}/setMissionsIsActive`, {
         method: 'POST',
         body: {
-          is_active: this.value,
+          is_online: this.value,
         },
       })
       this.$toast.success(this.toastMessageSucess)

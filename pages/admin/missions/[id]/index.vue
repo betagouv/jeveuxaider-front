@@ -14,139 +14,50 @@
       @cancel="showModalSwitchIsOnline = false"
       @confirm="afterChangeIsActive"
     />
-    <BaseAlertDialog
-      v-if="['admin', 'responsable'].includes($stores.auth.contextRole)"
-      theme="danger"
-      title="Supprimer la mission"
-      :text="`Vous êtes sur le point de supprimer la mission ${mission.name}.`"
-      :is-open="showModalDelete"
-      @confirm="handleConfirmDelete()"
-      @cancel="showModalDelete = false"
-    />
-    <div class="flex justify-between pb-8 mb-8 border-b">
-      <div>
-        <BaseHeading :level="1" class="mb-4">
-          Mission
-          <span class="font-normal text-gray-500 text-2xl">#{{ mission.id }}</span>
-          <DsfrLink
-            :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
-            :is-external="true"
-            class="text-xs font-normal ml-2"
-          >
-            Ouvrir l'aperçu
-          </DsfrLink>
-        </BaseHeading>
-        <div class="flex items-center space-x-3">
-          <DsfrBadge size="sm" :type="badgeTypeMissionSate">
-            {{ mission.state }}
-          </DsfrBadge>
-          <DsfrBadge size="sm" type="gray">
-            <div class="flex items-center">
-              <div
-                :class="[
-                  'h-2 w-2  rounded-full mr-1',
-                  mission.is_online ? 'bg-green-600' : 'bg-red-600',
-                ]"
-              ></div>
-              {{ mission.is_online ? 'En ligne' : 'Hors ligne' }}
-            </div>
-          </DsfrBadge>
-          <DsfrBadge v-if="mission.state == 'Validée' && mission.is_online" size="sm" type="gray">
-            {{ mission.is_registration_open ? 'Inscriptions ouvertes' : 'Inscriptions fermées' }}
-          </DsfrBadge>
+  </div>
+  <div
+    ref="menuActions"
+    :class="[isPinned ? 'bg-white shadow-lg' : '']"
+    class="z-50 sticky top-[-1px]"
+  >
+    <div class="container">
+      <div class="flex justify-between" :class="[isPinned ? 'py-8' : 'border-b pb-8 mb-8']">
+        <div>
+          <BaseHeading :level="1" class="mb-4">
+            Mission
+            <span class="font-normal text-gray-500 text-2xl">#{{ mission.id }}</span>
+            <DsfrLink
+              :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
+              :is-external="true"
+              class="text-xs font-normal ml-2"
+            >
+              Voir la mission
+            </DsfrLink>
+          </BaseHeading>
+          <Badges :mission="mission" />
+        </div>
+        <div class="flex space-x-3">
+          <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/edit`">
+            <DsfrButton type="primary" class="text-white">
+              <RiPencilLine class="h-5 w-5 fill-current" /> Modifier
+            </DsfrButton>
+          </nuxt-link>
+          <SelectMissionState
+            v-if="canEditStatut"
+            :mission="mission"
+            :mission-stats="missionStats"
+            @selected="handleChangeState($event)"
+          />
+          <Actions
+            :mission="mission"
+            @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
+            @missionDeleted="handleDeleted"
+          />
         </div>
       </div>
-      <div class="flex space-x-3">
-        <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/edit`">
-          <DsfrButton type="primary" class="text-white">
-            <RiPencilLine class="h-5 w-5 fill-current" /> Modifier
-          </DsfrButton>
-        </nuxt-link>
-        <SelectMissionState
-          v-if="canEditStatut"
-          :mission="mission"
-          :mission-stats="missionStats"
-          @selected="handleChangeState($event)"
-        />
-        <BaseDropdown>
-          <template #button>
-            <DsfrButton type="tertiary" class="!text-gray-800">
-              <RiMoreFill class="h-5 w-5 fill-current" />
-            </DsfrButton>
-          </template>
-          <template #items>
-            <BaseDropdownOptionsItem
-              v-if="['admin'].includes($stores.auth.contextRole) && mission.state == 'Validée'"
-              @click.native="showModalSwitchIsOnline = true"
-            >
-              <div class="flex items-center">
-                <div
-                  :class="[
-                    'h-3 w-3 rounded-full mr-3',
-                    mission.is_online ? 'bg-jva-red-600' : 'bg-jva-green-600',
-                  ]"
-                />
-                {{ mission.is_online ? 'Mettre hors ligne' : 'Mettre en ligne' }}
-              </div>
-            </BaseDropdownOptionsItem>
-            <BaseDropdownOptionsItem
-              v-if="mission.places_left > 0 && mission.is_online && mission.state == 'Validée'"
-              @click.native="handleChangeIsRegistrationOpen(!mission.is_registration_open)"
-            >
-              <div
-                v-if="mission.is_registration_open"
-                class="flex items-center"
-                v-tooltip="{
-                  content: 'La mission reste en ligne. Les bénévoles ne peuvent plus postuler.',
-                }"
-              >
-                <RiUserUnfollow class="h-4 w-4 mr-2 fill-current text-gray-600" />Fermer les
-                inscriptions
-              </div>
-              <div
-                v-else
-                class="flex items-center"
-                v-tooltip="{
-                  content: 'La mission reste en ligne. Les bénévoles ne peuvent plus postuler.',
-                }"
-              >
-                <RiUserFollow class="h-4 w-4 mr-2 fill-current text-gray-600" />Ouvrir les
-                inscriptions
-              </div>
-            </BaseDropdownOptionsItem>
-            <NuxtLink
-              v-if="mission.places_left > 0 && mission.is_online"
-              :to="`/admin/missions/${mission.id}/trouver-des-benevoles`"
-            >
-              <BaseDropdownOptionsItem>
-                <div class="flex items-center">
-                  <RiUserSearch class="h-4 w-4 mr-2 fill-current text-gray-600" /> Trouver des
-                  bénévoles
-                </div>
-              </BaseDropdownOptionsItem>
-            </NuxtLink>
-            <BaseDropdownOptionsItem v-if="canDuplicateMission">
-              <ButtonMissionDuplicate
-                :mission-id="mission.id"
-                :mission="mission"
-                theme="link"
-                :canDuplicateMission="canDuplicateMission"
-                :redirectToMission="true"
-              />
-            </BaseDropdownOptionsItem>
-            <BaseDropdownOptionsItem
-              v-if="['admin', 'responsable'].includes($stores.auth.contextRole)"
-              @click="() => (showModalDelete = true)"
-            >
-              <div class="flex items-center">
-                <RiDeleteBinLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Supprimer
-              </div>
-            </BaseDropdownOptionsItem>
-          </template>
-        </BaseDropdown>
-      </div>
     </div>
-
+  </div>
+  <div class="container">
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
         <Presentation :mission="mission" />
@@ -230,6 +141,7 @@
               :conversable-id="mission.id"
               conversable-type="App\Models\Mission"
               :conversable="mission"
+              @updated="refresh()"
             />
             <BoxOrganisation :organisation="mission.structure" />
           </div>
@@ -264,7 +176,8 @@ import BoxNotes from '@/components/custom/BoxNotes.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import Link from '@/components/dsfr/Link.vue'
 import ModalMissionToggleIsActive from '@/components/modal/ModalMissionToggleIsActive.vue'
-import ButtonMissionDuplicate from '@/components/custom/ButtonMissionDuplicate.vue'
+import Badges from '@/components/section/mission/Badges.vue'
+import Actions from '@/components/section/mission/Actions.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -287,7 +200,8 @@ export default defineNuxtComponent({
     BoxAideModeration,
     Link,
     ModalMissionToggleIsActive,
-    ButtonMissionDuplicate,
+    Badges,
+    Actions,
   },
   mixins: [MixinMission],
   async setup() {
@@ -331,9 +245,34 @@ export default defineNuxtComponent({
     return {
       showModalSwitchIsOnline: false,
       showModalDelete: false,
+      isPinned: false,
     }
   },
+  mounted() {
+    let timeout
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (timeout) {
+          window.cancelAnimationFrame(timeout)
+        }
+        timeout = window.requestAnimationFrame(() => {
+          this.handleScroll()
+        })
+      },
+      false
+    )
+  },
+  unmounted() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
   methods: {
+    handleScroll() {
+      if (!this.$refs.menuActions) {
+        return
+      }
+      this.isPinned = this.$refs.menuActions.getBoundingClientRect().top < 0
+    },
     async handleChangeState(event) {
       this.mission.state = event.key
       const mission = await apiFetch(`/missions/${this.mission.id}`, {
@@ -354,6 +293,9 @@ export default defineNuxtComponent({
     },
     handleDuplicated(mission) {
       console.log('new mission', mission)
+    },
+    handleDeleted() {
+      this.$router.push('/admin/missions')
     },
   },
 })
