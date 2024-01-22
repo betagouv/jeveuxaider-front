@@ -59,11 +59,13 @@
 
 <script>
 export default defineNuxtComponent({
-  setup() {
+  async setup() {
     const runtimeConfig = useRuntimeConfig()
+    const { formatAutonomyCities } = await autonomyCitiesHelper()
 
     return {
       googlePlacesKey: runtimeConfig.public.google.places,
+      formatAutonomyCities,
     }
   },
   props: {
@@ -71,12 +73,6 @@ export default defineNuxtComponent({
       type: Object,
       required: true,
     },
-  },
-  async setup() {
-    const { formatAutonomyCities } = await autonomyCitiesHelper()
-    return {
-      formatAutonomyCities,
-    }
   },
   computed: {
     address() {
