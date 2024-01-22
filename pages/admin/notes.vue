@@ -15,18 +15,17 @@
           {{ $numeral(queryResult.total) }}
           {{ $filters.pluralize(queryResult.total, 'note', 'notes', false) }}
         </BaseHeading>
-        <SearchFilters class="mb-12">
-          <BaseInput
-            name="search"
-            placeholder="Rechercher par mots clés, nom"
+        <SearchFilters class="mb-12" @reset-filters="deleteAllFilters">
+          <DsfrInput
+            type="search"
+            size="lg"
+            placeholder="Recherche par mots clés..."
             icon="RiSearchLine"
-            variant="transparent"
             :modelValue="$route.query['filter[search]']"
-            clearable
             @update:modelValue="changeFilter('filter[search]', $event)"
           />
           <template #prefilters>
-            <Tag
+            <!-- <Tag
               :key="`tous-${$route.fullPath}`"
               as="button"
               size="md"
@@ -35,7 +34,7 @@
               @click.native="deleteAllFilters"
             >
               Toutes
-            </Tag>
+            </Tag> -->
 
             <Tag
               :key="`mine-${$route.fullPath}`"
@@ -78,6 +77,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
           <CardNote v-for="note in queryResult.data" :key="note.id" :note="note" />
         </div>
+
+        <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
         <Pagination
           class="mt-8"

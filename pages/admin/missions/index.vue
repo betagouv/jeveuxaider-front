@@ -41,7 +41,7 @@
         </template>
       </BaseSectionHeading>
 
-      <SearchFilters class="mt-8 mb-12">
+      <SearchFilters class="mt-8 mb-12" @reset-filters="deleteAllFilters">
         <DsfrInput
           type="search"
           size="lg"
@@ -69,7 +69,7 @@
             <div aria-hidden class="bg-gray-600 mx-1 w-[1px] h-6" />
           </div>
 
-          <DsfrTag
+          <!-- <DsfrTag
             :key="`toutes-${$route.fullPath}`"
             as="button"
             size="md"
@@ -78,7 +78,7 @@
             @click.native="deleteAllFilters"
           >
             Toutes
-          </DsfrTag>
+          </DsfrTag> -->
 
           <template v-for="visibleFilter in visibleFilters" :key="visibleFilter">
             <BaseFilterSelectAdvanced
@@ -356,6 +356,8 @@
           @click.native="drawerMissionId = mission.id"
         />
       </div>
+
+      <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
       <DsfrPagination
         class="my-12"

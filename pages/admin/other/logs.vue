@@ -19,7 +19,7 @@
       :loading="queryLoading"
     />
 
-    <SearchFilters class="mb-4">
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
       <DsfrInput
         type="search"
         size="lg"
@@ -29,7 +29,7 @@
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Tag
+        <!-- <Tag
           :key="`toutes-${$route.fullPath}`"
           as="button"
           size="md"
@@ -38,7 +38,7 @@
           @click.native="deleteAllFilters"
         >
           Toutes
-        </Tag>
+        </Tag> -->
         <BaseFilterSelectAdvanced
           :key="`subject-type-${$route.fullPath}`"
           name="types"
@@ -80,6 +80,8 @@
       class="cursor-pointer"
       @click.native="drawerActivityLogId = log.id"
     />
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <Pagination
       class="mt-6"

@@ -34,215 +34,204 @@
             >
               Exporter
             </DsfrButton>
+            <div class="relative">
+              <BulkOperationActions
+                v-if="bulkOperationIsActive"
+                :operations="operations"
+                @unselectAll="operations = []"
+              >
+                <BaseDropdownOptionsItem
+                  v-if="canBulkValidate"
+                  @click.native="showModalBulkParticipationsValidate = true"
+                >
+                  Valider les participations
+                </BaseDropdownOptionsItem>
+                <BaseDropdownOptionsItem
+                  v-if="canBulkDecline"
+                  @click.native="showModalBulkParticipationsDecline = true"
+                >
+                  Refuser les participations
+                </BaseDropdownOptionsItem>
+              </BulkOperationActions>
+            </div>
           </div>
         </template>
       </BaseSectionHeading>
-      <DsfrInput
-        v-if="!bulkOperationIsActive"
-        type="search"
-        size="lg"
-        placeholder="Recherche par prénom, nom ou e-mail"
-        icon="RiSearchLine"
-        class="mt-8"
-        :modelValue="$route.query['filter[search]']"
-        @update:modelValue="changeFilter('filter[search]', $event)"
-      />
-      <div v-if="!bulkOperationIsActive" class="hidden lg:flex gap-3 mt-6 text-sm flex-wrap">
-        <DsfrTag
-          as="button"
-          size="md"
-          context="selectable"
-          :is-active="!hasActiveFilters"
-          @click.native="deleteAllFilters"
-        >
-          Toutes
-        </DsfrTag>
 
-        <template v-for="(visibleFilter, i) in visibleFilters" :key="`${visibleFilter}-${i}`">
-          <DsfrTag
-            v-if="visibleFilter === 'need_to_be_treated'"
+      <CustomSearchFilters class="mt-8 mb-12" @reset-filters="deleteAllFilters">
+        <DsfrInput
+          type="search"
+          size="lg"
+          placeholder="Recherche par prénom, nom ou e-mail"
+          icon="RiSearchLine"
+          :modelValue="$route.query['filter[search]']"
+          @update:modelValue="changeFilter('filter[search]', $event)"
+        />
+        <template #prefilters>
+          <!-- <DsfrTag
             as="button"
             size="md"
             context="selectable"
-            :is-active="$route.query['filter[need_to_be_treated]'] == 'true'"
-            @click.native="changeFilter('filter[need_to_be_treated]', 'true')"
+            :is-active="!hasActiveFilters"
+            @click.native="deleteAllFilters"
           >
-            ⚠️ À traiter en priorité
-          </DsfrTag>
+            Toutes
+          </DsfrTag> -->
+
+          <template v-for="(visibleFilter, i) in visibleFilters" :key="`${visibleFilter}-${i}`">
+            <DsfrTag
+              v-if="visibleFilter === 'need_to_be_treated'"
+              as="button"
+              size="md"
+              context="selectable"
+              :is-active="$route.query['filter[need_to_be_treated]'] == 'true'"
+              @click.native="changeFilter('filter[need_to_be_treated]', 'true')"
+            >
+              ⚠️ À traiter en priorité
+            </DsfrTag>
+
+            <DsfrTag
+              v-if="visibleFilter === 'is_state_pending'"
+              as="button"
+              size="md"
+              context="selectable"
+              :is-active="
+                $route.query['filter[is_state_pending]'] &&
+                $route.query['filter[is_state_pending]'] == 'true'
+              "
+              @click.native="changeFilter('filter[is_state_pending]', 'true')"
+            >
+              En cours de modération
+            </DsfrTag>
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'ofActivity'"
+              :modelValue="$route.query['filter[ofActivity]']"
+              name="activity_id"
+              :options="activities"
+              attribute-key="id"
+              attribute-label="name"
+              placeholder="Activité"
+              :searchable="true"
+              options-class="!min-w-[300px]"
+              @update:modelValue="changeFilter('filter[ofActivity]', $event)"
+            />
+
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'mission.structure.id'"
+              v-model="selectedOrganisation"
+              label="Organisation"
+              name="autocomplete-organisation"
+              :options="autocompleteOptionsOrganisations"
+              :loading="loadingFetchOrganisations"
+              @fetch-suggestions="onFetchSuggestionsOrganisations"
+              @selected="onSelectOrganisation"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'ofResponsable'"
+              name="responsable"
+              :options="responsables"
+              :modelValue="$route.query['filter[ofResponsable]']"
+              attribute-key="id"
+              attribute-label="full_name"
+              placeholder="Responsable"
+              @update:modelValue="changeFilter('filter[ofResponsable]', $event)"
+            />
+
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'mission.id'"
+              v-model="selectedMission"
+              label="Mission"
+              name="autocomplete-mission"
+              :options="autocompleteOptionsMission"
+              :loading="loadingFetchMissions"
+              @fetch-suggestions="onFetchSuggestionsMission"
+              @selected="onSelectMission"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'state'"
+              :modelValue="$route.query['filter[state]']"
+              name="state"
+              :options="$labels.participation_workflow_states"
+              placeholder="Statut"
+              @update:modelValue="changeFilter('filter[state]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="
+                ['responsable'].includes($stores.auth.contextRole) &&
+                $stores.structureTags.options.length > 0 &&
+                visibleFilter === 'tags'
+              "
+              :modelValue="$route.query['filter[tags]']"
+              name="tags"
+              :options="$stores.structureTags.options"
+              placeholder="Tags"
+              @update:modelValue="changeFilter('filter[tags]', $event)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'mission.department'"
+              name="department"
+              :options="
+                $labels.departments.map((option) => {
+                  return {
+                    key: option.key,
+                    label: `${option.key} - ${option.label}`,
+                  }
+                })
+              "
+              :modelValue="$route.query['filter[mission.department]']"
+              placeholder="Département"
+              :searchable="true"
+              @update:modelValue="changeFilter('filter[mission.department]', $event)"
+            />
+
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'mission.zip'"
+              :modelValue="$route.query['filter[mission.zip]']"
+              label="Code postal"
+              name="autocomplete-zips"
+              :options="autocompleteOptionsZips"
+              :loading="loadingFetchZips"
+              attribute-key="zip"
+              hide-attribute-key
+              attribute-right-label="zip"
+              @fetch-suggestions="onFetchSuggestionsZips"
+              @selected="changeFilter('filter[mission.zip]', $event?.zip)"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'mission.type'"
+              :modelValue="$route.query['filter[mission.type]']"
+              name="lieu_type"
+              :options="[
+                { key: 'presentiel', label: 'Mission en présentiel' },
+                { key: 'distance', label: 'Mission à distance' },
+              ]"
+              placeholder="Présentiel / distance"
+              attribute-key="label"
+              @update:modelValue="changeFilter('filter[mission.type]', $event)"
+            />
+          </template>
 
           <DsfrTag
-            v-if="visibleFilter === 'is_state_pending'"
-            as="button"
+            v-if="visibleFilters.length < allFilters.length"
+            key="view-all-filter"
+            context="clickable"
+            icon="RiAddLine"
+            :icon-only="true"
             size="md"
-            context="selectable"
-            :is-active="
-              $route.query['filter[is_state_pending]'] &&
-              $route.query['filter[is_state_pending]'] == 'true'
-            "
-            @click.native="changeFilter('filter[is_state_pending]', 'true')"
-          >
-            En cours de modération
-          </DsfrTag>
-
-          <BaseFilterSelectAdvanced
-            v-if="visibleFilter === 'ofActivity'"
-            :modelValue="$route.query['filter[ofActivity]']"
-            name="activity_id"
-            :options="activities"
-            attribute-key="id"
-            attribute-label="name"
-            placeholder="Activité"
-            :searchable="true"
-            options-class="!min-w-[300px]"
-            @update:modelValue="changeFilter('filter[ofActivity]', $event)"
-          />
-
-          <BaseFilterInputAutocomplete
-            v-if="visibleFilter === 'mission.structure.id'"
-            v-model="selectedOrganisation"
-            label="Organisation"
-            name="autocomplete-organisation"
-            :options="autocompleteOptionsOrganisations"
-            :loading="loadingFetchOrganisations"
-            @fetch-suggestions="onFetchSuggestionsOrganisations"
-            @selected="onSelectOrganisation"
-          />
-
-          <BaseFilterSelectAdvanced
-            v-if="visibleFilter === 'ofResponsable'"
-            name="responsable"
-            :options="responsables"
-            :modelValue="$route.query['filter[ofResponsable]']"
-            attribute-key="id"
-            attribute-label="full_name"
-            placeholder="Responsable"
-            @update:modelValue="changeFilter('filter[ofResponsable]', $event)"
-          />
-
-          <BaseFilterInputAutocomplete
-            v-if="visibleFilter === 'mission.id'"
-            v-model="selectedMission"
-            label="Mission"
-            name="autocomplete-mission"
-            :options="autocompleteOptionsMission"
-            :loading="loadingFetchMissions"
-            @fetch-suggestions="onFetchSuggestionsMission"
-            @selected="onSelectMission"
-          />
-
-          <BaseFilterSelectAdvanced
-            v-if="visibleFilter === 'state'"
-            :modelValue="$route.query['filter[state]']"
-            name="state"
-            :options="$labels.participation_workflow_states"
-            placeholder="Statut"
-            @update:modelValue="changeFilter('filter[state]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            v-if="
-              ['responsable'].includes($stores.auth.contextRole) &&
-              $stores.structureTags.options.length > 0 &&
-              visibleFilter === 'tags'
-            "
-            :modelValue="$route.query['filter[tags]']"
-            name="tags"
-            :options="$stores.structureTags.options"
-            placeholder="Tags"
-            @update:modelValue="changeFilter('filter[tags]', $event)"
-          />
-
-          <BaseFilterSelectAdvanced
-            v-if="visibleFilter === 'mission.department'"
-            name="department"
-            :options="
-              $labels.departments.map((option) => {
-                return {
-                  key: option.key,
-                  label: `${option.key} - ${option.label}`,
-                }
-              })
-            "
-            :modelValue="$route.query['filter[mission.department]']"
-            placeholder="Département"
-            :searchable="true"
-            @update:modelValue="changeFilter('filter[mission.department]', $event)"
-          />
-
-          <BaseFilterInputAutocomplete
-            v-if="visibleFilter === 'mission.zip'"
-            :modelValue="$route.query['filter[mission.zip]']"
-            label="Code postal"
-            name="autocomplete-zips"
-            :options="autocompleteOptionsZips"
-            :loading="loadingFetchZips"
-            attribute-key="zip"
-            hide-attribute-key
-            attribute-right-label="labelRight"
-            @fetch-suggestions="onFetchSuggestionsZips"
-            @selected="changeFilter('filter[mission.zip]', $event?.zip)"
-          />
-
-          <BaseFilterSelectAdvanced
-            v-if="visibleFilter === 'mission.type'"
-            :modelValue="$route.query['filter[mission.type]']"
-            name="lieu_type"
-            :options="[
-              { key: 'presentiel', label: 'Mission en présentiel' },
-              { key: 'distance', label: 'Mission à distance' },
-            ]"
-            placeholder="Présentiel / distance"
-            attribute-key="label"
-            @update:modelValue="changeFilter('filter[mission.type]', $event)"
+            as="button"
+            title="Afficher plus de filtres"
+            @click="showAllFilters = true"
           />
         </template>
+      </CustomSearchFilters>
 
-        <DsfrTag
-          v-if="visibleFilters.length < allFilters.length"
-          key="view-all-filter"
-          context="clickable"
-          icon="RiAddLine"
-          :icon-only="true"
-          size="md"
-          as="button"
-          title="Afficher plus de filtres"
-          @click="showAllFilters = true"
-        />
-      </div>
-
-      <BulkOperationActions
-        v-if="bulkOperationIsActive"
-        :operations="operations"
-        @unselectAll="operations = []"
-      >
-        <BaseDropdownOptionsItem
-          v-if="canBulkValidate"
-          @click.native="showModalBulkParticipationsValidate = true"
-        >
-          Valider les participations
-        </BaseDropdownOptionsItem>
-        <BaseDropdownOptionsItem
-          v-if="canBulkDecline"
-          @click.native="showModalBulkParticipationsDecline = true"
-        >
-          Refuser les participations
-        </BaseDropdownOptionsItem>
-      </BulkOperationActions>
-      <ModalBulkParticipationsValidate
-        v-if="canBulkValidate"
-        :is-open="showModalBulkParticipationsValidate"
-        :operations="operations"
-        @close="showModalBulkParticipationsValidate = false"
-        @processed="onBulkOperationProcessed"
-      />
-      <ModalBulkParticipationsDecline
-        v-if="canBulkDecline"
-        :is-open="showModalBulkParticipationsDecline"
-        :operations="operations"
-        @close="showModalBulkParticipationsDecline = false"
-        @processed="onBulkOperationProcessed"
-      />
-
+      <!--
       <DsfrPagination
         v-if="!bulkOperationIsActive"
         class="mt-12 mb-6"
@@ -252,7 +241,7 @@
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
         @page-change="onPageChange"
-      />
+      /> -->
 
       <div class="my-6 space-y-4">
         <div
@@ -278,15 +267,30 @@
         </div>
       </div>
 
+      <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
+
       <DsfrPagination
-        v-if="!bulkOperationIsActive"
         class="my-12"
         :current-page="queryResult.current_page"
         :total-rows="queryResult.total"
         :per-page="queryResult.per_page"
-        @page-change="onPageChange"
+        @page-change="changePage"
       />
     </div>
+    <ModalBulkParticipationsValidate
+      v-if="canBulkValidate"
+      :is-open="showModalBulkParticipationsValidate"
+      :operations="operations"
+      @close="showModalBulkParticipationsValidate = false"
+      @processed="onBulkOperationProcessed"
+    />
+    <ModalBulkParticipationsDecline
+      v-if="canBulkDecline"
+      :is-open="showModalBulkParticipationsDecline"
+      :operations="operations"
+      @close="showModalBulkParticipationsDecline = false"
+      @processed="onBulkOperationProcessed"
+    />
   </div>
 </template>
 
@@ -448,6 +452,7 @@ export default defineNuxtComponent({
             oldQuery?.['filter[mission.structure.id]']
           )
         }
+        this.operations = []
       },
       immediate: true,
     },

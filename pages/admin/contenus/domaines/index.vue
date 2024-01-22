@@ -31,7 +31,7 @@
       </template>
     </BaseSectionHeading>
 
-    <SearchFilters class="mb-4">
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
       <DsfrInput
         type="search"
         size="lg"
@@ -41,7 +41,7 @@
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <DsfrTag
+        <!-- <DsfrTag
           :key="`toutes-${$route.fullPath}`"
           as="button"
           size="md"
@@ -50,7 +50,7 @@
           @click.native="deleteAllFilters"
         >
           Toutes
-        </DsfrTag>
+        </DsfrTag> -->
 
         <DsfrTag
           :key="`published-${$route.fullPath}`"
@@ -105,6 +105,8 @@
         </template>
       </Card>
     </div>
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <Pagination
       class="mt-6"

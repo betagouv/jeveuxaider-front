@@ -9,14 +9,13 @@
       <BaseSectionHeading title="Vos notifications" />
     </template>
     <template #left>
-      <SearchFilters>
-        <BaseInput
-          name="search"
+      <SearchFilters @reset-filters="deleteAllFilters">
+        <DsfrInput
+          type="search"
+          size="lg"
           placeholder="Recherche par mots clés..."
           icon="RiSearchLine"
-          variant="transparent"
           :modelValue="$route.query['filter[search]']"
-          clearable
           @update:modelValue="changeFilter('filter[search]', $event)"
         />
         <template #prefilters>
@@ -73,6 +72,8 @@
           </div>
         </div>
       </div>
+
+      <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
       <DsfrPagination
         :current-page="queryResult.current_page"

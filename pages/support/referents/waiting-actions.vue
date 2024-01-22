@@ -19,7 +19,7 @@
       secondary-title-bottom="Liste des référents en fonction de leurs actions en attente de modération"
     />
 
-    <SearchFilters>
+    <SearchFilters @reset-filters="deleteAllFilters">
       <DsfrInput
         type="search"
         size="lg"
@@ -29,7 +29,7 @@
         @update:modelValue="changeFilter('search', $event)"
       />
       <template #prefilters>
-        <Tag
+        <!-- <Tag
           :key="`toutes-${$route.fullPath}`"
           as="button"
           size="md"
@@ -38,7 +38,7 @@
           @click.native="deleteAllFilters"
         >
           Tous
-        </Tag>
+        </Tag> -->
         <BaseFilterSelectAdvanced
           :key="`department-${$route.fullPath}`"
           name="department"

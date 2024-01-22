@@ -18,18 +18,17 @@
           {{ $numeral(queryResult.total) }}
           {{ $filters.pluralize(queryResult.total, 'retour', 'retours', false) }}
         </BaseHeading>
-        <SearchFilters class="mb-12">
-          <BaseInput
-            name="search"
-            placeholder="Rechercher par mots clés, email, nom"
+        <SearchFilters class="mb-12" @reset-filters="deleteAllFilters">
+          <DsfrInput
+            type="search"
+            size="lg"
+            placeholder="Recherche par mots clés..."
             icon="RiSearchLine"
-            variant="transparent"
             :modelValue="$route.query['filter[search]']"
-            clearable
             @update:modelValue="changeFilter('filter[search]', $event)"
           />
           <template #prefilters>
-            <DsfrTag
+            <!-- <DsfrTag
               :key="`tous-${$route.fullPath}`"
               as="button"
               size="md"
@@ -38,7 +37,7 @@
               @click.native="deleteAllFilters"
             >
               Tous
-            </DsfrTag>
+            </DsfrTag> -->
 
             <DsfrTag
               :key="`published-${$route.fullPath}`"
@@ -88,6 +87,8 @@
             @click.native="drawerTemoignageId = temoignage.id"
           />
         </div>
+
+        <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
         <DsfrPagination
           class="mt-8"
