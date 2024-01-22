@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <div v-if="nextDates" class="flex items-center text-sm cursor-pointer text-gray-600" @click="$emit('back')">
-      <ChevronLeftIcon class="mr-1 h-4 w-4" /> Retour
+      <RiArrowLeftSLine class="mr-1 h-4 w-4" /> Retour
     </div> -->
     <div class="text-center mb-6">
       <DsfrHeading as="div" size="lg" class="mb-2 lg:mb-3"> Proposez votre aide </DsfrHeading>
