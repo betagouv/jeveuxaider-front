@@ -1,5 +1,5 @@
 <template>
-  <BaseDisclosure v-if="$stores.aideModeration.isAICompliant !== true">
+  <BaseDisclosure v-if="$stores.aideModeration.isAICompliant === false">
     <template #button="{ isOpen }">
       <div class="flex font-semibold text-sm items-center group">
         <div class="flex items-center flex-shrink-0 group-hover:text-gray-600">

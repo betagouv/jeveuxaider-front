@@ -145,29 +145,36 @@ export default {
         this.$dayjs().isAfter(this.mission.start_date)
       )
     },
+    sentences() {
+      const items = [
+        this.mission.name,
+        this.mission.objectif,
+        this.mission.description,
+        this.mission.information,
+      ]
+      if (this.mission.prerequisites) {
+        items.push(...this.mission.prerequisites)
+      }
+
+      return items
+        .join('|')
+        .split(/[.?!|]/)
+        .flatMap((i) => {
+          return this.$filters
+            .decodeHTMLEntities(i)
+            .replace(/<\/li>/g, '</li>|')
+            .replace(/<\/p>/g, '</p>|')
+            .replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '')
+            .split(/[.?!|]/)
+        })
+        .map((i) => i.replace(/\s\s+/g, ' ').trim())
+        .filter((i) => i)
+    },
     textToAnalyze() {
-      return (
-        this.mission.name +
-        ' | ' +
-        this.mission.objectif +
-        ' | ' +
-        this.mission.description +
-        ' | ' +
-        this.mission.information +
-        (this.mission.prerequisites ? ' | ' + this.mission.prerequisites.join(' | ') : '')
-      )
-    },
-    textToAnalyzeWithoutTags() {
-      return this.textToAnalyze
-        ?.replace(/<\/li>/g, '</li> | ')
-        .replace(/<\/p>/g, '</p> | ')
-        .replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '')
-    },
-    textToAnalyzeAsSentences() {
-      return this.textToAnalyzeWithoutTags?.split(/[.?!|]\s+/)
+      return this.sentences.join('|')
     },
     sentencesWithBlacklistedWords() {
-      return this.textToAnalyzeAsSentences?.filter((sentence) =>
+      return this.sentences?.filter((sentence) =>
         this.blacklistedWords.some((word) => {
           const regex = new RegExp(`\\b${word}\\b`, 'gi')
           return regex.test(sentence.toLowerCase())
