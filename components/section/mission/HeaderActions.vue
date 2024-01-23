@@ -1,0 +1,118 @@
+<template>
+  <div
+    ref="menuActions"
+    :class="[isPinned ? 'bg-white shadow-lg' : '']"
+    class="z-50 sticky top-[-1px]"
+  >
+    <div class="container">
+      <div
+        class="flex justify-between flex-col lg:flex-row lg:items-center"
+        :class="[isPinned ? 'py-4' : 'border-b pb-8 mb-8']"
+      >
+        <div>
+          <div class="flex items-center space-x-3 mr-4">
+            <BaseHeading
+              :level="1"
+              class="flex-shrink-0"
+              :class="[isPinned ? 'mb-0 !text-2xl' : 'mb-4']"
+            >
+              Mission
+              <span class="font-normal text-gray-500">#{{ mission.id }}</span>
+            </BaseHeading>
+            <Badges class="hidden xl:flex" v-if="isPinned" :mission="mission" />
+            <DsfrLink
+              :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
+              :is-external="true"
+              class="text-xs font-normal ml-2 flex-shrink-0"
+            >
+              Voir la mission
+            </DsfrLink>
+          </div>
+          <Badges v-if="!isPinned" :mission="mission" />
+        </div>
+
+        <div class="flex space-x-3 mt-8 lg:mt-0">
+          <slot name="actions">
+            <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/edit`">
+              <DsfrButton type="primary">
+                <RiPencilLine class="h-5 w-5 fill-current" /> Modifier
+              </DsfrButton>
+            </nuxt-link>
+            <SelectMissionState
+              v-if="canEditStatut"
+              :mission="mission"
+              :mission-stats="missionStats"
+              @selected="handleChangeState($event)"
+            />
+            <Actions
+              :mission="mission"
+              @showModalSwitchIsOnline="$emit('showModalSwitchIsOnline')"
+              @missionDeleted="handleDeleted"
+            />
+          </slot>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Actions from '@/components/section/mission/Actions.vue'
+import Badges from '@/components/section/mission/Badges.vue'
+import SelectMissionState from '@/components/custom/SelectMissionState.vue'
+import MixinMission from '@/mixins/mission'
+
+export default defineNuxtComponent({
+  data() {
+    return {
+      isPinned: false,
+    }
+  },
+  components: {
+    Actions,
+    Badges,
+    SelectMissionState,
+  },
+  props: {
+    mission: {
+      type: Object,
+      required: true,
+    },
+    missionStats: {
+      type: Object,
+      default: null,
+    },
+  },
+  mixins: [MixinMission],
+  mounted() {
+    let timeout
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (timeout) {
+          window.cancelAnimationFrame(timeout)
+        }
+        timeout = window.requestAnimationFrame(() => {
+          this.handleScroll()
+        })
+      },
+      false
+    )
+  },
+  unmounted() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+
+  methods: {
+    handleScroll() {
+      if (!this.$refs.menuActions) {
+        return
+      }
+      this.isPinned = this.$refs.menuActions.getBoundingClientRect().top < 0
+    },
+    handleDeleted() {
+      this.$router.push('/admin/missions')
+    },
+  },
+})
+</script>

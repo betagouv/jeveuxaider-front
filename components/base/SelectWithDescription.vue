@@ -4,19 +4,15 @@
       <div class="relative z-0 inline-flex divide-x divide-gray-100">
         <div
           :class="[
-            'relative inline-flex items-center bg-white border border-transparent text-white',
+            'text-inherit relative inline-flex items-center bg-white border border-transparent text-white',
             { 'pl-2 pr-3': size === 'sm' },
             { 'py-2 pl-3 pr-4': size === 'md' },
           ]"
         >
           <RiCheckLine
-            :class="[
-              'text-cool-gray-700',
-              { 'h-4 w-4': size === 'sm' },
-              { 'h-5 w-5': size === 'md' },
-            ]"
+            :class="[{ 'h-4 w-4 text-sm': size === 'sm' }, { 'h-5 w-5 text-base': size === 'md' }]"
           />
-          <p class="ml-2.5 text-sm font-bold text-cool-gray-700 leading-4 truncate">
+          <p class="ml-2.5 font-medium leading-4 truncate">
             {{ selected.label }}
           </p>
         </div>

@@ -15,48 +15,12 @@
       @confirm="afterChangeIsActive"
     />
   </div>
-  <div
-    ref="menuActions"
-    :class="[isPinned ? 'bg-white shadow-lg' : '']"
-    class="z-50 sticky top-[-1px]"
-  >
-    <div class="container">
-      <div class="flex justify-between" :class="[isPinned ? 'py-8' : 'border-b pb-8 mb-8']">
-        <div>
-          <BaseHeading :level="1" class="mb-4">
-            Mission
-            <span class="font-normal text-gray-500 text-2xl">#{{ mission.id }}</span>
-            <DsfrLink
-              :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
-              :is-external="true"
-              class="text-xs font-normal ml-2"
-            >
-              Voir la mission
-            </DsfrLink>
-          </BaseHeading>
-          <Badges :mission="mission" />
-        </div>
-        <div class="flex space-x-3">
-          <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/edit`">
-            <DsfrButton type="primary" class="text-white">
-              <RiPencilLine class="h-5 w-5 fill-current" /> Modifier
-            </DsfrButton>
-          </nuxt-link>
-          <SelectMissionState
-            v-if="canEditStatut"
-            :mission="mission"
-            :mission-stats="missionStats"
-            @selected="handleChangeState($event)"
-          />
-          <Actions
-            :mission="mission"
-            @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
-            @missionDeleted="handleDeleted"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+  <HeaderActions
+    :mission="mission"
+    :missionStats="missionStats"
+    @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
+  />
+
   <div class="container">
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
@@ -170,14 +134,12 @@ import History from '@/components/section/History.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
 import MixinMission from '@/mixins/mission'
 import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
-import SelectMissionState from '@/components/custom/SelectMissionState.vue'
 import BoxReferents from '@/components/section/BoxReferents.vue'
 import BoxNotes from '@/components/custom/BoxNotes.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import Link from '@/components/dsfr/Link.vue'
 import ModalMissionToggleIsActive from '@/components/modal/ModalMissionToggleIsActive.vue'
-import Badges from '@/components/section/mission/Badges.vue'
-import Actions from '@/components/section/mission/Actions.vue'
+import HeaderActions from '@/components/section/mission/HeaderActions.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -193,15 +155,13 @@ export default defineNuxtComponent({
     HistoryStateChanges,
     History,
     OnlineIndicator,
-    SelectMissionState,
     BoxReferents,
     BoxNotes,
     Breadcrumb,
     BoxAideModeration,
     Link,
     ModalMissionToggleIsActive,
-    Badges,
-    Actions,
+    HeaderActions,
   },
   mixins: [MixinMission],
   async setup() {
@@ -248,31 +208,7 @@ export default defineNuxtComponent({
       isPinned: false,
     }
   },
-  mounted() {
-    let timeout
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (timeout) {
-          window.cancelAnimationFrame(timeout)
-        }
-        timeout = window.requestAnimationFrame(() => {
-          this.handleScroll()
-        })
-      },
-      false
-    )
-  },
-  unmounted() {
-    window.removeEventListener('scroll', this.handleScroll)
-  },
   methods: {
-    handleScroll() {
-      if (!this.$refs.menuActions) {
-        return
-      }
-      this.isPinned = this.$refs.menuActions.getBoundingClientRect().top < 0
-    },
     async handleChangeState(event) {
       this.mission.state = event.key
       const mission = await apiFetch(`/missions/${this.mission.id}`, {
@@ -293,9 +229,6 @@ export default defineNuxtComponent({
     },
     handleDuplicated(mission) {
       console.log('new mission', mission)
-    },
-    handleDeleted() {
-      this.$router.push('/admin/missions')
     },
   },
 })
