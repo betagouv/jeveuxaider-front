@@ -2,24 +2,22 @@
   <div
     ref="menuActions"
     :class="[isPinned ? 'bg-white shadow-lg' : '']"
-    class="z-50 sticky top-[-1px]"
+    class="z-50 sticky top-0 py-4 -mt-4"
   >
     <div class="container">
-      <div
-        class="flex justify-between flex-col lg:flex-row lg:items-center"
-        :class="[isPinned ? 'py-4' : 'border-b pb-8 mb-8']"
-      >
+      <div class="flex justify-between flex-col lg:flex-row lg:items-center">
         <div>
           <div class="flex items-center space-x-3 mr-4">
-            <BaseHeading
-              :level="1"
-              class="flex-shrink-0"
-              :class="[isPinned ? 'mb-0 !text-2xl' : 'mb-4']"
-            >
+            <BaseHeading :level="1" class="" :class="['flex-shrink-0', isPinned && '!text-2xl']">
               Mission
               <span class="font-normal text-gray-500">#{{ mission.id }}</span>
             </BaseHeading>
-            <Badges class="hidden xl:flex" v-if="isPinned" :mission="mission" />
+            <Badges
+              class="hidden xl:flex"
+              :class="{ 'xl:!hidden': !isPinned }"
+              :mission="mission"
+              v-if="isPinned"
+            />
             <DsfrLink
               :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
               :is-external="true"
@@ -28,10 +26,10 @@
               Voir la mission
             </DsfrLink>
           </div>
-          <Badges v-if="!isPinned" :mission="mission" />
+          <Badges :mission="mission" :class="{ 'xl:!hidden': isPinned }" />
         </div>
 
-        <div class="flex space-x-3 mt-8 lg:mt-0">
+        <div class="flex space-x-3 mt-4 lg:mt-0">
           <slot name="actions">
             <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/edit`">
               <DsfrButton type="primary">
@@ -53,6 +51,10 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <div :class="['container pt-4', { 'opactity-0 lg:!pt-7 xl:!pt-[38px]': isPinned }]">
+    <hr :class="['pb-8']" />
   </div>
 </template>
 
@@ -108,7 +110,7 @@ export default defineNuxtComponent({
       if (!this.$refs.menuActions) {
         return
       }
-      this.isPinned = this.$refs.menuActions.getBoundingClientRect().top < 0
+      this.isPinned = this.$refs.menuActions.getBoundingClientRect().top <= 0
     },
     handleDeleted() {
       this.$router.push('/admin/missions')
