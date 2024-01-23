@@ -9,28 +9,45 @@
         <CalendarFilters
           v-model="selectedDate"
           :starting-date="startingDate"
-          class="absolute bottom-[-100px] z-10"
+          class="mt-[50px] -mb-[190px] z-10"
           @update:modelValue="onChangedSelectedDate"
           @update:startingDate="onChangedStartingDate"
         />
       </div>
     </div>
-    <div class=""></div>
+    <div class="container mt-48 mb-32">
+      <AlgoliaMissions
+        :search-parameters="{
+          hitsPerPage: 6,
+          aroundPrecision: 2000,
+          filters: algoliaFilters,
+          aroundLatLngViaIP: true,
+          aroundRadius: 'all',
+        }"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import CalendarFilters from '@/components/calendar/CalendarFilters.vue'
+import AlgoliaMissions from '@/components/section/search/missions/AlgoliaMissions.vue'
 
 export default defineNuxtComponent({
   components: {
     CalendarFilters,
+    AlgoliaMissions,
   },
   data() {
     return {
       selectedDate: this.$dayjs().format('YYYY-MM-DD'),
       startingDate: this.$dayjs().format('YYYY-MM-DD'),
     }
+  },
+  computed: {
+    algoliaFilters() {
+      return `type:"Mission en présentiel"`
+    },
   },
   methods: {
     onChangedSelectedDate(date) {

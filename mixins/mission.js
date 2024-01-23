@@ -222,6 +222,72 @@ export default {
         return "en moins d'un jour"
       }
     },
+    hasSecondaryDomain() {
+      return (
+        (this.mission.template && this.mission.template.domaine_secondary_id) ||
+        this.mission.domaine_secondary_id
+      )
+    },
+    isIdealPourDebuter() {
+      return (
+        (!this.$stores.auth.isLogged ||
+          this.$stores.auth.user?.statistics?.participations_count === 0) &&
+        this.mission.structure?.score >= 80
+      )
+    },
+    isMissionCourte() {
+      return this.mission.commitment__total <= 4
+    },
+    placesOccupied() {
+      return this.mission.participations_max - this.mission.places_left
+    },
+    placesLeftText() {
+      if (!this.mission.is_registration_open) {
+        return 'Inscription fermée'
+      } else if (
+        this.mission.publisher_name &&
+        this.mission.publisher_name !== 'JeVeuxAider.gouv.fr' &&
+        this.mission.places_left > 99
+      ) {
+        return 'Plusieurs bénévoles recherchés'
+      } else if (this.mission.places_left && this.mission.places_left > 0) {
+        return this.$filters.pluralize(
+          this.mission.places_left,
+          'bénévole recherché',
+          'bénévoles recherchés'
+        )
+      } else {
+        return this.mission.has_places_left === false || this.mission.places_left === 0
+          ? 'Complet'
+          : 'Plusieurs bénévoles recherchés'
+      }
+    },
+    formattedBenevoleCount() {
+      const count = this.participationsCount - 3
+      return count < 1000 ? `+${count}` : '+1k'
+    },
+    participationsCount() {
+      return this.mission?.participations_max - this.mission?.places_left
+    },
+    portraits() {
+      const portraits = []
+      const randomNumbers = []
+      const portraitsCount = 74 // The total number of portraits existing
+      const portraitsToGetCount = Math.min(this.participationsCount, 3)
+
+      while (randomNumbers.length < portraitsToGetCount) {
+        const result = Math.floor(Math.random() * portraitsCount) + 1
+        if (!randomNumbers.includes(result)) {
+          randomNumbers.push(result)
+        }
+      }
+
+      randomNumbers.forEach((i) => {
+        portraits.push(`/images/portraits/${i}.png`)
+      })
+
+      return portraits
+    },
   },
   methods: {
     onClickGoToSimilarMissions() {
