@@ -12,12 +12,7 @@
               Mission
               <span class="font-normal text-gray-500">#{{ mission.id }}</span>
             </BaseHeading>
-            <Badges
-              class="hidden xl:flex"
-              :class="{ 'xl:!hidden': !isPinned }"
-              :mission="mission"
-              v-if="isPinned"
-            />
+            <Badges class="hidden xl:flex" :mission="mission" v-if="isPinned" />
             <DsfrLink
               :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
               :is-external="true"
@@ -26,7 +21,7 @@
               Voir la mission
             </DsfrLink>
           </div>
-          <Badges :mission="mission" :class="{ 'xl:!hidden': isPinned }" />
+          <Badges v-if="!isPinned" :mission="mission" />
         </div>
 
         <div class="flex space-x-3 mt-4 lg:mt-0">
