@@ -4,7 +4,7 @@
       <div class="relative z-0 inline-flex divide-x divide-gray-100">
         <div
           :class="[
-            'text-inherit relative inline-flex items-center bg-white border border-transparent text-white',
+            'text-inherit relative inline-flex items-center bg-white border border-transparent',
             { 'pl-2 pr-3': size === 'sm' },
             { 'py-2 pl-3 pr-4': size === 'md' },
           ]"
