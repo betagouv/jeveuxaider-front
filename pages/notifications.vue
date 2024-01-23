@@ -9,14 +9,13 @@
       <BaseSectionHeading title="Vos notifications" />
     </template>
     <template #left>
-      <SearchFilters>
-        <BaseInput
-          name="search"
+      <SearchFilters @reset-filters="deleteAllFilters">
+        <DsfrInput
+          type="search"
+          size="lg"
           placeholder="Recherche par mots clés..."
           icon="RiSearchLine"
-          variant="transparent"
           :modelValue="$route.query['filter[search]']"
-          clearable
           @update:modelValue="changeFilter('filter[search]', $event)"
         />
         <template #prefilters>
@@ -25,8 +24,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="!hasActiveFilters"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="!hasActiveFilters"
             @click.native="deleteAllFilters"
           >
             Toutes
@@ -37,10 +35,7 @@
             as="button"
             size="md"
             context="selectable"
-            :is-selected="
-              $route.query['filter[unread]'] && $route.query['filter[unread]'] == 'true'
-            "
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="$route.query['filter[unread]'] && $route.query['filter[unread]'] == 'true'"
             @click.native="changeFilter('filter[unread]', 'true')"
           >
             Non lues
@@ -77,6 +72,8 @@
           </div>
         </div>
       </div>
+
+      <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
       <DsfrPagination
         :current-page="queryResult.current_page"

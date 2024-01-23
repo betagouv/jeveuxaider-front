@@ -7,7 +7,11 @@
         { key: 'onsite', content: 'Prés de chez moi', slug: 'onsite' },
         { key: 'remote', content: 'Depuis chez moi', slug: 'remote' },
       ]"
-      :tabpanel-class="['py-4 bg-white tab-panel', { '!border-white': isPinned }]"
+      :tabpanel-class="[
+        'py-4 bg-white tab-panel',
+        { '!border-white': isPinned },
+        { '!pb-0': isGeolocFilterActive },
+      ]"
       tabswrapper-class="!px-2 !text-[15px] xs:!px-3 xs:!text-base"
       :selected-tab-key="selectedTabKey"
       :class="[{ 'full-bleed shadow-xl': isPinned }]"
@@ -16,7 +20,7 @@
       <template #tab-onsite>
         <div class="flex items-center divide-x">
           <LocalisationSuggestions
-            class="w-full pr-4 mr-auto"
+            :class="['w-full mr-auto min-w-0', { 'pr-4': !isGeolocFilterActive }]"
             @geolocFilterActiveStateToggle="isGeolocFilterActive = $event"
           />
           <transition

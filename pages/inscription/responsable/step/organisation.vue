@@ -15,7 +15,7 @@
         <span class="font-bold">{{ form.name }}</span> !
       </h1>
     </div>
-    <div class="max-w-xl mx-auto">
+    <div class="max-w-2xl mx-auto">
       <div class="px-8 py-6 bg-white text-black text-3xl font-extrabold leading-9 text-center">
         Complétez les informations suivantes liés à votre organisation
       </div>
@@ -447,6 +447,11 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
+    },
+    async onFetchGeoSuggestions(payload) {
+      this.autocompleteOptions = await useGeolocationFetch(payload, {
+        context: 'input',
+      })
     },
   },
 })

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="organisation" class="relative">
+  <div class="relative">
     <client-only>
       <ClientOnly>
         <Teleport to="#teleport-sidebar">
@@ -17,7 +17,7 @@
         <span class="font-bold">{{ form.name }}</span> !
       </h1>
     </div>
-    <div class="max-w-xl mx-auto">
+    <div class="max-w-2xl mx-auto">
       <div class="px-8 py-6 bg-white text-black text-3xl font-extrabold leading-9 text-center">
         Complétez les informations liées à votre collectivité territoriale
       </div>
@@ -166,7 +166,6 @@ export default defineNuxtComponent({
         department: string().nullable().required('Un département est requis'),
         zips: array().min(1, 'Merci de renseigner au moins 1 code postal'),
       }),
-      inputGeoType: 'municipality',
     }
   },
   computed: {
@@ -204,9 +203,18 @@ export default defineNuxtComponent({
       this.form.zips = this.form.zips.filter((item) => item !== value)
     },
     handleSelectedGeo(item) {
-      if (item && !this.form.zips.includes(item)) {
-        this.form.zips.push(item.postcode)
+      if (!item) {
+        return
       }
+
+      const zips = item.id.includes('all_zips')
+        ? item.postcodes.flatMap((p) => p.zip.split(','))
+        : item.postcode.split(',')
+      zips.forEach((zip) => {
+        if (!this.form.zips.includes(zip)) {
+          this.form.zips.push(zip)
+        }
+      })
     },
     onSubmit() {
       if (this.loading) {
@@ -228,6 +236,12 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
+    },
+    async onFetchGeoSuggestions(payload) {
+      this.autocompleteOptions = await useGeolocationFetch(payload, {
+        context: 'input',
+        inputGeoType: 'municipality',
+      })
     },
   },
 })

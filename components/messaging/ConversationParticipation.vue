@@ -19,6 +19,7 @@
         <ConversationParticipationActionAsResponsable
           v-if="conversation.conversable_type === 'App\\Models\\Participation'"
         />
+        <ConversationTags class="border-b" @update-selected-tags="onUpdateSelectedTags" />
       </template>
     </template>
 
@@ -48,6 +49,7 @@ import ConversationRecipientBenevole from '@/components/messaging/ConversationRe
 import ConversationRecipientResponsable from '@/components/messaging/ConversationRecipientResponsable.vue'
 import ConversationParticipationActionAsResponsable from '@/components/messaging/ConversationParticipationActionAsResponsable.vue'
 import ConversationParticipationActionAsBenevole from '@/components/messaging/ConversationParticipationActionAsBenevole.vue'
+import ConversationTags from '@/components/messaging/ConversationTags.vue'
 import CardInfosMission from '@/components/messaging/CardInfosMission.vue'
 import Conversation from '@/components/messaging/Conversation.vue'
 import MixinConversationParticipation from '@/mixins/conversation/participation'
@@ -58,6 +60,7 @@ export default defineNuxtComponent({
     ConversationRecipientResponsable,
     ConversationParticipationActionAsResponsable,
     ConversationParticipationActionAsBenevole,
+    ConversationTags,
     CardInfosMission,
     Conversation,
   },
@@ -70,6 +73,12 @@ export default defineNuxtComponent({
     },
     benevoleUser() {
       return this.conversation.users.find((user) => user.id == this.participation.profile.user_id)
+    },
+  },
+  methods: {
+    onUpdateSelectedTags(tags) {
+      this.conversation.conversable.tags = tags
+      this.$stores.messaging.refreshConversationInConversations(this.conversation)
     },
   },
 })

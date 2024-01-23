@@ -37,7 +37,7 @@
         </div>
       </template>
     </BaseSectionHeading>
-    <SearchFilters class="mb-4">
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
       <DsfrInput
         type="search"
         size="lg"
@@ -48,27 +48,25 @@
       />
 
       <template #prefilters>
-        <DsfrTag
+        <!-- <DsfrTag
           :key="`toutes-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="!hasActiveFilters"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="!hasActiveFilters"
           @click.native="deleteAllFilters"
         >
           Toutes
-        </DsfrTag>
+        </DsfrTag> -->
 
         <DsfrTag
           :key="`terms-with-related-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[has_related]'] && $route.query['filter[has_related]'] == 'yes'
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[has_related]', 'yes')"
         >
           Avec des liaisons
@@ -79,10 +77,9 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[has_related]'] && $route.query['filter[has_related]'] == 'no'
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[has_related]', 'no')"
         >
           Sans liaison
@@ -92,10 +89,9 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[is_published]', 'true')"
         >
           En ligne
@@ -106,10 +102,9 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[is_published]', 'false')"
         >
           Hors ligne
@@ -144,6 +139,8 @@
         </BaseTableRow>
       </BaseTableBody>
     </BaseTable>
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <DsfrPagination
       class="mt-6"

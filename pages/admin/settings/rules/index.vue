@@ -30,7 +30,7 @@
       </template>
     </BaseSectionHeading>
 
-    <SearchFilters class="mb-4">
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
       <DsfrInput
         type="search"
         size="lg"
@@ -40,25 +40,23 @@
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <DsfrTag
+        <!-- <DsfrTag
           :key="`toutes-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="!hasActiveFilters"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="!hasActiveFilters"
           @click.native="deleteAllFilters"
         >
           Toutes
-        </DsfrTag>
+        </DsfrTag> -->
 
         <DsfrTag
           :key="`published-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_active]'] && $route.query['filter[is_active]'] == 1"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="$route.query['filter[is_active]'] && $route.query['filter[is_active]'] == 1"
           @click.native="changeFilter('filter[is_active]', 1)"
         >
           Active
@@ -69,8 +67,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['filter[is_active]'] && $route.query['filter[is_active]'] == 0"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="$route.query['filter[is_active]'] && $route.query['filter[is_active]'] == 0"
           @click.native="changeFilter('filter[is_active]', 0)"
         >
           Inactive
@@ -118,6 +115,8 @@
         </BaseTableRow>
       </BaseTableBody>
     </BaseTable>
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <DsfrPagination
       class="mt-6"

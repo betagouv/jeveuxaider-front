@@ -18,36 +18,33 @@
           Guides, webinaires, etc.
         </BaseHeading>
 
-        <SearchFilters class="my-8">
-          <BaseInput
-            name="search"
+        <SearchFilters class="my-8" @reset-filters="deleteAllFilters">
+          <DsfrInput
+            type="search"
+            size="lg"
             placeholder="Recherche par mots clés..."
             icon="RiSearchLine"
-            variant="transparent"
             :modelValue="$route.query['filter[search]']"
-            clearable
             @update:modelValue="changeFilter('filter[search]', $event)"
           />
 
           <template #prefilters>
-            <DsfrTag
+            <!-- <DsfrTag
               :key="`toutes-${$route.fullPath}`"
               as="button"
               size="md"
               context="selectable"
-              :is-selected="!hasActiveFilters"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="!hasActiveFilters"
               @click.native="deleteAllFilters"
             >
               Toutes
-            </DsfrTag>
+            </DsfrTag> -->
             <DsfrTag
               :key="`type-file-${$route.fullPath}`"
               as="button"
               size="md"
               context="selectable"
-              :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'file'"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="$route.query['filter[type]'] && $route.query['filter[type]'] == 'file'"
               @click.native="changeFilter('filter[type]', 'file')"
             >
               Fichiers
@@ -57,8 +54,7 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="$route.query['filter[type]'] && $route.query['filter[type]'] == 'link'"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="$route.query['filter[type]'] && $route.query['filter[type]'] == 'link'"
               @click.native="changeFilter('filter[type]', 'link')"
             >
               Liens
@@ -109,11 +105,7 @@
                 </div>
               </div>
             </div>
-            <div v-else>
-              <div class="h-[300px] flex flex-col items-center justify-center">
-                <div class="text-lg text-gray-400 font-semibold">Aucune ressource disponible</div>
-              </div>
-            </div>
+            <CustomEmptyState v-else />
           </template>
         </div>
 

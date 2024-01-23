@@ -1,6 +1,13 @@
 <template>
   <div>
     <ConversationRecipient :title="user.profile.full_name">
+      <template #suffix-title>
+        <DsfrLink
+          @click="drawerProfileId = user.profile.id"
+          class="text-jva-blue-500 hover:text-jva-blue-300 text-xs"
+          >Plus de détails</DsfrLink
+        >
+      </template>
       <div
         v-dragscroll.x
         class="px-4 lg:px-6 flex gap-4 items-center overflow-hidden whitespace-nowrap"

@@ -19,7 +19,7 @@
       secondary-title-bottom="Liste des référents en fonction de leur activité"
     />
 
-    <SearchFilters>
+    <SearchFilters @reset-filters="deleteAllFilters">
       <DsfrInput
         type="search"
         size="lg"
@@ -29,24 +29,22 @@
         @update:modelValue="changeFilter('search', $event)"
       />
       <template #prefilters>
-        <Tag
+        <!-- <Tag
           :key="`toutes-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="!hasActiveFilters"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="!hasActiveFilters"
           @click.native="deleteAllFilters"
         >
           Tous
-        </Tag>
+        </Tag> -->
         <Tag
           :key="`online-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['online'] && $route.query['online'] == 'true'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="$route.query['online'] && $route.query['online'] == 'true'"
           @click.native="changeFilter('online', 'true')"
         >
           En ligne
@@ -56,8 +54,7 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="$route.query['inactive'] && $route.query['inactive'] == 'true'"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="$route.query['inactive'] && $route.query['inactive'] == 'true'"
           @click.native="changeFilter('inactive', 'true')"
         >
           Inactif depuis 1 mois

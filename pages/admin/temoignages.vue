@@ -18,39 +18,36 @@
           {{ $numeral(queryResult.total) }}
           {{ $filters.pluralize(queryResult.total, 'retour', 'retours', false) }}
         </BaseHeading>
-        <SearchFilters class="mb-12">
-          <BaseInput
-            name="search"
-            placeholder="Rechercher par mots clés, email, nom"
+        <SearchFilters class="mb-12" @reset-filters="deleteAllFilters">
+          <DsfrInput
+            type="search"
+            size="lg"
+            placeholder="Recherche par mots clés..."
             icon="RiSearchLine"
-            variant="transparent"
             :modelValue="$route.query['filter[search]']"
-            clearable
             @update:modelValue="changeFilter('filter[search]', $event)"
           />
           <template #prefilters>
-            <DsfrTag
+            <!-- <DsfrTag
               :key="`tous-${$route.fullPath}`"
               as="button"
               size="md"
               context="selectable"
-              :is-selected="!hasActiveFilters"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="!hasActiveFilters"
               @click.native="deleteAllFilters"
             >
               Tous
-            </DsfrTag>
+            </DsfrTag> -->
 
             <DsfrTag
               :key="`published-${$route.fullPath}`"
               as="button"
               size="md"
               context="selectable"
-              :is-selected="
+              :is-active="
                 $route.query['filter[is_published]'] &&
                 $route.query['filter[is_published]'] == 'true'
               "
-              is-selected-class="border-gray-50 bg-gray-50"
               @click.native="changeFilter('filter[is_published]', 'true')"
             >
               En ligne
@@ -61,11 +58,10 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="
+              :is-active="
                 $route.query['filter[is_published]'] &&
                 $route.query['filter[is_published]'] == 'false'
               "
-              is-selected-class="border-gray-50 bg-gray-50"
               @click.native="changeFilter('filter[is_published]', 'false')"
             >
               Hors ligne
@@ -91,6 +87,8 @@
             @click.native="drawerTemoignageId = temoignage.id"
           />
         </div>
+
+        <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
         <DsfrPagination
           class="mt-8"

@@ -15,36 +15,33 @@
           {{ $numeral(queryResult.total) }}
           {{ $filters.pluralize(queryResult.total, 'note', 'notes', false) }}
         </BaseHeading>
-        <SearchFilters class="mb-12">
-          <BaseInput
-            name="search"
-            placeholder="Rechercher par mots clés, nom"
+        <SearchFilters class="mb-12" @reset-filters="deleteAllFilters">
+          <DsfrInput
+            type="search"
+            size="lg"
+            placeholder="Recherche par mots clés..."
             icon="RiSearchLine"
-            variant="transparent"
             :modelValue="$route.query['filter[search]']"
-            clearable
             @update:modelValue="changeFilter('filter[search]', $event)"
           />
           <template #prefilters>
-            <Tag
+            <!-- <Tag
               :key="`tous-${$route.fullPath}`"
               as="button"
               size="md"
               context="selectable"
-              :is-selected="!hasActiveFilters"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="!hasActiveFilters"
               @click.native="deleteAllFilters"
             >
               Toutes
-            </Tag>
+            </Tag> -->
 
             <Tag
               :key="`mine-${$route.fullPath}`"
               as="button"
               size="md"
               context="selectable"
-              :is-selected="$route.query['filter[mine]'] && $route.query['filter[mine]'] == '1'"
-              is-selected-class="border-gray-50 bg-gray-50"
+              :is-active="$route.query['filter[mine]'] && $route.query['filter[mine]'] == '1'"
               @click.native="changeFilter('filter[mine]', '1')"
             >
               Mes notes
@@ -55,10 +52,9 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="
+              :is-active="
                 $route.query['filter[type]'] && $route.query['filter[type]'] == 'organisations'
               "
-              is-selected-class="border-gray-50 bg-gray-50"
               @click.native="changeFilter('filter[type]', 'organisations')"
             >
               Organisations
@@ -69,10 +65,9 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="
+              :is-active="
                 $route.query['filter[type]'] && $route.query['filter[type]'] == 'missions'
               "
-              is-selected-class="border-gray-50 bg-gray-50"
               @click.native="changeFilter('filter[type]', 'missions')"
             >
               Missions
@@ -82,6 +77,8 @@
         <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
           <CardNote v-for="note in queryResult.data" :key="note.id" :note="note" />
         </div>
+
+        <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
         <Pagination
           class="mt-8"

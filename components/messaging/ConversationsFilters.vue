@@ -13,6 +13,21 @@
       scrollbar-class="pr-4 lg:pr-6 py-4 lg:py-6"
     >
       <div class="px-2 grid grid-cols-1 gap-6 lg:gap-8">
+        <BaseFormControl
+          v-if="
+            ['responsable'].includes($stores.auth.contextRole) &&
+            $stores.structureTags.options.length > 0
+          "
+          label="Tags"
+          html-for="tags"
+        >
+          <BaseCheckboxGroup
+            v-model="form['filter[tags]']"
+            name="tags"
+            variant="button"
+            :options="$stores.structureTags.options"
+          />
+        </BaseFormControl>
         <BaseFormControl label="Statut de la participation" html-for="participation_state">
           <BaseCheckboxGroup
             v-model="form['filter[participation_state]']"
@@ -87,6 +102,7 @@ export default defineNuxtComponent({
         'filter[structure_name]': null,
         'filter[mission_name]': null,
         'filter[mission_zip_city]': null,
+        'filter[tags]': null,
       }
       this.handleSubmit()
     },

@@ -35,6 +35,7 @@
 
 <script>
 export default defineNuxtComponent({
+  emits: ['update:modelValue', 'clear', 'focus'],
   props: {
     modelValue: { type: [String, Number], default: null },
     alwaysShowClear: { type: Boolean, default: false },

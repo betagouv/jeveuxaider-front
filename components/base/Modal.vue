@@ -47,7 +47,7 @@
                       v-if="!hideClose"
                       type="button"
                       class="bg-white text-gray-400 hover:text-gray-700"
-                      @click="$emit('close')"
+                      @click.stop="$emit('close')"
                     >
                       <span class="sr-only">Close</span>
                       <RiCloseFill class="h-6 w-6 fill-current cursor-pointer" />

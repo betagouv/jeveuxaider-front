@@ -37,9 +37,10 @@
         ]"
       >
         <FocusLoop :is-visible="showOptions" @keydown.esc="showOptions = false">
-          <div class="font-medium border-b border-gray-300 pb-2">
+          <div :class="['font-medium ', { 'border-b border-gray-300 pb-2': !searchable }]">
             {{ placeholder }}
           </div>
+          <FacetSearch v-if="searchable" ref="facetSearch" class="mt-3" v-model="searchTerm" />
           <div
             ref="scrollContainer"
             class="max-h-[268px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2 py-2"
@@ -47,8 +48,8 @@
             <ul class="mx-2">
               <template v-if="!multiple">
                 <li
-                  v-for="(item, index) in options"
-                  :key="index"
+                  v-for="(item, index) in filteredOptions"
+                  :key="`${item[attributeKey]}_${index}`"
                   :ref="`option_${index}`"
                   class="relative flex justify-between items-center text-sm pl-2 py-[6px] pr-2 cursor-pointer hover:bg-[#F0F0FF] focus:bg-[#F0F0FF]"
                   :class="[
@@ -71,8 +72,8 @@
               <template v-else>
                 <div class="space-y-2">
                   <div
-                    v-for="(item, index) in options"
-                    :key="index"
+                    v-for="(item, index) in filteredOptions"
+                    :key="`${item[attributeKey]}_${index}`"
                     :class="[{ 'text-jva-blue-500': isOptionActive(item) }]"
                     class="flex items-center group"
                   >
@@ -110,10 +111,12 @@
 
 <script>
 import Selectable from '@/mixins/form/selectable'
+import FacetSearch from '@/components/section/search/FacetSearch.vue'
 import { FocusLoop } from '@vue-a11y/focus-loop'
 
 export default defineNuxtComponent({
   components: {
+    FacetSearch,
     FocusLoop,
   },
   mixins: [Selectable],
@@ -127,6 +130,7 @@ export default defineNuxtComponent({
     attributeKey: { type: String, default: 'key' },
     attributeLabel: { type: String, default: 'label' },
     clearable: { type: Boolean, default: false },
+    searchable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     optionsClass: { type: String, default: '' },
     multiple: { type: Boolean, default: false },
@@ -135,6 +139,7 @@ export default defineNuxtComponent({
     return {
       enableUnselect: true,
       optionsPositionClass: '',
+      searchTerm: '',
     }
   },
   watch: {
@@ -143,6 +148,16 @@ export default defineNuxtComponent({
         await this.$nextTick()
         this.handleOptionsPosition()
       }
+    },
+  },
+  computed: {
+    filteredOptions() {
+      if (!this.searchable) {
+        return this.options
+      }
+      return this.options.filter((option) => {
+        return option[this.attributeLabel].toLowerCase().includes(this.searchTerm.toLowerCase())
+      })
     },
   },
   methods: {

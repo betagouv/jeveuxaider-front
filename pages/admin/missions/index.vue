@@ -41,7 +41,7 @@
         </template>
       </BaseSectionHeading>
 
-      <SearchFilters class="mt-8 mb-12">
+      <SearchFilters class="mt-8 mb-12" @reset-filters="deleteAllFilters">
         <DsfrInput
           type="search"
           size="lg"
@@ -69,17 +69,16 @@
             <div aria-hidden class="bg-gray-600 mx-1 w-[1px] h-6" />
           </div>
 
-          <DsfrTag
+          <!-- <DsfrTag
             :key="`toutes-${$route.fullPath}`"
             as="button"
             size="md"
             context="selectable"
-            :is-selected="!hasActiveFilters"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="!hasActiveFilters"
             @click.native="deleteAllFilters"
           >
             Toutes
-          </DsfrTag>
+          </DsfrTag> -->
 
           <template v-for="visibleFilter in visibleFilters" :key="visibleFilter">
             <BaseFilterSelectAdvanced
@@ -99,11 +98,10 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="
+              :is-active="
                 $route.query['filter[available]'] &&
                 $route.query['filter[available]'] == 'available'
               "
-              is-selected-class="border-gray-50 bg-gray-50"
               @click.native="changeFilter('filter[available]', 'available')"
             >
               En ligne
@@ -151,11 +149,10 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="
+              :is-active="
                 $route.query['filter[is_snu_mig_compatible]'] &&
                 $route.query['filter[is_snu_mig_compatible]'] == 'true'
               "
-              is-selected-class="border-gray-50 bg-gray-50"
               @click.native="changeFilter('filter[is_snu_mig_compatible]', 'true')"
             >
               SNU/MIG
@@ -212,6 +209,7 @@
                   }
                 })
               "
+              :searchable="true"
               :modelValue="$route.query['filter[department]']"
               placeholder="Département"
               @update:modelValue="changeFilter('filter[department]', $event)"
@@ -225,7 +223,7 @@
               :options="autocompleteOptionsZips"
               attribute-key="zip"
               hide-attribute-key
-              attribute-right-label="zip"
+              attribute-right-label="labelRight"
               @fetch-suggestions="onFetchSuggestionsZips"
               @selected="changeFilter('filter[zip]', $event?.zip)"
               :loading="loadingFetchZips"
@@ -245,6 +243,7 @@
               :modelValue="$route.query['filter[ofActivity]']"
               name="activity_id"
               :options="activities"
+              :searchable="true"
               attribute-key="id"
               attribute-label="name"
               placeholder="Activité"
@@ -322,10 +321,9 @@
               as="button"
               size="md"
               context="selectable"
-              :is-selected="
+              :is-active="
                 $route.query['filter[is_autonomy]'] && $route.query['filter[is_autonomy]'] == 'true'
               "
-              is-selected-class="border-gray-50 bg-gray-50"
               @click="changeFilter('filter[is_autonomy]', 'true')"
             >
               En autonomie
@@ -358,6 +356,8 @@
           @click.native="drawerMissionId = mission.id"
         />
       </div>
+
+      <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
       <DsfrPagination
         class="my-12"
@@ -516,38 +516,11 @@ export default defineNuxtComponent({
       this.loadingFetchOrganisations = false
     },
     async onFetchSuggestionsZips(value) {
-      const trimmedValue = value?.trim()
-      if (!trimmedValue || trimmedValue.length < 3) {
-        this.autocompleteOptionsZips = []
-        return
-      }
-
-      // First character must be a letter or a number to avoid error 400
-      var re = new RegExp(/^[a-z0-9]$/i)
-      if (!re.test(trimmedValue[0])) {
-        this.autocompleteOptionsZips = []
-        return
-      }
-
       this.loadingFetchZips = true
-
-      const suggestions = await $fetch('https://api-adresse.data.gouv.fr/search', {
-        params: {
-          q: trimmedValue,
-          limit: 5,
-          type: 'municipality',
-        },
+      this.autocompleteOptionsZips = await useGeolocationFetch(value, {
+        context: 'filter',
+        inputGeoType: 'municipality',
       })
-
-      const formatOptions = suggestions.features.map((option) => {
-        return {
-          id: option.properties.id,
-          name: option.properties.city,
-          zip: option.properties.postcode,
-        }
-      })
-      this.autocompleteOptionsZips = formatOptions
-
       this.loadingFetchZips = false
     },
     async fetchResponsablesForAdmins(organisationId, oldOrganisationId) {

@@ -24,7 +24,7 @@
       <div class="text-[#727273]">
         <div class="line-clamp-1">
           <span>📍 </span>
-          <span v-if="mission.is_autonomy">{{ autonomyCities }}</span>
+          <span :title="autonomyCities" v-if="mission.is_autonomy">{{ autonomyCities }}</span>
           <span v-else>{{ address }}</span>
         </div>
         <div v-if="mission.is_autonomy && mission.autonomy_precisions">
@@ -59,11 +59,13 @@
 
 <script>
 export default defineNuxtComponent({
-  setup() {
+  async setup() {
     const runtimeConfig = useRuntimeConfig()
+    const { formatAutonomyCities } = await autonomyCitiesHelper()
 
     return {
       googlePlacesKey: runtimeConfig.public.google.places,
+      formatAutonomyCities,
     }
   },
   props: {
@@ -83,17 +85,7 @@ export default defineNuxtComponent({
       return null
     },
     autonomyCities() {
-      if (this.mission.is_autonomy && this.mission.autonomy_zips.length) {
-        return this.mission.autonomy_zips
-          .map((item) => {
-            return item.city.includes(' Arrondissement')
-              ? `${item.city.replace(' Arrondissement', '')}`
-              : `${item.city} (${item.zip})`
-          })
-          .sort((a, b) => a.localeCompare(b, 'fr', { numeric: true }))
-          .join(', ')
-      }
-      return null
+      return this.formatAutonomyCities(this.mission.autonomy_zips)
     },
     googleQuery() {
       return this.mission.is_autonomy

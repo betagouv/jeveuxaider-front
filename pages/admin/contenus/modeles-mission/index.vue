@@ -35,7 +35,7 @@
       </template>
     </BaseSectionHeading>
 
-    <SearchFilters class="mb-4">
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
       <DsfrInput
         type="search"
         size="lg"
@@ -45,27 +45,25 @@
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <DsfrTag
+        <!-- <DsfrTag
           :key="`tous-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="!hasActiveFilters"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="!hasActiveFilters"
           @click.native="deleteAllFilters"
         >
           Tous
-        </DsfrTag>
+        </DsfrTag> -->
 
         <DsfrTag
           :key="`published-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[published]'] && $route.query['filter[published]'] == 'true'
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[published]', 'true')"
         >
           En ligne
@@ -76,10 +74,9 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[published]'] && $route.query['filter[published]'] == 'false'
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[published]', 'false')"
         >
           Hors ligne
@@ -91,10 +88,9 @@
           as="button"
           size="md"
           context="selectable"
-          :is-selected="
+          :is-active="
             $route.query['filter[with_reseau]'] && $route.query['filter[with_reseau]'] == 'yes'
           "
-          is-selected-class="border-gray-50 bg-gray-50"
           @click.native="changeFilter('filter[with_reseau]', 'yes')"
         >
           Réseaux
@@ -179,6 +175,8 @@
         </template>
       </Card>
     </div>
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <Pagination
       class="mt-6"

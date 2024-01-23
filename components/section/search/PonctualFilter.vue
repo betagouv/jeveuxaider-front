@@ -3,8 +3,7 @@
     as="button"
     size="md"
     context="selectable"
-    :is-selected="isPonctual"
-    is-selected-class="border-gray-50 bg-gray-50"
+    :is-active="isPonctual"
     @click.native="handleToggle"
   >
     Missions courtes

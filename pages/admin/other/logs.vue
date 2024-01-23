@@ -19,7 +19,7 @@
       :loading="queryLoading"
     />
 
-    <SearchFilters class="mb-4">
+    <SearchFilters class="mb-4" @reset-filters="deleteAllFilters">
       <DsfrInput
         type="search"
         size="lg"
@@ -29,17 +29,16 @@
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <Tag
+        <!-- <Tag
           :key="`toutes-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
-          :is-selected="!hasActiveFilters"
-          is-selected-class="border-gray-50 bg-gray-50"
+          :is-active="!hasActiveFilters"
           @click.native="deleteAllFilters"
         >
           Toutes
-        </Tag>
+        </Tag> -->
         <BaseFilterSelectAdvanced
           :key="`subject-type-${$route.fullPath}`"
           name="types"
@@ -49,6 +48,7 @@
             { key: 'missions', label: 'Missions' },
             { key: 'participations', label: 'Participations' },
             { key: 'utilisateurs', label: 'Utilisateurs' },
+            { key: 'tags', label: 'Tags' },
             { key: 'rules', label: 'Règles' },
           ]"
           :modelValue="$route.query['filter[type]']"
@@ -80,6 +80,8 @@
       class="cursor-pointer"
       @click.native="drawerActivityLogId = log.id"
     />
+
+    <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
     <Pagination
       class="mt-6"

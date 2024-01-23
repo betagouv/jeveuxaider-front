@@ -34,7 +34,7 @@
                 size="md"
                 context="selectable"
                 :for="date.id + slot"
-                :is-selected="
+                :is-active="
                   selectedSlots.filter(
                     (selectedSlot) => selectedSlot.date == date.id && selectedSlot.slot == slot
                   ).length > 0

@@ -36,7 +36,7 @@
           </div>
         </template>
       </BaseSectionHeading>
-      <SearchFilters class="mt-8 mb-12">
+      <SearchFilters class="mt-8 mb-12" @reset-filters="deleteAllFilters">
         <DsfrInput
           type="search"
           size="lg"
@@ -66,17 +66,16 @@
             <div aria-hidden class="bg-gray-600 mx-1 w-[1px] h-6" />
           </div>
 
-          <DsfrTag
+          <!-- <DsfrTag
             :key="`toutes-${$route.fullPath}`"
             as="button"
             size="md"
             context="selectable"
-            :is-selected="!hasActiveFilters"
-            is-selected-class="border-gray-50 bg-gray-50"
+            :is-active="!hasActiveFilters"
             @click.native="deleteAllFilters"
           >
             Toutes
-          </DsfrTag>
+          </DsfrTag> -->
 
           <template v-for="visibleFilter in visibleFilters" :key="visibleFilter">
             <BaseFilterSelectAdvanced
@@ -120,6 +119,7 @@
                 })
               "
               :modelValue="$route.query['filter[department]']"
+              :searchable="true"
               placeholder="Département"
               @update:modelValue="changeFilter('filter[department]', $event)"
             />
@@ -151,6 +151,8 @@
           @click.native="drawerOrganisationId = organisation.id"
         />
       </div>
+
+      <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
 
       <Pagination
         class="my-12"

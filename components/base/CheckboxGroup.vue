@@ -12,7 +12,7 @@
         v-for="option in options"
         :key="option.key"
         :option="option"
-        class="relative flex items-start m-1"
+        class="relative flex items-start m-1 max-w-full"
         :size="size"
         :is-checked="
           isModel ? value.some((item) => item.id == option.key) : value.includes(option.key)
