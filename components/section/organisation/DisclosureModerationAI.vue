@@ -26,8 +26,8 @@
     </template>
     <div v-if="$stores.aideModeration.response" class="ml-7 mt-3 text-sm space-y-2 text-gray-500">
       <p>
-        Score de conformité : {{ $numeral(score, '0.[00]') }}%. <br />En dessous de 87%, la mission
-        présente un risque.
+        Score de conformité : <strong>{{ $numeral(globalScore, '0.[00]') }}%</strong>. <br />En
+        dessous de 50%, la mission présente un risque.
       </p>
       <template v-if="sentencesError.length > 0">
         <div>Les phrases détectées par le modèle :</div>
@@ -73,28 +73,12 @@ export default defineNuxtComponent({
         score: this.$stores.aideModeration.response.scores[key],
       }))
     },
-    sentencesSuccess() {
-      return this.sentencesWithKeyAndScore.filter((item) => item.score >= 0.95)
-    },
-    sentencesWarning() {
-      return this.sentencesWithKeyAndScore.filter((item) => item.score > 0.75 && item.score < 0.95)
-    },
     sentencesError() {
-      return this.sentencesWithKeyAndScore.filter((item) => item.score <= 0.75)
+      return this.sentencesWithKeyAndScore.filter((item) => item.score <= 0.8)
     },
-    otherSentences() {
-      return this.sentencesWithKeyAndScore
-        .filter((item) => item.score > 0.75)
-        .sort(function (a, b) {
-          return parseFloat(a.score) - parseFloat(b.score)
-        })
-    },
-    score() {
+    globalScore() {
       return this.$stores.aideModeration.response.global * 100
     },
-    // scoreMin () {
-    //   return this.$stores.aideModeration.response.scores.reduce((a, b) => Math.min(a, b)) * 100
-    // }
   },
 })
 </script>

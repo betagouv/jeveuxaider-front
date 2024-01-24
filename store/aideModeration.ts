@@ -8,7 +8,7 @@ export const useAideModerationStore = defineStore('aideModeration', {
     loading: false,
   }),
   getters: {
-    isAICompliant: (state) => (state.response ? state.response?.global > 0.87 : null),
+    isAICompliant: (state) => (state.response ? state.response?.report === 0 : null),
   },
   actions: {
     async fetch({ type, model, text }: any) {

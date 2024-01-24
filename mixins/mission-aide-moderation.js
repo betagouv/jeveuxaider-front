@@ -168,7 +168,7 @@ export default {
             .split(/[.?!|]/)
         })
         .map((i) => i.replace(/\s\s+/g, ' ').trim())
-        .filter((i) => i)
+        .filter((i) => i && i.length >= 3)
     },
     textToAnalyze() {
       return this.sentences.join('|')
@@ -184,16 +184,14 @@ export default {
   },
   methods: {
     async fetchAIReportScore() {
-      if (
-        this.$stores.aideModeration.type != 'mission' ||
-        this.mission.id != this.$stores.aideModeration.model?.id
-      ) {
-        await this.$stores.aideModeration.fetch({
-          type: 'mission',
-          model: { ...this.mission },
-          text: this.textToAnalyze,
-        })
+      if (this.textToAnalyze === this.$stores.aideModeration.response?.text) {
+        return
       }
+      await this.$stores.aideModeration.fetch({
+        type: 'mission',
+        model: { ...this.mission },
+        text: this.textToAnalyze,
+      })
     },
   },
 }
