@@ -49,22 +49,16 @@ export default defineNuxtComponent({
   async setup(props) {
     const { $algolia } = useNuxtApp()
     const response = await $algolia.missionsIndex.search('', props.searchParameters)
-    // emit('results', response)
-
-    console.log('response.hits SETUP', response.hits)
     return {
-      missions: response.hits,
+      missions: toRef(response.hits),
     }
   },
   watch: {
     searchParameters: {
       async handler(newVal) {
-        console.log('deep watch searchParameters', newVal)
         const response = await this.$algolia.missionsIndex.search('', newVal)
-        console.log('response', response.hits.filter((m) => m.id === 30150).length)
         this.missions = response.hits
       },
-      //immediate: true,
     },
   },
   methods: {
