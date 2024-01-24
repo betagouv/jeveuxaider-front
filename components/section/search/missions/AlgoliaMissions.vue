@@ -1,10 +1,10 @@
 <template>
   <div>
     <div v-if="displayMode === 'full'" class="flex flex-col gap-8">
-      <template v-if="missions.length > 0">
+      <template v-if="$stores.algoliaSearch.results.nbHits > 0">
         <nuxt-link
           no-prefetch
-          v-for="mission in missions"
+          v-for="mission in $stores.algoliaSearch.results.hits"
           :key="mission.id"
           class="flex min-w-0 transition"
           :to="
@@ -47,15 +47,38 @@ export default defineNuxtComponent({
     },
   },
   data() {
-    return {}
-  },
-  async setup(props, { emit }) {
-    const { $algolia } = useNuxtApp()
-    const response = await $algolia.missionsIndex.search('', props.searchParameters)
-    emit('results', response)
     return {
-      missions: response.hits,
+      missions: [],
     }
+  },
+  async setup(props) {
+    const { $stores } = useNuxtApp()
+    const runtimeConfig = useRuntimeConfig()
+    const route = useRoute()
+
+    $stores.algoliaSearch.reset()
+    $stores.algoliaSearch.indexKey = 'missionsIndex'
+    $stores.algoliaSearch.indexName = runtimeConfig.public.algolia.missionsIndex
+
+    $stores.algoliaSearch.hitsPerPage = props.searchParameters.hitsPerPage
+    $stores.algoliaSearch.initialFilters = props.searchParameters.filters
+
+    const { search } = useAlgoliaMissionsQueryBuilder()
+
+    await search()
+
+    return {
+      search,
+    }
+  },
+
+  watch: {
+    async $route(newVal, oldVal) {
+      if (newVal.name !== oldVal.name) {
+        return
+      }
+      await this.search()
+    },
   },
   methods: {
     async handleClickCard(item) {
@@ -71,6 +94,5 @@ export default defineNuxtComponent({
       await this.$gtm?.trackEvent({ event: 'calendrier-benevole-clic-carte-mission' })
     },
   },
-  watch: {},
 })
 </script>

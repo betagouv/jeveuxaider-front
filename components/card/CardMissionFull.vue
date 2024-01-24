@@ -1,9 +1,10 @@
 <template>
   <div class="flex gap-8 w-full">
     <div class="border bg-white w-[180px] px-6 py-8 border-b-4 border-b-[#3A3A3A] text-center">
+      <!-- <div class="font-bold mb-4">#{{ mission.id }}</div> -->
       <div class="font-bold mb-4">{{ mission.structure.name }}</div>
 
-      <div v-if="participationsCount" class="flex justify-center mb-4">
+      <!-- <div v-if="participationsCount" class="flex justify-center mb-4">
         <img
           v-for="(portrait, index) in portraits"
           :key="index"
@@ -19,7 +20,7 @@
         >
           {{ formattedBenevoleCount }}
         </div>
-      </div>
+      </div> -->
 
       <div class="text-sm text-[#666666]">
         <template v-if="!mission.has_places_left"> La mission est désormais complète </template>
@@ -35,7 +36,7 @@
         </template>
       </div>
     </div>
-    <div class="flex-1 flex border h-[324px]">
+    <div class="flex-1 flex border h-[334px]">
       <div class="relative w-[398px] h-full">
         <NuxtImg
           ref="thumbnail"
@@ -92,7 +93,7 @@
             <RiBuildingFill class="fill-current w-4 h-4 flex-none mr-2" />
             <span class="truncate">{{ mission.structure.name }}</span>
           </div>
-          <DsfrHeading as="h3" size="md" class="line-clamp-3 mb-4 order-3" :title="mission.name">
+          <DsfrHeading as="h3" size="md" class="line-clamp-2 mb-4 order-3" :title="mission.name">
             {{ mission.name }}
           </DsfrHeading>
           <div class="truncate text-[#3A3A3A] text-sm max-w-full">
@@ -112,20 +113,54 @@
           </div>
         </div>
         <div class="flex justify-between items-center">
-          {{ mission.date_type }}
-          <div class="flex flex-wrap gap-4">
-            <div
-              v-for="(date, i) in mission.dates"
-              :key="i"
-              class="flex flex-col items-center justify-center border w-[50px] h-[50px]"
-            >
-              <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
-                {{ $dayjs(date.date).format('DD') }}
+          <div class="flex flex-wrap items-center gap-4">
+            <template v-if="mission.creneaux">
+              <div
+                v-for="(date, i) in mission.creneaux"
+                :key="i"
+                class="flex flex-col items-center justify-center border w-[65px] h-[65px]"
+              >
+                <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
+                  {{ $dayjs.unix(date.timestamp).format('DD') }}
+                </div>
+                <div class="text-sm leading-[20px] text-[#666666]">
+                  {{ $dayjs.unix(date.timestamp).format('MMM') }}
+                </div>
+                <div class="text-xs leading-[14px] text-[#666666]">
+                  {{ $dayjs.unix(date.timestamp).format('YYYY') }}
+                </div>
               </div>
-              <div class="text-sm leading-[20px] text-[#666666]">
-                {{ $dayjs(date.date).format('MMM') }}
+            </template>
+            <template v-else>
+              <div
+                v-if="mission.start_date"
+                class="flex flex-col items-center justify-center border w-[65px] h-[65px]"
+              >
+                <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
+                  {{ $dayjs.unix(mission.start_date).format('DD') }}
+                </div>
+                <div class="text-sm leading-[20px] text-[#666666]">
+                  {{ $dayjs.unix(mission.start_date).format('MMM') }}
+                </div>
+                <div class="text-xs leading-[14px] text-[#666666]">
+                  {{ $dayjs.unix(mission.start_date).format('YYYY') }}
+                </div>
               </div>
-            </div>
+              <template v-if="mission.end_date">
+                <div class="text-gray-300 text-2xl">⇢</div>
+                <div class="flex flex-col items-center justify-center border w-[65px] h-[65px]">
+                  <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
+                    {{ $dayjs.unix(mission.end_date).format('DD') }}
+                  </div>
+                  <div class="text-sm leading-[20px] text-[#666666]">
+                    {{ $dayjs.unix(mission.end_date).format('MMM') }}
+                  </div>
+                  <div class="text-xs leading-[14px] text-[#666666]">
+                    {{ $dayjs.unix(mission.end_date).format('YYYY') }}
+                  </div>
+                </div>
+              </template>
+            </template>
           </div>
           <RiArrowRightLine :class="['flex-none ml-auto w-6 h-6 fill-current text-jva-blue-500']" />
         </div>

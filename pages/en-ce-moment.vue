@@ -38,20 +38,35 @@ export default defineNuxtComponent({
     CalendarFilters,
     AlgoliaMissions,
   },
+
   data() {
     return {
-      selectedDate: this.$dayjs().format('YYYY-MM-DD'),
-      startingDate: this.$dayjs().format('YYYY-MM-DD'),
+      selectedDate: this.$route.query.from ?? this.$dayjs().format('YYYY-MM-DD'),
+      startingDate: this.$route.query.from ?? this.$dayjs().format('YYYY-MM-DD'),
     }
   },
   computed: {
     algoliaFilters() {
-      return `type:"Mission en présentiel"`
+      const timestamp = this.$dayjs(this.selectedDate).unix()
+      const query = `(start_date<=${timestamp} OR creneaux.timestamp=${timestamp})`
+      return `${query} AND type:"Mission en présentiel" AND commitment__total<=4 AND is_registration_open=1`
     },
   },
   methods: {
     onChangedSelectedDate(date) {
+      console.log('onChangedSelectedDate', date)
       this.selectedDate = date
+      this.$stores.algoliaSearch.initialFilters = this.algoliaFilters
+
+      this.$router.push({
+        path: this.$route.path,
+        query: {
+          ...this.$route.query,
+          from: this.$dayjs(date).format('YYYY-MM-DD'),
+          // to: unixDateEndOfDay,
+          page: undefined,
+        },
+      })
     },
     onChangedStartingDate(date) {
       this.startingDate = date
