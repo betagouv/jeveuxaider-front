@@ -2,6 +2,13 @@
   <div class="flex gap-8 w-full">
     <div class="border bg-white w-[180px] px-6 py-8 border-b-4 border-b-[#3A3A3A] text-center">
       <!-- <div class="font-bold mb-4">#{{ mission.id }}</div> -->
+
+      <img
+        v-if="mission.structure.logo"
+        :srcset="mission.structure.logo.urls.large"
+        :alt="mission.structure.name"
+        class="h-auto max-w-[100px] mb-6 inline"
+      />
       <div class="font-bold mb-4">{{ mission.structure.name }}</div>
 
       <!-- <div v-if="participationsCount" class="flex justify-center mb-4">
