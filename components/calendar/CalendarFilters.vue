@@ -2,7 +2,7 @@ import dayjs from 'dayjs'; import dayjs from 'dayjs';
 <template>
   <div class="bg-white p-4 w-full">
     <div class="flex items-center">
-      <div class="group pr-4 cursor-pointer" @click="onPreviousDatesClick">
+      <div class="group pr-4 py-8 cursor-pointer" @click="onPreviousDatesClick">
         <RiArrowLeftSLine
           class="h-8 w-8 fill-current group-hover:text-jva-blue-500 group-hover:scale-125 transition-all"
         />
@@ -32,7 +32,7 @@ import dayjs from 'dayjs'; import dayjs from 'dayjs';
           </div>
         </div>
       </div>
-      <div class="group pl-4 cursor-pointer" @click="onNextDatesClick">
+      <div class="group pl-4 py-8 cursor-pointer" @click="onNextDatesClick">
         <RiArrowRightSLine
           class="h-8 w-8 fill-current group-hover:text-jva-blue-500 group-hover:scale-125 transition-all"
         />
@@ -49,13 +49,11 @@ export default defineNuxtComponent({
       type: String,
       required: true,
     },
-    startingDate: {
-      type: String,
-      required: true,
-    },
   },
   data() {
-    return {}
+    return {
+      startingDate: this.$route.query.from ?? this.$dayjs().format('YYYY-MM-DD'),
+    }
   },
   computed: {
     dates() {
@@ -69,16 +67,10 @@ export default defineNuxtComponent({
       this.$emit('update:modelValue', date)
     },
     onPreviousDatesClick() {
-      this.$emit(
-        'update:startingDate',
-        this.$dayjs(this.startingDate).subtract(7, 'days').format('YYYY-MM-DD')
-      )
+      this.startingDate = this.$dayjs(this.startingDate).subtract(7, 'days').format('YYYY-MM-DD')
     },
     onNextDatesClick() {
-      this.$emit(
-        'update:startingDate',
-        this.$dayjs(this.startingDate).add(7, 'days').format('YYYY-MM-DD')
-      )
+      this.startingDate = this.$dayjs(this.startingDate).add(7, 'days').format('YYYY-MM-DD')
     },
   },
 })

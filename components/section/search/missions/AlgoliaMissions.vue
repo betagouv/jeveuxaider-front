@@ -1,10 +1,10 @@
 <template>
   <div>
     <div v-if="displayMode === 'full'" class="flex flex-col gap-8">
-      <template v-if="$stores.algoliaSearch.results.nbHits > 0">
+      <template v-if="missions.length > 0">
         <nuxt-link
           no-prefetch
-          v-for="mission in $stores.algoliaSearch.results.hits"
+          v-for="mission in missions"
           :key="mission.id"
           class="flex min-w-0 transition"
           :to="
@@ -46,38 +46,25 @@ export default defineNuxtComponent({
       required: true,
     },
   },
-  data() {
-    return {
-      missions: [],
-    }
-  },
   async setup(props) {
-    const { $stores } = useNuxtApp()
-    const runtimeConfig = useRuntimeConfig()
-    const route = useRoute()
+    const { $algolia } = useNuxtApp()
+    const response = await $algolia.missionsIndex.search('', props.searchParameters)
+    // emit('results', response)
 
-    $stores.algoliaSearch.reset()
-    $stores.algoliaSearch.indexKey = 'missionsIndex'
-    $stores.algoliaSearch.indexName = runtimeConfig.public.algolia.missionsIndex
-
-    $stores.algoliaSearch.hitsPerPage = props.searchParameters.hitsPerPage
-    $stores.algoliaSearch.initialFilters = props.searchParameters.filters
-
-    const { search } = useAlgoliaMissionsQueryBuilder()
-
-    await search()
-
+    console.log('response.hits SETUP', response.hits)
     return {
-      search,
+      missions: response.hits,
     }
   },
-
   watch: {
-    async $route(newVal, oldVal) {
-      if (newVal.name !== oldVal.name) {
-        return
-      }
-      await this.search()
+    searchParameters: {
+      async handler(newVal) {
+        console.log('deep watch searchParameters', newVal)
+        const response = await this.$algolia.missionsIndex.search('', newVal)
+        console.log('response', response.hits.filter((m) => m.id === 30150).length)
+        this.missions = response.hits
+      },
+      //immediate: true,
     },
   },
   methods: {

@@ -1,32 +1,42 @@
 <template>
-  <div class="">
-    <div class="bg-jva-blue-500">
-      <div class="container py-[104px] relative">
+  <div class="relative">
+    <div class="bg-jva-blue-500 sticky">
+      <div class="container pt-[104px] relative">
         <h1 class="text-white font-bold">
           <span class="text-[40px]">Votre prochaine mission de bénévolat</span><br />
           <span class="text-[80px] leading-[80px]">très (très) bientôt</span>
         </h1>
-        <CalendarFilters
-          v-model="selectedDate"
-          :starting-date="startingDate"
-          class="mt-[50px] -mb-[180px] z-10"
-          @update:modelValue="onChangedSelectedDate"
-          @update:startingDate="onChangedStartingDate"
-        />
       </div>
     </div>
-    <div class="container mt-[150px] mb-32">
-      <AlgoliaMissions
-        :search-parameters="{
-          hitsPerPage: 6,
-          aroundPrecision: 2000,
-          filters: algoliaFilters,
-          aroundLatLngViaIP: true,
-          aroundRadius: 'all',
-        }"
-      />
+    <div class="">
+      <div class="bg-jva-blue-500 z-10 sticky top-[-64px] mb-[150px]">
+        <div class="container">
+          <div class="flex items-center bg-white relative translate-y-1/2 shadow-lg">
+            <CalendarFilters
+              :model-value="selectedDate"
+              :starting-date="startingDate"
+              class="flex-1"
+              @update:modelValue="onChangedSelectedDate"
+            />
+            <div class="w-[234px] border-l py-8 pl-8">
+              <div>Lieu de la mission</div>
+              <div>@TODO</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mt-12">
+        <AlgoliaMissions :search-parameters="computedSearchParameters" />
+      </div>
+
+      <DecembreEnsemble />
+      <div class="container mt-24 mb-32">
+        <DsfrHeading as="h3" size="2xl" class="tracking-[-.5px]">
+          Vous pouvez aussi vous engager à distance
+        </DsfrHeading>
+      </div>
     </div>
-    <DecembreEnsemble />
   </div>
 </template>
 
@@ -41,7 +51,6 @@ export default defineNuxtComponent({
     AlgoliaMissions,
     DecembreEnsemble,
   },
-
   data() {
     return {
       selectedDate: this.$route.query.from ?? this.$dayjs().format('YYYY-MM-DD'),
@@ -49,18 +58,30 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    algoliaFilters() {
+    computedSearchParameters() {
+      return {
+        hitsPerPage: 6,
+        aroundPrecision: 2000,
+        filters: this.presentielFilters,
+        aroundLatLngViaIP: true,
+        aroundRadius: 'all',
+      }
+    },
+    presentielFilters() {
       const timestamp = this.$dayjs(this.selectedDate).unix()
       const query = `start_date<=${timestamp} AND (end_date>=${timestamp} OR has_end_date=0 OR creneaux.timestamp=${timestamp})`
       return `${query} AND type:"Mission en présentiel" AND commitment__total<=4 AND is_registration_open=1`
     },
   },
+  watch: {
+    '$route.query': {
+      handler(newVal, oldVal) {
+        this.selectedDate = newVal.from
+      },
+    },
+  },
   methods: {
     onChangedSelectedDate(date) {
-      console.log('onChangedSelectedDate', date)
-      this.selectedDate = date
-      this.$stores.algoliaSearch.initialFilters = this.algoliaFilters
-
       this.$router.push({
         path: this.$route.path,
         query: {
@@ -70,9 +91,6 @@ export default defineNuxtComponent({
           page: undefined,
         },
       })
-    },
-    onChangedStartingDate(date) {
-      this.startingDate = date
     },
   },
 })
