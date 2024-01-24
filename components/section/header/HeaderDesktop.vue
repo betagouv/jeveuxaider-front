@@ -443,11 +443,11 @@ export default defineNuxtComponent({
           to: '/profile/missions',
           isActive: this.isActiveLink('profile/missions'),
         },
-        {
-          name: 'Décembre Ensemble 🤲🏻',
-          href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
-          target: '_blank',
-        },
+        // {
+        //   name: 'Décembre Ensemble 🤲🏻',
+        //   href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
+        //   target: '_blank',
+        // },
         {
           name: "Centre d'aide",
           href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/',
