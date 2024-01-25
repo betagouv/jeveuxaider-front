@@ -15,18 +15,15 @@
         { text: 'Modification' },
       ]"
     />
+  </div>
+  <HeaderActions :organisation="structure">
+    <template v-slot:actions>
+      <DsfrButton :loading="loading" @click.native="handleSubmit"> Enregistrer </DsfrButton>
+    </template>
+  </HeaderActions>
+  <div class="container">
     <div class="pb-6">
-      <BaseSectionHeading :title="structure.name">
-        <template #action>
-          <div class="hidden lg:block">
-            <BaseButton size="xl" variant="green" :loading="loading" @click.native="handleSubmit">
-              Enregistrer
-            </BaseButton>
-          </div>
-        </template>
-      </BaseSectionHeading>
-
-      <FormOrganisation ref="form" :structure="structure" class="my-8" />
+      <FormOrganisation ref="form" :structure="structure" />
     </div>
   </div>
 </template>
@@ -34,11 +31,13 @@
 <script>
 import FormOrganisation from '@/components/form/FormOrganisation.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import HeaderActions from '@/components/section/organisation/HeaderActions.vue'
 
 export default defineNuxtComponent({
   components: {
     FormOrganisation,
     Breadcrumb,
+    HeaderActions,
   },
   async setup() {
     definePageMeta({
