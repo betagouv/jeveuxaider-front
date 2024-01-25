@@ -16,6 +16,16 @@
         >
           <CardMissionFull :mission="mission" />
         </nuxt-link>
+        <div class="flex justify-center mt-6">
+          <DsfrButton
+            v-if="hasMoreResults"
+            type="transparent"
+            class="flex-none text-jva-blue-500 border-jva-blue-500 hover:bg-[#EFECE8]"
+            @click="onViewMoreClick()"
+          >
+            Plus de missions
+          </DsfrButton>
+        </div>
       </template>
       <CustomEmptyState v-else>
         <template #description>
@@ -45,12 +55,17 @@ export default defineNuxtComponent({
       type: Object,
       required: true,
     },
+    redirectParameters: {
+      type: Object,
+      default: () => {},
+    },
   },
   async setup(props) {
     const { $algolia } = useNuxtApp()
     const response = await $algolia.missionsIndex.search('', props.searchParameters)
     return {
       missions: toRef(response.hits),
+      nbHits: toRef(response.nbHits),
     }
   },
   watch: {
@@ -58,10 +73,26 @@ export default defineNuxtComponent({
       async handler(newVal) {
         const response = await this.$algolia.missionsIndex.search('', newVal)
         this.missions = response.hits
+        this.nbHits = response.nbHits
       },
     },
   },
+  computed: {
+    hasMoreResults() {
+      return this.nbHits > this.missions.length
+    },
+  },
   methods: {
+    onViewMoreClick() {
+      this.$router.push({
+        path: 'missions-benevolat',
+        query: {
+          ...this.redirectParameters,
+          ...this.$route.query,
+          page: undefined,
+        },
+      })
+    },
     async handleClickCard(item) {
       this.$plausible.trackEvent('En ce moment - Card Missions - Liste résultat', {
         props: {

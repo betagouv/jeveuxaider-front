@@ -2,9 +2,19 @@ import dayjs from 'dayjs'; import dayjs from 'dayjs';
 <template>
   <div class="bg-white p-4 w-full">
     <div class="flex items-center">
-      <div class="group pr-4 py-8 cursor-pointer" @click="onPreviousDatesClick">
+      <div
+        :class="['group pr-4 py-8', { 'pointer-events-none': !canSlideToPreviousDates }]"
+        @click="onPreviousDatesClick"
+      >
         <RiArrowLeftSLine
-          class="h-8 w-8 fill-current group-hover:text-jva-blue-500 group-hover:scale-125 transition-all"
+          :class="[
+            'h-8 w-8 fill-current',
+            { ' text-gray-300': !canSlideToPreviousDates },
+            {
+              ' cursor-pointer group-hover:text-jva-blue-500 group-hover:scale-125 transition-all':
+                canSlideToPreviousDates,
+            },
+          ]"
         />
       </div>
       <div class="flex-1 flex justify-between">
@@ -12,7 +22,7 @@ import dayjs from 'dayjs'; import dayjs from 'dayjs';
           v-for="(date, i) in dates"
           :key="i"
           :class="[
-            'group w-[109px] h-[120px] flex flex-col items-center justify-center cursor-pointer ',
+            'group w-[109px] h-[120px] flex flex-col items-center justify-center cursor-pointer',
             { 'hover:bg-gray-50': date !== modelValue },
             { 'bg-jva-blue-500 text-white': date === modelValue },
           ]"
@@ -32,6 +42,7 @@ import dayjs from 'dayjs'; import dayjs from 'dayjs';
           </div>
         </div>
       </div>
+
       <div class="group pl-4 py-8 cursor-pointer" @click="onNextDatesClick">
         <RiArrowRightSLine
           class="h-8 w-8 fill-current group-hover:text-jva-blue-500 group-hover:scale-125 transition-all"
@@ -43,7 +54,7 @@ import dayjs from 'dayjs'; import dayjs from 'dayjs';
 
 <script>
 export default defineNuxtComponent({
-  emits: ['update:modelValue', 'update:startingDate'],
+  emits: ['update:modelValue'],
   props: {
     modelValue: {
       type: String,
@@ -56,6 +67,9 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    canSlideToPreviousDates() {
+      return this.$dayjs(this.dates[0]).isAfter(this.$dayjs())
+    },
     dates() {
       return [...Array(7).keys()].map((i) => {
         return this.$dayjs(this.startingDate).add(i, 'days').format('YYYY-MM-DD')

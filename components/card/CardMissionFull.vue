@@ -1,8 +1,6 @@
 <template>
   <div class="flex gap-8 w-full">
     <div class="border bg-white w-[180px] px-6 py-8 border-b-4 border-b-[#3A3A3A] text-center">
-      <!-- <div class="font-bold mb-4">#{{ mission.id }}</div> -->
-
       <img
         v-if="mission.structure.logo"
         :srcset="mission.structure.logo.urls.large"
@@ -11,23 +9,7 @@
       />
       <div class="font-bold mb-4">{{ mission.structure.name }}</div>
 
-      <!-- <div v-if="participationsCount" class="flex justify-center mb-4">
-        <img
-          v-for="(portrait, index) in portraits"
-          :key="index"
-          :src="portrait"
-          alt=""
-          :class="[{ '-ml-1': index !== 0 }]"
-          class="portrait rounded-full"
-          style="width: 34px"
-        />
-        <div
-          v-if="participationsCount - 3 > 0"
-          class="h-9 w-9 text-cool-gray-500 shadow bg-gray-50 border font-bold inline-flex items-center justify-center rounded-full text-xs -ml-1"
-        >
-          {{ formattedBenevoleCount }}
-        </div>
-      </div> -->
+      <CustomPortraitsRandom v-if="participationsCount" :count="participationsCount" />
 
       <div class="text-sm text-[#666666]">
         <template v-if="!mission.has_places_left"> La mission est désormais complète </template>
@@ -65,13 +47,7 @@
           >
             Idéale pour débuter
           </DsfrBadge>
-          <DsfrBadge
-            v-if="isMissionCourte"
-            size="sm"
-            class="shadow-lg !bg-[#FEECC2] !text-[#716043]"
-          >
-            Mission courte
-          </DsfrBadge>
+
           <DsfrBadge
             v-if="formattedCommitment"
             size="sm"
@@ -120,55 +96,7 @@
           </div>
         </div>
         <div class="flex justify-between items-center">
-          <div class="flex flex-wrap items-center gap-4">
-            <template v-if="mission.creneaux">
-              <div
-                v-for="(date, i) in mission.creneaux"
-                :key="i"
-                class="flex flex-col items-center justify-center border w-[65px] h-[65px]"
-              >
-                <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
-                  {{ $dayjs.unix(date.timestamp).format('DD') }}
-                </div>
-                <div class="text-sm leading-[20px] text-[#666666]">
-                  {{ $dayjs.unix(date.timestamp).format('MMM') }}
-                </div>
-                <div class="text-xs leading-[14px] text-[#666666]">
-                  {{ $dayjs.unix(date.timestamp).format('YYYY') }}
-                </div>
-              </div>
-            </template>
-            <template v-else>
-              <div
-                v-if="mission.start_date"
-                class="flex flex-col items-center justify-center border w-[65px] h-[65px]"
-              >
-                <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
-                  {{ $dayjs.unix(mission.start_date).format('DD') }}
-                </div>
-                <div class="text-sm leading-[20px] text-[#666666]">
-                  {{ $dayjs.unix(mission.start_date).format('MMM') }}
-                </div>
-                <div class="text-xs leading-[14px] text-[#666666]">
-                  {{ $dayjs.unix(mission.start_date).format('YYYY') }}
-                </div>
-              </div>
-              <template v-if="mission.end_date">
-                <div class="text-gray-300 text-2xl">⇢</div>
-                <div class="flex flex-col items-center justify-center border w-[65px] h-[65px]">
-                  <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
-                    {{ $dayjs.unix(mission.end_date).format('DD') }}
-                  </div>
-                  <div class="text-sm leading-[20px] text-[#666666]">
-                    {{ $dayjs.unix(mission.end_date).format('MMM') }}
-                  </div>
-                  <div class="text-xs leading-[14px] text-[#666666]">
-                    {{ $dayjs.unix(mission.end_date).format('YYYY') }}
-                  </div>
-                </div>
-              </template>
-            </template>
-          </div>
+          <CustomMissionNextDates :mission="mission" />
           <RiArrowRightLine :class="['flex-none ml-auto w-6 h-6 fill-current text-jva-blue-500']" />
         </div>
       </div>
@@ -201,18 +129,6 @@ export default defineNuxtComponent({
       type: Object,
       default: null,
     },
-    // showState: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    // showTags: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    // lazyLoading: {
-    //   type: Boolean,
-    //   default: false,
-    // },
   },
   data() {
     return {
@@ -229,89 +145,6 @@ export default defineNuxtComponent({
     autonomyCities() {
       return this.formatAutonomyCities(this.mission.autonomy_zips)
     },
-    // placesLeftText() {
-    //   if (!this.mission.is_registration_open) {
-    //     return 'Inscription fermée'
-    //   } else if (
-    //     this.mission.publisher_name &&
-    //     this.mission.publisher_name !== 'JeVeuxAider.gouv.fr' &&
-    //     this.mission.places_left > 99
-    //   ) {
-    //     return 'Plusieurs bénévoles recherchés'
-    //   } else if (this.mission.places_left && this.mission.places_left > 0) {
-    //     return this.$filters.pluralize(
-    //       this.mission.places_left,
-    //       'bénévole recherché',
-    //       'bénévoles recherchés'
-    //     )
-    //   } else {
-    //     return this.mission.has_places_left === false || this.mission.places_left === 0
-    //       ? 'Complet'
-    //       : 'Plusieurs bénévoles recherchés'
-    //   }
-    // },
-    // formattedDate() {
-    //   const startDate = this.mission.start_date
-    //   const endDate = this.mission.end_date
-    //   const now = this.$dayjs()
-    //   if (!startDate) {
-    //     return
-    //   }
-    //   const startDateObject =
-    //     Number.isInteger(startDate) && this.$dayjs.unix(startDate).isValid()
-    //       ? this.$dayjs.unix(startDate)
-    //       : this.$dayjs(startDate, 'YYYY-MM-DD HH:mm:ss', 'fr', true).isValid()
-    //       ? this.$dayjs(startDate, 'YYYY-MM-DD HH:mm:ss')
-    //       : this.$dayjs(startDate).isValid()
-    //       ? this.$dayjs(startDate)
-    //       : null
-    //   if (!startDateObject || startDateObject.isBefore(now)) {
-    //     return null
-    //   }
-    //   const format = now.isSame(startDateObject, 'year') ? 'D MMMM' : 'D MMMM YYYY'
-    //   if (endDate) {
-    //     const endDateObject =
-    //       Number.isInteger(endDate) && this.$dayjs.unix(endDate).isValid()
-    //         ? this.$dayjs.unix(endDate)
-    //         : this.$dayjs(endDate, 'YYYY-MM-DD HH:mm:ss', 'fr', true).isValid()
-    //         ? this.$dayjs(endDate, 'YYYY-MM-DD HH:mm:ss')
-    //         : this.$dayjs(endDate).isValid()
-    //         ? this.$dayjs(endDate)
-    //         : null
-    //     if (endDateObject && this.$dayjs(startDateObject).isSame(this.$dayjs(endDateObject))) {
-    //       return `le ${this.$dayjs(startDateObject).format(format)}`
-    //     }
-    //   }
-    //   return `à partir du ${startDateObject.format(format)}`
-    // },
-    // iconOrganizationState() {
-    //   switch (this.mission.structure.state) {
-    //     case 'Validée':
-    //       return DsfrSuccessIcon
-    //     case 'Signalée':
-    //     case 'Désinscrite':
-    //       return DsfrErrorIcon
-    //     case 'En attente de validation':
-    //     case 'En cours de traitement':
-    //       return DsfrWarningIcon
-    //     default:
-    //       return DsfrInfoIcon
-    //   }
-    // },
-    // badgeTypeMissionSate() {
-    //   switch (this.mission.state) {
-    //     case 'Validée':
-    //       return 'success'
-    //     case 'Signalée':
-    //     case 'Annulée':
-    //       return 'error'
-    //     case 'En attente de validation':
-    //     case 'En cours de traitement':
-    //       return 'warning'
-    //     default:
-    //       return 'info'
-    //   }
-    // },
   },
   methods: {
     onImgError() {
