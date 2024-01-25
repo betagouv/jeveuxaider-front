@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Breadcrumb
+    <DsfrBreadcrumb
       :links="[
         { text: 'Tableau de bord', to: '/dashboard' },
         { text: 'Missions', to: '/admin/missions' },
@@ -137,7 +137,6 @@ import MixinMission from '@/mixins/mission'
 import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 import BoxReferents from '@/components/section/BoxReferents.vue'
 import BoxNotes from '@/components/custom/BoxNotes.vue'
-import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import Link from '@/components/dsfr/Link.vue'
 import ModalMissionToggleIsActive from '@/components/modal/ModalMissionToggleIsActive.vue'
 import HeaderActions from '@/components/section/mission/HeaderActions.vue'
@@ -158,7 +157,6 @@ export default defineNuxtComponent({
     OnlineIndicator,
     BoxReferents,
     BoxNotes,
-    Breadcrumb,
     BoxAideModeration,
     Link,
     ModalMissionToggleIsActive,

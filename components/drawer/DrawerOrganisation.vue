@@ -5,9 +5,9 @@
       theme="danger"
       title="Supprimer l'organisation"
       :text="`Vous êtes sur le point de supprimer l'organisation ${organisation.name}.`"
-      :is-open="showAlert"
+      :is-open="showModalDelete"
       @confirm="handleConfirmDelete()"
-      @cancel="showAlert = false"
+      @cancel="showModalDelete = false"
     />
     <template #title>
       <BaseHeading v-if="organisation" :level="3" class="text-jva-blue-500">
@@ -57,7 +57,7 @@
             icon="RiDeleteBinLine"
             :icon-only="true"
             size="sm"
-            @click="() => (showAlert = true)"
+            @click="() => (showModalDelete = true)"
           />
         </div>
         <div class="border-t -mx-6 my-6" />
@@ -166,7 +166,7 @@ export default defineNuxtComponent({
   },
   data() {
     return {
-      showAlert: false,
+      showModalDelete: false,
       organisation: null,
       organisationStats: null,
       loading: false,
@@ -198,17 +198,6 @@ export default defineNuxtComponent({
         .then((res) => {
           this.fetch()
           this.$emit('updated')
-        })
-        .catch(() => {})
-    },
-    async handleConfirmDelete() {
-      apiFetch(`/structures/${this.organisationId}`, {
-        method: 'DELETE',
-      })
-        .then((res) => {
-          this.showAlert = false
-          this.$emit('close')
-          this.$emit('refetch')
         })
         .catch(() => {})
     },

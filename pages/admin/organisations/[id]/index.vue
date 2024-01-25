@@ -1,5 +1,5 @@
 <template>
-  <div v-if="organisation" class="container">
+  <div class="container">
     <DsfrBreadcrumb
       :links="[
         { text: 'Tableau de bord', to: '/dashboard' },
@@ -14,6 +14,9 @@
         { text: organisation && organisation.name },
       ]"
     />
+  </div>
+  <HeaderActions :organisation="organisation" />
+  <div class="container">
     <BaseDrawer
       :is-open="showDrawerAddResponsable"
       form-id="form-add-responsable"
@@ -103,36 +106,6 @@
         />
       </div>
       <div class="lg:col-span-2 space-y-8">
-        <div class="flex items-start justify-between">
-          <div>
-            <BaseHeading :level="1" class="mb-4">
-              Organisation
-              <span
-                v-if="['admin'].includes($stores.auth.contextRole)"
-                class="font-normal text-gray-500 text-2xl"
-                >#{{ organisation.id }}</span
-              >
-            </BaseHeading>
-            <div class="flex items-center space-x-4">
-              <BaseBadge :color="organisation.state">
-                {{ organisation.state }}
-              </BaseBadge>
-              <OnlineIndicator
-                v-if="organisation.statut_juridique === 'Association'"
-                :published="hasPageOnline"
-                :link="hasPageOnline ? `/organisations/${organisation.slug}` : null"
-              />
-            </div>
-          </div>
-          <nuxt-link
-            no-prefetch
-            v-if="organisation?.permissions?.canUpdate"
-            :to="`/admin/organisations/${organisation.id}/edit`"
-          >
-            <BaseButton icon="RiPencilLine"> Modifier </BaseButton>
-          </nuxt-link>
-        </div>
-
         <ClientOnly>
           <BaseTabs
             :tabs="[
@@ -160,12 +133,6 @@
             ]"
           />
           <div v-if="$route.hash === '#infos' || !$route.hash" class="space-y-8">
-            <SelectOrganisationState
-              v-if="canEditStatut"
-              :organisation="organisation"
-              @selected="handleChangeState($event)"
-            />
-
             <BoxAideModeration
               v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
               :organisation="organisation"
@@ -242,7 +209,7 @@
                       'candidatures',
                       false
                     )}`"
-                    :link="`/admin/participations?filter[mission.structure.name]=${organisation.name}&filter[mission.structure.id]=${organisation.id}`"
+                    :link="`/admin/participations?organisation_name=${organisation.name}&filter[mission.structure.id]=${organisation.id}`"
                     link-label="Participations"
                   />
                 </div>
@@ -327,13 +294,13 @@ import CardStatistic from '@/components/card/CardStatistic.vue'
 import FormInvitation from '@/components/form/FormInvitation.vue'
 import FormAddResponsable from '@/components/form/FormAddResponsable.vue'
 import BoxInvitations from '@/components/section/BoxInvitations.vue'
-import SelectOrganisationState from '@/components/custom/SelectOrganisationState.vue'
 import BoxReferents from '@/components/section/BoxReferents.vue'
 import BoxReseau from '@/components/section/organisation/BoxReseau.vue'
 import BoxNotes from '@/components/custom/BoxNotes.vue'
 import BoxMember from '@/components/section/BoxMember.vue'
 import BoxScore from '@/components/section/organisation/BoxScore.vue'
 import BoxAideModeration from '@/components/section/organisation/BoxAideModeration.vue'
+import HeaderActions from '@/components/section/organisation/HeaderActions.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -346,13 +313,13 @@ export default defineNuxtComponent({
     FormInvitation,
     FormAddResponsable,
     BoxInvitations,
-    SelectOrganisationState,
     BoxReferents,
     BoxReseau,
     BoxNotes,
     BoxMember,
     BoxScore,
     BoxAideModeration,
+    HeaderActions,
   },
   mixins: [MixinOrganisation],
   async setup() {
@@ -419,24 +386,10 @@ export default defineNuxtComponent({
       })
     },
     async refetch() {
-      console.log('refetch')
       const organisation = await apiFetch(`/structures/${this.organisation.id}`)
       this.organisation = organisation
       const responsables = await apiFetch(`/structures/${this.organisation.id}/responsables`)
       this.responsables = responsables
-    },
-    async handleChangeState(event) {
-      await apiFetch(`/structures/${this.organisation.id}`, {
-        method: 'PUT',
-        body: {
-          ...this.organisation,
-          state: event.key,
-        },
-      })
-        .then(() => {
-          this.organisation.state = event.key
-        })
-        .catch(() => {})
     },
     handleSubmitInvitation() {
       this.showDrawerInvitation = false
