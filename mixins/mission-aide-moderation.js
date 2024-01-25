@@ -167,7 +167,7 @@ export default {
             .replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '')
             .split(/[.?!|]/)
         })
-        .map((i) => i.replace(/\s\s+/g, ' ').trim())
+        .map((i) => i.trim())
         .filter((i) => i && i.length >= 3)
     },
     textToAnalyze() {
