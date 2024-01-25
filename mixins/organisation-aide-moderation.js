@@ -140,16 +140,11 @@ export default {
     sentences() {
       return [this.organisation.name, this.organisation.description]
         .join('|')
+        .replace(/<\/li>/g, '</li>|')
+        .replace(/<\/p>/g, '</p>|')
+        .replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '')
         .split(/[.?!|]/)
-        .flatMap((i) => {
-          return this.$filters
-            .decodeHTMLEntities(i)
-            .replace(/<\/li>/g, '</li>|')
-            .replace(/<\/p>/g, '</p>|')
-            .replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '')
-            .split(/[.?!|]/)
-        })
-        .map((i) => i.trim())
+        .map((i) => this.$filters.decodeHTMLEntities(i).trim())
         .filter((i) => i && i.length >= 3)
     },
     textToAnalyze() {
