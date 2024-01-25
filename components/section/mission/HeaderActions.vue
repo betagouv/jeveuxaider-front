@@ -12,24 +12,25 @@
         ]"
       >
         <div>
-          <div class="flex items-center space-x-3 mr-4">
-            <BaseHeading :level="1" class="" :class="['flex-shrink-0', isPinned && '!text-2xl']">
+          <div :class="['mr-4', isPinned ? 'flex items-center space-x-3' : 'flex-col']">
+            <BaseHeading :level="1" :class="['flex-shrink-0', isPinned && '!text-2xl']">
               Mission
               <span class="font-normal text-gray-500">#{{ mission.id }}</span>
             </BaseHeading>
-            <Badges class="hidden xl:flex" :mission="mission" v-if="isPinned" />
-            <DsfrLink
-              :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
-              :is-external="true"
-              class="text-xs font-normal ml-2 flex-shrink-0"
-            >
-              Voir la mission
-            </DsfrLink>
+            <div :class="['flex items-center gap-3 flex-wrap', isPinned ? '' : 'mt-2']">
+              <Badges :class="[isPinned ? 'hidden xl:flex' : '']" :mission="mission" />
+              <DsfrLink
+                :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
+                :is-external="true"
+                class="text-xs font-normal flex-shrink-0"
+              >
+                Voir la mission
+              </DsfrLink>
+            </div>
           </div>
-          <Badges v-if="!isPinned" :mission="mission" class="mt-2" />
         </div>
 
-        <div class="flex space-x-3 mt-4 lg:mt-0">
+        <div class="flex-col sm:flex-row flex gap-3 mt-4 lg:mt-0">
           <slot name="actions">
             <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/edit`">
               <DsfrButton type="primary">
