@@ -9,7 +9,7 @@
   />
   <BaseDropdown>
     <template #button>
-      <DsfrButton size="md" type="tertiary" class="!text-gray-800">
+      <DsfrButton :size="buttonSize" type="tertiary" class="!text-gray-800">
         <RiMoreFill class="h-5 w-5 fill-current" />
       </DsfrButton>
     </template>
@@ -59,6 +59,10 @@ export default defineNuxtComponent({
     organisation: {
       type: Object,
       required: true,
+    },
+    buttonSize: {
+      type: String,
+      default: 'md',
     },
   },
 })

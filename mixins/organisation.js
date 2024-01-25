@@ -27,6 +27,7 @@ export default {
           return 'success'
         case 'Signalée':
         case 'Annulée':
+        case 'Désinscrite':
           return 'error'
         case 'En attente de validation':
         case 'En cours de traitement':
@@ -76,6 +77,7 @@ export default {
       })
         .then(() => {
           this.organisation.state = event.key
+          $emit('updated')
         })
         .catch(() => {})
     },

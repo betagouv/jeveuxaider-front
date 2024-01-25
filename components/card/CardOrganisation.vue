@@ -167,21 +167,6 @@ export default defineNuxtComponent({
           return b.id - a.id
         })
     },
-    badgeTypeOrganisationSate() {
-      switch (this.organisation.state) {
-        case 'Validée':
-          return 'success'
-        case 'Signalée':
-        case 'Annulée':
-        case 'Désinscrite':
-          return 'error'
-        case 'En attente de validation':
-        case 'En cours de traitement':
-          return 'warning'
-        default:
-          return 'info'
-      }
-    },
   },
   methods: {
     onImgError() {

@@ -1,14 +1,5 @@
 <template>
   <BaseDrawer :is-open="Boolean(organisationId)" @close="$emit('close')">
-    <BaseAlertDialog
-      v-if="organisation"
-      theme="danger"
-      title="Supprimer l'organisation"
-      :text="`Vous êtes sur le point de supprimer l'organisation ${organisation.name}.`"
-      :is-open="showModalDelete"
-      @confirm="handleConfirmDelete()"
-      @cancel="showModalDelete = false"
-    />
     <template #title>
       <BaseHeading v-if="organisation" :level="3" class="text-jva-blue-500">
         <nuxt-link
@@ -25,14 +16,15 @@
         <LoadingIndicator class="mt-8" />
       </div>
       <div v-else>
-        <div class="mt-2">
-          <OnlineIndicator
-            v-if="organisation.statut_juridique === 'Association'"
-            :published="hasPageOnline"
-            :link="hasPageOnline ? `/organisations/${organisation.slug}` : null"
-          />
-        </div>
-        <div class="mt-4 flex flex-wrap gap-1">
+        <DsfrLink
+          :to="`/organisations/${organisation.slug}`"
+          :is-external="true"
+          class="text-xs font-normal"
+        >
+          Voir l'organisation
+        </DsfrLink>
+        <Badges class="mt-5" :organisation="organisation" />
+        <div class="flex flex-wrap gap-1 mt-6">
           <DsfrButton
             :to="`/admin/organisations/${organisation.id}`"
             type="tertiary"
@@ -51,13 +43,11 @@
             Modifier
           </DsfrButton>
 
-          <DsfrButton
-            v-if="['admin'].includes($stores.auth.contextRole)"
-            type="tertiary"
-            icon="RiDeleteBinLine"
-            :icon-only="true"
-            size="sm"
-            @click="() => (showModalDelete = true)"
+          <Actions
+            v-if="['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)"
+            :organisation="organisation"
+            @organisationDeleted="handleDeleted"
+            buttonSize="sm"
           />
         </div>
         <div class="border-t -mx-6 my-6" />
@@ -142,6 +132,8 @@ import LoadingIndicator from '@/components/custom/LoadingIndicator.vue'
 import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 import BoxScoreLight from '@/components/section/organisation/BoxScoreLight.vue'
 import HistoryStateChanges from '@/components/section/HistoryStateChanges.vue'
+import Badges from '@/components/section/organisation/Badges.vue'
+import Actions from '@/components/section/organisation/Actions.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -156,6 +148,8 @@ export default defineNuxtComponent({
     BoxReferents,
     BoxScoreLight,
     HistoryStateChanges,
+    Badges,
+    Actions,
   },
   mixins: [MixinOrganisation],
   props: {
@@ -166,7 +160,6 @@ export default defineNuxtComponent({
   },
   data() {
     return {
-      showModalDelete: false,
       organisation: null,
       organisationStats: null,
       loading: false,
@@ -200,6 +193,11 @@ export default defineNuxtComponent({
           this.$emit('updated')
         })
         .catch(() => {})
+    },
+    handleDeleted() {
+      this.$emit('updated')
+      this.$emit('close')
+      this.$router.push('/admin/organisations')
     },
   },
 })
