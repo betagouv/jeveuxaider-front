@@ -287,6 +287,18 @@ export default {
       this.mission.is_registration_open = value
       this.$emit('updated', mission)
     },
+    async handleChangeState(option) {
+      this.mission.state = option.key
+      const mission = await apiFetch(`/missions/${this.mission.id}`, {
+        method: 'PUT',
+        body: this.mission,
+      }).catch(() => {})
+
+      if (mission) {
+        this.$emit('updated', mission)
+        this.$toast.success(`Le statut de la mission est passé à ${option.label}`)
+      }
+    },
     deleteMission() {
       return apiFetch(`/missions/${this.mission.id}`, {
         method: 'DELETE',

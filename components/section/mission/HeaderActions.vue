@@ -5,7 +5,12 @@
     class="z-50 sticky top-0 py-4 -mt-4"
   >
     <div class="container">
-      <div class="flex justify-between flex-col lg:flex-row lg:items-center">
+      <div
+        :class="[
+          'flex justify-between flex-col lg:flex-row',
+          isPinned ? 'lg:items-center' : 'lg:items-start',
+        ]"
+      >
         <div>
           <div class="flex items-center space-x-3 mr-4">
             <BaseHeading :level="1" class="" :class="['flex-shrink-0', isPinned && '!text-2xl']">
@@ -21,7 +26,7 @@
               Voir la mission
             </DsfrLink>
           </div>
-          <Badges v-if="!isPinned" :mission="mission" />
+          <Badges v-if="!isPinned" :mission="mission" class="mt-2" />
         </div>
 
         <div class="flex space-x-3 mt-4 lg:mt-0">
@@ -36,6 +41,7 @@
               :mission="mission"
               :mission-stats="missionStats"
               @selected="handleChangeState($event)"
+              @updated="$emit('updated', $event)"
             />
             <Actions
               :mission="mission"
@@ -60,6 +66,7 @@ import SelectMissionState from '@/components/custom/SelectMissionState.vue'
 import MixinMission from '@/mixins/mission'
 
 export default defineNuxtComponent({
+  emits: ['showModalSwitchIsOnline', 'updated'],
   data() {
     return {
       isPinned: false,

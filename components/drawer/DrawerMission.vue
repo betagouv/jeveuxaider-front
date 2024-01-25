@@ -92,6 +92,7 @@
           :mission-stats="missionStats"
           class="mt-4"
           @selected="handleChangeState($event)"
+          @updated="$emit('updated')"
         />
 
         <div v-else class="mt-4 font-medium text-gray-800">
@@ -202,15 +203,6 @@ export default defineNuxtComponent({
     },
     handleDuplicated(mission) {
       this.$emit('close')
-      this.$emit('updated')
-    },
-    async handleChangeState(option) {
-      this.mission.state = option.key
-      await apiFetch(`/missions/${this.missionId}`, {
-        method: 'PUT',
-        body: this.mission,
-      }).catch(() => {})
-      this.fetch()
       this.$emit('updated')
     },
     afterChangeIsActive() {

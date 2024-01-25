@@ -19,6 +19,7 @@
     :mission="mission"
     :missionStats="missionStats"
     @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
+    @updated="refreshMission()"
   />
 
   <div class="container">
