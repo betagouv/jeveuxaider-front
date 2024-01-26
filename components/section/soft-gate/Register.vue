@@ -179,17 +179,17 @@
             :icon-size="12"
             icon-class="mb-[.5px]"
           >
-            politique de confidentialité
+            <span>politique de confidentialité</span>
           </DsfrLink>
           <br class="hidden sm:block" />
-          <span>et la </span>
+          <span> et la </span>
           <DsfrLink
             to="/charte-reserve-civique"
             :is-external="true"
             :icon-size="12"
             icon-class="mb-[.5px]"
           >
-            charte
+            <span>charte</span>
           </DsfrLink>
           <span> de la Réserve Civique.</span>
         </p>

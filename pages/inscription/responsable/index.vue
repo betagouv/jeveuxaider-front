@@ -388,11 +388,17 @@
             <template v-else> J'inscris mon organisation </template>
           </DsfrButton>
 
-          <div class="mt-4 text-center text-gray-800 text-sm">
-            En m'inscrivant j'accepte
-            <DsfrLink :isExternal="true" to="/politique-de-confidentialite">
-              la politique de confidentialité
+          <div class="mt-4 text-center text-gray-800 text-xs">
+            <span>En m'inscrivant j'accepte </span>
+            <DsfrLink class="font-medium text-gray-900" to="/politique-de-confidentialite">
+              <span>la politique de confidentialité</span>
             </DsfrLink>
+            <br class="hidden sm:block" />
+            <span> et la </span>
+            <DsfrLink class="font-medium text-gray-900" to="/charte-reserve-civique">
+              <span>charte</span>
+            </DsfrLink>
+            <span> de la Réserve Civique.</span>
           </div>
         </div>
       </div>
