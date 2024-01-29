@@ -106,8 +106,10 @@ import RiSurveyLine from 'vue-remix-icons/icons/ri-survey-line.vue'
 import RiSaveLine from 'vue-remix-icons/icons/ri-save-line.vue'
 import RiTodoLine from 'vue-remix-icons/icons/ri-todo-line.vue'
 import RiFileDownloadLine from 'vue-remix-icons/icons/ri-file-download-line.vue'
+import RiTimeLine from 'vue-remix-icons/icons/ri-time-line.vue'
 
 const components = {
+  RiTimeLine,
   RiFileDownloadLine,
   RiTodoLine,
   RiSaveLine,

@@ -26,7 +26,6 @@
           </div>
         </div>
       </div>
-
       <div id="missions-presentiel" class="container mt-12 mb-24">
         <AlgoliaMissions
           :search-parameters="{
@@ -41,7 +40,6 @@
           }"
         />
       </div>
-
       <DecembreEnsemble />
       <div class="container mt-24 mb-24">
         <DsfrHeading as="h3" size="2xl" class="tracking-[-.5px]">
@@ -55,6 +53,8 @@
           }"
         />
       </div>
+      <SectionSearchBlocFaq title="Vous avez des questions?" />
+      <SectionHomeBlocNewsletter />
     </div>
   </div>
 </template>
@@ -80,7 +80,8 @@ export default defineNuxtComponent({
     commonFilters() {
       const timestamp = this.$dayjs(this.selectedDate).unix()
       const query = `start_date<=${timestamp} AND (end_date>=${timestamp} OR has_end_date=0 OR creneaux.timestamp=${timestamp})`
-      return `${query} AND commitment__total<=1`
+      // const query = `dates.timestamp=${timestamp}`
+      return `${query} AND commitment__total<=1 AND date_type:"ponctual"`
     },
     presentielFilters() {
       return `${this.commonFilters} AND type:"Mission en présentiel"`

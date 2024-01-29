@@ -1,5 +1,11 @@
 <template>
-  <label class="flex items-baseline cursor-pointer" :class="[{ 'space-x-2': variant !== 'tabs' }]">
+  <label
+    :class="[
+      'flex cursor-pointer',
+      { 'items-baseline space-x-2': variant !== 'tabs' },
+      { 'items-center  space-x-1': variant === 'tabs' },
+    ]"
+  >
     <input
       type="radio"
       :name="name"
@@ -8,6 +14,11 @@
       aria-labelledby="label"
       :checked="checked"
       @input="$emit('update', option.key)"
+    />
+    <component
+      v-if="option.icon"
+      :is="option.icon"
+      :class="['h-4 w-4 fill-current', { 'text-white': checked }, { 'text-gray-900': !checked }]"
     />
     <span
       :class="[

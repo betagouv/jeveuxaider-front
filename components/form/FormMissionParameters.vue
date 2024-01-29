@@ -224,6 +224,7 @@
             required
             :error="errors.start_date"
           >
+            {{ form.start_date }}
             <BaseInputDate v-model="form.start_date" required name="start_date" />
           </BaseFormControl>
           <BaseFormControl label="Fin de la mission" html-for="end_date" :error="errors.end_date">

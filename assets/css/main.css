@@ -409,21 +409,69 @@ select:focus {
   height: 35px !important;
   font-size: 16px !important;
   border-radius: 0 !important;
+  font-weight: 500 !important;
 }
 
-.vc-day .vc-highlight {
+/* .vc-day .vc-highlight {
   border-radius: 0 !important;
   width: 44px !important;
   height: 35px !important;
+} */
+
+.vc-day .vc-day-content:hover {
+  background-color: #1212FF !important;
+  color: white !important;
 }
 
-.vc-day .vc-day-content.is-highlight {
+.vc-day .vc-day-content.vc-highlight-content-solid {
+  color: white !important;
+  background-color: #070191 !important;
+}
+
+.vc-day .vc-highlight-content-light.vc-highlight-content-light {
+  color: #070191  !important;
+  background-color: #F5F5FE !important;
+}
+
+.vc-highlight.vc-highlight-bg-light {
+  background: none !important;
+}
+
+.vc-day .vc-day-content.vc-highlight-content-solid {
+  color: white !important;
+  background-color: #070191 !important;
+}
+
+/* .vc-day .vc-day-content.vc-highlight-content-outline {
+  border-color: #E3E3FD!important;
+  border-radius: 0 !important;
+  color: #070191  !important;
+} */
+
+.vc-highlight.vc-highlight-bg-outline {
+  border-color: #E3E3FD!important;
+  border-radius: 0 !important;
+  color: #070191  !important;
+}
+
+/* .vc-day .vc-day-content.is-disabled {
+  background-color: white !important;
+  color: rgb(167, 167, 176) !important;
+  font-weight: 500 !important;
+  cursor: not-allowed !important;
+} */
+
+/* .vc-day .vc-day-content {
   color: white !important;
   font-weight: bold !important;
   background-color: #070191 !important;
 }
 
-.vc-day .vc-day-content.is-disabled,
+.vc-highlight-base-middle.vc-highlight-bg-light {
+  background: none !important;
+} */
+
+/* .vc-day .vc-day-content.is-disabled,
 .vc-day .vc-day-content.is-disabled.is-highlight {
   background-color: white !important;
   color: rgb(167, 167, 176) !important;
@@ -444,7 +492,7 @@ select:focus {
   background-color: white !important;
   color: rgb(167, 167, 176) !important;
   font-weight: 500 !important;
-}
+} */
 
 .vue-focus-loop {
   height: 100%;

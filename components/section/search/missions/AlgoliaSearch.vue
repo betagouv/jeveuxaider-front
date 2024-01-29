@@ -125,7 +125,7 @@ export default defineNuxtComponent({
   },
   watch: {
     async $route(newVal, oldVal) {
-      console.log('Algoliasearch watching $route', newVal, oldVal)
+      //console.log('Algoliasearch watching $route', newVal, oldVal)
       if (newVal.name !== oldVal.name) {
         return
       }
