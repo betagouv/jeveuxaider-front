@@ -79,8 +79,7 @@ export default defineNuxtComponent({
   computed: {
     commonFilters() {
       const timestamp = this.$dayjs(this.selectedDate).unix()
-      const query = `start_date<=${timestamp} AND (end_date>=${timestamp} OR has_end_date=0 OR creneaux.timestamp=${timestamp})`
-      // const query = `dates.timestamp=${timestamp}`
+      const query = `start_date<=${timestamp} AND (end_date>=${timestamp} OR has_end_date=0 OR dates.timestamp=${timestamp})`
       return `${query} AND commitment__total<=1 AND date_type:"ponctual"`
     },
     presentielFilters() {

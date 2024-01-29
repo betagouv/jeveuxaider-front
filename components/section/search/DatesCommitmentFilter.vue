@@ -55,7 +55,6 @@
             </div>
             <div class="mt-4">
               <v-date-picker
-                ref="calendar"
                 v-model.range="calendar"
                 :disabled-dates="[{ start: null, end: $dayjs().subtract(1, 'day').toDate() }]"
                 @update:modelValue="onDayclick"
@@ -86,6 +85,12 @@
 
 <script>
 export default defineNuxtComponent({
+  setup() {
+    const { addFilter } = useAlgoliaMissionsQueryBuilder()
+    return {
+      addFilter,
+    }
+  },
   data() {
     return {
       isOpen: false,
@@ -98,17 +103,17 @@ export default defineNuxtComponent({
   },
   computed: {
     activeValue() {
-      // if (this.dateType === 'ponctual' && this.from && this.to) {
-      //   return `${this.$dayjs(this.from).format('DD/MM/YYYY')} - ${this.$dayjs(this.to).format(
-      //     'DD/MM/YYYY'
-      //   )}`
-      // }
-      // if (this.dateType === 'ponctual' && this.from) {
-      //   return `${this.$dayjs(this.from).format('DD/MM/YYYY')}`
-      // }
-      // if (this.dateType === 'recurring') {
-      //   return 'Récurrent'
-      // }
+      if (this.dateType === 'ponctual' && this.$route.query.from && this.$route.query.to) {
+        return `${this.$dayjs(this.$route.query.from).format('DD/MM/YYYY')} - ${this.$dayjs(
+          this.$route.query.to
+        ).format('DD/MM/YYYY')}`
+      }
+      if (this.dateType === 'ponctual' && this.$route.query.from) {
+        return `${this.$dayjs(this.$route.query.from).format('DD/MM/YYYY')}`
+      }
+      if (this.dateType === 'recurring') {
+        return 'Récurrent'
+      }
       return null
     },
   },
@@ -131,9 +136,13 @@ export default defineNuxtComponent({
   },
   methods: {
     onDayclick(payload) {
-      console.log('onDayclick', payload)
-      // this.from = this.$dayjs(payload.start).format('YYYY-MM-DD')
-      // this.to = this.$dayjs(payload.end).format('YYYY-MM-DD')
+      const startTimestamp = this.$dayjs(payload.start).unix()
+      const endTimestamp = this.$dayjs(payload.end).unix()
+
+      const query = `start_date<=${startTimestamp} AND (end_date>=${startTimestamp} OR has_end_date=0 OR dates.timestamp:${startTimestamp} TO ${endTimestamp})`
+      this.$stores.algoliaSearch.initialFilters = query
+
+      console.log('onDayclick query', query)
       this.$router.push({
         path: this.$route.path,
         query: {
