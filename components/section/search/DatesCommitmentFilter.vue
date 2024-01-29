@@ -96,20 +96,20 @@ export default defineNuxtComponent({
       isOpen: false,
       dateType: this.$route.query.date_type ?? null,
       calendar: {
-        start: this.$route.query.from ?? new Date(),
-        end: this.$route.query.to ?? new Date(),
+        start: this.$route.query.start ?? new Date(),
+        end: this.$route.query.end ?? new Date(),
       },
     }
   },
   computed: {
     activeValue() {
-      if (this.dateType === 'ponctual' && this.$route.query.from && this.$route.query.to) {
-        return `${this.$dayjs(this.$route.query.from).format('DD/MM/YYYY')} - ${this.$dayjs(
-          this.$route.query.to
+      if (this.dateType === 'ponctual' && this.$route.query.start && this.$route.query.end) {
+        return `${this.$dayjs(this.$route.query.start).format('DD/MM/YYYY')} - ${this.$dayjs(
+          this.$route.query.end
         ).format('DD/MM/YYYY')}`
       }
-      if (this.dateType === 'ponctual' && this.$route.query.from) {
-        return `${this.$dayjs(this.$route.query.from).format('DD/MM/YYYY')}`
+      if (this.dateType === 'ponctual' && this.$route.query.start) {
+        return `${this.$dayjs(this.$route.query.start).format('DD/MM/YYYY')}`
       }
       if (this.dateType === 'recurring') {
         return 'Récurrent'
@@ -121,34 +121,18 @@ export default defineNuxtComponent({
     // '$route.query.date_type'(newVal) {
     //   this.dateType = newVal
     // },
-    '$route.query.from'(newVal) {
-      this.from = newVal
-    },
-    '$route.query.to'(newVal) {
-      this.to = newVal
-    },
     // '$route.query.duration'(newVal) {
     //   this.commitment__duration = newVal
-    // },
-    // '$route.query.time_period'(newVal) {
-    //   this.commitment__time_period = newVal
     // },
   },
   methods: {
     onDayclick(payload) {
-      const startTimestamp = this.$dayjs(payload.start).unix()
-      const endTimestamp = this.$dayjs(payload.end).unix()
-
-      const query = `start_date<=${startTimestamp} AND (end_date>=${startTimestamp} OR has_end_date=0 OR dates.timestamp:${startTimestamp} TO ${endTimestamp})`
-      this.$stores.algoliaSearch.initialFilters = query
-
-      console.log('onDayclick query', query)
       this.$router.push({
         path: this.$route.path,
         query: {
           ...this.$route.query,
-          from: this.$dayjs(payload.start).format('YYYY-MM-DD'),
-          to: this.$dayjs(payload.end).format('YYYY-MM-DD'),
+          start: this.$dayjs(payload.start).format('YYYY-MM-DD'),
+          end: this.$dayjs(payload.end).format('YYYY-MM-DD'),
           page: undefined,
         },
       })

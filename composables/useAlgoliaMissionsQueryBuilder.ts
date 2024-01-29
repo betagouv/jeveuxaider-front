@@ -1,4 +1,5 @@
 import { useAlgoliaSearchStore } from '@/store/algoliaSearch'
+import dayjs from 'dayjs'
 
 export const useAlgoliaMissionsQueryBuilder = () => {
   const {
@@ -39,6 +40,29 @@ export const useAlgoliaMissionsQueryBuilder = () => {
     deleteAllFilters: () => deleteAllFilters(),
     isActiveFilter: (name: string, value: any) => isActiveFilter(name, value),
     hasActiveFilters: () => hasActiveFilters(),
+    rebuildAlgoliaDateFilter: (start?: string, end?: string) => {
+      // @todo: prendre en compte la valeur initiale de algoliaSearchStore.initialFilters,
+      // rechercher "initial-filters=" dans le projet
+
+      if (!start || !end) {
+        algoliaSearchStore.initialFilters = ''
+        return
+      }
+
+      const startDate = dayjs(start as string).startOf('day')
+      const endDate = dayjs(end as string).startOf('day')
+
+      const daysArray = []
+      let day = dayjs(startDate)
+      while (day.isBefore(endDate) || day.isSame(endDate)) {
+        daysArray.push(day.unix())
+        day = day.add(1, 'day')
+      }
+
+      algoliaSearchStore.initialFilters = `start_date<=${startDate.unix()} AND (end_date>=${startDate.unix()} OR has_end_date=0 OR ${daysArray
+        .map((day) => `dates.timestamp=${day}`)
+        .join(' OR ')})`
+    },
   }
 }
 

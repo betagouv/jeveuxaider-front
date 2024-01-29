@@ -124,11 +124,11 @@ export default defineNuxtComponent({
     },
   },
   watch: {
-    async $route(newVal, oldVal) {
-      //console.log('Algoliasearch watching $route', newVal, oldVal)
+    async '$route.query'(newVal, oldVal) {
       if (newVal.name !== oldVal.name) {
         return
       }
+      this.rebuildAlgoliaDateFilter(newVal.start, newVal.end)
       await this.search()
       this.handleNavigatorGeolocation()
     },
@@ -136,6 +136,7 @@ export default defineNuxtComponent({
   async setup(props) {
     const { $stores } = useNuxtApp()
     const runtimeConfig = useRuntimeConfig()
+    const route = useRoute()
 
     $stores.algoliaSearch.reset()
     $stores.algoliaSearch.indexKey = 'missionsIndex'
@@ -163,9 +164,15 @@ export default defineNuxtComponent({
       $stores.algoliaSearch.aroundLatLng = props.initialAroundLatLng
     }
 
-    const { search, deleteAllFilters, onNavigatorGeolocation, onNavigatorGeolocationError } =
-      useAlgoliaMissionsQueryBuilder()
+    const {
+      search,
+      deleteAllFilters,
+      onNavigatorGeolocation,
+      onNavigatorGeolocationError,
+      rebuildAlgoliaDateFilter,
+    } = useAlgoliaMissionsQueryBuilder()
 
+    rebuildAlgoliaDateFilter(route.query.start, route.query.end)
     await search()
 
     return {
@@ -173,6 +180,7 @@ export default defineNuxtComponent({
       deleteAllFilters,
       onNavigatorGeolocation,
       onNavigatorGeolocationError,
+      rebuildAlgoliaDateFilter,
     }
   },
   mounted() {
