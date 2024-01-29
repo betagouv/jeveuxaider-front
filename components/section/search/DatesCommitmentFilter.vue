@@ -139,7 +139,7 @@ export default defineNuxtComponent({
       const startTimestamp = this.$dayjs(payload.start).unix()
       const endTimestamp = this.$dayjs(payload.end).unix()
 
-      const query = `start_date<=${startTimestamp} AND (end_date>=${startTimestamp} OR has_end_date=0 OR dates.timestamp:${startTimestamp} TO ${endTimestamp})`
+      const query = `start_date<=${startTimestamp} AND (has_end_date=0 OR dates.timestamp:${startTimestamp} TO ${endTimestamp})`
       this.$stores.algoliaSearch.initialFilters = query
 
       console.log('onDayclick query', query)
