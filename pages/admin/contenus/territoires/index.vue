@@ -152,7 +152,10 @@
         "
         :image-srcset="territoire.banner ? territoire.banner.urls.desktop : undefined"
         :image-src="territoire.banner ? territoire.banner.urls.original : undefined"
-        @click.native="drawerTerritoireId = territoire.id"
+        @click.left="drawerTerritoireId = territoire.id"
+        @click.middle="
+          navigateTo(`/admin/contenus/territoires/${territoire.id}`, { open: { target: '_blank' } })
+        "
       >
         <div class="mt-4 text-[13px] text-gray-500">
           Complétion:

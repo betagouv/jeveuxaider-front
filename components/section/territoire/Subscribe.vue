@@ -76,15 +76,15 @@
           </div>
 
           <p class="text-gray-600 text-sm mt-6 sm:max-w-md md:max-w-lg lg:max-w-full">
-            En m'inscrivant j'accepte la
+            <span>En m'inscrivant j'accepte la </span>
             <DsfrLink to="/politique-de-confidentialite">
               <strong>politique de confidentialité</strong>
             </DsfrLink>
-            et la
+            <span> et la </span>
             <DsfrLink to="/charte-reserve-civique">
               <strong>charte</strong>
             </DsfrLink>
-            de la Réserve Civique.
+            <span> de la Réserve Civique.</span>
           </p>
         </div>
       </div>

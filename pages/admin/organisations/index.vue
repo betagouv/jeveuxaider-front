@@ -148,7 +148,10 @@
           show-infos
           show-state
           tabindex="0"
-          @click.native="drawerOrganisationId = organisation.id"
+          @click.left="drawerOrganisationId = organisation.id"
+          @click.middle="
+            navigateTo(`/admin/organisations/${organisation.id}`, { open: { target: '_blank' } })
+          "
         />
       </div>
 

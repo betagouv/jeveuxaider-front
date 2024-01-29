@@ -145,29 +145,31 @@ export default {
         this.$dayjs().isAfter(this.mission.start_date)
       )
     },
-    textToAnalyze() {
-      return (
-        this.mission.name +
-        ' | ' +
-        this.mission.objectif +
-        ' | ' +
-        this.mission.description +
-        ' | ' +
-        this.mission.information +
-        (this.mission.prerequisites ? ' | ' + this.mission.prerequisites.join(' | ') : '')
-      )
-    },
-    textToAnalyzeWithoutTags() {
-      return this.textToAnalyze
-        ?.replace(/<\/li>/g, '</li> | ')
-        .replace(/<\/p>/g, '</p> | ')
+    sentences() {
+      const items = [
+        this.mission.name,
+        this.mission.objectif,
+        this.mission.description,
+        this.mission.information,
+      ]
+      if (this.mission.prerequisites) {
+        items.push(...this.mission.prerequisites)
+      }
+
+      return items
+        .join('|')
+        .replace(/<\/li>/g, '</li>|')
+        .replace(/<\/p>/g, '</p>|')
         .replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '')
+        .split(/[.?!|]/)
+        .map((i) => this.$filters.decodeHTMLEntities(i).trim())
+        .filter((i) => i && i.length >= 3)
     },
-    textToAnalyzeAsSentences() {
-      return this.textToAnalyzeWithoutTags?.split(/[.?!|]\s+/)
+    textToAnalyze() {
+      return this.sentences.join('|')
     },
     sentencesWithBlacklistedWords() {
-      return this.textToAnalyzeAsSentences?.filter((sentence) =>
+      return this.sentences?.filter((sentence) =>
         this.blacklistedWords.some((word) => {
           const regex = new RegExp(`\\b${word}\\b`, 'gi')
           return regex.test(sentence.toLowerCase())
@@ -177,16 +179,14 @@ export default {
   },
   methods: {
     async fetchAIReportScore() {
-      if (
-        this.$stores.aideModeration.type != 'mission' ||
-        this.mission.id != this.$stores.aideModeration.model?.id
-      ) {
-        await this.$stores.aideModeration.fetch({
-          type: 'mission',
-          model: { ...this.mission },
-          text: this.textToAnalyze,
-        })
+      if (this.textToAnalyze === this.$stores.aideModeration.response?.text) {
+        return
       }
+      await this.$stores.aideModeration.fetch({
+        type: 'mission',
+        model: { ...this.mission },
+        text: this.textToAnalyze,
+      })
     },
   },
 }

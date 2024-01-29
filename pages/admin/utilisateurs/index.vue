@@ -195,7 +195,10 @@
           v-for="profile in queryResult.data"
           :key="profile.id"
           :profile="profile"
-          @click.native="drawerProfileId = profile.id"
+          @click.left="drawerProfileId = profile.id"
+          @click.middle="
+            navigateTo(`/admin/utilisateurs/${profile.id}`, { open: { target: '_blank' } })
+          "
         />
       </div>
 

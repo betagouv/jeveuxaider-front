@@ -310,7 +310,7 @@
 
                     <div class="mt-6 mb-3 bg-gray-50">
                       <p class="text-xs text-gray-600 text-center">
-                        En m'inscrivant j'accepte la
+                        <span>En m'inscrivant j'accepte la </span>
                         <DsfrLink
                           to="/politique-de-confidentialite"
                           class="font-medium text-gray-900"
@@ -318,11 +318,11 @@
                           <span>politique de confidentialité</span>
                         </DsfrLink>
                         <br class="hidden sm:block" />
-                        et la
+                        <span> et la </span>
                         <DsfrLink to="/charte-reserve-civique" class="font-medium text-gray-900">
                           <span>charte</span>
                         </DsfrLink>
-                        de la Réserve Civique.
+                        <span> de la Réserve Civique.</span>
                         <br /><br />
                         Déjà inscrit ?
                         <DsfrLink to="/login" class="font-medium text-gray-900">

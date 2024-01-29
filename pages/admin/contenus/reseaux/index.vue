@@ -100,7 +100,10 @@
         :description="`${reseau.structures_count} antennes`"
         :image-srcset="illustrationSrcset(reseau)"
         :image-src="illustrationSrc(reseau)"
-        @click.native="drawerReseauId = reseau.id"
+        @click.left="drawerReseauId = reseau.id"
+        @click.middle="
+          navigateTo(`/admin/contenus/reseaux/${reseau.id}`, { open: { target: '_blank' } })
+        "
       >
         <template #footer>
           <div

@@ -353,7 +353,10 @@
           show-state
           :show-tags="['admin'].includes($stores.auth.contextRole)"
           tabindex="0"
-          @click.native="drawerMissionId = mission.id"
+          @click.left="drawerMissionId = mission.id"
+          @click.middle="
+            navigateTo(`/admin/missions/${mission.id}`, { open: { target: '_blank' } })
+          "
         />
       </div>
 

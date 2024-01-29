@@ -91,7 +91,9 @@
         </template>
         <div class="ml-7 mt-3 text-sm text-gray-500">
           <div>Nombre de places : {{ mission.participations_max }}</div>
-          <div v-if="score">Score de réactivité : {{ score.total_points }}</div>
+          <div v-if="organisationScore">
+            Score de réactivité : {{ organisationScore.total_points }}
+          </div>
         </div>
       </BaseDisclosure>
 
@@ -147,7 +149,7 @@ export default defineNuxtComponent({
   },
   data() {
     return {
-      score: null,
+      organisationScore: null,
       loading: false,
     }
   },
@@ -159,8 +161,7 @@ export default defineNuxtComponent({
       this.loading = true
       await this.fetchAIReportScore()
       if (this.tooManyParticipationsMax) {
-        const score = await apiFetch(`/structures/${this.mission.structure_id}/score`)
-        this.score = score
+        this.organisationScore = await apiFetch(`/structures/${this.mission.structure_id}/score`)
       }
       this.loading = false
     },
