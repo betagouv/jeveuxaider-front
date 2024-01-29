@@ -15,13 +15,18 @@
       ]"
     />
   </div>
-  <HeaderActions :organisation="organisation" />
+  <HeaderActions
+    :organisation="organisation"
+    @updated="closeDrawerAndRefreshOrganisation"
+    @isPinned="(event) => (this.isPinned = event)"
+  />
   <div class="container">
     <BaseDrawer
       :is-open="showDrawerAddResponsable"
       form-id="form-add-responsable"
       submit-label="Ajouter ce membre"
       @close="showDrawerAddResponsable = false"
+      :classContainer="isPinned ? 'pt-[80px]' : undefined"
     >
       <template #title>
         <BaseHeading :level="3"> Ajouter un membre </BaseHeading>
@@ -29,7 +34,7 @@
       <FormAddResponsable
         class="mt-8"
         :endpoint="`/structures/${organisation.id}/responsables`"
-        @submited="handleSubmitAddResponsable"
+        @submited="closeDrawerAndRefreshOrganisation"
       />
     </BaseDrawer>
     <BaseDrawer
@@ -37,6 +42,7 @@
       form-id="form-invitation"
       submit-label="Envoyer l'invitation"
       @close="showDrawerInvitation = false"
+      :classContainer="isPinned ? 'pt-[80px]' : undefined"
     >
       <template #title>
         <BaseHeading :level="3"> Inviter un nouveau membre </BaseHeading>
@@ -46,7 +52,7 @@
         role="responsable_organisation"
         :invitable-id="organisation.id"
         invitable-type="App\Models\Structure"
-        @submited="handleSubmitInvitation"
+        @submited="closeDrawerAndRefreshOrganisation"
       />
     </BaseDrawer>
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
@@ -259,14 +265,24 @@
                     ['admin', 'responsable', 'tete_de_reseau'].includes($stores.auth.contextRole)
                   "
                   variant="white"
-                  @click.native="showDrawerInvitation = true"
+                  @click.native="
+                    () => {
+                      showDrawerAddResponsable = false
+                      showDrawerInvitation = true
+                    }
+                  "
                 >
                   <RiUserFill class="h-4 w-4 mr-2" /> Inviter un membre
                 </BaseButton>
                 <BaseButton
                   v-if="['admin'].includes($stores.auth.contextRole)"
                   variant="white"
-                  @click.native="showDrawerAddResponsable = true"
+                  @click.native="
+                    () => {
+                      showDrawerAddResponsable = true
+                      showDrawerInvitation = false
+                    }
+                  "
                 >
                   <RiAddLine class="h-4 w-4 mr-2" /> Ajouter un membre
                 </BaseButton>
@@ -345,7 +361,9 @@ export default defineNuxtComponent({
       }
     }
 
-    const organisation = await apiFetch(`/structures/${route.params.id}`)
+    const { data: organisation, refresh: refreshOrganisation } = await useApiFetch(
+      `/structures/${route.params.id}`
+    )
 
     if (!organisation) {
       return showError({ statusCode: 404 })
@@ -353,6 +371,7 @@ export default defineNuxtComponent({
 
     return {
       organisation: toRef(organisation),
+      refreshOrganisation,
       googlePlacesKey: runtimeConfig.public.google.places,
     }
   },
@@ -363,6 +382,7 @@ export default defineNuxtComponent({
       showDrawerAddResponsable: false,
       queryInvitations: null,
       responsables: [],
+      isPinned: false,
     }
   },
   created() {
@@ -384,20 +404,13 @@ export default defineNuxtComponent({
       apiFetch(`/structures/${route.params.id}/responsables`).then((response) => {
         this.responsables = response
       })
+
+      this.refreshOrganisation()
     },
-    async refetch() {
-      const organisation = await apiFetch(`/structures/${this.organisation.id}`)
-      this.organisation = organisation
-      const responsables = await apiFetch(`/structures/${this.organisation.id}/responsables`)
-      this.responsables = responsables
-    },
-    handleSubmitInvitation() {
+    closeDrawerAndRefreshOrganisation() {
       this.showDrawerInvitation = false
-      this.fetch()
-    },
-    handleSubmitAddResponsable() {
       this.showDrawerAddResponsable = false
-      this.refetch()
+      this.fetch()
     },
   },
 })

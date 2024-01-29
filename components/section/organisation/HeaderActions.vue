@@ -1,8 +1,8 @@
 <template>
   <div
     ref="menuActions"
-    :class="[isPinned ? 'bg-white shadow-lg' : '']"
-    class="z-50 sticky top-0 py-4 -mt-4"
+    :class="[isPinned ? 'bg-white shadow-lg z-50' : '']"
+    class="sticky top-0 py-4 -mt-4"
   >
     <div class="container">
       <div
@@ -51,6 +51,8 @@
               v-if="['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)"
               :organisation="organisation"
               @organisationDeleted="handleDeleted"
+              @organisationUpdated="$emit('updated')"
+              :isMenuPinned="isPinned"
             />
           </slot>
         </div>
@@ -70,7 +72,7 @@ import MixinOrganisation from '@/mixins/organisation'
 import SelectOrganisationState from '@/components/custom/SelectOrganisationState.vue'
 
 export default defineNuxtComponent({
-  emits: ['showModalSwitchIsOnline', 'updated'],
+  emits: ['showModalSwitchIsOnline', 'updated', 'isPinned'],
   mixins: [MixinOrganisation],
 
   data() {
@@ -114,6 +116,7 @@ export default defineNuxtComponent({
         return
       }
       this.isPinned = this.$refs.menuActions.getBoundingClientRect().top <= 0
+      this.$emit('isPinned', this.isPinned)
     },
     handleDeleted() {
       this.$router.push('/admin/organisations')
