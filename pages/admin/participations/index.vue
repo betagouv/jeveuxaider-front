@@ -139,7 +139,6 @@
             <BaseFilterSelectAdvanced
               v-if="visibleFilter === 'state'"
               multiple
-              searchable
               :modelValue="$route.query['filter[state]']?.split(',')"
               name="state"
               :options="$labels.participation_workflow_states"
