@@ -110,6 +110,7 @@ import RiFileDownloadLine from 'vue-remix-icons/icons/ri-file-download-line.vue'
 import RiUserFollow from 'vue-remix-icons/icons/ri-user-follow-line.vue'
 import RiUserUnfollow from 'vue-remix-icons/icons/ri-user-unfollow-line.vue'
 import RiUserAdd from 'vue-remix-icons/icons/ri-user-add-line.vue'
+import RiSpy from 'vue-remix-icons/icons/ri-spy-line.vue'
 
 const components = {
   RiFileDownloadLine,
@@ -220,6 +221,7 @@ const components = {
   RiUserUnfollow,
   RiUserSearch,
   RiUserAdd,
+  RiSpy,
 }
 
 export default defineNuxtPlugin((nuxtApp) => {
