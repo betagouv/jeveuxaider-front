@@ -118,9 +118,9 @@ export default defineNuxtComponent({
     },
   },
   watch: {
-    // '$route.query.date_type'(newVal) {
-    //   this.dateType = newVal
-    // },
+    '$route.query.date_type'(newVal) {
+      this.dateType = newVal
+    },
     // '$route.query.duration'(newVal) {
     //   this.commitment__duration = newVal
     // },

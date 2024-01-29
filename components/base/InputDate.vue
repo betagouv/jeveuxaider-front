@@ -57,7 +57,7 @@ export default defineNuxtComponent({
     popover: {
       type: Object,
       default: () => ({
-        visibility: 'click',
+        visibility: 'hover-focus',
         placement: 'bottom-start',
       }),
     },
