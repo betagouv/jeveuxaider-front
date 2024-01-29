@@ -90,20 +90,6 @@
               ⚠️ À traiter en priorité
             </DsfrTag>
 
-            <DsfrTag
-              v-if="visibleFilter === 'is_state_pending'"
-              as="button"
-              size="md"
-              context="selectable"
-              :is-active="
-                $route.query['filter[is_state_pending]'] &&
-                $route.query['filter[is_state_pending]'] == 'true'
-              "
-              @click.native="changeFilter('filter[is_state_pending]', 'true')"
-            >
-              En cours de modération
-            </DsfrTag>
-
             <BaseFilterSelectAdvanced
               v-if="visibleFilter === 'ofActivity'"
               :modelValue="$route.query['filter[ofActivity]']"
@@ -416,7 +402,6 @@ export default defineNuxtComponent({
       return [
         this.$stores.auth.user.statistics?.participations_need_to_be_treated_count > 0 &&
           'need_to_be_treated',
-        'is_state_pending',
         'state',
         'tags',
         this.activities.length &&
@@ -438,7 +423,6 @@ export default defineNuxtComponent({
       return [
         this.$stores.auth.user.statistics?.participations_need_to_be_treated_count > 0 &&
           'need_to_be_treated',
-        'is_state_pending',
         'state',
         'tags',
         ['admin'].includes(this.$stores.auth.contextRole) && 'mission.structure.id',
