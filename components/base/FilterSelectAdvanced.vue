@@ -103,6 +103,22 @@
               </li>
             </ul>
           </div>
+
+          <div class="border-t px-4 py-3 flex justify-end -mx-4">
+            <button
+              class="text-sm"
+              :class="[
+                { 'text-gray-400 pointer-events-none': !splittedModelValue.length > 0 },
+                {
+                  'text-jva-blue-500 cursor-pointer hover:underline': splittedModelValue.length > 0,
+                },
+              ]"
+              :disabled="!splittedModelValue.length > 0"
+              @click="reset()"
+            >
+              Effacer
+            </button>
+          </div>
         </FocusLoop>
       </div>
     </transition>
