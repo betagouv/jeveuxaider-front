@@ -74,6 +74,7 @@ export default defineNuxtComponent({
         const response = await this.$algolia.missionsIndex.search('', newVal)
         this.missions = response.hits
         this.nbHits = response.nbHits
+        this.$emit('update')
       },
     },
   },

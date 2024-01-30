@@ -38,6 +38,7 @@
           :redirect-parameters="{
             type: 'Mission en présentiel',
           }"
+          @update="onSearchUpdate"
         />
       </div>
       <DecembreEnsemble />
@@ -79,7 +80,7 @@ export default defineNuxtComponent({
   computed: {
     commonFilters() {
       const timestamp = this.$dayjs(this.selectedDate).unix()
-      const query = `start_date<=${timestamp} AND (end_date>=${timestamp} OR has_end_date=0 OR dates.timestamp=${timestamp})`
+      const query = `start_date<=${timestamp} AND (end_date_no_creneaux>=${timestamp} OR has_end_date=0 OR dates.timestamp=${timestamp})`
       return `${query} AND commitment__total<=1 AND date_type:"ponctual"`
     },
     presentielFilters() {
@@ -107,7 +108,9 @@ export default defineNuxtComponent({
           page: undefined,
         },
       })
-
+    },
+    async onSearchUpdate() {
+      await this.$nextTick()
       this.$scrollTo('#missions-presentiel', 500, {
         offset: -220,
       })
