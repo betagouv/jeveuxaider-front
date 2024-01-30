@@ -18,14 +18,13 @@
         </h1>
       </div>
     </div>
-    <div class="">
+    <div class="relative top-[-1px]">
       <div class="bg-jva-blue-500 z-10 lg:sticky lg:top-[-64px] lg:mb-[150px]">
         <div class="lg:container">
           <div
             class="flex flex-col lg:flex-row items-center bg-white relative lg:translate-y-1/2 shadow-md lg:shadow-lg"
           >
             <CalendarFilters
-              ref="calendarFilters"
               :model-value="selectedDate"
               :starting-date="startingDate"
               class="flex-1"
@@ -99,6 +98,7 @@ export default defineNuxtComponent({
       startingDate: this.$route.query.start ?? this.$dayjs().format('YYYY-MM-DD'),
     }
   },
+
   computed: {
     commonFilters() {
       const timestamp = this.$dayjs(this.selectedDate).unix()
