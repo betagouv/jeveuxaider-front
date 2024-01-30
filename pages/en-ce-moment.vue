@@ -11,15 +11,15 @@
               aria-hidden="true"
               class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[50px] lg:h-[51px] lg:bottom-[35px] lg:right-[-40px] pointer-events-none"
             />
-            <span class="text-[48px] leading-[56px] lg:text-[80px] lg:leading-[80px]"
+            <span class="text-[48px] leading-[56px] lg:text-[80px] lg:leading-[90px]"
               >très (très) bientôt</span
             >
           </span>
         </h1>
       </div>
     </div>
-    <div class="relative top-[-1px]">
-      <div class="bg-jva-blue-500 z-10 lg:sticky lg:top-[-64px] lg:mb-[150px]">
+    <div class="relative -top-px">
+      <div class="bg-jva-blue-500 z-10 lg:sticky lg:top-[-54px] lg:mb-[150px]">
         <div class="lg:container">
           <div
             class="flex flex-col lg:flex-row items-center bg-white relative lg:translate-y-1/2 shadow-md lg:shadow-lg"
@@ -52,6 +52,7 @@
             type: 'Mission en présentiel',
             date_type: 'ponctual',
           }"
+          @update="onSearchUpdate"
         />
       </div>
       <DecembreEnsemble />
@@ -101,7 +102,7 @@ export default defineNuxtComponent({
   computed: {
     commonFilters() {
       const timestamp = this.$dayjs(this.selectedDate).unix()
-      const query = `start_date<=${timestamp} AND (end_date>=${timestamp} OR has_end_date=0 OR dates.timestamp=${timestamp})`
+      const query = `start_date<=${timestamp} AND (end_date_no_creneaux>=${timestamp} OR has_end_date=0 OR dates.timestamp=${timestamp})`
       return `${query} AND commitment__total<=4 AND date_type:"ponctual"`
     },
     presentielFilters() {
@@ -130,8 +131,10 @@ export default defineNuxtComponent({
           page: undefined,
         },
       })
-
+    },
+    async onSearchUpdate() {
       if (this.$mq.current === 'xl') {
+        await this.$nextTick()
         this.$scrollTo('#missions-presentiel', 500, {
           offset: -220,
         })

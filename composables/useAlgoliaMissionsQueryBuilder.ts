@@ -59,7 +59,7 @@ export const useAlgoliaMissionsQueryBuilder = () => {
         day = day.add(1, 'day')
       }
 
-      algoliaSearchStore.initialFilters = `start_date<=${startDate.unix()} AND (end_date>=${startDate.unix()} OR has_end_date=0 OR ${daysArray
+      algoliaSearchStore.initialFilters = `start_date<=${startDate.unix()} AND (end_date_no_creneaux>=${startDate.unix()} OR has_end_date=0 OR ${daysArray
         .map((day) => `dates.timestamp=${day}`)
         .join(' OR ')})`
     },
