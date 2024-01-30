@@ -34,23 +34,11 @@
             <div class="flex gap-4">
               <div class="flex-1 space-y-4">
                 <div class="font-medium">À partir du</div>
-                <BaseInput
-                  ref="inputDatePicker"
-                  :modelValue="$route.query?.from"
-                  name="from"
-                  type="date"
-                  disabled
-                />
+                <BaseInput :modelValue="$route.query?.start" name="start" type="date" disabled />
               </div>
               <div class="flex-1 space-y-4">
                 <div class="font-medium">Jusqu'au</div>
-                <BaseInput
-                  ref="inputDatePicker"
-                  :modelValue="$route.query?.to"
-                  name="to"
-                  type="date"
-                  disabled
-                />
+                <BaseInput :modelValue="$route.query?.end" name="end" type="date" disabled />
               </div>
             </div>
             <div class="mt-4">
@@ -96,8 +84,8 @@ export default defineNuxtComponent({
       isOpen: false,
       dateType: this.$route.query.date_type ?? null,
       calendar: {
-        start: this.$route.query.start ?? new Date(),
-        end: this.$route.query.end ?? new Date(),
+        start: this.$route.query?.start ?? new Date(),
+        end: this.$route.query?.end ?? this.$route.query?.start ?? new Date(),
       },
     }
   },
@@ -145,9 +133,9 @@ export default defineNuxtComponent({
         path: this.$route.path,
         query: {
           ...this.$route.query,
-          from: undefined,
+          start: undefined,
           date_type: undefined,
-          to: undefined,
+          end: undefined,
           page: undefined,
         },
       })
