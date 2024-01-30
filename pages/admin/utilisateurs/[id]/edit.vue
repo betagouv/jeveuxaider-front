@@ -15,7 +15,7 @@
     </template>
   </HeaderActions>
   <div class="container">
-    <div class="flex flex-col pb-6 gap-6">
+    <div class="flex flex-col pb-20 gap-6">
       <FormProfile ref="form" :profile="profile" @role-changed="handleRoleChanged()" />
     </div>
   </div>

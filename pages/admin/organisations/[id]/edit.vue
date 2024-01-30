@@ -22,7 +22,7 @@
     </template>
   </HeaderActions>
   <div class="container">
-    <div class="pb-6">
+    <div class="pb-20">
       <FormOrganisation ref="form" :structure="structure" />
     </div>
   </div>

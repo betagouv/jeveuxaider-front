@@ -469,13 +469,6 @@
         </BaseBox>
       </div>
     </div>
-    <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
-      <div class="flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-        <BaseButton size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
-          Enregistrer
-        </BaseButton>
-      </div>
-    </div>
   </div>
 </template>
 

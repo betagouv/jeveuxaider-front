@@ -55,7 +55,7 @@
         @submited="closeDrawerAndRefreshOrganisation"
       />
     </BaseDrawer>
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-20">
       <div class="lg:col-span-3 space-y-6">
         <BaseBox class="relative z-10">
           <img
