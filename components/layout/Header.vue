@@ -8,7 +8,7 @@
     <HeaderBanner />
     <div id="teleport-header-top"></div>
 
-    <div class="relative bg-white shadow-lg z-30">
+    <div class="relative bg-white shadow-lg z-50">
       <HeaderMobile class="block lg:hidden" :full-width="fullWidth" />
       <HeaderDesktop class="hidden lg:block" :full-width="fullWidth" />
     </div>

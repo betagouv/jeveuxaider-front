@@ -1,28 +1,24 @@
 <template>
   <div class="relative">
-    <div class="inline-flex border border-cool-gray-300 divide-x divide-gray-100">
+    <div class="inline-flex border border-[#DDDDDD] divide-x divide-gray-100">
       <div class="relative z-0 inline-flex divide-x divide-gray-100">
         <div
           :class="[
-            'relative inline-flex items-center bg-white border border-transparent text-white',
+            'text-inherit relative inline-flex items-center bg-white border border-transparent',
             { 'pl-2 pr-3': size === 'sm' },
             { 'py-2 pl-3 pr-4': size === 'md' },
           ]"
         >
           <RiCheckLine
-            :class="[
-              'text-cool-gray-700',
-              { 'h-4 w-4': size === 'sm' },
-              { 'h-5 w-5': size === 'md' },
-            ]"
+            :class="[{ 'h-4 w-4 text-sm': size === 'sm' }, { 'h-5 w-5 text-base': size === 'md' }]"
           />
-          <p class="ml-2.5 text-sm font-bold text-cool-gray-700 leading-4 truncate">
+          <p class="ml-2.5 font-medium leading-4 truncate">
             {{ selected.label }}
           </p>
         </div>
         <button
           type="button"
-          class="relative inline-flex items-center bg-white p-2 text-sm font-medium text-white hover:bg-gray-100 focus:outline-none focus:z-10 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500"
+          class="relative inline-flex items-center bg-white p-2.5 text-sm font-medium text-white hover:bg-gray-100 focus:outline-none focus:z-10 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-gray-500"
           :class="[{ 'p-1': size === 'sm' }, { 'p-2': size === 'md' }]"
           aria-haspopup="listbox"
           aria-expanded="true"
@@ -45,7 +41,7 @@
       <ul
         v-if="show"
         v-click-outside="() => (show = false)"
-        class="origin-top-left absolute z-10 left-0 mt-2 w-72 shadow-lg bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none max-h-80 overscroll-contain overflow-auto"
+        class="origin-top-left absolute z-10 left-0 mt-2 w-72 shadow-lg bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none max-h-[500px] overscroll-contain overflow-auto"
         tabindex="-1"
         role="listbox"
         aria-labelledby="listbox-label"

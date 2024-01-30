@@ -35,16 +35,7 @@
           </DsfrButton>
         </nuxt-link>
 
-        <DsfrButton
-          v-if="['admin'].includes($stores.auth.contextRole)"
-          type="tertiary"
-          size="sm"
-          icon="RiProfileLine"
-          icon-class="!mr-1"
-          @click.native="handleImpersonate()"
-        >
-          Prendre sa place
-        </DsfrButton>
+        <Actions :profile="profile" @updated="fetch()" buttonSize="sm" />
       </div>
       <div class="border-t -mx-6 my-6" />
       <BoxUserBan
@@ -54,27 +45,8 @@
         ref="boxUserBan"
         :user="profile.user"
         class="mb-8"
-        @update="fetch"
-      >
-        <template #action="{ loading }">
-          <DsfrLink
-            v-if="!profile.user.banned_at"
-            :disabled="loading"
-            class="text-jva-blue-500 ml-auto"
-            @click.native="$refs.boxUserBan.showModalBan = true"
-          >
-            Bloquer l'utilisateur
-          </DsfrLink>
-          <DsfrLink
-            v-else
-            :disabled="loading"
-            class="text-jva-blue-500 ml-auto"
-            @click.native="$refs.boxUserBan.showModalUnban = true"
-          >
-            Débloquer l'utilisateur
-          </DsfrLink>
-        </template>
-      </BoxUserBan>
+      />
+
       <BoxRoles
         v-if="
           ['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole) && profile
@@ -129,6 +101,7 @@ import BoxActions from '@/components/section/profile/BoxActions.vue'
 import BoxUtm from '@/components/section/BoxUtm.vue'
 import BoxRoles from '@/components/section/profile/BoxRoles.vue'
 import BoxUserBan from '@/components/section/profile/BoxUserBan.vue'
+import Actions from '@/components/section/profile/Actions.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -141,6 +114,7 @@ export default defineNuxtComponent({
     BoxActions,
     BoxRoles,
     BoxUserBan,
+    Actions,
   },
   props: {
     profileId: {
@@ -163,9 +137,6 @@ export default defineNuxtComponent({
       }
       const profile = await apiFetch(`/profiles/${this.profileId}`)
       this.profile = profile
-    },
-    async handleImpersonate() {
-      await this.$stores.auth.impersonate(this.profile.user.id)
     },
   },
 })

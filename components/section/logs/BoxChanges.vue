@@ -251,6 +251,8 @@ export default defineNuxtComponent({
           return 'SEO'
         case 'is_active':
           return 'Actif'
+        case 'is_online':
+          return 'En ligne'
         case 'is_registration_open':
           return 'Inscription ouverte'
         case 'activity_secondary_id':

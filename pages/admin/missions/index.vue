@@ -264,15 +264,15 @@
             />
 
             <BaseFilterSelectAdvanced
-              v-if="visibleFilter === 'is_active'"
-              :modelValue="$route.query['filter[is_active]']"
+              v-if="visibleFilter === 'is_online'"
+              :modelValue="$route.query['filter[is_online]']"
               name="is-active"
               :options="[
-                { key: 'true', label: 'Missions activées' },
-                { key: 'false', label: 'Missions désactivées' },
+                { key: 'true', label: 'Missions en lignes' },
+                { key: 'false', label: 'Missions hors lignes' },
               ]"
               placeholder="État"
-              @update:modelValue="changeFilter('filter[is_active]', $event)"
+              @update:modelValue="changeFilter('filter[is_online]', $event)"
             />
 
             <BaseFilterSelectAdvanced
@@ -464,7 +464,7 @@ export default defineNuxtComponent({
         'ofDomaine',
         'ofActivity',
         'hasCreneaux',
-        'is_active',
+        'is_online',
         'publics_volontaires',
         'publics_beneficiaires',
         'type',

@@ -19,20 +19,20 @@
       <div
         v-if="
           $stores.auth.contextRole == 'admin' &&
-          (responsable.tags || profileStats?.missions_inactive > 0)
+          (responsable.tags || profileStats?.missions_offline > 0)
         "
         class="mt-1 mb-2 flex flex-wrap gap-1"
       >
         <DsfrTag
-          v-if="profileStats?.missions_inactive > 0"
+          v-if="profileStats?.missions_offline > 0"
           :custom-theme="true"
           class="bg-jva-red-600 text-white"
         >
           {{
             $filters.pluralize(
-              profileStats.missions_inactive,
-              'mission désactivée',
-              'missions désactivées'
+              profileStats.missions_offline,
+              'mission hors ligne',
+              'missions hors ligne'
             )
           }}
         </DsfrTag>
@@ -87,12 +87,12 @@
     </template>
 
     <template
-      v-if="['admin'].includes($stores.auth.contextRole) && profileStats?.missions_inactive > 0"
+      v-if="['admin'].includes($stores.auth.contextRole) && profileStats?.missions_offline > 0"
     >
       <div class="border-t -mx-4 xl:-mx-6 my-4" />
       <div class="flex justify-center text-sm">
         <BaseLink @click.native="showModalResponsableSetMissionsActive = true">
-          Activer les missions du responsable
+          Mettre en ligne les missions du responsable
         </BaseLink>
         <ModalResponsableSetMissionsIsActive
           :value="true"
@@ -111,7 +111,7 @@
       <div class="border-t -mx-4 xl:-mx-6 my-4" />
       <div class="flex justify-center text-sm">
         <BaseLink @click.native="showModalResponsableSetMissionsInactive = true">
-          Désactiver les missions du responsable
+          Mettre hors ligne les missions du responsable
         </BaseLink>
         <ModalResponsableSetMissionsIsActive
           :value="false"
