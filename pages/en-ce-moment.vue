@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div id="missions-presentiel" class="container mt-12 mb-24">
+      <div id="missions-presentiel" class="container mt-12 mb-12 lg:mb-24">
         <AlgoliaMissions
           :search-parameters="{
             hitsPerPage: 6,
@@ -55,7 +55,7 @@
         />
       </div>
       <DecembreEnsemble />
-      <div class="container mt-24 mb-24">
+      <div class="container my-12 lg:my-24">
         <DsfrHeading as="h3" size="2xl" class="tracking-[-.5px]">
           Vous pouvez aussi vous engager à distance
         </DsfrHeading>
@@ -98,7 +98,6 @@ export default defineNuxtComponent({
       startingDate: this.$route.query.start ?? this.$dayjs().format('YYYY-MM-DD'),
     }
   },
-
   computed: {
     commonFilters() {
       const timestamp = this.$dayjs(this.selectedDate).unix()
@@ -113,9 +112,11 @@ export default defineNuxtComponent({
     },
   },
   watch: {
-    '$route.query': {
+    '$route.query.start': {
       handler(newVal, oldVal) {
-        this.selectedDate = newVal.start
+        if (newVal) {
+          this.selectedDate = newVal
+        }
       },
     },
   },

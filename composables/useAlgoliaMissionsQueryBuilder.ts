@@ -159,5 +159,8 @@ const getNbMobileSecondaryFilters = () => {
   if (getSearchParameters()?.query) {
     nbSecondaryFilters++
   }
+  if (route.query.start) {
+    nbSecondaryFilters++
+  }
   return nbSecondaryFilters
 }

@@ -5,6 +5,11 @@
     </template>
 
     <div class="space-y-2">
+      <div class="relative font-medium text-[15px]">Dates</div>
+      <DatesMobileFilter />
+    </div>
+
+    <div class="space-y-2">
       <div class="relative font-medium text-[15px]">Disponibilités</div>
       <CommitmentMobileFilter />
     </div>
@@ -144,6 +149,7 @@ import CommitmentMobileFilter from '@/components/section/search/CommitmentMobile
 import AutonomyMobileFilter from '@/components/section/search/AutonomyMobileFilter.vue'
 import MinorsMobileFilter from '@/components/section/search/MinorsMobileFilter.vue'
 import PonctualMobileFilter from '@/components/section/search/PonctualMobileFilter.vue'
+import DatesMobileFilter from '@/components/section/search/DatesMobileFilter.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -153,6 +159,7 @@ export default defineNuxtComponent({
     AutonomyMobileFilter,
     MinorsMobileFilter,
     PonctualMobileFilter,
+    DatesMobileFilter,
   },
   setup() {
     const { getNbMobileSecondaryFilters } = useAlgoliaMissionsQueryBuilder()
