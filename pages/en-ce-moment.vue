@@ -114,7 +114,7 @@ export default defineNuxtComponent({
   },
   watch: {
     '$route.query.start': {
-      handler(newVal, oldVal) {
+      handler(newVal) {
         if (newVal) {
           this.selectedDate = newVal
         }
@@ -135,8 +135,8 @@ export default defineNuxtComponent({
     async onSearchUpdate() {
       if (this.$mq.current === 'xl') {
         await this.$nextTick()
-        this.$scrollTo('#missions-presentiel', 500, {
-          offset: -220,
+        this.$scrollTo('#missions-presentiel', 0, {
+          offset: -200,
         })
       }
     },
