@@ -8,7 +8,7 @@
       ]"
     />
   </div>
-  <HeaderActions :profile="profile" />
+  <HeaderActions :profile="profile" @updated="refreshProfile" />
   <div class="container">
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
@@ -186,13 +186,19 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
 
-    const profile = await apiFetch(`/profiles/${route.params.id}`)
+    // const profile = await apiFetch(`/profiles/${route.params.id}`)
+
+    const { data: profile, refresh: refreshProfile } = await useApiFetch(
+      `/profiles/${route.params.id}`
+    )
+
     if (!profile) {
       return showError({ statusCode: 404 })
     }
 
     return {
-      profile,
+      profile: toRef(profile),
+      refreshProfile,
     }
   },
   methods: {

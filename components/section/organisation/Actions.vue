@@ -62,7 +62,7 @@
       >
         <BaseDropdownOptionsItem>
           <div class="flex items-center">
-            <RiTeamLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Voir les participations
+            <RiMailStar class="h-4 w-4 mr-2 fill-current text-gray-600" /> Voir les participations
           </div>
         </BaseDropdownOptionsItem>
       </NuxtLink>
@@ -81,10 +81,9 @@
           <RiUserAdd class="h-4 w-4 mr-2" /> Inviter un membre
         </div>
       </BaseDropdownOptionsItem>
-      <BaseDropdownOptionsItem>
+      <BaseDropdownOptionsItem v-if="['admin'].includes($stores.auth.contextRole)">
         <div
           class="flex items-center"
-          v-if="['admin'].includes($stores.auth.contextRole)"
           v-tooltip="{
             content: 'L\'utilisateur ajouté à l\'organisation ne recevra pas de notifications.',
           }"

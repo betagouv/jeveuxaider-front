@@ -17,6 +17,7 @@
               Utilisateur
               <span class="font-normal text-gray-500">#{{ profile.id }}</span>
             </BaseHeading>
+            <Badges :class="[isPinned ? 'hidden xl:flex' : 'mt-2']" :profile="profile" />
           </div>
         </div>
 
@@ -28,7 +29,7 @@
               </DsfrButton>
             </nuxt-link>
 
-            <Actions :profile="profile" />
+            <Actions :profile="profile" @updated="$emit('updated')" />
           </slot>
         </div>
       </div>
@@ -42,8 +43,10 @@
 
 <script>
 import Actions from '@/components/section/profile/Actions.vue'
+import Badges from '@/components/section/profile/Badges.vue'
 
 export default defineNuxtComponent({
+  emits: ['updated'],
   data() {
     return {
       isPinned: false,
@@ -51,6 +54,7 @@ export default defineNuxtComponent({
   },
   components: {
     Actions,
+    Badges,
   },
   props: {
     profile: {

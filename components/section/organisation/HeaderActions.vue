@@ -48,7 +48,11 @@
               @selected="handleChangeState($event)"
             />
             <Actions
-              v-if="['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)"
+              v-if="
+                ['admin', 'referent', 'referent_regional', 'responsable'].includes(
+                  $stores.auth.contextRole
+                )
+              "
               :organisation="organisation"
               @organisationDeleted="handleDeleted"
               @organisationUpdated="$emit('updated')"
