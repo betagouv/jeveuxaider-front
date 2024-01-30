@@ -14,7 +14,8 @@
           "
           @click.native="handleClickCard(mission)"
         >
-          <CardMissionFull :mission="mission" />
+          <CardMission class="flex lg:hidden" :mission="mission" />
+          <CardMissionFull class="hidden lg:flex" :mission="mission" />
         </nuxt-link>
         <div class="flex justify-center mt-6">
           <DsfrButton
@@ -39,10 +40,12 @@
 </template>
 
 <script>
+import CardMission from '@/components/card/CardMission.vue'
 import CardMissionFull from '@/components/card/CardMissionFull.vue'
 
 export default defineNuxtComponent({
   components: {
+    CardMission,
     CardMissionFull,
   },
   props: {

@@ -1,17 +1,29 @@
 <template>
   <div class="relative">
-    <div class="bg-jva-blue-500 sticky">
-      <div class="container pt-[104px] relative">
+    <div class="bg-jva-blue-500">
+      <div class="container py-[56px] lg:pt-[104px] lg:pb-0 relative">
         <h1 class="text-white font-bold">
-          <span class="text-[40px]">Votre prochaine mission de bénévolat</span><br />
-          <span class="text-[80px] leading-[80px]">très (très) bientôt</span>
+          <span class="text-[22px] lg:text-[40px]">Votre prochaine mission de bénévolat</span><br />
+          <span class="relative">
+            <img
+              src="/images/home/sparkle-right.svg"
+              alt=""
+              aria-hidden="true"
+              class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[50px] lg:h-[51px] lg:bottom-[35px] lg:right-[-40px] pointer-events-none"
+            />
+            <span class="text-[48px] leading-[56px] lg:text-[80px] lg:leading-[80px]"
+              >très (très) bientôt</span
+            >
+          </span>
         </h1>
       </div>
     </div>
     <div class="">
-      <div class="bg-jva-blue-500 z-10 sticky top-[-64px] mb-[150px]">
-        <div class="container">
-          <div class="flex items-center bg-white relative translate-y-1/2 shadow-lg">
+      <div class="bg-jva-blue-500 z-10 lg:sticky lg:top-[-64px] lg:mb-[150px]">
+        <div class="lg:container">
+          <div
+            class="flex flex-col lg:flex-row items-center bg-white relative lg:translate-y-1/2 shadow-md lg:shadow-lg"
+          >
             <CalendarFilters
               ref="calendarFilters"
               :model-value="selectedDate"
@@ -19,7 +31,9 @@
               class="flex-1"
               @update:modelValue="onChangedSelectedDate"
             />
-            <div class="w-[234px] border-l py-8 pl-8">
+            <div
+              class="hidden lg:block w-full lg:w-[234px] border-t lg:border-l lg:border-t-0 lg:py-8 lg:pl-8"
+            >
               <div>Lieu de la mission</div>
               <div>@TODO</div>
             </div>
@@ -37,6 +51,7 @@
           }"
           :redirect-parameters="{
             type: 'Mission en présentiel',
+            date_type: 'ponctual',
           }"
         />
       </div>
@@ -51,6 +66,10 @@
             hitsPerPage: 6,
             filters: distanceFilters,
           }"
+          :redirect-parameters="{
+            type: 'Mission à distance',
+            date_type: 'ponctual',
+          }"
         />
       </div>
       <SectionSearchBlocFaq title="Vous avez des questions?" />
@@ -63,6 +82,7 @@
 import CalendarFilters from '@/components/calendar/CalendarFilters.vue'
 import AlgoliaMissions from '@/components/section/search/missions/AlgoliaMissions.vue'
 import DecembreEnsemble from '@/components/section/operations/DecembreEnsemble.vue'
+import { dragscroll } from 'vue-dragscroll'
 
 export default defineNuxtComponent({
   components: {
@@ -70,17 +90,20 @@ export default defineNuxtComponent({
     AlgoliaMissions,
     DecembreEnsemble,
   },
+  directives: {
+    dragscroll,
+  },
   data() {
     return {
-      selectedDate: this.$route.query.from ?? this.$dayjs().format('YYYY-MM-DD'),
-      startingDate: this.$route.query.from ?? this.$dayjs().format('YYYY-MM-DD'),
+      selectedDate: this.$route.query.start ?? this.$dayjs().format('YYYY-MM-DD'),
+      startingDate: this.$route.query.start ?? this.$dayjs().format('YYYY-MM-DD'),
     }
   },
   computed: {
     commonFilters() {
       const timestamp = this.$dayjs(this.selectedDate).unix()
       const query = `start_date<=${timestamp} AND (end_date>=${timestamp} OR has_end_date=0 OR dates.timestamp=${timestamp})`
-      return `${query} AND commitment__total<=1 AND date_type:"ponctual"`
+      return `${query} AND commitment__total<=4 AND date_type:"ponctual"`
     },
     presentielFilters() {
       return `${this.commonFilters} AND type:"Mission en présentiel"`
@@ -92,7 +115,7 @@ export default defineNuxtComponent({
   watch: {
     '$route.query': {
       handler(newVal, oldVal) {
-        this.selectedDate = newVal.from
+        this.selectedDate = newVal.start
       },
     },
   },
@@ -102,15 +125,16 @@ export default defineNuxtComponent({
         path: this.$route.path,
         query: {
           ...this.$route.query,
-          from: this.$dayjs(date).format('YYYY-MM-DD'),
-          // to: unixDateEndOfDay,
+          start: this.$dayjs(date).format('YYYY-MM-DD'),
           page: undefined,
         },
       })
 
-      this.$scrollTo('#missions-presentiel', 500, {
-        offset: -220,
-      })
+      if (this.$mq.current === 'xl') {
+        this.$scrollTo('#missions-presentiel', 500, {
+          offset: -220,
+        })
+      }
     },
   },
 })
