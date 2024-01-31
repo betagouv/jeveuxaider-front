@@ -31,11 +31,11 @@
           </p>
         </div>
         <img
-          src="/images/operations/operation-restos-du-coeur.png"
+          src="/images/operations/operation-restos-du-coeur.jpg"
           alt="Décembre Ensemble"
           width="383"
           height="384"
-          class="flex-none max-w-[227px] sm:max-w-[169px] lg:max-w-[300px] xl:max-w-[380px]"
+          class="flex-none max-w-[227px] sm:max-w-[169px] lg:max-w-[300px] xl:max-w-[340px]"
         />
       </div>
       <div class="mt-12">
