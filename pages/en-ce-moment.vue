@@ -1,11 +1,12 @@
 <template>
-  <div class="relative">
+  <div class="relative z-1">
     <div class="bg-jva-blue-500">
-      <div class="container py-[56px] lg:pt-[104px] lg:pb-[56px] relative">
+      <div class="container py-[56px] lg:pt-[104px] lg:pb-[114px] relative">
         <h1 class="text-white font-bold">
           <span class="text-[22px] lg:text-[40px]">Votre prochaine mission de bénévolat</span><br />
           <span class="relative">
             <img
+              v-if="isPinned"
               src="/images/home/sparkle-right.svg"
               alt=""
               aria-hidden="true"
@@ -21,13 +22,17 @@
     <div class="relative">
       <div
         ref="filters"
-        :class="['z-10 lg:sticky top-[-1px]', { 'bg-white': isPinned }, { '': !isPinned }]"
+        :class="[
+          ' z-10 sticky top-[-1px]',
+          { 'bg-white ': isPinned },
+          { 'lg:container  -translate-y-1/2': !isPinned },
+        ]"
       >
         <div
           :class="[
             'flex flex-col lg:flex-row items-center bg-white relative',
-            { '': isPinned },
-            { 'lg:container': !isPinned },
+            { 'lg:container ': isPinned },
+            { '': !isPinned },
           ]"
         >
           <CalendarFilters
@@ -44,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div id="missions-presentiel" class="container mt-12 mb-12 lg:mb-24">
+      <div id="missions-presentiel" class="container mt-0 mb-12 lg:mb-24">
         <AlgoliaMissions
           :search-parameters="{
             hitsPerPage: 6,
@@ -57,7 +62,6 @@
             type: 'Mission en présentiel',
             date_type: 'ponctual',
           }"
-          @update="onSearchUpdate"
         />
       </div>
       <DecembreEnsemble />
@@ -77,7 +81,7 @@
           }"
         />
       </div>
-      <SectionSearchBlocFaq title="Vous avez des questions?" />
+      <SectionSearchBlocFaq title="Vous avez des questions ?" />
       <SectionHomeBlocNewsletter />
     </div>
   </div>
@@ -95,10 +99,13 @@ export default defineNuxtComponent({
     DecembreEnsemble,
   },
   mounted() {
-    this.isPinnedObserver = new IntersectionObserver(([e]) => {
-      console.log('e.intersectionRatio', e.intersectionRatio)
-      this.isPinned = e.intersectionRatio < 1
-    }, {})
+    this.isPinnedObserver = new IntersectionObserver(
+      ([e]) => {
+        console.log('e.intersectionRatio', e.intersectionRatio)
+        this.isPinned = e.intersectionRatio < 1
+      },
+      { threshold: [1] }
+    )
     this.isPinnedObserver.observe(this.$refs.filters)
   },
   beforeUnmount() {
@@ -127,9 +134,13 @@ export default defineNuxtComponent({
   },
   watch: {
     '$route.query.start': {
-      handler(newVal) {
+      async handler(newVal) {
         if (newVal) {
           this.selectedDate = newVal
+          await this.$nextTick()
+          this.$scrollTo('#missions-presentiel', 300, {
+            offset: -200,
+          })
         }
       },
     },
@@ -145,14 +156,15 @@ export default defineNuxtComponent({
         },
       })
     },
-    async onSearchUpdate() {
-      if (this.$mq.current === 'xl') {
-        await this.$nextTick()
-        this.$scrollTo('#missions-presentiel', 0, {
-          offset: -200,
-        })
-      }
-    },
+    // async onSearchUpdate() {
+    //   console.log('onSearchUpdate', this.$mq.current)
+    //   if (this.$mq.current === 'xl') {
+    //     await this.$nextTick()
+    //     this.$scrollTo('#missions-presentiel', 0, {
+    //       offset: -200,
+    //     })
+    //   }
+    // },
   },
 })
 </script>
