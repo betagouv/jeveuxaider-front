@@ -61,10 +61,7 @@
         </DsfrHeading>
         <AlgoliaMissions
           class="mt-12"
-          :search-parameters="{
-            hitsPerPage: 6,
-            filters: distanceFilters,
-          }"
+          :search-parameters="searchParamsDistance"
           :redirect-parameters="{
             type: 'Mission à distance',
             date_type: 'ponctual',
