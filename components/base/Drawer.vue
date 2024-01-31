@@ -28,7 +28,10 @@
               { 'max-w-4xl': width === '4xl' },
             ]"
           >
-            <div class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl">
+            <div
+              class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl"
+              :class="classContainer"
+            >
               <div class="min-h-0 flex-1 flex flex-col py-6 overflow-y-scroll overscroll-contain">
                 <div class="px-4 sm:px-6">
                   <div class="flex items-start justify-between">
@@ -86,6 +89,10 @@ export default defineNuxtComponent({
     width: {
       type: String,
       default: 'md',
+    },
+    classContainer: {
+      type: String,
+      default: '',
     },
   },
   data() {

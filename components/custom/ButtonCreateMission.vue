@@ -132,7 +132,7 @@ export default defineNuxtComponent({
         !!this.structure?.state &&
         !['Brouillon', 'Signalée', 'Désinscrite'].includes(this.structure.state) &&
         this.$stores.auth.user?.profile?.mobile &&
-        !this.$stores.auth.user.statistics?.missions_inactive_count
+        !this.$stores.auth.user.statistics?.missions_offline_count
       )
     },
     tooltipCantCreateMission() {
@@ -155,7 +155,7 @@ export default defineNuxtComponent({
           'Renseignez au préalable votre numéro de mobile dans <a class="active:!bg-transparent" href="/profile/edit">votre profil</a> afin de pouvoir publier une mission'
       }
 
-      if (this.$stores.auth.user.statistics?.missions_inactive_count) {
+      if (this.$stores.auth.user.statistics?.missions_offline_count) {
         content =
           "Vous ne pouvez pas créer de nouvelles missions car vous avez trop de participations à mettre à jour. Pour toute information, veuillez contacter le support à l’adresse suivante : <a href='mailto:support@jeveuxaider.beta.gouv.fr'>support@jeveuxaider.beta.gouv.fr</a>"
       }

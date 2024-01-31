@@ -5,21 +5,21 @@
         v-scroll-lock="isOpen"
         :is-open="isOpen"
         theme="warning"
-        :title="`${mission.is_active ? 'Désactiver' : 'Activer'} la mission`"
+        :title="`${mission.is_online ? 'Mettre hors ligne' : 'Mettre en ligne'} la mission`"
         :prevent-click-outside="true"
         :hide-close="true"
         @close="$emit('cancel')"
       >
         <div class="formatted-text">
           <p>
-            Vous êtes sur le point
-            {{ mission.is_active ? 'de désactiver' : "d'activer" }} la mission
+            Vous êtes sur le point de
+            {{ mission.is_online ? 'mettre hors ligne' : 'mettre en ligne' }} la mission
             <strong>{{ mission.name }}</strong>
             <span class="text-gray-500">#{{ mission.id }}</span
             >. Le responsable de la mission <strong>{{ mission.responsable.full_name }}</strong> en
             sera notifié par mail.
           </p>
-          <p v-if="mission.is_active">
+          <p v-if="mission.is_online">
             La mission <strong>n'apparaîtra plus dans la recherche</strong> et il sera impossible
             pour de nouveaux bénévoles de s'y inscrire.
           </p>
@@ -75,11 +75,11 @@ export default defineNuxtComponent({
         method: 'PUT',
         body: {
           ...this.mission,
-          is_active: !this.mission.is_active,
+          is_online: !this.mission.is_online,
         },
       }).catch(() => {})
       this.$toast.success(
-        mission.is_active ? 'La mission est désormais active' : 'La mission a été désactivée'
+        mission.is_online ? 'La mission est désormais en ligne' : 'La mission a été mise hors ligne'
       )
       this.loading = false
       this.$emit('confirm', mission)

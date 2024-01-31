@@ -34,5 +34,5 @@ type Profile = {
   skills?: { [key: string]: any }[] // @todo
   domaines?: { [key: string]: any }[] // @todo
   activities?: { [key: string]: any }[] // @todo
-  missions_inactive?: Mission[]
+  missions_offline?: Mission[]
 }

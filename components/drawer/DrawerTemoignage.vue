@@ -23,7 +23,7 @@
           icon="RiCheckLine"
           @click.native="handlePublishing"
         >
-          Publier
+          Mettre en ligne
         </BaseButton>
         <BaseButton
           v-if="temoignage.is_published"
@@ -32,7 +32,7 @@
           icon="RiCloseLine"
           @click.native="handleUnpublishing"
         >
-          Dépublier
+          Mettre hors ligne
         </BaseButton>
       </div>
       <div class="border-t -mx-6 mt-8" />

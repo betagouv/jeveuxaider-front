@@ -7,6 +7,9 @@
         { text: profile.full_name },
       ]"
     />
+  </div>
+  <HeaderActions :profile="profile" @updated="refreshProfile" />
+  <div class="container">
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
       <div class="lg:col-span-3 space-y-6">
         <BaseBox class="relative z-10">
@@ -60,31 +63,6 @@
         </BoxDisponibilities>
       </div>
       <div class="lg:col-span-2 space-y-8">
-        <div class="flex items-start justify-between">
-          <BaseHeading :level="1">
-            Utilisateur
-            <span
-              v-if="['admin'].includes($stores.auth.contextRole)"
-              class="font-normal text-gray-500 text-2xl"
-              >#{{ profile.id }}</span
-            >
-          </BaseHeading>
-          <BaseButtonWithDropown
-            class="ml-4 flex-shrink-0"
-            :button-click="() => $router.push(`/admin/utilisateurs/${profile.id}/edit`)"
-          >
-            <template #buttonText> <RiPencilLine class="h-3 w-3 mr-3" /> Modifier </template>
-            <template #items>
-              <div
-                v-if="['admin'].includes($stores.auth.contextRole)"
-                class="text-gray-700 block cursor-pointer px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
-                @click="handleImpersonate()"
-              >
-                Prendre sa place
-              </div>
-            </template>
-          </BaseButtonWithDropown>
-        </div>
         <ClientOnly>
           <BaseTabs
             :tabs="[
@@ -179,6 +157,7 @@ import BoxUtm from '@/components/section/BoxUtm.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import Tag from '@/components/dsfr/Tag.vue'
 import BoxRoles from '@/components/section/profile/BoxRoles.vue'
+import HeaderActions from '@/components/section/profile/HeaderActions.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -193,6 +172,7 @@ export default defineNuxtComponent({
     Breadcrumb,
     Tag,
     BoxRoles,
+    HeaderActions,
   },
   async setup() {
     const { $stores } = useNuxtApp()
@@ -206,13 +186,19 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
 
-    const profile = await apiFetch(`/profiles/${route.params.id}`)
+    // const profile = await apiFetch(`/profiles/${route.params.id}`)
+
+    const { data: profile, refresh: refreshProfile } = await useApiFetch(
+      `/profiles/${route.params.id}`
+    )
+
     if (!profile) {
       return showError({ statusCode: 404 })
     }
 
     return {
-      profile,
+      profile: toRef(profile),
+      refreshProfile,
     }
   },
   methods: {

@@ -8,37 +8,22 @@
         { text: 'Modification' },
       ]"
     />
+  </div>
+  <HeaderActions :mission="mission">
+    <template v-slot:actions>
+      <ButtonsSubmitFormMission
+        class="hidden lg:flex"
+        :mission="mission"
+        :structure="mission.structure"
+        :template-id="mission.template_id"
+        :loading="loading"
+        @submitted="handleSubmit($event)"
+      />
+    </template>
+  </HeaderActions>
+  <div class="container">
     <div class="pb-6">
-      <BaseSectionHeading :title="mission.name">
-        <template #tags>
-          <BaseBadge :color="mission.state" class="mt-4">
-            {{ mission.state }}
-          </BaseBadge>
-        </template>
-        <template #action>
-          <ButtonsSubmitFormMission
-            class="hidden lg:flex"
-            :mission="mission"
-            :structure="mission.structure"
-            :template-id="mission.template_id"
-            :loading="loading"
-            @submitted="handleSubmit($event)"
-          />
-        </template>
-      </BaseSectionHeading>
-
       <FormMission ref="form" :mission="mission" :structure="mission.structure" class="my-8" />
-
-      <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
-        <ButtonsSubmitFormMission
-          class="flex"
-          :mission="mission"
-          :structure="mission.structure"
-          :template-id="mission.template_id"
-          :loading="loading"
-          @submitted="handleSubmit($event)"
-        />
-      </div>
     </div>
   </div>
 </template>
@@ -48,12 +33,14 @@ import FormMission from '@/components/form/FormMission.vue'
 import ButtonsSubmitFormMission from '@/components/custom/ButtonsSubmitFormMission.vue'
 import MixinUsetiful from '@/mixins/usetiful.client.js'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import HeaderActions from '@/components/section/mission/HeaderActions.vue'
 
 export default defineNuxtComponent({
   components: {
     FormMission,
     ButtonsSubmitFormMission,
     Breadcrumb,
+    HeaderActions,
   },
   mixins: [MixinUsetiful],
   async setup() {
