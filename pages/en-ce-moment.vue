@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <div class="bg-jva-blue-500">
-      <div class="container py-[56px] lg:pt-[104px] lg:pb-0 relative">
+      <div class="container py-[56px] lg:pt-[104px] lg:pb-[56px] relative">
         <h1 class="text-white font-bold">
           <span class="text-[22px] lg:text-[40px]">Votre prochaine mission de bénévolat</span><br />
           <span class="relative">
@@ -18,24 +18,29 @@
         </h1>
       </div>
     </div>
-    <div class="relative -top-px">
-      <div class="bg-jva-blue-500 z-10 lg:sticky lg:top-[-54px] lg:mb-[150px]">
-        <div class="lg:container">
+    <div class="relative">
+      <div
+        ref="filters"
+        :class="['z-10 lg:sticky top-[-1px]', { 'bg-white': isPinned }, { '': !isPinned }]"
+      >
+        <div
+          :class="[
+            'flex flex-col lg:flex-row items-center bg-white relative',
+            { '': isPinned },
+            { 'lg:container': !isPinned },
+          ]"
+        >
+          <CalendarFilters
+            :model-value="selectedDate"
+            :starting-date="startingDate"
+            class="flex-1"
+            @update:modelValue="onChangedSelectedDate"
+          />
           <div
-            class="flex flex-col lg:flex-row items-center bg-white relative lg:translate-y-1/2 shadow-md lg:shadow-lg"
+            class="hidden lg:block w-full lg:w-[234px] border-t lg:border-l lg:border-t-0 lg:py-8 lg:pl-8"
           >
-            <CalendarFilters
-              :model-value="selectedDate"
-              :starting-date="startingDate"
-              class="flex-1"
-              @update:modelValue="onChangedSelectedDate"
-            />
-            <div
-              class="hidden lg:block w-full lg:w-[234px] border-t lg:border-l lg:border-t-0 lg:py-8 lg:pl-8"
-            >
-              <div>Lieu de la mission</div>
-              <div>@TODO</div>
-            </div>
+            <div>Lieu de la mission</div>
+            <div>@TODO</div>
           </div>
         </div>
       </div>
@@ -82,7 +87,6 @@
 import CalendarFilters from '@/components/calendar/CalendarFilters.vue'
 import AlgoliaMissions from '@/components/section/search/missions/AlgoliaMissions.vue'
 import DecembreEnsemble from '@/components/section/operations/DecembreEnsemble.vue'
-import { dragscroll } from 'vue-dragscroll'
 
 export default defineNuxtComponent({
   components: {
@@ -90,11 +94,20 @@ export default defineNuxtComponent({
     AlgoliaMissions,
     DecembreEnsemble,
   },
-  directives: {
-    dragscroll,
+  mounted() {
+    this.isPinnedObserver = new IntersectionObserver(([e]) => {
+      console.log('e.intersectionRatio', e.intersectionRatio)
+      this.isPinned = e.intersectionRatio < 1
+    }, {})
+    this.isPinnedObserver.observe(this.$refs.filters)
+  },
+  beforeUnmount() {
+    this.isPinnedObserver?.disconnect()
   },
   data() {
     return {
+      isPinned: false,
+      isPinnedObserver: null,
       selectedDate: this.$route.query.start ?? this.$dayjs().format('YYYY-MM-DD'),
       startingDate: this.$route.query.start ?? this.$dayjs().format('YYYY-MM-DD'),
     }
