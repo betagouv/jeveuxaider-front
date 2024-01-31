@@ -51,13 +51,7 @@
       </div>
       <div id="missions-presentiel" class="container mt-0 mb-12 lg:mb-24">
         <AlgoliaMissions
-          :search-parameters="{
-            hitsPerPage: 6,
-            aroundPrecision: 2000,
-            filters: presentielFilters,
-            aroundLatLngViaIP: true,
-            aroundRadius: 'all',
-          }"
+          :search-parameters="searchParamsPresentiel"
           :redirect-parameters="{
             type: 'Mission en présentiel',
             date_type: 'ponctual',
@@ -125,11 +119,20 @@ export default defineNuxtComponent({
       const query = `start_date<=${timestamp} AND (end_date_no_creneaux>=${timestamp} OR has_end_date=0 OR dates.timestamp=${timestamp})`
       return `${query} AND commitment__total<=4 AND date_type:"ponctual"`
     },
-    presentielFilters() {
-      return `${this.commonFilters} AND type:"Mission en présentiel"`
+    searchParamsPresentiel() {
+      return {
+        hitsPerPage: 6,
+        aroundPrecision: 2000,
+        filters: `${this.commonFilters} AND type:"Mission en présentiel"`,
+        aroundLatLngViaIP: true,
+        aroundRadius: 'all',
+      }
     },
-    distanceFilters() {
-      return `${this.commonFilters} AND type:"Mission à distance"`
+    searchParamsDistance() {
+      return {
+        hitsPerPage: 6,
+        filters: `${this.commonFilters} AND type:"Mission à distance"`,
+      }
     },
   },
   watch: {
