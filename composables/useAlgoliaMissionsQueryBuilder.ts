@@ -17,7 +17,6 @@ export const useAlgoliaMissionsQueryBuilder = () => {
 
   return {
     search: async () => {
-      // filters =
       algoliaSearchStore.searchParameters = getSearchParameters()
       algoliaSearchStore.activeFacets = getActiveFacets()
       await search()
