@@ -23,7 +23,7 @@
         ref="filters"
         :class="[
           'z-10 lg:-translate-y-1/2',
-          { 'bg-white shadow-lg sticky top-[75px]': isPinned },
+          { 'bg-white shadow-lg lg:sticky lg:top-[75px]': isPinned },
           { 'lg:container ': !isPinned },
         ]"
       >
@@ -49,7 +49,6 @@
         </div>
       </div>
       <div id="missions-presentiel" class="container mt-12 mb-12 lg:mt-0 lg:mb-24">
-        <div class="text-xl">{{ isPinned ? 'IS PINNED' : 'NOT PINNED' }}</div>
         <AlgoliaMissions
           :search-parameters="searchParamsPresentiel"
           :redirect-parameters="{

@@ -1,5 +1,6 @@
 import { useAlgoliaSearchStore } from '@/store/algoliaSearch'
 import dayjs from 'dayjs'
+import { LocationQueryValue } from 'vue-router'
 
 export const useAlgoliaMissionsQueryBuilder = () => {
   const {
@@ -17,6 +18,7 @@ export const useAlgoliaMissionsQueryBuilder = () => {
 
   return {
     search: async () => {
+      // filters =
       algoliaSearchStore.searchParameters = getSearchParameters()
       algoliaSearchStore.activeFacets = getActiveFacets()
       await search()
@@ -40,29 +42,6 @@ export const useAlgoliaMissionsQueryBuilder = () => {
     deleteAllFilters: () => deleteAllFilters(),
     isActiveFilter: (name: string, value: any) => isActiveFilter(name, value),
     hasActiveFilters: () => hasActiveFilters(),
-    rebuildAlgoliaDateFilter: (start?: string, end?: string) => {
-      // @todo: prendre en compte la valeur initiale de algoliaSearchStore.initialFilters,
-      // rechercher "initial-filters=" dans le projet
-
-      if (!start || !end) {
-        algoliaSearchStore.initialFilters = ''
-        return
-      }
-
-      const startDate = dayjs(start as string).startOf('day')
-      const endDate = dayjs(end as string).startOf('day')
-
-      const daysArray = []
-      let day = dayjs(startDate)
-      while (day.isBefore(endDate) || day.isSame(endDate)) {
-        daysArray.push(day.unix())
-        day = day.add(1, 'day')
-      }
-
-      algoliaSearchStore.initialFilters = `start_date<=${startDate.unix()} AND (end_date_no_creneaux>=${startDate.unix()} OR has_end_date=0 OR ${daysArray
-        .map((day) => `dates.timestamp=${day}`)
-        .join(' OR ')})`
-    },
   }
 }
 
@@ -102,10 +81,26 @@ const getSearchParameters = () => {
     page: route.query.page ? Number(route.query.page) - 1 : 0,
     facetFilters: getActiveFacets(),
     facets: ['*'],
-    filters: algoliaSearchStore.initialFilters,
+    filters: recomputeFilters(),
     numericFilters: getActiveNumericFilters(),
     hitsPerPage: algoliaSearchStore?.hitsPerPage ?? 18,
   }
+}
+
+const recomputeFilters = () => {
+  const route = useRoute()
+  const algoliaSearchStore = useAlgoliaSearchStore()
+
+  if (route.query.start || route.query.end) {
+    return algoliaSearchStore.initialFilters
+      ? `${algoliaSearchStore.initialFilters} AND ${convertStartEndToTimestamp(
+          route.query.start,
+          route.query.end
+        )}`
+      : convertStartEndToTimestamp(route.query.start, route.query.end)
+  }
+
+  return algoliaSearchStore.initialFilters
 }
 
 const getActiveFacets = () => {
@@ -163,4 +158,21 @@ const getNbMobileSecondaryFilters = () => {
     nbSecondaryFilters++
   }
   return nbSecondaryFilters
+}
+
+const convertStartEndToTimestamp = (start: any, end: any) => {
+  const route = useRoute()
+  const startDate = dayjs(start).startOf('day')
+  const endDate = dayjs(end).startOf('day')
+
+  const daysArray = []
+  let day = dayjs(startDate)
+  while (day.isBefore(endDate) || day.isSame(endDate)) {
+    daysArray.push(day.unix())
+    day = day.add(1, 'day')
+  }
+
+  return `start_date<=${startDate.unix()} AND (end_date_no_creneaux>=${startDate.unix()} OR has_end_date=0 OR ${daysArray
+    .map((day) => `dates.timestamp=${day}`)
+    .join(' OR ')})`
 }
