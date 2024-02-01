@@ -3,6 +3,7 @@
     <BlocBanner />
     <template v-if="$stores.auth.isLogged">
       <BlocCaDevraitVousPlaire />
+      <RestosDuCoeur />
       <MissionsPourLaPlanete class="hidden" />
       <BlocProfileActivities />
       <BlocTemoignages />
