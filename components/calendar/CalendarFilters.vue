@@ -107,8 +107,8 @@ export default defineNuxtComponent({
         .format('YYYY-MM-DD')
     },
     onResize() {
-      let width = this.$refs.calendar.offsetWidth
-      if (width >= 1000) {
+      let width = this.$refs.calendar?.offsetWidth
+      if (width >= 950) {
         this.nbDaysToDisplay = 7
       } else if (width >= 708) {
         this.nbDaysToDisplay = 5

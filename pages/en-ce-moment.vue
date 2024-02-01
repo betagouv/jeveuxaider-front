@@ -23,9 +23,9 @@
       <div
         ref="filters"
         :class="[
-          ' z-10 sticky top-[-1px]',
-          { 'bg-white ': isPinned },
-          { 'lg:container  -translate-y-1/2': !isPinned },
+          'z-10 sticky top-[-1px]',
+          { 'bg-white shadow-lg': isPinned },
+          { 'lg:container  lg:-translate-y-1/2': !isPinned },
         ]"
       >
         <div
@@ -42,14 +42,14 @@
             @update:modelValue="onChangedSelectedDate"
           />
           <div
-            class="hidden lg:block w-full lg:w-[234px] border-t lg:border-l lg:border-t-0 lg:py-8 lg:pl-8"
+            class="hidden lg:block w-full lg:w-[300px] border-t lg:border-l lg:border-t-0 lg:py-8 lg:pl-8"
           >
-            <div>Lieu de la mission</div>
-            <div>@TODO</div>
+            <div class="text-[#3A3A3A]">Lieu de la mission</div>
+            <LocalisationFilter label="Localisation" class="max-w-[200px]" />
           </div>
         </div>
       </div>
-      <div id="missions-presentiel" class="container mt-0 mb-12 lg:mb-24">
+      <div id="missions-presentiel" class="container mt-12 mb-12 lg:mt-0 lg:mb-24">
         <AlgoliaMissions
           :search-parameters="searchParamsPresentiel"
           :redirect-parameters="{
@@ -82,10 +82,12 @@
 import CalendarFilters from '@/components/calendar/CalendarFilters.vue'
 import AlgoliaMissions from '@/components/section/search/missions/AlgoliaMissions.vue'
 import DecembreEnsemble from '@/components/section/operations/DecembreEnsemble.vue'
+import LocalisationFilter from '@/components/search/LocalisationFilter.vue'
 
 export default defineNuxtComponent({
   components: {
     CalendarFilters,
+    LocalisationFilter,
     AlgoliaMissions,
     DecembreEnsemble,
   },
@@ -122,6 +124,7 @@ export default defineNuxtComponent({
         aroundPrecision: 2000,
         filters: `${this.commonFilters} AND type:"Mission en présentiel"`,
         aroundLatLngViaIP: true,
+        aroundLatLng: this.$route.query.aroundLatLng,
         aroundRadius: 'all',
       }
     },
@@ -133,19 +136,27 @@ export default defineNuxtComponent({
     },
   },
   watch: {
+    '$route.query.city': {
+      handler(newVal) {
+        this.scrollToTop()
+      },
+    },
     '$route.query.start': {
-      async handler(newVal) {
+      handler(newVal) {
         if (newVal) {
           this.selectedDate = newVal
-          await this.$nextTick()
-          this.$scrollTo('#missions-presentiel', 300, {
-            offset: -200,
-          })
+          this.scrollToTop()
         }
       },
     },
   },
   methods: {
+    async scrollToTop() {
+      await this.$nextTick()
+      this.$scrollTo('#missions-presentiel', 300, {
+        offset: this.$mq.current === 'xl' ? -200 : -178,
+      })
+    },
     onChangedSelectedDate(date) {
       this.$router.push({
         path: this.$route.path,

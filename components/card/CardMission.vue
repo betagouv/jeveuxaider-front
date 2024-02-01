@@ -44,20 +44,23 @@
         </div>
       </template>
       <template v-else>
-        <template v-if="mission.date_type === 'ponctual'">
+        <div class="absolute top-4 left-4 flex flex-wrap gap-4 w-[318px] pr-8">
           <DsfrBadge
+            v-if="isIdealPourDebuter"
             size="sm"
-            class="absolute top-4 left-4 shadow-lg !bg-[#FEECC2] !text-[#716043]"
+            class="shadow-lg !bg-[#FEECC2] !text-[#716043]"
           >
-            {{
-              (!$stores.auth.isLogged ||
-                $stores.auth.user?.statistics?.participations_count === 0) &&
-              mission.structure?.score >= 80
-                ? 'Idéale pour débuter'
-                : 'Mission courte'
-            }}
+            Idéale pour débuter
           </DsfrBadge>
-        </template>
+
+          <DsfrBadge
+            v-if="formattedCommitment"
+            size="sm"
+            class="shadow-lg !bg-[#FEECC2] !text-[#716043]"
+          >
+            {{ formattedCommitment }}
+          </DsfrBadge>
+        </div>
       </template>
     </div>
 
