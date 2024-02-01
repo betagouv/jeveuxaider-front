@@ -160,10 +160,9 @@ const getNbMobileSecondaryFilters = () => {
   return nbSecondaryFilters
 }
 
-const convertStartEndToTimestamp = (start: any, end: any) => {
-  const route = useRoute()
+const convertStartEndToTimestamp = (start: any, end?: any) => {
   const startDate = dayjs(start).startOf('day')
-  const endDate = dayjs(end).startOf('day')
+  const endDate = end ? dayjs(end).startOf('day') : startDate
 
   const daysArray = []
   let day = dayjs(startDate)
