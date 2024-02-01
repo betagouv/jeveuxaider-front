@@ -1,6 +1,5 @@
 import { useAlgoliaSearchStore } from '@/store/algoliaSearch'
 import dayjs from 'dayjs'
-import { LocationQueryValue } from 'vue-router'
 
 export const useAlgoliaMissionsQueryBuilder = () => {
   const {
@@ -92,12 +91,10 @@ const recomputeFilters = () => {
   const algoliaSearchStore = useAlgoliaSearchStore()
 
   if (route.query.start || route.query.end) {
+    const dateFilter = getDateFilter(route.query.start, route.query.end)
     return algoliaSearchStore.initialFilters
-      ? `${algoliaSearchStore.initialFilters} AND ${convertStartEndToTimestamp(
-          route.query.start,
-          route.query.end
-        )}`
-      : convertStartEndToTimestamp(route.query.start, route.query.end)
+      ? `${algoliaSearchStore.initialFilters} AND ${dateFilter}`
+      : dateFilter
   }
 
   return algoliaSearchStore.initialFilters
@@ -160,7 +157,7 @@ const getNbMobileSecondaryFilters = () => {
   return nbSecondaryFilters
 }
 
-const convertStartEndToTimestamp = (start: any, end: any) => {
+const getDateFilter = (start: any, end: any) => {
   const route = useRoute()
   const startDate = dayjs(start).startOf('day')
   const endDate = dayjs(end).startOf('day')
