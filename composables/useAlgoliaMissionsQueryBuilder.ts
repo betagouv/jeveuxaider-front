@@ -90,10 +90,10 @@ const recomputeFilters = () => {
   const algoliaSearchStore = useAlgoliaSearchStore()
 
   if (route.query.start || route.query.end) {
-    const dateFilter = getDateFilter(route.query.start, route.query.end)
+    const dateFilters = getDateFilters(route.query.start, route.query.end)
     return algoliaSearchStore.initialFilters
-      ? `${algoliaSearchStore.initialFilters} AND ${dateFilter}`
-      : dateFilter
+      ? `${algoliaSearchStore.initialFilters} AND ${dateFilters}`
+      : dateFilters
   }
 
   return algoliaSearchStore.initialFilters
@@ -156,10 +156,9 @@ const getNbMobileSecondaryFilters = () => {
   return nbSecondaryFilters
 }
 
-const getDateFilter = (start: any, end: any) => {
-  const route = useRoute()
+const getDateFilters = (start: any, end: any) => {
   const startDate = dayjs(start).startOf('day')
-  const endDate = dayjs(end).startOf('day')
+  const endDate = end ? dayjs(end).startOf('day') : startDate
 
   const daysArray = []
   let day = dayjs(startDate)
