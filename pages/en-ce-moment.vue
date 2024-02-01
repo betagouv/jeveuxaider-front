@@ -6,7 +6,6 @@
           <span class="text-[22px] lg:text-[40px]">Votre prochaine mission de bénévolat</span><br />
           <span class="relative">
             <img
-              v-if="isPinned"
               src="/images/home/sparkle-right.svg"
               alt=""
               aria-hidden="true"
@@ -41,11 +40,11 @@
             class="flex-1"
             @update:modelValue="onChangedSelectedDate"
           />
-          <div
-            class="hidden lg:block w-full lg:w-[300px] border-t lg:border-l lg:border-t-0 lg:py-8 lg:pl-8"
-          >
-            <div class="text-[#3A3A3A]">Lieu de la mission</div>
-            <LocalisationFilter label="Localisation" class="max-w-[200px]" />
+          <div class="hidden lg:block w-full lg:w-[300px]">
+            <div class="lg:border-l lg:py-4 lg:pl-8">
+              <div class="text-[#3A3A3A]">Lieu de la mission</div>
+              <LocalisationFilter label="Localisation" class="max-w-[200px]" />
+            </div>
           </div>
         </div>
       </div>
