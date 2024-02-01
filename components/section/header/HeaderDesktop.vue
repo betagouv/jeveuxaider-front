@@ -242,7 +242,9 @@ export default defineNuxtComponent({
           {
             name: 'Bénévolat près de chez moi',
             to: '/missions-benevolat',
-            isActive: this.isBenevolatPresDeChezMoiActiveLink(),
+            isActive:
+              this.isBenevolatPresDeChezMoiActiveLink() &&
+              !this.isActiveOperation('Collecte nationale des Restos du Cœur'),
           },
           {
             name: 'À distance',
@@ -259,11 +261,11 @@ export default defineNuxtComponent({
             to: '/organisations',
             isActive: this.isActiveLink('/organisations'),
           },
-          // {
-          //   name: 'Décembre Ensemble 🤲🏻',
-          //   href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
-          //   target: '_blank',
-          // },
+          {
+            name: '🍽️ Restos du Coeur',
+            to: '/missions-benevolat?tags=Collecte nationale des Restos du Cœur',
+            isActive: this.isActiveOperation('Collecte nationale des Restos du Cœur'),
+          },
           {
             name: "Centre d'aide",
             href: 'https://reserve-civique.crisp.help/fr/',
@@ -453,11 +455,11 @@ export default defineNuxtComponent({
           to: '/en-ce-moment',
           isActive: this.isActiveLink('/en-ce-moment'),
         },
-        {
-          name: 'Décembre Ensemble 🤲🏻',
-          href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
-          target: '_blank',
-        },
+        // {
+        //   name: 'Décembre Ensemble 🤲🏻',
+        //   href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
+        //   target: '_blank',
+        // },
         {
           name: "Centre d'aide",
           href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/',
@@ -493,6 +495,9 @@ export default defineNuxtComponent({
     },
     isActiveLink(regex, exact = false) {
       return exact ? this.$route.path === regex : RegExp(regex).test(this.$route.path)
+    },
+    isActiveOperation(operation) {
+      return this.$route.query?.tags == operation
     },
     isBenevolatPresDeChezMoiActiveLink() {
       if (

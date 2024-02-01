@@ -8,7 +8,7 @@
           :key="i"
           :icon="`${i + 1}.`"
           icon-class="text-xl font-semibold text-gray-500"
-          :link="`/admin/participations?filter[mission.structure.name]=${item.name}&filter[mission.structure.id]=${item.id}&filter[state]=Refusée`"
+          :link="`/admin/participations?organisation_name=${item.name}&filter[mission.structure.id]=${item.id}&filter[state]=Refusée`"
         >
           <div class="text-gray-900 font-semibold" v-html="item.name" />
           <div class="text-gray-500 text-sm">

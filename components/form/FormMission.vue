@@ -2,6 +2,7 @@
   <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
     <div class="lg:col-span-3 space-y-8">
       <BaseBox>
+        <BaseHeading :level="2" class="mb-8"> {{ mission.name }}</BaseHeading>
         <BaseHeading :level="3" class="mb-8"> Description de la mission </BaseHeading>
         <div class="space-y-10">
           <BaseAlert>
@@ -658,7 +659,7 @@ export default defineNuxtComponent({
         autonomy_zips: this.mission.autonomy_zips || [],
         tags: this.mission?.tags?.length ? this.mission?.tags : this.mission.template?.tags || [],
         date_type: this.mission.date_type || 'ponctual',
-        is_active: this.mission.is_active ?? true,
+        is_online: this.mission.is_online ?? false,
       },
       formSchema: object({
         name: string()

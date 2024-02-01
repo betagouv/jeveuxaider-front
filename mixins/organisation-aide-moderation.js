@@ -137,20 +137,21 @@ export default {
     organisationHasDuplicates() {
       return this.duplicatesOrganisations?.total > 0
     },
-    textToAnalyze() {
-      return this.organisation.name + ' | ' + this.organisation.description
-    },
-    textToAnalyzeWithoutTags() {
-      return this.textToAnalyze
-        ?.replace(/<\/li>/g, '</li> | ')
-        .replace(/<\/p>/g, '</p> | ')
+    sentences() {
+      return [this.organisation.name, this.organisation.description]
+        .join('|')
+        .replace(/<\/li>/g, '</li>|')
+        .replace(/<\/p>/g, '</p>|')
         .replace(/<\/?([a-z][a-z0-9]*)\b[^>]*>/gi, '')
+        .split(/[.?!|]/)
+        .map((i) => this.$filters.decodeHTMLEntities(i).trim())
+        .filter((i) => i && i.length >= 3)
     },
-    textToAnalyzeAsSentences() {
-      return this.textToAnalyzeWithoutTags?.split(/[.?!|]\s+/)
+    textToAnalyze() {
+      return this.sentences.join('|')
     },
     sentencesWithBlacklistedWords() {
-      return this.textToAnalyzeAsSentences?.filter((sentence) =>
+      return this.sentences?.filter((sentence) =>
         this.blacklistedWords.some((word) => {
           const regex = new RegExp(`\\b${word}\\b`, 'gi')
           return regex.test(sentence.toLowerCase())
@@ -160,16 +161,14 @@ export default {
   },
   methods: {
     async fetchAIReportScore() {
-      if (
-        this.$stores.aideModeration.type != 'organisation' ||
-        this.organisation.id != this.$stores.aideModeration.model?.id
-      ) {
-        await this.$stores.aideModeration.fetch({
-          type: 'organisation',
-          model: { ...this.organisation },
-          text: this.textToAnalyze,
-        })
+      if (this.textToAnalyze === this.$stores.aideModeration.response?.text) {
+        return
       }
+      await this.$stores.aideModeration.fetch({
+        type: 'organisation',
+        model: { ...this.organisation },
+        text: this.textToAnalyze,
+      })
     },
     async fetchAlgoliaOrganisations() {
       const organisations = await apiFetch('/algolia/organisations', {

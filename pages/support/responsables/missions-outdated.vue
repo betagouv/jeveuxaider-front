@@ -90,7 +90,10 @@
             v-for="(item, y) in queryResult.data"
             :key="y"
             class="hover:cursor-pointer"
-            @click.native="drawerProfileId = item.profile_id"
+            @click.left="drawerProfileId = item.profile_id"
+            @click.middle="
+              navigateTo(`/admin/utilisateurs/${item.profile_id}`, { open: { target: '_blank' } })
+            "
           >
             <BaseTableRowCell class="max-w-[300px]">
               <div class="flex">

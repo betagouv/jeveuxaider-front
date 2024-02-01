@@ -20,6 +20,20 @@ export default {
     activities() {
       return [this.activity, this.activitySecondary].filter(Boolean)
     },
+    badgeTypeMissionSate() {
+      switch (this.mission.state) {
+        case 'Validée':
+          return 'success'
+        case 'Signalée':
+        case 'Annulée':
+          return 'error'
+        case 'En attente de validation':
+        case 'En cours de traitement':
+          return 'warning'
+        default:
+          return 'info'
+      }
+    },
     thumbnail() {
       return this.mission.provider == 'api_engagement'
         ? this.thumbnailApi
@@ -68,15 +82,6 @@ export default {
       const filepath = `/images/missions/api_engagement/${filename}`
       return `${filepath}.webp, ${filepath}@2x.webp 2x, ${filepath}.jpg, ${filepath}@2x.jpg 2x`
     },
-    hasPageOnline() {
-      if (!this.mission?.structure) {
-        return false
-      }
-      return (
-        this.mission.structure.state === 'Validée' &&
-        ['Validée', 'Terminée'].includes(this.mission.state)
-      )
-    },
     canEditStatut() {
       const rolesWhoCanEdit = this.$filters.label(
         this.mission.state,
@@ -114,7 +119,7 @@ export default {
       if (!this.mission.is_registration_open) {
         return false
       }
-      if (!this.mission.is_active) {
+      if (!this.mission.is_online) {
         return false
       }
 
@@ -130,6 +135,14 @@ export default {
       }
 
       return false
+    },
+    canDuplicateMission() {
+      return (
+        !!this.mission.structure?.state &&
+        !['Brouillon', 'Signalée', 'Désinscrite'].includes(this.mission.structure.state) &&
+        this.$stores.auth.user?.profile?.mobile &&
+        !this.$stores.auth.user.statistics?.missions_offline_count
+      )
     },
     formattedDates() {
       const startDate = this.mission.start_date
@@ -323,6 +336,39 @@ export default {
         ? `/missions-benevolat?activities.name=${encodeURIComponent(this.activity.name)}`
         : `/missions-benevolat?domaines=${encodeURIComponent(this.domaine.name)}`
       this.$router.push(url)
+    },
+    async handleChangeIsRegistrationOpen(value) {
+      const mission = await apiFetch(`/missions/${this.mission.id}`, {
+        method: 'PUT',
+        body: {
+          ...this.mission,
+          is_registration_open: value,
+        },
+      }).catch(() => {})
+      this.$toast.success(
+        value
+          ? "Les bénévoles peuvent s'inscrire à cette mission"
+          : "Les bénévoles ne peuvent plus s'inscrire à cette mission"
+      )
+      this.mission.is_registration_open = value
+      this.$emit('updated', mission)
+    },
+    async handleChangeState(option) {
+      this.mission.state = option.key
+      const mission = await apiFetch(`/missions/${this.mission.id}`, {
+        method: 'PUT',
+        body: this.mission,
+      }).catch(() => {})
+
+      if (mission) {
+        this.$emit('updated', mission)
+        this.$toast.success(`Le statut de la mission est passé à ${option.label}`)
+      }
+    },
+    deleteMission() {
+      return apiFetch(`/missions/${this.mission.id}`, {
+        method: 'DELETE',
+      })
     },
   },
 }

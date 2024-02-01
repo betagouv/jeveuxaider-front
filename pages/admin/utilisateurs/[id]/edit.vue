@@ -8,23 +8,14 @@
         { text: 'Modification' },
       ]"
     />
-    <div class="flex flex-col pb-6 gap-6">
-      <BaseSectionHeading :title="profile.full_name">
-        <template #action>
-          <div class="hidden lg:block space-x-2 flex-shrink-0">
-            <BaseButton
-              type="submit"
-              variant="green"
-              size="xl"
-              :loading="loading"
-              @click.native="handleSubmit"
-            >
-              Enregistrer
-            </BaseButton>
-          </div>
-        </template>
-      </BaseSectionHeading>
-
+  </div>
+  <HeaderActions :profile="profile">
+    <template v-slot:actions>
+      <DsfrButton :loading="loading" @click.native="handleSubmit"> Enregistrer </DsfrButton>
+    </template>
+  </HeaderActions>
+  <div class="container">
+    <div class="flex flex-col pb-20 gap-6">
       <FormProfile ref="form" :profile="profile" @role-changed="handleRoleChanged()" />
     </div>
   </div>
@@ -32,10 +23,12 @@
 
 <script>
 import FormProfile from '@/components/form/FormProfile.vue'
+import HeaderActions from '@/components/section/profile/HeaderActions.vue'
 
 export default defineNuxtComponent({
   components: {
     FormProfile,
+    HeaderActions,
   },
   async setup() {
     const { $stores } = useNuxtApp()

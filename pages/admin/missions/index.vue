@@ -264,15 +264,15 @@
             />
 
             <BaseFilterSelectAdvanced
-              v-if="visibleFilter === 'is_active'"
-              :modelValue="$route.query['filter[is_active]']"
+              v-if="visibleFilter === 'is_online'"
+              :modelValue="$route.query['filter[is_online]']"
               name="is-active"
               :options="[
-                { key: 'true', label: 'Missions activées' },
-                { key: 'false', label: 'Missions désactivées' },
+                { key: 'true', label: 'Missions en lignes' },
+                { key: 'false', label: 'Missions hors lignes' },
               ]"
               placeholder="État"
-              @update:modelValue="changeFilter('filter[is_active]', $event)"
+              @update:modelValue="changeFilter('filter[is_online]', $event)"
             />
 
             <BaseFilterSelectAdvanced
@@ -353,7 +353,10 @@
           show-state
           :show-tags="['admin'].includes($stores.auth.contextRole)"
           tabindex="0"
-          @click.native="drawerMissionId = mission.id"
+          @click.left="drawerMissionId = mission.id"
+          @click.middle="
+            navigateTo(`/admin/missions/${mission.id}`, { open: { target: '_blank' } })
+          "
         />
       </div>
 
@@ -461,7 +464,7 @@ export default defineNuxtComponent({
         'ofDomaine',
         'ofActivity',
         'hasCreneaux',
-        'is_active',
+        'is_online',
         'publics_volontaires',
         'publics_beneficiaires',
         'type',

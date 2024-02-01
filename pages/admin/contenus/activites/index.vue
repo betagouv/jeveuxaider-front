@@ -104,7 +104,10 @@
         :description="`Réalisez une mission de bénévolat ${activity.name}`"
         :image-srcset="activity.banner ? activity.banner.urls.desktop : undefined"
         :image-src="activity.banner ? activity.banner.urls.original : undefined"
-        @click.native="drawerActivityId = activity.id"
+        @click.left="drawerActivityId = activity.id"
+        @click.middle="
+          navigateTo(`/admin/contenus/activites/${activity.id}`, { open: { target: '_blank' } })
+        "
       >
         <template #badges>
           <div v-if="activity.domaines.length" class="mb-4 flex gap-2 mt-2">

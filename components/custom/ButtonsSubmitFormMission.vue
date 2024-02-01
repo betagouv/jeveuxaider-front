@@ -2,47 +2,31 @@
   <div class="flex-col gap-2 flex-shrink-0 items-center justify-center">
     <template v-if="mission">
       <template v-if="templateId">
-        <BaseButton
+        <DsfrButton
           v-if="
             ['Brouillon', 'En attente de validation'].includes(mission.state) &&
             structure.state === 'Validée'
           "
-          size="xl"
-          variant="green"
           :loading="loading"
           @click.native="handleSubmit({ state: 'Validée' })"
         >
           Enregistrer et publier
-        </BaseButton>
-        <BaseButton
-          v-else
-          size="xl"
-          variant="green"
-          :loading="loading"
-          @click.native="handleSubmit()"
-        >
+        </DsfrButton>
+        <DsfrButton v-else :loading="loading" @click.native="handleSubmit()">
           Enregistrer
-        </BaseButton>
+        </DsfrButton>
       </template>
       <template v-else>
-        <BaseButton
+        <DsfrButton
           v-if="['Brouillon'].includes(mission.state)"
-          size="xl"
-          variant="green"
           :loading="loading"
           @click.native="handleSubmit({ state: 'En attente de validation' })"
         >
           Soumettre à validation
-        </BaseButton>
-        <BaseButton
-          v-else
-          size="xl"
-          variant="green"
-          :loading="loading"
-          @click.native="handleSubmit()"
-        >
+        </DsfrButton>
+        <DsfrButton v-else :loading="loading" @click.native="handleSubmit()">
           Enregistrer
-        </BaseButton>
+        </DsfrButton>
       </template>
       <BaseLink
         v-if="['Brouillon', 'En attente de validation'].includes(mission.state)"
@@ -53,24 +37,20 @@
       </BaseLink>
     </template>
     <template v-else>
-      <BaseButton
+      <DsfrButton
         v-if="templateId && structure.state === 'Validée'"
-        size="xl"
-        variant="green"
         :loading="loading"
         @click.native="handleSubmit({ state: 'Validée' })"
       >
         Enregistrer et publier
-      </BaseButton>
-      <BaseButton
+      </DsfrButton>
+      <DsfrButton
         v-else
-        size="xl"
-        variant="green"
         :loading="loading"
         @click.native="handleSubmit({ state: 'En attente de validation' })"
       >
         Soumettre à validation
-      </BaseButton>
+      </DsfrButton>
       <BaseLink class="text-sm font-medium" @click.native="handleSubmit({ state: 'Brouillon' })">
         Enregistrer en brouillon
       </BaseLink>

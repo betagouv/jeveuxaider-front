@@ -1,11 +1,19 @@
 <template>
   <div>
     <ClientOnly>
-      <Teleport v-if="!hasPageOnline" to="#teleport-header-top">
+      <Teleport v-if="!mission.is_online" to="#teleport-header-top">
         <transition name="fade">
           <BaseBanner>
-            La mission n'est pas visible car elle est au statut « {{ mission.state }} » et
-            l'organisation est « {{ mission.structure.state }} »
+            {{
+              mission.state == 'Validée' && mission.structure.state == 'Validée'
+                ? "La mission n'est pas visible car elle a été mise hors ligne par un modérateur"
+                : "La mission n'est pas visible car elle est au statut « " +
+                  mission.state +
+                  " » et l'organisation est « " +
+                  mission.structure.state +
+                  ' »'
+            }}
+
             <template #action>
               <DsfrLink icon="RiArrowRightLine" :to="`/admin/missions?filter[id]=${mission.id}`">
                 Gérer
@@ -478,12 +486,7 @@ export default defineNuxtComponent({
       showError({ statusCode: 404 })
     }
 
-    if (
-      !(
-        mission.value?.structure.state === 'Validée' &&
-        ['Validée', 'Terminée'].includes(mission.value.state)
-      )
-    ) {
+    if (!mission.value.is_online) {
       if (!$stores.auth.isLogged) {
         showError({ statusCode: 403 })
       }

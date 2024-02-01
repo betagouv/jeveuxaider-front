@@ -83,7 +83,9 @@ import RiMailUnreadLine from 'vue-remix-icons/icons/ri-mail-unread-line.vue'
 import RiArchiveLine from 'vue-remix-icons/icons/ri-archive-line.vue'
 import RiMessage3Line from 'vue-remix-icons/icons/ri-message-3-line.vue'
 import RiMore2Line from 'vue-remix-icons/icons/ri-more-2-line.vue'
+import RiMoreFill from 'vue-remix-icons/icons/ri-more-fill.vue'
 import RiFileUserLine from 'vue-remix-icons/icons/ri-file-user-line.vue'
+import RiUserSearch from 'vue-remix-icons/icons/ri-user-search-line.vue'
 import RiCakeFill from 'vue-remix-icons/icons/ri-cake-fill.vue'
 import RiChatHistoryFill from 'vue-remix-icons/icons/ri-chat-history-fill.vue'
 import RiTeamLine from 'vue-remix-icons/icons/ri-team-line.vue'
@@ -107,6 +109,12 @@ import RiSaveLine from 'vue-remix-icons/icons/ri-save-line.vue'
 import RiTodoLine from 'vue-remix-icons/icons/ri-todo-line.vue'
 import RiFileDownloadLine from 'vue-remix-icons/icons/ri-file-download-line.vue'
 import RiTimeLine from 'vue-remix-icons/icons/ri-time-line.vue'
+import RiUserFollow from 'vue-remix-icons/icons/ri-user-follow-line.vue'
+import RiUserUnfollow from 'vue-remix-icons/icons/ri-user-unfollow-line.vue'
+import RiUserAdd from 'vue-remix-icons/icons/ri-user-add-line.vue'
+import RiSpy from 'vue-remix-icons/icons/ri-spy-line.vue'
+import RiMailStar from 'vue-remix-icons/icons/ri-mail-star-line.vue'
+import RiUserForbid from 'vue-remix-icons/icons/ri-user-forbid-line.vue'
 
 const components = {
   RiTimeLine,
@@ -133,6 +141,7 @@ const components = {
   RiCakeFill,
   RiFileUserLine,
   RiMore2Line,
+  RiMoreFill,
   RiMessage3Line,
   RiArchiveLine,
   RiMailUnreadLine,
@@ -214,6 +223,13 @@ const components = {
   RiHeartLine,
   RiFolderWarningLine,
   RiArrowLeftSLine,
+  RiUserFollow,
+  RiUserUnfollow,
+  RiUserSearch,
+  RiUserAdd,
+  RiSpy,
+  RiMailStar,
+  RiUserForbid,
 }
 
 export default defineNuxtPlugin((nuxtApp) => {
