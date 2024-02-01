@@ -1,7 +1,7 @@
 <template>
   <div class="relative z-1">
     <div class="bg-jva-blue-500">
-      <div class="container py-[56px] lg:pt-[104px] lg:pb-[114px] relative">
+      <div class="container py-[56px] lg:pt-[104px] lg:pb-[124px] relative">
         <h1 class="text-white font-bold">
           <span class="text-[22px] lg:text-[40px]">Votre prochaine mission de bénévolat</span><br />
           <span class="relative">
@@ -9,7 +9,7 @@
               src="/images/home/sparkle-right.svg"
               alt=""
               aria-hidden="true"
-              class="hidden lg:block absolute w-[31px] h-[33px] lg:w-[50px] lg:h-[51px] lg:bottom-[35px] lg:right-[-40px] pointer-events-none"
+              class="lg:block absolute w-[31px] h-[33px] bottom-[28px] right-[-27px] lg:w-[50px] lg:h-[51px] lg:bottom-[40px] lg:right-[-40px] pointer-events-none"
             />
             <span class="text-[48px] leading-[56px] lg:text-[80px] lg:leading-[90px]"
               >très (très) bientôt</span
@@ -22,9 +22,9 @@
       <div
         ref="filters"
         :class="[
-          'z-10 sticky top-[-1px]',
-          { 'bg-white shadow-lg': isPinned },
-          { 'lg:container  lg:-translate-y-1/2': !isPinned },
+          'z-10 lg:-translate-y-1/2',
+          { 'bg-white shadow-lg sticky top-[75px]': isPinned },
+          { 'lg:container ': !isPinned },
         ]"
       >
         <div
@@ -49,6 +49,7 @@
         </div>
       </div>
       <div id="missions-presentiel" class="container mt-12 mb-12 lg:mt-0 lg:mb-24">
+        <div class="text-xl">{{ isPinned ? 'IS PINNED' : 'NOT PINNED' }}</div>
         <AlgoliaMissions
           :search-parameters="searchParamsPresentiel"
           :redirect-parameters="{
@@ -57,7 +58,7 @@
           }"
         />
       </div>
-      <DecembreEnsemble />
+      <RestosDuCoeur />
       <div class="container my-12 lg:my-24">
         <DsfrHeading as="h3" size="2xl" class="tracking-[-.5px]">
           Vous pouvez aussi vous engager à distance
@@ -80,7 +81,7 @@
 <script>
 import CalendarFilters from '@/components/calendar/CalendarFilters.vue'
 import AlgoliaMissions from '@/components/section/search/missions/AlgoliaMissions.vue'
-import DecembreEnsemble from '@/components/section/operations/DecembreEnsemble.vue'
+import RestosDuCoeur from '@/components/section/operations/RestosDuCoeur.vue'
 import LocalisationFilter from '@/components/search/LocalisationFilter.vue'
 
 export default defineNuxtComponent({
@@ -88,15 +89,16 @@ export default defineNuxtComponent({
     CalendarFilters,
     LocalisationFilter,
     AlgoliaMissions,
-    DecembreEnsemble,
+    RestosDuCoeur,
   },
   mounted() {
     this.isPinnedObserver = new IntersectionObserver(
       ([e]) => {
-        console.log('e.intersectionRatio', e.intersectionRatio)
         this.isPinned = e.intersectionRatio < 1
       },
-      { threshold: [1] }
+      {
+        threshold: [1],
+      }
     )
     this.isPinnedObserver.observe(this.$refs.filters)
   },
@@ -153,7 +155,7 @@ export default defineNuxtComponent({
     async scrollToTop() {
       await this.$nextTick()
       this.$scrollTo('#missions-presentiel', 300, {
-        offset: this.$mq.current === 'xl' ? -200 : -178,
+        offset: this.$mq.current === 'xl' ? -200 : -162,
       })
     },
     onChangedSelectedDate(date) {
@@ -166,15 +168,6 @@ export default defineNuxtComponent({
         },
       })
     },
-    // async onSearchUpdate() {
-    //   console.log('onSearchUpdate', this.$mq.current)
-    //   if (this.$mq.current === 'xl') {
-    //     await this.$nextTick()
-    //     this.$scrollTo('#missions-presentiel', 0, {
-    //       offset: -200,
-    //     })
-    //   }
-    // },
   },
 })
 </script>

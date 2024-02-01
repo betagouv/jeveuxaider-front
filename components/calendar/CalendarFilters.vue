@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white py-4 lg:px-4 w-full overflow-hidden">
+  <div class="bg-white py-2 lg:py-4 lg:px-4 w-full overflow-hidden">
     <div ref="calendar" class="flex items-center justify-between">
       <div
         :class="['group pr-2 lg:pr-4 py-8', { 'pointer-events-none': !canSlideToPreviousDates }]"
@@ -21,7 +21,7 @@
           v-for="(date, i) in dates"
           :key="i"
           :class="[
-            'group w-[93px] h-[98px] lg:w-[109px] lg:h-[110px] flex flex-col items-center justify-center cursor-pointer',
+            'group w-[93px] h-[98px] lg:w-[109px] lg:h-[120px] flex flex-col items-center justify-center cursor-pointer',
             { 'hover:bg-gray-50': date !== modelValue },
             { 'bg-jva-blue-500 text-white': date === modelValue },
           ]"

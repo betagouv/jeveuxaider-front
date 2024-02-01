@@ -437,6 +437,11 @@ select:focus {
   background: none !important;
 }
 
+/* .vc-highlight.vc-highlight-base-middle {
+  width: 100% !important;
+  background: #070191  !important;
+} */
+
 .vc-day .vc-day-content.vc-highlight-content-solid {
   color: white !important;
   background-color: #070191 !important;
