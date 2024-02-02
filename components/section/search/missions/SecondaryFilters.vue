@@ -10,6 +10,10 @@
           facet-name="date_type"
           label="Types d'engagement"
           legend="Filtrer par type d'engagement"
+          :facet-value-resolver="{
+            recurring: 'Engagement régulier',
+            ponctual: 'Engagement ponctuel',
+          }"
         >
           <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
             <DsfrTag
@@ -37,7 +41,7 @@
               as="button"
               :aria-expanded="isOpen || 'false'"
             >
-              <span v-if="!activeValue">Fréquence d'engagement</span>
+              <span v-if="!activeValue">Disponibilités</span>
               <div v-else>
                 <span class="max-w-[170px] truncate">{{ activeValue }}</span>
               </div>
