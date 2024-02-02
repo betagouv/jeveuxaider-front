@@ -49,6 +49,10 @@
               />
             </div>
           </div>
+
+          <div v-if="dateType === 'recurring'" class="">
+            @TODO: choix des fréquences d'engagement
+          </div>
         </div>
 
         <div class="border-t px-8 py-4 flex justify-end">

@@ -5,6 +5,51 @@
         <AutonomyFilter v-if="filter === 'is_autonomy'" :key="i" />
 
         <FacetFilterToggle
+          v-if="filter === 'date_type'"
+          :key="i"
+          facet-name="date_type"
+          label="Types d'engagement"
+          legend="Filtrer par type d'engagement"
+          :facet-value-resolver="{
+            recurring: 'Engagement régulier',
+            ponctual: 'Engagement ponctuel',
+          }"
+        >
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
+            <DsfrTag
+              :is-active="!!activeValuesCount"
+              context="clickable"
+              size="md"
+              as="button"
+              :aria-expanded="isOpen || 'false'"
+            >
+              <span v-if="!firstValueSelected">Types d'engagement</span>
+              <div v-else>
+                <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+              </div>
+            </DsfrTag>
+          </template>
+        </FacetFilterToggle>
+
+        <CommitmentFilter v-if="filter === 'commitment'" :key="i">
+          <template #button="{ activeValue, isOpen }">
+            <DsfrTag
+              :is-active="!!activeValue"
+              context="clickable"
+              size="md"
+              as="button"
+              :aria-expanded="isOpen || 'false'"
+            >
+              <span v-if="!activeValue">Disponibilités</span>
+              <div v-else>
+                <span class="max-w-[170px] truncate">{{ activeValue }}</span>
+              </div>
+            </DsfrTag>
+          </template>
+        </CommitmentFilter>
+
+        <FacetFilterToggle
           v-if="filter === 'structure.name'"
           :key="i"
           facet-name="structure.name"
@@ -229,6 +274,7 @@ import FacetFilterToggle from '@/components/section/search/FacetFilterToggle.vue
 import AutonomyFilter from '@/components/section/search/AutonomyFilter.vue'
 import MinorsFilter from '@/components/section/search/MinorsFilter.vue'
 import PonctualFilter from '@/components/section/search/PonctualFilter.vue'
+import CommitmentFilter from '@/components/section/search/CommitmentFilter.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -236,6 +282,7 @@ export default defineNuxtComponent({
     AutonomyFilter,
     MinorsFilter,
     PonctualFilter,
+    CommitmentFilter,
   },
   props: {
     filtersName: {
@@ -291,8 +338,8 @@ export default defineNuxtComponent({
         this.$route.query?.type === 'Mission à distance'
           ? this.filtersName
               .filter((f) => !['is_autonomy', 'department_name'].includes(f))
-              .slice(0, 3)
-          : this.filtersName.slice(0, 3)
+              .slice(0, 4)
+          : this.filtersName.slice(0, 4)
 
       this.activeFilters.forEach((f) => {
         if (!visibleFilters.includes(f)) {
@@ -300,8 +347,8 @@ export default defineNuxtComponent({
         }
       })
 
-      if (this.activeFilters.length && visibleFilters.length < 3) {
-        visibleFilters.push(...this.inactiveFilters.slice(0, 3 - this.activeFilters.length))
+      if (this.activeFilters.length && visibleFilters.length < 4) {
+        visibleFilters.push(...this.inactiveFilters.slice(0, 4 - this.activeFilters.length))
       }
 
       return visibleFilters

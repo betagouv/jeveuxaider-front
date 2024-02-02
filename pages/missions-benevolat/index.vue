@@ -4,6 +4,8 @@
       id="recherche"
       :secondary-filters="[
         'is_autonomy',
+        'date_type',
+        'commitment',
         'structure.name',
         'is_ponctual',
         'publics_beneficiaires',
