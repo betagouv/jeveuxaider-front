@@ -84,8 +84,8 @@ export default defineNuxtComponent({
       isOpen: false,
       dateType: this.$route.query.date_type ?? null,
       calendar: {
-        start: this.$route.query?.start ?? new Date(),
-        end: this.$route.query?.end ?? this.$route.query?.start ?? new Date(),
+        start: this.$route.query?.start ?? null,
+        end: this.$route.query?.end ?? this.$route.query?.start ?? null,
       },
     }
   },
@@ -129,6 +129,8 @@ export default defineNuxtComponent({
       this.addFilter('date_type', dateType)
     },
     handleClickEffacer() {
+      this.calendar.start = null
+      this.calendar.end = null
       this.$router.push({
         path: this.$route.path,
         query: {
