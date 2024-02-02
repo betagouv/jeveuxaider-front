@@ -443,6 +443,21 @@ select:focus {
   color: #070191 !important;
 }
 
+.vc-focus,
+.vc-header .vc-title {
+  outline: none !important;
+  border-radius: 0 !important;
+  &:focus-visible {
+    outline-style: solid !important;
+    outline-color: #0a76f6 !important;
+    outline-width: 2px !important;
+    outline-offset: 2px !important;
+  }
+  &:focus-within {
+    box-shadow: none !important;
+  }
+}
+
 .vue-focus-loop {
   height: 100%;
   > div:nth-child(2) {
