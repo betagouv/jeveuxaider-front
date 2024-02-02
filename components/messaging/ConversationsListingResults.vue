@@ -105,7 +105,7 @@ export default defineNuxtComponent({
   async created() {
     await this.$stores.messaging.fetchConversations()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.$stores.messaging.conversations = []
   },
   methods: {

@@ -86,6 +86,7 @@ export default defineNuxtComponent({
     return {
       activities: activities.sort((a, b) => b.popular - a.popular),
       chunkSize: 5,
+      waitingOnAnimRequest: false,
     }
   },
   computed: {
@@ -97,29 +98,26 @@ export default defineNuxtComponent({
   async mounted() {
     await this.$nextTick()
     this.onResize()
-    let timeout
-    window.addEventListener(
-      'resize',
-      () => {
-        if (timeout) {
-          window.cancelAnimationFrame(timeout)
-        }
-        timeout = window.requestAnimationFrame(() => {
-          this.onResize()
-        })
-      },
-      false
-    )
+    window.addEventListener('resize', this.onResize, false)
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.onResize)
   },
   methods: {
     onResize() {
-      if (window.innerWidth >= 1024) {
-        this.chunkSize = 14
-      } else if (window.innerWidth >= 768) {
-        this.chunkSize = 7
-      } else {
-        this.chunkSize = 5
+      if (!this.waitingOnAnimRequest) {
+        window.requestAnimationFrame(() => {
+          if (window.innerWidth >= 1024) {
+            this.chunkSize = 14
+          } else if (window.innerWidth >= 768) {
+            this.chunkSize = 7
+          } else {
+            this.chunkSize = 5
+          }
+          this.waitingOnAnimRequest = false
+        })
       }
+      this.waitingOnAnimRequest = true
     },
     onClick(activity) {
       this.$plausible.trackEvent('Homepage - Clique - Activités', {

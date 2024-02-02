@@ -72,7 +72,7 @@ export default defineNuxtComponent({
     )
     this.isPinnedObserver.observe(this.$refs.mobileFilters)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.isPinnedObserver.disconnect()
   },
   methods: {

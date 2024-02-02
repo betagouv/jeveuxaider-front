@@ -85,7 +85,7 @@ export default defineNuxtComponent({
       return this.form?.grade < 3 ? 'Partager mon retour' : 'Publier mon témoignage'
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.$emit('destroy', this.form)
   },
   methods: {

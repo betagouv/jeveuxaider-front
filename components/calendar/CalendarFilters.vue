@@ -62,24 +62,16 @@ export default defineNuxtComponent({
   async mounted() {
     await this.$nextTick()
     this.onResize()
-    let timeout
-    window.addEventListener(
-      'resize',
-      () => {
-        if (timeout) {
-          window.cancelAnimationFrame(timeout)
-        }
-        timeout = window.requestAnimationFrame(() => {
-          this.onResize()
-        })
-      },
-      false
-    )
+    window.addEventListener('resize', this.onResize, false)
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.onResize)
   },
   data() {
     return {
       startingDate: this.$route.query.start ?? this.$dayjs().format('YYYY-MM-DD'),
       nbDaysToDisplay: 7,
+      waitingOnAnimRequest: false,
     }
   },
   computed: {
@@ -107,16 +99,22 @@ export default defineNuxtComponent({
         .format('YYYY-MM-DD')
     },
     onResize() {
-      let width = this.$refs.calendar?.offsetWidth
-      if (width >= 950) {
-        this.nbDaysToDisplay = 7
-      } else if (width >= 708) {
-        this.nbDaysToDisplay = 5
-      } else if (width >= 600) {
-        this.nbDaysToDisplay = 4
-      } else {
-        this.nbDaysToDisplay = 3
+      if (!this.waitingOnAnimRequest) {
+        window.requestAnimationFrame(() => {
+          let width = this.$refs.calendar?.offsetWidth
+          if (width >= 950) {
+            this.nbDaysToDisplay = 7
+          } else if (width >= 708) {
+            this.nbDaysToDisplay = 5
+          } else if (width >= 600) {
+            this.nbDaysToDisplay = 4
+          } else {
+            this.nbDaysToDisplay = 3
+          }
+          this.waitingOnAnimRequest = false
+        })
       }
+      this.waitingOnAnimRequest = true
     },
   },
 })

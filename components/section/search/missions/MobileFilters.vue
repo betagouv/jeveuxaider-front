@@ -108,6 +108,7 @@ export default defineNuxtComponent({
       isGeolocFilterActive: false,
       isPinned: false,
       tabswrapperBoundingClientRect: undefined,
+      waitingOnAnimRequest: false,
     }
   },
   computed: {
@@ -118,7 +119,7 @@ export default defineNuxtComponent({
   mounted() {
     this.handleSticky()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener('scroll', this.onScroll)
   },
   methods: {
@@ -163,25 +164,18 @@ export default defineNuxtComponent({
 
       this.tabswrapperElY = this.tabswrapperBoundingClientRect.top + window.scrollY
       this.onScroll()
-
-      let timeout
-      window.addEventListener(
-        'scroll',
-        () => {
-          if (timeout) {
-            window.cancelAnimationFrame(timeout)
-          }
-          timeout = window.requestAnimationFrame(() => {
-            this.onScroll()
-          })
-        },
-        false
-      )
+      window.addEventListener('scroll', this.onScroll, false)
     },
     onScroll() {
-      this.isPinned =
-        window.visualViewport.pageTop - (this.tabswrapperBoundingClientRect.height - 4) >=
-        this.tabswrapperElY
+      if (!this.waitingOnAnimRequest) {
+        window.requestAnimationFrame(() => {
+          this.isPinned =
+            window.visualViewport.pageTop - (this.tabswrapperBoundingClientRect.height - 4) >=
+            this.tabswrapperElY
+          this.waitingOnAnimRequest = false
+        })
+      }
+      this.waitingOnAnimRequest = true
     },
   },
 })

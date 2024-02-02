@@ -98,20 +98,27 @@ export default defineNuxtComponent({
   data() {
     return {
       drawerStyle: '',
+      waitingOnAnimRequest: false,
     }
   },
   mounted() {
     this.handleDrawerStyle()
-    window.addEventListener('scroll', this.handleDrawerStyle)
+    window.addEventListener('scroll', this.handleDrawerStyle, false)
   },
-  destroyed() {
+  beforeUnmount() {
     window.removeEventListener('scroll', this.handleDrawerStyle)
   },
   methods: {
-    handleDrawerStyle(event) {
-      const headerheight = document.getElementById('header')?.offsetHeight ?? 0
-      const offset = headerheight >= window.scrollY ? headerheight - window.scrollY : 0
-      this.drawerStyle = `height: calc(100vh - ${offset}px); top: ${offset}px`
+    handleDrawerStyle() {
+      if (!this.waitingOnAnimRequest) {
+        window.requestAnimationFrame(() => {
+          const headerheight = document.getElementById('header')?.offsetHeight ?? 0
+          const offset = headerheight >= window.scrollY ? headerheight - window.scrollY : 0
+          this.drawerStyle = `height: calc(100vh - ${offset}px); top: ${offset}px`
+          this.waitingOnAnimRequest = false
+        })
+      }
+      this.waitingOnAnimRequest = true
     },
   },
 })
