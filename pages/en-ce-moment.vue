@@ -50,6 +50,7 @@
       </div>
       <div id="missions-presentiel" class="container mt-12 mb-12 lg:mt-0 lg:mb-24">
         <AlgoliaMissions
+          index-key="missionsReplicaCreneauxIndex"
           :search-parameters="searchParamsPresentiel"
           :redirect-parameters="{
             type: 'Mission en présentiel',
@@ -64,6 +65,7 @@
         </DsfrHeading>
         <AlgoliaMissions
           class="mt-12"
+          index-key="missionsReplicaCreneauxIndex"
           :search-parameters="searchParamsDistance"
           :redirect-parameters="{
             type: 'Mission à distance',
@@ -113,11 +115,11 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    creneauxFilters() {
-      const timestamp = this.$dayjs(this.selectedDate).unix()
-      const query = `dates.timestamp=${timestamp}`
-      return `${query} AND commitment__total<=4 AND date_type:"ponctual"`
-    },
+    // creneauxFilters() {
+    //   const timestamp = this.$dayjs(this.selectedDate).unix()
+    //   const query = `dates.timestamp=${timestamp}`
+    //   return `${query} AND commitment__total<=4 AND date_type:"ponctual"`
+    // },
     commonFilters() {
       const timestamp = this.$dayjs(this.selectedDate).unix()
       const query = `start_date<=${timestamp} AND (end_date_no_creneaux>=${timestamp} OR has_end_date=0 OR dates.timestamp=${timestamp})`
@@ -127,7 +129,7 @@ export default defineNuxtComponent({
       return {
         hitsPerPage: 6,
         aroundPrecision: 2000,
-        filters: `${this.creneauxFilters} AND type:"Mission en présentiel"`,
+        filters: `${this.commonFilters} AND type:"Mission en présentiel"`,
         aroundLatLngViaIP: true,
         aroundLatLng: this.$route.query.aroundLatLng,
         aroundRadius: 'all',

@@ -49,6 +49,10 @@ export default defineNuxtComponent({
     CardMissionFull,
   },
   props: {
+    indexKey: {
+      type: String,
+      default: 'missionsIndex',
+    },
     displayMode: {
       type: String,
       default: 'full',
@@ -65,7 +69,7 @@ export default defineNuxtComponent({
   },
   async setup(props) {
     const { $algolia } = useNuxtApp()
-    const response = await $algolia.missionsIndex.search('', props.searchParameters)
+    const response = await $algolia[props.indexKey].search('', props.searchParameters)
     return {
       missions: toRef(response.hits),
       nbHits: toRef(response.nbHits),
@@ -74,7 +78,7 @@ export default defineNuxtComponent({
   watch: {
     searchParameters: {
       async handler(newVal) {
-        const response = await this.$algolia.missionsIndex.search('', newVal)
+        const response = await this.$algolia[this.indexKey].search('', newVal)
         this.missions = response.hits
         this.nbHits = response.nbHits
         this.$emit('update')
