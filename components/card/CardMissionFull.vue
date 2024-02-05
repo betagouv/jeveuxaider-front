@@ -1,11 +1,13 @@
 <template>
   <div class="flex gap-8 w-full">
     <div class="border bg-white w-[180px] px-6 py-8 border-b-4 border-b-[#3A3A3A] text-center">
-      <img
+      <NuxtImg
         v-if="mission.structure.logo"
+        :src="mission.structure.logo.urls.large"
         :srcset="mission.structure.logo.urls.large"
         :alt="mission.structure.name"
         class="h-auto max-w-[100px] mb-6 inline"
+        @error="onImgError"
       />
       <div class="font-bold mb-4">{{ mission.structure.name }}</div>
 
@@ -25,7 +27,7 @@
         </template>
       </div>
     </div>
-    <div class="flex-1 flex border h-[334px]">
+    <div class="flex-1 flex border h-[300px]">
       <div class="relative w-[398px] h-full">
         <NuxtImg
           ref="thumbnail"
@@ -70,12 +72,12 @@
             </DsfrTag>
             <DsfrTag v-if="hasSecondaryDomain" size="md"> +1 </DsfrTag>
           </div>
-          <div
+          <!-- <div
             class="text-[#666666] text-xs flex items-center justify-start truncate mb-4 max-w-full order-2"
           >
             <RiBuildingFill class="fill-current w-4 h-4 flex-none mr-2" />
             <span class="truncate">{{ mission.structure.name }}</span>
-          </div>
+          </div> -->
           <DsfrHeading as="h3" size="md" class="line-clamp-2 mb-4 order-3" :title="mission.name">
             {{ mission.name }}
           </DsfrHeading>

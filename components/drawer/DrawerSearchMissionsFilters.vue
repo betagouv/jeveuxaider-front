@@ -28,10 +28,10 @@
       <AutonomyMobileFilter />
     </div>
 
-    <div class="space-y-2">
+    <!-- <div class="space-y-2">
       <div class="relative font-medium text-[15px]">Missions courtes</div>
       <PonctualMobileFilter />
-    </div>
+    </div> -->
 
     <div class="space-y-2">
       <div class="relative font-medium text-[15px]">Mineurs</div>

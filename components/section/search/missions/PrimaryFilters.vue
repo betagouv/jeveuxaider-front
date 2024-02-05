@@ -68,12 +68,12 @@
           </div>
 
           <div :class="[spacingClasses, 'border-l lg:border-l-0']">
-            <div class="text-[#7B7B7B] mb-1">Dates et disponibilités</div>
+            <div class="text-[#7B7B7B] mb-1">Dates</div>
             <DatesCommitmentFilter>
               <template #button="{ activeValue }">
                 <div class="flex space-x-2 items-center justify-between group w-full">
                   <div class="flex space-x-2 items-center truncate">
-                    <RiTimeFill
+                    <RiCalendarEventFill
                       class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none"
                     />
                     <div

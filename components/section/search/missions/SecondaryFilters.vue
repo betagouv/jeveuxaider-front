@@ -219,7 +219,7 @@
 
         <MinorsFilter v-if="filter === 'is_minors'" :key="i" />
 
-        <PonctualFilter v-if="filter === 'is_ponctual'" :key="i" />
+        <!-- <PonctualFilter v-if="filter === 'is_ponctual'" :key="i" /> -->
 
         <FacetFilterToggle
           v-if="filter === 'publisher_name'"
@@ -338,8 +338,8 @@ export default defineNuxtComponent({
         this.$route.query?.type === 'Mission à distance'
           ? this.filtersName
               .filter((f) => !['is_autonomy', 'department_name'].includes(f))
-              .slice(0, 4)
-          : this.filtersName.slice(0, 4)
+              .slice(0, 3)
+          : this.filtersName.slice(0, 3)
 
       this.activeFilters.forEach((f) => {
         if (!visibleFilters.includes(f)) {

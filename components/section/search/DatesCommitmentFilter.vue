@@ -13,45 +13,26 @@
       <div
         v-if="isOpen"
         v-click-outside="() => (isOpen = false)"
-        class="mt-2 absolute right-0 xl:right-auto z-20 bg-white border shadow-xl w-[409px]"
+        class="mt-2 absolute right-0 xl:right-auto z-20 bg-white border shadow-xl w-[376px]"
         @keydown.esc="isOpen = false"
       >
-        <div class="flex flex-col p-8 space-y-8">
-          <div class="space-y-4">
-            <div class="font-medium">Vous cherchez une mission</div>
-            <BaseRadioGroup
-              v-model="dateType"
-              :options="[
-                { key: 'ponctual', label: 'Ponctuelle', icon: 'RiCalendarEventLine' },
-                { key: 'recurring', label: 'Régulière', icon: 'RiTimeLine' },
-              ]"
-              variant="tabs"
-              @update:modelValue="onDateTypeChanged"
+        <div class="flex flex-col p-4 space-y-4">
+          <div class="flex gap-4">
+            <div class="flex-1 space-y-1">
+              <div class="font-medium text-[15px]">À partir du</div>
+              <BaseInput :modelValue="$route.query?.start" name="start" type="date" disabled />
+            </div>
+            <div class="flex-1 space-y-1">
+              <div class="font-medium text-[15px]">Jusqu'au</div>
+              <BaseInput :modelValue="$route.query?.end" name="end" type="date" disabled />
+            </div>
+          </div>
+          <div class="mt-4">
+            <v-date-picker
+              v-model.range="calendar"
+              :disabled-dates="[{ start: null, end: $dayjs().subtract(1, 'day').toDate() }]"
+              @update:modelValue="onDayclick"
             />
-          </div>
-
-          <div v-if="dateType === 'ponctual'" class="">
-            <div class="flex gap-4">
-              <div class="flex-1 space-y-4">
-                <div class="font-medium">À partir du</div>
-                <BaseInput :modelValue="$route.query?.start" name="start" type="date" disabled />
-              </div>
-              <div class="flex-1 space-y-4">
-                <div class="font-medium">Jusqu'au</div>
-                <BaseInput :modelValue="$route.query?.end" name="end" type="date" disabled />
-              </div>
-            </div>
-            <div class="mt-4">
-              <v-date-picker
-                v-model.range="calendar"
-                :disabled-dates="[{ start: null, end: $dayjs().subtract(1, 'day').toDate() }]"
-                @update:modelValue="onDayclick"
-              />
-            </div>
-          </div>
-
-          <div v-if="dateType === 'recurring'" class="">
-            @TODO: choix des fréquences d'engagement
           </div>
         </div>
 
@@ -95,24 +76,21 @@ export default defineNuxtComponent({
   },
   computed: {
     activeValue() {
-      if (this.dateType === 'ponctual' && this.$route.query.start && this.$route.query.end) {
+      if (this.$route.query.start && this.$route.query.end) {
         return `${this.$dayjs(this.$route.query.start).format('DD/MM/YYYY')} - ${this.$dayjs(
           this.$route.query.end
         ).format('DD/MM/YYYY')}`
       }
-      if (this.dateType === 'ponctual' && this.$route.query.start) {
+      if (this.$route.query.start) {
         return `${this.$dayjs(this.$route.query.start).format('DD/MM/YYYY')}`
-      }
-      if (this.dateType === 'recurring') {
-        return 'Récurrent'
       }
       return null
     },
   },
   watch: {
-    '$route.query.date_type'(newVal) {
-      this.dateType = newVal
-    },
+    // '$route.query.date_type'(newVal) {
+    //   this.dateType = newVal
+    // },
     // '$route.query.duration'(newVal) {
     //   this.commitment__duration = newVal
     // },
@@ -125,6 +103,7 @@ export default defineNuxtComponent({
           ...this.$route.query,
           start: this.$dayjs(payload.start).format('YYYY-MM-DD'),
           end: this.$dayjs(payload.end).format('YYYY-MM-DD'),
+          date_type: 'ponctual', // 'ponctual' or 'recurring
           page: undefined,
         },
       })

@@ -30,7 +30,7 @@
       </template>
       <CustomEmptyState v-else>
         <template #description>
-          <div class="text-gray-600">
+          <div class="text-gray-600 text-center">
             Il n'y a aucune mission à cette date avec les filtres actuels
           </div>
         </template>

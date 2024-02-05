@@ -1,6 +1,6 @@
 <template>
   <div class="relative z-1">
-    <div class="bg-jva-blue-500">
+    <div class="hidden lg:block bg-jva-blue-500">
       <div class="container py-[56px] lg:pt-[104px] lg:pb-[124px] relative">
         <h1 class="text-white font-bold">
           <span class="text-[22px] lg:text-[40px]">Votre prochaine mission de bénévolat</span><br />
@@ -42,7 +42,7 @@
           />
           <div class="hidden lg:block w-full lg:w-[300px]">
             <div class="lg:border-l lg:py-4 lg:pl-8">
-              <div class="text-[#3A3A3A]">Lieu de la mission</div>
+              <div class="text-[#3A3A3A]">À proximité de</div>
               <LocalisationFilter label="Localisation" class="max-w-[200px]" />
             </div>
           </div>
@@ -113,6 +113,11 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    creneauxFilters() {
+      const timestamp = this.$dayjs(this.selectedDate).unix()
+      const query = `dates.timestamp=${timestamp}`
+      return `${query} AND commitment__total<=4 AND date_type:"ponctual"`
+    },
     commonFilters() {
       const timestamp = this.$dayjs(this.selectedDate).unix()
       const query = `start_date<=${timestamp} AND (end_date_no_creneaux>=${timestamp} OR has_end_date=0 OR dates.timestamp=${timestamp})`
@@ -122,7 +127,7 @@ export default defineNuxtComponent({
       return {
         hitsPerPage: 6,
         aroundPrecision: 2000,
-        filters: `${this.commonFilters} AND type:"Mission en présentiel"`,
+        filters: `${this.creneauxFilters} AND type:"Mission en présentiel"`,
         aroundLatLngViaIP: true,
         aroundLatLng: this.$route.query.aroundLatLng,
         aroundRadius: 'all',

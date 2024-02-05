@@ -54,29 +54,39 @@
         class="flex flex-col items-center justify-center border w-[65px] h-[65px]"
       >
         <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
-          {{ $dayjs.unix(mission.start_date).format('DD') }}
+          {{ $dayjs.unix(firstDate).format('DD') }}
         </div>
         <div class="text-sm leading-[20px] text-[#666666]">
-          {{ $dayjs.unix(mission.start_date).format('MMM') }}
+          {{ $dayjs.unix(firstDate).format('MMM') }}
         </div>
         <div class="text-xs leading-[14px] text-[#666666]">
-          {{ $dayjs.unix(mission.start_date).format('YYYY') }}
+          {{ $dayjs.unix(firstDate).format('YYYY') }}
         </div>
       </div>
-      <template v-if="mission.end_date">
-        <div class="text-gray-400 text-2xl">⇢</div>
-        <div class="flex flex-col items-center justify-center border w-[65px] h-[65px]">
-          <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
-            {{ $dayjs.unix(mission.end_date).format('DD') }}
-          </div>
-          <div class="text-sm leading-[20px] text-[#666666]">
-            {{ $dayjs.unix(mission.end_date).format('MMM') }}
-          </div>
-          <div class="text-xs leading-[14px] text-[#666666]">
-            {{ $dayjs.unix(mission.end_date).format('YYYY') }}
-          </div>
+      <div class="text-gray-400 text-2xl">⇢</div>
+      <div class="flex flex-col items-center justify-center border w-[65px] h-[65px]">
+        <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
+          {{
+            mission.end_date
+              ? $dayjs.unix(mission.end_date).format('DD')
+              : $dayjs.unix(lastDayOfYear).format('DD')
+          }}
         </div>
-      </template>
+        <div class="text-sm leading-[20px] text-[#666666]">
+          {{
+            mission.end_date
+              ? $dayjs.unix(mission.end_date).format('MMM')
+              : $dayjs.unix(lastDayOfYear).format('MMM')
+          }}
+        </div>
+        <div class="text-xs leading-[14px] text-[#666666]">
+          {{
+            mission.end_date
+              ? $dayjs.unix(mission.end_date).format('YYYY')
+              : $dayjs.unix(lastDayOfYear).format('YYYY')
+          }}
+        </div>
+      </div>
     </template>
   </div>
 </template>
@@ -92,6 +102,18 @@ export default defineNuxtComponent({
       required: true,
     },
   },
-  computed: {},
+  computed: {
+    firstDate() {
+      // if start date before current day, pick current day
+      if (this.mission.start_date < this.$dayjs().unix()) {
+        return this.$dayjs().unix()
+      }
+
+      return this.mission.start_date
+    },
+    lastDayOfYear() {
+      return this.$dayjs().endOf('year').unix()
+    },
+  },
 })
 </script>

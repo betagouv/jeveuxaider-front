@@ -3,11 +3,10 @@
     <AlgoliaSearch
       id="recherche"
       :secondary-filters="[
-        'is_autonomy',
         'date_type',
         'commitment',
         'structure.name',
-        'is_ponctual',
+        'is_autonomy',
         'publics_beneficiaires',
         'is_minors',
         'tags',
