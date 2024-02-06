@@ -32,6 +32,68 @@
           </template>
         </FacetFilterToggle>
 
+        <FacetFilterToggle
+          v-if="filter === 'commitment'"
+          :key="i"
+          facet-name="commitment"
+          label="Durée d'engagement"
+          legend="Filtrer par durée d'engagement"
+          :facet-value-resolver="{
+            few_hours: 'Quelques heures',
+            few_days: 'Quelques jours',
+            few_hours_a_week: 'Quelques heures par semaine',
+            few_days_a_week: 'Quelques jours par semaine',
+            few_hours_a_month: 'Quelques heures par mois',
+            few_days_a_month: 'Quelques jours par mois',
+          }"
+        >
+          <template #button="{ firstValueSelected, activeValuesCount, isOpen }">
+            <DsfrTag
+              :is-active="!!activeValuesCount"
+              context="clickable"
+              size="md"
+              as="button"
+              :aria-expanded="isOpen || 'false'"
+            >
+              <span v-if="!firstValueSelected">Durée d'engagement</span>
+              <div v-else>
+                <span class="max-w-[170px] truncate">{{ firstValueSelected }}</span>
+                <span v-if="activeValuesCount > 1">, +{{ activeValuesCount - 1 }}</span>
+              </div>
+            </DsfrTag>
+          </template>
+        </FacetFilterToggle>
+
+        <RadiosFilter
+          v-if="filter === 'commitment'"
+          :key="i"
+          name="commitment__total"
+          legend="Durée d'engagement"
+          :options="[
+            { key: '<=4', label: 'Quelques heures' },
+            { key: '<=21', label: 'Quelques jours' },
+            { key: '<=208', label: 'Quelques heures par semaine' },
+            { key: '<=1092', label: 'Quelques jours par semaine' },
+            { key: '<=48', label: 'Quelques heures par mois' },
+            { key: '<=252', label: 'Quelques jours par mois' },
+          ]"
+        >
+          <template #button="{ activeValue, isOpen }">
+            <DsfrTag
+              :is-active="!!activeValue"
+              context="clickable"
+              size="md"
+              as="button"
+              :aria-expanded="isOpen || 'false'"
+            >
+              <span v-if="!activeValue">Durée</span>
+              <div v-else>
+                <span class="max-w-[170px] truncate">{{ activeValue }}</span>
+              </div>
+            </DsfrTag>
+          </template>
+        </RadiosFilter>
+
         <CommitmentFilter v-if="filter === 'commitment'" :key="i">
           <template #button="{ activeValue, isOpen }">
             <DsfrTag
@@ -41,7 +103,7 @@
               as="button"
               :aria-expanded="isOpen || 'false'"
             >
-              <span v-if="!activeValue">Disponibilités</span>
+              <span v-if="!activeValue">Durée</span>
               <div v-else>
                 <span class="max-w-[170px] truncate">{{ activeValue }}</span>
               </div>
@@ -275,6 +337,7 @@ import AutonomyFilter from '@/components/section/search/AutonomyFilter.vue'
 import MinorsFilter from '@/components/section/search/MinorsFilter.vue'
 import PonctualFilter from '@/components/section/search/PonctualFilter.vue'
 import CommitmentFilter from '@/components/section/search/CommitmentFilter.vue'
+import RadiosFilter from '@/components/section/search/RadiosFilter.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -283,6 +346,7 @@ export default defineNuxtComponent({
     MinorsFilter,
     PonctualFilter,
     CommitmentFilter,
+    RadiosFilter,
   },
   props: {
     filtersName: {

@@ -68,8 +68,8 @@
           </div>
 
           <div :class="[spacingClasses, 'border-l lg:border-l-0']">
-            <div class="text-[#7B7B7B] mb-1">Dates</div>
-            <DatesCommitmentFilter>
+            <div class="text-[#7B7B7B] mb-1">Disponibilités</div>
+            <DatesFilter>
               <template #button="{ activeValue }">
                 <div class="flex space-x-2 items-center justify-between group w-full">
                   <div class="flex space-x-2 items-center truncate">
@@ -89,7 +89,7 @@
                   <RiArrowDownSLine class="text-[#7B7B7B] h-4 w-4 group-hover:text-gray-900" />
                 </div>
               </template>
-            </DatesCommitmentFilter>
+            </DatesFilter>
           </div>
 
           <div :class="[spacingClasses, 'hidden xl:block']">
@@ -106,7 +106,7 @@
 import FacetFilterToggle from '@/components/section/search/FacetFilterToggle.vue'
 import LocalisationFilter from '@/components/search/LocalisationFilter.vue'
 import CommitmentFilter from '@/components/section/search/CommitmentFilter.vue'
-import DatesCommitmentFilter from '@/components/section/search/DatesCommitmentFilter.vue'
+import DatesFilter from '@/components/section/search/DatesFilter.vue'
 import SearchFilter from '@/components/search/SearchFilter.vue'
 import MissionTypeFilter from '@/components/search/MissionTypeFilter.vue'
 
@@ -114,7 +114,7 @@ export default defineNuxtComponent({
   components: {
     FacetFilterToggle,
     CommitmentFilter,
-    DatesCommitmentFilter,
+    DatesFilter,
     LocalisationFilter,
     SearchFilter,
     MissionTypeFilter,
