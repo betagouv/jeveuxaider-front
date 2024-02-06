@@ -2,7 +2,6 @@
   <ClientOnly>
     <Teleport to="#teleport-body-end">
       <BaseModal
-        v-scroll-lock="isOpen"
         :is-open="isOpen"
         theme="message"
         :title="`À ${toUser.full_name}`"

@@ -3,7 +3,6 @@
     <Teleport to="#teleport-body-end">
       <template v-if="responsable.missions_count > 0">
         <BaseModal
-          v-scroll-lock="isOpen"
           :is-open="isOpen"
           theme="danger"
           :title="`Supprimer ${responsable.full_name}`"

@@ -2,7 +2,6 @@
   <ClientOnly>
     <Teleport to="#teleport-body-end">
       <BaseModal
-        v-scroll-lock="isOpen"
         :is-open="isOpen"
         theme="warning"
         :title="`${mission.is_online ? 'Mettre hors ligne' : 'Mettre en ligne'} la mission`"

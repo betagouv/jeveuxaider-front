@@ -7,7 +7,6 @@
       Publier une mission
     </DsfrButton>
     <BaseModal
-      v-scroll-lock="showModalFirstMission"
       :is-open="showModalFirstMission"
       title="C’est votre première mission ! 🍾"
       width-class="sm:max-w-3xl"
@@ -58,7 +57,6 @@
       </template>
     </BaseModal>
     <BaseModal
-      v-scroll-lock="showModalHasParticipationsWaiting"
       :is-open="showModalHasParticipationsWaiting"
       title="Vous avez des participations non traitées sur d’autres missions"
       width-class="sm:max-w-3xl"

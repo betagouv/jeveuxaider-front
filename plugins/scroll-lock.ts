@@ -5,13 +5,13 @@ export default defineNuxtPlugin((nuxtApp) => {
     // On mount (inserted)
     mounted(el, binding) {
       if (binding.value) {
-        disableBodyScroll(el)
+        disableBodyScroll(el, { reserveScrollBarGap: true })
       }
     },
 
     updated(el, binding) {
       if (binding.value) {
-        disableBodyScroll(el)
+        disableBodyScroll(el, { reserveScrollBarGap: true })
       } else {
         enableBodyScroll(el)
       }

@@ -2,7 +2,6 @@
   <ClientOnly>
     <Teleport to="#teleport-body-end">
       <BaseModal
-        vvv-scroll-lock="isOpen"
         :is-open="isOpen"
         theme="warning"
         title="Changement de statut"

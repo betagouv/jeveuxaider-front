@@ -3,7 +3,6 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :key="`modal_alert_dialog_${uuid}`"
-        v-scroll-lock="isOpen"
         :title="title"
         :is-open="isOpen"
         :theme="theme"

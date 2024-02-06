@@ -4,7 +4,6 @@
       <template v-if="status">
         <template v-if="canUnsubscribe">
           <BaseModal
-            v-scroll-lock="isOpen"
             :is-open="isOpen"
             theme="danger"
             title="Désinscription de mon organisation"
@@ -40,7 +39,6 @@
         </template>
         <template v-else>
           <BaseModal
-            v-scroll-lock="isOpen"
             :is-open="isOpen"
             theme="danger"
             title="Demande de désinscription"

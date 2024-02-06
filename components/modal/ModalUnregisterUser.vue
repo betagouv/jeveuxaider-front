@@ -41,7 +41,6 @@
         </template>
         <template v-if="modalToShow === 'contact-admin'">
           <BaseModal
-            v-scroll-lock="isOpen"
             :is-open="isOpen"
             theme="danger"
             title="Demande de désinscription"
@@ -77,7 +76,6 @@
         </template>
         <template v-if="modalToShow === 'select-new-responsable-and-unsubscribe-user'">
           <BaseModal
-            v-scroll-lock="isOpen"
             :is-open="isOpen"
             theme="danger"
             title="Supprimer mon compte"
@@ -138,7 +136,6 @@
         </template>
         <template v-if="modalToShow === 'unsubscibe-organisation-and-user'">
           <BaseModal
-            v-scroll-lock="isOpen"
             :is-open="isOpen"
             theme="danger"
             title="Supprimer mon compte"
