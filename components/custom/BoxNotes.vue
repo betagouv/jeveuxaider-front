@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
       <BaseHeading :level="3"> Notes </BaseHeading>
       <div>
-        <BaseButton variant="white" @click.native="showDrawer = true">
+        <BaseButton variant="white" @click.native="showModalNote = true">
           Ajouter une note
         </BaseButton>
       </div>
@@ -58,33 +58,19 @@
     <template v-else>
       <div class="text-gray-500 py-12">Aucune note pour le moment</div>
     </template>
-    <BaseDrawer
-      :is-open="showDrawer"
-      form-id="form-note"
-      submit-label="Enregistrer la note"
-      @close="showDrawer = false"
-    >
-      <template #title>
-        <BaseHeading :level="3"> Ajouter une note </BaseHeading>
-      </template>
-      <FormNote
-        class="mt-8"
-        :notable-type="notableType"
-        :notable-id="notableId"
-        :note="selectedNote"
-        @submitted="onSubmitted()"
-      />
-    </BaseDrawer>
+    <ModalNote
+      :is-open="showModalNote"
+      :notable-type="notableType"
+      :notable-id="notableId"
+      :note="selectedNote"
+      @confirm="onNoteSubmitted"
+      @cancel="onModalCancel"
+    />
   </BaseBox>
 </template>
 
 <script>
-import FormNote from '@/components/form/FormNote.vue'
-
 export default defineNuxtComponent({
-  components: {
-    FormNote,
-  },
   props: {
     notableType: {
       type: String,
@@ -99,7 +85,7 @@ export default defineNuxtComponent({
     return {
       loading: true,
       notes: null,
-      showDrawer: false,
+      showModalNote: false,
       selectedNote: null,
       page: 1,
     }
@@ -124,12 +110,16 @@ export default defineNuxtComponent({
       this.fetch()
     },
     handleUpdate(note) {
-      this.showDrawer = true
+      this.showModalNote = true
       this.selectedNote = note
     },
-    onSubmitted() {
+    onNoteSubmitted() {
       this.fetch()
-      this.showDrawer = false
+      this.showModalNote = false
+      this.selectedNote = null
+    },
+    onModalCancel() {
+      this.showModalNote = false
       this.selectedNote = null
     },
   },
