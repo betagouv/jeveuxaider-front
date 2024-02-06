@@ -153,6 +153,7 @@ export default defineNuxtComponent({
       'publics_volontaires',
       'publisher_name',
       'date_type',
+      'commitment',
     ]
     $stores.algoliaSearch.availableNumericFilters = ['commitment__total', 'is_autonomy']
     $stores.algoliaSearch.initialFilters = props.initialFilters
