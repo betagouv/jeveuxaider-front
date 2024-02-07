@@ -1,6 +1,12 @@
 <template>
   <Conversation>
     <template #header>
+      <ModalParticipationShouldBeDone
+        :participation="participation"
+        :is-open="showModal"
+        @cancel="showModal = false"
+        @updated="handleUpdatedParticipation"
+      />
       <template v-if="isCurrentUserBenevole">
         <ConversationRecipientResponsable :user="recipientUser" />
       </template>
@@ -8,7 +14,6 @@
         <ConversationRecipientBenevole :user="benevoleUser" />
       </template>
     </template>
-
     <template #actions>
       <template v-if="isCurrentUserBenevole">
         <ConversationParticipationActionAsBenevole
@@ -65,6 +70,11 @@ export default defineNuxtComponent({
     Conversation,
   },
   mixins: [MixinConversationParticipation],
+  data() {
+    return {
+      showModal: this.$route.query.open_modal === 'participation-should-be-done',
+    }
+  },
   computed: {
     recipientUser() {
       return this.conversation.users.filter(
@@ -79,6 +89,10 @@ export default defineNuxtComponent({
     onUpdateSelectedTags(tags) {
       this.conversation.conversable.tags = tags
       this.$stores.messaging.refreshConversationInConversations(this.conversation)
+    },
+    handleUpdatedParticipation() {
+      this.$stores.messaging.refreshActiveConversation(this.conversation.id)
+      this.$stores.messaging.fetchNewConversationMessages(this.conversation.id)
     },
   },
 })

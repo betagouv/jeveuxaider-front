@@ -2,7 +2,7 @@
   <fieldset>
     <legend class="sr-only">Choisir une option</legend>
 
-    <div class="flex" :class="[{ 'flex-col': variant === 'radios' }]">
+    <div class="flex" :class="[{ 'flex-col': variant === 'radios' }, classWrapper]">
       <BaseRadio
         v-for="(option, index) in options"
         :key="option.key"
@@ -50,6 +50,7 @@ export default defineNuxtComponent({
       default: 'radios',
       validator: (s) => ['radios', 'tabs'].includes(s),
     },
+    classWrapper: { type: String, default: '' },
   },
   data() {
     return {
