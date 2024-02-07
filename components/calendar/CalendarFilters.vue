@@ -21,14 +21,14 @@
           v-for="(date, i) in dates"
           :key="i"
           :class="[
-            'group w-[93px] h-[98px] lg:w-[109px] lg:h-[120px] flex flex-col items-center justify-center cursor-pointer',
+            'group w-[93px] h-[98px] lg:w-[93px] lg:h-[96px] flex flex-col items-center justify-center cursor-pointer',
             { 'hover:bg-gray-50': date !== modelValue },
             { 'bg-jva-blue-500 text-white': date === modelValue },
           ]"
           @click="onDateClick(date)"
         >
           <div class="font-bold leading-[16px]">{{ $dayjs(date).format('dddd') }}</div>
-          <div class="text-[28px] lg:text-[40px] font-bold leading-[40px] lg:py-2">
+          <div class="text-[28px] lg:text-[36px] font-bold leading-[40px] lg:py-1">
             {{ $dayjs(date).format('DD') }}
           </div>
           <div
@@ -57,6 +57,10 @@ export default defineNuxtComponent({
     modelValue: {
       type: String,
       required: true,
+    },
+    isPinned: {
+      type: Boolean,
+      default: false,
     },
   },
   async mounted() {
@@ -102,11 +106,14 @@ export default defineNuxtComponent({
       if (!this.waitingOnAnimRequest) {
         window.requestAnimationFrame(() => {
           let width = this.$refs.calendar?.offsetWidth
-          if (width >= 950) {
+          // console.log('width', width)
+          if (width >= 900) {
             this.nbDaysToDisplay = 7
-          } else if (width >= 708) {
+          } else if (width >= 640) {
+            this.nbDaysToDisplay = 6
+          } else if (width >= 550) {
             this.nbDaysToDisplay = 5
-          } else if (width >= 600) {
+          } else if (width >= 440) {
             this.nbDaysToDisplay = 4
           } else {
             this.nbDaysToDisplay = 3

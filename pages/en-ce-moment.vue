@@ -1,10 +1,13 @@
 <template>
   <div class="relative z-1">
-    <div class="hidden lg:block bg-jva-blue-500">
-      <div class="container py-[56px] lg:pt-[104px] lg:pb-[124px] relative">
+    <div class="lg:block bg-jva-blue-500">
+      <div class="container py-[32px] lg:pt-[104px] lg:pb-[124px] relative">
         <h1 class="text-white font-bold">
-          <span class="text-[22px] lg:text-[40px]">Votre prochaine mission de bénévolat</span><br />
-          <span class="relative">
+          <span class="lg:hidden text-[28px]">Votre prochaine mission de bénévolat</span>
+          <span class="hidden lg:inline text-[22px] lg:text-[40px]"
+            >Votre prochaine mission de bénévolat</span
+          ><br />
+          <span class="hidden lg:inline relative">
             <img
               src="/images/home/sparkle-right.svg"
               alt=""
@@ -22,8 +25,8 @@
       <div
         ref="filters"
         :class="[
-          'z-10 lg:-translate-y-1/2',
-          { 'bg-white shadow-lg lg:sticky lg:top-[75px]': isPinned },
+          'z-20 lg:-translate-y-1/2',
+          { 'bg-white shadow-lg sticky top-[-1px] lg:top-[63px]': isPinned },
           { 'lg:container ': !isPinned },
         ]"
       >
@@ -38,13 +41,17 @@
             :model-value="selectedDate"
             :starting-date="startingDate"
             class="flex-1"
+            :is-pinned="isPinned"
             @update:modelValue="onChangedSelectedDate"
           />
-          <div class="hidden lg:block w-full lg:w-[300px]">
-            <div class="lg:border-l lg:py-4 lg:pl-8">
+          <div
+            class="border-t border-t-[#DDDDDD] lg:border-t-0 py-2 w-full lg:w-[300px] xl:w-[350px]"
+          >
+            <div class="hidden lg:block lg:border-l lg:py-4 lg:pl-8">
               <div class="text-[#3A3A3A]">À proximité de</div>
-              <LocalisationFilter label="Localisation" class="max-w-[200px]" />
+              <LocalisationFilter label="Localisation" class="lg:max-w-[200px]" />
             </div>
+            <div class="px-2 lg:hidden"><LocalisationMobileFilter class="text-[#000000]" /></div>
           </div>
         </div>
       </div>
@@ -84,11 +91,13 @@ import CalendarFilters from '@/components/calendar/CalendarFilters.vue'
 import AlgoliaMissions from '@/components/section/search/missions/AlgoliaMissions.vue'
 import RestosDuCoeur from '@/components/section/operations/RestosDuCoeur.vue'
 import LocalisationFilter from '@/components/search/LocalisationFilter.vue'
+import LocalisationMobileFilter from '@/components/search/LocalisationMobileFilter.vue'
 
 export default defineNuxtComponent({
   components: {
     CalendarFilters,
     LocalisationFilter,
+    LocalisationMobileFilter,
     AlgoliaMissions,
     RestosDuCoeur,
   },
@@ -161,7 +170,7 @@ export default defineNuxtComponent({
     async scrollToTop() {
       await this.$nextTick()
       this.$scrollTo('#missions-presentiel', 300, {
-        offset: this.$mq.current === 'xl' ? -200 : -162,
+        offset: this.$mq.current === 'xl' ? -200 : -175,
       })
     },
     onChangedSelectedDate(date) {

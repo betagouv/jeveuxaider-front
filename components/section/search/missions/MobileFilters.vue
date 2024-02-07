@@ -20,6 +20,7 @@
       <template #tab-onsite>
         <div class="flex items-center divide-x">
           <LocalisationSuggestions
+            label="Localisation"
             :class="['w-full mr-auto min-w-0', { 'pr-4': !isGeolocFilterActive }]"
             @geolocFilterActiveStateToggle="isGeolocFilterActive = $event"
           />

@@ -92,6 +92,7 @@ import RiTeamLine from 'vue-remix-icons/icons/ri-team-line.vue'
 import RiAddCircleLine from 'vue-remix-icons/icons/ri-add-circle-line.vue'
 import RiIndeterminateCircleLine from 'vue-remix-icons/icons/ri-indeterminate-circle-line.vue'
 import RiMapPinLine from 'vue-remix-icons/icons/ri-map-pin-line.vue'
+import RiMapPin2Line from 'vue-remix-icons/icons/ri-map-pin-2-line.vue'
 import RiUserFill from 'vue-remix-icons/icons/ri-user-fill.vue'
 import RiExpandUpDownLine from 'vue-remix-icons/icons/ri-expand-up-down-line.vue'
 import RiArrowUpSLine from 'vue-remix-icons/icons/ri-arrow-up-s-line.vue'
@@ -134,6 +135,7 @@ const components = {
   RiExpandUpDownLine,
   RiUserFill,
   RiMapPinLine,
+  RiMapPin2Line,
   RiIndeterminateCircleLine,
   RiAddCircleLine,
   RiTeamLine,

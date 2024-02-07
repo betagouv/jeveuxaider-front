@@ -62,7 +62,7 @@
 
       <div class="flex-1 flex flex-col bg-white px-10 py-8">
         <div class="flex-1">
-          <div class="flex flex-wrap gap-4 order-1 mb-4">
+          <div class="flex flex-wrap gap-4 mb-4">
             <DsfrTag
               :custom-theme="true"
               :class="`${domaineBackgroundColor(domainId)} text-white`"
@@ -78,7 +78,7 @@
             <RiBuildingFill class="fill-current w-4 h-4 flex-none mr-2" />
             <span class="truncate">{{ mission.structure.name }}</span>
           </div> -->
-          <DsfrHeading as="h3" size="md" class="line-clamp-2 mb-4 order-3" :title="mission.name">
+          <DsfrHeading as="h3" size="md" class="line-clamp-2 mb-4" :title="mission.name">
             {{ mission.name }}
           </DsfrHeading>
           <div class="truncate text-[#3A3A3A] text-sm max-w-full">
