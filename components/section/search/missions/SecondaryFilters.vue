@@ -269,7 +269,7 @@
 
         <MinorsFilter v-if="filter === 'is_minors'" :key="i" />
 
-        <!-- <PonctualFilter v-if="filter === 'is_ponctual'" :key="i" /> -->
+        <PonctualFilter v-if="filter === 'is_ponctual'" :key="i" />
 
         <FacetFilterToggle
           v-if="filter === 'publisher_name'"
@@ -391,7 +391,7 @@ export default defineNuxtComponent({
       }
 
       const visibleFilters = this.filtersName.filter((f) =>
-        ['search', 'structure.name'].includes(f)
+        ['search', 'is_ponctual', 'structure.name'].includes(f)
       )
 
       this.activeFilters.forEach((f) => {

@@ -1,14 +1,16 @@
 <template>
   <div class="flex gap-8 w-full">
     <div class="border bg-white w-[180px] px-6 py-8 border-b-4 border-b-[#3A3A3A] text-center">
-      <NuxtImg
-        v-if="mission.structure.logo"
-        :src="mission.structure.logo.urls.large"
-        :srcset="mission.structure.logo.urls.large"
-        :alt="mission.structure.name"
-        class="h-auto max-w-[100px] mb-6 inline"
-        @error="onImgError"
-      />
+      <div v-if="mission.structure.logo" class="h-[65px] max-w-[100px] m-auto mb-6">
+        <NuxtImg
+          :src="mission.structure.logo.urls.large"
+          :srcset="mission.structure.logo.urls.large"
+          :alt="mission.structure.name"
+          class="object-contain h-full w-full"
+          @error="onImgError"
+        />
+      </div>
+
       <div class="font-bold mb-4 line-clamp-3">{{ mission.structure.name }}</div>
 
       <div class="text-sm text-[#666666]">
@@ -110,22 +112,8 @@
 <script>
 import MixinMission from '@/mixins/mission'
 import MixinDomaines from '@/mixins/domaines'
-import SpinIcon from '@/components/icon/SpinIcon.vue'
-import DsfrSuccessIcon from '@/components/icon/dsfr/Success.vue'
-import DsfrErrorIcon from '@/components/icon/dsfr/Error.vue'
-import DsfrWarningIcon from '@/components/icon/dsfr/Warning.vue'
-import DsfrNewIcon from '@/components/icon/dsfr/New.vue'
-import DsfrInfoIcon from '@/components/icon/dsfr/Info.vue'
 
 export default defineNuxtComponent({
-  components: {
-    DsfrSuccessIcon,
-    DsfrErrorIcon,
-    DsfrWarningIcon,
-    DsfrNewIcon,
-    DsfrInfoIcon,
-    SpinIcon,
-  },
   mixins: [MixinMission, MixinDomaines],
   props: {
     mission: {

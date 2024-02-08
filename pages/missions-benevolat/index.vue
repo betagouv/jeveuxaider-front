@@ -4,6 +4,7 @@
       id="recherche"
       :secondary-filters="[
         'search',
+        'is_ponctual',
         'commitment',
         'structure.name',
         'publics_beneficiaires',

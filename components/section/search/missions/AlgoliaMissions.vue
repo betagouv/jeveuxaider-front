@@ -97,6 +97,8 @@ export default defineNuxtComponent({
         query: {
           ...this.redirectParameters,
           ...this.$route.query,
+          start: this.$route.query.start ?? this.$dayjs().format('YYYY-MM-DD'),
+          end: this.$route.query.end ?? this.$dayjs().format('YYYY-MM-DD'),
           page: undefined,
         },
       })

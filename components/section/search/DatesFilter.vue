@@ -72,14 +72,14 @@ export default defineNuxtComponent({
     activeValue() {
       if (this.$route.query.start && this.$route.query.end) {
         if (this.$route.query.start === this.$route.query.end) {
-          return `Le ${this.$dayjs(this.$route.query.start).format('DD/MM/YYYY')}`
+          return `${this.$dayjs(this.$route.query.start).format('DD/MM/YYYY')}`
         }
-        return `Du ${this.$dayjs(this.$route.query.start).format('DD/MM/YYYY')} au ${this.$dayjs(
+        return `${this.$dayjs(this.$route.query.start).format('DD/MM/YYYY')} au ${this.$dayjs(
           this.$route.query.end
         ).format('DD/MM/YYYY')}`
       }
       if (this.$route.query.start) {
-        return `Le ${this.$dayjs(this.$route.query.start).format('DD/MM/YYYY')}`
+        return `${this.$dayjs(this.$route.query.start).format('DD/MM/YYYY')}`
       }
       return null
     },
