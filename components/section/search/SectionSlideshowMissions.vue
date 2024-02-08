@@ -90,27 +90,21 @@ export default defineNuxtComponent({
     return {
       disponibilities: [
         {
-          label: '1 heure par mois',
+          label: 'Quelques heures',
           parameters: {
-            commitment__total: '<12',
-            duration: '1_hour',
-            time_period: 'month',
+            commitment: 'few_hours',
           },
         },
         {
-          label: 'Une demi-journée par mois',
+          label: 'Quelques jours',
           parameters: {
-            commitment__total: '<48',
-            duration: 'half_day',
-            time_period: 'month',
+            commitment: 'few_days',
           },
         },
         {
-          label: '1 jour par mois',
+          label: 'De manière récurrente',
           parameters: {
-            commitment__total: '<84',
-            duration: 'day',
-            time_period: 'month',
+            commitment: 'few_hours_a_week|few_hours_a_month|few_days_a_week|few_days_a_month',
           },
         },
       ],

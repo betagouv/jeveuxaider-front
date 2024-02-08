@@ -4,12 +4,10 @@
       <QuizOption
         title="Quelques heures"
         description="C’est déjà beaucoup 😇"
-        :selected="$route.query?.commitment__total === '<=7'"
+        :selected="$route.query?.commitment === 'few_hours'"
         @click.native="
           onClickOption({
-            commitment__total: '<=7',
-            duration: 'day',
-            time_period: null,
+            commitment: 'few_hours',
           })
         "
       >
@@ -20,12 +18,10 @@
       <QuizOption
         title="Quelques jours"
         description="Wahou 👏"
-        :selected="$route.query?.commitment__total === '<=35'"
+        :selected="$route.query?.commitment === 'few_days'"
         @click.native="
           onClickOption({
-            commitment__total: '<=35',
-            duration: '5_days',
-            time_period: null,
+            commitment: 'few_days',
           })
         "
       >
@@ -36,12 +32,13 @@
       <QuizOption
         title="De manière récurrente"
         description="Vous êtes formidable 🤩"
-        :selected="$route.query?.commitment__total === '<=84'"
+        :selected="
+          $route.query?.commitment ===
+          'few_hours_a_week|few_hours_a_month|few_days_a_week|few_days_a_month'
+        "
         @click.native="
           onClickOption({
-            commitment__total: '<=364',
-            duration: 'day',
-            time_period: 'week',
+            commitment: 'few_hours_a_week|few_hours_a_month|few_days_a_week|few_days_a_month',
           })
         "
       >
@@ -52,12 +49,10 @@
       <QuizOption
         title="Peu importe"
         description="Cela dépend de la mission 🤗"
-        :selected="$route.query?.commitment__total === null"
+        :selected="$route.query?.commitment === null"
         @click.native="
           onClickOption({
-            commitment__total: null,
-            duration: null,
-            time_period: null,
+            commitment: null,
           })
         "
       >
@@ -112,7 +107,7 @@ export default defineNuxtComponent({
         props: {
           isLogged: this.$stores.auth.isLogged,
           quizPath: this.$route.path,
-          value: options.commitment__total,
+          value: options.commitment,
         },
       })
 

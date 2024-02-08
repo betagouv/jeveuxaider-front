@@ -13,7 +13,7 @@
       <div
         v-if="isOpen"
         v-click-outside="() => (isOpen = false)"
-        class="mt-2 absolute right-0 xl:right-auto z-20 bg-white border shadow-xl w-[376px]"
+        class="mt-2 absolute right-0 xl:left-auto z-20 bg-white border shadow-xl w-[376px]"
         @keydown.esc="isOpen = false"
       >
         <div class="flex flex-col p-4 space-y-4">
