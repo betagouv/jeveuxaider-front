@@ -58,16 +58,10 @@
 
 <script>
 export default defineNuxtComponent({
-  setup() {
-    const { addFilter } = useAlgoliaMissionsQueryBuilder()
-    return {
-      addFilter,
-    }
-  },
   data() {
     return {
       isOpen: false,
-      dateType: this.$route.query.date_type ?? null,
+      // dateType: this.$route.query.date_type ?? null,
       calendar: {
         start: this.$route.query?.start ?? null,
         end: this.$route.query?.end ?? this.$route.query?.start ?? null,
@@ -77,6 +71,9 @@ export default defineNuxtComponent({
   computed: {
     activeValue() {
       if (this.$route.query.start && this.$route.query.end) {
+        if (this.$route.query.start === this.$route.query.end) {
+          return `${this.$dayjs(this.$route.query.start).format('DD/MM/YYYY')}`
+        }
         return `${this.$dayjs(this.$route.query.start).format('DD/MM/YYYY')} - ${this.$dayjs(
           this.$route.query.end
         ).format('DD/MM/YYYY')}`
@@ -103,14 +100,14 @@ export default defineNuxtComponent({
           ...this.$route.query,
           start: this.$dayjs(payload.start).format('YYYY-MM-DD'),
           end: this.$dayjs(payload.end).format('YYYY-MM-DD'),
-          date_type: 'ponctual', // 'ponctual' or 'recurring
+          // date_type: 'ponctual', // 'ponctual' or 'recurring
           page: undefined,
         },
       })
     },
-    onDateTypeChanged(dateType) {
-      this.addFilter('date_type', dateType)
-    },
+    // onDateTypeChanged(dateType) {
+    //   this.addFilter('date_type', dateType)
+    // },
     handleClickEffacer() {
       this.calendar.start = null
       this.calendar.end = null
@@ -119,7 +116,7 @@ export default defineNuxtComponent({
         query: {
           ...this.$route.query,
           start: undefined,
-          date_type: undefined,
+          // date_type: undefined,
           end: undefined,
           page: undefined,
         },

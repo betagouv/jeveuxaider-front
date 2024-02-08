@@ -24,25 +24,26 @@
     </button>
 
     <!-- Real input -->
-    <FacetSearch
-      v-else
-      ref="facetSearch"
-      v-model="searchValue"
-      placeholder="Ville ou code postal"
-      icon="RiMapPin2Fill"
-      :aria-labelledby="`label-search-${uuid}`"
-      @focus="isGeolocFilterActive = true"
-      @update:modelValue="handleInput"
-      @clear="fetchSuggestions = []"
-      @keydown.native.esc="handleCloseSuggestions"
-    />
+    <div v-else class="p-2">
+      <FacetSearch
+        ref="facetSearch"
+        v-model="searchValue"
+        placeholder="Ville ou code postal"
+        icon="RiMapPin2Fill"
+        :aria-labelledby="`label-search-${uuid}`"
+        @focus="isGeolocFilterActive = true"
+        @update:modelValue="handleInput"
+        @clear="fetchSuggestions = []"
+        @keydown.native.esc="handleCloseSuggestions"
+      />
+    </div>
 
     <transition
       enter-active-class="ease-out duration-200"
       enter-from-class="opacity-0"
       enter-to-class="opacity-100"
     >
-      <div v-if="isGeolocFilterActive" class="text-sm">
+      <div v-if="isGeolocFilterActive" class="text-sm px-2">
         <div class="max-h-[250px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mr-2">
           <div class="flex flex-col py-4">
             <!-- Seulement si geolocalisation par navigateur acceptée -->

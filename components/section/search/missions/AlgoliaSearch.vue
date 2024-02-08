@@ -152,7 +152,6 @@ export default defineNuxtComponent({
       'template_subtitle',
       'publics_volontaires',
       'publisher_name',
-      'date_type',
       'commitment',
     ]
     $stores.algoliaSearch.availableNumericFilters = ['commitment__total', 'is_autonomy']

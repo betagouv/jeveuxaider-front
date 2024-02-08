@@ -161,13 +161,21 @@ const getDateFilters = (start: any, end: any) => {
   const endDate = end ? dayjs(end).startOf('day') : startDate
 
   const daysArray = []
+  let dateType = 'ponctual'
   let day = dayjs(startDate)
   while (day.isBefore(endDate) || day.isSame(endDate)) {
     daysArray.push(day.unix())
     day = day.add(1, 'day')
   }
 
-  return `start_date<=${startDate.unix()} AND (end_date_no_creneaux>=${startDate.unix()} OR has_end_date=0 OR ${daysArray
+  // if start date and end date is more than 1 month
+  if (startDate.isBefore(endDate) && endDate.diff(startDate, 'month') >= 1) {
+    dateType = 'recurring'
+  }
+
+  console.log('dateType', dateType)
+
+  return `date_type:"${dateType}" AND start_date<=${startDate.unix()} AND (end_date_no_creneaux>=${startDate.unix()} OR has_end_date=0 OR ${daysArray
     .map((day) => `dates.timestamp=${day}`)
     .join(' OR ')})`
 }

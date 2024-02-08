@@ -1,7 +1,7 @@
 <template>
   <div class="relative z-1">
     <div class="lg:block bg-jva-blue-500">
-      <div class="container py-[32px] lg:pt-[104px] lg:pb-[124px] relative">
+      <div class="container py-[32px] lg:pt-[74px] lg:pb-[114px] relative">
         <h1 class="text-white font-bold">
           <span class="lg:hidden text-[28px]">Votre prochaine mission de bénévolat</span>
           <span class="hidden lg:inline text-[22px] lg:text-[40px]"
@@ -25,14 +25,14 @@
       <div
         ref="filters"
         :class="[
-          'z-20 lg:-translate-y-1/2',
-          { 'bg-white shadow-lg sticky top-[-1px] lg:top-[63px]': isPinned },
+          'relative z-20 lg:-translate-y-1/2',
+          { 'bg-white sticky lg:shadow-xl top-[-1px] lg:top-[63px]': isPinned },
           { 'lg:container ': !isPinned },
         ]"
       >
         <div
           :class="[
-            'flex flex-col lg:flex-row items-center bg-white relative',
+            'flex flex-col lg:flex-row items-center bg-white relative shadow-xl lg:shadow-none',
             { 'lg:container ': isPinned },
             { '': !isPinned },
           ]"
@@ -51,7 +51,7 @@
               <div class="text-[#3A3A3A]">À proximité de</div>
               <LocalisationFilter label="Localisation" class="lg:max-w-[200px]" />
             </div>
-            <div class="px-2 lg:hidden"><LocalisationMobileFilter class="text-[#000000]" /></div>
+            <div class="px-2 lg:hidden"><LocalisationMobileFilter /></div>
           </div>
         </div>
       </div>
@@ -61,7 +61,6 @@
           :search-parameters="searchParamsPresentiel"
           :redirect-parameters="{
             type: 'Mission en présentiel',
-            date_type: 'ponctual',
           }"
         />
       </div>
@@ -76,7 +75,6 @@
           :search-parameters="searchParamsDistance"
           :redirect-parameters="{
             type: 'Mission à distance',
-            date_type: 'ponctual',
           }"
         />
       </div>
@@ -124,11 +122,6 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    // creneauxFilters() {
-    //   const timestamp = this.$dayjs(this.selectedDate).unix()
-    //   const query = `dates.timestamp=${timestamp}`
-    //   return `${query} AND commitment__total<=4 AND date_type:"ponctual"`
-    // },
     commonFilters() {
       const timestamp = this.$dayjs(this.selectedDate).unix()
       const query = `start_date<=${timestamp} AND (end_date_no_creneaux>=${timestamp} OR has_end_date=0 OR dates.timestamp=${timestamp})`
@@ -141,7 +134,7 @@ export default defineNuxtComponent({
         filters: `${this.commonFilters} AND type:"Mission en présentiel"`,
         aroundLatLngViaIP: true,
         aroundLatLng: this.$route.query.aroundLatLng,
-        aroundRadius: 'all',
+        aroundRadius: 20000,
       }
     },
     searchParamsDistance() {
@@ -170,7 +163,7 @@ export default defineNuxtComponent({
     async scrollToTop() {
       await this.$nextTick()
       this.$scrollTo('#missions-presentiel', 300, {
-        offset: this.$mq.current === 'xl' ? -200 : -175,
+        offset: this.$mq.current === 'xl' ? -190 : -190,
       })
     },
     onChangedSelectedDate(date) {
@@ -179,6 +172,7 @@ export default defineNuxtComponent({
         query: {
           ...this.$route.query,
           start: this.$dayjs(date).format('YYYY-MM-DD'),
+          end: this.$dayjs(date).format('YYYY-MM-DD'),
           page: undefined,
         },
       })

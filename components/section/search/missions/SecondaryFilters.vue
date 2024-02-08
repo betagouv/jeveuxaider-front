@@ -32,6 +32,24 @@
           </template>
         </FacetFilterToggle>
 
+        <DatesFilter v-if="filter === 'dates'">
+          <template #button="{ activeValue, isOpen }">
+            <DsfrTag
+              :is-active="!!activeValue"
+              context="clickable"
+              size="md"
+              as="button"
+              :aria-expanded="isOpen || 'false'"
+            >
+              <span v-if="!activeValue">Dates</span>
+              <div v-else>
+                <span class="max-w-[170px] truncate">{{ activeValue }}</span>
+              </div>
+            </DsfrTag>
+          </template>
+        </DatesFilter>
+
+        <!--
         <FacetFilterToggle
           v-if="filter === 'commitment'"
           :key="i"
@@ -62,54 +80,7 @@
               </div>
             </DsfrTag>
           </template>
-        </FacetFilterToggle>
-
-        <RadiosFilter
-          v-if="filter === 'commitment'"
-          :key="i"
-          name="commitment__total"
-          legend="Durée d'engagement"
-          :options="[
-            { key: '<=4', label: 'Quelques heures' },
-            { key: '<=21', label: 'Quelques jours' },
-            { key: '<=208', label: 'Quelques heures par semaine' },
-            { key: '<=1092', label: 'Quelques jours par semaine' },
-            { key: '<=48', label: 'Quelques heures par mois' },
-            { key: '<=252', label: 'Quelques jours par mois' },
-          ]"
-        >
-          <template #button="{ activeValue, isOpen }">
-            <DsfrTag
-              :is-active="!!activeValue"
-              context="clickable"
-              size="md"
-              as="button"
-              :aria-expanded="isOpen || 'false'"
-            >
-              <span v-if="!activeValue">Durée</span>
-              <div v-else>
-                <span class="max-w-[170px] truncate">{{ activeValue }}</span>
-              </div>
-            </DsfrTag>
-          </template>
-        </RadiosFilter>
-
-        <CommitmentFilter v-if="filter === 'commitment'" :key="i">
-          <template #button="{ activeValue, isOpen }">
-            <DsfrTag
-              :is-active="!!activeValue"
-              context="clickable"
-              size="md"
-              as="button"
-              :aria-expanded="isOpen || 'false'"
-            >
-              <span v-if="!activeValue">Durée</span>
-              <div v-else>
-                <span class="max-w-[170px] truncate">{{ activeValue }}</span>
-              </div>
-            </DsfrTag>
-          </template>
-        </CommitmentFilter>
+        </FacetFilterToggle> -->
 
         <FacetFilterToggle
           v-if="filter === 'structure.name'"
@@ -338,6 +309,7 @@ import MinorsFilter from '@/components/section/search/MinorsFilter.vue'
 import PonctualFilter from '@/components/section/search/PonctualFilter.vue'
 import CommitmentFilter from '@/components/section/search/CommitmentFilter.vue'
 import RadiosFilter from '@/components/section/search/RadiosFilter.vue'
+import DatesFilter from '@/components/section/search/DatesFilter.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -347,6 +319,7 @@ export default defineNuxtComponent({
     PonctualFilter,
     CommitmentFilter,
     RadiosFilter,
+    DatesFilter,
   },
   props: {
     filtersName: {
@@ -381,13 +354,13 @@ export default defineNuxtComponent({
         }
       }
 
-      const dateTypes = this.$route.query?.date_type?.split('|')
-      if (dateTypes?.includes('ponctual')) {
-        filters.push('is_ponctual')
-        if (dateTypes.length === 1) {
-          filters = filters.filter((f) => f !== 'date_type')
-        }
-      }
+      // const dateTypes = this.$route.query?.date_type?.split('|')
+      // if (dateTypes?.includes('ponctual')) {
+      //   filters.push('is_ponctual')
+      //   if (dateTypes.length === 1) {
+      //     filters = filters.filter((f) => f !== 'date_type')
+      //   }
+      // }
       return filters || []
     },
     inactiveFilters() {
@@ -398,12 +371,7 @@ export default defineNuxtComponent({
         return this.filtersName
       }
 
-      const visibleFilters =
-        this.$route.query?.type === 'Mission à distance'
-          ? this.filtersName
-              .filter((f) => !['is_autonomy', 'department_name'].includes(f))
-              .slice(0, 3)
-          : this.filtersName.slice(0, 3)
+      const visibleFilters = this.filtersName.filter((f) => ['dates', 'structure.name'].includes(f))
 
       this.activeFilters.forEach((f) => {
         if (!visibleFilters.includes(f)) {
@@ -411,8 +379,8 @@ export default defineNuxtComponent({
         }
       })
 
-      if (this.activeFilters.length && visibleFilters.length < 4) {
-        visibleFilters.push(...this.inactiveFilters.slice(0, 4 - this.activeFilters.length))
+      if (this.activeFilters.length && visibleFilters.length < 2) {
+        visibleFilters.push(...this.inactiveFilters.slice(0, 2 - this.activeFilters.length))
       }
 
       return visibleFilters

@@ -14,8 +14,8 @@
           "
           @click.native="handleClickCard(mission)"
         >
-          <CardMissionFull v-if="['lg', 'xl'].includes($mq.current)" :mission="mission" />
-          <CardMission v-else :mission="mission" />
+          <CardMission class="lg:hidden flex" :mission="mission" />
+          <CardMissionFull class="hidden lg:flex" :mission="mission" />
         </nuxt-link>
         <div class="flex justify-center mt-6">
           <DsfrButton

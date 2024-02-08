@@ -3,12 +3,12 @@
     <AlgoliaSearch
       id="recherche"
       :secondary-filters="[
-        'date_type',
+        'dates',
         'commitment',
         'structure.name',
-        'is_autonomy',
         'publics_beneficiaires',
         'is_minors',
+        'is_autonomy',
         'tags',
         'domaines',
         'structure.reseaux.name',

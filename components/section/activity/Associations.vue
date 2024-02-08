@@ -21,7 +21,7 @@
               </p>
             </h2>
 
-            <div class="mt-12 grid grid-cols-2 gap-8">
+            <div v-if="activity?.promoted_organisations" class="mt-12 grid grid-cols-2 gap-8">
               <NuxtImg
                 :ref="`media-${media.id}`"
                 v-for="media in activity.promoted_organisations"
