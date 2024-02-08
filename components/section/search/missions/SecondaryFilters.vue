@@ -49,6 +49,23 @@
           </template>
         </DatesFilter>
 
+        <SecondarySearchFilter>
+          <template #button="{ activeValue, isOpen }">
+            <DsfrTag
+              :is-active="!!activeValue"
+              context="clickable"
+              size="md"
+              as="button"
+              :aria-expanded="isOpen || 'false'"
+            >
+              <span v-if="!activeValue">Mots clés</span>
+              <div v-else>
+                <span class="max-w-[170px] truncate">{{ activeValue }}</span>
+              </div>
+            </DsfrTag>
+          </template>
+        </SecondarySearchFilter>
+
         <!--
         <FacetFilterToggle
           v-if="filter === 'commitment'"
@@ -310,6 +327,7 @@ import PonctualFilter from '@/components/section/search/PonctualFilter.vue'
 import CommitmentFilter from '@/components/section/search/CommitmentFilter.vue'
 import RadiosFilter from '@/components/section/search/RadiosFilter.vue'
 import DatesFilter from '@/components/section/search/DatesFilter.vue'
+import SecondarySearchFilter from '@/components/search/SecondarySearchFilter.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -320,6 +338,7 @@ export default defineNuxtComponent({
     CommitmentFilter,
     RadiosFilter,
     DatesFilter,
+    SecondarySearchFilter,
   },
   props: {
     filtersName: {
@@ -371,7 +390,9 @@ export default defineNuxtComponent({
         return this.filtersName
       }
 
-      const visibleFilters = this.filtersName.filter((f) => ['dates', 'structure.name'].includes(f))
+      const visibleFilters = this.filtersName.filter((f) =>
+        ['search', 'structure.name'].includes(f)
+      )
 
       this.activeFilters.forEach((f) => {
         if (!visibleFilters.includes(f)) {
