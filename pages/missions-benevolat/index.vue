@@ -3,7 +3,7 @@
     <AlgoliaSearch
       id="recherche"
       :secondary-filters="[
-        'dates',
+        'search',
         'commitment',
         'structure.name',
         'publics_beneficiaires',

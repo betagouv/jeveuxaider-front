@@ -90,9 +90,6 @@ export default defineNuxtComponent({
   },
   methods: {
     handleInput(value) {
-      console.log('handleInput', value)
-      // this.searchTerm = value
-      // this.showOptions = true
       if (this.timeout) {
         this.timeout.cancel()
       }

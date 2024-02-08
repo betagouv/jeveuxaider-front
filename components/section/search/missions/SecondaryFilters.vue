@@ -49,7 +49,7 @@
           </template>
         </DatesFilter>
 
-        <SecondarySearchFilter>
+        <SecondarySearchFilter v-if="filter === 'search'">
           <template #button="{ activeValue, isOpen }">
             <DsfrTag
               :is-active="!!activeValue"
