@@ -4,14 +4,26 @@
       <div class="font-bold">Filtres de recherche</div>
     </template>
 
+    <FacetFilter
+      show-more
+      facet-name="commitment"
+      label="Disponibilités"
+      :show-more-limit="3"
+      :facets="$stores.algoliaSearch.facetResults('commitment')"
+      legend="Filtrer par disponibilité"
+      :facet-value-resolver="{
+        few_hours: 'Quelques heures',
+        few_days: 'Quelques jours',
+        few_hours_a_week: 'Quelques heures par semaine',
+        few_days_a_week: 'Quelques jours par semaine',
+        few_hours_a_month: 'Quelques heures par mois',
+        few_days_a_month: 'Quelques jours par mois',
+      }"
+    />
+
     <div class="space-y-2">
       <div class="relative font-medium text-[15px]">Dates</div>
       <DatesMobileFilter />
-    </div>
-
-    <div class="space-y-2">
-      <div class="relative font-medium text-[15px]">Disponibilités</div>
-      <CommitmentMobileFilter />
     </div>
 
     <FacetFilter
