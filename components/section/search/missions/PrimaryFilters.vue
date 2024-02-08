@@ -67,6 +67,31 @@
             </FacetFilterToggle>
           </div>
 
+          <div :class="[spacingClasses, 'border-l lg:border-l-0 hidden xl:block']">
+            <div class="text-[#7B7B7B] mb-1">Dates</div>
+            <DatesFilter>
+              <template #button="{ activeValue }">
+                <div class="flex space-x-2 items-center justify-between group w-full">
+                  <div class="flex space-x-2 items-center truncate">
+                    <RiCalendarEventFill
+                      class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none"
+                    />
+                    <div
+                      :class="[
+                        'truncate',
+                        { 'font-bold': activeValue },
+                        { 'italic pr-[1px] text-[#888888]': !activeValue },
+                      ]"
+                    >
+                      {{ activeValue || 'Toutes' }}
+                    </div>
+                  </div>
+                  <RiArrowDownSLine class="text-[#7B7B7B] h-4 w-4 group-hover:text-gray-900" />
+                </div>
+              </template>
+            </DatesFilter>
+          </div>
+
           <div :class="[spacingClasses, 'border-l lg:border-l-0']">
             <div class="text-[#7B7B7B] mb-1">Disponibilités</div>
             <FacetFilterToggle
@@ -115,31 +140,6 @@
                 </div>
               </template>
             </FacetFilterToggle>
-          </div>
-
-          <div :class="[spacingClasses, 'border-l lg:border-l-0 hidden xl:block']">
-            <div class="text-[#7B7B7B] mb-1">Dates</div>
-            <DatesFilter>
-              <template #button="{ activeValue }">
-                <div class="flex space-x-2 items-center justify-between group w-full">
-                  <div class="flex space-x-2 items-center truncate">
-                    <RiCalendarEventFill
-                      class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none"
-                    />
-                    <div
-                      :class="[
-                        'truncate',
-                        { 'font-bold': activeValue },
-                        { 'italic pr-[1px] text-[#888888]': !activeValue },
-                      ]"
-                    >
-                      {{ activeValue || 'Toutes' }}
-                    </div>
-                  </div>
-                  <RiArrowDownSLine class="text-[#7B7B7B] h-4 w-4 group-hover:text-gray-900" />
-                </div>
-              </template>
-            </DatesFilter>
           </div>
 
           <!-- <div :class="[spacingClasses, 'hidden xl:block']">
