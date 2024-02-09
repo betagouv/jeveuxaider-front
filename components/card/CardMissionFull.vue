@@ -1,14 +1,15 @@
 <template>
   <div class="card--mission flex gap-8 w-full">
     <div class="border bg-white w-[180px] px-6 py-8 border-b-4 border-b-[#3A3A3A] text-center">
-      <div v-if="mission.structure.logo" class="h-[65px] max-w-[100px] m-auto mb-6">
-        <NuxtImg
-          :src="mission.structure.logo.urls.large"
-          :srcset="mission.structure.logo.urls.large"
-          :alt="mission.structure.name"
-          class="object-contain h-full w-full"
-        />
-      </div>
+      <NuxtImg
+        v-if="mission.structure.logo"
+        ref="logo"
+        :src="mission.structure.logo.urls.large"
+        :srcset="mission.structure.logo.urls.large"
+        :alt="mission.structure.name"
+        class="h-[65px] max-w-[100px] m-auto mb-6"
+        @error="onLogoError"
+      />
 
       <div class="font-bold mb-4 line-clamp-3">{{ mission.structure.name }}</div>
 
@@ -137,6 +138,10 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    onLogoError() {
+      console.log('onLogoError')
+      this.$refs.logo.$el.remove()
+    },
     onImgError() {
       this.$refs.thumbnail.$el.srcset =
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'

@@ -90,7 +90,6 @@ const getSearchParameters = () => {
 const recomputeFilters = (query = null) => {
   const route = useRoute()
   const algoliaSearchStore = useAlgoliaSearchStore()
-  console.log('recomputeFilters query dfgdfgdgf', query)
   const queries = query || route.query
 
   if (queries?.start || queries?.end) {
