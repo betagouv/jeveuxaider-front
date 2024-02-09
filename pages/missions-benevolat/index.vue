@@ -16,6 +16,7 @@
         'department_name',
         'template_subtitle',
         'publisher_name',
+        'date_type',
       ]"
       :with-slideshow-remote="true"
       class="pt-2 sm:pt-6"

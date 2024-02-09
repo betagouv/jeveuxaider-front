@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-8 w-full">
+  <div class="card--mission flex gap-8 w-full">
     <div class="border bg-white w-[180px] px-6 py-8 border-b-4 border-b-[#3A3A3A] text-center">
       <div v-if="mission.structure.logo" class="h-[65px] max-w-[100px] m-auto mb-6">
         <NuxtImg
@@ -7,7 +7,6 @@
           :srcset="mission.structure.logo.urls.large"
           :alt="mission.structure.name"
           class="object-contain h-full w-full"
-          @error="onImgError"
         />
       </div>
 
@@ -28,7 +27,7 @@
       </div>
     </div>
     <div class="lg:flex-1 flex border h-[330px] lg:h-[300px]">
-      <div class="relative w-[398px] h-full">
+      <div class="thumbnail--wrapper relative w-[398px] h-full">
         <NuxtImg
           ref="thumbnail"
           v-if="thumbnail && domainId"
@@ -41,7 +40,7 @@
           loading="lazy"
           @error="onImgError"
         />
-        <div class="absolute top-4 left-4 flex flex-wrap gap-4 w-[398px] pr-8">
+        <div class="absolute top-4 left-4 flex flex-wrap gap-2 w-[398px] pr-8">
           <DsfrBadge
             v-if="isIdealPourDebuter"
             size="sm"
@@ -145,3 +144,25 @@ export default defineNuxtComponent({
   },
 })
 </script>
+
+<style lang="postcss" scoped>
+.card--mission {
+  /* box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.05); */
+  @apply transition;
+  @screen sm {
+    &:hover {
+      .thumbnail--wrapper img {
+        transform: scale(1.05);
+      }
+      /* @apply shadow-xl; */
+    }
+  }
+}
+
+.thumbnail--wrapper {
+  @apply bg-gray-200 overflow-hidden;
+  img {
+    transition: all 0.25s;
+  }
+}
+</style>

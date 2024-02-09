@@ -19,6 +19,7 @@ export const useAlgoliaMissionsQueryBuilder = () => {
     search: async () => {
       algoliaSearchStore.searchParameters = getSearchParameters()
       algoliaSearchStore.activeFacets = getActiveFacets()
+      // @todo: possible de recompute filter ici une seule fois au lieu de 2 (setup et watch) ?
       await search()
     },
     onNavigatorGeolocation: async (data: any) => {
@@ -40,6 +41,7 @@ export const useAlgoliaMissionsQueryBuilder = () => {
     deleteAllFilters: () => deleteAllFilters(),
     isActiveFilter: (name: string, value: any) => isActiveFilter(name, value),
     hasActiveFilters: () => hasActiveFilters(),
+    recomputeFilters: (query?: any) => recomputeFilters(query),
   }
 }
 
@@ -79,18 +81,20 @@ const getSearchParameters = () => {
     page: route.query.page ? Number(route.query.page) - 1 : 0,
     facetFilters: getActiveFacets(),
     facets: ['*'],
-    filters: recomputeFilters(),
+    filters: algoliaSearchStore.filters,
     numericFilters: getActiveNumericFilters(),
     hitsPerPage: algoliaSearchStore?.hitsPerPage ?? 18,
   }
 }
 
-const recomputeFilters = () => {
+const recomputeFilters = (query = null) => {
   const route = useRoute()
   const algoliaSearchStore = useAlgoliaSearchStore()
+  console.log('recomputeFilters query dfgdfgdgf', query)
+  const queries = query || route.query
 
-  if (route.query.start || route.query.end) {
-    const dateFilters = getDateFilters(route.query.start, route.query.end)
+  if (queries?.start || queries?.end) {
+    const dateFilters = getDateFilters(queries?.start, queries?.end)
     return algoliaSearchStore.initialFilters
       ? `${algoliaSearchStore.initialFilters} AND ${dateFilters}`
       : dateFilters
@@ -172,8 +176,6 @@ const getDateFilters = (start: any, end: any) => {
   if (startDate.isBefore(endDate) && endDate.diff(startDate, 'month') >= 1) {
     dateType = 'recurring'
   }
-
-  console.log('dateType', dateType)
 
   return `date_type:"${dateType}" AND start_date<=${startDate.unix()} AND (end_date_no_creneaux>=${startDate.unix()} OR has_end_date=0 OR ${daysArray
     .map((day) => `dates.timestamp=${day}`)

@@ -128,12 +128,14 @@ export default defineNuxtComponent({
       if (newVal.name !== oldVal.name) {
         return
       }
+      this.$stores.algoliaSearch.filters = this.recomputeFilters(newVal)
       await this.search()
       this.handleNavigatorGeolocation()
     },
   },
   async setup(props) {
     const { $stores } = useNuxtApp()
+    const { recomputeFilters } = useAlgoliaMissionsQueryBuilder()
     const runtimeConfig = useRuntimeConfig()
     const route = useRoute()
 
@@ -157,6 +159,8 @@ export default defineNuxtComponent({
     ]
     $stores.algoliaSearch.availableNumericFilters = ['commitment__total', 'is_autonomy']
     $stores.algoliaSearch.initialFilters = props.initialFilters
+    $stores.algoliaSearch.filters = recomputeFilters()
+
     if (props.initialHitsPerPage) {
       $stores.algoliaSearch.hitsPerPage = props.initialHitsPerPage
     }
@@ -174,6 +178,7 @@ export default defineNuxtComponent({
       deleteAllFilters,
       onNavigatorGeolocation,
       onNavigatorGeolocationError,
+      recomputeFilters,
     }
   },
   mounted() {

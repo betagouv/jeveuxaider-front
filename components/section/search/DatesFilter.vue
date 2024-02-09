@@ -85,12 +85,12 @@ export default defineNuxtComponent({
     },
   },
   watch: {
-    // '$route.query.date_type'(newVal) {
-    //   this.dateType = newVal
-    // },
-    // '$route.query.duration'(newVal) {
-    //   this.commitment__duration = newVal
-    // },
+    '$route.query.start'(newVal) {
+      this.calendar.start = newVal
+    },
+    '$route.query.end'(newVal) {
+      this.calendar.end = newVal
+    },
   },
   methods: {
     onDayclick(payload) {

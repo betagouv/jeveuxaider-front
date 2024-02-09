@@ -49,7 +49,7 @@
         </div>
       </template>
       <template v-else>
-        <div class="absolute top-4 left-4 flex flex-wrap gap-4 w-[318px] pr-8">
+        <div class="absolute top-4 left-4 flex flex-wrap gap-2 w-[318px] pr-8">
           <DsfrBadge
             v-if="isIdealPourDebuter"
             size="sm"
