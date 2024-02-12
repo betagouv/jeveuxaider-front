@@ -55,6 +55,19 @@
               classWrapper="space-y-4"
             />
           </BaseFormControl>
+          <BaseFormControl html-for="content" label="Précisions">
+            <BaseTextarea
+              v-model="reasonMessage"
+              name="content"
+              placeholder="Plus d'explications si nécéssaire"
+            />
+            <template #description>
+              <p class="text-sm text-gray-600 mt-2">
+                Le message sera envoyé au responsable de la mission
+              </p>
+              <p></p
+            ></template>
+          </BaseFormControl>
         </div>
         <div v-else-if="step == 'waiting_response'" class="space-y-3">
           <div>On espère que vous pourrez bientôt réaliser votre mission !</div>
@@ -64,10 +77,23 @@
           </div>
         </div>
         <div v-else-if="step == 'has_cancel_participation'" class="space-y-3">
-          <div>Texte à prévoir</div>
+          <div>On espère que vous trouverez rapidement une mission qui vous correspond 🤞🏻</div>
+          <div>
+            Si vous souhaitez qu’on vous envoie des missions personnalisées, n’hésitez pas à mettre
+            à jour votre profil.
+          </div>
         </div>
 
         <template #footer>
+          <BaseButton
+            v-if="step == 'form_has_participate' || step == 'form_confirm_cancel_participation'"
+            :disabled="loading"
+            class="mr-3"
+            variant="white"
+            @click.native="$emit('cancel')"
+          >
+            Retour
+          </BaseButton>
           <BaseButton
             v-if="step == 'form_has_participate'"
             :loading="loading"
@@ -108,8 +134,12 @@ export default defineNuxtComponent({
       step: 'form_has_participate', // wiating_response, has_confirm_participation, form_confirm_cancel_participation, has_cancel_participation
       has_participate: null,
       cancelReason: null,
+      reasonMessage: null,
       errors: [],
     }
+  },
+  mounted() {
+    this.$plausible.trackEvent('Validation bénévole - Opened')
   },
   methods: {
     getFieldError(field) {
@@ -137,6 +167,7 @@ export default defineNuxtComponent({
         case 'not_yet':
           this.modalTitle = '🤞 Merci pour votre réponse'
           this.step = 'waiting_response'
+          this.$plausible.trackEvent('Validation bénévole - CTA - Non pas encore')
           break
       }
     },
@@ -149,6 +180,7 @@ export default defineNuxtComponent({
           this.loading = false
           this.step = 'has_confirm_participation'
           this.modalTitle = '✅ Votre participation est confirmée'
+          this.$plausible.trackEvent('Validation bénévole - CTA - Oui')
           this.$emit('updated')
         })
         .catch(() => (this.loading = false))
@@ -169,6 +201,7 @@ export default defineNuxtComponent({
         method: 'PUT',
         body: {
           reason: this.cancelReason,
+          content: this.reasonMessage,
         },
       })
         .then(() => {
@@ -176,6 +209,7 @@ export default defineNuxtComponent({
           this.step = 'has_cancel_participation'
           this.modalTitle = '❌ Votre participation est annulée'
           this.$emit('updated')
+          this.$plausible.trackEvent('Validation bénévole - CTA - Non annulation')
         })
         .catch(() => (this.loading = false))
     },
