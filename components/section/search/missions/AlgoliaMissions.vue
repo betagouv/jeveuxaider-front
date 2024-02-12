@@ -73,7 +73,13 @@ export default defineNuxtComponent({
   },
   async setup(props) {
     const { $algolia } = useNuxtApp()
-    const response = await $algolia[props.indexKey].search('', props.searchParameters)
+    const requestOptions = props.searchParameters
+    if ($algolia.xForwardedFor) {
+      requestOptions.headers = {
+        'X-Forwarded-For': $algolia.xForwardedFor,
+      }
+    }
+    const response = await $algolia[props.indexKey].search('', requestOptions)
     return {
       missions: toRef(response.hits),
       nbHits: toRef(response.nbHits),
