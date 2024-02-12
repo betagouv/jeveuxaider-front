@@ -20,6 +20,7 @@
           <FacetSearch
             ref="keywordsSearch"
             v-model="searchValue"
+            placeholder="Rechercher par mots clés..."
             :aria-labelledby="`label-search`"
             @update:modelValue="handleInput"
             @clear="showSearch = false"

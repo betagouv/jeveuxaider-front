@@ -2,91 +2,26 @@
   <div class="flex flex-wrap items-center gap-4">
     <template v-if="mission.dates">
       <template v-if="nextDates.length > 4">
-        <div
+        <CustomDateDisplay
           v-for="(date, i) in nextDates.slice(0, 3)"
           :key="i"
-          class="flex flex-col items-center justify-center border w-[65px] h-[65px]"
-        >
-          <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
-            {{ $dayjs.unix(date.timestamp).format('DD') }}
-          </div>
-          <div class="text-sm leading-[20px] text-[#666666]">
-            {{ $dayjs.unix(date.timestamp).format('MMM') }}
-          </div>
-          <div class="text-xs leading-[14px] text-[#666666]">
-            {{ $dayjs.unix(date.timestamp).format('YYYY') }}
-          </div>
-        </div>
+          :unix-date="date.timestamp"
+        />
         <div v-if="nextDates.length > 4" class="text-gray-400 text-2xl">⇢</div>
-        <div class="flex flex-col items-center justify-center border w-[65px] h-[65px]">
-          <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
-            {{ $dayjs.unix(nextDates[nextDates.length - 1].timestamp).format('DD') }}
-          </div>
-          <div class="text-sm leading-[20px] text-[#666666]">
-            {{ $dayjs.unix(nextDates[nextDates.length - 1].timestamp).format('MMM') }}
-          </div>
-          <div class="text-xs leading-[14px] text-[#666666]">
-            {{ $dayjs.unix(nextDates[nextDates.length - 1].timestamp).format('YYYY') }}
-          </div>
-        </div>
+        <CustomDateDisplay :unix-date="nextDates[nextDates.length - 1].timestamp" />
       </template>
       <template v-else>
-        <div
-          v-for="(date, i) in nextDates"
-          :key="i"
-          class="flex flex-col items-center justify-center border w-[65px] h-[65px]"
-        >
-          <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
-            {{ $dayjs.unix(date.timestamp).format('DD') }}
-          </div>
-          <div class="text-sm leading-[20px] text-[#666666]">
-            {{ $dayjs.unix(date.timestamp).format('MMM') }}
-          </div>
-          <div class="text-xs leading-[14px] text-[#666666]">
-            {{ $dayjs.unix(date.timestamp).format('YYYY') }}
-          </div>
-        </div>
+        <CustomDateDisplay v-for="(date, i) in nextDates" :key="i" :unix-date="date.timestamp" />
       </template>
     </template>
     <template v-else>
-      <div
-        v-if="mission.start_date"
-        class="flex flex-col items-center justify-center border w-[65px] h-[65px]"
-      >
-        <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
-          {{ $dayjs.unix(firstDate).format('DD') }}
-        </div>
-        <div class="text-sm leading-[20px] text-[#666666]">
-          {{ $dayjs.unix(firstDate).format('MMM') }}
-        </div>
-        <div class="text-xs leading-[14px] text-[#666666]">
-          {{ $dayjs.unix(firstDate).format('YYYY') }}
-        </div>
-      </div>
+      <CustomDateDisplay v-if="mission.start_date" :unix-date="firstUnixDate" />
+      <template v-if="showIntermediateDate">
+        <div class="text-gray-400 text-2xl">⇢</div>
+        <CustomDateDisplay :unix-date="$dayjs(selectedDate).unix()" />
+      </template>
       <div class="text-gray-400 text-2xl">⇢</div>
-      <div class="flex flex-col items-center justify-center border w-[65px] h-[65px]">
-        <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
-          {{
-            mission.end_date
-              ? $dayjs.unix(mission.end_date).format('DD')
-              : $dayjs.unix(lastDayOfYear).format('DD')
-          }}
-        </div>
-        <div class="text-sm leading-[20px] text-[#666666]">
-          {{
-            mission.end_date
-              ? $dayjs.unix(mission.end_date).format('MMM')
-              : $dayjs.unix(lastDayOfYear).format('MMM')
-          }}
-        </div>
-        <div class="text-xs leading-[14px] text-[#666666]">
-          {{
-            mission.end_date
-              ? $dayjs.unix(mission.end_date).format('YYYY')
-              : $dayjs.unix(lastDayOfYear).format('YYYY')
-          }}
-        </div>
-      </div>
+      <CustomDateDisplay :unix-date="lastUnixDate" />
     </template>
   </div>
 </template>
@@ -102,17 +37,40 @@ export default defineNuxtComponent({
       required: true,
     },
   },
+  data() {
+    return {
+      selectedDate: this.$route.query?.start ?? this.$dayjs().format('YYYY-MM-DD'),
+    }
+  },
+  watch: {
+    '$route.query.start': {
+      handler(newVal) {
+        this.selectedDate = newVal
+      },
+    },
+  },
   computed: {
-    firstDate() {
-      // if start date before current day, pick current day
+    firstUnixDate() {
+      if (this.$dayjs(this.selectedDate).isBefore(this.$dayjs())) {
+        return this.$dayjs(this.selectedDate).unix()
+      }
+
       if (this.mission.start_date < this.$dayjs().unix()) {
         return this.$dayjs().unix()
       }
-
       return this.mission.start_date
     },
-    lastDayOfYear() {
-      return this.$dayjs().endOf('year').unix()
+    lastUnixDate() {
+      if (!this.mission.end_date) {
+        return this.$dayjs().endOf('year').unix()
+      }
+      return this.mission.end_date
+    },
+    showIntermediateDate() {
+      if (this.selectedDate && this.firstUnixDate !== this.$dayjs(this.selectedDate).unix()) {
+        return true
+      }
+      return false
     },
   },
 })

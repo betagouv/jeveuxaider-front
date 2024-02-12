@@ -139,7 +139,6 @@ export default defineNuxtComponent({
   },
   methods: {
     onLogoError() {
-      console.log('onLogoError')
       this.$refs.logo.$el.remove()
     },
     onImgError() {

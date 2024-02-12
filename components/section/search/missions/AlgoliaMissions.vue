@@ -95,10 +95,7 @@ export default defineNuxtComponent({
       this.$plausible.trackEvent('En ce moment - Plus de missions', {
         props: {
           isLogged: this.$stores.auth.isLogged,
-          isFromApi: item.provider === 'api_engagement',
-          isRegistrationOpen: item.is_registration_open,
-          hasPlacesLeft: item.has_places_left,
-          isOutdated: item.is_outdated,
+          ...this.redirectParameters,
         },
       })
       this.$router.push({
@@ -115,6 +112,7 @@ export default defineNuxtComponent({
     async handleClickCard(item) {
       this.$plausible.trackEvent('En ce moment - Card Missions - Liste résultat', {
         props: {
+          ...this.redirectParameters,
           isLogged: this.$stores.auth.isLogged,
           isFromApi: item.provider === 'api_engagement',
           isRegistrationOpen: item.is_registration_open,
