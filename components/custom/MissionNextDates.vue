@@ -1,5 +1,5 @@
 <template>
-  <div ref="nextDates" class="flex flex-wrap items-center gap-2 xl:gap-4">
+  <div ref="nextDates" class="flex flex-wrap items-center gap-1 xl:gap-2">
     <template v-if="mission.dates">
       <template v-if="nextDates.length > maxNbDaysToDisplay">
         <CustomDateDisplay
@@ -7,7 +7,7 @@
           :key="i"
           :unix-date="date.timestamp"
         />
-        <div v-if="nextDates.length > maxNbDaysToDisplay" class="text-gray-400 text-lg xl:text-2xl">
+        <div v-if="nextDates.length > maxNbDaysToDisplay" class="text-gray-400 text-lg xl:text-xl">
           ⇢
         </div>
         <CustomDateDisplay :unix-date="nextDates[nextDates.length - 1].timestamp" />
@@ -19,10 +19,10 @@
     <template v-else>
       <CustomDateDisplay v-if="mission.start_date" :unix-date="firstUnixDate" />
       <template v-if="showIntermediateDate">
-        <div class="text-gray-400 text-lg xl:text-2xl">⇢</div>
+        <div class="text-gray-400 text-lg xl:text-xl">⇢</div>
         <CustomDateDisplay :unix-date="$dayjs(selectedDate).unix()" />
       </template>
-      <div class="text-gray-400 text-lg xl:text-2xl">⇢</div>
+      <div class="text-gray-400 text-lg xl:text-xl">⇢</div>
       <CustomDateDisplay :unix-date="lastUnixDate" />
     </template>
   </div>

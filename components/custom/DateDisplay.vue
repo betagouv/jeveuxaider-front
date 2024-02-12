@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col items-center justify-center border w-[45px] h-[45px] xl:w-[65px] xl:h-[65px]"
+    class="flex flex-col items-center justify-center border w-[50px] h-[50px] xl:w-[65px] xl:h-[65px]"
   >
     <div class="text-base font-bold leading-[24px] text-[#3A3A3A]">
       {{ $dayjs.unix(unixDate).format('DD') }}
