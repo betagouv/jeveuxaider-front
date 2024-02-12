@@ -9,8 +9,8 @@
           class="flex min-w-0 transition"
           :to="
             mission.provider == 'api_engagement'
-              ? `/missions-benevolat/${mission.id}?origin=calendrier`
-              : `/missions-benevolat/${mission.id}/${mission.slug}?origin=calendrier`
+              ? `/missions-benevolat/${mission.id}?origin=${origin}`
+              : `/missions-benevolat/${mission.id}/${mission.slug}?origin=${origin}`
           "
           @click.native="handleClickCard(mission)"
         >
@@ -65,6 +65,10 @@ export default defineNuxtComponent({
     redirectParameters: {
       type: Object,
       default: () => {},
+    },
+    origin: {
+      type: String,
+      required: true,
     },
   },
   async setup(props) {
