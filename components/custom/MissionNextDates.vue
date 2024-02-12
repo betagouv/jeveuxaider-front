@@ -67,7 +67,11 @@ export default defineNuxtComponent({
       return this.mission.end_date
     },
     showIntermediateDate() {
-      if (this.selectedDate && this.firstUnixDate !== this.$dayjs(this.selectedDate).unix()) {
+      if (
+        this.selectedDate &&
+        this.firstUnixDate !== this.$dayjs(this.selectedDate).unix() &&
+        this.lastUnixDate !== this.$dayjs(this.selectedDate).unix()
+      ) {
         return true
       }
       return false
