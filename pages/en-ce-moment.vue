@@ -56,29 +56,33 @@
         </div>
       </div>
       <div id="missions-presentiel" class="container mt-12 mb-12 lg:mt-0 lg:mb-24">
-        <AlgoliaMissions
-          index-key="missionsReplicaCreneauxIndex"
-          :search-parameters="searchParamsPresentiel"
-          :redirect-parameters="{
-            type: 'Mission en présentiel',
-          }"
-          origin="calendrier"
-        />
+        <ClientOnly>
+          <AlgoliaMissions
+            index-key="missionsReplicaCreneauxIndex"
+            :search-parameters="searchParamsPresentiel"
+            :redirect-parameters="{
+              type: 'Mission en présentiel',
+            }"
+            origin="calendrier"
+          />
+        </ClientOnly>
       </div>
       <RestosDuCoeur />
       <div class="container my-12 lg:my-24">
         <DsfrHeading as="h3" size="2xl" class="tracking-[-.5px]">
           Vous pouvez aussi vous engager à distance
         </DsfrHeading>
-        <AlgoliaMissions
-          class="mt-12"
-          index-key="missionsReplicaCreneauxIndex"
-          :search-parameters="searchParamsDistance"
-          :redirect-parameters="{
-            type: 'Mission à distance',
-          }"
-          origin="calendrier"
-        />
+        <ClientOnly>
+          <AlgoliaMissions
+            class="mt-12"
+            index-key="missionsReplicaCreneauxIndex"
+            :search-parameters="searchParamsDistance"
+            :redirect-parameters="{
+              type: 'Mission à distance',
+            }"
+            origin="calendrier"
+          />
+        </ClientOnly>
       </div>
       <SectionSearchBlocFaq title="Vous avez des questions ?" />
       <SectionHomeBlocNewsletter />
