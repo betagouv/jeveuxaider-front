@@ -240,6 +240,10 @@ export default defineNuxtComponent({
         return
       }
 
+      if (this.$route.query?.start && this.$route.name === 'en-ce-moment') {
+        return `le ${this.$dayjs(this.$route.query?.start).format('D MMMM YYYY')}`
+      }
+
       const startDateObject =
         Number.isInteger(startDate) && this.$dayjs.unix(startDate).isValid()
           ? this.$dayjs.unix(startDate)
