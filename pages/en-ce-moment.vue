@@ -134,7 +134,7 @@ export default defineNuxtComponent({
         hitsPerPage: 6,
         aroundPrecision: 2000,
         filters: `${this.commonFilters} AND type:"Mission en présentiel"`,
-        aroundLatLngViaIP: false,
+        aroundLatLngViaIP: true,
         aroundLatLng: this.$route.query.aroundLatLng,
         aroundRadius: 20000,
       }
