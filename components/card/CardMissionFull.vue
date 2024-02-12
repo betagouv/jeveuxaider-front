@@ -7,7 +7,7 @@
         :src="mission.structure.logo.urls.large"
         :srcset="mission.structure.logo.urls.large"
         :alt="mission.structure.name"
-        class="h-[65px] max-w-[100px] m-auto mb-6"
+        class="h-auto max-h-[65px] max-w-[100px] m-auto mb-6"
         @error="onLogoError"
       />
 
