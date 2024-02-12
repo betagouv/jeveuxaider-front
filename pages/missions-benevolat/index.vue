@@ -3,17 +3,20 @@
     <AlgoliaSearch
       id="recherche"
       :secondary-filters="[
-        'is_autonomy',
-        'structure.name',
+        'search',
         'is_ponctual',
+        'commitment',
+        'structure.name',
         'publics_beneficiaires',
         'is_minors',
+        'is_autonomy',
         'tags',
         'domaines',
         'structure.reseaux.name',
         'department_name',
         'template_subtitle',
         'publisher_name',
+        'date_type',
       ]"
       :with-slideshow-remote="true"
       class="pt-2 sm:pt-6"

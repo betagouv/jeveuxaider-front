@@ -15,6 +15,9 @@ export default defineNuxtPlugin(({ ctx }) => {
   const config = useRuntimeConfig()
   const client = algoliasearch(config.public.algolia.appId, config.public.algolia.searchKey)
   const missionsIndex = client.initIndex(config.public.algolia.missionsIndex)
+  const missionsReplicaCreneauxIndex = client.initIndex(
+    config.public.algolia.missionsReplicaCreneauxIndex
+  )
   const termsIndex = client.initIndex(config.public.algolia.termsIndex)
   const organisationsIndex = client.initIndex(config.public.algolia.organisationsIndex)
 
@@ -23,6 +26,7 @@ export default defineNuxtPlugin(({ ctx }) => {
       algolia: {
         multipleQueries: client.multipleQueries,
         missionsIndex,
+        missionsReplicaCreneauxIndex,
         organisationsIndex,
         termsIndex,
         xForwardedFor,

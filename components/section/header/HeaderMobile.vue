@@ -24,14 +24,19 @@
             />
           </nuxt-link>
         </div>
-        <div class="flex space-x-2 text-jva-blue-500">
+        <div class="flex items-center space-x-4 text-jva-blue-500">
           <nuxt-link no-prefetch to="/missions-benevolat" aria-label="Recherche">
             <MagnifyingGlassIcon class="h-6 w-6" />
           </nuxt-link>
-          <button type="button" aria-haspopup="true" @click="showMobileMenu = !showMobileMenu">
+          <button
+            type="button"
+            aria-haspopup="true"
+            @click="showMobileMenu = !showMobileMenu"
+            class="border"
+          >
             <template v-if="!showMobileMenu">
               <span class="sr-only">Open main menu</span>
-              <Bars3Icon class="h-6 w-6" />
+              <Bars3Icon class="h-8 w-8" />
             </template>
 
             <template v-else>

@@ -37,6 +37,7 @@ export type TypeVocabulary =
   | 'rule_actions'
   | 'user_ban_reasons'
   | 'faq_tabs'
+  | 'commitment'
 
 type TypeLabels = {
   [Key in TypeVocabulary]: {
@@ -181,6 +182,14 @@ const labels: TypeLabels = {
     { key: '3_days', label: '3 jours' },
     { key: '4_days', label: '4 jours' },
     { key: '5_days', label: '5 jours' },
+  ],
+  commitment: [
+    { key: 'few_hours', label: 'Quelques heures' },
+    { key: 'few_days', label: 'Quelques jours' },
+    { key: 'few_hours_a_week', label: 'Quelques heures par semaine' },
+    { key: 'few_days_a_week', label: 'Quelques jours par semaine' },
+    { key: 'few_hours_a_month', label: 'Quelques heures par mois' },
+    { key: 'few_days_a_month', label: 'Quelques jours par mois' },
   ],
   geoType: [
     { key: 'housenumber', label: 'Adresse' },

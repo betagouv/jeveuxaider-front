@@ -41,7 +41,7 @@ const search = async () => {
           (facetFilter: string[]) => facetFilter[0].split(':')[0] != facetName
         ),
         facets: [facetName],
-        filters: algoliaSearchStore.initialFilters,
+        filters: algoliaSearchStore.filters,
       },
     })
   })

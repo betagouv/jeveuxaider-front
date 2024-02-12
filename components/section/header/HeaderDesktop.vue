@@ -252,6 +252,11 @@ export default defineNuxtComponent({
             isActive: this.isBenevolatADistanceActiveLink(),
           },
           {
+            name: '🔥 En ce moment',
+            to: '/en-ce-moment',
+            isActive: this.isActiveLink('/en-ce-moment'),
+          },
+          {
             name: 'Associations',
             to: '/organisations',
             isActive: this.isActiveLink('/organisations'),
@@ -444,6 +449,11 @@ export default defineNuxtComponent({
           name: 'Mes missions',
           to: '/profile/missions',
           isActive: this.isActiveLink('profile/missions'),
+        },
+        {
+          name: '🔥 En ce moment',
+          to: '/en-ce-moment',
+          isActive: this.isActiveLink('/en-ce-moment'),
         },
         // {
         //   name: 'Décembre Ensemble 🤲🏻',

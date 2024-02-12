@@ -82,6 +82,7 @@ export default defineNuxtComponent({
   data() {
     return {
       isPinned: false,
+      waitingOnAnimRequest: false,
     }
   },
   components: {
@@ -96,31 +97,24 @@ export default defineNuxtComponent({
     },
   },
   mounted() {
-    let timeout
-    window.addEventListener(
-      'scroll',
-      () => {
-        if (timeout) {
-          window.cancelAnimationFrame(timeout)
-        }
-        timeout = window.requestAnimationFrame(() => {
-          this.handleScroll()
-        })
-      },
-      false
-    )
+    window.addEventListener('scroll', this.handleScroll, false)
   },
-  unmounted() {
+  beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
   },
-
   methods: {
     handleScroll() {
-      if (!this.$refs.menuActions) {
-        return
+      if (!this.waitingOnAnimRequest) {
+        window.requestAnimationFrame(() => {
+          if (!this.$refs.menuActions) {
+            return
+          }
+          this.isPinned = this.$refs.menuActions.getBoundingClientRect().top <= 0
+          this.$emit('isPinned', this.isPinned)
+          this.waitingOnAnimRequest = false
+        })
       }
-      this.isPinned = this.$refs.menuActions.getBoundingClientRect().top <= 0
-      this.$emit('isPinned', this.isPinned)
+      this.waitingOnAnimRequest = true
     },
     handleDeleted() {
       this.$router.push('/admin/organisations')

@@ -80,7 +80,7 @@
                       class="pl-2 flex justify-between truncate flex-1 group-hover:text-jva-blue-500 cursor-pointer"
                     >
                       <div class="truncate">
-                        {{ facet.value }}
+                        {{ resolveFacetValue(facet.value) }}
                       </div>
                       <div class="text-gray-600 ml-1 font-light">
                         {{ facet.count }}
@@ -126,6 +126,7 @@ export default defineNuxtComponent({
     label: { type: String, required: true },
     optionsClass: { type: String, default: '' },
     legend: { type: String, default: null },
+    facetValueResolver: { type: Object, default: null },
   },
   setup() {
     const { isActiveFilter, deleteFilter, addFilter, searchForFacetValues } =
@@ -176,7 +177,7 @@ export default defineNuxtComponent({
       })
     },
     firstValueSelected() {
-      return this.$route.query[this.facetName]?.split('|')[0]
+      return this.resolveFacetValue(this.$route.query[this.facetName]?.split('|')[0])
     },
     activeValuesCount() {
       return this.$route.query[this.facetName]?.split('|').length
@@ -201,6 +202,9 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    resolveFacetValue(value) {
+      return this.facetValueResolver ? this.facetValueResolver[value] : value
+    },
     deleteFacet() {
       this.deleteFilter(this.facetName)
       this.isOpen = false

@@ -41,17 +41,6 @@
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <!-- <DsfrTag
-          :key="`toutes-${$route.fullPath}`"
-          as="button"
-          size="md"
-          context="selectable"
-          :is-active="!hasActiveFilters"
-          @click.native="deleteAllFilters"
-        >
-          Toutes
-        </DsfrTag> -->
-
         <DsfrTag
           :key="`published-${$route.fullPath}`"
           as="button"

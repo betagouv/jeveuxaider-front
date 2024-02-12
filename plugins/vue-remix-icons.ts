@@ -92,6 +92,7 @@ import RiTeamLine from 'vue-remix-icons/icons/ri-team-line.vue'
 import RiAddCircleLine from 'vue-remix-icons/icons/ri-add-circle-line.vue'
 import RiIndeterminateCircleLine from 'vue-remix-icons/icons/ri-indeterminate-circle-line.vue'
 import RiMapPinLine from 'vue-remix-icons/icons/ri-map-pin-line.vue'
+import RiMapPin2Line from 'vue-remix-icons/icons/ri-map-pin-2-line.vue'
 import RiUserFill from 'vue-remix-icons/icons/ri-user-fill.vue'
 import RiExpandUpDownLine from 'vue-remix-icons/icons/ri-expand-up-down-line.vue'
 import RiArrowUpSLine from 'vue-remix-icons/icons/ri-arrow-up-s-line.vue'
@@ -108,6 +109,7 @@ import RiSurveyLine from 'vue-remix-icons/icons/ri-survey-line.vue'
 import RiSaveLine from 'vue-remix-icons/icons/ri-save-line.vue'
 import RiTodoLine from 'vue-remix-icons/icons/ri-todo-line.vue'
 import RiFileDownloadLine from 'vue-remix-icons/icons/ri-file-download-line.vue'
+import RiTimeLine from 'vue-remix-icons/icons/ri-time-line.vue'
 import RiUserFollow from 'vue-remix-icons/icons/ri-user-follow-line.vue'
 import RiUserUnfollow from 'vue-remix-icons/icons/ri-user-unfollow-line.vue'
 import RiUserAdd from 'vue-remix-icons/icons/ri-user-add-line.vue'
@@ -116,6 +118,7 @@ import RiMailStar from 'vue-remix-icons/icons/ri-mail-star-line.vue'
 import RiUserForbid from 'vue-remix-icons/icons/ri-user-forbid-line.vue'
 
 const components = {
+  RiTimeLine,
   RiFileDownloadLine,
   RiTodoLine,
   RiSaveLine,
@@ -132,6 +135,7 @@ const components = {
   RiExpandUpDownLine,
   RiUserFill,
   RiMapPinLine,
+  RiMapPin2Line,
   RiIndeterminateCircleLine,
   RiAddCircleLine,
   RiTeamLine,

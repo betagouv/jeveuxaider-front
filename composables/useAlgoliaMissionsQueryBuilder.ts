@@ -1,4 +1,5 @@
 import { useAlgoliaSearchStore } from '@/store/algoliaSearch'
+import dayjs from 'dayjs'
 
 export const useAlgoliaMissionsQueryBuilder = () => {
   const {
@@ -18,6 +19,7 @@ export const useAlgoliaMissionsQueryBuilder = () => {
     search: async () => {
       algoliaSearchStore.searchParameters = getSearchParameters()
       algoliaSearchStore.activeFacets = getActiveFacets()
+      // @todo: possible de recompute filter ici une seule fois au lieu de 2 (setup et watch) ?
       await search()
     },
     onNavigatorGeolocation: async (data: any) => {
@@ -39,6 +41,7 @@ export const useAlgoliaMissionsQueryBuilder = () => {
     deleteAllFilters: () => deleteAllFilters(),
     isActiveFilter: (name: string, value: any) => isActiveFilter(name, value),
     hasActiveFilters: () => hasActiveFilters(),
+    recomputeFilters: (query?: any) => recomputeFilters(query),
   }
 }
 
@@ -78,10 +81,25 @@ const getSearchParameters = () => {
     page: route.query.page ? Number(route.query.page) - 1 : 0,
     facetFilters: getActiveFacets(),
     facets: ['*'],
-    filters: algoliaSearchStore.initialFilters,
+    filters: algoliaSearchStore.filters,
     numericFilters: getActiveNumericFilters(),
     hitsPerPage: algoliaSearchStore?.hitsPerPage ?? 18,
   }
+}
+
+const recomputeFilters = (query = null) => {
+  const route = useRoute()
+  const algoliaSearchStore = useAlgoliaSearchStore()
+  const queries = query || route.query
+
+  if (queries?.start || queries?.end) {
+    const dateFilters = getDateFilters(queries?.start, queries?.end)
+    return algoliaSearchStore.initialFilters
+      ? `${algoliaSearchStore.initialFilters} AND ${dateFilters}`
+      : dateFilters
+  }
+
+  return algoliaSearchStore.initialFilters
 }
 
 const getActiveFacets = () => {
@@ -135,5 +153,30 @@ const getNbMobileSecondaryFilters = () => {
   if (getSearchParameters()?.query) {
     nbSecondaryFilters++
   }
+  if (route.query.start) {
+    nbSecondaryFilters++
+  }
   return nbSecondaryFilters
+}
+
+const getDateFilters = (start: any, end: any) => {
+  const startDate = dayjs(start).startOf('day')
+  const endDate = end ? dayjs(end).startOf('day') : startDate
+
+  const daysArray = []
+  let dateType = 'ponctual'
+  let day = dayjs(startDate)
+  while (day.isBefore(endDate) || day.isSame(endDate)) {
+    daysArray.push(day.unix())
+    day = day.add(1, 'day')
+  }
+
+  // if start date and end date is more than 1 month
+  if (startDate.isBefore(endDate) && endDate.diff(startDate, 'month') >= 1) {
+    dateType = 'recurring'
+  }
+
+  return `date_type:"${dateType}" AND start_date<=${startDate.unix()} AND (end_date_no_creneaux>=${startDate.unix()} OR has_end_date=0 OR ${daysArray
+    .map((day) => `dates.timestamp=${day}`)
+    .join(' OR ')})`
 }

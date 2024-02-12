@@ -8,6 +8,7 @@ export const useAlgoliaSearchStore = defineStore({
     results: null as any,
     facetsResults: [] as any,
     initialFilters: '',
+    filters: '',
     hitsPerPage: null,
     aroundLatLng: null,
     navigatorGeolocation: null as any,
@@ -34,7 +35,7 @@ export const useAlgoliaSearchStore = defineStore({
       this.indexName = null
       this.results = null
       this.facetsResults = []
-      this.initialFilters = ''
+      this.filters = this.initialFilters
       this.hitsPerPage = null
       this.aroundLatLng = null
     },

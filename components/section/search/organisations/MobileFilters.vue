@@ -4,6 +4,7 @@
       <div class="max-w-[309px] xs:max-w-[359px] mx-auto">
         <div class="flex items-center divide-x">
           <LocalisationSuggestions
+            label="Localisation"
             class="w-full pr-4 mr-auto"
             @geolocFilterActiveStateToggle="isGeolocFilterActive = $event"
           />
@@ -72,7 +73,7 @@ export default defineNuxtComponent({
     )
     this.isPinnedObserver.observe(this.$refs.mobileFilters)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.isPinnedObserver.disconnect()
   },
   methods: {

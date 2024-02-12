@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="activity">
     <ClientOnly>
       <Teleport v-if="!activity.is_published" to="#teleport-header-top">
         <transition name="fade">

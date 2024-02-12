@@ -9,6 +9,7 @@
       :min-date="minDate"
       :attributes="attributes"
       @popoverWillShow="$emit('popoverWillShow', $refs.datePicker)"
+      :popover="popover"
     >
       <template #default="data">
         <div class="flex items-center relative w-full">
@@ -52,6 +53,13 @@ export default defineNuxtComponent({
     attributes: {
       type: Array,
       default: null,
+    },
+    popover: {
+      type: Object,
+      default: () => ({
+        visibility: 'hover-focus',
+        placement: 'bottom-start',
+      }),
     },
     popoverWillShow: {
       type: Function,
