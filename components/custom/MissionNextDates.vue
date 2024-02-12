@@ -1,13 +1,15 @@
 <template>
-  <div class="flex flex-wrap items-center gap-4">
+  <div ref="nextDates" class="flex flex-wrap items-center gap-2 xl:gap-4">
     <template v-if="mission.dates">
-      <template v-if="nextDates.length > 4">
+      <template v-if="nextDates.length > maxNbDaysToDisplay">
         <CustomDateDisplay
-          v-for="(date, i) in nextDates.slice(0, 3)"
+          v-for="(date, i) in nextDates.slice(0, maxNbDaysToDisplay - 1)"
           :key="i"
           :unix-date="date.timestamp"
         />
-        <div v-if="nextDates.length > 4" class="text-gray-400 text-2xl">⇢</div>
+        <div v-if="nextDates.length > maxNbDaysToDisplay" class="text-gray-400 text-lg xl:text-2xl">
+          ⇢
+        </div>
         <CustomDateDisplay :unix-date="nextDates[nextDates.length - 1].timestamp" />
       </template>
       <template v-else>
@@ -17,10 +19,10 @@
     <template v-else>
       <CustomDateDisplay v-if="mission.start_date" :unix-date="firstUnixDate" />
       <template v-if="showIntermediateDate">
-        <div class="text-gray-400 text-2xl">⇢</div>
+        <div class="text-gray-400 text-lg xl:text-2xl">⇢</div>
         <CustomDateDisplay :unix-date="$dayjs(selectedDate).unix()" />
       </template>
-      <div class="text-gray-400 text-2xl">⇢</div>
+      <div class="text-gray-400 text-lg xl:text-2xl">⇢</div>
       <CustomDateDisplay :unix-date="lastUnixDate" />
     </template>
   </div>
@@ -39,6 +41,7 @@ export default defineNuxtComponent({
   },
   data() {
     return {
+      maxNbDaysToDisplay: 4,
       selectedDate: this.$route.query?.start ?? this.$dayjs().format('YYYY-MM-DD'),
     }
   },
@@ -77,5 +80,6 @@ export default defineNuxtComponent({
       return false
     },
   },
+  methods: {},
 })
 </script>
