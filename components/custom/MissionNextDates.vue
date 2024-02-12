@@ -65,18 +65,22 @@ export default defineNuxtComponent({
     },
     lastUnixDate() {
       if (!this.mission.end_date) {
-        return this.$dayjs().endOf('year').unix()
+        return this.selectedDate
+          ? this.$dayjs(this.selectedDate).endOf('year').unix()
+          : this.$dayjs().endOf('year').unix()
       }
       return this.mission.end_date
     },
     showIntermediateDate() {
-      if (
-        this.selectedDate &&
-        this.firstUnixDate !== this.$dayjs(this.selectedDate).unix() &&
-        this.lastUnixDate !== this.$dayjs(this.selectedDate).unix()
-      ) {
-        return true
+      if (!this.selectedDate) {
+        return false
       }
+      if (this.firstUnixDate !== this.$dayjs(this.selectedDate).unix()) {
+        if (this.lastUnixDate !== this.$dayjs(this.selectedDate).endOf('day').unix()) {
+          return true
+        }
+      }
+
       return false
     },
   },
