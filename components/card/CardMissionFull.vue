@@ -4,7 +4,7 @@
       <NuxtImg
         v-if="mission.structure.logo"
         ref="logo"
-        :src="mission.structure.logo.urls.large"
+        :src="mission.structure.logo.urls.original"
         :srcset="mission.structure.logo.urls.large"
         :alt="mission.structure.name"
         class="h-auto max-h-[65px] max-w-[100px] m-auto mb-6"
