@@ -27,7 +27,7 @@
         </template>
       </div>
     </div>
-    <div class="lg:flex-1 flex border h-[330px] lg:h-[300px]">
+    <div class="lg:flex-1 flex border min-w-0 h-[330px] lg:h-[300px]">
       <div class="thumbnail--wrapper relative w-[398px] h-full">
         <NuxtImg
           ref="thumbnail"
@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <div class="lg:flex-1 flex flex-col bg-white px-10 py-8">
+      <div class="lg:flex-1 min-w-0 flex flex-col bg-white px-10 py-8">
         <div class="flex-1">
           <div class="flex flex-wrap gap-4 mb-4">
             <DsfrTag
@@ -72,19 +72,10 @@
             </DsfrTag>
             <DsfrTag v-if="hasSecondaryDomain" size="md"> +1 </DsfrTag>
           </div>
-          <!-- <div
-            class="text-[#666666] relative text-xs truncate mb-4 max-w-full lg:hidden overflow-hidden"
-          >
-            <RiBuildingFill class="fill-current w-4 h-4 flex-none mr-2" />
-            <span class="truncate"
-              >{{ mission.structure.name }} dfds sfsdfsd fsdfsdfsd sdfsdfsdf sdfsdfsdf sfsdfsd
-              sdfsd</span
-            >
-          </div> -->
           <DsfrHeading as="h3" size="md" class="line-clamp-2 mb-4" :title="mission.name">
             {{ mission.name }}
           </DsfrHeading>
-          <div class="truncate text-[#3A3A3A] text-sm max-w-full">
+          <div class="truncate text-[#3A3A3A] text-sm max-w-full flex-none">
             <template v-if="mission.is_autonomy">
               {{ autonomyCities }}
             </template>
