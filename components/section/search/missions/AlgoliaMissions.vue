@@ -1,41 +1,43 @@
 <template>
   <div>
-    <div v-if="displayMode === 'full'" class="flex flex-col gap-8">
-      <template v-if="missions.length > 0">
-        <nuxt-link
-          no-prefetch
-          v-for="mission in missions"
-          :key="mission.id"
-          class="flex min-w-0 transition"
-          :to="
-            mission.provider == 'api_engagement'
-              ? `/missions-benevolat/${mission.id}?origin=${origin}`
-              : `/missions-benevolat/${mission.id}/${mission.slug}?origin=${origin}`
-          "
-          @click.native="handleClickCard(mission)"
-        >
-          <CardMission class="lg:hidden flex" :mission="mission" />
-          <CardMissionFull class="hidden lg:flex" :mission="mission" />
-        </nuxt-link>
-        <div class="flex justify-center mt-6">
-          <DsfrButton
-            v-if="hasMoreResults"
-            type="transparent"
-            class="flex-none text-jva-blue-500 border-jva-blue-500 hover:bg-[#EFECE8]"
-            @click="onViewMoreClick()"
+    <ClientOnly>
+      <div v-if="displayMode === 'full'" class="flex flex-col gap-8">
+        <template v-if="missions.length > 0">
+          <nuxt-link
+            no-prefetch
+            v-for="mission in missions"
+            :key="mission.id"
+            class="flex min-w-0 transition"
+            :to="
+              mission.provider == 'api_engagement'
+                ? `/missions-benevolat/${mission.id}?origin=${origin}`
+                : `/missions-benevolat/${mission.id}/${mission.slug}?origin=${origin}`
+            "
+            @click.native="handleClickCard(mission)"
           >
-            Plus de missions
-          </DsfrButton>
-        </div>
-      </template>
-      <CustomEmptyState v-else>
-        <template #description>
-          <div class="text-gray-600 text-center">
-            Il n'y a aucune mission à cette date avec les filtres actuels
+            <CardMission class="lg:hidden flex" :mission="mission" />
+            <CardMissionFull class="hidden lg:flex" :mission="mission" />
+          </nuxt-link>
+          <div class="flex justify-center mt-6">
+            <DsfrButton
+              v-if="hasMoreResults"
+              type="transparent"
+              class="flex-none text-jva-blue-500 border-jva-blue-500 hover:bg-[#EFECE8]"
+              @click="onViewMoreClick()"
+            >
+              Plus de missions
+            </DsfrButton>
           </div>
         </template>
-      </CustomEmptyState>
-    </div>
+        <CustomEmptyState v-else>
+          <template #description>
+            <div class="text-gray-600 text-center">
+              Il n'y a aucune mission à cette date avec les filtres actuels
+            </div>
+          </template>
+        </CustomEmptyState>
+      </div>
+    </ClientOnly>
   </div>
 </template>
 
