@@ -43,6 +43,14 @@ export default {
     },
     roleLabel(role) {
       switch (role) {
+        case 'benevole':
+          return 'Bénévole'
+        case 'responsable_organisation':
+          return 'Responsable organisation'
+        case 'responsable_reseau':
+          return 'Responsable réseau'
+        case 'responsable_territoire':
+          return 'Responsable territoire'
         case 'referent_regional':
           return 'Référent régional'
         case 'referent_departemental':
