@@ -62,6 +62,7 @@
             :search-parameters="searchParamsPresentiel"
             :redirect-parameters="{
               type: 'Mission en présentiel',
+              origin: 'calendrier',
             }"
             origin="calendrier"
           />
@@ -79,6 +80,7 @@
             :search-parameters="searchParamsDistance"
             :redirect-parameters="{
               type: 'Mission à distance',
+              origin: 'calendrier',
             }"
             origin="calendrier"
           />

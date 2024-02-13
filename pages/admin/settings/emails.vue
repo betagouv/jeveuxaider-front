@@ -395,7 +395,7 @@ export default defineNuxtComponent({
         {
           tab: 'responsables',
           key: 'responsable_collectivite_validated',
-          label: 'Prenez rendez-vous avec nous pour découvrir la plateforme 🙂',
+          label: 'Découvrez le fonctionnement de la plateforme JeVeuxAider.gouv.fr',
           description:
             'Notification envoyée au responsable lorsque son organisation de type collectivité territoriale est validée',
           tags: ['app-responsable-collectivite-validee'],
