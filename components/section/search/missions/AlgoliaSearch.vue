@@ -65,6 +65,7 @@
           :max-pages="10"
           :with-first-page="false"
           :with-last-page="false"
+          :anchor-content-id="paginationAnchorContentId"
           @page-change="handleChangePage"
         />
       </div>
@@ -121,6 +122,10 @@ export default defineNuxtComponent({
     withSlideshowRemote: {
       type: Boolean,
       default: false,
+    },
+    paginationAnchorContentId: {
+      type: String,
+      default: 'contenuprincipal',
     },
   },
   watch: {
