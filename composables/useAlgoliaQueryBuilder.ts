@@ -46,16 +46,7 @@ const search = async () => {
     })
   })
 
-  let params = {}
-  if ($algolia.xForwardedFor) {
-    params = {
-      headers: {
-        'X-Forwarded-For': $algolia.xForwardedFor,
-      },
-    }
-  }
-
-  const { results } = await $algolia.multipleQueries(queries, params)
+  const { results } = await $algolia.multipleQueries(queries)
 
   algoliaSearchStore.results = results[0]
   algoliaSearchStore.facetsResults = results.slice(1)
