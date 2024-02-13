@@ -23,7 +23,7 @@
       </p> -->
       <div class="text-[#727273]">
         <div class="line-clamp-1">
-          <span>📍 </span>
+          <span class="relative left-[-3px]">📍</span>
           <span :title="autonomyCities" v-if="mission.is_autonomy">{{ autonomyCities }}</span>
           <span v-else>{{ address }}</span>
         </div>
