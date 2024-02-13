@@ -1,7 +1,7 @@
 import algoliasearch from 'algoliasearch'
 
 export default defineNuxtPlugin(({ ctx }) => {
-  let xForwardedFor = null
+  const options: any = {}
   if (process.server) {
     const headers = useRequestHeaders()
     // Hydratation errors on local
@@ -9,11 +9,17 @@ export default defineNuxtPlugin(({ ctx }) => {
       headers['x-forwarded-for'] &&
       !['::ffff:127.0.0.1', '::1', '127.0.0.1'].includes(headers['x-forwarded-for'])
     ) {
-      xForwardedFor = (headers['x-forwarded-for'] as String).split(', ')[0]
+      options.headers = {
+        'X-Forwarded-For': (headers['x-forwarded-for'] as String).split(', ')[0],
+      }
     }
   }
   const config = useRuntimeConfig()
-  const client = algoliasearch(config.public.algolia.appId, config.public.algolia.searchKey)
+  const client = algoliasearch(
+    config.public.algolia.appId,
+    config.public.algolia.searchKey,
+    options
+  )
   const missionsIndex = client.initIndex(config.public.algolia.missionsIndex)
   const missionsReplicaCreneauxIndex = client.initIndex(
     config.public.algolia.missionsReplicaCreneauxIndex
@@ -29,7 +35,6 @@ export default defineNuxtPlugin(({ ctx }) => {
         missionsReplicaCreneauxIndex,
         organisationsIndex,
         termsIndex,
-        xForwardedFor,
       },
     },
   }
