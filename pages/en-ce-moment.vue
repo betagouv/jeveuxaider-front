@@ -131,7 +131,7 @@ export default defineNuxtComponent({
     commonFilters() {
       const timestamp = this.$dayjs(this.selectedDate).unix()
       const query = `start_date<=${timestamp} AND (end_date_no_creneaux>=${timestamp} OR has_end_date=0 OR dates.timestamp=${timestamp})`
-      return `${query} AND commitment__total<=4 AND date_type:"ponctual"`
+      return `${query} AND commitment__total<=4 AND date_type:"ponctual" AND has_places_left=1 AND is_registration_open=1`
     },
     searchParamsPresentiel() {
       return {
