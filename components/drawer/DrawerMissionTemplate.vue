@@ -2,13 +2,14 @@
   <BaseDrawer :is-open="Boolean(missionTemplateId)" @close="$emit('close')">
     <BaseAlertDialog
       v-if="missionTemplate"
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Supprimer le modèle de mission"
-      :text="`Vous êtes sur le point de supprimer le modèle de mission ${missionTemplate.title}.`"
       :is-open="showAlert"
       @confirm="handleConfirmDelete()"
       @cancel="showAlert = false"
-    />
+    >
+      Vous êtes sur le point de supprimer le modèle de mission {{ missionTemplate.title }}.
+    </BaseAlertDialog>
     <template #title>
       <BaseHeading v-if="missionTemplate" :level="3" class="text-jva-blue-500">
         {{ missionTemplate.title }}

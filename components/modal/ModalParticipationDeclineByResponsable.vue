@@ -3,7 +3,7 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        theme="warning"
+        icon="RiErrorWarningLine"
         title="Refuser la participation"
         :prevent-click-outside="true"
         @close="$emit('cancel')"

@@ -23,14 +23,15 @@
       <FormInvitation class="mt-8" @submited="handleSubmitInvitation" />
     </BaseDrawer>
     <BaseAlertDialog
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Supprimer l'invitation"
-      :text="`L'invitation pour ${invitationSelected.email}  sera supprimée.`"
       :is-open="showAlertDeleted"
       @confirm="handleConfirmDeleteInvitation()"
       @updated="fetch"
       @cancel="showAlertDeleted = false"
-    />
+    >
+      L'invitation pour {{ invitationSelected.email }} sera supprimée.
+    </BaseAlertDialog>
 
     <BaseSectionHeading
       :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
@@ -160,7 +161,7 @@
             </div>
           </BaseTableRowCell>
           <BaseTableRowCell class="max-w-[120px]">
-            <BaseDropdown :ref="`dropdown-${invitation.id}`">
+            <BaseDropdown>
               <template #button>
                 <DsfrButton type="secondary" size="sm" icon="RiSettings4Line">Actions</DsfrButton>
               </template>

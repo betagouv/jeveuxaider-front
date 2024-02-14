@@ -3,7 +3,7 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        theme="warning"
+        icon="RiErrorWarningLine"
         :title="modalTitle"
         :prevent-click-outside="true"
         :hide-close="true"

@@ -2,13 +2,14 @@
   <BaseDrawer :is-open="Boolean(ressourceId)" @close="$emit('close')">
     <BaseAlertDialog
       v-if="ressource"
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Supprimer la ressource"
-      :text="`Vous êtes sur le point de supprimer la ressource ${ressource.name}.`"
       :is-open="showAlert"
       @confirm="handleConfirmDelete()"
       @cancel="showAlert = false"
-    />
+    >
+      Vous êtes sur le point de supprimer la ressource {{ ressource.name }}.
+    </BaseAlertDialog>
     <template #title>
       <BaseHeading v-if="ressource" :level="3" class="text-jva-blue-500">
         {{ ressource.title }}

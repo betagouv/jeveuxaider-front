@@ -3,7 +3,7 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        theme="message"
+        icon="RiMessage3Line"
         :title="`À ${toUser.full_name}`"
         :prevent-click-outside="true"
         @close="handleCancel()"

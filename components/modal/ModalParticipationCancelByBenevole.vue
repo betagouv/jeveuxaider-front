@@ -3,7 +3,6 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        theme="warning"
         icon="RiErrorWarningLine"
         title="Annulez votre participation"
         :prevent-click-outside="true"

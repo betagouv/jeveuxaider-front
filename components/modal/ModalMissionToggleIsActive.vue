@@ -3,7 +3,7 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        theme="warning"
+        icon="RiErrorWarningLine"
         :title="`${mission.is_online ? 'Mettre hors ligne' : 'Mettre en ligne'} la mission`"
         :prevent-click-outside="true"
         :hide-close="true"

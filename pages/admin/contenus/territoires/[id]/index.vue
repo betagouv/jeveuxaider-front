@@ -14,13 +14,15 @@
       ]"
     />
     <BaseAlertDialog
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Supprimer le responsable"
-      :text="`<strong>${memberSelected.full_name}</strong> ne sera plus responsable du territoire <strong>${territoire.name}</strong>`"
       :is-open="showAlertMemberDeleted"
       @confirm="handleConfirmDeleteMember"
       @cancel="showAlertMemberDeleted = false"
-    />
+    >
+      <strong>{{ memberSelected.full_name }}</strong> ne sera plus responsable du territoire
+      <strong>{{ territoire.name }}</strong>
+    </BaseAlertDialog>
     <BaseDrawer
       :is-open="showDrawerAddResponsable"
       form-id="form-add-responsable"

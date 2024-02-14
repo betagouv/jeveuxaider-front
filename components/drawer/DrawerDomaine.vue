@@ -2,13 +2,14 @@
   <BaseDrawer :is-open="Boolean(domaineId)" @close="$emit('close')">
     <BaseAlertDialog
       v-if="domaine"
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Supprimer le domaine"
-      :text="`Vous êtes sur le point de supprimer le domaine ${domaine.name}.`"
       :is-open="showAlert"
       @confirm="handleConfirmDelete()"
       @cancel="showAlert = false"
-    />
+    >
+      Vous êtes sur le point de supprimer le domaine {{ domaine.name }}.
+    </BaseAlertDialog>
     <template #title>
       <BaseHeading v-if="domaine" :level="3" class="text-jva-blue-500">
         <nuxt-link no-prefetch :to="domaine.full_url" class="hover:underline" target="_blank">

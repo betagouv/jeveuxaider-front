@@ -1,13 +1,14 @@
 <template>
   <BaseAlertDialog
     v-if="mission"
-    theme="danger"
+    icon="RiErrorWarningLine"
     title="Supprimer la mission"
-    :text="`Vous êtes sur le point de supprimer la mission ${mission.name}.`"
     :is-open="showModalDelete"
     @confirm="handleConfirmDelete()"
     @cancel="showModalDelete = false"
-  />
+  >
+    Vous êtes sur le point de supprimer la mission {{ mission.name }}.
+  </BaseAlertDialog>
   <BaseDropdown>
     <template #button>
       <DsfrButton :size="buttonSize" type="tertiary" class="!text-gray-800">
