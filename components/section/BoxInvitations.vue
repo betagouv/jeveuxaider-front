@@ -39,7 +39,7 @@
             </div>
             <BaseDropdown>
               <template #button>
-                <DsfrButton size="sm" type="tertiary" icon="RiMoreFill" icon-only />
+                <DsfrButton size="xs" type="tertiary" icon="RiMoreFill" icon-only />
               </template>
               <template #items>
                 <div class="w-56">

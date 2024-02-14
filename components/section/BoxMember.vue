@@ -5,46 +5,53 @@
         <BaseHeading as="h3" :level="5">
           {{ responsable.full_name }}
         </BaseHeading>
-        <BaseDropdown v-if="showDropdownActions">
-          <template #button>
-            <DsfrButton size="sm" type="tertiary" icon="RiMoreFill" icon-only />
-          </template>
-          <template #items>
-            <div class="w-[240px]">
-              <BaseDropdownOptionsItem
-                v-if="canDeleteMember"
-                size="sm"
-                @click="handleDeleteMember(responsable)"
-              >
-                Retirer ce responsable
-              </BaseDropdownOptionsItem>
-              <BaseDropdownOptionsItem v-if="canMasquerade" size="sm" @click="handleImpersonate()">
-                Prendre sa place
-              </BaseDropdownOptionsItem>
-              <BaseDropdownOptionsItem
-                v-if="canSetMissionOnline"
-                size="sm"
-                @click="showModalResponsableSetMissionsActive = true"
-              >
-                Mettre en ligne ses missions
-              </BaseDropdownOptionsItem>
-              <BaseDropdownOptionsItem
-                v-if="canSetMissionOffline"
-                size="sm"
-                @click="showModalResponsableSetMissionsInactive = true"
-              >
-                Mettre hors ligne ses missions
-              </BaseDropdownOptionsItem>
-              <BaseDropdownOptionsItem
-                v-if="canSendMessage"
-                size="sm"
-                @click="handleClickSendMessage"
-              >
-                Envoyer un message
-              </BaseDropdownOptionsItem>
-            </div>
-          </template>
-        </BaseDropdown>
+        <div class="space-x-2">
+          <DsfrButton
+            v-if="canSendMessage"
+            size="xs"
+            type="tertiary"
+            icon="RiMessage3Line"
+            icon-only
+            @click="handleClickSendMessage"
+          />
+          <BaseDropdown v-if="showDropdownActions">
+            <template #button>
+              <DsfrButton size="xs" type="tertiary" icon="RiMoreFill" icon-only />
+            </template>
+            <template #items>
+              <div class="w-[240px]">
+                <BaseDropdownOptionsItem
+                  v-if="canDeleteMember"
+                  size="sm"
+                  @click="handleDeleteMember(responsable)"
+                >
+                  Retirer ce responsable
+                </BaseDropdownOptionsItem>
+                <BaseDropdownOptionsItem
+                  v-if="canMasquerade"
+                  size="sm"
+                  @click="handleImpersonate()"
+                >
+                  Prendre sa place
+                </BaseDropdownOptionsItem>
+                <BaseDropdownOptionsItem
+                  v-if="canSetMissionOnline"
+                  size="sm"
+                  @click="showModalResponsableSetMissionsActive = true"
+                >
+                  Mettre en ligne ses missions
+                </BaseDropdownOptionsItem>
+                <BaseDropdownOptionsItem
+                  v-if="canSetMissionOffline"
+                  size="sm"
+                  @click="showModalResponsableSetMissionsInactive = true"
+                >
+                  Mettre hors ligne ses missions
+                </BaseDropdownOptionsItem>
+              </div>
+            </template>
+          </BaseDropdown>
+        </div>
       </div>
     </template>
     <BaseDescriptionList v-if="responsable">
@@ -95,62 +102,6 @@
         <span v-else> - </span>
       </BaseDescriptionListItem>
     </BaseDescriptionList>
-    <!-- <template v-if="['admin', 'referent'].includes($stores.auth.contextRole)">
-      <template v-if="conversable">
-        <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
-        <div class="flex justify-center text-sm">
-          <BaseLink @click.native="handleClickSendMessage">
-            <RiMessage3Line class="h-4 w-4 mr-2" /> Envoyer un message
-          </BaseLink>
-          <ModalSendMessage
-            :is-open="showModalSendMessage"
-            :to-user="responsable"
-            :conversable="conversable"
-            :conversable-id="organisation.id"
-            conversable-type="App\Models\Structure"
-            @cancel="showModalSendMessage = false"
-          />
-        </div>
-      </template>
-    </template> -->
-
-    <!-- <template
-      v-if="['admin'].includes($stores.auth.contextRole) && profileStats?.missions_offline > 0"
-    >
-      <div class="border-t -mx-4 xl:-mx-6 my-4" />
-      <div class="flex justify-center text-sm">
-        <BaseLink @click.native="showModalResponsableSetMissionsActive = true">
-          Mettre en ligne les missions du responsable
-        </BaseLink>
-        <ModalResponsableSetMissionsIsActive
-          :value="true"
-          :is-open="showModalResponsableSetMissionsActive"
-          :responsable="responsable"
-          :profile-stats="profileStats"
-          @confirm="afterSetMissionsIsActive"
-          @cancel="showModalResponsableSetMissionsActive = false"
-        />
-      </div>
-    </template> -->
-
-    <!-- <template
-      v-if="['admin'].includes($stores.auth.contextRole) && profileStats?.missions_available > 0"
-    >
-      <div class="border-t -mx-4 xl:-mx-6 my-4" />
-      <div class="flex justify-center text-sm">
-        <BaseLink @click.native="showModalResponsableSetMissionsInactive = true">
-          Mettre hors ligne les missions du responsable
-        </BaseLink>
-        <ModalResponsableSetMissionsIsActive
-          :value="false"
-          :is-open="showModalResponsableSetMissionsInactive"
-          :responsable="responsable"
-          :profile-stats="profileStats"
-          @confirm="afterSetMissionsIsActive"
-          @cancel="showModalResponsableSetMissionsInactive = false"
-        />
-      </div>
-    </template> -->
 
     <template v-if="profileStats">
       <ModalResponsableSetMissionsIsActive

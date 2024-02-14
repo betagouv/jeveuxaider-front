@@ -13,7 +13,7 @@
         { text: territoire.name },
       ]"
     />
-    <BaseAlertDialog
+    <!-- <BaseAlertDialog
       icon="RiErrorWarningLine"
       title="Supprimer le responsable"
       :is-open="showAlertMemberDeleted"
@@ -22,7 +22,7 @@
     >
       <strong>{{ memberSelected.full_name }}</strong> ne sera plus responsable du territoire
       <strong>{{ territoire.name }}</strong>
-    </BaseAlertDialog>
+    </BaseAlertDialog> -->
     <BaseDrawer
       :is-open="showDrawerAddResponsable"
       form-id="form-add-responsable"
@@ -124,7 +124,7 @@
             ]"
           />
           <div v-if="$route.hash === '#infos' || !$route.hash">
-            <div class="space-y-4">
+            <div class="space-y-8">
               <SelectTerritoireState
                 v-if="canEditStatut"
                 :modelValue="territoire.state"
@@ -137,61 +137,38 @@
             </div>
           </div>
           <template v-if="$route.hash === '#responsables'">
-            <div class="space-y-4">
+            <div class="space-y-8">
               <BoxInvitations
-                v-if="canManageTerritoire && queryInvitations && queryInvitations.length > 0"
-                :invitations="queryInvitations"
+                v-if="canManageTerritoire && invitations && invitations.length > 0"
+                :title="`${$filters.pluralize(invitations.length, 'invitation')} en attente`"
+                :invitations="invitations"
                 @updated="fetch()"
               />
-              <BaseBox
-                v-for="responsable in territoire.responsables"
-                :key="responsable.id"
-                variant="flat"
-                padding="xs"
-              >
-                <template #header>
-                  <div class="flex justify-between items-center mb-4">
-                    <BaseHeading as="h3" :level="5">
-                      {{ responsable.profile.full_name }}
-                    </BaseHeading>
-                    <div
-                      class="text-sm flex items-center cursor-pointer group hover:text-red-500"
-                      @click="handleDeleteMember(responsable)"
-                    >
-                      <div class="group-hover:block hidden">Supprimer</div>
-                      <div>
-                        <RiDeleteBinLine class="ml-2 h-5 w-5 fill-current" />
-                      </div>
-                    </div>
-                  </div>
-                </template>
-                <BaseDescriptionList v-if="responsable">
-                  <BaseDescriptionListItem term="E-mail" :description="responsable.profile.email" />
-                  <BaseDescriptionListItem
-                    term="Mobile"
-                    :description="responsable.profile.mobile"
-                  />
-                  <BaseDescriptionListItemMasquerade
-                    v-if="$stores.auth.contextRole === 'admin'"
-                    :profile="responsable.profile"
-                  />
-                </BaseDescriptionList>
-              </BaseBox>
-              <div class="space-x-2">
-                <BaseButton
-                  v-if="canManageTerritoire"
-                  variant="white"
-                  @click.native="showDrawerInvitation = true"
-                >
-                  <RiUserFill class="h-4 w-4 mr-2" /> Inviter un responsable
-                </BaseButton>
-                <BaseButton
-                  v-if="['admin'].includes($stores.auth.contextRole)"
-                  variant="white"
-                  @click.native="showDrawerAddResponsable = true"
-                >
-                  <RiAddLine class="h-4 w-4 mr-2" /> Ajouter un responsable
-                </BaseButton>
+
+              <div>
+                <SectionBoxTerritoireResponsables
+                  :title="$filters.pluralize(territoire.responsables.length, 'responsable')"
+                  :territoire="territoire"
+                  :responsables="territoire.responsables"
+                  @removed="fetch()"
+                />
+
+                <div class="space-x-2 mt-4">
+                  <BaseButton
+                    v-if="canManageTerritoire"
+                    variant="white"
+                    @click.native="showDrawerInvitation = true"
+                  >
+                    <RiUserFill class="h-4 w-4 mr-2" /> Inviter un responsable
+                  </BaseButton>
+                  <BaseButton
+                    v-if="['admin'].includes($stores.auth.contextRole)"
+                    variant="white"
+                    @click.native="showDrawerAddResponsable = true"
+                  >
+                    <RiAddLine class="h-4 w-4 mr-2" /> Ajouter un responsable
+                  </BaseButton>
+                </div>
               </div>
             </div>
           </template>
@@ -271,9 +248,7 @@ export default defineNuxtComponent({
     return {
       showDrawerInvitation: false,
       showDrawerAddResponsable: false,
-      queryInvitations: null,
-      memberSelected: {},
-      showAlertMemberDeleted: false,
+      invitations: null,
     }
   },
   created() {
@@ -281,8 +256,8 @@ export default defineNuxtComponent({
   },
   methods: {
     async fetch() {
-      const queryInvitations = await apiFetch(`/territoires/${this.territoire.id}/invitations`)
-      this.queryInvitations = queryInvitations
+      const invitations = await apiFetch(`/territoires/${this.territoire.id}/invitations`)
+      this.invitations = invitations
     },
     async handleChangeState(option) {
       console.log('handleChangeState', option)
@@ -310,18 +285,18 @@ export default defineNuxtComponent({
       this.showDrawerAddResponsable = false
       this.refetch()
     },
-    handleDeleteMember(member) {
-      this.memberSelected = member
-      this.showAlertMemberDeleted = true
-    },
-    async handleConfirmDeleteMember() {
-      await apiFetch(`/territoires/${this.territoire.id}/responsables/${this.memberSelected.id}`, {
-        method: 'DELETE',
-      })
-      this.refetch()
-      this.memberSelected = {}
-      this.showAlertMemberDeleted = false
-    },
+    // handleDeleteMember(member) {
+    //   this.memberSelected = member
+    //   this.showAlertMemberDeleted = true
+    // },
+    // async handleConfirmDeleteMember() {
+    //   await apiFetch(`/territoires/${this.territoire.id}/responsables/${this.memberSelected.id}`, {
+    //     method: 'DELETE',
+    //   })
+    //   this.refetch()
+    //   this.memberSelected = {}
+    //   this.showAlertMemberDeleted = false
+    // },
   },
 })
 </script>

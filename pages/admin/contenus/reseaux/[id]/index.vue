@@ -10,16 +10,7 @@
         { text: reseau.name },
       ]"
     />
-    <BaseAlertDialog
-      icon="RiErrorWarningLine"
-      title="Supprimer le responsable"
-      :is-open="showAlertMemberDeleted"
-      @confirm="handleConfirmDeleteMember"
-      @cancel="showAlertMemberDeleted = false"
-    >
-      <strong>{{ memberSelected.full_name }}</strong> ne sera plus responsable du réseau
-      <strong>{{ reseau.name }}</strong>
-    </BaseAlertDialog>
+
     <BaseDrawer
       :is-open="showDrawerAddResponsable"
       form-id="form-add-responsable"
@@ -145,7 +136,10 @@
               <BoxAntenne :reseau="reseau" :stats="stats" @updated="fetch()" />
               <BoxInvitations
                 v-if="queryInvitationsAntennes && queryInvitationsAntennes.length > 0"
-                class="!mt-4"
+                :title="`${$filters.pluralize(
+                  queryInvitationsAntennes.length,
+                  'invitation'
+                )} en attente`"
                 :invitations="queryInvitationsAntennes"
                 @updated="fetch()"
               />
@@ -226,57 +220,34 @@
           </div>
           <History v-if="$route.hash === '#historique'" :model-id="reseau.id" model-type="reseau" />
           <template v-if="$route.hash === '#responsables'">
-            <div class="space-y-2">
+            <div class="space-y-8">
               <BoxInvitations
                 v-if="queryInvitations && queryInvitations.length > 0"
+                :title="`${$filters.pluralize(queryInvitations.length, 'invitation')} en attente`"
                 :invitations="queryInvitations"
                 @updated="fetch()"
               />
-              <BaseBox
-                v-for="responsable in reseau.responsables"
-                :key="responsable.id"
-                variant="flat"
-                padding="xs"
-              >
-                <template #header>
-                  <div class="flex justify-between items-center mb-4">
-                    <BaseHeading as="h3" :level="5">
-                      {{ responsable.profile.full_name }}
-                    </BaseHeading>
-                    <div
-                      class="text-sm flex items-center cursor-pointer group hover:text-red-500"
-                      @click="handleDeleteMember(responsable)"
-                    >
-                      <div class="group-hover:block hidden">Supprimer</div>
-                      <div>
-                        <RiDeleteBinLine class="ml-2 h-5 w-5 fill-current" />
-                      </div>
-                    </div>
-                  </div>
-                </template>
-                <BaseDescriptionList v-if="responsable">
-                  <BaseDescriptionListItem term="E-mail" :description="responsable.profile.email" />
-                  <BaseDescriptionListItem
-                    term="Mobile"
-                    :description="responsable.profile.mobile"
-                  />
-                  <BaseDescriptionListItemMasquerade
-                    v-if="$stores.auth.contextRole === 'admin'"
-                    :profile="responsable.profile"
-                  />
-                </BaseDescriptionList>
-              </BaseBox>
-              <div class="space-x-2">
-                <BaseButton variant="white" @click.native="showDrawerInvitation = true">
-                  <RiUserFill class="h-4 w-4 mr-2" /> Inviter un responsable
-                </BaseButton>
-                <BaseButton
-                  v-if="['admin'].includes($stores.auth.contextRole)"
-                  variant="white"
-                  @click.native="showDrawerAddResponsable = true"
-                >
-                  <RiAddLine class="h-4 w-4 mr-2" /> Ajouter un responsable
-                </BaseButton>
+
+              <div class="">
+                <SectionBoxReseauResponsables
+                  :title="$filters.pluralize(reseau.responsables.length, 'responsable')"
+                  :reseau="reseau"
+                  :responsables="reseau.responsables"
+                  @removed="fetch()"
+                />
+
+                <div class="space-x-2 mt-4">
+                  <BaseButton variant="white" @click.native="showDrawerInvitation = true">
+                    <RiUserFill class="h-4 w-4 mr-2" /> Inviter un responsable
+                  </BaseButton>
+                  <BaseButton
+                    v-if="['admin'].includes($stores.auth.contextRole)"
+                    variant="white"
+                    @click.native="showDrawerAddResponsable = true"
+                  >
+                    <RiAddLine class="h-4 w-4 mr-2" /> Ajouter un responsable
+                  </BaseButton>
+                </div>
               </div>
             </div>
           </template>
@@ -346,8 +317,6 @@ export default defineNuxtComponent({
       showDrawerAddResponsable: false,
       queryInvitations: null,
       queryInvitationsAntennes: null,
-      memberSelected: {},
-      showAlertMemberDeleted: false,
     }
   },
   created() {
@@ -384,18 +353,6 @@ export default defineNuxtComponent({
     handleSubmitInvitation() {
       this.showDrawerInvitation = false
       this.fetch()
-    },
-    handleDeleteMember(member) {
-      this.memberSelected = member
-      this.showAlertMemberDeleted = true
-    },
-    async handleConfirmDeleteMember() {
-      await apiFetch(`/reseaux/${this.reseau.id}/responsables/${this.memberSelected.id}`, {
-        method: 'DELETE',
-      })
-      this.refetch()
-      this.memberSelected = {}
-      this.showAlertMemberDeleted = false
     },
     handleSubmitAddResponsable() {
       this.showDrawerAddResponsable = false

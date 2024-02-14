@@ -251,7 +251,7 @@
                 @updated="fetch"
               />
 
-              <BoxMembers
+              <BoxOrganisationMembers
                 :title="$filters.pluralize(responsables.length, 'membre')"
                 :responsables="responsables"
                 :organisation="organisation"
@@ -285,7 +285,7 @@ import BoxInvitations from '@/components/section/BoxInvitations.vue'
 import BoxReferents from '@/components/section/BoxReferents.vue'
 import BoxReseau from '@/components/section/organisation/BoxReseau.vue'
 import BoxNotes from '@/components/custom/BoxNotes.vue'
-import BoxMembers from '@/components/section/BoxMembers.vue'
+import BoxOrganisationMembers from '@/components/section/BoxOrganisationMembers.vue'
 import BoxScore from '@/components/section/organisation/BoxScore.vue'
 import BoxAideModeration from '@/components/section/organisation/BoxAideModeration.vue'
 import HeaderActions from '@/components/section/organisation/HeaderActions.vue'
@@ -304,7 +304,7 @@ export default defineNuxtComponent({
     BoxReferents,
     BoxReseau,
     BoxNotes,
-    BoxMembers,
+    BoxOrganisationMembers,
     BoxScore,
     BoxAideModeration,
     HeaderActions,
