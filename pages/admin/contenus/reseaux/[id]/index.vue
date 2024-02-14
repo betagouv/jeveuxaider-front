@@ -233,7 +233,7 @@
                   :title="$filters.pluralize(reseau.responsables.length, 'responsable')"
                   :reseau="reseau"
                   :responsables="reseau.responsables"
-                  @removed="fetch()"
+                  @removed="refetch()"
                 />
 
                 <div class="space-x-2 mt-4">

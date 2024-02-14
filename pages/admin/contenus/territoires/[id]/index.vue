@@ -150,7 +150,7 @@
                   :title="$filters.pluralize(territoire.responsables.length, 'responsable')"
                   :territoire="territoire"
                   :responsables="territoire.responsables"
-                  @removed="fetch()"
+                  @removed="refetch()"
                 />
 
                 <div class="space-x-2 mt-4">
