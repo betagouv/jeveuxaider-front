@@ -9,6 +9,16 @@
   >
     Vous êtes sur le point de supprimer la mission {{ mission.name }}.
   </BaseAlertDialog>
+  <BaseAlertDialog
+    icon="RiErrorWarningLine"
+    title="Dupliquer la mission"
+    :is-open="showModalDuplicate"
+    @confirm="handleConfirmDuplicate()"
+    @cancel="showModalDuplicate = false"
+  >
+    Vous êtes sur le point de dupliquer la mission <strong>{{ mission.name }}</strong> qui sera
+    enregistrée en « <strong>Brouillon</strong> »
+  </BaseAlertDialog>
   <BaseDropdown>
     <template #button>
       <DsfrButton :size="buttonSize" type="tertiary" class="!text-gray-800">
@@ -63,14 +73,10 @@
           </div>
         </BaseDropdownOptionsItem>
       </NuxtLink>
-      <BaseDropdownOptionsItem v-if="canDuplicateMission">
-        <ButtonMissionDuplicate
-          :mission-id="mission.id"
-          :mission="mission"
-          theme="link"
-          :canDuplicateMission="canDuplicateMission"
-          :redirectToMission="true"
-        />
+      <BaseDropdownOptionsItem v-if="canDuplicateMission" @click="showModalDuplicate = true">
+        <div class="flex items-center">
+          <RiFileCopyLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Dupliquer
+        </div>
       </BaseDropdownOptionsItem>
       <BaseDropdownOptionsItem
         v-if="['admin', 'responsable'].includes($stores.auth.contextRole)"
@@ -89,10 +95,11 @@ import MixinMission from '@/mixins/mission'
 import ButtonMissionDuplicate from '@/components/custom/ButtonMissionDuplicate.vue'
 
 export default defineNuxtComponent({
-  emits: ['showModalSwitchIsOnline', 'missionDeleted'],
+  emits: ['showModalSwitchIsOnline', 'missionDeleted', 'updated'],
   data() {
     return {
       showModalDelete: false,
+      showModalDuplicate: false,
     }
   },
   components: {
@@ -114,6 +121,19 @@ export default defineNuxtComponent({
       await this.deleteMission()
       this.showModalDelete = false
       this.$emit('missionDeleted')
+    },
+    async handleConfirmDuplicate() {
+      await apiFetch(`/missions/${this.mission.id}/duplicate`, {
+        method: 'POST',
+      })
+        .then((response) => {
+          this.$toast.success('La mission a été dupliquée')
+          this.$router.push(`/admin/missions/${response.id}`)
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.showModalDuplicate = false
+        })
     },
   },
 })

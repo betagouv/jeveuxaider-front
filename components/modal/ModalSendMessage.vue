@@ -30,10 +30,8 @@
         </div>
 
         <template #footer>
-          <BaseButton class="mr-3" variant="white" @click.native="handleCancel()">
-            Annuler
-          </BaseButton>
-          <BaseButton :loading="loading" @click.native="handleSubmit"> Envoyer </BaseButton>
+          <DsfrButton type="tertiary" @click="handleCancel"> Annuler </DsfrButton>
+          <DsfrButton :loading="loading" @click="handleSubmit"> Envoyer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>
