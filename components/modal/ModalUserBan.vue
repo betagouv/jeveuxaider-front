@@ -19,8 +19,8 @@
         </div>
 
         <template #footer>
-          <BaseButton type="secondary" @click.native="$emit('cancel')"> Annuler </BaseButton>
-          <BaseButton is-submit form="form-user-ban"> Confirmer </BaseButton>
+          <DsfrButton type="secondary" @click.native="$emit('cancel')"> Annuler </DsfrButton>
+          <DsfrButton is-submit form="form-user-ban"> Confirmer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>
