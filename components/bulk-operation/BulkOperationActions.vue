@@ -5,7 +5,7 @@
     >
       <div class="flex justify-end">
         <div class="inline-flex items-center leading-none pointer-events-auto bg-[#F9F6F2]">
-          <div class="text-gray-600">
+          <div class="text-gray-600 truncate">
             {{ $filters.pluralize(operations.length, 'sélectionnée') }}
           </div>
           <div
@@ -15,7 +15,7 @@
             Désélectionner
           </div>
 
-          <BaseDropdown class="ml-6">
+          <BaseDropdown class="ml-6 flex-none">
             <template #button>
               <DsfrButton type="secondary" icon="RiArrowDownSLine" icon-position="right">
                 Actions
