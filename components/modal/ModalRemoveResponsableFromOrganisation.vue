@@ -43,16 +43,10 @@
           </div>
 
           <template #footer>
-            <BaseButton class="mr-3" variant="white" @click.native="$emit('cancel')">
-              Retour
-            </BaseButton>
-            <BaseButton
-              :loading="loading"
-              variant="red"
-              @click.native="handleSubmitAndSetNewResponsable"
-            >
+            <DsfrButton type="secondary" @click.native="$emit('cancel')"> Retour </DsfrButton>
+            <DsfrButton :loading="loading" @click.native="handleSubmitAndSetNewResponsable">
               Supprimer
-            </BaseButton>
+            </DsfrButton>
           </template>
         </BaseModal>
       </template>

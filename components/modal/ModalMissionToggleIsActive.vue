@@ -29,7 +29,7 @@
         </div>
 
         <template #footer>
-          <DsfrButton :disabled="loading" type="tertiary" @click.native="$emit('cancel')">
+          <DsfrButton :disabled="loading" type="secondary" @click.native="$emit('cancel')">
             Annuler
           </DsfrButton>
           <DsfrButton :disabled="loading" :loading="loading" @click.native="toggleIsActive()">

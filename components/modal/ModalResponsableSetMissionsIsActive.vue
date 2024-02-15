@@ -56,7 +56,7 @@
         </div>
 
         <template #footer>
-          <DsfrButton :disabled="loading" type="tertiary" @click="$emit('cancel')">
+          <DsfrButton :disabled="loading" type="secondary" @click="$emit('cancel')">
             Annuler
           </DsfrButton>
           <DsfrButton :disabled="loading" :loading="loading" @click="onConfirm()">

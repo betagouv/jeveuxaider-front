@@ -15,10 +15,8 @@
         </p>
 
         <template #footer>
-          <BaseButton class="mr-3" variant="white" @click.native="$emit('cancel')">
-            Annuler
-          </BaseButton>
-          <BaseButton type="submit" @click.native="$emit('confirm')"> Confirmer </BaseButton>
+          <DsfrButton type="secondary" @click.native="$emit('cancel')"> Annuler </DsfrButton>
+          <DsfrButton is-submit @click.native="$emit('confirm')"> Confirmer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>

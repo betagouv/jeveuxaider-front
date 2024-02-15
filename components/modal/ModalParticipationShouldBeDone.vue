@@ -85,29 +85,28 @@
         </div>
 
         <template #footer>
-          <BaseButton
+          <DsfrButton
             v-if="step == 'form_has_participate' || step == 'form_confirm_cancel_participation'"
             :disabled="loading"
-            class="mr-3"
-            variant="white"
+            type="secondary"
             @click.native="$emit('cancel')"
           >
             Retour
-          </BaseButton>
-          <BaseButton
+          </DsfrButton>
+          <DsfrButton
             v-if="step == 'form_has_participate'"
             :loading="loading"
             @click.native="handleSubmitHasParticipate"
           >
             Confirmer
-          </BaseButton>
-          <BaseButton
+          </DsfrButton>
+          <DsfrButton
             v-if="step == 'form_confirm_cancel_participation'"
             :loading="loading"
             @click.native="handleConfirmCancelParticipation"
           >
             Confirmer
-          </BaseButton>
+          </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>

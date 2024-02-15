@@ -17,7 +17,9 @@
 
           <BaseDropdown class="ml-6">
             <template #button>
-              <BaseButton size="lg" variant="white" icon="RiArrowDownSLine"> Actions </BaseButton>
+              <DsfrButton type="secondary" icon="RiArrowDownSLine" icon-position="right">
+                Actions
+              </DsfrButton>
             </template>
             <template #items>
               <slot />

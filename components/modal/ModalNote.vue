@@ -17,8 +17,8 @@
         />
 
         <template #footer>
-          <BaseButton class="mr-3" variant="white" @click="$emit('cancel')"> Annuler </BaseButton>
-          <BaseButton type="submit" form="form-note-mission"> Confirmer </BaseButton>
+          <DsfrButton type="secondary" @click="$emit('cancel')"> Annuler </DsfrButton>
+          <DsfrButton is-submit form="form-note-mission"> Confirmer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>

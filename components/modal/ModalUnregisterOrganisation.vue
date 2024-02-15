@@ -28,7 +28,7 @@
             </div>
 
             <template #footer>
-              <DsfrButton type="tertiary" @click.native="$emit('cancel')"> Annuler </DsfrButton>
+              <DsfrButton type="secondary" @click.native="$emit('cancel')"> Annuler </DsfrButton>
               <DsfrButton @click.native="handleSubmitUnregister">
                 Désinscrire mon organisation
               </DsfrButton>
@@ -73,12 +73,10 @@
             </div>
 
             <template #footer>
-              <BaseButton class="mr-8 hover:underline" type="transparent" @click="$emit('cancel')">
-                Retour
-              </BaseButton>
-              <BaseButton variant="red" @click.native="handleSubmitAskToUnregister">
+              <DsfrButton type="secondary" @click="$emit('cancel')"> Retour </DsfrButton>
+              <DsfrButton @click.native="handleSubmitAskToUnregister">
                 Je soumets ma demande
-              </BaseButton>
+              </DsfrButton>
             </template>
           </BaseModal>
         </template>

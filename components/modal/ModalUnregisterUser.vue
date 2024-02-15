@@ -66,12 +66,8 @@
               </p>
             </div>
             <template #footer>
-              <BaseButton class="mr-8 hover:underline" type="transparent" @click="$emit('cancel')">
-                Retour
-              </BaseButton>
-              <BaseButton variant="red" @click.native="handleContactAdmin">
-                Je soumets ma demande
-              </BaseButton>
+              <DsfrButton type="secondary" @click="$emit('cancel')"> Retour </DsfrButton>
+              <DsfrButton @click.native="handleContactAdmin"> Je soumets ma demande </DsfrButton>
             </template>
           </BaseModal>
         </template>
@@ -121,17 +117,14 @@
             </div>
 
             <template #footer>
-              <BaseButton class="mr-8 hover:underline" type="transparent" @click="$emit('cancel')">
-                Retour
-              </BaseButton>
-              <BaseButton
+              <DsfrButton type="secondary" @click="$emit('cancel')"> Retour </DsfrButton>
+              <DsfrButton
                 :loading="loading"
-                variant="red"
-                type="submit"
+                is-submit
                 @click.native="handleSetNewResponsableAndUnsubscribeUser"
               >
                 Supprimer mon compte
-              </BaseButton>
+              </DsfrButton>
             </template>
           </BaseModal>
         </template>
@@ -171,12 +164,10 @@
             </div>
 
             <template #footer>
-              <BaseButton class="mr-8 hover:underline" type="transparent" @click="$emit('cancel')">
-                Retour
-              </BaseButton>
-              <BaseButton variant="red" @click.native="handleUnsubscribeStructureAndUser">
+              <DsfrButton type="secondary" @click="$emit('cancel')"> Retour </DsfrButton>
+              <DsfrButton @click.native="handleUnsubscribeStructureAndUser">
                 Supprimer mon compte
-              </BaseButton>
+              </DsfrButton>
             </template>
           </BaseModal>
         </template>

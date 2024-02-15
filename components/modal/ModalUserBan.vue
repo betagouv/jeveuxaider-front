@@ -19,10 +19,8 @@
         </div>
 
         <template #footer>
-          <BaseButton class="mr-3" variant="white" @click.native="$emit('cancel')">
-            Annuler
-          </BaseButton>
-          <BaseButton type="submit" form="form-user-ban"> Confirmer </BaseButton>
+          <BaseButton type="secondary" @click.native="$emit('cancel')"> Annuler </BaseButton>
+          <BaseButton is-submit form="form-user-ban"> Confirmer </BaseButton>
         </template>
       </BaseModal>
     </Teleport>

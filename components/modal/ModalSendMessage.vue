@@ -30,7 +30,7 @@
         </div>
 
         <template #footer>
-          <DsfrButton type="tertiary" @click="handleCancel"> Annuler </DsfrButton>
+          <DsfrButton type="secondary" @click="handleCancel"> Annuler </DsfrButton>
           <DsfrButton :loading="loading" @click="handleSubmit"> Envoyer </DsfrButton>
         </template>
       </BaseModal>

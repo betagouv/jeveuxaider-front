@@ -32,10 +32,8 @@
         </div>
 
         <template #footer>
-          <BaseButton class="mr-3" variant="white" @click.native="$emit('cancel')">
-            Retour
-          </BaseButton>
-          <BaseButton @click.native="handleSubmit"> Confirmer </BaseButton>
+          <DsfrButton type="secondary" @click.native="$emit('cancel')"> Retour </DsfrButton>
+          <DsfrButton @click.native="handleSubmit"> Confirmer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>
