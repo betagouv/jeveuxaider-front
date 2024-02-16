@@ -345,19 +345,19 @@
       </SearchFilters>
 
       <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <CardMission
-          v-for="mission in queryResult.data"
-          :key="mission.id"
-          class="cursor-pointer"
-          :mission="mission"
-          show-state
-          :show-tags="['admin'].includes($stores.auth.contextRole)"
-          tabindex="0"
-          @click.left="drawerMissionId = mission.id"
-          @click.middle="
-            navigateTo(`/admin/missions/${mission.id}`, { open: { target: '_blank' } })
-          "
-        />
+        <div v-for="mission in queryResult.data" :key="mission.id">
+          <CardMission
+            class="cursor-pointer"
+            :mission="mission"
+            show-state
+            :show-tags="['admin'].includes($stores.auth.contextRole)"
+            tabindex="0"
+            @click.left="drawerMissionId = mission.id"
+            @click.middle="
+              navigateTo(`/admin/missions/${mission.id}`, { open: { target: '_blank' } })
+            "
+          />
+        </div>
       </div>
 
       <CustomEmptyState v-if="queryResult.total === 0 && !queryLoading" />
