@@ -2,14 +2,17 @@
   <div>
     <BaseAlertDialog
       v-if="form.origin && form.destination"
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Êtes-vous sûrs ?"
-      :text="`Vous êtes sur le point de transférer les missions de « ${form.origin.name} #${form.origin.id} » vers « ${form.destination.name} #${form.destination.id} ».`"
       :is-open="showAlert"
       button-label="Oui, je confirme"
       @confirm="handleConfirmSubmit()"
       @cancel="showAlert = false"
-    />
+    >
+      Vous êtes sur le point de transférer les missions de « {{ form.origin.name }} #{{
+        form.origin.id
+      }} » vers « {{ form.destination.name }} #{{ form.destination.id }} ».
+    </BaseAlertDialog>
     <ClientOnly>
       <Teleport to="#teleport-breadcrumb">
         <Breadcrumb

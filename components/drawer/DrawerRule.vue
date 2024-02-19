@@ -2,13 +2,14 @@
   <BaseDrawer :is-open="Boolean(ruleId)" @close="$emit('close')">
     <BaseAlertDialog
       v-if="rule"
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Supprimer la règle"
-      :text="`Vous êtes sur le point de supprimer la règle' ${rule.name}.`"
       :is-open="showAlertDelete"
       @confirm="handleConfirmDelete()"
       @cancel="showAlertDelete = false"
-    />
+    >
+      Vous êtes sur le point de supprimer la règle {{ rule.name }}.
+    </BaseAlertDialog>
     <BatchDialog
       v-if="rule"
       title="Exécuter la règle"

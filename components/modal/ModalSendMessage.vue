@@ -3,7 +3,7 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        theme="message"
+        icon="RiMessage3Line"
         :title="`À ${toUser.full_name}`"
         :prevent-click-outside="true"
         @close="handleCancel()"
@@ -30,10 +30,8 @@
         </div>
 
         <template #footer>
-          <BaseButton class="mr-3" variant="white" @click.native="handleCancel()">
-            Annuler
-          </BaseButton>
-          <BaseButton :loading="loading" @click.native="handleSubmit"> Envoyer </BaseButton>
+          <DsfrButton type="secondary" @click="handleCancel"> Annuler </DsfrButton>
+          <DsfrButton :loading="loading" @click="handleSubmit"> Envoyer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>

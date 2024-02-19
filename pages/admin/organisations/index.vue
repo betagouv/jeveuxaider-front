@@ -66,17 +66,6 @@
             <div aria-hidden class="bg-gray-600 mx-1 w-[1px] h-6" />
           </div>
 
-          <!-- <DsfrTag
-            :key="`toutes-${$route.fullPath}`"
-            as="button"
-            size="md"
-            context="selectable"
-            :is-active="!hasActiveFilters"
-            @click.native="deleteAllFilters"
-          >
-            Toutes
-          </DsfrTag> -->
-
           <template v-for="visibleFilter in visibleFilters" :key="visibleFilter">
             <BaseFilterSelectAdvanced
               v-if="visibleFilter === 'state'"

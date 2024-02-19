@@ -2,13 +2,14 @@
   <BaseDrawer :is-open="Boolean(activityId)" @close="$emit('close')">
     <BaseAlertDialog
       v-if="activity"
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Supprimer l'activité"
-      :text="`Vous êtes sur le point de supprimer l'actitivité ${activity.name}.`"
       :is-open="showAlert"
       @confirm="handleConfirmDelete()"
       @cancel="showAlert = false"
-    />
+    >
+      Vous êtes sur le point de supprimer l'actitivité {{ activity.name }}.
+    </BaseAlertDialog>
     <template #title>
       <BaseHeading v-if="activity" :level="3" class="text-jva-blue-500">
         <nuxt-link

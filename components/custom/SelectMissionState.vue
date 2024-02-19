@@ -20,14 +20,15 @@
       @confirm="handleConfirmDialog()"
     />
     <BaseAlertDialog
-      theme="warning"
+      icon="RiErrorWarningLine"
       title="Changement de statut"
-      :text="textAlert"
       :is-open="showAlert"
       :prevent-click-outside="true"
       @confirm="handleConfirmDialog()"
       @cancel="showAlert = false"
-    />
+    >
+      {{ textAlert }}
+    </BaseAlertDialog>
   </div>
 </template>
 

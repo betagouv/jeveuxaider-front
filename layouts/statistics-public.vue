@@ -13,7 +13,7 @@
         </aside>
         <div class="lg:col-span-4 min-w-0">
           <NuxtPage />
-          <div id="teleport-drawer" class="relative z-20"></div>
+          <div id="teleport-drawer" class="relative z-50"></div>
         </div>
       </div>
     </div>

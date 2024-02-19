@@ -68,6 +68,9 @@
                 </div>
               </div>
             </div>
+            <template #footer>
+              <DsfrButton @click="openModal = null">Fermer</DsfrButton>
+            </template>
           </BaseModal>
         </Teleport>
       </ClientOnly>

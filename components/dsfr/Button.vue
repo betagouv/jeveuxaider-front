@@ -11,6 +11,7 @@
 
       disabled ? 'cursor-not-allowed' : 'cursor-pointer',
 
+      { 'px-2 py-1 text-xs min-h-[32px]': size === 'xs' },
       { 'px-3 py-1 text-sm min-h-[34px]': size === 'sm' },
       { 'px-4 py-2 text-base min-h-[42px]': size === 'md' },
       { 'px-6 py-2 text-lg min-h-[3rem]': size === 'lg' },
@@ -50,12 +51,13 @@
       v-if="iconOrLoading && iconPosition === 'left'"
       :class="[
         'fill-current flex-none',
-        { 'ml-[-0.125rem]': ['sm', 'md'].includes(size) },
+        { 'ml-[-0.125rem]': ['xs', 'sm', 'md'].includes(size) },
         { 'ml-[-0.1875rem]': ['lg'].includes(size) },
         { 'mr-2': !iconOnly },
         { 'mr-[-0.125rem]': ['sm', 'md'].includes(size) && iconOnly },
         { 'mr-[-0.1875rem]': ['lg'].includes(size) && iconOnly },
 
+        { 'w-4 h-4': ['xs'].includes(size) },
         { 'w-4 h-4': ['sm', 'md'].includes(size) },
         { 'w-6 h-6': size === 'lg' },
 
@@ -72,12 +74,13 @@
       v-if="iconOrLoading && iconPosition === 'right'"
       :class="[
         'fill-current flex-none',
-        { 'mr-[-0.125rem]': ['sm', 'md'].includes(size) },
+        { 'mr-[-0.125rem]': ['xs', 'sm', 'md'].includes(size) },
         { 'mr-[-0.1875rem]': ['lg'].includes(size) },
         { 'ml-2': !iconOnly },
         { 'ml-[-0.125rem]': ['sm', 'md'].includes(size) && iconOnly },
         { 'ml-[-0.1875rem]': ['lg'].includes(size) && iconOnly },
 
+        { 'w-3 h-3': ['xs'].includes(size) },
         { 'w-4 h-4': ['sm', 'md'].includes(size) },
         { 'w-6 h-6': size === 'lg' },
 
@@ -95,7 +98,7 @@ export default defineNuxtComponent({
     size: {
       type: String,
       default: 'md',
-      validator: (s) => ['sm', 'md', 'lg'].includes(s),
+      validator: (s) => ['xs', 'sm', 'md', 'lg'].includes(s),
     },
     type: {
       type: String,

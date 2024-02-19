@@ -5,7 +5,6 @@ export default {
       navigator.clipboard
         .writeText(`${runtimeConfig.public.appUrl}/invitations/${invitation.token}`)
         .then(() => {
-          this.$refs[`dropdown-${invitation.id}`][0].show = false
           this.$toast.success("Le lien d'invitation a été copié dans votre presse papier (CTRL+V)")
         })
         .catch((err) => {
@@ -43,6 +42,14 @@ export default {
     },
     roleLabel(role) {
       switch (role) {
+        case 'benevole':
+          return 'Bénévole'
+        case 'responsable_organisation':
+          return 'Responsable organisation'
+        case 'responsable_reseau':
+          return 'Responsable réseau'
+        case 'responsable_territoire':
+          return 'Responsable territoire'
         case 'referent_regional':
           return 'Référent régional'
         case 'referent_departemental':
