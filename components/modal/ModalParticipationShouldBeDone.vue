@@ -23,13 +23,13 @@
               v-model="has_participate"
               :options="[
                 { label: 'Oui, j’ai participé ✅', key: 'yes' },
-                { label: 'Non, mais probablement bientôt 🤞', key: 'not_yet' },
+                { label: 'Non, mais j’espère bientôt 🤞', key: 'not_yet' },
                 { label: 'Non, et j’annule ma participation ❌', key: 'no' },
               ]"
               classWrapper="space-y-4"
             />
           </BaseFormControl>
-          <div>Le responsable de la mission sera informé de votre action.</div>
+          <div>Le responsable de la mission sera informé de votre choix.</div>
         </div>
         <div v-else-if="step == 'has_confirm_participation'" class="space-y-6">
           <div>
@@ -72,8 +72,13 @@
         <div v-else-if="step == 'waiting_response'" class="space-y-3">
           <div>On espère que vous pourrez bientôt réaliser votre mission !</div>
           <div>
-            Si vous la réalisez ou si vous souhaitez annuler votre participation dans les prochaines
-            semaines ou prochains mois, nous vous invitons à mettre à jour votre participation.
+            Vous pourrez mettre à jour votre participation au moment où vous aurez réalisé la
+            mission depuis la plateforme JeVeuxAider.gouv.fr.
+          </div>
+          <div>
+            Si vous êtes en attente d’un retour du responsable, n’hésitez surtout pas à le relancer
+            en utilisant la messagerie de JeVeuxAider.gouv.fr, ou à contacter le support si vous
+            n'avez pas de réponse.
           </div>
         </div>
         <div v-else-if="step == 'has_cancel_participation'" class="space-y-3">
