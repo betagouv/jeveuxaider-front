@@ -138,7 +138,9 @@ export default defineNuxtComponent({
     }
   },
   mounted() {
-    this.$plausible.trackEvent('Validation bénévole - Opened')
+    if (this.isOpen) {
+      this.$plausible.trackEvent('Validation bénévole - Opened')
+    }
   },
   methods: {
     getFieldError(field) {
