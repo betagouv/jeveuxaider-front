@@ -51,13 +51,15 @@
           Proposer la mission
         </button>
         <BaseAlertDialog
-          theme="warning"
+          icon="RiErrorWarningLine"
           title="Proposer la mission"
-          :text="`${profile.first_name} ${profile.last_name[0]} recevra un e-mail pour l'inviter à participer à votre mission`"
           :is-open="showAlert"
           @confirm="$emit('clickedProposerMission', profile)"
           @cancel="showAlert = false"
-        />
+        >
+          {{ profile.first_name }} {{ profile.last_name[0] }} recevra un e-mail pour l'inviter à
+          participer à votre mission
+        </BaseAlertDialog>
       </template>
     </div>
   </div>

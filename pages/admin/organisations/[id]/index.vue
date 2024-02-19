@@ -243,50 +243,22 @@
             />
           </div>
           <template v-if="$route.hash === '#membres'">
-            <div class="space-y-2">
+            <div class="space-y-8">
               <BoxInvitations
-                v-if="queryInvitations && queryInvitations.length > 0"
-                :invitations="queryInvitations"
+                :title="`${$filters.pluralize(invitations.length, 'invitation')} en attente`"
+                v-if="invitations && invitations.length > 0"
+                :invitations="invitations"
                 @updated="fetch"
               />
-              <BoxMember
-                v-for="responsable in responsables"
-                :key="responsable.id"
-                :responsable="responsable.profile"
+
+              <BoxOrganisationMembers
+                :title="$filters.pluralize(responsables.length, 'membre')"
+                :responsables="responsables"
                 :organisation="organisation"
                 :conversable="organisation"
-                conversable-type="App\Models\Structure"
                 @updated="fetch"
                 @removed="fetch"
               />
-              <div class="space-x-2">
-                <BaseButton
-                  v-if="
-                    ['admin', 'responsable', 'tete_de_reseau'].includes($stores.auth.contextRole)
-                  "
-                  variant="white"
-                  @click.native="
-                    () => {
-                      showDrawerAddResponsable = false
-                      showDrawerInvitation = true
-                    }
-                  "
-                >
-                  <RiUserFill class="h-4 w-4 mr-2" /> Inviter un membre
-                </BaseButton>
-                <BaseButton
-                  v-if="['admin'].includes($stores.auth.contextRole)"
-                  variant="white"
-                  @click.native="
-                    () => {
-                      showDrawerAddResponsable = true
-                      showDrawerInvitation = false
-                    }
-                  "
-                >
-                  <RiAddLine class="h-4 w-4 mr-2" /> Ajouter un membre
-                </BaseButton>
-              </div>
             </div>
           </template>
           <template v-if="$route.hash === '#historique'">
@@ -313,7 +285,7 @@ import BoxInvitations from '@/components/section/BoxInvitations.vue'
 import BoxReferents from '@/components/section/BoxReferents.vue'
 import BoxReseau from '@/components/section/organisation/BoxReseau.vue'
 import BoxNotes from '@/components/custom/BoxNotes.vue'
-import BoxMember from '@/components/section/BoxMember.vue'
+import BoxOrganisationMembers from '@/components/section/BoxOrganisationMembers.vue'
 import BoxScore from '@/components/section/organisation/BoxScore.vue'
 import BoxAideModeration from '@/components/section/organisation/BoxAideModeration.vue'
 import HeaderActions from '@/components/section/organisation/HeaderActions.vue'
@@ -332,7 +304,7 @@ export default defineNuxtComponent({
     BoxReferents,
     BoxReseau,
     BoxNotes,
-    BoxMember,
+    BoxOrganisationMembers,
     BoxScore,
     BoxAideModeration,
     HeaderActions,
@@ -380,7 +352,7 @@ export default defineNuxtComponent({
       organisationStats: null,
       showDrawerInvitation: false,
       showDrawerAddResponsable: false,
-      queryInvitations: null,
+      invitations: null,
       responsables: [],
       isPinned: false,
     }
@@ -397,7 +369,7 @@ export default defineNuxtComponent({
 
       if (['admin', 'responsable', 'tete_de_reseau'].includes(this.$stores.auth.contextRole)) {
         apiFetch(`/structures/${route.params.id}/invitations`).then((response) => {
-          this.queryInvitations = response
+          this.invitations = response
         })
       }
 

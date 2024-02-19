@@ -74,9 +74,8 @@
 
     <BaseAlertDialog
       v-if="warning"
-      :text="warning"
       :is-open="showAlert"
-      theme="warning"
+      icon="RiErrorWarningLine"
       :title="warningTitle"
       @confirm="
         () => {
@@ -90,7 +89,8 @@
           showAlert = false
         }
       "
-    />
+      >{{ warning }}</BaseAlertDialog
+    >
   </div>
 </template>
 

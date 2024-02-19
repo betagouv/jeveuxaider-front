@@ -594,7 +594,7 @@
       title="Point de vigilance"
       button-label="Je confirme"
       cancel-label="Je ne propose pas ma mission pour le SNU"
-      theme="warning"
+      icon="RiErrorWarningLine"
       @cancel="handleSNUCancel"
       @confirm="handleSNUConfirm"
     >

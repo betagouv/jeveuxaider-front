@@ -1,7 +1,7 @@
 <template>
   <button
     :type="type"
-    class="inline-flex items-center border font-bold shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 hover:shadow-lg hover:scale-105 transform transition disabled:opacity-25 disabled:cursor-not-allowed fill-current"
+    class="inline-flex items-center border font-bold shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 hover:shadow-lg hover:scale-105 transition disabled:opacity-25 disabled:cursor-not-allowed fill-current"
     :class="[
       {
         'text-white bg-jva-blue-500 hover:bg-jva-blue-700 border-transparent focus:ring-jva-blue-500':

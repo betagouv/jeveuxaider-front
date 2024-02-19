@@ -29,16 +29,6 @@
         @update:modelValue="changeFilter('filter[search]', $event)"
       />
       <template #prefilters>
-        <!-- <Tag
-          :key="`toutes-${$route.fullPath}`"
-          as="button"
-          size="md"
-          context="selectable"
-          :is-active="!hasActiveFilters"
-          @click.native="deleteAllFilters"
-        >
-          Toutes
-        </Tag> -->
         <BaseFilterSelectAdvanced
           :key="`subject-type-${$route.fullPath}`"
           name="types"

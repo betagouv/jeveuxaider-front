@@ -3,7 +3,7 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        theme="warning"
+        icon="RiErrorWarningLine"
         :title="modalTitle"
         :prevent-click-outside="true"
         :hide-close="true"
@@ -14,7 +14,7 @@
             <p>
               Vous êtes sur le point de mettre en ligne toutes les missions validées gérées par
               <strong>{{ responsable.full_name }}</strong>
-              <span class="text-gray-500">#{{ responsable.id }}</span
+              <span class="text-gray-500"> #{{ responsable.id }}</span
               >. Les missions seront de nouveau visibles dans la recherche.
             </p>
             <p>
@@ -35,7 +35,7 @@
             <p>
               Vous êtes sur le point de mettre hors ligne toutes les missions validées gérées par
               <strong>{{ responsable.full_name }}</strong>
-              <span class="text-gray-500">#{{ responsable.id }}</span
+              <span class="text-gray-500"> #{{ responsable.id }}</span
               >. Les missions <strong>n'apparaîtront plus dans la recherche</strong> et il sera
               impossible pour de nouveaux bénévoles de s'y inscrire.
             </p>
@@ -56,17 +56,12 @@
         </div>
 
         <template #footer>
-          <BaseButton
-            :disabled="loading"
-            class="mr-3"
-            variant="white"
-            @click.native="$emit('cancel')"
-          >
+          <DsfrButton :disabled="loading" type="secondary" @click="$emit('cancel')">
             Annuler
-          </BaseButton>
-          <BaseButton :disabled="loading" :loading="loading" @click.native="onConfirm()">
+          </DsfrButton>
+          <DsfrButton :disabled="loading" :loading="loading" @click="onConfirm()">
             Confirmer
-          </BaseButton>
+          </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>
@@ -101,8 +96,8 @@ export default defineNuxtComponent({
   computed: {
     modalTitle() {
       return this.value
-        ? 'Mettre en ligne les missions validées du responsable'
-        : 'Mettre hors ligne les missions validées du responsable'
+        ? 'Mettre en ligne ses missions validées'
+        : 'Mettre hors ligne ses missions validées'
     },
     toastMessageSucess() {
       return this.value

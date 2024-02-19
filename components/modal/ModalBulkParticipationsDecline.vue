@@ -20,7 +20,7 @@
     </template>
 
     <template #submit>
-      <BaseButton type="submit" form="form-participation-decline"> Confirmer </BaseButton>
+      <DsfrButton is-submit form="form-participation-decline"> Confirmer </DsfrButton>
     </template>
   </ModalBulkOperations>
 </template>
@@ -71,7 +71,7 @@ export default defineNuxtComponent({
           return `Vous êtes sur le point de refuser ${this.$filters.pluralize(
             this.operations.length,
             'participation'
-          )}&nbsp;:`
+          )}`
       }
     },
   },

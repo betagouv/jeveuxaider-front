@@ -33,7 +33,7 @@
         aria-labelledby="menu-button"
         @keydown.esc="show = false"
       >
-        <div role="none">
+        <div role="none" @click="close">
           <slot name="items" />
         </div>
       </div>

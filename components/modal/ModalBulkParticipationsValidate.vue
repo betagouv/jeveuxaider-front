@@ -9,7 +9,7 @@
     @processed="$emit('processed')"
   >
     <template #initialState>
-      <p class="text-gray-600">
+      <p class="">
         {{ participationNames }}
       </p>
     </template>
@@ -60,7 +60,7 @@ export default defineNuxtComponent({
           return `Vous êtes sur le point de valider ${this.$filters.pluralize(
             this.operations.length,
             'participation'
-          )}&nbsp;:`
+          )}`
       }
     },
   },

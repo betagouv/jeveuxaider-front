@@ -63,22 +63,11 @@
                 { key: '-places_left', label: 'Nombre de bénévoles recherchés' },
               ]"
               :modelValue="$route.query['sort']"
-              placeholder="Les plus récentes"
+              placeholder="Trier par"
               @update:modelValue="changeFilter('sort', $event)"
             />
             <div aria-hidden class="bg-gray-600 mx-1 w-[1px] h-6" />
           </div>
-
-          <!-- <DsfrTag
-            :key="`toutes-${$route.fullPath}`"
-            as="button"
-            size="md"
-            context="selectable"
-            :is-active="!hasActiveFilters"
-            @click.native="deleteAllFilters"
-          >
-            Toutes
-          </DsfrTag> -->
 
           <template v-for="visibleFilter in visibleFilters" :key="visibleFilter">
             <BaseFilterSelectAdvanced
@@ -346,9 +335,9 @@
 
       <div class="my-6 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <CardMission
+          class="cursor-pointer"
           v-for="mission in queryResult.data"
           :key="mission.id"
-          class="cursor-pointer"
           :mission="mission"
           show-state
           :show-tags="['admin'].includes($stores.auth.contextRole)"
@@ -381,6 +370,7 @@ import MixinExport from '@/mixins/export'
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import ButtonCreateMission from '@/components/custom/ButtonCreateMission.vue'
 import MixinFiltersVisibility from '@/mixins/filters-visibility'
+import activitiesJson from '@/assets/activities.json'
 
 export default defineNuxtComponent({
   components: {
@@ -413,15 +403,15 @@ export default defineNuxtComponent({
       responsables = responsablesResponse.map((user) => user.profile) ?? []
     }
 
-    const activities = await apiFetch('/activities', {
-      params: {
-        pagination: 999,
-        'filter[is_published]': 1,
-      },
-    })
+    // const activities = await apiFetch('/activities', {
+    //   params: {
+    //     pagination: 999,
+    //     'filter[is_published]': 1,
+    //   },
+    // })
 
     return {
-      activities: activities.data,
+      // activities: activities.data,
       responsables,
     }
   },
@@ -440,6 +430,7 @@ export default defineNuxtComponent({
       tags: [],
       responsablesStructures: [],
       autocompleteOptionsZips: [],
+      activities: activitiesJson.sort((a, b) => a.name.localeCompare(b.name)),
     }
   },
   computed: {

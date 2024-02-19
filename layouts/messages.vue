@@ -33,7 +33,7 @@
         <NuxtPage class="lg:flex-1" />
       </div>
 
-      <div id="teleport-drawer" class="relative z-20"></div>
+      <div id="teleport-drawer" class="relative z-50"></div>
       <div id="teleport-body-end"></div>
     </div>
   </div>

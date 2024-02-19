@@ -33,5 +33,6 @@ export default defineNuxtComponent({
       default: 'md',
     },
   },
+  methods: {},
 })
 </script>

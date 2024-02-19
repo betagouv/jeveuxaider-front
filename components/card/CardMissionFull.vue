@@ -117,15 +117,10 @@ export default defineNuxtComponent({
       nbPortraits: 5,
     }
   },
-  async setup() {
-    const { formatAutonomyCities } = await autonomyCitiesHelper()
-    return {
-      formatAutonomyCities,
-    }
-  },
   computed: {
     autonomyCities() {
-      return this.formatAutonomyCities(this.mission.autonomy_zips)
+      const { formatAutonomyCities } = autonomyCitiesHelper()
+      return formatAutonomyCities(this.mission.autonomy_zips)
     },
   },
   methods: {

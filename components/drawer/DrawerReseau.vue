@@ -2,13 +2,14 @@
   <BaseDrawer :is-open="Boolean(reseauId)" @close="$emit('close')">
     <BaseAlertDialog
       v-if="reseau"
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Supprimer le réseau"
-      :text="`Vous êtes sur le point de supprimer le réseau ${reseau.name}.`"
       :is-open="showAlert"
       @confirm="handleConfirmDelete()"
       @cancel="showAlert = false"
-    />
+    >
+      Vous êtes sur le point de supprimer le réseau {{ reseau.name }}.
+    </BaseAlertDialog>
     <template #title>
       <BaseHeading v-if="reseau" :level="3" class="text-jva-blue-500">
         <nuxt-link

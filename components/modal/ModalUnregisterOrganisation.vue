@@ -5,7 +5,7 @@
         <template v-if="canUnsubscribe">
           <BaseModal
             :is-open="isOpen"
-            theme="danger"
+            icon="RiErrorWarningLine"
             title="Désinscription de mon organisation"
             :prevent-click-outside="true"
             @close="$emit('cancel')"
@@ -28,19 +28,17 @@
             </div>
 
             <template #footer>
-              <BaseButton class="mr-3" variant="white" @click.native="$emit('cancel')">
-                Retour
-              </BaseButton>
-              <BaseButton variant="red" @click.native="handleSubmitUnregister">
+              <DsfrButton type="secondary" @click.native="$emit('cancel')"> Annuler </DsfrButton>
+              <DsfrButton @click.native="handleSubmitUnregister">
                 Désinscrire mon organisation
-              </BaseButton>
+              </DsfrButton>
             </template>
           </BaseModal>
         </template>
         <template v-else>
           <BaseModal
             :is-open="isOpen"
-            theme="danger"
+            icon="RiErrorWarningLine"
             title="Demande de désinscription"
             :prevent-click-outside="true"
             @close="$emit('cancel')"
@@ -75,12 +73,10 @@
             </div>
 
             <template #footer>
-              <BaseButton class="mr-8 hover:underline" type="transparent" @click="$emit('cancel')">
-                Retour
-              </BaseButton>
-              <BaseButton variant="red" @click.native="handleSubmitAskToUnregister">
+              <DsfrButton type="secondary" @click="$emit('cancel')"> Retour </DsfrButton>
+              <DsfrButton @click.native="handleSubmitAskToUnregister">
                 Je soumets ma demande
-              </BaseButton>
+              </DsfrButton>
             </template>
           </BaseModal>
         </template>
