@@ -200,6 +200,15 @@ export default defineNuxtComponent({
         },
         {
           tab: 'benevoles',
+          key: 'benevole_participation_will_start',
+          label: 'Votre mission commence très prochainement 👟',
+          description:
+            'Notification envoyée au bénévole lorsque sa participation est validée et que la mission commence demain. Seulement pour les missions ponctuelles.',
+          tags: ['app-benevole-participation-will-start'],
+          is_updated: true,
+        },
+        {
+          tab: 'benevoles',
           key: 'user_banned_not_regular_resident',
           label: 'Vous avez été automatiquement désinscrit de la plateforme JeVeuxAider.gouv.fr',
           description:
