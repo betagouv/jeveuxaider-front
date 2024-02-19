@@ -76,7 +76,7 @@
               { key: '-last_sent_at', label: 'Les dernières envoyées' },
             ]"
             :modelValue="$route.query['sort']"
-            placeholder="Les plus récentes"
+            placeholder="Trier par"
             @update:modelValue="changeFilter('sort', $event)"
           />
           <div aria-hidden class="bg-gray-600 mx-1 w-[1px] h-6" />

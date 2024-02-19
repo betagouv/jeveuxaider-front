@@ -59,7 +59,7 @@
                 { key: '-places_left', label: 'Nombre de bénévoles recherchés' },
               ]"
               :modelValue="$route.query['sort']"
-              placeholder="Les plus récentes"
+              placeholder="Trier par"
               options-class="!min-w-[280px]"
               @update:modelValue="changeFilter('sort', $event)"
             />

@@ -200,15 +200,10 @@ export default defineNuxtComponent({
       default: false,
     },
   },
-  async setup() {
-    const { formatAutonomyCities } = await autonomyCitiesHelper()
-    return {
-      formatAutonomyCities,
-    }
-  },
   computed: {
     autonomyCities() {
-      return this.formatAutonomyCities(this.mission.autonomy_zips)
+      const { formatAutonomyCities } = autonomyCitiesHelper()
+      return formatAutonomyCities(this.mission.autonomy_zips)
     },
     placesLeftText() {
       if (!this.mission.is_registration_open) {

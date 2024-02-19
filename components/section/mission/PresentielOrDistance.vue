@@ -61,11 +61,9 @@
 export default defineNuxtComponent({
   async setup() {
     const runtimeConfig = useRuntimeConfig()
-    const { formatAutonomyCities } = await autonomyCitiesHelper()
 
     return {
       googlePlacesKey: runtimeConfig.public.google.places,
-      formatAutonomyCities,
     }
   },
   props: {
@@ -85,7 +83,8 @@ export default defineNuxtComponent({
       return null
     },
     autonomyCities() {
-      return this.formatAutonomyCities(this.mission.autonomy_zips)
+      const { formatAutonomyCities } = autonomyCitiesHelper()
+      return formatAutonomyCities(this.mission.autonomy_zips)
     },
     googleQuery() {
       return this.mission.is_autonomy

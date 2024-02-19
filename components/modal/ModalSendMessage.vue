@@ -108,7 +108,7 @@ export default defineNuxtComponent({
               conversableType: this.conversableType,
             },
           })
-          console.log(conversation)
+          // console.log(conversation)
           this.$router.push(`/messages/${conversation.id}`)
         })
         .catch((errors) => {
