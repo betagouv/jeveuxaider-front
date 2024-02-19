@@ -35,7 +35,7 @@
         </div>
         <div class="flex flex-wrap items-center justify-center gap-2">
           <DsfrBadge v-for="date in participation.slots" :key="date.id" size="md" no-icon>
-            {{ $dayjs(date.date).format('dddd D MMMM')
+            {{ $dayjs(date.date).format('dddd D MMMM YYYY')
             }}<span class="font-normal text-gray-600">
               :
               {{ date.slots.map((slot) => $filters.label(slot, 'slots')).join(', ') }}</span
