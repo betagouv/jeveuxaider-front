@@ -160,10 +160,10 @@
               Le {{ $dayjs(invitation.last_sent_at).format('D MMM YYYY HH:mm:ss') }}
             </div>
           </BaseTableRowCell>
-          <BaseTableRowCell class="max-w-[120px]">
+          <BaseTableRowCell class="max-w-[70px]">
             <BaseDropdown>
               <template #button>
-                <DsfrButton type="secondary" size="sm" icon="RiSettings4Line">Actions</DsfrButton>
+                <DsfrButton size="xs" type="tertiary" icon="RiMoreFill" icon-only />
               </template>
               <template #items>
                 <div class="w-56 py-2">
