@@ -304,6 +304,7 @@ import ModalBulkParticipationsValidate from '@/components/modal/ModalBulkPartici
 import ModalBulkParticipationsDecline from '@/components/modal/ModalBulkParticipationsDecline.vue'
 import MixinUsetiful from '@/mixins/usetiful.client.js'
 import MixinFiltersVisibility from '@/mixins/filters-visibility'
+import activitiesJson from '@/assets/activities.json'
 
 export default defineNuxtComponent({
   components: {
@@ -328,12 +329,12 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
 
-    const activities = await apiFetch('/activities', {
-      params: {
-        pagination: 999,
-        'filter[is_published]': 1,
-      },
-    })
+    // const activities = await apiFetch('/activities', {
+    //   params: {
+    //     pagination: 999,
+    //     'filter[is_published]': 1,
+    //   },
+    // })
 
     let responsables = []
     if ($stores.auth.contextRole === 'responsable' && $stores.auth.contextableId) {
@@ -345,7 +346,7 @@ export default defineNuxtComponent({
     }
 
     return {
-      activities: activities.data,
+      // activities: activities.data,
       responsables: responsables,
     }
   },
@@ -367,6 +368,7 @@ export default defineNuxtComponent({
       autocompleteOptionsZips: [],
       showModalBulkParticipationsValidate: false,
       showModalBulkParticipationsDecline: false,
+      activities: activitiesJson.sort((a, b) => a.name.localeCompare(b.name)),
     }
   },
   computed: {

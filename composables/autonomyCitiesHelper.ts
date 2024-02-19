@@ -1,4 +1,4 @@
-export const autonomyCitiesHelper = async () => {
+export const autonomyCitiesHelper = () => {
   const formatAutonomyCities = (autonomyCities: any[]) => {
     if (autonomyCities?.length) {
       const groupedByCity = autonomyCities.reduce((accumulator, current) => {

@@ -83,18 +83,13 @@ export default defineNuxtComponent({
       default: 'Informations',
     },
   },
-  async setup() {
-    const { formatAutonomyCities } = await autonomyCitiesHelper()
-    return {
-      formatAutonomyCities,
-    }
-  },
   computed: {
     missionType() {
       return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
     },
     autonomyCities() {
-      return this.formatAutonomyCities(this.mission.autonomy_zips)
+      const { formatAutonomyCities } = autonomyCitiesHelper()
+      return formatAutonomyCities(this.mission.autonomy_zips)
     },
   },
 })

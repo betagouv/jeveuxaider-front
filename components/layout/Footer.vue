@@ -196,40 +196,43 @@
 
     <div class="bg-white py-8">
       <div class="container">
-        <div class="lg:flex">
-          <nuxt-link
-            no-prefetch
-            to="/"
-            class="flex flex-col gap-4 sm:gap-6 sm:flex-row lg:gap-8 xl:gap-12"
-          >
-            <img
-              src="@/assets/images/republique-francaise-logo.svg"
-              alt="République Française"
-              width="6500"
-              height="5870"
-              class="w-[76px] lg:w-[127px]"
-            />
+        <div class="lg:flex lg:justify-between lg:items-center lg:gap-8">
+          <div class="">
+            <nuxt-link
+              no-prefetch
+              to="/"
+              class="flex flex-col flex-wrap gap-4 sm:gap-6 sm:flex-row lg:gap-8 xl:gap-12"
+            >
+              <img
+                src="@/assets/images/republique-francaise-logo.svg"
+                alt="République Française"
+                width="6500"
+                height="5870"
+                class="w-[76px] lg:w-[127px]"
+              />
 
-            <img src="@/assets/images/jeveuxaider-logo.svg" alt="" width="251" height="41" />
-          </nuxt-link>
+              <img src="@/assets/images/jeveuxaider-logo.svg" alt="" width="251" height="41" />
+            </nuxt-link>
+          </div>
 
-          <div class="ml-auto lg:pl-16">
+          <div class="max-w-[600px]">
             <div class="text-[#383838] text-sm lg:max-w-lg leading-relaxed mt-8 mb-6">
               Trouvez une mission d'intérêt général auprès d'un organisme public
               <br class="hidden md:block" />
               ou associatif et faites vivre les valeurs de la République.
             </div>
 
-            <div class="flex flex-wrap -mx-3 -my-2">
+            <div class="flex flex-wrap gap-3">
               <a
                 v-for="link in gouvLinks"
                 :key="link.url"
-                class="hover:underline font-bold text-sm px-3 py-2"
+                class="hover:underline flex items-center gap-1 font-bold text-sm text-[#3A3A3A] mr-2"
                 :href="link.url"
                 target="_blank"
                 rel="noopener"
               >
                 {{ link.name }}
+                <RiExternalLinkLine class="relative top-[-1px] h-4 w-4 fill-current" />
               </a>
             </div>
           </div>
@@ -326,9 +329,18 @@ export default defineNuxtComponent({
           name: 'service-public.fr',
           url: 'https://service-public.fr',
         },
+
         {
           name: 'data.gouv.fr',
           url: 'https://www.data.gouv.fr',
+        },
+        {
+          name: 'snu.gouv.fr',
+          url: 'https://www.snu.gouv.fr/',
+        },
+        {
+          name: 'service-civique.gouv.fr',
+          url: 'https://www.service-civique.gouv.fr/',
         },
       ],
     }
