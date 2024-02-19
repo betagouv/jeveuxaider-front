@@ -20,7 +20,7 @@
           <div class="text-black whitespace-pre-line" v-html="messageFormatted" />
         </div>
         <div :class="['text-xs text-[#666666] mt-2', { 'text-right': isFromMe }]">
-          {{ $dayjs(message.created_at).format('D MMM • HH[h]mm') }}
+          {{ $dayjs(message.created_at).format('D MMM YYYY • HH[h]mm') }}
         </div>
       </div>
     </div>
