@@ -30,6 +30,14 @@
       <template v-if="message.contextual_state == 'Désinscription'">
         L'utilisateur s'est désinscrit de la plateforme
       </template>
+      <template v-if="message.contextual_state == 'Annulée'">
+        <template v-if="message.contextual_reason == 'user_unsubscribed'">
+          L'utilisateur s'est désinscrit de la plateforme
+        </template>
+        <template v-if="message.contextual_reason == 'user_archived'">
+          L'utilisateur est inactif depuis plus de 3 ans
+        </template>
+      </template>
       <template v-if="message.contextual_state == 'Automatiquement déclinée par la plateforme'">
         <template v-if="message.contextual_reason == 'not_regular_resident'">
           L'utilisateur ne réside pas sur le territoire français

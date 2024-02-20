@@ -116,8 +116,12 @@ import RiUserAdd from 'vue-remix-icons/icons/ri-user-add-line.vue'
 import RiSpy from 'vue-remix-icons/icons/ri-spy-line.vue'
 import RiMailStar from 'vue-remix-icons/icons/ri-mail-star-line.vue'
 import RiUserForbid from 'vue-remix-icons/icons/ri-user-forbid-line.vue'
+import RiInboxArchiveLine from 'vue-remix-icons/icons/ri-inbox-archive-line.vue'
+import RiInboxUnarchiveLine from 'vue-remix-icons/icons/ri-inbox-unarchive-line.vue'
 
 const components = {
+  RiInboxArchiveLine,
+  RiInboxUnarchiveLine,
   RiTimeLine,
   RiFileDownloadLine,
   RiTodoLine,

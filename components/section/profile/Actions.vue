@@ -69,7 +69,8 @@
         @click="showModalArchive = true"
       >
         <div class="flex items-center">
-          <RiUserForbid class="h-4 w-4 mr-2 fill-current text-gray-600" /> Archiver l'utilisateur
+          <RiInboxArchiveLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Archiver
+          l'utilisateur
         </div>
       </BaseDropdownOptionsItem>
       <BaseDropdownOptionsItem
@@ -77,7 +78,8 @@
         @click="showModalUnarchive = true"
       >
         <div class="flex items-center">
-          <RiUserFollow class="h-4 w-4 mr-2 fill-current text-gray-600" /> Désarchiver l'utilisateur
+          <RiInboxUnarchiveLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Désarchiver
+          l'utilisateur
         </div>
       </BaseDropdownOptionsItem>
       <BaseDropdownOptionsItem
