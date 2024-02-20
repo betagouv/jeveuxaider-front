@@ -224,9 +224,9 @@ export default defineNuxtComponent({
       this.refreshMission()
       this.showModalSwitchIsOnline = false
     },
-    handleDuplicated(mission) {
-      console.log('new mission', mission)
-    },
+    // handleDuplicated(mission) {
+    //   console.log('new mission', mission)
+    // },
   },
 })
 </script>

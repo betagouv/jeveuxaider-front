@@ -91,11 +91,8 @@
             />
 
             <template #footer slot-scope="">
-              <BaseButton class="mr-3" variant="white" @click.native="showModal = false">
-                Annuler
-              </BaseButton>
-
-              <BaseButton @click.native="doCrop"> Valider </BaseButton>
+              <DsfrButton type="secondary" @click="showModal = false"> Annuler </DsfrButton>
+              <DsfrButton @click="doCrop"> Valider </DsfrButton>
             </template>
           </BaseModal>
         </Teleport>

@@ -4,21 +4,22 @@
       <template v-if="isReady">
         <template v-if="modalToShow === 'unsubscibe-user'">
           <BaseAlertDialog
-            theme="danger"
+            icon="RiErrorWarningLine"
             title="Supprimer mon compte"
             button-label="Supprimer mon compte"
-            text="Attention, cette action est irréversible et toutes vos données de la plateforme JeVeuxAider.gouv.fr seront anonymisées."
             :is-open="isOpen"
             @confirm="handleUnsubscribeUser()"
             @cancel="$emit('cancel')"
-          />
+          >
+            Attention, cette action est irréversible et toutes vos données de la plateforme
+            JeVeuxAider.gouv.fr seront anonymisées.
+          </BaseAlertDialog>
         </template>
         <template v-if="modalToShow === 'leave-structure-and-unsubscibe-user'">
           <BaseAlertDialog
-            theme="danger"
+            icon="RiErrorWarningLine"
             title="Supprimer mon compte"
             button-label="Supprimer mon compte"
-            text=""
             :is-open="isOpen"
             @confirm="handleLeaveStructureAndUnsubscribeUser()"
             @cancel="$emit('cancel')"
@@ -42,7 +43,7 @@
         <template v-if="modalToShow === 'contact-admin'">
           <BaseModal
             :is-open="isOpen"
-            theme="danger"
+            icon="RiErrorWarningLine"
             title="Demande de désinscription"
             :prevent-click-outside="true"
             @close="$emit('cancel')"
@@ -65,19 +66,15 @@
               </p>
             </div>
             <template #footer>
-              <BaseButton class="mr-8 hover:underline" type="transparent" @click="$emit('cancel')">
-                Retour
-              </BaseButton>
-              <BaseButton variant="red" @click.native="handleContactAdmin">
-                Je soumets ma demande
-              </BaseButton>
+              <DsfrButton type="secondary" @click="$emit('cancel')"> Retour </DsfrButton>
+              <DsfrButton @click.native="handleContactAdmin"> Je soumets ma demande </DsfrButton>
             </template>
           </BaseModal>
         </template>
         <template v-if="modalToShow === 'select-new-responsable-and-unsubscribe-user'">
           <BaseModal
             :is-open="isOpen"
-            theme="danger"
+            icon="RiErrorWarningLine"
             title="Supprimer mon compte"
             :prevent-click-outside="true"
             @close="$emit('cancel')"
@@ -120,24 +117,21 @@
             </div>
 
             <template #footer>
-              <BaseButton class="mr-8 hover:underline" type="transparent" @click="$emit('cancel')">
-                Retour
-              </BaseButton>
-              <BaseButton
+              <DsfrButton type="secondary" @click="$emit('cancel')"> Retour </DsfrButton>
+              <DsfrButton
                 :loading="loading"
-                variant="red"
-                type="submit"
+                is-submit
                 @click.native="handleSetNewResponsableAndUnsubscribeUser"
               >
                 Supprimer mon compte
-              </BaseButton>
+              </DsfrButton>
             </template>
           </BaseModal>
         </template>
         <template v-if="modalToShow === 'unsubscibe-organisation-and-user'">
           <BaseModal
             :is-open="isOpen"
-            theme="danger"
+            icon="RiErrorWarningLine"
             title="Supprimer mon compte"
             :prevent-click-outside="true"
             @close="$emit('cancel')"
@@ -170,12 +164,10 @@
             </div>
 
             <template #footer>
-              <BaseButton class="mr-8 hover:underline" type="transparent" @click="$emit('cancel')">
-                Retour
-              </BaseButton>
-              <BaseButton variant="red" @click.native="handleUnsubscribeStructureAndUser">
+              <DsfrButton type="secondary" @click="$emit('cancel')"> Retour </DsfrButton>
+              <DsfrButton @click.native="handleUnsubscribeStructureAndUser">
                 Supprimer mon compte
-              </BaseButton>
+              </DsfrButton>
             </template>
           </BaseModal>
         </template>

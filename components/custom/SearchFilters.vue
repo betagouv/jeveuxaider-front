@@ -30,7 +30,7 @@ export default defineNuxtComponent({
       return !!this.$slots.sorts
     },
     hasActiveFilters() {
-      return Object.keys(this.$route.query).some((q) => q !== 'page')
+      return Object.keys(this.$route.query).some((q) => !['page', 'sort'].includes(q))
     },
   },
 })

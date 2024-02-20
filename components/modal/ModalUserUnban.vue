@@ -3,7 +3,7 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        theme="warning"
+        icon="RiErrorWarningLine"
         title="Débloquer l'utilisateur"
         :prevent-click-outside="true"
         @close="$emit('cancel')"
@@ -15,10 +15,8 @@
         </p>
 
         <template #footer>
-          <BaseButton class="mr-3" variant="white" @click.native="$emit('cancel')">
-            Annuler
-          </BaseButton>
-          <BaseButton type="submit" @click.native="$emit('confirm')"> Confirmer </BaseButton>
+          <DsfrButton type="secondary" @click.native="$emit('cancel')"> Annuler </DsfrButton>
+          <DsfrButton is-submit @click.native="$emit('confirm')"> Confirmer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>

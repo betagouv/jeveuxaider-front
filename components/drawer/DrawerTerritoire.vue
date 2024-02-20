@@ -2,13 +2,14 @@
   <BaseDrawer :is-open="Boolean(territoireId)" @close="$emit('close')">
     <BaseAlertDialog
       v-if="territoire"
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Supprimer le territoire"
-      :text="`Vous êtes sur le point de supprimer le territoire ${territoire.name}.`"
       :is-open="showAlert"
       @confirm="handleConfirmDelete()"
       @cancel="showAlert = false"
-    />
+    >
+      Vous êtes sur le point de supprimer le territoire {{ territoire.name }}.
+    </BaseAlertDialog>
     <template #title>
       <BaseHeading v-if="territoire" :level="3" class="text-jva-blue-500">
         <nuxt-link

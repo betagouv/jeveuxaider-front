@@ -1,12 +1,13 @@
 <template>
   <BaseAlertDialog
-    theme="danger"
+    icon="RiErrorWarningLine"
     title="Supprimer l'organisation"
-    :text="`Vous êtes sur le point de supprimer l'organisation ${organisation.name}.`"
     :is-open="showModalDelete"
     @confirm="handleConfirmDelete()"
     @cancel="showModalDelete = false"
-  />
+  >
+    Vous êtes sur le point de supprimer l'organisation {{ organisation.name }}.
+  </BaseAlertDialog>
   <BaseDrawer
     :is-open="showDrawerAddResponsable"
     form-id="form-add-responsable"
@@ -66,34 +67,37 @@
           </div>
         </BaseDropdownOptionsItem>
       </NuxtLink>
-      <BaseDropdownOptionsItem>
+      <BaseDropdownOptionsItem
+        @click.native="
+          () => {
+            showDrawerInvitation = true
+            showDrawerAddResponsable = false
+          }
+        "
+      >
         <div
           class="flex items-center"
           v-if="['admin', 'responsable', 'tete_de_reseau'].includes($stores.auth.contextRole)"
           variant="white"
-          @click.native="
-            () => {
-              showDrawerInvitation = true
-              showDrawerAddResponsable = false
-            }
-          "
         >
           <RiUserAdd class="h-4 w-4 mr-2" /> Inviter un membre
         </div>
       </BaseDropdownOptionsItem>
-      <BaseDropdownOptionsItem v-if="['admin'].includes($stores.auth.contextRole)">
+      <BaseDropdownOptionsItem
+        v-if="['admin'].includes($stores.auth.contextRole)"
+        @click="
+          () => {
+            showDrawerAddResponsable = true
+            showDrawerInvitation = false
+          }
+        "
+      >
         <div
           class="flex items-center"
           v-tooltip="{
             content: 'L\'utilisateur ajouté à l\'organisation ne recevra pas de notifications.',
           }"
           variant="white"
-          @click.native="
-            () => {
-              showDrawerAddResponsable = true
-              showDrawerInvitation = false
-            }
-          "
         >
           <RiUserAdd class="h-4 w-4 mr-2" /> Ajouter un membre
         </div>

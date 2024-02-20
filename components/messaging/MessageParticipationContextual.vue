@@ -1,7 +1,7 @@
 <template>
   <div class="text-center">
     <div class="text-xs text-[#666666]">
-      {{ $dayjs(message.created_at).format('D MMM HH[h]mm') }}
+      {{ $dayjs(message.created_at).format('D MMM YYYY • HH[h]mm') }}
     </div>
     <div v-if="badge">
       <span class="text-[#161616] font-bold">{{ badge.prepend }}</span>

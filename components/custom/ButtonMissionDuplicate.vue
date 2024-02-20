@@ -35,13 +35,15 @@
       </div>
     </div>
     <BaseAlertDialog
-      theme="warning"
+      icon="RiErrorWarningLine"
       title="Dupliquer la mission"
-      :text="`Vous êtes sur le point de dupliquer la mission <strong>${mission.name}</strong> qui sera enregistrée en « <strong>Brouillon</strong> »`"
       :is-open="showDialog"
       @confirm="handleConfirm()"
       @cancel="showDialog = false"
-    />
+    >
+      Vous êtes sur le point de dupliquer la mission <strong>{{ mission.name }}</strong> qui sera
+      enregistrée en « <strong>Brouillon</strong> »
+    </BaseAlertDialog>
   </div>
 </template>
 

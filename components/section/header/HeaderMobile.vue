@@ -36,7 +36,7 @@
           >
             <template v-if="!showMobileMenu">
               <span class="sr-only">Open main menu</span>
-              <Bars3Icon class="h-8 w-8" />
+              <Bars3Icon class="h-6 w-6" />
             </template>
 
             <template v-else>
@@ -238,6 +238,11 @@ export default defineNuxtComponent({
             isActive: this.isBenevolatADistanceActiveLink(),
           },
           {
+            name: '🔥 En ce moment',
+            to: '/en-ce-moment',
+            isActive: this.isActiveLink('/en-ce-moment'),
+          },
+          {
             name: 'Associations',
             to: '/organisations',
             isActive: this.isActiveLink('/organisations'),
@@ -427,6 +432,11 @@ export default defineNuxtComponent({
           name: 'Mes missions',
           to: '/profile/missions',
           isActive: this.isActiveLink('profile/missions'),
+        },
+        {
+          name: '🔥 En ce moment',
+          to: '/en-ce-moment',
+          isActive: this.isActiveLink('/en-ce-moment'),
         },
         {
           name: 'Banques alimentaires 🛒',

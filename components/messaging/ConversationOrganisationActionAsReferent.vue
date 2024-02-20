@@ -61,14 +61,6 @@
         </template>
       </BaseDropdown>
     </div>
-    <!-- <BaseAlertDialog
-      theme="warning"
-      title="Changement de statut"
-      text="Vous êtes sur le point de passer la candidature en cours de traitement"
-      :is-open="showInProgressParticipationModal"
-      @confirm="handleInProgressParticipation()"
-      @cancel="showInProgressParticipationModal = false"
-    /> -->
     <ModalOrganisationValidate
       :organisation="organisation"
       :is-open="showValidateOrganisationModal"

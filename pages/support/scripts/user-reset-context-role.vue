@@ -2,14 +2,17 @@
   <div>
     <BaseAlertDialog
       v-if="form.profile"
-      theme="danger"
+      icon="RiErrorWarningLine"
       title="Êtes-vous sûrs ?"
-      :text="`Vous êtes sur le point de réinitialiser le rôle de « ${form.profile.full_name} #${form.profile.id} ».`"
       :is-open="showAlert"
       button-label="Oui, je confirme"
       @confirm="handleConfirmSubmit()"
       @cancel="showAlert = false"
-    />
+    >
+      Vous êtes sur le point de réinitialiser le rôle de « {{ form.profile.full_name }} #{{
+        form.profile.id
+      }} ».
+    </BaseAlertDialog>
 
     <ClientOnly>
       <Teleport to="#teleport-breadcrumb">
