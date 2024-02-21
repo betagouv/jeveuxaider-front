@@ -151,15 +151,25 @@
         </div>
       </div>
     </div>
+    <ModalUserUnarchive
+      v-if="showModalUnarchive"
+      :is-open="showModalUnarchive"
+      @cancel="showModalUnarchive = false"
+      @create-new-account="() => $router.push('/inscription/benevole?email=' + form.email)"
+      :email="form.email"
+    />
   </div>
 </template>
 
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import ModalUserUnarchive from '@/components/modal/ModalUserUnarchive.vue'
 
 export default defineNuxtComponent({
-  components: {},
+  components: {
+    ModalUserUnarchive,
+  },
   mixins: [FormErrors],
   setup() {
     definePageMeta({
@@ -198,9 +208,10 @@ export default defineNuxtComponent({
         password: '',
       },
       formSchema: object({
-        email: string().required().email(),
-        password: string().required(),
+        email: string().required('Le champs email est requis').email(),
+        password: string().required('Le champs mot de passe est requis'),
       }),
+      showModalUnarchive: false,
     }
   },
   methods: {
@@ -212,9 +223,15 @@ export default defineNuxtComponent({
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          const errorLogin = await this.$stores.auth.login(this.form)
-          if (!errorLogin) {
-            navigateTo(this.$route.query?.redirect ?? '/')
+          const response = await apiFetch(`/user/archive/exist`, {
+            method: 'POST',
+            body: { email: this.form.email },
+          })
+          console.log('userArchiveExist', response)
+          if (response.exist === true) {
+            this.showModalUnarchive = true
+          } else {
+            this.login()
           }
         })
         .catch((errors) => {
@@ -223,6 +240,16 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
+    },
+    async login() {
+      const errorLogin = await this.$stores.auth.login(this.form)
+      if (!errorLogin) {
+        navigateTo(this.$route.query?.redirect ?? '/')
+      }
+    },
+    onCancelUnarchive() {
+      this.showModalUnarchive = false
+      this.$router.push('/inscription/benevole')
     },
   },
 })
