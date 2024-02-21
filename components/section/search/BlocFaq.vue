@@ -3,7 +3,7 @@
     <div class="container">
       <DsfrHeading as="h2" size="alt-md" class="py-16 xl:pt-24 xl:pb-24 text-center">
         <span class="relative">
-          <span>Le bénévolat en quelques mots</span>
+          <span>{{ title }}</span>
           <img
             src="/images/home/sparkle-right.svg"
             alt=""
@@ -713,3 +713,14 @@
     </div>
   </div>
 </template>
+
+<script>
+export default defineNuxtComponent({
+  props: {
+    title: {
+      type: String,
+      default: 'Le bénévolat en quelques mots',
+    },
+  },
+})
+</script>

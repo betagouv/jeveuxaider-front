@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <template v-if="mission.places_left > 0 && mission.is_active">
+      <template v-if="mission.places_left > 0 && mission.is_online">
         <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
         <div class="flex justify-center text-sm">
           <BaseLink :to="`/admin/missions/${mission.id}/trouver-des-benevoles`">
@@ -34,7 +34,7 @@
           </BaseLink>
         </div>
       </template>
-      <template v-if="mission.places_left > 0 && mission.is_active">
+      <template v-if="mission.places_left > 0 && mission.is_online">
         <div class="border-t -mx-4 xl:-mx-6 mt-4 mb-4" />
         <div class="flex justify-center text-sm">
           <BaseLink

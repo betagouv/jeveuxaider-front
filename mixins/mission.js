@@ -20,6 +20,20 @@ export default {
     activities() {
       return [this.activity, this.activitySecondary].filter(Boolean)
     },
+    badgeTypeMissionSate() {
+      switch (this.mission.state) {
+        case 'Validée':
+          return 'success'
+        case 'Signalée':
+        case 'Annulée':
+          return 'error'
+        case 'En attente de validation':
+        case 'En cours de traitement':
+          return 'warning'
+        default:
+          return 'info'
+      }
+    },
     thumbnail() {
       return this.mission.provider == 'api_engagement'
         ? this.thumbnailApi
@@ -68,15 +82,6 @@ export default {
       const filepath = `/images/missions/api_engagement/${filename}`
       return `${filepath}.webp, ${filepath}@2x.webp 2x, ${filepath}.jpg, ${filepath}@2x.jpg 2x`
     },
-    hasPageOnline() {
-      if (!this.mission?.structure) {
-        return false
-      }
-      return (
-        this.mission.structure.state === 'Validée' &&
-        ['Validée', 'Terminée'].includes(this.mission.state)
-      )
-    },
     canEditStatut() {
       const rolesWhoCanEdit = this.$filters.label(
         this.mission.state,
@@ -114,7 +119,7 @@ export default {
       if (!this.mission.is_registration_open) {
         return false
       }
-      if (!this.mission.is_active) {
+      if (!this.mission.is_online) {
         return false
       }
 
@@ -130,6 +135,14 @@ export default {
       }
 
       return false
+    },
+    canDuplicateMission() {
+      return (
+        !!this.mission.structure?.state &&
+        !['Brouillon', 'Signalée', 'Désinscrite'].includes(this.mission.structure.state) &&
+        this.$stores.auth.user?.profile?.mobile &&
+        !this.$stores.auth.user.statistics?.missions_offline_count
+      )
     },
     formattedDates() {
       const startDate = this.mission.start_date
@@ -222,6 +235,72 @@ export default {
         return "en moins d'un jour"
       }
     },
+    hasSecondaryDomain() {
+      return (
+        (this.mission.template && this.mission.template.domaine_secondary_id) ||
+        this.mission.domaine_secondary_id
+      )
+    },
+    isIdealPourDebuter() {
+      return (
+        (!this.$stores.auth.isLogged ||
+          this.$stores.auth.user?.statistics?.participations_count === 0) &&
+        this.mission.structure?.score >= 80
+      )
+    },
+    isMissionCourte() {
+      return this.mission.commitment__total <= 4
+    },
+    placesOccupied() {
+      return this.mission.participations_max - this.mission.places_left
+    },
+    placesLeftText() {
+      if (!this.mission.is_registration_open) {
+        return 'Inscription fermée'
+      } else if (
+        this.mission.publisher_name &&
+        this.mission.publisher_name !== 'JeVeuxAider.gouv.fr' &&
+        this.mission.places_left > 99
+      ) {
+        return 'Plusieurs bénévoles recherchés'
+      } else if (this.mission.places_left && this.mission.places_left > 0) {
+        return this.$filters.pluralize(
+          this.mission.places_left,
+          'bénévole recherché',
+          'bénévoles recherchés'
+        )
+      } else {
+        return this.mission.has_places_left === false || this.mission.places_left === 0
+          ? 'Complet'
+          : 'Plusieurs bénévoles recherchés'
+      }
+    },
+    formattedBenevoleCount() {
+      const count = this.participationsCount - 3
+      return count < 1000 ? `+${count}` : '+1k'
+    },
+    participationsCount() {
+      return this.mission?.participations_max - this.mission?.places_left
+    },
+    portraits() {
+      const portraits = []
+      const randomNumbers = []
+      const portraitsCount = 74 // The total number of portraits existing
+      const portraitsToGetCount = Math.min(this.participationsCount, 3)
+
+      while (randomNumbers.length < portraitsToGetCount) {
+        const result = Math.floor(Math.random() * portraitsCount) + 1
+        if (!randomNumbers.includes(result)) {
+          randomNumbers.push(result)
+        }
+      }
+
+      randomNumbers.forEach((i) => {
+        portraits.push(`/images/portraits/${i}.png`)
+      })
+
+      return portraits
+    },
   },
   methods: {
     onClickGoToSimilarMissions() {
@@ -257,6 +336,39 @@ export default {
         ? `/missions-benevolat?activities.name=${encodeURIComponent(this.activity.name)}`
         : `/missions-benevolat?domaines=${encodeURIComponent(this.domaine.name)}`
       this.$router.push(url)
+    },
+    async handleChangeIsRegistrationOpen(value) {
+      const mission = await apiFetch(`/missions/${this.mission.id}`, {
+        method: 'PUT',
+        body: {
+          ...this.mission,
+          is_registration_open: value,
+        },
+      }).catch(() => {})
+      this.$toast.success(
+        value
+          ? "Les bénévoles peuvent s'inscrire à cette mission"
+          : "Les bénévoles ne peuvent plus s'inscrire à cette mission"
+      )
+      this.mission.is_registration_open = value
+      this.$emit('updated', mission)
+    },
+    async handleChangeState(option) {
+      this.mission.state = option.key
+      const mission = await apiFetch(`/missions/${this.mission.id}`, {
+        method: 'PUT',
+        body: this.mission,
+      }).catch(() => {})
+
+      if (mission) {
+        this.$emit('updated', mission)
+        this.$toast.success(`Le statut de la mission est passé à ${option.label}`)
+      }
+    },
+    deleteMission() {
+      return apiFetch(`/missions/${this.mission.id}`, {
+        method: 'DELETE',
+      })
     },
   },
 }

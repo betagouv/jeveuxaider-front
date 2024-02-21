@@ -13,8 +13,8 @@
         :placeholder="placeholder"
         :maxlength="maxlength"
         :disabled="disabled"
-        :min="typeValue == 'number' && min"
-        :max="typeValue == 'number' && max"
+        :min="['number', 'date'].includes(typeValue) && min"
+        :max="['number', 'date'].includes(typeValue) && max"
         :required="required"
         :class="[
           'text-sm appearance-none block w-full placeholder-gray-text-400 border border-gray-300 overflow-ellipsis',
@@ -39,7 +39,7 @@
         :aria-required="ariaRequired"
         :autocomplete="autocomplete || 'off'"
         @input="$emit('update:modelValue', $event.target.value)"
-        @blur="$emit('blur')"
+        @blur="$emit('blur', $event.target.value)"
         @keypress.space="onKeypressSpace"
       />
       <div v-if="type == 'password' && modelValue" class="absolute right-3">
@@ -83,8 +83,8 @@ export default defineNuxtComponent({
     variant: { type: String, default: null },
     clearable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
-    min: { type: Number, default: 1 },
-    max: { type: Number, default: null },
+    min: { type: [String, Number], default: 1 },
+    max: { type: [String, Number], default: null },
     required: { type: Boolean, default: false },
     hidePicker: { type: Boolean, default: false },
     type: {

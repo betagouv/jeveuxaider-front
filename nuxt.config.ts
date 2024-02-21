@@ -61,6 +61,7 @@ export default defineNuxtConfig({
         searchKey: process.env.ALGOLIA_SEARCH_KEY,
         termsIndex: process.env.ALGOLIA_TERMS_INDEX,
         missionsIndex: process.env.ALGOLIA_MISSIONS_INDEX,
+        missionsReplicaCreneauxIndex: process.env.ALGOLIA_MISSIONS_REPLICA_CRENEAUX_INDEX,
         organisationsIndex: process.env.ALGOLIA_ORGANISATIONS_INDEX,
       },
       flare: {

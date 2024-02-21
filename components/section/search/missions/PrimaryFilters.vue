@@ -67,13 +67,13 @@
             </FacetFilterToggle>
           </div>
 
-          <div :class="[spacingClasses, 'border-l lg:border-l-0']">
-            <div class="text-[#7B7B7B] mb-1">Disponibilités</div>
-            <CommitmentFilter>
+          <div :class="[spacingClasses, 'border-l lg:border-l-0 hidden xl:block']">
+            <div class="text-[#7B7B7B] mb-1">Dates</div>
+            <DatesFilter>
               <template #button="{ activeValue }">
                 <div class="flex space-x-2 items-center justify-between group w-full">
                   <div class="flex space-x-2 items-center truncate">
-                    <RiTimeFill
+                    <RiCalendarEventFill
                       class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none"
                     />
                     <div
@@ -89,13 +89,63 @@
                   <RiArrowDownSLine class="text-[#7B7B7B] h-4 w-4 group-hover:text-gray-900" />
                 </div>
               </template>
-            </CommitmentFilter>
+            </DatesFilter>
           </div>
 
-          <div :class="[spacingClasses, 'hidden xl:block']">
+          <div :class="[spacingClasses, 'border-l lg:border-l-0']">
+            <div class="text-[#7B7B7B] mb-1">Disponibilités</div>
+            <FacetFilterToggle
+              facet-name="commitment"
+              label="Disponibilités"
+              :facets="$stores.algoliaSearch.facetResults('commitment')"
+              legend="Filtrer par disponibilités"
+              :facet-value-resolver="{
+                few_hours: 'Quelques heures',
+                few_days: 'Quelques jours',
+                few_hours_a_week: 'Quelques heures par semaine',
+                few_days_a_week: 'Quelques jours par semaine',
+                few_hours_a_month: 'Quelques heures par mois',
+                few_days_a_month: 'Quelques jours par mois',
+              }"
+            >
+              <template #button="props">
+                <!--
+                  v-show au lieu de v-if
+                  https://github.com/vuejs/core/issues/5657
+                -->
+                <div>
+                  <button
+                    :aria-expanded="props?.isOpen || 'false'"
+                    class="w-full flex space-x-2 items-center justify-between group"
+                  >
+                    <span class="flex space-x-2 items-center truncate">
+                      <RiTimeFill
+                        class="h-4 w-4 transition-opacity opacity-25 group-hover:opacity-100 flex-none"
+                      />
+                      <span
+                        v-show="!props?.firstValueSelected"
+                        class="italic pr-[1px] text-[#888888]"
+                      >
+                        Toutes
+                      </span>
+                      <span v-show="props?.firstValueSelected" class="font-bold truncate">
+                        <span>{{ props?.firstValueSelected }}</span>
+                        <span v-show="props?.activeValuesCount > 1"
+                          >, +{{ props?.activeValuesCount - 1 }}</span
+                        >
+                      </span>
+                    </span>
+                    <RiArrowDownSLine class="text-[#7B7B7B] h-4 w-4 group-hover:text-gray-900" />
+                  </button>
+                </div>
+              </template>
+            </FacetFilterToggle>
+          </div>
+
+          <!-- <div :class="[spacingClasses, 'hidden xl:block']">
             <div class="text-[#7B7B7B] mb-1">Recherche</div>
             <SearchFilter />
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -106,6 +156,7 @@
 import FacetFilterToggle from '@/components/section/search/FacetFilterToggle.vue'
 import LocalisationFilter from '@/components/search/LocalisationFilter.vue'
 import CommitmentFilter from '@/components/section/search/CommitmentFilter.vue'
+import DatesFilter from '@/components/section/search/DatesFilter.vue'
 import SearchFilter from '@/components/search/SearchFilter.vue'
 import MissionTypeFilter from '@/components/search/MissionTypeFilter.vue'
 
@@ -113,6 +164,7 @@ export default defineNuxtComponent({
   components: {
     FacetFilterToggle,
     CommitmentFilter,
+    DatesFilter,
     LocalisationFilter,
     SearchFilter,
     MissionTypeFilter,

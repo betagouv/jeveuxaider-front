@@ -65,6 +65,7 @@
           :max-pages="10"
           :with-first-page="false"
           :with-last-page="false"
+          :anchor-content-id="paginationAnchorContentId"
           @page-change="handleChangePage"
         />
       </div>
@@ -122,19 +123,26 @@ export default defineNuxtComponent({
       type: Boolean,
       default: false,
     },
+    paginationAnchorContentId: {
+      type: String,
+      default: 'contenuprincipal',
+    },
   },
   watch: {
-    async $route(newVal, oldVal) {
+    async '$route.query'(newVal, oldVal) {
       if (newVal.name !== oldVal.name) {
         return
       }
+      this.$stores.algoliaSearch.filters = this.recomputeFilters(newVal)
       await this.search()
       this.handleNavigatorGeolocation()
     },
   },
   async setup(props) {
     const { $stores } = useNuxtApp()
+    const { recomputeFilters } = useAlgoliaMissionsQueryBuilder()
     const runtimeConfig = useRuntimeConfig()
+    const route = useRoute()
 
     $stores.algoliaSearch.reset()
     $stores.algoliaSearch.indexKey = 'missionsIndex'
@@ -151,10 +159,13 @@ export default defineNuxtComponent({
       'template_subtitle',
       'publics_volontaires',
       'publisher_name',
+      'commitment',
       'date_type',
     ]
     $stores.algoliaSearch.availableNumericFilters = ['commitment__total', 'is_autonomy']
     $stores.algoliaSearch.initialFilters = props.initialFilters
+    $stores.algoliaSearch.filters = recomputeFilters()
+
     if (props.initialHitsPerPage) {
       $stores.algoliaSearch.hitsPerPage = props.initialHitsPerPage
     }
@@ -172,6 +183,7 @@ export default defineNuxtComponent({
       deleteAllFilters,
       onNavigatorGeolocation,
       onNavigatorGeolocationError,
+      recomputeFilters,
     }
   },
   mounted() {

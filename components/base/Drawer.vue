@@ -28,7 +28,10 @@
               { 'max-w-4xl': width === '4xl' },
             ]"
           >
-            <div class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl">
+            <div
+              class="h-full divide-y divide-gray-200 flex flex-col bg-white shadow-xl"
+              :class="classContainer"
+            >
               <div class="min-h-0 flex-1 flex flex-col py-6 overflow-y-scroll overscroll-contain">
                 <div class="px-4 sm:px-6">
                   <div class="flex items-start justify-between">
@@ -87,24 +90,35 @@ export default defineNuxtComponent({
       type: String,
       default: 'md',
     },
+    classContainer: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
       drawerStyle: '',
+      waitingOnAnimRequest: false,
     }
   },
   mounted() {
     this.handleDrawerStyle()
-    window.addEventListener('scroll', this.handleDrawerStyle)
+    window.addEventListener('scroll', this.handleDrawerStyle, false)
   },
-  destroyed() {
+  beforeUnmount() {
     window.removeEventListener('scroll', this.handleDrawerStyle)
   },
   methods: {
-    handleDrawerStyle(event) {
-      const headerheight = document.getElementById('header')?.offsetHeight ?? 0
-      const offset = headerheight >= window.scrollY ? headerheight - window.scrollY : 0
-      this.drawerStyle = `height: calc(100vh - ${offset}px); top: ${offset}px`
+    handleDrawerStyle() {
+      if (!this.waitingOnAnimRequest) {
+        window.requestAnimationFrame(() => {
+          const headerheight = document.getElementById('header')?.offsetHeight ?? 0
+          const offset = headerheight >= window.scrollY ? headerheight - window.scrollY : 0
+          this.drawerStyle = `height: calc(100vh - ${offset}px); top: ${offset}px`
+          this.waitingOnAnimRequest = false
+        })
+      }
+      this.waitingOnAnimRequest = true
     },
   },
 })

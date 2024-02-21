@@ -79,30 +79,33 @@
       </BaseDropdown>
     </div>
     <BaseAlertDialog
-      theme="warning"
+      icon="RiErrorWarningLine"
       title="Changement de statut"
-      text="Vous êtes sur le point de passer la candidature en cours de traitement"
       :is-open="showInProgressParticipationModal"
       @confirm="handleInProgressParticipation()"
       @cancel="showInProgressParticipationModal = false"
-    />
+    >
+      Vous êtes sur le point de passer la candidature en cours de traitement
+    </BaseAlertDialog>
     <BaseAlertDialog
-      theme="warning"
+      icon="RiErrorWarningLine"
       title="Changement de statut"
-      text="Vous êtes sur le point de valider la candidature"
       :is-open="showValidateParticipationModal"
       @confirm="handleValidateParticipation()"
       @cancel="showValidateParticipationModal = false"
-    />
+    >
+      Vous êtes sur le point de valider la candidature
+    </BaseAlertDialog>
 
     <BaseAlertDialog
-      theme="warning"
+      icon="RiErrorWarningLine"
       title="Changement de statut"
-      text="Vous êtes sur le point d'annuler la candidature"
       :is-open="showCancelParticipationModal"
       @confirm="handleCancelParticipation()"
       @cancel="showCancelParticipationModal = false"
-    />
+    >
+      Vous êtes sur le point d'annuler la candidature
+    </BaseAlertDialog>
 
     <ModalParticipationDeclineByResponsable
       :participation="participation"

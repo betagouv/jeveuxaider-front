@@ -21,24 +21,26 @@
             >Enregistrer</DsfrButton
           >
           <BaseAlertDialog
-            theme="warning"
+            icon="RiErrorWarningLine"
             title="Dupliquer le modèle"
-            :text="`Vous êtes sur le point de dupliquer le modèle <b>${form.name}</b>`"
             :is-open="showDuplicateAlert"
             @confirm="handleDuplicate"
             @cancel="showDuplicateAlert = false"
-          />
+          >
+            Vous êtes sur le point de dupliquer le modèle <b>{{ form.name }}</b>
+          </BaseAlertDialog>
           <DsfrButton @click="showDuplicateAlert = true" type="tertiary" icon="RiFileCopyLine"
             >Dupliquer</DsfrButton
           >
           <BaseAlertDialog
-            theme="warning"
+            icon="RiErrorWarningLine"
             title="Supprimer le modèle"
-            :text="`Vous êtes sur le point de supprimer le modèle <b>${form.name}</b>`"
             :is-open="showDeleteAlert"
             @confirm="handleDelete"
             @cancel="showDeleteAlert = false"
-          />
+          >
+            Vous êtes sur le point de supprimer le modèle <b>{{ form.name }}</b>
+          </BaseAlertDialog>
           <DsfrButton
             v-if="canDelete"
             @click="showDeleteAlert = true"

@@ -2,9 +2,8 @@
   <ClientOnly>
     <Teleport to="#teleport-body-end">
       <BaseModal
-        v-scroll-lock="isOpen"
         :is-open="isOpen"
-        theme="warning"
+        icon="RiErrorWarningLine"
         title="Changement de statut"
         :prevent-click-outside="true"
         @close="$emit('cancel')"
@@ -31,10 +30,8 @@
         </div>
 
         <template #footer>
-          <BaseButton class="mr-3" variant="white" @click.native="$emit('cancel')">
-            Annuler
-          </BaseButton>
-          <BaseButton type="submit" form="form-note-organisation-validate"> Confirmer </BaseButton>
+          <DsfrButton type="secondary" @click.native="$emit('cancel')"> Annuler </DsfrButton>
+          <DsfrButton is-submit form="form-note-organisation-validate"> Confirmer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>

@@ -5,13 +5,52 @@
         <BaseHeading as="h3" :level="5">
           {{ responsable.full_name }}
         </BaseHeading>
-        <div
-          v-if="organisation.members.length > 1"
-          class="text-sm flex items-center cursor-pointer group hover:text-red-500"
-          @click="handleDeleteMember(responsable)"
-        >
-          <div class="group-hover:block hidden">Supprimer</div>
-          <div><RiDeleteBinLine class="ml-2 h-5 w-5 fill-current" /></div>
+        <div class="space-x-2">
+          <DsfrButton
+            v-if="canSendMessage"
+            size="xs"
+            type="tertiary"
+            icon="RiMessage3Line"
+            icon-only
+            @click="handleClickSendMessage"
+          />
+          <BaseDropdown v-if="showDropdownActions">
+            <template #button>
+              <DsfrButton size="xs" type="tertiary" icon="RiMoreFill" icon-only />
+            </template>
+            <template #items>
+              <div class="w-[240px]">
+                <BaseDropdownOptionsItem
+                  v-if="canDeleteMember"
+                  size="sm"
+                  @click="handleDeleteMember(responsable)"
+                >
+                  Retirer ce responsable
+                </BaseDropdownOptionsItem>
+                <BaseDropdownOptionsItem
+                  v-if="canMasquerade"
+                  size="sm"
+                  @click="handleImpersonate()"
+                >
+                  Prendre sa place
+                </BaseDropdownOptionsItem>
+                <BaseDropdownOptionsItem
+                  v-if="canSetMissionOnline"
+                  size="sm"
+                  @click="showModalResponsableSetMissionsActive = true"
+                >
+                  Mettre en ligne ses missions
+                </BaseDropdownOptionsItem>
+                <BaseDropdownOptionsItem
+                  v-if="canSetMissionOffline"
+                  size="sm"
+                  @click="showModalResponsableSetMissionsInactive = true"
+                >
+                  Mettre hors ligne ses missions
+                </BaseDropdownOptionsItem>
+              </div>
+            </template>
+          </BaseDropdown>
         </div>
       </div>
     </template>
@@ -19,20 +58,20 @@
       <div
         v-if="
           $stores.auth.contextRole == 'admin' &&
-          (responsable.tags || profileStats?.missions_inactive > 0)
+          (responsable.tags || profileStats?.missions_offline > 0)
         "
         class="mt-1 mb-2 flex flex-wrap gap-1"
       >
         <DsfrTag
-          v-if="profileStats?.missions_inactive > 0"
+          v-if="profileStats?.missions_offline > 0"
           :custom-theme="true"
           class="bg-jva-red-600 text-white"
         >
           {{
             $filters.pluralize(
-              profileStats.missions_inactive,
-              'mission désactivée',
-              'missions désactivées'
+              profileStats?.missions_offline,
+              'mission hors ligne',
+              'missions hors ligne'
             )
           }}
         </DsfrTag>
@@ -62,67 +101,36 @@
         </template>
         <span v-else> - </span>
       </BaseDescriptionListItem>
-      <BaseDescriptionListItemMasquerade
-        v-if="$stores.auth.contextRole === 'admin'"
-        :profile="responsable"
-      />
     </BaseDescriptionList>
-    <template v-if="['admin', 'referent'].includes($stores.auth.contextRole)">
-      <template v-if="conversable">
-        <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
-        <div class="flex justify-center text-sm">
-          <BaseLink @click.native="handleClickSendMessage">
-            <RiMessage3Line class="h-4 w-4 mr-2" /> Envoyer un message
-          </BaseLink>
-          <ModalSendMessage
-            :is-open="showModalSendMessage"
-            :to-user="responsable"
-            :conversable="conversable"
-            :conversable-id="organisation.id"
-            conversable-type="App\Models\Structure"
-            @cancel="showModalSendMessage = false"
-          />
-        </div>
-      </template>
+
+    <template v-if="profileStats">
+      <ModalResponsableSetMissionsIsActive
+        :value="true"
+        :is-open="showModalResponsableSetMissionsActive"
+        :responsable="responsable"
+        :profile-stats="profileStats"
+        @confirm="afterSetMissionsIsActive"
+        @cancel="showModalResponsableSetMissionsActive = false"
+      />
+
+      <ModalResponsableSetMissionsIsActive
+        :value="false"
+        :is-open="showModalResponsableSetMissionsInactive"
+        :responsable="responsable"
+        :profile-stats="profileStats"
+        @confirm="afterSetMissionsIsActive"
+        @cancel="showModalResponsableSetMissionsInactive = false"
+      />
     </template>
 
-    <template
-      v-if="['admin'].includes($stores.auth.contextRole) && profileStats?.missions_inactive > 0"
-    >
-      <div class="border-t -mx-4 xl:-mx-6 my-4" />
-      <div class="flex justify-center text-sm">
-        <BaseLink @click.native="showModalResponsableSetMissionsActive = true">
-          Activer les missions du responsable
-        </BaseLink>
-        <ModalResponsableSetMissionsIsActive
-          :value="true"
-          :is-open="showModalResponsableSetMissionsActive"
-          :responsable="responsable"
-          :profile-stats="profileStats"
-          @confirm="afterSetMissionsIsActive"
-          @cancel="showModalResponsableSetMissionsActive = false"
-        />
-      </div>
-    </template>
-
-    <template
-      v-if="['admin'].includes($stores.auth.contextRole) && profileStats?.missions_available > 0"
-    >
-      <div class="border-t -mx-4 xl:-mx-6 my-4" />
-      <div class="flex justify-center text-sm">
-        <BaseLink @click.native="showModalResponsableSetMissionsInactive = true">
-          Désactiver les missions du responsable
-        </BaseLink>
-        <ModalResponsableSetMissionsIsActive
-          :value="false"
-          :is-open="showModalResponsableSetMissionsInactive"
-          :responsable="responsable"
-          :profile-stats="profileStats"
-          @confirm="afterSetMissionsIsActive"
-          @cancel="showModalResponsableSetMissionsInactive = false"
-        />
-      </div>
-    </template>
+    <ModalSendMessage
+      :is-open="showModalSendMessage"
+      :to-user="responsable"
+      :conversable="conversable"
+      :conversable-id="organisation.id"
+      conversable-type="App\Models\Structure"
+      @cancel="showModalSendMessage = false"
+    />
 
     <ModalRemoveResponsableFromOrganisation
       v-if="memberSelected"
@@ -176,6 +184,31 @@ export default defineNuxtComponent({
   created() {
     this.fetch()
   },
+  computed: {
+    showDropdownActions() {
+      return this.canDeleteMember || ['admin', 'referent'].includes(this.$stores.auth.contextRole)
+    },
+    canDeleteMember() {
+      return this.organisation.members.length > 1
+    },
+    canMasquerade() {
+      return ['admin'].includes(this.$stores.auth.contextRole)
+    },
+    canSetMissionOnline() {
+      return (
+        ['admin'].includes(this.$stores.auth.contextRole) && this.profileStats?.missions_offline > 0
+      )
+    },
+    canSetMissionOffline() {
+      return (
+        ['admin'].includes(this.$stores.auth.contextRole) &&
+        this.profileStats?.missions_available > 0
+      )
+    },
+    canSendMessage() {
+      return ['admin', 'referent'].includes(this.$stores.auth.contextRole) && this.conversable
+    },
+  },
   methods: {
     async fetch() {
       const conversations = await apiFetch('/conversations', {
@@ -205,6 +238,9 @@ export default defineNuxtComponent({
     handleDeleteMember(member) {
       this.memberSelected = member
       this.showAlertMemberDeleted = true
+    },
+    async handleImpersonate() {
+      await this.$stores.auth.impersonate(this.responsable.user_id)
     },
     afterSetMissionsIsActive() {
       this.fetch()

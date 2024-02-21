@@ -20,7 +20,7 @@
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
       <div class="uppercase font-semibold text-gray-600">Antennes</div>
       <BaseLink
-        :to="`/admin/organisations?filter[reseaux.id]=${reseau.id}&filter[reseaux.name]=${reseau.name}`"
+        :to="`/admin/organisations?filter[reseaux.id]=${reseau.id}&reseau_name=${reseau.name}`"
         icon="RiArrowRightSLine"
       >
         Consulter

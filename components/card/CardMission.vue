@@ -18,22 +18,27 @@
 
       <template v-if="showState">
         <div class="custom-gradient absolute inset-0" />
-        <DsfrBadge size="sm" :type="badgeTypeMissionSate" class="absolute top-3 left-3 shadow-lg">
-          {{ mission.state }}
-        </DsfrBadge>
+        <div class="absolute top-3 left-3 flex gap-2 flex-wrap">
+          <DsfrBadge class="shadow-lg" size="sm" :type="badgeTypeMissionSate">
+            {{ mission.state }}
+          </DsfrBadge>
 
-        <DsfrBadge
-          v-if="!mission.is_active"
-          v-tooltip="{
-            content:
-              'Cette mission a été désactivée par un membre du support. Elle n’est plus visible des bénévoles.',
-          }"
-          size="sm"
-          type="warning"
-          class="absolute bottom-3 left-3 shadow-lg"
-        >
-          Mission désactivée
-        </DsfrBadge>
+          <DsfrBadge
+            class="shadow-lg"
+            size="sm"
+            type="gray"
+            v-if="!mission.is_online && mission.state == 'Validée'"
+            v-tooltip="{
+              content:
+                'Cette mission a été mise hors ligne par un membre du support. Elle n’est plus visible des bénévoles.',
+            }"
+          >
+            <div class="flex items-center">
+              <div class="h-2 w-2 rounded-full mr-1 bg-red-600"></div>
+              Hors ligne
+            </div>
+          </DsfrBadge>
+        </div>
 
         <div class="custom-gradient-2 absolute inset-0 pointer-events-none" />
         <div
@@ -44,20 +49,23 @@
         </div>
       </template>
       <template v-else>
-        <template v-if="mission.date_type === 'ponctual'">
+        <div class="absolute top-4 left-4 flex flex-wrap gap-2 w-[318px] pr-8">
           <DsfrBadge
+            v-if="isIdealPourDebuter"
             size="sm"
-            class="absolute top-4 left-4 shadow-lg !bg-[#FEECC2] !text-[#716043]"
+            class="shadow-lg !bg-[#FEECC2] !text-[#716043]"
           >
-            {{
-              (!$stores.auth.isLogged ||
-                $stores.auth.user?.statistics?.participations_count === 0) &&
-              mission.structure?.score >= 80
-                ? 'Idéale pour débuter'
-                : 'Mission courte'
-            }}
+            Idéale pour débuter
           </DsfrBadge>
-        </template>
+
+          <DsfrBadge
+            v-if="formattedCommitment"
+            size="sm"
+            class="shadow-lg !bg-[#FEECC2] !text-[#716043]"
+          >
+            {{ formattedCommitment }}
+          </DsfrBadge>
+        </div>
       </template>
     </div>
 
@@ -192,15 +200,10 @@ export default defineNuxtComponent({
       default: false,
     },
   },
-  async setup() {
-    const { formatAutonomyCities } = await autonomyCitiesHelper()
-    return {
-      formatAutonomyCities,
-    }
-  },
   computed: {
     autonomyCities() {
-      return this.formatAutonomyCities(this.mission.autonomy_zips)
+      const { formatAutonomyCities } = autonomyCitiesHelper()
+      return formatAutonomyCities(this.mission.autonomy_zips)
     },
     placesLeftText() {
       if (!this.mission.is_registration_open) {
@@ -230,6 +233,10 @@ export default defineNuxtComponent({
 
       if (!startDate) {
         return
+      }
+
+      if (this.$route.query?.start && this.$route.name === 'en-ce-moment') {
+        return `le ${this.$dayjs(this.$route.query?.start).format('D MMMM YYYY')}`
       }
 
       const startDateObject =
@@ -276,20 +283,6 @@ export default defineNuxtComponent({
           return DsfrWarningIcon
         default:
           return DsfrInfoIcon
-      }
-    },
-    badgeTypeMissionSate() {
-      switch (this.mission.state) {
-        case 'Validée':
-          return 'success'
-        case 'Signalée':
-        case 'Annulée':
-          return 'error'
-        case 'En attente de validation':
-        case 'En cours de traitement':
-          return 'warning'
-        default:
-          return 'info'
       }
     },
   },

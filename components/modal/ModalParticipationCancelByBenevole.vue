@@ -2,9 +2,7 @@
   <ClientOnly>
     <Teleport to="#teleport-body-end">
       <BaseModal
-        v-scroll-lock="isOpen"
         :is-open="isOpen"
-        theme="warning"
         icon="RiErrorWarningLine"
         title="Annulez votre participation"
         :prevent-click-outside="true"
@@ -34,10 +32,8 @@
         </div>
 
         <template #footer>
-          <BaseButton class="mr-3" variant="white" @click.native="$emit('cancel')">
-            Retour
-          </BaseButton>
-          <BaseButton @click.native="handleSubmit"> Confirmer </BaseButton>
+          <DsfrButton type="secondary" @click.native="$emit('cancel')"> Retour </DsfrButton>
+          <DsfrButton @click.native="handleSubmit"> Confirmer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>

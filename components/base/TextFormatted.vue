@@ -42,34 +42,32 @@ export default defineNuxtComponent({
       isClamped: true,
       forceExpansion: false,
       iosSafari: false,
+      waitingOnAnimRequest: false,
     }
   },
   mounted() {
     this.setIsClamped()
     this.checkSafariIos()
-    let timeout
-    window.addEventListener(
-      'resize',
-      () => {
-        if (timeout) {
-          window.cancelAnimationFrame(timeout)
-        }
-        timeout = window.requestAnimationFrame(() => {
-          this.setIsClamped()
-        })
-      },
-      false
-    )
+    window.addEventListener('resize', this.setIsClamped, false)
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.setIsClamped)
   },
   methods: {
     setIsClamped() {
-      var el = this.$refs.clampedElement
-      if (!el) {
-        return
+      if (!this.waitingOnAnimRequest) {
+        window.requestAnimationFrame(() => {
+          let el = this.$refs.clampedElement
+          if (!el) {
+            return
+          }
+          this.isClamped =
+            (!this.forceExpansion && el.offsetHeight < el.scrollHeight) ||
+            el.offsetWidth < el.scrollWidth
+          this.waitingOnAnimRequest = false
+        })
       }
-      this.isClamped =
-        (!this.forceExpansion && el.offsetHeight < el.scrollHeight) ||
-        el.offsetWidth < el.scrollWidth
+      this.waitingOnAnimRequest = true
     },
     checkSafariIos() {
       var ua = window.navigator.userAgent

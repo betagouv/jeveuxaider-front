@@ -126,6 +126,10 @@ export default defineNuxtComponent({
       type: Boolean,
       default: true,
     },
+    anchorContentId: {
+      type: String,
+      default: 'contenuprincipal',
+    },
   },
   computed: {
     totalPages() {
@@ -190,7 +194,7 @@ export default defineNuxtComponent({
     onPageChange(page) {
       this.$emit('page-change', page)
       window.scrollTo({
-        top: document.getElementById('contenuprincipal')?.offsetTop ?? 0,
+        top: document.getElementById(this.anchorContentId)?.offsetTop ?? 0,
       })
     },
   },

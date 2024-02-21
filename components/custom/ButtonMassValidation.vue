@@ -4,13 +4,15 @@
       Validation en masse ({{ count }})
     </BaseButton>
     <BaseAlertDialog
-      theme="warning"
+      icon="RiErrorWarningLine"
       title="Validation en masse"
-      :text="`Vous êtes sur le point de valider ${count} participation(s) actuellement en attente de validation.`"
       :is-open="showDialog"
       @confirm="handleConfirm()"
       @cancel="showDialog = false"
-    />
+    >
+      Vous êtes sur le point de valider {{ count }} participation(s) actuellement en attente de
+      validation.
+    </BaseAlertDialog>
   </div>
 </template>
 

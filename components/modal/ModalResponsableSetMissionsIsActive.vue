@@ -2,9 +2,8 @@
   <ClientOnly>
     <Teleport to="#teleport-body-end">
       <BaseModal
-        v-scroll-lock="isOpen"
         :is-open="isOpen"
-        theme="warning"
+        icon="RiErrorWarningLine"
         :title="modalTitle"
         :prevent-click-outside="true"
         :hide-close="true"
@@ -13,18 +12,18 @@
         <div class="formatted-text">
           <template v-if="value">
             <p>
-              Vous êtes sur le point d'activer toutes les missions validées gérées par
+              Vous êtes sur le point de mettre en ligne toutes les missions validées gérées par
               <strong>{{ responsable.full_name }}</strong>
-              <span class="text-gray-500">#{{ responsable.id }}</span
+              <span class="text-gray-500"> #{{ responsable.id }}</span
               >. Les missions seront de nouveau visibles dans la recherche.
             </p>
             <p>
-              Nombre de missions actuellement désactivées :
-              <strong>{{ profileStats?.missions_inactive }}</strong
+              Nombre de missions actuellement hors ligne :
+              <strong>{{ profileStats?.missions_offline }}</strong
               ><br />
 
               <DsfrLink
-                :to="`/admin/missions?filter[responsable.id]=${responsable.id}&filter[is_active]=false`"
+                :to="`/admin/missions?filter[responsable.id]=${responsable.id}&filter[is_online]=false`"
                 target="_blank"
                 class="text-sm"
               >
@@ -34,9 +33,9 @@
           </template>
           <template v-else>
             <p>
-              Vous êtes sur le point de désactiver toutes les missions validées gérées par
+              Vous êtes sur le point de mettre hors ligne toutes les missions validées gérées par
               <strong>{{ responsable.full_name }}</strong>
-              <span class="text-gray-500">#{{ responsable.id }}</span
+              <span class="text-gray-500"> #{{ responsable.id }}</span
               >. Les missions <strong>n'apparaîtront plus dans la recherche</strong> et il sera
               impossible pour de nouveaux bénévoles de s'y inscrire.
             </p>
@@ -57,17 +56,12 @@
         </div>
 
         <template #footer>
-          <BaseButton
-            :disabled="loading"
-            class="mr-3"
-            variant="white"
-            @click.native="$emit('cancel')"
-          >
+          <DsfrButton :disabled="loading" type="secondary" @click="$emit('cancel')">
             Annuler
-          </BaseButton>
-          <BaseButton :disabled="loading" :loading="loading" @click.native="onConfirm()">
+          </DsfrButton>
+          <DsfrButton :disabled="loading" :loading="loading" @click="onConfirm()">
             Confirmer
-          </BaseButton>
+          </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>
@@ -102,13 +96,13 @@ export default defineNuxtComponent({
   computed: {
     modalTitle() {
       return this.value
-        ? 'Activer les missions validées du responsable'
-        : 'Désactiver les missions validées du responsable'
+        ? 'Mettre en ligne ses missions validées'
+        : 'Mettre hors ligne ses missions validées'
     },
     toastMessageSucess() {
       return this.value
-        ? 'Les missions ont bien été activées.'
-        : 'Les missions ont bien été désactivées.'
+        ? 'Les missions ont bien été mises en ligne.'
+        : 'Les missions ont bien été mises hors ligne.'
     },
   },
   methods: {
@@ -121,7 +115,7 @@ export default defineNuxtComponent({
       await apiFetch(`profiles/${this.responsable.id}/setMissionsIsActive`, {
         method: 'POST',
         body: {
-          is_active: this.value,
+          is_online: this.value,
         },
       })
       this.$toast.success(this.toastMessageSucess)

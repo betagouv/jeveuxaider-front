@@ -16,10 +16,7 @@
         >
           Autour de moi
         </p>
-        <p
-          v-else-if="!$route.query.city && $stores.algoliaSearch.results.aroundLatLng"
-          class="truncate italic pr-[1px] text-[#888888]"
-        >
+        <p v-else-if="!$route.query.city" class="truncate italic pr-[1px] text-[#888888]">
           Ville ou code postal
         </p>
         <p v-else class="font-bold truncate">

@@ -1,6 +1,6 @@
 <template>
   <div class="py-2 sm:gap-4 sm:flex">
-    <dt class="text-sm text-gray-500 flex-none" :style="style">
+    <dt class="text-sm text-[#666666] flex-none" :style="style">
       {{ term }}
     </dt>
     <dd

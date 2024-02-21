@@ -56,7 +56,7 @@
                 class="ml-2 flex justify-between truncate flex-1"
               >
                 <div class="truncate">
-                  {{ facet.value }}
+                  {{ resolveFacetValue(facet.value) }}
                 </div>
                 <div class="text-gray-600 ml-1 font-light">
                   {{ facet.count }}
@@ -120,6 +120,7 @@ export default defineNuxtComponent({
       type: String,
       default: null,
     },
+    facetValueResolver: { type: Object, default: null },
   },
   data() {
     return {
@@ -179,6 +180,9 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    resolveFacetValue(value) {
+      return this.facetValueResolver ? this.facetValueResolver[value] : value
+    },
     deleteFacet() {
       this.deleteFilter(this.facetName)
       this.isOpen = false

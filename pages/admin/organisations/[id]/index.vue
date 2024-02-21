@@ -1,5 +1,5 @@
 <template>
-  <div v-if="organisation" class="container">
+  <div class="container">
     <DsfrBreadcrumb
       :links="[
         { text: 'Tableau de bord', to: '/dashboard' },
@@ -14,11 +14,19 @@
         { text: organisation && organisation.name },
       ]"
     />
+  </div>
+  <HeaderActions
+    :organisation="organisation"
+    @updated="closeDrawerAndRefreshOrganisation"
+    @isPinned="(event) => (this.isPinned = event)"
+  />
+  <div class="container">
     <BaseDrawer
       :is-open="showDrawerAddResponsable"
       form-id="form-add-responsable"
       submit-label="Ajouter ce membre"
       @close="showDrawerAddResponsable = false"
+      :classContainer="isPinned ? 'pt-[80px]' : undefined"
     >
       <template #title>
         <BaseHeading :level="3"> Ajouter un membre </BaseHeading>
@@ -26,7 +34,7 @@
       <FormAddResponsable
         class="mt-8"
         :endpoint="`/structures/${organisation.id}/responsables`"
-        @submited="handleSubmitAddResponsable"
+        @submited="closeDrawerAndRefreshOrganisation"
       />
     </BaseDrawer>
     <BaseDrawer
@@ -34,6 +42,7 @@
       form-id="form-invitation"
       submit-label="Envoyer l'invitation"
       @close="showDrawerInvitation = false"
+      :classContainer="isPinned ? 'pt-[80px]' : undefined"
     >
       <template #title>
         <BaseHeading :level="3"> Inviter un nouveau membre </BaseHeading>
@@ -43,10 +52,10 @@
         role="responsable_organisation"
         :invitable-id="organisation.id"
         invitable-type="App\Models\Structure"
-        @submited="handleSubmitInvitation"
+        @submited="closeDrawerAndRefreshOrganisation"
       />
     </BaseDrawer>
-    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-12">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 pb-20">
       <div class="lg:col-span-3 space-y-6">
         <BaseBox class="relative z-10">
           <img
@@ -103,36 +112,6 @@
         />
       </div>
       <div class="lg:col-span-2 space-y-8">
-        <div class="flex items-start justify-between">
-          <div>
-            <BaseHeading :level="1" class="mb-4">
-              Organisation
-              <span
-                v-if="['admin'].includes($stores.auth.contextRole)"
-                class="font-normal text-gray-500 text-2xl"
-                >#{{ organisation.id }}</span
-              >
-            </BaseHeading>
-            <div class="flex items-center space-x-4">
-              <BaseBadge :color="organisation.state">
-                {{ organisation.state }}
-              </BaseBadge>
-              <OnlineIndicator
-                v-if="organisation.statut_juridique === 'Association'"
-                :published="hasPageOnline"
-                :link="hasPageOnline ? `/organisations/${organisation.slug}` : null"
-              />
-            </div>
-          </div>
-          <nuxt-link
-            no-prefetch
-            v-if="organisation?.permissions?.canUpdate"
-            :to="`/admin/organisations/${organisation.id}/edit`"
-          >
-            <BaseButton icon="RiPencilLine"> Modifier </BaseButton>
-          </nuxt-link>
-        </div>
-
         <ClientOnly>
           <BaseTabs
             :tabs="[
@@ -160,12 +139,6 @@
             ]"
           />
           <div v-if="$route.hash === '#infos' || !$route.hash" class="space-y-8">
-            <SelectOrganisationState
-              v-if="canEditStatut"
-              :organisation="organisation"
-              @selected="handleChangeState($event)"
-            />
-
             <BoxAideModeration
               v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
               :organisation="organisation"
@@ -242,7 +215,7 @@
                       'candidatures',
                       false
                     )}`"
-                    :link="`/admin/participations?filter[mission.structure.name]=${organisation.name}&filter[mission.structure.id]=${organisation.id}`"
+                    :link="`/admin/participations?organisation_name=${organisation.name}&filter[mission.structure.id]=${organisation.id}`"
                     link-label="Participations"
                   />
                 </div>
@@ -270,40 +243,22 @@
             />
           </div>
           <template v-if="$route.hash === '#membres'">
-            <div class="space-y-2">
+            <div class="space-y-8">
               <BoxInvitations
-                v-if="queryInvitations && queryInvitations.length > 0"
-                :invitations="queryInvitations"
+                :title="`${$filters.pluralize(invitations.length, 'invitation')} en attente`"
+                v-if="invitations && invitations.length > 0"
+                :invitations="invitations"
                 @updated="fetch"
               />
-              <BoxMember
-                v-for="responsable in responsables"
-                :key="responsable.id"
-                :responsable="responsable.profile"
+
+              <BoxOrganisationMembers
+                :title="$filters.pluralize(responsables.length, 'membre')"
+                :responsables="responsables"
                 :organisation="organisation"
                 :conversable="organisation"
-                conversable-type="App\Models\Structure"
                 @updated="fetch"
                 @removed="fetch"
               />
-              <div class="space-x-2">
-                <BaseButton
-                  v-if="
-                    ['admin', 'responsable', 'tete_de_reseau'].includes($stores.auth.contextRole)
-                  "
-                  variant="white"
-                  @click.native="showDrawerInvitation = true"
-                >
-                  <RiUserFill class="h-4 w-4 mr-2" /> Inviter un membre
-                </BaseButton>
-                <BaseButton
-                  v-if="['admin'].includes($stores.auth.contextRole)"
-                  variant="white"
-                  @click.native="showDrawerAddResponsable = true"
-                >
-                  <RiAddLine class="h-4 w-4 mr-2" /> Ajouter un membre
-                </BaseButton>
-              </div>
             </div>
           </template>
           <template v-if="$route.hash === '#historique'">
@@ -327,13 +282,13 @@ import CardStatistic from '@/components/card/CardStatistic.vue'
 import FormInvitation from '@/components/form/FormInvitation.vue'
 import FormAddResponsable from '@/components/form/FormAddResponsable.vue'
 import BoxInvitations from '@/components/section/BoxInvitations.vue'
-import SelectOrganisationState from '@/components/custom/SelectOrganisationState.vue'
 import BoxReferents from '@/components/section/BoxReferents.vue'
 import BoxReseau from '@/components/section/organisation/BoxReseau.vue'
 import BoxNotes from '@/components/custom/BoxNotes.vue'
-import BoxMember from '@/components/section/BoxMember.vue'
+import BoxOrganisationMembers from '@/components/section/BoxOrganisationMembers.vue'
 import BoxScore from '@/components/section/organisation/BoxScore.vue'
 import BoxAideModeration from '@/components/section/organisation/BoxAideModeration.vue'
+import HeaderActions from '@/components/section/organisation/HeaderActions.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -346,13 +301,13 @@ export default defineNuxtComponent({
     FormInvitation,
     FormAddResponsable,
     BoxInvitations,
-    SelectOrganisationState,
     BoxReferents,
     BoxReseau,
     BoxNotes,
-    BoxMember,
+    BoxOrganisationMembers,
     BoxScore,
     BoxAideModeration,
+    HeaderActions,
   },
   mixins: [MixinOrganisation],
   async setup() {
@@ -378,7 +333,9 @@ export default defineNuxtComponent({
       }
     }
 
-    const organisation = await apiFetch(`/structures/${route.params.id}`)
+    const { data: organisation, refresh: refreshOrganisation } = await useApiFetch(
+      `/structures/${route.params.id}`
+    )
 
     if (!organisation) {
       return showError({ statusCode: 404 })
@@ -386,6 +343,7 @@ export default defineNuxtComponent({
 
     return {
       organisation: toRef(organisation),
+      refreshOrganisation,
       googlePlacesKey: runtimeConfig.public.google.places,
     }
   },
@@ -394,8 +352,9 @@ export default defineNuxtComponent({
       organisationStats: null,
       showDrawerInvitation: false,
       showDrawerAddResponsable: false,
-      queryInvitations: null,
+      invitations: null,
       responsables: [],
+      isPinned: false,
     }
   },
   created() {
@@ -410,41 +369,20 @@ export default defineNuxtComponent({
 
       if (['admin', 'responsable', 'tete_de_reseau'].includes(this.$stores.auth.contextRole)) {
         apiFetch(`/structures/${route.params.id}/invitations`).then((response) => {
-          this.queryInvitations = response
+          this.invitations = response
         })
       }
 
       apiFetch(`/structures/${route.params.id}/responsables`).then((response) => {
         this.responsables = response
       })
+
+      this.refreshOrganisation()
     },
-    async refetch() {
-      console.log('refetch')
-      const organisation = await apiFetch(`/structures/${this.organisation.id}`)
-      this.organisation = organisation
-      const responsables = await apiFetch(`/structures/${this.organisation.id}/responsables`)
-      this.responsables = responsables
-    },
-    async handleChangeState(event) {
-      await apiFetch(`/structures/${this.organisation.id}`, {
-        method: 'PUT',
-        body: {
-          ...this.organisation,
-          state: event.key,
-        },
-      })
-        .then(() => {
-          this.organisation.state = event.key
-        })
-        .catch(() => {})
-    },
-    handleSubmitInvitation() {
+    closeDrawerAndRefreshOrganisation() {
       this.showDrawerInvitation = false
-      this.fetch()
-    },
-    handleSubmitAddResponsable() {
       this.showDrawerAddResponsable = false
-      this.refetch()
+      this.fetch()
     },
   },
 })

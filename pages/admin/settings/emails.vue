@@ -200,6 +200,15 @@ export default defineNuxtComponent({
         },
         {
           tab: 'benevoles',
+          key: 'benevole_participation_will_start',
+          label: 'Votre mission commence très prochainement 👟',
+          description:
+            'Notification envoyée au bénévole lorsque sa participation est validée et que la mission commence demain. Seulement pour les missions ponctuelles.',
+          tags: ['app-benevole-participation-will-start'],
+          is_updated: true,
+        },
+        {
+          tab: 'benevoles',
           key: 'user_banned_not_regular_resident',
           label: 'Vous avez été automatiquement désinscrit de la plateforme JeVeuxAider.gouv.fr',
           description:
@@ -228,25 +237,25 @@ export default defineNuxtComponent({
         {
           tab: 'responsables',
           key: 'responsable_mission_deactivated',
-          label: 'Votre mission a été désactivée',
+          label: 'Votre mission a été mise hors ligne',
           description:
-            "Notification envoyée au responsable d'organisation lorsqu'un modérateur désactive l'une de ses missions",
+            "Notification envoyée au responsable d'organisation lorsqu'un modérateur met hors ligne l'une de ses missions",
           tags: ['app-responsable-mission-desactivee'],
           types: ['Notification'],
         },
         {
           tab: 'responsables',
           key: 'responsable_mission_reactivated',
-          label: 'Votre mission est de nouveau active 👏🏻',
+          label: 'Votre mission est de nouveau en ligne 👏🏻',
           description:
-            "Notification envoyée au responsable d'organisation lorsqu'un modérateur réactive l'une de ses missions",
+            "Notification envoyée au responsable d'organisation lorsqu'un modérateur remet en ligne l'une de ses missions",
           tags: ['app-responsable-mission-reactivee'],
           types: ['Notification'],
         },
         {
           tab: 'responsables',
           key: 'responsable_missions_deactivated',
-          label: 'Vos missions ont été désactivées',
+          label: 'Vos missions ont été mises hors ligne',
           description:
             "Notification envoyée au responsable d'organisation lorsqu'un modérateur désactive toutes ses missions",
           tags: ['app-responsable-missions-desactivees'],
@@ -395,7 +404,7 @@ export default defineNuxtComponent({
         {
           tab: 'responsables',
           key: 'responsable_collectivite_validated',
-          label: 'Prenez rendez-vous avec nous pour découvrir la plateforme 🙂',
+          label: 'Découvrez le fonctionnement de la plateforme JeVeuxAider.gouv.fr',
           description:
             'Notification envoyée au responsable lorsque son organisation de type collectivité territoriale est validée',
           tags: ['app-responsable-collectivite-validee'],

@@ -198,9 +198,3 @@ export default defineNuxtComponent({
   },
 })
 </script>
-
-<style lang="postcss" scoped>
-:deep(.vc-highlight) {
-  background: #090391 !important;
-}
-</style>

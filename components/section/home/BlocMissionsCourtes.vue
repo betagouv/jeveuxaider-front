@@ -35,7 +35,7 @@
             aroundPrecision: 2000,
             aroundLatLngViaIP: true,
             aroundRadius: 'all',
-            numericFilters: ['commitment__total <= 4'],
+            facetFilters: ['commitment:few_hours'],
           }"
           @slide-click="onSlideClick"
         />
@@ -46,7 +46,7 @@
           Plus de missions
         </DsfrButton>
       </div>
-      <div class="mt-8 flex flex-col xl:flex-row space-y-6 xl:space-y-0 xl:space-x-6">
+      <!-- <div class="mt-8 flex flex-col xl:flex-row space-y-6 xl:space-y-0 xl:space-x-6">
         <p class="text-white font-bold text-xl xl:text-2xl">Quelles sont vos disponibilités ?</p>
         <div class="flex flex-wrap gap-4">
           <nuxt-link
@@ -66,7 +66,7 @@
             </DsfrTag>
           </nuxt-link>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -80,32 +80,32 @@ export default defineNuxtComponent({
   },
   data() {
     return {
-      links: [
-        {
-          label: '1 heure',
-          to: '/missions-benevolat?commitment__total=<%3D1&duration=1_hour&time_period=year',
-        },
-        {
-          label: '2 heures',
-          to: '/missions-benevolat?commitment__total=<%3D2&duration=2_hours&time_period=year',
-        },
-        {
-          label: 'Une demi-journée',
-          to: '/missions-benevolat?commitment__total=<%3D4&duration=half_day&time_period=year',
-        },
-        {
-          label: '1 jour',
-          to: '/missions-benevolat?commitment__total=<%3D7&duration=day&time_period=year',
-        },
-        {
-          label: '2 jours',
-          to: '/missions-benevolat?commitment__total=<%3D14&duration=2_days&time_period=year',
-        },
-        {
-          label: '3 jours',
-          to: '/missions-benevolat?commitment__total=<%3D21&duration=3_days&time_period=year',
-        },
-      ],
+      // links: [
+      //   {
+      //     label: '1 heure',
+      //     to: '/missions-benevolat?commitment__total=<%3D1&duration=1_hour&time_period=year',
+      //   },
+      //   {
+      //     label: '2 heures',
+      //     to: '/missions-benevolat?commitment__total=<%3D2&duration=2_hours&time_period=year',
+      //   },
+      //   {
+      //     label: 'Une demi-journée',
+      //     to: '/missions-benevolat?commitment__total=<%3D4&duration=half_day&time_period=year',
+      //   },
+      //   {
+      //     label: '1 jour',
+      //     to: '/missions-benevolat?commitment__total=<%3D7&duration=day&time_period=year',
+      //   },
+      //   {
+      //     label: '2 jours',
+      //     to: '/missions-benevolat?commitment__total=<%3D14&duration=2_days&time_period=year',
+      //   },
+      //   {
+      //     label: '3 jours',
+      //     to: '/missions-benevolat?commitment__total=<%3D21&duration=3_days&time_period=year',
+      //   },
+      // ],
     }
   },
   methods: {
@@ -113,9 +113,7 @@ export default defineNuxtComponent({
       this.$plausible.trackEvent('Homepage - CTA - Plus de missions - Mission courte', {
         props: { isLogged: this.$stores.auth.isLogged },
       })
-      this.$router.push(
-        '/missions-benevolat?commitment__total=<%3D4&duration=half_day&time_period=year'
-      )
+      this.$router.push('/missions-benevolat?commitment=few_hours')
     },
     onSlideClick() {
       this.$plausible.trackEvent('Homepage - Clique - Mission courte', {

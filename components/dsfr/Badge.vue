@@ -14,6 +14,7 @@
       { 'text-[#B34000] bg-[#FFE9E6]': type === 'warning' },
       { 'text-[#695240] bg-[#FEEBD0]': type === 'new' },
       { 'text-[#6E445A] bg-[#FEE7FC]': type === 'default' },
+      { 'text-[#3A3A3A] bg-[#EEEEEE]': type === 'gray' },
     ]"
   >
     <component
@@ -59,7 +60,8 @@ export default defineNuxtComponent({
     type: {
       type: String,
       default: 'default',
-      validator: (t) => ['success', 'error', 'info', 'warning', 'new', 'default'].includes(t),
+      validator: (t) =>
+        ['success', 'error', 'info', 'warning', 'new', 'default', 'gray'].includes(t),
     },
     noIcon: {
       type: Boolean,

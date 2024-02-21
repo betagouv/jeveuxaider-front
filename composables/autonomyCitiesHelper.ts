@@ -1,13 +1,18 @@
-export const autonomyCitiesHelper = async () => {
+export const autonomyCitiesHelper = () => {
   const formatAutonomyCities = (autonomyCities: any[]) => {
     if (autonomyCities?.length) {
       const groupedByCity = autonomyCities.reduce((accumulator, current) => {
         const { city, zip, arrondissement } = current
 
         // city.includes('Arrondissement') is legacy
-        const isArrondissement = city.includes('Arrondissement') || arrondissement
+        const isArrondissement =
+          city.includes('Arrondissement') ||
+          arrondissement ||
+          ['75001', '69001', '13001'].includes(zip)
+
         const arrondissementLabel =
-          (isArrondissement && (arrondissement ?? city.split(' ')[1])) ?? city
+          (isArrondissement && (arrondissement ?? city.split(' ')[1])) ??
+          (['75001', '69001', '13001'].includes(zip) ? '1er' : city)
 
         let formattedCity = city
         if (isArrondissement) {

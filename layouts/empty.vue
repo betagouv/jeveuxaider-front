@@ -4,7 +4,7 @@
     <main id="contenuprincipal" role="main">
       <NuxtPage />
     </main>
-    <div id="teleport-drawer" class="relative z-20"></div>
+    <div id="teleport-drawer" class="relative z-50"></div>
     <div id="teleport-body-end"></div>
   </div>
 </template>

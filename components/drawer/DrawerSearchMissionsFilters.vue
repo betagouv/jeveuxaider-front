@@ -4,9 +4,26 @@
       <div class="font-bold">Filtres de recherche</div>
     </template>
 
+    <FacetFilter
+      show-more
+      facet-name="commitment"
+      label="Disponibilités"
+      :show-more-limit="3"
+      :facets="$stores.algoliaSearch.facetResults('commitment')"
+      legend="Filtrer par disponibilité"
+      :facet-value-resolver="{
+        few_hours: 'Quelques heures',
+        few_days: 'Quelques jours',
+        few_hours_a_week: 'Quelques heures par semaine',
+        few_days_a_week: 'Quelques jours par semaine',
+        few_hours_a_month: 'Quelques heures par mois',
+        few_days_a_month: 'Quelques jours par mois',
+      }"
+    />
+
     <div class="space-y-2">
-      <div class="relative font-medium text-[15px]">Disponibilités</div>
-      <CommitmentMobileFilter />
+      <div class="relative font-medium text-[15px]">Dates</div>
+      <DatesMobileFilter />
     </div>
 
     <FacetFilter
@@ -23,10 +40,10 @@
       <AutonomyMobileFilter />
     </div>
 
-    <div class="space-y-2">
+    <!-- <div class="space-y-2">
       <div class="relative font-medium text-[15px]">Missions courtes</div>
       <PonctualMobileFilter />
-    </div>
+    </div> -->
 
     <div class="space-y-2">
       <div class="relative font-medium text-[15px]">Mineurs</div>
@@ -144,6 +161,7 @@ import CommitmentMobileFilter from '@/components/section/search/CommitmentMobile
 import AutonomyMobileFilter from '@/components/section/search/AutonomyMobileFilter.vue'
 import MinorsMobileFilter from '@/components/section/search/MinorsMobileFilter.vue'
 import PonctualMobileFilter from '@/components/section/search/PonctualMobileFilter.vue'
+import DatesMobileFilter from '@/components/section/search/DatesMobileFilter.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -153,6 +171,7 @@ export default defineNuxtComponent({
     AutonomyMobileFilter,
     MinorsMobileFilter,
     PonctualMobileFilter,
+    DatesMobileFilter,
   },
   setup() {
     const { getNbMobileSecondaryFilters } = useAlgoliaMissionsQueryBuilder()

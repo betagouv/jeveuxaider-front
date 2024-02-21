@@ -1,14 +1,14 @@
 <template>
   <header id="header" ref="header" role="banner">
     <a
-      class="absolute translate-x-[-150%] focus:translate-x-0 p-2 m-2 sm:p-4 sm:m-4 bg-white shadow-xl z-50"
+      class="absolute translate-x-[-150%] focus:translate-x-0 p-2 m-2 sm:p-4 sm:m-4 bg-white shadow-xl z-[999]"
       href="#contenuprincipal"
       >Aller au contenu</a
     >
     <HeaderBanner />
     <div id="teleport-header-top"></div>
 
-    <div class="relative bg-white shadow-lg z-30">
+    <div class="relative bg-white shadow-lg z-50">
       <HeaderMobile class="block lg:hidden" :full-width="fullWidth" />
       <HeaderDesktop class="hidden lg:block" :full-width="fullWidth" />
     </div>

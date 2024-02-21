@@ -41,6 +41,7 @@
         'template_subtitle',
         'publisher_name',
       ]"
+      pagination-anchor-content-id="recherche"
       class="py-4 my-4 sm:py-8 sm:my-8 lg:py-12 lg:my-12"
     />
     <SectionPartenairesEngagementSousToutesSesFormes

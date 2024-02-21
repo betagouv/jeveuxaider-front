@@ -24,11 +24,16 @@
             />
           </nuxt-link>
         </div>
-        <div class="flex space-x-2 text-jva-blue-500">
+        <div class="flex items-center space-x-4 text-jva-blue-500">
           <nuxt-link no-prefetch to="/missions-benevolat" aria-label="Recherche">
             <MagnifyingGlassIcon class="h-6 w-6" />
           </nuxt-link>
-          <button type="button" aria-haspopup="true" @click="showMobileMenu = !showMobileMenu">
+          <button
+            type="button"
+            aria-haspopup="true"
+            @click="showMobileMenu = !showMobileMenu"
+            class="border"
+          >
             <template v-if="!showMobileMenu">
               <span class="sr-only">Open main menu</span>
               <Bars3Icon class="h-6 w-6" />
@@ -223,7 +228,9 @@ export default defineNuxtComponent({
           {
             name: 'Bénévolat près de chez moi',
             to: '/missions-benevolat',
-            isActive: this.isBenevolatPresDeChezMoiActiveLink(),
+            isActive:
+              this.isBenevolatPresDeChezMoiActiveLink() &&
+              !this.isActiveOperation('Collecte nationale des Restos du Cœur'),
           },
           {
             name: 'À distance',
@@ -231,15 +238,20 @@ export default defineNuxtComponent({
             isActive: this.isBenevolatADistanceActiveLink(),
           },
           {
+            name: '🔥 En ce moment',
+            to: '/en-ce-moment',
+            isActive: this.isActiveLink('/en-ce-moment'),
+          },
+          {
             name: 'Associations',
             to: '/organisations',
             isActive: this.isActiveLink('/organisations'),
           },
-          // {
-          //    name: 'Décembre Ensemble 🤲🏻',
-          //    href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
-          //    target: '_blank',
-          // },
+          {
+            name: 'Restos du Coeur  🍽️',
+            to: '/missions-benevolat?tags=Collecte nationale des Restos du Cœur',
+            isActive: this.isActiveOperation('Collecte nationale des Restos du Cœur'),
+          },
           {
             name: "Centre d'aide",
             href: 'https://reserve-civique.crisp.help/fr/',
@@ -422,6 +434,11 @@ export default defineNuxtComponent({
           isActive: this.isActiveLink('profile/missions'),
         },
         {
+          name: '🔥 En ce moment',
+          to: '/en-ce-moment',
+          isActive: this.isActiveLink('/en-ce-moment'),
+        },
+        {
           name: 'Banques alimentaires 🛒',
           href: 'https://www.jeveuxaider.gouv.fr/engagement/banques-alimentaires/',
           target: '_blank',
@@ -482,6 +499,9 @@ export default defineNuxtComponent({
   methods: {
     isActiveLink(regex, exact = false) {
       return exact ? this.$route.path === regex : RegExp(regex).test(this.$route.path)
+    },
+    isActiveOperation(operation) {
+      return this.$route.query?.tags == operation
     },
     isBenevolatPresDeChezMoiActiveLink() {
       if (

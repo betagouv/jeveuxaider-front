@@ -2,7 +2,7 @@
   <fieldset>
     <legend class="sr-only">Choisir une option</legend>
 
-    <div class="flex" :class="[{ 'flex-col': variant === 'radios' }]">
+    <div class="flex" :class="[{ 'flex-col': variant === 'radios' }, classWrapper]">
       <BaseRadio
         v-for="(option, index) in options"
         :key="option.key"
@@ -12,7 +12,7 @@
         :name="uuid"
         :class="[
           {
-            'border border-r-0 py-3 px-3 flex items-center justify-center text-sm font-medium text-center sm:flex-1 cursor-pointer':
+            'tab-radio-component border border-r-0 py-3 px-3 flex items-center justify-center text-sm font-medium text-center sm:flex-1 cursor-pointer':
               variant === 'tabs',
           },
           {
@@ -50,6 +50,7 @@ export default defineNuxtComponent({
       default: 'radios',
       validator: (s) => ['radios', 'tabs'].includes(s),
     },
+    classWrapper: { type: String, default: '' },
   },
   data() {
     return {
@@ -64,3 +65,16 @@ export default defineNuxtComponent({
   },
 })
 </script>
+
+<style lang="postcss" scoped>
+.tab-radio-component {
+  outline: none !important;
+
+  &:focus-within {
+    outline-style: solid !important;
+    outline-color: #0a76f6 !important;
+    outline-width: 2px !important;
+    outline-offset: 2px !important;
+  }
+}
+</style>

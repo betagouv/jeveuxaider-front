@@ -1,35 +1,49 @@
 <template>
   <div>
-    <div v-if="!canDuplicateMission" v-tooltip="tooltipCantDuplicateMission">
+    <div v-if="theme == 'button'">
+      <div v-if="!canDuplicateMission" v-tooltip="tooltipCantDuplicateMission">
+        <DsfrButton
+          type="tertiary"
+          icon="RiFileCopyLine"
+          size="sm"
+          icon-class="!mr-1"
+          :disabled="true"
+        >
+          Dupliquer
+        </DsfrButton>
+      </div>
       <DsfrButton
+        v-else
         type="tertiary"
         icon="RiFileCopyLine"
         size="sm"
         icon-class="!mr-1"
-        :disabled="true"
+        :loading="loading"
+        @click.native="showDialog = true"
       >
         Dupliquer
       </DsfrButton>
     </div>
-    <DsfrButton
-      v-else
-      type="tertiary"
-      icon="RiFileCopyLine"
-      size="sm"
-      icon-class="!mr-1"
-      :loading="loading"
-      @click.native="showDialog = true"
-    >
-      Dupliquer
-    </DsfrButton>
+    <div v-if="theme == 'link'">
+      <div v-if="!canDuplicateMission" v-tooltip="tooltipCantDuplicateMission">
+        <div class="flex items-center">
+          <RiFileCopyLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Dupliquer
+        </div>
+      </div>
+      <div v-else class="flex items-center" @click.native="showDialog = true">
+        <RiFileCopyLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Dupliquer
+      </div>
+    </div>
     <BaseAlertDialog
-      theme="warning"
+      icon="RiErrorWarningLine"
       title="Dupliquer la mission"
-      :text="`Vous êtes sur le point de dupliquer la mission <strong>${mission.name}</strong> qui sera enregistrée en « <strong>Brouillon</strong> »`"
       :is-open="showDialog"
       @confirm="handleConfirm()"
       @cancel="showDialog = false"
-    />
+    >
+      Vous êtes sur le point de dupliquer la mission <strong>{{ mission.name }}</strong> qui sera
+      enregistrée en « <strong>Brouillon</strong> »
+    </BaseAlertDialog>
   </div>
 </template>
 
@@ -44,6 +58,18 @@ export default defineNuxtComponent({
       type: Object,
       required: true,
     },
+    theme: {
+      type: String,
+      default: 'button',
+    },
+    canDuplicateMission: {
+      type: Boolean,
+      required: true,
+    },
+    redirectToMission: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -52,14 +78,6 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    canDuplicateMission() {
-      return (
-        !!this.mission.structure?.state &&
-        !['Brouillon', 'Signalée', 'Désinscrite'].includes(this.mission.structure.state) &&
-        this.$stores.auth.user?.profile?.mobile &&
-        !this.$stores.auth.user.statistics?.missions_inactive_count
-      )
-    },
     tooltipCantDuplicateMission() {
       let content
       switch (this.mission.structure?.state) {
@@ -82,7 +100,7 @@ export default defineNuxtComponent({
           'Renseignez au préalable votre numéro de mobile dans <a class="active:!bg-transparent" href="/profile/edit">votre profil</a> afin de pouvoir dupliquer une mission'
       }
 
-      if (this.$stores.auth.user.statistics?.missions_inactive_count) {
+      if (this.$stores.auth.user.statistics?.missions_offline_count) {
         content =
           "Vous ne pouvez pas dupliquer la mission car vous avez trop de participations à mettre à jour. Pour toute information, veuillez contacter le support : <a href='mailto:support@jeveuxaider.beta.gouv.fr'>support@jeveuxaider.beta.gouv.fr</a>"
       }
@@ -106,6 +124,9 @@ export default defineNuxtComponent({
         .then((response) => {
           this.$toast.success('La mission a été dupliquée')
           this.$emit('duplicated', response)
+          if (this.redirectToMission) {
+            this.$router.push(`/admin/missions/${response.id}`)
+          }
         })
         .catch(() => {})
         .finally(() => {

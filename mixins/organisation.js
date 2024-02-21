@@ -1,4 +1,9 @@
 export default {
+  data() {
+    return {
+      showModalDelete: false,
+    }
+  },
   computed: {
     organisationCity() {
       if (this.organisation.city?.includes('Paris')) {
@@ -15,6 +20,21 @@ export default {
       return (
         this.organisation.statut_juridique == 'Association' && this.organisation.state === 'Validée'
       )
+    },
+    badgeTypeOrganisationSate() {
+      switch (this.organisation.state) {
+        case 'Validée':
+          return 'success'
+        case 'Signalée':
+        case 'Annulée':
+        case 'Désinscrite':
+          return 'error'
+        case 'En attente de validation':
+        case 'En cours de traitement':
+          return 'warning'
+        default:
+          return 'info'
+      }
     },
     canEditStatut() {
       const rolesWhoCanEdit = this.$filters.label(
@@ -34,6 +54,32 @@ export default {
         default:
           return false
       }
+    },
+  },
+  methods: {
+    async handleConfirmDelete() {
+      apiFetch(`/structures/${this.organisation.id}`, {
+        method: 'DELETE',
+      })
+        .then((res) => {
+          this.showModalDelete = false
+          this.$emit('organisationDeleted')
+        })
+        .catch(() => {})
+    },
+    async handleChangeState(event) {
+      await apiFetch(`/structures/${this.organisation.id}`, {
+        method: 'PUT',
+        body: {
+          ...this.organisation,
+          state: event.key,
+        },
+      })
+        .then(() => {
+          this.organisation.state = event.key
+          $emit('updated')
+        })
+        .catch(() => {})
     },
   },
 }

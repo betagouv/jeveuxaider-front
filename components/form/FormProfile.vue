@@ -13,18 +13,22 @@
         <FormProfileRole :profile="profile" @submited="handleSubmitRole" />
       </BaseDrawer>
       <BaseAlertDialog
-        theme="danger"
+        icon="RiErrorWarningLine"
         title="Supprimer le rôle"
-        :text="`<strong>${profile.full_name}</strong> n'aura plus le rôle <strong>${$filters.label(
-          roleSelected?.name,
-          'roles'
-        )} (${roleSelected?.pivot_model.name})</strong>`"
         :is-open="showAlertRoleDeleted"
         @confirm="handleConfirmDeleteRole"
         @cancel="showAlertRoleDeleted = false"
-      />
+      >
+        <strong>{{ profile.full_name }}</strong> n'aura plus le rôle
+        <strong
+          >{{ $filters.label(roleSelected?.name, 'roles') }} ({{
+            roleSelected?.pivot_model.name
+          }})</strong
+        >
+      </BaseAlertDialog>
       <div class="lg:col-span-3 space-y-12">
         <BaseBox>
+          <BaseHeading :level="2" class="mb-8"> {{ profile.full_name }} </BaseHeading>
           <BaseHeading :level="3" class="mb-8"> Informations personnelles </BaseHeading>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <BaseFormControl class="md:col-span-2" label="Photo de profil" html-for="avatar">
@@ -465,13 +469,6 @@
             />
           </div>
         </BaseBox>
-      </div>
-    </div>
-    <div class="border-t my-8 pt-8 lg:pt-12 lg:my-12">
-      <div class="flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-        <BaseButton size="xl" variant="green" :loading="loading" @click.native="handleSubmit()">
-          Enregistrer
-        </BaseButton>
       </div>
     </div>
   </div>

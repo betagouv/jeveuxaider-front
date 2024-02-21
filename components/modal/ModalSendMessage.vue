@@ -2,9 +2,8 @@
   <ClientOnly>
     <Teleport to="#teleport-body-end">
       <BaseModal
-        v-scroll-lock="isOpen"
         :is-open="isOpen"
-        theme="message"
+        icon="RiMessage3Line"
         :title="`À ${toUser.full_name}`"
         :prevent-click-outside="true"
         @close="handleCancel()"
@@ -31,10 +30,8 @@
         </div>
 
         <template #footer>
-          <BaseButton class="mr-3" variant="white" @click.native="handleCancel()">
-            Annuler
-          </BaseButton>
-          <BaseButton :loading="loading" @click.native="handleSubmit"> Envoyer </BaseButton>
+          <DsfrButton type="secondary" @click="handleCancel"> Annuler </DsfrButton>
+          <DsfrButton :loading="loading" @click="handleSubmit"> Envoyer </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>
@@ -111,7 +108,7 @@ export default defineNuxtComponent({
               conversableType: this.conversableType,
             },
           })
-          console.log(conversation)
+          // console.log(conversation)
           this.$router.push(`/messages/${conversation.id}`)
         })
         .catch((errors) => {

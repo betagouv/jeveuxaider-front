@@ -2,7 +2,6 @@
   <ClientOnly>
     <Teleport to="#teleport-body-end">
       <BaseModal
-        v-scroll-lock="isOpen"
         :is-open="isOpen"
         :theme="modalTheme"
         :title="modalTitle"
@@ -25,17 +24,15 @@
 
         <template #footer>
           <template v-if="state === 'initial'">
-            <BaseButton class="mr-3" variant="white" @click.native="$emit('close')">
-              Retour
-            </BaseButton>
+            <DsfrButton type="secondary" @click.native="$emit('close')"> Retour </DsfrButton>
             <slot name="submit">
-              <BaseButton @click.native="handleSubmit(endpoint)"> Confirmer </BaseButton>
+              <DsfrButton @click.native="handleSubmit(endpoint)"> Confirmer </DsfrButton>
             </slot>
           </template>
 
-          <BaseButton
+          <DsfrButton
             v-else-if="state === 'processed'"
-            variant="white"
+            type="secondary"
             @click.native="
               () => {
                 $emit('processed')
@@ -44,7 +41,7 @@
             "
           >
             Fermer
-          </BaseButton>
+          </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>

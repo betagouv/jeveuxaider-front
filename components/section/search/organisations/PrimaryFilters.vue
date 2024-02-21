@@ -106,7 +106,7 @@ export default defineNuxtComponent({
     )
     this.isPinnedObserver.observe(this.$refs.primaryFilters)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.isPinnedObserver.disconnect()
   },
 })

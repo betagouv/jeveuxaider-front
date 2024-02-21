@@ -3,7 +3,6 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :key="`modal_alert_dialog_${uuid}`"
-        v-scroll-lock="isOpen"
         :title="title"
         :is-open="isOpen"
         :theme="theme"
@@ -36,19 +35,19 @@
         </div>
         <template #footer>
           <template v-if="state === 'initial'">
-            <BaseButton variant="primary" @click.native="handleExecute">
+            <DsfrButton @click="handleExecute">
               {{ confirmLabel }}
-            </BaseButton>
+            </DsfrButton>
           </template>
           <template v-if="state === 'processing'">
-            <BaseButton variant="white" @click.native="cancelBatch">
+            <DsfrButton type="secondary" @click="cancelBatch">
               {{ cancelLabel }}
-            </BaseButton>
+            </DsfrButton>
           </template>
           <template v-if="['processed', 'cancelled'].includes(state)">
-            <BaseButton variant="white" @click.native="handleBatchEnd">
+            <DsfrButton type="secondary" @click="handleBatchEnd">
               {{ closeLabel }}
-            </BaseButton>
+            </DsfrButton>
           </template>
         </template>
       </BaseModal>

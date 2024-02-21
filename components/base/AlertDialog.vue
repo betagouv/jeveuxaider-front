@@ -3,24 +3,22 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :key="`modal_alert_dialog_${uuid}`"
-        v-scroll-lock="isOpen"
         :title="title"
         :is-open="isOpen"
-        :theme="theme"
+        :icon="icon"
         :prevent-click-outside="preventClickOutside"
         @close="$emit('cancel')"
       >
-        <div class="text-gray-700 space-y-4">
-          <div v-html="text" />
+        <div class="text-gray-700 mb-4">
           <slot />
         </div>
         <template #footer>
-          <BaseButton class="mr-3" variant="white" @click.native="$emit('cancel')">
+          <DsfrButton type="secondary" @click="$emit('cancel')">
             {{ cancelLabel }}
-          </BaseButton>
-          <BaseButton :variant="confirmButtonVariant" @click.native="$emit('confirm')">
-            {{ confirmLabel }}
-          </BaseButton>
+          </DsfrButton>
+          <DsfrButton @click="$emit('confirm')">
+            {{ buttonLabel }}
+          </DsfrButton>
         </template>
       </BaseModal>
     </Teleport>
@@ -37,21 +35,17 @@ export default defineNuxtComponent({
       type: Boolean,
       default: false,
     },
+    icon: {
+      type: String,
+      default: null,
+    },
     title: {
       type: String,
       required: true,
     },
-    text: {
-      type: String,
-      default: '',
-    },
-    theme: {
-      type: String,
-      default: 'success', // success, warning, danger
-    },
     buttonLabel: {
       type: String,
-      default: null,
+      default: 'Confirmer',
     },
     cancelLabel: {
       type: String,
@@ -62,21 +56,7 @@ export default defineNuxtComponent({
       default: true,
     },
   },
-  computed: {
-    confirmButtonVariant() {
-      return this.theme == 'danger' ? 'red' : 'primary'
-    },
-    confirmLabel() {
-      if (this.buttonLabel) {
-        return this.buttonLabel
-      }
-      return this.theme == 'danger'
-        ? 'Supprimer'
-        : this.theme == 'success'
-        ? 'Confirmer'
-        : 'Valider'
-    },
-  },
+  computed: {},
   data() {
     return {
       uuid: uuidv4(),

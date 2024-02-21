@@ -3,22 +3,19 @@
     <Teleport to="#teleport-body-end">
       <template v-if="responsable.missions_count > 0">
         <BaseModal
-          v-scroll-lock="isOpen"
           :is-open="isOpen"
-          theme="danger"
+          icon="RiErrorWarningLine"
           :title="`Supprimer ${responsable.full_name}`"
           :prevent-click-outside="true"
           @close="$emit('cancel')"
         >
           <div class="space-y-4">
-            <div class="text-sm text-gray-500 space-y-4">
-              <p>
-                <span class="font-semibold">{{ responsable.full_name }}</span>
-                ne fera plus partie de l'organisation
-                <span class="font-semibold">{{ organisation.name }}</span> et ne pourra plus gérer
-                les missions proposées sur JeVeuxAider.gouv.fr.
-              </p>
-            </div>
+            <p>
+              <span class="font-semibold">{{ responsable.full_name }}</span>
+              ne fera plus partie de l'organisation
+              <span class="font-semibold">{{ organisation.name }}</span> et ne pourra plus gérer les
+              missions proposées sur JeVeuxAider.gouv.fr.
+            </p>
 
             <form>
               <BaseFormControl
@@ -46,35 +43,27 @@
           </div>
 
           <template #footer>
-            <BaseButton class="mr-3" variant="white" @click.native="$emit('cancel')">
-              Retour
-            </BaseButton>
-            <BaseButton
-              :loading="loading"
-              variant="red"
-              @click.native="handleSubmitAndSetNewResponsable"
-            >
+            <DsfrButton type="secondary" @click.native="$emit('cancel')"> Retour </DsfrButton>
+            <DsfrButton :loading="loading" @click.native="handleSubmitAndSetNewResponsable">
               Supprimer
-            </BaseButton>
+            </DsfrButton>
           </template>
         </BaseModal>
       </template>
       <template v-else>
         <BaseAlertDialog
-          theme="danger"
+          icon="RiErrorWarningLine"
           :title="`Supprimer ${responsable.full_name}`"
           :is-open="isOpen"
           @confirm="handleSubmit"
           @close="$emit('cancel')"
           @cancel="$emit('cancel')"
         >
-          <div class="text-gray-500 space-y-4 text-sm">
-            <p>
-              <span class="font-semibold">{{ responsable.full_name }}</span> ne fera plus partie de
-              l'organisation <span class="font-semibold">{{ organisation.name }}</span> et ne pourra
-              plus gérer les missions proposées sur JeVeuxAider.gouv.fr.
-            </p>
-          </div>
+          <p>
+            <span class="font-semibold">{{ responsable.full_name }}</span> ne fera plus partie de
+            l'organisation <span class="font-semibold">{{ organisation.name }}</span> et ne pourra
+            plus gérer les missions proposées sur JeVeuxAider.gouv.fr.
+          </p>
         </BaseAlertDialog>
       </template>
     </Teleport>

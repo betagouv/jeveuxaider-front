@@ -186,7 +186,7 @@ export default defineNuxtComponent({
       if (!$stores.auth.user?.profile?.mobile) {
         return showError({ statusCode: 403 })
       }
-      if ($stores.auth.user.statistics?.missions_inactive_count) {
+      if ($stores.auth.user.statistics?.missions_offline_count) {
         return showError({ statusCode: 403 })
       }
     }
