@@ -185,7 +185,7 @@
               :loading="loadingFetchZips"
               attribute-key="zip"
               hide-attribute-key
-              attribute-right-label="zip"
+              attribute-right-label="labelRight"
               @fetch-suggestions="onFetchSuggestionsZips"
               @selected="changeFilter('filter[mission.zip]', $event?.zip)"
             />
