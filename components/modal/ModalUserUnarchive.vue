@@ -3,8 +3,8 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        icon="RiErrorWarningLine"
-        title="Réactiver votre compte utilisateur"
+        :icon="modalIcon"
+        :title="modalTitle"
         :prevent-click-outside="true"
         @close="$emit('cancel')"
       >
@@ -27,14 +27,26 @@
               <strong>{{ email }}</strong
               >.
             </p>
-            <p>FORM CODE</p>
+            <div class="flex justify-center">
+              <v-otp-input
+                ref="otpInput"
+                v-model:value="form.code"
+                input-classes="m-2 h-12 lg:h-16 w-8 lg:w-12 bg-gray-100 border-gray-300 text-center rounded text-black"
+                separator=""
+                :num-inputs="6"
+                :should-auto-focus="true"
+                input-type="letter-numeric"
+                :placeholder="['*', '*', '*', '*', '*', '*']"
+                @on-change="handleOnChange"
+                @on-complete="handleOnComplete"
+              />
+            </div>
           </div>
         </template>
         <template v-else-if="step === 'success'">
           <div class="space-y-4">
             <p>
-              Votre compte a été réactivé avec succès. Vous pouvez maintenant vous connecter avec
-              <strong>{{ email }}</strong
+              Vous pouvez dès maintenant vous connecter avec <strong>{{ email }}</strong
               >.
             </p>
           </div>
@@ -49,10 +61,12 @@
             </DsfrButton>
           </template>
           <template v-else-if="step === 'code'">
-            <DsfrButton @click="validateCode"> Réactiver mon compte </DsfrButton>
+            <DsfrButton @click="validateCode" :disabled="!isCodeValid" :loading="loading">
+              Réactiver mon compte
+            </DsfrButton>
           </template>
           <template v-else-if="step === 'success'">
-            <DsfrButton @click="$router.push(`login?email=${email}`)"> Je me connecte </DsfrButton>
+            <DsfrButton @click="goToLogin"> Je me connecte </DsfrButton>
           </template>
         </template>
       </BaseModal>
@@ -61,9 +75,11 @@
 </template>
 
 <script>
+import VOtpInput from 'vue3-otp-input'
+
 export default defineNuxtComponent({
   emits: ['cancel', 'create-new-account'],
-  components: {},
+  components: { VOtpInput },
   props: {
     isOpen: {
       type: Boolean,
@@ -78,10 +94,31 @@ export default defineNuxtComponent({
     return {
       loading: false,
       step: 'question',
+      isCodeValid: false,
       form: {
         code: '',
       },
     }
+  },
+  computed: {
+    modalIcon() {
+      if (this.step === 'code') {
+        return 'RiLockLine'
+      }
+      if (this.step === 'success') {
+        return 'RiCheckLine'
+      }
+      return 'RiErrorWarningLine'
+    },
+    modalTitle() {
+      if (this.step === 'code') {
+        return 'Code de réactivation'
+      }
+      if (this.step === 'success') {
+        return 'Réactivation réussie'
+      }
+      return 'Réactiver votre compte utilisateur'
+    },
   },
   methods: {
     async sendCode() {
@@ -100,9 +137,33 @@ export default defineNuxtComponent({
           this.loading = false
         })
     },
-    validateCode() {
-      console.log('validateCode')
-      this.step = 'success'
+    async validateCode() {
+      this.loading = true
+      await apiFetch(`/user/archive/validate-code`, {
+        method: 'POST',
+        body: { code: this.form.code, email: this.email },
+      })
+        .then(() => {
+          this.step = 'success'
+        })
+        .catch(() => {
+          this.loading = false
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+    goToLogin() {
+      this.$emit('cancel')
+      this.$router.push(`/login?email=${this.email}`)
+    },
+    handleOnChange(value) {
+      this.isCodeValid = false
+      this.form.code = value
+    },
+    handleOnComplete(value) {
+      this.form.code = value
+      this.isCodeValid = true
     },
   },
 })

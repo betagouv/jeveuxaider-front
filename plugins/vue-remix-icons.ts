@@ -118,8 +118,10 @@ import RiMailStar from 'vue-remix-icons/icons/ri-mail-star-line.vue'
 import RiUserForbid from 'vue-remix-icons/icons/ri-user-forbid-line.vue'
 import RiInboxArchiveLine from 'vue-remix-icons/icons/ri-inbox-archive-line.vue'
 import RiInboxUnarchiveLine from 'vue-remix-icons/icons/ri-inbox-unarchive-line.vue'
+import RiLockLine from 'vue-remix-icons/icons/ri-lock-line.vue'
 
 const components = {
+  RiLockLine,
   RiInboxArchiveLine,
   RiInboxUnarchiveLine,
   RiTimeLine,
