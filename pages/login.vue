@@ -63,7 +63,7 @@
                   placeholder="Entrez votre email"
                   aria-required="true"
                   autocomplete="email"
-                  @blur="validate('email')"
+                  @blur="onBlurEmail"
                 />
               </BaseFormControl>
               <BaseFormControl
@@ -155,7 +155,6 @@
       v-if="showModalUnarchive"
       :is-open="showModalUnarchive"
       @cancel="showModalUnarchive = false"
-      @create-new-account="() => $router.push('/inscription/benevole?email=' + form.email)"
       :email="form.email"
     />
   </div>
@@ -215,6 +214,22 @@ export default defineNuxtComponent({
     }
   },
   methods: {
+    async onBlurEmail() {
+      this.validate('email')
+      if (this.isValid('email')) {
+        this.checkUserArchiveExist()
+      }
+    },
+    async checkUserArchiveExist() {
+      await apiFetch(`/user/archive/exist`, {
+        method: 'POST',
+        body: { email: this.form.email },
+      }).then((response) => {
+        if (response.exist === true) {
+          this.showModalUnarchive = true
+        }
+      })
+    },
     onSubmit() {
       if (this.loading) {
         return
@@ -223,15 +238,9 @@ export default defineNuxtComponent({
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          const response = await apiFetch(`/user/archive/exist`, {
-            method: 'POST',
-            body: { email: this.form.email },
-          })
-          console.log('userArchiveExist', response)
-          if (response.exist === true) {
-            this.showModalUnarchive = true
-          } else {
-            this.login()
+          const errorLogin = await this.$stores.auth.login(this.form)
+          if (!errorLogin) {
+            navigateTo(this.$route.query?.redirect ?? '/')
           }
         })
         .catch((errors) => {
@@ -240,12 +249,6 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
-    },
-    async login() {
-      const errorLogin = await this.$stores.auth.login(this.form)
-      if (!errorLogin) {
-        navigateTo(this.$route.query?.redirect ?? '/')
-      }
     },
     onCancelUnarchive() {
       this.showModalUnarchive = false

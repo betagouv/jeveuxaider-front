@@ -45,28 +45,24 @@
         </template>
         <template v-else-if="step === 'success'">
           <div class="space-y-4">
+            <p>Votre compte a été réactivé avec succès.</p>
             <p>
-              Vous pouvez dès maintenant vous connecter avec <strong>{{ email }}</strong
+              Un e-mail de réinitialisation de mot de passe vous a été envoyé à
+              <strong>{{ email }}</strong
               >.
             </p>
           </div>
         </template>
         <template #footer>
           <template v-if="step === 'question'">
-            <DsfrButton type="secondary" @click="$emit('create-new-account')">
-              Non, je créé un nouveau compte
-            </DsfrButton>
             <DsfrButton @click="sendCode" :loading="loading">
-              Oui, je réactive mon compte
+              Envoyer mon code de réactivation
             </DsfrButton>
           </template>
           <template v-else-if="step === 'code'">
             <DsfrButton @click="validateCode" :disabled="!isCodeValid" :loading="loading">
               Réactiver mon compte
             </DsfrButton>
-          </template>
-          <template v-else-if="step === 'success'">
-            <DsfrButton @click="goToLogin"> Je me connecte </DsfrButton>
           </template>
         </template>
       </BaseModal>
@@ -88,6 +84,10 @@ export default defineNuxtComponent({
     email: {
       type: String,
       required: true,
+    },
+    sendForgotPassword: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
@@ -143,7 +143,15 @@ export default defineNuxtComponent({
         method: 'POST',
         body: { code: this.form.code, email: this.email },
       })
-        .then(() => {
+        .then(async () => {
+          if (this.sendForgotPassword) {
+            await apiFetch('/password/forgot', {
+              body: {
+                email: this.email,
+              },
+              method: 'POST',
+            })
+          }
           this.step = 'success'
         })
         .catch(() => {

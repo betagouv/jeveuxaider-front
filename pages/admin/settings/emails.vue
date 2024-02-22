@@ -99,6 +99,7 @@ export default defineNuxtComponent({
           tags: ['app-benevole-inscription'],
           is_updated: true,
         },
+
         {
           tab: 'benevoles',
           key: 'benevole_participation_created',
@@ -577,6 +578,14 @@ export default defineNuxtComponent({
           description:
             "Notification envoyée aux référents lorsqu'ils ont activé le résumé mensuel dans leurs préférences de notification",
           tags: ['app-referent-bilan-mensuel'],
+          is_updated: true,
+        },
+        {
+          tab: 'other',
+          key: 'user_unarchive_code',
+          label: "Votre code d'activation à usage unique",
+          description: "L'utilisateur demande un code pour réactiver son compte archivé",
+          tags: ['app-user-activation-code'],
           is_updated: true,
         },
         {

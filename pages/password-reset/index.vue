@@ -73,14 +73,25 @@
         </div>
       </div>
     </div>
+
+    <ModalUserUnarchive
+      v-if="showModalUnarchive"
+      :is-open="showModalUnarchive"
+      @cancel="showModalUnarchive = false"
+      :email="form.email"
+    />
   </div>
 </template>
 
 <script>
+import ModalUserUnarchive from '@/components/modal/ModalUserUnarchive.vue'
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 
 export default defineNuxtComponent({
+  components: {
+    ModalUserUnarchive,
+  },
   mixins: [FormErrors],
   setup() {
     definePageMeta({
@@ -91,6 +102,7 @@ export default defineNuxtComponent({
     return {
       loading: false,
       submitted: false,
+      showModalUnarchive: false,
       form: {
         email: this.$route.query.email ? this.$route.query.email : '',
       },
@@ -108,11 +120,15 @@ export default defineNuxtComponent({
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await apiFetch('/password/forgot', {
-            body: this.form,
+          const response = await apiFetch(`/user/archive/exist`, {
             method: 'POST',
+            body: { email: this.form.email },
           })
-          this.submitted = true
+          if (response.exist === true) {
+            this.showModalUnarchive = true
+          } else {
+            this.forstPassword()
+          }
         })
         .catch((errors) => {
           this.setErrors(errors)
@@ -120,6 +136,17 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
+    },
+    async forstPassword() {
+      await apiFetch('/password/forgot', {
+        body: this.form,
+        method: 'POST',
+      })
+      this.submitted = true
+    },
+    onCancelUnarchive() {
+      this.showModalUnarchive = false
+      this.$router.push('/inscription/benevole')
     },
   },
 })
