@@ -11,7 +11,7 @@
       icon="RiArrowDownSLine"
       icon-position="right"
       clearable
-      :is-active="splittedModelValue.length > 0"
+      :is-active="modelValue.length > 0"
       class="!max-w-[300px]"
       @click="!disabled && (showOptions = !showOptions)"
       @clear="reset()"
@@ -83,6 +83,7 @@
                       :checked="isOptionActive(item)"
                       type="checkbox"
                       class="rounded text-jva-blue-500 transition focus:ring-jva-blue-500 group-hover:border-jva-blue-500 cursor-pointer"
+                      @keydown.enter="handleSelectOptionMultiple(item)"
                       @change="handleSelectOptionMultiple(item)"
                     />
                     <label
@@ -107,12 +108,12 @@
             <button
               class="text-sm"
               :class="[
-                { 'text-gray-400 pointer-events-none': !splittedModelValue.length > 0 },
+                { 'text-gray-400 pointer-events-none': !modelValue.length > 0 },
                 {
-                  'text-jva-blue-500 cursor-pointer hover:underline': splittedModelValue.length > 0,
+                  'text-jva-blue-500 cursor-pointer hover:underline': modelValue.length > 0,
                 },
               ]"
-              :disabled="!splittedModelValue.length > 0"
+              :disabled="!modelValue.length > 0"
               @click="reset()"
             >
               Effacer
@@ -136,7 +137,7 @@ export default defineNuxtComponent({
   },
   mixins: [Selectable],
   props: {
-    modelValue: { type: [String, Number, Array], default: null },
+    modelValue: { type: [String, Number, Array], default: [] },
     placeholder: { type: String, default: null },
     labelEmpty: { type: String, default: 'Aucune option' },
     name: { type: String, required: true },

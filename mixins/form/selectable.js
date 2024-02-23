@@ -12,20 +12,11 @@ export default {
     }
   },
   computed: {
-    // @todo: supprimer quand refactoring single et multiple done,
-    // remplacer par modelValue dans le code
-    splittedModelValue() {
-      if (Array.isArray(this.modelValue)) {
-        return this.modelValue
-      }
-      if (typeof this.modelValue === 'string') {
-        return this.modelValue?.split(',')
-      }
-      return []
-    },
     activeOptions() {
-      return this.options.filter((o) =>
-        this.splittedModelValue.includes(String(o[this.attributeKey]))
+      return this.options.filter((option) =>
+        typeof this.modelValue === 'number'
+          ? this.modelValue === option[this.attributeKey]
+          : this.modelValue?.includes(String(option[this.attributeKey]))
       )
     },
   },
@@ -59,11 +50,6 @@ export default {
       this.showOptions = false
       this.$emit('update:modelValue', null)
     },
-    clickedOutside() {
-      this.showOptions = false
-    },
-
-    // @todo: refactoring single et multiple, toujours renvoyer un array pour modelValue
     handleSelectOption(item) {
       if (item) {
         this.$emit('update:modelValue', this.isOptionActive(item) ? null : item[this.attributeKey])
@@ -72,11 +58,8 @@ export default {
       this.showOptions = false
     },
     handleSelectOptionMultiple(item) {
-      if (this.multiple) {
-        this.$emit('update:modelValue', item[this.attributeKey])
-      }
+      this.$emit('update:modelValue', item[this.attributeKey])
     },
-
     onClick(e) {
       if (!this.disabled) {
         this.showOptions = !this.showOptions
@@ -147,6 +130,9 @@ export default {
         (o) => o[this.attributeKey] === this.activeOptions[0]?.[this.attributeKey] ?? 0
       )
       this.highlightIndex = index !== -1 ? index : 0
+    },
+    clickedOutside() {
+      this.showOptions = false
     },
   },
 }
