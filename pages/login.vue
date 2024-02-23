@@ -63,7 +63,7 @@
                   placeholder="Entrez votre email"
                   aria-required="true"
                   autocomplete="email"
-                  @blur="onBlurEmail"
+                  @blur="onBlurEmailCheckIfUserArchiveDatasExists"
                 />
               </BaseFormControl>
               <BaseFormControl
@@ -163,13 +163,14 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import DetectUserArchiveDatas from '@/mixins/detect-user-archive-datas'
 import ModalUserUnarchive from '@/components/modal/ModalUserUnarchive.vue'
 
 export default defineNuxtComponent({
   components: {
     ModalUserUnarchive,
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, DetectUserArchiveDatas],
   setup() {
     definePageMeta({
       middleware: ['guest'],
@@ -210,26 +211,9 @@ export default defineNuxtComponent({
         email: string().required('Le champs email est requis').email(),
         password: string().required('Le champs mot de passe est requis'),
       }),
-      showModalUnarchive: false,
     }
   },
   methods: {
-    async onBlurEmail() {
-      this.validate('email')
-      if (this.isValid('email')) {
-        this.checkUserArchiveExist()
-      }
-    },
-    async checkUserArchiveExist() {
-      await apiFetch(`/user/archive/exist`, {
-        method: 'POST',
-        body: { email: this.form.email },
-      }).then((response) => {
-        if (response.exist === true) {
-          this.showModalUnarchive = true
-        }
-      })
-    },
     onSubmit() {
       if (this.loading) {
         return
@@ -249,10 +233,6 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
-    },
-    onCancelUnarchive() {
-      this.showModalUnarchive = false
-      this.$router.push('/inscription/benevole')
     },
   },
 })

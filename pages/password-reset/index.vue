@@ -38,7 +38,7 @@
                   name="email"
                   type="email"
                   placeholder="Entrez votre email"
-                  @blur="validate('email')"
+                  @blur="onBlurEmailCheckIfUserArchiveDatasExists"
                 />
                 <template #description>
                   <p class="text-sm text-gray-600 mt-2">
@@ -87,12 +87,13 @@
 import ModalUserUnarchive from '@/components/modal/ModalUserUnarchive.vue'
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import DetectUserArchiveDatas from '@/mixins/detect-user-archive-datas'
 
 export default defineNuxtComponent({
   components: {
     ModalUserUnarchive,
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, DetectUserArchiveDatas],
   setup() {
     definePageMeta({
       middleware: ['guest'],
@@ -102,7 +103,6 @@ export default defineNuxtComponent({
     return {
       loading: false,
       submitted: false,
-      showModalUnarchive: false,
       form: {
         email: this.$route.query.email ? this.$route.query.email : '',
       },
@@ -120,15 +120,11 @@ export default defineNuxtComponent({
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          const response = await apiFetch(`/user/archive/exist`, {
+          await apiFetch('/password/forgot', {
+            body: this.form,
             method: 'POST',
-            body: { email: this.form.email },
           })
-          if (response.exist === true) {
-            this.showModalUnarchive = true
-          } else {
-            this.forstPassword()
-          }
+          this.submitted = true
         })
         .catch((errors) => {
           this.setErrors(errors)
@@ -136,17 +132,6 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
-    },
-    async forstPassword() {
-      await apiFetch('/password/forgot', {
-        body: this.form,
-        method: 'POST',
-      })
-      this.submitted = true
-    },
-    onCancelUnarchive() {
-      this.showModalUnarchive = false
-      this.$router.push('/inscription/benevole')
     },
   },
 })
