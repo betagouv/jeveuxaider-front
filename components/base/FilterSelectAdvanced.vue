@@ -13,10 +13,7 @@
       clearable
       :is-active="splittedModelValue.length > 0"
       class="!max-w-[300px]"
-      @keydown="!multiple && onKeydown($event)"
       @click="!disabled && (showOptions = !showOptions)"
-      @keydown.tab="showOptions = false"
-      @keydown.esc="showOptions = false"
       @clear="reset()"
     >
       <span>
@@ -44,6 +41,8 @@
           <div
             ref="scrollContainer"
             class="max-h-[268px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2 py-2"
+            :tabindex="!multiple ? '0' : '-1'"
+            @keydown="!multiple && onKeydown($event)"
           >
             <ul class="mx-2">
               <template v-if="!multiple">

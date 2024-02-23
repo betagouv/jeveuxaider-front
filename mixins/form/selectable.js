@@ -88,12 +88,6 @@ export default {
         return
       }
 
-      if (e.key === 'Tab') {
-        this.showOptions = false
-        this.setHighlightedIndexFromActiveOptions()
-        return
-      }
-
       if (e.key === 'Enter' && this.showOptions) {
         e.preventDefault()
         e.stopPropagation()
