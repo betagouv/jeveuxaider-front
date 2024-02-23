@@ -28,18 +28,13 @@ export default {
       }
     },
     modelValue(newVal) {
-      if (!this.multiple) {
-        // @todo: tester !
-        // @todo ensuite: supprimer
-        // remplacer @changed par @update:modelValue (BaseSelectAdvanced, BaseFilterSelectAdvanced)
-        // FiltersYears, SelectAdvancedMessageTemplate, SecondaryMenuAdmin, SecondaryMenuResponsable,
-        // SecondaryMenuStatistics, SecondaryMenuStatisticsPublic, SecondaryMenuSupport,
-        // SecondaryMenuTeteDeReseau, CommitmentFilter, CommitmentMobileFilter
-        this.$emit(
-          'changed',
-          this.options.find((o) => o[this.attributeKey] === newVal)
-        )
+      // The @changed event receive the whole option object.
+      this.$emit(
+        'changed',
+        this.options.find((o) => o[this.attributeKey] === newVal)
+      )
 
+      if (!this.multiple) {
         this.setHighlightedIndexFromActiveOptions()
       }
     },
