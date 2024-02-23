@@ -23,12 +23,6 @@
         </div>
       </form>
     </div>
-    <ModalUserUnarchive
-      v-if="showModalUnarchive"
-      :is-open="showModalUnarchive"
-      @cancel="showModalUnarchive = false"
-      :email="form.email"
-    />
   </div>
 </template>
 
@@ -37,13 +31,9 @@ import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import Emailable from '@/mixins/emailable.client'
 import DetectUserArchiveDatas from '@/mixins/detect-user-archive-datas'
-import ModalUserUnarchive from '@/components/modal/ModalUserUnarchive.vue'
 
 export default defineNuxtComponent({
   name: 'SoftGateEmail',
-  components: {
-    ModalUserUnarchive,
-  },
   mixins: [FormErrors, Emailable, DetectUserArchiveDatas],
   data() {
     return {

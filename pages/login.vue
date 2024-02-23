@@ -151,12 +151,6 @@
         </div>
       </div>
     </div>
-    <ModalUserUnarchive
-      v-if="showModalUnarchive"
-      :is-open="showModalUnarchive"
-      @cancel="showModalUnarchive = false"
-      :email="form.email"
-    />
   </div>
 </template>
 
@@ -164,12 +158,8 @@
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import DetectUserArchiveDatas from '@/mixins/detect-user-archive-datas'
-import ModalUserUnarchive from '@/components/modal/ModalUserUnarchive.vue'
 
 export default defineNuxtComponent({
-  components: {
-    ModalUserUnarchive,
-  },
   mixins: [FormErrors, DetectUserArchiveDatas],
   setup() {
     definePageMeta({

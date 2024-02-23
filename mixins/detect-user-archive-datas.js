@@ -1,9 +1,4 @@
 export default {
-  data() {
-    return {
-      showModalUnarchive: false,
-    }
-  },
   methods: {
     async onBlurEmailCheckIfUserArchiveDatasExists() {
       this.validate('email')
@@ -17,7 +12,9 @@ export default {
         body: { email },
       }).then((response) => {
         if (response.exist === true) {
-          this.showModalUnarchive = true
+          this.$stores.softGate.showOverlay = false
+          this.$stores.archivedUser.email = email
+          this.$stores.archivedUser.showOverlay = true
         }
       })
     },

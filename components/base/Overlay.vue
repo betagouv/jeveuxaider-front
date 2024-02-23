@@ -12,38 +12,44 @@
         v-if="isOpen"
         class="w-full h-full flex flex-col items-center justify-center bg-jva-blue-500/95"
       >
-        >
-        <div class="flex flex-col w-full h-full px-4">
-          <button
-            class="p-4 -mr-4 lg:m-0 lg:p-8 cursor-pointer ml-auto lg:absolute lg:right-0"
-            @click="onClose"
-          >
-            <RiCloseFill class="text-white h-10 w-10 fill-current" />
-          </button>
+        <FocusLoop :is-visible="true" @keydown.native.esc="onClose">
+          <div class="flex flex-col w-full h-full px-4">
+            <button
+              class="p-4 -mr-4 lg:m-0 lg:p-8 cursor-pointer ml-auto lg:absolute lg:right-0"
+              @click="onClose"
+            >
+              <RiCloseFill class="text-white h-10 w-10 fill-current" />
+            </button>
 
-          <div
-            v-scroll-lock="true"
-            class="overflow-y-auto flex-1 flex flex-col lg:justify-center lg:items-center"
-          >
-            <div class="pb-32 lg:pb-0">
-              <div class="text-center text-white text-lg">#ChacunPourTous</div>
-              <div class="text-center text-white font-bold mb-4 text-4xl tracking-tight">
-                {{ title }}
+            <div
+              v-scroll-lock="true"
+              class="overflow-y-auto flex-1 flex flex-col lg:justify-center lg:items-center"
+            >
+              <div class="pb-32 lg:pb-0">
+                <div class="text-center text-white text-lg">#ChacunPourTous</div>
+                <div class="text-center text-white font-bold mb-4 text-4xl tracking-tight">
+                  {{ title }}
+                </div>
+                <div class="bg-gray-100 max-w-full lg:max-w-xl mx-auto px-2 py-6 sm:p-6 lg:p-10">
+                  <slot />
+                </div>
+                <slot name="footer" />
               </div>
-              <div class="bg-gray-100 max-w-full lg:max-w-xl mx-auto px-2 py-6 sm:p-6 lg:p-10">
-                <slot />
-              </div>
-              <slot name="footer" />
             </div>
           </div>
-        </div>
+        </FocusLoop>
       </div>
     </div>
   </transition>
 </template>
 
 <script>
+import { FocusLoop } from '@vue-a11y/focus-loop'
+
 export default defineNuxtComponent({
+  components: {
+    FocusLoop,
+  },
   props: {
     isOpen: {
       type: Boolean,

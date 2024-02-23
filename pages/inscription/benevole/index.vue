@@ -367,12 +367,6 @@
         />
       </div>
     </div>
-    <ModalUserUnarchive
-      v-if="showModalUnarchive"
-      :is-open="showModalUnarchive"
-      @cancel="showModalUnarchive = false"
-      :email="form.email"
-    />
   </div>
 </template>
 
@@ -386,7 +380,6 @@ import CarouselLogos from '@/components/section/inscription/CarouselLogos.vue'
 import countries from '@/assets/countries.json'
 import { useToast } from 'vue-toastification'
 import DetectUserArchiveDatas from '@/mixins/detect-user-archive-datas'
-import ModalUserUnarchive from '@/components/modal/ModalUserUnarchive.vue'
 
 const errorIsOldEnoughErrorMessage =
   'JeVeuxAider.gouv.fr est ouvert aux personnes de plus de 16 ans'
@@ -396,7 +389,6 @@ export default defineNuxtComponent({
     FranceConnect,
     Temoignages,
     CarouselLogos,
-    ModalUserUnarchive,
   },
   mixins: [FormErrors, Emailable, DetectUserArchiveDatas],
   setup() {

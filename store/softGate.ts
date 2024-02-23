@@ -18,6 +18,7 @@ export const useSoftGateStore = defineStore({
       this.selectedMission = null
     },
     async closeOverlay() {
+      console.log('softgate close overlay')
       this.hideOverlay()
       // Wait for fade
       await new Promise((resolve) => setTimeout(resolve, 500))
