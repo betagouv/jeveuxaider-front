@@ -87,9 +87,10 @@
           name="domaine"
           placeholder="Tous les domaines"
           :options="$labels.domaines"
-          :modelValue="$route.query['filter[domaines.id]']"
+          :modelValue="$route.query['filter[domaines.id]']?.split(',').map((i) => parseInt(i))"
           clearable
-          @update:modelValue="changeFilter('filter[domaines.id]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[domaines.id]', $event, true)"
         />
       </template>
     </SearchFilters>

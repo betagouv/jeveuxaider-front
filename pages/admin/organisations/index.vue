@@ -71,9 +71,10 @@
               v-if="visibleFilter === 'state'"
               name="state"
               :options="$labels.structure_workflow_states"
-              :modelValue="$route.query['filter[state]']"
+              :modelValue="$route.query['filter[state]']?.split(',')"
               placeholder="Statut"
-              @update:modelValue="changeFilter('filter[state]', $event)"
+              multiple
+              @update:modelValue="changeFilter('filter[state]', $event, true)"
             />
 
             <BaseFilterInputAutocomplete
@@ -107,10 +108,11 @@
                   }
                 })
               "
-              :modelValue="$route.query['filter[department]']"
+              :modelValue="$route.query['filter[department]']?.split(',')"
               :searchable="true"
               placeholder="Département"
-              @update:modelValue="changeFilter('filter[department]', $event)"
+              multiple
+              @update:modelValue="changeFilter('filter[department]', $event, true)"
             />
           </template>
 

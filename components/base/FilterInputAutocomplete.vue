@@ -16,7 +16,7 @@
       @click="toggleOpen"
       @clear="reset()"
     >
-      <span>
+      <span class="flex min-w-0">
         <span class="truncate">
           {{
             valueOrLabelFilter.split(',').length > 1
@@ -66,7 +66,7 @@
               >
                 <LoadingIndicator v-if="loading" class="m-4" />
 
-                <ul v-else class="my-2 px-2">
+                <ul v-else class="px-2">
                   <li
                     v-for="(item, index) in options"
                     :key="`${item[attributeKey]}_${index}`"

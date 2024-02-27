@@ -29,6 +29,11 @@ export default {
         this.timeout.cancel()
       }
       this.timeout = _debounce(() => {
+        // As we rely on url query, numbers should always be casted to string
+        if (typeof filterValue === 'number') {
+          filterValue = String(filterValue)
+        }
+
         if (multiple && this.$route.query[filterName]?.split(',')?.includes(filterValue)) {
           this.deleteFilter(filterName, filterValue, multiple)
         } else if (!multiple && this.$route.query[filterName] === filterValue) {

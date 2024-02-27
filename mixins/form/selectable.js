@@ -5,7 +5,8 @@ export default {
       showOptions: false,
       highlightIndex: this.modelValue
         ? this.options.findIndex((option) => {
-            return option[this.attributeKey] == this.modelValue
+            const val = Array.isArray(this.modelValue) ? this.modelValue[0] : this.modelValue
+            return option[this.attributeKey] === val
           })
         : 0,
       enableUnselect: false,
@@ -13,11 +14,11 @@ export default {
   },
   computed: {
     activeOptions() {
-      return this.options.filter((option) =>
-        typeof this.modelValue === 'number'
-          ? this.modelValue === option[this.attributeKey]
-          : this.modelValue?.includes(String(option[this.attributeKey]))
-      )
+      if (Array.isArray(this.modelValue)) {
+        return this.options.filter((option) => this.modelValue?.includes(option[this.attributeKey]))
+      }
+
+      return this.options.filter((option) => this.modelValue === option[this.attributeKey])
     },
   },
   watch: {

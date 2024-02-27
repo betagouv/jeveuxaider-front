@@ -92,15 +92,16 @@
 
             <BaseFilterSelectAdvanced
               v-if="visibleFilter === 'ofActivity'"
-              :modelValue="$route.query['filter[ofActivity]']"
+              :modelValue="$route.query['filter[ofActivity]']?.split(',').map((i) => parseInt(i))"
               name="ofActivity"
               :options="activities"
               attribute-key="id"
               attribute-label="name"
               placeholder="Activité"
               :searchable="true"
+              multiple
               options-class="!min-w-[300px]"
-              @update:modelValue="changeFilter('filter[ofActivity]', $event)"
+              @update:modelValue="changeFilter('filter[ofActivity]', $event, true)"
             />
 
             <BaseFilterInputAutocomplete
@@ -170,10 +171,11 @@
                   }
                 })
               "
-              :modelValue="$route.query['filter[mission.department]']"
+              :modelValue="$route.query['filter[mission.department]']?.split(',')"
               placeholder="Département"
               :searchable="true"
-              @update:modelValue="changeFilter('filter[mission.department]', $event)"
+              multiple
+              @update:modelValue="changeFilter('filter[mission.department]', $event, true)"
             />
 
             <BaseFilterInputAutocomplete

@@ -137,7 +137,7 @@
 
             <BaseFilterSelectAdvanced
               v-if="visibleFilter === 'department'"
-              :modelValue="$route.query['filter[department]']"
+              :modelValue="$route.query['filter[department]']?.split(',')"
               name="department"
               :options="
                 $labels.departments.map((option) => {
@@ -149,7 +149,8 @@
               "
               placeholder="Département"
               :searchable="true"
-              @update:modelValue="changeFilter('filter[department]', $event)"
+              multiple
+              @update:modelValue="changeFilter('filter[department]', $event, true)"
             />
 
             <BaseFilterInputAutocomplete

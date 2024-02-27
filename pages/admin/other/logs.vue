@@ -30,7 +30,6 @@
       />
       <template #prefilters>
         <BaseFilterSelectAdvanced
-          :key="`subject-type-${$route.fullPath}`"
           name="types"
           placeholder="Tous les types"
           :options="[
@@ -41,12 +40,12 @@
             { key: 'tags', label: 'Tags' },
             { key: 'rules', label: 'Règles' },
           ]"
-          :modelValue="$route.query['filter[type]']"
+          :modelValue="$route.query['filter[type]']?.split(',')"
           clearable
-          @update:modelValue="changeFilter('filter[type]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[type]', $event, true)"
         />
         <BaseFilterSelectAdvanced
-          :key="`action-${$route.fullPath}`"
           name="action"
           placeholder="Toutes les actions"
           :options="[
@@ -56,9 +55,10 @@
             { key: 'deleted', label: 'Suppression' },
             { key: 'exported', label: 'Export' },
           ]"
-          :modelValue="$route.query['filter[description]']"
+          :modelValue="$route.query['filter[description]']?.split(',')"
           clearable
-          @update:modelValue="changeFilter('filter[description]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[description]', $event, true)"
         />
       </template>
     </SearchFilters>

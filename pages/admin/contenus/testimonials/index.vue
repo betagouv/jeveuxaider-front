@@ -31,7 +31,6 @@
       />
       <template #prefilters>
         <!-- <Tag
-          :key="`tous-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
@@ -42,7 +41,6 @@
         </Tag> -->
 
         <Tag
-          :key="`published-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
@@ -55,7 +53,6 @@
         </Tag>
 
         <Tag
-          :key="`unpublished-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
@@ -68,13 +65,13 @@
         </Tag>
 
         <BaseFilterSelectAdvanced
-          :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Toutes les notes"
           :options="$labels.testimonial_grade"
-          :modelValue="$route.query['filter[grade]']"
+          :modelValue="$route.query['filter[grade]']?.split(',').map((i) => parseInt(i))"
           clearable
-          @update:modelValue="changeFilter('filter[grade]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[grade]', $event, true)"
         />
 
         <template v-if="$stores.auth.contextRole === 'admin'">

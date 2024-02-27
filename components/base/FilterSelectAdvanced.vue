@@ -11,12 +11,12 @@
       icon="RiArrowDownSLine"
       icon-position="right"
       clearable
-      :is-active="modelValue.length > 0"
+      :is-active="!!modelValue"
       class="!max-w-[300px]"
       @click="!disabled && (showOptions = !showOptions)"
       @clear="reset()"
     >
-      <span>
+      <span class="flex min-w-0">
         <span class="truncate">
           {{ activeOptions.length ? activeOptions[0][attributeLabel] : placeholder }}
         </span>
@@ -108,12 +108,12 @@
             <button
               class="text-sm"
               :class="[
-                { 'text-gray-400 pointer-events-none': !modelValue.length > 0 },
+                { 'text-gray-400 pointer-events-none': !modelValue },
                 {
-                  'text-jva-blue-500 cursor-pointer hover:underline': modelValue.length > 0,
+                  'text-jva-blue-500 cursor-pointer hover:underline': !!modelValue,
                 },
               ]"
-              :disabled="!modelValue.length > 0"
+              :disabled="!modelValue"
               @click="reset()"
             >
               Effacer
@@ -137,7 +137,7 @@ export default defineNuxtComponent({
   },
   mixins: [Selectable],
   props: {
-    modelValue: { type: [String, Number, Array], default: [] },
+    modelValue: { type: [String, Number, Array], default: null },
     placeholder: { type: String, default: null },
     labelEmpty: { type: String, default: 'Aucune option' },
     name: { type: String, required: true },

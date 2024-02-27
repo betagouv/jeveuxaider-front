@@ -68,7 +68,6 @@
         <div class="flex gap-3 items-center">
           <span class="text-base">Trier par</span>
           <BaseFilterSelectAdvanced
-            key="sort"
             name="sort"
             :options="[
               { key: '-created_at', label: 'Les plus récentes' },
@@ -83,7 +82,6 @@
         </div>
 
         <BaseFilterSelectAdvanced
-          :key="`role-${$route.fullPath}`"
           name="role"
           placeholder="Rôles"
           :options="[
@@ -110,9 +108,10 @@
             })
           "
           :searchable="true"
-          :modelValue="$route.query['filter[department]']"
+          multiple
+          :modelValue="$route.query['filter[department]']?.split(',')"
           placeholder="Départements"
-          @update:modelValue="changeFilter('filter[department]', $event)"
+          @update:modelValue="changeFilter('filter[department]', $event, true)"
         />
         <BaseFilterInputAutocomplete
           v-model="selectedOrganisation"

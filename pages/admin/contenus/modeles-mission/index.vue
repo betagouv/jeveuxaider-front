@@ -46,7 +46,6 @@
       />
       <template #prefilters>
         <!-- <DsfrTag
-          :key="`tous-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
@@ -57,7 +56,6 @@
         </DsfrTag> -->
 
         <DsfrTag
-          :key="`published-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
@@ -70,7 +68,6 @@
         </DsfrTag>
 
         <DsfrTag
-          :key="`unpublished-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
@@ -84,7 +81,6 @@
 
         <DsfrTag
           v-if="$stores.auth.contextRole === 'admin'"
-          :key="`from-reseau-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
@@ -97,22 +93,22 @@
         </DsfrTag>
 
         <BaseFilterSelectAdvanced
-          :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Tous les statuts"
           :options="$labels.mission_template_workflow_states"
-          :modelValue="$route.query['filter[state]']"
+          :modelValue="$route.query['filter[state]']?.split(',')"
           clearable
-          @update:modelValue="changeFilter('filter[state]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[state]', $event, true)"
         />
         <BaseFilterSelectAdvanced
-          :key="`domaine-${$route.fullPath}`"
           name="domaine"
           placeholder="Tous les domaines"
           :options="$labels.domaines"
-          :modelValue="$route.query['filter[domaine.id]']"
+          :modelValue="$route.query['filter[domaine.id]']?.split(',').map((i) => parseInt(i))"
           clearable
-          @update:modelValue="changeFilter('filter[domaine.id]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[domaine.id]', $event, true)"
         />
 
         <template v-if="$stores.auth.contextRole === 'admin'">
