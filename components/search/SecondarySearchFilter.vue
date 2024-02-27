@@ -1,13 +1,13 @@
 <template>
   <div class="relative">
-    <button
+    <span
       :aria-expanded="isOpen || 'false'"
       class="flex w-full"
       @click="isOpen = !isOpen"
       @keydown.esc="isOpen = false"
     >
       <slot name="button" :isOpen="isOpen" :activeValue="activeValue"> Search component </slot>
-    </button>
+    </span>
 
     <transition name="fade-in">
       <div

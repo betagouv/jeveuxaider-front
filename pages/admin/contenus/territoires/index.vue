@@ -56,75 +56,69 @@
       />
       <template #prefilters>
         <!-- <DsfrTag
-          :key="`tous-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
           :is-active="!hasActiveFilters"
-          @click.native="deleteAllFilters"
+          @click="deleteAllFilters"
         >
           Tous
         </DsfrTag> -->
 
         <DsfrTag
-          :key="`type-dep-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
           :is-active="$route.query['filter[type]'] && $route.query['filter[type]'] == 'department'"
-          @click.native="changeFilter('filter[type]', 'department')"
+          @click="changeFilter('filter[type]', 'department')"
         >
           Départements
         </DsfrTag>
 
         <DsfrTag
-          :key="`type-city-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
           :is-active="$route.query['filter[type]'] && $route.query['filter[type]'] == 'city'"
-          @click.native="changeFilter('filter[type]', 'city')"
+          @click="changeFilter('filter[type]', 'city')"
         >
           Villes
         </DsfrTag>
 
         <DsfrTag
-          :key="`published-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
           :is-active="
             $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'true'
           "
-          @click.native="changeFilter('filter[is_published]', 'true')"
+          @click="changeFilter('filter[is_published]', 'true')"
         >
           En ligne
         </DsfrTag>
 
         <DsfrTag
-          :key="`unpublished-${$route.fullPath}`"
           as="button"
           size="md"
           context="selectable"
           :is-active="
             $route.query['filter[is_published]'] && $route.query['filter[is_published]'] == 'false'
           "
-          @click.native="changeFilter('filter[is_published]', 'false')"
+          @click="changeFilter('filter[is_published]', 'false')"
         >
           Hors ligne
         </DsfrTag>
 
         <BaseFilterSelectAdvanced
-          :key="`state-${$route.fullPath}`"
           name="state"
           placeholder="Tous les statuts"
           :options="$labels.territoire_workflow_states"
-          :modelValue="$route.query['filter[state]']"
+          :modelValue="$route.query['filter[state]']?.split(',')"
           clearable
-          @update:modelValue="changeFilter('filter[state]', $event)"
+          multiple
+          @update:modelValue="changeFilter('filter[state]', $event, true)"
         />
         <BaseFilterSelectAdvanced
-          key="sort"
           name="sort"
           :options="[
             { key: '-created_at', label: 'Les plus récentes' },

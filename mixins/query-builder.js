@@ -29,6 +29,11 @@ export default {
         this.timeout.cancel()
       }
       this.timeout = _debounce(() => {
+        // As we rely on url query, numbers should always be casted to string
+        if (typeof filterValue === 'number') {
+          filterValue = String(filterValue)
+        }
+
         if (multiple && this.$route.query[filterName]?.split(',')?.includes(filterValue)) {
           this.deleteFilter(filterName, filterValue, multiple)
         } else if (!multiple && this.$route.query[filterName] === filterValue) {
@@ -61,19 +66,17 @@ export default {
       })
     },
     deleteFilter(filterName, filterValue, multiple) {
-      let filterQuery = !multiple ? undefined : this.$route.query[filterName]?.split(',') ?? []
-      if (multiple) {
-        filterQuery = filterQuery?.filter((value) => value !== filterValue)
-        if (filterQuery.length === 0) {
-          filterQuery = undefined
-        }
-      }
+      let filterQuery = !multiple
+        ? undefined
+        : filterValue
+        ? this.$route.query[filterName]?.split(',').filter((value) => value !== filterValue)
+        : undefined
 
       this.$router.push({
         path: this.$route.path,
         query: {
           ...this.$route.query,
-          [filterName]: filterQuery?.join(','),
+          [filterName]: filterQuery?.length ? filterQuery.join(',') : undefined,
           page: undefined,
         },
       })
