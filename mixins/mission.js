@@ -8,6 +8,9 @@ export default {
     domainId() {
       return this.mission?.domaine_id ?? this.mission?.template?.domaine_id
     },
+    domaineSecondary() {
+      return this.mission?.template?.domaine_secondary ?? this.mission?.domaine_secondary
+    },
     activity() {
       const activity = this.mission?.activity ?? this.mission?.template?.activity
       return activitiesJson.find((activityJson) => activityJson.id === activity?.id)
