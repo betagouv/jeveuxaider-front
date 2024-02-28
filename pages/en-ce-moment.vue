@@ -26,15 +26,15 @@
         ref="filters"
         :class="[
           'relative z-20 lg:-translate-y-1/2',
-          { 'bg-white sticky lg:shadow-xl top-[-1px] lg:top-[63px]': isPinned },
+          { 'bg-white sticky lg:shadow-lg top-[-1px] lg:top-[63px]': isPinned },
           { 'lg:container ': !isPinned },
         ]"
       >
         <div
           :class="[
-            'flex flex-col lg:flex-row items-center bg-white relative shadow-xl lg:shadow-none',
-            { 'lg:container ': isPinned },
-            { '': !isPinned },
+            'flex flex-col lg:flex-row items-center bg-white relative',
+            { 'lg:container shadow-lg lg:shadow-none': isPinned },
+            { 'shadow-lg': !isPinned },
           ]"
         >
           <CalendarFilters
