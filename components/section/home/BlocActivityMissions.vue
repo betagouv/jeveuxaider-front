@@ -5,7 +5,7 @@
         <div class="lg:flex lg:justify-between lg:items-center lg:gap-6 xl:gap-8">
           <div>
             <DsfrHeading as="h3" size="alt-sm" class="tracking-[-.5px]">
-              <span aria-hidden="true">{{ activity.icon }} </span>
+              <span aria-hidden="true">{{ activity.icon }} </span>
               <span>{{ activity.name }}</span>
             </DsfrHeading>
           </div>

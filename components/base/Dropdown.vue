@@ -33,7 +33,7 @@
         aria-labelledby="menu-button"
         @keydown.esc="show = false"
       >
-        <div role="none" @click="close">
+        <div role="none" @click="() => closeOnClick && close()">
           <slot name="items" />
         </div>
       </div>
@@ -51,6 +51,10 @@ export default defineNuxtComponent({
     positionClass: {
       type: String,
       default: 'origin-top-right right-0',
+    },
+    closeOnClick: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {

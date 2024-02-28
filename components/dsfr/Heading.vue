@@ -1,5 +1,4 @@
 <template>
-  <!-- {'text-4xl xxs:text-[40px] xxs:leading-[48px] xl:text-5xl xl:leading-[56px]': size === 'alt-xs'}, -->
   <component
     :is="as"
     :class="[

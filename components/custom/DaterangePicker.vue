@@ -1,5 +1,5 @@
 <template>
-  <BaseDropdown ref="dropdown">
+  <BaseDropdown ref="dropdown" :close-on-click="false">
     <template #button>
       <div class="bg-white border border-gray-300 px-4 py-3 text-sm text-gray-500">
         <span class="text-gray-900 font-medium">{{
