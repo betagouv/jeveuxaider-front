@@ -24,7 +24,11 @@
       :class="[iconClasses, iconClass]"
     />
 
-    <RiExternalLinkLine v-if="isExternal" :width="iconSize" :class="[iconClasses, iconClass]" />
+    <RiExternalLinkLine
+      v-if="isExternal"
+      :width="iconSize"
+      :class="[iconClasses, iconClass, 'ml-1']"
+    />
   </component>
 </template>
 
