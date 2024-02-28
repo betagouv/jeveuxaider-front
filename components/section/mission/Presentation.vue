@@ -18,15 +18,14 @@
         size="md"
         icon="RiShareFill"
         context="clickable"
-        class="absolute sm:static flex-none w-8 h-8"
-        style="right: 0; top: -48px"
+        class="flex-none w-8 h-8"
         as="button"
         title="partager la mission"
         @click.native="handleClickShare"
       />
     </div>
 
-    <DsfrHeading as="h2" size="xl" class="line-clamp-4">
+    <DsfrHeading as="h2" size="xl">
       {{ mission.name }}
     </DsfrHeading>
 
