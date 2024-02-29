@@ -29,13 +29,12 @@
     </template>
     <template #left>
       <div>
-        <BaseInput
-          name="search"
-          placeholder="Recherche par responsables, missions, organisations..."
+        <DsfrInput
+          type="search"
+          size="lg"
+          placeholder="Recherche par mots clés..."
           icon="RiSearchLine"
-          variant="transparent"
           :modelValue="$route.query['filter[search]']"
-          clearable
           @update:modelValue="changeFilter('filter[search]', $event)"
         />
         <div class="hidden lg:flex gap-x-4 gap-y-4 mt-4 text-sm flex-wrap">

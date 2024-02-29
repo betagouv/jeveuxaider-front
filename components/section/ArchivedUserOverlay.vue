@@ -11,7 +11,7 @@
         <template v-if="step === 'first'">
           <div class="space-y-4">
             <p>
-              Votre compte a été archivé car vous êtes inactifs depuis plus de 3 ans. Souhaitez-vous
+              Votre compte est archivé car on ne vous a pas vu depuis un long moment. Souhaitez-vous
               réactiver le compte utilisateur associé à l'adresse mail
               <strong>{{ this.$stores.archivedUser.email }}</strong> ?
             </p>
@@ -105,7 +105,7 @@ export default defineNuxtComponent({
   computed: {
     title() {
       if (this.step === 'second') {
-        return 'Vérification du code de réactivation'
+        return 'Vérification de votre compte'
       }
       if (this.step === 'third') {
         return 'Réactivation de votre compte réussie'

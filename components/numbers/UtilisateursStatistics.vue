@@ -76,6 +76,23 @@
         link="/admin/statistics/utilisateurs"
         infos-bulle="Nombre de notifications envoyées aux bénévoles sur la période pour les inviter à participer à leurs missions"
       />
+      <CardStatistic
+        :value="statistics.utilisateurs_archived"
+        :title="`${$filters.pluralize(
+          statistics.utilisateurs_archived,
+          'Utilisateur',
+          'Utilisateurs',
+          false
+        )}`"
+        :subtitle="`${$filters.pluralize(
+          statistics.utilisateurs_archived,
+          'archivé',
+          'archivés',
+          false
+        )}`"
+        link="/admin/statistics/utilisateurs"
+        infos-bulle="Nombre d'utilisateurs archivés sur la période"
+      />
     </div>
   </BaseBox>
 </template>
