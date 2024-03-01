@@ -15,12 +15,13 @@
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
 import MixinPlausible from '@/mixins/plausible.js'
+import MixinHotjar from '@/mixins/hotjar.client.js'
 
 export default {
   components: {
     Header,
     Footer,
   },
-  mixins: [MixinPlausible],
+  mixins: [MixinPlausible, MixinHotjar],
 }
 </script>
