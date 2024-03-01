@@ -227,6 +227,14 @@ export default defineNuxtComponent({
           is_updated: true,
         },
         {
+          tab: 'benevoles',
+          key: 'benevole_will_be_archived',
+          label: 'On ne va pas se quitter comme ça 😢',
+          description: "Le bénévole est sur le point d'être archivé (J-7)",
+          tags: ['app-benevole-archivage'],
+          is_updated: true,
+        },
+        {
           tab: 'responsables',
           key: 'responsable_mission_deactivated',
           label: 'Votre mission a été mise hors ligne',
@@ -516,6 +524,14 @@ export default defineNuxtComponent({
           description:
             "Mail envoyé au responsable au bout de 30 jours si son organisation n'a toujours pas de mission",
           tags: ['app-responsable-publication-mission-relance'],
+          is_updated: true,
+        },
+        {
+          tab: 'responsables',
+          key: 'responsable_will_be_archived',
+          label: 'On ne va pas se quitter comme ça 😢',
+          description: "Le responsable est sur le point d'être archivé (J-7)",
+          tags: ['app-responsable-archivage'],
           is_updated: true,
         },
         {
