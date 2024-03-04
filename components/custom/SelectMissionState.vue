@@ -39,7 +39,8 @@
         <template v-else-if="selected.key === 'Terminée'">
           <p>Vous êtes sur le point de passer la mission au statut <b>terminée</b>.</p>
           <p>
-            Les participations <b>en attente de validation</b> seront automatiquement déclinées.
+            Les participations <b>en attente de validation</b> et
+            <b>en cours de traitement</b> seront automatiquement déclinées.
           </p>
           <p v-if="missionStats?.participations_state['Validée']" class="mt-4">
             Une invitation va être envoyée aux participations

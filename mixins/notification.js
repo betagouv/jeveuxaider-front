@@ -42,6 +42,16 @@ export default {
               ? `/messages/${this.notification.data.conversation_id}`
               : '/messages',
           }
+        case 'App\\Notifications\\ParticipationDeclinedFromMissionTerminated':
+          return {
+            emoji: '🥺',
+            message: 'La mission à laquelle vous avez candidaté **est terminée**',
+            contexteIcon: 'RiBuildingFill',
+            contexte: this.notification.data.structure_name,
+            redirection: this.notification.data.conversation_id
+              ? `/messages/${this.notification.data.conversation_id}`
+              : '/messages',
+          }
         case 'App\\Notifications\\ParticipationCanceled':
           return {
             emoji: '🙁',

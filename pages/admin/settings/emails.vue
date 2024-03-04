@@ -145,6 +145,15 @@ export default defineNuxtComponent({
         },
         {
           tab: 'benevoles',
+          key: 'benevole_participation_declined_mission_terminated',
+          label: 'La mission à laquelle vous avez candidaté est terminée',
+          description:
+            'La mission a été terminée et les bénévoles avec des participations en attente de validation sont notifiés',
+          tags: ['app-benevole-participation-declined-mission-terminated'],
+          types: ['Notification'],
+        },
+        {
+          tab: 'benevoles',
           key: 'benevole_participation_canceled',
           label: '😔 Oh non… La mission de [ORGANISATION] a été annulée',
           description:
