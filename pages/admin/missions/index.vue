@@ -199,9 +199,10 @@
                 })
               "
               :searchable="true"
-              :modelValue="$route.query['filter[department]']"
+              :modelValue="$route.query['filter[department]']?.split(',')"
               placeholder="Département"
-              @update:modelValue="changeFilter('filter[department]', $event)"
+              multiple
+              @update:modelValue="changeFilter('filter[department]', $event, true)"
             />
 
             <BaseFilterInputAutocomplete
@@ -222,14 +223,15 @@
               v-if="visibleFilter === 'ofDomaine'"
               name="domaine"
               :options="$labels.domaines"
-              :modelValue="$route.query['filter[ofDomaine]']"
+              :modelValue="$route.query['filter[ofDomaine]']?.split(',').map((i) => parseInt(i))"
               placeholder="Domaine d'action"
-              @update:modelValue="changeFilter('filter[ofDomaine]', $event)"
+              multiple
+              @update:modelValue="changeFilter('filter[ofDomaine]', $event, true)"
             />
 
             <BaseFilterSelectAdvanced
               v-if="visibleFilter === 'ofActivity'"
-              :modelValue="$route.query['filter[ofActivity]']"
+              :modelValue="$route.query['filter[ofActivity]']?.split(',').map((i) => parseInt(i))"
               name="activity_id"
               :options="activities"
               :searchable="true"
@@ -237,7 +239,8 @@
               attribute-label="name"
               placeholder="Activité"
               options-class="!min-w-[300px]"
-              @update:modelValue="changeFilter('filter[ofActivity]', $event)"
+              multiple
+              @update:modelValue="changeFilter('filter[ofActivity]', $event, true)"
             />
 
             <BaseFilterSelectAdvanced
@@ -266,21 +269,23 @@
 
             <BaseFilterSelectAdvanced
               v-if="visibleFilter === 'state'"
-              :modelValue="$route.query['filter[state]']"
+              :modelValue="$route.query['filter[state]']?.split(',')"
               name="state"
               :options="$labels.mission_workflow_states"
               placeholder="Statut"
-              @update:modelValue="changeFilter('filter[state]', $event)"
+              multiple
+              @update:modelValue="changeFilter('filter[state]', $event, true)"
             />
 
             <BaseFilterSelectAdvanced
               v-if="visibleFilter === 'publics_beneficiaires'"
-              :modelValue="$route.query['filter[publics_beneficiaires]']"
+              :modelValue="$route.query['filter[publics_beneficiaires]']?.split(',')"
               name="publics_beneficiaires"
               :options="$labels.mission_publics_beneficiaires"
               placeholder="Publics aidés"
               options-class="!min-w-[300px]"
-              @update:modelValue="changeFilter('filter[publics_beneficiaires]', $event)"
+              multiple
+              @update:modelValue="changeFilter('filter[publics_beneficiaires]', $event, true)"
             />
 
             <BaseFilterSelectAdvanced

@@ -47,7 +47,7 @@
             réactiver, mettez à jour le statut des participations.<br />
             <DsfrLink
               icon="RiArrowRightLine"
-              :to="`/admin/participations?filter[is_state_pending]=true&filter[ofResponsable]=${$stores.auth.profile.id}`"
+              :to="`/admin/participations?filter[state]=En+cours+de+traitement,En+attente+de+validation&filter[ofResponsable]=${$stores.auth.profile.id}`"
             >
               Traiter les participations
             </DsfrLink>

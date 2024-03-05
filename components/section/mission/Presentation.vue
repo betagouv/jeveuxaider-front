@@ -2,15 +2,21 @@
   <BaseBox class="relative z-10">
     <div class="flex justify-between mb-6">
       <div class="flex flex-wrap gap-2">
-        <DsfrTag v-if="domaine" size="md">
-          {{ domaine.name }}
-        </DsfrTag>
-        <DsfrTag v-if="mission.template?.domaine_secondary" size="md">
-          {{ mission.template.domaine_secondary.name }}
-        </DsfrTag>
-        <DsfrTag v-else-if="!mission.template && mission.domaine_secondary" size="md">
-          {{ mission.domaine_secondary.name }}
-        </DsfrTag>
+        <nuxt-link v-if="domaine" no-prefetch :to="domaine.full_url" class="rounded-full">
+          <DsfrTag size="md" context="clickable">
+            {{ domaine.name }}
+          </DsfrTag>
+        </nuxt-link>
+        <nuxt-link
+          v-if="domaineSecondary"
+          no-prefetch
+          :to="domaineSecondary.full_url"
+          class="rounded-full"
+        >
+          <DsfrTag size="md" context="clickable">
+            {{ domaineSecondary.name }}
+          </DsfrTag>
+        </nuxt-link>
       </div>
 
       <DsfrTag
@@ -18,15 +24,14 @@
         size="md"
         icon="RiShareFill"
         context="clickable"
-        class="absolute sm:static flex-none w-8 h-8"
-        style="right: 0; top: -48px"
+        class="flex-none w-8 h-8"
         as="button"
         title="partager la mission"
         @click.native="handleClickShare"
       />
     </div>
 
-    <DsfrHeading as="h2" size="xl" class="line-clamp-4">
+    <DsfrHeading as="h2" size="xl">
       {{ mission.name }}
     </DsfrHeading>
 

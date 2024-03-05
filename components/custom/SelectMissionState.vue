@@ -27,7 +27,46 @@
       @confirm="handleConfirmDialog()"
       @cancel="showAlert = false"
     >
-      {{ textAlert }}
+      <template v-if="selected">
+        <template v-if="selected.key === 'En attente de validation'">
+          <p>Une demande de publication va être envoyée aux référents de la plateforme.</p>
+        </template>
+        <template v-else-if="selected.key === 'En cours de traitement'">
+          <p>
+            Vous êtes sur le point de passer la mission au statut <b>en cours de traitement</b>.
+          </p>
+        </template>
+        <template v-else-if="selected.key === 'Terminée'">
+          <p>Vous êtes sur le point de passer la mission au statut <b>terminée</b>.</p>
+          <p>
+            Les participations <b>en attente de validation</b> et
+            <b>en cours de traitement</b> seront automatiquement déclinées.
+          </p>
+          <p v-if="missionStats?.participations_state['Validée']" class="mt-4">
+            Une invitation va être envoyée aux participations
+            <b>validées ({{ this.missionStats.participations_state['Validée'] }})</b> invitant les
+            bénévoles à raconter leur expérience.
+          </p>
+        </template>
+        <template v-else-if="selected.key === 'Annulée'">
+          <template v-if="this.missionStats.participations_total === 0">
+            <p>Vous êtes sur le point de passer la mission au statut <b>annulée</b>.</p>
+          </template>
+          <template v-else>
+            <p>
+              Attention, vous êtes sur le point d'<b>annuler</b> une mission en lien avec
+              {{ this.missionStats.participations_total }} participation(s).
+            </p>
+            <p class="mt-4">
+              Les participations <b>en attente de validation</b> seront automatiquement annulées et
+              ces bénévoles seront notifiés de l'annulation de la mission.
+            </p>
+          </template>
+        </template>
+        <template v-else="selected.key === 'Annulée'">
+          <p>Vous êtes sur le point de modifier le statut de la mission.</p>
+        </template>
+      </template>
     </BaseAlertDialog>
   </div>
 </template>
@@ -72,33 +111,33 @@ export default defineNuxtComponent({
       }
       return this.$labels.mission_workflow_states.filter((state) => toStates.includes(state.key))
     },
-    textAlert() {
-      let output = ''
-      switch (this.selected?.key) {
-        case 'En attente de validation':
-          output = 'Une demande de publication va être envoyée aux référents de la plateforme.'
-          break
-        case 'En cours de traitement':
-          output =
-            'Vous êtes sur le point de passer la mission au statut <b>en cours de traitement</b>.'
-          break
-        case 'Terminée':
-          output =
-            'Vous êtes sur le point de passer la mission au statut <b>terminée</b>.<br><br> Les participations <b>en attente de validation</b> seront automatiquement déclinées.'
-          if (this.missionStats?.participations_state['Validée']) {
-            output =
-              output +
-              `<br><br> Une invitation va être envoyée aux participations <b>validées (${this.missionStats.participations_state['Validée']})</b> invitant les bénévoles à raconter leur expérience.`
-          }
-          break
-        case 'Annulée':
-          output = `Attention, vous êtes sur le point d'<b>annuler</b> une mission en lien avec ${this.missionStats.participations_total} participation(s).<br><br> Les participations <b>en attente de validation</b> seront automatiquement annulées et ces bénévoles seront notifiés de l'annulation de la mission.`
-          break
-        default:
-          break
-      }
-      return output
-    },
+    // textAlert() {
+    //   let output = ''
+    //   switch (this.selected?.key) {
+    //     case 'En attente de validation':
+    //       output = 'Une demande de publication va être envoyée aux référents de la plateforme.'
+    //       break
+    //     case 'En cours de traitement':
+    //       output =
+    //         'Vous êtes sur le point de passer la mission au statut <b>en cours de traitement</b>.'
+    //       break
+    //     case 'Terminée':
+    //       output =
+    //         'Vous êtes sur le point de passer la mission au statut <b>terminée</b>.<br><br> Les participations <b>en attente de validation</b> seront automatiquement déclinées.'
+    //       if (this.missionStats?.participations_state['Validée']) {
+    //         output =
+    //           output +
+    //           `<br><br> Une invitation va être envoyée aux participations <b>validées (${this.missionStats.participations_state['Validée']})</b> invitant les bénévoles à raconter leur expérience.`
+    //       }
+    //       break
+    //     case 'Annulée':
+    //       output = `Attention, vous êtes sur le point d'<b>annuler</b> une mission en lien avec ${this.missionStats.participations_total} participation(s).<br><br> Les participations <b>en attente de validation</b> seront automatiquement annulées et ces bénévoles seront notifiés de l'annulation de la mission.`
+    //       break
+    //     default:
+    //       break
+    //   }
+    //   return output
+    // },
   },
   methods: {
     handleSelect($event) {

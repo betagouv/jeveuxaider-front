@@ -90,31 +90,18 @@
               ⚠️ À traiter en priorité
             </DsfrTag>
 
-            <DsfrTag
-              v-if="visibleFilter === 'is_state_pending'"
-              as="button"
-              size="md"
-              context="selectable"
-              :is-active="
-                $route.query['filter[is_state_pending]'] &&
-                $route.query['filter[is_state_pending]'] == 'true'
-              "
-              @click.native="changeFilter('filter[is_state_pending]', 'true')"
-            >
-              En cours de modération
-            </DsfrTag>
-
             <BaseFilterSelectAdvanced
               v-if="visibleFilter === 'ofActivity'"
-              :modelValue="$route.query['filter[ofActivity]']"
-              name="activity_id"
+              :modelValue="$route.query['filter[ofActivity]']?.split(',').map((i) => parseInt(i))"
+              name="ofActivity"
               :options="activities"
               attribute-key="id"
               attribute-label="name"
               placeholder="Activité"
               :searchable="true"
+              multiple
               options-class="!min-w-[300px]"
-              @update:modelValue="changeFilter('filter[ofActivity]', $event)"
+              @update:modelValue="changeFilter('filter[ofActivity]', $event, true)"
             />
 
             <BaseFilterInputAutocomplete
@@ -152,11 +139,12 @@
 
             <BaseFilterSelectAdvanced
               v-if="visibleFilter === 'state'"
-              :modelValue="$route.query['filter[state]']"
+              multiple
+              :modelValue="$route.query['filter[state]']?.split(',')"
               name="state"
               :options="$labels.participation_workflow_states"
               placeholder="Statut"
-              @update:modelValue="changeFilter('filter[state]', $event)"
+              @update:modelValue="changeFilter('filter[state]', $event, true)"
             />
 
             <BaseFilterSelectAdvanced
@@ -183,10 +171,11 @@
                   }
                 })
               "
-              :modelValue="$route.query['filter[mission.department]']"
+              :modelValue="$route.query['filter[mission.department]']?.split(',')"
               placeholder="Département"
               :searchable="true"
-              @update:modelValue="changeFilter('filter[mission.department]', $event)"
+              multiple
+              @update:modelValue="changeFilter('filter[mission.department]', $event, true)"
             />
 
             <BaseFilterInputAutocomplete
@@ -198,7 +187,7 @@
               :loading="loadingFetchZips"
               attribute-key="zip"
               hide-attribute-key
-              attribute-right-label="zip"
+              attribute-right-label="labelRight"
               @fetch-suggestions="onFetchSuggestionsZips"
               @selected="changeFilter('filter[mission.zip]', $event?.zip)"
             />
@@ -416,7 +405,6 @@ export default defineNuxtComponent({
       return [
         this.$stores.auth.user.statistics?.participations_need_to_be_treated_count > 0 &&
           'need_to_be_treated',
-        'is_state_pending',
         'state',
         'tags',
         this.activities.length &&
@@ -438,7 +426,7 @@ export default defineNuxtComponent({
       return [
         this.$stores.auth.user.statistics?.participations_need_to_be_treated_count > 0 &&
           'need_to_be_treated',
-        'is_state_pending',
+        'state',
         'tags',
         ['admin'].includes(this.$stores.auth.contextRole) && 'mission.structure.id',
         ['admin'].includes(this.$stores.auth.contextRole) && 'mission.department',

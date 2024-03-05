@@ -161,11 +161,17 @@ const getNbMobileSecondaryFilters = () => {
 
 const getDateFilters = (start: any, end: any) => {
   const startDate = dayjs(start).startOf('day')
-  const endDate = end ? dayjs(end).startOf('day') : startDate
+  let endDate = end ? dayjs(end).startOf('day') : startDate
 
   const daysArray = []
   let dateType = 'ponctual'
   let day = dayjs(startDate)
+
+  // if end date before startdate, set end date to start date
+  if (endDate.isBefore(startDate)) {
+    endDate = startDate
+  }
+
   while (day.isBefore(endDate) || day.isSame(endDate)) {
     daysArray.push(day.unix())
     day = day.add(1, 'day')

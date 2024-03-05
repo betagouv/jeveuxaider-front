@@ -197,12 +197,12 @@ export default defineNuxtComponent({
       }
     },
     formattedDate() {
-      const startDate = this.$dayjs(this.mission.start_date)
-      const endDate = this.$dayjs(this.mission.end_date)
-
-      if (!endDate) {
+      if (!this.mission.end_date) {
         return null
       }
+
+      const startDate = this.$dayjs.unix(this.mission.start_date)
+      const endDate = this.$dayjs.unix(this.mission.end_date)
 
       if (endDate.diff(startDate, 'year') > 1) {
         return null

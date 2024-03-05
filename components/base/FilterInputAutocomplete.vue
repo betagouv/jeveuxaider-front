@@ -8,17 +8,15 @@
       as="button"
       size="md"
       context="clickable"
-      clearable
       icon="RiArrowDownSLine"
       icon-position="right"
+      clearable
       :is-active="typeof modelValue === 'string' ? !!modelValue : !!modelValue.key"
       class="!max-w-[300px]"
       @click="toggleOpen"
-      @keydown.enter="toggleOpen"
-      @keydown.esc="showOptions = false"
       @clear="reset()"
     >
-      <span>
+      <span class="flex min-w-0">
         <span class="truncate">
           {{
             valueOrLabelFilter.split(',').length > 1
@@ -40,7 +38,7 @@
           optionsClass,
         ]"
       >
-        <FocusLoop :is-visible="showOptions">
+        <FocusLoop :is-visible="showOptions" @keydown.esc="showOptions = false">
           <div class="px-4 pt-4">
             <div class="font-medium">
               {{ label }}
@@ -50,12 +48,12 @@
               class="mt-3"
               v-model="searchTerm"
               @update:modelValue="handleInput"
-              @keydown="onKeydown"
-              @keydown.esc="showOptions = false"
             />
             <div
               ref="scrollContainer"
-              class="max-h-[268px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2"
+              class="max-h-[268px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2 py-2"
+              tabindex="0"
+              @keydown="onKeydown($event)"
             >
               <transition
                 enter-active-class="duration-200"
@@ -68,7 +66,7 @@
               >
                 <LoadingIndicator v-if="loading" class="m-4" />
 
-                <ul v-else class="my-2 px-2">
+                <ul v-else class="px-2">
                   <li
                     v-for="(item, index) in options"
                     :key="`${item[attributeKey]}_${index}`"
@@ -111,6 +109,22 @@
                   </li>
                 </ul>
               </transition>
+            </div>
+
+            <div class="border-t px-4 py-3 flex justify-end -mx-4">
+              <button
+                class="text-sm"
+                :class="[
+                  { 'text-gray-400 pointer-events-none': !hasValue },
+                  {
+                    'text-jva-blue-500 cursor-pointer hover:underline': hasValue,
+                  },
+                ]"
+                :disabled="!hasValue"
+                @click="reset()"
+              >
+                Effacer
+              </button>
             </div>
           </div>
         </FocusLoop>
@@ -159,6 +173,9 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    hasValue() {
+      return !!this.modelValue?.key || (typeof this.modelValue === 'string' && !!this.modelValue)
+    },
     valueOrLabelFilter() {
       return (
         this.modelValue?.label ??
@@ -213,6 +230,7 @@ export default defineNuxtComponent({
         }
       } else {
         this.highlightIndex = null
+        this.$refs?.tag?.$el.focus()
       }
     },
   },
@@ -262,6 +280,11 @@ export default defineNuxtComponent({
     },
     onKeydown(e) {
       const keyValue = e.which
+
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter') {
+        e.preventDefault()
+        e.stopPropagation()
+      }
 
       // Enter
       if (keyValue === 13) {

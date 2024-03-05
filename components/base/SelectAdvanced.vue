@@ -26,8 +26,8 @@
       >
         <div class="flex gap-4">
           <span v-if="prefixLabel" class="text-gray-400 font-semibold">{{ prefixLabel }}</span>
-          <template v-if="selectedOption">
-            <span class="truncate">{{ selectedOption[attributeLabel] }}</span>
+          <template v-if="activeOptions.length">
+            <span class="truncate">{{ activeOptions[0][attributeLabel] }}</span>
           </template>
           <template v-else>
             <span class="truncate italic text-[#888888]">{{ placeholder }}</span>
@@ -39,11 +39,11 @@
         :class="[
           { 'right-3': theme === 'default' },
           { 'right-1': theme === 'filter' },
-          { 'pointer-events-none': !(selectedOption && clearable) },
+          { 'pointer-events-none': !(activeOptions.length && clearable) },
         ]"
       >
         <RiCloseLine
-          v-if="selectedOption && clearable"
+          v-if="activeOptions.length && clearable"
           class="text-gray-400 hover:text-gray-500 cursor-pointer fill-current"
           :class="[{ 'h-5': theme === 'default' }, { 'h-4': theme === 'filter' }]"
           @click="reset()"
@@ -77,24 +77,18 @@
           :class="[
             { 'bg-[#F0F0FF]': highlightIndex == index },
             {
-              'bg-[#F0F0FF] !pr-8':
-                selectedOption && item[attributeKey] == selectedOption[attributeKey],
+              'bg-[#F0F0FF] !pr-8': isOptionActive(item),
             },
             { 'pointer-events-none text-gray-500': item.disabled },
           ]"
           role="option"
-          :aria-selected="
-            (selectedOption && item[attributeKey] == selectedOption[attributeKey]) || 'false'
-          "
+          :aria-selected="isOptionActive(item) || 'false'"
           @click="handleSelectOption(item)"
         >
           <span>
             {{ item[attributeLabel] }}
           </span>
-          <RiCheckLine
-            v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]"
-            class="absolute right-2 w-4 h-4"
-          />
+          <RiCheckLine v-if="isOptionActive(item)" class="absolute right-2 w-4 h-4" />
         </li>
         <li v-if="!options.length" class="px-8 py-2 text-center text-sm text-gray-500">
           {{ labelEmpty }}

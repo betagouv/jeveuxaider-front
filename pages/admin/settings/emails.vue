@@ -146,6 +146,15 @@ export default defineNuxtComponent({
         },
         {
           tab: 'benevoles',
+          key: 'benevole_participation_declined_mission_terminated',
+          label: 'La mission à laquelle vous avez candidaté est terminée',
+          description:
+            'La mission a été terminée et les bénévoles avec des participations en attente de validation sont notifiés',
+          tags: ['app-benevole-participation-declined-mission-terminated'],
+          types: ['Notification'],
+        },
+        {
+          tab: 'benevoles',
           key: 'benevole_participation_canceled',
           label: '😔 Oh non… La mission de [ORGANISATION] a été annulée',
           description:
@@ -197,6 +206,15 @@ export default defineNuxtComponent({
           description:
             'Notification envoyée au bénévole lorsque sa participation est toujours en attente de validation / en cours de traitement alors que la mission est censée être terminée. Pour les missions ponctuelles, la notification est envoyée 1 jour après la date de fin de la mission. Pour les missions récurrentes ou sans date de fin, 1 mois après la création de la participation.',
           tags: ['app-benevole-participation-should-be-done'],
+          is_updated: true,
+        },
+        {
+          tab: 'benevoles',
+          key: 'benevole_participation_will_start',
+          label: 'Votre mission commence très prochainement 👟',
+          description:
+            'Notification envoyée au bénévole lorsque sa participation est validée et que la mission commence demain. Seulement pour les missions ponctuelles.',
+          tags: ['app-benevole-participation-will-start'],
           is_updated: true,
         },
         {
