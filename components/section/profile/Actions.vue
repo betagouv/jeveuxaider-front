@@ -13,7 +13,7 @@
     @confirm="handleUserUnbanConfirm"
   />
 
-  <BaseAlertDialog
+  <!-- <BaseAlertDialog
     theme="danger"
     title="Archiver l'utilisateur"
     :is-open="showModalArchive"
@@ -21,8 +21,8 @@
     @cancel="showModalArchive = false"
   >
     Vous êtes sur le point d'archiver l'utilisateur {{ profile.full_name }}.
-  </BaseAlertDialog>
-  <BaseAlertDialog
+  </BaseAlertDialog> -->
+  <!-- <BaseAlertDialog
     theme="danger"
     title="Désarchiver l'utilisateur"
     :is-open="showModalUnarchive"
@@ -30,7 +30,7 @@
     @cancel="showModalUnarchive = false"
   >
     Vous êtes sur le point de réactiver le compte l'utilisateur à partir de ses données archivées.
-  </BaseAlertDialog>
+  </BaseAlertDialog> -->
 
   <BaseDropdown>
     <template #button>
@@ -64,7 +64,7 @@
           <RiUserFollow class="h-4 w-4 mr-2 fill-current text-gray-600" /> Débloquer l'utilisateur
         </div>
       </BaseDropdownOptionsItem>
-      <BaseDropdownOptionsItem
+      <!-- <BaseDropdownOptionsItem
         v-if="['admin'].includes($stores.auth.contextRole) && !profile.user.archived_at"
         @click="showModalArchive = true"
       >
@@ -72,8 +72,8 @@
           <RiInboxArchiveLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Archiver
           l'utilisateur
         </div>
-      </BaseDropdownOptionsItem>
-      <BaseDropdownOptionsItem
+      </BaseDropdownOptionsItem> -->
+      <!-- <BaseDropdownOptionsItem
         v-if="['admin'].includes($stores.auth.contextRole) && profile.user.archived_at"
         @click="showModalUnarchive = true"
       >
@@ -81,7 +81,7 @@
           <RiInboxUnarchiveLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Désarchiver
           l'utilisateur
         </div>
-      </BaseDropdownOptionsItem>
+      </BaseDropdownOptionsItem> -->
       <BaseDropdownOptionsItem
         v-if="['admin'].includes($stores.auth.contextRole)"
         @click="handleImpersonate()"
