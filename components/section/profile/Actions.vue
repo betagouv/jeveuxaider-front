@@ -108,8 +108,8 @@ export default defineNuxtComponent({
     return {
       showModalBan: false,
       showModalUnban: false,
-      showModalArchive: false,
-      showModalUnarchive: false,
+      // showModalArchive: false,
+      // showModalUnarchive: false,
     }
   },
   props: {
@@ -143,16 +143,16 @@ export default defineNuxtComponent({
       this.loading = false
       this.showModalUnban = false
     },
-    async handleConfirmArchive() {
-      await apiFetch(`/users/${this.profile.user.id}/archive`, { method: 'POST' }).catch(() => {})
-      this.$emit('updated')
-      this.showModalArchive = false
-    },
-    async handleConfirmUnarchive() {
-      await apiFetch(`/users/${this.profile.user.id}/unarchive`, { method: 'POST' }).catch(() => {})
-      this.$emit('updated')
-      this.showModalUnarchive = false
-    },
+    // async handleConfirmArchive() {
+    //   await apiFetch(`/users/${this.profile.user.id}/archive`, { method: 'POST' }).catch(() => {})
+    //   this.$emit('updated')
+    //   this.showModalArchive = false
+    // },
+    // async handleConfirmUnarchive() {
+    //   await apiFetch(`/users/${this.profile.user.id}/unarchive`, { method: 'POST' }).catch(() => {})
+    //   this.$emit('updated')
+    //   this.showModalUnarchive = false
+    // },
   },
 })
 </script>
