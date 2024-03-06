@@ -55,6 +55,7 @@
                   @close="onClose"
                 />
                 <SoftGatePrerequisites
+                  :check-distance="needToCheckDistance"
                   v-if="step == 'prerequisites'"
                   @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
                   @close="onClose"
@@ -103,31 +104,34 @@ export default defineNuxtComponent({
     FocusLoop,
   },
   data() {
-    let firstStep = 'email'
-    const selectedMission = this.$stores.softGate.selectedMission
-    if (this.$stores.auth.isLogged) {
-      if (this.$stores.auth.user.statistics.new_participations_today >= 3) {
-        firstStep = 'anti-flood'
-      } else if (selectedMission.prerequisites) {
-        firstStep = 'prerequisites'
-      } else if (
-        selectedMission.dates?.filter(
-          (date) =>
-            this.$dayjs(date.id).isAfter(this.$dayjs()) ||
-            this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
-        ).length > 0
-      ) {
-        firstStep = 'select-creneaux'
-      } else {
-        firstStep = 'participate'
-      }
-    }
+    // let firstStep = 'email'
+    // const selectedMission = this.$stores.softGate.selectedMission
+    // if (this.$stores.auth.isLogged) {
+    //   if (this.$stores.auth.user.statistics.new_participations_today >= 3) {
+    //     firstStep = 'anti-flood'
+    //   } else if (selectedMission.prerequisites) {
+    //     firstStep = 'prerequisites'
+    //   } else if (
+    //     selectedMission.dates?.filter(
+    //       (date) =>
+    //         this.$dayjs(date.id).isAfter(this.$dayjs()) ||
+    //         this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
+    //     ).length > 0
+    //   ) {
+    //     firstStep = 'select-creneaux'
+    //   } else {
+    //     firstStep = 'participate'
+    //   }
+    // }
 
     return {
       datas: null,
-      selectedMission,
-      step: firstStep,
+      selectedMission: this.$stores.softGate.selectedMission,
+      step: 'email',
     }
+  },
+  created() {
+    this.step = this.firstStepResolver()
   },
   computed: {
     nextDates() {
@@ -141,10 +145,44 @@ export default defineNuxtComponent({
       return this.nextDates?.length > 0
     },
     hasPrerequisites() {
-      return this.selectedMission?.prerequisites?.length > 0
+      return this.selectedMission?.prerequisites?.length > 0 || this.needToCheckDistance
+    },
+    needToCheckDistance() {
+      return false
+      // return (
+      //   this.pythagoreanDistanceBetweenPoints(
+      //     this.$stores.auth.user.profile.latitude,
+      //     this.$stores.auth.user.profile.longitude,
+      //     this.selectedMission.latitude,
+      //     this.selectedMission.longitude
+      //   ) > 30000
+      // )
     },
   },
   methods: {
+    pythagoreanDistanceBetweenPoints(lat1, lon1, lat2, lon2) {
+      const R = 63713
+      const x = (lon2 - lon1) * Math.cos((lat1 + lat2) / 2)
+      const y = lat2 - lat1
+      const d = Math.sqrt(x * x + y * y) * R
+      console.log('distance', d)
+      return d
+    },
+    firstStepResolver() {
+      if (!this.$stores.auth.isLogged) {
+        return 'email'
+      }
+      if (this.$stores.auth.user.statistics.new_participations_today >= 3) {
+        return 'anti-flood'
+      }
+      if (this.hasPrerequisites) {
+        return 'prerequisites'
+      }
+      if (this.hasCreneaux) {
+        return 'select-creneaux'
+      }
+      return 'participate'
+    },
     goToLogin(datas) {
       this.step = 'login'
       this.datas = datas
