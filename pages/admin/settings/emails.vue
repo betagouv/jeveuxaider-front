@@ -99,6 +99,7 @@ export default defineNuxtComponent({
           tags: ['app-benevole-inscription'],
           is_updated: true,
         },
+
         {
           tab: 'benevoles',
           key: 'benevole_participation_created',
@@ -241,6 +242,14 @@ export default defineNuxtComponent({
           description:
             'Notification envoyée au bénévole quand un administrateur bloque son compte car il a eu un comportement inapproprié',
           tags: ['app-benevole-banni-comportement-inadapte'],
+          is_updated: true,
+        },
+        {
+          tab: 'benevoles',
+          key: 'benevole_will_be_archived',
+          label: 'On ne va pas se quitter comme ça 😢',
+          description: "Le bénévole est sur le point d'être archivé (J-7)",
+          tags: ['app-benevole-archivage'],
           is_updated: true,
         },
         {
@@ -536,6 +545,14 @@ export default defineNuxtComponent({
           is_updated: true,
         },
         {
+          tab: 'responsables',
+          key: 'responsable_will_be_archived',
+          label: 'On ne va pas se quitter comme ça 😢',
+          description: "Le responsable est sur le point d'être archivé (J-7)",
+          tags: ['app-responsable-archivage'],
+          is_updated: true,
+        },
+        {
           tab: 'referents',
           key: 'referent_message_organisation',
           label: 'Le responsable de [STRUCTURE] vous a répondu !',
@@ -595,6 +612,14 @@ export default defineNuxtComponent({
           description:
             "Notification envoyée aux référents lorsqu'ils ont activé le résumé mensuel dans leurs préférences de notification",
           tags: ['app-referent-bilan-mensuel'],
+          is_updated: true,
+        },
+        {
+          tab: 'other',
+          key: 'user_unarchive_code',
+          label: "Votre code d'activation à usage unique",
+          description: "L'utilisateur demande un code pour réactiver son compte archivé",
+          tags: ['app-user-activation-code'],
           is_updated: true,
         },
         {

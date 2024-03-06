@@ -12,6 +12,26 @@
     @cancel="showModalUnban = false"
     @confirm="handleUserUnbanConfirm"
   />
+
+  <!-- <BaseAlertDialog
+    theme="danger"
+    title="Archiver l'utilisateur"
+    :is-open="showModalArchive"
+    @confirm="handleConfirmArchive()"
+    @cancel="showModalArchive = false"
+  >
+    Vous êtes sur le point d'archiver l'utilisateur {{ profile.full_name }}.
+  </BaseAlertDialog> -->
+  <!-- <BaseAlertDialog
+    theme="danger"
+    title="Désarchiver l'utilisateur"
+    :is-open="showModalUnarchive"
+    @confirm="handleConfirmUnarchive()"
+    @cancel="showModalUnarchive = false"
+  >
+    Vous êtes sur le point de réactiver le compte l'utilisateur à partir de ses données archivées.
+  </BaseAlertDialog> -->
+
   <BaseDropdown>
     <template #button>
       <DsfrButton :size="buttonSize" type="tertiary" class="!text-gray-800">
@@ -44,6 +64,24 @@
           <RiUserFollow class="h-4 w-4 mr-2 fill-current text-gray-600" /> Débloquer l'utilisateur
         </div>
       </BaseDropdownOptionsItem>
+      <!-- <BaseDropdownOptionsItem
+        v-if="['admin'].includes($stores.auth.contextRole) && !profile.user.archived_at"
+        @click="showModalArchive = true"
+      >
+        <div class="flex items-center">
+          <RiInboxArchiveLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Archiver
+          l'utilisateur
+        </div>
+      </BaseDropdownOptionsItem> -->
+      <!-- <BaseDropdownOptionsItem
+        v-if="['admin'].includes($stores.auth.contextRole) && profile.user.archived_at"
+        @click="showModalUnarchive = true"
+      >
+        <div class="flex items-center">
+          <RiInboxUnarchiveLine class="h-4 w-4 mr-2 fill-current text-gray-600" /> Désarchiver
+          l'utilisateur
+        </div>
+      </BaseDropdownOptionsItem> -->
       <BaseDropdownOptionsItem
         v-if="['admin'].includes($stores.auth.contextRole)"
         @click="handleImpersonate()"
@@ -70,6 +108,8 @@ export default defineNuxtComponent({
     return {
       showModalBan: false,
       showModalUnban: false,
+      // showModalArchive: false,
+      // showModalUnarchive: false,
     }
   },
   props: {
@@ -103,6 +143,16 @@ export default defineNuxtComponent({
       this.loading = false
       this.showModalUnban = false
     },
+    // async handleConfirmArchive() {
+    //   await apiFetch(`/users/${this.profile.user.id}/archive`, { method: 'POST' }).catch(() => {})
+    //   this.$emit('updated')
+    //   this.showModalArchive = false
+    // },
+    // async handleConfirmUnarchive() {
+    //   await apiFetch(`/users/${this.profile.user.id}/unarchive`, { method: 'POST' }).catch(() => {})
+    //   this.$emit('updated')
+    //   this.showModalUnarchive = false
+    // },
   },
 })
 </script>

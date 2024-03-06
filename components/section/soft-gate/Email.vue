@@ -12,7 +12,7 @@
             type="email"
             name="email"
             placeholder="Entrez votre email"
-            @blur="validate('email')"
+            @blur="onBlurEmailCheckIfUserArchiveDatasExists"
           />
         </BaseFormControl>
 
@@ -30,10 +30,11 @@
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import Emailable from '@/mixins/emailable.client'
+import DetectUserArchiveDatas from '@/mixins/detect-user-archive-datas'
 
 export default defineNuxtComponent({
   name: 'SoftGateEmail',
-  mixins: [FormErrors, Emailable],
+  mixins: [FormErrors, Emailable, DetectUserArchiveDatas],
   data() {
     return {
       loading: false,

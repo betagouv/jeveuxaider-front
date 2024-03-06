@@ -27,6 +27,9 @@ export default {
     resetErrors() {
       this.errors = {}
     },
+    isValid(field) {
+      return this.formSchema.isValid(field)
+    },
     validate(field) {
       this.formSchema
         .validateAt(field, this.form)

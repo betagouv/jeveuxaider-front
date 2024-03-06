@@ -25,6 +25,7 @@
         }}
       </div>
     </DsfrBadge>
+    <DsfrBadge v-if="profile.user.archived_at" size="sm" type="error"> Archivé </DsfrBadge>
   </div>
 </template>
 

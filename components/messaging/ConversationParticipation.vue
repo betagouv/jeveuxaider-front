@@ -8,7 +8,7 @@
         @updated="handleUpdatedParticipation"
       />
       <template v-if="isCurrentUserBenevole">
-        <ConversationRecipientResponsable :user="recipientUser" />
+        <ConversationRecipientResponsable :user="responsableUser" />
       </template>
       <template v-if="isCurrentUserResponsable">
         <ConversationRecipientBenevole :user="benevoleUser" />
@@ -76,7 +76,13 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    recipientUser() {
+    responsableUser() {
+      const responsable = this.conversation.users.find(
+        (user) => user.id === this.mission.responsable.user_id
+      )
+      if (responsable) {
+        return responsable
+      }
       return this.conversation.users.filter(
         (user) => user.id != this.$stores.auth.profile.user_id
       )[0]

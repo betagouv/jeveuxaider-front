@@ -63,7 +63,7 @@
                   placeholder="Entrez votre email"
                   aria-required="true"
                   autocomplete="email"
-                  @blur="validate('email')"
+                  @blur="onBlurEmailCheckIfUserArchiveDatasExists"
                 />
               </BaseFormControl>
               <BaseFormControl
@@ -157,10 +157,10 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import DetectUserArchiveDatas from '@/mixins/detect-user-archive-datas'
 
 export default defineNuxtComponent({
-  components: {},
-  mixins: [FormErrors],
+  mixins: [FormErrors, DetectUserArchiveDatas],
   setup() {
     definePageMeta({
       middleware: ['guest'],
@@ -198,8 +198,8 @@ export default defineNuxtComponent({
         password: '',
       },
       formSchema: object({
-        email: string().required().email(),
-        password: string().required(),
+        email: string().required('Le champs email est requis').email(),
+        password: string().required('Le champs mot de passe est requis'),
       }),
     }
   },

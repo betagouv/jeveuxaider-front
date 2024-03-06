@@ -38,7 +38,7 @@
                   name="email"
                   type="email"
                   placeholder="Entrez votre email"
-                  @blur="validate('email')"
+                  @blur="onBlurEmailCheckIfUserArchiveDatasExists"
                 />
                 <template #description>
                   <p class="text-sm text-gray-600 mt-2">
@@ -79,9 +79,10 @@
 <script>
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
+import DetectUserArchiveDatas from '@/mixins/detect-user-archive-datas'
 
 export default defineNuxtComponent({
-  mixins: [FormErrors],
+  mixins: [FormErrors, DetectUserArchiveDatas],
   setup() {
     definePageMeta({
       middleware: ['guest'],

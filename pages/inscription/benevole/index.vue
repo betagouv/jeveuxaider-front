@@ -165,7 +165,7 @@
                           placeholder="jean.dupont@gmail.com"
                           aria-required="true"
                           autocomplete="email"
-                          @blur="validate('email')"
+                          @blur="onBlurEmailCheckIfUserArchiveDatasExists"
                         />
                       </BaseFormControl>
                       <BaseFormControl
@@ -379,6 +379,7 @@ import Temoignages from '@/components/section/homepage/Temoignages.vue'
 import CarouselLogos from '@/components/section/inscription/CarouselLogos.vue'
 import countries from '@/assets/countries.json'
 import { useToast } from 'vue-toastification'
+import DetectUserArchiveDatas from '@/mixins/detect-user-archive-datas'
 
 const errorIsOldEnoughErrorMessage =
   'JeVeuxAider.gouv.fr est ouvert aux personnes de plus de 16 ans'
@@ -389,7 +390,7 @@ export default defineNuxtComponent({
     Temoignages,
     CarouselLogos,
   },
-  mixins: [FormErrors, Emailable],
+  mixins: [FormErrors, Emailable, DetectUserArchiveDatas],
   setup() {
     definePageMeta({
       middleware: ['guest'],
