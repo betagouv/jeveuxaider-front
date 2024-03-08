@@ -262,11 +262,6 @@ export default defineNuxtComponent({
             isActive: this.isActiveLink('/organisations'),
           },
           {
-            name: '🍽️ Restos du Coeur',
-            to: '/missions-benevolat?tags=Collecte nationale des Restos du Cœur',
-            isActive: this.isActiveOperation('Collecte nationale des Restos du Cœur'),
-          },
-          {
             name: "Centre d'aide",
             href: 'https://reserve-civique.crisp.help/fr/',
             target: '_blank',

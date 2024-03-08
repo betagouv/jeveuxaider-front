@@ -3,7 +3,6 @@
     <BlocBanner />
     <template v-if="$stores.auth.isLogged">
       <BlocCaDevraitVousPlaire />
-      <RestosDuCoeur />
       <MissionsPourLaPlanete class="hidden" />
       <BlocProfileActivities />
       <BlocTemoignages />
@@ -18,7 +17,6 @@
         <BlocInscriptionResponsable />
       </div>
       <BlocActivities />
-      <RestosDuCoeur />
       <MissionsPourLaPlanete class="hidden" />
       <BlocMissionsCourtes />
       <BlocActionsBenevolesPopulaires />
@@ -46,7 +44,6 @@ import BlocNewsletter from '@/components/section/home/BlocNewsletter.vue'
 import BlocFaq from '@/components/section/home/BlocFaq.vue'
 import BlocProfileActivities from '@/components/section/home/BlocProfileActivities.vue'
 import MissionsPourLaPlanete from '@/components/section/operations/MissionsPourLaPlanete.vue'
-import RestosDuCoeur from '@/components/section/operations/RestosDuCoeur.vue'
 
 export default defineNuxtComponent({
   setup() {
@@ -99,7 +96,6 @@ export default defineNuxtComponent({
     BlocFaq,
     BlocProfileActivities,
     MissionsPourLaPlanete,
-    RestosDuCoeur,
   },
 })
 </script>
