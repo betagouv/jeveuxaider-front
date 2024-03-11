@@ -148,26 +148,33 @@ export default defineNuxtComponent({
       return this.selectedMission?.prerequisites?.length > 0 || this.needToCheckDistance
     },
     needToCheckDistance() {
-      return false
-      // return (
-      //   this.pythagoreanDistanceBetweenPoints(
-      //     this.$stores.auth.user.profile.latitude,
-      //     this.$stores.auth.user.profile.longitude,
-      //     this.selectedMission.latitude,
-      //     this.selectedMission.longitude
-      //   ) > 30000
-      // )
+      if (this.selectedMission.type === 'Mission à distance') {
+        return false
+      }
+      if (this.selectedMission.is_autonomy) {
+        return false
+      }
+      if (this.selectedMission.latitude === null || this.selectedMission.longitude === null) {
+        return false
+      }
+      if (
+        this.$stores.auth.user.profile.latitude === null ||
+        this.$stores.auth.user.profile.longitude === null
+      ) {
+        return false
+      }
+
+      return (
+        this.$utils.haversineDistanceBetweenPoints(
+          this.$stores.auth.user.profile.latitude,
+          this.$stores.auth.user.profile.longitude,
+          this.selectedMission.latitude,
+          this.selectedMission.longitude
+        ) > 30000
+      )
     },
   },
   methods: {
-    pythagoreanDistanceBetweenPoints(lat1, lon1, lat2, lon2) {
-      const R = 63713
-      const x = (lon2 - lon1) * Math.cos((lat1 + lat2) / 2)
-      const y = lat2 - lat1
-      const d = Math.sqrt(x * x + y * y) * R
-      console.log('distance', d)
-      return d
-    },
     firstStepResolver() {
       if (!this.$stores.auth.isLogged) {
         return 'email'

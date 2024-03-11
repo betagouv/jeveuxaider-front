@@ -71,6 +71,9 @@ export default defineNuxtComponent({
       return this.prerequisites
     },
     prerequisites() {
+      if (!this.$stores.softGate.selectedMission.prerequisites) {
+        return []
+      }
       return this.$stores.softGate.selectedMission.prerequisites.map((prerequisite, key) => ({
         key,
         label: prerequisite,
