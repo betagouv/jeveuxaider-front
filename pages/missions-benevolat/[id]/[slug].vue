@@ -351,7 +351,7 @@
       v-observe-visibility="
         !userParticipation && !canRegister ? handleVisibilityFixedCtaMobile : false
       "
-      class="bg-[#ECECFE] overflow-hidden mt-12"
+      class="bg-[#ECECFE] overflow-hidden pt-12"
     >
       <div class="container mx-auto px-8 sm:px-4">
         <div class="pt-16 pb-24">
