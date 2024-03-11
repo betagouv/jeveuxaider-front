@@ -22,36 +22,18 @@
                 <SoftGateLogin
                   v-if="step == 'login'"
                   :datas="datas"
-                  @next="
-                    step = hasPrerequisites
-                      ? 'prerequisites'
-                      : hasCreneaux
-                      ? 'select-creneaux'
-                      : 'participate'
-                  "
+                  @next="handleNextResolver"
                   @anti-flood="step = 'anti-flood'"
                   @close="onClose"
                 />
                 <SoftGateRegister
                   v-if="step == 'register'"
                   :datas="datas"
-                  @next="
-                    step = hasPrerequisites
-                      ? 'prerequisites'
-                      : hasCreneaux
-                      ? 'select-creneaux'
-                      : 'participate'
-                  "
+                  @next="handleNextResolver"
                 />
                 <SoftGateAntiFlood
                   v-if="step == 'anti-flood'"
-                  @next="
-                    step = hasPrerequisites
-                      ? 'prerequisites'
-                      : hasCreneaux
-                      ? 'select-creneaux'
-                      : 'participate'
-                  "
+                  @next="handleNextResolver"
                   @close="onClose"
                 />
                 <SoftGatePrerequisites
@@ -104,26 +86,6 @@ export default defineNuxtComponent({
     FocusLoop,
   },
   data() {
-    // let firstStep = 'email'
-    // const selectedMission = this.$stores.softGate.selectedMission
-    // if (this.$stores.auth.isLogged) {
-    //   if (this.$stores.auth.user.statistics.new_participations_today >= 3) {
-    //     firstStep = 'anti-flood'
-    //   } else if (selectedMission.prerequisites) {
-    //     firstStep = 'prerequisites'
-    //   } else if (
-    //     selectedMission.dates?.filter(
-    //       (date) =>
-    //         this.$dayjs(date.id).isAfter(this.$dayjs()) ||
-    //         this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
-    //     ).length > 0
-    //   ) {
-    //     firstStep = 'select-creneaux'
-    //   } else {
-    //     firstStep = 'participate'
-    //   }
-    // }
-
     return {
       datas: null,
       selectedMission: this.$stores.softGate.selectedMission,
@@ -148,7 +110,7 @@ export default defineNuxtComponent({
       return this.selectedMission?.prerequisites?.length > 0 || this.needToCheckDistance
     },
     needToCheckDistance() {
-      if (this.selectedMission.type === 'Mission à distance') {
+      if (this.selectedMission?.type !== 'Mission en présentiel') {
         return false
       }
       if (this.selectedMission.is_autonomy) {
@@ -163,7 +125,6 @@ export default defineNuxtComponent({
       ) {
         return false
       }
-
       return (
         this.$utils.haversineDistanceBetweenPoints(
           this.$stores.auth.user.profile.latitude,
@@ -189,6 +150,15 @@ export default defineNuxtComponent({
         return 'select-creneaux'
       }
       return 'participate'
+    },
+    handleNextResolver() {
+      if (this.hasPrerequisites) {
+        this.step = 'prerequisites'
+      } else if (this.hasCreneaux) {
+        this.step = 'select-creneaux'
+      } else {
+        this.step = 'participate'
+      }
     },
     goToLogin(datas) {
       this.step = 'login'
