@@ -59,13 +59,16 @@ export default defineNuxtComponent({
       return this.options.length !== this.checkedPrerequisites.length
     },
     userZip() {
-      return this.$stores.auth.user.profile.zip
+      return `${this.$stores.auth.user.profile.zip} - ${this.$stores.auth.user.profile.city}`
+    },
+    missionZip() {
+      return `${this.$stores.softGate.selectedMission.zip} - ${this.$stores.softGate.selectedMission.city}`
     },
     options() {
       if (this.checkDistance) {
         this.prerequisites.push({
           key: 'distance',
-          label: `Je suis en mesure de me déplacer bien que mon code postal (${this.userZip}) se situe à plus de 30km du lieu de la mission`,
+          label: `Je suis en mesure de me déplacer bien que mon code postal (${this.userZip}) se situe à plus de 30km du lieu de la mission (${this.missionZip})`,
         })
       }
       return this.prerequisites
