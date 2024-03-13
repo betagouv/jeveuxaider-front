@@ -22,39 +22,22 @@
                 <SoftGateLogin
                   v-if="step == 'login'"
                   :datas="datas"
-                  @next="
-                    step = hasPrerequisites
-                      ? 'prerequisites'
-                      : hasCreneaux
-                      ? 'select-creneaux'
-                      : 'participate'
-                  "
+                  @next="handleNextResolver"
                   @anti-flood="step = 'anti-flood'"
                   @close="onClose"
                 />
                 <SoftGateRegister
                   v-if="step == 'register'"
                   :datas="datas"
-                  @next="
-                    step = hasPrerequisites
-                      ? 'prerequisites'
-                      : hasCreneaux
-                      ? 'select-creneaux'
-                      : 'participate'
-                  "
+                  @next="handleNextResolver"
                 />
                 <SoftGateAntiFlood
                   v-if="step == 'anti-flood'"
-                  @next="
-                    step = hasPrerequisites
-                      ? 'prerequisites'
-                      : hasCreneaux
-                      ? 'select-creneaux'
-                      : 'participate'
-                  "
+                  @next="handleNextResolver"
                   @close="onClose"
                 />
                 <SoftGatePrerequisites
+                  :check-distance="needToCheckDistance"
                   v-if="step == 'prerequisites'"
                   @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
                   @close="onClose"
@@ -103,31 +86,14 @@ export default defineNuxtComponent({
     FocusLoop,
   },
   data() {
-    let firstStep = 'email'
-    const selectedMission = this.$stores.softGate.selectedMission
-    if (this.$stores.auth.isLogged) {
-      if (this.$stores.auth.user.statistics.new_participations_today >= 3) {
-        firstStep = 'anti-flood'
-      } else if (selectedMission.prerequisites) {
-        firstStep = 'prerequisites'
-      } else if (
-        selectedMission.dates?.filter(
-          (date) =>
-            this.$dayjs(date.id).isAfter(this.$dayjs()) ||
-            this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
-        ).length > 0
-      ) {
-        firstStep = 'select-creneaux'
-      } else {
-        firstStep = 'participate'
-      }
-    }
-
     return {
       datas: null,
-      selectedMission,
-      step: firstStep,
+      selectedMission: this.$stores.softGate.selectedMission,
+      step: 'email',
     }
+  },
+  created() {
+    this.step = this.firstStepResolver()
   },
   computed: {
     nextDates() {
@@ -141,10 +107,59 @@ export default defineNuxtComponent({
       return this.nextDates?.length > 0
     },
     hasPrerequisites() {
-      return this.selectedMission?.prerequisites?.length > 0
+      return this.selectedMission?.prerequisites?.length > 0 || this.needToCheckDistance
+    },
+    needToCheckDistance() {
+      if (this.selectedMission?.type !== 'Mission en présentiel') {
+        return false
+      }
+      if (this.selectedMission.is_autonomy) {
+        return false
+      }
+      if (this.selectedMission.latitude === null || this.selectedMission.longitude === null) {
+        return false
+      }
+      if (
+        this.$stores.auth.user.profile.latitude === null ||
+        this.$stores.auth.user.profile.longitude === null
+      ) {
+        return false
+      }
+      return (
+        this.$utils.haversineDistanceBetweenPoints(
+          this.$stores.auth.user.profile.latitude,
+          this.$stores.auth.user.profile.longitude,
+          this.selectedMission.latitude,
+          this.selectedMission.longitude
+        ) > 30000
+      )
     },
   },
   methods: {
+    firstStepResolver() {
+      if (!this.$stores.auth.isLogged) {
+        return 'email'
+      }
+      if (this.$stores.auth.user.statistics.new_participations_today >= 3) {
+        return 'anti-flood'
+      }
+      if (this.hasPrerequisites) {
+        return 'prerequisites'
+      }
+      if (this.hasCreneaux) {
+        return 'select-creneaux'
+      }
+      return 'participate'
+    },
+    handleNextResolver() {
+      if (this.hasPrerequisites) {
+        this.step = 'prerequisites'
+      } else if (this.hasCreneaux) {
+        this.step = 'select-creneaux'
+      } else {
+        this.step = 'participate'
+      }
+    },
     goToLogin(datas) {
       this.step = 'login'
       this.datas = datas
