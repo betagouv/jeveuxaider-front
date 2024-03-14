@@ -183,16 +183,27 @@ export default defineNuxtComponent({
       })
     },
     async handleChangeState(option) {
-      this.organisation.state = option.key
-      apiFetch(`/structures/${this.organisation.id}`, {
-        method: 'PUT',
-        body: this.organisation,
-      })
-        .then((res) => {
-          this.fetch()
-          this.$emit('updated')
+      if (option.key == 'Désinscrite') {
+        await apiFetch(`/structures/${this.organisation.id}/unregister`, {
+          method: 'POST',
         })
-        .catch(() => {})
+          .then((res) => {
+            this.fetch()
+            this.$emit('updated')
+          })
+          .catch(() => {})
+      } else {
+        this.organisation.state = option.key
+        apiFetch(`/structures/${this.organisation.id}`, {
+          method: 'PUT',
+          body: this.organisation,
+        })
+          .then((res) => {
+            this.fetch()
+            this.$emit('updated')
+          })
+          .catch(() => {})
+      }
     },
     handleDeleted() {
       this.$emit('updated')

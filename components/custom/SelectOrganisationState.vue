@@ -24,7 +24,39 @@
       @confirm="handleConfirmDialog()"
       @cancel="showAlert = false"
     >
-      {{ textAlert }}
+      <template v-if="selected">
+        <template v-if="selected.key === 'Brouillon'">
+          <p>Vous êtes sur le point de passer l'organisation au statut <b>brouillon</b>.</p>
+        </template>
+
+        <template v-else-if="selected.key === 'En attente de validation'">
+          <p>
+            Vous êtes sur le point de passer l'organisation au statut
+            <b>en attente de validation</b>.
+          </p>
+        </template>
+
+        <template v-else-if="selected.key === 'En cours de traitement'">
+          <p>
+            Vous êtes sur le point de passer l'organisation au statut <b>en cours de traitement</b>.
+          </p>
+        </template>
+
+        <template v-else-if="selected.key === 'Désinscrite'">
+          <p>Vous êtes sur le point de <b>désinscrire</b> cette organisation.<br /><br /></p>
+          <ul>
+            <li>- Tous les responsables seront exclues de l'organisation.</li>
+            <li>- Les missions “En attente de validation” seront passées en “Annulée”.</li>
+            <li>
+              - Les missions “Validée” dont la date de fin est passée basculent au statut “Terminée”
+            </li>
+            <li>
+              - Les missions “Validée” dont la date de fin n’est pas passée basculent au statut
+              “Annulée”
+            </li>
+          </ul>
+        </template>
+      </template>
     </BaseAlertDialog>
   </div>
 </template>
@@ -58,34 +90,6 @@ export default defineNuxtComponent({
         'to'
       )
       return this.$labels.structure_workflow_states.filter((state) => toStates.includes(state.key))
-    },
-    textAlert() {
-      let output = ''
-      switch (this.selected?.key) {
-        case 'Brouillon':
-          output = "Vous êtes sur le point de passer l'organisation au statut <b>brouillon</b>."
-          break
-        case 'En attente de validation':
-          output =
-            "Vous êtes sur le point de passer l'organisation au statut <b>en attente de validation</b>."
-          break
-        case 'En cours de traitement':
-          output =
-            "Vous êtes sur le point de passer l'organisation au statut <b>en cours de traitement</b>."
-          break
-        case 'Désinscrite':
-          output = `
-            Vous êtes sur le point de <b>désinscrire</b> cette organisation.<br><br>
-            <ul>
-            <li>- Tous les responsables seront exclues de l'organisation.</li>
-            <li>- Les missions “En attente de validation” seront passées en “Annulée”.</li>
-            <li>- Les missions “Validée” dont la date de fin est passée bascule au statut “Terminée”</li>
-            <li>- Les missions “Validée” dont la date de fin n’est pas passée bascule au statut “Annulée”</li>
-            </ul>
-          `
-          break
-      }
-      return output
     },
   },
   methods: {
