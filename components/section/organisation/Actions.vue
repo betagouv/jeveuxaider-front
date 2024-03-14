@@ -68,6 +68,7 @@
         </BaseDropdownOptionsItem>
       </NuxtLink>
       <BaseDropdownOptionsItem
+        v-if="['admin', 'responsable', 'tete_de_reseau'].includes($stores.auth.contextRole)"
         @click.native="
           () => {
             showDrawerInvitation = true
@@ -75,13 +76,7 @@
           }
         "
       >
-        <div
-          class="flex items-center"
-          v-if="['admin', 'responsable', 'tete_de_reseau'].includes($stores.auth.contextRole)"
-          variant="white"
-        >
-          <RiUserAdd class="h-4 w-4 mr-2" /> Inviter un membre
-        </div>
+        <div class="flex items-center"><RiUserAdd class="h-4 w-4 mr-2" /> Inviter un membre</div>
       </BaseDropdownOptionsItem>
       <BaseDropdownOptionsItem
         v-if="['admin'].includes($stores.auth.contextRole)"
