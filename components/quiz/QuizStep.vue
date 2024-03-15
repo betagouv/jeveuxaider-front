@@ -71,12 +71,12 @@
             </nuxt-link>
           </div>
         </div>
-        <div v-if="mobilePicture" :class="['block relative lg:hidden h-[225px] overflow-hidden']">
+        <div v-if="mobilePicture" :class="['block relative lg:hidden h-[305px] overflow-hidden']">
           <img
             :src="`/images/quiz/${mobilePicture}.jpg`"
             :srcset="`/images/quiz/${mobilePicture}@2x.jpg 2x`"
             alt=""
-            :class="['object-cover h-full w-full']"
+            class="object-cover h-full w-full object-top"
           />
           <template v-if="logos.length > 0">
             <div class="inline-block absolute bottom-0 right-0 z-10">
