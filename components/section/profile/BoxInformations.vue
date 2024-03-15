@@ -40,6 +40,15 @@
             profile.user.last_online_at ? $dayjs(profile.user.last_online_at).fromNow() : null
           "
         />
+        <BaseDescriptionListItem
+          v-if="$stores.auth.contextRole === 'admin' && profile.user"
+          term="Der. intéraction"
+          :description="
+            profile.user.last_interaction_at
+              ? $dayjs(profile.user.last_interaction_at).format('D MMMM YYYY à HH:mm')
+              : null
+          "
+        />
         <BaseDescriptionListItem term="Nom" :description="profile.full_name" />
         <BaseDescriptionListItem term="Email" :description="profile.email" />
         <BaseDescriptionListItem term="Code postal" :description="profile.zip" />
