@@ -35,7 +35,7 @@
                 />n'est pas politique, cultuelle ou syndicale.
               </li>
             </ul>
-            <div class="mt-8 space-y-3">
+            <div class="mt-8 space-y-3 pb-8">
               <DsfrButton class="w-full" @click.native="handleConfirmChoixOrga">
                 Je confirme ces éléments
               </DsfrButton>
@@ -74,7 +74,7 @@
               ou bien <span class="font-bold">syndicale</span>, vous pouvez proposer à vos
               associations partenaires de mettre en ligne des missions sur notre plateforme.
             </p>
-            <div class="mt-6 w-full">
+            <div class="mt-6 w-full pb-8">
               <DsfrButton class="w-full" @click.native="handleDeniedChoixOrga"> Fermer </DsfrButton>
             </div>
           </div>

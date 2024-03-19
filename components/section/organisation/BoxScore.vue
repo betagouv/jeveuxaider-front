@@ -41,8 +41,9 @@
                     :is-open="showModalScoreDetails"
                     hide-footer
                     @close="showModalScoreDetails = false"
+                    title="Score d'engagement et de réactivité"
                   >
-                    <ScoreDetails :score="score" />
+                    <ScoreDetails :score="score" class="pb-8" />
                   </BaseModal>
                 </Teleport>
               </ClientOnly>
