@@ -14,7 +14,7 @@
 
     <div class="text-center mt-8">
       <div>
-        <DsfrButton size="lg" @click.native="$emit('close')">
+        <DsfrButton class="w-full" size="lg" @click.native="$emit('close')">
           J'attends la validation de mes inscriptions
         </DsfrButton>
       </div>
