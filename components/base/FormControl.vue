@@ -14,6 +14,7 @@
 
     <slot />
 
+    <BaseFormInfo v-if="info && !error">{{ info }}</BaseFormInfo>
     <BaseFormError v-if="error">
       {{ error }}
     </BaseFormError>
@@ -29,6 +30,7 @@
 export default defineNuxtComponent({
   props: {
     htmlFor: { type: String, required: true },
+    info: { type: String, default: null },
     error: { type: String, default: null },
     success: { type: String, default: null },
     label: { type: String, default: null },

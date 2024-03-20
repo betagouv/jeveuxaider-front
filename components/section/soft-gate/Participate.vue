@@ -1,29 +1,26 @@
 <template>
   <div>
-    <!-- <div v-if="nextDates" class="flex items-center text-sm cursor-pointer text-gray-600" @click="$emit('back')">
-      <RiArrowLeftSLine class="mr-1 h-4 w-4" /> Retour
-    </div> -->
-    <div class="text-center mb-6">
-      <DsfrHeading as="div" size="lg" class="mb-2 lg:mb-3"> Proposez votre aide </DsfrHeading>
+    <div class="text-center mb-8">
+      <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4"> Proposez votre aide </DsfrHeading>
       <div
         v-if="$stores.softGate.selectedMission"
-        class="text-cool-gray-500 text-lg lg:text-xl max-w-md mx-auto"
+        class="text-cool-gray-500 lg:text-lg max-w-md mx-auto"
       >
-        Vous allez être mis en relation avec
+        Envoyez vos motivations et question à
         <span class="font-bold">{{ $stores.softGate.selectedMission.responsable.first_name }}</span
         >, responsable de la mission chez
         <span class="font-bold">{{ $stores.softGate.selectedMission.structure.name }}</span
         >.
       </div>
     </div>
-    <div class="mx-auto max-w-sm">
-      <form id="form" class="space-y-8 my-8" @submit.prevent="onSubmit">
+    <div class="mx-auto">
+      <form id="form" class="space-y-8" @submit.prevent="onSubmit">
         <BaseFormControl
           label="Votre message"
-          labelSuffix="(100 caractères min.)"
           html-for="content"
           required
           :error="errors.content"
+          info="Obligatoire - 100 caractères minimum"
         >
           <BaseTextarea
             v-model="form.content"
@@ -61,7 +58,7 @@ export default defineNuxtComponent({
       },
       formSchema: object({
         content: string()
-          .min(100, 'Votre message est trop court (100 caractères min.)')
+          .min(100, 'Votre message est trop court - 100 caractères minimum')
           .required('Un message est requis'),
       }),
     }

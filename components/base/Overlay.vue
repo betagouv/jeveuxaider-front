@@ -15,10 +15,11 @@
         <FocusLoop :is-visible="true" @keydown.native.esc="onClose">
           <div class="flex flex-col w-full h-full px-4">
             <button
-              class="p-4 -mr-4 lg:m-0 lg:p-8 cursor-pointer ml-auto lg:absolute lg:right-0"
+              class="flex items-center cursor-pointer p-4 ml-auto lg:absolute lg:right-8 lg:top-8 lg:px-2 lg:py-1 lg:hover:bg-jva-blue-300/50"
               @click="onClose"
             >
-              <RiCloseFill class="text-white h-10 w-10 fill-current" />
+              <span class="text-white mr-1">Fermer</span>
+              <RiCloseFill class="text-white h-6 w-6 fill-current relative top-[1px]" />
             </button>
 
             <div
@@ -27,10 +28,15 @@
             >
               <div class="pb-32 lg:pb-0">
                 <div class="text-center text-white text-lg">#ChacunPourTous</div>
-                <div class="text-center text-white font-bold mb-4 text-4xl tracking-tight">
+                <div
+                  v-if="title"
+                  class="text-center text-white font-bold mb-4 text-4xl tracking-tight"
+                >
                   {{ title }}
                 </div>
-                <div class="bg-gray-100 max-w-full lg:max-w-xl mx-auto px-2 py-6 sm:p-6 lg:p-10">
+                <div
+                  class="bg-[#F6F6F6] mt-8 max-w-full lg:w-[588px] mx-auto px-2 py-6 sm:p-6 lg:px-14 lg:py-12"
+                >
                   <slot />
                 </div>
                 <slot name="footer" />
@@ -57,7 +63,7 @@ export default defineNuxtComponent({
     },
     title: {
       type: String,
-      required: true,
+      default: null,
     },
   },
   methods: {

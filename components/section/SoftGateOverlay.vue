@@ -1,68 +1,35 @@
 <template>
-  <div class="fixed inset-0 w-full h-full z-50">
-    <FocusLoop :is-visible="true" @keydown.native.esc="onClose">
-      <div class="w-full h-full flex flex-col items-center justify-center bg-jva-blue-500/95">
-        <div class="flex flex-col w-full h-full px-4">
-          <button
-            class="p-4 -mr-4 lg:m-0 lg:p-8 cursor-pointer ml-auto lg:absolute lg:right-0"
-            @click="onClose"
-          >
-            <RiCloseFill class="text-white h-10 w-10 fill-current" />
-          </button>
-
-          <div v-scroll-lock="true" class="overflow-y-auto flex-1 flex flex-col lg:justify-center">
-            <div class="pb-32 lg:pb-0">
-              <div class="text-center text-white text-lg tracking-tight">#ChacunPourTous</div>
-              <div class="text-center text-white font-bold mb-4 text-4xl tracking-tight">
-                <template v-if="step != 'share'"> Participez à cette mission </template>
-                <template v-else> Merci pour votre engagement </template>
-              </div>
-              <div class="bg-gray-100 max-w-full lg:max-w-xl mx-auto px-2 py-6 sm:p-6 lg:p-10">
-                <SoftGateEmail v-if="step == 'email'" @login="goToLogin" @register="goToRegister" />
-                <SoftGateLogin
-                  v-if="step == 'login'"
-                  :datas="datas"
-                  @next="handleNextResolver"
-                  @anti-flood="step = 'anti-flood'"
-                  @close="onClose"
-                />
-                <SoftGateRegister
-                  v-if="step == 'register'"
-                  :datas="datas"
-                  @next="handleNextResolver"
-                />
-                <SoftGateAntiFlood
-                  v-if="step == 'anti-flood'"
-                  @next="handleNextResolver"
-                  @close="onClose"
-                />
-                <SoftGatePrerequisites
-                  :check-distance="needToCheckDistance"
-                  v-if="step == 'prerequisites'"
-                  @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
-                  @close="onClose"
-                />
-                <SoftGateSelectCreneaux
-                  v-if="$stores.softGate.selectedMission && step == 'select-creneaux'"
-                  @next="step = 'participate'"
-                />
-                <SoftGateParticipate
-                  v-if="step == 'participate'"
-                  @next="step = 'share'"
-                  @back="step = 'select-creneaux'"
-                />
-                <SoftGateShare v-if="step == 'share'" @next="onClose" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </FocusLoop>
-  </div>
+  <BaseOverlay :is-open="$stores.softGate.showOverlay" @close="onClose">
+    <SoftGateEmail v-if="step == 'email'" @login="goToLogin" @register="goToRegister" />
+    <SoftGateLogin
+      v-if="step == 'login'"
+      :datas="datas"
+      @next="handleNextResolver"
+      @anti-flood="step = 'anti-flood'"
+      @close="onClose"
+    />
+    <SoftGateRegister v-if="step == 'register'" :datas="datas" @next="handleNextResolver" />
+    <SoftGateAntiFlood v-if="step == 'anti-flood'" @next="handleNextResolver" @close="onClose" />
+    <SoftGatePrerequisites
+      :check-distance="needToCheckDistance"
+      v-if="step == 'prerequisites'"
+      @next="step = hasCreneaux ? 'select-creneaux' : 'participate'"
+      @close="onClose"
+    />
+    <SoftGateSelectCreneaux
+      v-if="$stores.softGate.selectedMission && step == 'select-creneaux'"
+      @next="step = 'participate'"
+    />
+    <SoftGateParticipate
+      v-if="step == 'participate'"
+      @next="step = 'share'"
+      @back="step = 'select-creneaux'"
+    />
+    <SoftGateShare v-if="step == 'share'" @next="onClose" />
+  </BaseOverlay>
 </template>
 
 <script>
-import { FocusLoop } from '@vue-a11y/focus-loop'
 import SoftGateEmail from '@/components/section/soft-gate/Email.vue'
 import SoftGateLogin from '@/components/section/soft-gate/Login.vue'
 import SoftGateRegister from '@/components/section/soft-gate/Register.vue'
@@ -83,7 +50,6 @@ export default defineNuxtComponent({
     SoftGateSelectCreneaux,
     SoftGateShare,
     SoftGatePrerequisites,
-    FocusLoop,
   },
   data() {
     return {

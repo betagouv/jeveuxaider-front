@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="text-center mb-6">
-      <DsfrHeading as="div" size="lg" class="mb-2 lg:mb-3">
+    <div class="text-center mb-8">
+      <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4">
         Renseignez vos prochaines disponibilités
       </DsfrHeading>
     </div>
