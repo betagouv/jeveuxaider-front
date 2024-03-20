@@ -99,7 +99,13 @@ export default defineNuxtComponent({
           tags: ['app-benevole-inscription'],
           is_updated: true,
         },
-
+        {
+          tab: 'benevoles',
+          key: 'benevole_mission_shared',
+          label: '[PRENOM] [NOM] veut faire du bénévolat avec vous',
+          description: 'Le bénévole partage à ses proches une mission',
+          tags: ['app-benevole-mission-shared'],
+        },
         {
           tab: 'benevoles',
           key: 'benevole_participation_created',

@@ -1,15 +1,34 @@
 <template>
   <div>
-    <div class="text-center mb-6">
-      <div class="text-gray-900 font-bold text-2xl lg:text-3xl leading-8 mb-2 lg:mb-4">
-        Votre candidature est enregistrée
-      </div>
-      <div class="text-gray-500 text-lg lg:text-xl max-w-md mx-auto">
-        Et si vous invitiez vos proches à participer eux aussi à cette mission ?
-      </div>
+    <div class="text-center mb-8">
+      <template v-if="emails.length > 1">
+        <div class="text-[48px]">💌</div>
+        <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4">
+          Les invitations sont envoyées
+        </DsfrHeading>
+        <div class="text-cool-gray-500 lg:text-lg max-w-md mx-auto">
+          <span class="font-bold">{{ emails.slice(0, -1).join(', ') }}</span> et
+          <span class="font-bold">{{ emails.slice(-1)[0] }}</span>
+          vont bientôt recevoir un email
+        </div>
+      </template>
+      <template v-else-if="emails.length === 1">
+        <div class="text-[48px]">💌</div>
+        <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4">
+          L’invitation est envoyée
+        </DsfrHeading>
+        <div class="text-cool-gray-500 lg:text-lg max-w-md mx-auto">
+          <span class="font-bold">{{ emails[0] }}</span> va bientôt recevoir un email
+        </div>
+      </template>
+      <template v-else>
+        <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4">
+          Vous pouvez aussi partager la mission sur vos réseaux
+        </DsfrHeading>
+      </template>
     </div>
+
     <div>
-      <div class="text-xl font-bold text-center">Partagez la mission autour de vous</div>
       <div class="flex justify-center space-x-3 my-10">
         <ShareFacebook />
         <ShareTwitter :message="message" />
@@ -39,6 +58,12 @@ import ShareWhatsApp from '@/components/share/WhatsApp.vue'
 
 export default defineNuxtComponent({
   name: 'SoftGateShare',
+  props: {
+    emails: {
+      type: Array,
+      default: () => [],
+    },
+  },
   components: {
     ShareFacebook,
     ShareTwitter,

@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="mt-4">
-        <DsfrLink @click.native="$emit('next')" class="text-jva-blue-500">
+        <DsfrLink @click.native="$emit('next', [])" class="text-jva-blue-500">
           Passer l'étape
         </DsfrLink>
       </div>
@@ -70,6 +70,7 @@ import FormErrors from '@/mixins/form/errors'
 export default defineNuxtComponent({
   name: 'SoftGateInvitations',
   mixins: [FormErrors],
+  emits: ['next'],
   data() {
     return {
       loading: false,
@@ -88,21 +89,29 @@ export default defineNuxtComponent({
     addEmailRow() {
       this.form.emails.push('')
     },
+    recomputeFormEmails() {
+      if (this.form.emails.length === 0 || this.form.emails.every((email) => !email)) {
+        this.form.emails = ['']
+      } else {
+        this.form.emails = this.form.emails.filter((email) => email)
+      }
+    },
     async onSubmit() {
       if (this.loading) {
         return
       }
-      this.form.emails = this.form.emails.filter((email) => email)
+      this.recomputeFormEmails()
       this.loading = true
       await this.formSchema
         .validate(this.form, { abortEarly: false })
-        .then(async () => {
+        .then(async (res) => {
+          console.log('dfdfg')
           await apiFetch(`/missions/${this.selectedMission.id}/share`, {
             method: 'POST',
             body: this.form,
           })
           console.log('res', res)
-          // this.$emit('next')
+          this.$emit('next', this.form.emails)
         })
         .catch((errors) => {
           this.setErrors(errors)

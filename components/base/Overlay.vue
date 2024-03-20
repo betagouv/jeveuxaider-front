@@ -15,11 +15,11 @@
         <FocusLoop :is-visible="true" @keydown.native.esc="onClose">
           <div class="flex flex-col w-full h-full px-4">
             <button
-              class="flex items-center cursor-pointer p-4 ml-auto lg:absolute lg:right-8 lg:top-8 lg:px-2 lg:py-1 lg:hover:bg-jva-blue-300/50"
+              class="flex items-center cursor-pointer p-4 ml-auto lg:absolute lg:right-8 lg:top-8 lg:pl-2 lg:pr-1 lg:py-1 lg:hover:bg-jva-blue-300/50"
               @click="onClose"
             >
               <span class="text-white mr-1">Fermer</span>
-              <RiCloseFill class="text-white h-6 w-6 fill-current relative top-[1px]" />
+              <RiCloseFill class="text-white h-6 w-6 fill-current relative top-[1px] right-[0px]" />
             </button>
 
             <div

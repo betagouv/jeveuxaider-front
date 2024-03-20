@@ -25,7 +25,8 @@
       @next="step = 'invitations'"
       @back="step = 'select-creneaux'"
     />
-    <SoftGateInvitations v-if="step == 'invitations'" @next="onClose" />
+    <SoftGateInvitations v-if="step == 'invitations'" @next="onStepInvitationsNext" />
+    <SoftGateShare v-if="step == 'share'" @next="onClose" :emails="emails" />
   </BaseOverlay>
 </template>
 
@@ -37,6 +38,7 @@ import SoftGateAntiFlood from '@/components/section/soft-gate/AntiFlood.vue'
 import SoftGateParticipate from '@/components/section/soft-gate/Participate.vue'
 import SoftGateSelectCreneaux from '@/components/section/soft-gate/SelectCreneaux.vue'
 import SoftGateInvitations from '@/components/section/soft-gate/Invitations.vue'
+import SoftGateShare from '@/components/section/soft-gate/Share.vue'
 import SoftGatePrerequisites from '@/components/section/soft-gate/Prerequisites.vue'
 
 export default defineNuxtComponent({
@@ -49,6 +51,7 @@ export default defineNuxtComponent({
     SoftGateParticipate,
     SoftGateSelectCreneaux,
     SoftGateInvitations,
+    SoftGateShare,
     SoftGatePrerequisites,
   },
   data() {
@@ -56,6 +59,7 @@ export default defineNuxtComponent({
       datas: null,
       selectedMission: this.$stores.softGate.selectedMission,
       step: 'email',
+      emails: [],
     }
   },
   created() {
@@ -118,6 +122,10 @@ export default defineNuxtComponent({
       }
       return 'participate'
     },
+    onStepInvitationsNext(payload) {
+      this.emails = payload
+      this.step = 'share'
+    },
     handleNextResolver() {
       if (this.hasPrerequisites) {
         this.step = 'prerequisites'
@@ -136,7 +144,7 @@ export default defineNuxtComponent({
       this.datas = datas
     },
     onClose() {
-      if (this.step == 'invitations') {
+      if (['invitations', 'share'].includes(this.step)) {
         this.$stores.softGate.closeOverlay()
         this.$router.push('/profile/missions')
       } else {
