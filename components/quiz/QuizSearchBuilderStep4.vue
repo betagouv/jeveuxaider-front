@@ -124,7 +124,6 @@ export default defineNuxtComponent({
   },
   methods: {
     handleClickAll() {
-      this.selectedActivities = []
       this.$plausible.trackEvent('Quiz - Step 4', {
         props: {
           isLogged: this.$stores.auth.isLogged,
@@ -134,7 +133,7 @@ export default defineNuxtComponent({
       })
 
       this.$emit('selected', {
-        'activities.name': this.selectedActivitiesNames.map((activity) => activity.name).join('|'),
+        'activities.name': this.selectableActivities.map((activity) => activity.name).join('|'),
       })
     },
     handleClick() {

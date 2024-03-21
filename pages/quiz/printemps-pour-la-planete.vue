@@ -62,11 +62,7 @@ export default defineNuxtComponent({
   data() {
     return {
       logos: [
-        // { name: 'quiz-logo-mgen.svg', alt: 'MGEN' },
-        // {
-        //   name: 'quiz-logo-septembre-pour-apprendre.svg',
-        //   alt: 'Septembre pour Apprendre',
-        // },
+        { name: 'quiz-logo-printemps-pour-la-planete.svg', alt: 'Printemps pour la Planète' },
       ],
     }
   },
@@ -85,6 +81,7 @@ export default defineNuxtComponent({
         query: {
           ...this.$route.query,
           ...payload,
+          domaines: 'Protection de la nature',
           utm_medium: this.$route.path,
         },
       })
