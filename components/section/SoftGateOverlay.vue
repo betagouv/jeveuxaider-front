@@ -107,7 +107,6 @@ export default defineNuxtComponent({
   },
   methods: {
     firstStepResolver() {
-      return 'invitations'
       if (!this.$stores.auth.isLogged) {
         return 'email'
       }

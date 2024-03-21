@@ -105,12 +105,18 @@ export default defineNuxtComponent({
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async (res) => {
-          console.log('dfdfg')
           await apiFetch(`/missions/${this.selectedMission.id}/share`, {
             method: 'POST',
             body: this.form,
           })
-          console.log('res', res)
+          this.$plausible.trackEvent('Soft Gate - Étape 4 - Invitations', {
+            props: {
+              invitations: this.form.emails.length,
+            },
+          })
+          await this.$gtm?.trackEvent({
+            event: 'benevole-participation-soft-gate-invitations',
+          })
           this.$emit('next', this.form.emails)
         })
         .catch((errors) => {

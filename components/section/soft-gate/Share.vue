@@ -29,6 +29,9 @@
     </div>
 
     <div>
+      <div v-if="emails.length > 0" class="text-center text-[24px] font-bold">
+        Vous pouvez aussi partager la mission sur vos réseaux
+      </div>
       <div class="flex justify-center space-x-3 my-10">
         <ShareFacebook />
         <ShareTwitter :message="message" />
