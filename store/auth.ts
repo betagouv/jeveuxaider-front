@@ -136,14 +136,23 @@ export const useAuthStore = defineStore({
     async logout() {
       const cookieAccessToken = useCookie('access-token')
       const cookieAccessTokenImpersonate = useCookie('access-token-impersonate')
+      const cookieTokenIdImpersonate = useCookie('token-id-impersonate')
 
       navigateTo('/')
       await useApiFetch(`/logout`, {
         method: 'POST',
       })
-      cookieAccessToken.value = null
-      cookieAccessTokenImpersonate.value = null
-      this.user = null
+
+      if (this.isImpersonate) {
+        cookieAccessTokenImpersonate.value = null
+        cookieTokenIdImpersonate.value = null
+        await nextTick() // wait for cookie
+        this.isImpersonate = false
+        await this.fetchUser()
+      } else {
+        cookieAccessToken.value = null
+        this.user = null
+      }
     },
     async switchRole(attributes: Partial<User>) {
       const { data: user, error } = await useApiFetch<User>(`/user/switch-role`, {
