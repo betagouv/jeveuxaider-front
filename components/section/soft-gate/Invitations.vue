@@ -10,32 +10,35 @@
       </div>
     </div>
 
-    <div class="space-y-4">
-      <BaseFormControl
-        v-for="(email, index) in form.emails"
-        :name="`email-${index}`"
-        :html-for="`email-${index}`"
-        required
-        :error="errors[`emails[${index}]`]"
-      >
-        <BaseInput
+    <div class="">
+      <BaseFormLabel>Invitez vos proches à participer avec vous</BaseFormLabel>
+      <div class="space-y-4">
+        <BaseFormControl
+          v-for="(email, index) in form.emails"
           :name="`email-${index}`"
-          v-model="form.emails[index]"
-          type="email"
-          placeholder="jean.dupont@mail.com"
-        />
-      </BaseFormControl>
+          :html-for="`email-${index}`"
+          required
+          :error="errors[`emails[${index}]`]"
+        >
+          <BaseInput
+            :name="`email-${index}`"
+            v-model="form.emails[index]"
+            type="email"
+            placeholder="jean.dupont@mail.com"
+          />
+        </BaseFormControl>
 
-      <DsfrButton
-        v-if="form.emails.length < 5"
-        icon="RiAddLine"
-        icon-position="left"
-        @click="addEmailRow"
-        type="transparent"
-        class="border-0 text-jva-blue-500 hover:text-jva-blue-300 pl-0"
-      >
-        Ajouter un e-mail
-      </DsfrButton>
+        <DsfrButton
+          v-if="form.emails.length < 5"
+          icon="RiAddLine"
+          icon-position="left"
+          @click="addEmailRow"
+          type="transparent"
+          class="border-0 text-jva-blue-500 hover:text-jva-blue-300 pl-0"
+        >
+          Ajouter un e-mail
+        </DsfrButton>
+      </div>
     </div>
 
     <div class="text-center mt-8">
@@ -54,7 +57,7 @@
           tout ! Garantie sans spam
         </div>
       </div>
-      <div class="mt-4">
+      <div class="mt-8">
         <DsfrLink @click.native="$emit('next', [])" class="text-jva-blue-500">
           Passer l'étape
         </DsfrLink>
