@@ -6,7 +6,7 @@
       <MissionsPourLaPlanete class="hidden" />
       <BlocProfileActivities />
       <BlocTemoignages />
-      <BlocActualites v-if="$stores.settings.general?.blog_active" />
+      <BlocActualitesEngagement />
       <BlocNewsletter />
     </template>
     <template v-if="!$stores.auth.isLogged">
@@ -21,7 +21,7 @@
       <BlocMissionsCourtes />
       <BlocActionsBenevolesPopulaires />
       <BlocTemoignages />
-      <BlocActualites v-if="$stores.settings.general?.blog_active" />
+      <BlocActualitesEngagement />
       <BlocActeursEngagement />
       <BlocNewsletter />
       <BlocFaq />
@@ -43,6 +43,7 @@ import BlocActeursEngagement from '@/components/section/home/BlocActeursEngageme
 import BlocNewsletter from '@/components/section/home/BlocNewsletter.vue'
 import BlocFaq from '@/components/section/home/BlocFaq.vue'
 import BlocProfileActivities from '@/components/section/home/BlocProfileActivities.vue'
+import BlocActualitesEngagement from '@/components/section/home/BlocActualitesEngagement.vue'
 import MissionsPourLaPlanete from '@/components/section/operations/MissionsPourLaPlanete.vue'
 
 export default defineNuxtComponent({
@@ -95,6 +96,7 @@ export default defineNuxtComponent({
     BlocNewsletter,
     BlocFaq,
     BlocProfileActivities,
+    BlocActualitesEngagement,
     MissionsPourLaPlanete,
   },
 })
