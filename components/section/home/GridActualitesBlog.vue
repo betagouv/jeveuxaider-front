@@ -4,7 +4,7 @@
       <template v-for="(article, index) in articles" :key="article.id">
         <a
           v-if="index === 1"
-          href="https://www.jeveuxaider.gouv.fr/engagement/category/actualite/"
+          href="https://www.youtube.com/watch?v=5RMZCkLPM-E"
           target="_blank"
           class="card-scale-img bg-jva-blue-500 relative overflow-hidden"
         >
