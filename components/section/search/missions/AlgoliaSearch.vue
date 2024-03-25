@@ -129,11 +129,11 @@ export default defineNuxtComponent({
     },
   },
   watch: {
-    async '$route.query'(newVal, oldVal) {
+    async $route(newVal, oldVal) {
       if (newVal.name !== oldVal.name) {
         return
       }
-      this.$stores.algoliaSearch.filters = this.recomputeFilters(newVal)
+      this.$stores.algoliaSearch.filters = this.recomputeFilters(newVal.query)
       await this.search()
       this.handleNavigatorGeolocation()
     },

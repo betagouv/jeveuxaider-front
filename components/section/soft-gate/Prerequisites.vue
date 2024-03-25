@@ -1,19 +1,20 @@
 <template>
   <div v-if="$stores.softGate.selectedMission">
-    <div class="max-w-[380px] mx-auto text-center mb-8">
-      <DsfrHeading as="div" size="lg" class="mb-2 lg:mb-4">
+    <div class="text-center mb-8">
+      <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4">
         Pré-requis pour la mission
       </DsfrHeading>
-      <div class="text-cool-gray-500 font-medium text-[20px]">
+      <div class="text-cool-gray-500 lg:text-lg max-w-sm mx-auto">
         <span
           >Cochez
           {{ $filters.pluralize(options.length, 'le', 'les', false) }}
           <span class="font-extrabold"> pré-requis </span>
           {{ $filters.pluralize(options.length, 'suivant', 'suivants', false) }}
-          pour valider votre candidature :</span
+          pour valider votre candidature</span
         >
       </div>
-
+    </div>
+    <div>
       <div class="mt-8">
         <BaseCheckboxGroup
           v-model="checkedPrerequisites"

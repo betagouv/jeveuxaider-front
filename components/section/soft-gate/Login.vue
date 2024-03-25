@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="text-center mb-6">
-      <DsfrHeading as="div" size="lg" class="mb-2 lg:mb-3">
+    <div class="text-center mb-8">
+      <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4">
         {{ form.first_name }}, ravi de vous retrouver !
       </DsfrHeading>
       <div class="text-cool-gray-500 text-lg lg:text-xl">Renseignez votre mot de passe</div>
     </div>
-    <div class="mx-auto max-w-sm">
-      <form id="form" class="space-y-8 my-8" @submit.prevent="onSubmit">
+    <div class="mx-auto">
+      <form id="form" class="space-y-8" @submit.prevent="onSubmit">
         <BaseFormControl label="Email" html-for="email" required :error="errors.email">
           <BaseInput
             v-model="form.email"

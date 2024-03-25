@@ -1,17 +1,17 @@
 <template>
   <div>
-    <div class="text-center mb-6">
-      <DsfrHeading as="div" size="lg" class="mb-2 lg:mb-3">
+    <div class="text-center mb-8">
+      <DsfrHeading as="div" size="xl" class="mb-2 lg:mb-4">
         Rejoignez le mouvement&nbsp;!
       </DsfrHeading>
-      <div class="text-cool-gray-500 text-lg lg:text-xl">
+      <div class="text-cool-gray-500 text-lg lg:text-lg">
         Créez rapidement votre compte Bénévole
       </div>
     </div>
-    <div class="mx-auto max-w-md">
+    <div class="mx-auto">
       <form
         id="inscription"
-        class="gap-8 mb-8 grid grid-cols-1 lg:grid-cols-2"
+        class="gap-6 mb-8 grid grid-cols-1 lg:grid-cols-2"
         @submit.prevent="onSubmit"
       >
         <BaseFormControl
@@ -170,7 +170,7 @@
         S'inscrire
       </DsfrButton>
 
-      <div class="mt-6 mb-3">
+      <div class="mt-6">
         <p class="text-xs text-cool-gray-500 text-center">
           <span>En m'inscrivant j'accepte la </span>
           <DsfrLink
