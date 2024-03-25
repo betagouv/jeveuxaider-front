@@ -17,13 +17,20 @@
           href="https://www.jeveuxaider.gouv.fr/engagement/mesure-dimpact/"
           target="_blank"
           @click="onClickMesureImpact"
+          class="card--article"
         >
-          <img
-            srcset="/images/home/mesure-impact-2023.jpg, /images/home/mesure-impact-2023@2x.jpg 2x"
-            src="/images/home/mesure-impact-2023.jpg"
-            alt="Mesure d'impact 2023"
-            class="flex-none w-full h-auto"
-          />
+          <div class="thumbnail--wrapper">
+            <img
+              srcset="
+                /images/home/mesure-impact-2023.jpg,
+                /images/home/mesure-impact-2023@2x.jpg 2x
+              "
+              src="/images/home/mesure-impact-2023.jpg"
+              alt="Mesure d'impact 2023"
+              class="flex-none w-full h-auto"
+            />
+          </div>
+
           <DsfrHeading as="h3" size="md" class="mt-8" title="Mesure d’impact 2023">
             Mesure d’impact 2023 : Tout ce que vous avez toujours voulu savoir sur nous, sur vous,
             sur le bénévolat, rassemblé dans un livret aux petits oignons.
@@ -63,4 +70,30 @@ export default defineNuxtComponent({
 })
 </script>
 
-<style lang="postcss" scoped></style>
+<style lang="postcss" scoped>
+.card--article {
+  /* box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1); */
+  @apply transition;
+  @screen sm {
+    &:hover {
+      .thumbnail--wrapper img {
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+.thumbnail--wrapper {
+  @screen lg {
+    height: 550px;
+    @apply bg-gray-200 overflow-hidden;
+    img {
+      transition: all 0.25s;
+    }
+  }
+}
+
+.custom-gradient {
+  background: linear-gradient(183.3deg, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, 0.7) 100%);
+}
+</style>
