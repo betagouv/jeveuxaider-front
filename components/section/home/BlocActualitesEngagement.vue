@@ -36,7 +36,7 @@
             sur le bénévolat, rassemblé dans un livret aux petits oignons.
           </DsfrHeading>
           <DsfrLink icon="RiArrowRightSLine" class="text-jva-blue-500 mt-6"
-            >Je veux le voir</DsfrLink
+            >En savoir plus</DsfrLink
           >
         </a>
         <GridActualitesBlog class="mt-8 lg:mt-0 lg:pl-8" />
