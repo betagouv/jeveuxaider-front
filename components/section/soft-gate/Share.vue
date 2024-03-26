@@ -37,11 +37,11 @@
         <ShareTwitter :message="message" />
         <ShareLinkedin :message="message" />
         <ShareWhatsApp :message="message" />
-        <ShareMail
+        <!-- <ShareMail
           v-if="$stores.softGate.selectedMission"
           :subject="$stores.softGate.selectedMission.name"
           :message="message"
-        />
+        /> -->
       </div>
       <div class="text-center">
         <DsfrLink class="text-jva-blue-500" @click.native="$emit('next')">

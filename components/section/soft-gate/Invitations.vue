@@ -53,7 +53,7 @@
           Inviter mes proches
         </DsfrButton>
         <div class="text-xs text-[#666666] mt-2">
-          Nous leur enverrons un email pour leur proposer de candidater à votre mission, et c’est
+          Nous leur enverrons un e-mail pour leur proposer de candidater à votre mission, et c’est
           tout ! Garantie sans spam
         </div>
       </div>
