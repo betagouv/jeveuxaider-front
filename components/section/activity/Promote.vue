@@ -1,5 +1,5 @@
 <template>
-  <section class="section-promote bg-transparent">
+  <section class="section-promote bg-[#fafaff]">
     <div class="container px-4 mx-auto">
       <div>
         <div class="shadow-lg rounded-2xl overflow-hidden">
