@@ -40,19 +40,19 @@
                     <div
                       class="p-4 md:px-8 lg:px-10 xl:px-16 xl:pb-8 sm:border-r flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
                     >
-                      <div class="font-extrabold text-4xl">510 000</div>
+                      <div class="font-extrabold text-4xl">550 000</div>
                       <div class="text-lg">bénévoles<br />inscrits</div>
                     </div>
                     <div
                       class="p-4 pb-8 md:px-8 lg:px-12 xl:px-16 sm:border-r flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
                     >
-                      <div class="font-extrabold text-4xl">12 750</div>
+                      <div class="font-extrabold text-4xl">13 800</div>
                       <div class="text-lg">organisations<br />partenaires</div>
                     </div>
                     <div
                       class="pb-4 sm:p-4 md:px-8 lg:px-10 xl:px-16 xl:pb-8 flex-grow w-full sm:w-1/2 lg:w-auto text-center lg:text-left"
                     >
-                      <div class="font-extrabold text-4xl">15 000</div>
+                      <div class="font-extrabold text-4xl">18 000</div>
                       <div class="text-lg">missions<br />disponibles</div>
                     </div>
                   </div>
