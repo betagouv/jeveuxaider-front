@@ -243,6 +243,11 @@ export default defineNuxtComponent({
             isActive: this.isActiveLink('/en-ce-moment'),
           },
           {
+            name: 'Printemps pour la Planète 🌱',
+            href: 'https://www.jeveuxaider.gouv.fr/engagement/printemps-pour-la-planete/',
+            target: '_blank',
+          },
+          {
             name: 'Associations',
             to: '/organisations',
             isActive: this.isActiveLink('/organisations'),

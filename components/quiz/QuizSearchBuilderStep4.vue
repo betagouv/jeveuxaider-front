@@ -132,9 +132,10 @@ export default defineNuxtComponent({
         },
       })
 
-      this.$emit('selected', {
-        'activities.name': this.selectableActivities.map((activity) => activity.name).join('|'),
-      })
+      this.$emit('selected')
+      // this.$emit('selected', {
+      //   'activities.name': this.selectableActivities.map((activity) => activity.name).join('|'),
+      // })
     },
     handleClick() {
       this.$plausible.trackEvent('Quiz - Step 4', {

@@ -41,7 +41,7 @@
         >
           <div>
             <p class="font-bold text-xl lg:text-2xl xl:text-[32px] xl:leading-[40px]">
-              Engagez-vous pour l’environnement
+              Campagne nationale du 1er au 30 avril
             </p>
           </div>
           <div class="hidden lg:block flex-none">
@@ -49,9 +49,9 @@
               <ClientOnly>
                 <div :id="`slideshowOperationArrows-${uuid}`" />
               </ClientOnly>
-              <BaseButton class="flex-none" type="secondary" @click="onViewMoreClick()">
+              <DsfrButton class="flex-none" type="secondary" @click="onViewMoreClick()">
                 Plus de missions
-              </BaseButton>
+              </DsfrButton>
             </div>
           </div>
         </div>
@@ -62,18 +62,7 @@
           :search-parameters="{
             hitsPerPage: 6,
             aroundPrecision: 2000,
-            facetFilters: [
-              ['domaines:Protection de la nature'],
-              ['publisher_name:JeVeuxAider.gouv.fr', `publisher_name:J'agis pour la nature`],
-              [
-                'activities.name:Travaux manuels',
-                'activities.name:Actions de sensibilisation',
-                'activities.name:Vie citoyenne',
-                'activities.name:Ramassage de déchets',
-                'activities.name:Aménagement d\'espaces naturels',
-                'activities.name:Soins aux animaux',
-              ],
-            ],
+            facetFilters: [['domaines:Protection de la nature']],
             aroundLatLngViaIP: true,
             aroundRadius: 'all',
           }"
@@ -108,9 +97,7 @@ export default defineNuxtComponent({
           operation: 'Printemps pour la planète',
         },
       })
-      this.$router.push(
-        '/missions-benevolat?publisher_name=J%27agis%20pour%20la%20nature%7CJeVeuxAider.gouv.fr&activities.name=Travaux%20manuels%7CActions%20de%20sensibilisation%7CVie%20citoyenne%7CRamassage%20de%20d%C3%A9chets%7CAm%C3%A9nagement%20d%27espaces%20naturels%7CSoins%20aux%20animaux&domaines=Protection%20de%20la%20nature'
-      )
+      this.$router.push('/missions-benevolat?domaines=Protection%20de%20la%20nature')
     },
     onSlideClick() {
       this.$plausible.trackEvent('Homepage - Clique - Mission opé nationale', {

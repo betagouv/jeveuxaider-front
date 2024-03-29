@@ -257,6 +257,11 @@ export default defineNuxtComponent({
             isActive: this.isActiveLink('/en-ce-moment'),
           },
           {
+            name: 'Printemps pour la Planète 🌱',
+            href: 'https://www.jeveuxaider.gouv.fr/engagement/printemps-pour-la-planete/',
+            target: '_blank',
+          },
+          {
             name: 'Associations',
             to: '/organisations',
             isActive: this.isActiveLink('/organisations'),
@@ -450,11 +455,11 @@ export default defineNuxtComponent({
           to: '/en-ce-moment',
           isActive: this.isActiveLink('/en-ce-moment'),
         },
-        // {
-        //   name: 'Décembre Ensemble 🤲🏻',
-        //   href: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
-        //   target: '_blank',
-        // },
+        {
+          name: 'Printemps pour la Planète 🌱',
+          href: 'https://www.jeveuxaider.gouv.fr/engagement/printemps-pour-la-planete/',
+          target: '_blank',
+        },
         {
           name: "Centre d'aide",
           href: 'https://reserve-civique.crisp.help/fr/category/benevole-1avwdvi/',
