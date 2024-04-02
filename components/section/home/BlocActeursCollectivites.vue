@@ -44,17 +44,17 @@
     <div class="mt-8 lg:mt-12 flex items-center space-x-4">
       <img
         srcset="
-          /images/home/angela.webp,
-          /images/home/angela@2x.webp 2x,
-          /images/home/angela.png,
-          /images/home/angela@2x.png  2x
+          /images/home/sophie.webp,
+          /images/home/sophie@2x.webp 2x,
+          /images/home/sophie.png,
+          /images/home/sophie@2x.png  2x
         "
-        src="/images/home/angela.png"
-        alt="Angela"
-        class="flex-none h-[48px] w-[48px] lg:w-[60px] lg:h-[60px]"
+        src="/images/home/sophie.png"
+        alt="Sophie"
+        class="relative z-[2] flex-none h-[48px] w-[48px] lg:w-[60px] lg:h-[60px]"
       />
       <p class="text-white xl:text-lg">
-        <strong>Angela</strong> de JeVeuxAider.gouv.fr <br class="hidden lg:block" />pour vous
+        <strong>L’équipe</strong> de JeVeuxAider.gouv.fr <br class="hidden lg:block" />pour vous
         accompagner
       </p>
     </div>

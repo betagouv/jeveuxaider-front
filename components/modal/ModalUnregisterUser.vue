@@ -245,6 +245,7 @@ export default defineNuxtComponent({
         .then(() => {
           this.$stores.auth.logout()
           this.$router.push('/')
+          this.$toast.success('Le compte a bien été supprimé !')
           this.$emit('close')
         })
         .catch(() => {})

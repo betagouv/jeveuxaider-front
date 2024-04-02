@@ -54,20 +54,9 @@
           alt="Caroline"
           class="relative z-[3] flex-none h-[48px] w-[48px] lg:w-[60px] lg:h-[60px]"
         />
-        <img
-          srcset="
-            /images/home/sophie.webp,
-            /images/home/sophie@2x.webp 2x,
-            /images/home/sophie.png,
-            /images/home/sophie@2x.png  2x
-          "
-          src="/images/home/sophie.png"
-          alt="Sophie"
-          class="relative z-[2] flex-none h-[48px] w-[48px] -ml-4 lg:w-[60px] lg:h-[60px]"
-        />
       </div>
       <p class="text-[#3A3A3A] !-mr-1 xs:!mr-0 xl:text-lg">
-        <strong>Caroline et Sophie</strong> de JeVeuxAider.gouv.fr
+        <strong>L’équipe</strong> de JeVeuxAider.gouv.fr
         <br class="hidden lg:block" />
         pour vous accompagner
       </p>

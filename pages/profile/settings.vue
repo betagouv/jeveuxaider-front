@@ -48,6 +48,7 @@
                       type="secondary"
                       size="lg"
                       @click.native="() => (showAlertUnsubscribe = true)"
+                      :disabled="$stores.auth.contextRole === 'admin'"
                     >
                       Je souhaite me désinscrire
                     </DsfrButton>
