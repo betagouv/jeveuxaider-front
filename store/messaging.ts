@@ -188,7 +188,11 @@ export const useMessagingStore = defineStore({
       this.conversations.splice(index, 1)
     },
     async fetchMessageTemplates() {
-      const { data, error } = await useApiFetch<QueryBuilderResponse>('/message-templates')
+      const { data, error } = await useApiFetch<QueryBuilderResponse>('/message-templates', {
+        params: {
+          pagination: 99,
+        },
+      })
       if (data.value) {
         this.messageTemplates = data.value.data
       }
