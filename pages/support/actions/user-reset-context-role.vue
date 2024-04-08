@@ -19,7 +19,7 @@
         <Breadcrumb
           :links="[
             { text: 'Support', to: '/support' },
-            { text: 'Scripts' },
+            { text: 'Actions' },
             { text: 'Réinitialisation du rôle d\'un utilisateur' },
           ]"
         />

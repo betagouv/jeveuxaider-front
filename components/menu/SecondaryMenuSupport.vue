@@ -90,19 +90,23 @@ export default defineNuxtComponent({
         },
         {
           key: 'scripts',
-          label: 'Scripts',
+          label: 'Actions',
           childrens: [
             {
               label: 'Réinitialisation mot de passe',
-              to: '/support/scripts/user-reset-password-link',
+              to: '/support/actions/user-reset-password-link',
             },
             {
               label: 'Transfert de missions',
-              to: '/support/scripts/migrate-organisation-missions',
+              to: '/support/actions/migrate-organisation-missions',
             },
             {
               label: "Réinitialisation d'un utilisateur",
-              to: '/support/scripts/user-reset-context-role',
+              to: '/support/actions/user-reset-context-role',
+            },
+            {
+              label: 'Rechercher un utilisateur archivé',
+              to: '/support/actions/search-archived-users',
             },
           ],
         },

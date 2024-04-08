@@ -5,7 +5,7 @@
         <Breadcrumb
           :links="[
             { text: 'Support', to: '/support' },
-            { text: 'Scripts' },
+            { text: 'Actions' },
             { text: 'Réinitialisation mot de passe' },
           ]"
         />
@@ -131,7 +131,7 @@ export default defineNuxtComponent({
     },
     async generateLink() {
       this.loading = true
-      await apiFetch('/support/scripts/generate-password-reset-link', {
+      await apiFetch('/support/actions/generate-password-reset-link', {
         method: 'POST',
         body: this.form.profile,
       })

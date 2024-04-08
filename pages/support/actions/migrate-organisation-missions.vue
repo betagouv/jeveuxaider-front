@@ -18,7 +18,7 @@
         <Breadcrumb
           :links="[
             { text: 'Support', to: '/support' },
-            { text: 'Scripts' },
+            { text: 'Actions' },
             { text: 'Transfert de missions' },
           ]"
         />
