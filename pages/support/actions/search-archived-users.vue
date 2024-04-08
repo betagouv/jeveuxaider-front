@@ -31,16 +31,32 @@
 
           <div class="p-6 bg-gray-50 mt-10 divide-y [&>*:first-child]:pt-0 [&>*:last-child]:mb-0">
             <div v-for="archivedUser in results" :key="archivedUser.id" class="mb-4 pt-4">
-              <div class="grid grid-cols-2">
-                <div><strong class="text-sm">User ID:</strong> {{ archivedUser.user_id }}</div>
-                <div><strong class="text-sm">Email:</strong> {{ archivedUser.email }}</div>
+              <div class="grid sm:grid-cols-2">
                 <div>
-                  <strong class="text-sm">Nom:</strong>
-                  {{ archivedUser.unserializedDatas.last_name }}
+                  <div><strong class="text-sm">User ID:</strong> {{ archivedUser.user_id }}</div>
+                  <div>
+                    <strong class="text-sm">Nom:</strong>
+                    {{ archivedUser.unserializedDatas.last_name }}
+                  </div>
+                  <div>
+                    <strong class="text-sm">Prenom:</strong>
+                    {{ archivedUser.unserializedDatas.first_name }}
+                  </div>
                 </div>
                 <div>
-                  <strong class="text-sm">Prenom:</strong>
-                  {{ archivedUser.unserializedDatas.first_name }}
+                  <div><strong class="text-sm">Email:</strong> {{ archivedUser.email }}</div>
+                  <div>
+                    <strong class="text-sm">Archivé le:</strong>
+                    {{ $dayjs(archivedUser.user.archived_at).format('DD MMMM YYYY [à] HH[h]mm') }}
+                  </div>
+                  <div>
+                    <strong class="text-sm">Dernière interaction:</strong>
+                    {{
+                      $dayjs(archivedUser.user.last_interaction_at).format(
+                        'DD MMMM YYYY [à] HH[h]mm'
+                      )
+                    }}
+                  </div>
                 </div>
               </div>
             </div>
