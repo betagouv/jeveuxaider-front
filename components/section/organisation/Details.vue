@@ -150,8 +150,8 @@
                 {{
                   $filters.pluralize(
                     participationsCount,
-                    'bénévole s’est mobilisé',
-                    'bénévoles se sont mobilisés',
+                    'bénévole a proposé son aide',
+                    'bénévoles ont proposé leur aide',
                     false
                   )
                 }}
