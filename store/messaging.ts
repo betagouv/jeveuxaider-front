@@ -190,7 +190,7 @@ export const useMessagingStore = defineStore({
     async fetchMessageTemplates() {
       const { data, error } = await useApiFetch<QueryBuilderResponse>('/message-templates', {
         params: {
-          pagination: 99,
+          pagination: -1,
         },
       })
       if (data.value) {

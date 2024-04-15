@@ -67,7 +67,7 @@ export default defineNuxtComponent({
         params: {
           'filter[collection_name]': 'reseau__illustrations_antennes',
           'filter[model_id]': this.reseaux.map((reseau) => reseau.id).join(','),
-          pagination: 99,
+          pagination: -1,
         },
       })
       this.mediasFromReseau = medias.data
@@ -77,7 +77,7 @@ export default defineNuxtComponent({
         params: {
           'filter[collection_name]': 'domaine__illustrations_organisation',
           'filter[model_id]': this.domaineIds.join(','),
-          pagination: 99,
+          pagination: -1,
         },
       })
       this.mediasFromDomaines = medias.data

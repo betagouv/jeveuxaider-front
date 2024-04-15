@@ -142,7 +142,7 @@ export default defineNuxtComponent({
         'filter[state]': 'validated',
         'filter[is_published]': true,
         'filter[type]': 'city',
-        pagination: 9999,
+        pagination: -1,
       },
     })
 
@@ -151,7 +151,7 @@ export default defineNuxtComponent({
         'filter[state]': 'validated',
         'filter[is_published]': true,
         'filter[type]': 'department',
-        pagination: 9999,
+        pagination: -1,
       },
     })
 

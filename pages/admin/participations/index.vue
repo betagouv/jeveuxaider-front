@@ -320,7 +320,7 @@ export default defineNuxtComponent({
 
     // const activities = await apiFetch('/activities', {
     //   params: {
-    //     pagination: 999,
+    //     pagination: -1,
     //     'filter[is_published]': 1,
     //   },
     // })

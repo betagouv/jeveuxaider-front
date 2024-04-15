@@ -57,7 +57,7 @@ export default defineNuxtComponent({
         params: {
           'filter[collection_name]': this.collection,
           'filter[model_id]': this.domaineIds.join(','),
-          pagination: 99,
+          pagination: -1,
         },
       })
 

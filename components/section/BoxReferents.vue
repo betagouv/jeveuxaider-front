@@ -90,7 +90,7 @@ export default defineNuxtComponent({
       this.loading = true
       const referents = await apiFetch('/profiles', {
         params: {
-          pagination: 999,
+          pagination: -1,
           'filter[user.role]': 'referent',
           'filter[referent_department]': this.department,
           include: 'user,tags',

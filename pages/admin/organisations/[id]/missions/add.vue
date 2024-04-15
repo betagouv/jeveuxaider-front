@@ -246,7 +246,7 @@ export default defineNuxtComponent({
           'filter[with_reseaux]': this.structure.reseaux?.length
             ? this.structure.reseaux.map((reseau) => reseau.id).join(',')
             : 'empty',
-          pagination: 99,
+          pagination: -1,
           include: 'photo,reseau',
           sort: 'reseau_id',
         },

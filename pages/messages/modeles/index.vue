@@ -78,7 +78,7 @@ export default defineNuxtComponent({
       endpoint: '/message-templates',
       queryParams: {
         include: 'user',
-        pagination: 0,
+        pagination: -1,
       },
     }
   },
