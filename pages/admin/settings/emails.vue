@@ -93,7 +93,7 @@ export default defineNuxtComponent({
         {
           tab: 'benevoles',
           key: 'benevole_register',
-          label: '💪 Une dernière étape pour s’engager [PRENOM] !',
+          label: 'Bienvenue sur JeVeuxAider.gouv.fr 💙',
           description:
             'Le bénévole vient de s’inscrire sur JVA et reçoit une première proposition de mission',
           tags: ['app-benevole-inscription'],
