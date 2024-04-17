@@ -23,7 +23,7 @@
     <BaseFormControl
       html-for="content"
       label="Précisions pour le bénévole"
-      info="La note sera visible par les bénévoles"
+      info="La note sera visible par le bénévole"
     >
       <BaseTextarea
         v-model="form.content"
