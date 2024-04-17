@@ -11,9 +11,9 @@
           <img
             srcset="
               /images/actualites/actu-1dechetparjour.jpg,
-              /images/home/actu-1dechetparjour@2x.jpg    2x
+              /images/actualites/actu-1dechetparjour@2x.jpg 2x
             "
-            src="/images/home/actu-1dechetparjour.jpg"
+            src="/images/actualites/actu-1dechetparjour.jpg"
             alt=""
             class="thumbnail object-cover h-full w-full"
           />
