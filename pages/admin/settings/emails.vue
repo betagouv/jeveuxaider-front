@@ -252,6 +252,22 @@ export default defineNuxtComponent({
         },
         {
           tab: 'benevoles',
+          key: 'benevole_is_inactive',
+          label: 'Ah, vous voilà ! 💃',
+          description: 'Le benevole est inactif (M+3)',
+          tags: ['app-benevole-inactif'],
+          is_updated: true,
+        },
+        {
+          tab: 'benevoles',
+          key: 'benevole_is_inactive_second_reminder',
+          label: 'Quelle mission est faite pour vous ?',
+          description: 'Le benevole est inactif (M+6)',
+          tags: ['app-benevole-inactif-relance'],
+          is_updated: true,
+        },
+        {
+          tab: 'benevoles',
           key: 'benevole_will_be_archived',
           label: 'On ne va pas se quitter comme ça 😢',
           description: "Le bénévole est sur le point d'être archivé (M-1)",
@@ -556,6 +572,22 @@ export default defineNuxtComponent({
           description:
             "Mail envoyé au responsable au bout de 30 jours si son organisation n'a toujours pas de mission",
           tags: ['app-responsable-publication-mission-relance'],
+          is_updated: true,
+        },
+        {
+          tab: 'responsables',
+          key: 'responsable_is_inactive',
+          label: 'Ah, vous voilà ! 💃',
+          description: 'Le responsable est inactif (M+3)',
+          tags: ['app-responsable-inactif'],
+          is_updated: true,
+        },
+        {
+          tab: 'responsables',
+          key: 'responsable_is_inactive_second_reminder',
+          label: 'Vous avez besoin de bénévoles sur des missions ponctuelles ?',
+          description: 'Le responsable est inactif (M+6)',
+          tags: ['app-responsable-inactif-relance'],
           is_updated: true,
         },
         {
