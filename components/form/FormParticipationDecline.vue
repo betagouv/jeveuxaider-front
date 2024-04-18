@@ -20,11 +20,15 @@
       </span>
     </div>
 
-    <BaseFormControl html-for="content" label="Précisions">
+    <BaseFormControl
+      html-for="content"
+      label="Précisions pour le bénévole"
+      info="La note sera visible par le bénévole"
+    >
       <BaseTextarea
         v-model="form.content"
         name="content"
-        placeholder="Vous pouvez compléter par un commentaire si vous le souhaitez. À noter : celui-ci pourra être consulté par le bénévole"
+        placeholder="Ajoutez des précisions si nécessaire"
       />
     </BaseFormControl>
   </form>

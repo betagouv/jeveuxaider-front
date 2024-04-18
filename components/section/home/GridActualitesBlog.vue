@@ -4,23 +4,23 @@
       <template v-for="(article, index) in articles" :key="article.id">
         <a
           v-if="index === 1"
-          href="https://www.youtube.com/watch?v=5RMZCkLPM-E"
+          href="https://www.youtube.com/watch?v=9SJWaqktcT0&ab_channel=JeVeuxAider.gouv.fr"
           target="_blank"
           class="card-scale-img bg-jva-blue-500 relative overflow-hidden"
         >
           <img
             srcset="
-              /images/home/blog-bg-article-highlight.jpg,
-              /images/home/blog-bg-article-highlight@2x.jpg 2x
+              /images/actualites/actu-1dechetparjour.jpg,
+              /images/actualites/actu-1dechetparjour@2x.jpg 2x
             "
-            src="/images/home/blog-bg-article-highlight.jpg"
+            src="/images/actualites/actu-1dechetparjour.jpg"
             alt=""
             class="thumbnail object-cover h-full w-full"
           />
           <div class="text-white absolute bottom-0 p-8">
             <RiYoutubeFill class="h-8 fill-current" />
             <DsfrHeading as="h3" size="xs" class="mt-2">
-              Une distribution alimentaire avec Emmaüs Solidarité
+              Dépollution et sensibilisation au tri avec 1 Déchet Par Jour
             </DsfrHeading>
           </div>
         </a>

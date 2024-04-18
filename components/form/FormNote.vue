@@ -6,6 +6,7 @@
       html-for="content"
       :required="required"
       :error="errors.content"
+      info="La note sera visible uniquement par les administrateurs et les référents"
     >
       <BaseTextarea
         v-model="form.content"
@@ -14,9 +15,6 @@
         :rows="nbRows"
         @blur="validate('content')"
       />
-      <BaseFormHelperText v-if="!hideHelp" class="mt-2">
-        Visible uniquement des administrateurs et des référents
-      </BaseFormHelperText>
     </BaseFormControl>
   </form>
 </template>
@@ -58,7 +56,7 @@ export default defineNuxtComponent({
     },
     label: {
       type: String,
-      default: 'Note',
+      default: "Note interne à l'administration",
     },
     placeholder: {
       type: String,
