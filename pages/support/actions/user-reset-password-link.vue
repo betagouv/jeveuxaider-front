@@ -33,7 +33,7 @@
           :error="errors.profile"
         >
           <BaseInputAutocomplete
-            :value="$route.query['filter[search]']"
+            :modelValue="$route.query['filter[search]']"
             icon="RiSearchLine"
             name="autocomplete"
             placeholder="Recherche par mots clés..."

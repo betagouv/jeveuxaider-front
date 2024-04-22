@@ -44,12 +44,19 @@
             />
           </BaseFormControl>
           <BaseFormControl label="Code postal" html-for="zip" required :error="errors.zip">
-            <BaseInput
+            <BaseInputAutocomplete
               v-model="form.zip"
               name="zip"
-              type="tel"
-              maxlength="5"
               placeholder="56000"
+              :options="zipAutocompleteOptions"
+              attribute-key="id"
+              attribute-label="label"
+              attribute-right-label="typeLabel"
+              attribute-selected="postcode"
+              :min-value-length="3"
+              @selected="handleSelectedZip"
+              @fetch-suggestions="onFetchZipSuggestions($event)"
+              @cleared="onDeleteZip"
               @blur="validate('zip')"
             />
           </BaseFormControl>
@@ -249,10 +256,11 @@ import { string, object, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
+import GeolocProfile from '@/mixins/geoloc-profile'
 
 export default defineNuxtComponent({
   emits: ['change', 'submit'],
-  mixins: [FormErrors, FormUploads, Emailable],
+  mixins: [FormErrors, FormUploads, Emailable, GeolocProfile],
   props: {
     profile: {
       type: Object,
@@ -293,7 +301,7 @@ export default defineNuxtComponent({
           .transform((v) => (v === '' ? null : v)),
         zip: string()
           .nullable()
-          .min(5, 'Le format du code postal est incorrect')
+          .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
           .test('test-zip-required', 'Un code postal est requis', (zip) => {
             return ['admin'].includes(this.$stores.auth.contextRole) || zip
           }),
@@ -344,6 +352,7 @@ export default defineNuxtComponent({
           .nullable()
           .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
       }),
+      zipAutocompleteOptions: [],
     }
   },
   computed: {

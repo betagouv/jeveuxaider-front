@@ -24,7 +24,7 @@
           <DsfrFranceIcon />
         </template>
         <BaseInputAutocomplete
-          :value="$route.query.city"
+          :modelValue="$route.query.city"
           icon="RiMapPinLine"
           name="adress"
           placeholder="Renseignez une ville ou un code postal"

@@ -48,7 +48,7 @@
           >
             <BaseInputAutocomplete
               v-if="!form.origin"
-              :value="$route.query['filter[structure.name]']"
+              :modelValue="$route.query['filter[structure.name]']"
               icon="RiSearchLine"
               name="autocomplete"
               placeholder="Recherche par mots clés..."
@@ -80,7 +80,7 @@
               Laissez vide si vous voulez transférer toutes les missions.
             </BaseFormHelperText>
             <BaseInputAutocomplete
-              :value="$route.query['filter[search]']"
+              :modelValue="$route.query['filter[search]']"
               icon="RiSearchLine"
               name="autocomplete"
               placeholder="Recherche par mots clés..."
@@ -117,7 +117,7 @@
           >
             <BaseInputAutocomplete
               v-if="!form.destination"
-              :value="$route.query['filter[structure.name]']"
+              :modelValue="$route.query['filter[structure.name]']"
               icon="RiSearchLine"
               name="autocomplete"
               placeholder="Recherche par mots clés..."

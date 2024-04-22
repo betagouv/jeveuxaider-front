@@ -205,14 +205,19 @@
                         required
                         :error="errors.zip"
                       >
-                        <BaseInput
+                        <BaseInputAutocomplete
                           v-model="form.zip"
                           name="zip"
-                          type="tel"
                           placeholder="56000"
-                          maxlength="5"
-                          aria-required="true"
-                          autocomplete="postal-code"
+                          :options="zipAutocompleteOptions"
+                          attribute-key="id"
+                          attribute-label="label"
+                          attribute-right-label="typeLabel"
+                          attribute-selected="postcode"
+                          :min-value-length="3"
+                          @selected="handleSelectedZip"
+                          @fetch-suggestions="onFetchZipSuggestions($event)"
+                          @cleared="onDeleteZip"
                           @blur="validate('zip')"
                         />
                       </BaseFormControl>
@@ -380,6 +385,7 @@ import CarouselLogos from '@/components/section/inscription/CarouselLogos.vue'
 import countries from '@/assets/countries.json'
 import { useToast } from 'vue-toastification'
 import DetectUserArchiveDatas from '@/mixins/detect-user-archive-datas'
+import GeolocProfile from '@/mixins/geoloc-profile'
 
 const errorIsOldEnoughErrorMessage =
   'JeVeuxAider.gouv.fr est ouvert aux personnes de plus de 16 ans'
@@ -390,7 +396,7 @@ export default defineNuxtComponent({
     Temoignages,
     CarouselLogos,
   },
-  mixins: [FormErrors, Emailable, DetectUserArchiveDatas],
+  mixins: [FormErrors, Emailable, DetectUserArchiveDatas, GeolocProfile],
   setup() {
     definePageMeta({
       middleware: ['guest'],
@@ -444,7 +450,9 @@ export default defineNuxtComponent({
           .min(10)
           .matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect')
           .required('Un téléphone mobile est requis'),
-        zip: string().min(5).required('Un code postal est requis'),
+        zip: string()
+          .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
+          .required('Un code postal est requis'),
         country: string().required('Un pays est requis'),
         birthday: date()
           .required("Une date d'anniversaire est requise")
@@ -463,6 +471,7 @@ export default defineNuxtComponent({
           .oneOf([ref('password'), null], "Le mot de passe n'est pas identique"),
       }),
       countries,
+      zipAutocompleteOptions: [],
     }
   },
   methods: {

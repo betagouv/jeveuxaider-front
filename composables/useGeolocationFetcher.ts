@@ -35,6 +35,15 @@ export async function useGeolocationFetch(
   }
 }
 
+export function getDepartmentFromCitycode(citycode: string) {
+  const pattern = /^(971|972|973|974|976|987|988)/
+  if (pattern.test(citycode)) {
+    return citycode.substring(0, 3)
+  }
+
+  return citycode.substring(0, 2)
+}
+
 const queryIsOfSufficientLength = (query: string) => {
   return query.trim().length >= 3
 }
