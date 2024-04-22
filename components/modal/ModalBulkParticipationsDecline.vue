@@ -16,6 +16,7 @@
         class="mt-4"
         :is-bulk-operation="true"
         @confirm="onFormConfirm($event, handleSubmit, endpoint)"
+        :operations-count="operations.length"
       />
     </template>
 

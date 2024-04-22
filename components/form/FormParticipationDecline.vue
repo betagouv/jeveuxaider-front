@@ -22,8 +22,12 @@
 
     <BaseFormControl
       html-for="content"
-      label="Précisions pour le bénévole"
-      info="La note sera visible par le bénévole"
+      :label="operationsCount > 1 ? 'Message pour les bénévoles' : 'Message pour le bénévole'"
+      :info="
+        operationsCount > 1
+          ? 'La note sera visible par les bénévoles'
+          : 'La note sera visible par le bénévole'
+      "
     >
       <BaseTextarea
         v-model="form.content"
@@ -44,6 +48,10 @@ export default defineNuxtComponent({
     isBulkOperation: {
       type: Boolean,
       default: false,
+    },
+    operationsCount: {
+      type: Number,
+      default: 1,
     },
   },
   data() {
