@@ -58,6 +58,7 @@
       <ul class="options-wrapper-ul py-2" :class="[classOptionsUl]">
         <li
           v-for="(item, index) in options"
+          :ref="`option_${index}`"
           :key="index"
           class="flex justify-between items-center text-sm px-4 sm:px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
           :class="[
@@ -222,6 +223,10 @@ export default defineNuxtComponent({
             this.highlightIndex -= 1
           }
         }
+
+        this.$refs[`option_${this.highlightIndex}`]?.[0]?.scrollIntoView({
+          block: 'nearest',
+        })
       }
     },
   },
