@@ -1,5 +1,5 @@
 <template>
-  <div class="hidden sm:block lg:flex justify-between items-baseline !mt-8 lg:!mb-4">
+  <div class="hidden sm:block lg:flex justify-between gap-8 items-baseline !mt-8 lg:!mb-4">
     <div class="flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
       <template v-for="(filter, i) in visibleFilters">
         <AutonomyFilter v-if="filter === 'is_autonomy'" :key="i" />

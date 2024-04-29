@@ -228,7 +228,7 @@ export default defineNuxtComponent({
     handleOptionsPosition() {
       const elOptionsX = this.$refs.tag.getBoundingClientRect()?.x
       const windowCenterX = window.innerWidth / 2
-      this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
+      this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0 lg:right-auto' : ''
     },
   },
 })
