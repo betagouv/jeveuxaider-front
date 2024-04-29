@@ -199,7 +199,19 @@ export default defineNuxtComponent({
         const res = await this.searchForFacetValues(this.facetName, this.facetQuery)
         this.facetHits = res.facetHits
       }
+
+      // If a filter get moved to another line
+      if (this.isOpen) {
+        await this.$nextTick()
+        this.handleOptionsPosition()
+      }
     },
+  },
+  mounted() {
+    window.addEventListener('resize', this.onWindowResize, false)
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.onWindowResize)
   },
   methods: {
     resolveFacetValue(value) {
@@ -228,7 +240,12 @@ export default defineNuxtComponent({
     handleOptionsPosition() {
       const elOptionsX = this.$refs.tag.getBoundingClientRect()?.x
       const windowCenterX = window.innerWidth / 2
-      this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0 lg:right-auto' : ''
+      this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
+    },
+    onWindowResize() {
+      if (this.isOpen) {
+        this.handleOptionsPosition()
+      }
     },
   },
 })
