@@ -112,7 +112,6 @@ export default defineNuxtComponent({
     attributeKey: { type: String, default: 'id' },
     attributeLabel: { type: String, default: 'name' },
     attributeRightLabel: { type: String, default: '' },
-    attributeSelected: { type: String, default: null },
     classOptions: { type: String, default: '' },
     classOptionsUl: { type: String, default: '' },
     classInput: { type: String, default: '' },
@@ -168,11 +167,7 @@ export default defineNuxtComponent({
       this.timeout()
     },
     handleClick(item) {
-      this.searchTerm = this.resetValueOnSelect
-        ? null
-        : this.attributeSelected
-        ? item[this.attributeSelected]
-        : item[this.attributeLabel]
+      this.searchTerm = this.resetValueOnSelect ? null : item[this.attributeLabel]
       this.$emit('selected', item)
       this.selectedOption = item
       this.showOptions = false

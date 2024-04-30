@@ -212,7 +212,6 @@
                           attribute-key="id"
                           attribute-label="label"
                           attribute-right-label="typeLabel"
-                          attribute-selected="postcode"
                           placeholder="56000"
                           search-input-placeholder="Recherche par ville ou code postal"
                           options-class="md:min-w-[320px]"

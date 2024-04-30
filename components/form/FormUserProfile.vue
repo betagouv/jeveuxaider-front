@@ -52,7 +52,6 @@
               attribute-key="id"
               attribute-label="label"
               attribute-right-label="typeLabel"
-              attribute-selected="postcode"
               placeholder="Sélectionnez votre code postal"
               search-input-placeholder="Recherche par ville ou code postal"
               :loading="loadingFetchZips"
