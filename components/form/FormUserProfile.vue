@@ -272,7 +272,6 @@ export default defineNuxtComponent({
       loading: false,
       form: {
         ..._cloneDeep(this.profile),
-        zip: this.profile.zip ?? '',
       },
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
@@ -303,6 +302,7 @@ export default defineNuxtComponent({
           .matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect')
           .transform((v) => (v === '' ? null : v)),
         zip: string()
+          .transform((v) => (v === '' ? null : v))
           .nullable()
           .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
           .test('test-zip-required', 'Un code postal est requis', (zip) => {

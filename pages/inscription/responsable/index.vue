@@ -310,12 +310,20 @@
               />
             </BaseFormControl>
             <BaseFormControl label="Code postal" html-for="zip" required :error="errors.zip">
-              <BaseInput
+              <BaseSelectAutocomplete
                 v-model="form.zip"
                 name="zip"
-                type="tel"
-                maxlength="5"
+                :options="zipAutocompleteOptions"
+                :min-length-to-search="3"
+                attribute-key="id"
+                attribute-label="label"
+                attribute-right-label="typeLabel"
                 placeholder="56000"
+                search-input-placeholder="Recherche par ville ou code postal"
+                options-class="md:min-w-[320px]"
+                :loading="loadingFetchZips"
+                @selected="handleSelectedZip"
+                @fetch-suggestions="onFetchZipSuggestions($event)"
                 @blur="validate('zip')"
               />
             </BaseFormControl>
@@ -417,6 +425,7 @@ import FormErrors from '@/mixins/form/errors'
 import Emailable from '@/mixins/emailable.client'
 import FormLeadReseau from '@/components/form/FormLeadReseau.vue'
 import DsfrButton from '@/components/dsfr/Button.vue'
+import GeolocProfile from '@/mixins/geoloc-profile'
 
 export default defineNuxtComponent({
   components: {
@@ -443,7 +452,7 @@ export default defineNuxtComponent({
       ],
     })
   },
-  mixins: [FormErrors, Emailable],
+  mixins: [FormErrors, Emailable, GeolocProfile],
   data() {
     return {
       loading: false,
@@ -463,7 +472,9 @@ export default defineNuxtComponent({
           .min(10)
           .matches(/^[+|\s|\d]*$/, 'Ce format est incorrect')
           .required('Un téléphone mobile est requis'),
-        zip: string().min(5).required('Un code postal est requis'),
+        zip: string()
+          .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
+          .required('Un code postal est requis'),
         birthday: date()
           .required('Le format de la date est incorrect')
           .nullable()
@@ -474,6 +485,8 @@ export default defineNuxtComponent({
           .required('La confirmation est requise')
           .oneOf([ref('password'), null], "Le mot de passe n'est pas identique"),
       }),
+      zipAutocompleteOptions: [],
+      loadingFetchZips: false,
     }
   },
   computed: {

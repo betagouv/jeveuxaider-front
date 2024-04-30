@@ -18,6 +18,7 @@
       @keydown.enter.prevent="toggleOpen"
       @keydown.tab="showOptions = false"
       @keydown.esc="showOptions = false"
+      @blur="onBlur()"
     >
       <div class="flex gap-4">
         <span v-if="prefixSelect" class="text-gray-400 font-semibold">{{ prefixSelect }}</span>
@@ -74,7 +75,7 @@
                 'max-h-[196px] md:max-h-[268px] overflow-y-auto overscroll-contain custom-scrollbar-gray -mx-2 py-2',
                 scrollContainerClass,
               ]"
-              tabindex="0"
+              :tabindex="options.length > 0 ? 0 : undefined"
               @keydown="onKeydown($event)"
             >
               <transition
@@ -158,7 +159,7 @@ export default defineNuxtComponent({
     LoadingIndicator,
   },
   props: {
-    emits: ['selected', 'fetch-suggestions'],
+    emits: ['selected', 'fetch-suggestions', 'blur'],
     modelValue: { type: String, default: '' },
     name: { type: String, required: true },
     options: { type: Array, default: () => [] },
@@ -327,6 +328,11 @@ export default defineNuxtComponent({
       const elOptionsX = this.$refs.elSelect.getBoundingClientRect()?.x
       const windowCenterX = window.innerWidth / 2
       this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
+    },
+    onBlur() {
+      if (!this.showOptions) {
+        this.$emit('blur')
+      }
     },
   },
 })

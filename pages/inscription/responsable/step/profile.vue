@@ -70,7 +70,22 @@
             />
           </BaseFormControl>
           <BaseFormControl label="Code postal" html-for="zip" required :error="errors.zip">
-            <BaseInput v-model="form.zip" name="zip" placeholder="56000" @blur="validate('zip')" />
+            <BaseSelectAutocomplete
+              v-model="form.zip"
+              name="zip"
+              :options="zipAutocompleteOptions"
+              :min-length-to-search="3"
+              attribute-key="id"
+              attribute-label="label"
+              attribute-right-label="typeLabel"
+              placeholder="56000"
+              search-input-placeholder="Recherche par ville ou code postal"
+              options-class="md:min-w-[320px]"
+              :loading="loadingFetchZips"
+              @selected="handleSelectedZip"
+              @fetch-suggestions="onFetchZipSuggestions($event)"
+              @blur="validate('zip')"
+            />
           </BaseFormControl>
           <DsfrButton
             size="lg"
@@ -91,9 +106,10 @@
 import { string, object } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
+import GeolocProfile from '@/mixins/geoloc-profile'
 
 export default defineNuxtComponent({
-  mixins: [FormErrors, FormUploads],
+  mixins: [FormErrors, FormUploads, GeolocProfile],
   setup() {
     definePageMeta({
       layout: 'register-steps',
@@ -119,6 +135,8 @@ export default defineNuxtComponent({
           .min(5, 'Le format du code postal est incorrect')
           .required('Un code postal est requis'),
       }),
+      zipAutocompleteOptions: [],
+      loadingFetchZips: false,
     }
   },
   computed: {
