@@ -37,6 +37,7 @@ export async function useGeolocationFetch(
   }
 }
 
+// Citycode, not postcode.
 export function getDepartmentFromCitycode(citycode: string) {
   const pattern = /^(971|972|973|974|976|987|988)/
   if (pattern.test(citycode)) {
