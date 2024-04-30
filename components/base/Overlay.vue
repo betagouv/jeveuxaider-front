@@ -12,7 +12,7 @@
         v-if="isOpen"
         class="w-full h-full flex flex-col items-center justify-center bg-jva-blue-500/95"
       >
-        <FocusLoop :is-visible="true" @keydown.native.esc="onClose">
+        <FocusLoop :is-visible="true">
           <div class="flex flex-col w-full h-full px-4">
             <button
               class="flex items-center cursor-pointer p-4 ml-auto lg:absolute lg:right-8 lg:top-8 lg:pl-2 lg:pr-1 lg:py-1 lg:hover:bg-jva-blue-300/50"

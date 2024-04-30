@@ -4,6 +4,7 @@ export async function useGeolocationFetch(
     context?: 'input' | 'filter' | 'algolia'
     inputGeoType?: string
     hideAllZipsOption?: boolean
+    breakDownMultiplePostCodes?: boolean
   } = {}
 ) {
   if (!queryIsOfSufficientLength(query) || !firstCharIsAlphaNumeric(query)) {
@@ -31,6 +32,7 @@ export async function useGeolocationFetch(
       return formatInputGeoSuggestions(suggestions, {
         hideAllZipsOption: config.hideAllZipsOption,
         inputGeoType: config.inputGeoType,
+        breakDownMultiplePostCodes: config.breakDownMultiplePostCodes,
       })
   }
 }

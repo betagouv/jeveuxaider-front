@@ -44,19 +44,20 @@
             />
           </BaseFormControl>
           <BaseFormControl label="Code postal" html-for="zip" required :error="errors.zip">
-            <BaseInputAutocomplete
+            <BaseSelectAutocomplete
               v-model="form.zip"
               name="zip"
-              placeholder="56000"
               :options="zipAutocompleteOptions"
+              :min-length-to-search="3"
               attribute-key="id"
               attribute-label="label"
               attribute-right-label="typeLabel"
               attribute-selected="postcode"
-              :min-value-length="3"
+              placeholder="Sélectionnez votre code postal"
+              search-input-placeholder="Recherche par ville ou code postal"
+              :loading="loadingFetchZips"
               @selected="handleSelectedZip"
               @fetch-suggestions="onFetchZipSuggestions($event)"
-              @cleared="onDeleteZip"
               @blur="validate('zip')"
             />
           </BaseFormControl>
@@ -270,7 +271,10 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
-      form: _cloneDeep(this.profile),
+      form: {
+        ..._cloneDeep(this.profile),
+        zip: this.profile.zip ?? '',
+      },
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
@@ -353,6 +357,7 @@ export default defineNuxtComponent({
           .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
       }),
       zipAutocompleteOptions: [],
+      loadingFetchZips: false,
     }
   },
   computed: {

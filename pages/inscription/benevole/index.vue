@@ -205,19 +205,21 @@
                         required
                         :error="errors.zip"
                       >
-                        <BaseInputAutocomplete
+                        <BaseSelectAutocomplete
                           v-model="form.zip"
                           name="zip"
-                          placeholder="56000"
                           :options="zipAutocompleteOptions"
                           attribute-key="id"
                           attribute-label="label"
                           attribute-right-label="typeLabel"
                           attribute-selected="postcode"
-                          :min-value-length="3"
+                          placeholder="56000"
+                          search-input-placeholder="Recherche par ville ou code postal"
+                          options-class="md:min-w-[320px]"
+                          :min-length-to-search="3"
+                          :loading="loadingFetchZips"
                           @selected="handleSelectedZip"
                           @fetch-suggestions="onFetchZipSuggestions($event)"
-                          @cleared="onDeleteZip"
                           @blur="validate('zip')"
                         />
                       </BaseFormControl>
