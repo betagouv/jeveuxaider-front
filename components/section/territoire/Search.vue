@@ -15,7 +15,10 @@
             </span>
             <span v-else>
               {{
-                $utils.isFirstLetterVowel(territoire.name)
+                territoire.name.toLowerCase().startsWith('commune') ||
+                territoire.name.toLowerCase().startsWith('communauté')
+                  ? 'aux alentours de la '
+                  : $utils.isFirstLetterVowel(territoire.name)
                   ? "aux alentours d'"
                   : 'aux alentours de '
               }}{{ territoire.name }}
