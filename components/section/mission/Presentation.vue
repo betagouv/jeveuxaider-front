@@ -1,8 +1,8 @@
 <template>
   <BaseBox class="relative z-10">
-    <div class="flex justify-between mb-6">
-      <div class="flex flex-wrap gap-2">
-        <nuxt-link v-if="domaine" no-prefetch :to="domaine.full_url" class="rounded-full">
+    <div class="flex justify-between mb-6 gap-2">
+      <div class="flex flex-wrap gap-2 min-w-0">
+        <nuxt-link v-if="domaine" no-prefetch :to="domaine.full_url" class="rounded-full min-w-0">
           <DsfrTag size="md" context="clickable">
             {{ domaine.name }}
           </DsfrTag>
@@ -11,7 +11,7 @@
           v-if="domaineSecondary"
           no-prefetch
           :to="domaineSecondary.full_url"
-          class="rounded-full"
+          class="rounded-full min-w-0"
         >
           <DsfrTag size="md" context="clickable">
             {{ domaineSecondary.name }}
@@ -113,6 +113,7 @@
             v-if="activity.full_url"
             :key="activity.id"
             :to="activity.full_url"
+            class="min-w-0"
           >
             <DsfrBadge>
               {{ activity.name }}
