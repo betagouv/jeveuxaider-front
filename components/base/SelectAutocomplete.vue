@@ -51,6 +51,8 @@
         />
       </div>
     </div>
+
+    <!-- @todo: Refactoring avec FilterInputAutocomplete (facets également ?). Component "DropdownOptionsWithSearch" -->
     <transition name="fade-in">
       <div
         v-show="showOptions"
