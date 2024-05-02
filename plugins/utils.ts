@@ -21,6 +21,37 @@ export default defineNuxtPlugin(() => {
       console.log('pythagorean distance', d)
       return d
     },
+    isFirstLetterVowel: (str: string) => {
+      const firstLetter = str.charAt(0).toLowerCase()
+      const vowels = [
+        'a',
+        'e',
+        'i',
+        'o',
+        'u',
+        'á',
+        'é',
+        'í',
+        'ó',
+        'ú',
+        'à',
+        'è',
+        'ì',
+        'ò',
+        'ù',
+        'â',
+        'ê',
+        'î',
+        'ô',
+        'û',
+        'ä',
+        'ë',
+        'ï',
+        'ö',
+        'ü',
+      ]
+      return vowels.includes(firstLetter)
+    },
   }
 
   return {

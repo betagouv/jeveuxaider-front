@@ -208,9 +208,6 @@ export default defineNuxtComponent({
           .min(10, 'Le téléphone doit contenir au moins 10 caractères')
           .matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect')
           .transform((v) => (v === '' ? null : v)),
-        zip: string()
-          .min(5, 'Le format du code postal est incorrect')
-          .required('Un code postal est requis'),
         cej_email_adviser: string()
           .nullable()
           .email("Le format de l'email est incorrect")

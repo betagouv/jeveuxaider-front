@@ -25,8 +25,8 @@
           'pr-6 text-sm appearance-none block w-full placeholder-gray-text-400 focus:outline-none border border-gray-300 focus:ring-jva-blue-500 focus:border-jva-blue-500 truncate',
           { 'pl-10': icon && theme === 'default' },
           { 'pl-7': icon && theme === 'filter' },
-          { 'bg-transparent': variant == 'transparent' && !value },
-          { 'bg-white': variant == 'transparent' && value },
+          { 'bg-transparent': variant == 'transparent' && !modelValue },
+          { 'bg-white': variant == 'transparent' && modelValue },
           { 'px-6 py-3': theme === 'default' },
           { 'px-2 py-1': theme === 'filter' },
           classInput,
@@ -35,6 +35,7 @@
         :style="styleInput"
         @input="handleInput"
         @keydown="onKeydown"
+        @blur="$emit('blur', $event.target.value)"
       />
       <div
         v-if="searchTerm"
@@ -57,6 +58,7 @@
       <ul class="options-wrapper-ul py-2" :class="[classOptionsUl]">
         <li
           v-for="(item, index) in options"
+          :ref="`option_${index}`"
           :key="index"
           class="flex justify-between items-center text-sm px-4 sm:px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
           :class="[
@@ -98,9 +100,9 @@
 
 <script>
 export default defineNuxtComponent({
-  emits: ['selected', 'cleared', 'fetch-suggestions', 'mounted', 'update:modelValue'],
+  emits: ['selected', 'cleared', 'fetch-suggestions', 'mounted', 'update:modelValue', 'blur'],
   props: {
-    value: { type: String, default: null },
+    modelValue: { type: String, default: null },
     placeholder: { type: String, default: null },
     labelEmpty: { type: String, default: 'Aucun résultat' },
     name: { type: String, required: true },
@@ -127,11 +129,11 @@ export default defineNuxtComponent({
       showOptions: false,
       highlightIndex: null,
       selectedOption: null,
-      searchTerm: this.value,
+      searchTerm: this.modelValue,
     }
   },
   watch: {
-    value(newVal) {
+    modelValue(newVal) {
       this.searchTerm = newVal
     },
   },
@@ -145,6 +147,7 @@ export default defineNuxtComponent({
       this.selectedOption = null
       this.showOptions = false
       this.$emit('selected', null)
+      this.$refs.input?.focus()
       this.$emit('cleared')
     },
     handleInput(evt) {
@@ -215,6 +218,10 @@ export default defineNuxtComponent({
             this.highlightIndex -= 1
           }
         }
+
+        this.$refs[`option_${this.highlightIndex}`]?.[0]?.scrollIntoView({
+          block: 'nearest',
+        })
       }
     },
   },

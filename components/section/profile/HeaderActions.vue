@@ -1,7 +1,7 @@
 <template>
   <div
     ref="menuActions"
-    :class="[isPinned ? 'bg-white shadow-lg' : '']"
+    :class="[isPinned ? 'bg-white shadow-lg !z-[51]' : '']"
     class="z-40 sticky top-0 py-4 -mt-4"
   >
     <div class="container">

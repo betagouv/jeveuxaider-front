@@ -44,12 +44,19 @@
             />
           </BaseFormControl>
           <BaseFormControl label="Code postal" html-for="zip" required :error="errors.zip">
-            <BaseInput
+            <BaseSelectAutocomplete
               v-model="form.zip"
               name="zip"
-              type="tel"
-              maxlength="5"
-              placeholder="56000"
+              :options="zipAutocompleteOptions"
+              :min-length-to-search="3"
+              attribute-key="id"
+              attribute-label="label"
+              attribute-right-label="typeLabel"
+              placeholder="Sélectionnez votre code postal"
+              search-input-placeholder="Recherche par ville ou code postal"
+              :loading="loadingFetchZips"
+              @selected="handleSelectedZip"
+              @fetch-suggestions="onFetchZipSuggestions($event)"
               @blur="validate('zip')"
             />
           </BaseFormControl>
@@ -249,10 +256,11 @@ import { string, object, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
+import GeolocProfile from '@/mixins/geoloc-profile'
 
 export default defineNuxtComponent({
   emits: ['change', 'submit'],
-  mixins: [FormErrors, FormUploads, Emailable],
+  mixins: [FormErrors, FormUploads, Emailable, GeolocProfile],
   props: {
     profile: {
       type: Object,
@@ -262,7 +270,9 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
-      form: _cloneDeep(this.profile),
+      form: {
+        ..._cloneDeep(this.profile),
+      },
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
         last_name: string().required('Un nom est requis'),
@@ -292,8 +302,9 @@ export default defineNuxtComponent({
           .matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect')
           .transform((v) => (v === '' ? null : v)),
         zip: string()
+          .transform((v) => (v === '' ? null : v))
           .nullable()
-          .min(5, 'Le format du code postal est incorrect')
+          .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
           .test('test-zip-required', 'Un code postal est requis', (zip) => {
             return ['admin'].includes(this.$stores.auth.contextRole) || zip
           }),
@@ -344,6 +355,8 @@ export default defineNuxtComponent({
           .nullable()
           .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
       }),
+      zipAutocompleteOptions: [],
+      loadingFetchZips: false,
     }
   },
   computed: {

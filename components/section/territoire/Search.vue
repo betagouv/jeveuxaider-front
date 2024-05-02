@@ -8,8 +8,18 @@
           <p
             class="text-3xl lg:text-4xl leading-none font-extrabold tracking-[-1px] lg:tracking-[-2px]"
           >
-            Parmi les dernières missions <br class="hidden md:block" />de bénévolat
-            {{ territoire.suffix_title }}
+            Parmi les dernières missions <br class="hidden md:block" />
+
+            <span v-if="territoire.type === 'department'">
+              de bénévolat {{ territoire.suffix_title }}
+            </span>
+            <span v-else>
+              {{
+                $utils.isFirstLetterVowel(territoire.name)
+                  ? "aux alentours d'"
+                  : 'aux alentours de '
+              }}{{ territoire.name }}
+            </span>
           </p>
         </h2>
       </div>

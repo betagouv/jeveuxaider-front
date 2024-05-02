@@ -47,12 +47,20 @@
         </BaseFormControl>
 
         <BaseFormControl label="Code postal" html-for="zip" required :error="errors.zip">
-          <BaseInput
+          <BaseSelectAutocomplete
             v-model="form.zip"
             name="zip"
-            type="tel"
-            maxlength="5"
+            :options="zipAutocompleteOptions"
+            attribute-key="id"
+            attribute-label="label"
+            attribute-right-label="typeLabel"
             placeholder="56000"
+            search-input-placeholder="Recherche par ville ou code postal"
+            options-class="md:min-w-[320px]"
+            :min-length-to-search="3"
+            :loading="loadingFetchZips"
+            @selected="handleSelectedZip"
+            @fetch-suggestions="onFetchZipSuggestions($event)"
             @blur="validate('zip')"
           />
         </BaseFormControl>
@@ -203,13 +211,14 @@ import { string, object, ref, date } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import countries from '@/assets/countries.json'
 import { useToast } from 'vue-toastification'
+import GeolocProfile from '@/mixins/geoloc-profile'
 
 const errorIsOldEnoughErrorMessage =
   'JeVeuxAider.gouv.fr est ouvert aux personnes de plus de 16 ans'
 
 export default defineNuxtComponent({
   name: 'SoftGateRegister',
-  mixins: [FormErrors],
+  mixins: [FormErrors, GeolocProfile],
   props: {
     datas: {
       type: Object,
@@ -230,7 +239,9 @@ export default defineNuxtComponent({
           .min(10)
           .matches(/^[+|\s|\d]*$/, 'Le format du mobile est incorrect')
           .required('Un téléphone mobile est requis'),
-        zip: string().min(5).required('Un code postal est requis'),
+        zip: string()
+          .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
+          .required('Un code postal est requis'),
         country: string().required('Un pays est requis'),
         birthday: date()
           .required("Une date d'anniversaire est requise")
@@ -292,6 +303,8 @@ export default defineNuxtComponent({
           }),
       }),
       countries,
+      zipAutocompleteOptions: [],
+      loadingFetchZips: false,
     }
   },
   computed: {

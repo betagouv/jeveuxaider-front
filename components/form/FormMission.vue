@@ -358,7 +358,11 @@
                 :reset-value-on-select="true"
                 :min-value-length="3"
                 @selected="handleSelectedAutonomyZip"
-                @fetch-suggestions="onFetchGeoSuggestions($event, 'municipality')"
+                @fetch-suggestions="
+                  onFetchGeoSuggestions($event, {
+                    inputGeoType: 'municipality',
+                  })
+                "
               />
               <div v-if="form.autonomy_zips && form.autonomy_zips.length">
                 <div class="flex flex-wrap gap-2 mt-4">
@@ -1101,10 +1105,10 @@ export default defineNuxtComponent({
         this.$refs.comboboxSecondaryActivity?.$refs?.combobox?.reset()
       }
     },
-    async onFetchGeoSuggestions(payload, inputGeoType) {
+    async onFetchGeoSuggestions(payload, config = {}) {
       this.autocompleteOptions = await useGeolocationFetch(payload, {
         context: 'input',
-        inputGeoType,
+        ...config,
       })
     },
   },

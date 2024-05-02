@@ -4,6 +4,7 @@ export async function useGeolocationFetch(
     context?: 'input' | 'filter' | 'algolia'
     inputGeoType?: string
     hideAllZipsOption?: boolean
+    breakDownMultiplePostCodes?: boolean
   } = {}
 ) {
   if (!queryIsOfSufficientLength(query) || !firstCharIsAlphaNumeric(query)) {
@@ -31,8 +32,19 @@ export async function useGeolocationFetch(
       return formatInputGeoSuggestions(suggestions, {
         hideAllZipsOption: config.hideAllZipsOption,
         inputGeoType: config.inputGeoType,
+        breakDownMultiplePostCodes: config.breakDownMultiplePostCodes,
       })
   }
+}
+
+// Citycode, not postcode.
+export function getDepartmentFromCitycode(citycode: string) {
+  const pattern = /^(971|972|973|974|976|987|988)/
+  if (pattern.test(citycode)) {
+    return citycode.substring(0, 3)
+  }
+
+  return citycode.substring(0, 2)
 }
 
 const queryIsOfSufficientLength = (query: string) => {

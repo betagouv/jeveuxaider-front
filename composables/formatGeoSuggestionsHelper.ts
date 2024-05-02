@@ -97,7 +97,11 @@ export const formatGeoSuggestionsHelper = async () => {
 
   const formatInputGeoSuggestions = (
     suggestions: any,
-    config: { hideAllZipsOption?: boolean; inputGeoType?: string }
+    config: {
+      hideAllZipsOption?: boolean
+      inputGeoType?: string
+      breakDownMultiplePostCodes?: boolean // ex: Paris 16
+    }
   ) => {
     const formattedSuggestions = suggestions.features
       .flatMap((option: any) => {
@@ -120,7 +124,20 @@ export const formatGeoSuggestionsHelper = async () => {
                     postcodes: multidistributedCity,
                     typeLabel: 'Tous les codes postaux',
                   },
-              ...multidistributedCity.map((c) => {
+              ...multidistributedCity.flatMap((c) => {
+                if (config.breakDownMultiplePostCodes === true) {
+                  return c.zip.split(',').map((cPc: string) => {
+                    return {
+                      ...option.properties,
+                      ...c,
+                      coordinates: [c.longitude, c.latitude],
+                      id: c.key,
+                      label: c.labelArrondissement ?? c.label,
+                      postcode: cPc,
+                      typeLabel: cPc,
+                    }
+                  })
+                }
                 return {
                   ...option.properties,
                   ...c,
@@ -145,14 +162,20 @@ export const formatGeoSuggestionsHelper = async () => {
         }
       })
       .reduce((accumulator: any[], currentValue: any) => {
-        const exists = accumulator.some(
+        const foundIndex = accumulator.findIndex(
           (obj) =>
             !obj.id.includes('all_zips') &&
             obj.label === currentValue.label &&
             obj.postcode?.endsWith(currentValue.postcode)
         )
-        if (!exists) {
+        if (foundIndex === -1) {
           accumulator.push(currentValue)
+        } else {
+          // Prefer the multidistributedCitiesHelper version and keep the order
+          if (currentValue.group) {
+            accumulator.splice(foundIndex, 1)
+            accumulator.push(currentValue)
+          }
         }
         return accumulator
       }, [])

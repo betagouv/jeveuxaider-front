@@ -72,12 +72,20 @@
               />
             </BaseFormControl>
             <BaseFormControl label="Code postal" html-for="zip" required :error="errors.zip">
-              <BaseInput
+              <BaseSelectAutocomplete
                 v-model="form.zip"
                 name="zip"
-                type="tel"
-                maxlength="5"
+                :options="zipAutocompleteOptions"
+                :min-length-to-search="3"
+                attribute-key="id"
+                attribute-label="label"
+                attribute-right-label="typeLabel"
                 placeholder="56000"
+                search-input-placeholder="Recherche par ville ou code postal"
+                options-class="md:min-w-[320px]"
+                :loading="loadingFetchZips"
+                @selected="handleSelectedZip"
+                @fetch-suggestions="onFetchZipSuggestions($event)"
                 @blur="validate('zip')"
               />
             </BaseFormControl>
@@ -481,12 +489,13 @@ import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
 import activitiesOptions from '@/assets/activities.json'
 import FormProfileRole from '@/components/form/FormProfileRole.vue'
+import GeolocProfile from '@/mixins/geoloc-profile'
 
 export default defineNuxtComponent({
   components: {
     FormProfileRole,
   },
-  mixins: [FormErrors, FormUploads, Emailable],
+  mixins: [FormErrors, FormUploads, Emailable, GeolocProfile],
   props: {
     profile: {
       type: Object,
@@ -526,8 +535,9 @@ export default defineNuxtComponent({
           .matches(/^[+|\s|\d]*$/, 'Le format du téléphone est incorrect')
           .transform((v) => (v === '' ? null : v)),
         zip: string()
+          .transform((v) => (v === '' ? null : v))
           .nullable()
-          .min(5, 'Le format du code postal est incorrect')
+          .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
           .test('test-zip-required', 'Un code postal est requis', (zip) => {
             return ['admin'].includes(this.$stores.auth.contextRole) || zip
           }),
@@ -609,6 +619,8 @@ export default defineNuxtComponent({
         'Sport pour tous',
       ],
       tags: [],
+      zipAutocompleteOptions: [],
+      loadingFetchZips: false,
     }
   },
   computed: {
