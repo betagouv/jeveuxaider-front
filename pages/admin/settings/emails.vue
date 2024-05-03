@@ -425,10 +425,18 @@ export default defineNuxtComponent({
         {
           tab: 'responsables',
           key: 'responsable_mission_almost_full',
-          label: '🔥 Votre mission est presque complète ! ',
+          label: '🔥 Votre mission est presque complète !',
           description:
-            "Notification envoyée au responsable lorsque sa mission n'a plus qu'une seule place restante",
+            "Notification envoyée au responsable lorsque sa mission nécessite au moins 5 places, et il n'y en a plus qu'une seule place restante.",
           tags: ['app-responsable-mission-presque-complete'],
+          types: ['Notification'],
+        },
+        {
+          tab: 'responsables',
+          key: 'responsable_mission_full',
+          label: 'Vous ne pouvez plus recevoir de demandes de participations 😢',
+          description: 'Notification envoyée au responsable lorsque sa mission est complète',
+          tags: ['app-responsable-mission-complete'],
           types: ['Notification'],
         },
         {
