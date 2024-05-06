@@ -89,6 +89,16 @@ export default defineNuxtComponent({
           ],
         },
         {
+          key: 'contents',
+          label: 'Contenus',
+          childrens: [
+            {
+              label: 'Doublons territoires',
+              to: '/support/contents/doublons-territoires',
+            },
+          ],
+        },
+        {
           key: 'scripts',
           label: 'Actions',
           childrens: [
