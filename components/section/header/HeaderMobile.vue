@@ -242,9 +242,14 @@ export default defineNuxtComponent({
             to: '/en-ce-moment',
             isActive: this.isActiveLink('/en-ce-moment'),
           },
+          // {
+          //   name: 'Printemps pour la Planète 🌱',
+          //   href: 'https://www.jeveuxaider.gouv.fr/engagement/printemps-pour-la-planete/',
+          //   target: '_blank',
+          // },
           {
-            name: 'Printemps pour la Planète 🌱',
-            href: 'https://www.jeveuxaider.gouv.fr/engagement/printemps-pour-la-planete/',
+            name: 'Élections européennes 🗳️',
+            href: 'https://www.jeveuxaider.gouv.fr/engagement/trouver-des-assesseurs/',
             target: '_blank',
           },
           {

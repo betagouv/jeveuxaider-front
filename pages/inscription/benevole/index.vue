@@ -434,6 +434,7 @@ export default defineNuxtComponent({
 
     return {
       loading: false,
+      loadingFetchZips: false,
       isLoadingFranceConnect: false,
       form: {
         email: this.$route.query.email ? this.$route.query.email : '',
