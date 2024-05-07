@@ -114,7 +114,7 @@ export default {
   },
   computed: {
     hasResults() {
-      return this.hasError
+      return this.hasError || this.territoiresHasDuplicates
     },
     hasError() {
       return this.sentencesWithBlacklistedWords?.length > 0
