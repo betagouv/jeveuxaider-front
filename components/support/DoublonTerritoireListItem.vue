@@ -11,11 +11,12 @@
         class="bg-gray-50 rounded flex items-center justify-between p-2 text-gray-600 text-sm"
       >
         <div class="flex space-x-4">
-          <div>
-            <DsfrBadge>{{ item.id }}</DsfrBadge>
+          <DsfrBadge type="gray">#{{ item.id }}</DsfrBadge>
+          <Badges :territoire="item" />
+          <div class="font-medium text-[#161616]">{{ item.name }}</div>
+          <div class="text-xs">
+            Crée le {{ $dayjs(item.created_at).format('d MMMM YYYY à HH:mm') }}
           </div>
-          <div class="">{{ item.name }}</div>
-          <div class="">Crée le {{ $dayjs(item.created_at).format('d MMMM YYYY à HH:mm') }}</div>
         </div>
         <DsfrLink
           type="secondary"
@@ -31,7 +32,14 @@
 </template>
 
 <script>
+import MixinTerritoire from '@/mixins/territoire'
+import Badges from '@/components/section/territoire/Badges.vue'
+
 export default defineNuxtComponent({
+  mixins: [MixinTerritoire],
+  components: {
+    Badges,
+  },
   props: {
     territoire: {
       type: Object,
