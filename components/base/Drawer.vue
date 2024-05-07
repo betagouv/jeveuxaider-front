@@ -57,10 +57,10 @@
                 </div>
               </div>
               <div v-if="formId" class="flex-shrink-0 px-4 py-4 flex justify-end space-x-3">
-                <BaseButton variant="white" @click.native="$emit('close')"> Annuler </BaseButton>
-                <BaseButton type="submit" :form="formId" @click.native="$emit('submit')">
+                <DsfrButton type="secondary" @click.native="$emit('close')"> Annuler </DsfrButton>
+                <DsfrButton is-submit :form="formId" @click.native="$emit('submit')">
                   {{ submitLabel }}
-                </BaseButton>
+                </DsfrButton>
               </div>
             </div>
           </div>

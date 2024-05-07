@@ -13,7 +13,7 @@
     </ClientOnly>
 
     <BaseSectionHeading
-      secondary-title-bottom="Liste des territoires validés en doublon"
+      secondary-title-bottom="Liste des territoires validés en double"
       :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
         queryResult.total,
         'doublon de territoire',

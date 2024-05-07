@@ -1,15 +1,5 @@
 <template>
   <BaseDrawer :is-open="Boolean(territoireId)" @close="$emit('close')">
-    <BaseAlertDialog
-      v-if="territoire"
-      icon="RiErrorWarningLine"
-      title="Supprimer le territoire"
-      :is-open="showAlert"
-      @confirm="handleConfirmDelete()"
-      @cancel="showAlert = false"
-    >
-      Vous êtes sur le point de supprimer le territoire {{ territoire.name }}.
-    </BaseAlertDialog>
     <template #title>
       <BaseHeading v-if="territoire" :level="3" class="text-jva-blue-500">
         <nuxt-link
@@ -23,31 +13,34 @@
       </BaseHeading>
     </template>
     <template v-if="territoire">
-      <OnlineIndicator
-        :published="territoire.is_published"
-        :link="territoire.full_url"
-        class="mt-2"
-      />
-      <div class="flex gap-2 mt-4">
-        <nuxt-link
-          no-prefetch
+      <DsfrLink :to="`/villes/${territoire.slug}`" :is-external="true" class="text-xs font-normal">
+        Voir le territoire
+      </DsfrLink>
+      <Badges class="mt-5" :territoire="territoire" />
+      <div class="flex flex-wrap gap-1 mt-6">
+        <DsfrButton
           :to="`/admin/contenus/territoires/${territoire.id}`"
-          class="inline-flex"
-        >
-          <BaseButton variant="white" size="sm" icon="RiEyeLine"> Détails </BaseButton>
-        </nuxt-link>
-        <nuxt-link
-          no-prefetch
-          :to="`/admin/contenus/territoires/${territoire.id}/edit`"
-          class="inline-flex"
-        >
-          <BaseButton variant="white" size="sm" icon="RiPencilLine"> Modifier </BaseButton>
-        </nuxt-link>
-        <BaseButton
-          variant="white"
+          type="tertiary"
+          icon="RiEyeLine"
           size="sm"
-          icon="RiDeleteBinLine"
-          @click.native="() => (showAlert = true)"
+        >
+          Détails
+        </DsfrButton>
+
+        <DsfrButton
+          :to="`/admin/contenus/territoires/${territoire.id}/edit`"
+          type="tertiary"
+          icon="RiPencilLine"
+          size="sm"
+        >
+          Modifier
+        </DsfrButton>
+
+        <Actions
+          v-if="['admin', 'referent', 'referent_regional'].includes($stores.auth.contextRole)"
+          :territoire="territoire"
+          @territoireDeleted="handleDeleted"
+          buttonSize="sm"
         />
       </div>
 
@@ -91,18 +84,20 @@ import BoxMission from '@/components/section/territoire/BoxMission.vue'
 import BoxParticipation from '@/components/section/territoire/BoxParticipation.vue'
 import BoxResponsable from '@/components/section/BoxResponsable.vue'
 import SelectTerritoireState from '@/components/custom/SelectTerritoireState.vue'
-import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 import MixinTerritoire from '@/mixins/territoire'
+import Badges from '@/components/section/territoire/Badges.vue'
+import Actions from '@/components/section/territoire/Actions.vue'
 
 export default defineNuxtComponent({
   emits: ['loaded', 'refetch', 'close'],
   components: {
     BoxInformations,
-    OnlineIndicator,
     BoxMission,
     BoxParticipation,
     BoxResponsable,
     SelectTerritoireState,
+    Badges,
+    Actions,
   },
   mixins: [MixinTerritoire],
   props: {
@@ -142,14 +137,18 @@ export default defineNuxtComponent({
       this.fetch()
       this.$emit('refetch')
     },
-    async handleConfirmDelete() {
-      await apiFetch(`/territoires/${this.territoireId}`, { method: 'DELETE' })
-        .then((res) => {
-          this.showAlert = false
-          this.$emit('close')
-          this.$emit('refetch')
-        })
-        .catch(() => {})
+    // async handleConfirmDelete() {
+    //   await apiFetch(`/territoires/${this.territoireId}`, { method: 'DELETE' })
+    //     .then((res) => {
+    //       this.showAlert = false
+    //       this.$emit('close')
+    //       this.$emit('refetch')
+    //     })
+    //     .catch(() => {})
+    // },
+    handleDeleted() {
+      this.$emit('close')
+      this.$emit('refetch')
     },
   },
 })

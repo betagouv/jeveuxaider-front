@@ -13,17 +13,15 @@
         { text: territoire.name },
       ]"
     />
-    <div class="pb-6">
-      <BaseSectionHeading :title="territoire.name">
-        <template #action>
-          <div class="hidden lg:flex flex-col gap-2 flex-shrink-0 items-center justify-center">
-            <BaseButton size="xl" variant="green" :loading="loading" @click.native="handleSubmit">
-              Enregistrer
-            </BaseButton>
-          </div>
-        </template>
-      </BaseSectionHeading>
+  </div>
 
+  <HeaderActions :territoire="territoire">
+    <template v-slot:actions>
+      <DsfrButton :loading="loading" @click.native="handleSubmit"> Enregistrer </DsfrButton>
+    </template>
+  </HeaderActions>
+  <div class="container">
+    <div class="pb-20">
       <FormTerritoire ref="form" :territoire="territoire" class="my-8" />
     </div>
   </div>
@@ -32,9 +30,10 @@
 <script>
 import FormTerritoire from '@/components/form/FormTerritoire.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import HeaderActions from '@/components/section/territoire/HeaderActions.vue'
 
 export default {
-  components: { FormTerritoire, Breadcrumb },
+  components: { FormTerritoire, Breadcrumb, HeaderActions },
   async setup() {
     definePageMeta({
       middleware: ['authenticated'],

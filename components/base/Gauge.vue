@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative w-full">
     <div
       v-tooltip="tooltip"
       class="w-full bg-gray-200 overflow-hidden"
