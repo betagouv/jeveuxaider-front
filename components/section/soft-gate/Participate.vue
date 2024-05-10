@@ -95,7 +95,14 @@ export default defineNuxtComponent({
             },
           })
 
-          window.apieng && window.apieng('trackApplication')
+          // API Engagement - Commande pour compter une candidature
+          console.log(
+            'API ENGAGEMENT - trackApplication',
+            this.$stores.softGate.selectedMission?.id
+          )
+          window.apieng &&
+            window.apieng('trackApplication', this.$stores.softGate.selectedMission?.id)
+
           this.$plausible.trackEvent('Soft Gate - Étape 3 - Demande de participation', {
             props: {
               hasSlots: this.$stores.softGate.selectedMission?.dates?.length > 0,

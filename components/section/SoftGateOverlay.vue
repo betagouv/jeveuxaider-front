@@ -8,7 +8,11 @@
       @anti-flood="step = 'anti-flood'"
       @close="onClose"
     />
-    <SoftGateRegister v-if="step == 'register'" :datas="datas" @next="handleNextResolver" />
+    <SoftGateRegister
+      v-if="step == 'register'"
+      :datas="datas"
+      @next="handleRegisterNextStepResolver"
+    />
     <SoftGateAntiFlood v-if="step == 'anti-flood'" @next="handleNextResolver" @close="onClose" />
     <SoftGatePrerequisites
       :check-distance="needToCheckDistance"
@@ -133,6 +137,13 @@ export default defineNuxtComponent({
       } else {
         this.step = 'participate'
       }
+    },
+    handleRegisterNextStepResolver() {
+      // API Engagement - Commande pour compter une création de compte
+      // console.log('API ENGAGEMENT - trackAccount', this.$stores.softGate.selectedMission?.id)
+      // window.apieng && window.apieng('trackAccount', this.$stores.softGate.selectedMission?.id)
+
+      this.handleNextResolver()
     },
     goToLogin(datas) {
       this.step = 'login'

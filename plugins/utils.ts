@@ -10,7 +10,7 @@ export default defineNuxtPlugin(() => {
         Math.acos(
           Math.sin(p1) * Math.sin(p2) + Math.cos(p1) * Math.cos(p2) * Math.cos(deltaLambda)
         ) * R
-      console.log('haversine distance', d)
+      // console.log('haversine distance', d)
       return d
     },
     pythagoreanDistanceBetweenPoints: (lat1: number, lon1: number, lat2: number, lon2: number) => {
@@ -18,7 +18,7 @@ export default defineNuxtPlugin(() => {
       const x = (lon2 - lon1) * Math.cos((lat1 + lat2) / 2)
       const y = lat2 - lat1
       const d = Math.sqrt(x * x + y * y) * R
-      console.log('pythagorean distance', d)
+      // console.log('pythagorean distance', d)
       return d
     },
     isFirstLetterVowel: (str: string) => {
