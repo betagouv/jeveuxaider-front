@@ -244,6 +244,15 @@ export default defineNuxtComponent({
             { key: '<=', label: '<=' },
           ],
         },
+        {
+          key: 'missions.tags',
+          label: 'Tag de mission',
+          type: 'input',
+          operands: [
+            { key: '=', label: '=' },
+            { key: '!=', label: '!=' },
+          ],
+        },
       ].sort((a, b) => a.label.localeCompare(b.label))
     },
   },

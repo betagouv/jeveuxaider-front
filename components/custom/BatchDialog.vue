@@ -118,7 +118,7 @@ export default defineNuxtComponent({
   },
   methods: {
     async handleExecute() {
-      const { data: batchId } = await apiFetch(this.batchEndpoint, {
+      const batchId = await apiFetch(this.batchEndpoint, {
         method: 'POST',
       })
       this.batchId = batchId
