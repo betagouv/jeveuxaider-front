@@ -168,6 +168,7 @@ import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import MixinFiltersVisibility from '@/mixins/filters-visibility'
+import MixinSuggestionsFilters from '@/mixins/suggestions-filters'
 
 export default defineNuxtComponent({
   components: {
@@ -177,7 +178,7 @@ export default defineNuxtComponent({
     Pagination,
     Breadcrumb,
   },
-  mixins: [QueryBuilder, MixinExport, MixinFiltersVisibility],
+  mixins: [QueryBuilder, MixinExport, MixinFiltersVisibility, MixinSuggestionsFilters],
   setup() {
     const { $stores } = useNuxtApp()
 
@@ -194,12 +195,6 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    selectedReseau() {
-      return {
-        key: Number(this.$route.query['filter[reseaux.id]']) || undefined,
-        label: this.$route.query['reseau_name'],
-      }
-    },
     allFilters() {
       return [
         'state',
@@ -215,7 +210,6 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
-      loadingFetchReseaux: false,
       endpoint: '/structures',
       exportEndpoint: '/export/structures',
       queryParams: {
@@ -223,41 +217,8 @@ export default defineNuxtComponent({
         include: 'domaines,reseaux,illustrations,overrideImage1',
       },
       drawerOrganisationId: null,
-      autocompleteOptionsReseaux: [],
     }
   },
-  methods: {
-    async onFetchSuggestionsReseaux(value) {
-      this.loadingFetchReseaux = true
-      const res = await apiFetch('/reseaux', {
-        params: {
-          'filter[search]': value,
-          pagination: 20,
-        },
-      })
-      this.autocompleteOptionsReseaux = res.data
-      this.loadingFetchReseaux = false
-    },
-    async onSelectReseau($event) {
-      const queryReseauName =
-        $event !== null && this.$route.query['reseau_name'] !== $event?.name
-          ? $event.name
-          : undefined
-      const queryReseauId =
-        $event !== null && Number(this.$route.query['filter[reseaux.id]']) !== $event?.id
-          ? $event.id
-          : undefined
-
-      await this.$router.push({
-        path: this.$route.path,
-        query: {
-          ...this.$route.query,
-          page: undefined,
-          reseau_name: queryReseauName,
-          'filter[reseaux.id]': queryReseauId,
-        },
-      })
-    },
-  },
+  methods: {},
 })
 </script>

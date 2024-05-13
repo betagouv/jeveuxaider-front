@@ -140,8 +140,11 @@ export default defineNuxtComponent({
     },
     handleRegisterNextStepResolver() {
       // API Engagement - Commande pour compter une création de compte
-      // console.log('API ENGAGEMENT - trackAccount', this.$stores.softGate.selectedMission?.id)
-      // window.apieng && window.apieng('trackAccount', this.$stores.softGate.selectedMission?.id)
+      try {
+        window.apieng && window.apieng('trackAccount', this.$stores.softGate.selectedMission?.id)
+      } catch (error) {
+        console.error('API ENGAGEMENT - trackAccount', error)
+      }
 
       this.handleNextResolver()
     },

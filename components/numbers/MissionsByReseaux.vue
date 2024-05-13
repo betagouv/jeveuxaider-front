@@ -11,7 +11,7 @@
         :key="i"
         :icon="`${i + 1}.`"
         icon-class="text-xl font-semibold text-gray-500"
-        :link="`/admin/missions?filter[structure.reseaux.name]=${item.name}&filter[structure.reseaux.id]=${item.id}`"
+        :link="`/admin/missions?reseau_name=${item.name}&filter[ofReseau]=${item.id}`"
       >
         <div class="text-gray-900 font-semibold" v-html="item.name" />
         <div class="text-gray-500 text-sm">

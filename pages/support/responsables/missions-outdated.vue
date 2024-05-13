@@ -153,6 +153,7 @@ import OnlineIndicator from '@/components/custom/OnlineIndicator.vue'
 import DrawerProfile from '@/components/drawer/DrawerProfile.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import QueryResultSummary from '@/components/custom/QueryResultSummary.vue'
+import MixinSuggestionsFilters from '@/mixins/suggestions-filters'
 
 export default defineNuxtComponent({
   components: {
@@ -164,7 +165,7 @@ export default defineNuxtComponent({
     Pagination,
     QueryResultSummary,
   },
-  mixins: [QueryBuilder],
+  mixins: [QueryBuilder, MixinSuggestionsFilters],
   setup() {
     definePageMeta({
       layout: 'support',
@@ -172,54 +173,53 @@ export default defineNuxtComponent({
     })
   },
   computed: {
-    selectedOrganisation() {
-      return {
-        key: Number(this.$route.query['organisation_id']) || undefined,
-        label: this.$route.query['organisation_name'],
-      }
-    },
+    // selectedOrganisation() {
+    //   return {
+    //     key: Number(this.$route.query['organisation_id']) || undefined,
+    //     label: this.$route.query['organisation_name'],
+    //   }
+    // },
   },
   data() {
     return {
       endpoint: '/support/responsables/missions-outdated',
       loading: true,
-      loadingFetchOrganisations: false,
+      // loadingFetchOrganisations: false,
       drawerProfileId: null,
-      autocompleteOptionsOrganisations: [],
+      // autocompleteOptionsOrganisations: [],
     }
   },
   methods: {
-    async onFetchSuggestionsOrganisations(value) {
-      this.loadingFetchOrganisations = true
-      const organisations = await apiFetch('/structures', {
-        params: {
-          'filter[search]': value,
-          pagination: 12,
-        },
-      })
-      this.autocompleteOptionsOrganisations = organisations.data
-      this.loadingFetchOrganisations = false
-    },
-    async onSelectOrganisation($event) {
-      const queryOrganisationName =
-        $event !== null && this.$route.query['organisation_name'] !== $event?.name
-          ? $event.name
-          : undefined
-      const queryOrganisationId =
-        $event !== null && Number(this.$route.query['organisation_id']) !== $event?.id
-          ? $event.id
-          : undefined
-
-      await this.$router.push({
-        path: this.$route.path,
-        query: {
-          ...this.$route.query,
-          page: undefined,
-          organisation_name: queryOrganisationName,
-          organisation_id: queryOrganisationId,
-        },
-      })
-    },
+    // async onFetchSuggestionsOrganisations(value) {
+    //   this.loadingFetchOrganisations = true
+    //   const organisations = await apiFetch('/structures', {
+    //     params: {
+    //       'filter[search]': value,
+    //       pagination: 12,
+    //     },
+    //   })
+    //   this.autocompleteOptionsOrganisations = organisations.data
+    //   this.loadingFetchOrganisations = false
+    // },
+    // async onSelectOrganisation($event) {
+    //   const queryOrganisationName =
+    //     $event !== null && this.$route.query['organisation_name'] !== $event?.name
+    //       ? $event.name
+    //       : undefined
+    //   const queryOrganisationId =
+    //     $event !== null && Number(this.$route.query['organisation_id']) !== $event?.id
+    //       ? $event.id
+    //       : undefined
+    //   await this.$router.push({
+    //     path: this.$route.path,
+    //     query: {
+    //       ...this.$route.query,
+    //       page: undefined,
+    //       organisation_name: queryOrganisationName,
+    //       organisation_id: queryOrganisationId,
+    //     },
+    //   })
+    // },
   },
 })
 </script>

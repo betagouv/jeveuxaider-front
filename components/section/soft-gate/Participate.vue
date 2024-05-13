@@ -96,12 +96,12 @@ export default defineNuxtComponent({
           })
 
           // API Engagement - Commande pour compter une candidature
-          console.log(
-            'API ENGAGEMENT - trackApplication',
-            this.$stores.softGate.selectedMission?.id
-          )
-          window.apieng &&
-            window.apieng('trackApplication', this.$stores.softGate.selectedMission?.id)
+          try {
+            window.apieng &&
+              window.apieng('trackApplication', this.$stores.softGate.selectedMission?.id)
+          } catch (error) {
+            console.error('API ENGAGEMENT - trackApplication', error)
+          }
 
           this.$plausible.trackEvent('Soft Gate - Étape 3 - Demande de participation', {
             props: {

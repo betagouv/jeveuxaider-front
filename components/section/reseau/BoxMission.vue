@@ -3,7 +3,7 @@
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
       <div class="uppercase font-semibold text-gray-600">Missions</div>
       <BaseLink
-        :to="`/admin/missions?filter[structure.reseaux.id]=${reseau.id}&filter[structure.reseaux.name]=${reseau.name}`"
+        :to="`/admin/missions?filter[ofReseau]=${reseau.id}&reseau_name=${reseau.name}`"
         icon="RiArrowRightSLine"
       >
         Consulter
@@ -29,7 +29,7 @@
           <div class="border-t -mx-4 xl:-mx-6 mt-6 mb-4" />
           <nuxt-link
             no-prefetch
-            :to="`/admin/missions?filter[structure.reseaux.id]=${reseau.id}&filter[structure.reseaux.name]=${reseau.name}&filter[state]=En attente de validation`"
+            :to="`/admin/missions?filter[ofReseau]=${reseau.id}&reseau_name=${reseau.name}&filter[state]=En attente de validation`"
             class="flex justify-center items-center text-sm text-jva-orange-500 font-medium hover:underline"
           >
             {{ $filters.pluralize(stats.missions_state['En attente de validation'], 'mission') }}

@@ -117,18 +117,18 @@
           v-model="selectedOrganisation"
           label="Organisations"
           name="autocomplete-organisations"
-          :options="autocompleteOptionsOrga"
+          :options="autocompleteOptionsOrganisations"
           :loading="loadingFetchOrganisations"
-          @fetch-suggestions="onFetchSuggestionsOrga"
+          @fetch-suggestions="onFetchSuggestionsOrganisations"
           @selected="onSelectOrganisation"
         />
         <BaseFilterInputAutocomplete
           v-model="selectedReseau"
           label="Réseaux"
           name="autocomplete-reseau"
-          :options="autocompleteOptionsReseau"
+          :options="autocompleteOptionsReseaux"
           :loading="loadingFetchReseaux"
-          @fetch-suggestions="onFetchSuggestionsReseau"
+          @fetch-suggestions="onFetchSuggestionsReseaux"
           @selected="onSelectReseau"
         />
       </template>
@@ -214,6 +214,7 @@ import FormInvitation from '@/components/form/FormInvitation.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import DsfrButton from '@/components/dsfr/Button.vue'
+import MixinSuggestionsFilters from '@/mixins/suggestions-filters'
 
 export default defineNuxtComponent({
   components: {
@@ -222,7 +223,7 @@ export default defineNuxtComponent({
     Breadcrumb,
     DsfrButton,
   },
-  mixins: [MixinInvitation, QueryBuilder],
+  mixins: [MixinInvitation, QueryBuilder, MixinSuggestionsFilters],
   setup() {
     definePageMeta({
       layout: 'admin-with-sidebar-menu',
@@ -239,26 +240,9 @@ export default defineNuxtComponent({
       queryParams: {
         include: 'user.profile',
       },
-      loadingFetchReseaux: true,
-      loadingFetchOrganisations: false,
-      autocompleteOptionsOrga: [],
-      autocompleteOptionsReseau: [],
     }
   },
-  computed: {
-    selectedReseau() {
-      return {
-        key: Number(this.$route.query['filter[reseau.id]']) || undefined,
-        label: this.$route.query['reseau.name'],
-      }
-    },
-    selectedOrganisation() {
-      return {
-        key: Number(this.$route.query['filter[structure.id]']) || undefined,
-        label: this.$route.query['organisation.name'],
-      }
-    },
-  },
+  computed: {},
   methods: {
     async handleConfirmDeleteInvitation() {
       await this.handleConfirmDelete()
@@ -284,68 +268,6 @@ export default defineNuxtComponent({
         default:
           return ''
       }
-    },
-    async onFetchSuggestionsOrga(value) {
-      this.loadingFetchOrganisations = true
-      const organisations = await apiFetch('/structures', {
-        params: {
-          'filter[search]': value,
-          pagination: 20,
-        },
-      })
-      this.autocompleteOptionsOrga = organisations.data
-      this.loadingFetchOrganisations = false
-    },
-    async onFetchSuggestionsReseau(value) {
-      this.loadingFetchReseaux = true
-      const reseaux = await apiFetch('/reseaux', {
-        params: {
-          'filter[search]': value,
-          pagination: 20,
-        },
-      })
-      this.autocompleteOptionsReseau = reseaux.data
-      this.loadingFetchReseaux = false
-    },
-    async onSelectOrganisation($event) {
-      const queryOrganisationName =
-        $event !== null && this.$route.query['organisation.name'] !== $event?.name
-          ? $event.name
-          : undefined
-      const queryOrganisationId =
-        $event !== null && Number(this.$route.query['filter[structure.id]']) !== $event?.id
-          ? $event.id
-          : undefined
-
-      await this.$router.push({
-        path: this.$route.path,
-        query: {
-          ...this.$route.query,
-          page: undefined,
-          'organisation.name': queryOrganisationName,
-          'filter[structure.id]': queryOrganisationId,
-        },
-      })
-    },
-    async onSelectReseau($event) {
-      const queryReseauName =
-        $event !== null && this.$route.query['reseau.name'] !== $event?.name
-          ? $event.name
-          : undefined
-      const queryReseauId =
-        $event !== null && Number(this.$route.query['filter[reseau.id]']) !== $event?.id
-          ? $event.id
-          : undefined
-
-      await this.$router.push({
-        path: this.$route.path,
-        query: {
-          ...this.$route.query,
-          page: undefined,
-          'reseau.name': queryReseauName,
-          'filter[reseau.id]': queryReseauId,
-        },
-      })
     },
   },
 })

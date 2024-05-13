@@ -495,6 +495,13 @@ export default defineNuxtComponent({
 
           await this.$stores.auth.registerVolontaire(this.form)
 
+          // API Engagement - Commande pour compter une création de compte
+          try {
+            window.apieng && window.apieng('trackAccount')
+          } catch (error) {
+            console.error('API ENGAGEMENT - trackAccount', error)
+          }
+
           await this.$gtm?.trackEvent({ event: 'benevole-inscription' })
           this.$plausible.trackEvent('Inscription bénévole - Étape 1 - Création de compte')
           this.$router.push('/inscription/benevole/step/profile')

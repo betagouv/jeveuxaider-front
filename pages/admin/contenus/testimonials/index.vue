@@ -118,6 +118,7 @@ import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import Tag from '@/components/dsfr/Tag.vue'
+import MixinSuggestionsFilters from '@/mixins/suggestions-filters'
 
 export default defineNuxtComponent({
   components: {
@@ -128,7 +129,7 @@ export default defineNuxtComponent({
     Breadcrumb,
     Tag,
   },
-  mixins: [QueryBuilder],
+  mixins: [QueryBuilder, MixinSuggestionsFilters],
   setup() {
     const { $stores } = useNuxtApp()
 
@@ -145,56 +146,14 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
   },
-  computed: {
-    selectedOrganisation() {
-      return {
-        key: Number(this.$route.query['filter[participation.mission.structure.id]']) || undefined,
-        label: this.$route.query['filter[organisation]'],
-      }
-    },
-  },
+  computed: {},
   data() {
     return {
       endpoint: '/temoignages',
       queryParams: {},
       drawerTemoignageId: null,
-      autocompleteOptionsOrganisations: [],
-      loadingFetchOrganisations: false,
     }
   },
-  methods: {
-    async onFetchSuggestionsOrganisations(value) {
-      this.loadingFetchOrganisations = true
-      const organisations = await apiFetch('/structures', {
-        params: {
-          'filter[search]': value,
-          pagination: 20,
-        },
-      })
-      this.autocompleteOptionsOrganisations = organisations.data
-      this.loadingFetchOrganisations = false
-    },
-    async onSelectOrganisation($event) {
-      const queryOrganisationName =
-        $event !== null && this.$route.query['filter[organisation]'] !== $event?.name
-          ? $event.name
-          : undefined
-      const queryOrganisationId =
-        $event !== null &&
-        Number(this.$route.query['filter[participation.mission.structure.id]']) !== $event?.id
-          ? $event.id
-          : undefined
-
-      await this.$router.push({
-        path: this.$route.path,
-        query: {
-          ...this.$route.query,
-          page: undefined,
-          'filter[organisation]': queryOrganisationName,
-          'filter[participation.mission.structure.id]': queryOrganisationId,
-        },
-      })
-    },
-  },
+  methods: {},
 })
 </script>

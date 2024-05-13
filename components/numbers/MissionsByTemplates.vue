@@ -11,7 +11,7 @@
         :key="i"
         :icon="`${i + 1}.`"
         icon-class="text-xl font-semibold text-gray-500"
-        :link="`/admin/missions?filter[template.id]=${item.id}&template_name=${item.title}`"
+        :link="`/admin/missions?filter[ofTemplate]=${item.id}&template_name=${item.title}`"
       >
         <div class="text-gray-900 font-semibold" v-html="item.title" />
         <div class="text-gray-500 text-sm">

@@ -116,9 +116,9 @@
             v-model="selectedReseau"
             label="Tous les réseaux"
             name="autocomplete-reseau"
-            :options="autocompleteOptionsReseau"
+            :options="autocompleteOptionsReseaux"
             :loading="loadingFetchReseaux"
-            @fetch-suggestions="onFetchSuggestionsReseau"
+            @fetch-suggestions="onFetchSuggestionsReseaux"
             @selected="onSelectReseau"
           />
         </template>
@@ -191,6 +191,7 @@ import DrawerMissionTemplate from '@/components/drawer/DrawerMissionTemplate.vue
 import SearchFilters from '@/components/custom/SearchFilters.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import MixinSuggestionsFilters from '@/mixins/suggestions-filters'
 
 export default defineNuxtComponent({
   components: {
@@ -200,7 +201,7 @@ export default defineNuxtComponent({
     Pagination,
     Breadcrumb,
   },
-  mixins: [QueryBuilder],
+  mixins: [QueryBuilder, MixinSuggestionsFilters],
   setup() {
     const { $stores } = useNuxtApp()
 
@@ -214,58 +215,24 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    selectedReseau() {
-      return {
-        key: Number(this.$route.query['filter[reseau.id]']) || undefined,
-        label: this.$route.query['filter[reseau.name]'],
-      }
-    },
+    // selectedReseau() {
+    //   return {
+    //     key: Number(this.$route.query['filter[reseau.id]']) || undefined,
+    //     label: this.$route.query['filter[reseau.name]'],
+    //   }
+    // },
   },
   data() {
     return {
       loading: false,
-      loadingFetchReseaux: true,
       endpoint: '/mission-templates',
       queryParams: {
         include: 'photo,reseau',
         append: 'places_left',
       },
       drawerMissionTemplateId: null,
-      autocompleteOptionsReseau: [],
     }
   },
-  methods: {
-    async onFetchSuggestionsReseau(value) {
-      this.loadingFetchReseaux = true
-      const reseaux = await apiFetch('/reseaux', {
-        params: {
-          'filter[search]': value,
-          pagination: 20,
-        },
-      })
-      this.autocompleteOptionsReseau = reseaux.data
-      this.loadingFetchReseaux = false
-    },
-    async onSelectReseau($event) {
-      const queryReseauName =
-        $event !== null && this.$route.query['filter[reseau.name]'] !== $event?.name
-          ? $event.name
-          : undefined
-      const queryReseauId =
-        $event !== null && Number(this.$route.query['filter[reseau.id]']) !== $event?.id
-          ? $event.id
-          : undefined
-
-      await this.$router.push({
-        path: this.$route.path,
-        query: {
-          ...this.$route.query,
-          page: undefined,
-          'filter[reseau.name]': queryReseauName,
-          'filter[reseau.id]': queryReseauId,
-        },
-      })
-    },
-  },
+  methods: {},
 })
 </script>

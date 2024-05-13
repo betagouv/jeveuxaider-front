@@ -193,7 +193,7 @@
                         'missions',
                         false
                       )}`"
-                      :link="`/admin/missions?filter[structure.reseaux.id]=${reseau.id}&filter[structure.reseaux.name]=${reseau.name}`"
+                      :link="`/admin/missions?filter[ofReseau]=${reseau.id}&reseau_name=${reseau.name}`"
                       link-label="Missions"
                     />
                     <CardStatistic

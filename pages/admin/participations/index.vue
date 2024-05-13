@@ -105,7 +105,7 @@
             />
 
             <BaseFilterInputAutocomplete
-              v-if="visibleFilter === 'mission.structure.id'"
+              v-if="visibleFilter === 'ofStructure'"
               v-model="selectedOrganisation"
               label="Organisation"
               name="autocomplete-organisation"
@@ -113,6 +113,17 @@
               :loading="loadingFetchOrganisations"
               @fetch-suggestions="onFetchSuggestionsOrganisations"
               @selected="onSelectOrganisation"
+            />
+
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'ofReseau'"
+              v-model="selectedReseau"
+              label="Réseau"
+              name="autocomplete-reseau"
+              :options="autocompleteOptionsReseaux"
+              :loading="loadingFetchReseaux"
+              @fetch-suggestions="onFetchSuggestionsReseaux"
+              @selected="onSelectReseau"
             />
 
             <BaseFilterSelectAdvanced
@@ -131,9 +142,9 @@
               v-model="selectedMission"
               label="Mission"
               name="autocomplete-mission"
-              :options="autocompleteOptionsMission"
+              :options="autocompleteOptionsMissions"
               :loading="loadingFetchMissions"
-              @fetch-suggestions="onFetchSuggestionsMission"
+              @fetch-suggestions="onFetchSuggestionsMissions"
               @selected="onSelectMission"
             />
 
@@ -145,6 +156,40 @@
               :options="$labels.participation_workflow_states"
               placeholder="Statut"
               @update:modelValue="changeFilter('filter[state]', $event, true)"
+            />
+
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'ofTerritoire'"
+              v-model="selectedTerritoire"
+              label="Territoire"
+              name="autocomplete-territoire"
+              :options="autocompleteOptionsTerritoires"
+              :loading="loadingFetchTerritoires"
+              @fetch-suggestions="onFetchSuggestionsTerritoires"
+              @selected="onSelectTerritoire"
+            />
+
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'ofTemplate'"
+              v-model="selectedTemplate"
+              label="Template"
+              name="autocomplete-template"
+              attribute-key="id"
+              attribute-label="title"
+              :options="autocompleteOptionsTemplates"
+              :loading="loadingFetchTemplates"
+              @fetch-suggestions="onFetchSuggestionsTemplates"
+              @selected="onSelectTemplate"
+            />
+
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'ofDomaine'"
+              name="domaine"
+              :options="$labels.domaines"
+              :modelValue="$route.query['filter[ofDomaine]']?.split(',').map((i) => parseInt(i))"
+              placeholder="Domaine d'action"
+              multiple
+              @update:modelValue="changeFilter('filter[ofDomaine]', $event, true)"
             />
 
             <BaseFilterSelectAdvanced
@@ -220,18 +265,6 @@
         </template>
       </CustomSearchFilters>
 
-      <!--
-      <DsfrPagination
-        v-if="!bulkOperationIsActive"
-        class="mt-12 mb-6"
-        variant="light"
-        align="right"
-        :current-page="queryResult.current_page"
-        :total-rows="queryResult.total"
-        :per-page="queryResult.per_page"
-        @page-change="onPageChange"
-      /> -->
-
       <div class="my-6 space-y-4">
         <div
           v-for="(participation, index) in queryResult.data"
@@ -294,6 +327,7 @@ import ModalBulkParticipationsDecline from '@/components/modal/ModalBulkParticip
 import MixinUsetiful from '@/mixins/usetiful.client.js'
 import MixinFiltersVisibility from '@/mixins/filters-visibility'
 import activitiesJson from '@/assets/activities.json'
+import MixinSuggestionsFilters from '@/mixins/suggestions-filters'
 
 export default defineNuxtComponent({
   components: {
@@ -302,7 +336,14 @@ export default defineNuxtComponent({
     ModalBulkParticipationsValidate,
     ModalBulkParticipationsDecline,
   },
-  mixins: [QueryBuilder, MixinExport, MixinBulkOperations, MixinUsetiful, MixinFiltersVisibility],
+  mixins: [
+    QueryBuilder,
+    MixinExport,
+    MixinBulkOperations,
+    MixinUsetiful,
+    MixinFiltersVisibility,
+    MixinSuggestionsFilters,
+  ],
   async setup() {
     const { $stores } = useNuxtApp()
 
@@ -318,13 +359,6 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
 
-    // const activities = await apiFetch('/activities', {
-    //   params: {
-    //     pagination: -1,
-    //     'filter[is_published]': 1,
-    //   },
-    // })
-
     let responsables = []
     if ($stores.auth.contextRole === 'responsable' && $stores.auth.contextableId) {
       const response = await apiFetch(`/structures/${$stores.auth.contextableId}/responsables`)
@@ -335,15 +369,12 @@ export default defineNuxtComponent({
     }
 
     return {
-      // activities: activities.data,
       responsables: responsables,
     }
   },
   data() {
     return {
       loading: false,
-      loadingFetchOrganisations: false,
-      loadingFetchMissions: false,
       loadingFetchZips: false,
       endpoint: '/participations',
       exportEndpoint: '/export/participations',
@@ -352,8 +383,6 @@ export default defineNuxtComponent({
           'conversation.latestMessage,profile.avatar,mission.responsable,mission.structure,tags',
       },
       drawerParticipationId: null,
-      autocompleteOptionsOrganisations: [],
-      autocompleteOptionsMission: [],
       autocompleteOptionsZips: [],
       showModalBulkParticipationsValidate: false,
       showModalBulkParticipationsDecline: false,
@@ -389,18 +418,6 @@ export default defineNuxtComponent({
         .find((state) => state.key === 'Refusée')
         ?.roles?.includes(this.$stores.auth.contextRole)
     },
-    selectedOrganisation() {
-      return {
-        key: Number(this.$route.query['filter[mission.structure.id]']) || undefined,
-        label: this.$route.query['organisation_name'],
-      }
-    },
-    selectedMission() {
-      return {
-        key: Number(this.$route.query['filter[mission.id]']) || undefined,
-        label: this.$route.query['mission_name'],
-      }
-    },
     allFilters() {
       return [
         this.$stores.auth.user.statistics?.participations_need_to_be_treated_count > 0 &&
@@ -410,12 +427,18 @@ export default defineNuxtComponent({
         this.activities.length &&
           ['admin', 'referent'].includes(this.$stores.auth.contextRole) &&
           'ofActivity',
+
         ['admin', 'tete_de_reseau', 'referent', 'referent_regional'].includes(
           this.$stores.auth.contextRole
-        ) && 'mission.structure.id',
+        ) && 'ofStructure',
+        ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
+          'ofReseau',
         this.responsables.length &&
           ['responsable', 'admin'].includes(this.$stores.auth.contextRole) &&
           'ofResponsable',
+        ['admin', 'referent'].includes(this.$stores.auth.contextRole) && 'ofDomaine',
+        ['admin', 'referent'].includes(this.$stores.auth.contextRole) && 'ofTemplate',
+        ['admin', 'referent'].includes(this.$stores.auth.contextRole) && 'ofTerritoire',
         'mission.type',
         'mission.id',
         'mission.department',
@@ -428,7 +451,7 @@ export default defineNuxtComponent({
           'need_to_be_treated',
         'state',
         'tags',
-        ['admin'].includes(this.$stores.auth.contextRole) && 'mission.structure.id',
+        ['admin'].includes(this.$stores.auth.contextRole) && 'ofStructure',
         ['admin'].includes(this.$stores.auth.contextRole) && 'mission.department',
       ].filter((f) => f)
     },
@@ -438,8 +461,8 @@ export default defineNuxtComponent({
       handler(newQuery, oldQuery) {
         if (this.$stores.auth.contextRole === 'admin') {
           this.fetchResponsablesForAdmins(
-            newQuery['filter[mission.structure.id]'],
-            oldQuery?.['filter[mission.structure.id]']
+            newQuery['filter[ofStructure]'],
+            oldQuery?.['filter[ofStructure]']
           )
         }
         this.operations = []
@@ -455,28 +478,6 @@ export default defineNuxtComponent({
       this.queryResult.data.find(
         (participation) => participation.id === this.drawerParticipationId
       ).tags = tags
-    },
-    async onFetchSuggestionsOrganisations(value) {
-      this.loadingFetchOrganisations = true
-      const organisations = await apiFetch('/structures', {
-        params: {
-          'filter[search]': value,
-          pagination: 20,
-        },
-      })
-      this.autocompleteOptionsOrganisations = organisations.data
-      this.loadingFetchOrganisations = false
-    },
-    async onFetchSuggestionsMission(value) {
-      this.loadingFetchMissions = true
-      const missions = await apiFetch('/missions', {
-        params: {
-          'filter[search]': value,
-          pagination: 20,
-        },
-      })
-      this.autocompleteOptionsMission = missions.data
-      this.loadingFetchMissions = false
     },
     async onFetchSuggestionsZips(value) {
       this.loadingFetchZips = true
@@ -504,47 +505,6 @@ export default defineNuxtComponent({
       }
 
       return false
-    },
-    async onSelectOrganisation($event) {
-      const queryOrganisationName =
-        $event !== null && this.$route.query['organisation_name'] !== $event?.name
-          ? $event.name
-          : undefined
-      const queryOrganisationId =
-        $event !== null && Number(this.$route.query['filter[mission.structure.id]']) !== $event?.id
-          ? $event.id
-          : undefined
-
-      await this.$router.push({
-        path: this.$route.path,
-        query: {
-          ...this.$route.query,
-          page: undefined,
-          organisation_name: queryOrganisationName,
-          'filter[mission.structure.id]': queryOrganisationId,
-          'filter[ofResponsable]': undefined,
-        },
-      })
-    },
-    async onSelectMission($event) {
-      const queryMissionName =
-        $event !== null && this.$route.query['mission_name'] !== $event?.name
-          ? $event.name
-          : undefined
-      const queryMissionId =
-        $event !== null && Number(this.$route.query['filter[mission.id]']) !== $event?.id
-          ? $event.id
-          : undefined
-
-      await this.$router.push({
-        path: this.$route.path,
-        query: {
-          ...this.$route.query,
-          page: undefined,
-          mission_name: queryMissionName,
-          'filter[mission.id]': queryMissionId,
-        },
-      })
     },
     async fetchResponsablesForAdmins(organisationId, oldOrganisationId) {
       if (!organisationId) {

@@ -3,7 +3,7 @@
     <div class="text-sm flex justify-between px-2 mb-2 items-center">
       <div class="uppercase font-semibold text-gray-600">Participations</div>
       <BaseLink
-        :to="`/admin/participations?filter[mission.template.id]=${missionTemplate.id}&template_name=${missionTemplate.title}`"
+        :to="`/admin/participations?filter[ofTemplate]=${missionTemplate.id}&template_name=${missionTemplate.title}`"
         icon="RiArrowRightSLine"
       >
         Consulter

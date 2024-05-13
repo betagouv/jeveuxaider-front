@@ -157,14 +157,25 @@
             />
 
             <BaseFilterInputAutocomplete
-              v-if="visibleFilter === 'structure.id'"
+              v-if="visibleFilter === 'ofStructure'"
               v-model="selectedOrganisation"
               label="Organisation"
               name="autocomplete-organisation"
-              :options="autocompleteOptionsOrga"
-              @fetch-suggestions="onFetchSuggestionsOrga"
+              :options="autocompleteOptionsOrganisations"
+              @fetch-suggestions="onFetchSuggestionsOrganisations"
               @selected="onSelectOrganisation"
               :loading="loadingFetchOrganisations"
+            />
+
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'ofReseau'"
+              v-model="selectedReseau"
+              label="Réseau"
+              name="autocomplete-reseau"
+              :options="autocompleteOptionsReseaux"
+              :loading="loadingFetchReseaux"
+              @fetch-suggestions="onFetchSuggestionsReseaux"
+              @selected="onSelectReseau"
             />
 
             <BaseFilterSelectAdvanced
@@ -176,6 +187,30 @@
               attribute-label="full_name"
               placeholder="Responsable"
               @update:modelValue="changeFilter('filter[ofResponsable]', $event)"
+            />
+
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'ofTerritoire'"
+              v-model="selectedTerritoire"
+              label="Territoire"
+              name="autocomplete-territoire"
+              :options="autocompleteOptionsTerritoires"
+              :loading="loadingFetchTerritoires"
+              @fetch-suggestions="onFetchSuggestionsTerritoires"
+              @selected="onSelectTerritoire"
+            />
+
+            <BaseFilterInputAutocomplete
+              v-if="visibleFilter === 'ofTemplate'"
+              v-model="selectedTemplate"
+              label="Template"
+              name="autocomplete-template"
+              attribute-key="id"
+              attribute-label="title"
+              :options="autocompleteOptionsTemplates"
+              :loading="loadingFetchTemplates"
+              @fetch-suggestions="onFetchSuggestionsTemplates"
+              @selected="onSelectTemplate"
             />
 
             <BaseFilterSelectAdvanced
@@ -376,6 +411,7 @@ import SearchFilters from '@/components/custom/SearchFilters.vue'
 import ButtonCreateMission from '@/components/custom/ButtonCreateMission.vue'
 import MixinFiltersVisibility from '@/mixins/filters-visibility'
 import activitiesJson from '@/assets/activities.json'
+import MixinSuggestionsFilters from '@/mixins/suggestions-filters'
 
 export default defineNuxtComponent({
   components: {
@@ -384,7 +420,7 @@ export default defineNuxtComponent({
     SearchFilters,
     ButtonCreateMission,
   },
-  mixins: [QueryBuilder, MixinExport, MixinFiltersVisibility],
+  mixins: [QueryBuilder, MixinExport, MixinFiltersVisibility, MixinSuggestionsFilters],
   async setup() {
     const { $stores } = useNuxtApp()
 
@@ -408,15 +444,7 @@ export default defineNuxtComponent({
       responsables = responsablesResponse.map((user) => user.profile) ?? []
     }
 
-    // const activities = await apiFetch('/activities', {
-    //   params: {
-    //     pagination: -1,
-    //     'filter[is_published]': 1,
-    //   },
-    // })
-
     return {
-      // activities: activities.data,
       responsables,
     }
   },
@@ -424,14 +452,12 @@ export default defineNuxtComponent({
     return {
       loading: false,
       loadingFetchZips: false,
-      loadingFetchOrganisations: false,
       endpoint: '/missions',
       exportEndpoint: '/export/missions',
       queryParams: {
         include: 'template.photo,illustrations,tags',
       },
       drawerMissionId: null,
-      autocompleteOptionsOrga: [],
       tags: [],
       responsablesStructures: [],
       autocompleteOptionsZips: [],
@@ -439,12 +465,6 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    selectedOrganisation() {
-      return {
-        key: Number(this.$route.query['filter[structure.id]']) || undefined,
-        label: this.$route.query['organisation_name'],
-      }
-    },
     allFilters() {
       return [
         'state',
@@ -468,12 +488,16 @@ export default defineNuxtComponent({
         ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
           'is_snu_mig_compatible',
         ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
-          'structure.id',
+          'ofStructure',
+        ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
+          'ofReseau',
         this.responsablesStructures.length &&
           ['admin'].includes(this.$stores.auth.contextRole) &&
           'ofResponsable',
         ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
           'structure.statut_juridique',
+        ['admin'].includes(this.$stores.auth.contextRole) && 'ofTemplate',
+        ['admin'].includes(this.$stores.auth.contextRole) && 'ofTerritoire',
         this.$stores.auth.contextRole == 'admin' && 'tags',
       ].filter((f) => f)
     },
@@ -486,8 +510,8 @@ export default defineNuxtComponent({
       handler(newQuery, oldQuery) {
         if (this.$stores.auth.contextRole === 'admin') {
           this.fetchResponsablesForAdmins(
-            newQuery['filter[structure.id]'],
-            oldQuery?.['filter[structure.id]']
+            newQuery['filter[ofStructure]'],
+            oldQuery?.['filter[ofStructure]']
           )
         }
       },
@@ -503,17 +527,6 @@ export default defineNuxtComponent({
     })
   },
   methods: {
-    async onFetchSuggestionsOrga(value) {
-      this.loadingFetchOrganisations = true
-      const organisations = await apiFetch('/structures', {
-        params: {
-          'filter[search]': value,
-          pagination: 20,
-        },
-      })
-      this.autocompleteOptionsOrga = organisations.data
-      this.loadingFetchOrganisations = false
-    },
     async onFetchSuggestionsZips(value) {
       this.loadingFetchZips = true
       this.autocompleteOptionsZips = await useGeolocationFetch(value, {
@@ -531,27 +544,6 @@ export default defineNuxtComponent({
         const responsables = await apiFetch(`/structures/${organisationId}/responsables`)
         this.responsablesStructures = responsables.map((user) => user.profile) ?? []
       }
-    },
-    async onSelectOrganisation($event) {
-      const queryOrganisationName =
-        $event !== null && this.$route.query['organisation_name'] !== $event?.name
-          ? $event.name
-          : undefined
-      const queryOrganisationId =
-        $event !== null && Number(this.$route.query['filter[structure.id]']) !== $event?.id
-          ? $event.id
-          : undefined
-
-      await this.$router.push({
-        path: this.$route.path,
-        query: {
-          ...this.$route.query,
-          page: undefined,
-          organisation_name: queryOrganisationName,
-          'filter[structure.id]': queryOrganisationId,
-          'filter[ofResponsable]': undefined,
-        },
-      })
     },
   },
 })

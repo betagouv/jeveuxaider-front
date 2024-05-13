@@ -33,9 +33,9 @@
       >
         <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
-            <BaseButton variant="green" size="xl" :loading="loading" @click.native="handleSubmit">
+            <DsfrButton size="lg" :loading="loading" @click.native="handleSubmit">
               Exécuter le script
-            </BaseButton>
+            </DsfrButton>
           </div>
         </template>
       </BaseSectionHeading>
