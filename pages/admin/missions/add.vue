@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-10">
+  <div class="space-y-24">
     <div id="domaines" class="">
       <h2 class="text-[28px] font-bold leading-9 mb-10">
         Quel est le domaine d’action de votre mission ?
@@ -12,29 +12,47 @@
         <div
           v-for="domaine in domaines"
           :key="domaine.key"
-          class="bg-white shadow-lg p-6 text-center flex flex-col items-center justify-center cursor-pointer hover:shadow-xl"
-          @click="onDomaineClick(domaine.key)"
+          :class="[
+            'relative group  shadow-lg p-6 text-center border-2 flex flex-col items-center justify-center cursor-pointer hover:border-jva-blue-500',
+            selectedDomaine && selectedDomaine.key === domaine.key
+              ? 'border-jva-blue-500 bg-[#F5F5FE]'
+              : 'border-transparent bg-white',
+          ]"
+          @click="onDomaineClick(domaine)"
         >
+          <RiCheckboxCircleFill
+            v-if="selectedDomaine && selectedDomaine.key === domaine.key"
+            class="h-6 text-jva-blue-500 fill-current absolute top-2 right-2 group-hover:text-jva-blue-500"
+          />
           <div class="text-4xl mb-2">
             {{ domaine.emoji }}
           </div>
-          <div class="leading-tight font-bold text-[#161616]">
+          <div
+            :class="[
+              'leading-tight font-bold group-hover:text-jva-blue-500',
+              selectedDomaine && selectedDomaine.key === domaine.key
+                ? 'text-jva-blue-500'
+                : 'text-[#161616]',
+            ]"
+          >
             {{ domaine.label }}
           </div>
         </div>
       </div>
     </div>
-    <div id="templates" class="">
+    <div v-if="selectedDomaine" id="templates" class="">
       <div class="mb-10">
-        <h2 class="text-[28px] font-bold leading-9">Choisissez un modèle de mission</h2>
+        <h2 class="text-[28px] font-bold leading-9 mb-2">Choisissez un modèle de mission</h2>
         <div>
-          {{ selectedDomaine.emoji }} {{ selectedDomaine.label }}
-          <DsfrLink @click="onChangeDomaineClick">Changer</DsfrLink>
+          <span>{{ selectedDomaine.emoji }}</span>
+          <span class="ml-2 text-[#666666]">{{ selectedDomaine.label }}</span>
+          <DsfrLink class="ml-4 text-jva-blue-500" @click="onChangeDomaineClick">Changer</DsfrLink>
         </div>
       </div>
       <CustomTips class="mb-10">
-        Plusieurs domaines correspondent à votre mission ? Choisissez celui qui vous semble le plus
-        important. Vous pourrez choisir un domaine secondaire dans les étapes suivantes.
+        En utilisant un modèle déjà existant, votre mission sera publiée sans besoin d’être
+        instruite.
+        <span class="font-bold">L’instruction d’une mission prend en moyenne 7 à 10 jours.</span>
       </CustomTips>
 
       <div v-if="selectedDomaine" class="grid grid-cols-1 gap-4">
@@ -65,14 +83,63 @@
       </div>
     </div>
 
-    <div id="preview" class="">
-      <div class="" mb-10>
-        <h2 class="text-[28px] font-bold leading-9">Est-ce le modèle qu’il vous faut ?</h2>
-        <div>Ces informations ne seront pas modifiables, mais vous pourrez en ajouter !</div>
+    <div v-if="selectedTemplate" id="preview" class="">
+      <div class="mb-10">
+        <h2 class="text-[28px] font-bold leading-9 mb-2">Est-ce le modèle qu’il vous faut ?</h2>
+        <div class="text-[#666666]">
+          Ces informations ne seront pas modifiables, mais vous pourrez en ajouter !
+        </div>
       </div>
 
-      <div v-if="selectedTemplate">
-        {{ selectedTemplate }}
+      <div class="border border-t-[8px] rounded-t border-t-jva-blue-500">
+        <div class="grid grid-cols-1 p-8">
+          <div class="pb-8 text-lg font-bold text-[#161616] border-b">
+            {{ selectedTemplate.subtitle }}
+          </div>
+          <div class="py-8 border-b">
+            <div class="uppercase text-[#666666] font-bold text-sm mb-2">Type de mission</div>
+            <div class="font-medium">{{ selectedTemplate.title }}</div>
+          </div>
+          <div class="py-8 border-b">
+            <div class="uppercase text-[#666666] font-bold text-sm mb-2">Description</div>
+            <div class="formatted-text font-medium" v-html="selectedTemplate.description" />
+          </div>
+          <div class="pt-8">
+            <div class="uppercase text-[#666666] font-bold text-sm mb-2">Objectif</div>
+            <div class="formatted-text font-medium" v-html="selectedTemplate.objectif" />
+          </div>
+        </div>
+        <div class="flex justify-end space-x-4 border-t p-8">
+          <DsfrButton type="tertiary" @click="onChangeTemplateClick"
+            >Choisir un autre modèle</DsfrButton
+          >
+          <DsfrButton @click="onValidateClick">Valider</DsfrButton>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="noTemplateSelected" id="preview-no-template">
+      <div class="mb-10">
+        <h2 class="text-[28px] font-bold leading-9 mb-2">Personnalisez votre mission</h2>
+        <div class="text-[#666666]">
+          Vous pourrez personnaliser votre mission en complétant les informations demandées.
+        </div>
+      </div>
+      <div class="border border-t-[8px] rounded-t border-t-jva-blue-500">
+        <div class="grid grid-cols-1 p-8">
+          <div class="py-8 border-b">
+            <div class="uppercase text-[#666666] font-bold text-sm mb-2">Structure</div>
+            <div class="font-medium">{{ structure.name }}</div>
+          </div>
+          <div class="pt-8">
+            <div class="uppercase text-[#666666] font-bold text-sm mb-2">Domaine principal</div>
+            <div class="font-medium">{{ selectedDomaine.emoji }} {{ selectedDomaine.label }}</div>
+          </div>
+        </div>
+        <div class="flex justify-end space-x-4 border-t p-8">
+          <DsfrButton type="tertiary" @click="onChangeTemplateClick">Choisir un modèle</DsfrButton>
+          <DsfrButton @click="onValidateClick">Valider</DsfrButton>
+        </div>
       </div>
     </div>
   </div>
@@ -80,9 +147,12 @@
 
 <script>
 import domaines from '@/assets/domaines.json'
+import { RiCheckboxCircleFill } from 'vue-remix-icons'
 
 export default {
-  components: {},
+  components: {
+    RiCheckboxCircleFill,
+  },
   async setup() {
     definePageMeta({
       layout: 'form-missions',
@@ -122,6 +192,7 @@ export default {
       domaines: domaines.sort((a, b) => a.label.localeCompare(b.label)),
       selectedDomaine: null,
       selectedTemplate: null,
+      noTemplateSelected: false,
       templates: [],
     }
   },
@@ -130,16 +201,50 @@ export default {
   methods: {
     onDomaineClick(domaine) {
       this.selectedDomaine = domaine
+      this.selectedTemplate = null
       this.fetchTemplates()
-      this.$scrollTo('#templates', 300, {})
+      this.$router.push({
+        path: this.$route.path,
+        hash: '#templates',
+      })
+      // this.$scrollTo('#templates', 300, {})
     },
     onChangeDomaineClick() {
       this.selectedDomaine = null
-      this.$scrollTo('#domaines', 300, {})
+      this.selectedTemplate = null
+      this.templates = []
+      this.$router.push({
+        path: this.$route.path,
+        hash: '#domaines',
+      })
+      // this.$scrollTo('#domaines', 300, {})
+    },
+    onChangeTemplateClick() {
+      this.selectedTemplate = null
+      this.noTemplateSelected = false
+      this.$router.push({
+        path: this.$route.path,
+        hash: '#templates',
+      })
+      // this.$scrollTo('#templates', 300, {})
     },
     onTemplateClick(template) {
-      this.selectedTemplate = template
-      this.$scrollTo('#preview', 300, {})
+      if (!template) {
+        this.noTemplateSelected = true
+        this.selectedTemplate = null
+        this.$router.push({
+          path: this.$route.path,
+          hash: '#preview-no-template',
+        })
+        // this.$scrollTo('#preview-no-template', 300, {})
+      } else {
+        this.selectedTemplate = template
+        this.$router.push({
+          path: this.$route.path,
+          hash: '#preview',
+        })
+        // this.$scrollTo('#preview', 300, {})
+      }
     },
     async fetchTemplates() {
       await apiFetch('/mission-templates', {
@@ -157,6 +262,9 @@ export default {
       }).then((templates) => {
         this.templates = templates.data
       })
+    },
+    onValidateClick() {
+      console.log('onValidateClick')
     },
   },
 }

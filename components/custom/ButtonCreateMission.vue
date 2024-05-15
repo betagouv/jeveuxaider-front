@@ -6,6 +6,9 @@
     <DsfrButton v-else icon="RiAddLine" :size="size" tabindex="-1" @click.native="handleClick">
       Publier une mission
     </DsfrButton>
+    <DsfrButton :size="size" tabindex="-1" @click.native="$router.push('/admin/missions/add')">
+      Airbnb 🔥
+    </DsfrButton>
     <BaseModal
       :is-open="showModalFirstMission"
       title="C’est votre première mission ! 🍾"
