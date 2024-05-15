@@ -48,6 +48,7 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "click-outside-vue3": "^4.0.1",
     "floating-vue": "^2.0.0-beta.24",
+    "h3-compression": "^0.3.2",
     "lax.js": "^2.0.3",
     "marked": "^7.0.4",
     "mime-types": "^2.1.35",

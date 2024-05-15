@@ -56,22 +56,6 @@ export default defineNuxtComponent({
           rel: 'canonical',
           href: 'https://www.jeveuxaider.gouv.fr/',
         },
-        {
-          rel: 'preload',
-          as: 'image',
-          href: '/images/home/banner-ronds.svg',
-          type: 'image/svg+xml',
-          fetchpriority: 'high',
-        },
-        {
-          rel: 'preload',
-          as: 'image',
-          imagesrcset:
-            '/images/home/trombinoscope-mobile-2.webp, /images/home/trombinoscope-mobile-2@2x.webp 2x',
-          type: 'image/webp',
-          imagesizes: '100vw',
-          fetchpriority: 'high',
-        },
       ],
       meta: [
         {
