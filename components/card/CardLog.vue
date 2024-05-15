@@ -86,7 +86,7 @@
                 </template>
               </template>
               <template v-else>
-                <template v-if="log.description === 'stop_impersonated'">
+                <template v-if="log.event === 'stop_impersonated'">
                   Le modérateur ne prend plus la place de
                   <span class="font-bold"> {{ log.properties?.impersonate_user_name }}</span>
                 </template>
@@ -155,7 +155,7 @@ export default defineNuxtComponent({
   },
   computed: {
     hasCauser() {
-      if (this.log.description === 'stop_impersonated') {
+      if (this.log.event === 'stop_impersonated') {
         return false
       }
       return this.log.causer !== null
