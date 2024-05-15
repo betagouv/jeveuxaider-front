@@ -54,6 +54,7 @@
             { key: 'duplicated', label: 'Duplication' },
             { key: 'deleted', label: 'Suppression' },
             { key: 'exported', label: 'Export' },
+            { key: 'impersonated', label: 'Masquerade' },
           ]"
           :modelValue="$route.query['filter[description]']?.split(',')"
           clearable

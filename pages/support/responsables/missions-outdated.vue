@@ -172,54 +172,14 @@ export default defineNuxtComponent({
       middleware: ['admin'],
     })
   },
-  computed: {
-    // selectedOrganisation() {
-    //   return {
-    //     key: Number(this.$route.query['organisation_id']) || undefined,
-    //     label: this.$route.query['organisation_name'],
-    //   }
-    // },
-  },
+  computed: {},
   data() {
     return {
       endpoint: '/support/responsables/missions-outdated',
       loading: true,
-      // loadingFetchOrganisations: false,
       drawerProfileId: null,
-      // autocompleteOptionsOrganisations: [],
     }
   },
-  methods: {
-    // async onFetchSuggestionsOrganisations(value) {
-    //   this.loadingFetchOrganisations = true
-    //   const organisations = await apiFetch('/structures', {
-    //     params: {
-    //       'filter[search]': value,
-    //       pagination: 12,
-    //     },
-    //   })
-    //   this.autocompleteOptionsOrganisations = organisations.data
-    //   this.loadingFetchOrganisations = false
-    // },
-    // async onSelectOrganisation($event) {
-    //   const queryOrganisationName =
-    //     $event !== null && this.$route.query['organisation_name'] !== $event?.name
-    //       ? $event.name
-    //       : undefined
-    //   const queryOrganisationId =
-    //     $event !== null && Number(this.$route.query['organisation_id']) !== $event?.id
-    //       ? $event.id
-    //       : undefined
-    //   await this.$router.push({
-    //     path: this.$route.path,
-    //     query: {
-    //       ...this.$route.query,
-    //       page: undefined,
-    //       organisation_name: queryOrganisationName,
-    //       organisation_id: queryOrganisationId,
-    //     },
-    //   })
-    // },
-  },
+  methods: {},
 })
 </script>

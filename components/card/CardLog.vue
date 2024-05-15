@@ -12,13 +12,18 @@
           />
           <div>
             <div>
-              <template v-if="log.causer">
+              <template v-if="hasCauser">
                 <span class="font-bold">{{ log.causer?.profile.full_name }} </span>
                 <template v-if="log.log_name === 'export'">
                   {{ action }}
                   <span class="font-bold">
                     {{ log.properties?.items_count }} {{ log.properties?.type }}</span
                   >
+                </template>
+
+                <template v-if="log.log_name === 'impersonate'">
+                  {{ action }}
+                  <span class="font-bold"> {{ log.properties?.impersonate_user_name }}</span>
                 </template>
 
                 <template v-if="log.subject_type === 'App\\Models\\Structure'">
@@ -81,6 +86,10 @@
                 </template>
               </template>
               <template v-else>
+                <template v-if="log.description === 'stop_impersonated'">
+                  Le modérateur ne prend plus la place de
+                  <span class="font-bold"> {{ log.properties?.impersonate_user_name }}</span>
+                </template>
                 <template
                   v-if="
                     log.subject_type === 'App\\Models\\Profile' && log.description === 'created'
@@ -145,6 +154,12 @@ export default defineNuxtComponent({
     },
   },
   computed: {
+    hasCauser() {
+      if (this.log.description === 'stop_impersonated') {
+        return false
+      }
+      return this.log.causer !== null
+    },
     action() {
       if (this.log.log_name === 'note') {
         return 'a ajouté une note à'
@@ -161,8 +176,11 @@ export default defineNuxtComponent({
       if (this.log.description === 'duplicated') {
         return 'a dupliqué'
       }
-      if (this.log.log_name === 'export') {
-        return 'a exporté'
+      if (this.log.description === 'impersonated') {
+        return 'a pris la place de'
+      }
+      if (this.log.description === 'duplicated') {
+        return 'a dupliqué'
       }
       return this.log.description
     },

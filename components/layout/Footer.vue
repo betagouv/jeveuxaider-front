@@ -342,6 +342,10 @@ export default defineNuxtComponent({
           name: 'service-civique.gouv.fr',
           url: 'https://www.service-civique.gouv.fr/',
         },
+        {
+          name: 'api-engagement.beta.gouv.fr',
+          url: 'https://api-engagement.beta.gouv.fr/',
+        },
       ],
     }
   },
