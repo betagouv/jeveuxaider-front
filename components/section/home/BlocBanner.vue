@@ -3,8 +3,8 @@
     <img
       src="/images/home/banner-ronds.svg"
       alt=""
-      width="1592"
-      height="691"
+      width="465"
+      height="382"
       aria-hidden="true"
       :class="[
         'pointer-events-none absolute inset-0 m-auto object-cover',

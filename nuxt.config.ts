@@ -235,4 +235,8 @@ export default defineNuxtConfig({
     prefixSkip: false,
     upperAfterPrefix: false,
   },
+
+  nitro: {
+    compressPublicAssets: true,
+  },
 })
