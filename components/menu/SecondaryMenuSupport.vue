@@ -96,6 +96,10 @@ export default defineNuxtComponent({
               label: 'Doublons territoires',
               to: '/support/contents/doublons-territoires',
             },
+            {
+              label: 'Doublons organisations',
+              to: '/support/contents/doublons-organisations',
+            },
           ],
         },
         {
