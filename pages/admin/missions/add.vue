@@ -13,16 +13,16 @@
           v-for="domaine in domaines"
           :key="domaine.key"
           :class="[
-            'relative group  shadow-lg p-6 text-center border-2 flex flex-col items-center justify-center cursor-pointer hover:border-jva-blue-500',
+            'relative group  shadow-lg p-6 text-center border-2 flex flex-col items-center justify-center cursor-pointer hover:border-[#8585F6]',
             selectedDomaine && selectedDomaine.key === domaine.key
-              ? 'border-jva-blue-500 bg-[#F5F5FE]'
+              ? 'border-[#8585F6] bg-[#F5F5FE]'
               : 'border-transparent bg-white',
           ]"
           @click="onDomaineClick(domaine)"
         >
           <RiCheckboxCircleFill
             v-if="selectedDomaine && selectedDomaine.key === domaine.key"
-            class="h-6 text-jva-blue-500 fill-current absolute top-2 right-2 group-hover:text-jva-blue-500"
+            class="h-6 text-jva-blue-500 fill-current absolute top-3 right-3 group-hover:text-jva-blue-500"
           />
           <div class="text-4xl mb-2">
             {{ domaine.emoji }}
@@ -40,6 +40,7 @@
         </div>
       </div>
     </div>
+
     <div v-if="selectedDomaine" id="templates" class="">
       <div class="mb-10">
         <h2 class="text-[28px] font-bold leading-9 mb-2">Choisissez un modèle de mission</h2>
@@ -56,30 +57,28 @@
       </CustomTips>
 
       <div v-if="selectedDomaine" class="grid grid-cols-1 gap-4">
-        <div
-          class="bg-white shadow-lg p-6 cursor-pointer hover:shadow-xl"
-          @click="onTemplateClick(null)"
-        >
-          <div>IMG</div>
-          <div>
-            <div>{{ selectedDomaine.label }}</div>
-            <div>Personnalisez votre mission</div>
-            <div>L'intégralité des champs sont éditables</div>
-          </div>
-        </div>
-        <div
+        <CardTemplate :is-selected="noTemplateSelected" @click="onTemplateClick(null)">
+          <DsfrTag>{{ selectedDomaine.label }}</DsfrTag>
+        </CardTemplate>
+        <CardTemplate
           v-for="template in templates"
           :key="template.id"
-          class="bg-white shadow-lg p-6 cursor-pointer hover:shadow-xl"
+          :template="template"
+          :is-selected="template.id === selectedTemplate?.id"
           @click="onTemplateClick(template)"
         >
-          <div>IMG</div>
-          <div>
-            <div>{{ selectedDomaine.label }}</div>
-            <div>{{ template.subtitle }}</div>
-            <div>{{ template.title }}</div>
-          </div>
-        </div>
+          <template #tags>
+            <DsfrTag v-if="template.domaine_id">
+              {{ $labels.domaines.find((domaine) => domaine.key === template.domaine_id)?.label }}
+            </DsfrTag>
+            <DsfrTag v-if="template.domaine_secondary_id" class="ml-2">
+              {{
+                $labels.domaines.find((domaine) => domaine.key === template.domaine_secondary_id)
+                  ?.label
+              }}
+            </DsfrTag>
+          </template>
+        </CardTemplate>
       </div>
     </div>
 
@@ -91,31 +90,16 @@
         </div>
       </div>
 
-      <div class="border border-t-[8px] rounded-t border-t-jva-blue-500">
-        <div class="grid grid-cols-1 p-8">
-          <div class="pb-8 text-lg font-bold text-[#161616] border-b">
-            {{ selectedTemplate.subtitle }}
+      <CardTemplatePreview :template="selectedTemplate">
+        <template #footer>
+          <div class="flex justify-end space-x-4 border-t p-8">
+            <DsfrButton type="tertiary" @click="onChangeTemplateClick"
+              >Choisir un autre modèle</DsfrButton
+            >
+            <DsfrButton @click="onValidateClick">Valider</DsfrButton>
           </div>
-          <div class="py-8 border-b">
-            <div class="uppercase text-[#666666] font-bold text-sm mb-2">Type de mission</div>
-            <div class="font-medium">{{ selectedTemplate.title }}</div>
-          </div>
-          <div class="py-8 border-b">
-            <div class="uppercase text-[#666666] font-bold text-sm mb-2">Description</div>
-            <div class="formatted-text font-medium" v-html="selectedTemplate.description" />
-          </div>
-          <div class="pt-8">
-            <div class="uppercase text-[#666666] font-bold text-sm mb-2">Objectif</div>
-            <div class="formatted-text font-medium" v-html="selectedTemplate.objectif" />
-          </div>
-        </div>
-        <div class="flex justify-end space-x-4 border-t p-8">
-          <DsfrButton type="tertiary" @click="onChangeTemplateClick"
-            >Choisir un autre modèle</DsfrButton
-          >
-          <DsfrButton @click="onValidateClick">Valider</DsfrButton>
-        </div>
-      </div>
+        </template>
+      </CardTemplatePreview>
     </div>
 
     <div v-if="noTemplateSelected" id="preview-no-template">
@@ -125,22 +109,25 @@
           Vous pourrez personnaliser votre mission en complétant les informations demandées.
         </div>
       </div>
-      <div class="border border-t-[8px] rounded-t border-t-jva-blue-500">
-        <div class="grid grid-cols-1 p-8">
-          <div class="py-8 border-b">
-            <div class="uppercase text-[#666666] font-bold text-sm mb-2">Structure</div>
-            <div class="font-medium">{{ structure.name }}</div>
-          </div>
-          <div class="pt-8">
-            <div class="uppercase text-[#666666] font-bold text-sm mb-2">Domaine principal</div>
-            <div class="font-medium">{{ selectedDomaine.emoji }} {{ selectedDomaine.label }}</div>
-          </div>
+
+      <CardTemplatePreview>
+        <div class="py-8 border-b">
+          <div class="uppercase text-[#666666] font-bold text-sm mb-2">Structure</div>
+          <div class="font-medium">{{ structure.name }}</div>
         </div>
-        <div class="flex justify-end space-x-4 border-t p-8">
-          <DsfrButton type="tertiary" @click="onChangeTemplateClick">Choisir un modèle</DsfrButton>
-          <DsfrButton @click="onValidateClick">Valider</DsfrButton>
+        <div class="pt-8">
+          <div class="uppercase text-[#666666] font-bold text-sm mb-2">Domaine principal</div>
+          <div class="font-medium">{{ selectedDomaine.emoji }} {{ selectedDomaine.label }}</div>
         </div>
-      </div>
+        <template #footer>
+          <div class="flex justify-end space-x-4 border-t p-8">
+            <DsfrButton type="tertiary" @click="onChangeTemplateClick"
+              >Choisir un modèle</DsfrButton
+            >
+            <DsfrButton @click="onValidateClick">Valider</DsfrButton>
+          </div>
+        </template>
+      </CardTemplatePreview>
     </div>
   </div>
 </template>
@@ -148,9 +135,12 @@
 <script>
 import domaines from '@/assets/domaines.json'
 import { RiCheckboxCircleFill } from 'vue-remix-icons'
+import CardTemplate from '@/components/card/CardTemplate.vue'
+import CardTemplatePreview from '@/components/card/CardTemplatePreview.vue'
 
 export default {
   components: {
+    CardTemplate,
     RiCheckboxCircleFill,
   },
   async setup() {
@@ -240,6 +230,7 @@ export default {
         })
         // this.$scrollTo('#preview-no-template', 300, {})
       } else {
+        this.noTemplateSelected = false
         this.selectedTemplate = template
         this.$router.push({
           path: this.$route.path,
