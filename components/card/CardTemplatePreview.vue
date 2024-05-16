@@ -11,7 +11,7 @@
           <div class="font-medium">{{ template.title }}</div>
         </div>
         <div class="py-8 border-b">
-          <div class="grid grid-cols-2">
+          <div class="grid grid-cols-2 gap-2">
             <div>
               <div class="uppercase text-[#666666] font-bold text-sm mb-2">
                 Domaine d’action principal
@@ -34,16 +34,31 @@
           </div>
         </div>
         <div class="py-8 border-b">
-          <div class="uppercase text-[#666666] font-bold text-sm mb-2">Type de mission</div>
-          <div class="font-medium">{{ template.title }}</div>
-        </div>
-        <div class="py-8 border-b">
           <div class="uppercase text-[#666666] font-bold text-sm mb-2">Description</div>
           <div class="formatted-text font-medium" v-html="template.description" />
         </div>
-        <div class="pt-8">
+        <div class="py-8 border-b">
           <div class="uppercase text-[#666666] font-bold text-sm mb-2">Objectif</div>
           <div class="formatted-text font-medium" v-html="template.objectif" />
+        </div>
+        <div class="pt-8">
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <div class="uppercase text-[#666666] font-bold text-sm mb-2">Activité principale</div>
+              <DsfrBadge v-if="template.activity_id" size="md">
+                {{ activities.find((activity) => activity.key === template.activity_id)?.name }}
+              </DsfrBadge>
+            </div>
+            <div>
+              <div class="uppercase text-[#666666] font-bold text-sm mb-2">Activité secondaire</div>
+              <DsfrBadge v-if="template.activity_secondary_id" size="md">
+                {{
+                  activities.find((activity) => activity.key === template.activity_secondary_id)
+                    ?.name
+                }}
+              </DsfrBadge>
+            </div>
+          </div>
         </div>
       </template>
     </div>
@@ -52,8 +67,14 @@
 </template>
 
 <script>
+import activities from '@/assets/activities.json'
+
 export default defineNuxtComponent({
-  components: {},
+  data() {
+    return {
+      activities,
+    }
+  },
   props: {
     template: {
       type: Object,

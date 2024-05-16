@@ -112,12 +112,14 @@
 
       <CardTemplatePreview>
         <div class="py-8 border-b">
-          <div class="uppercase text-[#666666] font-bold text-sm mb-2">Structure</div>
+          <div class="uppercase text-[#666666] font-bold text-sm mb-2">Organisation</div>
           <div class="font-medium">{{ structure.name }}</div>
         </div>
         <div class="pt-8">
-          <div class="uppercase text-[#666666] font-bold text-sm mb-2">Domaine principal</div>
-          <div class="font-medium">{{ selectedDomaine.emoji }} {{ selectedDomaine.label }}</div>
+          <div class="uppercase text-[#666666] font-bold text-sm mb-2">
+            Domaine d’action principal
+          </div>
+          <div class="font-medium">{{ selectedDomaine.label }}</div>
         </div>
         <template #footer>
           <div class="flex justify-end space-x-4 border-t p-8">
