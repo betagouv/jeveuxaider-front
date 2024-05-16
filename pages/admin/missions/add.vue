@@ -136,7 +136,7 @@
 
 <script>
 import domaines from '@/assets/domaines.json'
-import { RiCheckboxCircleFill } from 'vue-remix-icons'
+import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
 import CardTemplate from '@/components/card/CardTemplate.vue'
 import CardTemplatePreview from '@/components/card/CardTemplatePreview.vue'
 
@@ -147,7 +147,7 @@ export default {
   },
   async setup() {
     definePageMeta({
-      layout: 'form-missions',
+      layout: 'form-mission-add',
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
     const { $stores } = useNuxtApp()
@@ -258,8 +258,25 @@ export default {
         this.templates = templates.data
       })
     },
-    onValidateClick() {
-      console.log('onValidateClick')
+    async onValidateClick() {
+      this.loading = true
+      await apiFetch(`/structures/${this.structure.id}/v2/missions`, {
+        method: 'POST',
+        body: {
+          domaine_id: this.selectedDomaine.key,
+          template_id: this.selectedTemplate?.id,
+        },
+      })
+        .then(async (mission) => {
+          if (this.$stores.auth.contextRole === 'responsable') {
+            await this.$stores.auth.fetchUser()
+          }
+          this.$router.push(`/admin/missions/${mission.id}/title`)
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.loading = false
+        })
     },
   },
 }

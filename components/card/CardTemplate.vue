@@ -57,7 +57,8 @@
 </template>
 
 <script>
-import { RiEditBoxLine, RiCheckboxCircleFill } from 'vue-remix-icons'
+import RiEditBoxLine from 'vue-remix-icons/icons/ri-edit-box-line.vue'
+import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
 
 export default defineNuxtComponent({
   components: {

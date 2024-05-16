@@ -10,6 +10,7 @@ import { useAlgoliaSearchStore } from '@/store/algoliaSearch'
 import { useSoftGateStore } from '@/store/softGate'
 import { useStructureTagsStore } from '@/store/structureTags'
 import { useArchivedUserStore } from '~/store/archivedUser'
+import { useFormMissionStore } from '~/store/formMission'
 
 export default defineNuxtPlugin(async () => {
   const storeAuth = useAuthStore()
@@ -24,6 +25,7 @@ export default defineNuxtPlugin(async () => {
   const storeSoftGate = useSoftGateStore()
   const storeStructureTags = useStructureTagsStore()
   const storeArchivedUser = useArchivedUserStore()
+  const storeFormMission = useFormMissionStore()
   const cookieAccessToken = useCookie('access-token')
   const cookieAccessTokenImpersonate = useCookie('access-token-impersonate')
 
@@ -56,6 +58,7 @@ export default defineNuxtPlugin(async () => {
         softGate: storeSoftGate,
         structureTags: storeStructureTags,
         archivedUser: storeArchivedUser,
+        formMission: storeFormMission,
       },
     },
   }
