@@ -202,6 +202,7 @@ export default {
     onDomaineClick(domaine) {
       this.selectedDomaine = domaine
       this.selectedTemplate = null
+      this.noTemplateSelected = false
       this.fetchTemplates()
       this.$router.push({
         path: this.$route.path,
@@ -212,6 +213,7 @@ export default {
     onChangeDomaineClick() {
       this.selectedDomaine = null
       this.selectedTemplate = null
+      this.noTemplateSelected = false
       this.templates = []
       this.$router.push({
         path: this.$route.path,
