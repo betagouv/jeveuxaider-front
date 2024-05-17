@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col">
-    <div class="flex-1">
-      <div class="max-w-[648px] mx-auto">
+  <div class="flex flex-col h-full">
+    <div class="flex-1 overflow-y-auto overflow-x-hidden h-full custom-scrollbar-gray">
+      <div class="px-4 max-w-[696px] mx-auto">
         <div class="py-14"><slot></slot></div>
       </div>
     </div>

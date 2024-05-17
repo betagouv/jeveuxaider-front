@@ -2,15 +2,20 @@
   <FormMissionEditWrapper>
     <div v-if="mission">
       <h2 class="text-[28px] font-bold leading-9 mb-10">Choisissez un visuel</h2>
-      {{ mission.domaine_id }}
-      <img
-        v-for="media in medias"
-        :key="media.id"
-        :srcset="media.urls['formPreview']"
-        :alt="media.name"
-        :class="['cursor-pointer transition ring-offset-4 hover:opacity-50']"
-        @click.stop="onMediaClick(media)"
-      />
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div v-for="media in medias" :key="media.id" class="">
+          <img
+            :srcset="media.urls['formPreview']"
+            :alt="media.name"
+            :class="[
+              'object-contain cursor-pointer transition',
+              { 'ring-4 ring-[#6A6AF4]': media.id === selectedMediaId },
+              { 'opacity-30': media.id !== selectedMediaId },
+            ]"
+            @click.stop="onMediaClick(media)"
+          />
+        </div>
+      </div>
     </div>
     <template #footer>
       <DsfrButton :loading="loading" @click="onValidateClick">Valider</DsfrButton>
@@ -20,8 +25,6 @@
 
 <script>
 import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
-import FormErrors from '@/mixins/form/errors'
-import { string, object } from 'yup'
 
 export default defineNuxtComponent({
   async setup() {
@@ -30,7 +33,6 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors],
   components: {
     FormMissionEditWrapper,
   },
@@ -38,25 +40,24 @@ export default defineNuxtComponent({
     return {
       loading: false,
       medias: [],
-      formSchema: object({
-        name: string().required('Le titre est requis'),
-      }),
+      selectedMediaId: null,
     }
   },
   mounted() {
     this.fetchMediasByDomaine()
+    if (this.mission.illustrations.length > 0) {
+      this.selectedMediaId = this.mission.illustrations[0].id
+    }
   },
   computed: {
-    form() {
-      return { ...this.$stores.formMission.mission }
-    },
     mission() {
       return this.$stores.formMission.mission
     },
   },
   methods: {
-    onMediaClick() {
-      console.log('media clicked')
+    onMediaClick(media) {
+      console.log('media clicked', media.id)
+      this.selectedMediaId = media.id
     },
     async fetchMediasByDomaine() {
       const medias = await apiFetch('/medias', {
@@ -71,26 +72,20 @@ export default defineNuxtComponent({
     },
     async onValidateClick() {
       this.loading = true
-      // await this.formSchema
-      //   .validate(this.form, { abortEarly: false })
-      //   .then(async () => {
-      //     await apiFetch(`/missions/${this.mission.id}/title`, {
-      //       method: 'PUT',
-      //       body: this.form,
-      //     })
-      //       .then(async (mission) => {
-      //         console.log(mission)
-      //         this.$stores.formMission.setMission(mission)
-      //         this.$router.push(`/admin/missions/${mission.id}/visuel`)
-      //       })
-      //       .catch(() => {})
-      //   })
-      //   .catch((errors) => {
-      //     this.setErrors(errors)
-      //   })
-      //   .finally(() => {
-      //     this.loading = false
-      //   })
+
+      await apiFetch(`/missions/${this.mission.id}/visuel`, {
+        method: 'PUT',
+        body: { media_id: this.selectedMediaId },
+      })
+        .then(async (mission) => {
+          console.log(mission)
+          this.$stores.formMission.setMission(mission)
+          this.$router.push(`/admin/missions/${mission.id}/description`)
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.loading = false
+        })
     },
   },
 })
