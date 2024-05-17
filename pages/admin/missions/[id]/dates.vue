@@ -173,14 +173,14 @@ export default defineNuxtComponent({
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await apiFetch(`/missions/${this.form.id}/title`, {
+          await apiFetch(`/missions/${this.form.id}/dates`, {
             method: 'PUT',
             body: this.form,
           })
             .then(async (mission) => {
               console.log(mission)
               this.$stores.formMission.setMission(mission)
-              this.$router.push(`/admin/missions/${mission.id}/visuel`)
+              this.$router.push(`/admin/missions/${mission.id}/benevoles`)
             })
             .catch(() => {})
         })

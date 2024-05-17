@@ -96,7 +96,7 @@
         <DsfrFormControl
           label="Quelques mots pour motiver les bénévoles à participer"
           html-for="information"
-          :error="errors.objectif"
+          :error="errors.information"
           required
         >
           <template #description>
@@ -193,7 +193,7 @@ export default defineNuxtComponent({
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await apiFetch(`/missions/${this.form.id}/description`, {
+          await apiFetch(`/missions/${this.form.id}/informations`, {
             method: 'PUT',
             body: this.form,
           })

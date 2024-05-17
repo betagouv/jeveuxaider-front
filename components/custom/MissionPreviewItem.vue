@@ -1,0 +1,43 @@
+<template>
+  <div
+    :class="[
+      'relative p-6 cursor-pointer shadow border-2 bg-white hover:shadow-lg transition-shadow duration-300',
+      { ' border-[#6A6AF4] ': isCurrent },
+      { 'border-white ': !isCurrent },
+      { '': isCompleted },
+    ]"
+  >
+    <RiCheckboxCircleFill
+      v-if="isCompleted"
+      class="h-6 text-jva-blue-500 fill-current absolute top-3 right-3 group-hover:text-jva-blue-500"
+    />
+    <div v-if="title" :class="['font-bold mb-2']">
+      {{ title }}
+    </div>
+    <slot></slot>
+  </div>
+</template>
+
+<script>
+import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
+
+export default defineNuxtComponent({
+  components: {
+    RiCheckboxCircleFill,
+  },
+  props: {
+    title: {
+      type: String,
+      default: null,
+    },
+    isCurrent: {
+      type: Boolean,
+      default: false,
+    },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
+  },
+})
+</script>
