@@ -1,5 +1,9 @@
 <template>
   <div class="flex flex-col h-full">
+    <ClientOnly>
+      <Teleport to="#teleport-header"> <slot name="header"></slot></Teleport>
+    </ClientOnly>
+
     <div class="flex-1 overflow-y-auto overflow-x-hidden h-full custom-scrollbar-gray">
       <div class="px-4 max-w-[696px] mx-auto">
         <div class="py-14"><slot></slot></div>

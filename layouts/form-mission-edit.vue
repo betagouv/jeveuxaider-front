@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white flex flex-col h-screen">
-    <HeaderFormMissions class="" title="Publier une mission" />
+    <div id="teleport-header" class="relative z-50"></div>
     <div class="flex-grow flex h-full min-h-0">
       <div class="w-[400px] bg-[#F9F6F2]">SIDEBAR</div>
       <NuxtPage class="flex-1" />
@@ -9,12 +9,7 @@
 </template>
 
 <script>
-import HeaderFormMissions from '@/components/layout/HeaderFormMissions.vue'
-
 export default {
-  components: {
-    HeaderFormMissions,
-  },
   async setup() {
     useHead({
       bodyAttrs: {

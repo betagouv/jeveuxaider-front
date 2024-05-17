@@ -11,6 +11,12 @@
       </div>
       <div class="">
         <h1 class="text-lg lg:text-[22px] font-bold">{{ title }}</h1>
+        <div class="flex" v-if="mission">
+          <div class="text-[#666666]">
+            #{{ $stores.formMission.mission?.id }} - {{ $stores.formMission.mission?.name }}
+          </div>
+          <Badges class="ml-3" :mission="$stores.formMission.mission" />
+        </div>
       </div>
     </div>
 
@@ -21,13 +27,22 @@
 </template>
 
 <script>
+import MixinMission from '@/mixins/mission'
+import Badges from '@/components/section/mission/Badges.vue'
+
 export default defineNuxtComponent({
+  mixins: [MixinMission],
   props: {
     title: {
       type: String,
-      required: true,
+      default: 'Publier une mission',
     },
   },
-  components: {},
+  components: { Badges },
+  computed: {
+    mission() {
+      return this.$stores.formMission.mission
+    },
+  },
 })
 </script>

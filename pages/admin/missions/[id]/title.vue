@@ -1,9 +1,10 @@
 <template>
   <FormMissionEditWrapper>
-    <div v-if="mission">
-      <h2 class="text-[28px] font-bold leading-9 mb-10">
-        Titre de votre mission {{ mission.name }}
-      </h2>
+    <template #header>
+      <LayoutHeaderFormMissions class="" title="Publier une mission" />
+    </template>
+    <div v-if="form">
+      <h2 class="text-[28px] font-bold leading-9 mb-10">Titre de votre mission</h2>
       <CustomTips class="mb-10">
         Rédigez le titre de votre mission à la première personne du singulier du point de vue du
         bénévole
@@ -37,21 +38,22 @@ export default defineNuxtComponent({
   components: {
     FormMissionEditWrapper,
   },
+  mounted() {
+    this.form = { ...this.$stores.formMission.mission }
+  },
   data() {
     return {
       loading: false,
+      form: null,
       formSchema: object({
         name: string().required('Le titre est requis'),
       }),
     }
   },
   computed: {
-    form() {
-      return { ...this.$stores.formMission.mission }
-    },
-    mission() {
-      return this.$stores.formMission.mission
-    },
+    // mission() {
+    //   return this.$stores.formMission.mission
+    // },
   },
   methods: {
     async onValidateClick() {
@@ -59,7 +61,7 @@ export default defineNuxtComponent({
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          await apiFetch(`/missions/${this.mission.id}/title`, {
+          await apiFetch(`/missions/${this.form.id}/title`, {
             method: 'PUT',
             body: this.form,
           })

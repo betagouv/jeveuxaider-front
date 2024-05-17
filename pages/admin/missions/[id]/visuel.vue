@@ -1,5 +1,8 @@
 <template>
   <FormMissionEditWrapper>
+    <template #header>
+      <LayoutHeaderFormMissions class="" title="Publier une mission" />
+    </template>
     <div v-if="mission">
       <h2 class="text-[28px] font-bold leading-9 mb-10">Choisissez un visuel</h2>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -25,7 +28,6 @@
 
 <script>
 import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
-
 export default defineNuxtComponent({
   async setup() {
     definePageMeta({
