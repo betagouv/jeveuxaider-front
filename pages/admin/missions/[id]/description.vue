@@ -12,7 +12,7 @@
 
       <div class="space-y-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <BaseFormControl
+          <DsfrFormControl
             label="Domaine d'action principal"
             html-for="domaine_id"
             :error="errors.domaine_id"
@@ -26,8 +26,8 @@
               :options="$labels.domaines"
               :disabled="Boolean(mission.template)"
             />
-          </BaseFormControl>
-          <BaseFormControl
+          </DsfrFormControl>
+          <DsfrFormControl
             label="Domaine d'action secondaire"
             html-for="domaine_secondary_id"
             :error="errors.domaine_secondary_id"
@@ -41,10 +41,10 @@
               :options="$labels.domaines.filter((domaine) => domaine.key != form.domaine_id)"
               :disabled="Boolean(mission.template)"
             />
-          </BaseFormControl>
+          </DsfrFormControl>
         </div>
 
-        <BaseFormControl
+        <DsfrFormControl
           label="Publics aidés"
           html-for="publics_beneficiaires"
           :error="errors.publics_beneficiaires"
@@ -56,7 +56,97 @@
             :options="$labels.mission_publics_beneficiaires"
             class="mt-4"
           />
-        </BaseFormControl>
+        </DsfrFormControl>
+
+        <DsfrFormControl
+          label="Présentation de la mission "
+          html-for="objectif"
+          :error="errors.objectif"
+          required
+        >
+          <template #description>
+            <div class="text-xs text-[#666666]">
+              Décrivez la mission en quelques lignes pour que le bénévole comprenne ce que vous
+              attendez
+            </div>
+          </template>
+          <DsfrRichEditor
+            name="objectif"
+            v-model="form.objectif"
+            :disabled="Boolean(mission.template)"
+          />
+        </DsfrFormControl>
+
+        <DsfrFormControl
+          label="Précisions"
+          html-for="description"
+          :error="errors.description"
+          required
+        >
+          <template #description>
+            <div class="text-xs text-[#666666]">
+              Précisez les détails et spécificités de la mission
+            </div>
+          </template>
+          <DsfrRichEditor
+            name="description"
+            v-model="form.description"
+            :disabled="Boolean(mission.template)"
+          />
+        </DsfrFormControl>
+        <DsfrFormControl
+          label="Quelques mots pour motiver les bénévoles à participer"
+          html-for="information"
+          :error="errors.objectif"
+          required
+        >
+          <template #description>
+            <div class="text-xs text-[#666666]">
+              Pourquoi faire du bénévolat avec vous ? Incitez les bénévoles à proposer leur aide
+            </div>
+          </template>
+          <DsfrRichEditor
+            name="information"
+            v-model="form.information"
+            :disabled="Boolean(mission.template)"
+          />
+        </DsfrFormControl>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <DsfrFormControl
+            label="Activité principale"
+            html-for="activity_id"
+            :error="errors.activity_id"
+            required
+          >
+            <DsfrSelect
+              id="activity_id"
+              name="activity_id"
+              v-model="form.activity_id"
+              placeholder="Sélectionner une activité"
+              :options="activities"
+              :disabled="Boolean(mission.template)"
+            />
+          </DsfrFormControl>
+          <DsfrFormControl
+            label="Activité secondaire"
+            html-for="activity_secondary_id"
+            :error="errors.activity_secondary_id"
+          >
+            <DsfrSelect
+              id="activity_secondary_id"
+              name="activity_secondary_id"
+              v-model="form.activity_secondary_id"
+              placeholder="Sélectionner un activité"
+              :options="activities"
+              :disabled="Boolean(mission.template)"
+            />
+          </DsfrFormControl>
+          <BaseFormInfo class="col-span-2 !mt-0"
+            >Remplissez l’activité secondaire pour que votre mission apparaissent plus souvent dans
+            les résultats de recherche</BaseFormInfo
+          >
+        </div>
       </div>
     </div>
     <template #footer>
@@ -69,7 +159,7 @@
 import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
 import FormErrors from '@/mixins/form/errors'
 import { string, object, array } from 'yup'
-
+import activities from '@/assets/activities.json'
 export default defineNuxtComponent({
   setup() {
     definePageMeta({
@@ -87,6 +177,7 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
+      activities,
       form: null,
       formSchema: object({
         publics_beneficiaires: array()
