@@ -67,7 +67,9 @@ export default defineNuxtComponent({
           })
             .then(async (mission) => {
               console.log(mission)
-              this.$stores.formMission.setMission(mission)
+              // this.$stores.formMission.setMission(mission)
+              this.$stores.formMission.updateFields(mission, ['name'])
+
               this.$router.push(`/admin/missions/${mission.id}/visuel`)
             })
             .catch(() => {})

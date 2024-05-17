@@ -82,7 +82,7 @@
             À définir
           </CustomMissionPreviewItem>
           <CustomMissionPreviewItem
-            title="Nombre de bénévoles recherchés"
+            title="Informations sur les bénévoles"
             :is-current="$route.name === 'admin-missions-id-benevoles-informations'"
             :is-completed="false"
             @click="$router.push(`/admin/missions/${mission.id}/benevoles-informations`)"
@@ -94,10 +94,23 @@
           <h3 class="text-sm font-bold uppercase text-[#666666]">Responsables</h3>
           <CustomMissionPreviewItem
             :is-current="$route.name === 'admin-missions-id-responsables'"
-            :is-completed="false"
+            :is-completed="!!mission.responsable"
             @click="$router.push(`/admin/missions/${mission.id}/responsables`)"
           >
-            XXX
+            <div class="flex items-center">
+              <BaseAvatar
+                :img-srcset="
+                  mission.responsable.avatar ? mission.responsable.avatar.urls.thumbMedium : null
+                "
+                :img-src="
+                  mission.responsable.avatar ? mission.responsable.avatar.urls.original : null
+                "
+                :initials="mission.responsable.short_name"
+                size="sm"
+                class="mr-4"
+              />
+              <div class="truncate font-bold">{{ mission.responsable.full_name }}</div>
+            </div>
           </CustomMissionPreviewItem>
         </div>
       </div>

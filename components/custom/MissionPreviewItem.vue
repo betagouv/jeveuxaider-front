@@ -1,9 +1,9 @@
 <template>
   <div
     :class="[
-      'relative p-6 cursor-pointer shadow border-2 bg-white hover:shadow-lg transition-shadow duration-300',
-      { ' border-[#6A6AF4] ': isCurrent },
-      { 'border-white ': !isCurrent },
+      'relative p-6 cursor-pointer shadow border-2  hover:shadow-lg transition-shadow duration-300',
+      { ' border-[#6A6AF4] bg-[#F5F5FE] ': isCurrent },
+      { 'border-white bg-white': !isCurrent },
       { '': isCompleted },
     ]"
   >

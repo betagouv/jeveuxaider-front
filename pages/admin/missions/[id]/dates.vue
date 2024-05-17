@@ -152,7 +152,7 @@ export default defineNuxtComponent({
       loading: false,
       form: null,
       formSchema: object({
-        name: string().required('Le titre est requis'),
+        date_type: string().required('Le type d’engagement est requis'),
       }),
     }
   },
@@ -179,7 +179,11 @@ export default defineNuxtComponent({
           })
             .then(async (mission) => {
               console.log(mission)
-              this.$stores.formMission.setMission(mission)
+              this.$stores.formMission.updateFields(mission, [
+                'date_type',
+                'commitment__duration',
+                'commitment__period',
+              ])
               this.$router.push(`/admin/missions/${mission.id}/benevoles`)
             })
             .catch(() => {})

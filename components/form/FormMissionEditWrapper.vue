@@ -28,20 +28,19 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
 
-    console.log('FormMissionEditWrapper setup')
-    const mission = await apiFetch(`/missions/${route.params.id}`)
+    if (!$stores.formMission.mission) {
+      const mission = await apiFetch(`/missions/${route.params.id}`)
+      $stores.formMission.setMission(mission)
+    }
 
-    console.log('mission', mission)
-    if (!mission) {
+    if (!$stores.formMission.mission) {
       return showError({ statusCode: 404 })
     }
     if ($stores.auth.contextRole == 'responsable') {
-      if ($stores.auth.contextableId != mission.structure_id) {
+      if ($stores.auth.contextableId != $stores.formMission.mission.structure_id) {
         return showError({ statusCode: 403 })
       }
     }
-
-    $stores.formMission.setMission(mission)
   },
   // beforeUnmount() {
   //   this.$stores.formMission.reset()

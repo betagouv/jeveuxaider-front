@@ -91,9 +91,11 @@ export default defineNuxtComponent({
         body: { media_id: this.selectedMediaId },
       })
         .then(async (mission) => {
-          console.log(mission)
-          this.$stores.formMission.setMission(mission)
-          this.$router.push(`/admin/missions/${mission.id}/description`)
+          console.log('response', mission)
+          // this.$stores.formMission.setMission(response)
+          this.$stores.formMission.updateFields(mission, ['illustrations'])
+
+          this.$router.push(`/admin/missions/${this.form.id}/informations`)
         })
         .catch(() => {})
         .finally(() => {

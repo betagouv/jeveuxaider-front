@@ -199,7 +199,16 @@ export default defineNuxtComponent({
           })
             .then(async (mission) => {
               console.log(mission)
-              this.$stores.formMission.setMission(mission)
+              this.$stores.formMission.updateFields(mission, [
+                'publics_beneficiaires',
+                'information',
+                'objectif',
+                'description',
+                'activity_id',
+                'activity_secondary_id',
+                'domaine_id',
+                'domaine_secondary_id',
+              ])
               this.$router.push(`/admin/missions/${mission.id}/dates`)
             })
             .catch(() => {})

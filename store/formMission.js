@@ -8,8 +8,13 @@ export const useFormMissionStore = defineStore({
   }),
   getters: {},
   actions: {
-    setMission(mission: any) {
+    setMission(mission) {
       this.mission = mission
+    },
+    updateFields(mission, fields) {
+      for (const field of fields) {
+        this.mission[field] = mission[field]
+      }
     },
     reset() {
       this.mission = null
