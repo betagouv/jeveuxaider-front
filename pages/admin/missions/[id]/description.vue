@@ -1,7 +1,7 @@
 <template>
   <FormMissionEditWrapper>
     <template #header>
-      <LayoutHeaderFormMissions class="" title="Publier une mission" />
+      <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
     <div v-if="form">
       <h2 class="text-[28px] font-bold leading-9 mb-10">En quoi consiste votre mission ?</h2>
@@ -24,14 +24,13 @@
               v-model="form.domaine_id"
               placeholder="Sélectionner un domaine"
               :options="$labels.domaines"
-              :disabled="Boolean(mission.template)"
+              :disabled="Boolean(form.template)"
             />
           </DsfrFormControl>
           <DsfrFormControl
             label="Domaine d'action secondaire"
             html-for="domaine_secondary_id"
             :error="errors.domaine_secondary_id"
-            required
           >
             <DsfrSelect
               id="domaine_secondary_id"
@@ -39,7 +38,7 @@
               v-model="form.domaine_secondary_id"
               placeholder="Sélectionner un domaine"
               :options="$labels.domaines.filter((domaine) => domaine.key != form.domaine_id)"
-              :disabled="Boolean(mission.template)"
+              :disabled="Boolean(form.template)"
             />
           </DsfrFormControl>
         </div>
@@ -73,7 +72,7 @@
           <DsfrRichEditor
             name="objectif"
             v-model="form.objectif"
-            :disabled="Boolean(mission.template)"
+            :disabled="Boolean(form.template)"
           />
         </DsfrFormControl>
 
@@ -91,7 +90,7 @@
           <DsfrRichEditor
             name="description"
             v-model="form.description"
-            :disabled="Boolean(mission.template)"
+            :disabled="Boolean(form.template)"
           />
         </DsfrFormControl>
         <DsfrFormControl
@@ -108,7 +107,7 @@
           <DsfrRichEditor
             name="information"
             v-model="form.information"
-            :disabled="Boolean(mission.template)"
+            :disabled="Boolean(form.template)"
           />
         </DsfrFormControl>
 
@@ -125,7 +124,7 @@
               v-model="form.activity_id"
               placeholder="Sélectionner une activité"
               :options="activities"
-              :disabled="Boolean(mission.template)"
+              :disabled="Boolean(form.template)"
             />
           </DsfrFormControl>
           <DsfrFormControl
@@ -139,7 +138,7 @@
               v-model="form.activity_secondary_id"
               placeholder="Sélectionner un activité"
               :options="activities"
-              :disabled="Boolean(mission.template)"
+              :disabled="Boolean(form.template)"
             />
           </DsfrFormControl>
           <BaseFormInfo class="col-span-2 !mt-0"
@@ -187,14 +186,7 @@ export default defineNuxtComponent({
       }),
     }
   },
-  computed: {
-    // form() {
-    //   return { ...this.$stores.formMission.mission }
-    // },
-    mission() {
-      return this.$stores.formMission.mission
-    },
-  },
+  computed: {},
   methods: {
     async onValidateClick() {
       this.loading = true
@@ -208,7 +200,7 @@ export default defineNuxtComponent({
             .then(async (mission) => {
               console.log(mission)
               this.$stores.formMission.setMission(mission)
-              //this.$router.push(`/admin/missions/${mission.id}/visuel`)
+              this.$router.push(`/admin/missions/${mission.id}/dates`)
             })
             .catch(() => {})
         })

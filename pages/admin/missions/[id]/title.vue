@@ -1,7 +1,7 @@
 <template>
   <FormMissionEditWrapper>
     <template #header>
-      <LayoutHeaderFormMissions class="" title="Publier une mission" />
+      <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
     <div v-if="form">
       <h2 class="text-[28px] font-bold leading-9 mb-10">Titre de votre mission</h2>

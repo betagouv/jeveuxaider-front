@@ -1,12 +1,20 @@
 <template>
   <FormMissionEditWrapper>
     <template #header>
-      <LayoutHeaderFormMissions class="" title="Publier une mission" />
+      <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
     <div v-if="mission">
       <h2 class="text-[28px] font-bold leading-9 mb-10">Choisissez un visuel</h2>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div v-for="media in medias" :key="media.id" class="">
+        <div v-for="media in medias" :key="media.id" class="relative">
+          <div
+            v-if="media.id === selectedMediaId"
+            class="absolute top-3 right-3 bg-white rounded-full"
+          >
+            <RiCheckboxCircleFill
+              class="h-6 text-jva-blue-500 fill-current group-hover:text-jva-blue-500"
+            />
+          </div>
           <img
             :srcset="media.urls['formPreview']"
             :alt="media.name"
@@ -28,6 +36,8 @@
 
 <script>
 import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
+import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
+
 export default defineNuxtComponent({
   async setup() {
     definePageMeta({
@@ -37,6 +47,7 @@ export default defineNuxtComponent({
   },
   components: {
     FormMissionEditWrapper,
+    RiCheckboxCircleFill,
   },
   data() {
     return {
