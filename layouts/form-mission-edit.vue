@@ -5,6 +5,7 @@
       <LayoutSidebarFormMission class="w-[400px]" />
       <NuxtPage class="flex-1" />
     </div>
+    <div id="teleport-body-end"></div>
   </div>
 </template>
 

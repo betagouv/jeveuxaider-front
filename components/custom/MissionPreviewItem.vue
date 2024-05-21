@@ -11,10 +11,13 @@
       v-if="isCompleted"
       class="h-6 text-jva-blue-500 fill-current absolute top-3 right-3 group-hover:text-jva-blue-500"
     />
-    <div v-if="title" :class="['font-bold mb-2']">
+    <div v-if="title" :class="['font-bold mb-2 text-[#161616]']">
       {{ title }}
     </div>
-    <slot></slot>
+
+    <div class="text-[#161616]">
+      <slot></slot>
+    </div>
   </div>
 </template>
 

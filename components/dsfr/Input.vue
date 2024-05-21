@@ -62,11 +62,11 @@ export default defineNuxtComponent({
     },
     error: {
       type: Boolean,
-      default: null,
+      default: false,
     },
     success: {
       type: Boolean,
-      default: null,
+      default: false,
     },
     type: {
       type: String,

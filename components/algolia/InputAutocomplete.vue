@@ -1,18 +1,36 @@
 <template>
-  <BaseInputAutocomplete
-    icon="RiSearchLine"
-    name="autocomplete"
-    :placeholder="placeholder"
-    :options="hits"
-    :attribute-key="attributeKey"
-    :attribute-label="attributeLabel"
-    :attribute-right-label="attributeRightLabel"
-    :reset-value-on-select="true"
-    :min-value-length="3"
-    @selected="onSelected"
-    @keyup.enter="onEnter"
-    @fetch-suggestions="onFetchSuggestions"
-  />
+  <div>
+    <BaseInputAutocomplete
+      v-if="variant === 'base'"
+      icon="RiSearchLine"
+      name="autocomplete"
+      :placeholder="placeholder"
+      :options="hits"
+      :attribute-key="attributeKey"
+      :attribute-label="attributeLabel"
+      :attribute-right-label="attributeRightLabel"
+      :reset-value-on-select="true"
+      :min-value-length="3"
+      @selected="onSelected"
+      @keyup.enter="onEnter"
+      @fetch-suggestions="onFetchSuggestions"
+    />
+    <DsfrInputAutocomplete
+      v-if="variant === 'dsfr'"
+      icon="RiSearchLine"
+      name="autocomplete"
+      :placeholder="placeholder"
+      :options="hits"
+      :attribute-key="attributeKey"
+      :attribute-label="attributeLabel"
+      :attribute-right-label="attributeRightLabel"
+      :reset-value-on-select="true"
+      :min-value-length="3"
+      @selected="onSelected"
+      @keyup.enter="onEnter"
+      @fetch-suggestions="onFetchSuggestions"
+    />
+  </div>
 </template>
 
 <script>
@@ -20,6 +38,11 @@ export default defineNuxtComponent({
   emits: ['selected'],
 
   props: {
+    variant: {
+      type: String,
+      validator: (value) => ['base', 'dsfr'].includes(value),
+      default: 'base',
+    },
     index: {
       type: String,
       required: true,
