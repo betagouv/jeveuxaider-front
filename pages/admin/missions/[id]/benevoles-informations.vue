@@ -220,7 +220,14 @@ export default defineNuxtComponent({
           })
             .then(async (mission) => {
               console.log(mission)
-              this.$stores.formMission.updateFields(mission, ['prerequisites', 'skills'])
+              this.$stores.formMission.updateFields(mission, [
+                'is_snu_mig_compatible',
+                'publics_volontaires',
+                'snu_mig_places',
+                'is_motivation_required',
+                'prerequisites',
+                'skills',
+              ])
               this.$router.push(`/admin/missions/${mission.id}/responsables`)
             })
             .catch(() => {})

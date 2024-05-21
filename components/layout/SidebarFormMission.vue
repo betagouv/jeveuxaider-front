@@ -105,7 +105,13 @@
               </template>
               <template v-else>Aucun prérequis</template>
             </div>
-            <div>XX informations</div>
+            <div>
+              {{
+                benevolesInfosItemsCount > 0
+                  ? $filters.pluralize(benevolesInfosItemsCount, 'information')
+                  : 'À définir'
+              }}
+            </div>
           </CustomMissionPreviewItem>
         </div>
         <div class="space-y-4">
@@ -145,6 +151,9 @@ export default defineNuxtComponent({
   computed: {
     mission() {
       return this.$stores.formMission.mission
+    },
+    benevolesInfosItemsCount() {
+      return 5
     },
   },
   methods: {
