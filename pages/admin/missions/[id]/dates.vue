@@ -119,6 +119,22 @@
               />
             </div>
           </DsfrFormControl>
+
+          <template v-if="form.with_creneaux === 'non'">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <DsfrFormControl
+                label="Date de début"
+                html-for="start_date"
+                :error="errors.start_date"
+                required
+              >
+                <DsfrInput type="date" v-model="form.start_date" name="start_date" />
+              </DsfrFormControl>
+              <DsfrFormControl label="Date de fin" html-for="end_date" :error="errors.end_date">
+                <DsfrInput type="date" v-model="form.end_date" name="end_date" />
+              </DsfrFormControl>
+            </div>
+          </template>
         </template>
       </div>
     </div>
@@ -146,14 +162,20 @@ export default defineNuxtComponent({
   },
   mounted() {
     this.form = { ...this.$stores.formMission.mission }
+
+    if (this.form.start_date) {
+      this.form.with_creneaux = this.form.dates?.length > 0 ? 'oui' : 'non'
+    }
   },
   data() {
     return {
       loading: false,
       form: null,
+
       formSchema: object({
         date_type: string().required('Le type d’engagement est requis'),
       }),
+      withDates: null,
     }
   },
   computed: {
@@ -183,6 +205,9 @@ export default defineNuxtComponent({
                 'date_type',
                 'commitment__duration',
                 'commitment__period',
+                'start_date',
+                'end_date',
+                'dates',
               ])
               this.$router.push(`/admin/missions/${mission.id}/lieux`)
             })

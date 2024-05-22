@@ -205,6 +205,9 @@ export default {
         ? this.$filters.label(this.mission.commitment__duration, 'duration')
         : null
     },
+    hasDates() {
+      return this.mission.dates && this.mission.dates.length > 0
+    },
     nextDates() {
       if (this.mission.dates) {
         return this.mission.dates.filter(

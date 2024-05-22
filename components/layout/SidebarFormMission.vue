@@ -52,12 +52,12 @@
         <div class="space-y-4">
           <h3 class="text-sm font-bold uppercase text-[#666666]">Dates et fréquences</h3>
           <CustomMissionPreviewItem
-            title="Ponctuelle ou régulière"
+            :title="titleBoxDateType"
             :is-current="$route.name === 'admin-missions-id-dates'"
             :is-completed="!!mission.date_type && !!mission.commitment__duration"
             @click="$router.push(`/admin/missions/${mission.id}/dates`)"
           >
-            Dates ou engagement à définir
+            {{ formattedDates }}
           </CustomMissionPreviewItem>
         </div>
         <div class="space-y-4">
@@ -164,6 +164,10 @@ export default defineNuxtComponent({
     titleBoxLieux() {
       if (!this.mission.type) return 'En présentiel ou à distance'
       return this.mission.type === 'Mission à distance' ? 'À distance' : 'En présentiel'
+    },
+    titleBoxDateType() {
+      if (!this.mission.date_type) return 'Ponctuelle ou régulière'
+      return this.mission.date_type === 'ponctual' ? 'Ponctuelle' : 'Régulière'
     },
   },
   methods: {
