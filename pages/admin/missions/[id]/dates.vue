@@ -198,7 +198,7 @@ export default defineNuxtComponent({
     FormMissionEditWrapper,
   },
   mounted() {
-    this.form = { ...this.$stores.formMission.mission }
+    this.form = _cloneDeep(this.$stores.formMission.mission)
 
     if (this.form.start_date) {
       this.withDates = this.form.dates?.length > 0 ? 'yes' : 'no'

@@ -76,7 +76,7 @@ export default defineNuxtComponent({
     RiCheckboxCircleFill,
   },
   mounted() {
-    this.form = { ...this.$stores.formMission.mission }
+    this.form = _cloneDeep(this.$stores.formMission.mission)
     this.responsables = this.$stores.formMission.mission.structure.members
     // console.log('mounted', this.form.responsable.id)
     // this.responsables.push(this.form.responsable)

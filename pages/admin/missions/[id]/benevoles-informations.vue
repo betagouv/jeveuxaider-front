@@ -59,7 +59,7 @@
         <div class="grid grid-cols-1 gap-8 pt-8">
           <DsfrFormControl html-for="publics_volontaires" :error="errors.publics_volontaires">
             <BaseToggle
-              v-model="isOpenMinor"
+              :model-value="isOpenMinor"
               label="La mission est ouverte aux mineurs (à partir de 16 ans)"
               @checked="onIsOpenMinorChecked"
               @unchecked="onIsOpenMinorUnchecked"
@@ -147,10 +147,10 @@ export default defineNuxtComponent({
     FormMissionEditWrapper,
   },
   mounted() {
-    this.form = { ...this.$stores.formMission.mission }
-    if (!this.form.prerequisites) {
-      this.form.prerequisites = [undefined, undefined, undefined]
-    }
+    this.form = _cloneDeep(this.$stores.formMission.mission)
+    // if (!this.form.prerequisites) {
+    //   this.form.prerequisites = [undefined, undefined, undefined]
+    // }
   },
   data() {
     return {
@@ -214,6 +214,8 @@ export default defineNuxtComponent({
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          this.form.prerequisites = this.form.prerequisites.filter((item) => item)
+
           await apiFetch(`/missions/${this.form.id}/benevoles-informations`, {
             method: 'PUT',
             body: this.form,

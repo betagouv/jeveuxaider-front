@@ -194,7 +194,7 @@ export default defineNuxtComponent({
     FormMissionEditWrapper,
   },
   mounted() {
-    this.form = { ...this.$stores.formMission.mission }
+    this.form = _cloneDeep(this.$stores.formMission.mission)
   },
   data() {
     return {

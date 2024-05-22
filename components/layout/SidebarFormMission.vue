@@ -88,7 +88,7 @@
           <CustomMissionPreviewItem
             :title="
               $filters.pluralize(
-                $stores.formMission.mission.participations_max,
+                mission.participations_max,
                 'bénévole recherché',
                 'bénévoles recherchés'
               )
@@ -97,23 +97,17 @@
             :is-completed="!!mission.participations_max"
             @click="$router.push(`/admin/missions/${mission.id}/benevoles`)"
           >
-            {{
-              $filters.pluralize(
-                $stores.formMission.mission.places_left,
-                'place restante',
-                'places restantes'
-              )
-            }}
+            {{ $filters.pluralize(mission.places_left, 'place restante', 'places restantes') }}
           </CustomMissionPreviewItem>
           <CustomMissionPreviewItem
             title="Informations sur les bénévoles"
             :is-current="$route.name === 'admin-missions-id-benevoles-informations'"
-            :is-completed="false"
+            :is-completed="mission.prerequisites?.length > 0 || benevolesInfosItemsCount > 0"
             @click="$router.push(`/admin/missions/${mission.id}/benevoles-informations`)"
           >
             <div>
-              <template v-if="$stores.formMission.mission.prerequisites">
-                {{ $stores.formMission.mission.prerequisites.length }} pré-requis
+              <template v-if="mission.prerequisites">
+                {{ mission.prerequisites.length }} pré-requis
               </template>
               <template v-else>Aucun prérequis</template>
             </div>
@@ -162,10 +156,15 @@ export default defineNuxtComponent({
   props: {},
   computed: {
     mission() {
-      return this.$stores.formMission.mission
+      return _cloneDeep(this.$stores.formMission.mission)
     },
     benevolesInfosItemsCount() {
-      return 5
+      let count = 0
+      if (this.mission.publics_volontaires?.length > 0) count++
+      if (this.mission.skills?.length > 0) count++
+      if (this.mission.is_snu_mig_compatible) count++
+      if (this.mission.is_motivation_required) count++
+      return count
     },
     titleBoxLieux() {
       if (!this.mission.type) return 'En présentiel ou à distance'
