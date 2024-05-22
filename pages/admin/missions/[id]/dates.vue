@@ -184,7 +184,7 @@ export default defineNuxtComponent({
                 'commitment__duration',
                 'commitment__period',
               ])
-              this.$router.push(`/admin/missions/${mission.id}/benevoles`)
+              this.$router.push(`/admin/missions/${mission.id}/lieux`)
             })
             .catch(() => {})
         })

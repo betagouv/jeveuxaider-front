@@ -228,6 +228,8 @@ export default defineNuxtComponent({
                 'prerequisites',
                 'skills',
               ])
+              this.$toast.success('Mission modifiée avec succès')
+
               this.$router.push(`/admin/missions/${mission.id}/responsables`)
             })
             .catch(() => {})

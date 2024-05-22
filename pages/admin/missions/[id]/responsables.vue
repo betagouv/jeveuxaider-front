@@ -107,7 +107,7 @@ export default defineNuxtComponent({
           })
             .then(async (mission) => {
               this.$stores.formMission.updateFields(mission, ['responsable', 'responsable_id'])
-              this.$toast.success('Responsable de la mission modifié avec succès')
+              this.$toast.success('Mission modifiée avec succès')
               //this.$router.push(`/admin/missions/${mission.id}`)
             })
             .catch(() => {})

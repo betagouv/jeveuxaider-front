@@ -209,6 +209,8 @@ export default defineNuxtComponent({
                 'domaine_id',
                 'domaine_secondary_id',
               ])
+              this.$toast.success('Mission modifiée avec succès')
+
               this.$router.push(`/admin/missions/${mission.id}/dates`)
             })
             .catch(() => {})
