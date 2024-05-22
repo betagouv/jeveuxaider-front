@@ -15,30 +15,41 @@
       </div>
       <div class="flex-1">
         <div class="flex">
-          <h1 class="text-lg lg:text-[22px] font-bold">{{ title }}</h1>
-          <Badges v-if="mission" class="ml-3" :mission="$stores.formMission.mission" />
+          <h1 class="text-lg lg:text-[22px] font-bold">
+            <template v-if="mission">
+              Mission <span class="text-[#666666]">#{{ mission.id }}</span>
+            </template>
+            <template v-else>{{ title }}</template>
+          </h1>
         </div>
 
-        <div class="flex" v-if="mission">
-          <div class="text-[#666666]">
-            #{{ $stores.formMission.mission?.id }} - {{ $stores.formMission.mission?.name }}
-          </div>
+        <div class="flex mt-1" v-if="mission">
+          <Badges :mission="$stores.formMission.mission" />
         </div>
       </div>
       <div class="ml-auto flex gap-2">
-        <SelectMissionState
+        <!-- <SelectMissionState
           v-if="canEditStatut"
           :mission="mission"
           :mission-stats="statistics"
           @selected="handleChangeState($event)"
           @updated="$emit('updated', $event)"
-        />
+        /> -->
+        <DsfrButton v-if="mission" type="tertiary" @click="showModalPreview = true" icon="RiEyeLine"
+          >Aperçu
+        </DsfrButton>
         <Actions
           :mission="mission"
           @showModalSwitchIsOnline="$emit('showModalSwitchIsOnline')"
           @missionDeleted="handleDeleted"
         />
       </div>
+
+      <SectionFormMissionOverlay
+        :mission="mission"
+        :is-open="showModalPreview"
+        @close="showModalPreview = false"
+      />
     </div>
 
     <div>
@@ -62,6 +73,11 @@ export default defineNuxtComponent({
     },
   },
   components: { Badges, Actions, SelectMissionState },
+  data() {
+    return {
+      showModalPreview: false,
+    }
+  },
   computed: {
     mission() {
       return this.$stores.formMission.mission

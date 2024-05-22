@@ -21,7 +21,7 @@ export const useFormMissionStore = defineStore({
       this.mission = null
       this.statistics = statistics
     },
-    setStatisctics(statistics) {
+    setStatistics(statistics) {
       this.statistics = statistics
     },
   },

@@ -8,8 +8,14 @@ export default {
     domainId() {
       return this.mission?.domaine_id ?? this.mission?.template?.domaine_id
     },
+    domainName() {
+      return this.mission?.domaine?.name ?? this.mission?.template?.domaine?.name ?? null
+    },
     domaineSecondary() {
       return this.mission?.template?.domaine_secondary ?? this.mission?.domaine_secondary
+    },
+    missionType() {
+      return this.mission?.is_autonomy ? 'Mission en autonomie' : this.mission?.type
     },
     activity() {
       const activity = this.mission?.activity ?? this.mission?.template?.activity
@@ -303,6 +309,20 @@ export default {
       })
 
       return portraits
+    },
+    illustrationSrcset() {
+      return (
+        this.mission.template?.photo?.urls?.large ??
+        this.mission.illustrations?.[0]?.urls?.large ??
+        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+      )
+    },
+    illustrationSrc() {
+      return (
+        this.mission.template?.photo?.urls?.original ??
+        this.mission.illustrations?.[0]?.urls?.original ??
+        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+      )
     },
   },
   methods: {

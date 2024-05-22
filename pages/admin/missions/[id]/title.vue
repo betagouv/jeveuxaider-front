@@ -46,7 +46,10 @@ export default defineNuxtComponent({
       loading: false,
       form: null,
       formSchema: object({
-        name: string().required('Le titre est requis'),
+        name: string()
+          .min(3, 'Le titre est trop court')
+          .matches(/^(Je|J'|J‘|J’)/, 'Le titre de la mission doit commencer par "Je" ou "J‘"')
+          .required('Le titre est requis'),
       }),
     }
   },
