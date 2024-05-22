@@ -57,7 +57,13 @@
             :is-completed="!!mission.date_type && !!mission.commitment__duration"
             @click="$router.push(`/admin/missions/${mission.id}/dates`)"
           >
-            {{ formattedDates }}
+            <template v-if="hasDates">
+              <template v-if="nextDates">
+                {{ $filters.pluralize(nextDates.length, 'date') }} à venir</template
+              >
+              <template v-else> Aucune date à venir</template></template
+            >
+            <template v-else> {{ formattedDates }}</template>
           </CustomMissionPreviewItem>
         </div>
         <div class="space-y-4">

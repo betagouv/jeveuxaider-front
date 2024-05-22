@@ -141,7 +141,6 @@
                 class="flex justify-between items-center"
                 v-for="item in form.autonomy_zips"
                 :key="item.zip"
-                :tag="item"
               >
                 <div class="font-medium">{{ item.city }}, {{ item.zip }}</div>
                 <DsfrButton

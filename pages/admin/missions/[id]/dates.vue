@@ -106,21 +106,57 @@
           >
             <div class="grid grid-cols-2 gap-4">
               <CustomOptionCard
-                :is-selected="form.with_creneaux === 'oui'"
+                :is-selected="withDates === 'yes'"
                 title="Sur des jours définis"
                 description="Ex : tous les premiers mercredis du mois, tous les mardis et jeudis, etc."
-                @click="form.with_creneaux = 'oui'"
+                @click="withDates = 'yes'"
               />
               <CustomOptionCard
-                :is-selected="form.with_creneaux === 'non'"
+                :is-selected="withDates === 'no'"
                 title="C’est à définir"
                 description="Vous ne savez pas encore ou c’est à discuter avec le bénévole"
-                @click="form.with_creneaux = 'non'"
+                @click="withDates = 'no'"
               />
             </div>
           </DsfrFormControl>
 
-          <template v-if="form.with_creneaux === 'non'">
+          <template v-if="withDates === 'yes'">
+            <div class="flex justify-between items-center border-b py-4">
+              <div class="font-bold text-xl">
+                <template v-if="nextDates">
+                  {{ $filters.pluralize(nextDates.length, 'date') }} à venir</template
+                >
+                <template v-else> Aucune date à venir</template>
+              </div>
+              <DsfrButton size="sm" type="secondary">Ajouter des dates</DsfrButton>
+            </div>
+            <div v-if="form.dates && form.dates.length" class="mt-6 grid grid-cols-1 gap-4">
+              <div
+                class="flex justify-between items-center"
+                v-for="date in form.dates"
+                :key="date.id"
+              >
+                <div>
+                  <div class="first-letter:uppercase">
+                    {{ $dayjs(date.id).format('dddd D MMMM YYYY') }}
+                  </div>
+                  <div class="text-sm text-gray-500 font-medium">
+                    {{ date.slots.map((slot) => $filters.label(slot, 'slots')).join(', ') }}
+                  </div>
+                </div>
+                <DsfrButton
+                  icon-only
+                  size="xs"
+                  type="tertiary"
+                  icon="RiDeleteBinLine"
+                  icon-class="text-[#CE0500]"
+                  @click="onRemovedDate(date)"
+                />
+              </div>
+            </div>
+          </template>
+
+          <template v-if="withDates === 'no'">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <DsfrFormControl
                 label="Date de début"
@@ -148,6 +184,7 @@
 import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
 import FormErrors from '@/mixins/form/errors'
 import { string, object } from 'yup'
+import MixinMission from '@/mixins/mission'
 
 export default defineNuxtComponent({
   setup() {
@@ -156,7 +193,7 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, MixinMission],
   components: {
     FormMissionEditWrapper,
   },
@@ -164,14 +201,14 @@ export default defineNuxtComponent({
     this.form = { ...this.$stores.formMission.mission }
 
     if (this.form.start_date) {
-      this.form.with_creneaux = this.form.dates?.length > 0 ? 'oui' : 'non'
+      this.withDates = this.form.dates?.length > 0 ? 'yes' : 'no'
     }
   },
   data() {
     return {
       loading: false,
       form: null,
-
+      withDates: null,
       formSchema: object({
         date_type: string().required('Le type d’engagement est requis'),
       }),
@@ -179,9 +216,9 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    // mission() {
-    //   return this.$stores.formMission.mission
-    // },
+    mission() {
+      return this.$stores.formMission.mission
+    },
   },
   methods: {
     onPonctualClick() {
@@ -189,6 +226,10 @@ export default defineNuxtComponent({
     },
     onRecurringClick() {
       this.form.date_type = 'recurring'
+    },
+    onRemovedDate(date) {
+      console.log('onRemovedDate', date)
+      this.form.dates = this.form.dates.filter((item) => item.id !== date.id)
     },
     async onValidateClick() {
       this.loading = true
