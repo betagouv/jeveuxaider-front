@@ -9,13 +9,30 @@
         Vous pourrez modifier le nombre de bénévoles recherchés en fonction des demandes de
         participation reçues et de vos besoins s’ils évoluent !
       </CustomTips>
-      <DsfrInput
-        v-model="form.participations_max"
-        label="Nombre de bénévoles recherchés"
-        type="number"
-        size="lg"
-      />
-      <div class="mt-2 text-[#666666]">
+      <div class="flex items-center justify-center gap-4">
+        <div
+          aria-
+          class="border cursor-pointer p-3 border-jva-blue-500 rounded-full text-jva-blue-500 hover:bg-[#F5F5FE]"
+          @click="form.participations_max--"
+        >
+          <RiSubtractLine class="fill-current h-5 w-5" @click="form.participations_max--" />
+        </div>
+
+        <input
+          type="number"
+          name="participations_max"
+          v-model="form.participations_max"
+          class="outline-none focus:outline-none border-b px-8 py-1 w-[220px] text-center border-none text-[80px] font-bold text-[#161616] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        />
+
+        <div
+          class="border cursor-pointer p-3 border-jva-blue-500 rounded-full text-jva-blue-500 hover:bg-[#F5F5FE]"
+          @click="form.participations_max++"
+        >
+          <RiAddLine class="fill-current h-5 w-5" />
+        </div>
+      </div>
+      <div class="mt-8 text-[#666666] text-center">
         {{
           $filters.pluralize(
             $stores.formMission.mission.places_left,
@@ -34,6 +51,8 @@
 <script>
 import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
 import FormErrors from '@/mixins/form/errors'
+import RiSubtractLine from 'vue-remix-icons/icons/ri-subtract-line.vue'
+import RiAddLine from 'vue-remix-icons/icons/ri-add-line.vue'
 import { number, object } from 'yup'
 
 export default defineNuxtComponent({
@@ -46,6 +65,8 @@ export default defineNuxtComponent({
   mixins: [FormErrors],
   components: {
     FormMissionEditWrapper,
+    RiSubtractLine,
+    RiAddLine,
   },
   mounted() {
     this.form = { ...this.$stores.formMission.mission }

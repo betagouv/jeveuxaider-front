@@ -5,6 +5,7 @@ export const useFormMissionStore = defineStore({
   id: 'formMission',
   state: () => ({
     mission: null,
+    statistics: null,
   }),
   getters: {},
   actions: {
@@ -18,6 +19,10 @@ export const useFormMissionStore = defineStore({
     },
     reset() {
       this.mission = null
+      this.statistics = statistics
+    },
+    setStatisctics(statistics) {
+      this.statistics = statistics
     },
   },
 })

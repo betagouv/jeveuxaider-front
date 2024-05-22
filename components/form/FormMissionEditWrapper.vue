@@ -29,7 +29,7 @@ export default defineNuxtComponent({
     }
 
     if (!$stores.formMission.mission) {
-      const mission = await apiFetch(`/missions/${route.params.id}`)
+      const mission = await apiFetch(`/missions/${route.params.id}/show`)
       $stores.formMission.setMission(mission)
     }
 
@@ -40,6 +40,11 @@ export default defineNuxtComponent({
       if ($stores.auth.contextableId != $stores.formMission.mission.structure_id) {
         return showError({ statusCode: 403 })
       }
+    }
+
+    if (!$stores.formMission.statistics) {
+      const statistics = await apiFetch(`/statistics/missions/${route.params.id}`)
+      $stores.formMission.setStatistics(statistics)
     }
   },
   // beforeUnmount() {

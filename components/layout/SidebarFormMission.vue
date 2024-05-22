@@ -69,13 +69,11 @@
             @click="$router.push(`/admin/missions/${mission.id}/lieux`)"
           >
             <template v-if="mission.type === 'Mission à distance'"> Misison à distance </template>
-            <template v-if="mission.type === 'Mission en présentiel'">
+            <template v-if="mission.type === 'Mission en présentiel' && !mission.is_autonomy">
               {{ mission.city }}, {{ mission.zip }}
             </template>
             <template v-if="mission.autonomy_zips && mission.autonomy_zips.length > 0">
-              <br />
-              Et
-              {{ $filters.pluralize(mission.autonomy_zips.length, 'autre lieu', 'autres lieux') }}
+              {{ $filters.pluralize(mission.autonomy_zips.length, 'lieu', 'lieux') }}
             </template>
           </CustomMissionPreviewItem>
         </div>
