@@ -40,7 +40,7 @@
         </DsfrButton>
         <Actions
           :mission="mission"
-          @showModalSwitchIsOnline="$emit('showModalSwitchIsOnline')"
+          @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
           @missionDeleted="handleDeleted"
         />
       </div>
@@ -49,6 +49,12 @@
         :mission="mission"
         :is-open="showModalPreview"
         @close="showModalPreview = false"
+      />
+      <ModalMissionToggleIsActive
+        :mission="mission"
+        :is-open="showModalSwitchIsOnline"
+        @cancel="showModalSwitchIsOnline = false"
+        @confirm="afterChangeIsActive"
       />
     </div>
 
@@ -76,11 +82,12 @@ export default defineNuxtComponent({
   data() {
     return {
       showModalPreview: false,
+      showModalSwitchIsOnline: false,
     }
   },
   computed: {
     mission() {
-      return this.$stores.formMission.mission
+      return _cloneDeep(this.$stores.formMission.mission)
     },
     statistics() {
       return this.$stores.formMission.statistics
@@ -89,6 +96,10 @@ export default defineNuxtComponent({
   methods: {
     handleDeleted() {
       this.$router.push('/admin/missions')
+    },
+    afterChangeIsActive(mission) {
+      this.$stores.formMission.updateFields(mission, ['is_online'])
+      this.showModalSwitchIsOnline = false
     },
   },
 })
