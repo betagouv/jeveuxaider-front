@@ -123,12 +123,15 @@ export default {
     },
     canRegister() {
       if (!this.mission.has_places_left) {
+        console.log('no places left')
         return false
       }
       if (!this.mission.is_registration_open) {
+        console.log('registration closed')
         return false
       }
       if (!this.mission.is_online) {
+        console.log('not online')
         return false
       }
 
@@ -136,10 +139,12 @@ export default {
         this.mission.end_date &&
         this.$dayjs(this.mission.end_date).endOf('day').isBefore(this.$dayjs())
       ) {
+        console.log('mission expired')
         return false
       }
 
       if (this.mission.state === 'Validée' && this.mission.structure.state === 'Validée') {
+        console.log('mission validated')
         return true
       }
 
@@ -216,6 +221,36 @@ export default {
             this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
         )
       }
+    },
+    dates() {
+      const dates = []
+      const startDate = this.mission?.start_date
+      const endDate = this.mission?.end_date
+      const sameStartAndEnd = this.$dayjs(startDate).isSame(this.$dayjs(endDate))
+
+      // Si date de début dépassée et pas de date de fin, masquer les dates
+      if (this.$dayjs(startDate).isBefore(this.$dayjs()) && !endDate) {
+        return dates
+      }
+
+      if (startDate) {
+        dates.push({
+          date:
+            endDate && sameStartAndEnd
+              ? `Le ${this.$dayjs(startDate).format('D MMM YYYY')}`
+              : this.$dayjs(startDate).format('D MMM YYYY'),
+          label: endDate && sameStartAndEnd ? null : 'À PARTIR DU',
+        })
+      }
+
+      if (endDate && !sameStartAndEnd) {
+        dates.push({
+          date: this.$dayjs(endDate).format('D MMM YYYY'),
+          label: "JUSQU'AU",
+        })
+      }
+
+      return dates
     },
     missionStructureResponseTimeInDays() {
       if (!this.structureScore) {

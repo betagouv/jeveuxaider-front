@@ -304,8 +304,8 @@
                         </DsfrBadge>
                       </ul>
                     </div>
-                    <div v-else-if="canRegister" class="relative text-center">
-                      <ButtonJeProposeMonAide :mission="mission" class="w-full" />
+                    <div v-if="canRegister" class="relative text-center">
+                      <ButtonJeProposeMonAide disabled :mission="mission" class="w-full" />
                     </div>
 
                     <template v-else>
@@ -314,14 +314,14 @@
                       </DsfrButton>
                     </template>
 
-                    <p
+                    <!-- <p
                       v-if="canRegister && structureScore?.response_time"
                       class="mt-4 px-8 text-cool-gray-500 text-xs text-center leading-4"
                     >
                       <span class="font-semibold">{{ mission.structure.name }}</span> répond
                       généralement
                       <span class="font-semibold">{{ missionStructureResponseTimeFormatted }}</span>
-                    </p>
+                    </p> -->
                   </div>
                 </div>
               </BaseBox>
