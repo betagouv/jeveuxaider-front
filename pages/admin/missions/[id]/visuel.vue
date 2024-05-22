@@ -29,7 +29,7 @@
       </div>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onValidateClick">Valider</DsfrButton>
+      <DsfrButton :loading="loading" @click="onValidateClick">Sauvegarder</DsfrButton>
     </template>
   </FormMissionEditWrapper>
 </template>
@@ -92,10 +92,8 @@ export default defineNuxtComponent({
       })
         .then(async (mission) => {
           console.log('response', mission)
-          // this.$stores.formMission.setMission(response)
           this.$stores.formMission.updateFields(mission, ['illustrations'])
-
-          this.$router.push(`/admin/missions/${this.form.id}/informations`)
+          this.$router.push(`/admin/missions/${mission.id}/informations`)
         })
         .catch(() => {})
         .finally(() => {

@@ -123,7 +123,7 @@
       </div>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onValidateClick">Valider</DsfrButton>
+      <DsfrButton :loading="loading" @click="onValidateClick">Sauvegarder</DsfrButton>
     </template>
   </FormMissionEditWrapper>
 </template>

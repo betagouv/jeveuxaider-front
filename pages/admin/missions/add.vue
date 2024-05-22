@@ -96,7 +96,7 @@
             <DsfrButton type="tertiary" @click="onChangeTemplateClick"
               >Choisir un autre modèle</DsfrButton
             >
-            <DsfrButton @click="onValidateClick">Valider</DsfrButton>
+            <DsfrButton @click="onValidateClick">Sauvegarder</DsfrButton>
           </div>
         </template>
       </CardTemplatePreview>
@@ -126,7 +126,7 @@
             <DsfrButton type="tertiary" @click="onChangeTemplateClick"
               >Choisir un modèle</DsfrButton
             >
-            <DsfrButton @click="onValidateClick">Valider</DsfrButton>
+            <DsfrButton @click="onValidateClick">Sauvegarder</DsfrButton>
           </div>
         </template>
       </CardTemplatePreview>

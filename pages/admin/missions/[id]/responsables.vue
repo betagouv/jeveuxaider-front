@@ -9,33 +9,50 @@
         Le responsable de la mission est la personne qui sera en contact avec les bénévoles et qui
         sera chargé de les accompagner dans leur intégration dans la structure.
       </CustomTips>
-      <div>
-        <div v-for="responsable in responsables" :key="responsable.id">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center">
-              <BaseAvatar
-                :img-srcset="responsable.avatar ? responsable.avatar.urls.thumbMedium : null"
-                :img-src="responsable.avatar ? responsable.avatar.urls.original : null"
-                :initials="responsable.short_name"
-                size="sm"
-                class="mr-4"
-              />
-              <div>
-                <div class="truncate font-bold">{{ responsable.full_name }}</div>
-                <div class="truncate text-sm">{{ responsable.email }}</div>
-              </div>
-            </div>
+      <div class="grid grid-cols-1 gap-8">
+        <div
+          v-for="responsable in responsables"
+          :key="responsable.id"
+          class="relative"
+          :class="[
+            'relative group shadow-lg p-6  border-2 cursor-pointer hover:border-[#8585F6]',
+            responsable.profile.id === form.responsable_id
+              ? 'border-[#8585F6] bg-[#F5F5FE]'
+              : 'border-transparent bg-white',
+          ]"
+          @click="onResponsableClick(responsable)"
+        >
+          <div
+            v-if="responsable.profile.id === form.responsable_id"
+            class="absolute top-3 right-3 bg-white rounded-full"
+          >
+            <RiCheckboxCircleFill
+              class="h-6 text-jva-blue-500 fill-current group-hover:text-jva-blue-500"
+            />
+          </div>
+
+          <div class="flex items-center">
+            <BaseAvatar
+              :img-srcset="
+                responsable.profile.avatar ? responsable.profile.avatar.urls.thumbMedium : null
+              "
+              :img-src="
+                responsable.profile.avatar ? responsable.profile.avatar.urls.original : null
+              "
+              :initials="responsable.profile.short_name"
+              size="sm"
+              class="mr-4"
+            />
             <div>
-              <DsfrButton type="secondary" size="sm" @click="onEditResponsable(responsable)"
-                >Changer</DsfrButton
-              >
+              <div class="truncate font-bold">{{ responsable.profile.full_name }}</div>
+              <div class="truncate text-sm">{{ responsable.profile.email }}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onValidateClick">Valider</DsfrButton>
+      <DsfrButton :loading="loading" @click="onValidateClick">Sauvegarder</DsfrButton>
     </template>
   </FormMissionEditWrapper>
 </template>
@@ -44,6 +61,7 @@
 import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
 import FormErrors from '@/mixins/form/errors'
 import { string, object } from 'yup'
+import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
 
 export default defineNuxtComponent({
   setup() {
@@ -55,18 +73,18 @@ export default defineNuxtComponent({
   mixins: [FormErrors],
   components: {
     FormMissionEditWrapper,
+    RiCheckboxCircleFill,
   },
   mounted() {
     this.form = { ...this.$stores.formMission.mission }
-
-    console.log('mounted', this.form.responsable.id)
-    this.responsables.push(this.form.responsable)
+    this.responsables = this.$stores.formMission.mission.structure.members
+    // console.log('mounted', this.form.responsable.id)
+    // this.responsables.push(this.form.responsable)
   },
   data() {
     return {
       loading: false,
       form: null,
-      showModalChangeResponsable: false,
       responsables: [],
       formSchema: object({
         name: string().required('Le titre est requis'),
@@ -75,8 +93,8 @@ export default defineNuxtComponent({
   },
   computed: {},
   methods: {
-    onEditResponsable(responsable) {
-      this.showModalChangeResponsable = true
+    onResponsableClick(responsable) {
+      this.form.responsable_id = responsable.profile.id
     },
     async onValidateClick() {
       this.loading = true
@@ -88,11 +106,9 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              console.log(mission)
-              // this.$stores.formMission.setMission(mission)
-              this.$stores.formMission.updateFields(mission, ['name'])
-
-              this.$router.push(`/admin/missions/${mission.id}`)
+              this.$stores.formMission.updateFields(mission, ['responsable', 'responsable_id'])
+              this.$toast.success('Responsable de la mission modifié avec succès')
+              //this.$router.push(`/admin/missions/${mission.id}`)
             })
             .catch(() => {})
         })
