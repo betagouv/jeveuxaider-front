@@ -73,6 +73,42 @@
           />
         </DsfrFormControl>
 
+        <template v-if="!form.is_autonomy && form.type === 'Mission en présentiel'">
+          <DsfrFormControl
+            label="Lieu de la mission"
+            html-for="adress"
+            info="Si l'adresse n'est pas reconnue veuillez saisir le nom de la
+              ville."
+            required
+          >
+            <DsfrInputAutocomplete
+              icon="RiMapPinLine"
+              name="adress"
+              placeholder="Renseignez une adresse"
+              :options="autocompleteOptions"
+              attribute-key="id"
+              attribute-label="label"
+              attribute-right-label="typeLabel"
+              :min-value-length="3"
+              @selected="handleSelectedGeo"
+              @fetch-suggestions="onFetchGeoSuggestions($event)"
+            />
+          </DsfrFormControl>
+
+          <div v-if="form.address" class="mt-6 grid grid-cols-1 gap-4">
+            <div class="flex justify-between items-center">
+              <div class="font-medium">{{ form.full_address }}</div>
+              <DsfrButton
+                icon-only
+                size="xs"
+                type="tertiary"
+                icon="RiDeleteBinLine"
+                icon-class="text-[#CE0500]"
+                @click="onRemovedTagItem(item)"
+              />
+            </div>
+          </div>
+        </template>
         <template v-if="form.is_autonomy && form.type === 'Mission en présentiel'">
           <DsfrFormControl
             label="Codes postaux de la zone d'intervention (jusqu'à 25)"
@@ -144,7 +180,7 @@
 <script>
 import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
 import FormErrors from '@/mixins/form/errors'
-import { string, object } from 'yup'
+import { string, object, array } from 'yup'
 import MixinInputGeo from '@/mixins/input-geo'
 
 export default defineNuxtComponent({
@@ -167,6 +203,78 @@ export default defineNuxtComponent({
       form: null,
       formSchema: object({
         type: string().required('Le type de mission est requis'),
+        department: string()
+          .nullable()
+          .when(['type'], {
+            is: (type) => type == 'Mission en présentiel',
+            then: (schema) => schema.required('Le département est requis'),
+          }),
+        address: string().nullable(),
+        zip: string()
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) =>
+              type == 'Mission en présentiel' &&
+              !is_autonomy &&
+              this.form.zip &&
+              this.form.department,
+            then: (schema) =>
+              schema.test(
+                'test-zip',
+                'Le code postal et le département ne correspondent pas',
+                () => {
+                  const department = ['2A', '2B'].includes(this.form.department)
+                    ? '20'
+                    : this.form.department
+                  return this.form.zip && this.form.zip.startsWith(department)
+                }
+              ),
+          })
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
+            then: (schema) => schema.nullable().required('Le code postal est requis'),
+            otherwise: (schema) => schema.nullable(),
+          }),
+        city: string()
+          .nullable()
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
+            then: (schema) => schema.required('La ville est requise'),
+            otherwise: (schema) => schema.nullable(),
+          }),
+        autonomy_zips: array()
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => !is_autonomy || type !== 'Mission en présentiel',
+            then: (schema) => schema.nullable(),
+          })
+          .when(['type', 'is_autonomy'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy) => type == 'Mission en présentiel' && is_autonomy,
+            then: (schema) =>
+              schema.min(1, 'Au moins un code postal requis').max(25, '25 codes postaux maximum'),
+          })
+          .when(['type', 'is_autonomy', 'department'], {
+            // eslint-disable-next-line camelcase
+            is: (type, is_autonomy, department) =>
+              type == 'Mission en présentiel' && is_autonomy && department,
+            then: (schema) =>
+              schema.test(
+                'test-zips',
+                'Les codes postaux et le département ne correspondent pas',
+                // eslint-disable-next-line camelcase
+                (autonomy_zips) => {
+                  const zips = autonomy_zips.map((i) => i.zip)
+                  const department = ['2A', '2B'].includes(this.form.department)
+                    ? '20'
+                    : this.form.department
+                  return zips.every((zip) => zip.startsWith(department))
+                }
+              ),
+            otherwise: (schema) => schema.nullable(),
+          }),
       }),
     }
   },

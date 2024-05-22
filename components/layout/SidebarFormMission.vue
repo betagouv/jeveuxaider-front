@@ -63,12 +63,20 @@
         <div class="space-y-4">
           <h3 class="text-sm font-bold uppercase text-[#666666]">Lieux</h3>
           <CustomMissionPreviewItem
-            title="En présentiel ou à distance"
+            :title="titleBoxLieux"
             :is-current="$route.name === 'admin-missions-id-lieux'"
             :is-completed="!!mission.type"
             @click="$router.push(`/admin/missions/${mission.id}/lieux`)"
           >
-            Lieu à définir
+            <template v-if="mission.type === 'Mission à distance'"> Misison à distance </template>
+            <template v-if="mission.type === 'Mission en présentiel'">
+              {{ mission.city }}, {{ mission.zip }}
+            </template>
+            <template v-if="mission.autonomy_zips && mission.autonomy_zips.length > 0">
+              <br />
+              Et
+              {{ $filters.pluralize(mission.autonomy_zips.length, 'autre lieu', 'autres lieux') }}
+            </template>
           </CustomMissionPreviewItem>
         </div>
         <div class="space-y-4">
@@ -154,6 +162,10 @@ export default defineNuxtComponent({
     },
     benevolesInfosItemsCount() {
       return 5
+    },
+    titleBoxLieux() {
+      if (!this.mission.type) return 'En présentiel ou à distance'
+      return this.mission.type === 'Mission à distance' ? 'À distance' : 'En présentiel'
     },
   },
   methods: {
