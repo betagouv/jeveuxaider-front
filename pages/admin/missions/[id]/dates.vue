@@ -123,8 +123,8 @@
           <template v-if="withDates === 'yes'">
             <div class="flex justify-between items-center border-b py-4">
               <div class="font-bold text-xl">
-                <template v-if="nextDates">
-                  {{ $filters.pluralize(nextDates.length, 'date') }} à venir</template
+                <template v-if="formNextDates">
+                  {{ $filters.pluralize(formNextDates.length, 'date') }} à venir</template
                 >
                 <template v-else> Aucune date à venir</template>
               </div>
@@ -177,6 +177,7 @@
       </div>
 
       <ModalFormMissionAddDates
+        v-if="showModalAddDates"
         :is-open="showModalAddDates"
         @cancel="showModalAddDates = false"
         @submit="onAddDatesSubmitted"
@@ -230,6 +231,13 @@ export default defineNuxtComponent({
     mission() {
       return this.$stores.formMission.mission
     },
+    formNextDates() {
+      return this.form.dates.filter(
+        (date) =>
+          this.$dayjs(date.id).isAfter(this.$dayjs()) ||
+          this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
+      )
+    },
   },
   methods: {
     onPonctualClick() {
@@ -239,12 +247,10 @@ export default defineNuxtComponent({
       this.form.date_type = 'recurring'
     },
     onRemovedDate(date) {
-      console.log('onRemovedDate', date)
       this.form.dates = this.form.dates.filter((item) => item.id !== date.id)
     },
     onAddDatesSubmitted(payload) {
-      console.log('onAddDatesSubmitted', payload)
-      this.form.dates = [...this.form.dates, payload].sort((a, b) => a.id.localeCompare(b.id))
+      this.form.dates = this.form.dates.concat(payload).sort((a, b) => a.id.localeCompare(b.id))
     },
     async onValidateClick() {
       this.loading = true
