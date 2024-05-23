@@ -28,13 +28,6 @@
         </div>
       </div>
       <div class="ml-auto flex gap-2">
-        <!-- <SelectMissionState
-          v-if="canEditStatut"
-          :mission="mission"
-          :mission-stats="statistics"
-          @selected="handleChangeState($event)"
-          @updated="$emit('updated', $event)"
-        /> -->
         <DsfrButton v-if="mission" type="tertiary" @click="showModalPreview = true" icon="RiEyeLine"
           >Aperçu
         </DsfrButton>

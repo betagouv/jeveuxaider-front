@@ -128,7 +128,9 @@
                 >
                 <template v-else> Aucune date à venir</template>
               </div>
-              <DsfrButton size="sm" type="secondary">Ajouter des dates</DsfrButton>
+              <DsfrButton size="sm" type="secondary" @click="showModalAddDates = true"
+                >Ajouter des dates</DsfrButton
+              >
             </div>
             <div v-if="form.dates && form.dates.length" class="mt-6 grid grid-cols-1 gap-4">
               <div
@@ -173,6 +175,12 @@
           </template>
         </template>
       </div>
+
+      <ModalFormMissionAddDates
+        :is-open="showModalAddDates"
+        @cancel="showModalAddDates = false"
+        @submit="onAddDatesSubmitted"
+      />
     </div>
     <template #footer>
       <DsfrButton :loading="loading" @click="onValidateClick">Sauvegarder</DsfrButton>
@@ -185,6 +193,7 @@ import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
 import FormErrors from '@/mixins/form/errors'
 import { string, object } from 'yup'
 import MixinMission from '@/mixins/mission'
+import ModalFormMissionAddDates from '@/components/modal/ModalFormMissionAddDates'
 
 export default defineNuxtComponent({
   setup() {
@@ -196,6 +205,7 @@ export default defineNuxtComponent({
   mixins: [FormErrors, MixinMission],
   components: {
     FormMissionEditWrapper,
+    ModalFormMissionAddDates,
   },
   mounted() {
     this.form = _cloneDeep(this.$stores.formMission.mission)
@@ -203,16 +213,17 @@ export default defineNuxtComponent({
     if (this.form.start_date) {
       this.withDates = this.form.dates?.length > 0 ? 'yes' : 'no'
     }
+    console.log('mounted', this.form.dates)
   },
   data() {
     return {
       loading: false,
       form: null,
-      withDates: null,
       formSchema: object({
         date_type: string().required('Le type d’engagement est requis'),
       }),
       withDates: null,
+      showModalAddDates: false,
     }
   },
   computed: {
@@ -230,6 +241,10 @@ export default defineNuxtComponent({
     onRemovedDate(date) {
       console.log('onRemovedDate', date)
       this.form.dates = this.form.dates.filter((item) => item.id !== date.id)
+    },
+    onAddDatesSubmitted(payload) {
+      console.log('onAddDatesSubmitted', payload)
+      this.form.dates = [...this.form.dates, payload].sort((a, b) => a.id.localeCompare(b.id))
     },
     async onValidateClick() {
       this.loading = true
