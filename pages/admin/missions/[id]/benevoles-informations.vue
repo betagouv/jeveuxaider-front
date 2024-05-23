@@ -138,7 +138,7 @@ import { number, object } from 'yup'
 export default defineNuxtComponent({
   setup() {
     definePageMeta({
-      layout: 'form-mission-edit',
+      layout: 'form-mission',
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
@@ -148,9 +148,9 @@ export default defineNuxtComponent({
   },
   mounted() {
     this.form = _cloneDeep(this.$stores.formMission.mission)
-    // if (!this.form.prerequisites) {
-    //   this.form.prerequisites = [undefined, undefined, undefined]
-    // }
+    if (!this.form.prerequisites) {
+      this.form.prerequisites = [null, null, null]
+    }
   },
   data() {
     return {

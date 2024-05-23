@@ -27,8 +27,8 @@
           <Badges :mission="$stores.formMission.mission" />
         </div>
       </div>
-      <div class="ml-auto flex gap-2">
-        <DsfrButton v-if="mission" type="tertiary" @click="showModalPreview = true" icon="RiEyeLine"
+      <div v-if="mission" class="ml-auto flex gap-2">
+        <DsfrButton type="tertiary" @click="showModalPreview = true" icon="RiEyeLine"
           >Aperçu
         </DsfrButton>
         <Actions
@@ -36,19 +36,18 @@
           @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
           @missionDeleted="handleDeleted"
         />
+        <SectionFormMissionOverlay
+          :mission="mission"
+          :is-open="showModalPreview"
+          @close="showModalPreview = false"
+        />
+        <ModalMissionToggleIsActive
+          :mission="mission"
+          :is-open="showModalSwitchIsOnline"
+          @cancel="showModalSwitchIsOnline = false"
+          @confirm="afterChangeIsActive"
+        />
       </div>
-
-      <SectionFormMissionOverlay
-        :mission="mission"
-        :is-open="showModalPreview"
-        @close="showModalPreview = false"
-      />
-      <ModalMissionToggleIsActive
-        :mission="mission"
-        :is-open="showModalSwitchIsOnline"
-        @cancel="showModalSwitchIsOnline = false"
-        @confirm="afterChangeIsActive"
-      />
     </div>
 
     <div>

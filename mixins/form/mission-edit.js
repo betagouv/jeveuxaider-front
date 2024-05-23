@@ -1,7 +1,7 @@
 export default {
   // async setup() {
   //   definePageMeta({
-  //     layout: 'form-mission-edit',
+  //     layout: 'form-mission',
   //     middleware: ['authenticated', 'agreed-responsable-terms'],
   //   })
   //   const { $stores } = useNuxtApp()

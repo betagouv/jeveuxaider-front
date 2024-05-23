@@ -22,6 +22,8 @@
             variant === 'white',
         },
 
+        { ' cursor-not-allowed': disabled },
+
         { '!shadow-[inset_0_-2px_0_0_#ce0500]': error },
         { '!shadow-[inset_0_-2px_0_0_#18753c]': success },
 
@@ -37,6 +39,7 @@
         inputClass,
       ]"
       @keypress.space="onKeypressSpace"
+      :disabled="disabled"
       @input="$emit('update:modelValue', $event.target.value)"
     />
 
@@ -59,6 +62,10 @@ export default defineNuxtComponent({
       type: String,
       default: 'md',
       validator: (s) => ['md', 'lg'].includes(s),
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
     error: {
       type: Boolean,

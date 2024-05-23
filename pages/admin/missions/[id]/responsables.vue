@@ -66,7 +66,7 @@ import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.
 export default defineNuxtComponent({
   setup() {
     definePageMeta({
-      layout: 'form-mission-edit',
+      layout: 'form-mission',
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },

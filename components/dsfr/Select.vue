@@ -53,12 +53,13 @@ const props = defineProps({
       :placeholder="placeholder"
       :disabled="disabled"
       :class="[
-        'border-none rounded-t w-full h-full',
+        'border-none rounded-t w-full h-full truncate',
         'bg-[#EEEEEE] shadow-[inset_0_-2px_0_0_#3A3A3A] focus:!shadow-[inset_0_-2px_0_0_#3A3A3A] text-[#3a3a3a]',
 
         { '!shadow-[inset_0_-2px_0_0_#ce0500]': error },
         { '!shadow-[inset_0_-2px_0_0_#18753c]': success },
         { 'py-3': size === 'lg' },
+        { 'cursor-not-allowed': disabled },
 
         customClass,
       ]"

@@ -4,7 +4,7 @@
       <Teleport to="#teleport-header"> <slot name="header"></slot></Teleport>
     </ClientOnly>
 
-    <div class="flex-1 overflow-y-auto overflow-x-hidden h-full custom-scrollbar-gray">
+    <div id="content" class="flex-1 overflow-y-auto overflow-x-hidden h-full custom-scrollbar-gray">
       <div class="px-4 max-w-[696px] mx-auto">
         <div class="py-14"><slot></slot></div>
       </div>
@@ -28,23 +28,25 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
 
-    if (!$stores.formMission.mission) {
-      const mission = await apiFetch(`/missions/${route.params.id}/show`)
-      $stores.formMission.setMission(mission)
-    }
-
-    if (!$stores.formMission.mission) {
-      return showError({ statusCode: 404 })
-    }
-    if ($stores.auth.contextRole == 'responsable') {
-      if ($stores.auth.contextableId != $stores.formMission.mission.structure_id) {
-        return showError({ statusCode: 403 })
+    if (route.name != 'admin-missions-add') {
+      if (!$stores.formMission.mission) {
+        const mission = await apiFetch(`/missions/${route.params.id}/show`)
+        $stores.formMission.setMission(mission)
       }
-    }
 
-    if (!$stores.formMission.statistics) {
-      const statistics = await apiFetch(`/statistics/missions/${route.params.id}`)
-      $stores.formMission.setStatistics(statistics)
+      if (!$stores.formMission.mission) {
+        return showError({ statusCode: 404 })
+      }
+      if ($stores.auth.contextRole == 'responsable') {
+        if ($stores.auth.contextableId != $stores.formMission.mission.structure_id) {
+          return showError({ statusCode: 403 })
+        }
+      }
+
+      if (!$stores.formMission.statistics) {
+        const statistics = await apiFetch(`/statistics/missions/${route.params.id}`)
+        $stores.formMission.setStatistics(statistics)
+      }
     }
   },
   // beforeUnmount() {

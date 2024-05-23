@@ -57,13 +57,16 @@
             :is-completed="!!mission.date_type && !!mission.commitment__duration"
             @click="$router.push(`/admin/missions/${mission.id}/dates`)"
           >
-            <template v-if="hasDates">
-              <template v-if="nextDates">
-                {{ $filters.pluralize(nextDates.length, 'date') }} à venir</template
+            <template v-if="mission.date_type">
+              <template v-if="hasDates">
+                <template v-if="nextDates">
+                  {{ $filters.pluralize(nextDates.length, 'date') }} à venir</template
+                >
+                <template v-else> Aucune date à venir</template></template
               >
-              <template v-else> Aucune date à venir</template></template
-            >
-            <template v-else> {{ formattedDates }}</template>
+              <template v-else> {{ formattedDates }}</template>
+            </template>
+            <template v-else>À définir</template>
           </CustomMissionPreviewItem>
         </div>
         <div class="space-y-4">
@@ -74,13 +77,16 @@
             :is-completed="!!mission.type"
             @click="$router.push(`/admin/missions/${mission.id}/lieux`)"
           >
-            <template v-if="mission.type === 'Mission à distance'"> Misison à distance </template>
-            <template v-if="mission.type === 'Mission en présentiel' && !mission.is_autonomy">
-              {{ mission.city }}, {{ mission.zip }}
+            <template v-if="mission.type">
+              <template v-if="mission.type === 'Mission à distance'"> Misison à distance </template>
+              <template v-if="mission.type === 'Mission en présentiel' && !mission.is_autonomy">
+                {{ mission.city }}, {{ mission.zip }}
+              </template>
+              <template v-if="mission.autonomy_zips && mission.autonomy_zips.length > 0">
+                {{ $filters.pluralize(mission.autonomy_zips.length, 'lieu', 'lieux') }}
+              </template>
             </template>
-            <template v-if="mission.autonomy_zips && mission.autonomy_zips.length > 0">
-              {{ $filters.pluralize(mission.autonomy_zips.length, 'lieu', 'lieux') }}
-            </template>
+            <template v-else>À définir</template>
           </CustomMissionPreviewItem>
         </div>
         <div class="space-y-4">
@@ -142,6 +148,16 @@
               <div class="truncate font-bold">{{ mission.responsable.full_name }}</div>
             </div>
           </CustomMissionPreviewItem>
+        </div>
+      </div>
+    </div>
+    <div v-else>
+      <div class="p-8">
+        <h3 class="text-xl font-bold mb-4">Titre todo</h3>
+        <div>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eligendi officiis
+          inventore deleniti, fugiat consequatur esse tempora reiciendis. Nemo iste, reiciendis
+          labore cum tempore ad alias sunt est repellat nisi.
         </div>
       </div>
     </div>

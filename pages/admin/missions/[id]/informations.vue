@@ -104,11 +104,7 @@
               Pourquoi faire du bénévolat avec vous ? Incitez les bénévoles à proposer leur aide
             </div>
           </template>
-          <DsfrRichEditor
-            name="information"
-            v-model="form.information"
-            :disabled="Boolean(form.template)"
-          />
+          <DsfrRichEditor name="information" v-model="form.information" />
         </DsfrFormControl>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -162,7 +158,7 @@ import activities from '@/assets/activities.json'
 export default defineNuxtComponent({
   setup() {
     definePageMeta({
-      layout: 'form-mission-edit',
+      layout: 'form-mission',
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
@@ -172,6 +168,13 @@ export default defineNuxtComponent({
   },
   mounted() {
     this.form = _cloneDeep(this.$stores.formMission.mission)
+
+    this.form.domaine_id = this.mission.template?.domaine_id || this.mission.domaine_id
+    this.form.domaine_secondary_id =
+      this.mission.template?.domaine_secondary_id || this.mission.domaine_secondary_id
+    this.form.activity_id = this.mission.template?.activity_id || this.mission.activity_id
+    this.form.activity_secondary_id =
+      this.mission.template?.activity_secondary_id || this.mission.activity_secondary_id
   },
   data() {
     return {
@@ -186,7 +189,11 @@ export default defineNuxtComponent({
       }),
     }
   },
-  computed: {},
+  computed: {
+    mission() {
+      return this.$stores.formMission.mission
+    },
+  },
   methods: {
     async onValidateClick() {
       this.loading = true

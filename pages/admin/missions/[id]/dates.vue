@@ -199,7 +199,7 @@ import ModalFormMissionAddDates from '@/components/modal/ModalFormMissionAddDate
 export default defineNuxtComponent({
   setup() {
     definePageMeta({
-      layout: 'form-mission-edit',
+      layout: 'form-mission',
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },

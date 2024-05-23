@@ -14,6 +14,7 @@
         label="Titre de la mission"
         size="lg"
         placeholder="Exemple : Je contribue au déroulé d’un événement sportif le jour J"
+        :disabled="Boolean(form.template_id)"
       />
     </div>
     <template #footer>
@@ -30,7 +31,7 @@ import { string, object } from 'yup'
 export default defineNuxtComponent({
   setup() {
     definePageMeta({
-      layout: 'form-mission-edit',
+      layout: 'form-mission',
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
