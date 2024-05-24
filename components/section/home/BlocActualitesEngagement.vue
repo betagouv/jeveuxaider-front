@@ -22,10 +22,10 @@
           <div class="thumbnail--wrapper">
             <img
               srcset="
-                /images/home/mesure-impact-2023.jpg,
-                /images/home/mesure-impact-2023@2x.jpg 2x
+                /images/home/mesure-impact-2023.webp,
+                /images/home/mesure-impact-2023@2x.webp 2x
               "
-              src="/images/home/mesure-impact-2023.jpg"
+              src="/images/home/mesure-impact-2023.webp"
               alt="Mesure d'impact 2023"
               class="flex-none w-full h-auto"
             />
