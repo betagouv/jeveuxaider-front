@@ -28,6 +28,10 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
 
+    if (route.name == 'admin-missions-add') {
+      $stores.formMission.setMission(null)
+    }
+
     if (route.name != 'admin-missions-add') {
       if (!$stores.formMission.mission) {
         const mission = await apiFetch(`/missions/${route.params.id}/show`)

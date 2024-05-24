@@ -7,7 +7,7 @@
       { '': isCompleted },
     ]"
   >
-    <RiCheckboxCircleFill
+    <RiCheckLine
       v-if="isCompleted"
       class="h-6 text-jva-blue-500 fill-current absolute top-3 right-3 group-hover:text-jva-blue-500"
     />
@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
+import RiCheckLine from 'vue-remix-icons/icons/ri-check-line.vue'
 
 export default defineNuxtComponent({
   components: {
-    RiCheckboxCircleFill,
+    RiCheckLine,
   },
   props: {
     title: {

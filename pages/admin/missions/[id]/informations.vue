@@ -97,7 +97,6 @@
           label="Quelques mots pour motiver les bénévoles à participer"
           html-for="information"
           :error="errors.information"
-          required
         >
           <template #description>
             <div class="text-xs text-[#666666]">
@@ -186,6 +185,67 @@ export default defineNuxtComponent({
           .transform((v) => (!v ? [] : v))
           .min(1, 'Sélectionnez au moins 1 public bénéficiaire')
           .required('Sélectionnez au moins 1 public bénéficiaire'),
+        objectif: string()
+          .required('La présentation est requise')
+          .test(
+            'test-contains-email',
+            "La présentation ne doit pas contenir d'email",
+            (objectif) => {
+              return !this.stringContainsEmail(objectif)
+            }
+          )
+          .test(
+            'test-contains-url',
+            'La présentation ne doit pas contenir de liens.',
+            (objectif) => {
+              return !this.stringContainsUrl(objectif)
+            }
+          )
+          .test(
+            'test-contains-phone',
+            'La présentation ne doit pas contenir de téléphone.',
+            (objectif) => {
+              return !this.stringContainsPhone(objectif)
+            }
+          ),
+        description: string()
+          .required('Les précisions sont requises')
+          .test(
+            'test-contains-email',
+            "Les précisions ne doivent pas contenir d'email",
+            (description) => {
+              return !this.stringContainsEmail(description)
+            }
+          )
+          .test(
+            'test-contains-url',
+            'Les précisions ne doivent pas contenir de liens.',
+            (description) => {
+              return !this.stringContainsUrl(description)
+            }
+          )
+          .test(
+            'test-contains-phone',
+            'Les précisions ne doivent pas contenir de téléphone.',
+            (description) => {
+              return !this.stringContainsPhone(description)
+            }
+          ),
+        information: string()
+          .nullable()
+          .test('test-contains-email', "Ce champ ne doit pas contenir d'email", (information) => {
+            return !this.stringContainsEmail(information)
+          })
+          .test('test-contains-url', 'Ce champ ne doit pas contenir de liens', (information) => {
+            return !this.stringContainsUrl(information)
+          })
+          .test(
+            'test-contains-phone',
+            'Ce champ ne doit pas contenir de téléphone',
+            (information) => {
+              return !this.stringContainsPhone(information)
+            }
+          ),
       }),
     }
   },

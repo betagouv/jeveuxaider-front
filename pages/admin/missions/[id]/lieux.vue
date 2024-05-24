@@ -20,7 +20,7 @@
         <DsfrFormControl
           label="La mission est à réaliser "
           html-for="type"
-          :error="errors.date_type"
+          :error="errors.type"
           required
         >
           <div class="grid grid-cols-2 gap-4">
@@ -90,12 +90,12 @@
               attribute-label="label"
               attribute-right-label="typeLabel"
               :min-value-length="3"
-              @selected="handleSelectedGeo"
+              @selected="handleSelectedAddress"
               @fetch-suggestions="onFetchGeoSuggestions($event)"
             />
           </DsfrFormControl>
 
-          <div v-if="form.address" class="mt-6 grid grid-cols-1 gap-4">
+          <div v-if="form.full_address" class="mt-6 grid grid-cols-1 gap-4">
             <div class="flex justify-between items-center">
               <div class="font-medium">{{ form.full_address }}</div>
               <DsfrButton
@@ -104,7 +104,7 @@
                 type="tertiary"
                 icon="RiDeleteBinLine"
                 icon-class="text-[#CE0500]"
-                @click="onRemovedTagItem(item)"
+                @click="onRemovedAddressItem"
               />
             </div>
           </div>
@@ -149,7 +149,7 @@
                   type="tertiary"
                   icon="RiDeleteBinLine"
                   icon-class="text-[#CE0500]"
-                  @click="onRemovedTagItem(item)"
+                  @click="onRemovedZipItem(item)"
                 />
               </div>
             </div>
@@ -289,9 +289,16 @@ export default defineNuxtComponent({
     onDistanceClick() {
       this.form.type = 'Mission à distance'
     },
-    onRemovedTagItem(value) {
-      console.log('onRemovedTagItem', value)
+    onRemovedAddressItem() {
+      this.clearAddress()
+    },
+    onRemovedZipItem(value) {
+      console.log('onRemovedZipItem', value)
       this.form.autonomy_zips = this.form.autonomy_zips.filter((item) => item.zip !== value.zip)
+    },
+    handleSelectedAddress(selectedItem) {
+      this.handleSelectedGeo(selectedItem)
+      this.form.full_address = selectedItem.label
     },
     handleSelectedAutonomyZip(selectedItem) {
       if (!this.form.autonomy_zips) {
@@ -347,6 +354,10 @@ export default defineNuxtComponent({
                 'department',
                 'autonomy_zips',
                 'autonomy_precisions',
+                'address',
+                'zip',
+                'city',
+                'full_address',
               ])
               this.$toast.success('Mission modifié avec succès')
               this.$router.push(`/admin/missions/${mission.id}/benevoles`)

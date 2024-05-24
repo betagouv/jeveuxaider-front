@@ -112,7 +112,7 @@
 
 <script>
 import FormErrors from '@/mixins/form/errors'
-import { string, object, array } from 'yup'
+import { string, object, array, date, ref } from 'yup'
 
 export default defineNuxtComponent({
   mixins: [FormErrors],
@@ -147,8 +147,19 @@ export default defineNuxtComponent({
       }
       if (this.mode === 'multiple') {
         return object({
-          start_date: string().required('La date de début est obligatoire'),
-          end_date: string().required('La date de fin est obligatoire'),
+          start_date: date().required('La date de début est obligatoire'),
+          end_date: date()
+            .required('La date de fin est obligatoire')
+            .when('start_date', {
+              is: (startDate) => startDate instanceof Date,
+              then: (schema) =>
+                schema
+                  .min(ref('start_date'), 'La date de fin doit être supérieure à celle du début')
+                  .max(
+                    this.$dayjs(this.form.start_date).add(1, 'year').format('YYYY-MM-DD'),
+                    "La date de fin ne doit pas être à plus d'une année d'écart"
+                  ),
+            }),
           days: array()
             .min(1, 'Il faut sélectionner au moins un jour.')
             .required('Les jours sont obligatoires'),
@@ -188,8 +199,6 @@ export default defineNuxtComponent({
       }
     },
     handleSubmit() {
-      this.getRecomputedDatas()
-
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(() => {
@@ -197,6 +206,7 @@ export default defineNuxtComponent({
           this.$emit('cancel')
         })
         .catch((errors) => {
+          console.log('errors', errors)
           this.setErrors(errors)
         })
     },

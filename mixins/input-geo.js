@@ -11,6 +11,7 @@ export default {
       this.form.city = null
       this.form.latitude = null
       this.form.longitude = null
+      this.form.full_address = null
     },
     handleSelectedGeo(item) {
       if (!item) {

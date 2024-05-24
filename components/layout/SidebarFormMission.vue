@@ -13,7 +13,7 @@
             :is-completed="!!mission.name"
             @click="$router.push(`/admin/missions/${mission.id}/title`)"
           >
-            {{ mission.name }}
+            {{ mission.name ?? 'À définir' }}
           </CustomMissionPreviewItem>
           <CustomMissionPreviewItem
             title="Visuel"
@@ -39,10 +39,7 @@
             title="Informations"
             :is-current="$route.name === 'admin-missions-id-informations'"
             :is-completed="
-              !!mission.description &&
-              !!mission.objectif &&
-              !!mission.information &&
-              !!mission.publics_beneficiaires
+              !!mission.description && !!mission.objectif && !!mission.publics_beneficiaires
             "
             @click="$router.push(`/admin/missions/${mission.id}/informations`)"
           >
@@ -80,7 +77,7 @@
             <template v-if="mission.type">
               <template v-if="mission.type === 'Mission à distance'"> Misison à distance </template>
               <template v-if="mission.type === 'Mission en présentiel' && !mission.is_autonomy">
-                {{ mission.city }}, {{ mission.zip }}
+                {{ mission.full_address }}
               </template>
               <template v-if="mission.autonomy_zips && mission.autonomy_zips.length > 0">
                 {{ $filters.pluralize(mission.autonomy_zips.length, 'lieu', 'lieux') }}

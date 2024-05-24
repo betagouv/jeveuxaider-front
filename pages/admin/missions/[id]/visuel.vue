@@ -19,7 +19,7 @@
             :srcset="media.urls['formPreview']"
             :alt="media.name"
             :class="[
-              'object-contain cursor-pointer transition',
+              'object-contain cursor-pointer transition hover:opacity-100',
               { 'ring-4 ring-[#6A6AF4]': media.id === selectedMediaId },
               { 'opacity-30': media.id !== selectedMediaId },
             ]"

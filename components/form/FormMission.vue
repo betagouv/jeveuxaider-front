@@ -773,7 +773,7 @@ export default defineNuxtComponent({
             then: (schema) =>
               schema
                 .transform((v) => (v instanceof Date && !isNaN(v) ? v : null))
-                .min(ref('start_date'), 'La date de fin doit être supérieur à la date de début'),
+                .min(ref('start_date'), 'La date de fin doit être supérieure à la date de début'),
           }),
         commitment__duration: string().nullable().required("La durée d'engagement est requise"),
         commitment__time_period: string()

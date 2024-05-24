@@ -10,27 +10,28 @@
         participation reçues et de vos besoins s’ils évoluent !
       </CustomTips>
       <div class="flex items-center justify-center gap-4">
-        <div
+        <button
           aria-
           class="border cursor-pointer p-3 border-jva-blue-500 rounded-full text-jva-blue-500 hover:bg-[#F5F5FE]"
-          @click="form.participations_max--"
+          @click="form.participations_max > 1 && form.participations_max--"
         >
-          <RiSubtractLine class="fill-current h-5 w-5" @click="form.participations_max--" />
-        </div>
+          <RiSubtractLine class="fill-current h-5 w-5" />
+        </button>
 
         <input
           type="number"
+          min="1"
           name="participations_max"
           v-model="form.participations_max"
           class="outline-none focus:outline-none border-b px-8 py-1 w-[220px] text-center border-none text-[80px] font-bold text-[#161616] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         />
 
-        <div
+        <button
           class="border cursor-pointer p-3 border-jva-blue-500 rounded-full text-jva-blue-500 hover:bg-[#F5F5FE]"
           @click="form.participations_max++"
         >
           <RiAddLine class="fill-current h-5 w-5" />
-        </div>
+        </button>
       </div>
       <div class="mt-8 text-[#666666] text-center">
         {{

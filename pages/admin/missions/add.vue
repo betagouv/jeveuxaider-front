@@ -233,15 +233,14 @@ export default {
       })
     },
     async onChangeDomaineClick() {
+      await this.$scrollTo('#domaines', 300, {
+        container: '#content',
+        offset: -50,
+      })
       this.selectedDomaine = null
       this.selectedTemplate = null
       this.noTemplateSelected = false
       this.templates = []
-      await this.$nextTick()
-      this.$scrollTo('#domaines', 300, {
-        container: '#content',
-        offset: -50,
-      })
     },
     async onChangeTemplateClick() {
       this.selectedTemplate = null
