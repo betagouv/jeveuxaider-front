@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col bg-[#F9F6F2] h-full">
-    <div class="p-6 border-b">
+    <!-- <div class="p-6 border-b">
       <div class="">Étape {{ completedStep }} / 8</div>
       <div class="">
         <BaseGauge
@@ -10,7 +10,7 @@
           size="sm"
         />
       </div>
-    </div>
+    </div> -->
     <div
       v-if="mission"
       class="py-10 px-8 overflow-y-auto overflow-x-hidden h-full custom-scrollbar-gray"
@@ -29,7 +29,7 @@
           <CustomMissionPreviewItem
             title="Visuel"
             :is-current="$route.name === 'admin-missions-id-visuel'"
-            :is-completed="!!thumbnail"
+            :is-completed="!!mission.picture"
             @click="$router.push(`/admin/missions/${mission.id}/visuel`)"
           >
             <div class="">

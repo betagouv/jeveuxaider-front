@@ -28,9 +28,13 @@
         </div>
       </div>
       <div v-if="mission" class="ml-auto flex gap-2">
+        <DsfrButton v-if="$stores.formMission.canBePublished">Publier la mission </DsfrButton>
+        <DsfrButton id="testanimation" @click="testAnimation">Test Animation</DsfrButton>
+
         <DsfrButton type="tertiary" @click="showModalPreview = true" icon="RiEyeLine"
           >Aperçu
         </DsfrButton>
+
         <Actions
           :mission="mission"
           @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
@@ -61,6 +65,7 @@ import MixinMission from '@/mixins/mission'
 import Badges from '@/components/section/mission/Badges.vue'
 import Actions from '@/components/section/mission/Actions.vue'
 import SelectMissionState from '@/components/custom/SelectMissionState.vue'
+import confetti from 'canvas-confetti'
 
 export default defineNuxtComponent({
   mixins: [MixinMission],
@@ -86,6 +91,13 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    testAnimation() {
+      confetti({
+        particleCount: 500,
+        spread: 360,
+        // origin: { y: 0.6 },
+      })
+    },
     handleDeleted() {
       this.$router.push('/admin/missions')
     },

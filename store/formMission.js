@@ -7,7 +7,11 @@ export const useFormMissionStore = defineStore({
     mission: null,
     statistics: null,
   }),
-  getters: {},
+  getters: {
+    canBePublished: (state) => {
+      return state.mission && state.mission.state === 'Brouillon'
+    },
+  },
   actions: {
     setMission(mission) {
       this.mission = mission

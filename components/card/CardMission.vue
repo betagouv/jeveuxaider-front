@@ -72,7 +72,7 @@
     <div class="m-8 flex-1 flex flex-col items-start">
       <div class="flex flex-col w-full">
         <DsfrHeading as="h3" size="xs" class="line-clamp-3 mb-3 order-3" :title="mission.name">
-          {{ mission.name }}
+          {{ mission.name ?? 'Titre à définir' }}
         </DsfrHeading>
 
         <div class="mb-4 flex flex-wrap gap-2 order-1">

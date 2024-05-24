@@ -152,7 +152,7 @@
 <script>
 import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
 import FormErrors from '@/mixins/form/errors'
-import { string, object, array } from 'yup'
+import { string, object, array, number } from 'yup'
 import activities from '@/assets/activities.json'
 export default defineNuxtComponent({
   setup() {
@@ -181,6 +181,8 @@ export default defineNuxtComponent({
       activities,
       form: null,
       formSchema: object({
+        domaine_id: number().nullable().required('Le domaine principal est requis'),
+        activity_id: number().nullable().required('L’activité principale est requise'),
         publics_beneficiaires: array()
           .transform((v) => (!v ? [] : v))
           .min(1, 'Sélectionnez au moins 1 public bénéficiaire')

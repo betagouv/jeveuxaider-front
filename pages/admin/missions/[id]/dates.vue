@@ -228,7 +228,9 @@ export default defineNuxtComponent({
   mounted() {
     this.form = _cloneDeep(this.$stores.formMission.mission)
 
-    this.form.with_dates = this.form.dates?.length > 0 ? 'yes' : 'no'
+    if (this.form.start_date) {
+      this.form.with_dates = this.form.dates?.length > 0 ? 'yes' : 'no'
+    }
 
     console.log('mounted', this.form.dates)
   },
@@ -253,8 +255,14 @@ export default defineNuxtComponent({
           }),
         with_dates: string().required('Le type de dates est requis'),
         start_date: date()
-          .required('La date de début est requise')
-          .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
+          .nullable()
+          .when('with_dates', {
+            is: (value) => value == 'no',
+            then: (schema) =>
+              schema
+                .required('La date de début est requise')
+                .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
+          }),
         end_date: date()
           .nullable()
           .when('start_date', {
