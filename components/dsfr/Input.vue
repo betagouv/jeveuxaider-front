@@ -40,6 +40,8 @@
       ]"
       @keypress.space="onKeypressSpace"
       :disabled="disabled"
+      :min="min"
+      :max="max"
       @input="$emit('update:modelValue', $event.target.value)"
     />
 
@@ -96,6 +98,14 @@ export default defineNuxtComponent({
     inputClass: {
       type: String,
       default: '',
+    },
+    min: {
+      type: String,
+      default: null,
+    },
+    max: {
+      type: String,
+      default: null,
     },
     variant: {
       type: String,

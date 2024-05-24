@@ -126,7 +126,7 @@
               </div>
 
               <BaseBox
-                class="overflow-hidden mt-8 lg:w-96 lg:mt-0 z-20 flex-shrink-0 sticky top-8"
+                class="overflow-hidden mt-8 lg:w-96 lg:mt-0 z-20 flex-shrink-0"
                 :padding="false"
               >
                 <NuxtImg

@@ -1,5 +1,16 @@
 <template>
-  <div class="flex bg-[#F9F6F2] h-full">
+  <div class="flex flex-col bg-[#F9F6F2] h-full">
+    <div class="p-6 border-b">
+      <div class="">Étape {{ completedStep }} / 8</div>
+      <div class="">
+        <BaseGauge
+          :percentage="percentage"
+          tooltip="tooltip"
+          :color="percentage == 100 ? 'green' : 'blue'"
+          size="sm"
+        />
+      </div>
+    </div>
     <div
       v-if="mission"
       class="py-10 px-8 overflow-y-auto overflow-x-hidden h-full custom-scrollbar-gray"
@@ -168,6 +179,26 @@ export default defineNuxtComponent({
   mixins: [MixinMission],
   props: {},
   computed: {
+    completedStep() {
+      if (this.$route.name === 'admin-missions-add') return 1
+
+      let count = 1
+      if (this.mission) {
+        if (this.mission.name) count++
+        if (this.thumbnail) count++
+        if (this.mission.description && this.mission.objectif && this.mission.publics_beneficiaires)
+          count++
+        if (this.mission.date_type && this.mission.commitment__duration) count++
+        if (this.mission.type) count++
+        if (this.mission.participations_max) count++
+        if (this.mission.prerequisites?.length > 0 || this.benevolesInfosItemsCount > 0) count++
+        if (this.mission.responsable) count++
+      }
+      return count
+    },
+    percentage() {
+      return (this.completedStep / 8) * 100
+    },
     mission() {
       return _cloneDeep(this.$stores.formMission.mission)
     },
