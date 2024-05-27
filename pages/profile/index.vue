@@ -32,6 +32,9 @@
             :icon="action.icon"
             :link="action.link"
             :icon-variant="action.iconVariant"
+            :arrow="action.arrow"
+            @click="onClick(action)"
+            class="cursor-pointer"
           >
             <div class="text-gray-900 font-semibold" v-html="action.title" />
             <div v-if="action.subtitle" class="text-gray-500 text-sm" v-html="action.subtitle" />
@@ -46,6 +49,12 @@
       <HelpCenter />
     </template>
   </BaseContainer2Cols>
+
+  <LazyModalIsMinor
+    :is-open="showModalIsMinor"
+    @confirm="showModalIsMinor = false"
+    @cancel="showModalIsMinor = false"
+  />
 </template>
 
 <script>
@@ -69,11 +78,19 @@ export default defineNuxtComponent({
   data() {
     return {
       loadingActions: true,
+      showModalIsMinor: false,
     }
   },
   async created() {
     this.actions = await apiFetch('/user/actions/benevole')
     this.loadingActions = false
+  },
+  methods: {
+    onClick(action) {
+      if (action.type === 'is_minor') {
+        this.showModalIsMinor = true
+      }
+    },
   },
 })
 </script>
