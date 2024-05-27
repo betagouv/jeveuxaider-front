@@ -371,6 +371,14 @@ export default {
             subtitle: 'Quelques règles utiles pour assurer une bonne utilisation de la plateforme',
             link: '/profile/charte-bon-fonctionnement',
           }
+        case 'is_minor':
+          return {
+            icon: 'ℹ️',
+            iconVariant: 'info',
+            title: '<b>Information concernant votre âge</b>',
+            subtitle: 'Indispensable pour pouvoir proposer votre aide 🙂',
+            arrow: true,
+          }
       }
     },
   },
