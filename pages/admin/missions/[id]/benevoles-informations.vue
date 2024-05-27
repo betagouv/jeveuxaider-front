@@ -107,7 +107,9 @@
       </div>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onValidateClick">Sauvegarder</DsfrButton>
+      <DsfrButton :loading="loading" @click="onValidateClick">
+        {{ $stores.formMission.canBePublished ? 'Sauvegarder' : 'Continuer' }}</DsfrButton
+      >
     </template>
 
     <BaseAlertDialog
@@ -235,8 +237,9 @@ export default defineNuxtComponent({
                 'skills',
               ])
               this.$toast.success('Mission modifiée avec succès')
-
-              this.$router.push(`/admin/missions/${mission.id}/responsables`)
+              if (!this.$stores.formMission.canBePublished) {
+                this.$router.push(`/admin/missions/${mission.id}/responsables`)
+              }
             })
             .catch(() => {})
         })

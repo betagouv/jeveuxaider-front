@@ -16,7 +16,7 @@
           <DsfrButton type="secondary" @click="$emit('cancel')">
             {{ cancelLabel }}
           </DsfrButton>
-          <DsfrButton @click="$emit('confirm')">
+          <DsfrButton :loading="buttonLoading" @click="$emit('confirm')">
             {{ buttonLabel }}
           </DsfrButton>
         </template>
@@ -32,6 +32,10 @@ export default defineNuxtComponent({
   emits: ['cancel', 'confirm'],
   props: {
     isOpen: {
+      type: Boolean,
+      default: false,
+    },
+    buttonLoading: {
       type: Boolean,
       default: false,
     },

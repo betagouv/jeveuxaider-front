@@ -1,27 +1,14 @@
 import { defineStore } from 'pinia'
 import { useSoftGateStore } from './softGate'
 
-export const useFormMissionStore = defineStore({
+export const useFormMissionStore = defineStore('useFormMissionStore', {
   id: 'formMission',
   state: () => ({
     mission: null,
     statistics: null,
+    showPublishModal: false,
   }),
   getters: {
-    canBePublished: (state, getters) => {
-      return (
-        state.mission &&
-        state.mission.state === 'Brouillon' &&
-        getters.isStepTitleCompleted &&
-        getters.isStepVisuelCompleted &&
-        getters.isStepInformationsCompleted &&
-        getters.isStepDatesCompleted &&
-        getters.isStepLieuxCompleted &&
-        getters.isStepBenevolesCompleted &&
-        getters.isStepBenevolesInformationsCompleted &&
-        getters.isStepResponsablesCompleted
-      )
-    },
     isStepTitleCompleted: (state) => {
       return !!state.mission.name
     },
@@ -55,6 +42,19 @@ export const useFormMissionStore = defineStore({
     },
     isStepResponsablesCompleted: (state) => {
       return !!state.mission.responsable_id
+    },
+    canBePublished() {
+      return (
+        this.mission &&
+        this.mission.state === 'Brouillon' &&
+        this.isStepTitleCompleted &&
+        this.isStepVisuelCompleted &&
+        this.isStepInformationsCompleted &&
+        this.isStepDatesCompleted &&
+        this.isStepLieuxCompleted &&
+        this.isStepBenevolesCompleted &&
+        this.isStepResponsablesCompleted
+      )
     },
   },
   actions: {

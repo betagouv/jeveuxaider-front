@@ -75,7 +75,7 @@
       />
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onValidateClick">Sauvegarder</DsfrButton>
+      <DsfrButton :loading="loading" @click="onValidateClick"> Sauvegarder</DsfrButton>
     </template>
   </FormMissionEditWrapper>
 </template>
@@ -135,6 +135,7 @@ export default defineNuxtComponent({
             .then(async (mission) => {
               this.$stores.formMission.updateFields(mission, ['responsables'])
               this.$toast.success('Mission modifiée avec succès')
+
               //this.$router.push(`/admin/missions/${mission.id}`)
             })
             .catch(() => {})

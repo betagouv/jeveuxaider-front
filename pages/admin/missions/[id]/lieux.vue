@@ -171,7 +171,9 @@
       </div>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onValidateClick">Sauvegarder</DsfrButton>
+      <DsfrButton :loading="loading" @click="onValidateClick">{{
+        $stores.formMission.canBePublished ? 'Sauvegarder' : 'Continuer'
+      }}</DsfrButton>
     </template>
   </FormMissionEditWrapper>
 </template>
@@ -360,7 +362,9 @@ export default defineNuxtComponent({
                 'full_address',
               ])
               this.$toast.success('Mission modifié avec succès')
-              this.$router.push(`/admin/missions/${mission.id}/benevoles`)
+              if (!this.$stores.formMission.canBePublished) {
+                this.$router.push(`/admin/missions/${mission.id}/benevoles`)
+              }
             })
             .catch(() => {})
         })

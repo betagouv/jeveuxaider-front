@@ -206,7 +206,9 @@
       />
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onValidateClick">Sauvegarder</DsfrButton>
+      <DsfrButton :loading="loading" @click="onValidateClick">{{
+        $stores.formMission.canBePublished ? 'Sauvegarder' : 'Continuer'
+      }}</DsfrButton>
     </template>
   </FormMissionEditWrapper>
 </template>
@@ -337,7 +339,9 @@ export default defineNuxtComponent({
                 'end_date',
                 'dates',
               ])
-              this.$router.push(`/admin/missions/${mission.id}/lieux`)
+              if (!this.$stores.formMission.canBePublished) {
+                this.$router.push(`/admin/missions/${mission.id}/lieux`)
+              }
             })
             .catch(() => {})
         })

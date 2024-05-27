@@ -28,8 +28,12 @@
         </div>
       </div>
       <div v-if="mission" class="ml-auto flex gap-2">
-        <DsfrButton v-if="$stores.formMission.canBePublished">Publier la mission </DsfrButton>
-        <DsfrButton id="testanimation" @click="testAnimation">Test Animation</DsfrButton>
+        <DsfrButton
+          v-if="$stores.formMission.canBePublished"
+          @click="$stores.formMission.showPublishModal = true"
+          >Publier la mission
+        </DsfrButton>
+        <DsfrButton @click="testAnimation" type="tertiary">🎉</DsfrButton>
 
         <Actions
           :mission="mission"
@@ -44,6 +48,19 @@
           :is-open="showModalPreview"
           @close="showModalPreview = false"
         />
+        <BaseAlertDialog
+          icon="RiErrorWarningLine"
+          title="Publier cette mission"
+          :is-open="$stores.formMission.showPublishModal"
+          @confirm="onPublishConfirm"
+          @cancel="$stores.formMission.showPublishModal = false"
+          :button-loading="buttonLoading"
+        >
+          <p class="mb-4">
+            Vous êtes sur le point de publier la mission <strong> {{ mission.name }}</strong
+            >.
+          </p>
+        </BaseAlertDialog>
         <ModalMissionToggleIsActive
           :mission="mission"
           :is-open="showModalSwitchIsOnline"
@@ -77,6 +94,7 @@ export default defineNuxtComponent({
   components: { Badges, Actions, SelectMissionState },
   data() {
     return {
+      buttonLoading: false,
       showModalPreview: false,
       showModalSwitchIsOnline: false,
     }
@@ -90,6 +108,22 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    async onPublishConfirm() {
+      this.buttonLoading = true
+      await apiFetch(`/missions/${this.mission.id}/publish`, {
+        method: 'PUT',
+      })
+        .then(async (mission) => {
+          console.log(mission)
+          this.testAnimation()
+          this.$stores.formMission.updateFields(mission, ['state', 'is_online'])
+          this.$stores.formMission.showPublishModal = false
+        })
+        .catch(() => {})
+        .finally(() => {
+          this.buttonLoading = false
+        })
+    },
     testAnimation() {
       confetti({
         particleCount: 500,
