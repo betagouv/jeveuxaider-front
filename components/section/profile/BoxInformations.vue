@@ -58,10 +58,25 @@
         />
         <BaseDescriptionListItem term="Mobile" :description="profile.mobile" />
         <BaseDescriptionListItem term="Téléphone" :description="profile.phone" />
-        <BaseDescriptionListItem
-          term="Âge"
-          :description="$dayjs(profile.birthday).fromNow('year')"
-        />
+
+        <BaseDescriptionListItem term="Âge">
+          <div class="flex items-center">
+            <div>{{ $dayjs(profile.birthday).fromNow('year') }}</div>
+            <div
+              v-if="$dayjs().diff($dayjs(profile.birthday), 'year') < 18"
+              v-tooltip="{
+                content:
+                  'Ce bénévole devra fournir un accord de ses parents ou représentants légaux pour effectuer la mission de bénévolat',
+              }"
+              class="p-2 cursor-help"
+            >
+              <RiInformationLine
+                class="h-4 w-4 text-gray-400 group-hover:text-gray-900 fill-current"
+              />
+            </div>
+          </div>
+        </BaseDescriptionListItem>
+
         <BaseDescriptionListItem term="Disponibilités" :description="formattedCommitment" />
         <BaseDescriptionListItem
           v-if="profile.activities"
