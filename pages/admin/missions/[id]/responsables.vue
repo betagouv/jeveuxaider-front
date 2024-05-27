@@ -6,50 +6,68 @@
     <div v-if="form">
       <h2 class="text-[28px] font-bold leading-9 mb-10">Qui gère cette mission ?</h2>
       <CustomTips class="mb-10">
-        Le responsable de la mission est la personne qui sera en contact avec les bénévoles et qui
-        sera chargé de les accompagner dans leur intégration dans la structure.
+        <p>
+          Le responsable de la mission est la personne qui sera en contact avec les bénévoles et qui
+          sera chargé de les accompagner dans leur intégration dans la structure.
+        </p>
+        <p class="mt-4">
+          Vous pouvez
+          <nuxt-link
+            no-prefetch
+            class="underline"
+            :to="`/admin/organisations/${$stores.formMission.mission.structure_id}#membres`"
+          >
+            ajouter un nouveau membre
+          </nuxt-link>
+          à votre équipe pour vous répartir la gestion de la mission.
+        </p>
       </CustomTips>
       <div class="grid grid-cols-1 gap-8">
-        <div
-          v-for="responsable in responsables"
-          :key="responsable.id"
-          class="relative"
-          :class="[
-            'relative group shadow-lg p-6  border-2 cursor-pointer hover:border-[#8585F6]',
-            responsable.profile.id === form.responsable_id
-              ? 'border-[#8585F6] bg-[#F5F5FE]'
-              : 'border-transparent bg-white',
-          ]"
-          @click="onResponsableClick(responsable)"
-        >
-          <div
-            v-if="responsable.profile.id === form.responsable_id"
-            class="absolute top-3 right-3 bg-white rounded-full"
+        <div class="flex justify-between items-center border-b py-4">
+          <div class="font-bold text-xl">Responsables</div>
+          <DsfrButton size="sm" type="secondary" @click="showModalAddResponsable = true"
+            >Ajouter un responsable</DsfrButton
           >
-            <RiCheckboxCircleFill
-              class="h-6 text-jva-blue-500 fill-current group-hover:text-jva-blue-500"
-            />
-          </div>
-
-          <div class="flex items-center">
+        </div>
+        <div
+          class="flex justify-between items-center"
+          v-for="responsable in form.responsables"
+          :key="responsable.id"
+        >
+          <div class="flex">
             <BaseAvatar
-              :img-srcset="
-                responsable.profile.avatar ? responsable.profile.avatar.urls.thumbMedium : null
-              "
-              :img-src="
-                responsable.profile.avatar ? responsable.profile.avatar.urls.original : null
-              "
-              :initials="responsable.profile.short_name"
+              :img-srcset="responsable.avatar ? responsable.avatar.urls.thumbMedium : null"
+              :img-src="responsable.avatar ? responsable.avatar.urls.original : null"
+              :initials="responsable.short_name"
               size="sm"
               class="mr-4"
             />
             <div>
-              <div class="truncate font-bold">{{ responsable.profile.full_name }}</div>
-              <div class="truncate text-sm">{{ responsable.profile.email }}</div>
+              <div class="first-letter:uppercase">
+                {{ responsable.full_name }}
+              </div>
+              <div class="text-sm text-gray-500 font-medium">
+                {{ responsable.email }}
+              </div>
             </div>
           </div>
+          <DsfrButton
+            icon-only
+            size="xs"
+            type="tertiary"
+            icon="RiDeleteBinLine"
+            icon-class="text-[#CE0500]"
+            @click="onRemovedResponsable(responsable)"
+          />
         </div>
       </div>
+      <ModalFormMissionAddResponsable
+        v-if="showModalAddResponsable"
+        :is-open="showModalAddResponsable"
+        :responsables="form.responsables"
+        @cancel="showModalAddResponsable = false"
+        @submit="onAddResponsableSubmit"
+      />
     </div>
     <template #footer>
       <DsfrButton :loading="loading" @click="onValidateClick">Sauvegarder</DsfrButton>
@@ -62,6 +80,7 @@ import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
 import FormErrors from '@/mixins/form/errors'
 import { string, object } from 'yup'
 import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
+import ModalFormMissionAddResponsable from '@/components/modal/ModalFormMissionAddResponsable'
 
 export default defineNuxtComponent({
   setup() {
@@ -74,18 +93,16 @@ export default defineNuxtComponent({
   components: {
     FormMissionEditWrapper,
     RiCheckboxCircleFill,
+    ModalFormMissionAddResponsable,
   },
   mounted() {
     this.form = _cloneDeep(this.$stores.formMission.mission)
-    this.responsables = this.$stores.formMission.mission.structure.members
-    // console.log('mounted', this.form.responsable.id)
-    // this.responsables.push(this.form.responsable)
   },
   data() {
     return {
       loading: false,
       form: null,
-      responsables: [],
+      showModalAddResponsable: false,
       formSchema: object({
         name: string().required('Le titre est requis'),
       }),
@@ -93,8 +110,11 @@ export default defineNuxtComponent({
   },
   computed: {},
   methods: {
-    onResponsableClick(responsable) {
-      this.form.responsable_id = responsable.profile.id
+    onAddResponsableSubmit(responsable) {
+      this.form.responsables.push(responsable)
+    },
+    onRemovedResponsable(responsable) {
+      this.form.responsables = this.form.responsables.filter((r) => r.id !== responsable.id)
     },
     async onValidateClick() {
       this.loading = true

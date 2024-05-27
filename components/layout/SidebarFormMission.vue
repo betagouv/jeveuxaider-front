@@ -21,7 +21,7 @@
           <CustomMissionPreviewItem
             title="Titre"
             :is-current="$route.name === 'admin-missions-id-title'"
-            :is-completed="!!mission.name"
+            :is-completed="$stores.formMission.isStepTitleCompleted"
             @click="$router.push(`/admin/missions/${mission.id}/title`)"
           >
             {{ mission.name ?? 'À définir' }}
@@ -29,7 +29,7 @@
           <CustomMissionPreviewItem
             title="Visuel"
             :is-current="$route.name === 'admin-missions-id-visuel'"
-            :is-completed="!!mission.picture"
+            :is-completed="$stores.formMission.isStepVisuelCompleted"
             @click="$router.push(`/admin/missions/${mission.id}/visuel`)"
           >
             <div class="">
@@ -49,9 +49,7 @@
           <CustomMissionPreviewItem
             title="Informations"
             :is-current="$route.name === 'admin-missions-id-informations'"
-            :is-completed="
-              !!mission.description && !!mission.objectif && !!mission.publics_beneficiaires
-            "
+            :is-completed="$stores.formMission.isStepInformationsCompleted"
             @click="$router.push(`/admin/missions/${mission.id}/informations`)"
           >
             Présentation de la mission et 3 autres informations
@@ -62,7 +60,7 @@
           <CustomMissionPreviewItem
             :title="titleBoxDateType"
             :is-current="$route.name === 'admin-missions-id-dates'"
-            :is-completed="!!mission.date_type && !!mission.commitment__duration"
+            :is-completed="$stores.formMission.isStepDatesCompleted"
             @click="$router.push(`/admin/missions/${mission.id}/dates`)"
           >
             <template v-if="mission.date_type">
@@ -82,7 +80,7 @@
           <CustomMissionPreviewItem
             :title="titleBoxLieux"
             :is-current="$route.name === 'admin-missions-id-lieux'"
-            :is-completed="!!mission.type"
+            :is-completed="$stores.formMission.isStepLieuxCompleted"
             @click="$router.push(`/admin/missions/${mission.id}/lieux`)"
           >
             <template v-if="mission.type">
@@ -108,7 +106,7 @@
               )
             "
             :is-current="$route.name === 'admin-missions-id-benevoles'"
-            :is-completed="!!mission.participations_max"
+            :is-completed="$stores.formMission.isStepBenevolesCompleted"
             @click="$router.push(`/admin/missions/${mission.id}/benevoles`)"
           >
             {{ $filters.pluralize(mission.places_left, 'place restante', 'places restantes') }}
@@ -116,7 +114,7 @@
           <CustomMissionPreviewItem
             title="Informations sur les bénévoles"
             :is-current="$route.name === 'admin-missions-id-benevoles-informations'"
-            :is-completed="mission.prerequisites?.length > 0 || benevolesInfosItemsCount > 0"
+            :is-completed="$stores.formMission.isStepBenevolesInformationsCompleted"
             @click="$router.push(`/admin/missions/${mission.id}/benevoles-informations`)"
           >
             <div>
@@ -138,22 +136,22 @@
           <h3 class="text-sm font-bold uppercase text-[#666666]">Responsables</h3>
           <CustomMissionPreviewItem
             :is-current="$route.name === 'admin-missions-id-responsables'"
-            :is-completed="!!mission.responsable"
+            :is-completed="$stores.formMission.isStepResponsablesCompleted"
             @click="$router.push(`/admin/missions/${mission.id}/responsables`)"
           >
-            <div class="flex items-center">
+            <div
+              class="flex items-center"
+              v-for="responsable in mission.responsables"
+              :key="responsable.id"
+            >
               <BaseAvatar
-                :img-srcset="
-                  mission.responsable.avatar ? mission.responsable.avatar.urls.thumbMedium : null
-                "
-                :img-src="
-                  mission.responsable.avatar ? mission.responsable.avatar.urls.original : null
-                "
-                :initials="mission.responsable.short_name"
+                :img-srcset="responsable.avatar ? responsable.avatar.urls.thumbMedium : null"
+                :img-src="responsable.avatar ? responsable.avatar.urls.original : null"
+                :initials="responsable.short_name"
                 size="sm"
                 class="mr-4"
               />
-              <div class="truncate font-bold">{{ mission.responsable.full_name }}</div>
+              <div class="truncate font-bold">{{ responsable.full_name }}</div>
             </div>
           </CustomMissionPreviewItem>
         </div>

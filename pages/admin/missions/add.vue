@@ -108,7 +108,7 @@
         </CardTemplatePreview>
       </div>
 
-      <div v-if="noTemplateSelected" id="preview-no-template">
+      <!-- <div v-if="noTemplateSelected" id="preview-no-template">
         <div class="mb-10">
           <h2 class="text-[28px] font-bold leading-9 mb-2">Personnalisez votre mission</h2>
           <div class="text-[#666666]">
@@ -127,26 +127,11 @@
             </div>
             <div class="font-medium">{{ selectedDomaine.label }}</div>
           </div>
-          <!-- <template #footer>
-          <div class="flex justify-end space-x-4 border-t p-8">
-            <DsfrButton type="tertiary" @click="onChangeTemplateClick"
-              >Choisir un modèle</DsfrButton
-            >
-            <DsfrButton @click="onValidateClick">Sauvegarder</DsfrButton>
-          </div>
-        </template> -->
         </CardTemplatePreview>
-      </div>
+      </div> -->
     </div>
     <template #footer>
       <div class="flex justify-end space-x-4">
-        <DsfrButton
-          v-if="!selectedTemplate && noTemplateSelected"
-          type="tertiary"
-          @click="onChangeTemplateClick"
-        >
-          Choisir un modèle</DsfrButton
-        >
         <DsfrButton v-if="selectedTemplate" type="tertiary" @click="onChangeTemplateClick">
           Choisir un autre modèle</DsfrButton
         >
@@ -154,7 +139,7 @@
           :loading="loading"
           :disabled="!(selectedDomaine && (selectedTemplate || noTemplateSelected))"
           @click="onValidateClick"
-          >Sauvegarder</DsfrButton
+          >Continuer</DsfrButton
         >
       </div>
     </template>
@@ -255,11 +240,6 @@ export default {
       if (!template) {
         this.noTemplateSelected = true
         this.selectedTemplate = null
-        await this.$nextTick()
-        this.$scrollTo('#preview-no-template', 300, {
-          container: '#content',
-          offset: -50,
-        })
       } else {
         this.noTemplateSelected = false
         this.selectedTemplate = template

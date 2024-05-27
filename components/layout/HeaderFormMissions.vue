@@ -31,15 +31,14 @@
         <DsfrButton v-if="$stores.formMission.canBePublished">Publier la mission </DsfrButton>
         <DsfrButton id="testanimation" @click="testAnimation">Test Animation</DsfrButton>
 
-        <DsfrButton type="tertiary" @click="showModalPreview = true" icon="RiEyeLine"
-          >Aperçu
-        </DsfrButton>
-
         <Actions
           :mission="mission"
           @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
           @missionDeleted="handleDeleted"
         />
+        <DsfrButton type="tertiary" @click="showModalPreview = true" icon="RiEyeLine"
+          >Aperçu
+        </DsfrButton>
         <SectionFormMissionOverlay
           :mission="mission"
           :is-open="showModalPreview"
