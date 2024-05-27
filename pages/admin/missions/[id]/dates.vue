@@ -149,30 +149,35 @@
                 >Ajouter des dates</DsfrButton
               >
             </div>
-            <div v-if="form.dates && form.dates.length" class="mt-6 grid grid-cols-1 gap-4">
-              <div
-                class="flex justify-between items-center"
-                v-for="date in form.dates"
-                :key="date.id"
-              >
-                <div>
-                  <div class="first-letter:uppercase">
-                    {{ $dayjs(date.id).format('dddd D MMMM YYYY') }}
+            <template v-if="form.dates.length === 0">
+              <div class="text-center text-gray-500">Aucune date à venir</div>
+            </template>
+            <template v-else>
+              <div class="mt-6 grid grid-cols-1 gap-4">
+                <div
+                  class="flex justify-between items-center"
+                  v-for="date in form.dates"
+                  :key="date.id"
+                >
+                  <div>
+                    <div class="first-letter:uppercase">
+                      {{ $dayjs(date.id).format('dddd D MMMM YYYY') }}
+                    </div>
+                    <div class="text-sm text-gray-500 font-medium">
+                      {{ date.slots.map((slot) => $filters.label(slot, 'slots')).join(', ') }}
+                    </div>
                   </div>
-                  <div class="text-sm text-gray-500 font-medium">
-                    {{ date.slots.map((slot) => $filters.label(slot, 'slots')).join(', ') }}
-                  </div>
+                  <DsfrButton
+                    icon-only
+                    size="xs"
+                    type="tertiary"
+                    icon="RiDeleteBinLine"
+                    icon-class="text-[#CE0500]"
+                    @click="onRemovedDate(date)"
+                  />
                 </div>
-                <DsfrButton
-                  icon-only
-                  size="xs"
-                  type="tertiary"
-                  icon="RiDeleteBinLine"
-                  icon-class="text-[#CE0500]"
-                  @click="onRemovedDate(date)"
-                />
               </div>
-            </div>
+            </template>
           </template>
 
           <template v-if="form.with_dates === 'no'">

@@ -152,6 +152,9 @@ export default defineNuxtComponent({
     if (!this.form.prerequisites) {
       this.form.prerequisites = [null, null, null]
     }
+    if (this.form.publics_volontaires === null) {
+      this.form.publics_volontaires = ['Mineurs']
+    }
   },
   data() {
     return {

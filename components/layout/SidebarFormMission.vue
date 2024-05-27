@@ -139,19 +139,21 @@
             :is-completed="$stores.formMission.isStepResponsablesCompleted"
             @click="$router.push(`/admin/missions/${mission.id}/responsables`)"
           >
-            <div
-              class="flex items-center"
-              v-for="responsable in mission.responsables"
-              :key="responsable.id"
-            >
-              <BaseAvatar
-                :img-srcset="responsable.avatar ? responsable.avatar.urls.thumbMedium : null"
-                :img-src="responsable.avatar ? responsable.avatar.urls.original : null"
-                :initials="responsable.short_name"
-                size="sm"
-                class="mr-4"
-              />
-              <div class="truncate font-bold">{{ responsable.full_name }}</div>
+            <div class="space-y-4">
+              <div
+                class="flex items-center"
+                v-for="responsable in mission.responsables"
+                :key="responsable.id"
+              >
+                <BaseAvatar
+                  :img-srcset="responsable.avatar ? responsable.avatar.urls.thumbMedium : null"
+                  :img-src="responsable.avatar ? responsable.avatar.urls.original : null"
+                  :initials="responsable.short_name"
+                  size="sm"
+                  class="mr-4"
+                />
+                <div class="truncate font-bold">{{ responsable.full_name }}</div>
+              </div>
             </div>
           </CustomMissionPreviewItem>
         </div>

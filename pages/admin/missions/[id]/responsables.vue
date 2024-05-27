@@ -29,37 +29,42 @@
             >Ajouter un responsable</DsfrButton
           >
         </div>
-        <div
-          class="flex justify-between items-center"
-          v-for="responsable in form.responsables"
-          :key="responsable.id"
-        >
-          <div class="flex">
-            <BaseAvatar
-              :img-srcset="responsable.avatar ? responsable.avatar.urls.thumbMedium : null"
-              :img-src="responsable.avatar ? responsable.avatar.urls.original : null"
-              :initials="responsable.short_name"
-              size="sm"
-              class="mr-4"
-            />
-            <div>
-              <div class="first-letter:uppercase">
-                {{ responsable.full_name }}
-              </div>
-              <div class="text-sm text-gray-500 font-medium">
-                {{ responsable.email }}
+        <template v-if="form.responsables.length === 0">
+          <div class="text-center text-gray-500">Aucun responsable</div>
+        </template>
+        <template v-else>
+          <div
+            class="flex justify-between items-center"
+            v-for="responsable in form.responsables"
+            :key="responsable.id"
+          >
+            <div class="flex">
+              <BaseAvatar
+                :img-srcset="responsable.avatar ? responsable.avatar.urls.thumbMedium : null"
+                :img-src="responsable.avatar ? responsable.avatar.urls.original : null"
+                :initials="responsable.short_name"
+                size="sm"
+                class="mr-4"
+              />
+              <div>
+                <div class="first-letter:uppercase">
+                  {{ responsable.full_name }}
+                </div>
+                <div class="text-sm text-gray-500 font-medium">
+                  {{ responsable.email }}
+                </div>
               </div>
             </div>
+            <DsfrButton
+              icon-only
+              size="xs"
+              type="tertiary"
+              icon="RiDeleteBinLine"
+              icon-class="text-[#CE0500]"
+              @click="onRemovedResponsable(responsable)"
+            />
           </div>
-          <DsfrButton
-            icon-only
-            size="xs"
-            type="tertiary"
-            icon="RiDeleteBinLine"
-            icon-class="text-[#CE0500]"
-            @click="onRemovedResponsable(responsable)"
-          />
-        </div>
+        </template>
       </div>
       <ModalFormMissionAddResponsable
         v-if="showModalAddResponsable"
@@ -78,7 +83,7 @@
 <script>
 import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
 import FormErrors from '@/mixins/form/errors'
-import { string, object } from 'yup'
+import { string, object, array } from 'yup'
 import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
 import ModalFormMissionAddResponsable from '@/components/modal/ModalFormMissionAddResponsable'
 
@@ -104,7 +109,9 @@ export default defineNuxtComponent({
       form: null,
       showModalAddResponsable: false,
       formSchema: object({
-        name: string().required('Le titre est requis'),
+        responsables: array()
+          .min(1, 'Un responsable est requis')
+          .required('Un responsable est requis'),
       }),
     }
   },
@@ -126,7 +133,7 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              this.$stores.formMission.updateFields(mission, ['responsable', 'responsable_id'])
+              this.$stores.formMission.updateFields(mission, ['responsables'])
               this.$toast.success('Mission modifiée avec succès')
               //this.$router.push(`/admin/missions/${mission.id}`)
             })
