@@ -149,7 +149,7 @@
                 >Ajouter des dates</DsfrButton
               >
             </div>
-            <template v-if="form.dates.length === 0">
+            <template v-if="form.dates?.length === 0">
               <div class="text-center text-gray-500">Aucune date à venir</div>
             </template>
             <template v-else>
@@ -207,7 +207,7 @@
     </div>
     <template #footer>
       <DsfrButton :loading="loading" @click="onValidateClick">{{
-        $stores.formMission.canBePublished ? 'Sauvegarder' : 'Continuer'
+        $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder'
       }}</DsfrButton>
     </template>
   </FormMissionEditWrapper>
@@ -339,7 +339,7 @@ export default defineNuxtComponent({
                 'end_date',
                 'dates',
               ])
-              if (!this.$stores.formMission.canBePublished) {
+              if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/lieux`)
               }
             })

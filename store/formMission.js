@@ -9,6 +9,9 @@ export const useFormMissionStore = defineStore('useFormMissionStore', {
     showPublishModal: false,
   }),
   getters: {
+    isDraft: (state) => {
+      return state.mission && state.mission.state === 'Brouillon'
+    },
     isStepTitleCompleted: (state) => {
       return !!state.mission.name
     },
@@ -45,8 +48,7 @@ export const useFormMissionStore = defineStore('useFormMissionStore', {
     },
     canBePublished() {
       return (
-        this.mission &&
-        this.mission.state === 'Brouillon' &&
+        this.isDraft &&
         this.isStepTitleCompleted &&
         this.isStepVisuelCompleted &&
         this.isStepInformationsCompleted &&

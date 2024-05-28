@@ -110,7 +110,8 @@ export default defineNuxtComponent({
       showModalAddResponsable: false,
       formSchema: object({
         responsables: array()
-          .min(1, 'Un responsable est requis')
+          .min(1, 'Vous devez ajouter au moins un responsable')
+          .max(3, 'Vous ne pouvez pas ajouter plus de 3 responsables')
           .required('Un responsable est requis'),
       }),
     }

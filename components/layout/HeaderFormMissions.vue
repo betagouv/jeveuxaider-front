@@ -27,7 +27,7 @@
           <Badges :mission="$stores.formMission.mission" />
         </div>
       </div>
-      <div v-if="mission" class="ml-auto flex gap-2">
+      <div v-if="mission" class="hidden ml-auto lg:flex gap-2">
         <DsfrButton
           v-if="$stores.formMission.canBePublished"
           @click="$stores.formMission.showPublishModal = true"

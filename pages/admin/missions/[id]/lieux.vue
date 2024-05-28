@@ -95,7 +95,7 @@
             />
           </DsfrFormControl>
 
-          <div v-if="form.full_address" class="mt-6 grid grid-cols-1 gap-4">
+          <div v-if="form.zip" class="mt-6 grid grid-cols-1 gap-4">
             <div class="flex justify-between items-center">
               <div class="font-medium">{{ form.full_address }}</div>
               <DsfrButton
@@ -172,7 +172,7 @@
     </div>
     <template #footer>
       <DsfrButton :loading="loading" @click="onValidateClick">{{
-        $stores.formMission.canBePublished ? 'Sauvegarder' : 'Continuer'
+        $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder'
       }}</DsfrButton>
     </template>
   </FormMissionEditWrapper>
@@ -362,7 +362,7 @@ export default defineNuxtComponent({
                 'full_address',
               ])
               this.$toast.success('Mission modifié avec succès')
-              if (!this.$stores.formMission.canBePublished) {
+              if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/benevoles`)
               }
             })

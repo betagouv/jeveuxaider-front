@@ -45,7 +45,7 @@
     </div>
     <template #footer>
       <DsfrButton :loading="loading" @click="onValidateClick">{{
-        $stores.formMission.canBePublished ? 'Sauvegarder' : 'Continuer'
+        $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder'
       }}</DsfrButton>
     </template>
   </FormMissionEditWrapper>
@@ -105,7 +105,7 @@ export default defineNuxtComponent({
               // this.$stores.formMission.setMission(mission)
               this.$stores.formMission.updateFields(mission, ['participations_max', 'places_left'])
               this.$toast.success('Mission modifiée avec succès')
-              if (!this.$stores.formMission.canBePublished) {
+              if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/benevoles-informations`)
               }
             })
