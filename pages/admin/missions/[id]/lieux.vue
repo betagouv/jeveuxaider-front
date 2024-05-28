@@ -76,14 +76,15 @@
         <template v-if="!form.is_autonomy && form.type === 'Mission en présentiel'">
           <DsfrFormControl
             label="Lieu de la mission"
-            html-for="adress"
+            html-for="address"
             info="Si l'adresse n'est pas reconnue veuillez saisir le nom de la
               ville."
             required
+            :error="errors.address"
           >
             <DsfrInputAutocomplete
               icon="RiMapPinLine"
-              name="adress"
+              name="address"
               placeholder="Renseignez une adresse"
               :options="autocompleteOptions"
               attribute-key="id"
@@ -133,27 +134,27 @@
                 })
               "
             />
-            <div
-              v-if="form.autonomy_zips && form.autonomy_zips.length"
-              class="mt-6 grid grid-cols-1 gap-4"
-            >
-              <div
-                class="flex justify-between items-center"
-                v-for="item in form.autonomy_zips"
-                :key="item.zip"
-              >
-                <div class="font-medium">{{ item.city }}, {{ item.zip }}</div>
-                <DsfrButton
-                  icon-only
-                  size="xs"
-                  type="tertiary"
-                  icon="RiDeleteBinLine"
-                  icon-class="text-[#CE0500]"
-                  @click="onRemovedZipItem(item)"
-                />
-              </div>
-            </div>
           </DsfrFormControl>
+          <div
+            v-if="form.autonomy_zips && form.autonomy_zips.length"
+            class="mt-6 grid grid-cols-1 gap-4"
+          >
+            <div
+              class="flex justify-between items-center"
+              v-for="item in form.autonomy_zips"
+              :key="item.zip"
+            >
+              <div class="font-medium">{{ item.city }}, {{ item.zip }}</div>
+              <DsfrButton
+                icon-only
+                size="xs"
+                type="tertiary"
+                icon="RiDeleteBinLine"
+                icon-class="text-[#CE0500]"
+                @click="onRemovedZipItem(item)"
+              />
+            </div>
+          </div>
 
           <DsfrFormControl
             label="Précisions sur la zone d'intervention (villes, lieux, etc.)"
@@ -210,72 +211,86 @@ export default defineNuxtComponent({
             is: (type) => type == 'Mission en présentiel',
             then: (schema) => schema.required('Le département est requis'),
           }),
-        address: string().nullable(),
-        zip: string()
-          .when(['type', 'is_autonomy'], {
-            // eslint-disable-next-line camelcase
-            is: (type, is_autonomy) =>
-              type == 'Mission en présentiel' &&
-              !is_autonomy &&
-              this.form.zip &&
-              this.form.department,
-            then: (schema) =>
-              schema.test(
-                'test-zip',
-                'Le code postal et le département ne correspondent pas',
-                () => {
-                  const department = ['2A', '2B'].includes(this.form.department)
-                    ? '20'
-                    : this.form.department
-                  return this.form.zip && this.form.zip.startsWith(department)
-                }
-              ),
-          })
-          .when(['type', 'is_autonomy'], {
-            // eslint-disable-next-line camelcase
-            is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
-            then: (schema) => schema.nullable().required('Le code postal est requis'),
-            otherwise: (schema) => schema.nullable(),
-          }),
-        city: string()
+        address: string()
           .nullable()
           .when(['type', 'is_autonomy'], {
-            // eslint-disable-next-line camelcase
             is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
-            then: (schema) => schema.required('La ville est requise'),
-            otherwise: (schema) => schema.nullable(),
+            then: (schema) => schema.required('Une adresse est requise'),
           }),
         autonomy_zips: array()
+          .nullable()
           .when(['type', 'is_autonomy'], {
-            // eslint-disable-next-line camelcase
-            is: (type, is_autonomy) => !is_autonomy || type !== 'Mission en présentiel',
-            then: (schema) => schema.nullable(),
-          })
-          .when(['type', 'is_autonomy'], {
-            // eslint-disable-next-line camelcase
-            is: (type, is_autonomy) => type == 'Mission en présentiel' && is_autonomy,
+            is: (type, is_autonomy) => is_autonomy && type === 'Mission en présentiel',
             then: (schema) =>
-              schema.min(1, 'Au moins un code postal requis').max(25, '25 codes postaux maximum'),
-          })
-          .when(['type', 'is_autonomy', 'department'], {
-            // eslint-disable-next-line camelcase
-            is: (type, is_autonomy, department) =>
-              type == 'Mission en présentiel' && is_autonomy && department,
-            then: (schema) =>
-              schema.test(
-                'test-zips',
-                'Les codes postaux et le département ne correspondent pas',
-                // eslint-disable-next-line camelcase
-                (autonomy_zips) => {
-                  const zips = autonomy_zips.map((i) => i.zip)
-                  const department = ['2A', '2B'].includes(this.form.department)
-                    ? '20'
-                    : this.form.department
-                  return zips.every((zip) => zip.startsWith(department))
-                }
-              ),
-            otherwise: (schema) => schema.nullable(),
+              schema
+                .min(1, 'Au moins une adresse est requise')
+                .required('Au moins une adresse est requise'),
           }),
+        // zip: string()
+        //   .when(['type', 'is_autonomy'], {
+        //     // eslint-disable-next-line camelcase
+        //     is: (type, is_autonomy) =>
+        //       type == 'Mission en présentiel' &&
+        //       !is_autonomy &&
+        //       this.form.zip &&
+        //       this.form.department,
+        //     then: (schema) =>
+        //       schema.test(
+        //         'test-zip',
+        //         'Le code postal et le département ne correspondent pas',
+        //         () => {
+        //           const department = ['2A', '2B'].includes(this.form.department)
+        //             ? '20'
+        //             : this.form.department
+        //           return this.form.zip && this.form.zip.startsWith(department)
+        //         }
+        //       ),
+        //   })
+        //   .when(['type', 'is_autonomy'], {
+        //     // eslint-disable-next-line camelcase
+        //     is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
+        //     then: (schema) => schema.nullable().required('Le code postal est requis'),
+        //     otherwise: (schema) => schema.nullable(),
+        //   }),
+        // city: string()
+        //   .nullable()
+        //   .when(['type', 'is_autonomy'], {
+        //     // eslint-disable-next-line camelcase
+        //     is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
+        //     then: (schema) => schema.required('La ville est requise'),
+        //     otherwise: (schema) => schema.nullable(),
+        //   }),
+        // autonomy_zips: array()
+        //   .when(['type', 'is_autonomy'], {
+        //     // eslint-disable-next-line camelcase
+        //     is: (type, is_autonomy) => !is_autonomy || type !== 'Mission en présentiel',
+        //     then: (schema) => schema.nullable(),
+        //   })
+        //   .when(['type', 'is_autonomy'], {
+        //     // eslint-disable-next-line camelcase
+        //     is: (type, is_autonomy) => type == 'Mission en présentiel' && is_autonomy,
+        //     then: (schema) =>
+        //       schema.min(1, 'Au moins un code postal requis').max(25, '25 codes postaux maximum'),
+        //   })
+        //   .when(['type', 'is_autonomy', 'department'], {
+        //     // eslint-disable-next-line camelcase
+        //     is: (type, is_autonomy, department) =>
+        //       type == 'Mission en présentiel' && is_autonomy && department,
+        //     then: (schema) =>
+        //       schema.test(
+        //         'test-zips',
+        //         'Les codes postaux et le département ne correspondent pas',
+        //         // eslint-disable-next-line camelcase
+        //         (autonomy_zips) => {
+        //           const zips = autonomy_zips.map((i) => i.zip)
+        //           const department = ['2A', '2B'].includes(this.form.department)
+        //             ? '20'
+        //             : this.form.department
+        //           return zips.every((zip) => zip.startsWith(department))
+        //         }
+        //       ),
+        //     otherwise: (schema) => schema.nullable(),
+        //   }),
       }),
     }
   },
@@ -290,6 +305,7 @@ export default defineNuxtComponent({
     },
     onDistanceClick() {
       this.form.type = 'Mission à distance'
+      this.form.is_autonomy = false
     },
     onRemovedAddressItem() {
       this.clearAddress()
@@ -332,6 +348,8 @@ export default defineNuxtComponent({
           }
         })
       })
+
+      this.validate('autonomy_zips')
     },
     async onFetchGeoSuggestions(payload, config = {}) {
       this.autocompleteOptions = await useGeolocationFetch(payload, {
