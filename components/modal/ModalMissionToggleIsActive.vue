@@ -15,8 +15,8 @@
             {{ mission.is_online ? 'mettre hors ligne' : 'mettre en ligne' }} la mission
             <strong>{{ mission.name }}</strong>
             <span class="text-gray-500"> #{{ mission.id }}</span
-            >. Le responsable de la mission <strong>{{ mission.responsable.full_name }}</strong> en
-            sera notifié par mail.
+            >. Le responsable de la mission
+            <strong>{{ mission.responsables[0].full_name }}</strong> en sera notifié par mail.
           </p>
           <p v-if="mission.is_online">
             La mission <strong>n'apparaîtra plus dans la recherche</strong> et il sera impossible

@@ -41,7 +41,7 @@ export const useFormMissionStore = defineStore('useFormMissionStore', {
       )
     },
     isStepResponsablesCompleted: (state) => {
-      return !!state.mission.responsable_id
+      return state.mission.responsables?.length > 0
     },
     canBePublished() {
       return (

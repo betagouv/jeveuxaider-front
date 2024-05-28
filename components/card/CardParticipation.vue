@@ -56,8 +56,8 @@
           >
             <div class="flex space-x-1 text-sm truncate max-w-full text-gray-600">
               <span>Responsable :</span>
-              <span v-if="participation.mission.responsable" class="font-bold truncate">{{
-                participation.mission.responsable.full_name
+              <span v-if="participation.mission.responsables" class="font-bold truncate">{{
+                participation.mission.responsables.map((r) => r.full_name).join(', ')
               }}</span>
             </div>
           </div>
@@ -199,7 +199,7 @@ export default defineNuxtComponent({
     profile() {
       return this.display === 'benevole'
         ? this.participation.profile
-        : this.participation.mission.responsable
+        : this.participation.mission.responsables[0]
     },
     isBenevole() {
       return this.participation.profile_id == this.$stores.auth.profile.id

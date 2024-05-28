@@ -78,7 +78,7 @@ export default defineNuxtComponent({
   computed: {
     responsableUser() {
       const responsable = this.conversation.users.find(
-        (user) => user.id === this.mission.responsable.user_id
+        (user) => user.id === this.mission.responsables[0].user_id
       )
       if (responsable) {
         return responsable

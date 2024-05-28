@@ -54,7 +54,11 @@
           </template>
         </BoxInformationsMission>
         <BoxOrganisation :organisation="temoignage.participation.mission.structure" />
-        <BoxResponsable :responsable="temoignage.participation.mission.responsable" />
+        <BoxResponsable
+          v-if="temoignage.participation.mission.responsables"
+          v-for="responsable in temoignage.participation.mission.responsables"
+          :responsable="responsable"
+        />
       </div>
     </div>
   </BaseDrawer>

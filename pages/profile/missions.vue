@@ -108,7 +108,7 @@ export default defineNuxtComponent({
       endpoint: '/user/participations',
       queryParams: {
         include:
-          'conversation.latestMessage,mission.responsable.avatar,mission.structure,temoignage',
+          'conversation.latestMessage,mission.responsables.avatar,mission.structure,temoignage',
       },
     }
   },

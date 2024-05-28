@@ -81,7 +81,10 @@
             </BaseLink>
           </template>
         </BoxInformationsMission>
-        <BoxResponsable :responsable="participation.mission.responsable" />
+        <BoxResponsable
+          v-for="responsable in participation.mission.responsables"
+          :responsable="responsable"
+        />
       </div>
     </template>
   </BaseDrawer>

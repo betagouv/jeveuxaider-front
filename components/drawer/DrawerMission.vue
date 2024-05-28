@@ -117,7 +117,8 @@
         />
         <BoxResponsable
           class="mb-8"
-          :responsable="mission.responsable"
+          v-for="responsable in mission.responsables"
+          :responsable="responsable"
           :conversable-id="mission.id"
           :conversable="mission"
           conversable-type="App\Models\Mission"
