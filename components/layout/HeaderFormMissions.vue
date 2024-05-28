@@ -33,7 +33,7 @@
           @click="$stores.formMission.showPublishModal = true"
           >Publier la mission
         </DsfrButton>
-        <DsfrButton @click="testAnimation" type="tertiary">🎉</DsfrButton>
+        <DsfrButton @click="triggerConfettis" type="tertiary">🎉</DsfrButton>
 
         <Actions
           :mission="mission"
@@ -56,10 +56,20 @@
           @cancel="$stores.formMission.showPublishModal = false"
           :button-loading="buttonLoading"
         >
-          <p class="mb-4">
-            Vous êtes sur le point de publier la mission <strong> {{ mission.name }}</strong
-            >.
-          </p>
+          <template v-if="mission.template_id">
+            <p class="mb-4">
+              Vous êtes sur le point de publier la mission <strong> {{ mission.name }}</strong
+              >.
+            </p>
+          </template>
+          <template v-else>
+            <p class="mb-4">
+              Vous êtes sur le point de demander la publication de la mission
+              <strong> {{ mission.name }}</strong
+              >.
+            </p>
+            <p>La validation prend en moyenne 7 à 10 jours.</p>
+          </template>
         </BaseAlertDialog>
         <ModalMissionToggleIsActive
           :mission="mission"
@@ -114,17 +124,17 @@ export default defineNuxtComponent({
         method: 'PUT',
       })
         .then(async (mission) => {
-          console.log(mission)
-          this.testAnimation()
+          this.triggerConfettis()
           this.$stores.formMission.updateFields(mission, ['state', 'is_online'])
           this.$stores.formMission.showPublishModal = false
+          this.$router.push(`/admin/missions`)
         })
         .catch(() => {})
         .finally(() => {
           this.buttonLoading = false
         })
     },
-    testAnimation() {
+    triggerConfettis() {
       confetti({
         particleCount: 500,
         spread: 360,

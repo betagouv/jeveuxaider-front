@@ -279,13 +279,16 @@ export default defineNuxtComponent({
                 .transform((v) => (v instanceof Date && !isNaN(v) ? v : null))
                 .min(ref('start_date'), 'La date de fin doit être supérieure à celle du début'),
           }),
-        dates: array().when('with_dates', {
-          is: (withDates) => withDates === 'yes',
-          then: (schema) =>
-            schema
-              .required('Veuillez ajouter au moins une date')
-              .min(1, 'Veuillez ajouter au moins une date'),
-        }),
+        dates: object()
+          .nullable()
+          .when('with_dates', {
+            is: (withDates) => withDates === 'yes',
+            then: (schema) =>
+              schema
+                .array()
+                .required('Veuillez ajouter au moins une date')
+                .min(1, 'Veuillez ajouter au moins une date'),
+          }),
       }),
       showModalAddDates: false,
     }
@@ -338,7 +341,10 @@ export default defineNuxtComponent({
                 'start_date',
                 'end_date',
                 'dates',
+                'commitment__time_period',
+                'recurrent_description',
               ])
+              this.$toast.success('Mission modifiée avec succès')
               if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/lieux`)
               }

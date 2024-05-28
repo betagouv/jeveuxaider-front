@@ -360,6 +360,8 @@ export default defineNuxtComponent({
                 'zip',
                 'city',
                 'full_address',
+                'latitude',
+                'longitude',
               ])
               this.$toast.success('Mission modifié avec succès')
               if (this.$stores.formMission.isDraft) {
