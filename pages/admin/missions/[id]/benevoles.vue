@@ -9,6 +9,19 @@
         Vous pourrez modifier le nombre de bénévoles recherchés en fonction des demandes de
         participation reçues et de vos besoins s’ils évoluent !
       </CustomTips>
+
+      <div class="relative flex flex-col space-x-4 items-center justify-center pt-4 mb-4 h-[180px]">
+        <div class="flex space-x-0 pb-[40px]">
+          <img
+            v-for="i in illustrationsCount"
+            :key="i"
+            :src="`/images/illustrations/group-${i}.svg`"
+          />
+        </div>
+        <div v-if="form.participations_max > 10" class="absolute w-full text-center bottom-[8px]">
+          <div class="text-xs text-[#666666]">Et bien plus encore !</div>
+        </div>
+      </div>
       <div class="flex items-center justify-center gap-4">
         <button
           aria-
@@ -86,9 +99,9 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    // mission() {
-    //   return this.$stores.formMission.mission
-    // },
+    illustrationsCount() {
+      return this.form.participations_max > 10 ? 10 : this.form.participations_max
+    },
   },
   methods: {
     async onValidateClick() {

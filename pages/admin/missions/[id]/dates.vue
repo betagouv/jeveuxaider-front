@@ -5,7 +5,15 @@
     </template>
     <div v-if="form">
       <h2 class="text-[28px] font-bold leading-9 mb-10">Quel type d’engagement attendez-vous ?</h2>
-      <CustomTips class="mb-10">
+      <CustomTips v-if="$stores.formMission.isStepDatesWarning" variant="warning" class="mb-10">
+        <p>La mission n'a plus de date disponible. Vous pouvez :</p>
+        <ul class="list-disc mt-2 pl-5">
+          <li>Ajouter de nouvelles dates</li>
+          <li>Modifier la date de fin de la mission</li>
+          <li v-if="mission.state === 'Validée'">Terminer la mission</li>
+        </ul>
+      </CustomTips>
+      <CustomTips v-else class="mb-10">
         <p>Vous avez des doutes sur le type d’engagement souhaité ?</p>
         <ul class="list-disc mt-2 pl-5">
           <li>Exemples de missions ponctuelles</li>
@@ -140,23 +148,26 @@
           <template v-if="form.with_dates === 'yes'">
             <div class="flex justify-between items-center border-b py-4">
               <div class="font-bold text-xl">
-                <template v-if="formNextDates">
-                  {{ $filters.pluralize(formNextDates.length, 'date') }} à venir</template
-                >
+                <template v-if="formNextDates"> Dates</template>
                 <template v-else> Aucune date à venir</template>
               </div>
               <DsfrButton size="sm" type="secondary" @click="showModalAddDates = true"
                 >Ajouter des dates</DsfrButton
               >
             </div>
-            <template v-if="form.dates?.length === 0">
-              <div class="text-center text-gray-500">Aucune date à venir</div>
+            <template v-if="formNextDates.length === 0">
+              <div class="text-center text-gray-500">
+                <p>
+                  {{ $filters.pluralize(formPreviousDates.length, 'date passée', 'dates passées') }}
+                </p>
+                <p>Aucune date à venir</p>
+              </div>
             </template>
             <template v-else>
               <div class="mt-6 grid grid-cols-1 gap-4">
                 <div
                   class="flex justify-between items-center"
-                  v-for="date in form.dates"
+                  v-for="date in formNextDates"
                   :key="date.id"
                 >
                   <div>
@@ -279,15 +290,14 @@ export default defineNuxtComponent({
                 .transform((v) => (v instanceof Date && !isNaN(v) ? v : null))
                 .min(ref('start_date'), 'La date de fin doit être supérieure à celle du début'),
           }),
-        dates: object()
+        dates: array()
           .nullable()
           .when('with_dates', {
             is: (withDates) => withDates === 'yes',
             then: (schema) =>
               schema
-                .array()
-                .required('Veuillez ajouter au moins une date')
-                .min(1, 'Veuillez ajouter au moins une date'),
+                .min(1, 'Veuillez ajouter au moins une date')
+                .required('Veuillez ajouter au moins une date'),
           }),
       }),
       showModalAddDates: false,
@@ -298,11 +308,16 @@ export default defineNuxtComponent({
       return this.$stores.formMission.mission
     },
     formNextDates() {
+      if (!this.form.dates) return []
       return this.form.dates?.filter(
         (date) =>
           this.$dayjs(date.id).isAfter(this.$dayjs()) ||
           this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
       )
+    },
+    formPreviousDates() {
+      if (!this.form.dates) return []
+      return this.form.dates?.filter((date) => this.$dayjs(date.id).isBefore(this.$dayjs()))
     },
   },
   methods: {

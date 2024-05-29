@@ -50,6 +50,7 @@
             :title="titleBoxDateType"
             :is-current="$route.name === 'admin-missions-id-dates'"
             :is-completed="$stores.formMission.isStepDatesCompleted"
+            :is-warning="$stores.formMission.isStepDatesWarning"
             @click="$router.push(`/admin/missions/${mission.id}/dates`)"
           >
             <template v-if="mission.date_type">
@@ -73,7 +74,7 @@
             @click="$router.push(`/admin/missions/${mission.id}/lieux`)"
           >
             <template v-if="mission.type">
-              <template v-if="mission.type === 'Mission à distance'"> Misison à distance </template>
+              <template v-if="mission.type === 'Mission à distance'"> Mission à distance </template>
               <template v-if="mission.type === 'Mission en présentiel' && !mission.is_autonomy">
                 {{ mission.full_address }}
               </template>
@@ -96,6 +97,7 @@
             "
             :is-current="$route.name === 'admin-missions-id-benevoles'"
             :is-completed="$stores.formMission.isStepBenevolesCompleted"
+            :is-warning="$stores.formMission.isStepBenevolesWarning"
             @click="$router.push(`/admin/missions/${mission.id}/benevoles`)"
           >
             {{ $filters.pluralize(mission.places_left, 'place restante', 'places restantes') }}

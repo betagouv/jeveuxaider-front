@@ -7,8 +7,12 @@
       { '': isCompleted },
     ]"
   >
+    <RiErrorWarningLine
+      v-if="isWarning"
+      class="h-6 text-yellow-500 fill-current absolute top-3 right-3 group-hover:text-jva-blue-500"
+    />
     <RiCheckLine
-      v-if="isCompleted"
+      v-else-if="isCompleted"
       class="h-6 text-jva-blue-500 fill-current absolute top-3 right-3 group-hover:text-jva-blue-500"
     />
     <div v-if="title" :class="['font-bold mb-2 text-[#161616]']">
@@ -23,10 +27,12 @@
 
 <script>
 import RiCheckLine from 'vue-remix-icons/icons/ri-check-line.vue'
+import RiErrorWarningLine from 'vue-remix-icons/icons/ri-error-warning-line.vue'
 
 export default defineNuxtComponent({
   components: {
     RiCheckLine,
+    RiErrorWarningLine,
   },
   props: {
     title: {
@@ -38,6 +44,10 @@ export default defineNuxtComponent({
       default: false,
     },
     isCompleted: {
+      type: Boolean,
+      default: false,
+    },
+    isWarning: {
       type: Boolean,
       default: false,
     },

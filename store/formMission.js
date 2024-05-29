@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { useSoftGateStore } from './softGate'
+import dayjs from 'dayjs'
 
 export const useFormMissionStore = defineStore('useFormMissionStore', {
   id: 'formMission',
@@ -57,6 +58,12 @@ export const useFormMissionStore = defineStore('useFormMissionStore', {
         this.isStepBenevolesCompleted &&
         this.isStepResponsablesCompleted
       )
+    },
+    isStepDatesWarning() {
+      return this.isStepDatesCompleted && dayjs().isAfter(this.mission?.end_date)
+    },
+    isStepBenevolesWarning() {
+      return this.isStepBenevolesCompleted && this.mission?.places_left < 1
     },
   },
   actions: {
