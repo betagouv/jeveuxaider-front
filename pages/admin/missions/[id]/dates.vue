@@ -157,7 +157,7 @@
             </div>
             <template v-if="formNextDates.length === 0">
               <div class="text-center text-gray-500">
-                <p>
+                <p v-if="form.dates?.length > 0">
                   {{ $filters.pluralize(formPreviousDates.length, 'date passée', 'dates passées') }}
                 </p>
                 <p>Aucune date à venir</p>
@@ -249,8 +249,6 @@ export default defineNuxtComponent({
     if (this.form.start_date) {
       this.form.with_dates = this.form.dates?.length > 0 ? 'yes' : 'no'
     }
-
-    console.log('mounted', this.form.dates)
   },
   data() {
     return {

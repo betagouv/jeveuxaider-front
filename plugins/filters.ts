@@ -1,3 +1,4 @@
+import { test } from 'process'
 import { TypeVocabulary } from './labels'
 import { marked } from 'marked'
 
@@ -49,7 +50,10 @@ export default defineNuxtPlugin(() => {
       var replaceStr = replaceMode ? '$1' + breakTag : '$1' + breakTag + '$2'
       return (text + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, replaceStr)
     },
-    clamp(text: string, length: number) {
+    clamp(text?: string) {
+      if (!text) {
+        return ''
+      }
       if (text.length > 120) {
         let trimmedTextBegin = text.substr(0, 70)
         trimmedTextBegin = trimmedTextBegin.substr(

@@ -18,12 +18,15 @@ export default {
         this.clearAddress()
         return
       }
-      this.form.address = item.name != item.city ? item.name : null
+
+      this.form.address = item.name != item.city ? item.name : ''
       this.form.zip = item.postcode
       this.form.city = item.city
       this.form.latitude = item.coordinates[1]
       this.form.longitude = item.coordinates[0]
-      this.validate('address')
+      console.log('handleSelectedGeo', item, this.form.address)
+
+      this.validate('zip')
     },
   },
 }

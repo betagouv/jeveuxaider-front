@@ -95,7 +95,6 @@
               @fetch-suggestions="onFetchGeoSuggestions($event)"
             />
           </DsfrFormControl>
-
           <div v-if="form.zip" class="mt-6 grid grid-cols-1 gap-4">
             <div class="flex justify-between items-center">
               <div class="font-medium">{{ form.full_address }}</div>
@@ -211,7 +210,7 @@ export default defineNuxtComponent({
             is: (type) => type == 'Mission en présentiel',
             then: (schema) => schema.required('Le département est requis'),
           }),
-        address: string()
+        zip: string()
           .nullable()
           .when(['type', 'is_autonomy'], {
             is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
@@ -316,7 +315,7 @@ export default defineNuxtComponent({
     },
     handleSelectedAddress(selectedItem) {
       this.handleSelectedGeo(selectedItem)
-      this.form.full_address = selectedItem.label
+      this.form.full_address = selectedItem?.label
     },
     handleSelectedAutonomyZip(selectedItem) {
       if (!this.form.autonomy_zips) {

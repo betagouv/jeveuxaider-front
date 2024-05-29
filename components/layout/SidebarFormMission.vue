@@ -8,6 +8,7 @@
         <div class="space-y-4">
           <h3 class="text-sm font-bold uppercase text-[#666666]">Description</h3>
           <CustomMissionPreviewItem
+            ref="admin-missions-id-title"
             title="Titre"
             :is-current="$route.name === 'admin-missions-id-title'"
             :is-completed="$stores.formMission.isStepTitleCompleted"
@@ -16,6 +17,7 @@
             {{ mission.name ?? 'À définir' }}
           </CustomMissionPreviewItem>
           <CustomMissionPreviewItem
+            ref="admin-missions-id-visuel"
             title="Visuel"
             :is-current="$route.name === 'admin-missions-id-visuel'"
             :is-completed="$stores.formMission.isStepVisuelCompleted"
@@ -36,6 +38,7 @@
             </div>
           </CustomMissionPreviewItem>
           <CustomMissionPreviewItem
+            ref="admin-missions-id-informations"
             title="Informations"
             :is-current="$route.name === 'admin-missions-id-informations'"
             :is-completed="$stores.formMission.isStepInformationsCompleted"
@@ -47,6 +50,7 @@
         <div class="space-y-4">
           <h3 class="text-sm font-bold uppercase text-[#666666]">Dates et fréquences</h3>
           <CustomMissionPreviewItem
+            ref="admin-missions-id-dates"
             :title="titleBoxDateType"
             :is-current="$route.name === 'admin-missions-id-dates'"
             :is-completed="$stores.formMission.isStepDatesCompleted"
@@ -68,6 +72,7 @@
         <div class="space-y-4">
           <h3 class="text-sm font-bold uppercase text-[#666666]">Lieux</h3>
           <CustomMissionPreviewItem
+            ref="admin-missions-id-lieux"
             :title="titleBoxLieux"
             :is-current="$route.name === 'admin-missions-id-lieux'"
             :is-completed="$stores.formMission.isStepLieuxCompleted"
@@ -88,6 +93,7 @@
         <div class="space-y-4">
           <h3 class="text-sm font-bold uppercase text-[#666666]">Bénévoles</h3>
           <CustomMissionPreviewItem
+            ref="admin-missions-id-benevoles"
             :title="
               $filters.pluralize(
                 mission.participations_max,
@@ -103,6 +109,7 @@
             {{ $filters.pluralize(mission.places_left, 'place restante', 'places restantes') }}
           </CustomMissionPreviewItem>
           <CustomMissionPreviewItem
+            ref="admin-missions-id-benevoles-informations"
             title="Informations sur les bénévoles"
             :is-current="$route.name === 'admin-missions-id-benevoles-informations'"
             :is-completed="$stores.formMission.isStepBenevolesInformationsCompleted"
@@ -126,6 +133,7 @@
         <div class="space-y-4">
           <h3 class="text-sm font-bold uppercase text-[#666666]">Responsables</h3>
           <CustomMissionPreviewItem
+            ref="admin-missions-id-responsables"
             :is-current="$route.name === 'admin-missions-id-responsables'"
             :is-completed="$stores.formMission.isStepResponsablesCompleted"
             @click="$router.push(`/admin/missions/${mission.id}/responsables`)"
@@ -165,10 +173,21 @@
 
 <script>
 import MixinMission from '@/mixins/mission'
+import { offset } from '@popperjs/core'
 
 export default defineNuxtComponent({
   mixins: [MixinMission],
   props: {},
+  watch: {
+    '$route.name': {
+      async handler(newVal, oldVal) {
+        this.scrollIntoView(newVal)
+      },
+    },
+  },
+  mounted() {
+    this.scrollIntoView(this.$route.name)
+  },
   computed: {
     mission() {
       return _cloneDeep(this.$stores.formMission.mission)
@@ -191,6 +210,14 @@ export default defineNuxtComponent({
     },
   },
   methods: {
+    scrollIntoView(refValue) {
+      console.log('scrollIntoView', refValue)
+      console.log('scrollIntoView', this.$refs[refValue])
+      this.$refs[refValue]?.$el?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      })
+    },
     onImgError() {
       this.$refs.thumbnail.$el.srcset =
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'

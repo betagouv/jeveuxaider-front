@@ -43,6 +43,8 @@
         <DsfrButton type="tertiary" @click="showModalPreview = true" icon="RiEyeLine"
           >Aperçu
         </DsfrButton>
+        <DsfrButton type="tertiary" @click="onClose" icon="RiCloseLine">Fermer </DsfrButton>
+
         <SectionFormMissionOverlay
           :mission="mission"
           :is-open="showModalPreview"
@@ -60,6 +62,10 @@
             <p class="mb-4">
               Vous êtes sur le point de publier la mission <strong> {{ mission.name }}</strong
               >.
+            </p>
+            <p v-if="mission.structure.state !== 'Validée'">
+              Votre organisation devra être préalablement validée pour que la mission soit
+              accessible.
             </p>
           </template>
           <template v-else>
@@ -147,6 +153,9 @@ export default defineNuxtComponent({
     afterChangeIsActive(mission) {
       this.$stores.formMission.updateFields(mission, ['is_online'])
       this.showModalSwitchIsOnline = false
+    },
+    onClose() {
+      this.$router.push('/admin/missions')
     },
   },
 })

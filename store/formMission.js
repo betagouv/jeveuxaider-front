@@ -67,6 +67,12 @@ export const useFormMissionStore = defineStore('useFormMissionStore', {
     },
   },
   actions: {
+    // scrollIntoView(id) {
+    //   const element = document.getElementById(id)
+    //   if (element) {
+    //     element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    //   }
+    // },
     setMission(mission) {
       this.mission = mission
     },
