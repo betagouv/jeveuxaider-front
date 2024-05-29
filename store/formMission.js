@@ -83,7 +83,7 @@ export const useFormMissionStore = defineStore('useFormMissionStore', {
     },
     reset() {
       this.mission = null
-      this.statistics = statistics
+      this.statistics = null
     },
     setStatistics(statistics) {
       this.statistics = statistics

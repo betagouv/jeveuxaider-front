@@ -28,9 +28,9 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
 
-    if (route.name == 'admin-organisations-id-missions-add') {
-      $stores.formMission.setMission(null)
-    }
+    // if (route.name == 'admin-organisations-id-missions-add') {
+    //   $stores.formMission.setMission(null)
+    // }
 
     if (route.name != 'admin-organisations-id-missions-add') {
       if (!$stores.formMission.mission) {
@@ -53,7 +53,30 @@ export default defineNuxtComponent({
       }
     }
   },
+  // watch: {
+  //   $route(to, from) {
+  //     if (to.name == 'admin-organisations-id-missions-add') {
+  //       this.$stores.formMission.setMission(null)
+  //     }
+  //   },
+  // },
+  watch: {
+    '$route.params.id': {
+      async handler(newVal, oldVal) {
+        if (newVal !== oldVal) {
+          console.log('FormMissionWrapper $route.params.id', newVal, oldVal)
+          const mission = await apiFetch(`/missions/${newVal}/show`)
+          this.$stores.formMission.setMission(mission)
+        } else {
+          console.log('Reset store mission null')
+          this.$stores.formMission.reset()
+        }
+      },
+      immediate: true,
+    },
+  },
   // beforeUnmount() {
+  //   console.log('FormMissionWrapper beforeUnmount')
   //   this.$stores.formMission.reset()
   // },
 })
