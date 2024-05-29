@@ -32,7 +32,7 @@
 
         <div class="flex-col sm:flex-row flex gap-3 mt-4 lg:mt-0">
           <slot name="actions">
-            <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/edit`">
+            <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/title`">
               <DsfrButton type="primary">
                 <RiPencilLine class="h-5 w-5 fill-current" /> Modifier
               </DsfrButton>

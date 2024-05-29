@@ -1,5 +1,5 @@
 <template>
-  <FormMissionEditWrapper>
+  <FormMissionWrapper>
     <template #header>
       <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
@@ -77,11 +77,11 @@
     <template #footer>
       <DsfrButton :loading="loading" @click="onValidateClick"> Sauvegarder</DsfrButton>
     </template>
-  </FormMissionEditWrapper>
+  </FormMissionWrapper>
 </template>
 
 <script>
-import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
+import FormMissionWrapper from '@/components/form/FormMissionWrapper'
 import FormErrors from '@/mixins/form/errors'
 import { string, object, array } from 'yup'
 import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
@@ -96,7 +96,7 @@ export default defineNuxtComponent({
   },
   mixins: [FormErrors],
   components: {
-    FormMissionEditWrapper,
+    FormMissionWrapper,
     RiCheckboxCircleFill,
     ModalFormMissionAddResponsable,
   },

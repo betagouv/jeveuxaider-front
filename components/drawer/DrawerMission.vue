@@ -33,7 +33,7 @@
             </DsfrButton>
           </nuxt-link>
 
-          <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/edit`">
+          <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/title`">
             <DsfrButton
               type="tertiary"
               icon="RiPencilLine"
@@ -49,6 +49,7 @@
             :mission="mission"
             @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
             @missionDeleted="handleDeleted()"
+            @updated="handleUpdated()"
             buttonSize="sm"
           />
         </div>
@@ -213,6 +214,9 @@ export default defineNuxtComponent({
     },
     handleDeleted() {
       this.$emit('close')
+      this.$emit('updated')
+    },
+    handleUpdated() {
       this.$emit('updated')
     },
   },

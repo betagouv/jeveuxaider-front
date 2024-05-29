@@ -1,5 +1,5 @@
 <template>
-  <FormMissionEditWrapper>
+  <FormMissionWrapper>
     <template #header>
       <LayoutHeaderFormMissions class="" title="Publier votre mission" />
     </template>
@@ -143,7 +143,7 @@
         >
       </div>
     </template>
-  </FormMissionEditWrapper>
+  </FormMissionWrapper>
 </template>
 
 <script>
@@ -151,13 +151,13 @@ import domaines from '@/assets/domaines.json'
 import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
 import CardTemplate from '@/components/card/CardTemplate.vue'
 import CardTemplatePreview from '@/components/card/CardTemplatePreview.vue'
-import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
+import FormMissionWrapper from '@/components/form/FormMissionWrapper'
 
 export default {
   components: {
     CardTemplate,
     RiCheckboxCircleFill,
-    FormMissionEditWrapper,
+    FormMissionWrapper,
   },
   async setup() {
     definePageMeta({

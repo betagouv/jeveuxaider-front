@@ -46,7 +46,7 @@
               <div class="px-4 text-base font-medium">Signaler cette mission</div>
             </BaseDropdownOptionsItem>
             <BaseDropdownOptionsItem
-              @click.native.stop="$router.push(`/admin/missions/${mission.id}/edit`)"
+              @click.native.stop="$router.push(`/admin/missions/${mission.id}/title`)"
             >
               <div class="px-4 text-base font-medium">Modifier cette mission</div>
             </BaseDropdownOptionsItem>

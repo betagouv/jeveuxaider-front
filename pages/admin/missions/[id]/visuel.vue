@@ -1,5 +1,5 @@
 <template>
-  <FormMissionEditWrapper>
+  <FormMissionWrapper>
     <template #header>
       <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
@@ -33,11 +33,11 @@
         {{ $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder' }}
       </DsfrButton>
     </template>
-  </FormMissionEditWrapper>
+  </FormMissionWrapper>
 </template>
 
 <script>
-import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
+import FormMissionWrapper from '@/components/form/FormMissionWrapper'
 import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
 
 export default defineNuxtComponent({
@@ -48,7 +48,7 @@ export default defineNuxtComponent({
     })
   },
   components: {
-    FormMissionEditWrapper,
+    FormMissionWrapper,
     RiCheckboxCircleFill,
   },
   data() {

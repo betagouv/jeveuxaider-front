@@ -1,5 +1,5 @@
 <template>
-  <FormMissionEditWrapper>
+  <FormMissionWrapper>
     <template #header>
       <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
@@ -130,11 +130,11 @@
         <li>- Un tuteur sera présent durant la mission pour accompagner les volontaires du SNU</li>
       </ul>
     </BaseAlertDialog>
-  </FormMissionEditWrapper>
+  </FormMissionWrapper>
 </template>
 
 <script>
-import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
+import FormMissionWrapper from '@/components/form/FormMissionWrapper'
 import FormErrors from '@/mixins/form/errors'
 import { number, object } from 'yup'
 
@@ -147,7 +147,7 @@ export default defineNuxtComponent({
   },
   mixins: [FormErrors],
   components: {
-    FormMissionEditWrapper,
+    FormMissionWrapper,
   },
   mounted() {
     this.form = _cloneDeep(this.$stores.formMission.mission)

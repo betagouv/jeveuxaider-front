@@ -1,5 +1,5 @@
 <template>
-  <FormMissionEditWrapper>
+  <FormMissionWrapper>
     <template #header>
       <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
@@ -22,11 +22,11 @@
         {{ $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder' }}
       </DsfrButton>
     </template>
-  </FormMissionEditWrapper>
+  </FormMissionWrapper>
 </template>
 
 <script>
-import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
+import FormMissionWrapper from '@/components/form/FormMissionWrapper'
 import FormErrors from '@/mixins/form/errors'
 import { string, object } from 'yup'
 
@@ -39,7 +39,7 @@ export default defineNuxtComponent({
   },
   mixins: [FormErrors],
   components: {
-    FormMissionEditWrapper,
+    FormMissionWrapper,
   },
   mounted() {
     this.form = _cloneDeep(this.$stores.formMission.mission)

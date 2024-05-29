@@ -19,6 +19,12 @@
     Vous êtes sur le point de dupliquer la mission <strong>{{ mission.name }}</strong> qui sera
     enregistrée en « <strong>Brouillon</strong> »
   </BaseAlertDialog>
+  <ModalMissionTagsManager
+    :is-open="showModalTags"
+    :mission="mission"
+    @cancel="showModalTags = false"
+    @submit="onSubmitTags"
+  />
   <BaseDropdown>
     <template #button>
       <DsfrButton :size="buttonSize" type="tertiary" class="!text-gray-800">
@@ -79,6 +85,14 @@
         </div>
       </BaseDropdownOptionsItem>
       <BaseDropdownOptionsItem
+        v-if="['admin'].includes($stores.auth.contextRole)"
+        @click="showModalTags = true"
+      >
+        <div class="flex items-center">
+          <RiPriceTag3Line class="h-4 w-4 mr-2 fill-current text-gray-600" /> Gérer les tags
+        </div>
+      </BaseDropdownOptionsItem>
+      <BaseDropdownOptionsItem
         v-if="['admin', 'responsable'].includes($stores.auth.contextRole)"
         @click="showModalDelete = true"
       >
@@ -93,6 +107,7 @@
 <script>
 import MixinMission from '@/mixins/mission'
 import ButtonMissionDuplicate from '@/components/custom/ButtonMissionDuplicate.vue'
+import ModalMissionTagsManager from '@/components/modal/ModalMissionTagsManager.vue'
 
 export default defineNuxtComponent({
   emits: ['showModalSwitchIsOnline', 'missionDeleted', 'updated'],
@@ -100,10 +115,12 @@ export default defineNuxtComponent({
     return {
       showModalDelete: false,
       showModalDuplicate: false,
+      showModalTags: false,
     }
   },
   components: {
     ButtonMissionDuplicate,
+    ModalMissionTagsManager,
   },
   mixins: [MixinMission],
   props: {
@@ -134,6 +151,10 @@ export default defineNuxtComponent({
         .finally(() => {
           this.showModalDuplicate = false
         })
+    },
+    onSubmitTags() {
+      this.showModalTags = false
+      this.$emit('updated')
     },
   },
 })

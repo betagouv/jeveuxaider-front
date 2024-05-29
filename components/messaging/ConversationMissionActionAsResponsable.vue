@@ -25,7 +25,7 @@
         <template #items>
           <div class="w-[300px] py-4">
             <BaseDropdownOptionsItem
-              @click.native.stop="$router.push(`/admin/missions/${mission.id}/edit`)"
+              @click.native.stop="$router.push(`/admin/missions/${mission.id}/title`)"
             >
               <div class="px-4 text-base font-medium">Modifier cette mission</div>
             </BaseDropdownOptionsItem>

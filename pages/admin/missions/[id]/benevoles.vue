@@ -1,5 +1,5 @@
 <template>
-  <FormMissionEditWrapper>
+  <FormMissionWrapper>
     <template #header>
       <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
@@ -61,11 +61,11 @@
         $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder'
       }}</DsfrButton>
     </template>
-  </FormMissionEditWrapper>
+  </FormMissionWrapper>
 </template>
 
 <script>
-import FormMissionEditWrapper from '@/components/form/FormMissionEditWrapper'
+import FormMissionWrapper from '@/components/form/FormMissionWrapper'
 import FormErrors from '@/mixins/form/errors'
 import RiSubtractLine from 'vue-remix-icons/icons/ri-subtract-line.vue'
 import RiAddLine from 'vue-remix-icons/icons/ri-add-line.vue'
@@ -80,7 +80,7 @@ export default defineNuxtComponent({
   },
   mixins: [FormErrors],
   components: {
-    FormMissionEditWrapper,
+    FormMissionWrapper,
     RiSubtractLine,
     RiAddLine,
   },

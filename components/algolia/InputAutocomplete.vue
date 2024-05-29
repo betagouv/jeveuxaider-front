@@ -10,7 +10,7 @@
       :attribute-label="attributeLabel"
       :attribute-right-label="attributeRightLabel"
       :reset-value-on-select="true"
-      :min-value-length="3"
+      :min-value-length="minValueLength"
       @selected="onSelected"
       @keyup.enter="onEnter"
       @fetch-suggestions="onFetchSuggestions"
@@ -25,7 +25,7 @@
       :attribute-label="attributeLabel"
       :attribute-right-label="attributeRightLabel"
       :reset-value-on-select="true"
-      :min-value-length="3"
+      :min-value-length="minValueLength"
       @selected="onSelected"
       @keyup.enter="onEnter"
       @fetch-suggestions="onFetchSuggestions"
@@ -36,7 +36,6 @@
 <script>
 export default defineNuxtComponent({
   emits: ['selected'],
-
   props: {
     variant: {
       type: String,
@@ -66,6 +65,10 @@ export default defineNuxtComponent({
     attributeRightLabel: {
       type: String,
       default: null,
+    },
+    minValueLength: {
+      type: Number,
+      default: 3,
     },
   },
   data() {

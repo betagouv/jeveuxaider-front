@@ -4,7 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         {{ title }}
       </div>
-      <BaseLink :to="`/admin/missions/${mission.id}/edit`" icon="RiArrowRightSLine">
+      <BaseLink :to="`/admin/missions/${mission.id}/dates`" icon="RiArrowRightSLine">
         Modifier
       </BaseLink>
     </div>
