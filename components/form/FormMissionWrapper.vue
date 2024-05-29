@@ -18,40 +18,37 @@
 <script>
 export default defineNuxtComponent({
   async setup() {
-    const { $stores } = useNuxtApp()
-    const route = useRoute()
-    if (
-      !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'responsable'].includes(
-        $stores.auth.contextRole
-      )
-    ) {
-      return showError({ statusCode: 403 })
-    }
-
+    // const { $stores } = useNuxtApp()
+    // const route = useRoute()
+    // if (
+    //   !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'responsable'].includes(
+    //     $stores.auth.contextRole
+    //   )
+    // ) {
+    //   return showError({ statusCode: 403 })
+    // }
     // if (route.name == 'admin-organisations-id-missions-add') {
     //   $stores.formMission.setMission(null)
     // }
-
-    if (route.name != 'admin-organisations-id-missions-add') {
-      if (!$stores.formMission.mission) {
-        const mission = await apiFetch(`/missions/${route.params.id}/show`)
-        $stores.formMission.setMission(mission)
-      }
-
-      if (!$stores.formMission.mission) {
-        return showError({ statusCode: 404 })
-      }
-      if ($stores.auth.contextRole == 'responsable') {
-        if ($stores.auth.contextableId != $stores.formMission.mission.structure_id) {
-          return showError({ statusCode: 403 })
-        }
-      }
-
-      if (!$stores.formMission.statistics) {
-        const statistics = await apiFetch(`/statistics/missions/${route.params.id}`)
-        $stores.formMission.setStatistics(statistics)
-      }
-    }
+    // console.log('FormMissionWrapper setup', route.name, route.params.id)
+    // if (route.name != 'admin-organisations-id-missions-add') {
+    //   if (!$stores.formMission.mission) {
+    //     const mission = await apiFetch(`/missions/${route.params.id}/show`)
+    //     $stores.formMission.setMission(mission)
+    //   }
+    //   if (!$stores.formMission.mission) {
+    //     return showError({ statusCode: 404 })
+    //   }
+    //   if ($stores.auth.contextRole == 'responsable') {
+    //     if ($stores.auth.contextableId != $stores.formMission.mission.structure_id) {
+    //       return showError({ statusCode: 403 })
+    //     }
+    //   }
+    //   if (!$stores.formMission.statistics) {
+    //     const statistics = await apiFetch(`/statistics/missions/${route.params.id}`)
+    //     $stores.formMission.setStatistics(statistics)
+    //   }
+    // }
   },
   // watch: {
   //   $route(to, from) {
@@ -60,21 +57,20 @@ export default defineNuxtComponent({
   //     }
   //   },
   // },
-  watch: {
-    '$route.params.id': {
-      async handler(newVal, oldVal) {
-        if (newVal !== oldVal) {
-          console.log('FormMissionWrapper $route.params.id', newVal, oldVal)
-          const mission = await apiFetch(`/missions/${newVal}/show`)
-          this.$stores.formMission.setMission(mission)
-        } else {
-          console.log('Reset store mission null')
-          this.$stores.formMission.reset()
-        }
-      },
-      immediate: true,
-    },
-  },
+  // watch: {
+  //   $route: {
+  //     async handler(newVal, oldVal) {
+  //       if (newVal.params.id && newVal.params.id !== oldVal.params.id) {
+  //         console.log('FormMissionWrapper $route.params.id', newVal.params.id, oldVal.params.id)
+  //         const mission = await apiFetch(`/missions/${newVal.params.id}/show`)
+  //         this.$stores.formMission.setMission(mission)
+  //       } else {
+  //         console.log('Reset store mission null')
+  //         this.$stores.formMission.reset()
+  //       }
+  //     },
+  //   },
+  // },
   // beforeUnmount() {
   //   console.log('FormMissionWrapper beforeUnmount')
   //   this.$stores.formMission.reset()
