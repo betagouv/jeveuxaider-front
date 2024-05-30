@@ -174,7 +174,6 @@
 
 <script>
 import MixinMission from '@/mixins/mission'
-import { offset } from '@popperjs/core'
 
 export default defineNuxtComponent({
   mixins: [MixinMission],

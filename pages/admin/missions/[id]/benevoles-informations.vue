@@ -16,7 +16,7 @@
           :error="errors.prerequisites"
           info="Les bénévoles devront cocher ces pré-requis pour proposer leur aide"
         >
-          <div class="space-y-2">
+          <div v-if="form.prerequisites" class="space-y-2">
             <DsfrInput
               v-for="n in 3"
               :key="n"
@@ -150,8 +150,9 @@ export default defineNuxtComponent({
     FormMissionWrapper,
   },
   mounted() {
-    this.form = _cloneDeep(this.$stores.formMission.mission)
+    // this.form = _cloneDeep(this.$stores.formMission.mission)
     if (!this.form.prerequisites) {
+      console.log('prerequisites init', this.form.prerequisites)
       this.form.prerequisites = [null, null, null]
     }
     if (this.form.publics_volontaires === null) {
@@ -161,7 +162,7 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
-      form: null,
+      form: { ...this.$stores.formMission.mission },
       formSchema: object({
         participations_max: number()
           .min(1, 'Le nombre de bénévole(s) recherché(s) doit être supérieur à 0')

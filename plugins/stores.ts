@@ -9,8 +9,8 @@ import { useAideModerationStore } from '@/store/aideModeration'
 import { useAlgoliaSearchStore } from '@/store/algoliaSearch'
 import { useSoftGateStore } from '@/store/softGate'
 import { useStructureTagsStore } from '@/store/structureTags'
-import { useArchivedUserStore } from '~/store/archivedUser'
-import { useFormMissionStore } from '~/store/formMission'
+import { useArchivedUserStore } from '@/store/archivedUser'
+import { useFormMissionStore } from '@/store/formMission'
 
 export default defineNuxtPlugin(async () => {
   const storeAuth = useAuthStore()

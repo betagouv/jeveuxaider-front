@@ -168,7 +168,7 @@ export default defineNuxtComponent({
     FormMissionWrapper,
   },
   mounted() {
-    this.form = _cloneDeep(this.$stores.formMission.mission)
+    // this.form = _cloneDeep(this.$stores.formMission.mission)
 
     this.form.domaine_id = this.mission.template?.domaine_id || this.mission.domaine_id
     this.form.domaine_secondary_id =
@@ -181,7 +181,7 @@ export default defineNuxtComponent({
     return {
       loading: false,
       activities,
-      form: null,
+      form: { ...this.$stores.formMission.mission },
       formSchema: object({
         domaine_id: number().nullable().required('Le domaine principal est requis'),
         activity_id: number().nullable().required('L’activité principale est requise'),

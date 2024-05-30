@@ -244,7 +244,7 @@ export default defineNuxtComponent({
     ModalFormMissionAddDates,
   },
   mounted() {
-    this.form = _cloneDeep(this.$stores.formMission.mission)
+    // this.form = _cloneDeep(this.$stores.formMission.mission)
 
     if (this.form.start_date) {
       this.form.with_dates = this.form.dates?.length > 0 ? 'yes' : 'no'
@@ -253,7 +253,7 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
-      form: null,
+      form: { ...this.$stores.formMission.mission },
       formSchema: object({
         date_type: string().required('Le type d’engagement est requis'),
         commitment__duration: string().nullable().required("La durée d'engagement est requise"),

@@ -5,7 +5,14 @@
     </template>
     <div v-if="form">
       <h2 class="text-[28px] font-bold leading-9 mb-10">Combien de bénévoles recherchez-vous ?</h2>
-      <CustomTips class="mb-10">
+
+      <CustomTips v-if="form.participations_max > 70" class="mb-10" variant="warning">
+        <span class="font-bold">Ça fait beaucoup de bénévoles 😅</span><br />
+        Toutes les demandes de participations devront être mises à jour (validées ou refusées). Nous
+        vous conseillons de mobiliser progressivement des bénévoles, et de revoir votre besoin à la
+        hausse si nécessaire.
+      </CustomTips>
+      <CustomTips v-else class="mb-10">
         Vous pourrez modifier le nombre de bénévoles recherchés en fonction des demandes de
         participation reçues et de vos besoins s’ils évoluent !
       </CustomTips>
@@ -84,13 +91,13 @@ export default defineNuxtComponent({
     RiSubtractLine,
     RiAddLine,
   },
-  mounted() {
-    this.form = _cloneDeep(this.$stores.formMission.mission)
-  },
+  // mounted() {
+  //   this.form = _cloneDeep(this.$stores.formMission.mission)
+  // },
   data() {
     return {
       loading: false,
-      form: null,
+      form: { ...this.$stores.formMission.mission },
       formSchema: object({
         participations_max: number()
           .min(1, 'Le nombre de bénévole(s) recherché(s) doit être supérieur à 0')

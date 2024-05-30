@@ -25,7 +25,13 @@
       <div class="grid grid-cols-1 gap-8">
         <div class="flex justify-between items-center border-b py-4">
           <div class="font-bold text-xl">Responsables</div>
-          <DsfrButton size="sm" type="secondary" @click="showModalAddResponsable = true"
+          <DsfrButton
+            :disabled="
+              form.responsables.length === $stores.formMission.mission.structure.members.length
+            "
+            size="sm"
+            type="secondary"
+            @click="showModalAddResponsable = true"
             >Ajouter un responsable</DsfrButton
           >
         </div>
@@ -100,13 +106,10 @@ export default defineNuxtComponent({
     RiCheckboxCircleFill,
     ModalFormMissionAddResponsable,
   },
-  mounted() {
-    this.form = _cloneDeep(this.$stores.formMission.mission)
-  },
   data() {
     return {
       loading: false,
-      form: null,
+      form: { ...this.$stores.formMission.mission },
       showModalAddResponsable: false,
       formSchema: object({
         responsables: array()

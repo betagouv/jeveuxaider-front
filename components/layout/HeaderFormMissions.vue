@@ -27,62 +27,65 @@
           <Badges :mission="$stores.formMission.mission" />
         </div>
       </div>
-      <div v-if="mission" class="hidden ml-auto lg:flex gap-2">
-        <DsfrButton
-          v-if="$stores.formMission.canBePublished"
-          @click="$stores.formMission.showPublishModal = true"
-          >Publier la mission
-        </DsfrButton>
-        <DsfrButton @click="triggerConfettis" type="tertiary">🎉</DsfrButton>
+      <div class="hidden ml-auto lg:flex gap-2">
+        <template v-if="mission">
+          <DsfrButton
+            v-if="$stores.formMission.canBePublished"
+            @click="$stores.formMission.showPublishModal = true"
+            >Publier la mission
+          </DsfrButton>
+          <DsfrButton @click="triggerConfettis" type="tertiary">🎉</DsfrButton>
 
-        <Actions
-          :mission="mission"
-          @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
-          @missionDeleted="handleDeleted"
-        />
-        <DsfrButton type="tertiary" @click="showModalPreview = true" icon="RiEyeLine"
-          >Aperçu
-        </DsfrButton>
+          <Actions
+            :mission="mission"
+            @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
+            @missionDeleted="handleDeleted"
+          />
+          <DsfrButton type="tertiary" @click="showModalPreview = true" icon="RiEyeLine"
+            >Aperçu
+          </DsfrButton>
+
+          <SectionFormMissionOverlay
+            :mission="mission"
+            :is-open="showModalPreview"
+            @close="showModalPreview = false"
+          />
+          <BaseAlertDialog
+            icon="RiErrorWarningLine"
+            title="Publier cette mission"
+            :is-open="$stores.formMission.showPublishModal"
+            @confirm="onPublishConfirm"
+            @cancel="$stores.formMission.showPublishModal = false"
+            :button-loading="buttonLoading"
+          >
+            <template v-if="mission.template_id">
+              <p class="mb-4">
+                Vous êtes sur le point de publier la mission <strong> {{ mission.name }}</strong
+                >.
+              </p>
+              <p v-if="mission.structure.state !== 'Validée'">
+                Votre organisation devra être préalablement validée pour que la mission soit
+                accessible.
+              </p>
+            </template>
+            <template v-else>
+              <p class="mb-4">
+                Vous êtes sur le point de demander la publication de la mission
+                <strong> {{ mission.name }}</strong
+                >.
+              </p>
+              <p>La validation prend en moyenne 7 à 10 jours.</p>
+            </template>
+          </BaseAlertDialog>
+          <ModalMissionToggleIsActive
+            :mission="mission"
+            :is-open="showModalSwitchIsOnline"
+            @cancel="showModalSwitchIsOnline = false"
+            @confirm="afterChangeIsActive"
+          />
+        </template>
+
         <DsfrButton type="tertiary" @click="onClose" icon="RiCloseLine">Fermer </DsfrButton>
-
-        <SectionFormMissionOverlay
-          :mission="mission"
-          :is-open="showModalPreview"
-          @close="showModalPreview = false"
-        />
-        <BaseAlertDialog
-          icon="RiErrorWarningLine"
-          title="Publier cette mission"
-          :is-open="$stores.formMission.showPublishModal"
-          @confirm="onPublishConfirm"
-          @cancel="$stores.formMission.showPublishModal = false"
-          :button-loading="buttonLoading"
-        >
-          <template v-if="mission.template_id">
-            <p class="mb-4">
-              Vous êtes sur le point de publier la mission <strong> {{ mission.name }}</strong
-              >.
-            </p>
-            <p v-if="mission.structure.state !== 'Validée'">
-              Votre organisation devra être préalablement validée pour que la mission soit
-              accessible.
-            </p>
-          </template>
-          <template v-else>
-            <p class="mb-4">
-              Vous êtes sur le point de demander la publication de la mission
-              <strong> {{ mission.name }}</strong
-              >.
-            </p>
-            <p>La validation prend en moyenne 7 à 10 jours.</p>
-          </template>
-        </BaseAlertDialog>
-        <ModalMissionToggleIsActive
-          :mission="mission"
-          :is-open="showModalSwitchIsOnline"
-          @cancel="showModalSwitchIsOnline = false"
-          @confirm="afterChangeIsActive"
-        />
       </div>
     </div>
 

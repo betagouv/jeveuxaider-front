@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { useSoftGateStore } from './softGate'
 import dayjs from 'dayjs'
 
-export const useFormMissionStore = defineStore('useFormMissionStore', {
+export const useFormMissionStore = defineStore('formMission', {
   id: 'formMission',
   state: () => ({
     mission: null,
@@ -60,19 +60,13 @@ export const useFormMissionStore = defineStore('useFormMissionStore', {
       )
     },
     isStepDatesWarning() {
-      return this.isStepDatesCompleted && dayjs().isAfter(this.mission?.end_date)
+      return this.isStepDatesCompleted && dayjs().startOf('day').isAfter(this.mission?.end_date)
     },
     isStepBenevolesWarning() {
       return this.isStepBenevolesCompleted && this.mission?.places_left < 1
     },
   },
   actions: {
-    // scrollIntoView(id) {
-    //   const element = document.getElementById(id)
-    //   if (element) {
-    //     element.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    //   }
-    // },
     setMission(mission) {
       this.mission = mission
     },

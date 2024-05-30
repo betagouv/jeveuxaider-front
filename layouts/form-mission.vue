@@ -20,6 +20,7 @@ export default {
 
     const { $stores } = useNuxtApp()
     const route = useRouter().currentRoute.value
+
     if (
       !['admin', 'referent', 'referent_regional', 'tete_de_reseau', 'responsable'].includes(
         $stores.auth.contextRole
@@ -28,11 +29,13 @@ export default {
       return showError({ statusCode: 403 })
     }
 
-    console.log('form-mission setup route params', route.params)
-
+    console.log('form-mission setup')
+    if (route.name === 'admin-organisations-id-missions-add') {
+      $stores.formMission.reset()
+    }
     if (route.name !== 'admin-organisations-id-missions-add') {
       if ($stores.formMission.mission?.id !== route.params.id) {
-        console.log('form-mission setup', route.name, route.params.id)
+        console.log('form-mission edit', route.name, route.params.id)
         const mission = await apiFetch(`/missions/${route.params.id}/show`)
         $stores.formMission.setMission(mission)
       }
@@ -47,6 +50,7 @@ export default {
       }
 
       if (!$stores.formMission.statistics) {
+        console.log('form-mission setup statistics', route.name, route.params.id)
         const statistics = await apiFetch(`/statistics/missions/${route.params.id}`)
         $stores.formMission.setStatistics(statistics)
       }

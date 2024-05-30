@@ -17,6 +17,7 @@
         :disabled="Boolean(form.template_id)"
       />
     </div>
+    <div v-else>no form</div>
     <template #footer>
       <DsfrButton :loading="loading" @click="onValidateClick">
         {{ $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder' }}
@@ -41,13 +42,13 @@ export default defineNuxtComponent({
   components: {
     FormMissionWrapper,
   },
-  mounted() {
-    this.form = _cloneDeep(this.$stores.formMission.mission)
-  },
+  // mounted() {
+  //   this.form = _cloneDeep(this.$stores.formMission.mission)
+  // },
   data() {
     return {
       loading: false,
-      form: null,
+      form: { ...this.$stores.formMission.mission },
       formSchema: object({
         name: string()
           .min(3, 'Le titre est trop court')

@@ -195,13 +195,13 @@ export default defineNuxtComponent({
   components: {
     FormMissionWrapper,
   },
-  mounted() {
-    this.form = _cloneDeep(this.$stores.formMission.mission)
-  },
+  // mounted() {
+  //   this.form = _cloneDeep(this.$stores.formMission.mission)
+  // },
   data() {
     return {
       loading: false,
-      form: null,
+      form: { ...this.$stores.formMission.mission },
       formSchema: object({
         type: string().required('Le type de mission est requis'),
         department: string()
