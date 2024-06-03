@@ -40,7 +40,7 @@
         >
           <div>
             <p class="font-bold text-xl lg:text-2xl xl:text-[32px] xl:leading-[40px]">
-              Rejoignez le mouvement
+              Campagne nationale du 1er au 30 juin 2024
             </p>
           </div>
           <div class="hidden lg:block flex-none">
@@ -61,7 +61,7 @@
           :search-parameters="{
             hitsPerPage: 6,
             aroundPrecision: 2000,
-            facetFilters: [['tags:La tournée d\'été']],
+            facetFilters: ['tags:La tournée d\'été', 'type:Mission en présentiel'],
             aroundLatLngViaIP: true,
             aroundRadius: 'all',
           }"
@@ -96,7 +96,9 @@ export default defineNuxtComponent({
           operation: "La tournée de l'été",
         },
       })
-      this.$router.push('/missions-benevolat?tags=La%20tournée%20d%27été')
+      this.$router.push(
+        '/missions-benevolat?tags=La%20tournée%20d%27été&type=Mission en présentiel'
+      )
     },
     onSlideClick() {
       this.$plausible.trackEvent('Homepage - Clique - Mission opé nationale', {
