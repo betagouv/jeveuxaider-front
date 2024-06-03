@@ -25,23 +25,16 @@
             @click="$stores.formMission.showPublishModal = true"
             >Publier la mission
           </DsfrButton>
-          <DsfrButton @click="triggerConfettis" type="tertiary">🎉</DsfrButton>
 
-          <Actions
-            :mission="mission"
-            @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
-            @missionDeleted="handleDeleted"
-          />
           <DsfrButton type="tertiary" @click="showModalPreview = true" icon="RiEyeLine"
             >Aperçu
           </DsfrButton>
-
           <SectionFormMissionOverlay
             :mission="mission"
             :is-open="showModalPreview"
             @close="showModalPreview = false"
           />
-          <BaseAlertDialog
+          <!-- <BaseAlertDialog
             icon="RiErrorWarningLine"
             title="Publier cette mission"
             :is-open="$stores.formMission.showPublishModal"
@@ -67,13 +60,7 @@
               </p>
               <p>La validation prend en moyenne 7 à 10 jours.</p>
             </template>
-          </BaseAlertDialog>
-          <ModalMissionToggleIsActive
-            :mission="mission"
-            :is-open="showModalSwitchIsOnline"
-            @cancel="showModalSwitchIsOnline = false"
-            @confirm="afterChangeIsActive"
-          />
+          </BaseAlertDialog> -->
         </template>
 
         <DsfrButton type="tertiary" @click="onClose" icon="RiCloseLine">Fermer </DsfrButton>
@@ -90,7 +77,6 @@
 import MixinMission from '@/mixins/mission'
 import Badges from '@/components/section/mission/Badges.vue'
 import Actions from '@/components/section/mission/Actions.vue'
-import SelectMissionState from '@/components/custom/SelectMissionState.vue'
 import confetti from 'canvas-confetti'
 
 export default defineNuxtComponent({
@@ -101,39 +87,35 @@ export default defineNuxtComponent({
       default: 'Publier une mission',
     },
   },
-  components: { Badges, Actions, SelectMissionState },
+  components: { Badges },
   data() {
     return {
       buttonLoading: false,
       showModalPreview: false,
-      showModalSwitchIsOnline: false,
     }
   },
   computed: {
     mission() {
       return _cloneDeep(this.$stores.formMission.mission)
     },
-    statistics() {
-      return this.$stores.formMission.statistics
-    },
   },
   methods: {
-    async onPublishConfirm() {
-      this.buttonLoading = true
-      await apiFetch(`/missions/${this.mission.id}/publish`, {
-        method: 'PUT',
-      })
-        .then(async (mission) => {
-          this.triggerConfettis()
-          this.$stores.formMission.updateFields(mission, ['state', 'is_online'])
-          this.$stores.formMission.showPublishModal = false
-          this.$router.push(`/admin/missions`)
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.buttonLoading = false
-        })
-    },
+    // async onPublishConfirm() {
+    //   this.buttonLoading = true
+    //   await apiFetch(`/missions/${this.mission.id}/publish`, {
+    //     method: 'PUT',
+    //   })
+    //     .then(async (mission) => {
+    //       this.triggerConfettis()
+    //       this.$stores.formMission.updateFields(mission, ['state', 'is_online'])
+    //       this.$stores.formMission.showPublishModal = false
+    //       this.$router.push(`/admin/missions`)
+    //     })
+    //     .catch(() => {})
+    //     .finally(() => {
+    //       this.buttonLoading = false
+    //     })
+    // },
     triggerConfettis() {
       confetti({
         particleCount: 500,

@@ -1,12 +1,11 @@
 import { defineStore } from 'pinia'
-import { useSoftGateStore } from './softGate'
 import dayjs from 'dayjs'
 
 export const useFormMissionStore = defineStore('formMission', {
   id: 'formMission',
   state: () => ({
     mission: null,
-    statistics: null,
+    loading: false,
     showPublishModal: false,
   }),
   getters: {
@@ -69,6 +68,10 @@ export const useFormMissionStore = defineStore('formMission', {
   actions: {
     setMission(mission) {
       this.mission = mission
+      this.loading = false
+    },
+    setLoading(value) {
+      this.loading = value
     },
     updateFields(mission, fields) {
       for (const field of fields) {
@@ -77,10 +80,6 @@ export const useFormMissionStore = defineStore('formMission', {
     },
     reset() {
       this.mission = null
-      this.statistics = null
-    },
-    setStatistics(statistics) {
-      this.statistics = statistics
     },
   },
 })

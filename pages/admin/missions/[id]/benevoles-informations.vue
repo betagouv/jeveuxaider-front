@@ -137,6 +137,7 @@
 import FormMissionWrapper from '@/components/form/FormMissionWrapper'
 import FormErrors from '@/mixins/form/errors'
 import { number, object } from 'yup'
+import FormMission from '@/mixins/form/mission'
 
 export default defineNuxtComponent({
   setup() {
@@ -145,24 +146,24 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, FormMission],
   components: {
     FormMissionWrapper,
   },
-  mounted() {
-    // this.form = _cloneDeep(this.$stores.formMission.mission)
-    if (!this.form.prerequisites) {
-      console.log('prerequisites init', this.form.prerequisites)
-      this.form.prerequisites = [null, null, null]
-    }
-    if (this.form.publics_volontaires === null) {
-      this.form.publics_volontaires = ['Mineurs']
-    }
-  },
+  // mounted() {
+  //   // this.form = _cloneDeep(this.$stores.formMission.mission)
+  //   if (!this.form.prerequisites) {
+  //     console.log('prerequisites init', this.form.prerequisites)
+  //     this.form.prerequisites = [null, null, null]
+  //   }
+  //   if (this.form.publics_volontaires === null) {
+  //     this.form.publics_volontaires = ['Mineurs']
+  //   }
+  // },
   data() {
     return {
       loading: false,
-      form: { ...this.$stores.formMission.mission },
+
       formSchema: object({
         participations_max: number()
           .min(1, 'Le nombre de bénévole(s) recherché(s) doit être supérieur à 0')

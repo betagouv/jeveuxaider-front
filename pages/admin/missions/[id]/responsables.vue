@@ -92,6 +92,7 @@ import FormErrors from '@/mixins/form/errors'
 import { string, object, array } from 'yup'
 import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
 import ModalFormMissionAddResponsable from '@/components/modal/ModalFormMissionAddResponsable'
+import FormMission from '@/mixins/form/mission'
 
 export default defineNuxtComponent({
   setup() {
@@ -100,7 +101,7 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, FormMission],
   components: {
     FormMissionWrapper,
     RiCheckboxCircleFill,
@@ -109,7 +110,6 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
-      form: { ...this.$stores.formMission.mission },
       showModalAddResponsable: false,
       formSchema: object({
         responsables: array()

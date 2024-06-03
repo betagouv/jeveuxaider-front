@@ -77,6 +77,7 @@ import FormErrors from '@/mixins/form/errors'
 import RiSubtractLine from 'vue-remix-icons/icons/ri-subtract-line.vue'
 import RiAddLine from 'vue-remix-icons/icons/ri-add-line.vue'
 import { number, object } from 'yup'
+import FormMission from '@/mixins/form/mission'
 
 export default defineNuxtComponent({
   setup() {
@@ -85,19 +86,15 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, FormMission],
   components: {
     FormMissionWrapper,
     RiSubtractLine,
     RiAddLine,
   },
-  // mounted() {
-  //   this.form = _cloneDeep(this.$stores.formMission.mission)
-  // },
   data() {
     return {
       loading: false,
-      form: { ...this.$stores.formMission.mission },
       formSchema: object({
         participations_max: number()
           .min(1, 'Le nombre de bénévole(s) recherché(s) doit être supérieur à 0')

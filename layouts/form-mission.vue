@@ -36,6 +36,7 @@ export default {
     if (route.name !== 'admin-organisations-id-missions-add') {
       if ($stores.formMission.mission?.id !== route.params.id) {
         console.log('form-mission edit', route.name, route.params.id)
+        $stores.formMission.setLoading(true)
         const mission = await apiFetch(`/missions/${route.params.id}/show`)
         $stores.formMission.setMission(mission)
       }
@@ -48,12 +49,6 @@ export default {
           return showError({ statusCode: 403 })
         }
       }
-
-      if (!$stores.formMission.statistics) {
-        console.log('form-mission setup statistics', route.name, route.params.id)
-        const statistics = await apiFetch(`/statistics/missions/${route.params.id}`)
-        $stores.formMission.setStatistics(statistics)
-      }
     }
   },
   watch: {
@@ -61,7 +56,9 @@ export default {
       async handler(newVal, oldVal) {
         if (newVal.params.id && newVal.params.id !== oldVal.params.id) {
           console.log('FormMissionWrapper $route.params.id', newVal.params.id, oldVal.params.id)
+          this.$stores.formMission.setLoading(true)
           const mission = await apiFetch(`/missions/${newVal.params.id}/show`)
+          // await this.$nextTick()
           this.$stores.formMission.setMission(mission)
         }
       },

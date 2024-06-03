@@ -59,6 +59,7 @@
 import FormMissionWrapper from '@/components/form/FormMissionWrapper'
 import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
 import MixinMission from '@/mixins/mission'
+import FormMission from '@/mixins/form/mission'
 
 export default defineNuxtComponent({
   async setup() {
@@ -67,7 +68,7 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [MixinMission],
+  mixins: [MixinMission, FormMission],
   components: {
     FormMissionWrapper,
     RiCheckboxCircleFill,

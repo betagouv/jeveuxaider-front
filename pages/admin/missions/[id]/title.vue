@@ -3,7 +3,7 @@
     <template #header>
       <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
-    <div v-if="form">
+    <div v-if="$stores.formMission.mission">
       <h2 class="text-[28px] font-bold leading-9 mb-10">Titre de votre mission</h2>
       <CustomTips class="mb-10">
         Rédigez le titre de votre mission à la première personne du singulier du point de vue du
@@ -19,6 +19,7 @@
           v-model="form.name"
           label="Titre de la mission"
           size="lg"
+          placeholder="Je ..."
           :disabled="Boolean(form.template_id)"
         />
       </DsfrFormControl>
@@ -35,6 +36,7 @@
 import FormMissionWrapper from '@/components/form/FormMissionWrapper'
 import FormErrors from '@/mixins/form/errors'
 import { string, object } from 'yup'
+import FormMission from '@/mixins/form/mission'
 
 export default defineNuxtComponent({
   setup() {
@@ -43,17 +45,13 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, FormMission],
   components: {
     FormMissionWrapper,
   },
-  // mounted() {
-  //   this.form = _cloneDeep(this.$stores.formMission.mission)
-  // },
   data() {
     return {
       loading: false,
-      form: { ...this.$stores.formMission.mission },
       formSchema: object({
         name: string()
           .min(3, 'Le titre est trop court')
@@ -61,11 +59,6 @@ export default defineNuxtComponent({
           .required('Le titre est requis'),
       }),
     }
-  },
-  computed: {
-    // mission() {
-    //   return this.$stores.formMission.mission
-    // },
   },
   methods: {
     async onValidateClick() {

@@ -183,6 +183,7 @@ import FormMissionWrapper from '@/components/form/FormMissionWrapper'
 import FormErrors from '@/mixins/form/errors'
 import { string, object, array } from 'yup'
 import MixinInputGeo from '@/mixins/input-geo'
+import FormMission from '@/mixins/form/mission'
 
 export default defineNuxtComponent({
   setup() {
@@ -191,7 +192,7 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors, MixinInputGeo],
+  mixins: [FormErrors, MixinInputGeo, FormMission],
   components: {
     FormMissionWrapper,
   },
@@ -201,7 +202,6 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
-      form: { ...this.$stores.formMission.mission },
       formSchema: object({
         type: string().required('Le type de mission est requis'),
         department: string()

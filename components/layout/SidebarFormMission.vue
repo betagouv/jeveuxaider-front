@@ -96,18 +96,23 @@
           <CustomMissionPreviewItem
             id="admin-missions-id-benevoles"
             :title="
-              $filters.pluralize(
-                mission.participations_max,
-                'bénévole recherché',
-                'bénévoles recherchés'
-              )
+              mission.participations_max
+                ? $filters.pluralize(
+                    mission.participations_max,
+                    'bénévole recherché',
+                    'bénévoles recherchés'
+                  )
+                : 'Bénévoles recherchés'
             "
             :is-current="$route.name === 'admin-missions-id-benevoles'"
             :is-completed="$stores.formMission.isStepBenevolesCompleted"
             :is-warning="$stores.formMission.isStepBenevolesWarning"
             @click="$router.push(`/admin/missions/${mission.id}/benevoles`)"
           >
-            {{ $filters.pluralize(mission.places_left, 'place restante', 'places restantes') }}
+            <template v-if="mission.participations_max">
+              {{ $filters.pluralize(mission.places_left, 'place restante', 'places restantes') }}
+            </template>
+            <template v-else>À définir</template>
           </CustomMissionPreviewItem>
           <CustomMissionPreviewItem
             id="admin-missions-id-benevoles-informations"
@@ -139,22 +144,25 @@
             :is-completed="$stores.formMission.isStepResponsablesCompleted"
             @click="$router.push(`/admin/missions/${mission.id}/responsables`)"
           >
-            <div class="space-y-4">
-              <div
-                class="flex items-center"
-                v-for="responsable in mission.responsables"
-                :key="responsable.id"
-              >
-                <BaseAvatar
-                  :img-srcset="responsable.avatar ? responsable.avatar.urls.thumbMedium : null"
-                  :img-src="responsable.avatar ? responsable.avatar.urls.original : null"
-                  :initials="responsable.short_name"
-                  size="sm"
-                  class="mr-4"
-                />
-                <div class="truncate font-bold">{{ responsable.full_name }}</div>
+            <template v-if="mission.responsables.length > 0">
+              <div class="space-y-4">
+                <div
+                  class="flex items-center"
+                  v-for="responsable in mission.responsables"
+                  :key="responsable.id"
+                >
+                  <BaseAvatar
+                    :img-srcset="responsable.avatar ? responsable.avatar.urls.thumbMedium : null"
+                    :img-src="responsable.avatar ? responsable.avatar.urls.original : null"
+                    :initials="responsable.short_name"
+                    size="sm"
+                    class="mr-4"
+                  />
+                  <div class="truncate font-bold">{{ responsable.full_name }}</div>
+                </div>
               </div>
-            </div>
+            </template>
+            <template v-else>À définir</template>
           </CustomMissionPreviewItem>
         </div>
       </div>

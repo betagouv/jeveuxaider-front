@@ -230,6 +230,7 @@ import FormErrors from '@/mixins/form/errors'
 import { string, object, date, array, ref } from 'yup'
 import MixinMission from '@/mixins/mission'
 import ModalFormMissionAddDates from '@/components/modal/ModalFormMissionAddDates'
+import FormMission from '@/mixins/form/mission'
 
 export default defineNuxtComponent({
   setup() {
@@ -238,22 +239,14 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors, MixinMission],
+  mixins: [FormErrors, MixinMission, FormMission],
   components: {
     FormMissionWrapper,
     ModalFormMissionAddDates,
   },
-  mounted() {
-    // this.form = _cloneDeep(this.$stores.formMission.mission)
-
-    if (this.form.start_date) {
-      this.form.with_dates = this.form.dates?.length > 0 ? 'yes' : 'no'
-    }
-  },
   data() {
     return {
       loading: false,
-      form: { ...this.$stores.formMission.mission },
       formSchema: object({
         date_type: string().required('Le type d’engagement est requis'),
         commitment__duration: string().nullable().required("La durée d'engagement est requise"),
