@@ -1,11 +1,14 @@
 <template>
   <div
     :class="[
-      'relative p-6 cursor-pointer shadow border-2  hover:shadow-lg transition-shadow duration-300',
+      'relative p-6 shadow border-2 hover:shadow-lg transition-shadow duration-300',
       { ' border-[#6A6AF4] bg-[#F5F5FE] ': isCurrent },
       { 'border-white bg-white': !isCurrent },
       { '': isCompleted },
+      { 'cursor- cursor-not-allowed  opacity-70': isDisabled },
+      { 'cursor-pointer': !isDisabled },
     ]"
+    @click="onClick"
   >
     <RiErrorWarningLine
       v-if="isWarning"
@@ -43,6 +46,10 @@ export default defineNuxtComponent({
       type: Boolean,
       default: false,
     },
+    isDisabled: {
+      type: Boolean,
+      default: false,
+    },
     isCompleted: {
       type: Boolean,
       default: false,
@@ -50,6 +57,13 @@ export default defineNuxtComponent({
     isWarning: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    onClick() {
+      if (!this.isDisabled) {
+        this.$emit('next')
+      }
     },
   },
 })

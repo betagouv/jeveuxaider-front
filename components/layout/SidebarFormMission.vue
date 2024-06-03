@@ -13,7 +13,7 @@
             title="Titre"
             :is-current="$route.name === 'admin-missions-id-title'"
             :is-completed="$stores.formMission.isStepTitleCompleted"
-            @click="$router.push(`/admin/missions/${mission.id}/title`)"
+            @next="$router.push(`/admin/missions/${mission.id}/title`)"
           >
             {{ mission.name ?? 'Titre à définir' }}
           </CustomMissionPreviewItem>
@@ -22,7 +22,8 @@
             title="Visuel"
             :is-current="$route.name === 'admin-missions-id-visuel'"
             :is-completed="$stores.formMission.isStepVisuelCompleted"
-            @click="$router.push(`/admin/missions/${mission.id}/visuel`)"
+            :is-disabled="!$stores.formMission.isStepTitleCompleted"
+            @next="$router.push(`/admin/missions/${mission.id}/visuel`)"
           >
             <div class="">
               <NuxtImg
@@ -43,7 +44,8 @@
             title="Informations"
             :is-current="$route.name === 'admin-missions-id-informations'"
             :is-completed="$stores.formMission.isStepInformationsCompleted"
-            @click="$router.push(`/admin/missions/${mission.id}/informations`)"
+            :is-disabled="!$stores.formMission.isStepVisuelCompleted"
+            @next="$router.push(`/admin/missions/${mission.id}/informations`)"
           >
             Présentation de la mission et 3 autres informations
           </CustomMissionPreviewItem>
@@ -56,7 +58,8 @@
             :is-current="$route.name === 'admin-missions-id-dates'"
             :is-completed="$stores.formMission.isStepDatesCompleted"
             :is-warning="$stores.formMission.isStepDatesWarning"
-            @click="$router.push(`/admin/missions/${mission.id}/dates`)"
+            :is-disabled="!$stores.formMission.isStepInformationsCompleted"
+            @next="$router.push(`/admin/missions/${mission.id}/dates`)"
           >
             <template v-if="mission.date_type">
               <template v-if="hasDates">
@@ -77,7 +80,8 @@
             :title="titleBoxLieux"
             :is-current="$route.name === 'admin-missions-id-lieux'"
             :is-completed="$stores.formMission.isStepLieuxCompleted"
-            @click="$router.push(`/admin/missions/${mission.id}/lieux`)"
+            :is-disabled="!$stores.formMission.isStepDatesCompleted"
+            @next="$router.push(`/admin/missions/${mission.id}/lieux`)"
           >
             <template v-if="mission.type">
               <template v-if="mission.type === 'Mission à distance'"> Mission à distance </template>
@@ -107,7 +111,8 @@
             :is-current="$route.name === 'admin-missions-id-benevoles'"
             :is-completed="$stores.formMission.isStepBenevolesCompleted"
             :is-warning="$stores.formMission.isStepBenevolesWarning"
-            @click="$router.push(`/admin/missions/${mission.id}/benevoles`)"
+            :is-disabled="!$stores.formMission.isStepLieuxCompleted"
+            @next="$router.push(`/admin/missions/${mission.id}/benevoles`)"
           >
             <template v-if="mission.participations_max">
               {{ $filters.pluralize(mission.places_left, 'place restante', 'places restantes') }}
@@ -119,7 +124,8 @@
             title="Informations sur les bénévoles"
             :is-current="$route.name === 'admin-missions-id-benevoles-informations'"
             :is-completed="$stores.formMission.isStepBenevolesInformationsCompleted"
-            @click="$router.push(`/admin/missions/${mission.id}/benevoles-informations`)"
+            :is-disabled="!$stores.formMission.isStepBenevolesCompleted"
+            @next="$router.push(`/admin/missions/${mission.id}/benevoles-informations`)"
           >
             <div>
               <template v-if="mission.prerequisites">
@@ -142,7 +148,8 @@
             id="admin-missions-id-responsables"
             :is-current="$route.name === 'admin-missions-id-responsables'"
             :is-completed="$stores.formMission.isStepResponsablesCompleted"
-            @click="$router.push(`/admin/missions/${mission.id}/responsables`)"
+            :is-disabled="!$stores.formMission.isStepBenevolesInformationsCompleted"
+            @next="$router.push(`/admin/missions/${mission.id}/responsables`)"
           >
             <template v-if="mission.responsables.length > 0">
               <div class="space-y-4">

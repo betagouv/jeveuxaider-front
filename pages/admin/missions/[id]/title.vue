@@ -4,7 +4,7 @@
       <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
     <div v-if="$stores.formMission.mission">
-      <h2 class="text-[28px] font-bold leading-9 mb-10">Titre de votre mission</h2>
+      <h2 class="text-[28px] font-bold leading-9 mb-10">C’est quoi son p’tit nom ?</h2>
       <CustomTips class="mb-10">
         Rédigez le titre de votre mission à la première personne du singulier du point de vue du
         bénévole

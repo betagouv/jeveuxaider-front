@@ -280,7 +280,11 @@ export default {
           if (this.$stores.auth.contextRole === 'responsable') {
             await this.$stores.auth.fetchUser()
           }
-          this.$router.push(`/admin/missions/${mission.id}/title`)
+          if (this.selectedTemplate?.id) {
+            this.$router.push(`/admin/missions/${mission.id}/informations`)
+          } else {
+            this.$router.push(`/admin/missions/${mission.id}/title`)
+          }
         })
         .catch(() => {})
         .finally(() => {
