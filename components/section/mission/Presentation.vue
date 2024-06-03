@@ -35,21 +35,11 @@
       {{ mission.name ?? 'Titre à définir' }}
     </DsfrHeading>
 
-    <p v-if="mission.responsable" class="mt-8 text-[#666666]">
+    <p v-if="mission.responsables" class="mt-8 text-[#666666]">
       <span>Publié par </span>
-      <img
-        v-if="mission.responsable.image"
-        :src="
-          mission.responsable.image.thumb
-            ? mission.responsable.image.thumb
-            : mission.responsable.image.original
-        "
-        :alt="mission.responsable.full_name"
-        class="inline-flex w-7 h-7 rounded-full border-2 border-gray-200"
-      />
+
       <span class="text-black">
-        {{ mission.responsable.first_name }}
-        {{ mission.responsable.last_name[0] }}.
+        {{ mission.responsables.map((r) => r.secret_name).join(', ') }}
       </span>
       <span class="lowercase">
         de
