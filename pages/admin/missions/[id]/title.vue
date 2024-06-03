@@ -9,15 +9,20 @@
         Rédigez le titre de votre mission à la première personne du singulier du point de vue du
         bénévole
       </CustomTips>
-      <DsfrInput
-        v-model="form.name"
-        label="Titre de la mission"
-        size="lg"
-        placeholder="Exemple : Je contribue au déroulé d’un événement sportif le jour J"
-        :disabled="Boolean(form.template_id)"
-      />
+      <DsfrFormControl label="Titre de votre mission" html-for="name" :error="errors.name" required>
+        <template #description>
+          <div class="text-xs text-[#666666]">
+            Exemple : Je contribue au déroulé d’un événement sportif le jour J
+          </div>
+        </template>
+        <DsfrInput
+          v-model="form.name"
+          label="Titre de la mission"
+          size="lg"
+          :disabled="Boolean(form.template_id)"
+        />
+      </DsfrFormControl>
     </div>
-    <div v-else>no form</div>
     <template #footer>
       <DsfrButton :loading="loading" @click="onValidateClick">
         {{ $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder' }}

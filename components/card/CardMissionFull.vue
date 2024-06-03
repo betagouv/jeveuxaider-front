@@ -73,7 +73,7 @@
             <DsfrTag v-if="hasSecondaryDomain" size="md"> +1 </DsfrTag>
           </div>
           <DsfrHeading as="h3" size="md" class="line-clamp-2 mb-4" :title="mission.name">
-            {{ mission.name }}
+            {{ mission.name ?? 'Titre à définir' }}
           </DsfrHeading>
           <div class="truncate text-[#3A3A3A] text-sm max-w-full flex-none">
             <template v-if="mission.is_autonomy">

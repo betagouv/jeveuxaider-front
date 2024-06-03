@@ -2,16 +2,7 @@
   <div class="flex w-full bg-white border-b justify-between items-center px-4 py-2 lg:px-6 lg:py-4">
     <div class="flex w-full items-center gap-4 lg:gap-8">
       <div class="lg:border-r pr-4 lg:pr-8 py-2">
-        <nuxt-link
-          no-prefetch
-          :to="mission ? `/admin/missions/${mission.id}` : '/dashboard'"
-          class="flex gap-4 lg:gap-10 items-center group"
-        >
-          <RiArrowLeftLine
-            class="hidden lg:block flex-none h-6 w-6 lg:h-8 lg:w-8 text-[#929292] fill-current group-hover:text-jva-blue-500 transition-colors"
-          />
-          <img src="@/assets/images/jeveuxaider-logo-short.svg" alt="" width="59" height="44" />
-        </nuxt-link>
+        <img src="@/assets/images/jeveuxaider-logo-short.svg" alt="" width="59" height="44" />
       </div>
       <div class="flex-1">
         <div class="flex">

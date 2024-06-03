@@ -32,7 +32,7 @@
     </div>
 
     <DsfrHeading as="h2" size="xl">
-      {{ mission.name }}
+      {{ mission.name ?? 'Titre à définir' }}
     </DsfrHeading>
 
     <p v-if="mission.responsable" class="mt-8 text-[#666666]">

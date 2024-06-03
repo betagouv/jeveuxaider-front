@@ -3,7 +3,7 @@
     <template #title>
       <BaseHeading v-if="mission" :level="3" class="text-jva-blue-500">
         <nuxt-link no-prefetch :to="`/admin/missions/${missionId}`" class="hover:underline">
-          {{ mission.name }}
+          {{ mission.name ?? 'Titre à définir' }}
         </nuxt-link>
       </BaseHeading>
     </template>

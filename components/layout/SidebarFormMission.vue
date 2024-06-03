@@ -15,7 +15,7 @@
             :is-completed="$stores.formMission.isStepTitleCompleted"
             @click="$router.push(`/admin/missions/${mission.id}/title`)"
           >
-            {{ mission.name ?? 'À définir' }}
+            {{ mission.name ?? 'Titre à définir' }}
           </CustomMissionPreviewItem>
           <CustomMissionPreviewItem
             id="admin-missions-id-visuel"

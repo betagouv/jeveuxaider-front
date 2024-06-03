@@ -8,7 +8,7 @@
     >
       <div class="flex items-center gap-4">
         <div class="text-lg lg:text-xl font-bold">
-          {{ mission.name }}
+          {{ mission.name ?? 'Titre à définir' }}
         </div>
         <nuxt-link
           no-prefetch

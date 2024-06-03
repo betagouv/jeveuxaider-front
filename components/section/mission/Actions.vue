@@ -7,7 +7,7 @@
     @confirm="handleConfirmDelete()"
     @cancel="showModalDelete = false"
   >
-    Vous êtes sur le point de supprimer la mission {{ mission.name }}.
+    Vous êtes sur le point de supprimer la mission {{ mission.name ?? 'Titre à définir' }}.
   </BaseAlertDialog>
   <BaseAlertDialog
     icon="RiErrorWarningLine"
@@ -16,8 +16,9 @@
     @confirm="handleConfirmDuplicate()"
     @cancel="showModalDuplicate = false"
   >
-    Vous êtes sur le point de dupliquer la mission <strong>{{ mission.name }}</strong> qui sera
-    enregistrée en « <strong>Brouillon</strong> »
+    Vous êtes sur le point de dupliquer la mission
+    <strong>{{ mission.name ?? 'Titre à définir' }}</strong> qui sera enregistrée en «
+    <strong>Brouillon</strong> »
   </BaseAlertDialog>
   <ModalMissionTagsManager
     :is-open="showModalTags"

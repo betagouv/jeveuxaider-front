@@ -17,7 +17,7 @@
       <BaseBox class="mt-6" padding="sm" variant="flat">
         <div class="flex justify-between">
           <div class="text-xl font-extrabold mb-4">
-            {{ mission.name }}
+            {{ mission.name ?? 'Titre à définir' }}
           </div>
           <div class="font-bold text-jva-green-500">
             {{
