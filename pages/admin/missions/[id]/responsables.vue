@@ -101,7 +101,7 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors, FormMission],
+  mixins: [FormErrors],
   components: {
     FormMissionWrapper,
     RiCheckboxCircleFill,
@@ -110,6 +110,7 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
+      form: { ...this.$stores.formMission.mission },
       showModalAddResponsable: false,
       formSchema: object({
         responsables: array()
@@ -122,7 +123,8 @@ export default defineNuxtComponent({
   computed: {},
   methods: {
     onAddResponsableSubmit(responsable) {
-      this.form.responsables.push(responsable)
+      // this.form.responsables.push(responsable) // bug reactivity
+      this.form.responsables = [...this.form.responsables, responsable]
     },
     onRemovedResponsable(responsable) {
       this.form.responsables = this.form.responsables.filter((r) => r.id !== responsable.id)

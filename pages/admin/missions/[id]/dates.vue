@@ -296,7 +296,7 @@ export default defineNuxtComponent({
   },
   computed: {
     mission() {
-      return this.$stores.formMission.mission
+      return { ...this.$stores.formMission.mission }
     },
     formNextDates() {
       if (!this.form.dates) return []
@@ -350,9 +350,11 @@ export default defineNuxtComponent({
                 'commitment__time_period',
                 'recurrent_description',
               ])
-              this.$toast.success('Mission modifiée avec succès')
+
               if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/lieux`)
+              } else {
+                this.$toast.success('Mission modifiée avec succès')
               }
             })
             .catch(() => {})

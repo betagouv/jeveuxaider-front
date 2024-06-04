@@ -196,9 +196,6 @@ export default defineNuxtComponent({
   components: {
     FormMissionWrapper,
   },
-  // mounted() {
-  //   this.form = _cloneDeep(this.$stores.formMission.mission)
-  // },
   data() {
     return {
       loading: false,
@@ -225,79 +222,10 @@ export default defineNuxtComponent({
                 .min(1, 'Au moins une adresse est requise')
                 .required('Au moins une adresse est requise'),
           }),
-        // zip: string()
-        //   .when(['type', 'is_autonomy'], {
-        //     // eslint-disable-next-line camelcase
-        //     is: (type, is_autonomy) =>
-        //       type == 'Mission en présentiel' &&
-        //       !is_autonomy &&
-        //       this.form.zip &&
-        //       this.form.department,
-        //     then: (schema) =>
-        //       schema.test(
-        //         'test-zip',
-        //         'Le code postal et le département ne correspondent pas',
-        //         () => {
-        //           const department = ['2A', '2B'].includes(this.form.department)
-        //             ? '20'
-        //             : this.form.department
-        //           return this.form.zip && this.form.zip.startsWith(department)
-        //         }
-        //       ),
-        //   })
-        //   .when(['type', 'is_autonomy'], {
-        //     // eslint-disable-next-line camelcase
-        //     is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
-        //     then: (schema) => schema.nullable().required('Le code postal est requis'),
-        //     otherwise: (schema) => schema.nullable(),
-        //   }),
-        // city: string()
-        //   .nullable()
-        //   .when(['type', 'is_autonomy'], {
-        //     // eslint-disable-next-line camelcase
-        //     is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
-        //     then: (schema) => schema.required('La ville est requise'),
-        //     otherwise: (schema) => schema.nullable(),
-        //   }),
-        // autonomy_zips: array()
-        //   .when(['type', 'is_autonomy'], {
-        //     // eslint-disable-next-line camelcase
-        //     is: (type, is_autonomy) => !is_autonomy || type !== 'Mission en présentiel',
-        //     then: (schema) => schema.nullable(),
-        //   })
-        //   .when(['type', 'is_autonomy'], {
-        //     // eslint-disable-next-line camelcase
-        //     is: (type, is_autonomy) => type == 'Mission en présentiel' && is_autonomy,
-        //     then: (schema) =>
-        //       schema.min(1, 'Au moins un code postal requis').max(25, '25 codes postaux maximum'),
-        //   })
-        //   .when(['type', 'is_autonomy', 'department'], {
-        //     // eslint-disable-next-line camelcase
-        //     is: (type, is_autonomy, department) =>
-        //       type == 'Mission en présentiel' && is_autonomy && department,
-        //     then: (schema) =>
-        //       schema.test(
-        //         'test-zips',
-        //         'Les codes postaux et le département ne correspondent pas',
-        //         // eslint-disable-next-line camelcase
-        //         (autonomy_zips) => {
-        //           const zips = autonomy_zips.map((i) => i.zip)
-        //           const department = ['2A', '2B'].includes(this.form.department)
-        //             ? '20'
-        //             : this.form.department
-        //           return zips.every((zip) => zip.startsWith(department))
-        //         }
-        //       ),
-        //     otherwise: (schema) => schema.nullable(),
-        //   }),
       }),
     }
   },
-  computed: {
-    // mission() {
-    //   return this.$stores.formMission.mission
-    // },
-  },
+  computed: {},
   methods: {
     onPresentielClick() {
       this.form.type = 'Mission en présentiel'
@@ -366,7 +294,6 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              console.log(mission)
               this.$stores.formMission.updateFields(mission, [
                 'type',
                 'is_autonomy',
@@ -380,9 +307,10 @@ export default defineNuxtComponent({
                 'latitude',
                 'longitude',
               ])
-              this.$toast.success('Mission modifié avec succès')
               if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/benevoles`)
+              } else {
+                this.$toast.success('Mission modifié avec succès')
               }
             })
             .catch(() => {})

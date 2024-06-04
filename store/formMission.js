@@ -9,6 +9,20 @@ export const useFormMissionStore = defineStore('formMission', {
     showPublishModal: false,
   }),
   getters: {
+    progress() {
+      const steps = [
+        'isStepTitleCompleted',
+        'isStepVisuelCompleted',
+        'isStepInformationsCompleted',
+        'isStepDatesCompleted',
+        'isStepLieuxCompleted',
+        'isStepBenevolesCompleted',
+        'isStepBenevolesInformationsCompleted',
+        'isStepResponsablesCompleted',
+      ]
+      const completedSteps = steps.filter((step) => this[step])
+      return Math.round((completedSteps.length / steps.length) * 100)
+    },
     isDraft: (state) => {
       return state.mission && state.mission.state === 'Brouillon'
     },
@@ -55,6 +69,7 @@ export const useFormMissionStore = defineStore('formMission', {
         this.isStepDatesCompleted &&
         this.isStepLieuxCompleted &&
         this.isStepBenevolesCompleted &&
+        this.isStepBenevolesInformationsCompleted &&
         this.isStepResponsablesCompleted
       )
     },
@@ -74,6 +89,7 @@ export const useFormMissionStore = defineStore('formMission', {
       this.loading = value
     },
     updateFields(mission, fields) {
+      console.log('updateFields', mission, fields)
       for (const field of fields) {
         this.mission[field] = mission[field]
       }

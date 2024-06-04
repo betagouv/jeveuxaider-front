@@ -205,7 +205,7 @@ export default defineNuxtComponent({
   },
   computed: {
     mission() {
-      return _cloneDeep(this.$stores.formMission.mission)
+      return { ...this.$stores.formMission.mission }
     },
     benevolesInfosItemsCount() {
       let count = 0

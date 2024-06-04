@@ -268,7 +268,6 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              console.log(mission)
               this.$stores.formMission.updateFields(mission, [
                 'publics_beneficiaires',
                 'information',
@@ -279,9 +278,10 @@ export default defineNuxtComponent({
                 'domaine_id',
                 'domaine_secondary_id',
               ])
-              this.$toast.success('Mission modifiée avec succès')
               if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/dates`)
+              } else {
+                this.$toast.success('Mission modifiée avec succès')
               }
             })
             .catch(() => {})

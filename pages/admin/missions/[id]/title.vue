@@ -72,9 +72,10 @@ export default defineNuxtComponent({
           })
             .then(async (mission) => {
               this.$stores.formMission.updateFields(mission, ['name'])
-              this.$toast.success('Mission modifiée avec succès')
               if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/visuel`)
+              } else {
+                this.$toast.success('Mission modifiée avec succès')
               }
             })
             .catch(() => {})

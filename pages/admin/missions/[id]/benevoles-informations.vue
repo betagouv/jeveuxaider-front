@@ -150,16 +150,6 @@ export default defineNuxtComponent({
   components: {
     FormMissionWrapper,
   },
-  // mounted() {
-  //   // this.form = _cloneDeep(this.$stores.formMission.mission)
-  //   if (!this.form.prerequisites) {
-  //     console.log('prerequisites init', this.form.prerequisites)
-  //     this.form.prerequisites = [null, null, null]
-  //   }
-  //   if (this.form.publics_volontaires === null) {
-  //     this.form.publics_volontaires = ['Mineurs']
-  //   }
-  // },
   data() {
     return {
       loading: false,

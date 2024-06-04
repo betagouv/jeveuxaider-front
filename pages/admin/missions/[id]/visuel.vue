@@ -88,7 +88,7 @@ export default defineNuxtComponent({
   },
   computed: {
     mission() {
-      return this.$stores.formMission.mission
+      return { ...this.$stores.formMission.mission }
     },
   },
   methods: {
@@ -122,11 +122,11 @@ export default defineNuxtComponent({
         body: { media_id: this.selectedMediaId },
       })
         .then(async (mission) => {
-          console.log('response', mission)
           this.$stores.formMission.updateFields(mission, ['illustrations', 'picture'])
-          this.$toast.success('Mission modifiée avec succès')
           if (this.$stores.formMission.isDraft) {
             this.$router.push(`/admin/missions/${mission.id}/informations`)
+          } else {
+            this.$toast.success('Mission modifiée avec succès')
           }
         })
         .catch(() => {})

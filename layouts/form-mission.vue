@@ -1,8 +1,14 @@
 <template>
   <div class="bg-white flex flex-col h-screen">
     <div id="teleport-header" class="relative z-50"></div>
+    <div v-if="$stores.formMission.isDraft" class="h-[6px] bg-[#EEEEEE]">
+      <div
+        class="bg-[#6A6AF4] h-full transition-all"
+        :style="`width:${$stores.formMission.progress}%;`"
+      ></div>
+    </div>
     <div class="flex-grow flex h-full min-h-0">
-      <LayoutSidebarFormMission class="hidden lg:block w-[400px]" />
+      <LayoutSidebarFormMission class="hidden lg:block w-[400px]" width />
       <NuxtPage class="flex-1" />
     </div>
     <div id="teleport-body-end"></div>
@@ -67,9 +73,7 @@ export default {
   data() {
     return {}
   },
-  created() {
-    // console.log('FormMissionLayout created')
-  },
+  created() {},
   computed: {},
   methods: {},
 }

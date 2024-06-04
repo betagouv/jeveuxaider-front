@@ -43,6 +43,7 @@ import FormErrors from '@/mixins/form/errors'
 import { string, object, number } from 'yup'
 
 export default defineNuxtComponent({
+  emits: ['submit', 'cancel'],
   mixins: [FormErrors],
   components: {},
   props: {
@@ -83,6 +84,7 @@ export default defineNuxtComponent({
   },
   methods: {
     handleSubmit() {
+      console.log('handleSubmit', this.form)
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(() => {
