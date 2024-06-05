@@ -64,20 +64,20 @@
     </div>
     <div
       v-show="searchTerm && showOptions"
-      class="options-wrapper absolute w-full z-50 bg-white border border-gray-200 rounded-xl shadow-md max-h-60 overflow-x-hidden overflow-y-auto mt-1 overscroll-contain"
+      class="options-wrapper absolute w-full z-50 bg-white border border-gray-200 shadow-md max-h-60 overflow-x-hidden overflow-y-auto mt-1 overscroll-contain custom-scrollbar-gray"
       :class="classOptions"
       @focusout="showOptions = false"
     >
-      <ul class="options-wrapper-ul py-2" :class="[classOptionsUl]">
+      <ul class="options-wrapper-ul divide-y" :class="[classOptionsUl]">
         <li
           v-for="(item, index) in options"
           :ref="`option_${index}`"
           :key="index"
-          class="flex justify-between items-center text-sm px-4 sm:px-8 py-2 cursor-pointer hover:bg-gray-50 focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
+          class="flex justify-between items-center text-sm px-6 py-4 cursor-pointer hover:bg-[#F5F5FE] focus:outline-none hover:text-jva-blue-500 focus:bg-gray-50 focus:text-jva-blue-500"
           :class="[
-            { 'bg-gray-50 text-jva-blue-500': highlightIndex == index },
+            { 'bg-[#F5F5FE] text-jva-blue-500': highlightIndex == index },
             {
-              'bg-gray-50 text-jva-blue-500':
+              'bg-[#F5F5FE] text-jva-blue-500':
                 selectedOption && item[attributeKey] == selectedOption[attributeKey],
             },
           ]"
@@ -92,7 +92,7 @@
               {{ item[attributeRightLabel] }}
             </span>
           </div>
-          <RiCheckLine
+          <RiCheckboxCircleFill
             v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]"
             class="flex-none h-5 fill-current"
           />

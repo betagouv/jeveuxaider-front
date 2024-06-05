@@ -12,8 +12,16 @@
         Vous êtes sur le point de publier la mission <strong> {{ mission.name }}</strong
         >.
       </p>
+      <p class="mb-4">
+        Votre organisation devra être préalablement validée pour que la mission soit accessible.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod repellendus error animi
+        deleniti, ipsum dolores quas maiores? Quia modi dolore aliquid porro ipsum. Aut excepturi
+        commodi asperiores ab veritatis molestiae.
+      </p>
     </template>
-    <template v-if="mission.template_id">
+    <template v-else-if="mission.template_id">
       <p class="mb-4">
         Vous êtes sur le point de publier la mission <strong> {{ mission.name }}</strong
         >.
@@ -21,12 +29,22 @@
       <p v-if="mission.structure.state !== 'Validée'">
         Votre organisation devra être préalablement validée pour que la mission soit accessible.
       </p>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod repellendus error animi
+        deleniti, ipsum dolores quas maiores? Quia modi dolore aliquid porro ipsum. Aut excepturi
+        commodi asperiores ab veritatis molestiae.
+      </p>
     </template>
     <template v-else>
       <p class="mb-4">
         Vous êtes sur le point de demander la publication de la mission
         <strong> {{ mission.name }}</strong
         >.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod repellendus error animi
+        deleniti, ipsum dolores quas maiores? Quia modi dolore aliquid porro ipsum. Aut excepturi
+        commodi asperiores ab veritatis molestiae.
       </p>
       <p>La validation prend en moyenne 7 à 10 jours.</p>
     </template>

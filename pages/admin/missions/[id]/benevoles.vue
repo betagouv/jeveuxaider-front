@@ -53,7 +53,10 @@
           <RiAddLine class="fill-current h-5 w-5" />
         </button>
       </div>
-      <div class="mt-8 text-[#666666] text-center">
+      <div
+        v-if="$stores.formMission.mission.state === 'Validée'"
+        class="mt-8 text-[#666666] text-center"
+      >
         {{
           $filters.pluralize(
             $stores.formMission.mission.places_left,

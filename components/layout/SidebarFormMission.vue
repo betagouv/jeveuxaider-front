@@ -99,15 +99,7 @@
           <h3 class="text-sm font-bold uppercase text-[#666666]">Bénévoles</h3>
           <CustomMissionPreviewItem
             id="admin-missions-id-benevoles"
-            :title="
-              mission.participations_max
-                ? $filters.pluralize(
-                    mission.participations_max,
-                    'bénévole recherché',
-                    'bénévoles recherchés'
-                  )
-                : 'Bénévoles recherchés'
-            "
+            title="Information sur les places"
             :is-current="$route.name === 'admin-missions-id-benevoles'"
             :is-completed="$stores.formMission.isStepBenevolesCompleted"
             :is-warning="$stores.formMission.isStepBenevolesWarning"
@@ -115,7 +107,16 @@
             @next="$router.push(`/admin/missions/${mission.id}/benevoles`)"
           >
             <template v-if="mission.participations_max">
-              {{ $filters.pluralize(mission.places_left, 'place restante', 'places restantes') }}
+              {{
+                $filters.pluralize(
+                  mission.participations_max,
+                  'bénévole recherché',
+                  'bénévoles recherchés'
+                )
+              }}
+              <template v-if="mission.state === 'Validée'">
+                {{ $filters.pluralize(mission.places_left, 'place restante', 'places restantes') }}
+              </template>
             </template>
             <template v-else>À définir</template>
           </CustomMissionPreviewItem>
