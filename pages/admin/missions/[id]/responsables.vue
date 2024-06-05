@@ -81,7 +81,9 @@
       />
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onValidateClick"> Sauvegarder</DsfrButton>
+      <DsfrButton :loading="loading" @click="onValidateClick">{{
+        $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder'
+      }}</DsfrButton>
     </template>
   </FormMissionWrapper>
 </template>
@@ -101,16 +103,22 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors],
+  mixins: [FormErrors, FormMission],
   components: {
     FormMissionWrapper,
     RiCheckboxCircleFill,
     ModalFormMissionAddResponsable,
   },
+  mounted() {
+    if (this.form.responsables.length === 0) {
+      if (this.$stores.formMission.mission.structure.members[0]) {
+        this.form.responsables = [this.$stores.formMission.mission.structure.members[0]?.profile]
+      }
+    }
+  },
   data() {
     return {
       loading: false,
-      form: { ...this.$stores.formMission.mission },
       showModalAddResponsable: false,
       formSchema: object({
         responsables: array()
@@ -140,7 +148,13 @@ export default defineNuxtComponent({
           })
             .then(async (mission) => {
               this.$stores.formMission.updateFields(mission, ['responsables'])
-              this.$toast.success('Mission modifiée avec succès')
+
+              if (this.$stores.formMission.isDraft) {
+                this.$stores.formMission.showPublishModal = true
+              } else {
+                this.$toast.success('Mission modifiée avec succès')
+              }
+              //this.$toast.success('Mission modifiée avec succès')
 
               //this.$router.push(`/admin/missions/${mission.id}`)
             })

@@ -24,41 +24,41 @@ export const useFormMissionStore = defineStore('formMission', {
       return Math.round((completedSteps.length / steps.length) * 100)
     },
     isDraft: (state) => {
-      return state.mission && state.mission.state === 'Brouillon'
+      return state.mission && state.mission?.state === 'Brouillon'
     },
     isStepTitleCompleted: (state) => {
-      return !!state.mission.name
+      return !!state.mission?.name
     },
     isStepVisuelCompleted: (state) => {
-      return !!state.mission.picture
+      return !!state.mission?.picture
     },
     isStepInformationsCompleted: (state) => {
       return (
-        !!state.mission.description &&
-        !!state.mission.objectif &&
-        !!state.mission.publics_beneficiaires
+        !!state.mission?.description &&
+        !!state.mission?.objectif &&
+        !!state.mission?.publics_beneficiaires
       )
     },
     isStepDatesCompleted: (state) => {
-      return !!state.mission.date_type && !!state.mission.commitment__duration
+      return !!state.mission?.date_type && !!state.mission?.commitment__duration
     },
     isStepLieuxCompleted: (state) => {
-      return !!state.mission.type
+      return !!state.mission?.type
     },
     isStepBenevolesCompleted: (state) => {
-      return !!state.mission.participations_max
+      return !!state.mission?.participations_max
     },
     isStepBenevolesInformationsCompleted: (state) => {
       return (
-        state.mission.prerequisites?.length > 0 ||
-        state.mission.publics_volontaires?.length > 0 ||
-        state.mission.skills?.length > 0 ||
-        state.mission.is_snu_mig_compatible ||
-        state.mission.is_motivation_required
+        state.mission?.prerequisites?.length > 0 ||
+        state.mission?.publics_volontaires?.length > 0 ||
+        state.mission?.skills?.length > 0 ||
+        state.mission?.is_snu_mig_compatible ||
+        state.mission?.is_motivation_required
       )
     },
     isStepResponsablesCompleted: (state) => {
-      return state.mission.responsables?.length > 0
+      return state.mission?.responsables?.length > 0
     },
     canBePublished() {
       return (

@@ -193,6 +193,11 @@ import MixinMission from '@/mixins/mission'
 export default defineNuxtComponent({
   mixins: [MixinMission],
   props: {},
+  data() {
+    return {
+      mission: null,
+    }
+  },
   watch: {
     '$route.name': {
       async handler(newVal, oldVal) {
@@ -203,25 +208,35 @@ export default defineNuxtComponent({
   mounted() {
     this.scrollIntoView(this.$route.name)
   },
-  computed: {
-    mission() {
-      return { ...this.$stores.formMission.mission }
+  watch: {
+    '$stores.formMission.mission': {
+      handler(newVal) {
+        if (!newVal) {
+          this.mission = null
+        } else {
+          this.mission = { ...newVal }
+        }
+      },
+      immediate: true,
+      deep: true,
     },
+  },
+  computed: {
     benevolesInfosItemsCount() {
       let count = 0
-      if (this.mission.publics_volontaires?.length > 0) count++
-      if (this.mission.skills?.length > 0) count++
-      if (this.mission.is_snu_mig_compatible) count++
-      if (this.mission.is_motivation_required) count++
+      if (this.mission?.publics_volontaires?.length > 0) count++
+      if (this.mission?.skills?.length > 0) count++
+      if (this.mission?.is_snu_mig_compatible) count++
+      if (this.mission?.is_motivation_required) count++
       return count
     },
     titleBoxLieux() {
-      if (!this.mission.type) return 'En présentiel ou à distance'
-      return this.mission.type === 'Mission à distance' ? 'À distance' : 'En présentiel'
+      if (!this.mission?.type) return 'En présentiel ou à distance'
+      return this.mission?.type === 'Mission à distance' ? 'À distance' : 'En présentiel'
     },
     titleBoxDateType() {
-      if (!this.mission.date_type) return 'Ponctuelle ou régulière'
-      return this.mission.date_type === 'ponctual' ? 'Ponctuelle' : 'Régulière'
+      if (!this.mission?.date_type) return 'Ponctuelle ou régulière'
+      return this.mission?.date_type === 'ponctual' ? 'Ponctuelle' : 'Régulière'
     },
   },
   methods: {

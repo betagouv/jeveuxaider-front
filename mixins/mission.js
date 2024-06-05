@@ -30,7 +30,7 @@ export default {
       return [this.activity, this.activitySecondary].filter(Boolean)
     },
     badgeTypeMissionSate() {
-      switch (this.mission.state) {
+      switch (this.mission?.state) {
         case 'Validée':
           return 'success'
         case 'Signalée':

@@ -121,9 +121,10 @@ export default defineNuxtComponent({
               console.log(mission)
               // this.$stores.formMission.setMission(mission)
               this.$stores.formMission.updateFields(mission, ['participations_max', 'places_left'])
-              this.$toast.success('Mission modifiée avec succès')
               if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/benevoles-informations`)
+              } else {
+                this.$toast.success('Mission modifiée avec succès')
               }
             })
             .catch(() => {})

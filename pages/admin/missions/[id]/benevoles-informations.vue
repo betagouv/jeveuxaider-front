@@ -228,9 +228,11 @@ export default defineNuxtComponent({
                 'prerequisites',
                 'skills',
               ])
-              this.$toast.success('Mission modifiée avec succès')
+
               if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/responsables`)
+              } else {
+                this.$toast.success('Mission modifiée avec succès')
               }
             })
             .catch(() => {})
