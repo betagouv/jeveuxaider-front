@@ -63,11 +63,12 @@
           >
             <template v-if="mission.date_type">
               <template v-if="hasDates">
+                {{ formattedDates }} <br />
                 <template v-if="nextDates">
                   {{ $filters.pluralize(nextDates.length, 'date') }} à venir</template
                 >
-                <template v-else> Aucune date à venir</template></template
-              >
+                <template v-else> Aucune date à venir</template>
+              </template>
               <template v-else> {{ formattedDates }}</template>
             </template>
             <template v-else>À définir</template>

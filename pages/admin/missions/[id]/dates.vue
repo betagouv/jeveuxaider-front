@@ -97,17 +97,17 @@
             </DsfrFormControl>
           </div>
           <DsfrFormControl
-            label="Précisez les créneaux horaires"
-            html-for="recurrent_description"
-            :error="errors.recurrent_description"
-            info=" Précisez en une ligne la disponibilité attendue. Par exemple “Le samedi matin”, “En
-              soirée, le lundi et le jeudi”"
+            label="Durée d’engagement minimum"
+            html-for="commitment__duration_min"
+            :error="errors.commitment__duration_min"
             required
           >
-            <DsfrInput
-              v-model="form.recurrent_description"
-              name="recurrent_description"
-              placeholder="les mardis ou jeudis"
+            <DsfrSelect
+              id="commitment__duration_min"
+              name="commitment__duration_min"
+              v-model="form.commitment__duration_min"
+              placeholder="Sélectionner une durée"
+              :options="$labels.commitment_duration_min"
             />
           </DsfrFormControl>
         </div>
@@ -208,6 +208,22 @@
               </DsfrFormControl>
             </div>
           </template>
+          <DsfrFormControl
+            label="Précisez les créneaux horaires"
+            html-for="recurrent_description"
+            :error="errors.recurrent_description"
+          >
+            <template #description>
+              <div class="text-xs text-[#666666]">
+                Vous pouvez préciser des horaires, les jours obligatoires, etc.
+              </div>
+            </template>
+            <DsfrInput
+              v-model="form.recurrent_description"
+              name="recurrent_description"
+              placeholder="Exemple : de 11h à 13h, 1 jour à choisir entre le lundi et le mardi, etc."
+            />
+          </DsfrFormControl>
         </template>
       </div>
 
@@ -258,11 +274,11 @@ export default defineNuxtComponent({
             is: (dateType) => dateType == 'recurring',
             then: (schema) => schema.required('La fréquence est requise'),
           }),
-        recurrent_description: string()
+        commitment__duration_min: string()
           .nullable()
           .when(['date_type'], {
             is: (dateType) => dateType == 'recurring',
-            then: (schema) => schema.required('Précisez les créneaux horaires pour le bénévole'),
+            then: (schema) => schema.required("Précisez l'engagement minimum requis"),
           }),
         with_dates: string().required('Le type de dates est requis'),
         start_date: date()
@@ -346,7 +362,7 @@ export default defineNuxtComponent({
               this.$stores.formMission.updateFields(mission, [
                 'date_type',
                 'commitment__duration',
-                'commitment__period',
+                'commitment__duration_min',
                 'start_date',
                 'end_date',
                 'dates',

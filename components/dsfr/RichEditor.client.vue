@@ -1,6 +1,10 @@
 <template>
-  <div class="wrapper">
+  <div :class="['wrapper', { 'border-[#E5E5E5]': disabled }, { 'border-[#3A3A3A]': !disabled }]">
+    <template v-if="disabled">
+      <div class="ck-content ck-read-only" v-html="modelValue" />
+    </template>
     <ckeditor.component
+      v-else
       :disabled="disabled"
       :editor="ClassicEditor"
       :config="editorConfig"
@@ -74,10 +78,9 @@ const editorConfig = {
 
 <style lang="postcss" scoped>
 .wrapper {
-  @apply border-b-2 border-[#3A3A3A];
+  @apply border-b-2;
   :deep(.ck-content) {
     background: #eeeeee;
-    padding: 6px 1.5rem !important;
     @apply text-sm border-0;
     a {
       @apply underline;
@@ -95,9 +98,11 @@ const editorConfig = {
     ol {
       list-style: decimal;
     }
+    &:not(.ck-read-only) {
+      padding: 6px 1.5rem !important;
+    }
     &.ck-read-only {
-      background-color: #f5f5f5 !important;
-      @apply cursor-not-allowed;
+      @apply rounded-t p-6 text-[#666666] cursor-not-allowed;
     }
     p:not(:last-child) {
       @apply mb-4;
@@ -106,7 +111,9 @@ const editorConfig = {
       margin: -1px;
     }
   }
-
+  :deep(.ck-sticky-panel) {
+    @apply rounded-t overflow-hidden;
+  }
   :deep(.ck-toolbar) {
     background: #f6f6f6;
     @apply border-0;

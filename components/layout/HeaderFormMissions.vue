@@ -99,7 +99,11 @@ export default defineNuxtComponent({
   },
   methods: {
     onClose() {
-      this.$router.push('/admin/missions')
+      if (this.mission) {
+        this.$router.push(`/admin/missions/${this.mission.id}`)
+      } else {
+        this.$router.push('/admin/missions')
+      }
     },
   },
 })

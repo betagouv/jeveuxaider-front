@@ -38,6 +38,7 @@ export type TypeVocabulary =
   | 'user_ban_reasons'
   | 'faq_tabs'
   | 'commitment'
+  | 'commitment_duration_min'
 
 type TypeLabels = {
   [Key in TypeVocabulary]: {
@@ -182,6 +183,15 @@ const labels: TypeLabels = {
     { key: '3_days', label: '3 jours' },
     { key: '4_days', label: '4 jours' },
     { key: '5_days', label: '5 jours' },
+  ],
+  commitment_duration_min: [
+    { key: '1_week', label: '1 semaine' },
+    { key: '2_week', label: '2 semaines' },
+    { key: '1_month', label: '1 mois' },
+    { key: '2_month', label: '2 mois' },
+    { key: '3_month', label: '3 mois' },
+    { key: '6_month', label: '6 mois' },
+    { key: '1_year', label: '1 an' },
   ],
   commitment: [
     { key: 'few_hours', label: 'Quelques heures' },

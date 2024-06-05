@@ -3,7 +3,7 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        title="Ajouter une ou plusieures dates"
+        title="Ajouter une ou plusieurs dates"
         :prevent-click-outside="true"
         @close="$emit('cancel')"
       >
