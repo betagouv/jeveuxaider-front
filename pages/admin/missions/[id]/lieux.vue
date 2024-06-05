@@ -39,135 +39,69 @@
           </div>
         </DsfrFormControl>
 
-        <DsfrFormControl
-          v-if="form.type === 'Mission en présentiel'"
-          html-for="is_autonomy"
-          info="En cochant cette case, vous pourrez indiquer plusieurs adresses ou villes"
-        >
-          <BaseToggle
-            v-model="form.is_autonomy"
-            label="La mission peut s’effectuer depuis plusieurs lieux (dans le même département)"
-          />
-        </DsfrFormControl>
-
-        <DsfrFormControl
-          v-if="form.type === 'Mission en présentiel'"
-          label="Département"
-          html-for="department"
-          required
-          :error="errors.department"
-        >
-          <DsfrSelect
-            id="department"
-            name="department"
-            v-model="form.department"
-            placeholder="Sélectionnez un département"
-            :options="
-              $labels.departments.map((option) => {
-                return {
-                  key: option.key,
-                  label: `${option.key} - ${option.label}`,
-                }
-              })
-            "
-          />
-        </DsfrFormControl>
-
-        <template v-if="!form.is_autonomy && form.type === 'Mission en présentiel'">
+        <template v-if="form.type === 'Mission en présentiel'">
           <DsfrFormControl
-            label="Lieu de la mission"
-            html-for="address"
-            info="Si l'adresse n'est pas reconnue veuillez saisir le nom de la
-              ville."
-            required
-            :error="errors.address"
-          >
-            <DsfrInputAutocomplete
-              icon="RiMapPinLine"
-              name="address"
-              placeholder="Renseignez une adresse"
-              :options="autocompleteOptions"
-              attribute-key="id"
-              attribute-label="label"
-              attribute-right-label="typeLabel"
-              :min-value-length="3"
-              @selected="handleSelectedAddress"
-              @fetch-suggestions="onFetchGeoSuggestions($event)"
-            />
-          </DsfrFormControl>
-          <div v-if="form.zip" class="mt-6 grid grid-cols-1 gap-4">
-            <div class="flex justify-between items-center">
-              <div class="font-medium">{{ form.full_address }}</div>
-              <DsfrButton
-                icon-only
-                size="xs"
-                type="tertiary"
-                icon="RiDeleteBinLine"
-                icon-class="text-[#CE0500]"
-                @click="onRemovedAddressItem"
-              />
-            </div>
-          </div>
-        </template>
-        <template v-if="form.is_autonomy && form.type === 'Mission en présentiel'">
-          <DsfrFormControl
-            label="Codes postaux de la zone d'intervention (jusqu'à 25)"
-            html-for="autonomy_zips"
-            :error="errors.autonomy_zips"
+            label="Ville ou adresse exacte"
+            html-for="addresses"
+            info="Vous pouvez ajouter plusieurs villes ou adresses au sein du même département"
+            :error="errors.addresses"
             required
           >
             <DsfrInputAutocomplete
               icon="RiMapPinLine"
               name="autocomplete"
-              placeholder="Recherche par ville ou code postal"
+              placeholder="Exemple : 4 rue de Rivoli, 75001 Paris"
               :options="autocompleteOptions"
               attribute-key="id"
               attribute-label="label"
-              attribute-right-label="typeLabel"
+              attribute-right-label="context"
               :reset-value-on-select="true"
               :min-value-length="3"
-              @selected="handleSelectedAutonomyZip"
-              @fetch-suggestions="
-                onFetchGeoSuggestions($event, {
-                  inputGeoType: 'municipality',
-                })
-              "
+              @selected="handleSelectedAddress"
+              @fetch-suggestions="onFetchGeoSuggestions($event)"
             />
           </DsfrFormControl>
           <div
-            v-if="form.autonomy_zips && form.autonomy_zips.length"
-            class="mt-6 grid grid-cols-1 gap-4"
+            v-if="form.addresses && form.addresses.length"
+            class="mt-6 grid grid-cols-1 divide-y"
           >
             <div
-              class="flex justify-between items-center"
-              v-for="item in form.autonomy_zips"
-              :key="item.zip"
+              class="flex justify-between items-center py-4"
+              v-for="item in form.addresses"
+              :key="item.id"
             >
-              <div class="font-medium">{{ item.city }}, {{ item.zip }}</div>
+              <div>
+                <div class="first-letter:uppercase">
+                  {{ item.label }}
+                </div>
+                <div class="text-sm text-gray-500 font-medium">
+                  {{ item.properties.context }}
+                </div>
+              </div>
               <DsfrButton
                 icon-only
                 size="xs"
                 type="tertiary"
                 icon="RiDeleteBinLine"
                 icon-class="text-[#CE0500]"
-                @click="onRemovedZipItem(item)"
+                @click="onRemovedAddressItem(item)"
               />
             </div>
           </div>
-
-          <DsfrFormControl
-            label="Précisions sur la zone d'intervention (villes, lieux, etc.)"
-            html-for="autonomy_precisions"
-            :error="errors.autonomy_precisions"
-          >
-            <DsfrTextarea
-              v-model="form.autonomy_precisions"
-              name="autonomy_precisions"
-              placeholder="Précisez en quelques mots les zones d'intervention du bénévole en autonomie"
-              @keydown.enter.native.prevent
-            />
-          </DsfrFormControl>
         </template>
+
+        <!-- <DsfrFormControl
+          label="Précisions sur la zone d'intervention (villes, lieux, etc.)"
+          html-for="autonomy_precisions"
+          :error="errors.autonomy_precisions"
+        >
+          <DsfrTextarea
+            v-model="form.autonomy_precisions"
+            name="autonomy_precisions"
+            placeholder="Précisez en quelques mots les zones d'intervention du bénévole en autonomie"
+            @keydown.enter.native.prevent
+          />
+        </DsfrFormControl> -->
       </div>
     </div>
     <template #footer>
@@ -182,7 +116,6 @@
 import FormMissionWrapper from '@/components/form/FormMissionWrapper'
 import FormErrors from '@/mixins/form/errors'
 import { string, object, array } from 'yup'
-import MixinInputGeo from '@/mixins/input-geo'
 import FormMission from '@/mixins/form/mission'
 
 export default defineNuxtComponent({
@@ -192,36 +125,16 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors, MixinInputGeo, FormMission],
+  mixins: [FormErrors, FormMission],
   components: {
     FormMissionWrapper,
   },
   data() {
     return {
       loading: false,
+      autocompleteOptions: [],
       formSchema: object({
         type: string().required('Le type de mission est requis'),
-        department: string()
-          .nullable()
-          .when(['type'], {
-            is: (type) => type == 'Mission en présentiel',
-            then: (schema) => schema.required('Le département est requis'),
-          }),
-        zip: string()
-          .nullable()
-          .when(['type', 'is_autonomy'], {
-            is: (type, is_autonomy) => type == 'Mission en présentiel' && !is_autonomy,
-            then: (schema) => schema.required('Une adresse est requise'),
-          }),
-        autonomy_zips: array()
-          .nullable()
-          .when(['type', 'is_autonomy'], {
-            is: (type, is_autonomy) => is_autonomy && type === 'Mission en présentiel',
-            then: (schema) =>
-              schema
-                .min(1, 'Au moins une adresse est requise')
-                .required('Au moins une adresse est requise'),
-          }),
       }),
     }
   },
@@ -234,49 +147,26 @@ export default defineNuxtComponent({
       this.form.type = 'Mission à distance'
       this.form.is_autonomy = false
     },
-    onRemovedAddressItem() {
-      this.clearAddress()
-    },
-    onRemovedZipItem(value) {
-      console.log('onRemovedZipItem', value)
-      this.form.autonomy_zips = this.form.autonomy_zips.filter((item) => item.zip !== value.zip)
+    onRemovedAddressItem(address) {
+      this.form.addresses = this.form.addresses.filter((item) => item.id !== address.id)
     },
     handleSelectedAddress(selectedItem) {
-      this.handleSelectedGeo(selectedItem)
-      this.form.full_address = selectedItem?.label
-    },
-    handleSelectedAutonomyZip(selectedItem) {
-      if (!this.form.autonomy_zips) {
-        this.form.autonomy_zips = []
-      }
-      if (!selectedItem) {
-        return
-      }
-
-      const zipsObject = selectedItem.id.includes('all_zips')
-        ? selectedItem.postcodes.map((p) => {
-            return { ...p, coordinates: [p.longitude, p.latitude], postcode: p.zip, city: p.label }
-          })
-        : [selectedItem]
-
-      zipsObject.forEach((zipObject) => {
-        zipObject.postcode.split(',').forEach((postcode) => {
-          if (!this.form.autonomy_zips.map((a) => a.zip).includes(postcode)) {
-            const newObject = {
-              zip: postcode,
-              latitude: zipObject.coordinates?.[1],
-              longitude: zipObject.coordinates?.[0],
-              city: zipObject.city,
-            }
-            if (zipObject.arrondissement) {
-              newObject.arrondissement = zipObject.arrondissement
-            }
-            this.form.autonomy_zips.push(newObject)
-          }
-        })
-      })
-
-      this.validate('autonomy_zips')
+      this.form.addresses = [
+        ...this.form.addresses,
+        {
+          id: selectedItem.id,
+          label: selectedItem.label,
+          street: selectedItem.street,
+          zip: selectedItem.postcode,
+          city: selectedItem.city,
+          longitude: selectedItem.coordinates[0],
+          latitude: selectedItem.coordinates[1],
+          properties: {
+            id: selectedItem.id,
+            context: selectedItem.context,
+          },
+        },
+      ]
     },
     async onFetchGeoSuggestions(payload, config = {}) {
       this.autocompleteOptions = await useGeolocationFetch(payload, {
@@ -294,19 +184,7 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              this.$stores.formMission.updateFields(mission, [
-                'type',
-                'is_autonomy',
-                'department',
-                'autonomy_zips',
-                'autonomy_precisions',
-                'address',
-                'zip',
-                'city',
-                'full_address',
-                'latitude',
-                'longitude',
-              ])
+              this.$stores.formMission.updateFields(mission, ['type', 'addresses'])
               if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/benevoles`)
               } else {

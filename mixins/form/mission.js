@@ -29,6 +29,9 @@ export default {
           if (!this.form.participations_max) {
             this.form.participations_max = 1
           }
+          if (this.form.addresses === null) {
+            this.form.addresses = []
+          }
         }
       },
       immediate: true,

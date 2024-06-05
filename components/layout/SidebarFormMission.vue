@@ -86,11 +86,8 @@
           >
             <template v-if="mission.type">
               <template v-if="mission.type === 'Mission à distance'"> Mission à distance </template>
-              <template v-if="mission.type === 'Mission en présentiel' && !mission.is_autonomy">
-                {{ mission.full_address }}
-              </template>
-              <template v-if="mission.autonomy_zips && mission.autonomy_zips.length > 0">
-                {{ $filters.pluralize(mission.autonomy_zips.length, 'lieu', 'lieux') }}
+              <template v-if="mission.addresses?.length > 0">
+                {{ mission.addresses.map((a) => a.label).join(', ') }}
               </template>
             </template>
             <template v-else>À définir</template>
