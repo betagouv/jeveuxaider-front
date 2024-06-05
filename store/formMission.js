@@ -89,7 +89,6 @@ export const useFormMissionStore = defineStore('formMission', {
       this.loading = value
     },
     updateFields(mission, fields) {
-      console.log('updateFields', mission, fields)
       for (const field of fields) {
         this.mission[field] = mission[field]
       }

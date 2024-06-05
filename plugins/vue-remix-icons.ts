@@ -119,8 +119,10 @@ import RiUserForbid from 'vue-remix-icons/icons/ri-user-forbid-line.vue'
 import RiInboxArchiveLine from 'vue-remix-icons/icons/ri-inbox-archive-line.vue'
 import RiInboxUnarchiveLine from 'vue-remix-icons/icons/ri-inbox-unarchive-line.vue'
 import RiLockLine from 'vue-remix-icons/icons/ri-lock-line.vue'
+import RiShieldCheckLine from 'vue-remix-icons/icons/ri-shield-check-line.vue'
 
 const components = {
+  RiShieldCheckLine,
   RiLockLine,
   RiInboxArchiveLine,
   RiInboxUnarchiveLine,

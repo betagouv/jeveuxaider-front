@@ -24,7 +24,7 @@
               v-model="form.domaine_id"
               placeholder="Sélectionner un domaine"
               :options="$labels.domaines"
-              :disabled="Boolean(form.template)"
+              :disabled="Boolean(form.template_id && form.template?.domaine_id)"
             />
           </DsfrFormControl>
           <DsfrFormControl
@@ -38,7 +38,7 @@
               v-model="form.domaine_secondary_id"
               placeholder="Sélectionner un domaine"
               :options="$labels.domaines.filter((domaine) => domaine.key != form.domaine_id)"
-              :disabled="Boolean(form.template)"
+              :disabled="Boolean(form.template_id && form.template?.domaine_sondary_id)"
             />
           </DsfrFormControl>
         </div>
@@ -72,7 +72,7 @@
           <DsfrRichEditor
             name="objectif"
             v-model="form.objectif"
-            :disabled="Boolean(form.template)"
+            :disabled="Boolean(form.template_id)"
           />
         </DsfrFormControl>
 
@@ -90,7 +90,7 @@
           <DsfrRichEditor
             name="description"
             v-model="form.description"
-            :disabled="Boolean(form.template)"
+            :disabled="Boolean(form.template_id)"
           />
         </DsfrFormControl>
         <DsfrFormControl
@@ -119,7 +119,7 @@
               v-model="form.activity_id"
               placeholder="Sélectionner une activité"
               :options="activities"
-              :disabled="Boolean(form.template)"
+              :disabled="Boolean(form.template_id && form.template?.activity_id)"
             />
           </DsfrFormControl>
           <DsfrFormControl
@@ -133,7 +133,7 @@
               v-model="form.activity_secondary_id"
               placeholder="Sélectionner un activité"
               :options="activities"
-              :disabled="Boolean(form.template)"
+              :disabled="Boolean(form.template_id && form.template?.activity_secondary_id)"
             />
           </DsfrFormControl>
           <BaseFormInfo class="col-span-2 !mt-0"
@@ -243,19 +243,6 @@ export default defineNuxtComponent({
           ),
       }),
     }
-  },
-  watch: {
-    '$stores.formMission.mission': {
-      handler(newVal) {
-        this.form = newVal
-      },
-      immediate: true,
-    },
-  },
-  computed: {
-    mission() {
-      return this.$stores.formMission.mission
-    },
   },
   methods: {
     async onValidateClick() {

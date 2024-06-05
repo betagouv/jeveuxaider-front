@@ -25,7 +25,16 @@
           <DsfrButton
             v-if="$stores.formMission.canBePublished"
             @click="$stores.formMission.showPublishModal = true"
-            >Publier la mission
+          >
+            <template
+              v-if="
+                $stores.formMission.mission.structure.state !== 'Validée' ||
+                !$stores.formMission.mission.template_id
+              "
+            >
+              Soumettre à validation
+            </template>
+            <template v-else> Publier la mission</template>
           </DsfrButton>
 
           <DsfrButton type="tertiary" @click="showModalPreview = true" icon="RiEyeLine"
@@ -36,33 +45,7 @@
             :is-open="showModalPreview"
             @close="showModalPreview = false"
           />
-          <BaseAlertDialog
-            icon="RiErrorWarningLine"
-            title="Publier cette mission"
-            :is-open="$stores.formMission.showPublishModal"
-            @confirm="onPublishConfirm"
-            @cancel="$stores.formMission.showPublishModal = false"
-            :button-loading="buttonLoading"
-          >
-            <template v-if="mission.template_id">
-              <p class="mb-4">
-                Vous êtes sur le point de publier la mission <strong> {{ mission.name }}</strong
-                >.
-              </p>
-              <p v-if="mission.structure.state !== 'Validée'">
-                Votre organisation devra être préalablement validée pour que la mission soit
-                accessible.
-              </p>
-            </template>
-            <template v-else>
-              <p class="mb-4">
-                Vous êtes sur le point de demander la publication de la mission
-                <strong> {{ mission.name }}</strong
-                >.
-              </p>
-              <p>La validation prend en moyenne 7 à 10 jours.</p>
-            </template>
-          </BaseAlertDialog>
+          <ModalMissionPublish :mission="$stores.formMission.mission" />
         </template>
       </div>
       <div title="Fermer" class="py-2 group" @click="onClose">
@@ -83,7 +66,7 @@
 <script>
 import MixinMission from '@/mixins/mission'
 import Badges from '@/components/section/mission/Badges.vue'
-import confetti from 'canvas-confetti'
+import ModalMissionPublish from '@/components/modal/ModalMissionPublish.vue'
 
 export default defineNuxtComponent({
   mixins: [MixinMission],
@@ -93,7 +76,7 @@ export default defineNuxtComponent({
       default: 'Publier une mission',
     },
   },
-  components: { Badges },
+  components: { Badges, ModalMissionPublish },
   data() {
     return {
       mission: null,
@@ -115,36 +98,6 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    async onPublishConfirm() {
-      this.buttonLoading = true
-      await apiFetch(`/missions/${this.mission.id}/publish`, {
-        method: 'PUT',
-      })
-        .then(async (mission) => {
-          this.triggerConfettis()
-          this.$stores.formMission.updateFields(mission, ['state', 'is_online'])
-          this.$stores.formMission.showPublishModal = false
-          this.$router.push(`/admin/missions`)
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.buttonLoading = false
-        })
-    },
-    triggerConfettis() {
-      confetti({
-        particleCount: 500,
-        spread: 360,
-        // origin: { y: 0.6 },
-      })
-    },
-    // handleDeleted() {
-    //   this.$router.push('/admin/missions')
-    // },
-    // afterChangeIsActive(mission) {
-    //   this.$stores.formMission.updateFields(mission, ['is_online'])
-    //   this.showModalSwitchIsOnline = false
-    // },
     onClose() {
       this.$router.push('/admin/missions')
     },

@@ -10,7 +10,7 @@
         <ul class="list-disc mt-2 pl-5">
           <li>Ajouter de nouvelles dates</li>
           <li>Modifier la date de fin de la mission</li>
-          <li v-if="mission.state === 'Validée'">Terminer la mission</li>
+          <li v-if="form.state === 'Validée'">Terminer la mission</li>
         </ul>
       </CustomTips>
       <CustomTips v-else class="mb-10">
@@ -113,37 +113,39 @@
         </div>
 
         <template v-if="form.date_type">
-          <CustomTips>
-            <p class="mb-2">
-              En précisant des dates, vous permettez aux bénévoles d’indiquer leurs disponibilités
-              lorsqu’ils proposent leur aide, vous gagnez du temps !
-            </p>
-            <p class="font-bold">
-              Les missions avec dates obtiennent en moyenne 25% de plus de participations.
-            </p>
-          </CustomTips>
+          <template v-if="form.date_type === 'ponctual'">
+            <CustomTips>
+              <p class="mb-2">
+                En précisant des dates, vous permettez aux bénévoles d’indiquer leurs disponibilités
+                lorsqu’ils proposent leur aide, vous gagnez du temps !
+              </p>
+              <p class="font-bold">
+                Les missions avec dates obtiennent en moyenne 25% de plus de participations.
+              </p>
+            </CustomTips>
 
-          <DsfrFormControl
-            label="Quand la mission se déroule-t-elle ?"
-            html-for="with_dates"
-            :error="errors.with_dates"
-            required
-          >
-            <div class="grid grid-cols-2 gap-4">
-              <CustomOptionCard
-                :is-selected="form.with_dates === 'yes'"
-                title="Sur des jours définis"
-                description="Ex : tous les premiers mercredis du mois, tous les mardis et jeudis, etc."
-                @click="form.with_dates = 'yes'"
-              />
-              <CustomOptionCard
-                :is-selected="form.with_dates === 'no'"
-                title="C’est à définir"
-                description="Vous ne savez pas encore ou c’est à discuter avec le bénévole"
-                @click="form.with_dates = 'no'"
-              />
-            </div>
-          </DsfrFormControl>
+            <DsfrFormControl
+              label="Quand la mission se déroule-t-elle ?"
+              html-for="with_dates"
+              :error="errors.with_dates"
+              required
+            >
+              <div class="grid grid-cols-2 gap-4">
+                <CustomOptionCard
+                  :is-selected="form.with_dates === 'yes'"
+                  title="Sur des jours définis"
+                  description="Ex : tous les premiers mercredis du mois, tous les mardis et jeudis, etc."
+                  @click="form.with_dates = 'yes'"
+                />
+                <CustomOptionCard
+                  :is-selected="form.with_dates === 'no'"
+                  title="C’est à définir"
+                  description="Vous ne savez pas encore ou c’est à discuter avec le bénévole"
+                  @click="form.with_dates = 'no'"
+                />
+              </div>
+            </DsfrFormControl>
+          </template>
 
           <template v-if="form.with_dates === 'yes'">
             <div class="flex justify-between items-center border-b py-4">
@@ -239,7 +241,7 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors, MixinMission, FormMission],
+  mixins: [FormErrors, FormMission],
   components: {
     FormMissionWrapper,
     ModalFormMissionAddDates,
@@ -295,9 +297,9 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    mission() {
-      return { ...this.$stores.formMission.mission }
-    },
+    // mission() {
+    //   return { ...this.$stores.formMission.mission }
+    // },
     formNextDates() {
       if (!this.form.dates) return []
       return this.form.dates?.filter(
@@ -317,6 +319,7 @@ export default defineNuxtComponent({
     },
     onRecurringClick() {
       this.form.date_type = 'recurring'
+      this.form.with_dates = 'no'
     },
     onRemovedDate(date) {
       this.form.dates = this.form.dates.filter((item) => item.id !== date.id)
