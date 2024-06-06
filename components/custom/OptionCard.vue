@@ -1,9 +1,12 @@
 <template>
   <div
     :class="[
-      'relative border-2 p-6 cursor-pointer hover:border-jva-blue-500',
+      'relative border-2 p-6 cursor-pointer hover:border-jva-blue-500 focus:ring-2  ring-offset-2 ring-[#0A76F6]',
       { 'border-2 border-jva-blue-500 bg-[#F5F5FE]': isSelected },
     ]"
+    tabindex="0"
+    :aria-label="title"
+    @keydown="onKeydown"
   >
     <RiCheckboxCircleFill
       v-if="isSelected"
@@ -47,6 +50,17 @@ export default defineNuxtComponent({
     isSelected: {
       type: Boolean,
       default: false,
+    },
+  },
+  methods: {
+    onKeydown(e) {
+      const keyValue = e.which // enter key
+      if (keyValue === 13 || keyValue === 32) {
+        if (this.highlightIndex !== null) {
+          this.$emit('click')
+          return
+        }
+      }
     },
   },
 })

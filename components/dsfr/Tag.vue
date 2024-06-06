@@ -3,7 +3,7 @@
     :is="as"
     :type="as === 'button' ? 'button' : null"
     :class="[
-      'tag inline-flex items-center justify-center rounded-full max-w-full relative transition',
+      'tag inline-flex items-center justify-center rounded-full max-w-full relative transition focus:ring-2 ring-offset-2 ring-[#0A76F6]',
       { 'px-2 py-0.5 text-xs h-6': size == 'sm' },
       { 'px-3 py-1 text-sm h-8': size == 'md' },
       {

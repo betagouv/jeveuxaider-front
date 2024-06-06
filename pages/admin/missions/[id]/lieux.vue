@@ -75,7 +75,7 @@
                   {{ item.label }}
                 </div>
                 <div class="text-sm text-gray-500 font-medium">
-                  {{ item.properties.context }}
+                  {{ item.context }}
                 </div>
               </div>
               <DsfrButton
@@ -135,6 +135,7 @@ export default defineNuxtComponent({
       autocompleteOptions: [],
       formSchema: object({
         type: string().required('Le type de mission est requis'),
+        addresses: array().min(1, 'Veuillez ajouter au moins une adresse'),
       }),
     }
   },
@@ -161,10 +162,7 @@ export default defineNuxtComponent({
           city: selectedItem.city,
           longitude: selectedItem.coordinates[0],
           latitude: selectedItem.coordinates[1],
-          properties: {
-            id: selectedItem.id,
-            context: selectedItem.context,
-          },
+          context: selectedItem.context,
         },
       ]
     },
@@ -184,7 +182,7 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              this.$stores.formMission.updateFields(mission, ['type', 'addresses'])
+              this.$stores.formMission.updateFields(mission, ['type', 'addresses', 'department'])
               if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/benevoles`)
               } else {

@@ -86,9 +86,20 @@
           >
             <template v-if="mission.type">
               <template v-if="mission.type === 'Mission à distance'"> Mission à distance </template>
-              <template v-if="mission.addresses?.length > 0">
-                {{ mission.addresses.map((a) => a.label).join(', ') }}
+              <template v-else-if="mission.addresses?.length > 0">
+                <div>{{ mission.addresses[0].label }}</div>
+                <div v-if="mission.addresses?.length > 1">
+                  Et
+                  {{
+                    $filters.pluralize(
+                      mission.addresses?.length - 1,
+                      'autre adresse',
+                      'autres adresses'
+                    )
+                  }}
+                </div>
               </template>
+              <template v-else>À définir</template>
             </template>
             <template v-else>À définir</template>
           </CustomMissionPreviewItem>

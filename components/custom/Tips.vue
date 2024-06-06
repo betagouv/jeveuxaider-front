@@ -1,18 +1,18 @@
 <template>
   <div
     :class="[
-      'border  border-t-[5px] p-4 rounded-t',
+      'border p-6 rounded max-w-[90%] mx-auto',
       {
-        'border-[#0063CB]': variant === 'infos',
-        'border-yellow-500': variant === 'warning',
+        'border-[#B9CEFF] bg-[#F5F7FF]': variant === 'infos',
+        'border-yellow-200 bg-yellow-50': variant === 'warning',
       },
     ]"
   >
-    <div class="flex space-x-4">
-      <div class="pl-4">
+    <div class="flex space-x-6 items-center">
+      <div class="pl-2">
         <RiLightbulbLine
           v-if="variant === 'infos'"
-          class="h-8 w-8 text-[#0063CB] fill-current mt-[2px]"
+          class="h-8 w-8 text-[#5698FF] fill-current mt-[2px]"
           aria-hidden="true"
         />
         <RiErrorWarningLine
@@ -22,7 +22,12 @@
         />
       </div>
 
-      <div class="text-[#3A3A3A] text-sm"><slot></slot></div>
+      <div>
+        <div v-if="$slots.title" class="text-[#161616] text-sm font-bold mb-2">
+          <slot name="title"></slot>
+        </div>
+        <div class="text-[#161616] text-sm"><slot></slot></div>
+      </div>
     </div>
   </div>
 </template>
