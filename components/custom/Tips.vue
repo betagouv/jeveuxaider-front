@@ -1,29 +1,29 @@
 <template>
   <div
     :class="[
-      'border p-6 rounded max-w-[90%] mx-auto',
+      'border p-6 rounded max-w-[600px] mx-auto',
       {
         'border-[#B9CEFF] bg-[#F5F7FF]': variant === 'infos',
         'border-yellow-200 bg-yellow-50': variant === 'warning',
       },
     ]"
   >
-    <div class="flex space-x-6 items-center">
-      <div class="pl-2">
+    <div class="flex items-center">
+      <div class="px-2">
         <RiLightbulbLine
           v-if="variant === 'infos'"
-          class="h-8 w-8 text-[#5698FF] fill-current mt-[2px]"
+          class="h-8 w-8 text-[#5698FF] fill-current"
           aria-hidden="true"
         />
         <RiErrorWarningLine
           v-if="variant === 'warning'"
-          class="h-8 w-8 text-yellow-500 fill-current mt-[2px]"
+          class="h-8 w-8 text-yellow-500 fill-current"
           aria-hidden="true"
         />
       </div>
 
-      <div>
-        <div v-if="$slots.title" class="text-[#161616] text-sm font-bold mb-2">
+      <div class="pl-4">
+        <div v-if="$slots.title" class="text-[#161616] text-sm font-bold mb-[2px]">
           <slot name="title"></slot>
         </div>
         <div class="text-[#161616] text-sm"><slot></slot></div>

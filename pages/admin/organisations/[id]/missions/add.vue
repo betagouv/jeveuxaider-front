@@ -10,20 +10,30 @@
           Quel est le domaine d’action de votre mission ?
         </h2>
         <CustomTips class="mb-10">
-          Plusieurs domaines correspondent à votre mission ? Choisissez celui qui vous semble le
-          plus important. Vous pourrez choisir un domaine secondaire dans les étapes suivantes.
+          <template #title>Plusieurs domaines correspondent à votre mission ?</template>
+          Choisissez celui qui vous semble le plus important. Vous pourrez choisir un domaine
+          secondaire dans les étapes suivantes.
         </CustomTips>
         <div class="grid grid-cols-2 gap-4">
           <div
             v-for="domaine in domaines"
             :key="domaine.key"
             :class="[
-              'relative group  shadow-lg p-6 text-center border-2 flex flex-col items-center justify-center cursor-pointer hover:border-[#8585F6]',
+              'relative group shadow-lg p-6 text-center border-2 flex flex-col items-center justify-center cursor-pointer hover:border-[#8585F6]',
+              'focus:ring-2 ring-offset-2 ring-[#0A76F6]',
               selectedDomaine && selectedDomaine.key === domaine.key
                 ? 'border-[#8585F6] bg-[#F5F5FE]'
                 : 'border-transparent bg-white',
             ]"
             @click="onDomaineClick(domaine)"
+            @keydown="
+              (e) => {
+                if (e.which === 13 || e.which === 32) {
+                  onDomaineClick(domaine)
+                }
+              }
+            "
+            tabindex="0"
           >
             <RiCheckboxCircleFill
               v-if="selectedDomaine && selectedDomaine.key === domaine.key"
@@ -59,13 +69,14 @@
         </div>
         <CustomTips class="mb-10">
           En utilisant un modèle déjà existant, votre mission sera publiée sans besoin d’être
-          instruite.
-          <span class="font-bold">L’instruction d’une mission prend en moyenne 7 à 10 jours.</span>
+          validée par un référent.
         </CustomTips>
 
         <div v-if="selectedDomaine" class="grid grid-cols-1 gap-4">
           <CardTemplate :is-selected="noTemplateSelected" @click="onTemplateClick(null)">
-            <DsfrTag>{{ selectedDomaine.label }}</DsfrTag>
+            <template #tags
+              ><DsfrTag>{{ selectedDomaine.label }}</DsfrTag></template
+            >
           </CardTemplate>
           <CardTemplate
             v-for="template in templates"

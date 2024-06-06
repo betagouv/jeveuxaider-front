@@ -2,7 +2,10 @@
   <component
     :is="as"
     :target="to ? (isExternal ? '_blank' : '_self') : undefined"
-    :class="['dsfr-link inline no-underline cursor-pointer']"
+    :class="[
+      'dsfr-link inline no-underline cursor-pointer',
+      'focus:ring-2 ring-offset-2 ring-[#0A76F6]',
+    ]"
     :href="isExternal && to ? to : undefined"
     :to="!isExternal && to ? to : undefined"
     :title="title || $slots.default?.[0]?.text?.trim()"

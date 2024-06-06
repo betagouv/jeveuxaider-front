@@ -2,8 +2,11 @@
   <div
     :class="[
       'relative border-2 shadow-lg cursor-pointer hover:shadow-xl hover:border-[#8585F6]',
+      'focus:ring-2 ring-offset-2 ring-[#0A76F6]',
       isSelected ? 'bg-[#F5F5FE] border-[#8585F6]' : 'border-transparent bg-white',
     ]"
+    tabindex="0"
+    @keydown="onKeydown"
   >
     <RiCheckboxCircleFill
       v-if="isSelected"
@@ -79,6 +82,15 @@ export default defineNuxtComponent({
     onImgError() {
       this.$refs.image.$el.srcset =
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+    },
+    onKeydown(e) {
+      const keyValue = e.which // enter key
+      if (keyValue === 13 || keyValue === 32) {
+        if (this.highlightIndex !== null) {
+          this.$emit('click')
+          return
+        }
+      }
     },
   },
 })

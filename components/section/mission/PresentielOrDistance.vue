@@ -1,6 +1,6 @@
 <template>
   <BaseBox
-    v-if="mission.type == 'Mission en présentiel' && address"
+    v-if="mission.type == 'Mission en présentiel' && mission.addresses.length > 0"
     :padding="false"
     class="overflow-hidden"
   >
@@ -14,8 +14,7 @@
     />
     <div class="text-sm px-6 xl:px-16 py-6">
       <div class="text-gray-800 uppercase font-bold">
-        <span v-if="mission.is_autonomy">Mission en autonomie</span>
-        <span v-else>Mission sur le terrain</span>
+        <span>Mission sur le terrain</span>
       </div>
       <!-- <p v-if="mission.is_autonomy" class="text-[#666666] mt-1 mb-1">
         Cette mission peut être réalisée sans l’encadrement du responsable de mission.
@@ -24,10 +23,9 @@
       <div class="text-[#727273]">
         <div class="line-clamp-1">
           <span class="relative left-[-3px]">📍</span>
-          <span :title="autonomyCities" v-if="mission.is_autonomy">{{ autonomyCities }}</span>
-          <span v-else>{{ address }}</span>
+          <span>{{ mission.addresses.map((a) => a.label).join(', ') }}</span>
         </div>
-        <div v-if="mission.is_autonomy && mission.autonomy_precisions">
+        <div v-if="mission.autonomy_precisions">
           <span class="font-bold">Précisions sur la zone d’intervention&nbsp;: </span>
           <span>{{
             $filters.decodeHTMLEntities($filters.stripHTML(mission.autonomy_precisions))
@@ -73,26 +71,21 @@ export default defineNuxtComponent({
     },
   },
   computed: {
-    address() {
-      if (this.mission.full_address) {
-        return this.mission.full_address
-      }
-      if (this.mission.zip) {
-        return this.mission.zip
-      }
-      return null
-    },
-    autonomyCities() {
-      const { formatAutonomyCities } = autonomyCitiesHelper()
-      return formatAutonomyCities(this.mission.autonomy_zips)
-    },
+    // address() {
+    //   if (this.mission.full_address) {
+    //     return this.mission.full_address
+    //   }
+    //   if (this.mission.zip) {
+    //     return this.mission.zip
+    //   }
+    //   return null
+    // },
+    // autonomyCities() {
+    //   const { formatAutonomyCities } = autonomyCitiesHelper()
+    //   return formatAutonomyCities(this.mission.autonomy_zips)
+    // },
     googleQuery() {
-      return this.mission.is_autonomy
-        ? `${this.mission.department} ${this.$filters.label(
-            this.mission.department,
-            'departments'
-          )}`
-        : this.address
+      return this.mission.addresses[0]?.label
     },
   },
 })
