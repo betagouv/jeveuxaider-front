@@ -9,7 +9,6 @@ export default {
     '$stores.formMission.mission': {
       handler(newVal) {
         this.form = { ...newVal }
-        console.log('watcher mixins', this.form)
         if (this.form) {
           this.form.domaine_id = this.form.template?.domaine_id || this.form.domaine_id
           this.form.domaine_secondary_id =

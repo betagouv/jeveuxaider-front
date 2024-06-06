@@ -22,7 +22,7 @@
             title="Visuel"
             :is-current="$route.name === 'admin-missions-id-visuel'"
             :is-completed="$stores.formMission.isStepVisuelCompleted"
-            :is-disabled="!$stores.formMission.isStepTitleCompleted"
+            :is-disabled="!$stores.formMission.isStepTitleCompleted && $stores.formMission.isDraft"
             @next="$router.push(`/admin/missions/${mission.id}/visuel`)"
           >
             <div class="">
@@ -44,7 +44,7 @@
             title="Informations"
             :is-current="$route.name === 'admin-missions-id-informations'"
             :is-completed="$stores.formMission.isStepInformationsCompleted"
-            :is-disabled="!$stores.formMission.isStepVisuelCompleted"
+            :is-disabled="!$stores.formMission.isStepVisuelCompleted && $stores.formMission.isDraft"
             @next="$router.push(`/admin/missions/${mission.id}/informations`)"
           >
             Présentation de la mission et 3 autres informations
@@ -58,7 +58,9 @@
             :is-current="$route.name === 'admin-missions-id-dates'"
             :is-completed="$stores.formMission.isStepDatesCompleted"
             :is-warning="$stores.formMission.isStepDatesWarning"
-            :is-disabled="!$stores.formMission.isStepInformationsCompleted"
+            :is-disabled="
+              !$stores.formMission.isStepInformationsCompleted && $stores.formMission.isDraft
+            "
             @next="$router.push(`/admin/missions/${mission.id}/dates`)"
           >
             <template v-if="mission.date_type">
@@ -81,7 +83,7 @@
             :title="titleBoxLieux"
             :is-current="$route.name === 'admin-missions-id-lieux'"
             :is-completed="$stores.formMission.isStepLieuxCompleted"
-            :is-disabled="!$stores.formMission.isStepDatesCompleted"
+            :is-disabled="!$stores.formMission.isStepDatesCompleted && $stores.formMission.isDraft"
             @next="$router.push(`/admin/missions/${mission.id}/lieux`)"
           >
             <template v-if="mission.type">
@@ -112,7 +114,7 @@
             :is-current="$route.name === 'admin-missions-id-benevoles'"
             :is-completed="$stores.formMission.isStepBenevolesCompleted"
             :is-warning="$stores.formMission.isStepBenevolesWarning"
-            :is-disabled="!$stores.formMission.isStepLieuxCompleted"
+            :is-disabled="!$stores.formMission.isStepLieuxCompleted && $stores.formMission.isDraft"
             @next="$router.push(`/admin/missions/${mission.id}/benevoles`)"
           >
             <template v-if="mission.participations_max">
@@ -134,7 +136,9 @@
             title="Informations sur les bénévoles"
             :is-current="$route.name === 'admin-missions-id-benevoles-informations'"
             :is-completed="$stores.formMission.isStepBenevolesInformationsCompleted"
-            :is-disabled="!$stores.formMission.isStepBenevolesCompleted"
+            :is-disabled="
+              !$stores.formMission.isStepBenevolesCompleted && $stores.formMission.isDraft
+            "
             @next="$router.push(`/admin/missions/${mission.id}/benevoles-informations`)"
           >
             <div>
@@ -158,7 +162,10 @@
             id="admin-missions-id-responsables"
             :is-current="$route.name === 'admin-missions-id-responsables'"
             :is-completed="$stores.formMission.isStepResponsablesCompleted"
-            :is-disabled="!$stores.formMission.isStepBenevolesInformationsCompleted"
+            :is-disabled="
+              !$stores.formMission.isStepBenevolesInformationsCompleted &&
+              $stores.formMission.isDraft
+            "
             @next="$router.push(`/admin/missions/${mission.id}/responsables`)"
           >
             <template v-if="mission.responsables.length > 0">

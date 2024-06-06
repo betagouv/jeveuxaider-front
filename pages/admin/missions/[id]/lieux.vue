@@ -75,7 +75,8 @@
                   {{ item.label }}
                 </div>
                 <div class="text-sm text-gray-500 font-medium">
-                  {{ item.context }}
+                  {{ item.department }}, {{ $filters.label(item.department, 'departments') }},
+                  {{ $filters.label(item.department, 'departments_regions') }}
                 </div>
               </div>
               <DsfrButton
@@ -152,6 +153,7 @@ export default defineNuxtComponent({
       this.form.addresses = this.form.addresses.filter((item) => item.id !== address.id)
     },
     handleSelectedAddress(selectedItem) {
+      console.log('selectedItem', selectedItem)
       this.form.addresses = [
         ...this.form.addresses,
         {
@@ -162,7 +164,7 @@ export default defineNuxtComponent({
           city: selectedItem.city,
           longitude: selectedItem.coordinates[0],
           latitude: selectedItem.coordinates[1],
-          context: selectedItem.context,
+          department: selectedItem.context?.split(', ')[0],
         },
       ]
     },
