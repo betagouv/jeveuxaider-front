@@ -44,8 +44,7 @@ export default defineNuxtConfig({
         id: process.env.GTM_ID,
       },
       ai: {
-        missionModerationUrl: process.env.API_AI_MISSION_MODERATION_URL,
-        organisationModerationUrl: process.env.API_AI_ORGANISATION_MODERATION_URL,
+        moderationUrl: process.env.API_AI_MODERATION_URL,
       },
       apiEngagement: {
         key: process.env.APIENG_KEY,

@@ -19,16 +19,12 @@ export const useAideModerationStore = defineStore('aideModeration', {
       this.model = model
       this.response = null
 
-      const url =
-        type == 'organisation'
-          ? config.public.ai.organisationModerationUrl
-          : config.public.ai.missionModerationUrl
-
       try {
-        const data = await $fetch<any>(url, {
+        const data = await $fetch<any>(config.public.ai.moderationUrl, {
           method: 'POST',
           body: {
             text,
+            type,
           },
         })
         this.response = data

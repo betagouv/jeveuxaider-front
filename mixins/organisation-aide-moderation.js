@@ -165,7 +165,7 @@ export default {
         return
       }
       await this.$stores.aideModeration.fetch({
-        type: 'organisation',
+        type: 'structure',
         model: { ...this.organisation },
         text: this.textToAnalyze,
       })
