@@ -126,7 +126,7 @@ export default defineNuxtComponent({
     })
 
     const route = useRoute()
-    const { data: reseau, error } = await useApiFetch(`/reseaux/${route.params.slug}`)
+    const { data: reseau, error } = await useApiFetch(`/reseaux/${route.params.slug}/view`)
 
     useHead({
       title: `${reseau.value.name} - Devenez bénévole - JeVeuxAider.gouv.fr`,
