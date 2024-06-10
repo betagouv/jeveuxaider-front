@@ -67,7 +67,7 @@
           <div class="group p-10 bg-white shadow-2xl cursor-pointer" @click="onClickFindMissions">
             <DsfrPeuImporteIcon class="-mt-3 w-[80px] h-[80px]" />
             <div class="text-4xl lg:text-5xl font-bold">
-              {{ $numeral(statistics.missions_available_count) }}
+              {{ $numeral(nbHits) }}
             </div>
             <div class="text-2xl font-bold">missions disponibles</div>
             <div class="">
@@ -122,6 +122,21 @@ export default defineNuxtComponent({
       type: Object,
       required: true,
     },
+  },
+  async setup(props) {
+    const { $algolia } = useNuxtApp()
+
+    // Get total nbHits count (without geolocation and facet filters)
+    const algoliaSearch = await $algolia.missionsIndex.search('', {
+      aroundLatLngViaIP: false,
+      aroundLatLng: '',
+      aroundRadius: 'all',
+      filters: `domaines:"${props.domaine.name}"`,
+    })
+
+    return {
+      nbHits: algoliaSearch?.nbHits ?? props.statistics.missions_available_count,
+    }
   },
   computed: {
     images() {
