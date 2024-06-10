@@ -6,7 +6,7 @@
       slogan="Le bénévolat et vous"
       picture="quiz-step-0-min"
       mobile-picture="quiz-step-0-mobile-min"
-      missions-count="15 000"
+      missions-count="18 000"
     >
       <template #bottom>
         <div class="hidden lg:block px-[32px] lg:px-[80px]">
