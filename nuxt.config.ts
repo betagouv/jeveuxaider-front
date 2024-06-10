@@ -227,6 +227,9 @@ export default defineNuxtConfig({
     '/dasboard/**': { ssr: false },
     '/profile/**': { ssr: false },
     '/messages/**': { ssr: false },
+    '/activites/accompagnement-aux-activites-sportives': {
+      redirect: '/activites/activites-sportives',
+    },
   },
 
   lodash: {
