@@ -5,7 +5,7 @@
     "label": "✉️ Vie citoyenne",
     "icon": "✉️",
     "name": "Vie citoyenne",
-    "domain":["Mémoire et citoyenneté"],
+    "domain": ["Mémoire et citoyenneté"],
     "popular": false,
     "full_url": "/activites/vie-citoyenne"
   },
@@ -295,7 +295,17 @@
     "label": "💶 Collecte de fonds",
     "icon": "💶",
     "name": "Collecte de fonds",
-    "domain": ["Bénévolat de compétences", "Solidarité et insertion", "Mémoire et citoyenneté", "Art et culture pour tous", "Protection de la nature", "Éducation pour tous", "Santé pour tous", "Sport pour tous", "Prévention et protection"],
+    "domain": [
+      "Bénévolat de compétences",
+      "Solidarité et insertion",
+      "Mémoire et citoyenneté",
+      "Art et culture pour tous",
+      "Protection de la nature",
+      "Éducation pour tous",
+      "Santé pour tous",
+      "Sport pour tous",
+      "Prévention et protection"
+    ],
     "popular": false,
     "full_url": "/activites/collecte-de-fonds"
   },
@@ -362,9 +372,9 @@
   {
     "id": 20,
     "key": 20,
-    "label": "🏀 Accompagnement aux activités sportives",
+    "label": "🏀 Activités sportives",
     "icon": "🏀",
-    "name": "Accompagnement aux activités sportives",
+    "name": "Activités sportives",
     "domain": ["Sport pour tous"],
     "popular": false,
     "full_url": "/activites/accompagnement-aux-activites-sportives"
