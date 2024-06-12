@@ -14,6 +14,7 @@
 // @todo: numeric keyboard on mobile (test inputmode="numeric")
 // no datepicker
 // "placeholder" in gray, should be jj/mm/aaaa even on safari
+// If not possible, try 3 separate inputs (but themed as there was only one)
 export default defineNuxtComponent({
   emits: ['update:modelValue', 'blur'],
   props: {
