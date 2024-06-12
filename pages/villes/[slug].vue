@@ -16,7 +16,7 @@ export default defineNuxtComponent({
     let territoire = null
     let cities = []
     const fetchActivities = async () => {
-      const { data } = await useApiFetch(`/territoires/${route.params.slug}`)
+      const { data } = await useApiFetch(`/territoires/${route.params.slug}/view`)
       territoire = data
     }
     const fetchCities = async () => {
