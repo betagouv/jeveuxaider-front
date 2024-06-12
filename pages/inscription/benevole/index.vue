@@ -256,18 +256,23 @@
                           @blur="validate('mobile')"
                         />
                       </BaseFormControl>
+
                       <BaseFormControl
                         label="Date de naissance"
                         html-for="birthday"
                         required
                         :error="errors.birthday"
                       >
-                        <BaseInputDate
+                        <!-- <BaseInputDate2
                           v-model="form.birthday"
-                          required
                           name="birthday"
-                          aria-required="true"
-                          autocomplete="bday"
+                          @blur="validate('birthday')"
+                        /> -->
+
+                        <BaseInputDate3
+                          v-model="form.birthday"
+                          name="birthday"
+                          @blur="validate('birthday')"
                         />
                       </BaseFormControl>
                       <BaseFormControl
@@ -377,7 +382,7 @@
 </template>
 
 <script>
-import { string, object, ref, date } from 'yup'
+import { string, object, ref, date, lazy, mixed } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import Emailable from '@/mixins/emailable.client'
 import FranceConnect from '@/components/custom/FranceConnect.vue'
@@ -456,16 +461,29 @@ export default defineNuxtComponent({
           .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
           .required('Un code postal est requis'),
         country: string().required('Un pays est requis'),
+        // Input2
+        // birthday: mixed()
+        //   .required("Une date d'anniversaire est requise")
+        //   .transform((value) =>
+        //     value instanceof Date ? value : this.$dayjs(value, 'DD/MM/YYYY', true).toDate()
+        //   )
+        //   .test('invalid-date', 'La date indiquée est invalide', (value) => {
+        //     return !isNaN(value)
+        //   })
+        //   .test('is-old-enough', errorIsOldEnoughErrorMessage, function (date) {
+        //     const today = new Date()
+        //     const age = today.getFullYear() - date.getFullYear()
+        //     return age >= 16
+        //   }),
+        // Input3
         birthday: date()
+          .typeError('La date indiquée est invalide')
           .required("Une date d'anniversaire est requise")
-          .test('is-old-enough', errorIsOldEnoughErrorMessage, function (value) {
+          .test('is-old-enough', errorIsOldEnoughErrorMessage, function (date) {
             const today = new Date()
-            const birthDate = new Date(value)
-            const age = today.getFullYear() - birthDate.getFullYear()
+            const age = today.getFullYear() - date.getFullYear()
             return age >= 16
-          })
-          .nullable()
-          .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
+          }),
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
         password: string().min(8).required('Un mot de passe est requis'),
         password_confirmation: string()
