@@ -84,7 +84,7 @@ export default defineNuxtComponent({
 }
 
 .thumbnail--wrapper {
-  @screen lg {
+  @screen xl {
     height: 550px;
     @apply bg-gray-200 overflow-hidden;
     img {
