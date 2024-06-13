@@ -262,6 +262,11 @@ export default defineNuxtComponent({
           //   target: '_blank',
           // },
           {
+            name: 'Élections législatives 🗳️',
+            href: 'https://www.jeveuxaider.gouv.fr/engagement/trouver-des-assesseurs/',
+            target: '_blank',
+          },
+          {
             name: 'La tournée d’été ☀️',
             href: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/',
             target: '_blank',
@@ -465,6 +470,11 @@ export default defineNuxtComponent({
         //   href: 'https://www.jeveuxaider.gouv.fr/engagement/printemps-pour-la-planete/',
         //   target: '_blank',
         // },
+        {
+          name: 'Élections législatives 🗳️',
+          href: 'https://www.jeveuxaider.gouv.fr/engagement/trouver-des-assesseurs/',
+          target: '_blank',
+        },
         {
           name: 'La tournée d’été ☀️',
           href: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/',

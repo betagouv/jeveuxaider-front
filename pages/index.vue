@@ -3,6 +3,7 @@
     <BlocBanner />
     <template v-if="$stores.auth.isLogged">
       <BlocCaDevraitVousPlaire />
+      <ElectionsLegislatives />
       <LaTourneeDeLete />
       <BlocProfileActivities />
       <BlocTemoignages />
@@ -17,6 +18,7 @@
         <BlocInscriptionResponsable />
       </div>
       <BlocActivities />
+      <ElectionsLegislatives />
       <LaTourneeDeLete />
       <BlocMissionsCourtes />
       <BlocActionsBenevolesPopulaires />
@@ -45,6 +47,7 @@ import BlocFaq from '@/components/section/home/BlocFaq.vue'
 import BlocProfileActivities from '@/components/section/home/BlocProfileActivities.vue'
 import BlocActualitesEngagement from '@/components/section/home/BlocActualitesEngagement.vue'
 import LaTourneeDeLete from '@/components/section/operations/LaTourneeDeLete.vue'
+import ElectionsLegislatives from '@/components/section/operations/ElectionsLegislatives.vue'
 
 export default defineNuxtComponent({
   setup() {
@@ -98,6 +101,7 @@ export default defineNuxtComponent({
     BlocProfileActivities,
     BlocActualitesEngagement,
     LaTourneeDeLete,
+    ElectionsLegislatives,
   },
 })
 </script>
