@@ -66,6 +66,7 @@
           origin="calendrier"
         />
       </div>
+      <ElectionsLegislatives />
       <div class="container my-12 lg:my-24">
         <DsfrHeading as="h3" size="2xl" class="tracking-[-.5px]">
           Vous pouvez aussi vous engager à distance
@@ -81,6 +82,8 @@
           origin="calendrier"
         />
       </div>
+
+      <LaTourneeDeLete />
       <SectionSearchBlocFaq title="Vous avez des questions ?" />
       <SectionHomeBlocNewsletter />
     </div>
@@ -92,6 +95,8 @@ import CalendarFilters from '@/components/calendar/CalendarFilters.vue'
 import AlgoliaMissions from '@/components/section/search/missions/AlgoliaMissions.vue'
 import LocalisationFilter from '@/components/search/LocalisationFilter.vue'
 import LocalisationMobileFilter from '@/components/search/LocalisationMobileFilter.vue'
+import LaTourneeDeLete from '@/components/section/operations/LaTourneeDeLete.vue'
+import ElectionsLegislatives from '@/components/section/operations/ElectionsLegislatives.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -99,6 +104,8 @@ export default defineNuxtComponent({
     LocalisationFilter,
     LocalisationMobileFilter,
     AlgoliaMissions,
+    LaTourneeDeLete,
+    ElectionsLegislatives,
   },
   mounted() {
     this.isPinnedObserver = new IntersectionObserver(
