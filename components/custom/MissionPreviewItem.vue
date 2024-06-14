@@ -1,12 +1,12 @@
 <template>
   <div
     :class="[
-      'relative p-6 shadow border-2 hover:shadow-lg transition-shadow duration-300',
+      'relative p-6 shadow border-2 transition-shadow duration-300',
       { ' border-[#6A6AF4] bg-[#F5F5FE] ': isCurrent },
       { 'border-white bg-white': !isCurrent },
       { '': isCompleted },
       { 'cursor- cursor-not-allowed  opacity-70': isDisabled },
-      { 'cursor-pointer': !isDisabled },
+      { 'cursor-pointer  hover:shadow-lg': !isDisabled },
     ]"
     @click="onClick"
   >

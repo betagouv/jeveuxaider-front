@@ -22,8 +22,11 @@
       <p>Vous pourrez toujours modifier les informations de la mission après publication.</p>
     </template>
     <template v-else>
-      <p class="mb-4">Vous êtes sur le point de soumettre votre mission à validation.</p>
-      <p>Vous serez notifiés par mail prochainement.</p>
+      <p class="mb-4">
+        Vous êtes sur le point de soumettre votre mission. Elle sera validée ou non par le référent
+        de votre département. En moyenne, le traitement prend entre 7 et 10 jours.
+      </p>
+      <p>Vous serez notifiés par mail de son avancement.</p>
     </template>
   </BaseAlertDialog>
 </template>

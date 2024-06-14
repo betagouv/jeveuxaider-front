@@ -55,7 +55,17 @@
             class="hidden lg:block pt-4 border-t border-[#E5E5E5] border-dashed"
           >
             <div class="flex space-x-1 text-sm truncate max-w-full text-gray-600">
-              <span>Responsable :</span>
+              <span
+                >{{
+                  $filters.pluralize(
+                    participation.mission.responsables.length,
+                    'Responsable',
+                    'Responsables',
+                    false
+                  )
+                }}
+                :</span
+              >
               <span v-if="participation.mission.responsables" class="font-bold truncate">{{
                 participation.mission.responsables.map((r) => r.full_name).join(', ')
               }}</span>

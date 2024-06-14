@@ -6,8 +6,15 @@
     <div v-if="form">
       <h2 class="text-[28px] font-bold leading-9 mb-10">En quoi consiste votre mission ?</h2>
       <CustomTips class="mb-10">
-        Consultez cet article pour découvrir nos astuces pour rédiger une mission qui donne envie
-        aux bénévoles de proposer leur aide.
+        Consultez
+        <a
+          class="underline"
+          href="https://reserve-civique.crisp.help/fr/article/comment-bien-rediger-une-mission-1dizodt/"
+          target="_blank"
+          >cet article</a
+        >
+        pour découvrir nos astuces pour rédiger une mission qui donne envie aux bénévoles de
+        proposer leur aide.
       </CustomTips>
       <template v-if="form.template_id">
         <div class="space-y-8">

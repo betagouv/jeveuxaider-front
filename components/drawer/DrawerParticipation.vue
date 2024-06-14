@@ -82,6 +82,7 @@
           </template>
         </BoxInformationsMission>
         <BoxResponsable
+          class="mb-8"
           v-for="responsable in participation.mission.responsables"
           :responsable="responsable"
         />
