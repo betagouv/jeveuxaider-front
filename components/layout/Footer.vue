@@ -75,6 +75,13 @@
           <div class="md:col-span-2">
             <div class="font-bold mb-8">Organisations populaires</div>
             <div class="grid grid-cols-2 gap-4">
+              <nuxt-link
+                no-prefetch
+                class="link"
+                to="/reseaux/14-federation-francaise-des-banques-alimentaires"
+                >Banques Alimentaires</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/104-oxfam-france">Oxfam</nuxt-link>
               <nuxt-link no-prefetch class="link" to="/organisations/2747-makesense"
                 >Makesense</nuxt-link
               >
