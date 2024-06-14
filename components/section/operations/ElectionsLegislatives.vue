@@ -97,7 +97,7 @@ export default defineNuxtComponent({
           operation: 'Élections législatives 2024',
         },
       })
-      this.$router.push('/missions-benevolat?tags=Elections%20européennes%202024')
+      this.$router.push('/missions-benevolat?tags=Élections%20législatives%202024')
     },
     onSlideClick() {
       this.$plausible.trackEvent('Homepage - Clique - Mission opé nationale', {
