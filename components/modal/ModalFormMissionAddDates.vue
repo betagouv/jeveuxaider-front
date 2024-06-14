@@ -13,13 +13,13 @@
               @click="mode = 'single'"
               :is-selected="mode === 'single'"
               title="Une seule date"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+              description="Sélectionnez une date après l'autre"
             />
             <CustomOptionCard
               @click="mode = 'multiple'"
               :is-selected="mode === 'multiple'"
               title="Plusieurs dates"
-              description=" Ex : Tous les mercredis du mois, tous les jours de la semaine, etc."
+              description="Séléctionnez une période et les jours de la semaine souhaités"
             />
           </div>
 

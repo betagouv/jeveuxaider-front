@@ -87,10 +87,13 @@ export default defineNuxtComponent({
       if (this.selectedMission?.type !== 'Mission en présentiel') {
         return false
       }
-      if (this.selectedMission.is_autonomy) {
-        return false
-      }
-      if (this.selectedMission.latitude === null || this.selectedMission.longitude === null) {
+      // if (this.selectedMission.is_autonomy) {
+      //   return false
+      // }
+      if (
+        this.selectedMission.addresses[0].latitude === null ||
+        this.selectedMission.addresses[0].longitude === null
+      ) {
         return false
       }
       if (
@@ -103,8 +106,8 @@ export default defineNuxtComponent({
         this.$utils.haversineDistanceBetweenPoints(
           this.$stores.auth.user.profile.latitude,
           this.$stores.auth.user.profile.longitude,
-          this.selectedMission.latitude,
-          this.selectedMission.longitude
+          this.selectedMission.addresses[0].latitude,
+          this.selectedMission.addresses[0].longitude
         ) > 30000
       )
     },

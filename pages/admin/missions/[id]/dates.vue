@@ -69,6 +69,7 @@
                 v-model="form.commitment__duration"
                 placeholder="Sélectionner une durée"
                 :options="$labels.duration"
+                @input="validate('commitment__duration')"
               />
             </DsfrFormControl>
             <DsfrFormControl
@@ -86,6 +87,7 @@
                   { key: 'week', label: 'par semaine' },
                   { key: 'month', label: 'par mois' },
                 ]"
+                @input="validate('commitment__time_period')"
               />
             </DsfrFormControl>
           </div>
@@ -101,6 +103,7 @@
               v-model="form.commitment__duration_min"
               placeholder="Sélectionner une durée"
               :options="$labels.commitment_duration_min"
+              @input="validate('commitment__duration_min')"
             />
           </DsfrFormControl>
         </div>
@@ -205,6 +208,7 @@
             label="Précisez les créneaux horaires"
             html-for="recurrent_description"
             :error="errors.recurrent_description"
+            v-if="form.date_type === 'recurring'"
           >
             <template #description>
               <div class="text-xs text-[#666666]">

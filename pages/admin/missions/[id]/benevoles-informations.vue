@@ -72,7 +72,7 @@
           >
             <BaseToggle
               v-model="form.is_snu_mig_compatible"
-              label="Accueillir des <strong>bénévoles de 15 à 18 ans</strong> pour cette mission"
+              label="Proposer cette mission aux jeunes volontaires du <strong>Service National Universel</strong> (de 15ans à 18ans)"
               @checked="onSNUChecked"
             />
             <DsfrFormControl
@@ -153,11 +153,14 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
-
       formSchema: object({
-        participations_max: number()
-          .min(1, 'Le nombre de bénévole(s) recherché(s) doit être supérieur à 0')
-          .required('Le nombre de bénévole(s) recherché(s) est requis'),
+        snu_mig_places: number()
+          .nullable()
+          .when(['is_snu_mig_compatible'], {
+            is: (value) => value == true,
+            then: (schema) =>
+              schema.required('Précisez le nombre de places pour les volontaires du SNU'),
+          }),
       }),
       placeholders: [
         'ex : Parler anglais couramment',

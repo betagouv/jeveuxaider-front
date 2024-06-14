@@ -9,7 +9,7 @@
         Envoyez vos motivations et question à
         <span class="font-bold">
           {{
-            $stores.softGate.selectedMission.responsables.map((r) => r.full_name).join(', ')
+            $stores.softGate.selectedMission.responsables.map((r) => r.secret_name).join(', ')
           }}</span
         >,
         {{
