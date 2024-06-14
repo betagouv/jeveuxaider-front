@@ -71,15 +71,15 @@
 
           <template v-for="visibleFilter in visibleFilters" :key="visibleFilter">
             <BaseFilterSelectAdvanced
-              v-if="visibleFilter === 'responsable.id'"
-              name="responsable.id"
-              placeholder="Tous les responsables"
+              v-if="visibleFilter === 'ofResponsable'"
+              name="ofResponsable"
+              placeholder="Responsable"
               :options="responsables"
               attribute-key="id"
               attribute-label="full_name"
-              :modelValue="$route.query['filter[responsable.id]']"
+              :modelValue="$route.query['filter[ofResponsable]']"
               clearable
-              @update:modelValue="changeFilter('filter[responsable.id]', $event)"
+              @update:modelValue="changeFilter('filter[ofResponsable]', $event)"
             />
 
             <DsfrTag
@@ -178,7 +178,7 @@
               @selected="onSelectReseau"
             />
 
-            <BaseFilterSelectAdvanced
+            <!-- <BaseFilterSelectAdvanced
               v-if="visibleFilter === 'ofResponsable'"
               name="responsable"
               :options="responsablesStructures"
@@ -187,7 +187,7 @@
               attribute-label="full_name"
               placeholder="Responsable"
               @update:modelValue="changeFilter('filter[ofResponsable]', $event)"
-            />
+            /> -->
 
             <BaseFilterInputAutocomplete
               v-if="visibleFilter === 'ofTerritoire'"
@@ -470,7 +470,7 @@ export default defineNuxtComponent({
         'state',
         ['responsable'].includes(this.$stores.auth.contextRole) &&
           this.responsables.length &&
-          'responsable.id',
+          'ofResponsable',
         'available',
         'place',
         'is_registration_open',
@@ -502,7 +502,7 @@ export default defineNuxtComponent({
       ].filter((f) => f)
     },
     alwaysVisibleFilters() {
-      return ['state', 'responsable.id', 'available', 'place', 'is_registration_open', 'date']
+      return ['state', 'ofResponsable', 'available', 'place', 'is_registration_open', 'date']
     },
   },
   watch: {

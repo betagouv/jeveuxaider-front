@@ -49,7 +49,7 @@
           >
             <DsfrInputAutocomplete
               icon="RiMapPinLine"
-              name="autocomplete"
+              name="addresses"
               placeholder="Exemple : 4 rue de Rivoli, 75001 Paris"
               :options="autocompleteOptions"
               attribute-key="id"
@@ -71,9 +71,7 @@
               :key="item.id"
             >
               <div>
-                <div class="first-letter:uppercase">
-                  {{ item.label }}
-                </div>
+                <div class="first-letter:uppercase">{{ item.label }}</div>
                 <div class="text-sm text-gray-500 font-medium">
                   {{ item.department }}, {{ $filters.label(item.department, 'departments') }},
                   {{ $filters.label(item.department, 'departments_regions') }}
@@ -153,7 +151,6 @@ export default defineNuxtComponent({
       this.form.addresses = this.form.addresses.filter((item) => item.id !== address.id)
     },
     handleSelectedAddress(selectedItem) {
-      console.log('selectedItem', selectedItem)
       this.form.addresses = [
         ...this.form.addresses,
         {
@@ -167,6 +164,7 @@ export default defineNuxtComponent({
           department: selectedItem.context?.split(', ')[0],
         },
       ]
+      this.validate('addresses')
     },
     async onFetchGeoSuggestions(payload, config = {}) {
       this.autocompleteOptions = await useGeolocationFetch(payload, {

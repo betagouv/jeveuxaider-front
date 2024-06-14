@@ -13,13 +13,6 @@
           <li v-if="form.state === 'Validée'">Terminer la mission</li>
         </ul>
       </CustomTips>
-      <CustomTips v-else class="mb-10">
-        <p>Vous avez des doutes sur le type d’engagement souhaité ?</p>
-        <ul class="list-disc mt-2 pl-5">
-          <li>Exemples de missions ponctuelles</li>
-          <li>Exemples de missions régulières</li>
-        </ul>
-      </CustomTips>
 
       <div class="space-y-10">
         <DsfrFormControl

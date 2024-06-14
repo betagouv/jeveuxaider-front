@@ -193,11 +193,15 @@
     </div>
     <div v-else>
       <div class="p-8">
-        <h3 class="text-xl font-bold mb-4">Titre todo</h3>
+        <div class="text-5xl">✌️</div>
+        <h3 class="text-2xl font-bold mb-4">Vous êtes à deux doigts de trouver vos bénévoles</h3>
         <div>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam eligendi officiis
-          inventore deleniti, fugiat consequatur esse tempora reiciendis. Nemo iste, reiciendis
-          labore cum tempore ad alias sunt est repellat nisi.
+          Vous êtes sur le point de créer une mission de bénévolat, quelle bonne nouvelle ! Le
+          formulaire vous guidera étape par étape pour décrire votre mission. Plus vous serez
+          précis, plus vos futurs bénévoles pourront se projeter.
+        </div>
+        <div class="text-[#666666] mt-4 text-sm">
+          Les champs marqués par <span class="text-[#E1000F]">*</span> sont obligatoires
         </div>
       </div>
     </div>
