@@ -5004,11 +5004,6 @@ marked@^7.0.4:
   resolved "https://registry.yarnpkg.com/marked/-/marked-7.0.5.tgz#8a9e4e3afb93b58fe9ee7608e67cc154eb15d508"
   integrity sha512-lwNAFTfXgqpt/XvK17a/8wY9/q6fcSPZT1aP6QW0u74VwaJF/Z9KbRcX23sWE4tODM+AolJNcUtErTkgOeFP/Q==
 
-maska@^3.0.0-beta3:
-  version "3.0.0-beta3"
-  resolved "https://registry.yarnpkg.com/maska/-/maska-3.0.0-beta3.tgz#e2f47293aec738a46ebf67e647bbbbe4a5783a04"
-  integrity sha512-Wp1cDF7JgZVstTKDVf0QUcn7XERPnC9gR+EM/qOW3L+c5yYe6AdWTI1J+1SFIWOEcGAUfWxnSK8JEn9aohnZ6Q==
-
 mdn-data@2.0.28:
   version "2.0.28"
   resolved "https://registry.yarnpkg.com/mdn-data/-/mdn-data-2.0.28.tgz#5ec48e7bef120654539069e1ae4ddc81ca490eba"
