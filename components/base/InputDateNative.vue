@@ -6,15 +6,10 @@
     class="appearance-none px-6 py-3 text-sm block w-full placeholder-gray-text-400 border border-gray-300 overflow-ellipsis"
     @blur="$emit('blur', $event.target.value)"
     @input="$emit('update:modelValue', $event.target.value)"
-    inputmode="numeric"
   />
 </template>
 
 <script>
-// @todo: numeric keyboard on mobile (test inputmode="numeric")
-// no datepicker
-// "placeholder" in gray, should be jj/mm/aaaa even on safari
-// If not possible, try 3 separate inputs (but themed as there was only one)
 export default defineNuxtComponent({
   emits: ['update:modelValue', 'blur'],
   props: {
@@ -33,7 +28,7 @@ export default defineNuxtComponent({
   },
   data() {
     return {
-      val: '',
+      val: this.modelValue ?? '',
     }
   },
 })

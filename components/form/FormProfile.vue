@@ -120,7 +120,12 @@
               required
               :error="errors.birthday"
             >
-              <BaseInputDate v-model="form.birthday" required name="birthday" />
+              <BaseInputDateNative
+                v-model="form.birthday"
+                required
+                name="birthday"
+                @blur="validate('birthday')"
+              />
             </BaseFormControl>
             <BaseFormControl label="Profession" html-for="type" required :error="errors.type">
               <BaseSelectAdvanced
@@ -513,6 +518,17 @@ export default defineNuxtComponent({
           .test('test-birthday-required', "Une date d'anniversaire est requise", (birthday) => {
             return ['admin'].includes(this.$stores.auth.contextRole) || birthday
           })
+          .test(
+            'is-old-enough',
+            'JeVeuxAider.gouv.fr est ouvert aux personnes de plus de 16 ans',
+            (date) => {
+              if (!date) {
+                return true
+              }
+              const age = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+              return age >= 16
+            }
+          )
           .nullable()
           .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),

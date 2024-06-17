@@ -263,14 +263,9 @@
                         required
                         :error="errors.birthday"
                       >
-                        <!-- <BaseInputDate2
+                        <BaseInputDateNative
                           v-model="form.birthday"
-                          name="birthday"
-                          @blur="validate('birthday')"
-                        /> -->
-
-                        <BaseInputDate3
-                          v-model="form.birthday"
+                          required
                           name="birthday"
                           @blur="validate('birthday')"
                         />
@@ -449,6 +444,7 @@ export default defineNuxtComponent({
         utm_source: utmSourceCookie?.value,
         utm_campaign: utmCampaignCookie?.value,
         utm_medium: utmMediumCookie?.value,
+        birthday: '',
       },
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
@@ -461,27 +457,13 @@ export default defineNuxtComponent({
           .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
           .required('Un code postal est requis'),
         country: string().required('Un pays est requis'),
-        // Input2
-        // birthday: mixed()
-        //   .required("Une date d'anniversaire est requise")
-        //   .transform((value) =>
-        //     value instanceof Date ? value : this.$dayjs(value, 'DD/MM/YYYY', true).toDate()
-        //   )
-        //   .test('invalid-date', 'La date indiquée est invalide', (value) => {
-        //     return !isNaN(value)
-        //   })
-        //   .test('is-old-enough', errorIsOldEnoughErrorMessage, function (date) {
-        //     const today = new Date()
-        //     const age = today.getFullYear() - date.getFullYear()
-        //     return age >= 16
-        //   }),
-        // Input3
         birthday: date()
           .typeError('La date indiquée est invalide')
-          .required("Une date d'anniversaire est requise")
-          .test('is-old-enough', errorIsOldEnoughErrorMessage, function (date) {
-            const today = new Date()
-            const age = today.getFullYear() - date.getFullYear()
+          .test('is-old-enough', errorIsOldEnoughErrorMessage, (date) => {
+            if (!date) {
+              return true
+            }
+            const age = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
             return age >= 16
           }),
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
