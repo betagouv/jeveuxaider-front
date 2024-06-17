@@ -348,7 +348,12 @@
               required
               :error="errors.birthday"
             >
-              <BaseInputDate v-model="form.birthday" required name="birthday" />
+              <BaseInputDateNative
+                v-model="form.birthday"
+                required
+                name="birthday"
+                @blur="validate('birthday')"
+              />
             </BaseFormControl>
             <BaseFormControl
               label="Mot de passe"
@@ -459,6 +464,7 @@ export default defineNuxtComponent({
       currentStepKey: 'choix_orga_type',
       form: {
         structure: {},
+        birthday: '',
       },
       orgaExist: null,
       showModalConfirmOrga: false,
@@ -476,9 +482,18 @@ export default defineNuxtComponent({
           .matches(/^\d{5}$/, 'Le format du code postal est incorrect')
           .required('Un code postal est requis'),
         birthday: date()
-          .required('Le format de la date est incorrect')
-          .nullable()
-          .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
+          .typeError('La date indiquée est invalide')
+          .test(
+            'is-old-enough',
+            'JeVeuxAider.gouv.fr est ouvert aux personnes de plus de 16 ans',
+            (date) => {
+              if (!date) {
+                return true
+              }
+              const age = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
+              return age >= 16
+            }
+          ),
         email: string().required('Un email est requis').email(),
         password: string().min(8).required('Un mot de passe est requis'),
         password_confirmation: string()
