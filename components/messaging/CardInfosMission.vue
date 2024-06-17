@@ -72,9 +72,13 @@ export default defineNuxtComponent({
   },
   computed: {
     lieu() {
-      return this.mission.is_autonomy
-        ? this.mission.autonomy_zips?.map((item) => `${item.city} (${item.zip})`).join(', ')
-        : `${this.mission.city} (${this.mission.zip})`
+      return this.mission.addresses
+        ?.map((item) => item.city)
+        .filter((value, index, self) => self.indexOf(value) === index)
+        .join(', ')
+      // return this.mission.is_autonomy
+      //   ? this.mission.autonomy_zips?.map((item) => `${item.city} (${item.zip})`).join(', ')
+      //   : `${this.mission.city} (${this.mission.zip})`
     },
   },
 })

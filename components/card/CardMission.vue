@@ -103,15 +103,18 @@
       </div>
 
       <div class="truncate text-[#3A3A3A] text-sm max-w-full">
-        <template v-if="mission.is_autonomy">
+        <!-- <template v-if="mission.is_autonomy">
           {{ autonomyCities }}
+        </template> -->
+        <template v-if="mission.type === 'Mission en présentiel' && mission.addresses">
+          {{ uniqueCities.join(', ') }}
         </template>
 
-        <template v-else-if="mission.city && mission.type == 'Mission en présentiel'">
+        <!-- <template v-else-if="mission.city && mission.type == 'Mission en présentiel'">
           <span v-if="mission.zip">{{ missionCity }} ({{ mission.zip }})</span>
           <span v-else-if="mission.department">{{ missionCity }} ({{ mission.department }})</span>
           <span v-else>{{ missionCity }}</span>
-        </template>
+        </template> -->
 
         <template v-else> Mission à distance </template>
       </div>
@@ -171,6 +174,7 @@ import DsfrErrorIcon from '@/components/icon/dsfr/Error.vue'
 import DsfrWarningIcon from '@/components/icon/dsfr/Warning.vue'
 import DsfrNewIcon from '@/components/icon/dsfr/New.vue'
 import DsfrInfoIcon from '@/components/icon/dsfr/Info.vue'
+import mission from '@/mixins/mission'
 
 export default defineNuxtComponent({
   components: {
@@ -201,10 +205,10 @@ export default defineNuxtComponent({
     },
   },
   computed: {
-    autonomyCities() {
-      const { formatAutonomyCities } = autonomyCitiesHelper()
-      return formatAutonomyCities(this.mission.autonomy_zips)
-    },
+    // autonomyCities() {
+    //   const { formatAutonomyCities } = autonomyCitiesHelper()
+    //   return formatAutonomyCities(this.mission.autonomy_zips)
+    // },
     placesLeftText() {
       if (!this.mission.is_registration_open) {
         return 'Inscription fermée'

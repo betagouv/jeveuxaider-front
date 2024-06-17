@@ -76,16 +76,19 @@
             {{ mission.name ?? 'Titre à définir' }}
           </DsfrHeading>
           <div class="truncate text-[#3A3A3A] text-sm max-w-full flex-none">
-            <template v-if="mission.is_autonomy">
+            <!-- <template v-if="mission.is_autonomy">
               {{ autonomyCities }}
-            </template>
+            </template> -->
 
-            <template v-else-if="mission.city && mission.type == 'Mission en présentiel'">
+            <!-- <template v-else-if="mission.city && mission.type == 'Mission en présentiel'">
               <span v-if="mission.zip">{{ missionCity }} ({{ mission.zip }})</span>
               <span v-else-if="mission.department"
                 >{{ missionCity }} ({{ mission.department }})</span
               >
               <span v-else>{{ missionCity }}</span>
+            </template> -->
+            <template v-if="mission.type === 'Mission en présentiel' && mission.addresses">
+              {{ uniqueCities.join(', ') }}
             </template>
 
             <template v-else> Mission à distance </template>
@@ -118,10 +121,10 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    autonomyCities() {
-      const { formatAutonomyCities } = autonomyCitiesHelper()
-      return formatAutonomyCities(this.mission.autonomy_zips)
-    },
+    // autonomyCities() {
+    //   const { formatAutonomyCities } = autonomyCitiesHelper()
+    //   return formatAutonomyCities(this.mission.autonomy_zips)
+    // },
   },
   methods: {
     onLogoError() {

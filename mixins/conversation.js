@@ -50,25 +50,34 @@ export default {
         return
       }
 
-      if (model.is_autonomy && model.autonomy_zips.length) {
-        return model.autonomy_zips
-          .map((item) => {
-            return item.city.includes(' Arrondissement')
-              ? `${item.city.replace(' Arrondissement', '')}`
-              : `${item.city} (${item.zip})`
-          })
-          .sort((a, b) => a.localeCompare(b, 'fr', { numeric: true }))
-          .join(', ')
-      }
+      // if (model.is_autonomy && model.autonomy_zips.length) {
+      //   return model.autonomy_zips
+      //     .map((item) => {
+      //       return item.city.includes(' Arrondissement')
+      //         ? `${item.city.replace(' Arrondissement', '')}`
+      //         : `${item.city} (${item.zip})`
+      //     })
+      //     .sort((a, b) => a.localeCompare(b, 'fr', { numeric: true }))
+      //     .join(', ')
+      // }
 
-      if (model.type === 'Mission en présentiel' && model.city) {
-        let cityLabel = this.getCity(this.conversation)
-        if (model.zip) {
-          cityLabel = `${cityLabel} (${model.zip})`
-        } else if (model.department) {
-          cityLabel = `${cityLabel} (${model.department})`
-        }
-        return cityLabel
+      // if (model.type === 'Mission en présentiel' && model.city) {
+      //   let cityLabel = this.getCity(this.conversation)
+      //   if (model.zip) {
+      //     cityLabel = `${cityLabel} (${model.zip})`
+      //   } else if (model.department) {
+      //     cityLabel = `${cityLabel} (${model.department})`
+      //   }
+      //   return cityLabel
+      // }
+
+      if (model.type === 'Mission en présentiel') {
+        return model.addresses
+          ?.map((address) => {
+            return `${address.city} (${address.zip})`
+          })
+          .filter((value, index, self) => self.indexOf(value) === index)
+          .join(', ')
       }
 
       return 'Mission à distance'

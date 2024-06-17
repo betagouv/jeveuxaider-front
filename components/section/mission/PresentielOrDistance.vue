@@ -21,16 +21,16 @@
         <span v-if="mission.autonomy_zips.length > 1">Elle est proposée sur plusieurs lieux.</span>
       </p> -->
       <div class="text-[#727273]">
-        <div class="line-clamp-1">
+        <div class="old-line-clamp-1">
           <span class="relative left-[-3px]">📍</span>
           <span>{{ mission.addresses.map((a) => a.label).join(', ') }}</span>
         </div>
-        <div v-if="mission.autonomy_precisions">
+        <!-- <div v-if="mission.autonomy_precisions">
           <span class="font-bold">Précisions sur la zone d’intervention&nbsp;: </span>
           <span>{{
             $filters.decodeHTMLEntities($filters.stripHTML(mission.autonomy_precisions))
           }}</span>
-        </div>
+        </div> -->
       </div>
     </div>
   </BaseBox>

@@ -30,7 +30,7 @@
       :initial-filters="`domaines:&quot;${domaine.name}&quot;`"
       :with-slideshow-remote="true"
       :secondary-filters="[
-        'is_autonomy',
+        // 'is_autonomy',
         'structure.name',
         'is_ponctual',
         'publics_beneficiaires',

@@ -9,7 +9,6 @@
     <DsfrBreadcrumb
       :links="[{ text: 'Tableau de bord', to: '/dashboard' }, { text: 'Missions' }]"
     />
-
     <div>
       <BaseSectionHeading
         :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
@@ -77,7 +76,7 @@
               :options="responsables"
               attribute-key="id"
               attribute-label="full_name"
-              :modelValue="$route.query['filter[ofResponsable]']"
+              :modelValue="Number($route.query['filter[ofResponsable]'])"
               clearable
               @update:modelValue="changeFilter('filter[ofResponsable]', $event)"
             />
@@ -345,7 +344,7 @@
               @update:modelValue="changeFilter('filter[type]', $event)"
             />
 
-            <DsfrTag
+            <!-- <DsfrTag
               v-if="visibleFilter === 'is_autonomy'"
               as="button"
               size="md"
@@ -356,7 +355,7 @@
               @click="changeFilter('filter[is_autonomy]', 'true')"
             >
               En autonomie
-            </DsfrTag>
+            </DsfrTag> -->
           </template>
 
           <DsfrTag
@@ -484,7 +483,7 @@ export default defineNuxtComponent({
         'publics_volontaires',
         'publics_beneficiaires',
         'type',
-        'is_autonomy',
+        // 'is_autonomy',
         ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
           'is_snu_mig_compatible',
         ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&

@@ -2,7 +2,7 @@
   <div class="hidden sm:block lg:flex justify-between gap-8 items-baseline !mt-8 lg:!mb-4">
     <div class="flex flex-wrap items-center justify-start gap-3 lg:ml-6 xl:ml-12">
       <template v-for="(filter, i) in visibleFilters">
-        <AutonomyFilter v-if="filter === 'is_autonomy'" :key="i" />
+        <!-- <AutonomyFilter v-if="filter === 'is_autonomy'" :key="i" /> -->
 
         <FacetFilterToggle
           v-if="filter === 'date_type'"
@@ -321,7 +321,7 @@
 
 <script>
 import FacetFilterToggle from '@/components/section/search/FacetFilterToggle.vue'
-import AutonomyFilter from '@/components/section/search/AutonomyFilter.vue'
+// import AutonomyFilter from '@/components/section/search/AutonomyFilter.vue'
 import MinorsFilter from '@/components/section/search/MinorsFilter.vue'
 import PonctualFilter from '@/components/section/search/PonctualFilter.vue'
 import CommitmentFilter from '@/components/section/search/CommitmentFilter.vue'
@@ -332,7 +332,7 @@ import SecondarySearchFilter from '@/components/search/SecondarySearchFilter.vue
 export default defineNuxtComponent({
   components: {
     FacetFilterToggle,
-    AutonomyFilter,
+    // AutonomyFilter,
     MinorsFilter,
     PonctualFilter,
     CommitmentFilter,

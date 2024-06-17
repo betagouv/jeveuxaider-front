@@ -15,7 +15,7 @@ export default {
       return this.mission?.template?.domaine_secondary ?? this.mission?.domaine_secondary
     },
     missionType() {
-      return this.mission?.is_autonomy ? 'Mission en autonomie' : this.mission?.type
+      return this.mission?.type
     },
     activity() {
       const activity = this.mission?.activity ?? this.mission?.template?.activity
@@ -110,17 +110,17 @@ export default {
           return !!rolesWhoCanEdit?.includes(this.$stores.auth.contextRole)
       }
     },
-    missionCity() {
-      if (this.mission.city?.startsWith('Paris ')) {
-        return 'Paris'
-      } else if (this.mission.city?.startsWith('Lyon ')) {
-        return 'Lyon'
-      } else if (this.mission.city?.startsWith('Marseille ')) {
-        return 'Marseille'
-      } else {
-        return this.mission.city?.replace(' Arrondissement', '')
-      }
-    },
+    // missionCity() {
+    //   if (this.mission.city?.startsWith('Paris ')) {
+    //     return 'Paris'
+    //   } else if (this.mission.city?.startsWith('Lyon ')) {
+    //     return 'Lyon'
+    //   } else if (this.mission.city?.startsWith('Marseille ')) {
+    //     return 'Marseille'
+    //   } else {
+    //     return this.mission.city?.replace(' Arrondissement', '')
+    //   }
+    // },
     canRegister() {
       if (!this.mission.has_places_left) {
         console.log('no places left')
@@ -361,6 +361,11 @@ export default {
         this.mission.illustrations?.[0]?.urls?.original ??
         '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
       )
+    },
+    uniqueCities() {
+      return this.mission?.addresses
+        .map((address) => address.city)
+        .filter((value, index, self) => self.indexOf(value) === index)
     },
   },
   methods: {

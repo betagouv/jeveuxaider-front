@@ -145,17 +145,21 @@ export default defineNuxtComponent({
     },
     onDistanceClick() {
       this.form.type = 'Mission à distance'
-      this.form.is_autonomy = false
+      // this.form.is_autonomy = false
     },
     onRemovedAddressItem(address) {
       this.form.addresses = this.form.addresses.filter((item) => item.id !== address.id)
     },
     handleSelectedAddress(selectedItem) {
+      console.log(selectedItem)
       this.form.addresses = [
         ...this.form.addresses,
         {
           id: selectedItem.id,
-          label: selectedItem.label,
+          label:
+            selectedItem.type === 'municipality'
+              ? `${selectedItem.postcode} ${selectedItem.city}`
+              : selectedItem.label,
           street: selectedItem.street,
           zip: selectedItem.postcode,
           city: selectedItem.city,

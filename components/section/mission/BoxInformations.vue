@@ -17,7 +17,7 @@
           term="Modifié le"
           :description="$dayjs(mission.updated_at).format('D MMMM YYYY à HH:mm')"
         />
-        <BaseDescriptionListItem term="Type" :description="missionType" />
+        <BaseDescriptionListItem term="Type" :description="mission.type" />
         <BaseDescriptionListItem
           term="Domaine"
           :description="mission.domaine && mission.domaine.name"
@@ -44,9 +44,8 @@
           "
         />
         <BaseDescriptionListItem
-          v-if="!mission.is_autonomy && mission.full_address.trim()"
-          term="Adresse"
-          :description="mission.full_address"
+          term="Adresses"
+          :description="mission?.addresses?.map((item) => item.label).join(', ')"
         />
         <BaseDescriptionListItem
           v-if="mission.department"
@@ -56,11 +55,11 @@
             'departments'
           )}`"
         />
-        <BaseDescriptionListItem
+        <!-- <BaseDescriptionListItem
           v-if="autonomyCities"
           term="Villes"
           :description="autonomyCities"
-        />
+        /> -->
         <BaseDescriptionListItem
           v-if="['admin'].includes($stores.auth.contextRole) && mission.tags"
           term="Tags"
@@ -85,12 +84,13 @@ export default defineNuxtComponent({
   },
   computed: {
     missionType() {
-      return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
+      return this.mission.type
+      // return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
     },
-    autonomyCities() {
-      const { formatAutonomyCities } = autonomyCitiesHelper()
-      return formatAutonomyCities(this.mission.autonomy_zips)
-    },
+    // autonomyCities() {
+    //   const { formatAutonomyCities } = autonomyCitiesHelper()
+    //   return formatAutonomyCities(this.mission.autonomy_zips)
+    // },
   },
 })
 </script>

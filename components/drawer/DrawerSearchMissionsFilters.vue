@@ -35,10 +35,10 @@
       legend="Filtrer par type d'activité"
     />
 
-    <div v-if="isPresentiel" class="space-y-2">
+    <!-- <div v-if="isPresentiel" class="space-y-2">
       <div class="relative font-medium text-[15px]">En autonomie</div>
       <AutonomyMobileFilter />
-    </div>
+    </div> -->
 
     <!-- <div class="space-y-2">
       <div class="relative font-medium text-[15px]">Missions courtes</div>

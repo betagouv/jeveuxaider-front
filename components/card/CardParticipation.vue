@@ -11,26 +11,26 @@
 
               <template
                 v-if="
-                  participation.mission.city &&
+                  participation.mission.addresses &&
                   participation.mission.type == 'Mission en présentiel'
                 "
               >
-                <template v-if="participation.mission.zip">
-                  <span class="font-semibold">{{ missionCity }}</span>
-                  <span> ({{ participation.mission.zip }})</span>
+                <template v-if="uniqueCities.length > 0">
+                  <span class="font-semibold">{{ uniqueCities.join(', ') }}</span>
+                  <!-- <span> ({{ participation.mission.zip }})</span> -->
                 </template>
 
-                <template v-else-if="participation.mission.department">
-                  <span class="font-semibold">{{ missionCity }}</span>
-                  <span> ({{ participation.mission.department }})</span>
-                </template>
+                <!-- <template v-else-if="participation.mission.department">
+                  <span class="font-semibold">{{ participation.mission.department }}</span>
+                   <span> ({{ participation.mission.department }})</span> 
+                </template> -->
 
                 <template v-else>
-                  <span class="font-semibold">{{ missionCity }}</span>
+                  <span class="font-semibold">{{ participation.mission.department }}</span>
                 </template>
               </template>
 
-              <template v-else-if="participation.mission.is_autonomy"> En autonomie </template>
+              <!-- <template v-else-if="participation.mission.is_autonomy"> En autonomie </template> -->
 
               <template v-else> À distance </template>
             </div>

@@ -625,7 +625,7 @@ export default defineNuxtComponent({
       )
     },
     missionType() {
-      return this.mission?.is_autonomy ? 'Mission en autonomie' : this.mission?.type
+      return this.mission?.type
     },
     userParticipationLink() {
       return !this.userParticipation
