@@ -2,6 +2,7 @@
   <div class="p-4 lg:p-6">
     <div class="flex">
       <BaseAvatar
+        v-if="!hideAvatars"
         v-for="(recipient, i) in recipients.slice(0, 3)"
         :key="recipient.id"
         class="mr-4 relative"
@@ -13,10 +14,9 @@
       />
       <div class="flex-1 min-w-0 relative">
         <div class="flex items-center">
-          <p
-            class="truncate font-bold text-lg"
-            v-html="recipients.map((recipient) => recipient.profile.first_name).join(', ')"
-          />
+          <p class="truncate font-bold text-lg">
+            {{ title }}
+          </p>
           <div
             v-if="hasUnreadMessage"
             aria-label="Message non lu"
@@ -50,7 +50,18 @@ import MixinConversation from '@/mixins/conversation.js'
 export default defineNuxtComponent({
   mixins: [MixinConversation],
   props: {
-    conversation: { type: Object, required: true },
+    conversation: {
+      type: Object,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    hideAvatars: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     recipients() {

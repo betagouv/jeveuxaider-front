@@ -177,16 +177,16 @@
               @selected="onSelectReseau"
             />
 
-            <!-- <BaseFilterSelectAdvanced
-              v-if="visibleFilter === 'ofResponsable'"
+            <BaseFilterSelectAdvanced
+              v-if="visibleFilter === 'ofResponsableAdmin'"
               name="responsable"
               :options="responsablesStructures"
-              :modelValue="$route.query['filter[ofResponsable]']"
+              :modelValue="Number($route.query['filter[ofResponsable]'])"
               attribute-key="id"
               attribute-label="full_name"
               placeholder="Responsable"
               @update:modelValue="changeFilter('filter[ofResponsable]', $event)"
-            /> -->
+            />
 
             <BaseFilterInputAutocomplete
               v-if="visibleFilter === 'ofTerritoire'"
@@ -492,7 +492,7 @@ export default defineNuxtComponent({
           'ofReseau',
         this.responsablesStructures.length &&
           ['admin'].includes(this.$stores.auth.contextRole) &&
-          'ofResponsable',
+          'ofResponsableAdmin',
         ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
           'structure.statut_juridique',
         ['admin'].includes(this.$stores.auth.contextRole) && 'ofTemplate',
@@ -541,6 +541,7 @@ export default defineNuxtComponent({
       }
       if (organisationId !== oldOrganisationId) {
         const responsables = await apiFetch(`/structures/${organisationId}/responsables`)
+        console.log('responsresponsablesStructuresables', responsables)
         this.responsablesStructures = responsables.map((user) => user.profile) ?? []
       }
     },

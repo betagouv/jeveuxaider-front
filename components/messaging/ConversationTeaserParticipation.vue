@@ -1,5 +1,9 @@
 <template>
-  <ConversationTeaser :conversation="conversation">
+  <ConversationTeaser
+    :conversation="conversation"
+    :title="title"
+    :hide-avatars="isCurrentUserBenevole"
+  >
     <template #badge>
       <DsfrBadge size="sm" :type="badgeType" :no-icon="true">
         {{ conversation.conversable.state }}
@@ -9,7 +13,7 @@
     <p :class="['line-clamp-2', { 'font-bold': hasUnreadMessage }]">
       {{ conversation.conversable.mission.name }}
     </p>
-    <div class="flex space-x-1 items-center truncate text-sm mt-2 text-cool-gray-500">
+    <div class="flex space-x-1 items-center truncate text-sm mt-4 text-cool-gray-500">
       <RiMapPin2Fill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
       <p class="truncate leading-none">
         {{ getPlaceMission(conversation) }}
@@ -47,6 +51,11 @@ export default defineNuxtComponent({
     conversation: { type: Object, required: true },
   },
   computed: {
+    title() {
+      return this.isCurrentUserBenevole
+        ? this.conversation.conversable.mission.structure.name
+        : this.conversation.conversable.profile.full_name
+    },
     canSeeTags() {
       return (
         ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(

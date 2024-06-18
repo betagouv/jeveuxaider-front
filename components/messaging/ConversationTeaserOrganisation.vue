@@ -1,5 +1,5 @@
 <template>
-  <ConversationTeaser :conversation="conversation">
+  <ConversationTeaser :conversation="conversation" :title="title">
     <template #badge>
       <div class="flex space-x-1 items-center truncate text-xs text-[#272747]">
         <div class="truncate leading-none uppercase font-bold">
@@ -13,7 +13,7 @@
       {{ conversation.conversable.name }}
     </p>
 
-    <div class="flex space-x-1 items-center truncate text-sm mt-2 text-cool-gray-500">
+    <div class="flex space-x-1 items-center truncate text-sm mt-4 text-cool-gray-500">
       <RiBuildingFill class="w-[14px] h-[14px] flex-none fill-current text-gray-400" />
       <p class="truncate leading-none">
         {{ $filters.label(conversation.conversable.statut_juridique, 'structure_legal_status') }}
@@ -33,6 +33,16 @@ export default defineNuxtComponent({
   mixins: [MixinConversation],
   props: {
     conversation: { type: Object, required: true },
+  },
+  computed: {
+    recipients() {
+      return this.conversation.users.filter((user) => {
+        return user.id != this.$stores.auth.profile.user_id
+      })
+    },
+    title() {
+      return this.recipients.map((recipient) => recipient.profile.secret_name).join(', ')
+    },
   },
 })
 </script>
