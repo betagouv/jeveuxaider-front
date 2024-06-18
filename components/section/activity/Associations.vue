@@ -29,7 +29,7 @@
                 class="mx-auto lg:mx-0 my-auto w-full sm:w-auto h-20 object-contain"
                 :alt="media.name"
                 :src="media.urls.original"
-                srcset="media.urls.small"
+                :srcset="media.urls.small"
                 style="max-width: 130px"
                 @error="$refs[`media-${media.id}`][0]?.$el.remove()"
               />
