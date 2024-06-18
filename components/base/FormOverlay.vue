@@ -10,7 +10,7 @@
     <div v-show="isOpen" class="fixed inset-0 w-full h-full z-50">
       <div v-if="isOpen" class="w-full h-full bg-black/75">
         <FocusLoop :is-visible="true">
-          <div v-scroll-lock="true" class="p-[120px] h-full w-full overflow-y-auto">
+          <div v-scroll-lock="true" class="p-[40px] h-full w-full overflow-y-auto">
             <div class="bg-white">
               <div class="p-8 flex justify-between">
                 <div class="text-lg font-bold">{{ title }}</div>

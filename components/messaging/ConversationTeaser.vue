@@ -25,7 +25,7 @@
           />
 
           <!-- Badge Desktop -->
-          <div class="ml-auto hidden xs:block leading-none">
+          <div class="pl-4 ml-auto hidden xs:block leading-none">
             <slot name="badge" />
           </div>
         </div>
@@ -66,6 +66,9 @@ export default defineNuxtComponent({
   },
   computed: {
     recipients() {
+      if(this.isCurrentUserResponsable){
+        return this.conversation.users.filter((user)=> user.id === this.conversation.conversable.profile.user_id)
+      }
       return this.conversation.users.filter((user) => {
         return user.id != this.$stores.auth.profile.user_id
       })

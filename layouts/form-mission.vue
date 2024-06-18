@@ -60,7 +60,9 @@ export default {
   watch: {
     $route: {
       async handler(newVal, oldVal) {
-        if (newVal.params.id && newVal.params.id !== oldVal.params.id) {
+        // console.log('watch  handler', newVal)
+        // console.log('watch  handler', oldVal)
+        if (newVal.params.id && newVal.params.id !== oldVal.params.id && newVal.name.includes('admin-missions-id')) {
           console.log('FormMissionWrapper $route.params.id', newVal.params.id, oldVal.params.id)
           this.$stores.formMission.setLoading(true)
           const mission = await apiFetch(`/missions/${newVal.params.id}/show`)
