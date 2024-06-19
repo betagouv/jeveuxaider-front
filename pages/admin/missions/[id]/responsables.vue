@@ -33,7 +33,7 @@
         </template>
         <template v-else>
           <DsfrFormControl html-for="responsables" :error="errors.responsables">
-            <div class="space-y-4">
+            <div class="space-y-4 mb-8">
               <div
                 class="flex justify-between items-center"
                 v-for="responsable in form.responsables"
@@ -138,9 +138,11 @@ export default defineNuxtComponent({
     onAddResponsableSubmit(responsable) {
       // this.form.responsables.push(responsable) // bug reactivity
       this.form.responsables = [...this.form.responsables, responsable]
+      this.validate('responsables')
     },
     onRemovedResponsable(responsable) {
       this.form.responsables = this.form.responsables.filter((r) => r.id !== responsable.id)
+      this.validate('responsables')
     },
     async onValidateClick() {
       this.loading = true
