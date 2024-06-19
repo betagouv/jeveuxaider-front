@@ -1,8 +1,7 @@
 <template>
-  <div>
+  <div v-if="missions?.length">
     <BaseSlideshow
       :key="slideshowKey"
-      v-if="missions.length"
       ref="algoliaSlideshow"
       :bleed="bleed"
       :dots-variant="dotsVariant"

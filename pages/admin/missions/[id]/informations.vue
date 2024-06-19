@@ -50,6 +50,20 @@
             </DsfrFormControl>
           </div>
 
+            <DsfrFormControl
+            label="Publics aidés"
+            html-for="publics_beneficiaires"
+            :error="errors.publics_beneficiaires"
+            required
+          >
+            <DsfrTagsGroup
+              v-model="form.publics_beneficiaires"
+              name="publics_beneficiaires"
+              :options="$labels.mission_publics_beneficiaires"
+              class="mt-4"
+            />
+          </DsfrFormControl>
+
           <DsfrFormControl
             label="Quelques mots pour motiver les bénévoles à participer"
             html-for="information"

@@ -134,7 +134,12 @@ export default defineNuxtComponent({
       autocompleteOptions: [],
       formSchema: object({
         type: string().required('Le type de mission est requis'),
-        addresses: array().min(1, 'Veuillez ajouter au moins une adresse'),
+        addresses: array()
+          .nullable()
+          .when(['type'], {
+            is: (type) => type === 'Mission en présentiel',
+            then: (schema) => schema.min(1, 'Veuillez ajouter au moins une adresse').required("Veuillez ajouter au moins une adresse"),
+          }),
       }),
     }
   },
