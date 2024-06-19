@@ -5,7 +5,7 @@
     </template>
     <div v-if="form">
       <h2 class="text-[28px] font-bold leading-9 mb-10">En quoi consiste votre mission ?</h2>
-      <CustomTips class="mb-10">
+      <CustomTips v-if="!$stores.formMission.mission.template_id" class="mb-10">
         Consultez
         <a
           class="underline"
@@ -17,8 +17,8 @@
         proposer leur aide.
       </CustomTips>
       <template v-if="form.template_id">
-        <div class="space-y-8">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="space-y-10">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <DsfrFormControl
               label="Domaine d'action principal"
               html-for="domaine_id"
@@ -50,7 +50,7 @@
             </DsfrFormControl>
           </div>
 
-            <DsfrFormControl
+          <DsfrFormControl
             label="Publics aidés"
             html-for="publics_beneficiaires"
             :error="errors.publics_beneficiaires"
@@ -77,7 +77,7 @@
             <DsfrRichEditor name="information" v-model="form.information" />
           </DsfrFormControl>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <DsfrFormControl
               label="Activité principale"
               html-for="activity_id"
@@ -158,8 +158,8 @@
         </div>
       </template>
       <template v-else>
-        <div class="space-y-8">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="space-y-10">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <DsfrFormControl
               label="Domaine d'action principal"
               html-for="domaine_id"
@@ -254,7 +254,7 @@
             <DsfrRichEditor name="information" v-model="form.information" />
           </DsfrFormControl>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <DsfrFormControl
               label="Activité principale"
               html-for="activity_id"

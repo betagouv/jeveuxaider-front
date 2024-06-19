@@ -63,7 +63,7 @@ export default defineNuxtComponent({
       return `${this.$stores.auth.user.profile.zip} - ${this.$stores.auth.user.profile.city}`
     },
     missionZip() {
-      return `${this.$stores.softGate.selectedMission.zip} - ${this.$stores.softGate.selectedMission.city}`
+      return `${this.$stores.softGate.selectedMission.addresses[0].zip} - ${this.$stores.softGate.selectedMission.addresses[0].city}`
     },
     options() {
       if (this.checkDistance) {

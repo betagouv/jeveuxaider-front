@@ -57,7 +57,7 @@
               missionType == 'Mission en autonomie'
                 ? `Bénévolat ${mission.structure.name} en autonomie`
                 : missionType == 'Mission en présentiel'
-                ? `Bénévolat ${mission.structure.name} à ${mission.city}`
+                ? `Bénévolat ${mission.structure.name} à ${mission.addresses[0]?.city}`
                 : `Bénévolat ${mission.structure.name} à distance`,
             is: 'h1',
           },

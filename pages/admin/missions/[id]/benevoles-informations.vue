@@ -9,7 +9,7 @@
         En précisant le type de profils recherchés, vous augmentez vos chances de trouver des
         bénévoles correspondant à vos besoins.
       </CustomTips>
-      <div class="space-y-8">
+      <div class="space-y-10">
         <DsfrFormControl
           label="Pré-requis pour réaliser la mission (3 max.)"
           html-for="prerequisites"
@@ -72,13 +72,23 @@
           >
             <BaseToggle
               v-model="form.is_snu_mig_compatible"
-              label="Proposer cette mission aux jeunes volontaires du <strong>Service National Universel</strong> (de 15ans à 18ans)"
+              label="Proposer cette mission aux jeunes volontaires du <strong>Service National Universel</strong> (de 15 à 17 ans)"
               @checked="onSNUChecked"
-            />
+            >
+              <template #right>
+                <img
+                  src="@/assets/images/snu-logo-2.png"
+                  alt="SNU"
+                  title="SNU"
+                  class="h-10"
+                  data-not-lazy
+                />
+              </template>
+            </BaseToggle>
             <DsfrFormControl
               v-if="form.is_snu_mig_compatible"
               class="mt-8"
-              label="Nombre de volontaires du snu acceptés"
+              label="Nombre de volontaires du SNU acceptés"
               html-for="snu_mig_places"
               required
               :error="errors.snu_mig_places"
@@ -126,7 +136,7 @@
         de vous assurer que :
       </p>
       <ul>
-        <li>- Votre mission est adaptée pour l’accueil de volontaires de 15 à 18 ans</li>
+        <li>- Votre mission est adaptée pour l’accueil de volontaires de 15 à 17 ans</li>
         <li>- Un tuteur sera présent durant la mission pour accompagner les volontaires du SNU</li>
       </ul>
     </BaseAlertDialog>

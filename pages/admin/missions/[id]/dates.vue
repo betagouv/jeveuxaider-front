@@ -56,7 +56,7 @@
         </DsfrFormControl>
 
         <div v-if="form.date_type === 'recurring'" class="space-y-10">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <DsfrFormControl
               label="Fréquence d’engagement"
               html-for="commitment__duration"
@@ -190,7 +190,7 @@
           </template>
 
           <template v-if="form.with_dates === 'no'">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <DsfrFormControl
                 label="Date de début"
                 html-for="start_date"

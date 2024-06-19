@@ -11,15 +11,8 @@
           sera chargé de les accompagner dans leur intégration dans la structure.
         </p>
         <p class="mt-4">
-          Vous pouvez
-          <nuxt-link
-            no-prefetch
-            class="underline"
-            :to="`/admin/organisations/${$stores.formMission.mission.structure_id}#membres`"
-          >
-            ajouter un nouveau membre
-          </nuxt-link>
-          à votre équipe pour vous répartir la gestion de la mission.
+          Vous pouvez ajouter un nouveau membre à votre équipe pour vous répartir la gestion de la
+          mission.
         </p>
       </CustomTips>
       <div class="grid grid-cols-1 gap-8">

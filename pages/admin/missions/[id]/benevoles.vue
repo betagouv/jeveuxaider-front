@@ -43,7 +43,7 @@
           min="1"
           name="participations_max"
           v-model="form.participations_max"
-          class="outline-none focus:outline-none border-b px-8 py-1 w-[220px] text-center border-none text-[80px] font-bold text-[#161616] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          class="outline-none focus:outline-none px-8 py-1 w-[220px] text-center border-none text-[80px] font-bold text-[#161616] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         />
 
         <button
@@ -53,6 +53,7 @@
           <RiAddLine class="fill-current h-5 w-5" />
         </button>
       </div>
+      <div class="w-[120px] mx-auto border-b-2 border-b-[#161616]" />
       <div
         v-if="$stores.formMission.mission.state === 'Validée'"
         class="mt-8 text-[#666666] text-center"

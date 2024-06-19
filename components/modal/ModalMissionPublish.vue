@@ -23,10 +23,12 @@
     </template>
     <template v-else>
       <p class="mb-4">
-        Vous êtes sur le point de soumettre votre mission. Elle sera validée ou non par le référent
-        de votre département. En moyenne, le traitement prend entre 7 et 10 jours.
+        Votre mission va être examinée par des référents départementaux.
+        <strong
+          >Cela prend en général 7 à 10 jours et vous recevrez un email avec le résultat.</strong
+        >
       </p>
-      <p>Vous serez notifiés par mail de son avancement.</p>
+      <p>Si votre mission est validée, elle sera automatiquement publiée.</p>
     </template>
   </BaseAlertDialog>
 </template>

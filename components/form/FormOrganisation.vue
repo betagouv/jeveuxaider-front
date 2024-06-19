@@ -162,7 +162,7 @@
             </template>
 
             <BaseHeading :level="3" class="mb-8"> Votre organisation sur Internet </BaseHeading>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <BaseFormControl label="Email public" html-for="email" :error="errors.email">
                 <BaseInput
                   v-model="form.email"
@@ -392,7 +392,7 @@
                 collection="domaine__illustrations_organisation"
                 preview-conversion="large"
                 preview-sizes="200px"
-                class="grid grid-cols-1 lg:grid-cols-2 gap-4"
+                class="grid grid-cols-1 lg:grid-cols-2 gap-6"
                 @change="onMediaPickerChange($event, 'illustrations')"
               />
 
@@ -403,7 +403,7 @@
 
             <div
               v-if="$stores.auth.contextRole === 'admin'"
-              class="grid grid-cols-1 lg:grid-cols-2 gap-4"
+              class="grid grid-cols-1 lg:grid-cols-2 gap-6"
             >
               <BaseFormControl label="Surcharger visuel 1" html-for="avatar">
                 <BaseImageCrop
