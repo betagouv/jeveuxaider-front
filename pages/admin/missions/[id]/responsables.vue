@@ -32,37 +32,41 @@
           <div class="text-center text-gray-500">Aucun responsable</div>
         </template>
         <template v-else>
-          <div
-            class="flex justify-between items-center"
-            v-for="responsable in form.responsables"
-            :key="responsable.id"
-          >
-            <div class="flex">
-              <BaseAvatar
-                :img-srcset="responsable.avatar ? responsable.avatar.urls.thumbMedium : null"
-                :img-src="responsable.avatar ? responsable.avatar.urls.original : null"
-                :initials="responsable.short_name"
-                size="sm"
-                class="mr-4"
-              />
-              <div>
-                <div class="first-letter:uppercase">
-                  {{ responsable.full_name }}
+          <DsfrFormControl html-for="responsables" :error="errors.responsables">
+            <div class="space-y-4">
+              <div
+                class="flex justify-between items-center"
+                v-for="responsable in form.responsables"
+                :key="responsable.id"
+              >
+                <div class="flex">
+                  <BaseAvatar
+                    :img-srcset="responsable.avatar ? responsable.avatar.urls.thumbMedium : null"
+                    :img-src="responsable.avatar ? responsable.avatar.urls.original : null"
+                    :initials="responsable.short_name"
+                    size="sm"
+                    class="mr-4"
+                  />
+                  <div>
+                    <div class="first-letter:uppercase">
+                      {{ responsable.full_name }}
+                    </div>
+                    <div class="text-sm text-gray-500 font-medium">
+                      {{ responsable.email }}
+                    </div>
+                  </div>
                 </div>
-                <div class="text-sm text-gray-500 font-medium">
-                  {{ responsable.email }}
-                </div>
+                <DsfrButton
+                  icon-only
+                  size="xs"
+                  type="tertiary"
+                  icon="RiDeleteBinLine"
+                  icon-class="text-[#CE0500]"
+                  @click="onRemovedResponsable(responsable)"
+                />
               </div>
             </div>
-            <DsfrButton
-              icon-only
-              size="xs"
-              type="tertiary"
-              icon="RiDeleteBinLine"
-              icon-class="text-[#CE0500]"
-              @click="onRemovedResponsable(responsable)"
-            />
-          </div>
+          </DsfrFormControl>
         </template>
       </div>
       <ModalFormMissionAddResponsable
@@ -104,9 +108,7 @@ export default defineNuxtComponent({
   },
   mounted() {
     if (this.form.responsables.length === 0) {
-      if (this.$stores.formMission.mission.structure.members[0]) {
-        this.form.responsables = [this.$stores.formMission.mission.structure.members[0]?.profile]
-      }
+      this.addDefaultResponsable()
     }
   },
   data() {
@@ -123,6 +125,16 @@ export default defineNuxtComponent({
   },
   computed: {},
   methods: {
+    addDefaultResponsable() {
+      const currentMemberUser = this.$stores.formMission.mission.structure.members.filter(
+        (member) => member.profile.id === this.$stores.auth.profile.id
+      )
+      if (currentMemberUser.length === 0) {
+        this.form.responsables = [this.$stores.formMission.mission.structure.members[0]?.profile]
+      } else {
+        this.form.responsables = [currentMemberUser[0].profile]
+      }
+    },
     onAddResponsableSubmit(responsable) {
       // this.form.responsables.push(responsable) // bug reactivity
       this.form.responsables = [...this.form.responsables, responsable]
