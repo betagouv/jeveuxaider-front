@@ -50,15 +50,17 @@ export default {
       if (activitiesClassifier.code === 200) {
         this.activities = this.activities
           .map((activity) => {
-            const activityFromClassifier = activitiesClassifier.content[0].find(
-              (ac) => ac.label === activity.name
+            const activityFromClassifier = activitiesClassifier.content[0].find((ac) =>
+              ac.label === 'Accompagnement aux activités sportives'
+                ? activity.name === 'Activités sportives'
+                : ac.label === activity.name
             )
             const formattedScore = activityFromClassifier
               ? this.$numeral(activityFromClassifier.score, '0.0 %')
               : null
             return {
               ...activity,
-              score: activityFromClassifier.score,
+              score: activityFromClassifier?.score,
               formattedScore,
             }
           })
