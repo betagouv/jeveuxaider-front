@@ -19,11 +19,14 @@
         <div class="flex justify-between items-center border-b py-4">
           <div class="font-bold text-xl">Responsables</div>
           <DsfrButton
-            :disabled="
-              form.responsables.length === $stores.formMission.mission.structure.members.length
-            "
+            :disabled="!canAddResponsable"
             size="sm"
             type="secondary"
+            v-tooltip="
+              !canAddResponsable
+                ? `Vous n'avez pas d'autre responsable dans votre organisation`
+                : null
+            "
             @click="showModalAddResponsable = true"
             >Ajouter un responsable</DsfrButton
           >
@@ -123,7 +126,15 @@ export default defineNuxtComponent({
       }),
     }
   },
-  computed: {},
+  computed: {
+    canAddResponsable() {
+      console.log(this.form.responsables.length)
+      console.log(this.$stores.formMission.mission.structure.members.length)
+      return (
+        this.form.responsables.length < this.$stores.formMission.mission.structure.members.length
+      )
+    },
+  },
   methods: {
     addDefaultResponsable() {
       const currentMemberUser = this.$stores.formMission.mission.structure.members.filter(

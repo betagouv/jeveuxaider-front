@@ -18,19 +18,19 @@
 
       {
         'text-white bg-jva-blue-500 hover:bg-jva-blue-800 active:bg-jva-blue-900 border-transparent':
-          type === 'primary',
+          type === 'primary' && !disabled,
       },
       {
         'text-jva-blue-500 border-jva-blue-500 bg-white hover:bg-[#F6F6F6] active:bg-[#EDEDED]':
-          type === 'secondary',
+          type === 'secondary' && !disabled,
       },
       {
         'text-jva-blue-500 border-[#DDDDDD] bg-white hover:bg-[#F6F6F6] active:bg-[#EDEDED]':
-          type === 'tertiary',
+          type === 'tertiary' && !disabled,
       },
       {
         'text-jva-blue-500 border-transparent bg-white hover:bg-[#F6F6F6] active:bg-[#EDEDED]':
-          type === 'tertiary-no-outline',
+          type === 'tertiary-no-outline' && !disabled,
       },
       { 'bg-transparent': type === 'transparent' },
       {
