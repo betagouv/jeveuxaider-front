@@ -103,20 +103,11 @@
       </div>
 
       <div class="truncate text-[#3A3A3A] text-sm max-w-full">
-        <!-- <template v-if="mission.is_autonomy">
-          {{ autonomyCities }}
-        </template> -->
         <template v-if="mission.type === 'Mission en présentiel' && mission.addresses">
           {{ uniqueCities.join(', ') }}
         </template>
-
-        <!-- <template v-else-if="mission.city && mission.type == 'Mission en présentiel'">
-          <span v-if="mission.zip">{{ missionCity }} ({{ mission.zip }})</span>
-          <span v-else-if="mission.department">{{ missionCity }} ({{ mission.department }})</span>
-          <span v-else>{{ missionCity }}</span>
-        </template> -->
-
-        <template v-else> Mission à distance </template>
+        <template v-else-if="mission.type === 'Mission à distance'"> Mission à distance </template>
+        <template v-else>Lieu à définir</template>
       </div>
 
       <div
@@ -225,6 +216,9 @@ export default defineNuxtComponent({
           'bénévoles recherchés'
         )
       } else {
+        if (!this.mission.publisher_name && !this.mission.participations_max) {
+          return ''
+        }
         return this.mission.has_places_left === false || this.mission.places_left === 0
           ? 'Complet'
           : 'Plusieurs bénévoles recherchés'

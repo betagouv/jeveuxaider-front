@@ -176,12 +176,13 @@
             <!-- Ils recherchent -->
             <div class="text-center pb-6">
               <p class="text-xl leading-tight mb-1 font-bold text-black">
-                <template v-if="!mission.has_places_left">
+                <template v-if="!mission.has_places_left && mission.is_online">
                   La mission est désormais complète
                 </template>
                 <template v-else-if="!mission.is_registration_open">
                   Les inscriptions sont fermées
                 </template>
+                <template v-else-if="!mission.is_online"> La mission n'est pas en ligne </template>
                 <template v-else>
                   <template v-if="['Terminée', 'Annulée'].includes(mission.state)">
                     Ils recherchaient
