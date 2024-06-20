@@ -87,20 +87,20 @@
               />
             </div>
           </div>
-        </template>
 
-        <!-- <DsfrFormControl
-          label="Précisions sur la zone d'intervention (villes, lieux, etc.)"
-          html-for="autonomy_precisions"
-          :error="errors.autonomy_precisions"
-        >
-          <DsfrTextarea
-            v-model="form.autonomy_precisions"
-            name="autonomy_precisions"
-            placeholder="Précisez en quelques mots les zones d'intervention du bénévole en autonomie"
-            @keydown.enter.native.prevent
-          />
-        </DsfrFormControl> -->
+          <DsfrFormControl
+            label="Précisions sur la zone d'intervention (villes, lieux, etc.)"
+            html-for="addresses_precisions"
+            :error="errors.addresses_precisions"
+          >
+            <DsfrTextarea
+              v-model="form.addresses_precisions"
+              name="addresses_precisions"
+              placeholder="Précisez en quelques mots les zones d'intervention du bénévole"
+              @keydown.enter.native.prevent
+            />
+          </DsfrFormControl>
+        </template>
       </div>
     </div>
     <template #footer>
@@ -138,7 +138,10 @@ export default defineNuxtComponent({
           .nullable()
           .when(['type'], {
             is: (type) => type === 'Mission en présentiel',
-            then: (schema) => schema.min(1, 'Veuillez ajouter au moins une adresse').required("Veuillez ajouter au moins une adresse"),
+            then: (schema) =>
+              schema
+                .min(1, 'Veuillez ajouter au moins une adresse')
+                .required('Veuillez ajouter au moins une adresse'),
           }),
       }),
     }

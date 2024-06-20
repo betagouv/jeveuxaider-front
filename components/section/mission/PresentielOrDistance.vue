@@ -25,12 +25,12 @@
           <span class="relative left-[-3px]">📍</span>
           <span>{{ mission.addresses.map((a) => a.label).join(', ') }}</span>
         </div>
-        <!-- <div v-if="mission.autonomy_precisions">
+        <div v-if="mission.addresses_precisions">
           <span class="font-bold">Précisions sur la zone d’intervention&nbsp;: </span>
           <span>{{
-            $filters.decodeHTMLEntities($filters.stripHTML(mission.autonomy_precisions))
+            $filters.decodeHTMLEntities($filters.stripHTML(mission.addresses_precisions))
           }}</span>
-        </div> -->
+        </div>
       </div>
     </div>
   </BaseBox>

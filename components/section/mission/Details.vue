@@ -31,14 +31,12 @@
       <BaseTextFormatted :max-lines="3" :text="mission.description" class="text-cool-gray-500" />
     </div>
 
-    <!-- <div v-if="mission.autonomy_precisions">
-      <div class="text-lg mb-4 text-gray-800">
-        Précisions sur la zone d'intervention
-      </div>
+    <div v-if="mission.addresses_precisions">
+      <div class="text-lg mb-4 text-gray-800">Précisions sur la zone d'intervention</div>
       <div class="text-cool-gray-500">
-        {{ $filters.decodeHTMLEntities($filters.stripHTML(mission.autonomy_precisions)) }}
+        {{ $filters.decodeHTMLEntities($filters.stripHTML(mission.addresses_precisions)) }}
       </div>
-    </div> -->
+    </div>
 
     <div v-if="publicsVolontaires.length > 0">
       <BaseHrTitle> Mission ouverte également aux </BaseHrTitle>

@@ -120,17 +120,11 @@
           </CustomTips>
 
           <DsfrFormControl
-            label="Présentation de la mission "
+            label="Présentation de la mission"
             html-for="objectif"
             :error="errors.objectif"
             required
           >
-            <template #description>
-              <div class="text-xs text-[#666666]">
-                Décrivez la mission en quelques lignes pour que le bénévole comprenne ce que vous
-                attendez
-              </div>
-            </template>
             <DsfrRichEditor
               name="objectif"
               v-model="form.objectif"
@@ -144,11 +138,6 @@
             :error="errors.description"
             required
           >
-            <template #description>
-              <div class="text-xs text-[#666666]">
-                Précisez les détails et spécificités de la mission
-              </div>
-            </template>
             <DsfrRichEditor
               name="description"
               v-model="form.description"

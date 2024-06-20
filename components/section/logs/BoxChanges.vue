@@ -221,6 +221,8 @@ export default defineNuxtComponent({
           return 'Autonomie - Codes postaux'
         case 'autonomy_precisions':
           return 'Autonomie - Précisions'
+        case 'addresses_precisions':
+          return 'Précisions zone intervention'
         case 'date_type':
           return 'Type de dates'
         case 'recurrent_description':
