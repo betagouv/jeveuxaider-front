@@ -86,13 +86,17 @@
             </div>
             <div v-else class="flex flex-col gap-4 items-center">
               <CardOrganisation :organisation="form.organisationFrom" show-infos show-state />
+              <div class="">
+                <div>Missions: {{ form.organisationFrom.missions_count }}</div>
+                <div>Responsables: {{ form.organisationFrom.members_count }}</div>
+              </div>
               <DsfrButton type="tertiary" @click="form.organisationFrom = null" size="sm"
                 >Retirer</DsfrButton
               >
             </div>
           </div>
           <div class="flex items-center justify-center">
-            <RiArrowRightLine class="w-12 h-12 text-gray-600 fill-current" />
+            <RiArrowRightLine class="w-12 h-12 text-gray-300 fill-current" />
           </div>
           <div class="">
             <div
@@ -109,6 +113,10 @@
             </div>
             <div v-else class="flex flex-col gap-4 items-center">
               <CardOrganisation :organisation="form.organisationTo" show-infos show-state />
+              <div class="">
+                <div>Missions: {{ form.organisationTo.missions_count }}</div>
+                <div>Responsables: {{ form.organisationTo.members_count }}</div>
+              </div>
               <DsfrButton type="tertiary" @click="form.organisationTo = null" size="sm"
                 >Retirer</DsfrButton
               >
@@ -177,7 +185,7 @@ export default defineNuxtComponent({
       const res = await apiFetch('/structures', {
         params: {
           append: 'places_left,completion_rate',
-          include: 'missionsCount,domaines,reseaux,illustrations,overrideImage1',
+          include: 'missionsCount,membersCount,domaines,reseaux,illustrations,overrideImage1',
           'filter[search]': value,
           pagination: 7,
         },
