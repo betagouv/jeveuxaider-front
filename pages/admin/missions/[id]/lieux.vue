@@ -18,12 +18,12 @@
 
       <div class="space-y-10">
         <DsfrFormControl
-          label="La mission est à réaliser "
+          label="La mission est à réaliser"
           html-for="type"
           :error="errors.type"
           required
         >
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <CustomOptionCard
               @click="onPresentielClick"
               :is-selected="form.type === 'Mission en présentiel'"

@@ -8,7 +8,7 @@
         @close="$emit('cancel')"
       >
         <form id="form-mission-add-dates" @submit.prevent="handleSubmit" class="py-6 space-y-6">
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <CustomOptionCard
               @click="mode = 'single'"
               :is-selected="mode === 'single'"

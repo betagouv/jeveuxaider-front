@@ -11,7 +11,7 @@
           <div class="font-medium">{{ template.title }}</div>
         </div>
         <div class="py-8 border-b">
-          <div class="grid grid-cols-2 gap-2">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
             <div>
               <div class="uppercase text-[#666666] font-bold text-sm mb-2">
                 Domaine d’action principal
@@ -42,7 +42,7 @@
           <div class="formatted-text font-medium" v-html="template.objectif" />
         </div>
         <div class="pt-8">
-          <div class="grid grid-cols-2 gap-2">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
             <div>
               <div class="uppercase text-[#666666] font-bold text-sm mb-2">Activité principale</div>
               <DsfrBadge v-if="template.activity_id" size="md">

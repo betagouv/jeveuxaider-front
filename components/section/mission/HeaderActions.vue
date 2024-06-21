@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        <div class="flex-col sm:flex-row flex gap-3 mt-4 lg:mt-0">
+        <div class="flex flex-wrap gap-3 mt-4 lg:mt-0">
           <slot name="actions">
             <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/title`">
               <DsfrButton type="primary">

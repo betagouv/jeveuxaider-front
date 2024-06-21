@@ -20,7 +20,7 @@
         :loading="queryLoading"
       >
         <template #action>
-          <div class="flex space-x-2">
+          <div class="flex flex-wrap gap-2">
             <DsfrButton
               v-if="
                 ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(

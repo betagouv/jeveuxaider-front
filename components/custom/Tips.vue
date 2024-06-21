@@ -1,14 +1,14 @@
 <template>
   <div
     :class="[
-      'border p-6 rounded max-w-[600px] mx-auto',
+      'border p-4 lg:p-6 rounded max-w-[600px] mx-auto',
       {
         'border-[#B9CEFF] bg-[#F5F7FF]': variant === 'infos',
         'border-yellow-200 bg-yellow-50': variant === 'warning',
       },
     ]"
   >
-    <div class="flex items-center">
+    <div class="flex flex-col lg:flex-row lg:items-center gap-4">
       <div class="px-2">
         <RiLightbulbLine
           v-if="variant === 'infos'"

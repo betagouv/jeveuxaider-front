@@ -3,6 +3,7 @@
     icon="RiSendPlaneFill"
     :title="title"
     :is-open="$stores.formMission.showPublishModal"
+    cancel-label="Laisser en brouillon"
     @confirm="onPublishConfirm"
     @cancel="$stores.formMission.showPublishModal = false"
     :button-loading="loading"

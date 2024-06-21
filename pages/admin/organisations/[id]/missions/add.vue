@@ -14,7 +14,7 @@
           Choisissez celui qui vous semble le plus important. Vous pourrez choisir un domaine
           secondaire dans les étapes suivantes.
         </CustomTips>
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div
             v-for="domaine in domaines"
             :key="domaine.key"

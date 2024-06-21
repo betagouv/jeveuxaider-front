@@ -28,7 +28,6 @@ export default {
       return this.participation.mission
     },
     structure() {
-      console.log('participation.mission.structure', this.participation.mission.structure)
       return this.participation?.mission?.structure
     },
     hasCreneaux() {

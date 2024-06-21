@@ -86,7 +86,7 @@
             </div>
             <div v-else class="flex flex-col gap-4 items-center">
               <CardOrganisation :organisation="form.organisationFrom" show-infos show-state />
-              <div class="">
+              <div class="text-sm text-center text-gray-500">
                 <div>Missions: {{ form.organisationFrom.missions_count }}</div>
                 <div>Responsables: {{ form.organisationFrom.members_count }}</div>
               </div>
@@ -113,7 +113,7 @@
             </div>
             <div v-else class="flex flex-col gap-4 items-center">
               <CardOrganisation :organisation="form.organisationTo" show-infos show-state />
-              <div class="">
+              <div class="text-sm text-center text-gray-500">
                 <div>Missions: {{ form.organisationTo.missions_count }}</div>
                 <div>Responsables: {{ form.organisationTo.members_count }}</div>
               </div>

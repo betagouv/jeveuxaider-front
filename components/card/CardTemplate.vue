@@ -12,9 +12,11 @@
       v-if="isSelected"
       class="h-6 text-jva-blue-500 fill-current absolute top-3 right-3"
     />
-    <div class="flex">
+    <div class="flex flex-col lg:flex-row">
       <template v-if="template === null">
-        <div class="relative flex justify-center items-center w-[214px] bg-[#F5F5FE]">
+        <div
+          class="relative flex justify-center items-center min-h-[150px] lg:w-[214px] bg-[#F5F5FE]"
+        >
           <div class="absolute top-0">
             <div
               class="bg-[#B34000] text-white px-3 py-1 inline-block mx-auto z-10 font-medium text-xs"
@@ -31,7 +33,7 @@
         </div>
       </template>
       <template v-else>
-        <div class="relative flex justify-center items-center w-[214px] bg-[#F5F5FE]">
+        <div class="relative flex justify-center items-center lg:w-[214px] bg-[#F5F5FE]">
           <div class="absolute top-0">
             <div
               class="bg-[#18753C] text-white px-3 py-1 inline-block mx-auto z-10 font-medium text-xs"

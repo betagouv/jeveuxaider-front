@@ -21,7 +21,7 @@
           :error="errors.date_type"
           required
         >
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <CustomOptionCard
               @click="onPonctualClick"
               :is-selected="form.date_type === 'ponctual'"
@@ -126,7 +126,7 @@
               :error="errors.with_dates"
               required
             >
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <CustomOptionCard
                   :is-selected="form.with_dates === 'yes'"
                   title="Sur des jours définis"
