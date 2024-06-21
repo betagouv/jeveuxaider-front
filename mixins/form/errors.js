@@ -31,15 +31,12 @@ export default {
       return this.formSchema.isValid(field)
     },
     validate(field) {
-      console.log('validate', field, this.formSchema, this.form)
       this.formSchema
         .validateAt(field, this.form)
         .then(() => {
-          console.log('ok', field)
           this.errors[field] = ''
         })
         .catch((error) => {
-          console.log('not ok', field, error.message)
           this.errors[field] = error.message
         })
     },
