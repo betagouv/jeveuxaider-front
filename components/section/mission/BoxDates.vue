@@ -18,6 +18,11 @@
           <div class="text-gray-500 text-sm">
             {{ formattedCommitment ? formattedCommitment : 'Engagement non spécifié' }}
           </div>
+          <div v-if="mission.commitment__duration_min" class="text-gray-500 text-sm">
+            pendant
+            {{ $filters.label(mission.commitment__duration_min, 'commitment_duration_min') }}
+            minimum
+          </div>
         </BaseStackedListItem>
         <BaseStackedListItem v-if="hasExpired" class="px-4" icon="⏰">
           <div class="text-gray-900 font-semibold">La date de la mission a expiré</div>

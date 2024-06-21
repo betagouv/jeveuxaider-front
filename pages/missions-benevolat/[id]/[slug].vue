@@ -276,6 +276,15 @@
               <p v-if="mission.recurrent_description" class="text-cool-gray-500 text-sm">
                 {{ mission.recurrent_description }}
               </p>
+              <p v-if="mission.commitment__duration_min" class="text-cool-gray-500 text-sm">
+                Engagement souhaitée :
+                <span class="font-bold"
+                  >{{
+                    $filters.label(mission.commitment__duration_min, 'commitment_duration_min')
+                  }}
+                  min.</span
+                >
+              </p>
             </div>
 
             <!-- CTA -->
