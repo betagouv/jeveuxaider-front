@@ -256,18 +256,18 @@
                           @blur="validate('mobile')"
                         />
                       </BaseFormControl>
+
                       <BaseFormControl
                         label="Date de naissance"
                         html-for="birthday"
                         required
                         :error="errors.birthday"
                       >
-                        <BaseInputDate
+                        <BaseInputDateNative
                           v-model="form.birthday"
                           required
                           name="birthday"
-                          aria-required="true"
-                          autocomplete="bday"
+                          @blur="validate('birthday')"
                         />
                       </BaseFormControl>
                       <BaseFormControl
@@ -377,7 +377,7 @@
 </template>
 
 <script>
-import { string, object, ref, date } from 'yup'
+import { string, object, ref, date, lazy, mixed } from 'yup'
 import FormErrors from '@/mixins/form/errors'
 import Emailable from '@/mixins/emailable.client'
 import FranceConnect from '@/components/custom/FranceConnect.vue'
@@ -444,6 +444,7 @@ export default defineNuxtComponent({
         utm_source: utmSourceCookie?.value,
         utm_campaign: utmCampaignCookie?.value,
         utm_medium: utmMediumCookie?.value,
+        birthday: '',
       },
       formSchema: object({
         first_name: string().required('Un prénom est requis'),
@@ -457,15 +458,14 @@ export default defineNuxtComponent({
           .required('Un code postal est requis'),
         country: string().required('Un pays est requis'),
         birthday: date()
-          .required("Une date d'anniversaire est requise")
-          .test('is-old-enough', errorIsOldEnoughErrorMessage, function (value) {
-            const today = new Date()
-            const birthDate = new Date(value)
-            const age = today.getFullYear() - birthDate.getFullYear()
+          .typeError('La date indiquée est invalide')
+          .test('is-old-enough', errorIsOldEnoughErrorMessage, (date) => {
+            if (!date) {
+              return true
+            }
+            const age = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
             return age >= 16
-          })
-          .nullable()
-          .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
+          }),
         email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
         password: string().min(8).required('Un mot de passe est requis'),
         password_confirmation: string()
