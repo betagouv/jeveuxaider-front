@@ -25,6 +25,7 @@
               v-model="form.responsable_id"
               placeholder="Sélectionner un responsable"
               :options="selectableResponsables"
+              required
             />
           </DsfrFormControl>
         </form>

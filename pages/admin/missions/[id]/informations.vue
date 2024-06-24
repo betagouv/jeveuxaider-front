@@ -26,6 +26,7 @@
               required
             >
               <DsfrSelect
+                required
                 id="domaine_id"
                 name="domaine_id"
                 v-model="form.domaine_id"
@@ -85,6 +86,7 @@
               required
             >
               <DsfrSelect
+                required
                 id="activity_id"
                 name="activity_id"
                 v-model="form.activity_id"
@@ -156,6 +158,7 @@
               required
             >
               <DsfrSelect
+                required
                 id="domaine_id"
                 name="domaine_id"
                 v-model="form.domaine_id"
@@ -251,6 +254,7 @@
               required
             >
               <DsfrSelect
+                required
                 id="activity_id"
                 name="activity_id"
                 v-model="form.activity_id"

@@ -41,6 +41,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
 })
 </script>
 
@@ -65,7 +69,7 @@ const props = defineProps({
       ]"
       @input="$emit('update:modelValue', $event.target.value)"
     >
-      <option value="" selected disabled hidden>{{ placeholder }}</option>
+      <option value="" selected :disabled="required">{{ placeholder }}</option>
       <option v-for="option in options" :key="option.key" :value="option.key">
         {{ option.label }}
       </option>

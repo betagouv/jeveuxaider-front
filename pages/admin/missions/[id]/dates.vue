@@ -47,6 +47,7 @@
           required
         >
           <DsfrSelect
+            required
             id="commitment__duration"
             name="commitment__duration"
             v-model="form.commitment__duration"
@@ -64,6 +65,7 @@
               required
             >
               <DsfrSelect
+                required
                 id="commitment__duration"
                 name="commitment__duration"
                 v-model="form.commitment__duration"
@@ -79,6 +81,7 @@
               class="lg:mt-6"
             >
               <DsfrSelect
+                required
                 id="commitment__time_period"
                 name="commitment__time_period"
                 v-model="form.commitment__time_period"
@@ -98,6 +101,7 @@
             required
           >
             <DsfrSelect
+              required
               id="commitment__duration_min"
               name="commitment__duration_min"
               v-model="form.commitment__duration_min"
