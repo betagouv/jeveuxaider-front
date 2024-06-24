@@ -20,6 +20,7 @@
       title="Choisissez une organisation"
       :is-open="showDialogOrganisations"
       button-label="Sélectionner"
+      :overflow-hidden="false"
       @confirm="handleSelectedOrganisation"
       @cancel="showDialogOrganisations = false"
     >
@@ -73,7 +74,7 @@
       </BaseSectionHeading>
       <BaseBox>
         <div class="flex gap-8 justify-center">
-          <div class="">
+          <div class="max-w-[300px]">
             <div
               v-if="!form.organisationFrom"
               class="group h-[400px] w-[300px] border-2 border-dashed flex flex-col items-center justify-center cursor-pointer hover:border-jva-blue-500"
@@ -98,7 +99,7 @@
           <div class="flex items-center justify-center">
             <RiArrowRightLine class="w-12 h-12 text-gray-300 fill-current" />
           </div>
-          <div class="">
+          <div class="max-w-[300px]">
             <div
               v-if="!form.organisationTo"
               class="group h-[400px] w-[300px] border-2 border-dashed flex flex-col items-center justify-center cursor-pointer hover:border-jva-blue-500"

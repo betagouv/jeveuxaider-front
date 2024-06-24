@@ -1,7 +1,7 @@
 <template>
   <form id="form" class="my-8" @submit.prevent="onSubmit">
-    <BaseFormControl class="mb-8" label="E-mail" html-for="email" required>
-      <BaseInput
+    <DsfrFormControl class="mb-8" label="E-mail" html-for="email" required>
+      <DsfrInput
         v-model="form.email"
         type="email"
         name="email"
@@ -9,16 +9,16 @@
         required
         disabled
       />
-    </BaseFormControl>
-    <BaseFormControl label="Mot de passe" html-for="password" required>
-      <BaseInput
+    </DsfrFormControl>
+    <DsfrFormControl label="Mot de passe" html-for="password" required>
+      <DsfrInput
         v-model="form.password"
         name="password"
         placeholder="Entrez votre mot de passe"
         type="password"
         required
       />
-    </BaseFormControl>
+    </DsfrFormControl>
 
     <div class="my-4">
       <nuxt-link
@@ -29,16 +29,15 @@
         Mot de passe perdu ?
       </nuxt-link>
     </div>
-    <BaseButton
-      type="submit"
-      size="xl"
-      variant="green"
-      full
+    <DsfrButton
+      is-submit="true"
+      size="lg"
+      class="w-full"
       :loading="loading"
       @click.native.prevent="onSubmit"
     >
       Me connecter à mon compte
-    </BaseButton>
+    </DsfrButton>
   </form>
 </template>
 

@@ -7,6 +7,7 @@
         :is-open="isOpen"
         :icon="icon"
         :prevent-click-outside="preventClickOutside"
+        :overflow-hidden="overflowHidden"
         @close="$emit('cancel')"
       >
         <div class="text-gray-700 mb-4">
@@ -56,6 +57,10 @@ export default defineNuxtComponent({
       default: 'Annuler',
     },
     preventClickOutside: {
+      type: Boolean,
+      default: true,
+    },
+    overflowHidden: {
       type: Boolean,
       default: true,
     },
