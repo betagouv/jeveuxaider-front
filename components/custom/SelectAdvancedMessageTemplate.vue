@@ -36,8 +36,8 @@ export default defineNuxtComponent({
   computed: {
     tokens() {
       return {
-        '[destinataire_prenom]': this.recipientUser.first_name,
-        '[destinataire_nom]': this.recipientUser.last_name,
+        '[destinataire_prenom]': this.tokenDestinatairePrenomResolver,
+        '[destinataire_nom]': this.tokenDestinataireNomResolver,
         '[mission_nom]': this.tokenMissionNomResolver,
         '[mission_ville]': this.tokenMissionVilleResolver,
         '[mission_date_debut]': this.tokenMissionDateDebutResolver,
@@ -45,6 +45,30 @@ export default defineNuxtComponent({
         '[organisation_nom]': this.tokenOrganisationNomResolver,
         '[expediteur_prenom]': this.$stores.auth.user.profile.first_name,
         '[expediteur_nom]': this.$stores.auth.user.profile.last_name,
+      }
+    },
+    tokenDestinatairePrenomResolver() {
+      switch (this.conversation.conversable_type) {
+        case 'App\\Models\\Participation':
+          return this.conversation.conversable.profile.first_name
+        case 'App\\Models\\Mission':
+          return this.recipientUser.profile.first_name
+        case 'App\\Models\\Structure':
+          return this.recipientUser.profile.first_name
+        default:
+          return ''
+      }
+    },
+    tokenDestinataireNomResolver() {
+      switch (this.conversation.conversable_type) {
+        case 'App\\Models\\Participation':
+          return this.conversation.conversable.profile.last_name
+        case 'App\\Models\\Mission':
+          return this.recipientUser.profile.last_name
+        case 'App\\Models\\Structure':
+          return this.recipientUser.profile.last_name
+        default:
+          return ''
       }
     },
     tokenOrganisationNomResolver() {
@@ -62,9 +86,9 @@ export default defineNuxtComponent({
     tokenMissionNomResolver() {
       switch (this.conversableType) {
         case 'App\\Models\\Participation':
-          return this.conversable.mission.name
+          return this.conversable.mission.name ?? ''
         case 'App\\Models\\Mission':
-          return this.conversable.name
+          return this.conversable.name ?? ''
         default:
           return ''
       }
@@ -72,9 +96,9 @@ export default defineNuxtComponent({
     tokenMissionVilleResolver() {
       switch (this.conversableType) {
         case 'App\\Models\\Participation':
-          return this.conversable.mission.city
+          return this.conversable.mission.city ?? ''
         case 'App\\Models\\Mission':
-          return this.conversable.city
+          return this.conversable.city ?? ''
         default:
           return ''
       }
