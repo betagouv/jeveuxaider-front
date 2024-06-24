@@ -48,25 +48,25 @@ export default defineNuxtComponent({
       }
     },
     tokenDestinatairePrenomResolver() {
-      switch (this.conversation.conversable_type) {
+      switch (this.conversableType) {
         case 'App\\Models\\Participation':
-          return this.conversation.conversable.profile.first_name
+          return this.conversable.profile.first_name
         case 'App\\Models\\Mission':
-          return this.recipientUser.profile.first_name
+          return this.recipientUser.first_name
         case 'App\\Models\\Structure':
-          return this.recipientUser.profile.first_name
+          return this.recipientUser.first_name
         default:
           return ''
       }
     },
     tokenDestinataireNomResolver() {
-      switch (this.conversation.conversable_type) {
+      switch (this.conversableType) {
         case 'App\\Models\\Participation':
-          return this.conversation.conversable.profile.last_name
+          return this.conversable.profile.last_name
         case 'App\\Models\\Mission':
-          return this.recipientUser.profile.last_name
+          return this.recipientUser.last_name
         case 'App\\Models\\Structure':
-          return this.recipientUser.profile.last_name
+          return this.recipientUser.last_name
         default:
           return ''
       }
