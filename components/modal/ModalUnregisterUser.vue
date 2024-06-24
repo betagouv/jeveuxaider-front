@@ -2,7 +2,7 @@
   <ClientOnly>
     <Teleport to="#teleport-body-end">
       <template v-if="isReady">
-        <template v-if="modalToShow === 'unsubscibe-user'">
+        <template v-if="modalToShow === 'unsubscribe-user'">
           <BaseAlertDialog
             icon="RiErrorWarningLine"
             title="Supprimer mon compte"
@@ -15,7 +15,7 @@
             JeVeuxAider.gouv.fr seront anonymisées.
           </BaseAlertDialog>
         </template>
-        <template v-if="modalToShow === 'leave-structure-and-unsubscibe-user'">
+        <template v-if="modalToShow === 'leave-structure-and-unsubscribe-user'">
           <BaseAlertDialog
             icon="RiErrorWarningLine"
             title="Supprimer mon compte"
@@ -128,7 +128,7 @@
             </template>
           </BaseModal>
         </template>
-        <template v-if="modalToShow === 'unsubscibe-organisation-and-user'">
+        <template v-if="modalToShow === 'unsubscribe-organisation-and-user'">
           <BaseModal
             :is-open="isOpen"
             icon="RiErrorWarningLine"
@@ -209,7 +209,7 @@ export default defineNuxtComponent({
           this.userStatus.structure_missions_where_i_m_responsable_count === 0 &&
           this.userStatus.structure_responsables.length > 1
         ) {
-          return 'leave-structure-and-unsubscibe-user'
+          return 'leave-structure-and-unsubscribe-user'
         }
         if (
           this.userStatus.structure_missions_where_i_m_responsable_count > 0 &&
@@ -223,9 +223,9 @@ export default defineNuxtComponent({
         ) {
           return 'contact-admin'
         }
-        return 'unsubscibe-organisation-and-user'
+        return 'unsubscribe-organisation-and-user'
       }
-      return 'unsubscibe-user'
+      return 'unsubscribe-user'
     },
   },
   methods: {
