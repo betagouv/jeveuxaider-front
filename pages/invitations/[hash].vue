@@ -34,7 +34,7 @@
             <DsfrButton
               v-else
               :is-submit="true"
-              size="xl"
+              size="lg"
               class="mt-6 w-full"
               @click.native="handleAcceptInvitation()"
             >

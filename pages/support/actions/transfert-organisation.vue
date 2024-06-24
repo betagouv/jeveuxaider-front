@@ -25,16 +25,15 @@
       @cancel="showDialogOrganisations = false"
     >
       <DsfrFormControl
-        label="Rechercher votre orga"
+        label="Rechercher une organisation"
         html-for="autocomplete"
-        info="Vous pouvez ajouter plusieurs villes ou adresses au sein du même département"
         :error="errors.addresses"
         required
       >
         <DsfrInputAutocomplete
-          icon="RiMapPinLine"
+          icon="RiSearchLine"
           name="autocomplete"
-          placeholder="sdfsdffds"
+          placeholder="Recherche par identifiant ou par nom"
           :options="autocompleteOptionsOrganisations"
           attribute-key="id"
           attribute-label="name"
