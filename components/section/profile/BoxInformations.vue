@@ -60,7 +60,7 @@
         <BaseDescriptionListItem term="Téléphone" :description="profile.phone" />
 
         <BaseDescriptionListItem term="Âge">
-          <div class="flex items-center">
+          <div v-if="profile.birthday" class="flex items-center">
             <div>{{ $dayjs(profile.birthday).fromNow('year') }}</div>
             <div
               v-if="$dayjs().diff($dayjs(profile.birthday), 'year') < 18"
@@ -75,6 +75,7 @@
               />
             </div>
           </div>
+          <span v-else>-</span>
         </BaseDescriptionListItem>
 
         <BaseDescriptionListItem term="Disponibilités" :description="formattedCommitment" />
