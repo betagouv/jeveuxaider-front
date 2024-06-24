@@ -72,9 +72,13 @@ export default defineNuxtComponent({
     tokenMissionVilleResolver() {
       switch (this.conversableType) {
         case 'App\\Models\\Participation':
-          return this.conversable.mission.city
+          return this.conversable.mission.type === 'Mission en présentiel'
+            ? this.conversable.mission?.addresses[0]?.city
+            : ''
         case 'App\\Models\\Mission':
-          return this.conversable.city
+          return this.conversable?.type === 'Mission en présentiel'
+            ? this.conversable?.addresses[0]?.city
+            : ''
         default:
           return ''
       }
