@@ -14,7 +14,7 @@
           <BaseDescriptionListItem term="Téléphone" :description="profile.phone" />
           <BaseDescriptionListItem
             term="Âge"
-            :description="profile.birthday ? $dayjs(profile.birthday).fromNow('year') - '-'"
+            :description="profile.birthday ? $dayjs(profile.birthday).fromNow('year') : '-'"
           />
           <BaseDescriptionListItem
             term="Département"
