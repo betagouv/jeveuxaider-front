@@ -7,7 +7,7 @@
         :style="`width:${$stores.formMission.progress}%;`"
       ></div>
     </div>
-    <div class="block lg:hidden">
+    <div v-if="!$stores.formMission.isDraft" class="block lg:hidden">
       <div class="p-4">
         <BaseSelectAdvanced
           id="menu"
@@ -90,8 +90,7 @@ export default {
   created() {},
   computed: {
     menuItems() {
-      console.log(this.$route.name)
-      const missionId = this.$stores.formMission.mission.id
+      const missionId = this.$stores.formMission?.mission?.id
       return [
         {
           key: 'admin-missions-id-title',
