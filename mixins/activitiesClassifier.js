@@ -50,10 +50,8 @@ export default {
       if (activitiesClassifier.code === 200) {
         this.activities = this.activities
           .map((activity) => {
-            const activityFromClassifier = activitiesClassifier.content[0].find((ac) =>
-              ac.label === 'Accompagnement aux activités sportives'
-                ? activity.name === 'Activités sportives'
-                : ac.label === activity.name
+            const activityFromClassifier = activitiesClassifier.content[0].find(
+              (ac) => activity.name === this.mapActivityName(ac.label)
             )
             const formattedScore = activityFromClassifier
               ? this.$numeral(activityFromClassifier.score, '0.0 %')
@@ -62,6 +60,7 @@ export default {
               ...activity,
               score: activityFromClassifier?.score,
               formattedScore,
+              label: `${activity.label} (${formattedScore})`,
             }
           })
           .sort((a, b) => (a.score > b.score ? -1 : 1))
@@ -69,6 +68,26 @@ export default {
       }
 
       this.activitiesClassifierLoading = false
+    },
+    mapActivityName(name) {
+      let activityName
+
+      switch (name) {
+        case 'Accompagnement aux activités sportives':
+          activityName = 'Activités sportives'
+          break
+        case 'Mentorat & Parrainage':
+          activityName = 'Mentorat & parrainage'
+          break
+        case 'Gestion financière / comptabilité':
+          activityName = 'Gestion financière / Comptabilité'
+          break
+        default:
+          activityName = name
+          break
+      }
+
+      return activityName
     },
   },
 }

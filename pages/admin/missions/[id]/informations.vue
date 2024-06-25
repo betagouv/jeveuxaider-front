@@ -106,7 +106,7 @@
                 id="activity_secondary_id"
                 name="activity_secondary_id"
                 v-model="form.activity_secondary_id"
-                placeholder="Sélectionner un activité"
+                placeholder="Sélectionner une activité"
                 :options="activities"
                 :disabled="Boolean(form.template_id && form.template?.activity_secondary_id)"
               />
@@ -274,7 +274,7 @@
                 id="activity_secondary_id"
                 name="activity_secondary_id"
                 v-model="form.activity_secondary_id"
-                placeholder="Sélectionner un activité"
+                placeholder="Sélectionner une activité"
                 :options="activities"
                 :disabled="Boolean(form.template_id && form.template?.activity_secondary_id)"
               />
@@ -301,15 +301,16 @@ import FormErrors from '@/mixins/form/errors'
 import FormMission from '@/mixins/form/mission'
 import { string, object, array, number } from 'yup'
 import activities from '@/assets/activities.json'
+import activitiesClassifierMixin from '@/mixins/activitiesClassifier'
 
 export default defineNuxtComponent({
-  setup() {
+  async setup() {
     definePageMeta({
       layout: 'form-mission',
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [FormErrors, FormMission],
+  mixins: [FormErrors, FormMission, activitiesClassifierMixin],
   components: {
     FormMissionWrapper,
   },
@@ -424,6 +425,9 @@ export default defineNuxtComponent({
           this.loading = false
         })
     },
+  },
+  async created() {
+    await this.fetchActivitiesClassifier()
   },
 })
 </script>
