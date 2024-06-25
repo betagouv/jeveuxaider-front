@@ -32,6 +32,7 @@
 
 <script>
 export default defineNuxtComponent({
+  emits: ['click'],
   props: {
     icon: {
       type: [String, Number],
@@ -67,6 +68,7 @@ export default defineNuxtComponent({
       if (this.link) {
         this.$router.push(this.link)
       }
+      this.$emit('click')
     },
   },
 })

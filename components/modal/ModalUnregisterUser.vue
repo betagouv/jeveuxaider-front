@@ -276,7 +276,7 @@ export default defineNuxtComponent({
       }
       this.loading = true
       await apiFetch(
-        `/structures/${this.userStatus.structure.id}/members/${this.$stores.auth.profile.id}`,
+        `/structures/${this.userStatus.structure.id}/members/${this.$stores.auth.user.id}`,
         {
           method: 'DELETE',
         }

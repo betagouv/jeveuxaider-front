@@ -248,8 +248,13 @@ export default defineNuxtComponent({
           //   target: '_blank',
           // },
           {
-            name: 'Élections européennes 🗳️',
+            name: 'Élections législatives 🗳️',
             href: 'https://www.jeveuxaider.gouv.fr/engagement/trouver-des-assesseurs/',
+            target: '_blank',
+          },
+          {
+            name: 'La tournée d’été ☀️',
+            href: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/',
             target: '_blank',
           },
           {

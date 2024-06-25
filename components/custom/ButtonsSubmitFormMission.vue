@@ -8,37 +8,40 @@
             structure.state === 'Validée'
           "
           :loading="loading"
+          :is-submit="true"
           @click.native="handleSubmit({ state: 'Validée' })"
         >
           Enregistrer et publier
         </DsfrButton>
-        <DsfrButton v-else :loading="loading" @click.native="handleSubmit()">
+        <DsfrButton v-else :is-submit="true" :loading="loading" @click.native="handleSubmit()">
           Enregistrer
         </DsfrButton>
       </template>
       <template v-else>
         <DsfrButton
           v-if="['Brouillon'].includes(mission.state)"
+          :is-submit="true"
           :loading="loading"
           @click.native="handleSubmit({ state: 'En attente de validation' })"
         >
           Soumettre à validation
         </DsfrButton>
-        <DsfrButton v-else :loading="loading" @click.native="handleSubmit()">
+        <DsfrButton v-else :is-submit="true" :loading="loading" @click.native="handleSubmit()">
           Enregistrer
         </DsfrButton>
       </template>
-      <BaseLink
+      <DsfrLink
         v-if="['Brouillon', 'En attente de validation'].includes(mission.state)"
-        class="text-sm font-medium"
+        class="text-sm font-medium text-jva-blue-500"
         @click.native="handleSubmit({ state: 'Brouillon' })"
       >
         Enregistrer en brouillon
-      </BaseLink>
+      </DsfrLink>
     </template>
     <template v-else>
       <DsfrButton
         v-if="templateId && structure.state === 'Validée'"
+        :is-submit="true"
         :loading="loading"
         @click.native="handleSubmit({ state: 'Validée' })"
       >
@@ -46,14 +49,18 @@
       </DsfrButton>
       <DsfrButton
         v-else
+        :is-submit="true"
         :loading="loading"
         @click.native="handleSubmit({ state: 'En attente de validation' })"
       >
         Soumettre à validation
       </DsfrButton>
-      <BaseLink class="text-sm font-medium" @click.native="handleSubmit({ state: 'Brouillon' })">
+      <DsfrLink
+        class="text-sm font-medium text-jva-blue-500"
+        @click.native="handleSubmit({ state: 'Brouillon' })"
+      >
         Enregistrer en brouillon
-      </BaseLink>
+      </DsfrLink>
     </template>
   </div>
 </template>

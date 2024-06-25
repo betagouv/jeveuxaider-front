@@ -1,7 +1,9 @@
 <template>
-  <DsfrButton size="lg" icon="RiExternalLinkLine" icon-position="right" @click.native="onClick">
-    Je propose mon aide
-  </DsfrButton>
+  <a :href="url" target="_blank" class="inline-block" @click="onClick">
+    <DsfrButton size="lg" icon="RiExternalLinkLine" icon-position="right" class="w-full">
+      Je propose mon aide
+    </DsfrButton>
+  </a>
 </template>
 
 <script>
@@ -17,8 +19,6 @@ export default defineNuxtComponent({
       this.$plausible.trackEvent('Click CTA - Mission API Engagement', {
         props: { isLogged: this.$stores.auth.isLogged },
       })
-
-      window.open(this.url, '_blank').focus()
     },
   },
 })

@@ -75,6 +75,13 @@
           <div class="md:col-span-2">
             <div class="font-bold mb-8">Organisations populaires</div>
             <div class="grid grid-cols-2 gap-4">
+              <nuxt-link
+                no-prefetch
+                class="link"
+                to="/reseaux/14-federation-francaise-des-banques-alimentaires"
+                >Banques Alimentaires</nuxt-link
+              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/104-oxfam-france">Oxfam</nuxt-link>
               <nuxt-link no-prefetch class="link" to="/organisations/2747-makesense"
                 >Makesense</nuxt-link
               >
@@ -91,54 +98,44 @@
               <nuxt-link
                 no-prefetch
                 class="link"
-                to="/organisations/7198-lobby-des-consciences-antenne-nationale"
-                >Lobby des Consciences</nuxt-link
+                to="/organisations/7384-la-societe-protectrice-des-animaux-la-spa"
+                >La SPA</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/6638-entraide-scolaire-amicale"
-                >Entraide Scolaire Amicale</nuxt-link
+              <nuxt-link
+                no-prefetch
+                class="link"
+                to="/organisations/5674-la-cravate-solidaire-mobile"
+                >La Cravate Solidaire Mobile</nuxt-link
               >
               <nuxt-link no-prefetch class="link" to="/organisations/5605-emmaus-connect"
                 >Emmaüs Connect - Paris</nuxt-link
               >
-              <!-- <nuxt-link no-prefetch class="link" to="/organisations/5575-singa">Singa</nuxt-link> -->
-              <nuxt-link
-                no-prefetch
-                class="link"
-                to="/organisations/8818-secours-catholique-delegation-du-val-de-marne"
-                >Secours Catholique - Délégation du Val de Marne</nuxt-link
+              <nuxt-link no-prefetch class="link" to="/reseaux/8-secours-catholique"
+                >Secours Catholique</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/8507-etendart"
-                >Etendart</nuxt-link
+              <nuxt-link no-prefetch class="link" to="/organisations/9315-apf-france-handicap"
+                >APF France handicap</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/7490-1-lettre-1-sourire"
-                >1 Lettre 1 Sourire</nuxt-link
-              >
-              <nuxt-link
-                no-prefetch
-                class="link"
-                to="/organisations/8281-association-solidarite-universelle-monde"
-                >Association Solidarité Universelle Monde</nuxt-link
-              >
-              <nuxt-link
-                no-prefetch
-                class="link"
-                to="/organisations/7159-restos-du-coeur-mandelieu-la-napoule"
+              <nuxt-link no-prefetch class="link" to="/reseaux/4-les-restos-du-coeur"
                 >Restos du coeur</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/7330-apprentis-dauteuil"
-                >Apprentis d'Auteuil</nuxt-link
+              <nuxt-link no-prefetch class="link" to="/organisations/10077-habitat-et-humanisme"
+                >Habitat et Humanisme</nuxt-link
               >
               <nuxt-link no-prefetch class="link" to="/organisations/97-entourage"
                 >Entourage</nuxt-link
               >
+              <nuxt-link no-prefetch class="link" to="/organisations/11563-greenminded"
+                >GreenMinded</nuxt-link
+              >
               <nuxt-link no-prefetch class="link" to="/organisations/4561-mon-emile-association"
                 >Mon Emile Association</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/6484-coallia"
-                >Coallia</nuxt-link
+              <nuxt-link no-prefetch class="link" to="/organisations/9751-regles-elementaires"
+                >Règles Élémentaires</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/6875-le-bon-samaritain"
-                >Le Bon Samaritain</nuxt-link
+              <nuxt-link no-prefetch class="link" to="/reseaux/46-pro-bono-lab"
+                >Pro Bono Lab</nuxt-link
               >
             </div>
           </div>

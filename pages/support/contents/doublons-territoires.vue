@@ -21,7 +21,21 @@
         false
       )}`"
       :loading="queryLoading"
-    />
+    >
+      <template #action>
+        <div class="hidden lg:block space-x-2 flex-shrink-0">
+          <DsfrButton
+            type="secondary"
+            icon="RiDownload2Line"
+            :disabled="queryResult?.total === 0"
+            :loading="exportLoading"
+            @click.native="handleExport"
+          >
+            Exporter
+          </DsfrButton>
+        </div>
+      </template>
+    </BaseSectionHeading>
 
     <SearchFilters @reset-filters="deleteAllFilters">
       <DsfrInput
@@ -61,6 +75,7 @@ import DrawerProfile from '@/components/drawer/DrawerProfile.vue'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import QueryResultSummary from '@/components/custom/QueryResultSummary.vue'
 import DoublonTerritoireListItem from '@/components/support/DoublonTerritoireListItem.vue'
+import MixinExport from '@/mixins/export'
 
 export default defineNuxtComponent({
   components: {
@@ -73,7 +88,7 @@ export default defineNuxtComponent({
     Pagination,
     QueryResultSummary,
   },
-  mixins: [QueryBuilder],
+  mixins: [QueryBuilder, MixinExport],
   setup() {
     definePageMeta({
       layout: 'support',
@@ -84,7 +99,8 @@ export default defineNuxtComponent({
     return {
       endpoint: '/support/contents/doublons-territoires',
       loading: true,
-      //   drawerProfileId: null,
+      exportEndpoint: '/support/contents/doublons-territoires/export',
+      exportLoading: false,
     }
   },
   computed: {},

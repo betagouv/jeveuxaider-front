@@ -55,7 +55,12 @@ export default defineNuxtComponent({
   },
   computed: {
     petitMotByRole() {
-      if (this.$stores.auth.currentRole?.key === 'responsable') {
+      if (
+        this.$stores.auth.currentRole?.key === 'responsable' &&
+        this.$stores.auth.roles?.filter((role) => role.key === 'responsable_territoire').length > 0
+      ) {
+        return this.messages.responsable_territoire
+      } else if (this.$stores.auth.currentRole?.key === 'responsable') {
         return this.messages.responsable_organisation
       } else if (this.$stores.auth.currentRole?.key === 'responsable_territoire') {
         return this.messages.responsable_territoire

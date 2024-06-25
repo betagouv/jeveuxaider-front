@@ -57,7 +57,7 @@ export default defineNuxtComponent({
           hid: 'description',
           name: 'description',
           content:
-            "Plus de 15 000 missions disponibles dans 10 domaines d'action : solidarité, insertion, éducation, environnement, santé, sport, culture ... Trouvez la mission qui vous correspond, sur le terrain ou à distance, partout en France, dès 16 ans.",
+            "Plus de 18 000 missions disponibles dans 10 domaines d'action : solidarité, insertion, éducation, environnement, santé, sport, culture ... Trouvez la mission qui vous correspond, sur le terrain ou à distance, partout en France, dès 16 ans.",
         },
         {
           hid: 'og:image',

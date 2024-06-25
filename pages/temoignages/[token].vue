@@ -1,40 +1,35 @@
 <template>
   <div>
-    <TemoignageAlreadyExist v-if="temoignage" :temoignage="temoignage" />
+    <transition name="fade" mode="out-in">
+      <TemoignageGrade
+        v-if="currentStep.slug == 'grade'"
+        :mission="notificationTemoignage.participation.mission"
+        :benevole="notificationTemoignage.participation.profile"
+        :initial-form="form"
+        @rating-selected="onRatingSelected"
+      />
 
-    <template v-else>
-      <transition name="fade" mode="out-in">
-        <TemoignageGrade
-          v-if="currentStep.slug == 'grade'"
-          :mission="notificationTemoignage.participation.mission"
-          :benevole="notificationTemoignage.participation.profile"
-          :initial-form="form"
-          @rating-selected="onRatingSelected"
-        />
+      <TemoignageTestimony
+        v-else-if="currentStep.slug == 'testimony'"
+        :notification-temoignage="notificationTemoignage"
+        :mission="notificationTemoignage.participation.mission"
+        :benevole="notificationTemoignage.participation.profile"
+        :initial-form="form"
+        @submit="onTestimonySubmit"
+        @destroy="onDestroy"
+      />
 
-        <TemoignageTestimony
-          v-else-if="currentStep.slug == 'testimony'"
-          :notification-temoignage="notificationTemoignage"
-          :mission="notificationTemoignage.participation.mission"
-          :benevole="notificationTemoignage.participation.profile"
-          :initial-form="form"
-          @submit="onTestimonySubmit"
-          @destroy="onDestroy"
-        />
-
-        <TemoignageThanks
-          v-else-if="currentStep.slug == 'thanks'"
-          :mission="notificationTemoignage.participation.mission"
-          :benevole="notificationTemoignage.participation.profile"
-          :initial-form="form"
-        />
-      </transition>
-    </template>
+      <TemoignageThanks
+        v-else-if="currentStep.slug == 'thanks'"
+        :mission="notificationTemoignage.participation.mission"
+        :benevole="notificationTemoignage.participation.profile"
+        :initial-form="form"
+      />
+    </transition>
   </div>
 </template>
 
 <script>
-import TemoignageAlreadyExist from '@/components/section/temoignage/TemoignageAlreadyExist.vue'
 import TemoignageGrade from '@/components/section/temoignage/Grade.vue'
 import TemoignageTestimony from '@/components/section/temoignage/Testimony.vue'
 import TemoignageThanks from '@/components/section/temoignage/Thanks.vue'
@@ -44,7 +39,6 @@ export default defineNuxtComponent({
     TemoignageThanks,
     TemoignageTestimony,
     TemoignageGrade,
-    TemoignageAlreadyExist,
   },
   async setup() {
     definePageMeta({
@@ -77,13 +71,8 @@ export default defineNuxtComponent({
       return showError({ statusCode: 404 })
     }
 
-    const response = await apiFetch(
-      `/participations/${notificationTemoignage.participation_id}/temoignage`
-    )
-
     return {
       notificationTemoignage,
-      temoignage: response.temoignage,
     }
   },
   data() {

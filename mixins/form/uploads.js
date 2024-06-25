@@ -10,7 +10,7 @@ export default {
   },
   methods: {
     addFiles(payload) {
-      payload.files.forEach((file) => {
+      Array.from(payload.files).forEach((file) => {
         this.uploads.add.push({
           file,
           collection: payload.collection,
@@ -21,17 +21,13 @@ export default {
     deleteFile(file) {
       if (file.id) {
         this.uploads.delete.push(file)
-        const updateIndex = this.uploads.update?.findIndex(
-          (upload) => upload.id == file.id
-        )
+        const updateIndex = this.uploads.update?.findIndex((upload) => upload.id == file.id)
         if (updateIndex !== -1) {
           this.uploads.update.splice(updateIndex, 1)
         }
       } else {
         const index = this.uploads.add.findIndex((upload) =>
-          upload.file?.uuid
-            ? upload.file.uuid === file.uuid
-            : upload.name === file.name
+          upload.file?.uuid ? upload.file.uuid === file.uuid : upload.name === file.name
         )
         this.uploads.add.splice(index, 1)
       }
@@ -39,9 +35,7 @@ export default {
     onManipulationsChange(payload) {
       if (payload.file.id) {
         this.uploads.update.splice(
-          this.uploads.update.findIndex(
-            (upload) => upload.id === payload.file.id
-          ),
+          this.uploads.update.findIndex((upload) => upload.id === payload.file.id),
           1,
           { ...payload.file, manipulations: payload.manipulations }
         )

@@ -3,7 +3,8 @@
     <BlocBanner />
     <template v-if="$stores.auth.isLogged">
       <BlocCaDevraitVousPlaire />
-      <ElectionsEuropennes />
+      <ElectionsLegislatives />
+      <LaTourneeDeLete />
       <BlocProfileActivities />
       <BlocTemoignages />
       <BlocActualitesEngagement />
@@ -17,7 +18,8 @@
         <BlocInscriptionResponsable />
       </div>
       <BlocActivities />
-      <ElectionsEuropennes />
+      <ElectionsLegislatives />
+      <LaTourneeDeLete />
       <BlocMissionsCourtes />
       <BlocActionsBenevolesPopulaires />
       <BlocTemoignages />
@@ -44,7 +46,8 @@ import BlocNewsletter from '@/components/section/home/BlocNewsletter.vue'
 import BlocFaq from '@/components/section/home/BlocFaq.vue'
 import BlocProfileActivities from '@/components/section/home/BlocProfileActivities.vue'
 import BlocActualitesEngagement from '@/components/section/home/BlocActualitesEngagement.vue'
-import ElectionsEuropennes from '@/components/section/operations/ElectionsEuropennes.vue'
+import LaTourneeDeLete from '@/components/section/operations/LaTourneeDeLete.vue'
+import ElectionsLegislatives from '@/components/section/operations/ElectionsLegislatives.vue'
 
 export default defineNuxtComponent({
   setup() {
@@ -62,7 +65,7 @@ export default defineNuxtComponent({
           hid: 'description',
           name: 'description',
           content:
-            "Trouvez une mission de bénévolat dans une association, organisation publique ou une collectivité territoriale, sur le terrain ou à distance. Plus de 15 000 missions disponibles partout en France dans 10 domaines d'action : solidarité, insertion, éducation, environnement, santé, sport, culture ...",
+            "Trouvez une mission de bénévolat dans une association, organisation publique ou une collectivité territoriale, sur le terrain ou à distance. Plus de 18 000 missions disponibles partout en France dans 10 domaines d'action : solidarité, insertion, éducation, environnement, santé, sport, culture ...",
         },
         {
           hid: 'og:image',
@@ -97,7 +100,8 @@ export default defineNuxtComponent({
     BlocFaq,
     BlocProfileActivities,
     BlocActualitesEngagement,
-    ElectionsEuropennes,
+    LaTourneeDeLete,
+    ElectionsLegislatives,
   },
 })
 </script>

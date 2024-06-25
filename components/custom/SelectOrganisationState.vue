@@ -81,7 +81,7 @@ export default defineNuxtComponent({
   },
   computed: {
     statesAvailable() {
-      if (['admin', 'referent'].includes(this.$stores.auth.contextRole)) {
+      if (['admin'].includes(this.$stores.auth.contextRole)) {
         return this.$labels.structure_workflow_states
       }
       const toStates = this.$filters.label(

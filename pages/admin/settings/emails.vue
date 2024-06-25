@@ -254,7 +254,8 @@ export default defineNuxtComponent({
           tab: 'benevoles',
           key: 'benevole_is_inactive',
           label: 'Ah, vous voilà ! 💃',
-          description: 'Le benevole est inactif (M+3)',
+          description:
+            "Le benevole est inactif (M+3) et n'a aucune mise en relation en cours ou validée dans les 6 mois",
           tags: ['app-benevole-inactif'],
           is_updated: true,
         },

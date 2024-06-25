@@ -45,6 +45,22 @@
         </div>
       </div>
 
+      <BaseAlert
+        v-if="
+          isCurrentUserResponsable &&
+          $dayjs().diff($dayjs(benevoleUser.profile.birthday), 'year') < 18
+        "
+        class="mt-4 lg:ml-10"
+      >
+        <div>
+          <strong>Ce bénévole a moins de 18 ans</strong>
+          <p>
+            Il devra fournir un accord de ses parents ou représentants légaux pour effectuer la
+            mission
+          </p>
+        </div>
+      </BaseAlert>
+
       <CardInfosMission :show-places-left="isCurrentUserResponsable" />
     </template>
   </Conversation>

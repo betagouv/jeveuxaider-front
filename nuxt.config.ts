@@ -44,8 +44,7 @@ export default defineNuxtConfig({
         id: process.env.GTM_ID,
       },
       ai: {
-        missionModerationUrl: process.env.API_AI_MISSION_MODERATION_URL,
-        organisationModerationUrl: process.env.API_AI_ORGANISATION_MODERATION_URL,
+        moderationUrl: process.env.API_AI_MODERATION_URL,
       },
       apiEngagement: {
         key: process.env.APIENG_KEY,
@@ -95,7 +94,7 @@ export default defineNuxtConfig({
           hid: 'description',
           name: 'description',
           content:
-            "Trouvez une mission de bénévolat dans une association, organisation publique ou une collectivité territoriale, sur le terrain ou à distance. Plus de 15 000 missions disponibles partout en France dans 10 domaines d'action : solidarité, insertion, éducation, environnement, santé, sport, culture ...",
+            "Trouvez une mission de bénévolat dans une association, organisation publique ou une collectivité territoriale, sur le terrain ou à distance. Plus de 18 000 missions disponibles partout en France dans 10 domaines d'action : solidarité, insertion, éducation, environnement, santé, sport, culture ...",
         },
         { name: 'format-detection', content: 'telephone=no' },
         process.env.API_URL !== 'https://www.jeveuxaider.gouv.fr'
@@ -228,11 +227,18 @@ export default defineNuxtConfig({
     '/dasboard/**': { ssr: false },
     '/profile/**': { ssr: false },
     '/messages/**': { ssr: false },
+    '/activites/accompagnement-aux-activites-sportives': {
+      redirect: '/activites/activites-sportives',
+    },
   },
 
   lodash: {
     prefix: '_',
     prefixSkip: false,
     upperAfterPrefix: false,
+  },
+
+  nitro: {
+    compressPublicAssets: true,
   },
 })

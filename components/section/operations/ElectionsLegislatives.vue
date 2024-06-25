@@ -12,26 +12,27 @@
       <div class="flex flex-col justify-between items-center sm:flex-row gap-12">
         <div class="flex flex-col space-y-4 xl:space-y-8 max-w-[740px]">
           <p class="font-bold text-jva-blue-500 uppercase xl:text-xl">
-            Actions bénévoles pour un été solidaire
+            Action citoyenne le 30 ou 07 juillet 2024
           </p>
           <DsfrHeading as="h2" size="alt-sm">
-            <span>Rejoignez la tournée d’été</span>
+            <span>Rejoignez un bureau de vote </span>
+            <br class="hidden lg:block" />
+            <span>lors des élections législatives</span>
           </DsfrHeading>
           <p
             :id="`label-missions-operation-${uuid}`"
             class="text-xl text-[#3A3A3A] xl:text-[24px] xl:leading-[38px]"
           >
-            Et si nous rendions la promesse de l'été, ses fêtes et ses échappées accessible au plus
-            grand nombre grâce au bénévolat ? C'est le défi de la tournée d'été : une boucle joyeuse
-            tournée vers les autres.
+            Afin de garantir la bonne tenue du scrutin dans les bureaux de vote, les communes
+            recherchent des assesseurs bénévoles. Faites vivre la démocratie !
           </p>
         </div>
         <img
-          src="/images/operations/logo-la-tournee-de-lete.svg"
-          alt="La tournée de l'été"
+          src="/images/operations/elections-legislatives.png"
+          alt="Elections législatives 2024"
           width="383"
           height="384"
-          class="flex-none w-[227px] h-[227px] sm:w-[169px] sm:h-[169px] lg:w-[200px] lg:h-[200px] xl:w-[380px] xl:h-[380px]"
+          class="flex-none w-[227px] h-[227px] sm:w-[169px] sm:h-[169px] lg:w-[200px] lg:h-[200px] xl:w-[383px] xl:h-[384px]"
         />
       </div>
       <div class="mt-12">
@@ -40,7 +41,7 @@
         >
           <div>
             <p class="font-bold text-xl lg:text-2xl xl:text-[32px] xl:leading-[40px]">
-              Campagne nationale du 1er au 30 juin 2024
+              Regardez si votre commune a besoin d’assesseurs
             </p>
           </div>
           <div class="hidden lg:block flex-none">
@@ -61,7 +62,7 @@
           :search-parameters="{
             hitsPerPage: 6,
             aroundPrecision: 2000,
-            facetFilters: ['tags:La tournée d\'été', 'type:Mission en présentiel'],
+            facetFilters: [['tags:Élections législatives 2024']],
             aroundLatLngViaIP: true,
             aroundRadius: 'all',
           }"
@@ -93,28 +94,19 @@ export default defineNuxtComponent({
       this.$plausible.trackEvent('Homepage - CTA - Plus de missions - Opé nationale', {
         props: {
           isLogged: this.$stores.auth.isLogged,
-          operation: "La tournée de l'été",
+          operation: 'Élections législatives 2024',
         },
       })
-      this.$router.push(
-        '/missions-benevolat?tags=La%20tournée%20d%27été&type=Mission en présentiel'
-      )
+      this.$router.push('/missions-benevolat?tags=Élections%20législatives%202024')
     },
     onSlideClick() {
       this.$plausible.trackEvent('Homepage - Clique - Mission opé nationale', {
         props: {
           isLogged: this.$stores.auth.isLogged,
-          operation: "La tournée de l'été",
+          operation: 'Élections législatives 2024',
         },
       })
     },
   },
 })
 </script>
-
-<style lang="postcss" scoped>
-.slide-wrapper {
-  @apply !flex flex-col h-full max-w-[320px] transition;
-  width: calc(100vw - 64px) !important; /* To let the next slide appear */
-}
-</style>
