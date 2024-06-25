@@ -291,8 +291,6 @@ const labels: TypeLabels = {
     { key: '5_days', label: '5 jours' },
   ],
   commitment_duration_min: [
-    { key: '1_week', label: '1 semaine' },
-    { key: '2_week', label: '2 semaines' },
     { key: '1_month', label: '1 mois' },
     { key: '2_month', label: '2 mois' },
     { key: '3_month', label: '3 mois' },

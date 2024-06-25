@@ -13,7 +13,7 @@
               @click="mode = 'single'"
               :is-selected="mode === 'single'"
               title="Une seule date"
-              description="Sélectionnez une date après l'autre"
+              description="Sélectionnez une date à la fois"
             />
             <CustomOptionCard
               @click="mode = 'multiple'"

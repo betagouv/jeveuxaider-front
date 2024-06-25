@@ -120,7 +120,7 @@
                 lorsqu’ils proposent leur aide, vous gagnez du temps !
               </p>
               <p class="font-bold">
-                Les missions avec dates obtiennent en moyenne 25% de plus de participations.
+                Les missions avec dates obtiennent en moyenne +50% de participations validées.
               </p>
             </CustomTips>
 
