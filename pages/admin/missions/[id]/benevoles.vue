@@ -4,7 +4,9 @@
       <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
     <div v-if="form">
-      <h2 class="text-[28px] font-bold leading-9 mb-10">Combien de bénévoles recherchez-vous ?</h2>
+      <h2 class="text-[22px] lg:text-[28px] font-bold leading-9 mb-6 lg:mb-10">
+        Combien de bénévoles recherchez-vous ?
+      </h2>
 
       <CustomTips v-if="form.participations_max > 70" class="mb-10" variant="warning">
         <span class="font-bold">Ça fait beaucoup de bénévoles 😅</span><br />

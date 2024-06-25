@@ -1,12 +1,12 @@
 <template>
-  <div class="flex w-full bg-white border-b justify-between items-center px-4 py-2 lg:px-6 lg:py-4">
+  <div class="flex w-full bg-white border-b justify-between items-center px-4 py-3 lg:px-6 lg:py-4">
     <div class="flex w-full items-center gap-4 lg:gap-8">
       <div class="hidden lg:block lg:border-r pr-4 lg:pr-8 py-2 group">
         <div class="lg:flex items-center gap-2">
           <img src="@/assets/images/jeveuxaider-logo-short.svg" alt="" width="59" height="44" />
         </div>
       </div>
-      <div class="flex-1">
+      <div class="flex-1 max-w-full">
         <div class="flex">
           <h1 class="text-lg lg:text-[22px] font-bold">
             <template v-if="$stores.formMission.mission">
@@ -16,7 +16,7 @@
           </h1>
         </div>
 
-        <div class="flex mt-1" v-if="$stores.formMission.mission">
+        <div v-dragscroll.x class="overflow-hidden flex mt-1" v-if="$stores.formMission.mission">
           <Badges :mission="$stores.formMission.mission" />
         </div>
       </div>
@@ -67,8 +67,12 @@
 import MixinMission from '@/mixins/mission'
 import Badges from '@/components/section/mission/Badges.vue'
 import ModalMissionPublish from '@/components/modal/ModalMissionPublish.vue'
+import { dragscroll } from 'vue-dragscroll'
 
 export default defineNuxtComponent({
+  directives: {
+    dragscroll,
+  },
   mixins: [MixinMission],
   props: {
     title: {

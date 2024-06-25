@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white flex flex-col h-screen">
+  <div class="bg-white flex flex-col h-screen overflow-x-hidden">
     <div id="teleport-header" class="relative z-50"></div>
     <div v-if="$stores.formMission.isDraft" class="h-[6px] bg-[#EEEEEE]">
       <div

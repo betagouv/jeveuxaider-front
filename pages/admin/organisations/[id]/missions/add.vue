@@ -6,10 +6,10 @@
 
     <div class="space-y-24">
       <div id="domaines" class="">
-        <h2 class="text-[28px] font-bold leading-9 mb-10">
+        <h2 class="text-[22px] lg:text-[28px] font-bold leading-9 mb-6 lg:mb-10">
           Quel est le domaine d’action de votre mission ?
         </h2>
-        <CustomTips class="mb-10">
+        <CustomTips class="mb-6 lg:mb-10">
           <template #title>Plusieurs domaines correspondent à votre mission ?</template>
           Choisissez celui qui vous semble le plus important. Vous pourrez choisir un domaine
           secondaire dans les étapes suivantes.
@@ -67,7 +67,7 @@
             >
           </div>
         </div>
-        <CustomTips class="mb-10">
+        <CustomTips class="mb-6 lg:mb-10">
           En utilisant un modèle déjà existant, votre mission sera publiée sans besoin d’être
           validée par un référent.
         </CustomTips>

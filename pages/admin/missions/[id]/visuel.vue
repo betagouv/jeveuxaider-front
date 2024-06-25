@@ -5,7 +5,9 @@
     </template>
     <div v-if="mission">
       <template v-if="mission.template_id">
-        <h2 class="text-[28px] font-bold leading-9 mb-10">Visuel du modèle de mission</h2>
+        <h2 class="text-[22px] lg:text-[28px] font-bold leading-9 mb-6 lg:mb-10">
+          Visuel du modèle de mission
+        </h2>
         <div>
           <NuxtImg
             ref="thumbnail"
@@ -22,7 +24,9 @@
         <div class="text-center text-[#666666] mt-2">Le visuel n'est pas modifiable</div>
       </template>
       <template v-else>
-        <h2 class="text-[28px] font-bold leading-9 mb-10">Choisissez un visuel</h2>
+        <h2 class="text-[22px] lg:text-[28px] font-bold leading-9 mb-6 lg:mb-10">
+          Choisissez un visuel
+        </h2>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div v-for="media in medias" :key="media.id" class="relative">
             <div

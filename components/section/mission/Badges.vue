@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center space-x-3">
+  <div class="flex items-center flex-wrap gap-3">
     <DsfrBadge size="sm" :type="badgeTypeMissionSate">
       {{ mission.state }}
     </DsfrBadge>

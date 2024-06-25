@@ -6,7 +6,7 @@
 
     <div id="content" class="flex-1 overflow-y-auto overflow-x-hidden h-full custom-scrollbar-gray">
       <div class="px-4 max-w-[696px] mx-auto">
-        <div class="py-8 lg:py-14" v-if="$stores.formMission.loading === false">
+        <div class="py-6 lg:py-14" v-if="$stores.formMission.loading === false">
           <slot></slot>
         </div>
       </div>

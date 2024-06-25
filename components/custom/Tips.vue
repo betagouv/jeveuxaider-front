@@ -22,7 +22,7 @@
         />
       </div>
 
-      <div class="pl-4">
+      <div class="lg:pl-4">
         <div v-if="$slots.title" class="text-[#161616] text-sm font-bold mb-[2px]">
           <slot name="title"></slot>
         </div>

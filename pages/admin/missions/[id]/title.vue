@@ -4,16 +4,16 @@
       <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
     <div v-if="$stores.formMission.mission">
-      <h2 class="text-[28px] font-bold leading-9 mb-10">C’est quoi son p’tit nom ?</h2>
-      <CustomTips class="mb-10">
+      <h2 class="text-[22px] lg:text-[28px] font-bold leading-9 mb-6 lg:mb-10">
+        C’est quoi son p’tit nom ?
+      </h2>
+      <CustomTips class="mb-6 lg:mb-10">
         Rédigez le titre de votre mission à la première personne du singulier du point de vue du
         bénévole
       </CustomTips>
       <DsfrFormControl label="Titre de votre mission" html-for="name" :error="errors.name" required>
         <template #description>
-          <div class="text-xs text-[#666666]">
-            Exemple : Je contribue au déroulé d’un événement sportif le jour J
-          </div>
+          <div class="text-xs text-[#666666]">Exemple : Je collecte des produits alimentaires</div>
         </template>
         <DsfrInput
           v-model="form.name"

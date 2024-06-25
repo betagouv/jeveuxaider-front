@@ -4,8 +4,10 @@
       <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
     <div v-if="form">
-      <h2 class="text-[28px] font-bold leading-9 mb-10">Quels bénévoles recherchez-vous ?</h2>
-      <CustomTips class="mb-10">
+      <h2 class="text-[22px] lg:text-[28px] font-bold leading-9 mb-6 lg:mb-10">
+        Quels bénévoles recherchez-vous ?
+      </h2>
+      <CustomTips class="mb-6 lg:mb-10">
         En précisant le type de profils recherchés, vous augmentez vos chances de trouver des
         bénévoles correspondant à vos besoins.
       </CustomTips>

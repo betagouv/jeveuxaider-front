@@ -4,8 +4,10 @@
       <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
     <div v-if="form">
-      <h2 class="text-[28px] font-bold leading-9 mb-10">Qui gère cette mission ?</h2>
-      <CustomTips class="mb-10">
+      <h2 class="text-[22px] lg:text-[28px] font-bold leading-9 mb-6 lg:mb-10">
+        Qui gère cette mission ?
+      </h2>
+      <CustomTips class="mb-6 lg:mb-10">
         <p>
           Le responsable de la mission est la personne qui sera en contact avec les bénévoles et qui
           sera chargé de les accompagner dans leur intégration dans la structure.
@@ -15,7 +17,7 @@
           mission.
         </p>
       </CustomTips>
-      <div class="grid grid-cols-1 gap-8">
+      <div class="grid grid-cols-1 gap-6 lg:gap-8">
         <div class="flex justify-between items-center border-b py-4">
           <div class="font-bold text-xl">Responsables</div>
           <DsfrButton
@@ -28,15 +30,16 @@
                 : null
             "
             @click="showModalAddResponsable = true"
-            >Ajouter un responsable</DsfrButton
           >
+            Ajouter <span class="hidden lg:inline">un responsable</span>
+          </DsfrButton>
         </div>
         <template v-if="form.responsables.length === 0">
           <div class="text-center text-gray-500">Aucun responsable</div>
         </template>
         <template v-else>
           <DsfrFormControl html-for="responsables" :error="errors.responsables">
-            <div class="space-y-4 mb-8">
+            <div class="space-y-4 mb-6 lg:mb-8">
               <div
                 class="flex justify-between items-center"
                 v-for="responsable in form.responsables"

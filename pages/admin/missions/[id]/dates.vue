@@ -4,7 +4,9 @@
       <LayoutHeaderFormMissions class="" title="Compléter votre mission" />
     </template>
     <div v-if="form">
-      <h2 class="text-[28px] font-bold leading-9 mb-10">Quel type d’engagement attendez-vous ?</h2>
+      <h2 class="text-[22px] lg:text-[28px] font-bold leading-9 mb-6 lg:mb-10">
+        Quel type d’engagement attendez-vous ?
+      </h2>
       <CustomTips v-if="$stores.formMission.isStepDatesWarning" variant="warning" class="mb-10">
         <p>La mission n'a plus de date disponible. Vous pouvez :</p>
         <ul class="list-disc mt-2 pl-5">
