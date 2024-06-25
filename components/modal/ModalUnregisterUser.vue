@@ -204,28 +204,19 @@ export default defineNuxtComponent({
   },
   computed: {
     modalToShow() {
-      if (this.userStatus.structure) {
-        if (
-          this.userStatus.structure_missions_where_i_m_responsable_count === 0 &&
-          this.userStatus.structure_responsables.length > 1
-        ) {
-          return 'leave-structure-and-unsubscribe-user'
-        }
-        if (
-          this.userStatus.structure_missions_where_i_m_responsable_count > 0 &&
-          this.userStatus.structure_responsables.length > 1
-        ) {
-          return 'select-new-responsable-and-unsubscribe-user'
-        }
-        if (
-          this.userStatus.structure_responsables.length === 1 &&
-          this.userStatus.structure_participations_count > 0
-        ) {
-          return 'contact-admin'
-        }
-        return 'unsubscribe-organisation-and-user'
+      if (!this.userStatus.structure) {
+        return 'unsubscribe-user'
       }
-      return 'unsubscribe-user'
+
+      if (this.userStatus.structure_responsables.length > 1) {
+        return this.userStatus.structure_missions_where_i_m_responsable_count === 0
+          ? 'leave-structure-and-unsubscribe-user'
+          : 'select-new-responsable-and-unsubscribe-user'
+      }
+
+      return this.userStatus.structure_participations_count > 0
+        ? 'contact-admin'
+        : 'unsubscribe-organisation-and-user'
     },
   },
   methods: {

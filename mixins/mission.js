@@ -123,15 +123,15 @@ export default {
     // },
     canRegister() {
       if (!this.mission.has_places_left) {
-        console.log('no places left')
+        // console.log('no places left')
         return false
       }
       if (!this.mission.is_registration_open) {
-        console.log('registration closed')
+        // console.log('registration closed')
         return false
       }
       if (!this.mission.is_online) {
-        console.log('not online')
+        // console.log('not online')
         return false
       }
 
@@ -139,12 +139,12 @@ export default {
         this.mission.end_date &&
         this.$dayjs(this.mission.end_date).endOf('day').isBefore(this.$dayjs())
       ) {
-        console.log('mission expired')
+        // console.log('mission expired')
         return false
       }
 
       if (this.mission.state === 'Validée' && this.mission.structure.state === 'Validée') {
-        console.log('mission validated')
+        // console.log('mission validated')
         return true
       }
 
