@@ -7,6 +7,15 @@
         :style="`width:${$stores.formMission.progress}%;`"
       ></div>
     </div>
+    <div class="block lg:hidden">
+      <BaseSelectAdvanced
+        id="menu"
+        v-model="selectedMenuItem"
+        name="menu"
+        :options="menuItems"
+        @changed="handleChangeItem($event)"
+      />
+    </div>
     <div class="flex-grow flex h-full min-h-0">
       <LayoutSidebarFormMission class="hidden lg:block w-[400px]" width />
       <NuxtPage class="flex-1" />
@@ -72,10 +81,67 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      selectedMenuItem: this.$route.name,
+    }
   },
   created() {},
-  computed: {},
-  methods: {},
+  computed: {
+    menuItems() {
+      console.log(this.$route.name)
+      const missionId = this.$stores.formMission.mission.id
+      return [
+        {
+          key: 'admin-missions-id-title',
+          label: 'Titre',
+          to: `/admin/missions/${missionId}/title`,
+        },
+        {
+          key: 'admin-missions-id-visuel',
+          label: 'Visuel',
+          to: `/admin/missions/${missionId}/visuel`,
+        },
+        {
+          key: 'admin-missions-id-informations',
+          label: 'Informations',
+          to: `/admin/missions/${missionId}/informations`,
+        },
+        {
+          key: 'admin-missions-id-lieux',
+          label: 'Dates',
+          to: `/admin/missions/${missionId}/dates`,
+        },
+        { key: 'lieux', label: 'Lieux', to: `/admin/missions/${missionId}/lieux` },
+        {
+          key: 'admin-missions-id-benevoles',
+          label: 'Bénévoles recherchés',
+          to: `/admin/missions/${missionId}/benevoles`,
+        },
+        {
+          key: 'admin-missions-id-benevoles-informations',
+          label: 'Informations bénévoles',
+          to: `/admin/missions/${missionId}/benevoles-informations`,
+        },
+        {
+          key: 'admin-missions-id-responsables',
+          label: 'Responsables',
+          to: `/admin/missions/${missionId}/responsables`,
+        },
+      ]
+    },
+  },
+  methods: {
+    handleChangeItem(item) {
+      if (!item) {
+        return
+      }
+
+      if (item.to) {
+        this.$router.push(item.to)
+      } else if (item.href) {
+        window.location.href = item.href
+      }
+    },
+  },
 }
 </script>
