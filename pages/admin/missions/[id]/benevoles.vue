@@ -17,12 +17,15 @@
         participation reçues et de vos besoins s’ils évoluent !
       </CustomTips>
 
-      <div class="relative flex flex-col space-x-4 items-center justify-center pt-4 mb-4 h-[180px]">
+      <div
+        class="relative flex flex-col space-x-4 items-center justify-center pt-4 mb-4 h-[120px] lg:h-[180px]"
+      >
         <div class="flex space-x-0 pb-[40px]">
           <img
             v-for="i in illustrationsCount"
             :key="i"
             :src="`/images/illustrations/group-${i}.svg`"
+            class="h-[80px] lg:h-[105px] w-auto"
           />
         </div>
         <div v-if="form.participations_max > 10" class="absolute w-full text-center bottom-[8px]">
@@ -32,10 +35,10 @@
       <div class="flex items-center justify-center gap-4">
         <button
           aria-
-          class="border cursor-pointer p-3 border-jva-blue-500 rounded-full text-jva-blue-500 hover:bg-[#F5F5FE]"
+          class="border cursor-pointer p-2 lg:p-3 border-jva-blue-500 rounded-full text-jva-blue-500 hover:bg-[#F5F5FE]"
           @click="form.participations_max > 1 && form.participations_max--"
         >
-          <RiSubtractLine class="fill-current h-5 w-5" />
+          <RiSubtractLine class="fill-current h-4 w-4 lg:h-5 lg:w-5" />
         </button>
 
         <input
@@ -43,14 +46,14 @@
           min="1"
           name="participations_max"
           v-model="form.participations_max"
-          class="outline-none focus:outline-none px-8 py-1 w-[220px] text-center border-none text-[80px] font-bold text-[#161616] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+          class="outline-none focus:outline-none px-8 py-1 w-[150px] lg:w-[220px] text-center border-none text-[60px] lg:text-[80px] font-bold text-[#161616] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         />
 
         <button
-          class="border cursor-pointer p-3 border-jva-blue-500 rounded-full text-jva-blue-500 hover:bg-[#F5F5FE]"
+          class="border cursor-pointer p-2 lg:p-3 border-jva-blue-500 rounded-full text-jva-blue-500 hover:bg-[#F5F5FE]"
           @click="form.participations_max++"
         >
-          <RiAddLine class="fill-current h-5 w-5" />
+          <RiAddLine class="fill-current h-4 w-4 lg:h-5 lg:w-5" />
         </button>
       </div>
       <div class="w-[120px] mx-auto border-b-2 border-b-[#161616]" />

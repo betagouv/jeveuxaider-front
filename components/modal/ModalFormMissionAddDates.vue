@@ -39,19 +39,7 @@
           </template>
 
           <template v-if="mode === 'multiple'">
-            <!-- <DsfrFormControl label="Récurrence" html-for="recurring" :error="errors.recurring">
-              <DsfrSelect
-                id="recurring"
-                name="recurring"
-                v-model="recurring"
-                placeholder="Sélectionner une récurrence"
-                :options="[
-                  { key: 'daily', label: 'Tous les jours' },
-                  { key: 'weekly', label: 'Toutes les semaines' },
-                ]"
-              />
-            </DsfrFormControl> -->
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <DsfrFormControl
                 label="À partir du"
                 html-for="start_date"

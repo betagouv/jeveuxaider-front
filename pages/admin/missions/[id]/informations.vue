@@ -277,7 +277,7 @@
                 :disabled="Boolean(form.template_id && form.template?.activity_secondary_id)"
               />
             </DsfrFormControl>
-            <BaseFormInfo class="col-span-2 !mt-0"
+            <BaseFormInfo class="lg:col-span-2 !mt-0"
               >Remplissez l’activité secondaire pour que votre mission apparaissent plus souvent
               dans les résultats de recherche</BaseFormInfo
             >

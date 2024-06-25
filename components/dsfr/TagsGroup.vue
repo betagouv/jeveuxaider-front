@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :class="['flex flex-wrap gap-4', wrapperClass]">
+    <div :class="['flex flex-wrap gap-2 lg:gap-4', wrapperClass]">
       <DsfrTag
         v-for="option in options"
         :key="option.key"

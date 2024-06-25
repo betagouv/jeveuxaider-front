@@ -66,7 +66,7 @@ export default defineNuxtComponent({
       if (this.checkDistance) {
         this.prerequisites.push({
           key: 'distance',
-          label: `Je suis en mesure de me déplacer bien que mon code postal (${this.userZip}) se situe à plus de 30km du lieu de la mission`,
+          label: `Je suis en mesure de me déplacer bien que mon code postal (${this.userZip}) se situe à plus de 30 kms du lieu de la mission`,
         })
       }
       return this.prerequisites

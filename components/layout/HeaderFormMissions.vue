@@ -1,8 +1,8 @@
 <template>
   <div class="flex w-full bg-white border-b justify-between items-center px-4 py-2 lg:px-6 lg:py-4">
     <div class="flex w-full items-center gap-4 lg:gap-8">
-      <div class="lg:border-r pr-4 lg:pr-8 py-2 group">
-        <div class="flex items-center gap-2">
+      <div class="hidden lg:block lg:border-r pr-4 lg:pr-8 py-2 group">
+        <div class="lg:flex items-center gap-2">
           <img src="@/assets/images/jeveuxaider-logo-short.svg" alt="" width="59" height="44" />
         </div>
       </div>
