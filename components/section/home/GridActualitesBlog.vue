@@ -4,23 +4,23 @@
       <template v-for="(article, index) in articles" :key="article.id">
         <a
           v-if="index === 1"
-          href="https://www.youtube.com/watch?v=9SJWaqktcT0&ab_channel=JeVeuxAider.gouv.fr"
+          href="https://www.youtube.com/watch?v=_mJrbLy33Es"
           target="_blank"
           class="card-scale-img bg-jva-blue-500 relative overflow-hidden"
         >
           <img
             srcset="
-              /images/actualites/actu-1dechetparjour.jpg,
-              /images/actualites/actu-1dechetparjour@2x.jpg 2x
+              /images/actualites/bloc_video_course.jpg,
+              /images/actualites/bloc_video_course@2x.jpg 2x
             "
-            src="/images/actualites/actu-1dechetparjour.jpg"
+            src="/images/actualites/bloc_video_course.jpg"
             alt=""
             class="thumbnail object-cover h-full w-full"
           />
           <div class="text-white absolute bottom-0 p-8">
             <RiYoutubeFill class="h-8 fill-current" />
             <DsfrHeading as="h3" size="xs" class="mt-2">
-              Dépollution et sensibilisation au tri avec 1 Déchet Par Jour
+              Une course sportive à ciel ouvert avec Athlétic Club Phocéen
             </DsfrHeading>
           </div>
         </a>
