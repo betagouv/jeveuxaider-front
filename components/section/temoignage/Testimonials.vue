@@ -87,7 +87,7 @@ export default defineNuxtComponent({
       uuid: uuidv4(),
     }
   },
-  created() {
+  mounted() {
     this.fetch()
   },
   computed: {
