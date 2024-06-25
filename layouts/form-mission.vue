@@ -8,13 +8,15 @@
       ></div>
     </div>
     <div class="block lg:hidden">
-      <BaseSelectAdvanced
-        id="menu"
-        v-model="selectedMenuItem"
-        name="menu"
-        :options="menuItems"
-        @changed="handleChangeItem($event)"
-      />
+      <div class="p-4">
+        <BaseSelectAdvanced
+          id="menu"
+          v-model="selectedMenuItem"
+          name="menu"
+          :options="menuItems"
+          @changed="handleChangeItem($event)"
+        />
+      </div>
     </div>
     <div class="flex-grow flex h-full min-h-0">
       <LayoutSidebarFormMission class="hidden lg:block w-[400px]" width />
