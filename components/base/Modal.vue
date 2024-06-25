@@ -83,7 +83,7 @@
                     <slot />
                   </div>
                   <!-- MODAL FOOTER -->
-                  <div class="flex justify-end gap-4 p-8" v-if="$slots.footer">
+                  <div class="flex flex-wrap justify-end gap-4 p-8" v-if="$slots.footer">
                     <slot name="footer" />
                   </div>
                 </div>
