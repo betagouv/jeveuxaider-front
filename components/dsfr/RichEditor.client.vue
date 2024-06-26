@@ -108,7 +108,7 @@ const editorConfig = {
       @apply mb-4;
     }
     &.ck-focused {
-      margin: -1px;
+      margin: -2px;
     }
   }
   :deep(.ck-sticky-panel) {
