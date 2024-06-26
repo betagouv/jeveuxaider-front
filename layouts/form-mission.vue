@@ -108,7 +108,7 @@ export default {
           to: `/admin/missions/${missionId}/informations`,
         },
         {
-          key: 'admin-missions-id-lieux',
+          key: 'admin-missions-id-dates',
           label: 'Dates',
           to: `/admin/missions/${missionId}/dates`,
         },
