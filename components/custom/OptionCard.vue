@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'relative border-2 p-6 cursor-pointer hover:border-jva-blue-500 focus:ring-2 ring-offset-2 ring-[#0A76F6]',
+      'relative border-2 p-6 cursor-pointer hover:border-jva-blue-500',
       { 'border-2 border-jva-blue-500 bg-[#F5F5FE]': isSelected },
     ]"
     tabindex="0"

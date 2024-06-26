@@ -22,7 +22,7 @@
         type="text"
         :placeholder="placeholder"
         :class="[
-          'border-none rounded-t w-full h-full',
+          '!border-none rounded-t w-full h-full',
 
           {
             'bg-[#EEEEEE] shadow-[inset_0_-2px_0_0_#3A3A3A] focus:!shadow-[inset_0_-2px_0_0_#3A3A3A]':

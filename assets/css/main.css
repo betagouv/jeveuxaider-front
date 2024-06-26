@@ -132,7 +132,7 @@ body {
   --ck-color-base-active-focus: #070191;
   --ck-color-focus-border: #070191;
   --ck-focus-ring: 2px solid #070191;
-  --ck-focus-ring-offset: 2px; 
+  --ck-focus-ring-offset: 2px;
 }
 .ck-powered-by-balloon {
   display: none !important;
@@ -248,10 +248,10 @@ body.full-height-layout {
 * {
   outline: none;
   &:focus-visible {
-    /* outline-style: solid;
+    outline-style: solid;
     outline-color: #0a76f6;
     outline-width: 2px;
-    outline-offset: 2px; */
+    outline-offset: 2px;
   }
 }
 

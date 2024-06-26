@@ -45,7 +45,7 @@ const props = defineProps({
       :rows="rows"
       :placeholder="placeholder"
       :class="[
-        ' border-t-0 border-l-0 border-r-0 rounded-t w-full h-full border-b-2 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0a76f6]',
+        'border-t-0 border-l-0 border-r-0 rounded-t w-full h-full border-b-2',
         {
           'bg-[#EEEEEE]  border-[#3A3A3A] focus-visible:border-[#3A3A3A]': variant === 'primary',
         },

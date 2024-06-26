@@ -2,7 +2,6 @@
   <div
     :class="[
       'relative border-2 shadow-lg cursor-pointer hover:shadow-xl hover:border-[#8585F6]',
-      'focus:ring-2 ring-offset-2 ring-[#0A76F6]',
       isSelected ? 'bg-[#F5F5FE] border-[#8585F6]' : 'border-transparent bg-white',
     ]"
     tabindex="0"

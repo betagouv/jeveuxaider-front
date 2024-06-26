@@ -20,7 +20,6 @@
             :key="domaine.key"
             :class="[
               'relative group shadow-lg p-6 text-center border-2 flex flex-col items-center justify-center cursor-pointer hover:border-[#8585F6]',
-              'focus:ring-2 ring-offset-2 ring-[#0A76F6]',
               selectedDomaine && selectedDomaine.key === domaine.key
                 ? 'border-[#8585F6] bg-[#F5F5FE]'
                 : 'border-transparent bg-white',
