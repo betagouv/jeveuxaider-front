@@ -18,7 +18,7 @@
 
       <div class="space-y-10">
         <DsfrFormControl
-          label="Le bénévole doit s’engager de manière :"
+          label="Le bénévole s’engage de manière :"
           html-for="date_type"
           :error="errors.date_type"
           required
@@ -35,7 +35,7 @@
               @click="onRecurringClick"
               :is-selected="form.date_type === 'recurring'"
               title="Régulière"
-              subtitle="Demande un engagement dans la durée (plusieurs mois)"
+              subtitle="Un engagement dans la durée (plusieurs mois)"
               description=" Ex : 2 heures par semaine, 1 jour par mois pendant 6 mois etc."
             />
           </div>
@@ -118,11 +118,12 @@
           <template v-if="form.date_type === 'ponctual'">
             <CustomTips>
               <p class="mb-2">
-                En précisant des dates, vous permettez aux bénévoles d’indiquer leurs disponibilités
-                lorsqu’ils proposent leur aide, vous gagnez du temps !
+                Vous voulez gagner du temps et obtenir plus de proposition d’aide de la part des
+                bénévoles ? <strong>Précisez la date de votre mission ! </strong>
               </p>
-              <p class="font-bold">
-                Les missions avec dates obtiennent en moyenne +50% de participations validées.
+              <p class="">
+                Vous permettrez aux bénévoles d’indiquez leurs disponibilités et de s’organiser en
+                conséquence !
               </p>
             </CustomTips>
 

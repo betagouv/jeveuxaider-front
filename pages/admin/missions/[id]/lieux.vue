@@ -13,8 +13,9 @@
           lieu ou un territoire. Elles seront visibles par les bénévoles les plus proches.
         </p>
         <p>
-          <strong>Les missions à distance</strong> peuvent s’effectuer de n’importe où et seront
-          visibles par les bénévoles de toute la France.
+          <strong>Les missions à distance</strong> ne demandent pas au bénévole de se déplacer. Il
+          peut réaliser la mission d’où il le souhaite. Ces missions sont visibles par les bénévoles
+          de toute la France.
         </p>
       </CustomTips>
 
