@@ -24,12 +24,12 @@
     </template>
     <template v-else>
       <p class="mb-4">
-        Votre mission va être examinée par des référents départementaux.
-        <strong
-          >Cela prend en général 7 à 10 jours et vous recevrez un email avec le résultat.</strong
-        >
+        Votre mission va être examinée par un référent territorial.
+        <strong>Les délais sont de 7 à 10 jours ouvrés. Vous serez informé par la suite.</strong>
       </p>
-      <p>Si votre mission est validée, elle sera automatiquement publiée.</p>
+      <p>
+        Si votre mission est validée, elle sera automatiquement publiée et visible des bénévoles.
+      </p>
     </template>
   </BaseAlertDialog>
 </template>

@@ -7,7 +7,7 @@
         :style="`width:${$stores.formMission.progress}%;`"
       ></div>
     </div>
-    <div v-if="!$stores.formMission.isDraft" class="block lg:hidden">
+    <div v-if="$stores.formMission.mission && !$stores.formMission.isDraft" class="block lg:hidden">
       <div class="p-4">
         <BaseSelectAdvanced
           id="menu"

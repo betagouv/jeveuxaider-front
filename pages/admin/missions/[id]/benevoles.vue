@@ -15,8 +15,8 @@
         hausse si nécessaire.
       </CustomTips>
       <CustomTips v-else class="mb-10">
-        Vous pourrez modifier le nombre de bénévoles recherchés en fonction des demandes de
-        participation reçues et de vos besoins s’ils évoluent !
+        Vous pourrez modifier le nombre de bénévoles recherchés en fonction des propositions d’aide
+        reçues et de vos besoins s’ils évoluent !
       </CustomTips>
 
       <div

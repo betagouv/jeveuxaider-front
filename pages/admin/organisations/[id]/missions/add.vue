@@ -11,7 +11,7 @@
         </h2>
         <CustomTips class="mb-6 lg:mb-10">
           <template #title>Plusieurs domaines correspondent à votre mission ?</template>
-          Choisissez celui qui vous semble le plus important. Vous pourrez choisir un domaine
+          Choisissez celui qui représente au mieux votre mission. Vous pourrez choisir un domaine
           secondaire dans les étapes suivantes.
         </CustomTips>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
