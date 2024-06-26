@@ -112,8 +112,9 @@
               />
             </DsfrFormControl>
             <BaseFormInfo class="lg:col-span-2 !mt-0"
-              >Remplissez l’activité secondaire pour que votre mission apparaissent plus souvent
-              dans les résultats de recherche</BaseFormInfo
+              >Nous vous suggérons automatiquement une activité adaptée au contenu de votre
+              mission ! Astuce : les pourcentages indiquent le niveau de pertinence de la
+              recommandation</BaseFormInfo
             >
           </div>
 
@@ -280,8 +281,9 @@
               />
             </DsfrFormControl>
             <BaseFormInfo class="lg:col-span-2 !mt-0"
-              >Remplissez l’activité secondaire pour que votre mission apparaissent plus souvent
-              dans les résultats de recherche</BaseFormInfo
+              >Nous vous suggérons automatiquement une activité adaptée au contenu de votre
+              mission ! Astuce : les pourcentages indiquent le niveau de pertinence de la
+              recommandation</BaseFormInfo
             >
           </div>
         </div>

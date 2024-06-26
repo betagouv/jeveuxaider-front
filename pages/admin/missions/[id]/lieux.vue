@@ -9,8 +9,8 @@
       </h2>
       <CustomTips class="mb-6 lg:mb-10">
         <p class="mb-2">
-          <strong>Les missions en présentiel</strong> nécessitent une présence sur place, dans un
-          lieu ou un territoire. Elles seront visibles par les bénévoles les plus proches.
+          <strong>Les missions en présentiel</strong> nécessitent une présence sur place. Elles
+          seront visibles par les bénévoles les plus proches.
         </p>
         <p>
           <strong>Les missions à distance</strong> ne demandent pas au bénévole de se déplacer. Il

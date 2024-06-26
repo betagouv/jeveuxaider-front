@@ -143,7 +143,7 @@
                 <CustomOptionCard
                   :is-selected="form.with_dates === 'no'"
                   title="C’est à définir"
-                  description="Vous ne savez pas encore ou c’est à discuter avec le bénévole"
+                  description="Vous ne savez pas encore quand la mission aura lieu, ou bien c’est à adapter aux disponibilités du bénévole."
                   @click="form.with_dates = 'no'"
                 />
               </div>
