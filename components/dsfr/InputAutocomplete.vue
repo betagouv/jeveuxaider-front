@@ -256,3 +256,9 @@ export default defineNuxtComponent({
   },
 })
 </script>
+
+<style lang="postcss" scoped>
+input {
+  --tw-ring-shadow: 0 0 #000 !important;
+}
+</style>

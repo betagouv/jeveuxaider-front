@@ -1,5 +1,6 @@
 <template>
   <div
+    tabindex="0"
     :class="[
       'relative p-6 shadow border-2 transition-shadow duration-300',
       { ' border-[#6A6AF4] bg-[#F5F5FE] ': isCurrent },
@@ -9,6 +10,7 @@
       { 'cursor-pointer  hover:shadow-lg': !isDisabled },
     ]"
     @click="onClick"
+    @keydown.enter="onClick"
   >
     <RiErrorWarningLine
       v-if="isWarning"
