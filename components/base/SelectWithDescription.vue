@@ -41,7 +41,11 @@
       <ul
         v-if="show"
         v-click-outside="() => (show = false)"
-        class="origin-top-left absolute z-10 left-0 mt-2 w-72 shadow-lg bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none max-h-[500px] overscroll-contain overflow-auto"
+        class="absolute z-10 mt-2 w-72 shadow-lg bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none max-h-[500px] overscroll-contain overflow-auto"
+        :class="[
+          { 'origin-top-left left-0': orientation === 'left' },
+          { 'origin-top-right right-0': orientation === 'right' },
+        ]"
         tabindex="-1"
         role="listbox"
         aria-labelledby="listbox-label"
@@ -96,6 +100,11 @@ export default defineNuxtComponent({
       type: String,
       default: 'md',
       validator: (s) => ['sm', 'md'].includes(s),
+    },
+    orientation: {
+      type: String,
+      default: 'left',
+      validator: (s) => ['left', 'right'].includes(s),
     },
   },
   data() {

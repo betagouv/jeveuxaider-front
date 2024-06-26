@@ -380,7 +380,7 @@ export default defineNuxtComponent({
       exportEndpoint: '/export/participations',
       queryParams: {
         include:
-          'conversation.latestMessage,profile.avatar,mission.responsable,mission.structure,tags',
+          'conversation.latestMessage,profile.avatar,mission.responsables,mission.structure,tags',
       },
       drawerParticipationId: null,
       autocompleteOptionsZips: [],
@@ -501,7 +501,10 @@ export default defineNuxtComponent({
         return true
       }
       if (this.$stores.auth.contextRole === 'responsable') {
-        return participation.mission.responsable_id === this.$stores.auth.profile.id
+        return (
+          participation.mission.responsables.filter((r) => r.id === this.$stores.auth.profile.id)
+            .length > 0
+        )
       }
 
       return false

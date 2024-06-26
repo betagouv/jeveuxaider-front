@@ -111,8 +111,8 @@ export default defineNuxtComponent({
               to: '/support/actions/user-reset-password-link',
             },
             {
-              label: 'Transfert de missions',
-              to: '/support/actions/migrate-organisation-missions',
+              label: 'Transfert organisation',
+              to: '/support/actions/transfert-organisation',
             },
             {
               label: "Réinitialisation d'un utilisateur",

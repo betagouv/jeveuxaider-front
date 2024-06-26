@@ -2,7 +2,7 @@
   <ClientOnly>
     <Teleport to="#teleport-body-end">
       <template v-if="isReady">
-        <template v-if="modalToShow === 'unsubscibe-user'">
+        <template v-if="modalToShow === 'unsubscribe-user'">
           <BaseAlertDialog
             icon="RiErrorWarningLine"
             title="Supprimer mon compte"
@@ -15,7 +15,7 @@
             JeVeuxAider.gouv.fr seront anonymisées.
           </BaseAlertDialog>
         </template>
-        <template v-if="modalToShow === 'leave-structure-and-unsubscibe-user'">
+        <template v-if="modalToShow === 'leave-structure-and-unsubscribe-user'">
           <BaseAlertDialog
             icon="RiErrorWarningLine"
             title="Supprimer mon compte"
@@ -128,7 +128,7 @@
             </template>
           </BaseModal>
         </template>
-        <template v-if="modalToShow === 'unsubscibe-organisation-and-user'">
+        <template v-if="modalToShow === 'unsubscribe-organisation-and-user'">
           <BaseModal
             :is-open="isOpen"
             icon="RiErrorWarningLine"
@@ -204,28 +204,19 @@ export default defineNuxtComponent({
   },
   computed: {
     modalToShow() {
-      if (this.userStatus.structure) {
-        if (
-          this.userStatus.structure_missions_where_i_m_responsable_count === 0 &&
-          this.userStatus.structure_responsables.length > 1
-        ) {
-          return 'leave-structure-and-unsubscibe-user'
-        }
-        if (
-          this.userStatus.structure_missions_where_i_m_responsable_count > 0 &&
-          this.userStatus.structure_responsables.length > 1
-        ) {
-          return 'select-new-responsable-and-unsubscribe-user'
-        }
-        if (
-          this.userStatus.structure_responsables.length === 1 &&
-          this.userStatus.structure_participations_count > 0
-        ) {
-          return 'contact-admin'
-        }
-        return 'unsubscibe-organisation-and-user'
+      if (!this.userStatus.structure) {
+        return 'unsubscribe-user'
       }
-      return 'unsubscibe-user'
+
+      if (this.userStatus.structure_responsables.length > 1) {
+        return this.userStatus.structure_missions_where_i_m_responsable_count === 0
+          ? 'leave-structure-and-unsubscribe-user'
+          : 'select-new-responsable-and-unsubscribe-user'
+      }
+
+      return this.userStatus.structure_participations_count > 0
+        ? 'contact-admin'
+        : 'unsubscribe-organisation-and-user'
     },
   },
   methods: {

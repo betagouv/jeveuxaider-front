@@ -62,13 +62,12 @@ html {
   &.v-popper--theme-dsfr,
   &.v-popper--theme-tooltip {
     .v-popper__inner {
-      color: white;
-      border-radius: 8px;
-      padding: 16px;
-      @apply bg-[#E3E3FD] text-black shadow-lg;
+      border-radius: 1px;
+      padding: 12px;
+      @apply bg-white text-black shadow-lg;
     }
     .v-popper__arrow-outer {
-      border-color: #e3e3fd;
+      border-color: white;
     }
   }
 }
@@ -133,6 +132,7 @@ body {
   --ck-color-base-active-focus: #070191;
   --ck-color-focus-border: #070191;
   --ck-focus-ring: 2px solid #070191;
+  --ck-focus-ring-offset: 2px;
 }
 .ck-powered-by-balloon {
   display: none !important;

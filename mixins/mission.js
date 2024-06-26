@@ -8,8 +8,14 @@ export default {
     domainId() {
       return this.mission?.domaine_id ?? this.mission?.template?.domaine_id
     },
+    domainName() {
+      return this.mission?.domaine?.name ?? this.mission?.template?.domaine?.name ?? null
+    },
     domaineSecondary() {
       return this.mission?.template?.domaine_secondary ?? this.mission?.domaine_secondary
+    },
+    missionType() {
+      return this.mission?.type
     },
     activity() {
       const activity = this.mission?.activity ?? this.mission?.template?.activity
@@ -24,7 +30,7 @@ export default {
       return [this.activity, this.activitySecondary].filter(Boolean)
     },
     badgeTypeMissionSate() {
-      switch (this.mission.state) {
+      switch (this.mission?.state) {
         case 'Validée':
           return 'success'
         case 'Signalée':
@@ -104,25 +110,28 @@ export default {
           return !!rolesWhoCanEdit?.includes(this.$stores.auth.contextRole)
       }
     },
-    missionCity() {
-      if (this.mission.city?.startsWith('Paris ')) {
-        return 'Paris'
-      } else if (this.mission.city?.startsWith('Lyon ')) {
-        return 'Lyon'
-      } else if (this.mission.city?.startsWith('Marseille ')) {
-        return 'Marseille'
-      } else {
-        return this.mission.city?.replace(' Arrondissement', '')
-      }
-    },
+    // missionCity() {
+    //   if (this.mission.city?.startsWith('Paris ')) {
+    //     return 'Paris'
+    //   } else if (this.mission.city?.startsWith('Lyon ')) {
+    //     return 'Lyon'
+    //   } else if (this.mission.city?.startsWith('Marseille ')) {
+    //     return 'Marseille'
+    //   } else {
+    //     return this.mission.city?.replace(' Arrondissement', '')
+    //   }
+    // },
     canRegister() {
       if (!this.mission.has_places_left) {
+        // console.log('no places left')
         return false
       }
       if (!this.mission.is_registration_open) {
+        // console.log('registration closed')
         return false
       }
       if (!this.mission.is_online) {
+        // console.log('not online')
         return false
       }
 
@@ -130,10 +139,12 @@ export default {
         this.mission.end_date &&
         this.$dayjs(this.mission.end_date).endOf('day').isBefore(this.$dayjs())
       ) {
+        // console.log('mission expired')
         return false
       }
 
       if (this.mission.state === 'Validée' && this.mission.structure.state === 'Validée') {
+        // console.log('mission validated')
         return true
       }
 
@@ -199,6 +210,9 @@ export default {
         ? this.$filters.label(this.mission.commitment__duration, 'duration')
         : null
     },
+    hasDates() {
+      return this.mission.dates && this.mission.dates.length > 0
+    },
     nextDates() {
       if (this.mission.dates) {
         return this.mission.dates.filter(
@@ -207,6 +221,36 @@ export default {
             this.$dayjs(date.id).isSame(this.$dayjs(), 'day')
         )
       }
+    },
+    dates() {
+      const dates = []
+      const startDate = this.mission?.start_date
+      const endDate = this.mission?.end_date
+      const sameStartAndEnd = this.$dayjs(startDate).isSame(this.$dayjs(endDate))
+
+      // Si date de début dépassée et pas de date de fin, masquer les dates
+      if (this.$dayjs(startDate).isBefore(this.$dayjs()) && !endDate) {
+        return dates
+      }
+
+      if (startDate) {
+        dates.push({
+          date:
+            endDate && sameStartAndEnd
+              ? `Le ${this.$dayjs(startDate).format('D MMM YYYY')}`
+              : this.$dayjs(startDate).format('D MMM YYYY'),
+          label: endDate && sameStartAndEnd ? null : 'À PARTIR DU',
+        })
+      }
+
+      if (endDate && !sameStartAndEnd) {
+        dates.push({
+          date: this.$dayjs(endDate).format('D MMM YYYY'),
+          label: "JUSQU'AU",
+        })
+      }
+
+      return dates
     },
     missionStructureResponseTimeInDays() {
       if (!this.structureScore) {
@@ -303,6 +347,25 @@ export default {
       })
 
       return portraits
+    },
+    illustrationSrcset() {
+      return (
+        this.mission.template?.photo?.urls?.large ??
+        this.mission.illustrations?.[0]?.urls?.large ??
+        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+      )
+    },
+    illustrationSrc() {
+      return (
+        this.mission.template?.photo?.urls?.original ??
+        this.mission.illustrations?.[0]?.urls?.original ??
+        '/images/card-thumbnail-default.jpg, /images/card-thumbnail-default@2x.jpg 2x'
+      )
+    },
+    uniqueCities() {
+      return this.mission?.addresses
+        .map((address) => address.city)
+        .filter((value, index, self) => self.indexOf(value) === index)
     },
   },
   methods: {

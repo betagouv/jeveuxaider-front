@@ -40,5 +40,16 @@ export default {
           this.errors[field] = error.message
         })
     },
+    stringContainsEmail(string) {
+      return /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/is.test(string)
+    },
+    stringContainsUrl(string) {
+      return /(http|ftp|mailto|www)/.test(string)
+    },
+    stringContainsPhone(string) {
+      return /(?:(?:(?:\+|00)33[ ]?(?:\(0\)[ ]?)?)|0){1}[1-9]{1}([ .-]?)(?:\d{2}\1?){3}\d{2}/.test(
+        string
+      )
+    },
   },
 }

@@ -31,17 +31,15 @@
               :invitation="invitation"
               @submitted="handleAcceptInvitation()"
             />
-            <BaseButton
+            <DsfrButton
               v-else
-              type="submit"
-              size="xl"
-              variant="green"
-              class="mt-6"
-              full
+              :is-submit="true"
+              size="lg"
+              class="mt-6 w-full"
               @click.native="handleAcceptInvitation()"
             >
               J'accepte l'invitation
-            </BaseButton>
+            </DsfrButton>
           </template>
           <template v-else>
             <FormInvitationAcceptRegister

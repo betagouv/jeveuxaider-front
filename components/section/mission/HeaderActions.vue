@@ -21,7 +21,7 @@
               <Badges :class="[isPinned ? 'hidden xl:flex' : '']" :mission="mission" />
               <DsfrLink
                 :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
-                :is-external="false"
+                :is-external="true"
                 class="text-xs font-normal flex-shrink-0"
               >
                 Voir la mission
@@ -30,9 +30,9 @@
           </div>
         </div>
 
-        <div class="flex-col sm:flex-row flex gap-3 mt-4 lg:mt-0">
+        <div class="flex flex-wrap gap-3 mt-4 lg:mt-0">
           <slot name="actions">
-            <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/edit`">
+            <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/title`">
               <DsfrButton type="primary">
                 <RiPencilLine class="h-5 w-5 fill-current" /> Modifier
               </DsfrButton>

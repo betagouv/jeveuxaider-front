@@ -3,9 +3,9 @@
     <div class="flex justify-between items-center">
       <BaseHeading :level="3"> Notes </BaseHeading>
       <div>
-        <BaseButton variant="white" @click.native="showModalNote = true">
+        <DsfrButton type="tertiary" @click.native="showModalNote = true">
           Ajouter une note
-        </BaseButton>
+        </DsfrButton>
       </div>
     </div>
     <template v-if="notes && notes.data.length > 0">

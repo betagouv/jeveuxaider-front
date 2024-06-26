@@ -9,7 +9,7 @@
         'structure.name',
         'publics_beneficiaires',
         'is_minors',
-        'is_autonomy',
+        // 'is_autonomy',
         'tags',
         'domaines',
         'structure.reseaux.name',

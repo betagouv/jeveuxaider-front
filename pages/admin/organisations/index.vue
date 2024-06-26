@@ -78,7 +78,7 @@
             />
 
             <BaseFilterInputAutocomplete
-              v-if="visibleFilter === 'reseaux.id'"
+              v-if="visibleFilter === 'ofReseau'"
               v-model="selectedReseau"
               label="Réseau"
               name="autocomplete-reseau"
@@ -198,7 +198,7 @@ export default defineNuxtComponent({
     allFilters() {
       return [
         'state',
-        ['admin'].includes(this.$stores.auth.contextRole) && 'reseaux.id',
+        ['admin'].includes(this.$stores.auth.contextRole) && 'ofReseau',
         'statut_juridique',
         'department',
       ].filter((f) => f)

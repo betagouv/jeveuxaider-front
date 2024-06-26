@@ -11,26 +11,26 @@
 
               <template
                 v-if="
-                  participation.mission.city &&
+                  participation.mission.addresses &&
                   participation.mission.type == 'Mission en présentiel'
                 "
               >
-                <template v-if="participation.mission.zip">
-                  <span class="font-semibold">{{ missionCity }}</span>
-                  <span> ({{ participation.mission.zip }})</span>
+                <template v-if="uniqueCities.length > 0">
+                  <span class="font-semibold">{{ uniqueCities.join(', ') }}</span>
+                  <!-- <span> ({{ participation.mission.zip }})</span> -->
                 </template>
 
-                <template v-else-if="participation.mission.department">
-                  <span class="font-semibold">{{ missionCity }}</span>
-                  <span> ({{ participation.mission.department }})</span>
-                </template>
+                <!-- <template v-else-if="participation.mission.department">
+                  <span class="font-semibold">{{ participation.mission.department }}</span>
+                   <span> ({{ participation.mission.department }})</span> 
+                </template> -->
 
                 <template v-else>
-                  <span class="font-semibold">{{ missionCity }}</span>
+                  <span class="font-semibold">{{ participation.mission.department }}</span>
                 </template>
               </template>
 
-              <template v-else-if="participation.mission.is_autonomy"> En autonomie </template>
+              <!-- <template v-else-if="participation.mission.is_autonomy"> En autonomie </template> -->
 
               <template v-else> À distance </template>
             </div>
@@ -55,9 +55,19 @@
             class="hidden lg:block pt-4 border-t border-[#E5E5E5] border-dashed"
           >
             <div class="flex space-x-1 text-sm truncate max-w-full text-gray-600">
-              <span>Responsable :</span>
-              <span v-if="participation.mission.responsable" class="font-bold truncate">{{
-                participation.mission.responsable.full_name
+              <span
+                >{{
+                  $filters.pluralize(
+                    participation.mission.responsables.length,
+                    'Responsable',
+                    'Responsables',
+                    false
+                  )
+                }}
+                :</span
+              >
+              <span v-if="participation.mission.responsables" class="font-bold truncate">{{
+                participation.mission.responsables.map((r) => r.full_name).join(', ')
               }}</span>
             </div>
           </div>
@@ -70,42 +80,56 @@
         <div class="space-y-6">
           <div class="flex flex-col space-y-4 lg:flex-row lg:space-y-0">
             <div class="flex">
-              <BaseAvatar
-                :img-srcset="profile.avatar ? profile.avatar.urls.thumbMedium : null"
-                :img-src="profile.avatar ? profile.avatar.urls.original : null"
-                :initials="profile.short_name"
-                size="sm"
-                class="mr-4"
-              />
-              <div>
-                <div class="font-bold">
-                  {{ profile.full_name }}
-                  <div
-                    v-if="display == 'benevole' && participation.profile.cej"
-                    class="inline-flex font-normal text-gray-600 text-sm"
-                  >
-                    <span class="ml-1 mr-2">•</span>
-                    <a
-                      class="inline-flex items-center hover:underline hover:text-jva-blue-500"
-                      href="https://travail-emploi.gouv.fr/emploi-et-insertion/mesures-jeunes/contrat-engagement-jeune/article/qu-est-ce-que-le-contrat-d-engagement-jeune-cej"
-                      target="_blank"
-                      @click.stop
+              <template v-if="display === 'benevole'">
+                <BaseAvatar
+                  :img-srcset="profile.avatar ? profile.avatar.urls.thumbMedium : null"
+                  :img-src="profile.avatar ? profile.avatar.urls.original : null"
+                  :initials="profile.short_name"
+                  size="sm"
+                  class="mr-4"
+                />
+                <div>
+                  <div class="font-bold">
+                    {{ profile.full_name }}
+                    <div
+                      v-if="display == 'benevole' && participation.profile.cej"
+                      class="inline-flex font-normal text-gray-600 text-sm"
                     >
-                      <span>Jeune en CEJ</span>
-                      <RiExternalLinkLine class="ml-1 h-3 w-3 inline-block" />
-                    </a>
+                      <span class="ml-1 mr-2">•</span>
+                      <a
+                        class="inline-flex items-center hover:underline hover:text-jva-blue-500"
+                        href="https://travail-emploi.gouv.fr/emploi-et-insertion/mesures-jeunes/contrat-engagement-jeune/article/qu-est-ce-que-le-contrat-d-engagement-jeune-cej"
+                        target="_blank"
+                        @click.stop
+                      >
+                        <span>Jeune en CEJ</span>
+                        <RiExternalLinkLine class="ml-1 h-3 w-3 inline-block" />
+                      </a>
+                    </div>
+                  </div>
+                  <div class="flex gap-2 text-sm text-gray-600">
+                    <template v-if="isNewBenevole && display == 'benevole'">
+                      <div class="font-bold">Nouveau sur JeVeuxAider.gouv.fr</div>
+                      <div class="">•</div>
+                    </template>
+                    <div class="first-letter:uppercase">
+                      {{ $dayjs(participation.created_at).fromNow() }}
+                    </div>
                   </div>
                 </div>
-                <div class="flex gap-2 text-sm text-gray-600">
-                  <template v-if="isNewBenevole && display == 'benevole'">
-                    <div class="font-bold">Nouveau sur JeVeuxAider.gouv.fr</div>
-                    <div class="">•</div>
-                  </template>
-                  <div class="first-letter:uppercase">
-                    {{ $dayjs(participation.created_at).fromNow() }}
+              </template>
+              <template v-if="display === 'responsable'">
+                <div>
+                  <div class="font-bold">
+                    {{ participation.mission.structure.name }}
+                  </div>
+                  <div class="flex gap-2 text-sm text-gray-600">
+                    <div class="first-letter:uppercase">
+                      {{ $dayjs(participation.created_at).fromNow() }}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </template>
             </div>
             <div class="lg:ml-auto lg:pl-2">
               <DsfrBadge size="sm" :type="badgeTypeParticipationSate">
@@ -199,7 +223,7 @@ export default defineNuxtComponent({
     profile() {
       return this.display === 'benevole'
         ? this.participation.profile
-        : this.participation.mission.responsable
+        : this.participation.mission.responsables[0]
     },
     isBenevole() {
       return this.participation.profile_id == this.$stores.auth.profile.id

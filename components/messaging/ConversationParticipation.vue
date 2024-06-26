@@ -8,7 +8,8 @@
         @updated="handleUpdatedParticipation"
       />
       <template v-if="isCurrentUserBenevole">
-        <ConversationRecipientResponsable :user="responsableUser" />
+        <!-- <ConversationRecipientResponsable :user="responsableUser" /> -->
+        <ConversationRecipientOrganisation :structure="structure" :users="conversationUsers" />
       </template>
       <template v-if="isCurrentUserResponsable">
         <ConversationRecipientBenevole :user="benevoleUser" />
@@ -68,6 +69,7 @@
 <script>
 import ConversationRecipientBenevole from '@/components/messaging/ConversationRecipientBenevole.vue'
 import ConversationRecipientResponsable from '@/components/messaging/ConversationRecipientResponsable.vue'
+import ConversationRecipientOrganisation from '@/components/messaging/ConversationRecipientOrganisation.vue'
 import ConversationParticipationActionAsResponsable from '@/components/messaging/ConversationParticipationActionAsResponsable.vue'
 import ConversationParticipationActionAsBenevole from '@/components/messaging/ConversationParticipationActionAsBenevole.vue'
 import ConversationTags from '@/components/messaging/ConversationTags.vue'
@@ -81,6 +83,7 @@ export default defineNuxtComponent({
     ConversationRecipientResponsable,
     ConversationParticipationActionAsResponsable,
     ConversationParticipationActionAsBenevole,
+    ConversationRecipientOrganisation,
     ConversationTags,
     CardInfosMission,
     Conversation,
@@ -94,7 +97,7 @@ export default defineNuxtComponent({
   computed: {
     responsableUser() {
       const responsable = this.conversation.users.find(
-        (user) => user.id === this.mission.responsable.user_id
+        (user) => user.id === this.mission.responsables[0].user_id
       )
       if (responsable) {
         return responsable

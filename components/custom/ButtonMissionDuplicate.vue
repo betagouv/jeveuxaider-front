@@ -41,8 +41,9 @@
       @confirm="handleConfirm()"
       @cancel="showDialog = false"
     >
-      Vous êtes sur le point de dupliquer la mission <strong>{{ mission.name }}</strong> qui sera
-      enregistrée en « <strong>Brouillon</strong> »
+      Vous êtes sur le point de dupliquer la mission
+      <strong>{{ mission.name ?? 'Titre à définir' }}</strong> qui sera enregistrée en «
+      <strong>Brouillon</strong> »
     </BaseAlertDialog>
   </div>
 </template>

@@ -99,10 +99,10 @@
               class="mb-8"
               :department="mission.department"
             />
-
             <BoxResponsable
-              v-if="mission.responsable"
-              :responsable="mission.responsable"
+              v-if="mission.responsables"
+              v-for="responsable in mission.responsables"
+              :responsable="responsable"
               :conversable-id="mission.id"
               conversable-type="App\Models\Mission"
               :conversable="mission"

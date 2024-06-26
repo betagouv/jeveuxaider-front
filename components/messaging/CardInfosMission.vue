@@ -8,7 +8,7 @@
     >
       <div class="flex items-center gap-4">
         <div class="text-lg lg:text-xl font-bold">
-          {{ mission.name }}
+          {{ mission.name ?? 'Titre à définir' }}
         </div>
         <nuxt-link
           no-prefetch
@@ -72,9 +72,13 @@ export default defineNuxtComponent({
   },
   computed: {
     lieu() {
-      return this.mission.is_autonomy
-        ? this.mission.autonomy_zips?.map((item) => `${item.city} (${item.zip})`).join(', ')
-        : `${this.mission.city} (${this.mission.zip})`
+      return this.mission.addresses
+        ?.map((item) => item.city)
+        .filter((value, index, self) => self.indexOf(value) === index)
+        .join(', ')
+      // return this.mission.is_autonomy
+      //   ? this.mission.autonomy_zips?.map((item) => `${item.city} (${item.zip})`).join(', ')
+      //   : `${this.mission.city} (${this.mission.zip})`
     },
   },
 })

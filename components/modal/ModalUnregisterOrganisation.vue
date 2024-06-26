@@ -137,6 +137,7 @@ export default defineNuxtComponent({
       })
         .then(async () => {
           if (!['admin'].includes(this.$stores.auth.contextRole)) {
+            // @todo: message toast
             await this.$stores.auth.fetchUser()
             this.$router.push('/')
           } else {

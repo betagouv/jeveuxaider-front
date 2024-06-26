@@ -73,9 +73,8 @@
                 to="https://www.journal-officiel.gouv.fr/pages/associations-recherche/?reinitrefine=1&sort=cronosort&disjunctive.source"
                 :is-external="true"
                 :icon-size="12"
+                >répertoire national des associations</DsfrLink
               >
-                répertoire national des associations
-              </DsfrLink>
               <span>
                 sur la plateforme ouverte des données publiques data.gouv.fr pour retrouver votre
                 numéro RNA.</span

@@ -1,5 +1,5 @@
 <template>
-  <div v-scroll-lock="isScrollLocked">
+  <div>
     <transition
       enter-active-class="ease-out duration-300"
       enter-from-class="opacity-0"
@@ -16,6 +16,7 @@
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
+        v-scroll-lock="isScrollLocked"
       >
         <FocusLoop :is-visible="isOpen" @keydown.native.esc="$emit('close')">
           <div
@@ -83,7 +84,7 @@
                     <slot />
                   </div>
                   <!-- MODAL FOOTER -->
-                  <div class="flex justify-end gap-4 p-8" v-if="$slots.footer">
+                  <div class="flex flex-wrap justify-end gap-4 p-8" v-if="$slots.footer">
                     <slot name="footer" />
                   </div>
                 </div>

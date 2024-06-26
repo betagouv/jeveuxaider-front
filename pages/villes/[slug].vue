@@ -15,7 +15,7 @@ export default defineNuxtComponent({
 
     let territoire = null
     let cities = []
-    const fetchActivities = async () => {
+    const fetchTerritoire = async () => {
       const { data } = await useApiFetch(`/territoires/${route.params.slug}/view`)
       territoire = data
     }
@@ -23,7 +23,7 @@ export default defineNuxtComponent({
       const { data } = await useApiFetch(`/territoires/${route.params.slug}/available-cities`)
       cities = data
     }
-    await Promise.all([fetchActivities(), fetchCities()])
+    await Promise.all([fetchTerritoire(), fetchCities()])
 
     if (!territoire.value) {
       return showError({ statusCode: 404 })

@@ -57,7 +57,7 @@
       <p>
         Veuillez confirmer votre participation à la mission
         <strong>{{ participation.mission.name }}</strong
-        >. {{ participation.mission.responsable.full_name }} de
+        >. {{ participation.mission.responsables[0].full_name }} de
         <strong>{{ participation.mission.structure.name }}</strong> sera notifié.
       </p>
     </BaseAlertDialog>

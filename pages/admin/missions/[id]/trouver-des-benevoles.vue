@@ -17,7 +17,7 @@
       <BaseBox class="mt-6" padding="sm" variant="flat">
         <div class="flex justify-between">
           <div class="text-xl font-extrabold mb-4">
-            {{ mission.name }}
+            {{ mission.name ?? 'Titre à définir' }}
           </div>
           <div class="font-bold text-jva-green-500">
             {{
@@ -40,7 +40,7 @@
                 'places disponibles'
               )}`"
             />
-            <BaseDescriptionListItem :term-size="160" term="Type" :description="missionType" />
+            <BaseDescriptionListItem :term-size="160" term="Type" :description="mission.type" />
             <BaseDescriptionListItem
               :term-size="160"
               term="Domaine"
@@ -66,10 +66,10 @@
               )}`"
             />
             <BaseDescriptionListItem
-              v-if="autonomyCities"
+              v-if="uniqueCities.length"
               :term-size="160"
               term="Villes"
-              :description="autonomyCities"
+              :description="uniqueCities.join(',')"
             />
           </BaseDescriptionList>
         </div>
@@ -163,6 +163,7 @@ import DrawerBenevole from '@/components/drawer/DrawerBenevole.vue'
 import MixinMission from '@/mixins/mission'
 import Pagination from '@/components/dsfr/Pagination.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
+import mission from '@/mixins/mission'
 
 export default defineNuxtComponent({
   components: { CardProfileBenevole, DrawerBenevole, Pagination, Breadcrumb },
@@ -214,13 +215,13 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    missionType() {
-      return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
-    },
-    autonomyCities() {
-      const { formatAutonomyCities } = autonomyCitiesHelper()
-      return formatAutonomyCities(this.mission.autonomy_zips)
-    },
+    // missionType() {
+    //   return this.mission.is_autonomy ? 'Mission en autonomie' : this.mission.type
+    // },
+    // autonomyCities() {
+    //   const { formatAutonomyCities } = autonomyCitiesHelper()
+    //   return formatAutonomyCities(this.mission.autonomy_zips)
+    // },
   },
   created() {
     this.fetchNotificationsBenevoles()

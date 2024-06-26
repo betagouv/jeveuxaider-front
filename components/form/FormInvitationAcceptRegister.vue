@@ -1,16 +1,16 @@
 <template>
   <form id="form" class="space-y-8 my-8" @submit.prevent="onSubmit">
     <div class="grid grid-cols-2 gap-4">
-      <BaseFormControl label="Prénom" html-for="first_name" required>
-        <BaseInput v-model="form.first_name" name="first_name" placeholder="Prénom" required />
-      </BaseFormControl>
-      <BaseFormControl label="Nom" html-for="last_name" required>
-        <BaseInput v-model="form.last_name" name="last_name" placeholder="Nom" required />
-      </BaseFormControl>
+      <DsfrFormControl label="Prénom" html-for="first_name" required>
+        <DsfrInput v-model="form.first_name" name="first_name" placeholder="Prénom" required />
+      </DsfrFormControl>
+      <DsfrFormControl label="Nom" html-for="last_name" required>
+        <DsfrInput v-model="form.last_name" name="last_name" placeholder="Nom" required />
+      </DsfrFormControl>
     </div>
 
-    <BaseFormControl label="E-mail" html-for="email" required>
-      <BaseInput
+    <DsfrFormControl label="E-mail" html-for="email" required>
+      <DsfrInput
         v-model="form.email"
         type="email"
         name="email"
@@ -18,40 +18,39 @@
         required
         disabled
       />
-    </BaseFormControl>
-    <BaseFormControl label="Mot de passe" html-for="password" required :error="errors.password">
-      <BaseInput
+    </DsfrFormControl>
+    <DsfrFormControl label="Mot de passe" html-for="password" required :error="errors.password">
+      <DsfrInput
         v-model="form.password"
         name="password"
         placeholder="Entrez votre mot de passe"
         type="password"
         required
       />
-    </BaseFormControl>
-    <BaseFormControl
+    </DsfrFormControl>
+    <DsfrFormControl
       label="Confirmer le mot de passe"
       html-for="password_confirmation"
       required
       :error="errors.password_confirmation"
     >
-      <BaseInput
+      <DsfrInput
         v-model="form.password_confirmation"
         name="password_confirmation"
         placeholder="Entrez votre mot de passe"
         type="password"
         required
       />
-    </BaseFormControl>
-    <BaseButton
-      type="submit"
-      size="xl"
-      variant="green"
-      full
+    </DsfrFormControl>
+    <DsfrButton
+      :is-submit="true"
+      size="lg"
+      class="w-full"
       :loading="loading"
       @click.native.prevent="onSubmit"
     >
       J'accepte l'invitation
-    </BaseButton>
+    </DsfrButton>
   </form>
 </template>
 

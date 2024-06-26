@@ -2,9 +2,11 @@
   <div>
     <div
       class="flex cursor-pointer"
-      :class="[{ 'flex-row-reverse': position === 'left' }, { 'gap-8': label }]"
+      :class="[{ 'flex-row-reverse': position === 'left' }, { 'gap-4': label }]"
       @click="onToggleSwitch"
     >
+      <slot name="right"></slot>
+
       <div class="flex-1 flex flex-col">
         <div
           v-if="label"

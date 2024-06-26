@@ -13,12 +13,12 @@
         <div class="mt-12 flex flex-wrap gap-4 items-center justify-center">
           <nuxt-link
             no-prefetch
-            v-for="city in cities"
-            :key="city.zipcode"
+            v-for="(city, i) in cities"
+            :key="i"
             class="leading-none truncate px-8 py-4 rounded-full text-sm shadow-md font-extrabold tracking-wide uppercase bg-white text-gray-800 transform transition hover:scale-105"
-            :to="`/missions-benevolat?type=Mission en présentiel&aroundLatLng=${city.coordonates}&city=${city.name}&aroundRadius=35000`"
+            :to="`/missions-benevolat?type=Mission en présentiel&aroundLatLng=${aroundLatLng}&city=${city.value}&aroundRadius=35000`"
           >
-            {{ city.name }}
+            {{ city.value }} ({{ city.count }})
           </nuxt-link>
         </div>
       </template>
@@ -38,6 +38,11 @@ export default defineNuxtComponent({
     cities: {
       type: Array,
       required: true,
+    },
+  },
+  computed: {
+    aroundLatLng() {
+      return `${this.territoire.latitude},${this.territoire.longitude}`
     },
   },
 })

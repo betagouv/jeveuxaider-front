@@ -7,8 +7,20 @@
         class="text-cool-gray-500 lg:text-lg max-w-md mx-auto"
       >
         Envoyez vos motivations et question à
-        <span class="font-bold">{{ $stores.softGate.selectedMission.responsable.first_name }}</span
-        >, responsable de la mission chez
+        <span class="font-bold">
+          {{
+            $stores.softGate.selectedMission.responsables.map((r) => r.secret_name).join(', ')
+          }}</span
+        >,
+        {{
+          $filters.pluralize(
+            $stores.softGate.selectedMission.responsables.length,
+            'responsable',
+            'responsables',
+            false
+          )
+        }}
+        de la mission chez
         <span class="font-bold">{{ $stores.softGate.selectedMission.structure.name }}</span
         >.
       </div>
@@ -53,7 +65,7 @@ export default defineNuxtComponent({
       selectedMission: this.$stores.softGate.selectedMission,
       form: {
         content: !this.$stores.softGate.selectedMission?.is_motivation_required
-          ? `Bonjour ${this.$stores.softGate.selectedMission?.responsable.first_name},\nJe souhaite participer à cette mission et apporter mon aide. Je me tiens disponible pour échanger et débuter la mission 🙂\n${this.$stores.auth.user.profile.first_name}`
+          ? `Bonjour,\nJe souhaite participer à cette mission et apporter mon aide. Je me tiens disponible pour échanger et débuter la mission 🙂\n${this.$stores.auth.user.profile.first_name}`
           : null,
       },
       formSchema: object({

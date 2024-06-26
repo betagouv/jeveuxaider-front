@@ -87,10 +87,10 @@ export default defineNuxtComponent({
       if (this.selectedMission?.type !== 'Mission en présentiel') {
         return false
       }
-      if (this.selectedMission.is_autonomy) {
-        return false
-      }
-      if (this.selectedMission.latitude === null || this.selectedMission.longitude === null) {
+      if (
+        this.selectedMission.addresses[0].latitude === null ||
+        this.selectedMission.addresses[0].longitude === null
+      ) {
         return false
       }
       if (
@@ -99,17 +99,32 @@ export default defineNuxtComponent({
       ) {
         return false
       }
-      return (
-        this.$utils.haversineDistanceBetweenPoints(
-          this.$stores.auth.user.profile.latitude,
-          this.$stores.auth.user.profile.longitude,
-          this.selectedMission.latitude,
-          this.selectedMission.longitude
-        ) > 30000
-      )
+      return this.isOneOfAddressesDistanceMoreThan(30000)
     },
   },
   methods: {
+    isOneOfAddressesDistanceMoreThan(maxDistance) {
+      for (let i = 0; i < this.selectedMission.addresses.length; i++) {
+        const address = this.selectedMission.addresses[i]
+        const distance = this.$utils.haversineDistanceBetweenPoints(
+          this.$stores.auth.user.profile.latitude,
+          this.$stores.auth.user.profile.longitude,
+          address.latitude,
+          address.longitude
+        )
+        if (distance > maxDistance) {
+          console.log(
+            `Address at index ${i} is more than ${maxDistance} kms away: ${distance.toFixed(2)} kms`
+          )
+          return true
+        } else {
+          console.log(
+            `Address at index ${i} is within ${maxDistance} kms: ${distance.toFixed(2)} kms`
+          )
+        }
+      }
+      return false
+    },
     firstStepResolver() {
       if (!this.$stores.auth.isLogged) {
         return 'email'

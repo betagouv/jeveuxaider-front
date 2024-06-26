@@ -3,7 +3,7 @@
     <template #title>
       <BaseHeading v-if="mission" :level="3" class="text-jva-blue-500">
         <nuxt-link no-prefetch :to="`/admin/missions/${missionId}`" class="hover:underline">
-          {{ mission.name }}
+          {{ mission.name ?? 'Titre à définir' }}
         </nuxt-link>
       </BaseHeading>
     </template>
@@ -33,7 +33,7 @@
             </DsfrButton>
           </nuxt-link>
 
-          <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/edit`">
+          <nuxt-link no-prefetch :to="`/admin/missions/${mission.id}/title`">
             <DsfrButton
               type="tertiary"
               icon="RiPencilLine"
@@ -49,6 +49,7 @@
             :mission="mission"
             @showModalSwitchIsOnline="showModalSwitchIsOnline = true"
             @missionDeleted="handleDeleted()"
+            @updated="handleUpdated()"
             buttonSize="sm"
           />
         </div>
@@ -117,7 +118,8 @@
         />
         <BoxResponsable
           class="mb-8"
-          :responsable="mission.responsable"
+          v-for="responsable in mission.responsables"
+          :responsable="responsable"
           :conversable-id="mission.id"
           :conversable="mission"
           conversable-type="App\Models\Mission"
@@ -212,6 +214,9 @@ export default defineNuxtComponent({
     },
     handleDeleted() {
       this.$emit('close')
+      this.$emit('updated')
+    },
+    handleUpdated() {
       this.$emit('updated')
     },
   },

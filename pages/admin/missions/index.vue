@@ -9,7 +9,6 @@
     <DsfrBreadcrumb
       :links="[{ text: 'Tableau de bord', to: '/dashboard' }, { text: 'Missions' }]"
     />
-
     <div>
       <BaseSectionHeading
         :title="`${$numeral(queryResult.total)} ${$filters.pluralize(
@@ -21,7 +20,7 @@
         :loading="queryLoading"
       >
         <template #action>
-          <div class="flex space-x-2">
+          <div class="flex flex-wrap gap-2">
             <DsfrButton
               v-if="
                 ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
@@ -71,15 +70,15 @@
 
           <template v-for="visibleFilter in visibleFilters" :key="visibleFilter">
             <BaseFilterSelectAdvanced
-              v-if="visibleFilter === 'responsable.id'"
-              name="responsable.id"
-              placeholder="Tous les responsables"
+              v-if="visibleFilter === 'ofResponsable'"
+              name="ofResponsable"
+              placeholder="Responsable"
               :options="responsables"
               attribute-key="id"
               attribute-label="full_name"
-              :modelValue="$route.query['filter[responsable.id]']"
+              :modelValue="Number($route.query['filter[ofResponsable]'])"
               clearable
-              @update:modelValue="changeFilter('filter[responsable.id]', $event)"
+              @update:modelValue="changeFilter('filter[ofResponsable]', $event)"
             />
 
             <DsfrTag
@@ -179,10 +178,10 @@
             />
 
             <BaseFilterSelectAdvanced
-              v-if="visibleFilter === 'ofResponsable'"
+              v-if="visibleFilter === 'ofResponsableAdmin'"
               name="responsable"
               :options="responsablesStructures"
-              :modelValue="$route.query['filter[ofResponsable]']"
+              :modelValue="Number($route.query['filter[ofResponsable]'])"
               attribute-key="id"
               attribute-label="full_name"
               placeholder="Responsable"
@@ -345,7 +344,7 @@
               @update:modelValue="changeFilter('filter[type]', $event)"
             />
 
-            <DsfrTag
+            <!-- <DsfrTag
               v-if="visibleFilter === 'is_autonomy'"
               as="button"
               size="md"
@@ -356,7 +355,7 @@
               @click="changeFilter('filter[is_autonomy]', 'true')"
             >
               En autonomie
-            </DsfrTag>
+            </DsfrTag> -->
           </template>
 
           <DsfrTag
@@ -470,7 +469,7 @@ export default defineNuxtComponent({
         'state',
         ['responsable'].includes(this.$stores.auth.contextRole) &&
           this.responsables.length &&
-          'responsable.id',
+          'ofResponsable',
         'available',
         'place',
         'is_registration_open',
@@ -484,7 +483,7 @@ export default defineNuxtComponent({
         'publics_volontaires',
         'publics_beneficiaires',
         'type',
-        'is_autonomy',
+        // 'is_autonomy',
         ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
           'is_snu_mig_compatible',
         ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
@@ -493,7 +492,7 @@ export default defineNuxtComponent({
           'ofReseau',
         this.responsablesStructures.length &&
           ['admin'].includes(this.$stores.auth.contextRole) &&
-          'ofResponsable',
+          'ofResponsableAdmin',
         ['admin', 'referent', 'referent_regional'].includes(this.$stores.auth.contextRole) &&
           'structure.statut_juridique',
         ['admin'].includes(this.$stores.auth.contextRole) && 'ofTemplate',
@@ -502,7 +501,7 @@ export default defineNuxtComponent({
       ].filter((f) => f)
     },
     alwaysVisibleFilters() {
-      return ['state', 'responsable.id', 'available', 'place', 'is_registration_open', 'date']
+      return ['state', 'ofResponsable', 'available', 'place', 'is_registration_open', 'date']
     },
   },
   watch: {
@@ -542,6 +541,7 @@ export default defineNuxtComponent({
       }
       if (organisationId !== oldOrganisationId) {
         const responsables = await apiFetch(`/structures/${organisationId}/responsables`)
+        console.log('responsresponsablesStructuresables', responsables)
         this.responsablesStructures = responsables.map((user) => user.profile) ?? []
       }
     },

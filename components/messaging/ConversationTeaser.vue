@@ -1,22 +1,23 @@
 <template>
   <div class="p-4 lg:p-6">
     <div class="flex">
-      <BaseAvatar
-        v-for="(recipient, i) in recipients.slice(0, 3)"
-        :key="recipient.id"
-        class="mr-4 relative"
-        :class="[{ '-ml-10': i !== 0 }]"
-        :img-srcset="recipient.profile.avatar && recipient.profile.avatar.urls.thumbSmall"
-        :img-src="recipient.profile.avatar && recipient.profile.avatar.urls.original"
-        :initials="recipient.profile.short_name"
-        size="sm"
-      />
+      <div class="flex flex-col mr-4">
+        <BaseAvatar
+          v-for="(recipient, i) in recipients.slice(0, 4)"
+          :key="recipient.id"
+          class="relative border-white border-2 z-10"
+          :class="[{ '-mt-[15px]': i !== 0 }]"
+          :img-srcset="recipient.profile.avatar && recipient.profile.avatar.urls.thumbSmall"
+          :img-src="recipient.profile.avatar && recipient.profile.avatar.urls.original"
+          :initials="recipient.profile.short_name"
+          size="sm"
+        />
+      </div>
       <div class="flex-1 min-w-0 relative">
         <div class="flex items-center">
-          <p
-            class="truncate font-bold text-lg"
-            v-html="recipients.map((recipient) => recipient.profile.first_name).join(', ')"
-          />
+          <p class="truncate font-bold text-lg">
+            {{ title }}
+          </p>
           <div
             v-if="hasUnreadMessage"
             aria-label="Message non lu"
@@ -24,7 +25,7 @@
           />
 
           <!-- Badge Desktop -->
-          <div class="ml-auto hidden xs:block leading-none">
+          <div class="pl-4 ml-auto hidden xs:block leading-none">
             <slot name="badge" />
           </div>
         </div>
@@ -50,10 +51,24 @@ import MixinConversation from '@/mixins/conversation.js'
 export default defineNuxtComponent({
   mixins: [MixinConversation],
   props: {
-    conversation: { type: Object, required: true },
+    conversation: {
+      type: Object,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    hideAvatars: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     recipients() {
+      if(this.isCurrentUserResponsable){
+        return this.conversation.users.filter((user)=> user.id === this.conversation.conversable.profile.user_id)
+      }
       return this.conversation.users.filter((user) => {
         return user.id != this.$stores.auth.profile.user_id
       })

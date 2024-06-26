@@ -12,7 +12,6 @@
       :placeholder="placeholder"
       :class="[
         'border-none rounded-t w-full h-full',
-
         {
           'bg-[#EEEEEE] shadow-[inset_0_-2px_0_0_#3A3A3A] focus:!shadow-[inset_0_-2px_0_0_#3A3A3A]':
             variant === 'default',
@@ -21,22 +20,23 @@
           'bg-white shadow-[inset_0_-2px_0_0_#000091] focus:!shadow-[inset_0_-2px_0_0_#000091]':
             variant === 'white',
         },
-
+        { ' shadow-[inset_0_-2px_0_0_#3A3A3A]': !disabled },
+        { 'cursor-not-allowed shadow-[inset_0_-2px_0_0_#E5E5E5]': disabled },
         { '!shadow-[inset_0_-2px_0_0_#ce0500]': error },
         { '!shadow-[inset_0_-2px_0_0_#18753c]': success },
-
         { 'py-3': size === 'lg' },
-
         {
           'pl-12': icon && iconPosition === 'left' && ['md', 'lg'].includes(size),
         },
         {
           'pr-12': icon && iconPosition === 'right' && ['md', 'lg'].includes(size),
         },
-
         inputClass,
       ]"
       @keypress.space="onKeypressSpace"
+      :disabled="disabled"
+      :min="min"
+      :max="max"
       @input="$emit('update:modelValue', $event.target.value)"
     />
 
@@ -60,13 +60,17 @@ export default defineNuxtComponent({
       default: 'md',
       validator: (s) => ['md', 'lg'].includes(s),
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     error: {
       type: Boolean,
-      default: null,
+      default: false,
     },
     success: {
       type: Boolean,
-      default: null,
+      default: false,
     },
     type: {
       type: String,
@@ -89,6 +93,14 @@ export default defineNuxtComponent({
     inputClass: {
       type: String,
       default: '',
+    },
+    min: {
+      type: String,
+      default: null,
+    },
+    max: {
+      type: String,
+      default: null,
     },
     variant: {
       type: String,

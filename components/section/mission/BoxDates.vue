@@ -4,7 +4,7 @@
       <div class="uppercase font-semibold text-gray-600">
         {{ title }}
       </div>
-      <BaseLink :to="`/admin/missions/${mission.id}/edit`" icon="RiArrowRightSLine">
+      <BaseLink :to="`/admin/missions/${mission.id}/dates`" icon="RiArrowRightSLine">
         Modifier
       </BaseLink>
     </div>
@@ -17,6 +17,11 @@
           </div>
           <div class="text-gray-500 text-sm">
             {{ formattedCommitment ? formattedCommitment : 'Engagement non spécifié' }}
+          </div>
+          <div v-if="mission.commitment__duration_min" class="text-gray-500 text-sm">
+            pendant
+            {{ $filters.label(mission.commitment__duration_min, 'commitment_duration_min') }}
+            minimum
           </div>
         </BaseStackedListItem>
         <BaseStackedListItem v-if="hasExpired" class="px-4" icon="⏰">
