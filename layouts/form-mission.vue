@@ -112,7 +112,11 @@ export default {
           label: 'Dates',
           to: `/admin/missions/${missionId}/dates`,
         },
-        { key: 'lieux', label: 'Lieux', to: `/admin/missions/${missionId}/lieux` },
+        {
+          key: 'admin-missions-id-lieux',
+          label: 'Lieux',
+          to: `/admin/missions/${missionId}/lieux`,
+        },
         {
           key: 'admin-missions-id-benevoles',
           label: 'Bénévoles recherchés',
