@@ -48,13 +48,13 @@
           <ModalMissionPublish :mission="$stores.formMission.mission" />
         </template>
       </div>
-      <div title="Fermer" class="py-2 group" @click="onClose">
+      <button title="Fermer" class="py-2 group" @click="onClose">
         <div class="flex items-center gap-2 group-hover:cursor-pointer">
           <RiCloseLine
             class="block flex-none h-6 w-6 lg:h-8 lg:w-8 text-[#929292] fill-current group-hover:text-jva-blue-500 transition-colors"
           />
         </div>
-      </div>
+      </button>
     </div>
 
     <div>
