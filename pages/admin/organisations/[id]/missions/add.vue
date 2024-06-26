@@ -233,6 +233,8 @@ export default {
         container: '#content',
         offset: -50,
       })
+      // Wait for scroll animation
+      await new Promise((resolve) => setTimeout(resolve, 300))
       this.selectedDomaine = null
       this.selectedTemplate = null
       this.noTemplateSelected = false
