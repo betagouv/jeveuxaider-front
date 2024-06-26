@@ -43,7 +43,7 @@
 
         <DsfrFormControl
           v-if="form.date_type === 'ponctual'"
-          label="Durée de l’activité"
+          label="Durée de l’engagement"
           html-for="commitment__duration"
           :error="errors.commitment__duration"
           required

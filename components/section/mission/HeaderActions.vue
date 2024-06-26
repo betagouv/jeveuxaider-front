@@ -21,7 +21,7 @@
               <Badges :class="[isPinned ? 'hidden xl:flex' : '']" :mission="mission" />
               <DsfrLink
                 :to="`/missions-benevolat/${mission.id}/${mission.slug}`"
-                :is-external="false"
+                :is-external="true"
                 class="text-xs font-normal flex-shrink-0"
               >
                 Voir la mission
