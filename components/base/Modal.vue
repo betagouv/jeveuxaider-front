@@ -1,5 +1,5 @@
 <template>
-  <div v-scroll-lock="isScrollLocked">
+  <div>
     <transition
       enter-active-class="ease-out duration-300"
       enter-from-class="opacity-0"
@@ -16,6 +16,7 @@
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
+        v-scroll-lock="isScrollLocked"
       >
         <FocusLoop :is-visible="isOpen" @keydown.native.esc="$emit('close')">
           <div
