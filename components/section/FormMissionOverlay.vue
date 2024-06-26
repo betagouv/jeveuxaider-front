@@ -16,7 +16,7 @@
         >
       </div>
     </template>
-    <div>
+    <div inert>
       <template v-if="mode === 'full'">
         <div class="relative">
           <div
