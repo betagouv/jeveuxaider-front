@@ -197,7 +197,12 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              this.$stores.formMission.updateFields(mission, ['type', 'addresses', 'department'])
+              this.$stores.formMission.updateFields(mission, [
+                'type',
+                'addresses',
+                'department',
+                'addresses_precisions',
+              ])
               if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/benevoles`)
               } else {

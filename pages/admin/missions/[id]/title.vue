@@ -5,7 +5,7 @@
     </template>
     <div v-if="$stores.formMission.mission">
       <h2 class="text-[22px] lg:text-[28px] font-bold leading-9 mb-6 lg:mb-10">
-        C’est quoi son p’tit nom ?
+        Trouvez un titre accrocheur pour votre mission
       </h2>
       <CustomTips class="mb-6 lg:mb-10">
         Rédigez le titre de votre mission à la première personne du singulier
