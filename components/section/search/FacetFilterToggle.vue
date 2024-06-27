@@ -238,9 +238,11 @@ export default defineNuxtComponent({
         : await this.addFilter(facetName, facetValue, true)
     },
     handleOptionsPosition() {
-      const elOptionsX = this.$refs.tag.getBoundingClientRect()?.x
-      const windowCenterX = window.innerWidth / 2
-      this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
+      if (this.$refs.tag) {
+        const elOptionsX = this.$refs.tag?.getBoundingClientRect()?.x
+        const windowCenterX = window.innerWidth / 2
+        this.optionsPositionClass = elOptionsX > windowCenterX ? 'right-0' : ''
+      }
     },
     onWindowResize() {
       if (this.isOpen) {

@@ -900,13 +900,13 @@ const labels: TypeLabels = {
     },
   ],
   participation_declined_reasons: [
-    { key: 'no_response', label: 'Le bénévole ne répond pas.' },
     {
       key: 'requirements_not_fulfilled',
       label: 'Le bénévole ne correspond pas aux besoins.',
     },
     { key: 'change_mind', label: "Le bénévole a changé d'avis." },
     { key: 'mission_terminated', label: 'La mission est terminée.' },
+    { key: 'no_response', label: 'Le bénévole ne répond pas.' },
     { key: 'other', label: 'Autres.' },
   ],
   participation_canceled_by_benevole_reasons: [

@@ -55,6 +55,7 @@ export default defineNuxtComponent({
       formSchema: object({
         name: string()
           .min(3, 'Le titre est trop court')
+          .max(254, 'Le titre est trop long')
           .matches(/^(Je|J'|J‘|J’)/, 'Le titre de la mission doit commencer par "Je" ou "J‘"')
           .required('Le titre est requis'),
       }),
