@@ -60,7 +60,7 @@ export default {
               ...activity,
               score: activityFromClassifier?.score,
               formattedScore,
-              label: `${activity.label} (${formattedScore})`,
+              label: `${activity.icon} ${activity.name} (${formattedScore})`,
             }
           })
           .sort((a, b) => (a.score > b.score ? -1 : 1))
