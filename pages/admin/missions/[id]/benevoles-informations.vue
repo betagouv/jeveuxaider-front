@@ -120,7 +120,7 @@
     </div>
     <template #footer>
       <DsfrButton :loading="loading" @click="onValidateClick">
-        {{ $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder' }}</DsfrButton
+        {{ $stores.formMission.isDraft ? 'Sauvegarder et continuer' : 'Sauvegarder' }}</DsfrButton
       >
     </template>
 

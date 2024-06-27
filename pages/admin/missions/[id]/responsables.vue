@@ -84,8 +84,8 @@
       />
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onValidateClick">{{
-        $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder'
+      <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onValidateClick">{{
+        $stores.formMission.isDraft ? 'Sauvegarder et continuer' : 'Sauvegarder'
       }}</DsfrButton>
     </template>
   </FormMissionWrapper>
@@ -131,8 +131,6 @@ export default defineNuxtComponent({
   },
   computed: {
     canAddResponsable() {
-      console.log(this.form.responsables.length)
-      console.log(this.$stores.formMission.mission.structure.members.length)
       return (
         this.form.responsables.length < this.$stores.formMission.mission.structure.members.length
       )

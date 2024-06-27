@@ -52,8 +52,8 @@
       </template>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onContinueClick">
-        {{ $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder' }}
+      <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onContinueClick">
+        {{ $stores.formMission.isDraft ? 'Sauvegarder et continuer' : 'Sauvegarder' }}
       </DsfrButton>
     </template>
   </FormMissionWrapper>
@@ -63,7 +63,7 @@
 import FormMissionWrapper from '@/components/form/FormMissionWrapper'
 import RiCheckboxCircleFill from 'vue-remix-icons/icons/ri-checkbox-circle-fill.vue'
 import MixinMission from '@/mixins/mission'
-import FormMission from '@/mixins/form/mission'
+// import FormMission from '@/mixins/form/mission'
 
 export default defineNuxtComponent({
   async setup() {
@@ -72,7 +72,7 @@ export default defineNuxtComponent({
       middleware: ['authenticated', 'agreed-responsable-terms'],
     })
   },
-  mixins: [MixinMission, FormMission],
+  mixins: [MixinMission],
   components: {
     FormMissionWrapper,
     RiCheckboxCircleFill,
@@ -82,6 +82,7 @@ export default defineNuxtComponent({
       loading: false,
       medias: [],
       selectedMediaId: null,
+      isFormDirty: false,
     }
   },
   mounted() {
@@ -99,6 +100,7 @@ export default defineNuxtComponent({
     onMediaClick(media) {
       console.log('media clicked', media.id)
       this.selectedMediaId = media.id
+      this.isFormDirty = true
     },
     async fetchMediasByDomaine() {
       const medias = await apiFetch('/medias', {

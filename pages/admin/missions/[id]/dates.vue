@@ -239,8 +239,8 @@
       />
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onValidateClick">{{
-        $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder'
+      <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onValidateClick">{{
+        $stores.formMission.isDraft ? 'Sauvegarder et continuer' : 'Sauvegarder'
       }}</DsfrButton>
     </template>
   </FormMissionWrapper>
@@ -317,9 +317,6 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    // mission() {
-    //   return { ...this.$stores.formMission.mission }
-    // },
     formNextDates() {
       if (!this.form.dates) return []
       return this.form.dates?.filter(
@@ -352,8 +349,10 @@ export default defineNuxtComponent({
     },
     async onValidateClick() {
       this.loading = true
-
-      console.log('onValidateClick', this.form)
+      // if (!this.form.with_dates) {
+      //   this.form.with_dates = 'no'
+      // }
+      console.log('form with_dates', this.form.with_dates)
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {

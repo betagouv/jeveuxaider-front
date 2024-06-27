@@ -107,8 +107,8 @@
       </div>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onValidateClick">{{
-        $stores.formMission.isDraft ? 'Continuer' : 'Sauvegarder'
+      <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onValidateClick">{{
+        $stores.formMission.isDraft ? 'Sauvegarder et continuer' : 'Sauvegarder'
       }}</DsfrButton>
     </template>
   </FormMissionWrapper>
@@ -163,22 +163,40 @@ export default defineNuxtComponent({
     },
     handleSelectedAddress(selectedItem) {
       console.log(selectedItem)
-      this.form.addresses = [
-        ...this.form.addresses,
-        {
-          id: selectedItem.id,
-          label:
-            selectedItem.type === 'municipality'
-              ? `${selectedItem.postcode} ${selectedItem.city}`
-              : selectedItem.label,
-          street: selectedItem.street,
-          zip: selectedItem.postcode,
-          city: selectedItem.city,
-          longitude: selectedItem.coordinates[0],
-          latitude: selectedItem.coordinates[1],
-          department: selectedItem.context?.split(', ')[0],
-        },
-      ]
+      // this.form.addresses = [
+      //   ...this.form.addresses,
+      //   {
+      //     id: selectedItem.id,
+      //     label:
+      //       selectedItem.type === 'municipality'
+      //         ? `${selectedItem.postcode} ${selectedItem.city}`
+      //         : selectedItem.label,
+      //     street: selectedItem.street,
+      //     zip: selectedItem.postcode,
+      //     city: selectedItem.city,
+      //     longitude: selectedItem.coordinates[0],
+      //     latitude: selectedItem.coordinates[1],
+      //     department: selectedItem.context?.split(', ')[0],
+      //   },
+      // ]
+
+      if (!selectedItem) {
+        return
+      }
+
+      this.form.addresses.push({
+        id: selectedItem.id,
+        label:
+          selectedItem.type === 'municipality'
+            ? `${selectedItem.postcode} ${selectedItem.city}`
+            : selectedItem.label,
+        street: selectedItem.street,
+        zip: selectedItem.postcode,
+        city: selectedItem.city,
+        longitude: selectedItem.coordinates[0],
+        latitude: selectedItem.coordinates[1],
+        department: selectedItem.context?.split(', ')[0],
+      })
       this.validate('addresses')
     },
     async onFetchGeoSuggestions(payload, config = {}) {
