@@ -59,12 +59,10 @@
       <BoxInformations class="mb-8" :territoire="territoire" />
       <BoxMission class="mb-8" :territoire="territoire" :stats="stats" />
       <BoxParticipation class="mb-8" :territoire="territoire" :stats="stats" />
-      <BoxResponsable
-        v-for="responsable in territoire.responsables"
-        :key="responsable.id"
-        class="mb-8"
-        :responsable="responsable.profile"
-      />
+
+      <template v-for="responsable in territoire.responsables" :key="responsable.id">
+        <BoxResponsable class="mb-8" :responsable="responsable.profile" />
+      </template>
 
       <div class="flex justify-center mb-10">
         <BaseLink

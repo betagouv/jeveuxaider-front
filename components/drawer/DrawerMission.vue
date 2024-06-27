@@ -116,15 +116,16 @@
           :department="mission.department"
           class="mb-8"
         />
-        <BoxResponsable
-          class="mb-8"
-          v-for="responsable in mission.responsables"
-          :responsable="responsable"
-          :conversable-id="mission.id"
-          :conversable="mission"
-          conversable-type="App\Models\Mission"
-          @updated="$emit('updated')"
-        />
+        <template v-for="responsable in mission.responsables" :key="responsable.id">
+          <BoxResponsable
+            class="mb-8"
+            :responsable="responsable"
+            :conversable-id="mission.id"
+            :conversable="mission"
+            conversable-type="App\Models\Mission"
+            @updated="$emit('updated')"
+          />
+        </template>
         <BoxOrganisation class="mb-8" :organisation="mission.structure" />
 
         <div class="flex justify-center mb-10">

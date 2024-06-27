@@ -99,15 +99,15 @@
               class="mb-8"
               :department="mission.department"
             />
-            <BoxResponsable
-              v-if="mission.responsables"
-              v-for="responsable in mission.responsables"
-              :responsable="responsable"
-              :conversable-id="mission.id"
-              conversable-type="App\Models\Mission"
-              :conversable="mission"
-              @updated="refresh()"
-            />
+            <template v-for="responsable in mission.responsables" :key="responsable.id">
+              <BoxResponsable
+                :responsable="responsable"
+                :conversable-id="mission.id"
+                conversable-type="App\Models\Mission"
+                :conversable="mission"
+                @updated="refresh()"
+              />
+            </template>
             <BoxOrganisation :organisation="mission.structure" />
           </div>
           <template v-if="$route.hash === '#historique'">

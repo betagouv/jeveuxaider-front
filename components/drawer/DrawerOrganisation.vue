@@ -90,16 +90,16 @@
           :organisation="organisation"
           :organisation-stats="organisationStats"
         />
-        <BoxResponsable
-          v-for="responsable in organisation.members"
-          :key="responsable.id"
-          class="mb-8"
-          :responsable="responsable.profile"
-          :conversable-id="organisation.id"
-          conversable-type="App\Models\Structure"
-          :conversable="organisation"
-          @updated="fetch"
-        />
+        <template v-for="responsable in organisation.members" :key="responsable.id">
+          <BoxResponsable
+            class="mb-8"
+            :responsable="responsable.profile"
+            :conversable-id="organisation.id"
+            conversable-type="App\Models\Structure"
+            :conversable="organisation"
+            @updated="fetch"
+          />
+        </template>
         <BoxReseau
           v-for="reseau in organisation.reseaux"
           :key="reseau.id"
