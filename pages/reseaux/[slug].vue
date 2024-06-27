@@ -87,7 +87,7 @@
         />
       </div>
 
-      <SectionTemoignages v-if="testimonials.length > 0" :testimonials="testimonials" />
+      <SectionTemoignages v-if="testimonials?.length > 0" :testimonials="testimonials" />
 
       <SectionDonation
         v-if="reseau.donation"

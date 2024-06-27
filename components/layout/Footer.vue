@@ -85,9 +85,7 @@
               <nuxt-link no-prefetch class="link" to="/organisations/2747-makesense"
                 >Makesense</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/5265-article-1"
-                >Article 1</nuxt-link
-              >
+              <nuxt-link no-prefetch class="link" to="/reseaux/20-article-1">Article 1</nuxt-link>
               <nuxt-link
                 no-prefetch
                 class="link"
@@ -98,41 +96,39 @@
               <nuxt-link
                 no-prefetch
                 class="link"
-                to="/organisations/7384-la-societe-protectrice-des-animaux-la-spa"
+                to="/reseaux/58-la-societe-protectrice-des-animaux-la-spa"
                 >La SPA</nuxt-link
               >
-              <nuxt-link
-                no-prefetch
-                class="link"
-                to="/organisations/5674-la-cravate-solidaire-mobile"
-                >La Cravate Solidaire Mobile</nuxt-link
+              <nuxt-link no-prefetch class="link" to="/reseaux/33-la-cravate-solidaire"
+                >La Cravate Solidaire</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/5605-emmaus-connect"
-                >Emmaüs Connect - Paris</nuxt-link
+              <nuxt-link no-prefetch class="link" to="/reseaux/35-emmaus-france"
+                >Emmaüs France</nuxt-link
               >
               <nuxt-link no-prefetch class="link" to="/reseaux/8-secours-catholique"
                 >Secours Catholique</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/9315-apf-france-handicap"
+              <nuxt-link no-prefetch class="link" to="/reseaux/79-apf-france-handicap"
                 >APF France handicap</nuxt-link
               >
               <nuxt-link no-prefetch class="link" to="/reseaux/4-les-restos-du-coeur"
                 >Restos du coeur</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/10077-habitat-et-humanisme"
+              <nuxt-link no-prefetch class="link" to="/reseaux/17-federation-habitat-et-humanisme"
                 >Habitat et Humanisme</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/97-entourage"
-                >Entourage</nuxt-link
-              >
-              <nuxt-link no-prefetch class="link" to="/organisations/11563-greenminded"
-                >GreenMinded</nuxt-link
+              <nuxt-link no-prefetch class="link" to="/reseaux/2-entourage">Entourage</nuxt-link>
+              <nuxt-link
+                no-prefetch
+                class="link"
+                to="/reseaux/15-federation-nationale-de-la-protection-civile"
+                >Protection Civile</nuxt-link
               >
               <nuxt-link no-prefetch class="link" to="/organisations/4561-mon-emile-association"
                 >Mon Emile Association</nuxt-link
               >
-              <nuxt-link no-prefetch class="link" to="/organisations/9751-regles-elementaires"
-                >Règles Élémentaires</nuxt-link
+              <nuxt-link no-prefetch class="link" to="/reseaux/56-apprentis-dauteuil"
+                >Apprentis d’Auteuil</nuxt-link
               >
               <nuxt-link no-prefetch class="link" to="/reseaux/46-pro-bono-lab"
                 >Pro Bono Lab</nuxt-link
