@@ -12,7 +12,7 @@ export default defineNuxtComponent({
   async setup() {
     const route = useRoute()
 
-    const { data: territoire, error } = await useApiFetch(`/territoires/${route.params.slug}`)
+    const { data: territoire, error } = await useApiFetch(`/territoires/${route.params.slug}/view`)
 
     if (error.value) {
       showError({
