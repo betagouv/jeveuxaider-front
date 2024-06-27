@@ -20,7 +20,7 @@
             :disabled="!canSubmitForm"
             @click.native="handleSubmit"
           >
-            Mettre à jour
+            Enregistrer
           </DsfrButton>
         </template>
       </BaseSectionHeading>

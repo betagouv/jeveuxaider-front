@@ -141,7 +141,7 @@
             :disabled="!formIsDirty"
             @click.native="handleSubmit()"
           >
-            Mettre à jour
+            Enregistrer
           </DsfrButton>
         </div>
       </div>
@@ -159,7 +159,7 @@
             :disabled="!formIsDirty"
             @click.native="handleSubmit()"
           >
-            Mettre à jour
+            Enregistrer
           </DsfrButton>
         </div>
       </transition>

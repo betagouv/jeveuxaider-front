@@ -14,7 +14,7 @@
             :disabled="!formIsDirty"
             @click.native="submitForm"
           >
-            Mettre à jour
+            Enregistrer
           </DsfrButton>
         </template>
       </BaseSectionHeading>

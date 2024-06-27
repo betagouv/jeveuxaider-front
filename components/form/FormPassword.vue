@@ -51,7 +51,7 @@
           :disabled="!formIsValid"
           @click.native="handleSubmit()"
         >
-          Mettre à jour
+          Enregistrer
         </DsfrButton>
       </div>
     </div>
@@ -69,7 +69,7 @@
           :disabled="!formIsValid"
           @click.native="handleSubmit()"
         >
-          Mettre à jour
+          Enregistrer
         </DsfrButton>
       </div>
     </transition>

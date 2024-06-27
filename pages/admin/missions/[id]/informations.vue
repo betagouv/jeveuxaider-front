@@ -291,7 +291,7 @@
     </div>
     <template #footer>
       <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onValidateClick">
-        {{ $stores.formMission.isDraft ? 'Sauvegarder et continuer' : 'Sauvegarder' }}
+        {{ $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer' }}
       </DsfrButton>
     </template>
   </FormMissionWrapper>
