@@ -91,14 +91,13 @@
           </DsfrAccordion>
           <DsfrAccordion title-variant="xxl" title-emoji="🙅">
             <template #title>
-              Proposer des missions sans exiger de participation financière en contrepartie
+              Proposer des missions dont la finalité n'est pas un don en nature ou un don financier
             </template>
 
             <div class="formatted-text md:text-lg lg:text-xl">
               <p>
-                Vous ne pouvez en aucun cas demander à un bénévole qui s’engage par l’intermédiaire
-                de JeVeuxAider.gouv.fr une participation financière (don financier, adhésion
-                obligatoire…).
+                La mission doit être une mission de bénévolat, au service de l'intérêt général, et
+                ne doit pas avoir pour unique finalité un don en nature ou un don financier.
               </p>
               <p>
                 <span aria-hidden="true">❗</span> Là encore, si vous ne respectez pas ce cadre,
