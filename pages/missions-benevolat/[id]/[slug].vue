@@ -352,7 +352,9 @@
     </div>
 
     <!-- TESTIMONIALS -->
-    <Testimonials :model="mission.structure" model-type="organisation" />
+    <ClientOnly>
+      <Testimonials :model="mission.structure" model-type="organisation" />
+    </ClientOnly>
 
     <!-- MISSIONS SIMILAIRES -->
     <div
