@@ -4,7 +4,7 @@
     <template v-if="$stores.auth.isLogged">
       <BlocCaDevraitVousPlaire />
       <ElectionsLegislatives />
-      <LaTourneeDeLete />
+      <!-- <LaTourneeDeLete /> -->
       <BlocProfileActivities />
       <BlocTemoignages />
       <BlocActualitesEngagement />
@@ -19,7 +19,7 @@
       </div>
       <BlocActivities />
       <ElectionsLegislatives />
-      <LaTourneeDeLete />
+      <!-- <LaTourneeDeLete /> -->
       <BlocMissionsCourtes />
       <BlocActionsBenevolesPopulaires />
       <BlocTemoignages />
@@ -46,7 +46,7 @@ import BlocNewsletter from '@/components/section/home/BlocNewsletter.vue'
 import BlocFaq from '@/components/section/home/BlocFaq.vue'
 import BlocProfileActivities from '@/components/section/home/BlocProfileActivities.vue'
 import BlocActualitesEngagement from '@/components/section/home/BlocActualitesEngagement.vue'
-import LaTourneeDeLete from '@/components/section/operations/LaTourneeDeLete.vue'
+// import LaTourneeDeLete from '@/components/section/operations/LaTourneeDeLete.vue'
 import ElectionsLegislatives from '@/components/section/operations/ElectionsLegislatives.vue'
 
 export default defineNuxtComponent({
@@ -100,7 +100,6 @@ export default defineNuxtComponent({
     BlocFaq,
     BlocProfileActivities,
     BlocActualitesEngagement,
-    LaTourneeDeLete,
     ElectionsLegislatives,
   },
 })

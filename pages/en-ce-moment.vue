@@ -83,7 +83,7 @@
         />
       </div>
 
-      <LaTourneeDeLete />
+      <!-- <LaTourneeDeLete /> -->
       <SectionSearchBlocFaq title="Vous avez des questions ?" />
       <SectionHomeBlocNewsletter />
     </div>
@@ -95,7 +95,7 @@ import CalendarFilters from '@/components/calendar/CalendarFilters.vue'
 import AlgoliaMissions from '@/components/section/search/missions/AlgoliaMissions.vue'
 import LocalisationFilter from '@/components/search/LocalisationFilter.vue'
 import LocalisationMobileFilter from '@/components/search/LocalisationMobileFilter.vue'
-import LaTourneeDeLete from '@/components/section/operations/LaTourneeDeLete.vue'
+// import LaTourneeDeLete from '@/components/section/operations/LaTourneeDeLete.vue'
 import ElectionsLegislatives from '@/components/section/operations/ElectionsLegislatives.vue'
 
 export default defineNuxtComponent({
@@ -104,7 +104,6 @@ export default defineNuxtComponent({
     LocalisationFilter,
     LocalisationMobileFilter,
     AlgoliaMissions,
-    LaTourneeDeLete,
     ElectionsLegislatives,
   },
   mounted() {
