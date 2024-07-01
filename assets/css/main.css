@@ -371,7 +371,10 @@ select:focus {
 
 .Vue-Toastification__toast {
   border-radius: 0 !important;
-  @apply !font-sans;
+  @apply !font-sans flex items-start justify-between p-4 shadow-lg;
+  .Vue-Toastification__icon {
+    @apply mt-1;
+  }
 }
 
 .vc-container {

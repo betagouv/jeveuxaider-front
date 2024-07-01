@@ -316,16 +316,23 @@
 
                     <div class="mt-6 mb-3 bg-gray-50">
                       <p class="text-xs text-gray-600 text-center">
-                        <span>En m'inscrivant j'accepte la </span>
+                        <span>En m’inscrivant j'accepte les </span>
                         <DsfrLink
-                          to="/politique-de-confidentialite"
+                          to="/conditions-generales-d-utilisation"
                           class="font-medium text-gray-900"
+                          :is-external="true"
+                          :icon-size="12"
                         >
-                          <span>politique de confidentialité</span>
+                          <span>conditions générales d’utilisation</span>
                         </DsfrLink>
                         <br class="hidden sm:block" />
                         <span> et la </span>
-                        <DsfrLink to="/charte-reserve-civique" class="font-medium text-gray-900">
+                        <DsfrLink
+                          to="/charte-reserve-civique"
+                          class="font-medium text-gray-900"
+                          :is-external="true"
+                          :icon-size="12"
+                        >
                           <span>charte</span>
                         </DsfrLink>
                         <span> de la Réserve Civique.</span>

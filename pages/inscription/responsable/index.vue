@@ -402,13 +402,23 @@
           </DsfrButton>
 
           <div class="mt-4 text-center text-gray-800 text-xs">
-            <span>En m'inscrivant j'accepte </span>
-            <DsfrLink class="font-medium text-gray-900" to="/politique-de-confidentialite">
-              <span>la politique de confidentialité</span>
+            <span>En m’inscrivant j'accepte les </span>
+            <DsfrLink
+              class="font-medium text-gray-900"
+              to="/conditions-generales-d-utilisation"
+              :is-external="true"
+              :icon-size="12"
+            >
+              <span>conditions générales d’utilisation</span>
             </DsfrLink>
             <br class="hidden sm:block" />
             <span> et la </span>
-            <DsfrLink class="font-medium text-gray-900" to="/charte-reserve-civique">
+            <DsfrLink
+              class="font-medium text-gray-900"
+              to="/charte-reserve-civique"
+              :is-external="true"
+              :icon-size="12"
+            >
               <span>charte</span>
             </DsfrLink>
             <span> de la Réserve Civique.</span>

@@ -76,7 +76,7 @@
           </div>
 
           <p class="text-gray-600 text-sm mt-6 sm:max-w-md md:max-w-lg lg:max-w-full">
-            <span>En m'inscrivant j'accepte la </span>
+            <span>En m’inscrivant j'accepte la </span>
             <DsfrLink to="/politique-de-confidentialite">
               <strong>politique de confidentialité</strong>
             </DsfrLink>

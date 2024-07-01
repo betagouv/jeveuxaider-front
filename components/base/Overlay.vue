@@ -7,12 +7,12 @@
     leave-from-class="opacity-100"
     leave-to-class="opacity-0"
   >
-    <div v-show="isOpen" class="fixed inset-0 w-full h-full z-50">
+    <div v-show="isOpen" class="fixed inset-0 w-full h-full z-[60]">
       <div
         v-if="isOpen"
-        class="w-full h-full flex flex-col items-center justify-center bg-jva-blue-500/95"
+        class="w-full h-full flex flex-col items-center justify-center bg-jva-blue-500/95 overflow-y-auto py-4 lg:py-12"
       >
-        <FocusLoop :is-visible="true">
+        <FocusLoop :is-visible="true" class="w-full">
           <div class="flex flex-col w-full h-full px-4">
             <button
               class="flex items-center cursor-pointer p-4 ml-auto lg:absolute lg:right-8 lg:top-8 lg:pl-2 lg:pr-1 lg:py-1 lg:hover:bg-jva-blue-300/50"
@@ -24,9 +24,9 @@
 
             <div
               v-scroll-lock="true"
-              class="overflow-y-auto flex-1 flex flex-col lg:justify-center lg:items-center"
+              class="flex-1 flex flex-col lg:justify-center lg:items-center"
             >
-              <div class="pb-32 lg:pb-0">
+              <div class="w-full pb-32 lg:pb-12">
                 <div class="text-center text-white text-lg">#ChacunPourTous</div>
                 <div
                   v-if="title"
@@ -35,7 +35,7 @@
                   {{ title }}
                 </div>
                 <div
-                  class="bg-[#F6F6F6] mt-8 max-w-full lg:w-[588px] mx-auto px-2 py-6 sm:p-6 lg:px-14 lg:py-12"
+                  class="bg-[#F6F6F6] mt-8 max-w-[588px] w-full mx-auto px-4 py-6 sm:p-6 lg:px-14 lg:py-12"
                 >
                   <slot />
                 </div>

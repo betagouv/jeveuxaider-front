@@ -185,14 +185,14 @@
 
       <div class="mt-6">
         <p class="text-xs text-cool-gray-500 text-center">
-          <span>En m'inscrivant j'accepte la </span>
+          <span>En m’inscrivant j'accepte les </span>
           <DsfrLink
-            to="/politique-de-confidentialite"
+            to="/conditions-generales-d-utilisation"
             :is-external="true"
             :icon-size="12"
             icon-class="mb-[.5px]"
           >
-            <span>politique de confidentialité</span>
+            <span>conditions générales d’utilisation</span>
           </DsfrLink>
           <br class="hidden sm:block" />
           <span> et la </span>

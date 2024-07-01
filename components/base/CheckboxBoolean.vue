@@ -1,6 +1,6 @@
 <template>
-  <div class="flex items-center">
-    <div class="flex items-center h-5">
+  <div class="flex">
+    <div class="flex mt-[5px]">
       <input
         :id="name"
         :aria-describedby="`${name}-description`"
@@ -23,7 +23,7 @@
 
 <script>
 export default defineNuxtComponent({
-  emits: ['checked', 'unchecked', 'update:modelValue'],
+  emits: ['checked', 'unchecked', 'update:modelValue', 'changed'],
   props: {
     value: { type: Boolean, default: false },
     name: { type: String, required: true },
@@ -54,6 +54,7 @@ export default defineNuxtComponent({
       } else {
         this.$emit('unchecked')
       }
+      this.$emit('changed', this.checked)
     },
   },
 })
