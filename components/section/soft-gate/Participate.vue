@@ -6,7 +6,7 @@
         v-if="$stores.softGate.selectedMission"
         class="text-cool-gray-500 lg:text-lg max-w-md mx-auto"
       >
-        Envoyez vos motivations et question à
+        Envoyez vos motivations et questions à
         <span class="font-bold">
           {{
             $stores.softGate.selectedMission.responsables.map((r) => r.secret_name).join(', ')
