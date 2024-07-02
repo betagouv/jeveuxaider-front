@@ -2,7 +2,7 @@
   <BaseDrawer :is-open="Boolean(profile)" @close="$emit('close')">
     <template #title>
       <BaseHeading v-if="profile" :level="3">
-        {{ profile.first_name }} {{ profile.last_name[0] }}
+        {{ profile.secret_name }}
       </BaseHeading>
     </template>
     <template v-if="profile">
@@ -47,7 +47,9 @@
         </BaseBox>
       </div>
       <div>
-        <div class="text-sm flex justify-between px-2 mb-2 items-center">Profil</div>
+        <div class="text-sm flex justify-between px-2 mb-2 items-center">
+          <div class="uppercase font-semibold text-gray-600">Profil</div>
+        </div>
         <BaseBox variant="flat" padding="xs">
           <BaseDescriptionList>
             <BaseDescriptionListItem term="Code postal" :description="profile.zip" />

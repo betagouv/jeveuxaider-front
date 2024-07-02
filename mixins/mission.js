@@ -364,7 +364,7 @@ export default {
     },
     uniqueCities() {
       return this.mission?.addresses
-        .map((address) => address.city)
+        ?.map((address) => address.city)
         .filter((value, index, self) => self.indexOf(value) === index)
     },
   },

@@ -66,7 +66,7 @@
               )}`"
             />
             <BaseDescriptionListItem
-              v-if="uniqueCities.length"
+              v-if="uniqueCities"
               :term-size="160"
               term="Villes"
               :description="uniqueCities.join(',')"
@@ -207,7 +207,7 @@ export default defineNuxtComponent({
     return {
       endpoint: `/missions/${this.$route.params.id}/benevoles`,
       queryParams: {
-        include: 'user,participationsValidatedCount,avatar,notificationsBenevoles',
+        include: 'participationsValidatedCount,avatar,notificationsBenevoles',
       },
       drawerProfileId: null,
       notifications: [],

@@ -9,7 +9,7 @@
         />
         <div class="ml-4">
           <div class="font-semibold text-sm text-gray-900">
-            {{ profile.first_name }} {{ profile.last_name[0] }}
+            {{ profile.secret_name }}
           </div>
 
           <BaseBadge
@@ -57,8 +57,7 @@
           @confirm="$emit('clickedProposerMission', profile)"
           @cancel="showAlert = false"
         >
-          {{ profile.first_name }} {{ profile.last_name[0] }} recevra un e-mail pour l'inviter à
-          participer à votre mission
+          {{ profile.secret_name }} recevra un e-mail pour l'inviter à participer à votre mission
         </BaseAlertDialog>
       </template>
     </div>
