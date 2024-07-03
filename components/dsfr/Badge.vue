@@ -15,6 +15,7 @@
       { 'text-[#695240] bg-[#FEEBD0]': type === 'new' },
       { 'text-[#6E445A] bg-[#FEE7FC]': type === 'default' },
       { 'text-[#3A3A3A] bg-[#EEEEEE]': type === 'gray' },
+      { 'text-[#0063CB] bg-[#F5F5FE]': type === 'recommendation' },
     ]"
   >
     <component
@@ -42,6 +43,7 @@ import DsfrErrorIcon from '@/components/icon/dsfr/Error.vue'
 import DsfrWarningIcon from '@/components/icon/dsfr/Warning.vue'
 import DsfrNewIcon from '@/components/icon/dsfr/New.vue'
 import DsfrInfoIcon from '@/components/icon/dsfr/Info.vue'
+import DsfrBardFillIcon from '@/components/icon/dsfr/BardFill.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -50,6 +52,7 @@ export default defineNuxtComponent({
     DsfrWarningIcon,
     DsfrNewIcon,
     DsfrInfoIcon,
+    DsfrBardFillIcon,
   },
   props: {
     size: {
@@ -61,7 +64,16 @@ export default defineNuxtComponent({
       type: String,
       default: 'default',
       validator: (t) =>
-        ['success', 'error', 'info', 'warning', 'new', 'default', 'gray'].includes(t),
+        [
+          'success',
+          'error',
+          'info',
+          'warning',
+          'new',
+          'default',
+          'gray',
+          'recommendation',
+        ].includes(t),
     },
     noIcon: {
       type: Boolean,
@@ -88,6 +100,8 @@ export default defineNuxtComponent({
           return DsfrWarningIcon
         case 'new':
           return DsfrNewIcon
+        case 'recommendation':
+          return DsfrBardFillIcon
         default:
           return null
       }

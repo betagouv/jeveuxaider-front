@@ -30,6 +30,9 @@
               title="Ponctuelle"
               subtitle="Une activité courte ou un événement particulier"
               description="Ex : 2 jours les 4 et 5 mai, 2 heures le 9 août, 3 demi-journées en juin, etc."
+              :is-recommended="
+                $stores.formMission.mission?.template?.recommendation_date_type === 'ponctual'
+              "
             />
             <CustomOptionCard
               @click="onRecurringClick"
@@ -37,6 +40,9 @@
               title="Régulière"
               subtitle="Un engagement dans la durée (plusieurs mois)"
               description=" Ex : 2 heures par semaine, 1 jour par mois pendant 6 mois etc."
+              :is-recommended="
+                $stores.formMission.mission?.template?.recommendation_date_type === 'recurring'
+              "
             />
           </div>
         </DsfrFormControl>
@@ -136,12 +142,18 @@
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <CustomOptionCard
                   :is-selected="form.with_dates === 'yes'"
+                  :is-recommended="
+                    $stores.formMission.mission?.template?.recommendation_with_dates === true
+                  "
                   title="Sur des jours définis"
                   description="Ex : tous les premiers mercredis du mois, tous les mardis et jeudis, etc."
                   @click="form.with_dates = 'yes'"
                 />
                 <CustomOptionCard
                   :is-selected="form.with_dates === 'no'"
+                  :is-recommended="
+                    $stores.formMission.mission?.template?.recommendation_with_dates === false
+                  "
                   title="C’est à définir"
                   description="Vous ne savez pas encore quand la mission aura lieu, ou bien c’est à adapter aux disponibilités du bénévole."
                   @click="form.with_dates = 'no'"

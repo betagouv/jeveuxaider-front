@@ -30,12 +30,18 @@
             <CustomOptionCard
               @click="onPresentielClick"
               :is-selected="form.type === 'Mission en présentiel'"
+              :is-recommended="
+                $stores.formMission.mission?.template?.recommendation_type === 'onsite'
+              "
               title="En présentiel"
               description="Vous pourrez préciser le ou les lieux ensuite : villes, départements, etc."
             />
             <CustomOptionCard
               @click="onDistanceClick"
               :is-selected="form.type === 'Mission à distance'"
+              :is-recommended="
+                $stores.formMission.mission?.template?.recommendation_type === 'remote'
+              "
               title="À distance"
               description="Le bénévole peut réaliser la mission depuis chez lui ou n’importe où, à distance"
             />
