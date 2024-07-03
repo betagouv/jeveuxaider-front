@@ -17,9 +17,10 @@
 
     <BaseSectionHeading title="Participations">
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics @refetch="refetch()" />
-        </div>
+        <FiltersStatisticsButton />
+      </template>
+      <template #bottom>
+        <FiltersStatisticsActive class="mt-4" />
       </template>
     </BaseSectionHeading>
 
@@ -75,7 +76,8 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
+import FiltersStatisticsButton from '@/components/custom/FiltersStatisticsButton.vue'
+import FiltersStatisticsActive from '@/components/custom/FiltersStatisticsActive.vue'
 import ParticipationsStatistics from '@/components/numbers/ParticipationsStatistics.vue'
 import ParticipationsByDate from '@/components/numbers/ParticipationsByDate.vue'
 import ParticipationsByStates from '@/components/numbers/ParticipationsByStates.vue'
@@ -88,7 +90,8 @@ import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    FiltersStatistics,
+    FiltersStatisticsButton,
+    FiltersStatisticsActive,
     ParticipationsStatistics,
     ParticipationsByDate,
     ParticipationsByStates,
@@ -111,10 +114,20 @@ export default defineNuxtComponent({
     //   return showError({ statusCode: 403 })
     // }
   },
+  watch: {
+    $route(newVal, oldVal) {
+      if (newVal.name === oldVal.name) {
+        this.fetch()
+      }
+    },
+  },
   data() {
     return {}
   },
   methods: {
+    fetch() {
+      this.refetch()
+    },
     refetch() {
       if (this.$refs.participationsByDate) {
         this.$refs.participationsByDate.fetch()

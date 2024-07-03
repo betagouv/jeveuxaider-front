@@ -73,8 +73,12 @@ export default defineNuxtComponent({
         { key: 'all', label: 'Depuis le début' },
       ],
       form: {
-        startDate: this.$dayjs(this.$stores.statistics.params.startDate).toDate(),
-        endDate: this.$dayjs(this.$stores.statistics.params.endDate).toDate(),
+        startDate: this.$stores.statistics.params.startDate
+          ? this.$dayjs(this.$stores.statistics.params.startDate).toDate()
+          : null,
+        endDate: this.$stores.statistics.params.endDate
+          ? this.$dayjs(this.$stores.statistics.params.endDate).toDate()
+          : null,
       },
     }
   },

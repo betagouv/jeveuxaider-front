@@ -20,9 +20,9 @@
         {{ title }}
       </template>
     </BaseHeading>
-    <div v-if="contextLabels.length && !noParams" class="text-gray-400 font-semibold">
+    <!-- <div v-if="contextLabels.length && !noParams" class="text-gray-400 font-semibold">
       {{ contextLabels.join(' · ') }}
-    </div>
+    </div> -->
   </div>
 </template>
 

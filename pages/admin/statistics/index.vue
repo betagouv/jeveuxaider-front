@@ -53,12 +53,12 @@ import OverviewQuickGlance from '@/components/numbers/OverviewQuickGlance.vue'
 import OverviewUtilisateurs from '@/components/numbers/OverviewUtilisateurs.vue'
 import OverviewPlaces from '@/components/numbers/OverviewPlaces.vue'
 // import OverviewAPIEngagement from '@/components/numbers/OverviewAPIEngagement.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
+// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    FiltersStatistics,
+    // FiltersStatistics,
     OverviewQuickGlance,
     OverviewOrganisations,
     OverviewParticipations,

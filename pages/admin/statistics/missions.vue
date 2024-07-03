@@ -16,11 +16,11 @@
     </ClientOnly>
 
     <BaseSectionHeading title="Missions">
-      <template #action>
+      <!-- <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
           <FiltersStatistics @refetch="refetch()" />
         </div>
-      </template>
+      </template> -->
     </BaseSectionHeading>
 
     <div class="space-y-12">
@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
+// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import MissionsStatistics from '@/components/numbers/MissionsStatistics.vue'
 import MissionsByDate from '@/components/numbers/MissionsByDate.vue'
 import MissionsByStates from '@/components/numbers/MissionsByStates.vue'
@@ -109,7 +109,7 @@ import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    FiltersStatistics,
+    // FiltersStatistics,
     MissionsStatistics,
     MissionsByDate,
     MissionsByStates,

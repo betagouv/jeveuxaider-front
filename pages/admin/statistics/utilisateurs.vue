@@ -16,11 +16,11 @@
     </ClientOnly>
 
     <BaseSectionHeading title="Utilisateurs">
-      <template #action>
+      <!-- <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
           <FiltersStatistics @refetch="refetch()" />
         </div>
-      </template>
+      </template> -->
     </BaseSectionHeading>
 
     <div class="space-y-12">
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
+// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import UtilisateursStatistics from '@/components/numbers/UtilisateursStatistics.vue'
 import UtilisateursByDate from '@/components/numbers/UtilisateursByDate.vue'
 import UtilisateursByActivities from '@/components/numbers/UtilisateursByActivities.vue'
@@ -55,7 +55,7 @@ import UtilisateursByAge from '@/components/numbers/UtilisateursByAge.vue'
 
 export default defineNuxtComponent({
   components: {
-    FiltersStatistics,
+    // FiltersStatistics,
     UtilisateursStatistics,
     UtilisateursByDate,
     UtilisateursByActivities,

@@ -6,8 +6,8 @@ export const useStatisticsStore = defineStore({
   state: () => ({
     params: {
       department: null,
-      startDate: dayjs().startOf('year').format('YYYY-MM-DD'),
-      endDate: dayjs().format('YYYY-MM-DD'),
+      startDate: null,
+      endDate: null,
     },
   }),
   getters: {},

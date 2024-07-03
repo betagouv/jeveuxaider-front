@@ -75,8 +75,11 @@ export default defineNuxtComponent({
   methods: {
     async fetch() {
       this.loading = true
+      console.log('fetching participations statistics', this.$route.query)
       await apiFetch('/statistics/global/participations', {
-        params: this.$stores.statistics.params,
+        params: {
+          ...this.$route.query,
+        },
       }).then((response) => {
         this.loading = false
         this.statistics = response

@@ -16,11 +16,11 @@
     </ClientOnly>
 
     <BaseSectionHeading title="Places disponibles">
-      <template #action>
+      <!-- <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
           <FiltersStatistics :filters="['department']" @refetch="refetch()" />
         </div>
-      </template>
+      </template> -->
     </BaseSectionHeading>
 
     <div class="space-y-12">
@@ -75,12 +75,12 @@ import PlacesByMissions from '@/components/numbers/PlacesByMissions.vue'
 import PlacesByDomaines from '@/components/numbers/PlacesByDomaines.vue'
 import PlacesByActivities from '@/components/numbers/PlacesByActivities.vue'
 import PlacesStatistics from '@/components/numbers/PlacesStatistics.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
+// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    FiltersStatistics,
+    // FiltersStatistics,
     PlacesByReseaux,
     PlacesByOrganisations,
     PlacesByMissions,

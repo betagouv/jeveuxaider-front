@@ -15,7 +15,7 @@
         :title="`${$filters.pluralize(statistics.missions, 'Mission', 'Missions', false)}`"
         :subtitle="`${$filters.pluralize(statistics.missions, 'créée', 'créées', false)}`"
         link="/admin/statistics/missions"
-        infos-bulle="Nombre de missions en ligne à l’instant T"
+        infos-bulle="Nombre de missions créées depuis le début"
       />
       <CardStatistic
         :value="statistics.missions_available"

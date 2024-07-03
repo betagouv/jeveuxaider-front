@@ -20,9 +20,9 @@
       secondary-title-bottom="Évolution des indicateurs avec leurs variations par rapport à l'année précédente"
     >
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
+        <!-- <div class="hidden lg:block space-x-2 flex-shrink-0">
           <FiltersStatistics :filters="['department']" @refetch="refetch()" />
-        </div>
+        </div> -->
       </template>
     </BaseSectionHeading>
 
@@ -36,14 +36,14 @@
 <script>
 import EvolutionsByYear from '@/components/numbers/EvolutionsByYear.vue'
 import EvolutionsByMonth from '@/components/numbers/EvolutionsByMonth.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
+// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
     EvolutionsByYear,
     EvolutionsByMonth,
-    FiltersStatistics,
+    // FiltersStatistics,
     Breadcrumb,
   },
   setup() {
