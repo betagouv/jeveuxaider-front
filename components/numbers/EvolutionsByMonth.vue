@@ -7,8 +7,12 @@
       <BaseTable>
         <BaseTableHead>
           <BaseTableHeadCell>Période</BaseTableHeadCell>
-          <BaseTableHeadCell>Utilisateurs inscrits</BaseTableHeadCell>
-          <BaseTableHeadCell>Structures validées</BaseTableHeadCell>
+          <BaseTableHeadCell v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+            >Utilisateurs inscrits</BaseTableHeadCell
+          >
+          <BaseTableHeadCell v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+            >Structures validées</BaseTableHeadCell
+          >
           <BaseTableHeadCell>Missions postées</BaseTableHeadCell>
           <BaseTableHeadCell>Mises en relation</BaseTableHeadCell>
           <BaseTableHeadCell>Participations validées</BaseTableHeadCell>
@@ -24,7 +28,7 @@
                 {{ $dayjs(item.created_at).format('MMMM') }}
               </span>
             </BaseTableRowCell>
-            <BaseTableRowCell>
+            <BaseTableRowCell v-if="['admin', 'referent'].includes($stores.auth.contextRole)">
               <div class="flex space-x-2 items-center">
                 <span>{{ $numeral(item.profiles_total) }}</span>
                 <PercentageVariation
@@ -33,7 +37,7 @@
                 />
               </div>
             </BaseTableRowCell>
-            <BaseTableRowCell>
+            <BaseTableRowCell v-if="['admin', 'referent'].includes($stores.auth.contextRole)">
               <div class="flex space-x-2 items-center">
                 <span>{{ $numeral(item.structures_validated) }}</span>
                 <PercentageVariation
@@ -162,11 +166,15 @@ export default defineNuxtComponent({
       }
     },
     async fetchStructuresByMonth() {
-      await apiFetch('/statistics/structures-by-month', {
-        params: this.$stores.statistics.params,
-      }).then((response) => {
-        this.structures = response
-      })
+      if (['responsable'].includes(this.$stores.auth.contextRole)) {
+        this.structures = []
+      } else {
+        await apiFetch('/statistics/structures-by-month', {
+          params: this.$stores.statistics.params,
+        }).then((response) => {
+          this.structures = response
+        })
+      }
     },
     async fetchMissionsByMonth() {
       await apiFetch('/statistics/missions-by-month', {
@@ -176,11 +184,15 @@ export default defineNuxtComponent({
       })
     },
     async fetchUsersByMonth() {
-      await apiFetch('/statistics/users-by-month', {
-        params: this.$stores.statistics.params,
-      }).then((response) => {
-        this.users = response
-      })
+      if (['responsable'].includes(this.$stores.auth.contextRole)) {
+        this.users = []
+      } else {
+        await apiFetch('/statistics/users-by-month', {
+          params: this.$stores.statistics.params,
+        }).then((response) => {
+          this.users = response
+        })
+      }
     },
     async fetchParticipationsByMonth() {
       await apiFetch('/statistics/participations-by-month', {

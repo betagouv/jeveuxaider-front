@@ -10,6 +10,7 @@
       class="grid grid-cols-1 lg:grid-cols-4 border bg-gray-200 gap-[1px] overflow-hidden"
     >
       <CardStatistic
+        v-if="statistics.organisations !== null"
         :value="statistics.organisations"
         :title="`${$filters.pluralize(
           statistics.organisations,
@@ -22,6 +23,7 @@
         infos-bulle="Correspond au nombre d’organisations inscrites et validées sur la période"
       />
       <CardStatistic
+        v-if="statistics.missions !== null"
         :value="statistics.missions"
         :title="`${$filters.pluralize(statistics.missions, 'Mission', 'Missions', false)}`"
         :subtitle="`${$filters.pluralize(
@@ -34,6 +36,7 @@
         infos-bulle="Correspond aux missions créées sur la période, qui sont validées ou bien terminées"
       />
       <CardStatistic
+        v-if="statistics.participations !== null"
         :value="statistics.participations"
         :title="`${$filters.pluralize(
           statistics.participations,
@@ -41,11 +44,30 @@
           'Participations',
           false
         )}`"
-        :subtitle="`${$filters.pluralize(statistics.participations, 'validée', 'validées', false)}`"
+        :subtitle="`${$filters.pluralize(statistics.participations, 'brute', 'brutes', false)}`"
+        link="/admin/statistics/participations"
+        infos-bulle="Correspond au nombre de participations brutes sur la période"
+      />
+      <CardStatistic
+        v-if="statistics.participations_validated !== null"
+        :value="statistics.participations_validated"
+        :title="`${$filters.pluralize(
+          statistics.participations_validated,
+          'Participation',
+          'Participations',
+          false
+        )}`"
+        :subtitle="`${$filters.pluralize(
+          statistics.participations_validated,
+          'validée',
+          'validées',
+          false
+        )}`"
         link="/admin/statistics/participations"
         infos-bulle="Correspond au nombre de participations validées sur la période"
       />
       <CardStatistic
+        v-if="statistics.utilisateurs !== null"
         :value="statistics.utilisateurs"
         :title="`${$filters.pluralize(
           statistics.utilisateurs,

@@ -41,6 +41,7 @@
       />
       <CardStatistic
         :value="statistics.territoires"
+        v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
         :title="`${$filters.pluralize(statistics.territoires, 'Territoire', 'Territoires', false)}`"
         subtitle="en ligne"
         link="/admin/statistics/organisations"
@@ -48,6 +49,7 @@
       />
       <CardStatistic
         :value="statistics.reseaux"
+        v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
         :title="`${$filters.pluralize(statistics.reseaux, 'Réseau', 'Réseaux', false)}`"
         subtitle="inscrits"
         link="/admin/statistics/organisations"

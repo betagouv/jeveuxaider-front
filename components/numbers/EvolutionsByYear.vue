@@ -4,8 +4,12 @@
     <BaseTable>
       <BaseTableHead>
         <BaseTableHeadCell>Période</BaseTableHeadCell>
-        <BaseTableHeadCell>Utilisateurs inscrits</BaseTableHeadCell>
-        <BaseTableHeadCell>Structures validées</BaseTableHeadCell>
+        <BaseTableHeadCell v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+          >Utilisateurs inscrits</BaseTableHeadCell
+        >
+        <BaseTableHeadCell v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+          >Structures validées</BaseTableHeadCell
+        >
         <BaseTableHeadCell>Missions postées</BaseTableHeadCell>
         <BaseTableHeadCell>Mises en relation</BaseTableHeadCell>
         <BaseTableHeadCell>Participations validées</BaseTableHeadCell>
@@ -20,7 +24,7 @@
               {{ item.year }}
             </span>
           </BaseTableRowCell>
-          <BaseTableRowCell>
+          <BaseTableRowCell v-if="['admin', 'referent'].includes($stores.auth.contextRole)">
             <div class="flex space-x-2 items-center">
               <span>{{ $numeral(item.profiles_total) }}</span>
               <PercentageVariation
@@ -29,7 +33,7 @@
               />
             </div>
           </BaseTableRowCell>
-          <BaseTableRowCell>
+          <BaseTableRowCell v-if="['admin', 'referent'].includes($stores.auth.contextRole)">
             <div class="flex space-x-2 items-center">
               <span>{{ $numeral(item.structures_validated) }}</span>
               <PercentageVariation
@@ -130,11 +134,15 @@ export default defineNuxtComponent({
       })
     },
     async fetchStructuresByYear() {
-      await apiFetch('/statistics/structures-by-year', {
-        params: this.$stores.statistics.params,
-      }).then((response) => {
-        this.structures = response
-      })
+      if (['responsable'].includes(this.$stores.auth.contextRole)) {
+        this.structures = []
+      } else {
+        await apiFetch('/statistics/structures-by-year', {
+          params: this.$stores.statistics.params,
+        }).then((response) => {
+          this.structures = response
+        })
+      }
     },
     async fetchMissionsByYear() {
       await apiFetch('/statistics/missions-by-year', {
@@ -144,11 +152,15 @@ export default defineNuxtComponent({
       })
     },
     async fetchUsersByYear() {
-      await apiFetch('/statistics/users-by-year', {
-        params: this.$stores.statistics.params,
-      }).then((response) => {
-        this.users = response
-      })
+      if (['responsable'].includes(this.$stores.auth.contextRole)) {
+        this.users = []
+      } else {
+        await apiFetch('/statistics/users-by-year', {
+          params: this.$stores.statistics.params,
+        }).then((response) => {
+          this.users = response
+        })
+      }
     },
     async fetchParticipationsByYear() {
       await apiFetch('/statistics/participations-by-year', {

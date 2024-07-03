@@ -162,6 +162,26 @@ export default defineNuxtComponent({
             ],
           },
         ]
+      } else if (this.$stores.auth.contextRole === 'responsable') {
+        return [
+          {
+            key: 'statistics',
+            label: 'Statistiques',
+            childrens: [
+              { label: "Vue d'ensemble", to: '/admin/statistics' },
+              // {
+              //   label: 'Indicateurs clés',
+              //   to: '/admin/statistics/indicateurs-cles',
+              // },
+              {
+                label: 'Participations',
+                to: '/admin/statistics/participations',
+              },
+              { label: 'Missions', to: '/admin/statistics/missions' },
+              { label: 'Places', to: '/admin/statistics/places' },
+            ],
+          },
+        ]
       }
 
       return null

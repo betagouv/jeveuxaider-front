@@ -34,13 +34,40 @@
       />
       <div class="flex flex-col lg:flex-row gap-12">
         <div class="space-y-12 w-1/2">
-          <ParticipationsByStates ref="participationsByStates" />
-          <ParticipationsByActivities ref="participationsByActivities" />
-          <ParticipationsByReseaux ref="participationsByReseaux" />
+          <ParticipationsByStates
+            ref="participationsByStates"
+            v-if="
+              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+                $stores.auth.contextRole
+              )
+            "
+          />
+          <ParticipationsByActivities
+            ref="participationsByActivities"
+            v-if="
+              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+                $stores.auth.contextRole
+              )
+            "
+          />
+          <ParticipationsByReseaux
+            ref="participationsByReseaux"
+            v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+          />
         </div>
         <div class="space-y-12 w-1/2">
-          <ParticipationsByDomaines ref="participationsByDomaines" />
-          <ParticipationsByOrganisations ref="participationsByOrganisations" />
+          <ParticipationsByDomaines
+            ref="participationsByDomaines"
+            v-if="
+              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+                $stores.auth.contextRole
+              )
+            "
+          />
+          <ParticipationsByOrganisations
+            ref="participationsByOrganisations"
+            v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
+          />
         </div>
       </div>
     </div>
@@ -78,27 +105,51 @@ export default defineNuxtComponent({
       middleware: ['authenticated'],
     })
 
-    const { $stores } = useNuxtApp()
+    // const { $stores } = useNuxtApp()
 
-    if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
-      return showError({ statusCode: 403 })
-    }
+    // if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
+    //   return showError({ statusCode: 403 })
+    // }
   },
   data() {
     return {}
   },
   methods: {
     refetch() {
-      this.$refs.participationsByDate.fetch()
-      this.$refs.participationsStatistics.fetch()
-      this.$refs.participationsByStates.fetch()
-      this.$refs.participationsByDomaines.fetch()
-      this.$refs.participationsByOrganisations.fetch()
-      this.$refs.participationsByReseaux.fetch()
-      this.$refs.participationsByActivities.fetch()
-      if (['admin'].includes(this.$stores.auth.contextRole)) {
+      if (this.$refs.participationsByDate) {
+        this.$refs.participationsByDate.fetch()
+      }
+      if (this.$refs.participationsStatistics) {
+        this.$refs.participationsStatistics.fetch()
+      }
+      if (this.$refs.participationsByStates) {
+        this.$refs.participationsByStates.fetch()
+      }
+      if (this.$refs.participationsByDomaines) {
+        this.$refs.participationsByDomaines.fetch()
+      }
+      if (this.$refs.participationsByOrganisations) {
+        this.$refs.participationsByOrganisations.fetch()
+      }
+      if (this.$refs.participationsByReseaux) {
+        this.$refs.participationsByReseaux.fetch()
+      }
+      if (this.$refs.participationsByActivities) {
+        this.$refs.participationsByActivities.fetch()
+      }
+      if (this.$refs.participationsConversionByDate) {
         this.$refs.participationsConversionByDate.fetch()
       }
+      // this.$refs.participationsByDate.fetch()
+      // this.$refs.participationsStatistics.fetch()
+      // this.$refs.participationsByStates.fetch()
+      // this.$refs.participationsByDomaines.fetch()
+      // this.$refs.participationsByOrganisations.fetch()
+      // this.$refs.participationsByReseaux.fetch()
+      // this.$refs.participationsByActivities.fetch()
+      // if (['admin'].includes(this.$stores.auth.contextRole)) {
+      //   this.$refs.participationsConversionByDate.fetch()
+      // }
     },
   },
 })

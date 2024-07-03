@@ -238,6 +238,8 @@
           />
         </div>
       </BaseBox>
+      <MoreNumbers />
+
       <BoxScore
         v-if="['responsable'].includes($stores.auth.contextRole)"
         padding="sm"
@@ -254,7 +256,6 @@
           </div>
         </template>
       </BoxScore>
-      <MoreNumbers v-if="['admin', 'referent'].includes($stores.auth.contextRole)" />
       <GuideLinks />
       <HelpCenter />
     </template>

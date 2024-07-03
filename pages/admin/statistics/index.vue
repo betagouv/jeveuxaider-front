@@ -15,21 +15,30 @@
       </Teleport>
     </ClientOnly>
 
-    <BaseSectionHeading title="Vue d'ensemble">
-      <template #action>
+    <BaseSectionHeading
+      title="Vue d'ensemble"
+      secondaryTitleBottom="L’activité sur JeVeuxAider.gouv.fr en détail"
+    >
+      <!-- <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
           <FiltersStatistics @refetch="refetch()" />
         </div>
-      </template>
+      </template> -->
     </BaseSectionHeading>
 
-    <OverviewQuickGlance ref="overviewQuickGlance" />
+    <!-- <OverviewQuickGlance ref="overviewQuickGlance" /> -->
 
-    <BaseHeading as="h2" :level="2"> L’activité sur JeVeuxAider.gouv.fr en détail </BaseHeading>
+    <!-- <BaseHeading as="h2" :level="2"> L’activité sur JeVeuxAider.gouv.fr en détail </BaseHeading> -->
 
     <OverviewParticipations ref="overviewParticipations" />
-    <OverviewUtilisateurs ref="overviewUtilisateurs" />
-    <OverviewOrganisations ref="overviewOrganisations" />
+    <OverviewUtilisateurs
+      v-if="['admin'].includes($stores.auth.contextRole)"
+      ref="overviewUtilisateurs"
+    />
+    <OverviewOrganisations
+      ref="overviewOrganisations"
+      v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
+    />
     <OverviewMissions ref="overviewMissions" />
     <OverviewPlaces ref="overviewPlaces" />
     <!-- <OverviewAPIEngagement v-if="['admin'].includes($stores.auth.contextRole)" ref="overviewAPIEngagement" /> -->
@@ -65,11 +74,11 @@ export default defineNuxtComponent({
       middleware: ['authenticated'],
     })
 
-    const { $stores } = useNuxtApp()
+    // const { $stores } = useNuxtApp()
 
-    if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
-      return showError({ statusCode: 403 })
-    }
+    // if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
+    //   return showError({ statusCode: 403 })
+    // }
   },
   data() {
     return {}

@@ -14,8 +14,8 @@
         :value="statistics.participations"
         :title="`${$filters.pluralize(
           statistics.participations,
-          'Nouvelle mise en relation',
-          'Nouvelles mises en relation',
+          'Mise en relation',
+          'Mises en relation',
           false
         )}`"
         link="/admin/statistics/participations"

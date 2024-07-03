@@ -28,13 +28,40 @@
       <BaseHeading as="h2" :level="2"> L'offre actuelle en détail </BaseHeading>
       <div class="flex flex-col lg:flex-row gap-12">
         <div class="space-y-12 w-1/2">
-          <PlacesByActivities ref="placesByActivities" />
-          <PlacesByOrganisations ref="placesByOrganisations" />
-          <PlacesByReseaux ref="placesByReseaux" />
+          <PlacesByActivities
+            ref="placesByActivities"
+            v-if="
+              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+                $stores.auth.contextRole
+              )
+            "
+          />
+          <PlacesByOrganisations
+            ref="placesByOrganisations"
+            v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
+          />
+          <PlacesByReseaux
+            ref="placesByReseaux"
+            v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+          />
         </div>
         <div class="space-y-12 w-1/2">
-          <PlacesByDomaines ref="placesByDomaines" />
-          <PlacesByMissions ref="placesByMissions" />
+          <PlacesByDomaines
+            ref="placesByDomaines"
+            v-if="
+              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+                $stores.auth.contextRole
+              )
+            "
+          />
+          <PlacesByMissions
+            ref="placesByMissions"
+            v-if="
+              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+                $stores.auth.contextRole
+              )
+            "
+          />
         </div>
       </div>
     </div>
@@ -68,23 +95,35 @@ export default defineNuxtComponent({
       middleware: ['authenticated'],
     })
 
-    const { $stores } = useNuxtApp()
+    // const { $stores } = useNuxtApp()
 
-    if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
-      return showError({ statusCode: 403 })
-    }
+    // if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
+    //   return showError({ statusCode: 403 })
+    // }
   },
   data() {
     return {}
   },
   methods: {
     refetch() {
-      this.$refs.placesByActivities.fetch()
-      this.$refs.placesByDomaines.fetch()
-      this.$refs.placesByReseaux.fetch()
-      this.$refs.placesByMissions.fetch()
-      this.$refs.placesByOrganisations.fetch()
-      this.$refs.placesStatistics.fetch()
+      if (this.$refs.placesByActivities) {
+        this.$refs.placesByActivities.fetch()
+      }
+      if (this.$refs.placesByDomaines) {
+        this.$refs.placesByDomaines.fetch()
+      }
+      if (this.$refs.placesByReseaux) {
+        this.$refs.placesByReseaux.fetch()
+      }
+      if (this.$refs.placesByMissions) {
+        this.$refs.placesByMissions.fetch()
+      }
+      if (this.$refs.placesByOrganisations) {
+        this.$refs.placesByOrganisations.fetch()
+      }
+      if (this.$refs.placesStatistics) {
+        this.$refs.placesStatistics.fetch()
+      }
     },
   },
 })
