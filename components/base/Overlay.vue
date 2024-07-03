@@ -24,7 +24,7 @@
             </button>
 
             <div class="flex-1 flex flex-col lg:justify-center lg:items-center">
-              <div class="w-full pb-32 lg:pb-12">
+              <div class="w-full pb-12 lg:pb-12">
                 <div class="text-center text-white text-lg">#ChacunPourTous</div>
                 <div
                   v-if="title"
