@@ -99,54 +99,22 @@ export default defineNuxtComponent({
     },
   },
   mounted() {
-    const observer = new IntersectionObserver(
-      async ([entry]) => {
-        // await this.$nextTick()
-        this.isPinned = entry.boundingClientRect.top < 0
-        // console.log('isPinned', this.isPinned)
-      },
-      { threshold: [1] }
-    )
-
-    observer.observe(this.$refs.sentinel)
+    window.addEventListener('scroll', this.handleScroll, false)
   },
   beforeUnmount() {
-    // TODO
-    // window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
-    // handleScroll() {
-    //   console.log('Scroll')
-    //   if (!this.waitingOnAnimRequest) {
-    //     window.requestAnimationFrame(() => {
-    //       if (!this.$refs.menuActions) {
-    //         return
-    //       }
-    //       console.log('requestAnimationFrame')
-    //       this.isPinned = this.$refs.menuActions.getBoundingClientRect().top <= 0
-    //       this.$emit('isPinned', this.isPinned)
-    //       this.waitingOnAnimRequest = false
-    //     })
-    //   }
-    //   this.waitingOnAnimRequest = true
-    // },
     handleScroll() {
-      if (!this.waitingOnAnimRequest) {
-        this.waitingOnAnimRequest = true
-        console.log('Scroll')
-        window.requestAnimationFrame(() => {
-          if (!this.$refs.menuActions) {
-            return
-          }
-          console.log('requestAnimationFrame')
-          this.isPinned = this.$refs.menuActions.getBoundingClientRect().top <= 0
-          this.$emit('isPinned', this.isPinned)
-          this.waitingOnAnimRequest = false
-        })
-      }
+      this.isPinned = this.$refs.menuActions.getBoundingClientRect().top <= 0
     },
     handleDeleted() {
       this.$router.push('/admin/organisations')
+    },
+  },
+  watch: {
+    isPinned(newVal) {
+      this.$emit('isPinned', newVal)
     },
   },
 })
