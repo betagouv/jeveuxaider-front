@@ -10,6 +10,7 @@
     <div v-show="isOpen" class="fixed inset-0 w-full h-full z-[60]">
       <div
         v-if="isOpen"
+        v-scroll-lock="true"
         class="w-full h-full flex flex-col items-center justify-center bg-jva-blue-500/95 overflow-y-auto py-4 lg:py-12"
       >
         <FocusLoop :is-visible="true" class="w-full">
@@ -22,10 +23,7 @@
               <RiCloseFill class="text-white h-6 w-6 fill-current relative top-[1px] right-[0px]" />
             </button>
 
-            <div
-              v-scroll-lock="true"
-              class="flex-1 flex flex-col lg:justify-center lg:items-center"
-            >
+            <div class="flex-1 flex flex-col lg:justify-center lg:items-center">
               <div class="w-full pb-32 lg:pb-12">
                 <div class="text-center text-white text-lg">#ChacunPourTous</div>
                 <div
