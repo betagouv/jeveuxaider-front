@@ -103,18 +103,35 @@ export default defineNuxtComponent({
     window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
+    // handleScroll() {
+    //   console.log('Scroll')
+    //   if (!this.waitingOnAnimRequest) {
+    //     window.requestAnimationFrame(() => {
+    //       if (!this.$refs.menuActions) {
+    //         return
+    //       }
+    //       console.log('requestAnimationFrame')
+    //       this.isPinned = this.$refs.menuActions.getBoundingClientRect().top <= 0
+    //       this.$emit('isPinned', this.isPinned)
+    //       this.waitingOnAnimRequest = false
+    //     })
+    //   }
+    //   this.waitingOnAnimRequest = true
+    // },
     handleScroll() {
       if (!this.waitingOnAnimRequest) {
+        this.waitingOnAnimRequest = true
+        console.log('Scroll')
         window.requestAnimationFrame(() => {
           if (!this.$refs.menuActions) {
             return
           }
+          console.log('requestAnimationFrame')
           this.isPinned = this.$refs.menuActions.getBoundingClientRect().top <= 0
           this.$emit('isPinned', this.isPinned)
           this.waitingOnAnimRequest = false
         })
       }
-      this.waitingOnAnimRequest = true
     },
     handleDeleted() {
       this.$router.push('/admin/organisations')
