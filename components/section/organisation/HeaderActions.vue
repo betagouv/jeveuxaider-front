@@ -1,4 +1,6 @@
 <template>
+  <div ref="sentinel" class="h-px" />
+
   <div
     ref="menuActions"
     :class="[isPinned ? 'bg-white shadow-lg !z-[51]' : '']"
@@ -97,10 +99,20 @@ export default defineNuxtComponent({
     },
   },
   mounted() {
-    window.addEventListener('scroll', this.handleScroll, false)
+    const observer = new IntersectionObserver(
+      async ([entry]) => {
+        // await this.$nextTick()
+        this.isPinned = entry.boundingClientRect.top < 0
+        // console.log('isPinned', this.isPinned)
+      },
+      { threshold: [1] }
+    )
+
+    observer.observe(this.$refs.sentinel)
   },
   beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
+    // TODO
+    // window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
     // handleScroll() {
