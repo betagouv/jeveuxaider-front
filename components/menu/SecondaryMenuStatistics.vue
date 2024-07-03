@@ -169,10 +169,10 @@ export default defineNuxtComponent({
             label: 'Statistiques',
             childrens: [
               { label: "Vue d'ensemble", to: '/admin/statistics' },
-              // {
-              //   label: 'Indicateurs clés',
-              //   to: '/admin/statistics/indicateurs-cles',
-              // },
+              {
+                label: 'Indicateurs clés',
+                to: '/admin/statistics/indicateurs-cles',
+              },
               {
                 label: 'Participations',
                 to: '/admin/statistics/participations',

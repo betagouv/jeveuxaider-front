@@ -11,6 +11,13 @@
       class="grid grid-cols-1 lg:grid-cols-4 border bg-gray-200 gap-[1px] overflow-hidden"
     >
       <CardStatistic
+        :value="statistics.missions"
+        :title="`${$filters.pluralize(statistics.missions, 'Mission', 'Missions', false)}`"
+        :subtitle="`${$filters.pluralize(statistics.missions, 'créée', 'créées', false)}`"
+        link="/admin/statistics/missions"
+        infos-bulle="Nombre de missions en ligne à l’instant T"
+      />
+      <CardStatistic
         :value="statistics.missions_available"
         :title="`${$filters.pluralize(
           statistics.missions_available,
