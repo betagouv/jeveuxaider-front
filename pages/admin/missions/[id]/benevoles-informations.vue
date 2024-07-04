@@ -22,10 +22,11 @@
             <DsfrInput
               v-for="n in 3"
               :key="n"
-              v-model="form.prerequisites[n - 1]"
+              :modelValue="form.prerequisites[n - 1]"
               name="prerequisites"
               maxlength="100"
               :placeholder="placeholders[n - 1] || '…'"
+              @update:modelValue="form.prerequisites[n - 1] = $event || null"
             />
           </div>
         </DsfrFormControl>
@@ -119,7 +120,11 @@
       </div>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" @click="onValidateClick">
+      <DsfrButton
+        :loading="loading"
+        :disabled="!$stores.formMission.isDraft && !isFormDirty"
+        @click="onValidateClick"
+      >
         {{ $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer' }}</DsfrButton
       >
     </template>

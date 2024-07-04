@@ -52,7 +52,11 @@
       </template>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onContinueClick">
+      <DsfrButton
+        :loading="loading"
+        :disabled="!$stores.formMission.isDraft && !isFormDirty"
+        @click="onContinueClick"
+      >
         {{ $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer' }}
       </DsfrButton>
     </template>
@@ -99,7 +103,7 @@ export default defineNuxtComponent({
   methods: {
     onMediaClick(media) {
       this.selectedMediaId = media.id
-      this.isFormDirty = true
+      this.isFormDirty = this.selectedMediaId !== this.mission.illustrations[0]?.id
     },
     async fetchMediasByDomaine() {
       const medias = await apiFetch('/medias', {
@@ -131,6 +135,7 @@ export default defineNuxtComponent({
           if (this.$stores.formMission.isDraft) {
             this.$router.push(`/admin/missions/${mission.id}/informations`)
           } else {
+            this.isFormDirty = false
             this.$toast.success('Mission modifiée avec succès')
           }
         })

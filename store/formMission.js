@@ -50,7 +50,7 @@ export const useFormMissionStore = defineStore('formMission', {
     },
     isStepBenevolesInformationsCompleted: (state) => {
       return (
-        state.mission?.prerequisites !== null ||
+        state.mission?.prerequisites?.filter((p) => p).length > 0 ||
         state.mission?.publics_volontaires !== null ||
         state.mission?.skills?.length > 0 ||
         state.mission?.is_snu_mig_compatible ||
@@ -88,6 +88,18 @@ export const useFormMissionStore = defineStore('formMission', {
       mission.activity_id = mission.template?.activity_id || mission.activity_id
       mission.activity_secondary_id =
         mission.template?.activity_secondary_id || mission.activity_secondary_id
+      if (mission.start_date) {
+        mission.with_dates = mission.dates?.length > 0 ? 'yes' : 'no'
+      }
+
+      // Fix dirty state comparison
+      if (!mission.prerequisites || mission.prerequisites?.length === 0) {
+        mission.prerequisites = [null, null, null]
+      }
+      mission.responsables.map((responsable) => {
+        delete responsable.pivot
+        return responsable
+      })
 
       this.mission = mission
       this.loading = false

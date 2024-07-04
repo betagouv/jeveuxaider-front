@@ -42,7 +42,7 @@
             <div class="space-y-4 mb-6 lg:mb-8">
               <div
                 class="flex justify-between items-center"
-                v-for="responsable in form.responsables"
+                v-for="(responsable, index) in form.responsables"
                 :key="responsable.id"
               >
                 <div class="flex">
@@ -68,7 +68,7 @@
                   type="tertiary"
                   icon="RiDeleteBinLine"
                   icon-class="text-[#CE0500]"
-                  @click="onRemovedResponsable(responsable)"
+                  @click="onRemovedResponsable(index)"
                 />
               </div>
             </div>
@@ -84,9 +84,12 @@
       />
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onValidateClick">{{
-        $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer'
-      }}</DsfrButton>
+      <DsfrButton
+        :loading="loading"
+        :disabled="!$stores.formMission.isDraft && !isFormDirty"
+        @click="onValidateClick"
+        >{{ $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer' }}</DsfrButton
+      >
     </template>
   </FormMissionWrapper>
 </template>
@@ -148,12 +151,11 @@ export default defineNuxtComponent({
       }
     },
     onAddResponsableSubmit(responsable) {
-      // this.form.responsables.push(responsable) // bug reactivity
-      this.form.responsables = [...this.form.responsables, responsable]
+      this.form.responsables.push(responsable)
       this.validate('responsables')
     },
-    onRemovedResponsable(responsable) {
-      this.form.responsables = this.form.responsables.filter((r) => r.id !== responsable.id)
+    onRemovedResponsable(index) {
+      this.form.responsables.splice(index, 1)
       this.validate('responsables')
     },
     async onValidateClick() {
@@ -166,6 +168,11 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
+              // Fix dirty state comparison
+              mission.responsables.map((responsable) => {
+                delete responsable.pivot
+                return responsable
+              })
               this.$stores.formMission.updateFields(mission, ['responsables'])
 
               if (this.$stores.formMission.isDraft) {
@@ -173,9 +180,6 @@ export default defineNuxtComponent({
               } else {
                 this.$toast.success('Mission modifiée avec succès')
               }
-              //this.$toast.success('Mission modifiée avec succès')
-
-              //this.$router.push(`/admin/missions/${mission.id}`)
             })
             .catch(() => {})
         })

@@ -1,5 +1,5 @@
 <template>
-  <BaseFormOverlay title="Aperçu de votre mission" :is-open="isOpen" @close="onClose">
+  <BaseFormOverlay title="Aperçu de votre mission" :is-open="isOpen">
     <template #header>
       <div class="flex gap-4 pr-[200px]">
         <DsfrButton

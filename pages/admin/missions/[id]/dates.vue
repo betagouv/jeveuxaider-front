@@ -180,7 +180,7 @@
             </DsfrFormControl>
           </template>
 
-          <template v-if="form.with_dates === 'yes'">
+          <template v-if="form.date_type === 'ponctual' && form.with_dates === 'yes'">
             <div class="flex justify-between items-center border-b py-4">
               <div class="font-bold text-xl">
                 <template v-if="formNextDates"> Dates</template>
@@ -226,7 +226,7 @@
             </template>
           </template>
 
-          <template v-if="form.with_dates === 'no'">
+          <template v-if="form.date_type === 'recurring' || form.with_dates === 'no'">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <DsfrFormControl
                 label="Date de début"
@@ -269,9 +269,12 @@
       />
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onValidateClick">{{
-        $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer'
-      }}</DsfrButton>
+      <DsfrButton
+        :loading="loading"
+        :disabled="!$stores.formMission.isDraft && !isFormDirty"
+        @click="onValidateClick"
+        >{{ $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer' }}</DsfrButton
+      >
     </template>
   </FormMissionWrapper>
 </template>
@@ -366,7 +369,6 @@ export default defineNuxtComponent({
     },
     onRecurringClick() {
       this.form.date_type = 'recurring'
-      this.form.with_dates = 'no'
     },
     onRemovedDate(date) {
       this.form.dates = this.form.dates.filter((item) => item.id !== date.id)
@@ -387,6 +389,7 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
+              mission.with_dates = mission.dates?.length > 0 ? 'yes' : 'no'
               this.$stores.formMission.updateFields(mission, [
                 'date_type',
                 'commitment__duration',
@@ -396,6 +399,7 @@ export default defineNuxtComponent({
                 'dates',
                 'commitment__time_period',
                 'recurrent_description',
+                'with_dates',
               ])
 
               if (this.$stores.formMission.isDraft) {
