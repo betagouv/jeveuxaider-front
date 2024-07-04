@@ -194,7 +194,6 @@ export default defineNuxtComponent({
           this.$emit('cancel')
         })
         .catch((errors) => {
-          console.log('errors', errors)
           this.setErrors(errors)
         })
     },

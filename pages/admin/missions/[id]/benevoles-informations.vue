@@ -234,7 +234,6 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              console.log(mission)
               this.$stores.formMission.updateFields(mission, [
                 'is_snu_mig_compatible',
                 'publics_volontaires',

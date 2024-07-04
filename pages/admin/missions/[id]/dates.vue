@@ -379,10 +379,6 @@ export default defineNuxtComponent({
     },
     async onValidateClick() {
       this.loading = true
-      // if (!this.form.with_dates) {
-      //   this.form.with_dates = 'no'
-      // }
-      console.log('form with_dates', this.form.with_dates)
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
@@ -391,7 +387,6 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              console.log(mission)
               this.$stores.formMission.updateFields(mission, [
                 'date_type',
                 'commitment__duration',
@@ -412,7 +407,6 @@ export default defineNuxtComponent({
             .catch(() => {})
         })
         .catch((errors) => {
-          console.log('catch errors', errors)
           this.setErrors(errors)
         })
         .finally(() => {

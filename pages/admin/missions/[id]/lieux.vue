@@ -177,24 +177,6 @@ export default defineNuxtComponent({
       this.form.addresses = this.form.addresses.filter((item) => item.id !== address.id)
     },
     handleSelectedAddress(selectedItem) {
-      console.log(selectedItem)
-      // this.form.addresses = [
-      //   ...this.form.addresses,
-      //   {
-      //     id: selectedItem.id,
-      //     label:
-      //       selectedItem.type === 'municipality'
-      //         ? `${selectedItem.postcode} ${selectedItem.city}`
-      //         : selectedItem.label,
-      //     street: selectedItem.street,
-      //     zip: selectedItem.postcode,
-      //     city: selectedItem.city,
-      //     longitude: selectedItem.coordinates[0],
-      //     latitude: selectedItem.coordinates[1],
-      //     department: selectedItem.context?.split(', ')[0],
-      //   },
-      // ]
-
       if (!selectedItem) {
         return
       }

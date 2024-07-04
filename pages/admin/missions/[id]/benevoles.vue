@@ -127,8 +127,6 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              console.log(mission)
-              // this.$stores.formMission.setMission(mission)
               this.$stores.formMission.updateFields(mission, ['participations_max', 'places_left'])
               if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/benevoles-informations`)

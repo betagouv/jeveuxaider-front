@@ -98,7 +98,6 @@ export default defineNuxtComponent({
   },
   methods: {
     onMediaClick(media) {
-      console.log('media clicked', media.id)
       this.selectedMediaId = media.id
       this.isFormDirty = true
     },
