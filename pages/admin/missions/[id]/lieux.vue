@@ -49,7 +49,10 @@
 
           <template #bottom>
             <CustomInfoRecommendation
-              v-if="$stores.formMission.mission?.template?.recommendation_type !== null"
+              v-if="
+                $stores.formMission.mission?.template &&
+                $stores.formMission.mission?.template?.recommendation_type !== null
+              "
             />
           </template>
         </DsfrFormControl>

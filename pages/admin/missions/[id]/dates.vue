@@ -48,7 +48,10 @@
 
           <template #bottom>
             <CustomInfoRecommendation
-              v-if="$stores.formMission.mission?.template?.recommendation_date_type !== null"
+              v-if="
+                $stores.formMission.mission?.template &&
+                $stores.formMission.mission.template.recommendation_date_type !== null
+              "
             />
           </template>
         </DsfrFormControl>
@@ -168,7 +171,10 @@
 
               <template #bottom>
                 <CustomInfoRecommendation
-                  v-if="$stores.formMission.mission?.template?.recommendation_with_dates !== null"
+                  v-if="
+                    $stores.formMission.mission?.template &&
+                    $stores.formMission.mission?.template?.recommendation_with_dates !== null
+                  "
                 />
               </template>
             </DsfrFormControl>
