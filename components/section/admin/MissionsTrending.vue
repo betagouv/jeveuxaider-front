@@ -43,7 +43,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/administration/missions-trending', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.missions = response

@@ -58,7 +58,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/statistics/utilisateurs-with-participations', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.chartData = {

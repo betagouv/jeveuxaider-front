@@ -81,7 +81,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/charts/participations-conversion-by-date', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((data) => {
         this.loading = false
 

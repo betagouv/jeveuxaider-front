@@ -41,7 +41,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/administration/topito-referents', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.users = response

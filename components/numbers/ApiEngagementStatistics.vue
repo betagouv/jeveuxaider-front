@@ -209,7 +209,7 @@ export default defineNuxtComponent({
     },
     async fetchOutgoingTrafic() {
       await apiFetch('/statistics/api-engagement/outgoing-trafic', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.outgoingTraficFacets = response.partners
         this.outgoingTrafic = response.total
@@ -217,7 +217,7 @@ export default defineNuxtComponent({
     },
     async fetchIncomingTrafic() {
       await apifetch('/statistics/api-engagement/incoming-trafic', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.incomingTraficFacets = response.partners
         this.incomingTrafic = response.total
@@ -225,7 +225,7 @@ export default defineNuxtComponent({
     },
     async fetchOutgoingApplies() {
       await apifetch('/statistics/api-engagement/outgoing-applies', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.outgoingAppliesFacets = response.partners
         this.outgoingApplies = response.total
@@ -233,7 +233,7 @@ export default defineNuxtComponent({
     },
     async fetchIncomingApplies() {
       await apifetch('/statistics/api-engagement/incoming-applies', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.incomingAppliesFacets = response.partners
         this.incomingApplies = response.total

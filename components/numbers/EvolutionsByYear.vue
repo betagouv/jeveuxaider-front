@@ -138,7 +138,7 @@ export default defineNuxtComponent({
         this.structures = []
       } else {
         await apiFetch('/statistics/structures-by-year', {
-          params: this.$stores.statistics.params,
+          params: this.$route.query,
         }).then((response) => {
           this.structures = response
         })
@@ -146,7 +146,7 @@ export default defineNuxtComponent({
     },
     async fetchMissionsByYear() {
       await apiFetch('/statistics/missions-by-year', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.missions = response
       })
@@ -156,7 +156,7 @@ export default defineNuxtComponent({
         this.users = []
       } else {
         await apiFetch('/statistics/users-by-year', {
-          params: this.$stores.statistics.params,
+          params: this.$route.query,
         }).then((response) => {
           this.users = response
         })
@@ -164,7 +164,7 @@ export default defineNuxtComponent({
     },
     async fetchParticipationsByYear() {
       await apiFetch('/statistics/participations-by-year', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.participations = response
       })

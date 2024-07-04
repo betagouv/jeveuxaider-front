@@ -170,7 +170,7 @@ export default defineNuxtComponent({
         this.structures = []
       } else {
         await apiFetch('/statistics/structures-by-month', {
-          params: this.$stores.statistics.params,
+          params: this.$route.query,
         }).then((response) => {
           this.structures = response
         })
@@ -178,7 +178,7 @@ export default defineNuxtComponent({
     },
     async fetchMissionsByMonth() {
       await apiFetch('/statistics/missions-by-month', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.missions = response
       })
@@ -188,7 +188,7 @@ export default defineNuxtComponent({
         this.users = []
       } else {
         await apiFetch('/statistics/users-by-month', {
-          params: this.$stores.statistics.params,
+          params: this.$route.query,
         }).then((response) => {
           this.users = response
         })
@@ -196,7 +196,7 @@ export default defineNuxtComponent({
     },
     async fetchParticipationsByMonth() {
       await apiFetch('/statistics/participations-by-month', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.participations = response
       })
