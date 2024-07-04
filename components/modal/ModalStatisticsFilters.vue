@@ -7,26 +7,43 @@
         :prevent-click-outside="true"
         @close="$emit('cancel')"
       >
-        <form id="form-filters" @submit.prevent="handleSubmit" class="py-6 space-y-6">
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <DsfrFormControl label="À partir du" html-for="start_date" :error="errors.start_date">
-              <DsfrInput type="date" v-model="form.start_date" name="start_date" />
-            </DsfrFormControl>
-            <DsfrFormControl label="Jusqu'au" html-for="end_date" :error="errors.end_date">
-              <DsfrInput type="date" v-model="form.end_date" name="end_date" />
-            </DsfrFormControl>
+        <form id="form-filters" @submit.prevent="handleSubmit" class="py-6 flex flex-col gap-6">
+          <div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <DsfrFormControl label="À partir du" html-for="start_date" :error="errors.start_date">
+                <DsfrInput type="date" v-model="form.start_date" name="start_date" />
+              </DsfrFormControl>
+              <DsfrFormControl label="Jusqu'au" html-for="end_date" :error="errors.end_date">
+                <DsfrInput type="date" v-model="form.end_date" name="end_date" />
+              </DsfrFormControl>
+            </div>
+            <div class="flex flex-wrap gap-2 mt-4">
+              <DsfrTag
+                v-for="(datePrefilter, i) in datePrefilters"
+                :key="i"
+                size="sm"
+                class="py-1 cursor-pointer text-gray-600 hover:text-jva-blue-500"
+                @click="onPrefiltersDatesClick(datePrefilter.key)"
+              >
+                {{ datePrefilter.label }}
+              </DsfrTag>
+            </div>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <DsfrTag
-              v-for="(datePrefilter, i) in datePrefilters"
-              :key="i"
-              size="sm"
-              class="py-1 cursor-pointer text-gray-600 hover:text-jva-blue-500"
-              @click="onPrefiltersDatesClick(datePrefilter.key)"
-            >
-              {{ datePrefilter.label }}
-            </DsfrTag>
-          </div>
+
+          <DsfrFormControl label="Département" html-for="department" :error="errors.department">
+            <DsfrSelect
+              required
+              id="department"
+              name="department"
+              v-model="form.department"
+              placeholder="Sélectionner un département"
+              :options="
+                $labels.departments.map((option) => {
+                  return { key: option.key, label: `${option.key} - ${option.label}` }
+                })
+              "
+            />
+          </DsfrFormControl>
         </form>
 
         <template #footer>

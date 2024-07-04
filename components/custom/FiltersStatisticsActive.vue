@@ -8,7 +8,8 @@
       :is-active="!!$route.query['start_date']"
       @click.native="removeFilter('dates')"
     >
-      {{ $route.query['start_date'] }} - {{ $route.query['end_date'] }}
+      {{ $dayjs($route.query['start_date']).format('DD MMM YYYY') }} au
+      {{ $dayjs($route.query['end_date']).format('DD MMM YYYY') }}
     </DsfrTag>
     <DsfrTag
       as="button"
@@ -18,7 +19,8 @@
       :is-active="!!$route.query['department']"
       @click.native="removeFilter('department')"
     >
-      {{ $route.query['department'] }}
+      {{ $route.query['department'] }} -
+      {{ $filters.label($route.query['department'], 'departments') }}
     </DsfrTag>
   </div>
 </template>

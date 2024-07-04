@@ -31,14 +31,12 @@
 <script>
 import EvolutionsByYear from '@/components/numbers/EvolutionsByYear.vue'
 import EvolutionsByMonth from '@/components/numbers/EvolutionsByMonth.vue'
-// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
     EvolutionsByYear,
     EvolutionsByMonth,
-    // FiltersStatistics,
     Breadcrumb,
   },
   setup() {

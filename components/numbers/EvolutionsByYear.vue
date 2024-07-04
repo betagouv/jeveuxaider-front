@@ -13,7 +13,13 @@
         <BaseTableHeadCell>Missions postées</BaseTableHeadCell>
         <BaseTableHeadCell>Mises en relation</BaseTableHeadCell>
         <BaseTableHeadCell>Participations validées</BaseTableHeadCell>
-        <BaseTableHeadCell v-if="['admin'].includes($stores.auth.contextRole)">
+        <BaseTableHeadCell
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        >
           Taux de conversion
         </BaseTableHeadCell>
       </BaseTableHead>
@@ -69,7 +75,13 @@
               />
             </div>
           </BaseTableRowCell>
-          <BaseTableRowCell v-if="['admin'].includes($stores.auth.contextRole)">
+          <BaseTableRowCell
+            v-if="
+              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+                $stores.auth.contextRole
+              )
+            "
+          >
             <span v-if="item.participations_conversion" class="text-gray-600 font-semibold">
               {{ $numeral(item.participations_conversion) }}%
             </span>
