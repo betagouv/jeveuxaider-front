@@ -177,7 +177,6 @@ export default defineNuxtComponent({
       this.showDialogOrganisations = true
     },
     handleSelectedOrganisation(payload) {
-      console.log('handleSelectedOrganisation', payload)
       this.form[this.selectedField] = payload
       this.showDialogOrganisations = false
     },

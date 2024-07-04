@@ -24,7 +24,6 @@ export default {
       this.form.city = item.city
       this.form.latitude = item.coordinates[1]
       this.form.longitude = item.coordinates[0]
-      console.log('handleSelectedGeo', item, this.form.address)
 
       this.validate('zip')
     },

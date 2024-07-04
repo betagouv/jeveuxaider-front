@@ -108,7 +108,6 @@ export default defineNuxtComponent({
   },
   methods: {
     async handleChangeState(option) {
-      console.log('handleChangeState', option)
       await apiFetch(`/territoires/${this.territoire.id}`, {
         method: 'PUT',
         body: {

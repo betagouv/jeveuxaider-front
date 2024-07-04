@@ -541,7 +541,6 @@ export default defineNuxtComponent({
       }
       if (organisationId !== oldOrganisationId) {
         const responsables = await apiFetch(`/structures/${organisationId}/responsables`)
-        console.log('responsresponsablesStructuresables', responsables)
         this.responsablesStructures = responsables.map((user) => user.profile) ?? []
       }
     },

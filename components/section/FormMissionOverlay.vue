@@ -381,12 +381,6 @@ export default defineNuxtComponent({
       mode: 'full',
     }
   },
-  computed: {},
-  methods: {
-    onClose() {
-      console.log('close')
-    },
-  },
 })
 </script>
 

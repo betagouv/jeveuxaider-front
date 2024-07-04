@@ -96,7 +96,6 @@ export default defineNuxtComponent({
   },
   methods: {
     handleChange(value) {
-      console.log('handleChange', value)
       this.$emit('changed', value)
       this.$router.push({
         path: this.$route.path,
