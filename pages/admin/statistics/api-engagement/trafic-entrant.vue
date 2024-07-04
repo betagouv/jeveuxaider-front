@@ -21,9 +21,10 @@
       secondary-title-bottom="Les missions proposées sur JeVeuxAider.gouv.fr sont diffusées sur des plateformes partenaires, en vue d’optimiser leur visibilité. Le trafic entrant est donc le trafic reçu sur JeVeuxAider.gouv.fr grâce aux partenaires."
     >
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <!-- <FiltersStatistics :filters="['daterange']" @refetch="refetch()" /> -->
-        </div>
+        <CustomFiltersStatisticsButton />
+      </template>
+      <template #bottom>
+        <CustomFiltersStatisticsActive class="mt-4" />
       </template>
     </BaseSectionHeading>
 
@@ -35,14 +36,12 @@
 </template>
 
 <script>
-// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import OverviewApiEngagementEntrant from '@/components/numbers/OverviewApiEngagementEntrant.vue'
 import OverviewApiEngagementEntrantDetails from '@/components/numbers/OverviewApiEngagementEntrantDetails.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    // FiltersStatistics,
     OverviewApiEngagementEntrant,
     OverviewApiEngagementEntrantDetails,
     Breadcrumb,
@@ -53,13 +52,24 @@ export default defineNuxtComponent({
       middleware: ['admin'],
     })
   },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
   data() {
     return {}
   },
   methods: {
     refetch() {
-      this.$refs.apiEngagementStatisticsEntrant.$fetch()
-      this.$refs.apiEngagementStatisticsEntrantDetails.$fetch()
+      if (this.$refs.apiEngagementStatisticsEntrant) {
+        this.$refs.apiEngagementStatisticsEntrant.fetch()
+      }
+      if (this.$refs.apiEngagementStatisticsEntrantDetails) {
+        this.$refs.apiEngagementStatisticsEntrantDetails.fetch()
+      }
     },
   },
 })

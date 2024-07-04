@@ -16,20 +16,21 @@
     </ClientOnly>
 
     <BaseSectionHeading title="Missions">
-      <!-- <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics @refetch="refetch()" />
-        </div>
-      </template> -->
+      <template #action>
+        <CustomFiltersStatisticsButton />
+      </template>
+      <template #bottom>
+        <CustomFiltersStatisticsActive class="mt-4" />
+      </template>
     </BaseSectionHeading>
 
     <div class="space-y-12">
       <MissionsStatistics ref="missionsStatistics" />
       <BaseHeading as="h2" :level="2"> L’activité relative aux missions en détail </BaseHeading>
-      <MissionsByDate
+      <!-- <MissionsByDate
         v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
         ref="missionsByDate"
-      />
+      /> -->
       <div class="flex flex-col gap-12">
         <MissionsByStates
           ref="missionsByStates"
@@ -139,6 +140,13 @@ export default defineNuxtComponent({
     ) {
       return showError({ statusCode: 403 })
     }
+  },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
   },
   data() {
     return {}

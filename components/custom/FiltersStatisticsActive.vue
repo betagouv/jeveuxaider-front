@@ -24,10 +24,7 @@
 </template>
 
 <script>
-import QueryBuilder from '@/mixins/query-builder'
-
 export default defineNuxtComponent({
-  mixins: [QueryBuilder],
   props: {},
   data() {
     return {}

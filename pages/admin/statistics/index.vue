@@ -19,11 +19,6 @@
       title="Vue d'ensemble"
       secondaryTitleBottom="L’activité sur JeVeuxAider.gouv.fr en détail"
     >
-      <!-- <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics @refetch="refetch()" />
-        </div>
-      </template> -->
     </BaseSectionHeading>
 
     <!-- <OverviewQuickGlance ref="overviewQuickGlance" /> -->

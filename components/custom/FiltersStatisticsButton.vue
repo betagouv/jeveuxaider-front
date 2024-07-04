@@ -48,7 +48,7 @@ export default defineNuxtComponent({
     return {
       loading: false,
       showFilters: false,
-      form: { ...this.$stores.statistics.params },
+      form: { ...this.$route.query },
     }
   },
   methods: {

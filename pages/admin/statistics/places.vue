@@ -15,13 +15,7 @@
       </Teleport>
     </ClientOnly>
 
-    <BaseSectionHeading title="Places disponibles">
-      <!-- <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics :filters="['department']" @refetch="refetch()" />
-        </div>
-      </template> -->
-    </BaseSectionHeading>
+    <BaseSectionHeading title="Places disponibles"> </BaseSectionHeading>
 
     <div class="space-y-12">
       <PlacesStatistics ref="placesStatistics" />

@@ -65,6 +65,8 @@ export default defineNuxtComponent({
   computed: {
     items() {
       const runtimeConfig = useRuntimeConfig()
+      console.log('this.route', this.$route)
+      const queryString = window.location.search
 
       if (this.$stores.auth.contextRole === 'admin') {
         return [
@@ -79,11 +81,11 @@ export default defineNuxtComponent({
               },
               {
                 label: 'Participations',
-                to: '/admin/statistics/participations',
+                to: `/admin/statistics/participations${queryString}`,
               },
-              { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
-              { label: 'Organisations', to: '/admin/statistics/organisations' },
-              { label: 'Missions', to: '/admin/statistics/missions' },
+              { label: 'Utilisateurs', to: `/admin/statistics/utilisateurs${queryString}` },
+              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
+              { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
               { label: 'Places', to: '/admin/statistics/places' },
             ],
           },
@@ -143,11 +145,11 @@ export default defineNuxtComponent({
               },
               {
                 label: 'Participations',
-                to: '/admin/statistics/participations',
+                to: `/admin/statistics/participations${queryString}`,
               },
-              { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
-              { label: 'Organisations', to: '/admin/statistics/organisations' },
-              { label: 'Missions', to: '/admin/statistics/missions' },
+              { label: 'Utilisateurs', to: `/admin/statistics/utilisateurs${queryString}` },
+              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
+              { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
               { label: 'Places', to: '/admin/statistics/places' },
             ],
           },
@@ -175,9 +177,9 @@ export default defineNuxtComponent({
               },
               {
                 label: 'Participations',
-                to: '/admin/statistics/participations',
+                to: `/admin/statistics/participations${queryString}`,
               },
-              { label: 'Missions', to: '/admin/statistics/missions' },
+              { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
               { label: 'Places', to: '/admin/statistics/places' },
             ],
           },

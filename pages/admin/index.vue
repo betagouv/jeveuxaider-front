@@ -19,11 +19,12 @@
 
     <div class="space-y-12">
       <BaseSectionHeading :title="`Topito`">
-        <!-- <template #action>
-          <div class="hidden lg:block space-x-2 flex-shrink-0">
-            <FiltersStatistics :filters="['daterange']" @refetch="refetch()" />
-          </div>
-        </template> -->
+        <template #action>
+          <CustomFiltersStatisticsButton />
+        </template>
+        <template #bottom>
+          <CustomFiltersStatisticsActive class="mt-4" />
+        </template>
       </BaseSectionHeading>
 
       <div>
@@ -87,6 +88,13 @@ export default defineNuxtComponent({
       layout: 'admin-with-sidebar-menu',
       middleware: ['admin'],
     })
+  },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
   },
   data() {
     return {}

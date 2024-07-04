@@ -17,10 +17,10 @@
 
     <BaseSectionHeading title="Participations">
       <template #action>
-        <FiltersStatisticsButton />
+        <CustomFiltersStatisticsButton />
       </template>
       <template #bottom>
-        <FiltersStatisticsActive class="mt-4" />
+        <CustomFiltersStatisticsActive class="mt-4" />
       </template>
     </BaseSectionHeading>
 
@@ -118,19 +118,16 @@ export default defineNuxtComponent({
     }
   },
   watch: {
-    $route(newVal, oldVal) {
-      if (newVal.name === oldVal.name) {
-        this.fetch()
-      }
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
     },
   },
   data() {
     return {}
   },
   methods: {
-    fetch() {
-      this.refetch()
-    },
     refetch() {
       if (this.$refs.participationsByDate) {
         this.$refs.participationsByDate.fetch()
