@@ -7,6 +7,10 @@ export default {
   },
   computed: {
     activitiesClassifierDescription() {
+      if (!this.form) {
+        return null
+      }
+
       let description = [this.form.objectif, this.form.description]
       if (this.form.template) {
         description = [this.form.template.title, ...description]
