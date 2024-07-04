@@ -214,7 +214,7 @@ export default defineNuxtComponent({
 </script>
 
 <style lang="postcss" scoped>
-a.nuxt-link-exact-active {
+a.router-link-active {
   @apply text-jva-blue-500;
 }
 </style>
