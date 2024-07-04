@@ -27,16 +27,16 @@
       <MissionsStatistics ref="missionsStatistics" />
       <BaseHeading as="h2" :level="2"> L’activité relative aux missions en détail </BaseHeading>
       <MissionsByDate ref="missionsByDate" />
-      <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 w-1/2">
-          <MissionsByStates
-            ref="missionsByStates"
-            v-if="
-              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-                $stores.auth.contextRole
-              )
-            "
-          />
+      <div class="flex flex-col gap-12">
+        <MissionsByStates
+          ref="missionsByStates"
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        />
+        <div class="flex flex-col lg:flex-row gap-12">
           <MissionsByTypes
             ref="missionsByTypes"
             v-if="
@@ -44,32 +44,7 @@
                 $stores.auth.contextRole
               )
             "
-          />
-          <MissionsByActivities
-            ref="missionsByActivities"
-            v-if="
-              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-                $stores.auth.contextRole
-              )
-            "
-          />
-          <MissionsByTemplates
-            ref="missionsByTemplates"
-            v-if="
-              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-                $stores.auth.contextRole
-              )
-            "
-          />
-        </div>
-        <div class="space-y-12 w-1/2">
-          <MissionsByDomaines
-            ref="missionsByDomaines"
-            v-if="
-              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-                $stores.auth.contextRole
-              )
-            "
+            class="w-full"
           />
           <MissionsByTemplateTypes
             ref="missionsByTemplateTypes"
@@ -78,17 +53,43 @@
                 $stores.auth.contextRole
               )
             "
-          />
-          <MissionsByOrganisations
-            ref="missionsByOrganisations"
-            v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
-          />
-          <MissionsByReseaux
-            ref="missionsByReseaux"
-            v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+            class="w-full"
           />
         </div>
+        <MissionsByActivities
+          ref="missionsByActivities"
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        />
+        <MissionsByDomaines
+          ref="missionsByDomaines"
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        />
+        <MissionsByTemplates
+          ref="missionsByTemplates"
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        />
       </div>
+
+      <MissionsByOrganisations
+        ref="missionsByOrganisations"
+        v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
+      />
+      <MissionsByReseaux
+        ref="missionsByReseaux"
+        v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+      />
     </div>
   </div>
 </template>

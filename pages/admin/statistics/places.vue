@@ -26,43 +26,39 @@
     <div class="space-y-12">
       <PlacesStatistics ref="placesStatistics" />
       <BaseHeading as="h2" :level="2"> L'offre actuelle en détail </BaseHeading>
-      <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 w-1/2">
-          <PlacesByActivities
-            ref="placesByActivities"
-            v-if="
-              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-                $stores.auth.contextRole
-              )
-            "
-          />
-          <PlacesByOrganisations
-            ref="placesByOrganisations"
-            v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
-          />
-          <PlacesByReseaux
-            ref="placesByReseaux"
-            v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
-          />
-        </div>
-        <div class="space-y-12 w-1/2">
-          <PlacesByDomaines
-            ref="placesByDomaines"
-            v-if="
-              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-                $stores.auth.contextRole
-              )
-            "
-          />
-          <PlacesByMissions
-            ref="placesByMissions"
-            v-if="
-              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-                $stores.auth.contextRole
-              )
-            "
-          />
-        </div>
+      <div class="flex flex-col gap-12">
+        <PlacesByActivities
+          ref="placesByActivities"
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        />
+        <PlacesByOrganisations
+          ref="placesByOrganisations"
+          v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
+        />
+        <PlacesByReseaux
+          ref="placesByReseaux"
+          v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+        />
+        <PlacesByDomaines
+          ref="placesByDomaines"
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        />
+        <PlacesByMissions
+          ref="placesByMissions"
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        />
       </div>
     </div>
   </div>

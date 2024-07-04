@@ -20,11 +20,11 @@
       title="Trafic sortant"
       secondary-title-bottom="JeVeuxAider.gouv.fr diffuse les missions de bénévolat hébergées sur des plateformes partenaires, avec l’objectif d’optimiser leur visibilité. Le trafic sortant est donc le trafic généré par JeVeuxAider.gouv.fr vers les sites partenaires."
     >
-      <template #action>
+      <!-- <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
           <FiltersStatistics :filters="['daterange']" @refetch="refetch()" />
         </div>
-      </template>
+      </template> -->
     </BaseSectionHeading>
 
     <div class="space-y-12">
@@ -35,14 +35,14 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
+// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import OverviewApiEngagementSortant from '@/components/numbers/OverviewApiEngagementSortant.vue'
 import OverviewApiEngagementSortantDetails from '@/components/numbers/OverviewApiEngagementSortantDetails.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    FiltersStatistics,
+    // FiltersStatistics,
     OverviewApiEngagementSortant,
     OverviewApiEngagementSortantDetails,
     Breadcrumb,

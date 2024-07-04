@@ -19,11 +19,11 @@
 
     <div class="space-y-12">
       <BaseSectionHeading :title="`Topito`">
-        <template #action>
+        <!-- <template #action>
           <div class="hidden lg:block space-x-2 flex-shrink-0">
             <FiltersStatistics :filters="['daterange']" @refetch="refetch()" />
           </div>
-        </template>
+        </template> -->
       </BaseSectionHeading>
 
       <div>
@@ -68,7 +68,7 @@ import OrganisationsTrending from '@/components/section/admin/OrganisationsTrend
 import PlausiblePageViews from '@/components/section/admin/PlausiblePageViews.vue'
 import Goals from '@/components/section/admin/Goals.vue'
 import Heading from '@/components/dsfr/Heading.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
+// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 
 export default defineNuxtComponent({
   components: {
@@ -80,7 +80,7 @@ export default defineNuxtComponent({
     TopitoAdmins,
     TopitoReferents,
     PlausiblePageViews,
-    FiltersStatistics,
+    // FiltersStatistics,
   },
   setup() {
     definePageMeta({

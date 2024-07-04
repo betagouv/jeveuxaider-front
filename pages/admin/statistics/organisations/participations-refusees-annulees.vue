@@ -16,11 +16,11 @@
     </ClientOnly>
 
     <BaseSectionHeading title="Organisations">
-      <template #action>
+      <!-- <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
           <FiltersStatistics @refetch="refetch()" />
         </div>
-      </template>
+      </template> -->
     </BaseSectionHeading>
 
     <BaseTabs
@@ -49,14 +49,14 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
+// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import ParticipationsRefusedByOrganisations from '@/components/numbers/ParticipationsRefusedByOrganisations.vue'
 import ParticipationsCanceledByOrganisations from '@/components/numbers/ParticipationsCanceledByOrganisations.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    FiltersStatistics,
+    // FiltersStatistics,
     ParticipationsRefusedByOrganisations,
     ParticipationsCanceledByOrganisations,
     Breadcrumb,

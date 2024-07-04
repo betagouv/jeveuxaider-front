@@ -22,7 +22,7 @@
     >
       <template #action>
         <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics :filters="['daterange']" @refetch="refetch()" />
+          <!-- <FiltersStatistics :filters="['daterange']" @refetch="refetch()" /> -->
         </div>
       </template>
     </BaseSectionHeading>
@@ -35,14 +35,14 @@
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
+// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import OverviewApiEngagementEntrant from '@/components/numbers/OverviewApiEngagementEntrant.vue'
 import OverviewApiEngagementEntrantDetails from '@/components/numbers/OverviewApiEngagementEntrantDetails.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    FiltersStatistics,
+    // FiltersStatistics,
     OverviewApiEngagementEntrant,
     OverviewApiEngagementEntrantDetails,
     Breadcrumb,

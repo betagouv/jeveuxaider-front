@@ -25,51 +25,46 @@
     </BaseSectionHeading>
 
     <div class="space-y-12">
-      <ParticipationsStatistics ref="participationsStatistics" class="lg:col-span-2" />
+      <ParticipationsStatistics ref="participationsStatistics" />
       <BaseHeading as="h2" :level="2"> Les participations en détail </BaseHeading>
-      <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" />
+      <ParticipationsByDate ref="participationsByDate" />
       <ParticipationsConversionByDate
         v-if="['admin'].includes($stores.auth.contextRole)"
         ref="participationsConversionByDate"
-        class="lg:col-span-2"
       />
-      <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 w-1/2">
-          <ParticipationsByStates
-            ref="participationsByStates"
-            v-if="
-              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-                $stores.auth.contextRole
-              )
-            "
-          />
-          <ParticipationsByActivities
-            ref="participationsByActivities"
-            v-if="
-              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-                $stores.auth.contextRole
-              )
-            "
-          />
-          <ParticipationsByReseaux
-            ref="participationsByReseaux"
-            v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
-          />
-        </div>
-        <div class="space-y-12 w-1/2">
-          <ParticipationsByDomaines
-            ref="participationsByDomaines"
-            v-if="
-              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-                $stores.auth.contextRole
-              )
-            "
-          />
-          <ParticipationsByOrganisations
-            ref="participationsByOrganisations"
-            v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
-          />
-        </div>
+      <div class="flex flex-col gap-12">
+        <ParticipationsByStates
+          ref="participationsByStates"
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        />
+        <ParticipationsByActivities
+          ref="participationsByActivities"
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        />
+        <ParticipationsByReseaux
+          ref="participationsByReseaux"
+          v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+        />
+        <ParticipationsByDomaines
+          ref="participationsByDomaines"
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        />
+        <ParticipationsByOrganisations
+          ref="participationsByOrganisations"
+          v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
+        />
       </div>
     </div>
   </div>
