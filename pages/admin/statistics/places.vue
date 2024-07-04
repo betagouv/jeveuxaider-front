@@ -91,11 +91,13 @@ export default defineNuxtComponent({
       middleware: ['authenticated'],
     })
 
-    // const { $stores } = useNuxtApp()
+    const { $stores } = useNuxtApp()
 
-    // if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
-    //   return showError({ statusCode: 403 })
-    // }
+    if (
+      !['admin', 'referent', 'tete_de_reseau', 'responsable'].includes($stores.auth.contextRole)
+    ) {
+      return showError({ statusCode: 403 })
+    }
   },
   data() {
     return {}

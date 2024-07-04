@@ -27,7 +27,11 @@
     <div class="space-y-12">
       <ParticipationsStatistics ref="participationsStatistics" />
       <BaseHeading as="h2" :level="2"> Les participations en détail </BaseHeading>
-      <ParticipationsByDate ref="participationsByDate" />
+      <ParticipationsByDate
+        v-if="['admin'].includes($stores.auth.contextRole)"
+        ref="participationsByDate"
+      />
+      <ParticipationsByPeriod ref="participationsByPeriod" />
       <ParticipationsConversionByDate
         v-if="['admin'].includes($stores.auth.contextRole)"
         ref="participationsConversionByDate"
@@ -75,6 +79,7 @@ import FiltersStatisticsButton from '@/components/custom/FiltersStatisticsButton
 import FiltersStatisticsActive from '@/components/custom/FiltersStatisticsActive.vue'
 import ParticipationsStatistics from '@/components/numbers/ParticipationsStatistics.vue'
 import ParticipationsByDate from '@/components/numbers/ParticipationsByDate.vue'
+import ParticipationsByPeriod from '@/components/numbers/ParticipationsByPeriod.vue'
 import ParticipationsByStates from '@/components/numbers/ParticipationsByStates.vue'
 import ParticipationsByOrganisations from '@/components/numbers/ParticipationsByOrganisations.vue'
 import ParticipationsByDomaines from '@/components/numbers/ParticipationsByDomaines.vue'
@@ -89,6 +94,7 @@ export default defineNuxtComponent({
     FiltersStatisticsActive,
     ParticipationsStatistics,
     ParticipationsByDate,
+    ParticipationsByPeriod,
     ParticipationsByStates,
     ParticipationsByOrganisations,
     ParticipationsByDomaines,
@@ -103,11 +109,13 @@ export default defineNuxtComponent({
       middleware: ['authenticated'],
     })
 
-    // const { $stores } = useNuxtApp()
+    const { $stores } = useNuxtApp()
 
-    // if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
-    //   return showError({ statusCode: 403 })
-    // }
+    if (
+      !['admin', 'referent', 'tete_de_reseau', 'responsable'].includes($stores.auth.contextRole)
+    ) {
+      return showError({ statusCode: 403 })
+    }
   },
   watch: {
     $route(newVal, oldVal) {
@@ -147,6 +155,9 @@ export default defineNuxtComponent({
       }
       if (this.$refs.participationsConversionByDate) {
         this.$refs.participationsConversionByDate.fetch()
+      }
+      if (this.$refs.participationsByPeriod) {
+        this.$refs.participationsByPeriod.fetch()
       }
       // this.$refs.participationsByDate.fetch()
       // this.$refs.participationsStatistics.fetch()

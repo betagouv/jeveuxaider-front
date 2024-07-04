@@ -26,7 +26,10 @@
     <div class="space-y-12">
       <MissionsStatistics ref="missionsStatistics" />
       <BaseHeading as="h2" :level="2"> L’activité relative aux missions en détail </BaseHeading>
-      <MissionsByDate ref="missionsByDate" />
+      <MissionsByDate
+        v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+        ref="missionsByDate"
+      />
       <div class="flex flex-col gap-12">
         <MissionsByStates
           ref="missionsByStates"
@@ -129,11 +132,13 @@ export default defineNuxtComponent({
       middleware: ['authenticated'],
     })
 
-    // const { $stores } = useNuxtApp()
+    const { $stores } = useNuxtApp()
 
-    // if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
-    //   return showError({ statusCode: 403 })
-    // }
+    if (
+      !['admin', 'referent', 'tete_de_reseau', 'responsable'].includes($stores.auth.contextRole)
+    ) {
+      return showError({ statusCode: 403 })
+    }
   },
   data() {
     return {}
