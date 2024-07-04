@@ -45,6 +45,14 @@
             )
           "
         />
+        <ParticipationsRefusedByResponsables
+          ref="participationsRefusedByResponsables"
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        />
         <ParticipationsByActivities
           ref="participationsByActivities"
           v-if="
@@ -86,6 +94,7 @@ import ParticipationsByDomaines from '@/components/numbers/ParticipationsByDomai
 import ParticipationsByReseaux from '@/components/numbers/ParticipationsByReseaux.vue'
 import ParticipationsByActivities from '@/components/numbers/ParticipationsByActivities.vue'
 import ParticipationsConversionByDate from '@/components/numbers/ParticipationsConversionByDate.vue'
+import ParticipationsRefusedByResponsables from '@/components/numbers/ParticipationsRefusedByResponsables.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
@@ -101,6 +110,7 @@ export default defineNuxtComponent({
     ParticipationsByReseaux,
     ParticipationsByActivities,
     ParticipationsConversionByDate,
+    ParticipationsRefusedByResponsables,
     Breadcrumb,
   },
   setup() {
@@ -155,6 +165,9 @@ export default defineNuxtComponent({
       }
       if (this.$refs.participationsByPeriod) {
         this.$refs.participationsByPeriod.fetch()
+      }
+      if (this.$refs.participationsRefusedByResponsables) {
+        this.$refs.participationsRefusedByResponsables.fetch()
       }
       // this.$refs.participationsByDate.fetch()
       // this.$refs.participationsStatistics.fetch()

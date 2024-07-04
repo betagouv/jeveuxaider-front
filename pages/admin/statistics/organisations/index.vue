@@ -31,9 +31,12 @@
       <div class="flex flex-col gap-12">
         <OrganisationsByStates ref="organisationsByStates" />
         <OrganisationsByTypes ref="organisationsByTypes" />
-        <ParticipationsRefusedByResponsables ref="participationsRefusedByResponsables" />
+        <!-- <ParticipationsRefusedByResponsables ref="participationsRefusedByResponsables" /> -->
         <OrganisationsByDomaines ref="organisationsByDomaines" />
-        <OrganisationsByReseaux ref="organisationsByReseaux" />
+        <OrganisationsByReseaux
+          v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+          ref="organisationsByReseaux"
+        />
       </div>
     </div>
   </div>
@@ -68,7 +71,7 @@ export default defineNuxtComponent({
 
     const { $stores } = useNuxtApp()
 
-    if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
+    if (!['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)) {
       return showError({ statusCode: 403 })
     }
   },

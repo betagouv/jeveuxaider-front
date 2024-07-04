@@ -134,7 +134,7 @@ export default defineNuxtComponent({
       })
     },
     async fetchStructuresByYear() {
-      if (['responsable'].includes(this.$stores.auth.contextRole)) {
+      if (['responsable', 'tete_de_reseau'].includes(this.$stores.auth.contextRole)) {
         this.structures = []
       } else {
         await apiFetch('/statistics/structures-by-year', {
@@ -152,7 +152,7 @@ export default defineNuxtComponent({
       })
     },
     async fetchUsersByYear() {
-      if (['responsable'].includes(this.$stores.auth.contextRole)) {
+      if (['responsable', 'tete_de_reseau'].includes(this.$stores.auth.contextRole)) {
         this.users = []
       } else {
         await apiFetch('/statistics/users-by-year', {

@@ -184,6 +184,27 @@ export default defineNuxtComponent({
             ],
           },
         ]
+      } else if (this.$stores.auth.contextRole === 'tete_de_reseau') {
+        return [
+          {
+            key: 'statistics',
+            label: 'Statistiques',
+            childrens: [
+              { label: "Vue d'ensemble", to: '/admin/statistics' },
+              {
+                label: 'Indicateurs clés',
+                to: '/admin/statistics/indicateurs-cles',
+              },
+              {
+                label: 'Participations',
+                to: `/admin/statistics/participations${queryString}`,
+              },
+              { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
+              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
+              { label: 'Places', to: '/admin/statistics/places' },
+            ],
+          },
+        ]
       }
 
       return null
