@@ -46,6 +46,12 @@
               description="Le bénévole peut réaliser la mission depuis chez lui ou n’importe où, à distance"
             />
           </div>
+
+          <template #bottom>
+            <CustomInfoRecommendation
+              v-if="$stores.formMission.mission?.template?.recommendation_type !== null"
+            />
+          </template>
         </DsfrFormControl>
 
         <template v-if="form.type === 'Mission en présentiel'">

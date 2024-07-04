@@ -45,6 +45,12 @@
               "
             />
           </div>
+
+          <template #bottom>
+            <CustomInfoRecommendation
+              v-if="$stores.formMission.mission?.template?.recommendation_date_type !== null"
+            />
+          </template>
         </DsfrFormControl>
 
         <DsfrFormControl
@@ -159,6 +165,12 @@
                   @click="form.with_dates = 'no'"
                 />
               </div>
+
+              <template #bottom>
+                <CustomInfoRecommendation
+                  v-if="$stores.formMission.mission?.template?.recommendation_with_dates !== null"
+                />
+              </template>
             </DsfrFormControl>
           </template>
 
