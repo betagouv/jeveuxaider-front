@@ -76,7 +76,6 @@ export default {
         ) {
           this.$stores.formMission.setLoading(true)
           const mission = await apiFetch(`/missions/${newVal.params.id}/show`)
-          // await this.$nextTick()
           this.$stores.formMission.setMission(mission)
         }
       },
