@@ -82,25 +82,7 @@ export const useFormMissionStore = defineStore('formMission', {
   },
   actions: {
     setMission(mission) {
-      mission.domaine_id = mission.template?.domaine_id || mission.domaine_id
-      mission.domaine_secondary_id =
-        mission.template?.domaine_secondary_id || mission.domaine_secondary_id
-      mission.activity_id = mission.template?.activity_id || mission.activity_id
-      mission.activity_secondary_id =
-        mission.template?.activity_secondary_id || mission.activity_secondary_id
-      if (mission.start_date) {
-        mission.with_dates = mission.dates?.length > 0 ? 'yes' : 'no'
-      }
-
-      // Fix dirty state comparison
-      mission.prerequisites = mission.prerequisites
-        ?.concat(new Array(3 - mission.prerequisites.length).fill(null))
-        .slice(0, 3) ?? [null, null, null]
-      mission.responsables.map((responsable) => {
-        delete responsable.pivot
-        return responsable
-      })
-
+      this.initMissionFields(mission)
       this.mission = mission
       this.loading = false
     },
@@ -108,9 +90,30 @@ export const useFormMissionStore = defineStore('formMission', {
       this.loading = value
     },
     updateFields(mission, fields) {
+      this.initMissionFields(mission)
+
       for (const field of fields) {
         this.mission[field] = mission[field]
       }
+    },
+    initMissionFields(mission) {
+      mission.domaine_id = mission.template?.domaine_id || mission.domaine_id
+      mission.domaine_secondary_id =
+        mission.template?.domaine_secondary_id || mission.domaine_secondary_id
+      mission.activity_id = mission.template?.activity_id || mission.activity_id
+      mission.activity_secondary_id =
+        mission.template?.activity_secondary_id || mission.activity_secondary_id
+      mission.with_dates =
+        mission.date_type == 'ponctual' && mission.dates?.length > 0 ? 'yes' : 'no'
+
+      // Fix dirty state comparison
+      mission.prerequisites = mission.prerequisites
+        ?.concat(new Array(3 - mission.prerequisites.length).fill(null))
+        .slice(0, 3) ?? [null, null, null]
+      mission.responsables?.map((responsable) => {
+        delete responsable.pivot
+        return responsable
+      })
     },
     reset() {
       this.mission = null

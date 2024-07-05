@@ -168,11 +168,6 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              // Fix dirty state comparison
-              mission.responsables.map((responsable) => {
-                delete responsable.pivot
-                return responsable
-              })
               this.$stores.formMission.updateFields(mission, ['responsables'])
 
               if (this.$stores.formMission.isDraft) {
