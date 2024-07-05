@@ -294,7 +294,13 @@
                 name="activity_id"
                 :modelValue="form.activity_id"
                 placeholder="Sélectionner une activité"
-                :options="activities"
+                :options="
+                  activities.map((activity) =>
+                    activity.id === form.activity_secondary_id
+                      ? { ...activity, disabled: true }
+                      : activity
+                  )
+                "
                 :disabled="Boolean(form.template_id && form.template?.activity_id)"
                 @update:modelValue="form.activity_id = $event ? Number($event) : null"
               />
@@ -309,7 +315,11 @@
                 name="activity_secondary_id"
                 :modelValue="form.activity_secondary_id"
                 placeholder="Sélectionner une activité"
-                :options="activities"
+                :options="
+                  activities.map((activity) =>
+                    activity.id === form.activity_id ? { ...activity, disabled: true } : activity
+                  )
+                "
                 :disabled="Boolean(form.template_id && form.template?.activity_secondary_id)"
                 @update:modelValue="form.activity_secondary_id = $event ? Number($event) : null"
               />
