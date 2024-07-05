@@ -148,8 +148,8 @@
 
             <template v-else>
               <div>
-                <template v-if="mission.prerequisites?.length > 0">
-                  {{ mission.prerequisites.length }} pré-requis
+                <template v-if="mission.prerequisites?.filter((p) => p).length > 0">
+                  {{ mission.prerequisites.filter((p) => p).length }} pré-requis
                 </template>
                 <template v-else>Aucun prérequis</template>
               </div>

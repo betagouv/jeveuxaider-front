@@ -1,7 +1,7 @@
 <template>
   <BaseBox class="space-y-12">
     <div
-      v-if="mission.prerequisites?.length > 0"
+      v-if="mission.prerequisites?.filter((p) => p).length > 0"
       class="border border-b-4 border-b-jva-blue-500 p-6 sm:p-8"
     >
       <div class="flex flex-wrap sm:flex-nowrap items-center gap-4 sm:gap-8 justify-start">
@@ -14,7 +14,7 @@
               { 'list-decimal pl-6': mission.prerequisites.length > 1 },
             ]"
           >
-            <li v-for="(prerequisite, key) in mission.prerequisites" :key="key">
+            <li v-for="(prerequisite, key) in mission.prerequisites.filter((p) => p)" :key="key">
               {{ prerequisite }}
             </li>
           </ol>
