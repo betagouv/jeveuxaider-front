@@ -105,6 +105,67 @@
             </template>
           </div>
         </BaseBox>
+
+        <BaseBox>
+          <BaseHeading :level="3" class="mb-8">Aide à la création de mission</BaseHeading>
+          <p class="text-[#666666]">
+            Indiquez la configuration la plus probable d’une mission utilisant ce modèle. Cela sera
+            ajouté sous la forme de recommandation lors de la création de missions avec ce modèle.
+          </p>
+          <p class="mt-4 font-bold">Les missions de ce modèle seront-elles le plus souvent :</p>
+
+          <div class="mt-10 space-y-10">
+            <BaseFormControl
+              label="Régulières ou ponctuelles ?"
+              html-for="recommendation_date_type"
+              :error="errors.recommendation_date_type"
+              required
+            >
+              <BaseSelectAdvanced
+                v-model="form.recommendation_date_type"
+                name="recommendation_date_type"
+                :options="[
+                  { key: null, label: 'Ça dépend' },
+                  { key: 'ponctual', label: 'Ponctuelles' },
+                  { key: 'recurring', label: 'Régulières' },
+                ]"
+              />
+            </BaseFormControl>
+            <BaseFormControl
+              v-if="form.recommendation_date_type === 'ponctual'"
+              label="Avec ou sans jours et créneaux fixes ?"
+              html-for="recommendation_with_dates"
+              :error="errors.recommendation_with_dates"
+              required
+            >
+              <BaseSelectAdvanced
+                v-model="form.recommendation_with_dates"
+                name="recommendation_with_dates"
+                :options="[
+                  { key: null, label: 'Ça dépend' },
+                  { key: true, label: 'Avec créneaux' },
+                  { key: false, label: 'Sans créneaux' },
+                ]"
+              />
+            </BaseFormControl>
+            <BaseFormControl
+              label="En présentiel ou à distance ?"
+              html-for="recommendation_type"
+              :error="errors.recommendation_type"
+              required
+            >
+              <BaseSelectAdvanced
+                v-model="form.recommendation_type"
+                name="recommendation_type"
+                :options="[
+                  { key: null, label: 'Ça dépend' },
+                  { key: 'onsite', label: 'En présentiel' },
+                  { key: 'remote', label: 'À distance' },
+                ]"
+              />
+            </BaseFormControl>
+          </div>
+        </BaseBox>
       </div>
       <div class="lg:col-span-2 space-y-8">
         <BaseBox v-if="['admin'].includes($stores.auth.contextRole)" padding="sm">

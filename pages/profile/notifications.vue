@@ -173,7 +173,6 @@ export default defineNuxtComponent({
   },
   methods: {
     async handleUpdateProfile() {
-      console.log('handleUpdateProfile', this.form)
       if (this.loading) {
         return
       }

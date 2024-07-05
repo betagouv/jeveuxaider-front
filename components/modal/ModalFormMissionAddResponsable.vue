@@ -85,7 +85,6 @@ export default defineNuxtComponent({
   },
   methods: {
     handleSubmit() {
-      console.log('handleSubmit', this.form)
       this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(() => {
@@ -93,7 +92,6 @@ export default defineNuxtComponent({
           this.$emit('cancel')
         })
         .catch((errors) => {
-          console.log('errors', errors)
           this.setErrors(errors)
         })
     },

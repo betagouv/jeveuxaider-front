@@ -105,7 +105,7 @@ export default defineNuxtComponent({
   mixins: [Selectable],
   emits: ['update:modelValue', 'blur', 'changed'],
   props: {
-    modelValue: { type: [String, Number], default: null },
+    modelValue: { type: [String, Number, Boolean], default: null },
     placeholder: { type: String, default: null },
     labelEmpty: { type: String, default: 'Aucune option' },
     name: { type: String, required: true },

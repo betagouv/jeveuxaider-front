@@ -30,6 +30,9 @@
               title="Ponctuelle"
               subtitle="Une activité courte ou un événement particulier"
               description="Ex : 2 jours les 4 et 5 mai, 2 heures le 9 août, 3 demi-journées en juin, etc."
+              :is-recommended="
+                $stores.formMission.mission?.template?.recommendation_date_type === 'ponctual'
+              "
             />
             <CustomOptionCard
               @click="onRecurringClick"
@@ -37,8 +40,20 @@
               title="Régulière"
               subtitle="Un engagement dans la durée (plusieurs mois)"
               description=" Ex : 2 heures par semaine, 1 jour par mois pendant 6 mois etc."
+              :is-recommended="
+                $stores.formMission.mission?.template?.recommendation_date_type === 'recurring'
+              "
             />
           </div>
+
+          <template #bottom>
+            <CustomInfoRecommendation
+              v-if="
+                $stores.formMission.mission?.template &&
+                $stores.formMission.mission.template.recommendation_date_type !== null
+              "
+            />
+          </template>
         </DsfrFormControl>
 
         <DsfrFormControl
@@ -136,21 +151,36 @@
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <CustomOptionCard
                   :is-selected="form.with_dates === 'yes'"
+                  :is-recommended="
+                    $stores.formMission.mission?.template?.recommendation_with_dates === true
+                  "
                   title="Sur des jours définis"
                   description="Ex : tous les premiers mercredis du mois, tous les mardis et jeudis, etc."
                   @click="form.with_dates = 'yes'"
                 />
                 <CustomOptionCard
                   :is-selected="form.with_dates === 'no'"
+                  :is-recommended="
+                    $stores.formMission.mission?.template?.recommendation_with_dates === false
+                  "
                   title="C’est à définir"
                   description="Vous ne savez pas encore quand la mission aura lieu, ou bien c’est à adapter aux disponibilités du bénévole."
                   @click="form.with_dates = 'no'"
                 />
               </div>
+
+              <template #bottom>
+                <CustomInfoRecommendation
+                  v-if="
+                    $stores.formMission.mission?.template &&
+                    $stores.formMission.mission?.template?.recommendation_with_dates !== null
+                  "
+                />
+              </template>
             </DsfrFormControl>
           </template>
 
-          <template v-if="form.with_dates === 'yes'">
+          <template v-if="form.date_type === 'ponctual' && form.with_dates === 'yes'">
             <div class="flex justify-between items-center border-b py-4">
               <div class="font-bold text-xl">
                 <template v-if="formNextDates"> Dates</template>
@@ -196,7 +226,7 @@
             </template>
           </template>
 
-          <template v-if="form.with_dates === 'no'">
+          <template v-if="form.date_type === 'recurring' || form.with_dates === 'no'">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <DsfrFormControl
                 label="Date de début"
@@ -239,9 +269,12 @@
       />
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onValidateClick">{{
-        $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer'
-      }}</DsfrButton>
+      <DsfrButton
+        :loading="loading"
+        :disabled="!$stores.formMission.isDraft && !isFormDirty"
+        @click="onValidateClick"
+        >{{ $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer' }}</DsfrButton
+      >
     </template>
   </FormMissionWrapper>
 </template>
@@ -284,17 +317,24 @@ export default defineNuxtComponent({
             is: (dateType) => dateType == 'recurring',
             then: (schema) => schema.required("Précisez l'engagement minimum requis"),
           }),
-        with_dates: string().required('Le type de dates est requis'),
-        start_date: date()
+        with_dates: string()
           .nullable()
-          .when('with_dates', {
-            is: (value) => value == 'no',
+          .when(['date_type'], {
+            is: (dateType) => dateType == 'ponctual',
+            then: (schema) => schema.required('Le type de dates est requis'),
+          }),
+        start_date: date()
+          .typeError('La date de début est invalide')
+          .nullable()
+          .when(['with_dates', 'date_type'], {
+            is: (withDates, dateType) => withDates == 'no' || dateType == 'recurring',
             then: (schema) =>
               schema
                 .required('La date de début est requise')
                 .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
           }),
         end_date: date()
+          .typeError('La date de fin est invalide')
           .nullable()
           .when('start_date', {
             is: (startDate) => startDate instanceof Date,
@@ -336,7 +376,6 @@ export default defineNuxtComponent({
     },
     onRecurringClick() {
       this.form.date_type = 'recurring'
-      this.form.with_dates = 'no'
     },
     onRemovedDate(date) {
       this.form.dates = this.form.dates.filter((item) => item.id !== date.id)
@@ -349,19 +388,18 @@ export default defineNuxtComponent({
     },
     async onValidateClick() {
       this.loading = true
-      // if (!this.form.with_dates) {
-      //   this.form.with_dates = 'no'
-      // }
-      console.log('form with_dates', this.form.with_dates)
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          this.form.with_dates =
+            this.form.date_type == 'ponctual' && this.form.dates?.length > 0 ? 'yes' : 'no'
           await apiFetch(`/missions/${this.form.id}/dates`, {
             method: 'PUT',
             body: this.form,
           })
             .then(async (mission) => {
-              console.log(mission)
+              mission.with_dates =
+                mission.date_type == 'ponctual' && mission.dates?.length > 0 ? 'yes' : 'no'
               this.$stores.formMission.updateFields(mission, [
                 'date_type',
                 'commitment__duration',
@@ -371,6 +409,7 @@ export default defineNuxtComponent({
                 'dates',
                 'commitment__time_period',
                 'recurrent_description',
+                'with_dates',
               ])
 
               if (this.$stores.formMission.isDraft) {
@@ -382,7 +421,6 @@ export default defineNuxtComponent({
             .catch(() => {})
         })
         .catch((errors) => {
-          console.log('catch errors', errors)
           this.setErrors(errors)
         })
         .finally(() => {

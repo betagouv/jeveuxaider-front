@@ -25,7 +25,11 @@
       </DsfrFormControl>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onValidateClick">
+      <DsfrButton
+        :loading="loading"
+        :disabled="!$stores.formMission.isDraft && !isFormDirty"
+        @click="onValidateClick"
+      >
         {{ $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer' }}
       </DsfrButton>
     </template>

@@ -21,6 +21,8 @@
     <BaseFormSuccess v-if="success">
       {{ success }}
     </BaseFormSuccess>
+
+    <slot name="bottom" />
   </div>
 </template>
 

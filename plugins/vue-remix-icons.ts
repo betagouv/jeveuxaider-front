@@ -121,6 +121,7 @@ import RiInboxArchiveLine from 'vue-remix-icons/icons/ri-inbox-archive-line.vue'
 import RiInboxUnarchiveLine from 'vue-remix-icons/icons/ri-inbox-unarchive-line.vue'
 import RiLockLine from 'vue-remix-icons/icons/ri-lock-line.vue'
 import RiShieldCheckLine from 'vue-remix-icons/icons/ri-shield-check-line.vue'
+import RiBardFill from 'vue-remix-icons/icons/ri-bard-fill.vue'
 
 const components = {
   RiShieldCheckLine,
@@ -242,6 +243,7 @@ const components = {
   RiSpy,
   RiMailStar,
   RiUserForbid,
+  RiBardFill,
 }
 
 export default defineNuxtPlugin((nuxtApp) => {
