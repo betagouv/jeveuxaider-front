@@ -20,6 +20,7 @@
       <BaseHeading as="h2" :level="2"> L’activité des organisations en détail </BaseHeading>
       <!-- <OrganisationsByDate ref="organisationsByDate" /> -->
       <div class="flex flex-col gap-12">
+        <OrganisationsByPeriod ref="organisationsByPeriod" />
         <div class="flex flex-col lg:flex-row gap-12">
           <OrganisationsByStates ref="organisationsByStates" class="w-full" />
           <OrganisationsByTypes ref="organisationsByTypes" class="w-full" />
@@ -34,9 +35,9 @@
 </template>
 
 <script>
-import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic.vue'
 import OrganisationsStatistics from '@/components/statistics/OrganisationsStatistics.vue'
 import OrganisationsByDate from '@/components/statistics/OrganisationsByDate.vue'
+import OrganisationsByPeriod from '@/components/statistics/OrganisationsByPeriod.vue'
 import OrganisationsByStates from '@/components/statistics/OrganisationsByStates.vue'
 import OrganisationsByTypes from '@/components/statistics/OrganisationsByTypes.vue'
 import OrganisationsByDomaines from '@/components/statistics/OrganisationsByDomaines.vue'
@@ -46,9 +47,9 @@ import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    FiltersStatisticsPublic,
     OrganisationsStatistics,
     OrganisationsByDate,
+    OrganisationsByPeriod,
     OrganisationsByStates,
     OrganisationsByTypes,
     OrganisationsByDomaines,
@@ -79,6 +80,7 @@ export default defineNuxtComponent({
   methods: {
     refetch() {
       this.$refs.organisationsByDate?.fetch()
+      this.$refs.organisationsByPeriod?.fetch()
       this.$refs.organisationsStatistics?.fetch()
       this.$refs.organisationsByStates?.fetch()
       this.$refs.organisationsByTypes?.fetch()

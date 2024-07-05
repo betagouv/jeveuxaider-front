@@ -32,58 +32,15 @@
         ref="missionsByDate"
       /> -->
       <div class="flex flex-col gap-12">
-        <MissionsByStates
-          ref="missionsByStates"
-          v-if="
-            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-              $stores.auth.contextRole
-            )
-          "
-        />
+        <MissionsByPeriod ref="missionsByPeriod" />
+        <MissionsByStates ref="missionsByStates" />
         <div class="flex flex-col lg:flex-row gap-12">
-          <MissionsByTypes
-            ref="missionsByTypes"
-            v-if="
-              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-                $stores.auth.contextRole
-              )
-            "
-            class="w-full"
-          />
-          <MissionsByTemplateTypes
-            ref="missionsByTemplateTypes"
-            v-if="
-              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-                $stores.auth.contextRole
-              )
-            "
-            class="w-full"
-          />
+          <MissionsByTypes ref="missionsByTypes" class="w-full" />
+          <MissionsByTemplateTypes ref="missionsByTemplateTypes" class="w-full" />
         </div>
-        <MissionsByActivities
-          ref="missionsByActivities"
-          v-if="
-            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-              $stores.auth.contextRole
-            )
-          "
-        />
-        <MissionsByDomaines
-          ref="missionsByDomaines"
-          v-if="
-            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-              $stores.auth.contextRole
-            )
-          "
-        />
-        <MissionsByTemplates
-          ref="missionsByTemplates"
-          v-if="
-            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-              $stores.auth.contextRole
-            )
-          "
-        />
+        <MissionsByActivities ref="missionsByActivities" />
+        <MissionsByDomaines ref="missionsByDomaines" />
+        <MissionsByTemplates ref="missionsByTemplates" />
       </div>
 
       <MissionsByOrganisations
@@ -99,9 +56,9 @@
 </template>
 
 <script>
-// import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import MissionsStatistics from '@/components/numbers/MissionsStatistics.vue'
 import MissionsByDate from '@/components/numbers/MissionsByDate.vue'
+import MissionsByPeriod from '@/components/numbers/MissionsByPeriod.vue'
 import MissionsByStates from '@/components/numbers/MissionsByStates.vue'
 import MissionsByTypes from '@/components/numbers/MissionsByTypes.vue'
 import MissionsByActivities from '@/components/numbers/MissionsByActivities.vue'
@@ -114,9 +71,9 @@ import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    // FiltersStatistics,
     MissionsStatistics,
     MissionsByDate,
+    MissionsByPeriod,
     MissionsByStates,
     MissionsByTypes,
     MissionsByActivities,
@@ -171,36 +128,17 @@ export default defineNuxtComponent({
   },
   methods: {
     refetch() {
-      if (this.$refs.missionsStatistics) {
-        this.$refs.missionsStatistics.fetch()
-      }
-      if (this.$refs.missionsByDate) {
-        this.$refs.missionsByDate.fetch()
-      }
-      if (this.$refs.missionsByStates) {
-        this.$refs.missionsByStates.fetch()
-      }
-      if (this.$refs.missionsByDomaines) {
-        this.$refs.missionsByDomaines.fetch()
-      }
-      if (this.$refs.missionsByTypes) {
-        this.$refs.missionsByTypes.fetch()
-      }
-      if (this.$refs.missionsByActivities) {
-        this.$refs.missionsByActivities.fetch()
-      }
-      if (this.$refs.missionsByOrganisations) {
-        this.$refs.missionsByOrganisations.fetch()
-      }
-      if (this.$refs.missionsByReseaux) {
-        this.$refs.missionsByReseaux.fetch()
-      }
-      if (this.$refs.missionsByTemplates) {
-        this.$refs.missionsByTemplates.fetch()
-      }
-      if (this.$refs.missionsByTemplateTypes) {
-        this.$refs.missionsByTemplateTypes.fetch()
-      }
+      this.$refs.missionsStatistics?.fetch()
+      this.$refs.missionsByDate?.fetch()
+      this.$refs.missionsByPeriod?.fetch()
+      this.$refs.missionsByStates?.fetch()
+      this.$refs.missionsByDomaines?.fetch()
+      this.$refs.missionsByTypes?.fetch()
+      this.$refs.missionsByActivities?.fetch()
+      this.$refs.missionsByOrganisations?.fetch()
+      this.$refs.missionsByReseaux?.fetch()
+      this.$refs.missionsByTemplates?.fetch()
+      this.$refs.missionsByTemplateTypes?.fetch()
     },
   },
 })

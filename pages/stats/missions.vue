@@ -20,6 +20,7 @@
       <BaseHeading as="h2" :level="2"> L’activité relative aux missions en détail </BaseHeading>
       <!-- <MissionsByDate ref="missionsByDate" /> -->
       <div class="flex flex-col gap-12">
+        <MissionsByPeriod ref="missionsByPeriod" />
         <MissionsByStates ref="missionsByStates" />
         <MissionsByTypes ref="missionsByTypes" />
         <MissionsByActivities ref="missionsByActivities" />
@@ -34,9 +35,9 @@
 </template>
 
 <script>
-import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic.vue'
 import MissionsStatistics from '@/components/statistics/MissionsStatistics.vue'
 import MissionsByDate from '@/components/statistics/MissionsByDate.vue'
+import MissionsByPeriod from '@/components/statistics/MissionsByPeriod.vue'
 import MissionsByStates from '@/components/statistics/MissionsByStates.vue'
 import MissionsByTypes from '@/components/statistics/MissionsByTypes.vue'
 import MissionsByActivities from '@/components/statistics/MissionsByActivities.vue'
@@ -49,9 +50,9 @@ import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    FiltersStatisticsPublic,
     MissionsStatistics,
     MissionsByDate,
+    MissionsByPeriod,
     MissionsByStates,
     MissionsByTypes,
     MissionsByActivities,
@@ -85,6 +86,7 @@ export default defineNuxtComponent({
   methods: {
     refetch() {
       this.$refs.missionsByDate?.fetch()
+      this.$refs.missionsByPeriod?.fetch()
       this.$refs.missionsStatistics?.fetch()
       this.$refs.missionsByStates?.fetch()
       this.$refs.missionsByDomaines?.fetch()
