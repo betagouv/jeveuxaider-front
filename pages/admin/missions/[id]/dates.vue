@@ -324,24 +324,21 @@ export default defineNuxtComponent({
             then: (schema) => schema.required('Le type de dates est requis'),
           }),
         start_date: date()
-          .typeError('La date de début est invalide')
+          .typeError('La date est invalide')
           .nullable()
+          .transform((curr, orig) => (orig === '' ? null : curr))
           .when(['with_dates', 'date_type'], {
             is: (withDates, dateType) => withDates == 'no' || dateType == 'recurring',
-            then: (schema) =>
-              schema
-                .required('La date de début est requise')
-                .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
+            then: (schema) => schema.required('La date de début est invalide'),
           }),
         end_date: date()
           .typeError('La date de fin est invalide')
           .nullable()
+          .transform((curr, orig) => (orig === '' ? null : curr))
           .when('start_date', {
             is: (startDate) => startDate instanceof Date,
             then: (schema) =>
-              schema
-                .transform((v) => (v instanceof Date && !isNaN(v) ? v : null))
-                .min(ref('start_date'), 'La date de fin doit être supérieure à celle du début'),
+              schema.min(ref('start_date'), 'La date de fin doit être supérieure à celle du début'),
           }),
         dates: array()
           .nullable()
@@ -391,15 +388,18 @@ export default defineNuxtComponent({
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          this.form.with_dates =
-            this.form.date_type == 'ponctual' && this.form.dates?.length > 0 ? 'yes' : 'no'
+          if (this.form.date_type === 'recurring' && this.form.with_dates === 'yes') {
+            this.form.with_dates = 'no'
+          }
+          if (this.form.with_dates === 'no') {
+            this.form.dates = null
+          }
+
           await apiFetch(`/missions/${this.form.id}/dates`, {
             method: 'PUT',
             body: this.form,
           })
             .then(async (mission) => {
-              mission.with_dates =
-                mission.date_type == 'ponctual' && mission.dates?.length > 0 ? 'yes' : 'no'
               this.$stores.formMission.updateFields(mission, [
                 'date_type',
                 'commitment__duration',
