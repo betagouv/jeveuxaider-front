@@ -97,7 +97,7 @@ export default defineNuxtComponent({
         return ['daterange']
       }
       if (this.$stores.auth.contextRole === 'tete_de_reseau') {
-        return ['daterange']
+        return ['daterange', 'department']
       }
       if (this.$stores.auth.contextRole === 'responsable') {
         return ['daterange']

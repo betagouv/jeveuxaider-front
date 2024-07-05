@@ -102,7 +102,7 @@ export default defineNuxtComponent({
         return []
       }
       if (this.$stores.auth.contextRole === 'tete_de_reseau') {
-        return []
+        return ['department']
       }
       if (this.$stores.auth.contextRole === 'responsable') {
         return []
