@@ -103,8 +103,10 @@ export const useFormMissionStore = defineStore('formMission', {
       mission.activity_id = mission.template?.activity_id || mission.activity_id
       mission.activity_secondary_id =
         mission.template?.activity_secondary_id || mission.activity_secondary_id
-      mission.with_dates =
-        mission.date_type == 'ponctual' && mission.dates?.length > 0 ? 'yes' : 'no'
+
+      if (mission.with_dates === undefined && mission.date_type == 'ponctual') {
+        mission.with_dates = mission.dates?.length > 0 ? 'yes' : 'no'
+      }
 
       // Fix dirty state comparison
       mission.prerequisites = mission.prerequisites
