@@ -317,17 +317,24 @@ export default defineNuxtComponent({
             is: (dateType) => dateType == 'recurring',
             then: (schema) => schema.required("Précisez l'engagement minimum requis"),
           }),
-        with_dates: string().required('Le type de dates est requis'),
-        start_date: date()
+        with_dates: string()
           .nullable()
-          .when('with_dates', {
-            is: (value) => value == 'no',
+          .when(['date_type'], {
+            is: (dateType) => dateType == 'ponctual',
+            then: (schema) => schema.required('Le type de dates est requis'),
+          }),
+        start_date: date()
+          .typeError('La date de début est invalide')
+          .nullable()
+          .when(['with_dates', 'date_type'], {
+            is: (withDates, dateType) => withDates == 'no' || dateType == 'recurring',
             then: (schema) =>
               schema
                 .required('La date de début est requise')
                 .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
           }),
         end_date: date()
+          .typeError('La date de fin est invalide')
           .nullable()
           .when('start_date', {
             is: (startDate) => startDate instanceof Date,
@@ -384,12 +391,15 @@ export default defineNuxtComponent({
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
+          this.form.with_dates =
+            this.form.date_type == 'ponctual' && this.form.dates?.length > 0 ? 'yes' : 'no'
           await apiFetch(`/missions/${this.form.id}/dates`, {
             method: 'PUT',
             body: this.form,
           })
             .then(async (mission) => {
-              mission.with_dates = mission.dates?.length > 0 ? 'yes' : 'no'
+              mission.with_dates =
+                mission.date_type == 'ponctual' && mission.dates?.length > 0 ? 'yes' : 'no'
               this.$stores.formMission.updateFields(mission, [
                 'date_type',
                 'commitment__duration',
