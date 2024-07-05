@@ -304,7 +304,12 @@ export default defineNuxtComponent({
       loading: false,
       formSchema: object({
         date_type: string().required('Le type d’engagement est requis'),
-        commitment__duration: string().nullable().required("La durée d'engagement est requise"),
+        commitment__duration: string()
+          .nullable()
+          .when(['date_type'], {
+            is: (dateType) => !!dateType,
+            then: (schema) => schema.required("La durée d'engagement est requise"),
+          }),
         commitment__time_period: string()
           .nullable()
           .when(['date_type'], {
