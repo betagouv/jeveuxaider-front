@@ -26,6 +26,30 @@
         {{ $filters.label($route.query['department'], 'departments') }}
       </DsfrTag>
     </template>
+    <template v-if="filters.includes('reseau')">
+      <DsfrTag
+        as="button"
+        v-if="$route.query['reseau']"
+        size="md"
+        context="deletable"
+        :is-active="!!$route.query['reseau']"
+        @click.native="removeFilter('reseau')"
+      >
+        {{ $route.query['reseau'] }} - {{ $route.query['reseau_name'] }}
+      </DsfrTag>
+    </template>
+    <template v-if="filters.includes('structure')">
+      <DsfrTag
+        as="button"
+        v-if="$route.query['structure']"
+        size="md"
+        context="deletable"
+        :is-active="!!$route.query['structure']"
+        @click.native="removeFilter('structure')"
+      >
+        {{ $route.query['structure'] }} - {{ $route.query['structure_name'] }}
+      </DsfrTag>
+    </template>
   </div>
 </template>
 

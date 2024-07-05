@@ -113,7 +113,7 @@ export default defineNuxtComponent({
   computed: {
     filters() {
       if (this.$stores.auth.contextRole === 'admin') {
-        return ['department']
+        return ['department', 'reseau', 'structure']
       }
       if (this.$stores.auth.contextRole === 'referent') {
         return []

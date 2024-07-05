@@ -37,42 +37,15 @@
         ref="participationsConversionByDate"
       /> -->
       <div class="flex flex-col gap-12">
-        <ParticipationsByStates
-          ref="participationsByStates"
-          v-if="
-            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-              $stores.auth.contextRole
-            )
-          "
-        />
-        <ParticipationsRefusedByResponsables
-          ref="participationsRefusedByResponsables"
-          v-if="
-            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-              $stores.auth.contextRole
-            )
-          "
-        />
-        <ParticipationsByActivities
-          ref="participationsByActivities"
-          v-if="
-            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-              $stores.auth.contextRole
-            )
-          "
-        />
+        <ParticipationsByStates ref="participationsByStates" />
+        <ParticipationsRefusedByResponsables ref="participationsRefusedByResponsables" />
+        <ParticipationsCanceledByBenevoles ref="participationsCanceledByBenevoles" />
+        <ParticipationsByActivities ref="participationsByActivities" />
         <ParticipationsByReseaux
           ref="participationsByReseaux"
           v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
         />
-        <ParticipationsByDomaines
-          ref="participationsByDomaines"
-          v-if="
-            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
-              $stores.auth.contextRole
-            )
-          "
-        />
+        <ParticipationsByDomaines ref="participationsByDomaines" />
         <ParticipationsByOrganisations
           ref="participationsByOrganisations"
           v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
@@ -95,6 +68,7 @@ import ParticipationsByReseaux from '@/components/numbers/ParticipationsByReseau
 import ParticipationsByActivities from '@/components/numbers/ParticipationsByActivities.vue'
 import ParticipationsConversionByDate from '@/components/numbers/ParticipationsConversionByDate.vue'
 import ParticipationsRefusedByResponsables from '@/components/numbers/ParticipationsRefusedByResponsables.vue'
+import ParticipationsCanceledByBenevoles from '@/components/numbers/ParticipationsCanceledByBenevoles.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
@@ -111,6 +85,7 @@ export default defineNuxtComponent({
     ParticipationsByActivities,
     ParticipationsConversionByDate,
     ParticipationsRefusedByResponsables,
+    ParticipationsCanceledByBenevoles,
     Breadcrumb,
   },
   setup() {
@@ -140,7 +115,7 @@ export default defineNuxtComponent({
   computed: {
     filters() {
       if (this.$stores.auth.contextRole === 'admin') {
-        return ['department', 'daterange']
+        return ['department', 'daterange', 'reseau', 'structure']
       }
       if (this.$stores.auth.contextRole === 'referent') {
         return ['daterange']
@@ -157,46 +132,17 @@ export default defineNuxtComponent({
   },
   methods: {
     refetch() {
-      if (this.$refs.participationsByDate) {
-        this.$refs.participationsByDate.fetch()
-      }
-      if (this.$refs.participationsStatistics) {
-        this.$refs.participationsStatistics.fetch()
-      }
-      if (this.$refs.participationsByStates) {
-        this.$refs.participationsByStates.fetch()
-      }
-      if (this.$refs.participationsByDomaines) {
-        this.$refs.participationsByDomaines.fetch()
-      }
-      if (this.$refs.participationsByOrganisations) {
-        this.$refs.participationsByOrganisations.fetch()
-      }
-      if (this.$refs.participationsByReseaux) {
-        this.$refs.participationsByReseaux.fetch()
-      }
-      if (this.$refs.participationsByActivities) {
-        this.$refs.participationsByActivities.fetch()
-      }
-      if (this.$refs.participationsConversionByDate) {
-        this.$refs.participationsConversionByDate.fetch()
-      }
-      if (this.$refs.participationsByPeriod) {
-        this.$refs.participationsByPeriod.fetch()
-      }
-      if (this.$refs.participationsRefusedByResponsables) {
-        this.$refs.participationsRefusedByResponsables.fetch()
-      }
-      // this.$refs.participationsByDate.fetch()
-      // this.$refs.participationsStatistics.fetch()
-      // this.$refs.participationsByStates.fetch()
-      // this.$refs.participationsByDomaines.fetch()
-      // this.$refs.participationsByOrganisations.fetch()
-      // this.$refs.participationsByReseaux.fetch()
-      // this.$refs.participationsByActivities.fetch()
-      // if (['admin'].includes(this.$stores.auth.contextRole)) {
-      //   this.$refs.participationsConversionByDate.fetch()
-      // }
+      this.$refs.participationsByDate?.fetch()
+      this.$refs.participationsStatistics?.fetch()
+      this.$refs.participationsByStates?.fetch()
+      this.$refs.participationsByDomaines?.fetch()
+      this.$refs.participationsByOrganisations?.fetch()
+      this.$refs.participationsByReseaux?.fetch()
+      this.$refs.participationsByActivities?.fetch()
+      this.$refs.participationsConversionByDate?.fetch()
+      this.$refs.participationsByPeriod?.fetch()
+      this.$refs.participationsCanceledByBenevoles?.fetch()
+      this.$refs.participationsRefusedByResponsables?.fetch()
     },
   },
 })

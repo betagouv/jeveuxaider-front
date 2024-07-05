@@ -51,7 +51,7 @@ export default defineNuxtComponent({
   methods: {
     async fetch() {
       this.loading = true
-      await apiFetch('/statistics/utilisateurs-by-period', {
+      await apiFetch('/charts/utilisateurs-by-period', {
         params: {
           ...this.$route.query,
         },

@@ -36,7 +36,6 @@
         <UtilisateursWithParticipations ref="utilisateursWithParticipations" />
         <UtilisateursByAge ref="utilisateursByAge" />
         <ParticipationsDelaysByRegistrations ref="participationsDelaysByRegistrations" />
-        <ParticipationsCanceledByBenevoles ref="participationsCanceledByBenevoles" />
       </div>
     </div>
   </div>

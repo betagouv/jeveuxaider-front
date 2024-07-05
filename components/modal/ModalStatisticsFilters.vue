@@ -5,6 +5,7 @@
         :is-open="isOpen"
         title="Filtres de recherche"
         :prevent-click-outside="true"
+        :overflow-hidden="false"
         @close="$emit('cancel')"
       >
         <form id="form-filters" @submit.prevent="handleSubmit" class="py-6 flex flex-col gap-6">
@@ -49,6 +50,80 @@
               "
             />
           </DsfrFormControl>
+
+          <DsfrFormControl
+            v-if="filters.includes('reseau')"
+            label="Réseau"
+            html-for="reseau"
+            :error="errors.reseau"
+          >
+            <DsfrInputAutocomplete
+              icon="RiSearchLine"
+              name="reseau"
+              placeholder="Recherche par identifiant ou par nom"
+              :options="autocompleteOptionsReseaux"
+              attribute-key="id"
+              attribute-label="name"
+              :show-key-in-options="true"
+              :reset-value-on-select="true"
+              :min-value-length="3"
+              @selected="handleSelectedReseau"
+              @fetch-suggestions="onFetchSuggestionsReseaux($event)"
+            />
+            <div v-if="form.reseau" class="mt-4">
+              <DsfrTag
+                as="button"
+                size="md"
+                context="deletable"
+                :is-active="!!form.reseau"
+                @click.native="
+                  () => {
+                    form.reseau = null
+                    form.reseau_name = null
+                  }
+                "
+              >
+                {{ form.reseau }} - {{ form.reseau_name }}
+              </DsfrTag>
+            </div>
+          </DsfrFormControl>
+
+          <DsfrFormControl
+            v-if="filters.includes('structure')"
+            label="Organisation"
+            html-for="structure"
+            :error="errors.structure"
+          >
+            <DsfrInputAutocomplete
+              icon="RiSearchLine"
+              name="structure"
+              placeholder="Recherche par identifiant ou par nom"
+              :options="autocompleteOptionsOrganisations"
+              attribute-key="id"
+              attribute-label="name"
+              :show-key-in-options="true"
+              :reset-value-on-select="true"
+              :min-value-length="3"
+              @selected="handleSelectedOrganisation"
+              @fetch-suggestions="onFetchSuggestionsOrganisations($event)"
+            />
+            <div v-if="form.structure" class="mt-4">
+              <DsfrTag
+                as="button"
+                size="md"
+                context="deletable"
+                :is-active="!!form.structure"
+                @click.native="
+                  () => {
+                    form.structure = null
+                    form.structure_name = null
+                  }
+                "
+              >
+                {{ form.structure }} - {{ form.structure_name }}
+              </DsfrTag>
+            </div>
+          </DsfrFormControl>
         </form>
 
         <template #footer>
@@ -63,10 +138,11 @@
 <script>
 import FormErrors from '@/mixins/form/errors'
 import { string, object, array, date, ref } from 'yup'
+import MixinSuggestionsFilters from '@/mixins/suggestions-filters'
 
 export default defineNuxtComponent({
   emits: ['submitted', 'cancel'],
-  mixins: [FormErrors],
+  mixins: [FormErrors, MixinSuggestionsFilters],
   components: {},
   props: {
     isOpen: {
@@ -86,6 +162,10 @@ export default defineNuxtComponent({
         department: this.$route.query['department'] || null,
         start_date: this.$route.query['start_date'] || null,
         end_date: this.$route.query['end_date'] || null,
+        reseau: this.$route.query['reseau'] || null,
+        reseau_name: this.$route.query['reseau_name'] || null,
+        structure: this.$route.query['structure'] || null,
+        structure_name: this.$route.query['structure_name'] || null,
       },
       formSchema: object().shape({
         start_date: date().nullable(),
@@ -158,6 +238,14 @@ export default defineNuxtComponent({
           console.log('errors', errors)
           this.setErrors(errors)
         })
+    },
+    handleSelectedReseau(selected) {
+      this.form.reseau = selected.id
+      this.form.reseau_name = selected.name
+    },
+    handleSelectedOrganisation(selected) {
+      this.form.structure = selected.id
+      this.form.structure_name = selected.name
     },
   },
 })
