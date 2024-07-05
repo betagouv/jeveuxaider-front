@@ -33,9 +33,14 @@
         <UtilisateursByPeriod ref="utilisateursByPeriod" />
 
         <UtilisateursByActivities ref="utilisateursByActivities" />
-        <UtilisateursWithParticipations ref="utilisateursWithParticipations" />
         <UtilisateursByAge ref="utilisateursByAge" />
-        <ParticipationsDelaysByRegistrations ref="participationsDelaysByRegistrations" />
+        <div class="flex flex-col lg:flex-row gap-12">
+          <UtilisateursWithParticipations ref="utilisateursWithParticipations" class="w-full" />
+          <ParticipationsDelaysByRegistrations
+            ref="participationsDelaysByRegistrations"
+            class="w-full"
+          />
+        </div>
       </div>
     </div>
   </div>
