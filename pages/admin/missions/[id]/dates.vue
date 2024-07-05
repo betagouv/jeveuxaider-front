@@ -348,8 +348,8 @@ export default defineNuxtComponent({
           }),
         dates: array()
           .nullable()
-          .when('with_dates', {
-            is: (withDates) => withDates === 'yes',
+          .when(['with_dates', 'date_type'], {
+            is: (withDates, dateType) => withDates === 'yes' && dateType === 'ponctual',
             then: (schema) =>
               schema
                 .min(1, 'Veuillez ajouter au moins une date')
@@ -379,6 +379,7 @@ export default defineNuxtComponent({
     },
     onRecurringClick() {
       this.form.date_type = 'recurring'
+      this.form.with_dates = 'no'
     },
     onRemovedDate(date) {
       this.form.dates = this.form.dates.filter((item) => item.id !== date.id)
@@ -394,13 +395,6 @@ export default defineNuxtComponent({
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          if (this.form.date_type === 'recurring' && this.form.with_dates === 'yes') {
-            this.form.with_dates = 'no'
-          }
-          if (this.form.with_dates === 'no') {
-            this.form.dates = null
-          }
-
           await apiFetch(`/missions/${this.form.id}/dates`, {
             method: 'PUT',
             body: this.form,

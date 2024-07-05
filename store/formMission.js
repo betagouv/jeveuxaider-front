@@ -104,7 +104,9 @@ export const useFormMissionStore = defineStore('formMission', {
       mission.activity_secondary_id =
         mission.template?.activity_secondary_id || mission.activity_secondary_id
 
-      if (mission.with_dates === undefined && mission.date_type == 'ponctual') {
+      if (mission.date_type === 'recurring') {
+        mission.with_dates = 'no'
+      } else if (mission.with_dates === undefined && mission.date_type === 'ponctual') {
         mission.with_dates = mission.dates?.length > 0 ? 'yes' : 'no'
       }
 
