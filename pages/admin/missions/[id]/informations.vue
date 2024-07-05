@@ -31,10 +31,11 @@
                 required
                 id="domaine_id"
                 name="domaine_id"
-                v-model="form.domaine_id"
+                :modelValue="form.domaine_id"
                 placeholder="Sélectionner un domaine"
                 :options="$labels.domaines"
                 :disabled="Boolean(form.template_id && form.template?.domaine_id)"
+                @update:modelValue="form.domaine_id = $event ? Number($event) : null"
               />
             </DsfrFormControl>
             <DsfrFormControl
@@ -45,10 +46,15 @@
               <DsfrSelect
                 id="domaine_secondary_id"
                 name="domaine_secondary_id"
-                v-model="form.domaine_secondary_id"
+                :modelValue="form.domaine_secondary_id"
                 placeholder="Sélectionner un domaine"
-                :options="$labels.domaines.filter((domaine) => domaine.key != form.domaine_id)"
-                :disabled="Boolean(form.template_id && form.template?.domaine_sondary_id)"
+                :options="
+                  $labels.domaines.map((domaine) =>
+                    domaine.key === form.domaine_id ? { ...domaine, disabled: true } : domaine
+                  )
+                "
+                :disabled="Boolean(form.template_id && form.template?.domaine_secondary_id)"
+                @update:modelValue="form.domaine_secondary_id = $event ? Number($event) : null"
               />
             </DsfrFormControl>
           </div>
@@ -60,10 +66,11 @@
             required
           >
             <DsfrTagsGroup
-              v-model="form.publics_beneficiaires"
+              :modelValue="form.publics_beneficiaires"
               name="publics_beneficiaires"
               :options="$labels.mission_publics_beneficiaires"
               class="mt-4"
+              @update:modelValue="onUpdatePublicBeneficiaires"
             />
           </DsfrFormControl>
 
@@ -91,10 +98,17 @@
                 required
                 id="activity_id"
                 name="activity_id"
-                v-model="form.activity_id"
+                :modelValue="form.activity_id"
                 placeholder="Sélectionner une activité"
-                :options="activities"
+                :options="
+                  activities.map((activity) =>
+                    activity.id === form.activity_secondary_id
+                      ? { ...activity, disabled: true }
+                      : activity
+                  )
+                "
                 :disabled="Boolean(form.template_id && form.template?.activity_id)"
+                @update:modelValue="form.activity_id = $event ? Number($event) : null"
               />
             </DsfrFormControl>
             <DsfrFormControl
@@ -105,10 +119,15 @@
               <DsfrSelect
                 id="activity_secondary_id"
                 name="activity_secondary_id"
-                v-model="form.activity_secondary_id"
+                :modelValue="form.activity_secondary_id"
                 placeholder="Sélectionner une activité"
-                :options="activities"
+                :options="
+                  activities.map((activity) =>
+                    activity.id === form.activity_id ? { ...activity, disabled: true } : activity
+                  )
+                "
                 :disabled="Boolean(form.template_id && form.template?.activity_secondary_id)"
+                @update:modelValue="form.activity_secondary_id = $event ? Number($event) : null"
               />
             </DsfrFormControl>
             <BaseFormInfo class="lg:col-span-2 !mt-0"
@@ -164,10 +183,17 @@
                 required
                 id="domaine_id"
                 name="domaine_id"
-                v-model="form.domaine_id"
+                :modelValue="form.domaine_id"
                 placeholder="Sélectionner un domaine"
-                :options="$labels.domaines"
+                :options="
+                  $labels.domaines.map((domaine) =>
+                    domaine.key === form.domaine_secondary_id
+                      ? { ...domaine, disabled: true }
+                      : domaine
+                  )
+                "
                 :disabled="Boolean(form.template_id && form.template?.domaine_id)"
+                @update:modelValue="form.domaine_id = $event ? Number($event) : null"
               />
             </DsfrFormControl>
             <DsfrFormControl
@@ -178,10 +204,15 @@
               <DsfrSelect
                 id="domaine_secondary_id"
                 name="domaine_secondary_id"
-                v-model="form.domaine_secondary_id"
+                :modelValue="form.domaine_secondary_id"
                 placeholder="Sélectionner un domaine"
-                :options="$labels.domaines.filter((domaine) => domaine.key != form.domaine_id)"
-                :disabled="Boolean(form.template_id && form.template?.domaine_sondary_id)"
+                :options="
+                  $labels.domaines.map((domaine) =>
+                    domaine.key === form.domaine_id ? { ...domaine, disabled: true } : domaine
+                  )
+                "
+                :disabled="Boolean(form.template_id && form.template?.domaine_secondary_id)"
+                @update:modelValue="form.domaine_secondary_id = $event ? Number($event) : null"
               />
             </DsfrFormControl>
           </div>
@@ -193,10 +224,11 @@
             required
           >
             <DsfrTagsGroup
-              v-model="form.publics_beneficiaires"
+              :modelValue="form.publics_beneficiaires"
               name="publics_beneficiaires"
               :options="$labels.mission_publics_beneficiaires"
               class="mt-4"
+              @update:modelValue="onUpdatePublicBeneficiaires"
             />
           </DsfrFormControl>
 
@@ -260,10 +292,17 @@
                 required
                 id="activity_id"
                 name="activity_id"
-                v-model="form.activity_id"
+                :modelValue="form.activity_id"
                 placeholder="Sélectionner une activité"
-                :options="activities"
+                :options="
+                  activities.map((activity) =>
+                    activity.id === form.activity_secondary_id
+                      ? { ...activity, disabled: true }
+                      : activity
+                  )
+                "
                 :disabled="Boolean(form.template_id && form.template?.activity_id)"
+                @update:modelValue="form.activity_id = $event ? Number($event) : null"
               />
             </DsfrFormControl>
             <DsfrFormControl
@@ -274,10 +313,15 @@
               <DsfrSelect
                 id="activity_secondary_id"
                 name="activity_secondary_id"
-                v-model="form.activity_secondary_id"
+                :modelValue="form.activity_secondary_id"
                 placeholder="Sélectionner une activité"
-                :options="activities"
+                :options="
+                  activities.map((activity) =>
+                    activity.id === form.activity_id ? { ...activity, disabled: true } : activity
+                  )
+                "
                 :disabled="Boolean(form.template_id && form.template?.activity_secondary_id)"
+                @update:modelValue="form.activity_secondary_id = $event ? Number($event) : null"
               />
             </DsfrFormControl>
             <BaseFormInfo class="lg:col-span-2 !mt-0"
@@ -290,7 +334,11 @@
       </template>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onValidateClick">
+      <DsfrButton
+        :loading="loading"
+        :disabled="!$stores.formMission.isDraft && !isFormDirty"
+        @click="onValidateClick"
+      >
         {{ $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer' }}
       </DsfrButton>
     </template>
@@ -426,6 +474,11 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
+    },
+    onUpdatePublicBeneficiaires($event) {
+      this.form.publics_beneficiaires = $event.sort((a, b) =>
+        a.localeCompare(b, 'fr', { numeric: true })
+      )
     },
   },
   async created() {

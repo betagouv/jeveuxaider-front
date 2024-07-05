@@ -47,7 +47,9 @@
             :is-disabled="!$stores.formMission.isStepVisuelCompleted && $stores.formMission.isDraft"
             @next="$router.push(`/admin/missions/${mission.id}/informations`)"
           >
-            Présentation de la mission et 3 autres informations
+            <span v-if="$stores.formMission.isStepInformationsCompleted === false">À définir</span>
+            <!-- @todo -->
+            <span v-else>Présentation de la mission et 3 autres informations</span>
           </CustomMissionPreviewItem>
         </div>
         <div class="space-y-4">
@@ -140,19 +142,27 @@
             "
             @next="$router.push(`/admin/missions/${mission.id}/benevoles-informations`)"
           >
-            <div>
-              <template v-if="mission.prerequisites">
-                {{ mission.prerequisites.length }} pré-requis
-              </template>
-              <template v-else>Aucun prérequis</template>
+            <div v-if="$stores.formMission.isStepBenevolesInformationsCompleted === false">
+              À définir
             </div>
-            <div>
-              {{
-                benevolesInfosItemsCount > 0
-                  ? $filters.pluralize(benevolesInfosItemsCount, 'information')
-                  : 'À définir'
-              }}
-            </div>
+
+            <template v-else>
+              <div>
+                <template v-if="mission.prerequisites?.filter((p) => p).length > 0">
+                  {{ mission.prerequisites.filter((p) => p).length }} pré-requis
+                </template>
+                <template v-else>Aucun prérequis</template>
+              </div>
+              <div>
+                {{
+                  benevolesInfosItemsCount > 0
+                    ? $filters.pluralize(benevolesInfosItemsCount, 'information')
+                    : $stores.formMission.isStepBenevolesInformationsCompleted
+                    ? 'Aucune information'
+                    : 'À définir'
+                }}
+              </div>
+            </template>
           </CustomMissionPreviewItem>
         </div>
         <div class="space-y-4">
@@ -218,15 +228,8 @@ export default defineNuxtComponent({
       mission: null,
     }
   },
-  watch: {
-    '$route.name': {
-      async handler(newVal, oldVal) {
-        this.scrollIntoView(newVal)
-      },
-    },
-  },
   mounted() {
-    this.scrollIntoView(this.$route.name)
+    this.scrollIntoView(this.$route.name, 0)
   },
   watch: {
     '$stores.formMission.mission': {
@@ -234,11 +237,16 @@ export default defineNuxtComponent({
         if (!newVal) {
           this.mission = null
         } else {
-          this.mission = { ...newVal }
+          this.mission = _cloneDeep(newVal)
         }
       },
       immediate: true,
       deep: true,
+    },
+    '$route.name': {
+      async handler(newVal) {
+        this.scrollIntoView(newVal)
+      },
     },
   },
   computed: {
@@ -260,8 +268,14 @@ export default defineNuxtComponent({
     },
   },
   methods: {
-    scrollIntoView(id) {
-      this.$scrollTo(`#${id}`, 300, {
+    async scrollIntoView(id, duration = null) {
+      await this.$nextTick()
+      const _duration = duration ?? 1000
+      const el = document.getElementById(id)
+      if (el && this.$utils.isElementInViewport(el)) {
+        return
+      }
+      this.$scrollTo(`#${id}`, _duration, {
         container: '#sidebar-content',
         offset: -75,
       })

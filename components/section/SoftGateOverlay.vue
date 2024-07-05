@@ -113,14 +113,14 @@ export default defineNuxtComponent({
           address.longitude
         )
         if (distance > maxDistance) {
-          console.log(
-            `Address at index ${i} is more than ${maxDistance} kms away: ${distance.toFixed(2)} kms`
-          )
+          // console.log(
+          //   `Address at index ${i} is more than ${maxDistance} kms away: ${distance.toFixed(2)} kms`
+          // )
           return true
         } else {
-          console.log(
-            `Address at index ${i} is within ${maxDistance} kms: ${distance.toFixed(2)} kms`
-          )
+          // console.log(
+          //   `Address at index ${i} is within ${maxDistance} kms: ${distance.toFixed(2)} kms`
+          // )
         }
       }
       return false

@@ -105,7 +105,7 @@ export default defineNuxtComponent({
     },
   },
   mounted() {
-    if (this.isElementInViewport(this.$refs.tablist)) {
+    if (this.$utils.isElementInViewport(this.$refs.tablist)) {
       this.scrollSelectedTabIntoView({ behavior: 'auto' })
     }
   },
@@ -119,20 +119,11 @@ export default defineNuxtComponent({
       }
       this.$emit('selected', tab)
     },
-    isElementInViewport(el) {
-      const rect = el.getBoundingClientRect()
-      return (
-        rect.top >= 0 &&
-        rect.left >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-      )
-    },
     onScroll() {
       const elFirst = this.$refs[`tab-${this.firstTabKey}`]?.[0]
-      this.hasShadowLeft = elFirst && !this.isElementInViewport(elFirst)
+      this.hasShadowLeft = elFirst && !this.$utils.isElementInViewport(elFirst)
       const elLast = this.$refs[`tab-${this.lastTabKey}`]?.[0]
-      this.hasShadowRight = elLast && !this.isElementInViewport(elLast)
+      this.hasShadowRight = elLast && !this.$utils.isElementInViewport(elLast)
     },
     scrollSelectedTabIntoView({ behavior }) {
       this.$refs[`tab-${this.selectedKey}`]?.[0]?.scrollIntoView({
@@ -167,10 +158,10 @@ button {
 /* @todo: props pour gérer la couleur */
 .shadow-left::before {
   background: linear-gradient(to right, #f9f6f2, transparent);
-  @apply left-0;
+  @apply -left-px;
 }
 .shadow-right::after {
   background: linear-gradient(to right, transparent, #f9f6f2);
-  @apply right-0;
+  @apply -right-px;
 }
 </style>

@@ -30,16 +30,31 @@
             <CustomOptionCard
               @click="onPresentielClick"
               :is-selected="form.type === 'Mission en présentiel'"
+              :is-recommended="
+                $stores.formMission.mission?.template?.recommendation_type === 'onsite'
+              "
               title="En présentiel"
               description="Vous pourrez préciser le ou les lieux ensuite : villes, départements, etc."
             />
             <CustomOptionCard
               @click="onDistanceClick"
               :is-selected="form.type === 'Mission à distance'"
+              :is-recommended="
+                $stores.formMission.mission?.template?.recommendation_type === 'remote'
+              "
               title="À distance"
               description="Le bénévole peut réaliser la mission depuis chez lui ou n’importe où, à distance"
             />
           </div>
+
+          <template #bottom>
+            <CustomInfoRecommendation
+              v-if="
+                $stores.formMission.mission?.template &&
+                $stores.formMission.mission?.template?.recommendation_type !== null
+              "
+            />
+          </template>
         </DsfrFormControl>
 
         <template v-if="form.type === 'Mission en présentiel'">
@@ -70,7 +85,7 @@
           >
             <div
               class="flex justify-between items-center py-4"
-              v-for="item in form.addresses"
+              v-for="(item, index) in form.addresses"
               :key="item.id"
             >
               <div>
@@ -86,7 +101,7 @@
                 type="tertiary"
                 icon="RiDeleteBinLine"
                 icon-class="text-[#CE0500]"
-                @click="onRemovedAddressItem(item)"
+                @click="onRemovedAddressItem(index)"
               />
             </div>
           </div>
@@ -97,19 +112,23 @@
             :error="errors.addresses_precisions"
           >
             <DsfrTextarea
-              v-model="form.addresses_precisions"
+              :modelValue="form.addresses_precisions"
               name="addresses_precisions"
               placeholder="Précisez en quelques mots les zones d'intervention du bénévole"
               @keydown.enter.native.prevent
+              @update:modelValue="form.addresses_precisions = $event || null"
             />
           </DsfrFormControl>
         </template>
       </div>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onValidateClick">{{
-        $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer'
-      }}</DsfrButton>
+      <DsfrButton
+        :loading="loading"
+        :disabled="!$stores.formMission.isDraft && !isFormDirty"
+        @click="onValidateClick"
+        >{{ $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer' }}</DsfrButton
+      >
     </template>
   </FormMissionWrapper>
 </template>
@@ -156,47 +175,39 @@ export default defineNuxtComponent({
     },
     onDistanceClick() {
       this.form.type = 'Mission à distance'
-      // this.form.is_autonomy = false
     },
-    onRemovedAddressItem(address) {
-      this.form.addresses = this.form.addresses.filter((item) => item.id !== address.id)
+    onRemovedAddressItem(index) {
+      this.form.addresses.splice(index, 1)
+      if (this.form.addresses.length === 0) {
+        this.form.addresses = null
+      }
     },
     handleSelectedAddress(selectedItem) {
-      console.log(selectedItem)
-      // this.form.addresses = [
-      //   ...this.form.addresses,
-      //   {
-      //     id: selectedItem.id,
-      //     label:
-      //       selectedItem.type === 'municipality'
-      //         ? `${selectedItem.postcode} ${selectedItem.city}`
-      //         : selectedItem.label,
-      //     street: selectedItem.street,
-      //     zip: selectedItem.postcode,
-      //     city: selectedItem.city,
-      //     longitude: selectedItem.coordinates[0],
-      //     latitude: selectedItem.coordinates[1],
-      //     department: selectedItem.context?.split(', ')[0],
-      //   },
-      // ]
-
       if (!selectedItem) {
         return
       }
+      if (this.form.addresses === null) {
+        this.form.addresses = []
+      }
 
-      this.form.addresses.push({
-        id: selectedItem.id,
-        label:
-          selectedItem.type === 'municipality'
-            ? `${selectedItem.postcode} ${selectedItem.city}`
-            : selectedItem.label,
-        street: selectedItem.street,
-        zip: selectedItem.postcode,
-        city: selectedItem.city,
-        longitude: selectedItem.coordinates[0],
-        latitude: selectedItem.coordinates[1],
-        department: selectedItem.context?.split(', ')[0],
-      })
+      const newAddress = _omitBy(
+        {
+          id: selectedItem.id,
+          label:
+            selectedItem.type === 'municipality'
+              ? `${selectedItem.postcode} ${selectedItem.city}`
+              : selectedItem.label,
+          street: selectedItem.street,
+          zip: selectedItem.postcode,
+          city: selectedItem.city,
+          longitude: selectedItem.coordinates[0],
+          latitude: selectedItem.coordinates[1],
+          department: selectedItem.context?.split(', ')[0],
+        },
+        _isNil
+      )
+
+      this.form.addresses.push(newAddress)
       this.validate('addresses')
     },
     async onFetchGeoSuggestions(payload, config = {}) {

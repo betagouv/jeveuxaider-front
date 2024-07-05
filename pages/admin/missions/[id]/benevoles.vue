@@ -73,9 +73,12 @@
       </div>
     </div>
     <template #footer>
-      <DsfrButton :loading="loading" :disabled="!isFormDirty" @click="onValidateClick">{{
-        $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer'
-      }}</DsfrButton>
+      <DsfrButton
+        :loading="loading"
+        :disabled="!$stores.formMission.isDraft && !isFormDirty"
+        @click="onValidateClick"
+        >{{ $stores.formMission.isDraft ? 'Enregistrer et continuer' : 'Enregistrer' }}</DsfrButton
+      >
     </template>
   </FormMissionWrapper>
 </template>
@@ -127,8 +130,6 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              console.log(mission)
-              // this.$stores.formMission.setMission(mission)
               this.$stores.formMission.updateFields(mission, ['participations_max', 'places_left'])
               if (this.$stores.formMission.isDraft) {
                 this.$router.push(`/admin/missions/${mission.id}/benevoles-informations`)
