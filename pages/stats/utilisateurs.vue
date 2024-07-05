@@ -21,9 +21,9 @@
       <!-- <UtilisateursByDate ref="utilisateursByDate" /> -->
       <div class="flex flex-col gap-12">
         <UtilisateursByPeriod ref="utilisateursByPeriod" />
+        <UtilisateursByAge ref="utilisateursByAge" />
         <UtilisateursByActivities ref="utilisateursByActivities" />
         <TemoignagesByGrades ref="temoignagesByGrades" />
-        <UtilisateursByAge ref="utilisateursByAge" />
         <ParticipationsDelaysByRegistrations ref="participationsDelaysByRegistrations" />
       </div>
     </div>
