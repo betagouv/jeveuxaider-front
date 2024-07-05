@@ -196,6 +196,7 @@
                   {{ $filters.pluralize(formPreviousDates.length, 'date passée', 'dates passées') }}
                 </p>
                 <p>Aucune date à venir</p>
+                <BaseFormError v-if="errors.dates">{{ errors.dates }}</BaseFormError>
               </div>
             </template>
             <template v-else>
