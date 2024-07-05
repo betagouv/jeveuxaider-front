@@ -74,19 +74,20 @@ export default defineNuxtComponent({
             key: 'statistics',
             label: 'Statistiques',
             childrens: [
-              { label: "Vue d'ensemble", to: '/admin/statistics' },
+              { label: "Vue d'ensemble", to: `/admin/statistics${queryString}` },
               {
                 label: 'Indicateurs clés',
-                to: '/admin/statistics/indicateurs-cles',
+                to: `/admin/statistics/indicateurs-cles${queryString}`,
               },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
               {
                 label: 'Participations',
                 to: `/admin/statistics/participations${queryString}`,
               },
               { label: 'Utilisateurs', to: `/admin/statistics/utilisateurs${queryString}` },
-              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
               { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
-              { label: 'Places', to: '/admin/statistics/places' },
+
+              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
             ],
           },
           {
@@ -103,20 +104,20 @@ export default defineNuxtComponent({
               },
             ],
           },
-          {
-            key: 'actions',
-            label: 'Actions en attente',
-            childrens: [
-              {
-                label: 'Organisations',
-                to: '/admin/statistics/organisations/participations-a-valider',
-              },
-              {
-                label: 'Départements',
-                to: '/admin/statistics/departements/organisations-a-valider',
-              },
-            ],
-          },
+          // {
+          //   key: 'actions',
+          //   label: 'Actions en attente',
+          //   childrens: [
+          //     {
+          //       label: 'Organisations',
+          //       to: '/admin/statistics/organisations/participations-a-valider',
+          //     },
+          //     {
+          //       label: 'Départements',
+          //       to: '/admin/statistics/departements/organisations-a-valider',
+          //     },
+          //   ],
+          // },
           {
             key: 'services',
             label: 'Services tiers',
@@ -138,19 +139,19 @@ export default defineNuxtComponent({
             key: 'statistics',
             label: 'Statistiques',
             childrens: [
-              { label: "Vue d'ensemble", to: '/admin/statistics' },
+              { label: "Vue d'ensemble", to: `/admin/statistics${queryString}` },
               {
                 label: 'Indicateurs clés',
-                to: '/admin/statistics/indicateurs-cles',
+                to: `/admin/statistics/indicateurs-cles${queryString}`,
               },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
               {
                 label: 'Participations',
                 to: `/admin/statistics/participations${queryString}`,
               },
               { label: 'Utilisateurs', to: `/admin/statistics/utilisateurs${queryString}` },
-              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
               { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
-              { label: 'Places', to: '/admin/statistics/places' },
+              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
             ],
           },
           {
@@ -159,7 +160,7 @@ export default defineNuxtComponent({
             childrens: [
               {
                 label: 'Organisations',
-                to: '/admin/statistics/organisations/participations-a-valider',
+                to: `/admin/statistics/organisations/participations-a-valider${queryString}`,
               },
             ],
           },
@@ -170,17 +171,17 @@ export default defineNuxtComponent({
             key: 'statistics',
             label: 'Statistiques',
             childrens: [
-              { label: "Vue d'ensemble", to: '/admin/statistics' },
+              { label: "Vue d'ensemble", to: `/admin/statistics${queryString}` },
               {
                 label: 'Indicateurs clés',
-                to: '/admin/statistics/indicateurs-cles',
+                to: `/admin/statistics/indicateurs-cles${queryString}`,
               },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
               {
                 label: 'Participations',
                 to: `/admin/statistics/participations${queryString}`,
               },
               { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
-              { label: 'Places', to: '/admin/statistics/places' },
             ],
           },
         ]
@@ -190,18 +191,18 @@ export default defineNuxtComponent({
             key: 'statistics',
             label: 'Statistiques',
             childrens: [
-              { label: "Vue d'ensemble", to: '/admin/statistics' },
+              { label: "Vue d'ensemble", to: `/admin/statistics${queryString}` },
               {
                 label: 'Indicateurs clés',
-                to: '/admin/statistics/indicateurs-cles',
+                to: `/admin/statistics/indicateurs-cles${queryString}`,
               },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
               {
                 label: 'Participations',
                 to: `/admin/statistics/participations${queryString}`,
               },
               { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
               { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
-              { label: 'Places', to: '/admin/statistics/places' },
             ],
           },
         ]

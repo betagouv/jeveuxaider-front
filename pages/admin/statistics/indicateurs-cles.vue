@@ -19,6 +19,12 @@
       title="Indicateurs clés"
       secondary-title-bottom="Évolution des indicateurs avec leurs variations par rapport à l'année précédente"
     >
+      <template #action>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
+      </template>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
+      </template>
     </BaseSectionHeading>
 
     <div class="space-y-12">
@@ -53,8 +59,33 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
   },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
   data() {
     return {}
+  },
+  computed: {
+    filters() {
+      if (this.$stores.auth.contextRole === 'admin') {
+        return ['department']
+      }
+      if (this.$stores.auth.contextRole === 'referent') {
+        return []
+      }
+      if (this.$stores.auth.contextRole === 'tete_de_reseau') {
+        return ['department']
+      }
+      if (this.$stores.auth.contextRole === 'responsable') {
+        return ['department']
+      }
+
+      return []
+    },
   },
   methods: {
     refetch() {

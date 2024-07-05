@@ -17,10 +17,10 @@
 
     <BaseSectionHeading title="Utilisateurs">
       <template #action>
-        <CustomFiltersStatisticsButton />
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
       </template>
       <template #bottom>
-        <CustomFiltersStatisticsActive class="mt-4" />
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
       </template>
     </BaseSectionHeading>
 
@@ -88,15 +88,36 @@ export default defineNuxtComponent({
   data() {
     return {}
   },
+  computed: {
+    filters() {
+      if (this.$stores.auth.contextRole === 'admin') {
+        return ['department', 'daterange']
+      }
+      if (this.$stores.auth.contextRole === 'referent') {
+        return ['daterange']
+      }
+      if (this.$stores.auth.contextRole === 'tete_de_reseau') {
+        return ['daterange']
+      }
+      if (this.$stores.auth.contextRole === 'responsable') {
+        return ['daterange']
+      }
+
+      return []
+    },
+  },
   methods: {
     refetch() {
-      this.$refs.utilisateursStatistics.fetch()
-      this.$refs.utilisateursByDate.fetch()
-      this.$refs.utilisateursByAge.fetch()
-      this.$refs.participationsCanceledByBenevoles.fetch()
-      this.$refs.utilisateursByActivities.fetch()
-      this.$refs.utilisateursWithParticipations.fetch()
-      this.$refs.participationsDelaysByRegistrations.fetch()
+      if (this.$refs.utilisateursStatistics) this.$refs.utilisateursStatistics.fetch()
+      if (this.$refs.utilisateursByDate) this.$refs.utilisateursByDate.fetch()
+      if (this.$refs.utilisateursByAge) this.$refs.utilisateursByAge.fetch()
+      if (this.$refs.participationsCanceledByBenevoles)
+        this.$refs.participationsCanceledByBenevoles.fetch()
+      if (this.$refs.utilisateursByActivities) this.$refs.utilisateursByActivities.fetch()
+      if (this.$refs.utilisateursWithParticipations)
+        this.$refs.utilisateursWithParticipations.fetch()
+      if (this.$refs.participationsDelaysByRegistrations)
+        this.$refs.participationsDelaysByRegistrations.fetch()
     },
   },
 })

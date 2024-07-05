@@ -8,7 +8,7 @@
         @close="$emit('cancel')"
       >
         <form id="form-filters" @submit.prevent="handleSubmit" class="py-6 flex flex-col gap-6">
-          <div>
+          <div v-if="filters.includes('daterange')">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <DsfrFormControl label="À partir du" html-for="start_date" :error="errors.start_date">
                 <DsfrInput type="date" v-model="form.start_date" name="start_date" />
@@ -30,7 +30,12 @@
             </div>
           </div>
 
-          <DsfrFormControl label="Département" html-for="department" :error="errors.department">
+          <DsfrFormControl
+            v-if="filters.includes('department')"
+            label="Département"
+            html-for="department"
+            :error="errors.department"
+          >
             <DsfrSelect
               required
               id="department"
@@ -67,6 +72,12 @@ export default defineNuxtComponent({
     isOpen: {
       type: Boolean,
       default: false,
+    },
+    filters: {
+      type: Array,
+      default: () => {
+        return ['department', 'daterange']
+      },
     },
   },
   data() {

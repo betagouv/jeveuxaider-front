@@ -9,33 +9,39 @@
               to: ['admin'].includes($stores.auth.contextRole) ? '/admin' : null,
             },
             { text: 'Plus de chiffres' },
-            { text: 'Vue d\'ensemble' },
+            { text: 'Vue d’ensemble' },
           ]"
         />
       </Teleport>
     </ClientOnly>
 
     <BaseSectionHeading
-      title="Vue d'ensemble"
+      title="Vue d’ensemble"
       secondaryTitleBottom="L’activité sur JeVeuxAider.gouv.fr en détail"
     >
+      <template #action>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
+      </template>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
+      </template>
     </BaseSectionHeading>
 
     <!-- <OverviewQuickGlance ref="overviewQuickGlance" /> -->
 
     <!-- <BaseHeading as="h2" :level="2"> L’activité sur JeVeuxAider.gouv.fr en détail </BaseHeading> -->
-
+    <OverviewPlaces ref="overviewPlaces" />
     <OverviewParticipations ref="overviewParticipations" />
     <OverviewUtilisateurs
       v-if="['admin'].includes($stores.auth.contextRole)"
       ref="overviewUtilisateurs"
     />
+    <OverviewMissions ref="overviewMissions" />
+
     <OverviewOrganisations
       ref="overviewOrganisations"
       v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
     />
-    <OverviewMissions ref="overviewMissions" />
-    <OverviewPlaces ref="overviewPlaces" />
     <!-- <OverviewAPIEngagement v-if="['admin'].includes($stores.auth.contextRole)" ref="overviewAPIEngagement" /> -->
   </div>
 </template>
@@ -77,17 +83,42 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
   },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
   data() {
     return {}
   },
+  computed: {
+    filters() {
+      if (this.$stores.auth.contextRole === 'admin') {
+        return ['department']
+      }
+      if (this.$stores.auth.contextRole === 'referent') {
+        return []
+      }
+      if (this.$stores.auth.contextRole === 'tete_de_reseau') {
+        return ['department']
+      }
+      if (this.$stores.auth.contextRole === 'responsable') {
+        return ['department']
+      }
+
+      return []
+    },
+  },
   methods: {
     refetch() {
-      this.$refs.overviewQuickGlance.fetch()
-      this.$refs.overviewParticipations.fetch()
-      this.$refs.overviewUtilisateurs.fetch()
-      this.$refs.overviewOrganisations.fetch()
-      this.$refs.overviewMissions.fetch()
-      this.$refs.overviewPlaces.fetch()
+      if (this.$refs.overviewQuickGlance) this.$refs.overviewQuickGlance.fetch()
+      if (this.$refs.overviewParticipations) this.$refs.overviewParticipations.fetch()
+      if (this.$refs.overviewUtilisateurs) this.$refs.overviewUtilisateurs.fetch()
+      if (this.$refs.overviewOrganisations) this.$refs.overviewOrganisations.fetch()
+      if (this.$refs.overviewMissions) this.$refs.overviewMissions.fetch()
+      if (this.$refs.overviewPlaces) this.$refs.overviewPlaces.fetch()
     },
   },
 })
