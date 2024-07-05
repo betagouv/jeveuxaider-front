@@ -8,25 +8,22 @@
 
     <BaseSectionHeading title="Places disponibles">
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatisticsPublic :filters="['department']" @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
+      </template>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
       </template>
     </BaseSectionHeading>
 
     <div class="space-y-12">
       <PlacesStatistics ref="placesStatistics" />
       <BaseHeading as="h2" :level="2"> L'offre actuelle en détail </BaseHeading>
-      <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 lg:w-1/2">
-          <PlacesByActivities ref="placesByActivities" />
-          <PlacesByOrganisations ref="placesByOrganisations" />
-          <PlacesByReseaux ref="placesByReseaux" />
-        </div>
-        <div class="space-y-12 lg:w-1/2">
-          <PlacesByDomaines ref="placesByDomaines" />
-          <PlacesByMissions ref="placesByMissions" />
-        </div>
+      <div class="flex flex-col gap-12">
+        <PlacesByActivities ref="placesByActivities" />
+        <PlacesByOrganisations ref="placesByOrganisations" />
+        <PlacesByReseaux ref="placesByReseaux" />
+        <PlacesByDomaines ref="placesByDomaines" />
+        <PlacesByMissions ref="placesByMissions" />
       </div>
     </div>
   </div>
@@ -58,17 +55,29 @@ export default defineNuxtComponent({
       layout: 'statistics-public',
     })
   },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
+  computed: {
+    filters() {
+      return ['department']
+    },
+  },
   data() {
     return {}
   },
   methods: {
     refetch() {
-      this.$refs.placesByActivities.fetch()
-      this.$refs.placesByDomaines.fetch()
-      this.$refs.placesByReseaux.fetch()
-      this.$refs.placesByMissions.fetch()
-      this.$refs.placesByOrganisations.fetch()
-      this.$refs.placesStatistics.fetch()
+      this.$refs.placesByActivities?.fetch()
+      this.$refs.placesByDomaines?.fetch()
+      this.$refs.placesByReseaux?.fetch()
+      this.$refs.placesByMissions?.fetch()
+      this.$refs.placesByOrganisations?.fetch()
+      this.$refs.placesStatistics?.fetch()
     },
   },
 })

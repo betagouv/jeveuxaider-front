@@ -21,10 +21,10 @@
       secondary-title-bottom="Les missions proposées sur JeVeuxAider.gouv.fr sont diffusées sur des plateformes partenaires, en vue d’optimiser leur visibilité. Le trafic entrant est donc le trafic reçu sur JeVeuxAider.gouv.fr grâce aux partenaires."
     >
       <template #action>
-        <CustomFiltersStatisticsButton />
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
       </template>
       <template #bottom>
-        <CustomFiltersStatisticsActive class="mt-4" />
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
       </template>
     </BaseSectionHeading>
 
@@ -61,6 +61,17 @@ export default defineNuxtComponent({
   },
   data() {
     return {}
+  },
+  computed: {
+    filters() {
+      if (this.$stores.auth.contextRole === 'admin') {
+        return ['daterange']
+      }
+      if (this.$stores.auth.contextRole === 'referent') {
+        return ['daterange']
+      }
+      return []
+    },
   },
   methods: {
     refetch() {

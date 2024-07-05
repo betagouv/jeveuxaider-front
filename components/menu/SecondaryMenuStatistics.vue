@@ -96,11 +96,11 @@ export default defineNuxtComponent({
             childrens: [
               {
                 label: 'Trafic entrant',
-                to: '/admin/statistics/api-engagement/trafic-entrant',
+                to: `/admin/statistics/api-engagement/trafic-entrant${queryString}`,
               },
               {
                 label: 'Trafic sortant',
-                to: '/admin/statistics/api-engagement/trafic-sortant',
+                to: `/admin/statistics/api-engagement/trafic-sortant${queryString}`,
               },
             ],
           },
