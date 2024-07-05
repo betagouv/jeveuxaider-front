@@ -23,6 +23,7 @@
       <!-- <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" /> -->
 
       <div class="flex flex-col gap-12">
+        <ParticipationsByPeriod ref="participationsByPeriod" />
         <ParticipationsByActivities ref="participationsByActivities" />
         <ParticipationsByReseaux ref="participationsByReseaux" />
         <ParticipationsByDomaines ref="participationsByDomaines" />
@@ -40,6 +41,7 @@ import ParticipationsByOrganisations from '@/components/statistics/Participation
 import ParticipationsByDomaines from '@/components/statistics/ParticipationsByDomaines.vue'
 import ParticipationsByReseaux from '@/components/statistics/ParticipationsByReseaux.vue'
 import ParticipationsByActivities from '@/components/statistics/ParticipationsByActivities.vue'
+import ParticipationsByPeriod from '@/components/statistics/ParticipationsByPeriod.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
@@ -51,6 +53,7 @@ export default defineNuxtComponent({
     ParticipationsByDomaines,
     ParticipationsByReseaux,
     ParticipationsByActivities,
+    ParticipationsByPeriod,
     Breadcrumb,
   },
   setup() {
@@ -76,6 +79,7 @@ export default defineNuxtComponent({
   methods: {
     refetch() {
       this.$refs.participationsByDate?.fetch()
+      this.$refs.participationsByPeriod?.fetch()
       this.$refs.participationsStatistics?.fetch()
       this.$refs.participationsByDomaines?.fetch()
       this.$refs.participationsByOrganisations?.fetch()

@@ -20,6 +20,7 @@
       <BaseHeading as="h2" :level="2"> Les utilisateurs en détail </BaseHeading>
       <!-- <UtilisateursByDate ref="utilisateursByDate" /> -->
       <div class="flex flex-col gap-12">
+        <UtilisateursByPeriod ref="utilisateursByPeriod" />
         <UtilisateursByActivities ref="utilisateursByActivities" />
         <TemoignagesByGrades ref="temoignagesByGrades" />
         <UtilisateursByAge ref="utilisateursByAge" />
@@ -33,6 +34,7 @@
 import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic.vue'
 import UtilisateursStatistics from '@/components/statistics/UtilisateursStatistics.vue'
 import UtilisateursByDate from '@/components/statistics/UtilisateursByDate.vue'
+import UtilisateursByPeriod from '@/components/statistics/UtilisateursByPeriod.vue'
 import UtilisateursByActivities from '@/components/statistics/UtilisateursByActivities.vue'
 import UtilisateursByAge from '@/components/statistics/UtilisateursByAge.vue'
 import ParticipationsDelaysByRegistrations from '@/components/statistics/ParticipationsDelaysByRegistrations.vue'
@@ -46,6 +48,7 @@ export default defineNuxtComponent({
     UtilisateursByDate,
     UtilisateursByActivities,
     UtilisateursByAge,
+    UtilisateursByPeriod,
     ParticipationsDelaysByRegistrations,
     TemoignagesByGrades,
     Breadcrumb,
@@ -74,6 +77,7 @@ export default defineNuxtComponent({
     refetch() {
       this.$refs.utilisateursStatistics?.fetch()
       this.$refs.utilisateursByDate?.fetch()
+      this.$refs.utilisateursByPeriod?.fetch()
       this.$refs.utilisateursByAge?.fetch()
       this.$refs.utilisateursByActivities?.fetch()
       this.$refs.participationsDelaysByRegistrations?.fetch()
