@@ -90,7 +90,7 @@ export default defineNuxtComponent({
   },
   computed: {
     filters() {
-      return ['department', 'daterange']
+      return ['department']
     },
   },
   methods: {

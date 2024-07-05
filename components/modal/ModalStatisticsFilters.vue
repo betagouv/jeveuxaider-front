@@ -60,7 +60,7 @@
             <DsfrInputAutocomplete
               icon="RiSearchLine"
               name="reseau"
-              placeholder="Recherche par identifiant ou par nom"
+              placeholder="Recherche par mots clés..."
               :options="autocompleteOptionsReseaux"
               attribute-key="id"
               attribute-label="name"
@@ -97,7 +97,7 @@
             <DsfrInputAutocomplete
               icon="RiSearchLine"
               name="structure"
-              placeholder="Recherche par identifiant ou par nom"
+              placeholder="Recherche par mots clés..."
               :options="autocompleteOptionsOrganisations"
               attribute-key="id"
               attribute-label="name"

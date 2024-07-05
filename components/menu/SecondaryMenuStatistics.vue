@@ -65,7 +65,6 @@ export default defineNuxtComponent({
   computed: {
     items() {
       const runtimeConfig = useRuntimeConfig()
-      console.log('this.route', this.$route)
       const queryString = window.location.search
 
       if (this.$stores.auth.contextRole === 'admin') {

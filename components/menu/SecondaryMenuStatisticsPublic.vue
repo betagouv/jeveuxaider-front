@@ -64,17 +64,18 @@ export default defineNuxtComponent({
   },
   computed: {
     items() {
+      const queryString = window.location.search
       return [
         {
           key: 'statistics',
           label: 'Statistiques',
           childrens: [
             { label: "Vue d'ensemble", to: '/stats' },
-            { label: 'Mises en relation', to: '/stats/participations' },
-            { label: 'Utilisateurs', to: '/stats/utilisateurs' },
-            { label: 'Organisations', to: '/stats/organisations' },
-            { label: 'Missions', to: '/stats/missions' },
-            { label: 'Places', to: '/stats/places' },
+            { label: 'Mises en relation', to: `/stats/participations${queryString}` },
+            { label: 'Utilisateurs', to: `/stats/utilisateurs${queryString}` },
+            { label: 'Organisations', to: `/stats/organisations${queryString}` },
+            { label: 'Missions', to: `/stats/missions${queryString}` },
+            { label: 'Places', to: `/stats/places${queryString}` },
             // { label: 'API Engagement', to: '/stats/api-engagement' }
           ],
         },
