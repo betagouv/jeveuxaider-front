@@ -93,9 +93,9 @@ export const useFormMissionStore = defineStore('formMission', {
       }
 
       // Fix dirty state comparison
-      if (!mission.prerequisites || mission.prerequisites?.length === 0) {
-        mission.prerequisites = [null, null, null]
-      }
+      mission.prerequisites = mission.prerequisites
+        ?.concat(new Array(3 - mission.prerequisites.length).fill(null))
+        .slice(0, 3) ?? [null, null, null]
       mission.responsables.map((responsable) => {
         delete responsable.pivot
         return responsable
