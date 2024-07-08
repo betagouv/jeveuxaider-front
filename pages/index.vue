@@ -3,7 +3,7 @@
     <BlocBanner />
     <template v-if="$stores.auth.isLogged">
       <BlocCaDevraitVousPlaire />
-      <ElectionsLegislatives />
+      <!-- <ElectionsLegislatives /> -->
       <!-- <LaTourneeDeLete /> -->
       <BlocProfileActivities />
       <BlocTemoignages />
@@ -18,7 +18,7 @@
         <BlocInscriptionResponsable />
       </div>
       <BlocActivities />
-      <ElectionsLegislatives />
+      <!-- <ElectionsLegislatives /> -->
       <!-- <LaTourneeDeLete /> -->
       <BlocMissionsCourtes />
       <BlocActionsBenevolesPopulaires />

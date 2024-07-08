@@ -66,7 +66,7 @@
           origin="calendrier"
         />
       </div>
-      <ElectionsLegislatives />
+      <!-- <ElectionsLegislatives /> -->
       <div class="container my-12 lg:my-24">
         <DsfrHeading as="h3" size="2xl" class="tracking-[-.5px]">
           Vous pouvez aussi vous engager à distance
