@@ -16,7 +16,7 @@
             )
           "
         >
-          Taux de conversion
+          Conversion
         </BaseTableHeadCell>
       </BaseTableHead>
       <BaseTableBody>
@@ -129,7 +129,7 @@ export default defineNuxtComponent({
     },
     hideUsers() {
       return (
-        !!['responsable'].includes(this.$stores.auth.contextRole) ||
+        !!['responsable', 'tete_de_reseau'].includes(this.$stores.auth.contextRole) ||
         !!this.$route.query.structure ||
         !!this.$route.query.reseau
       )
