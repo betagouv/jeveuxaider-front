@@ -172,6 +172,7 @@ export default defineNuxtComponent({
         end_date: date().nullable(),
       }),
       datePrefilters: [
+        { key: 'last_12_months', label: 'Les 12 derniers mois' },
         { key: 'current_year', label: 'Cette année' },
         { key: 'last_year', label: "L'année dernière" },
         { key: 'current_month', label: 'Ce mois-ci' },
@@ -186,6 +187,10 @@ export default defineNuxtComponent({
   methods: {
     onPrefiltersDatesClick(filter) {
       switch (filter) {
+        case 'last_12_months':
+          this.form.start_date = this.$dayjs().subtract(12, 'month').format('YYYY-MM-DD')
+          this.form.end_date = this.$dayjs().format('YYYY-MM-DD')
+          break
         case 'current_year':
           this.form.start_date = this.$dayjs().startOf('year').format('YYYY-MM-DD')
           this.form.end_date = this.$dayjs().format('YYYY-MM-DD')

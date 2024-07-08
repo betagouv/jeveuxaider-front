@@ -7,12 +7,8 @@
       <BaseTable>
         <BaseTableHead>
           <BaseTableHeadCell>Période</BaseTableHeadCell>
-          <BaseTableHeadCell v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
-            >Utilisateurs inscrits</BaseTableHeadCell
-          >
-          <BaseTableHeadCell v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
-            >Structures validées</BaseTableHeadCell
-          >
+          <BaseTableHeadCell v-if="!hideUsers">Utilisateurs inscrits</BaseTableHeadCell>
+          <BaseTableHeadCell v-if="!hideStructures">Structures validées</BaseTableHeadCell>
           <BaseTableHeadCell>Missions postées</BaseTableHeadCell>
           <BaseTableHeadCell>Mises en relation</BaseTableHeadCell>
           <BaseTableHeadCell>Participations validées</BaseTableHeadCell>
@@ -34,49 +30,49 @@
                 {{ $dayjs(item.created_at).format('MMMM') }}
               </span>
             </BaseTableRowCell>
-            <BaseTableRowCell v-if="['admin', 'referent'].includes($stores.auth.contextRole)">
+            <BaseTableRowCell v-if="!hideUsers">
               <div class="flex space-x-2 items-center">
                 <span>{{ $numeral(item.profiles_total) }}</span>
-                <PercentageVariation
+                <!-- <PercentageVariation
                   v-if="item.profiles_total_variation"
                   :value="item.profiles_total_variation"
-                />
+                /> -->
               </div>
             </BaseTableRowCell>
-            <BaseTableRowCell v-if="['admin', 'referent'].includes($stores.auth.contextRole)">
+            <BaseTableRowCell v-if="!hideStructures">
               <div class="flex space-x-2 items-center">
                 <span>{{ $numeral(item.structures_validated) }}</span>
-                <PercentageVariation
+                <!-- <PercentageVariation
                   v-if="item.structures_validated_variation"
                   :value="item.structures_validated_variation"
-                />
+                /> -->
               </div>
             </BaseTableRowCell>
             <BaseTableRowCell>
               <div class="flex space-x-2 items-center">
                 <span>{{ $numeral(item.missions_posted) }}</span>
-                <PercentageVariation
+                <!-- <PercentageVariation
                   v-if="item.missions_posted_variation"
                   :value="item.missions_posted_variation"
-                />
+                /> -->
               </div>
             </BaseTableRowCell>
             <BaseTableRowCell>
               <div class="flex space-x-2 items-center">
                 <span>{{ $numeral(item.participations_total) }}</span>
-                <PercentageVariation
+                <!-- <PercentageVariation
                   v-if="item.participations_total_variation"
                   :value="item.participations_total_variation"
-                />
+                /> -->
               </div>
             </BaseTableRowCell>
             <BaseTableRowCell>
               <div class="flex space-x-2 items-center">
                 <span>{{ $numeral(item.participations_validated) }}</span>
-                <PercentageVariation
+                <!-- <PercentageVariation
                   v-if="item.participations_validated_variation"
                   :value="item.participations_validated_variation"
-                />
+                /> -->
               </div>
             </BaseTableRowCell>
             <BaseTableRowCell
@@ -133,6 +129,18 @@ export default defineNuxtComponent({
     this.fetch()
   },
   computed: {
+    hideUsers() {
+      return (
+        !!['responsable'].includes(this.$stores.auth.contextRole) ||
+        !!this.$route.query.structure ||
+        !!this.$route.query.reseau
+      )
+    },
+    hideStructures() {
+      return (
+        !!['responsable'].includes(this.$stores.auth.contextRole) || !!this.$route.query.structure
+      )
+    },
     years() {
       const years = []
       for (let year = 2020; year <= this.$dayjs().year(); year++) {
@@ -178,7 +186,7 @@ export default defineNuxtComponent({
       }
     },
     async fetchStructuresByMonth() {
-      if (['responsable', 'tete_de_reseau'].includes(this.$stores.auth.contextRole)) {
+      if (this.hideStructures) {
         this.structures = []
       } else {
         await apiFetch('/statistics/structures-by-month', {
@@ -196,7 +204,7 @@ export default defineNuxtComponent({
       })
     },
     async fetchUsersByMonth() {
-      if (['responsable', 'tete_de_reseau'].includes(this.$stores.auth.contextRole)) {
+      if (this.hideUsers) {
         this.users = []
       } else {
         await apiFetch('/statistics/users-by-month', {
