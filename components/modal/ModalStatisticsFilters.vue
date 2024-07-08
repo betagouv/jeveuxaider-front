@@ -38,7 +38,6 @@
             :error="errors.department"
           >
             <DsfrSelect
-              required
               id="department"
               name="department"
               v-model="form.department"
