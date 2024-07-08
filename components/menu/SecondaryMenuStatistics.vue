@@ -87,6 +87,7 @@ export default defineNuxtComponent({
               { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
 
               { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
+              { label: 'Conversions', to: `/admin/statistics/conversions${queryString}` },
             ],
           },
           {
