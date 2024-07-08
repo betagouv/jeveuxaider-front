@@ -177,8 +177,8 @@
               <a
                 class="link"
                 target="_blank"
-                href="https://www.jeveuxaider.gouv.fr/engagement/ecoles-et-universites/"
-                >Écoles et Universités</a
+                href="https://www.jeveuxaider.gouv.fr/engagement/campagnes-mobilisation-nationale/"
+                >Campagnes de mobilisation nationale</a
               >
               <nuxt-link no-prefetch class="link" to="/stats">Statistiques</nuxt-link>
             </div>
