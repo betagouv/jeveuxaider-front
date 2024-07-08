@@ -26,17 +26,19 @@
 
     <div class="space-y-12">
       <ParticipationsStatistics ref="participationsStatistics" />
-      <BaseHeading as="h2" :level="2"> Les participations en détail </BaseHeading>
+
       <!-- <ParticipationsByDate
         v-if="['admin'].includes($stores.auth.contextRole)"
         ref="participationsByDate"
       /> -->
-      <ParticipationsByPeriod ref="participationsByPeriod" />
       <!-- <ParticipationsConversionByDate
         v-if="['admin'].includes($stores.auth.contextRole)"
         ref="participationsConversionByDate"
       /> -->
       <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-12"> Les participations en détail </BaseHeading>
+        <ParticipationsByPeriod ref="participationsByPeriod" />
+
         <ParticipationsByStates ref="participationsByStates" />
         <ParticipationsRefusedByResponsables ref="participationsRefusedByResponsables" />
         <ParticipationsCanceledByBenevoles ref="participationsCanceledByBenevoles" />

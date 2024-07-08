@@ -26,9 +26,11 @@
 
     <div class="space-y-12">
       <OrganisationsStatistics ref="organisationsStatistics" />
-      <BaseHeading as="h2" :level="2"> L’activité des organisations en détail </BaseHeading>
       <!-- <OrganisationsByDate ref="organisationsByDate" /> -->
       <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-12">
+          L’activité des organisations en détail
+        </BaseHeading>
         <OrganisationsByPeriod ref="organisationsByPeriod" />
         <OrganisationsByStates ref="organisationsByStates" />
         <OrganisationsByTypes ref="organisationsByTypes" />

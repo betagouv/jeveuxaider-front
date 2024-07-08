@@ -17,9 +17,10 @@
 
     <div class="space-y-12">
       <UtilisateursStatistics ref="utilisateursStatistics" />
-      <BaseHeading as="h2" :level="2"> Les utilisateurs en détail </BaseHeading>
       <!-- <UtilisateursByDate ref="utilisateursByDate" /> -->
       <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-12"> Les utilisateurs en détail </BaseHeading>
+
         <UtilisateursByPeriod ref="utilisateursByPeriod" />
         <UtilisateursByAge ref="utilisateursByAge" />
         <UtilisateursByActivities ref="utilisateursByActivities" />

@@ -15,7 +15,7 @@
           <div class="text-gray-900 font-semibold">
             {{ formattedDates }}
           </div>
-          <div class="text-gray-500 text-sm">
+          <div class="text-gray-600 text-sm">
             {{ formattedCommitment ? formattedCommitment : 'Engagement non spécifié' }}
           </div>
           <div v-if="mission.commitment__duration_min" class="text-gray-500 text-sm">
@@ -26,7 +26,7 @@
         </BaseStackedListItem>
         <BaseStackedListItem v-if="hasExpired" class="px-4" icon="⏰">
           <div class="text-gray-900 font-semibold">La date de la mission a expiré</div>
-          <div class="text-gray-500 text-sm">Changez son statut ou modifiez la date de fin</div>
+          <div class="text-gray-600 text-sm">Changez son statut ou modifiez la date de fin</div>
         </BaseStackedListItem>
       </BaseStackedList>
     </BaseBox>

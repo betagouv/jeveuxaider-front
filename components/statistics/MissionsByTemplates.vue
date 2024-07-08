@@ -13,7 +13,7 @@
         icon-class="text-xl font-semibold text-gray-500"
       >
         <div class="text-gray-900 font-semibold" v-html="item.title" />
-        <div class="text-gray-500 text-sm">
+        <div class="text-gray-600 text-sm">
           {{ $filters.pluralize(item.count, 'mission validée', 'missions validées') }}
         </div>
       </BaseStackedListItem>

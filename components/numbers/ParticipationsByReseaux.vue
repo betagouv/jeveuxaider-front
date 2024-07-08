@@ -14,7 +14,7 @@
         :link="`/admin/participations?reseau_name=${item.name}&filter[ofReseau]=${item.id}`"
       >
         <div class="text-gray-900 font-semibold" v-html="item.name" />
-        <div class="text-gray-500 text-sm">
+        <div class="text-gray-600 text-sm">
           {{ $filters.pluralize(item.count, 'participation', 'participations') }}
         </div>
       </BaseStackedListItem>

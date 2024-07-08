@@ -15,7 +15,7 @@
           :link="`/admin/missions?organisation_name=${item.name}&filter[structure.id]=${item.id}&filter[state]=Validée&filter[date]=over`"
         >
           <div class="text-gray-900 font-semibold" v-html="item.name" />
-          <div class="text-gray-500 text-sm">
+          <div class="text-gray-600 text-sm">
             {{ $filters.pluralize(item.count, 'mission', 'missions') }}
           </div>
         </BaseStackedListItem>

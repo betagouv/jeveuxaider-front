@@ -17,7 +17,7 @@
         <div class="text-gray-900 font-semibold">
           {{ item.page }}
         </div>
-        <div class="text-gray-500 text-sm">{{ $numeral(item.pageviews) }} vues</div>
+        <div class="text-gray-600 text-sm">{{ $numeral(item.pageviews) }} vues</div>
       </BaseStackedListItem>
     </BaseStackedList>
   </BaseBox>

@@ -17,7 +17,7 @@
         <div class="text-gray-900 font-semibold">
           {{ organisation.name }}
         </div>
-        <div class="text-gray-500 text-sm">{{ $numeral(organisation.count) }} participations</div>
+        <div class="text-gray-600 text-sm">{{ $numeral(organisation.count) }} participations</div>
       </BaseStackedListItem>
     </BaseStackedList>
   </BaseBox>

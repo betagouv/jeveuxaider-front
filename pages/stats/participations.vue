@@ -19,10 +19,13 @@
 
     <div class="space-y-12">
       <ParticipationsStatistics ref="participationsStatistics" class="lg:col-span-2" />
-      <BaseHeading as="h2" :level="2"> Les mises en relation en détail </BaseHeading>
       <!-- <ParticipationsByDate ref="participationsByDate" class="lg:col-span-2" /> -->
 
       <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-12">
+          Les mises en relation en détail
+        </BaseHeading>
+
         <ParticipationsByPeriod ref="participationsByPeriod" />
         <ParticipationsByActivities ref="participationsByActivities" />
         <ParticipationsByReseaux ref="participationsByReseaux" />

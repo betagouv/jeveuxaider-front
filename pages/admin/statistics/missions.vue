@@ -26,12 +26,15 @@
 
     <div class="space-y-12">
       <MissionsStatistics ref="missionsStatistics" />
-      <BaseHeading as="h2" :level="2"> L’activité relative aux missions en détail </BaseHeading>
       <!-- <MissionsByDate
         v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
         ref="missionsByDate"
       /> -->
       <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-12">
+          L’activité relative aux missions en détail
+        </BaseHeading>
+
         <MissionsByPeriod ref="missionsByPeriod" />
         <MissionsByStates ref="missionsByStates" />
         <div class="flex flex-col lg:flex-row gap-12">

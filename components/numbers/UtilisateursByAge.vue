@@ -64,7 +64,6 @@ export default defineNuxtComponent({
         params: this.$route.query,
       }).then((response) => {
         this.loading = false
-        console.log('response', response)
         this.chartDatasets = response
         this.chartData.labels = response.map((item) => item.age)
         this.chartData.datasets[0].data = response.map((item) => item.count)

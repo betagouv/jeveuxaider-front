@@ -60,15 +60,29 @@ import MixinSecondaryMenu from '@/mixins/secondary-menu'
 export default defineNuxtComponent({
   mixins: [MixinSecondaryMenu],
   data() {
-    return {}
+    return {
+      items: [],
+    }
   },
-  computed: {
-    items() {
+  mounted() {
+    this.recomputeMenuItems()
+  },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.recomputeMenuItems()
+      },
+    },
+  },
+  methods: {
+    recomputeMenuItems() {
+      let items = []
+
       const runtimeConfig = useRuntimeConfig()
       const queryString = window.location.search
 
       if (this.$stores.auth.contextRole === 'admin') {
-        return [
+        items = [
           {
             key: 'statistics',
             label: 'Statistiques',
@@ -134,7 +148,7 @@ export default defineNuxtComponent({
           },
         ]
       } else if (this.$stores.auth.contextRole === 'referent') {
-        return [
+        items = [
           {
             key: 'statistics',
             label: 'Statistiques',
@@ -166,7 +180,7 @@ export default defineNuxtComponent({
           },
         ]
       } else if (this.$stores.auth.contextRole === 'responsable') {
-        return [
+        items = [
           {
             key: 'statistics',
             label: 'Statistiques',
@@ -186,7 +200,7 @@ export default defineNuxtComponent({
           },
         ]
       } else if (this.$stores.auth.contextRole === 'tete_de_reseau') {
-        return [
+        items = [
           {
             key: 'statistics',
             label: 'Statistiques',
@@ -208,7 +222,7 @@ export default defineNuxtComponent({
         ]
       }
 
-      return null
+      this.items = items
     },
   },
 })
