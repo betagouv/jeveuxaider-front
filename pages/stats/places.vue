@@ -18,7 +18,7 @@
     <div class="space-y-12">
       <PlacesStatistics ref="placesStatistics" />
       <div class="flex flex-col gap-12">
-        <BaseHeading as="h2" :level="2" class="mt-12"> L'offre actuelle en détail </BaseHeading>
+        <BaseHeading as="h2" :level="2" class="mt-8"> L'offre actuelle en détail </BaseHeading>
 
         <PlacesByActivities ref="placesByActivities" />
         <PlacesByOrganisations ref="placesByOrganisations" />

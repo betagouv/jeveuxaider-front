@@ -31,7 +31,7 @@
         ref="missionsByDate"
       /> -->
       <div class="flex flex-col gap-12">
-        <BaseHeading as="h2" :level="2" class="mt-12">
+        <BaseHeading as="h2" :level="2" class="mt-8">
           L’activité relative aux missions en détail
         </BaseHeading>
 

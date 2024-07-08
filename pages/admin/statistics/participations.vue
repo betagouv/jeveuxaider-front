@@ -36,7 +36,7 @@
         ref="participationsConversionByDate"
       /> -->
       <div class="flex flex-col gap-12">
-        <BaseHeading as="h2" :level="2" class="mt-12"> Les participations en détail </BaseHeading>
+        <BaseHeading as="h2" :level="2" class="mt-8"> Les participations en détail </BaseHeading>
         <ParticipationsByPeriod ref="participationsByPeriod" />
 
         <ParticipationsByStates ref="participationsByStates" />

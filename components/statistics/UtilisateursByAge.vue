@@ -66,7 +66,7 @@ export default defineNuxtComponent({
         this.loading = false
         console.log('response', response)
         this.chartDatasets = response
-        this.chartData.labels = response.map((item) => item.age)
+        this.chartData.labels = response.map((item) => item.age_range)
         this.chartData.datasets[0].data = response.map((item) => item.count)
       })
     },

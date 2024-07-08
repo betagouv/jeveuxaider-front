@@ -60,12 +60,24 @@ import MixinSecondaryMenu from '@/mixins/secondary-menu'
 export default defineNuxtComponent({
   mixins: [MixinSecondaryMenu],
   data() {
-    return {}
+    return {
+      items: [],
+    }
   },
-  computed: {
-    items() {
+  mounted() {
+    this.recomputeMenuItems()
+  },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.recomputeMenuItems()
+      },
+    },
+  },
+  methods: {
+    recomputeMenuItems() {
       const queryString = window.location.search
-      return [
+      this.items = [
         {
           key: 'statistics',
           label: 'Statistiques',

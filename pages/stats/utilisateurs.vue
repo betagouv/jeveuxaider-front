@@ -19,7 +19,7 @@
       <UtilisateursStatistics ref="utilisateursStatistics" />
       <!-- <UtilisateursByDate ref="utilisateursByDate" /> -->
       <div class="flex flex-col gap-12">
-        <BaseHeading as="h2" :level="2" class="mt-12"> Les utilisateurs en détail </BaseHeading>
+        <BaseHeading as="h2" :level="2" class="mt-8"> Les utilisateurs en détail </BaseHeading>
 
         <UtilisateursByPeriod ref="utilisateursByPeriod" />
         <UtilisateursByAge ref="utilisateursByAge" />
