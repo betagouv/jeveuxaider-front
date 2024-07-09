@@ -12,15 +12,30 @@
     >
       <CardStatistic
         :value="statistics.participations"
-        title="Mises en relation"
-        subtitle="créées"
+        :title="`${$filters.pluralize(
+          statistics.participations,
+          'Mise en relation',
+          'Mises en relation',
+          false
+        )}`"
+        :subtitle="`${$filters.pluralize(statistics.participations, 'créée', 'créées', false)}`"
         link="/admin/statistics/participations"
         infos-bulle="Total du nombre de mises en relation depuis le début"
       />
       <CardStatistic
         :value="statistics.participations_validated"
-        title="Mises en relation"
-        subtitle="validées"
+        :title="`${$filters.pluralize(
+          statistics.participations_validated,
+          'Mise en relation',
+          'Mises en relation',
+          false
+        )}`"
+        :subtitle="`${$filters.pluralize(
+          statistics.participations_validated,
+          'validée',
+          'validées',
+          false
+        )}`"
         link="/admin/statistics/participations"
         infos-bulle="Nombre de participations validées parmi les mises en relation reçues depuis le début"
       />
@@ -32,7 +47,12 @@
       />
       <CardStatistic
         :value="statistics.participations_in_progress"
-        title="Mises en relation"
+        :title="`${$filters.pluralize(
+          statistics.participations_in_progress,
+          'Mise en relation',
+          'Mises en relation',
+          false
+        )}`"
         link="/admin/statistics/participations"
         subtitle="à traiter"
         infos-bulle="Nombre de participations en attente de validation ou en cours de traitement parmi les mises en relation reçues depuis le début"

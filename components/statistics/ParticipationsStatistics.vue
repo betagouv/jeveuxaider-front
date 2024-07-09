@@ -12,8 +12,13 @@
     >
       <CardStatistic
         :value="statistics.participations"
-        title="Mises en relation"
-        subtitle="créées"
+        :title="`${$filters.pluralize(
+          statistics.participations,
+          'Mise en relation',
+          'Mises en relation',
+          false
+        )}`"
+        :subtitle="`${$filters.pluralize(statistics.participations, 'créée', 'créées', false)}`"
         infos-bulle="Total du nombre de mises en relation créées sur la période sélectionnée"
       />
       <CardStatistic
