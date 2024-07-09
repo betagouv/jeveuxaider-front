@@ -1,9 +1,9 @@
 <template>
   <BaseBox padding="sm" :loading="loading" loading-text="Générations des données...">
     <BoxHeadingStatistics
-      title="Répartition des participations par domaine d’action"
+      title="Répartition des mises en relation par domaine d’action"
       class="mb-6"
-      infos-bulle="Répartition des participations sur la période par domaine d'action"
+      infos-bulle="Répartition des mises en relation sur la période par domaine d'action"
     />
     <div v-if="items" class="flex flex-col gap-2">
       <ListItemCount
@@ -41,7 +41,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/statistics/participations-by-domaines', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.items = response

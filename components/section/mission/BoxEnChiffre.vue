@@ -17,7 +17,7 @@
               )
             }}
           </div>
-          <div class="text-gray-500 text-sm">depuis sa mise en ligne</div>
+          <div class="text-gray-600 text-sm">depuis sa mise en ligne</div>
         </div>
       </div>
       <div

@@ -15,7 +15,7 @@
           :link="`/admin/participations?organisation_name=${item.name}&filter[mission.structure.id]=${item.id}&filter[state]=En attente de validation`"
         >
           <div class="text-gray-900 font-semibold" v-html="item.name" />
-          <div class="text-gray-500 text-sm">
+          <div class="text-gray-600 text-sm">
             {{ $filters.pluralize(item.count, 'participation', 'participations') }}
           </div>
         </BaseStackedListItem>
@@ -44,7 +44,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/statistics/participations-waiting-by-organisations', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.items = response

@@ -11,6 +11,13 @@
       class="grid grid-cols-1 lg:grid-cols-4 border bg-gray-200 gap-[1px] overflow-hidden"
     >
       <CardStatistic
+        :value="statistics.missions"
+        :title="`${$filters.pluralize(statistics.missions, 'Mission', 'Missions', false)}`"
+        :subtitle="`${$filters.pluralize(statistics.missions, 'créée', 'créées', false)}`"
+        link="/admin/statistics/missions"
+        infos-bulle="Nombre de missions créées depuis le début"
+      />
+      <CardStatistic
         :value="statistics.missions_available"
         :title="`${$filters.pluralize(
           statistics.missions_available,
@@ -83,7 +90,7 @@ export default defineNuxtComponent({
       this.loading = true
 
       await apiFetch('/statistics/overview-missions', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.statistics = response

@@ -13,7 +13,7 @@
         icon-class="text-xl font-semibold text-gray-500"
       >
         <div class="text-gray-900 font-semibold" v-html="item.name" />
-        <div class="text-gray-500 text-sm">
+        <div class="text-gray-600 text-sm">
           {{ $filters.pluralize(item.count, 'mission validée', 'missions validées') }}
         </div>
       </BaseStackedListItem>
@@ -41,7 +41,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/statistics/public/missions-by-reseaux', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.items = response

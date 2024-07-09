@@ -17,38 +17,51 @@
 
     <BaseSectionHeading title="Missions">
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
+      </template>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
       </template>
     </BaseSectionHeading>
 
     <div class="space-y-12">
       <MissionsStatistics ref="missionsStatistics" />
-      <BaseHeading as="h2" :level="2"> L’activité relative aux missions en détail </BaseHeading>
-      <MissionsByDate ref="missionsByDate" />
-      <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 w-1/2">
-          <MissionsByStates ref="missionsByStates" />
-          <MissionsByTypes ref="missionsByTypes" />
-          <MissionsByActivities ref="missionsByActivities" />
-          <MissionsByTemplates ref="missionsByTemplates" />
+      <!-- <MissionsByDate
+        v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+        ref="missionsByDate"
+      /> -->
+      <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-8">
+          L’activité relative aux missions en détail
+        </BaseHeading>
+
+        <MissionsByPeriod ref="missionsByPeriod" />
+        <MissionsByStates ref="missionsByStates" />
+        <div class="flex flex-col lg:flex-row gap-12">
+          <MissionsByTypes ref="missionsByTypes" class="w-full" />
+          <MissionsByTemplateTypes ref="missionsByTemplateTypes" class="w-full" />
         </div>
-        <div class="space-y-12 w-1/2">
-          <MissionsByDomaines ref="missionsByDomaines" />
-          <MissionsByTemplateTypes ref="missionsByTemplateTypes" />
-          <MissionsByOrganisations ref="missionsByOrganisations" />
-          <MissionsByReseaux ref="missionsByReseaux" />
-        </div>
+        <MissionsByActivities ref="missionsByActivities" />
+        <MissionsByDomaines ref="missionsByDomaines" />
+        <MissionsByTemplates ref="missionsByTemplates" />
       </div>
+
+      <MissionsByOrganisations
+        ref="missionsByOrganisations"
+        v-if="['admin', 'referent', 'tete_de_reseau'].includes($stores.auth.contextRole)"
+      />
+      <MissionsByReseaux
+        ref="missionsByReseaux"
+        v-if="['admin', 'referent'].includes($stores.auth.contextRole)"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import MissionsStatistics from '@/components/numbers/MissionsStatistics.vue'
 import MissionsByDate from '@/components/numbers/MissionsByDate.vue'
+import MissionsByPeriod from '@/components/numbers/MissionsByPeriod.vue'
 import MissionsByStates from '@/components/numbers/MissionsByStates.vue'
 import MissionsByTypes from '@/components/numbers/MissionsByTypes.vue'
 import MissionsByActivities from '@/components/numbers/MissionsByActivities.vue'
@@ -61,9 +74,9 @@ import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    FiltersStatistics,
     MissionsStatistics,
     MissionsByDate,
+    MissionsByPeriod,
     MissionsByStates,
     MissionsByTypes,
     MissionsByActivities,
@@ -82,25 +95,53 @@ export default defineNuxtComponent({
 
     const { $stores } = useNuxtApp()
 
-    if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
+    if (
+      !['admin', 'referent', 'tete_de_reseau', 'responsable'].includes($stores.auth.contextRole)
+    ) {
       return showError({ statusCode: 403 })
     }
+  },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
   },
   data() {
     return {}
   },
+  computed: {
+    filters() {
+      if (this.$stores.auth.contextRole === 'admin') {
+        return ['department', 'daterange', 'reseau', 'structure']
+      }
+      if (this.$stores.auth.contextRole === 'referent') {
+        return ['daterange']
+      }
+      if (this.$stores.auth.contextRole === 'tete_de_reseau') {
+        return ['daterange', 'department']
+      }
+      if (this.$stores.auth.contextRole === 'responsable') {
+        return ['daterange']
+      }
+
+      return []
+    },
+  },
   methods: {
     refetch() {
-      this.$refs.missionsByDate.fetch()
-      this.$refs.missionsStatistics.fetch()
-      this.$refs.missionsByStates.fetch()
-      this.$refs.missionsByDomaines.fetch()
-      this.$refs.missionsByTypes.fetch()
-      this.$refs.missionsByActivities.fetch()
-      this.$refs.missionsByOrganisations.fetch()
-      this.$refs.missionsByReseaux.fetch()
-      this.$refs.missionsByTemplates.fetch()
-      this.$refs.missionsByTemplateTypes.fetch()
+      this.$refs.missionsStatistics?.fetch()
+      this.$refs.missionsByDate?.fetch()
+      this.$refs.missionsByPeriod?.fetch()
+      this.$refs.missionsByStates?.fetch()
+      this.$refs.missionsByDomaines?.fetch()
+      this.$refs.missionsByTypes?.fetch()
+      this.$refs.missionsByActivities?.fetch()
+      this.$refs.missionsByOrganisations?.fetch()
+      this.$refs.missionsByReseaux?.fetch()
+      this.$refs.missionsByTemplates?.fetch()
+      this.$refs.missionsByTemplateTypes?.fetch()
     },
   },
 })

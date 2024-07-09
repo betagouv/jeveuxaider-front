@@ -71,7 +71,7 @@ export default defineNuxtComponent({
       this.loading = true
 
       await apiFetch('/statistics/global/places', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.statistics = response

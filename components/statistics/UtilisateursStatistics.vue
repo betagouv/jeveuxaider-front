@@ -35,8 +35,8 @@
           'Bénévoles visibles',
           false
         )}`"
-        subtitle="pour une mise en relation inversée"
-        infos-bulle="Nombre de bénévoles inscrits sur la période et visibles pour une mise en relation inversée"
+        subtitle="des organisations"
+        infos-bulle="Nombre de bénévoles inscrits sur la période et visibles des organisations"
       />
       <CardStatistic
         :value="statistics.benevoles_notifications_martketplace"
@@ -75,7 +75,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/statistics/public/global/utilisateurs', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.statistics = response

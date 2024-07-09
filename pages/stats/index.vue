@@ -3,16 +3,17 @@
     <ClientOnly>
       <Teleport to="#teleport-breadcrumb">
         <DsfrBreadcrumb
-          :links="[{ text: 'Statistiques', to: '/stats' }, { text: 'Vue d\'ensemble' }]"
+          :links="[{ text: 'Statistiques', to: '/stats' }, { text: 'Vue d’ensemble' }]"
         />
       </Teleport>
     </ClientOnly>
 
-    <BaseSectionHeading title="Vue d'ensemble">
+    <BaseSectionHeading title="Vue d’ensemble">
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatisticsPublic @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
+      </template>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
       </template>
     </BaseSectionHeading>
 
@@ -50,7 +51,7 @@
     <OverviewUtilisateurs ref="overviewUtilisateurs" />
     <OverviewOrganisations ref="overviewOrganisations" />
     <OverviewMissions ref="overviewMissions" />
-    <OverviewPlaces ref="overviewPlaces" />
+    <!-- <OverviewPlaces ref="overviewPlaces" /> -->
   </div>
 </template>
 
@@ -80,14 +81,26 @@ export default defineNuxtComponent({
       layout: 'statistics-public',
     })
   },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
+  computed: {
+    filters() {
+      return ['department', 'daterange']
+    },
+  },
   methods: {
     refetch() {
-      this.$refs.overviewQuickGlance.fetch()
-      this.$refs.overviewParticipations.fetch()
-      this.$refs.overviewUtilisateurs.fetch()
-      this.$refs.overviewOrganisations.fetch()
-      this.$refs.overviewMissions.fetch()
-      this.$refs.overviewPlaces.fetch()
+      this.$refs.overviewQuickGlance?.fetch()
+      this.$refs.overviewParticipations?.fetch()
+      this.$refs.overviewUtilisateurs?.fetch()
+      this.$refs.overviewOrganisations?.fetch()
+      this.$refs.overviewMissions?.fetch()
+      this.$refs.overviewPlaces?.fetch()
     },
   },
 })

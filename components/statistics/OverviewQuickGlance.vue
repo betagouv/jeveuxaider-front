@@ -34,6 +34,7 @@
           'Mises en relation',
           false
         )}`"
+        :subtitle="`${$filters.pluralize(statistics.participations, 'créée', 'créées', false)}`"
         infos-bulle="Correspond au nombre de mises en relation créées sur la période"
       />
       <CardStatistic
@@ -74,7 +75,7 @@ export default defineNuxtComponent({
       this.loading = true
 
       await apiFetch('/statistics/public/overview-quick-glance', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.statistics = response

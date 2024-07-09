@@ -17,7 +17,7 @@
         <div class="text-gray-900 font-semibold">
           {{ organisation.name }}
         </div>
-        <div class="text-gray-500 text-sm">{{ $numeral(organisation.count) }} participations</div>
+        <div class="text-gray-600 text-sm">{{ $numeral(organisation.count) }} participations</div>
       </BaseStackedListItem>
     </BaseStackedList>
   </BaseBox>
@@ -43,7 +43,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/administration/organisations-trending', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.organisations = response

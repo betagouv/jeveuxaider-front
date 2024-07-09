@@ -81,7 +81,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/charts/participations-conversion-by-date', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((data) => {
         this.loading = false
 
@@ -101,22 +101,18 @@ export default defineNuxtComponent({
           'Dec',
         ]
 
+        // '#fb7185', '#e879f9', '#a78bfa', '#818cf8', '#29C2AF'
         const colors = [
           '#fb7185',
-
           pattern.draw('dot', '#fb7185'),
           '#e879f9',
-
           pattern.draw('dot', '#e879f9'),
           '#a78bfa',
-
           pattern.draw('dot', '#a78bfa'),
           '#818cf8',
-
           pattern.draw('dot', '#818cf8'),
-          '#138bdf8',
-
-          pattern.draw('dot', '#138bdf8'),
+          '#29C2AF',
+          pattern.draw('dot', '#29C2AF'),
         ]
 
         // Extract the years from the data

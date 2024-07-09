@@ -20,9 +20,10 @@
       secondary-title-bottom="Évolution des indicateurs avec leurs variations par rapport à l'année précédente"
     >
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatistics :filters="['department']" @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
+      </template>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
       </template>
     </BaseSectionHeading>
 
@@ -36,14 +37,12 @@
 <script>
 import EvolutionsByYear from '@/components/numbers/EvolutionsByYear.vue'
 import EvolutionsByMonth from '@/components/numbers/EvolutionsByMonth.vue'
-import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
     EvolutionsByYear,
     EvolutionsByMonth,
-    FiltersStatistics,
     Breadcrumb,
   },
   setup() {
@@ -54,12 +53,39 @@ export default defineNuxtComponent({
 
     const { $stores } = useNuxtApp()
 
-    if (!['admin', 'referent'].includes($stores.auth.contextRole)) {
+    if (
+      !['admin', 'referent', 'tete_de_reseau', 'responsable'].includes($stores.auth.contextRole)
+    ) {
       return showError({ statusCode: 403 })
     }
   },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
   data() {
     return {}
+  },
+  computed: {
+    filters() {
+      if (this.$stores.auth.contextRole === 'admin') {
+        return ['department', 'daterange', 'reseau', 'structure']
+      }
+      if (this.$stores.auth.contextRole === 'referent') {
+        return ['daterange']
+      }
+      if (this.$stores.auth.contextRole === 'tete_de_reseau') {
+        return ['department', 'daterange']
+      }
+      if (this.$stores.auth.contextRole === 'responsable') {
+        return ['department', 'daterange']
+      }
+
+      return []
+    },
   },
   methods: {
     refetch() {

@@ -8,35 +8,39 @@
 
     <BaseSectionHeading title="Organisations">
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatisticsPublic @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
+      </template>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
       </template>
     </BaseSectionHeading>
 
     <div class="space-y-12">
       <OrganisationsStatistics ref="organisationsStatistics" />
-      <BaseHeading as="h2" :level="2"> L’activité des organisations en détail </BaseHeading>
-      <OrganisationsByDate ref="organisationsByDate" />
-      <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 lg:w-1/2">
-          <OrganisationsByStates ref="organisationsByStates" />
-          <OrganisationsByReseaux ref="organisationsByReseaux" />
-          <!-- <ParticipationsRefusedByResponsables ref="participationsRefusedByResponsables" /> -->
+      <!-- <OrganisationsByDate ref="organisationsByDate" /> -->
+      <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-8">
+          L’activité des organisations en détail
+        </BaseHeading>
+
+        <OrganisationsByPeriod ref="organisationsByPeriod" />
+        <div class="flex flex-col lg:flex-row gap-12">
+          <OrganisationsByStates ref="organisationsByStates" class="w-full" />
+          <OrganisationsByTypes ref="organisationsByTypes" class="w-full" />
         </div>
-        <div class="space-y-12 lg:w-1/2">
-          <OrganisationsByTypes ref="organisationsByTypes" />
-          <OrganisationsByDomaines ref="organisationsByDomaines" />
-        </div>
+
+        <OrganisationsByReseaux ref="organisationsByReseaux" />
+        <!-- <ParticipationsRefusedByResponsables ref="participationsRefusedByResponsables" /> -->
+        <OrganisationsByDomaines ref="organisationsByDomaines" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic.vue'
 import OrganisationsStatistics from '@/components/statistics/OrganisationsStatistics.vue'
 import OrganisationsByDate from '@/components/statistics/OrganisationsByDate.vue'
+import OrganisationsByPeriod from '@/components/statistics/OrganisationsByPeriod.vue'
 import OrganisationsByStates from '@/components/statistics/OrganisationsByStates.vue'
 import OrganisationsByTypes from '@/components/statistics/OrganisationsByTypes.vue'
 import OrganisationsByDomaines from '@/components/statistics/OrganisationsByDomaines.vue'
@@ -46,9 +50,9 @@ import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 
 export default defineNuxtComponent({
   components: {
-    FiltersStatisticsPublic,
     OrganisationsStatistics,
     OrganisationsByDate,
+    OrganisationsByPeriod,
     OrganisationsByStates,
     OrganisationsByTypes,
     OrganisationsByDomaines,
@@ -64,15 +68,28 @@ export default defineNuxtComponent({
   data() {
     return {}
   },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
+  computed: {
+    filters() {
+      return ['department', 'daterange']
+    },
+  },
   methods: {
     refetch() {
-      this.$refs.organisationsByDate.fetch()
-      this.$refs.organisationsStatistics.fetch()
-      this.$refs.organisationsByStates.fetch()
-      this.$refs.organisationsByTypes.fetch()
-      // this.$refs.participationsRefusedByResponsables.fetch()
-      this.$refs.organisationsByDomaines.fetch()
-      this.$refs.organisationsByReseaux.fetch()
+      this.$refs.organisationsByDate?.fetch()
+      this.$refs.organisationsByPeriod?.fetch()
+      this.$refs.organisationsStatistics?.fetch()
+      this.$refs.organisationsByStates?.fetch()
+      this.$refs.organisationsByTypes?.fetch()
+      this.$refs.organisationsByDomaines?.fetch()
+      this.$refs.organisationsByReseaux?.fetch()
+      this.$refs.participationsRefusedByResponsables?.fetch()
     },
   },
 })

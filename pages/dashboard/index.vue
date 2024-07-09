@@ -83,7 +83,7 @@
         <template v-else>
           <BaseStackedListItem icon="🎊" icon-variant="warning">
             <div class="text-gray-900 font-semibold">Félicitations !</div>
-            <div class="text-gray-500 text-sm">Vous n'avez plus aucune action en attente !</div>
+            <div class="text-gray-600 text-sm">Vous n'avez plus aucune action en attente !</div>
           </BaseStackedListItem>
         </template>
       </BaseBox>
@@ -238,6 +238,8 @@
           />
         </div>
       </BaseBox>
+      <MoreNumbers />
+
       <BoxScore
         v-if="['responsable'].includes($stores.auth.contextRole)"
         padding="sm"
@@ -254,7 +256,6 @@
           </div>
         </template>
       </BoxScore>
-      <MoreNumbers v-if="['admin', 'referent'].includes($stores.auth.contextRole)" />
       <GuideLinks />
       <HelpCenter />
     </template>

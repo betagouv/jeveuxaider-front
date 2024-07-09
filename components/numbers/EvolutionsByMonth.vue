@@ -1,96 +1,109 @@
 <template>
-  <div class="space-y-12">
-    <div v-for="(year, i) in years" :key="i">
-      <h2 class="text-3xl font-semibold mb-6">
+  <div class="">
+    <!-- <div v-for="(year, i) in years" :key="i"> -->
+    <!-- <h2 class="text-3xl font-semibold mb-6">
         {{ year }}
-      </h2>
-      <BaseTable>
-        <BaseTableHead>
-          <BaseTableHeadCell>Période</BaseTableHeadCell>
-          <BaseTableHeadCell>Utilisateurs inscrits</BaseTableHeadCell>
-          <BaseTableHeadCell>Structures validées</BaseTableHeadCell>
-          <BaseTableHeadCell>Missions postées</BaseTableHeadCell>
-          <BaseTableHeadCell>Mises en relation</BaseTableHeadCell>
-          <BaseTableHeadCell>Participations validées</BaseTableHeadCell>
-          <BaseTableHeadCell v-if="['admin'].includes($stores.auth.contextRole)">
-            Taux de conversion
-          </BaseTableHeadCell>
-          <BaseTableHeadCell />
-        </BaseTableHead>
-        <BaseTableBody>
-          <BaseTableRow v-for="(item, y) in resultsFilteredByYear(year)" :key="y">
-            <BaseTableRowCell>
-              <span class="capitalize text-gray-600 font-semibold">
-                {{ $dayjs(item.created_at).format('MMMM') }}
-              </span>
-            </BaseTableRowCell>
-            <BaseTableRowCell>
-              <div class="flex space-x-2 items-center">
-                <span>{{ $numeral(item.profiles_total) }}</span>
-                <PercentageVariation
+      </h2> -->
+    <h2 class="text-3xl font-semibold mb-6">Par mois</h2>
+    <BaseTable>
+      <BaseTableHead>
+        <BaseTableHeadCell>Période</BaseTableHeadCell>
+        <BaseTableHeadCell v-if="!hideUsers">Utilisateurs inscrits</BaseTableHeadCell>
+        <BaseTableHeadCell v-if="!hideStructures">Structures validées</BaseTableHeadCell>
+        <BaseTableHeadCell>Missions postées</BaseTableHeadCell>
+        <BaseTableHeadCell>Mises en relation</BaseTableHeadCell>
+        <BaseTableHeadCell>Participations validées</BaseTableHeadCell>
+        <BaseTableHeadCell
+          v-if="
+            ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+              $stores.auth.contextRole
+            )
+          "
+        >
+          Conversion
+        </BaseTableHeadCell>
+        <!-- <BaseTableHeadCell /> -->
+      </BaseTableHead>
+      <BaseTableBody>
+        <BaseTableRow v-for="(item, y) in results" :key="y">
+          <BaseTableRowCell>
+            <span class="capitalize text-gray-600 font-semibold">
+              {{ $dayjs(item.created_at).format('MMMM YYYY') }}
+            </span>
+          </BaseTableRowCell>
+          <BaseTableRowCell v-if="!hideUsers">
+            <div class="flex space-x-2 items-center">
+              <span>{{ $numeral(item.profiles_total) }}</span>
+              <!-- <PercentageVariation
                   v-if="item.profiles_total_variation"
                   :value="item.profiles_total_variation"
-                />
-              </div>
-            </BaseTableRowCell>
-            <BaseTableRowCell>
-              <div class="flex space-x-2 items-center">
-                <span>{{ $numeral(item.structures_validated) }}</span>
-                <PercentageVariation
+                /> -->
+            </div>
+          </BaseTableRowCell>
+          <BaseTableRowCell v-if="!hideStructures">
+            <div class="flex space-x-2 items-center">
+              <span>{{ $numeral(item.structures_validated) }}</span>
+              <!-- <PercentageVariation
                   v-if="item.structures_validated_variation"
                   :value="item.structures_validated_variation"
-                />
-              </div>
-            </BaseTableRowCell>
-            <BaseTableRowCell>
-              <div class="flex space-x-2 items-center">
-                <span>{{ $numeral(item.missions_posted) }}</span>
-                <PercentageVariation
+                /> -->
+            </div>
+          </BaseTableRowCell>
+          <BaseTableRowCell>
+            <div class="flex space-x-2 items-center">
+              <span>{{ $numeral(item.missions_posted) }}</span>
+              <!-- <PercentageVariation
                   v-if="item.missions_posted_variation"
                   :value="item.missions_posted_variation"
-                />
-              </div>
-            </BaseTableRowCell>
-            <BaseTableRowCell>
-              <div class="flex space-x-2 items-center">
-                <span>{{ $numeral(item.participations_total) }}</span>
-                <PercentageVariation
+                /> -->
+            </div>
+          </BaseTableRowCell>
+          <BaseTableRowCell>
+            <div class="flex space-x-2 items-center">
+              <span>{{ $numeral(item.participations_total) }}</span>
+              <!-- <PercentageVariation
                   v-if="item.participations_total_variation"
                   :value="item.participations_total_variation"
-                />
-              </div>
-            </BaseTableRowCell>
-            <BaseTableRowCell>
-              <div class="flex space-x-2 items-center">
-                <span>{{ $numeral(item.participations_validated) }}</span>
-                <PercentageVariation
+                /> -->
+            </div>
+          </BaseTableRowCell>
+          <BaseTableRowCell>
+            <div class="flex space-x-2 items-center">
+              <span>{{ $numeral(item.participations_validated) }}</span>
+              <!-- <PercentageVariation
                   v-if="item.participations_validated_variation"
                   :value="item.participations_validated_variation"
-                />
-              </div>
-            </BaseTableRowCell>
-            <BaseTableRowCell v-if="['admin'].includes($stores.auth.contextRole)">
-              <span v-if="item.participations_conversion" class="text-gray-600 font-semibold">
-                {{ $numeral(item.participations_conversion) }}%
-              </span>
-              <span v-else>--</span>
-            </BaseTableRowCell>
-            <BaseTableRowCell>
-              <RiCloseLine
-                v-if="selectedMonth"
-                class="h-4 cursor-pointer hover:text-jva-blue-500"
-                @click="toggleMonth(item.month)"
-              />
-              <MagnifyingGlassIcon
-                v-else
-                class="h-4 cursor-pointer hover:text-jva-blue-500"
-                @click="toggleMonth(item.month)"
-              />
-            </BaseTableRowCell>
-          </BaseTableRow>
-        </BaseTableBody>
-      </BaseTable>
-    </div>
+                /> -->
+            </div>
+          </BaseTableRowCell>
+          <BaseTableRowCell
+            v-if="
+              ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(
+                $stores.auth.contextRole
+              )
+            "
+          >
+            <span v-if="item.participations_conversion" class="text-gray-600 font-semibold">
+              {{ $numeral(item.participations_conversion) }}%
+            </span>
+            <span v-else>--</span>
+          </BaseTableRowCell>
+          <!-- <BaseTableRowCell>
+            <RiCloseLine
+              v-if="selectedMonth"
+              class="h-4 cursor-pointer hover:text-jva-blue-500"
+              @click="toggleMonth(item.month)"
+            />
+            <MagnifyingGlassIcon
+              v-else
+              class="h-4 cursor-pointer hover:text-jva-blue-500"
+              @click="toggleMonth(item.month)"
+            />
+          </BaseTableRowCell>-->
+        </BaseTableRow>
+      </BaseTableBody>
+    </BaseTable>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -117,13 +130,25 @@ export default defineNuxtComponent({
     this.fetch()
   },
   computed: {
-    years() {
-      const years = []
-      for (let year = 2020; year <= this.$dayjs().year(); year++) {
-        years.push(year)
-      }
-      return years.reverse()
+    hideUsers() {
+      return (
+        !!['responsable', 'tete_de_reseau'].includes(this.$stores.auth.contextRole) ||
+        !!this.$route.query.structure ||
+        !!this.$route.query.reseau
+      )
     },
+    hideStructures() {
+      return (
+        !!['responsable'].includes(this.$stores.auth.contextRole) || !!this.$route.query.structure
+      )
+    },
+    // years() {
+    //   const years = []
+    //   for (let year = 2020; year <= this.$dayjs().year(); year++) {
+    //     years.push(year)
+    //   }
+    //   return years.reverse()
+    // },
     results() {
       return Object.values(
         _merge(
@@ -162,29 +187,37 @@ export default defineNuxtComponent({
       }
     },
     async fetchStructuresByMonth() {
-      await apiFetch('/statistics/structures-by-month', {
-        params: this.$stores.statistics.params,
-      }).then((response) => {
-        this.structures = response
-      })
+      if (this.hideStructures) {
+        this.structures = []
+      } else {
+        await apiFetch('/statistics/structures-by-month', {
+          params: this.$route.query,
+        }).then((response) => {
+          this.structures = response
+        })
+      }
     },
     async fetchMissionsByMonth() {
       await apiFetch('/statistics/missions-by-month', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.missions = response
       })
     },
     async fetchUsersByMonth() {
-      await apiFetch('/statistics/users-by-month', {
-        params: this.$stores.statistics.params,
-      }).then((response) => {
-        this.users = response
-      })
+      if (this.hideUsers) {
+        this.users = []
+      } else {
+        await apiFetch('/statistics/users-by-month', {
+          params: this.$route.query,
+        }).then((response) => {
+          this.users = response
+        })
+      }
     },
     async fetchParticipationsByMonth() {
       await apiFetch('/statistics/participations-by-month', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.participations = response
       })

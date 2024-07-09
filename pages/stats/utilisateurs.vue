@@ -8,25 +8,24 @@
 
     <BaseSectionHeading title="Utilisateurs">
       <template #action>
-        <div class="hidden lg:block space-x-2 flex-shrink-0">
-          <FiltersStatisticsPublic @refetch="refetch()" />
-        </div>
+        <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
+      </template>
+      <template #bottom>
+        <CustomFiltersStatisticsActive v-if="filters.length > 0" :filters="filters" class="mt-4" />
       </template>
     </BaseSectionHeading>
 
     <div class="space-y-12">
       <UtilisateursStatistics ref="utilisateursStatistics" />
-      <BaseHeading as="h2" :level="2"> Les utilisateurs en détail </BaseHeading>
-      <UtilisateursByDate ref="utilisateursByDate" />
-      <div class="flex flex-col lg:flex-row gap-12">
-        <div class="space-y-12 lg:w-1/2">
-          <UtilisateursByActivities ref="utilisateursByActivities" />
-        </div>
-        <div class="space-y-12 lg:w-1/2">
-          <TemoignagesByGrades ref="temoignagesByGrades" />
-          <UtilisateursByAge ref="utilisateursByAge" />
-          <ParticipationsDelaysByRegistrations ref="participationsDelaysByRegistrations" />
-        </div>
+      <!-- <UtilisateursByDate ref="utilisateursByDate" /> -->
+      <div class="flex flex-col gap-12">
+        <BaseHeading as="h2" :level="2" class="mt-8"> Les utilisateurs en détail </BaseHeading>
+
+        <UtilisateursByPeriod ref="utilisateursByPeriod" />
+        <UtilisateursByAge ref="utilisateursByAge" />
+        <UtilisateursByActivities ref="utilisateursByActivities" />
+        <TemoignagesByGrades ref="temoignagesByGrades" />
+        <ParticipationsDelaysByRegistrations ref="participationsDelaysByRegistrations" />
       </div>
     </div>
   </div>
@@ -36,6 +35,7 @@
 import FiltersStatisticsPublic from '@/components/custom/FiltersStatisticsPublic.vue'
 import UtilisateursStatistics from '@/components/statistics/UtilisateursStatistics.vue'
 import UtilisateursByDate from '@/components/statistics/UtilisateursByDate.vue'
+import UtilisateursByPeriod from '@/components/statistics/UtilisateursByPeriod.vue'
 import UtilisateursByActivities from '@/components/statistics/UtilisateursByActivities.vue'
 import UtilisateursByAge from '@/components/statistics/UtilisateursByAge.vue'
 import ParticipationsDelaysByRegistrations from '@/components/statistics/ParticipationsDelaysByRegistrations.vue'
@@ -49,6 +49,7 @@ export default defineNuxtComponent({
     UtilisateursByDate,
     UtilisateursByActivities,
     UtilisateursByAge,
+    UtilisateursByPeriod,
     ParticipationsDelaysByRegistrations,
     TemoignagesByGrades,
     Breadcrumb,
@@ -61,14 +62,27 @@ export default defineNuxtComponent({
   data() {
     return {}
   },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.refetch()
+      },
+    },
+  },
+  computed: {
+    filters() {
+      return ['department', 'daterange']
+    },
+  },
   methods: {
     refetch() {
-      this.$refs.utilisateursStatistics.fetch()
-      this.$refs.utilisateursByDate.fetch()
-      this.$refs.utilisateursByAge.fetch()
-      this.$refs.utilisateursByActivities.fetch()
-      this.$refs.participationsDelaysByRegistrations.fetch()
-      this.$refs.temoignagesByGrades.fetch()
+      this.$refs.utilisateursStatistics?.fetch()
+      this.$refs.utilisateursByDate?.fetch()
+      this.$refs.utilisateursByPeriod?.fetch()
+      this.$refs.utilisateursByAge?.fetch()
+      this.$refs.utilisateursByActivities?.fetch()
+      this.$refs.participationsDelaysByRegistrations?.fetch()
+      this.$refs.temoignagesByGrades?.fetch()
     },
   },
 })

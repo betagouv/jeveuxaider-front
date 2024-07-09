@@ -14,7 +14,7 @@
             {{ item.department }} -
             {{ $filters.label(item.department, 'departments') }}
           </div>
-          <div class="text-gray-500 text-sm">
+          <div class="text-gray-600 text-sm">
             {{ $filters.pluralize(item.count, 'mission', 'missions') }}
           </div>
         </BaseStackedListItem>
@@ -43,7 +43,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/statistics/missions-in-progress-by-departments', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.items = response

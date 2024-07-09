@@ -60,9 +60,9 @@
           'Bénévoles visibles',
           false
         )}`"
-        subtitle="sur la marketplace"
+        subtitle="des organisations"
         link="/admin/statistics/utilisateurs"
-        infos-bulle="Nombre de bénévoles inscrits sur la période et visibles sur la marketplace"
+        infos-bulle="Nombre de bénévoles inscrits sur la période et visibles des organisations"
       />
       <CardStatistic
         :value="statistics.benevoles_notifications_martketplace"
@@ -119,7 +119,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/statistics/global/utilisateurs', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.statistics = response

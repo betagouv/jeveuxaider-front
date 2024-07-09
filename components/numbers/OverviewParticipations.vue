@@ -1,7 +1,7 @@
 <template>
   <BaseBox padding="sm" :loading="loading" loading-text="Générations des données...">
     <BoxHeadingStatistics
-      title="Participations ›"
+      title="Mises en relation ›"
       link="/admin/statistics/participations"
       no-period
       class="mb-6"
@@ -14,10 +14,11 @@
         :value="statistics.participations"
         :title="`${$filters.pluralize(
           statistics.participations,
-          'Nouvelle mise en relation',
-          'Nouvelles mises en relation',
+          'Mise en relation',
+          'Mises en relation',
           false
         )}`"
+        :subtitle="`${$filters.pluralize(statistics.participations, 'créée', 'créées', false)}`"
         link="/admin/statistics/participations"
         infos-bulle="Total du nombre de mises en relation depuis le début"
       />
@@ -25,8 +26,14 @@
         :value="statistics.participations_validated"
         :title="`${$filters.pluralize(
           statistics.participations_validated,
-          'Participation validée',
-          'Participations validées',
+          'Mise en relation',
+          'Mises en relation',
+          false
+        )}`"
+        :subtitle="`${$filters.pluralize(
+          statistics.participations_validated,
+          'validée',
+          'validées',
           false
         )}`"
         link="/admin/statistics/participations"
@@ -41,9 +48,9 @@
       <CardStatistic
         :value="statistics.participations_in_progress"
         :title="`${$filters.pluralize(
-          statistics.participations_validated,
-          'Participation',
-          'Participations',
+          statistics.participations_in_progress,
+          'Mise en relation',
+          'Mises en relation',
           false
         )}`"
         link="/admin/statistics/participations"
@@ -77,7 +84,7 @@ export default defineNuxtComponent({
       this.loading = true
 
       await apiFetch('/statistics/overview-participations', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.statistics = response

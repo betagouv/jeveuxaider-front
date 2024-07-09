@@ -1,7 +1,7 @@
 <template>
   <BaseBox padding="sm" :loading="loading" loading-text="Générations des données...">
     <BoxHeadingStatistics
-      title="Motifs des participations refusées"
+      title="Motifs des mises en relation refusées"
       class="mb-6"
       infos-bulle="Répartition des motifs de refus pour les mises en relation sur la période sélectionnée"
     />
@@ -67,7 +67,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/statistics/participations-refused-by-responsables', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.statistics = response

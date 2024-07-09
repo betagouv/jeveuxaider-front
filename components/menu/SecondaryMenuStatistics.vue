@@ -60,31 +60,49 @@ import MixinSecondaryMenu from '@/mixins/secondary-menu'
 export default defineNuxtComponent({
   mixins: [MixinSecondaryMenu],
   data() {
-    return {}
+    return {
+      items: [],
+    }
   },
-  computed: {
-    items() {
+  mounted() {
+    this.recomputeMenuItems()
+  },
+  watch: {
+    '$route.query': {
+      handler(newQuery, oldQuery) {
+        this.recomputeMenuItems()
+      },
+    },
+  },
+  methods: {
+    recomputeMenuItems() {
+      let items = []
+
       const runtimeConfig = useRuntimeConfig()
+      const queryString = window.location.search
 
       if (this.$stores.auth.contextRole === 'admin') {
-        return [
+        items = [
           {
             key: 'statistics',
             label: 'Statistiques',
             childrens: [
-              { label: "Vue d'ensemble", to: '/admin/statistics' },
+              { label: "Vue d'ensemble", to: `/admin/statistics${queryString}` },
               {
                 label: 'Indicateurs clés',
-                to: '/admin/statistics/indicateurs-cles',
+                to: `/admin/statistics/indicateurs-cles${queryString}`,
               },
+
               {
-                label: 'Participations',
-                to: '/admin/statistics/participations',
+                label: 'Mises en relation',
+                to: `/admin/statistics/participations${queryString}`,
               },
-              { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
-              { label: 'Organisations', to: '/admin/statistics/organisations' },
-              { label: 'Missions', to: '/admin/statistics/missions' },
-              { label: 'Places', to: '/admin/statistics/places' },
+              { label: 'Utilisateurs', to: `/admin/statistics/utilisateurs${queryString}` },
+              { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
+
+              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
+              // { label: 'Conversions', to: `/admin/statistics/conversions${queryString}` },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
             ],
           },
           {
@@ -93,28 +111,28 @@ export default defineNuxtComponent({
             childrens: [
               {
                 label: 'Trafic entrant',
-                to: '/admin/statistics/api-engagement/trafic-entrant',
+                to: `/admin/statistics/api-engagement/trafic-entrant${queryString}`,
               },
               {
                 label: 'Trafic sortant',
-                to: '/admin/statistics/api-engagement/trafic-sortant',
+                to: `/admin/statistics/api-engagement/trafic-sortant${queryString}`,
               },
             ],
           },
-          {
-            key: 'actions',
-            label: 'Actions en attente',
-            childrens: [
-              {
-                label: 'Organisations',
-                to: '/admin/statistics/organisations/participations-a-valider',
-              },
-              {
-                label: 'Départements',
-                to: '/admin/statistics/departements/organisations-a-valider',
-              },
-            ],
-          },
+          // {
+          //   key: 'actions',
+          //   label: 'Actions en attente',
+          //   childrens: [
+          //     {
+          //       label: 'Organisations',
+          //       to: '/admin/statistics/organisations/participations-a-valider',
+          //     },
+          //     {
+          //       label: 'Départements',
+          //       to: '/admin/statistics/departements/organisations-a-valider',
+          //     },
+          //   ],
+          // },
           {
             key: 'services',
             label: 'Services tiers',
@@ -131,24 +149,24 @@ export default defineNuxtComponent({
           },
         ]
       } else if (this.$stores.auth.contextRole === 'referent') {
-        return [
+        items = [
           {
             key: 'statistics',
             label: 'Statistiques',
             childrens: [
-              { label: "Vue d'ensemble", to: '/admin/statistics' },
+              { label: "Vue d'ensemble", to: `/admin/statistics${queryString}` },
               {
                 label: 'Indicateurs clés',
-                to: '/admin/statistics/indicateurs-cles',
+                to: `/admin/statistics/indicateurs-cles${queryString}`,
               },
               {
-                label: 'Participations',
-                to: '/admin/statistics/participations',
+                label: 'Mises en relation',
+                to: `/admin/statistics/participations${queryString}`,
               },
-              { label: 'Utilisateurs', to: '/admin/statistics/utilisateurs' },
-              { label: 'Organisations', to: '/admin/statistics/organisations' },
-              { label: 'Missions', to: '/admin/statistics/missions' },
-              { label: 'Places', to: '/admin/statistics/places' },
+              { label: 'Utilisateurs', to: `/admin/statistics/utilisateurs${queryString}` },
+              { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
+              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
             ],
           },
           {
@@ -157,21 +175,64 @@ export default defineNuxtComponent({
             childrens: [
               {
                 label: 'Organisations',
-                to: '/admin/statistics/organisations/participations-a-valider',
+                to: `/admin/statistics/organisations/participations-a-valider${queryString}`,
               },
+            ],
+          },
+        ]
+      } else if (this.$stores.auth.contextRole === 'responsable') {
+        items = [
+          {
+            key: 'statistics',
+            label: 'Statistiques',
+            childrens: [
+              { label: "Vue d'ensemble", to: `/admin/statistics${queryString}` },
+              {
+                label: 'Indicateurs clés',
+                to: `/admin/statistics/indicateurs-cles${queryString}`,
+              },
+
+              {
+                label: 'Mises en relation',
+                to: `/admin/statistics/participations${queryString}`,
+              },
+              { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
+            ],
+          },
+        ]
+      } else if (this.$stores.auth.contextRole === 'tete_de_reseau') {
+        items = [
+          {
+            key: 'statistics',
+            label: 'Statistiques',
+            childrens: [
+              { label: "Vue d'ensemble", to: `/admin/statistics${queryString}` },
+              {
+                label: 'Indicateurs clés',
+                to: `/admin/statistics/indicateurs-cles${queryString}`,
+              },
+
+              {
+                label: 'Mises en relation',
+                to: `/admin/statistics/participations${queryString}`,
+              },
+              { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
+              { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
             ],
           },
         ]
       }
 
-      return null
+      this.items = items
     },
   },
 })
 </script>
 
 <style lang="postcss" scoped>
-a.nuxt-link-exact-active {
+a.router-link-active {
   @apply text-jva-blue-500;
 }
 </style>

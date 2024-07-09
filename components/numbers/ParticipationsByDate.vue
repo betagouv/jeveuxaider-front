@@ -48,7 +48,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/charts/participations-by-date', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         const colors = ['#fb7185', '#e879f9', '#a78bfa', '#818cf8', '#29C2AF']

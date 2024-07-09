@@ -70,7 +70,7 @@
         color,
       ]"
     />
-    <div class="text-gray-500 truncate flex-1">
+    <div class="text-gray-600 truncate flex-1">
       {{ label }}
     </div>
     <div class="font-medium">

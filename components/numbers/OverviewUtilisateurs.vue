@@ -49,9 +49,9 @@
           'Bénévoles visibles',
           false
         )}`"
-        subtitle="sur la marketplace"
+        subtitle="des organisations"
         link="/admin/statistics/utilisateurs"
-        infos-bulle="Nombre de bénévoles visibles sur la marketplace"
+        infos-bulle="Nombre de bénévoles visibles des organisations"
       />
     </div>
   </BaseBox>
@@ -80,7 +80,7 @@ export default defineNuxtComponent({
       this.loading = true
 
       await apiFetch('/statistics/overview-utilisateurs', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.statistics = response

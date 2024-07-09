@@ -15,7 +15,7 @@
         :link="`/admin/utilisateurs/${user.profile_id}`"
       >
         <div class="text-gray-900 font-semibold">{{ user.first_name }} {{ user.last_name }}</div>
-        <div class="text-gray-500 text-sm">{{ $numeral(user.count) }} actions</div>
+        <div class="text-gray-600 text-sm">{{ $numeral(user.count) }} actions</div>
       </BaseStackedListItem>
     </BaseStackedList>
   </BaseBox>
@@ -41,7 +41,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/administration/topito-referents', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.users = response

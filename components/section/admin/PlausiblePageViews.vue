@@ -17,7 +17,7 @@
         <div class="text-gray-900 font-semibold">
           {{ item.page }}
         </div>
-        <div class="text-gray-500 text-sm">{{ $numeral(item.pageviews) }} vues</div>
+        <div class="text-gray-600 text-sm">{{ $numeral(item.pageviews) }} vues</div>
       </BaseStackedListItem>
     </BaseStackedList>
   </BaseBox>
@@ -49,7 +49,24 @@ export default defineNuxtComponent({
   created() {
     this.fetch()
   },
+  computed: {
+    dateRange() {
+      let startDate = '2020-01-01'
+      let endDate = this.$dayjs().format('YYYY-MM-DD')
 
+      if (this.$route.query.start_date) {
+        startDate = this.$route.query.start_date
+      }
+
+      if (this.$route.query.end_date) {
+        endDate = this.$route.query.end_date
+      }
+
+      return `${this.$dayjs(startDate).format('YYYY-MM-DD')},${this.$dayjs(endDate).format(
+        'YYYY-MM-DD'
+      )}`
+    },
+  },
   methods: {
     async fetch() {
       const runtimeConfig = useRuntimeConfig()
@@ -63,9 +80,7 @@ export default defineNuxtComponent({
           property: 'event:page',
           period: 'custom',
           filters: this.paramsFilters,
-          date: `${this.$dayjs(this.$stores.statistics.params.startDate).format(
-            'YYYY-MM-DD'
-          )},${this.$dayjs(this.$stores.statistics.params.endDate).format('YYYY-MM-DD')}`,
+          date: this.dateRange,
           limit: 5,
         },
       })

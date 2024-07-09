@@ -17,7 +17,7 @@
         <div class="text-gray-900 font-semibold line-clamp-2">
           {{ mission.template_name ?? mission.name }}
         </div>
-        <div class="text-gray-500 text-sm">{{ $numeral(mission.count) }} participations</div>
+        <div class="text-gray-600 text-sm">{{ $numeral(mission.count) }} participations</div>
       </BaseStackedListItem>
     </BaseStackedList>
   </BaseBox>
@@ -43,7 +43,7 @@ export default defineNuxtComponent({
     async fetch() {
       this.loading = true
       await apiFetch('/administration/missions-trending', {
-        params: this.$stores.statistics.params,
+        params: this.$route.query,
       }).then((response) => {
         this.loading = false
         this.missions = response
