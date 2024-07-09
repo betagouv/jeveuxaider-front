@@ -72,16 +72,16 @@ export default defineNuxtComponent({
   computed: {
     filters() {
       if (this.$stores.auth.contextRole === 'admin') {
-        return ['department', 'reseau', 'structure']
+        return ['department', 'daterange', 'reseau', 'structure']
       }
       if (this.$stores.auth.contextRole === 'referent') {
-        return []
+        return ['daterange']
       }
       if (this.$stores.auth.contextRole === 'tete_de_reseau') {
-        return ['department']
+        return ['department', 'daterange']
       }
       if (this.$stores.auth.contextRole === 'responsable') {
-        return ['department']
+        return ['department', 'daterange']
       }
 
       return []
