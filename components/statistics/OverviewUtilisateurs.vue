@@ -35,8 +35,8 @@
           'Bénévoles visibles',
           false
         )}`"
-        subtitle="pour une mise en relation inversée"
-        infos-bulle="Nombre de bénévoles visibles pour une mise en relation inversée"
+        subtitle="des organisations"
+        infos-bulle="Nombre de bénévoles visibles des organisations"
       />
     </div>
   </BaseBox>

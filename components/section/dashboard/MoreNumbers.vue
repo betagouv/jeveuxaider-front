@@ -7,7 +7,16 @@
       <div class="text-xl text-white font-bold max-w-[260px]">
         Tout l'historique de votre activité sur la plateforme
       </div>
-      <BaseButton variant="white-green" @click.native="$router.push('/admin/statistics')">
+      <BaseButton
+        variant="white-green"
+        @click.native="
+          $router.push(
+            `/admin/statistics?start_date=${$dayjs()
+              .subtract(1, 'year')
+              .format('YYYY-MM-DD')}&end_date=${$dayjs().format('YYYY-MM-DD')}`
+          )
+        "
+      >
         Vos statistiques
       </BaseButton>
     </div>

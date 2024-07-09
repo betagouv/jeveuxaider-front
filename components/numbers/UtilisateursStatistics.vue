@@ -60,9 +60,9 @@
           'Bénévoles visibles',
           false
         )}`"
-        subtitle="sur la marketplace"
+        subtitle="des organisations"
         link="/admin/statistics/utilisateurs"
-        infos-bulle="Nombre de bénévoles inscrits sur la période et visibles sur la marketplace"
+        infos-bulle="Nombre de bénévoles inscrits sur la période et visibles des organisations"
       />
       <CardStatistic
         :value="statistics.benevoles_notifications_martketplace"

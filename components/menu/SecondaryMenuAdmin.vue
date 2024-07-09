@@ -54,6 +54,7 @@
 
 <script>
 import MixinSecondaryMenu from '@/mixins/secondary-menu'
+import dayjs from 'dayjs'
 
 export default defineNuxtComponent({
   mixins: [MixinSecondaryMenu],
@@ -99,7 +100,12 @@ export default defineNuxtComponent({
           key: 'other',
           label: 'Autre',
           childrens: [
-            { label: 'Statistiques', to: '/admin/statistics' },
+            {
+              label: 'Statistiques',
+              to: `/admin/statistics?start_date=${dayjs()
+                .subtract(1, 'year')
+                .format('YYYY-MM-DD')}&end_date=${dayjs().format('YYYY-MM-DD')}`,
+            },
             {
               label: 'Indicateurs clés',
               to: '/admin/statistics/indicateurs-cles',

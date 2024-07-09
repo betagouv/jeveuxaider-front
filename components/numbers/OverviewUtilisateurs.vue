@@ -49,9 +49,9 @@
           'Bénévoles visibles',
           false
         )}`"
-        subtitle="sur la marketplace"
+        subtitle="des organisations"
         link="/admin/statistics/utilisateurs"
-        infos-bulle="Nombre de bénévoles visibles sur la marketplace"
+        infos-bulle="Nombre de bénévoles visibles des organisations"
       />
     </div>
   </BaseBox>

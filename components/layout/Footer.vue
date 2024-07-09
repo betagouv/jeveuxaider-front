@@ -180,7 +180,14 @@
                 href="https://www.jeveuxaider.gouv.fr/engagement/ecoles-et-universites/"
                 >Écoles et Universités</a
               >
-              <nuxt-link no-prefetch class="link" to="/stats">Statistiques</nuxt-link>
+              <nuxt-link
+                no-prefetch
+                class="link"
+                :to="`/stats?start_date=${$dayjs()
+                  .subtract(1, 'year')
+                  .format('YYYY-MM-DD')}&end_date=${$dayjs().format('YYYY-MM-DD')}`"
+                >Statistiques</nuxt-link
+              >
             </div>
           </div>
         </div>
