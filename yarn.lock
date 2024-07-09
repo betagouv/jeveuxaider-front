@@ -1048,6 +1048,13 @@
   resolved "https://registry.yarnpkg.com/@flareapp/flare-vue/-/flare-vue-3.0.5.tgz#127b6b8a3e2126909a71937fb609e6ee91e78b74"
   integrity sha512-Pbvq5QSyX78agszzUvLTOYw/h1MsvZmrxv06Dnz7TajLkAqUPfY5uKz3MhEPOWoT7HiClE38FiJg80Rzlp44tA==
 
+"@flareapp/js@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@flareapp/js/-/js-1.0.1.tgz#5873827e5c5c8bdd62fbcc9be6f87e3befa092c0"
+  integrity sha512-SVhg5jG9sqUUGi5qwNhD8rUmT6/Em3/Z7uekFDATMwlFyoJEHi0wu3zbZSllAyH1mdlvlaj8pBkZBZjTx56JFA==
+  dependencies:
+    error-stack-parser "^2.0.2"
+
 "@flareapp/vite-plugin-sourcemap-uploader@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@flareapp/vite-plugin-sourcemap-uploader/-/vite-plugin-sourcemap-uploader-1.0.2.tgz#f54ebf66ee771c8f4922e68a0de05638a5b08043"
@@ -1055,6 +1062,19 @@
   dependencies:
     axios "^1.2.1"
     fast-glob "^3.2.12"
+
+"@flareapp/vite@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@flareapp/vite/-/vite-1.0.0.tgz#f4427dcbb0f2bdd3cb613249adcb17ba371ed7b6"
+  integrity sha512-b8VaFBhqBt/0JP5swBOIDz6WGsWEmgFBTkLjMKefviv+ywpFZ4YQE8fMl8phketdZ+1DoXw93K0SsDM3RS/qUw==
+  dependencies:
+    axios "^1.2.1"
+    fast-glob "^3.2.12"
+
+"@flareapp/vue@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@flareapp/vue/-/vue-1.0.1.tgz#24c30d965c601f0a2e3a7776741a8c421a754afa"
+  integrity sha512-Dk7u78qFvCwcsfUWXBHa6HJHgvzWVXYsB/OjWFMI53xOkHGJHXZYPY49Q5vH2W7bVKnzzZM/US3mWJREcFsqFQ==
 
 "@floating-ui/core@^1.1.0":
   version "1.5.0"
