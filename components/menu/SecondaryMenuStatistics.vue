@@ -92,9 +92,9 @@ export default defineNuxtComponent({
                 label: 'Indicateurs clés',
                 to: `/admin/statistics/indicateurs-cles${queryString}`,
               },
-              { label: 'Places', to: `/admin/statistics/places${queryString}` },
+
               {
-                label: 'Participations',
+                label: 'Mises en relation',
                 to: `/admin/statistics/participations${queryString}`,
               },
               { label: 'Utilisateurs', to: `/admin/statistics/utilisateurs${queryString}` },
@@ -102,6 +102,7 @@ export default defineNuxtComponent({
 
               { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
               // { label: 'Conversions', to: `/admin/statistics/conversions${queryString}` },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
             ],
           },
           {
@@ -158,14 +159,14 @@ export default defineNuxtComponent({
                 label: 'Indicateurs clés',
                 to: `/admin/statistics/indicateurs-cles${queryString}`,
               },
-              { label: 'Places', to: `/admin/statistics/places${queryString}` },
               {
-                label: 'Participations',
+                label: 'Mises en relation',
                 to: `/admin/statistics/participations${queryString}`,
               },
               { label: 'Utilisateurs', to: `/admin/statistics/utilisateurs${queryString}` },
               { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
               { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
             ],
           },
           {
@@ -190,12 +191,13 @@ export default defineNuxtComponent({
                 label: 'Indicateurs clés',
                 to: `/admin/statistics/indicateurs-cles${queryString}`,
               },
-              { label: 'Places', to: `/admin/statistics/places${queryString}` },
+
               {
-                label: 'Participations',
+                label: 'Mises en relation',
                 to: `/admin/statistics/participations${queryString}`,
               },
               { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
             ],
           },
         ]
@@ -210,13 +212,14 @@ export default defineNuxtComponent({
                 label: 'Indicateurs clés',
                 to: `/admin/statistics/indicateurs-cles${queryString}`,
               },
-              { label: 'Places', to: `/admin/statistics/places${queryString}` },
+
               {
-                label: 'Participations',
+                label: 'Mises en relation',
                 to: `/admin/statistics/participations${queryString}`,
               },
               { label: 'Missions', to: `/admin/statistics/missions${queryString}` },
               { label: 'Organisations', to: `/admin/statistics/organisations${queryString}` },
+              { label: 'Places', to: `/admin/statistics/places${queryString}` },
             ],
           },
         ]

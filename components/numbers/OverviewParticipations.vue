@@ -1,7 +1,7 @@
 <template>
   <BaseBox padding="sm" :loading="loading" loading-text="Générations des données...">
     <BoxHeadingStatistics
-      title="Participations ›"
+      title="Mises en relation ›"
       link="/admin/statistics/participations"
       no-period
       class="mb-6"
@@ -12,23 +12,15 @@
     >
       <CardStatistic
         :value="statistics.participations"
-        :title="`${$filters.pluralize(
-          statistics.participations,
-          'Mise en relation',
-          'Mises en relation',
-          false
-        )}`"
+        title="Mises en relation"
+        subtitle="créées"
         link="/admin/statistics/participations"
         infos-bulle="Total du nombre de mises en relation depuis le début"
       />
       <CardStatistic
         :value="statistics.participations_validated"
-        :title="`${$filters.pluralize(
-          statistics.participations_validated,
-          'Participation validée',
-          'Participations validées',
-          false
-        )}`"
+        title="Mises en relation"
+        subtitle="validées"
         link="/admin/statistics/participations"
         infos-bulle="Nombre de participations validées parmi les mises en relation reçues depuis le début"
       />
@@ -40,12 +32,7 @@
       />
       <CardStatistic
         :value="statistics.participations_in_progress"
-        :title="`${$filters.pluralize(
-          statistics.participations_validated,
-          'Participation',
-          'Participations',
-          false
-        )}`"
+        title="Mises en relation"
         link="/admin/statistics/participations"
         subtitle="à traiter"
         infos-bulle="Nombre de participations en attente de validation ou en cours de traitement parmi les mises en relation reçues depuis le début"

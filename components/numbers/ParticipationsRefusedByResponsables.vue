@@ -1,7 +1,7 @@
 <template>
   <BaseBox padding="sm" :loading="loading" loading-text="Générations des données...">
     <BoxHeadingStatistics
-      title="Motifs des participations refusées"
+      title="Motifs des mises en relation refusées"
       class="mb-6"
       infos-bulle="Répartition des motifs de refus pour les mises en relation sur la période sélectionnée"
     />

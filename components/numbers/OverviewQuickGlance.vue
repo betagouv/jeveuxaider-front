@@ -40,21 +40,21 @@
         :value="statistics.participations"
         :title="`${$filters.pluralize(
           statistics.participations,
-          'Participation',
-          'Participations',
+          'Mise en relation',
+          'Mises en relation',
           false
         )}`"
         :subtitle="`${$filters.pluralize(statistics.participations, 'brute', 'brutes', false)}`"
         link="/admin/statistics/participations"
-        infos-bulle="Correspond au nombre de participations brutes sur la période"
+        infos-bulle="Correspond au nombre de mises en relation brutes sur la période"
       />
       <CardStatistic
         v-if="statistics.participations_validated !== null"
         :value="statistics.participations_validated"
         :title="`${$filters.pluralize(
           statistics.participations_validated,
-          'Participation',
-          'Participations',
+          'Mise en relation',
+          'Mises en relation',
           false
         )}`"
         :subtitle="`${$filters.pluralize(
@@ -64,7 +64,7 @@
           false
         )}`"
         link="/admin/statistics/participations"
-        infos-bulle="Correspond au nombre de participations validées sur la période"
+        infos-bulle="Correspond au nombre de mises en relation validées sur la période"
       />
       <CardStatistic
         v-if="statistics.utilisateurs !== null"

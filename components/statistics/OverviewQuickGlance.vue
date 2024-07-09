@@ -34,6 +34,7 @@
           'Mises en relation',
           false
         )}`"
+        :subtitle="`${$filters.pluralize(statistics.participations, 'créée', 'créées', false)}`"
         infos-bulle="Correspond au nombre de mises en relation créées sur la période"
       />
       <CardStatistic

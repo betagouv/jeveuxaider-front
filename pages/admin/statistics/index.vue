@@ -27,10 +27,10 @@
       </template>
     </BaseSectionHeading>
 
-    <!-- <OverviewQuickGlance ref="overviewQuickGlance" /> -->
+    <OverviewQuickGlance ref="overviewQuickGlance" />
 
     <!-- <BaseHeading as="h2" :level="2"> L’activité sur JeVeuxAider.gouv.fr en détail </BaseHeading> -->
-    <OverviewPlaces ref="overviewPlaces" />
+    <!-- <OverviewPlaces ref="overviewPlaces" /> -->
     <OverviewParticipations ref="overviewParticipations" />
     <OverviewUtilisateurs
       v-if="['admin'].includes($stores.auth.contextRole)"
@@ -52,7 +52,7 @@ import OverviewMissions from '@/components/numbers/OverviewMissions.vue'
 import OverviewParticipations from '@/components/numbers/OverviewParticipations.vue'
 import OverviewQuickGlance from '@/components/numbers/OverviewQuickGlance.vue'
 import OverviewUtilisateurs from '@/components/numbers/OverviewUtilisateurs.vue'
-import OverviewPlaces from '@/components/numbers/OverviewPlaces.vue'
+// import OverviewPlaces from '@/components/numbers/OverviewPlaces.vue'
 // import OverviewAPIEngagement from '@/components/numbers/OverviewAPIEngagement.vue'
 // import FiltersStatistics from '@/components/custom/FiltersStatistics.vue'
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
@@ -65,7 +65,7 @@ export default defineNuxtComponent({
     OverviewParticipations,
     OverviewMissions,
     OverviewUtilisateurs,
-    OverviewPlaces,
+    // OverviewPlaces,
     // OverviewAPIEngagement,
     Breadcrumb,
   },
@@ -96,16 +96,16 @@ export default defineNuxtComponent({
   computed: {
     filters() {
       if (this.$stores.auth.contextRole === 'admin') {
-        return ['department']
+        return ['department', 'daterange']
       }
       if (this.$stores.auth.contextRole === 'referent') {
-        return []
+        return ['daterange', 'daterange']
       }
       if (this.$stores.auth.contextRole === 'tete_de_reseau') {
-        return ['department']
+        return ['department', 'daterange']
       }
       if (this.$stores.auth.contextRole === 'responsable') {
-        return []
+        return ['daterange', 'daterange']
       }
 
       return []
@@ -113,12 +113,12 @@ export default defineNuxtComponent({
   },
   methods: {
     refetch() {
-      if (this.$refs.overviewQuickGlance) this.$refs.overviewQuickGlance.fetch()
-      if (this.$refs.overviewParticipations) this.$refs.overviewParticipations.fetch()
-      if (this.$refs.overviewUtilisateurs) this.$refs.overviewUtilisateurs.fetch()
-      if (this.$refs.overviewOrganisations) this.$refs.overviewOrganisations.fetch()
-      if (this.$refs.overviewMissions) this.$refs.overviewMissions.fetch()
-      if (this.$refs.overviewPlaces) this.$refs.overviewPlaces.fetch()
+      this.$refs.overviewQuickGlance?.fetch()
+      this.$refs.overviewParticipations?.fetch()
+      this.$refs.overviewUtilisateurs?.fetch()
+      this.$refs.overviewOrganisations?.fetch()
+      this.$refs.overviewMissions?.fetch()
+      this.$refs.overviewPlaces?.fetch()
     },
   },
 })

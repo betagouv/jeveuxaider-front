@@ -43,7 +43,7 @@
       </div>
     </BaseBox>
 
-    <!-- <OverviewQuickGlance ref="overviewQuickGlance" /> -->
+    <OverviewQuickGlance ref="overviewQuickGlance" />
 
     <BaseHeading as="h2" :level="2"> L’activité sur JeVeuxAider.gouv.fr en détail </BaseHeading>
 
@@ -51,7 +51,7 @@
     <OverviewUtilisateurs ref="overviewUtilisateurs" />
     <OverviewOrganisations ref="overviewOrganisations" />
     <OverviewMissions ref="overviewMissions" />
-    <OverviewPlaces ref="overviewPlaces" />
+    <!-- <OverviewPlaces ref="overviewPlaces" /> -->
   </div>
 </template>
 
@@ -90,7 +90,7 @@ export default defineNuxtComponent({
   },
   computed: {
     filters() {
-      return ['department']
+      return ['department', 'daterange']
     },
   },
   methods: {

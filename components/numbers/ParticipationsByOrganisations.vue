@@ -15,7 +15,7 @@
       >
         <div class="text-gray-900 font-semibold" v-html="item.name" />
         <div class="text-gray-600 text-sm">
-          {{ $filters.pluralize(item.count, 'participation', 'participations') }}
+          {{ $filters.pluralize(item.count, 'mise en relation', 'mises en relation') }}
         </div>
       </BaseStackedListItem>
     </BaseStackedList>

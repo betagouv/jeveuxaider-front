@@ -9,13 +9,13 @@
               to: ['admin'].includes($stores.auth.contextRole) ? '/admin' : null,
             },
             { text: 'Plus de chiffres', to: '/admin/statistics' },
-            { text: 'Participations' },
+            { text: 'Mises en relation' },
           ]"
         />
       </Teleport>
     </ClientOnly>
 
-    <BaseSectionHeading title="Participations">
+    <BaseSectionHeading title="Mises en relation">
       <template #action>
         <CustomFiltersStatisticsButton v-if="filters.length > 0" :filters="filters" />
       </template>
@@ -36,7 +36,7 @@
         ref="participationsConversionByDate"
       /> -->
       <div class="flex flex-col gap-12">
-        <BaseHeading as="h2" :level="2" class="mt-8"> Les participations en détail </BaseHeading>
+        <BaseHeading as="h2" :level="2" class="mt-8"> Les mises en relation en détail </BaseHeading>
         <ParticipationsByPeriod ref="participationsByPeriod" />
 
         <ParticipationsByStates ref="participationsByStates" />
