@@ -1,14 +1,15 @@
 <template>
-  <div id="more-numbers" class="bg-jva-green-500 p-12 shadow-lg overflow-hidden">
-    <div class="space-y-4">
-      <BaseHeading as="h2" :level="2" class="text-white font-extrabold">
+  <div id="more-numbers" class="bg-jva-green-500 p-10 shadow-lg overflow-hidden">
+    <div class="">
+      <BaseHeading as="h2" :level="3" class="text-white font-extrabold mb-4">
         Plus de chiffres
       </BaseHeading>
-      <div class="text-xl text-white font-bold max-w-[260px]">
+      <div class="text-xl text-white max-w-[260px] mb-6">
         Tout l'historique de votre activité sur la plateforme
       </div>
-      <BaseButton
-        variant="white-green"
+      <DsfrButton
+        type="tertiary-no-outline"
+        class="text-jva-green-500"
         @click.native="
           $router.push(
             `/admin/statistics?start_date=${$dayjs()
@@ -18,7 +19,7 @@
         "
       >
         Vos statistiques
-      </BaseButton>
+      </DsfrButton>
     </div>
   </div>
 </template>

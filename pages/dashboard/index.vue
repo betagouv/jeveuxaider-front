@@ -61,7 +61,7 @@
         </div>
       </BaseBox>
       <BaseBox :loading="loadingActions" loading-text="Récupération des actions en attente ...">
-        <BaseHeading as="h2" :level="3" class="mb-8">
+        <BaseHeading as="h2" :level="3" class="mb-4 sm:mb-8">
           Vous avez
           {{ $filters.pluralize(formattedActions.length, 'action') }} en attente
         </BaseHeading>
@@ -75,8 +75,12 @@
               :href="action.href"
               :icon-variant="action.iconVariant"
             >
-              <div class="text-gray-900 font-semibold" v-html="action.title" />
-              <div v-if="action.subtitle" class="text-gray-500 text-sm" v-html="action.subtitle" />
+              <div class="text-gray-900 lg:font-semibold" v-html="action.title" />
+              <div
+                v-if="action.subtitle"
+                class="hidden sm:block text-gray-500 text-sm"
+                v-html="action.subtitle"
+              />
             </BaseStackedListItem>
           </BaseStackedList>
         </template>
@@ -87,11 +91,12 @@
           </BaseStackedListItem>
         </template>
       </BaseBox>
+
+      <BoxOperations v-if="['admin'].includes($stores.auth.contextRole)" />
       <LePetitMot />
 
       <BaseBox
         v-if="testimonials.length && !['responsable_territoire'].includes($stores.auth.contextRole)"
-        padding="sm"
         :loading="loadingTestimonials"
         loading-text="Récupération des témoignages ..."
       >
@@ -104,28 +109,18 @@
               :temoignage="temoignage"
             />
           </div>
-          <div class="flex justify-center mt-8">
-            <BaseLink
-              :to="`/admin/temoignages`"
-              class="uppercase font-semibold text-sm hover:underline"
-            >
-              Tous les retours
-            </BaseLink>
+          <div class="mt-8">
+            <nuxt-link to="/admin/temoignages" no-prefetch>
+              <DsfrButton type="secondary">Tous les retours d'expériences</DsfrButton>
+            </nuxt-link>
           </div>
         </div>
       </BaseBox>
     </template>
     <template #right>
-      <BaseBox
-        padding="sm"
-        :loading="loadingStatistics"
-        loading-text="Récupération de votre activité ..."
-      >
+      <BaseBox :loading="loadingStatistics" loading-text="Récupération de votre activité ...">
         <BaseHeading as="h2" :level="3" class="mb-8"> Votre activité en chiffres </BaseHeading>
-        <div
-          v-if="statistics"
-          class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px] mb-8"
-        >
+        <div v-if="statistics" class="grid grid-cols-1 lg:grid-cols-2 border bg-gray-200 gap-[1px]">
           <CardStatistic
             :value="statistics.places_left"
             :title="`${$filters.pluralize(
@@ -268,6 +263,7 @@ import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
 import MoreNumbers from '@/components/section/dashboard/MoreNumbers.vue'
 import GuideLinks from '@/components/section/dashboard/GuideLinks.vue'
 import LePetitMot from '@/components/section/dashboard/LePetitMot.vue'
+import BoxOperations from '@/components/section/dashboard/BoxOperations.vue'
 import CardStatistic from '@/components/card/CardStatistic.vue'
 import CardTemoignage from '@/components/card/CardTemoignage.vue'
 import ButtonCreateMission from '@/components/custom/ButtonCreateMission.vue'
@@ -283,6 +279,7 @@ export default defineNuxtComponent({
     ButtonCreateMission,
     GuideLinks,
     BoxScore,
+    BoxOperations,
   },
   mixins: [MixinAction],
   setup() {

@@ -5,9 +5,9 @@
       {
         'shadow-lg': variant == 'shadow',
         border: variant == 'flat',
-        'px-6 py-8 xl:py-12 xl:px-16': padding == 'lg',
-        'px-6 py-8 xl:py-10 xl:px-8': padding == 'sm',
-        'px-4 py-4 xl:py-4 xl:px-6': padding == 'xs',
+        'p-4 sm:p-8 lg:p-10': padding == 'lg',
+        'p-6 lg:p-8': padding == 'sm',
+        'p-4 lg:p-6': padding == 'xs',
       },
     ]"
   >

@@ -420,7 +420,7 @@ export default defineNuxtComponent({
     },
     allFilters() {
       return [
-        this.$stores.auth.user.statistics?.participations_need_to_be_treated_count > 0 &&
+        this.$stores.auth.user?.statistics?.participations_need_to_be_treated_count > 0 &&
           'need_to_be_treated',
         'state',
         'tags',
@@ -447,7 +447,7 @@ export default defineNuxtComponent({
     },
     alwaysVisibleFilters() {
       return [
-        this.$stores.auth.user.statistics?.participations_need_to_be_treated_count > 0 &&
+        this.$stores.auth.user?.statistics?.participations_need_to_be_treated_count > 0 &&
           'need_to_be_treated',
         'state',
         'tags',

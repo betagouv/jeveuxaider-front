@@ -43,7 +43,7 @@ export default defineNuxtComponent({
       return this.message.from
     },
     isFromMe() {
-      return this.message.from_id === this.$stores.auth.user.id
+      return this.message.from_id === this.$stores.auth.user?.id
     },
   },
   methods: {

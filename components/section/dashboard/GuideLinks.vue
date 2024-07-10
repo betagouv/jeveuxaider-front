@@ -1,6 +1,6 @@
 <template>
   <BaseBox>
-    <BaseHeading as="h2" :level="2" class="mb-8 font-extrabold">
+    <BaseHeading as="h2" :level="3" class="mb-8 font-extrabold">
       {{ $stores.auth.contextRole === 'admin' ? 'Liens utiles' : 'Suivez le guide' }}
     </BaseHeading>
     <BaseStackedList class="border-t">

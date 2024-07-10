@@ -168,10 +168,10 @@ export default defineNuxtComponent({
       }
     },
     isFirstMission() {
-      return this.$stores.auth.user.statistics?.missions_as_responsable_count === 0
+      return this.$stores.auth.user?.statistics?.missions_as_responsable_count === 0
     },
     hasParticipationsWaiting() {
-      return this.$stores.auth.user.statistics?.participations_need_to_be_treated_count > 0
+      return this.$stores.auth.user?.statistics?.participations_need_to_be_treated_count > 0
     },
   },
   methods: {

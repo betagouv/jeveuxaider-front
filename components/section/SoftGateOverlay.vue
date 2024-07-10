@@ -94,8 +94,8 @@ export default defineNuxtComponent({
         return false
       }
       if (
-        this.$stores.auth.user.profile.latitude === null ||
-        this.$stores.auth.user.profile.longitude === null
+        this.$stores.auth.user?.profile?.latitude === null ||
+        this.$stores.auth.user?.profile?.longitude === null
       ) {
         return false
       }

@@ -329,7 +329,7 @@ export default defineNuxtComponent({
           },
           {
             name:
-              this.$stores.auth.user.statistics?.participations_need_to_be_treated_count > 0
+              this.$stores.auth.user?.statistics?.participations_need_to_be_treated_count > 0
                 ? '⚠️ Participations'
                 : 'Participations',
             to: '/admin/participations',

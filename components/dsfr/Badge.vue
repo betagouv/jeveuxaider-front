@@ -15,6 +15,7 @@
       { 'text-[#695240] bg-[#FEEBD0]': type === 'new' },
       { 'text-[#6E445A] bg-[#FEE7FC]': type === 'default' },
       { 'text-[#3A3A3A] bg-[#EEEEEE]': type === 'gray' },
+      { 'text-[#716043] bg-[#FEECC2]': type === 'yellow' },
       { 'text-[#0063CB] bg-[#F5F5FE]': type === 'recommendation' },
     ]"
   >
@@ -72,6 +73,7 @@ export default defineNuxtComponent({
           'new',
           'default',
           'gray',
+          'yellow',
           'recommendation',
         ].includes(t),
     },

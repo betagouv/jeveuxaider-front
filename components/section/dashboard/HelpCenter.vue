@@ -1,13 +1,15 @@
 <template>
-  <div id="help-center" class="bg-jva-blue-400 p-12 shadow-lg">
-    <div class="space-y-4">
-      <BaseHeading as="h2" :level="2" class="text-white font-extrabold">
-        Centre d'aide
+  <div id="help-center" class="bg-[#0063CB] p-10 shadow-lg overflow-hidden">
+    <div class="">
+      <BaseHeading as="h2" :level="3" class="text-white font-extrabold mb-4">
+        Centre d’aide
       </BaseHeading>
-      <div class="text-xl text-white font-bold max-w-[260px]">
+      <div class="text-xl text-white max-w-[260px] mb-6">
         Trouvez toutes les réponses à vos questions
       </div>
-      <BaseButton variant="white-blue" @click.native="onClick()"> Foire aux questions </BaseButton>
+      <DsfrButton type="tertiary-no-outline" @click.native="onClick()">
+        Foire aux questions
+      </DsfrButton>
     </div>
   </div>
 </template>
@@ -43,11 +45,12 @@ export default defineNuxtComponent({
 
 <style lang="postcss" scoped>
 #help-center {
-  background-image: url('/images/dashboard/bg-help-center.png');
+  background-image: url('/images/dashboard/illus-centre-aide.svg');
   background-repeat: no-repeat;
-  background-position: right -48px bottom -40px;
+  background-position: right bottom;
+  background-size: 210px auto;
   @screen xl {
-    background-position: right -20px center;
+    background-position: right bottom;
   }
 }
 </style>

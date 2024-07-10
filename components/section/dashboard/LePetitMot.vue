@@ -1,5 +1,8 @@
 <template>
-  <div id="petit-mot" class="bg-[#FEF8F4] p-12 shadow-lg border-l-4 border-[#EADBD1] text-gray-800">
+  <div
+    id="petit-mot"
+    class="bg-[#FEF8F4] p-4 lg:p-12 shadow-lg border-l-4 border-[#EADBD1] text-gray-800"
+  >
     <template v-if="loading">
       <LoadingIndicator> Récupération du petit mot</LoadingIndicator>
     </template>
@@ -11,11 +14,11 @@
         <img
           srcset="/images/dashboard/margot.png, /images/dashboard/margot@2x.png 2x"
           alt="Margot"
-          class="h-[100px] w-[100px]"
+          class="h-[32px] w-[32px] lg:h-[80px] lg:w-[80px]"
           data-not-lazy
         />
         <div class="flex-1">
-          <div class="text-xl mb-6">
+          <div class="text-md lg:text-xl mb-6">
             <span class="font-bold">{{ messages.title }}</span> de l'équipe JeVeuxAider.gouv.fr
           </div>
           <div class="flex">
@@ -32,7 +35,7 @@
               />
             </svg>
 
-            <div class="content text-lg" v-html="petitMotByRole" />
+            <div class="content text-sm lg:text-lg" v-html="petitMotByRole" />
           </div>
         </div>
       </div>
@@ -88,9 +91,11 @@ export default defineNuxtComponent({
 
 <style lang="postcss" scoped>
 #petit-mot {
-  background-image: url('/images/dashboard/bg-petit-mot.png');
-  background-position: right 38px bottom 38px;
-  background-repeat: no-repeat;
+  @screen lg {
+    background-image: url('/images/dashboard/bg-petit-mot.png');
+    background-position: right 38px bottom 38px;
+    background-repeat: no-repeat;
+  }
 }
 
 #petit-mot .content :deep(a) {
