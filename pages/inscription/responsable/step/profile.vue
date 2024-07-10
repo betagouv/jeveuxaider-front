@@ -177,7 +177,7 @@ export default defineNuxtComponent({
         .then(async () => {
           await this.uploadFiles('profile', this.form.id)
           await this.$stores.auth.updateProfile({
-            id: this.$stores.auth.profile.id,
+            id: this.$stores.auth.profile?.id,
             ...this.form,
           })
           this.$plausible.trackEvent('Inscription responsable - Étape 2 - Profil')

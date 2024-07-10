@@ -43,7 +43,7 @@ export default defineNuxtComponent({
   },
   computed: {
     otherUsers() {
-      return this.users.filter((user) => user.id != this.$stores.auth.profile.user_id)
+      return this.users.filter((user) => user.id != this.$stores.auth.profile?.user_id)
     },
   },
 })

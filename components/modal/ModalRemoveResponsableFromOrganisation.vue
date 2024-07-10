@@ -111,7 +111,7 @@ export default defineNuxtComponent({
     },
     async afterSubmit() {
       this.$emit('close')
-      if (this.$stores.auth.profile.id === this.responsable.id) {
+      if (this.$stores.auth.profile?.id === this.responsable.id) {
         await this.$stores.auth.fetchUser()
         this.$router.push('/')
       } else {

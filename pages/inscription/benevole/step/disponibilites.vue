@@ -133,13 +133,13 @@ export default defineNuxtComponent({
     }
   },
   created() {
-    if (!this.$stores.auth.profile.disponibilities) {
+    if (!this.$stores.auth.profile?.disponibilities) {
       this.form.disponibilities = ['flexible', 'jours_feries', 'weekend', 'vacances']
     }
-    if (!this.$stores.auth.profile.commitment__duration) {
+    if (!this.$stores.auth.profile?.commitment__duration) {
       this.form.commitment__duration = '2_hours'
     }
-    if (!this.$stores.auth.profile.commitment__time_period) {
+    if (!this.$stores.auth.profile?.commitment__time_period) {
       this.form.commitment__time_period = 'year'
     }
   },
@@ -153,7 +153,7 @@ export default defineNuxtComponent({
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           await this.$stores.auth.updateProfile({
-            id: this.$stores.auth.profile.id,
+            id: this.$stores.auth.profile?.id,
             ...this.form,
           })
           this.$plausible.trackEvent('Inscription bénévole - Étape 3 - Préférences')

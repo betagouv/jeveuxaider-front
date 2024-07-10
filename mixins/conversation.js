@@ -2,12 +2,12 @@ export default {
   computed: {
     currentUserInConversation() {
       return this.conversation.users.find((user) => {
-        return user.id == this.$stores.auth.profile.user_id
+        return user.id == this.$stores.auth.profile?.user_id
       })
     },
     contactInConversation() {
       return this.conversation.users.find((user) => {
-        return user.id != this.$stores.auth.profile.user_id
+        return user.id != this.$stores.auth.profile?.user_id
       })
     },
     hasUnreadMessage() {
@@ -31,12 +31,12 @@ export default {
       return true
     },
     isCurrentUserBenevole() {
-      return this.conversation.conversable.profile_id == this.$stores.auth.profile.id
+      return this.conversation.conversable.profile_id == this.$stores.auth.profile?.id
     },
     isCurrentUserResponsable() {
       return (
         this.conversation.conversable.profile_id &&
-        this.conversation.conversable.profile_id !== this.$stores.auth.profile.id
+        this.conversation.conversable.profile_id !== this.$stores.auth.profile?.id
       )
     },
   },

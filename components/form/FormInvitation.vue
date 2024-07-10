@@ -93,7 +93,7 @@ export default defineNuxtComponent({
   data() {
     return {
       form: {
-        user_id: this.$stores.auth.profile.user_id,
+        user_id: this.$stores.auth.profile?.user_id,
         role: this.role,
         invitable_id: this.invitableId,
         invitable_type: this.invitableType,

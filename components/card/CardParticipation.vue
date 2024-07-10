@@ -226,7 +226,7 @@ export default defineNuxtComponent({
         : this.participation.mission.responsables[0]
     },
     isBenevole() {
-      return this.participation.profile_id == this.$stores.auth.profile.id
+      return this.participation.profile_id == this.$stores.auth.profile?.id
     },
     canSeeTags() {
       return ['admin', 'referent', 'tete_de_reseau', 'responsable'].includes(

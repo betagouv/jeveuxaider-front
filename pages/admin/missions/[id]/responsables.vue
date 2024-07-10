@@ -142,7 +142,7 @@ export default defineNuxtComponent({
   methods: {
     addDefaultResponsable() {
       const currentMemberUser = this.$stores.formMission.mission.structure.members.filter(
-        (member) => member.profile.id === this.$stores.auth.profile.id
+        (member) => member.profile.id === this.$stores.auth.profile?.id
       )
       if (currentMemberUser.length === 0) {
         this.form.responsables = [this.$stores.formMission.mission.structure.members[0]?.profile]

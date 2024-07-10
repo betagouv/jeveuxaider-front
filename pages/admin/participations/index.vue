@@ -399,7 +399,7 @@ export default defineNuxtComponent({
       }
       if (
         ['referent'].includes(this.$stores.auth.contextRole) &&
-        this.$stores.auth.profile.can_export_profiles
+        this.$stores.auth.profile?.can_export_profiles
       ) {
         return true
       }
@@ -502,7 +502,7 @@ export default defineNuxtComponent({
       }
       if (this.$stores.auth.contextRole === 'responsable') {
         return (
-          participation.mission.responsables.filter((r) => r.id === this.$stores.auth.profile.id)
+          participation.mission.responsables.filter((r) => r.id === this.$stores.auth.profile?.id)
             .length > 0
         )
       }

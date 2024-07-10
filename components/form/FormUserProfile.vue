@@ -359,7 +359,7 @@ export default defineNuxtComponent({
                     if (!value || !this.$stores.auth.isLogged) {
                       return true
                     }
-                    return value !== this.$stores.auth.profile.email
+                    return value !== this.$stores.auth.profile?.email
                   }
                 ),
           }),
@@ -424,7 +424,7 @@ export default defineNuxtComponent({
           }
           await this.uploadFiles('profile', this.form.id)
           await this.$stores.auth.updateProfile({
-            id: this.$stores.auth.profile.id,
+            id: this.$stores.auth.profile?.id,
             ...this.form,
           })
           this.$emit('submit')

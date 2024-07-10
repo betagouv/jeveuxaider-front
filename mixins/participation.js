@@ -4,7 +4,7 @@ export default {
       if (this.$stores.auth.contextRole === 'responsable') {
         return (
           this.participation.mission.responsables.filter(
-            (r) => r.id === this.$stores.auth.profile.id
+            (r) => r.id === this.$stores.auth.profile?.id
           ).length > 0
         )
       }

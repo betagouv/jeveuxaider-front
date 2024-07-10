@@ -215,7 +215,7 @@ export default defineNuxtComponent({
         params: {
           'filter[conversable_id]': this.organisation.id,
           'filter[conversable_type]': 'App\\Models\\Structure',
-          'filter[with_users]': `${this.responsable.user_id},${this.$stores.auth.profile.user_id}`,
+          'filter[with_users]': `${this.responsable.user_id},${this.$stores.auth.profile?.user_id}`,
         },
       })
       this.conversationCurrentUserAndResponsable = conversations.total > 0 && conversations.data[0]

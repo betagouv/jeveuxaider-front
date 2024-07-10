@@ -96,22 +96,22 @@ export default defineNuxtComponent({
   },
   computed: {
     activities() {
-      return this.$stores.auth.profile.activities?.length
-        ? this.$stores.auth.profile.activities
+      return this.$stores.auth.profile?.activities?.length
+        ? this.$stores.auth.profile?.activities
         : this.allActivities.filter((activity) => activity.popular === true)
     },
     facetFilterActivities() {
       return this.activities.map((activity) => `activities.name:${activity.name}`)
     },
     numericFiltersCommitmentTotal() {
-      const commitmentTotal = this.$stores.auth.profile.commitment__total ?? 4
+      const commitmentTotal = this.$stores.auth.profile?.commitment__total ?? 4
       return [`commitment__total <= ${commitmentTotal}`]
     },
     searchPageWithFilters() {
       const filters = []
-      filters.push(`commitment__total=<%3D${this.$stores.auth.profile.commitment__total ?? '4'}`)
-      filters.push(`duration=${this.$stores.auth.profile.commitment__duration ?? 'half_day'}`)
-      filters.push(`time_period=${this.$stores.auth.profile.commitment__time_period ?? 'year'}`)
+      filters.push(`commitment__total=<%3D${this.$stores.auth.profile?.commitment__total ?? '4'}`)
+      filters.push(`duration=${this.$stores.auth.profile?.commitment__duration ?? 'half_day'}`)
+      filters.push(`time_period=${this.$stores.auth.profile?.commitment__time_period ?? 'year'}`)
       filters.push(
         `activities.name=${this.activities
           .map((activity) => encodeURIComponent(activity.name))

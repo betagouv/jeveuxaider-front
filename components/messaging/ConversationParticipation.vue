@@ -103,7 +103,7 @@ export default defineNuxtComponent({
         return responsable
       }
       return this.conversation.users.filter(
-        (user) => user.id != this.$stores.auth.profile.user_id
+        (user) => user.id != this.$stores.auth.profile?.user_id
       )[0]
     },
     benevoleUser() {

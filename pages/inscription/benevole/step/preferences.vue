@@ -123,7 +123,7 @@ export default defineNuxtComponent({
         .validate(this.form, { abortEarly: false })
         .then(async () => {
           await this.$stores.auth.updateProfile({
-            id: this.$stores.auth.profile.id,
+            id: this.$stores.auth.profile?.id,
             ...this.form,
           })
           this.$plausible.trackEvent('Inscription bénévole - Étape 3 - Préférences')

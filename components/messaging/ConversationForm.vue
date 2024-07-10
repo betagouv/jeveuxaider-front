@@ -64,7 +64,7 @@ export default defineNuxtComponent({
     isBenevoleInParticipation() {
       return (
         this.conversation.conversable_type === 'App\\Models\\Participation' &&
-        this.conversation.conversable.profile_id === this.$stores.auth.profile.id
+        this.conversation.conversable.profile_id === this.$stores.auth.profile?.id
       )
     },
     conversation() {

@@ -36,7 +36,7 @@ export default defineNuxtComponent({
   computed: {
     recipients() {
       return this.conversation.users.filter((user) => {
-        return user.id != this.$stores.auth.profile.user_id
+        return user.id != this.$stores.auth.profile?.user_id
       })
     },
     title() {

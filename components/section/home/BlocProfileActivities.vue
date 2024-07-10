@@ -77,10 +77,10 @@ export default defineNuxtComponent({
   },
   computed: {
     profileActivitiesIds() {
-      if (!this.$stores.auth.profile.activities) {
+      if (!this.$stores.auth.profile?.activities) {
         return []
       }
-      return this.$stores.auth.profile.activities.map((activity) => {
+      return this.$stores.auth.profile?.activities.map((activity) => {
         return activity.id
       })
     },
@@ -91,13 +91,13 @@ export default defineNuxtComponent({
     },
     profileActivitiesRemaining() {
       if (
-        !this.$stores.auth.profile.activities ||
-        this.$stores.auth.profile.activities.length === 0
+        !this.$stores.auth.profile?.activities ||
+        this.$stores.auth.profile?.activities.length === 0
       ) {
         return []
       }
-      const profileActivitiesIds = this.$stores.auth.profile.activities
-        .slice(this.chunkSize, this.$stores.auth.profile.activities.length)
+      const profileActivitiesIds = this.$stores.auth.profile?.activities
+        .slice(this.chunkSize, this.$stores.auth.profile?.activities.length)
         .map((activity) => {
           return activity.id
         })
@@ -109,7 +109,7 @@ export default defineNuxtComponent({
   },
   methods: {
     async attachActivityToProfile(activity) {
-      await apiFetch(`/profiles/${this.$stores.auth.profile.id}/activity/${activity.id}/attach`, {
+      await apiFetch(`/profiles/${this.$stores.auth.profile?.id}/activity/${activity.id}/attach`, {
         method: 'PUT',
         body: this.mission,
       })
@@ -121,7 +121,7 @@ export default defineNuxtComponent({
         .catch(() => {})
     },
     async detachActivityToProfile(activity) {
-      await apiFetch(`/profiles/${this.$stores.auth.profile.id}/activity/${activity.id}/detach`, {
+      await apiFetch(`/profiles/${this.$stores.auth.profile?.id}/activity/${activity.id}/detach`, {
         method: 'PUT',
         body: this.mission,
       })

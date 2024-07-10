@@ -217,7 +217,7 @@ export default {
             subtitle: "Des bénévoles attendent votre réponse pour s'engager.",
             link:
               this.$stores.auth.contextRole === 'responsable'
-                ? `/admin/participations?filter[state]=En attente de validation&filter[ofResponsable]=${this.$stores.auth.profile.id}`
+                ? `/admin/participations?filter[state]=En attente de validation&filter[ofResponsable]=${this.$stores.auth.profile?.id}`
                 : '/admin/participations?filter[state]=En attente de validation',
           }
         case 'participations_need_to_be_treated':
@@ -231,7 +231,7 @@ export default {
               false
             )}</b> à traiter en priorité`,
             subtitle: 'Les bénévoles risquent de se désengager',
-            link: `/admin/participations?filter[need_to_be_treated]=true&filter[ofResponsable]=${this.$stores.auth.profile.id}`,
+            link: `/admin/participations?filter[need_to_be_treated]=true&filter[ofResponsable]=${this.$stores.auth.profile?.id}`,
           }
         case 'participations_in_progress':
           return {
@@ -246,7 +246,7 @@ export default {
             subtitle: "Des bénévoles attendent votre réponse pour s'engager.",
             link:
               this.$stores.auth.contextRole === 'responsable'
-                ? `/admin/participations?filter[state]=En cours de traitement&filter[ofResponsable]=${this.$stores.auth.profile.id}`
+                ? `/admin/participations?filter[state]=En cours de traitement&filter[ofResponsable]=${this.$stores.auth.profile?.id}`
                 : '/admin/participations?filter[state]=En attente de validation',
           }
         case 'snu_waiting_validation':

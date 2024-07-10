@@ -50,7 +50,7 @@ export default defineNuxtComponent({
   computed: {
     recipientUser() {
       return this.conversation.users.filter(
-        (user) => user.id != this.$stores.auth.profile.user_id
+        (user) => user.id != this.$stores.auth.profile?.user_id
       )[0]
     },
   },

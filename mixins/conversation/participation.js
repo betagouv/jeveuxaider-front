@@ -7,12 +7,12 @@ export default {
   },
   computed: {
     isCurrentUserBenevole() {
-      return this.conversation.conversable.profile_id == this.$stores.auth.profile.id
+      return this.conversation.conversable.profile_id == this.$stores.auth.profile?.id
     },
     isCurrentUserResponsable() {
       return (
         this.conversation.conversable.profile_id &&
-        this.conversation.conversable.profile_id !== this.$stores.auth.profile.id
+        this.conversation.conversable.profile_id !== this.$stores.auth.profile?.id
       )
     },
     conversation() {

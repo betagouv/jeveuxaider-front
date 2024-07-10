@@ -124,7 +124,7 @@ export default defineNuxtComponent({
       }
       this.loading = true
       await this.$stores.auth.updateProfile({
-        id: this.$stores.auth.profile.id,
+        id: this.$stores.auth.profile?.id,
         ...this.form,
       })
       this.loading = false

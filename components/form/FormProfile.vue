@@ -694,7 +694,7 @@ export default defineNuxtComponent({
 
           if (this.form.id === this.$stores.auth.user.profile.id) {
             await this.$stores.auth.updateProfile({
-              id: this.$stores.auth.profile.id,
+              id: this.$stores.auth.profile?.id,
               ...this.form,
             })
             this.$router.push('/profile')
