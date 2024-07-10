@@ -188,7 +188,7 @@ export default defineNuxtComponent({
       if (newVal) {
         await this.$nextTick()
         this.handleOptionsPosition()
-        this.$refs.facetSearch.$refs?.input?.focus()
+        this.$refs.facetSearch?.$refs?.input?.focus()
       }
     },
     async $route(newVal, oldVal) {

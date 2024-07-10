@@ -6,7 +6,7 @@
     <template #header>
       <BaseSectionHeading
         title="Ravi de vous retrouver 👋"
-        :secondary-title="`Bonjour ${$stores.auth.user.profile.first_name}`"
+        :secondary-title="`Bonjour ${$stores.auth.user?.profile?.first_name}`"
       >
         <template #action>
           <DsfrButton

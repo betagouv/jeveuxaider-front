@@ -8,7 +8,7 @@
     <template #header>
       <BaseSectionHeading
         :title="`Retours d\'expériences`"
-        :secondary-title="`Bonjour ${$stores.auth.user.profile.first_name}`"
+        :secondary-title="`Bonjour ${$stores.auth.user?.profile?.first_name}`"
         :loading="queryLoading"
       />
     </template>

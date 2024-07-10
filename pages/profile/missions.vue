@@ -14,7 +14,7 @@
           'missions',
           false
         )}`"
-        :secondary-title="`Bonjour ${$stores.auth.user.profile.first_name}`"
+        :secondary-title="`Bonjour ${$stores.auth.user?.profile?.first_name}`"
       >
         <template #action>
           <DsfrButton

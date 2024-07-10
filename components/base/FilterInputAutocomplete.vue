@@ -221,7 +221,7 @@ export default defineNuxtComponent({
       if (newVal) {
         await this.$nextTick()
         this.handleOptionsPosition()
-        this.$refs.facetSearch.$refs?.input?.focus()
+        this.$refs.facetSearch?.$refs?.input?.focus()
         if (this.valueIndexInOptions !== -1) {
           this.highlightIndex = this.valueIndexInOptions
           this.$refs[`option_${this.valueIndexInOptions}`]?.[0]?.scrollIntoView({

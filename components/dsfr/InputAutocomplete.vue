@@ -186,7 +186,7 @@ export default defineNuxtComponent({
         this.timeout.cancel()
       }
       this.timeout = _debounce(() => {
-        if (this.minValueLength && this.searchTerm.trim().length < this.minValueLength) {
+        if (this.minValueLength && this.searchTerm?.trim()?.length < this.minValueLength) {
           this.showOptions = false
           return
         }

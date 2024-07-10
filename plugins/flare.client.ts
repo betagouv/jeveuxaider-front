@@ -5,6 +5,7 @@ const excludeContainsMessagesErrors = [
   '403',
   '401',
   '422',
+  '499',
   'Failed to fetch',
   'dynamically imported module',
   'Network Error',

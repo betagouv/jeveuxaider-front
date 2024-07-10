@@ -9,7 +9,7 @@
     <div class="space-y-12 mb-24">
       <BaseSectionHeading
         :title="`Alors, on en est où aujourd'hui ?`"
-        :secondary-title="`Bonjour ${$stores.auth.user.profile.first_name}`"
+        :secondary-title="`Bonjour ${$stores.auth.user?.profile?.first_name}`"
       />
       <div>
         <Heading as="h2" size="xl" class="mb-6"> 🚀 Objectifs </Heading>

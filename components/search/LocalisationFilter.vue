@@ -210,7 +210,7 @@ export default defineNuxtComponent({
     async isOpen(isOpen) {
       if (isOpen) {
         await this.$nextTick()
-        this.$refs.facetSearch.$refs?.input?.focus()
+        this.$refs.facetSearch?.$refs?.input?.focus()
       }
     },
   },
