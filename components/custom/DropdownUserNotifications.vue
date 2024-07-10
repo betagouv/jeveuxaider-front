@@ -26,7 +26,7 @@
               v-for="notification in notifications"
               :key="notification.id"
               :notification="notification"
-              @close="$refs.dropdownUserNotifications.close()"
+              @close="$refs.dropdownUserNotifications?.close()"
             />
           </div>
         </template>
@@ -54,7 +54,7 @@ export default defineNuxtComponent({
   },
   methods: {
     goToNotifications() {
-      this.$refs.dropdownUserNotifications.close()
+      this.$refs.dropdownUserNotifications?.close()
       this.$router.push('/notifications')
     },
   },

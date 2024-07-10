@@ -15,7 +15,12 @@
                 <DsfrInput type="date" v-model="form.start_date" name="start_date" />
               </DsfrFormControl>
               <DsfrFormControl label="Jusqu'au" html-for="end_date" :error="errors.end_date">
-                <DsfrInput type="date" v-model="form.end_date" name="end_date" />
+                <DsfrInput
+                  type="date"
+                  v-model="form.end_date"
+                  name="end_date"
+                  @change="validate('end_date')"
+                />
               </DsfrFormControl>
             </div>
             <div class="flex flex-wrap gap-2 mt-4">
@@ -167,8 +172,16 @@ export default defineNuxtComponent({
         structure_name: this.$route.query['structure_name'] || null,
       },
       formSchema: object().shape({
-        start_date: date().nullable(),
-        end_date: date().nullable(),
+        start_date: date()
+          .nullable()
+          .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
+        end_date: date()
+          .nullable()
+          .transform((v) => (v instanceof Date && !isNaN(v) ? v : null))
+          .when(['start_date'], {
+            is: (startDate) => !!startDate,
+            then: (schema) => schema.required(),
+          }),
       }),
       datePrefilters: [
         { key: 'last_12_months', label: 'Les 12 derniers mois' },

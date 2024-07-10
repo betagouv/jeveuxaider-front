@@ -3,7 +3,7 @@
     <template #button>
       <button class="group flex items-center gap-3 lg:w-48 rounded-full">
         <BaseAvatar
-          v-if="$stores.auth.user.profile"
+          v-if="$stores.auth.user?.profile"
           :img-srcset="
             $stores.auth.user.profile.avatar && $stores.auth.user.profile.avatar.urls.thumbSmall
           "
