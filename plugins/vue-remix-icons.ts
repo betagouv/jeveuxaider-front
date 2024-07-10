@@ -123,6 +123,7 @@ import RiLockLine from 'vue-remix-icons/icons/ri-lock-line.vue'
 import RiShieldCheckLine from 'vue-remix-icons/icons/ri-shield-check-line.vue'
 import RiBardFill from 'vue-remix-icons/icons/ri-bard-fill.vue'
 import RiFilterLine from 'vue-remix-icons/icons/ri-filter-line.vue'
+import RiCheckboxBlankCircleLine from 'vue-remix-icons/icons/ri-checkbox-blank-circle-line.vue'
 
 const components = {
   RiShieldCheckLine,
@@ -246,6 +247,7 @@ const components = {
   RiUserForbid,
   RiBardFill,
   RiFilterLine,
+  RiCheckboxBlankCircleLine,
 }
 
 export default defineNuxtPlugin((nuxtApp) => {

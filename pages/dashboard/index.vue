@@ -78,7 +78,7 @@
               <div class="text-gray-900 lg:font-semibold" v-html="action.title" />
               <div
                 v-if="action.subtitle"
-                class="hidden sm:block text-gray-500 text-sm"
+                class="hidden sm:block text-[#666666] text-sm"
                 v-html="action.subtitle"
               />
             </BaseStackedListItem>
@@ -87,7 +87,7 @@
         <template v-else>
           <BaseStackedListItem icon="🎊" icon-variant="warning">
             <div class="text-gray-900 font-semibold">Félicitations !</div>
-            <div class="text-gray-600 text-sm">Vous n'avez plus aucune action en attente !</div>
+            <div class="text-[#666666] text-sm">Vous n'avez plus aucune action en attente !</div>
           </BaseStackedListItem>
         </template>
       </BaseBox>

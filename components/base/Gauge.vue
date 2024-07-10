@@ -51,7 +51,7 @@ export default defineNuxtComponent({
     color: {
       type: String,
       default: 'salmon',
-      validator: (s) => ['salmon', 'green', 'blue'].includes(s),
+      validator: (s) => ['salmon', 'green', 'blue', 'gradient'].includes(s),
     },
     track: {
       type: Number,
