@@ -86,16 +86,16 @@ export default defineNuxtComponent({
         {
           title: 'Décembre ensemble',
           icon: '/images/operations/operation-decembre-ensemble.png',
-          subtitle: 'Du 1er au 30 novembre',
+          subtitle: 'Du 1er au 31 décembre',
           tags: ['Solidarité et insertion', 'Lutte contre l’isolement ', 'Distribution', 'Maraude'],
           link: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
           start_date: {
-            month: 11,
+            month: 12,
             day: 1,
           },
           end_date: {
-            month: 11,
-            day: 30,
+            month: 12,
+            day: 31,
           },
         },
         {
