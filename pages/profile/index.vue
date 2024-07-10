@@ -44,6 +44,7 @@
       <LePetitMot />
     </template>
     <template #right>
+      <BoxCompleteProfile :profile="$stores.auth.user.profile" />
       <BoxUserProfileBenevole :profile="$stores.auth.user.profile" />
 
       <HelpCenter />
@@ -62,12 +63,14 @@ import MixinAction from '@/mixins/action'
 import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
 import LePetitMot from '@/components/section/dashboard/LePetitMot.vue'
 import BoxUserProfileBenevole from '@/components/section/profile/BoxUserProfileBenevole.vue'
+import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
 
 export default defineNuxtComponent({
   components: {
     HelpCenter,
     LePetitMot,
     BoxUserProfileBenevole,
+    BoxCompleteProfile,
   },
   mixins: [MixinAction],
   setup() {
