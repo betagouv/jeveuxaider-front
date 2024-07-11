@@ -18,6 +18,7 @@ export type TypeVocabulary =
   | 'disponibilities'
   | 'profile_type'
   | 'profile_certifications'
+  | 'profile_type_missions'
   | 'mission_types'
   | 'mission_workflow_states'
   | 'profile_fields'
@@ -737,6 +738,11 @@ const labels: TypeLabels = {
   profile_certifications: [
     { key: 'permis_voiture', label: 'Permis voiture' },
     { key: 'gestes_premier_secours', label: 'Geste de premiers secours' },
+  ],
+  profile_type_missions: [
+    { key: 'presentiel', label: 'Sur place' },
+    { key: 'distance', label: 'À distance' },
+    { key: 'all', label: 'Les deux' },
   ],
   mission_types: [
     { key: 'Mission en présentiel', label: 'Mission en présentiel' },

@@ -9,7 +9,7 @@
       />
     </template>
     <template #header>
-      <BaseSectionHeading title="Mes préférences de missions">
+      <BaseSectionHeading title="Préférences de missions">
         <template #action>
           <DsfrButton
             class="hidden lg:flex"

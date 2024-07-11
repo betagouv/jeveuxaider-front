@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white px-6 py-8 lg:px-12 lg:py-14">
-    <div class="grid grid-cols-1 gap-12">
+    <div class="grid grid-cols-1 gap-8 lg:gap-12">
       <div>
         <DsfrFormControl class="md:col-span-2" label="Photo de profil" html-for="avatar">
           <!-- :key="form.avatar?.updated_at ?? 'imageCrop'" -->
@@ -161,8 +161,6 @@
               name="certifications"
               variant="button"
               :options="$labels.profile_certifications"
-              class="mt-6"
-              @updated="validate('certifications')"
             />
           </DsfrFormControl>
         </div>
@@ -170,6 +168,9 @@
       <hr />
       <div class="">
         <BaseHeading as="h2" :level="2"> Quelques mots sur vous </BaseHeading>
+        <div class="text-[#666666] mt-2">
+          Une description de vous-même pour vous présenter aux organisations.
+        </div>
         <div class="mt-6">
           <DsfrFormControl label="" html-for="description">
             <DsfrTextarea
@@ -297,6 +298,24 @@
           </DsfrButton>
         </div>
       </div> -->
+      <transition name="fade">
+        <div
+          v-if="formIsDirty"
+          :class="['sm:hidden fixed bottom-0 p-3 bg-white z-50 w-full left-0 right-0']"
+          style="box-shadow: 0 25px 20px 30px rgb(0 0 0 / 25%)"
+        >
+          <DsfrButton
+            size="lg"
+            class="w-full"
+            variant="primary"
+            :loading="loading"
+            :disabled="!formIsDirty"
+            @click.native="handleSubmit()"
+          >
+            Enregistrer
+          </DsfrButton>
+        </div>
+      </transition>
     </div>
   </div>
 </template>

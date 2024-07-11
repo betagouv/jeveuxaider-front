@@ -1,138 +1,116 @@
 <template>
   <div class="bg-white px-6 py-8 lg:px-12 lg:py-14">
-    <div class="grid grid-cols-1 divide-y-gray-400 divide-y gap-12 lg:gap-16">
-      <div>
-        <BaseHeading as="h2" :level="2">
-          Ma disponibilité pour réaliser des actions bénévoles
-        </BaseHeading>
-        <div class="text-lg text-[#3A3A3A] mt-4">
-          Ces informations sont utilisées pour vous suggérer des missions en fonction de votre
-          agenda.
+    <div class="grid grid-cols-1 gap-8 lg:gap-12">
+      <div class="flex gap-12">
+        <div class="hidden lg:block w-[80px]">
+          <img src="/images/icons/calendar.svg" alt="" data-not-lazy class="w-full" />
         </div>
-        <div class="mt-12 space-y-8">
-          <div class="flex lg:space-x-10 items-center">
-            <div class="hidden lg:block w-[90px]">
+        <div class="flex-1">
+          <BaseHeading as="h2" :level="2"> Ma disponibilité </BaseHeading>
+          <div class="text-[#666666] mt-4">
+            Ces informations sont utilisées pour vous suggérer des missions en fonction de votre
+            agenda.
+          </div>
+          <div class="mt-10 space-y-10">
+            <div class="flex lg:space-x-10 items-center">
+              <!-- <div class="hidden lg:block w-[90px]">
               <img src="/images/icons/calendar.svg" alt="" data-not-lazy />
-            </div>
-            <div>
-              <BaseFormLabel html-for="frequence" required size="xl">
-                Combien de temps pourriez-vous allouer à des actions de bénévolat&nbsp;?
-              </BaseFormLabel>
-              <div class="mt-4 flex flex-col sm:flex-row gap-4 lg:gap-6">
-                <div class="lg:w-1/2">
-                  <BaseSelectAdvanced
-                    v-model="form.commitment__duration"
-                    name="commitment__duration"
-                    placeholder="Durée"
-                    :options="$labels.duration"
-                    @blur="validate('commitment__duration')"
-                  />
-                  <BaseFormError v-if="errors.commitment__duration">
-                    {{ errors.commitment__time_period }}
-                  </BaseFormError>
-                </div>
-                <div class="flex-none text-lg font-semibold sm:mt-2">par</div>
-                <div class="lg:w-1/2">
-                  <BaseSelectAdvanced
-                    v-model="form.commitment__time_period"
-                    name="commitment__time_period"
-                    placeholder="Fréquence"
-                    :options="$labels.time_period"
-                    @blur="validate('commitment__time_period')"
-                  />
-                  <BaseFormError v-if="errors.commitment__time_period">
-                    {{ errors.commitment__time_period }}
-                  </BaseFormError>
+            </div> -->
+              <div>
+                <BaseFormLabel html-for="frequence" required size="xl">
+                  Combien de temps pourriez-vous allouer à des actions
+                  <br class="hidden lg:inline" />de bénévolat&nbsp;?
+                </BaseFormLabel>
+                <div class="mt-4 flex flex-col sm:flex-row gap-4 lg:gap-6">
+                  <div class="lg:w-1/2">
+                    <DsfrSelect
+                      id="commitment__duration"
+                      v-model="form.commitment__duration"
+                      name="commitment__duration"
+                      placeholder="Durée"
+                      :options="$labels.duration"
+                      @blur="validate('commitment__duration')"
+                    />
+                    <BaseFormError v-if="errors.commitment__duration">
+                      {{ errors.commitment__time_period }}
+                    </BaseFormError>
+                  </div>
+                  <div class="flex-none text-lg font-semibold sm:mt-2">par</div>
+                  <div class="lg:w-1/2">
+                    <DsfrSelect
+                      v-model="form.commitment__time_period"
+                      id="commitment__time_period"
+                      name="commitment__time_period"
+                      placeholder="Fréquence"
+                      :options="$labels.time_period"
+                      @blur="validate('commitment__time_period')"
+                    />
+                    <BaseFormError v-if="errors.commitment__time_period">
+                      {{ errors.commitment__time_period }}
+                    </BaseFormError>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div>
-            <div class="lg:pl-[130px]">
-              <BaseFormControl
-                label="Cochez les créneaux pendant lesquels vous seriez disponible"
-                label-size="xl"
+            <div>
+              <BaseFormLabel html-for="disponibilities" required size="xl">
+                Cochez les créneaux pendant lesquels vous seriez <br class="hidden lg:inline" />
+                disponible&nbsp;?
+              </BaseFormLabel>
+              <DsfrFormControl
                 html-for="disponibilities"
-                required
                 :error="errors.disponibilities"
+                class="mt-4"
               >
                 <DsfrTagsGroup
                   v-model="form.disponibilities"
                   name="disponibilities"
                   variant="button"
                   :options="$labels.disponibilities"
-                  class="mt-6"
                   @updated="validate('disponibilities')"
                 />
-              </BaseFormControl>
+              </DsfrFormControl>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="pt-8 lg:pt-14">
-        <div class="flex lg:space-x-10 items-center">
-          <div class="hidden lg:block w-[90px]">
-            <img src="/images/icons/send-mail.svg" alt="" data-not-lazy />
-          </div>
-          <div>
-            <div class="block font-bold mb-2 relative text-xl normal-case text-black">
-              Recevoir des propositions de missions par les organisations
+            <div>
+              <BaseFormLabel html-for="type_missions" size="xl">
+                Vous êtes plutôt mission sur place ou à distance&nbsp;?
+              </BaseFormLabel>
+              <DsfrFormControl html-for="type_missions" :error="errors.disponibilities">
+                <DsfrSelect
+                  v-model="form.type_missions"
+                  id="type_missions"
+                  name="type_missions"
+                  variant="button"
+                  :options="$labels.profile_type_missions"
+                  class="mt-6"
+                />
+              </DsfrFormControl>
             </div>
-            <div class="text-[#3A3A3A]">
-              Recevez par e-mail des suggestions de missions de bénévolat
-            </div>
-          </div>
-          <div>
-            <BaseToggle v-model="form.is_visible" size="xl" />
           </div>
         </div>
       </div>
 
-      <div class="pt-8 lg:pt-14">
-        <div class="text-3xl font-bold text-black">
-          Quelles activités de bénévolat peuvent vous intéresser ?
+      <hr />
+      <div class="flex gap-12">
+        <div class="hidden lg:block w-[80px]">
+          <img src="/images/icons/culture.svg" alt="" data-not-lazy class="w-full" />
         </div>
-        <DsfrTagsGroup
-          v-model="form.activities"
-          name="activites"
-          variant="button"
-          :options="activitiesOptions"
-          is-model
-          class="mt-12"
-        />
-      </div>
-      <div class="pt-8 lg:pt-14">
-        <div class="text-3xl font-bold text-black">Les compétences que vous pourriez apporter</div>
-        <BaseFormControl
-          label="Renseignez certaines de vos compétences"
-          html-for="algolia-search"
-          class="mt-12"
-        >
-          <AlgoliaInputAutocomplete
-            index="termsIndex"
-            attribute-right-label="group"
-            :search-parameters="{
-              facetFilters: [['vocabulary_name:Skills']],
-              hitsPerPage: 6,
-            }"
-            @selected="handleSelectSkillItems"
+        <div class="flex-1">
+          <div class="text-3xl font-bold text-black">
+            Quelles activités de bénévolat<br />
+            vous intéressent ?
+          </div>
+          <DsfrTagsGroup
+            v-model="form.activities"
+            name="activites"
+            variant="button"
+            :options="activitiesOptions"
+            is-model
+            class="mt-12"
           />
-        </BaseFormControl>
-
-        <div v-if="form.skills.length" class="mt-6">
-          <div class="flex flex-wrap gap-4">
-            <BaseTagFormItem
-              v-for="item in form.skills"
-              :key="item.id"
-              :tag="item"
-              @removed="onRemovedSkillItem"
-            >
-              {{ item.name }}
-            </BaseTagFormItem>
-          </div>
         </div>
       </div>
-      <div class="hidden sm:block pt-8 lg:pt-14">
+      <!-- <div class="hidden sm:block ">
         <div class="text-center">
           <DsfrButton
             size="lg"
@@ -144,7 +122,7 @@
             Enregistrer
           </DsfrButton>
         </div>
-      </div>
+      </div> -->
       <transition name="fade">
         <div
           v-if="formIsDirty"

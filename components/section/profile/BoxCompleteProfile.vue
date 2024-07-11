@@ -97,6 +97,7 @@ export default defineNuxtComponent({
       if (!!this.profile?.type) points += 5
       if (!!this.profile?.description) points += 5
       if (!!this.profile?.avatar) points += 5
+      if (!!this.profile?.type_missions) points += 10
       if (this.isDisponibilitiesCompleted) points += 15
       if (this.isPreferencesCompleted) points += 20
       if (this.isSkillsAndCertificationsCompleted) points += 10
@@ -124,7 +125,7 @@ export default defineNuxtComponent({
       return !!this.profile?.avatar
     },
     isSkillsAndCertificationsCompleted() {
-      return this.profile?.skills?.length > 0
+      return this.profile?.skills?.length > 0 || this.profile?.certifications?.length > 0
     },
   },
   methods: {},

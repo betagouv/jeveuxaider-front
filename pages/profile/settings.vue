@@ -9,20 +9,7 @@
       />
     </template>
     <template #header>
-      <BaseSectionHeading title="Mes paramètres de compte">
-        <template #action>
-          <DsfrButton
-            class="hidden lg:flex"
-            size="lg"
-            variant="primary"
-            :loading="loading"
-            :disabled="!canSubmitForm"
-            @click.native="handleSubmit"
-          >
-            Enregistrer
-          </DsfrButton>
-        </template>
-      </BaseSectionHeading>
+      <BaseSectionHeading title="Mes paramètres de compte" />
     </template>
     <template #left>
       <ModalUnregisterUser
@@ -66,7 +53,6 @@
       </UserProfileTabs>
     </template>
     <template #right>
-      <BoxCompleteProfile title="Améliorez votre profil pour trouver une mission" />
       <HelpCenter />
     </template>
   </BaseContainer2Cols>
