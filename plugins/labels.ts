@@ -17,6 +17,7 @@ export type TypeVocabulary =
   | 'domaines'
   | 'disponibilities'
   | 'profile_type'
+  | 'profile_certifications'
   | 'mission_types'
   | 'mission_workflow_states'
   | 'profile_fields'
@@ -732,6 +733,10 @@ const labels: TypeLabels = {
     { key: 'retraite', label: 'Retraité' },
     { key: 'chomeur', label: 'Sans activité professionnelle' },
     { key: 'autre', label: 'Autre' },
+  ],
+  profile_certifications: [
+    { key: 'permis_voiture', label: 'Permis voiture' },
+    { key: 'gestes_premier_secours', label: 'Geste de premiers secours' },
   ],
   mission_types: [
     { key: 'Mission en présentiel', label: 'Mission en présentiel' },
