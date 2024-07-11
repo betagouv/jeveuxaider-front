@@ -1,15 +1,18 @@
 <template>
   <BaseBox>
-    <BaseHeading as="h2" :level="3" class="text-black"> Complétez votre profil </BaseHeading>
-    <div class="text-[#666666] mt-2">
-      Trouvez des bénévoles plus facilement en créant des missions en lien avec nos thématiques.
-    </div>
-    <div class="mt-8">
-      <div class="flex items-center gap-4">
-        <div class="text-[22px] text-[#161616] font-bold">{{ percentage }}%</div>
-        <BaseGauge :percentage="percentage" color="gradient" />
+    <BaseHeading as="h2" :level="3" class="text-black"> {{ title }} </BaseHeading>
+    <slot name="subtitle" />
+    <div class="">
+      <div class="flex items-center gap-6 my-8">
+        <div class="text-[22px] text-[#161616] font-bold">{{ totalPoints }}%</div>
+        <BaseGauge
+          :percentage="totalPoints"
+          color="gradient"
+          size="xl"
+          class="rounded-full overflow-hidden"
+        />
       </div>
-      <div class="flex flex-col gap-4 mt-8">
+      <div v-if="showSteps" class="flex flex-col gap-6 pt-6">
         <InlineComponent :isCompleted="isContactInformationsCompleted">
           Remplissez vos informations de contact
         </InlineComponent>
@@ -34,11 +37,7 @@
           Indiquez vos compétences et certifications
         </InlineComponent>
       </div>
-      <div class="mt-8">
-        <nuxt-link to="/profile/edit" no-prefetch>
-          <DsfrButton type="secondary">Complétez mon profil</DsfrButton>
-        </nuxt-link>
-      </div>
+      <slot name="footer" />
     </div>
   </BaseBox>
 </template>
@@ -53,10 +52,12 @@ function createInlineComponent() {
       },
     },
     template: `
-      <div class="flex gap-4 items-center">
-        <RiCheckboxCircleFill v-if="isCompleted" class="h-8 w-8 text-[#00A95F] fill-current" />
-        <RiCheckboxBlankCircleLine v-else class="h-8 w-8 text-[#000091] fill-current" />
-        <div :class="['flex gap-4 items-center', {'text-[#666666] line-through': isCompleted }, {'text-[#000091]': !isCompleted }]">
+      <div class="flex gap-6 items-center">
+        <div>
+          <RiCheckboxCircleFill v-if="isCompleted" class="h-8 w-8 text-[#00A95F] fill-current" />
+          <RiCheckboxBlankCircleLine v-else class="h-8 w-8 text-[#161616] fill-current" />
+        </div>
+        <div :class="['flex gap-4 items-center', {'text-[#666666] line-through': isCompleted }, {'text-[#161616]': !isCompleted }]">
           <slot></slot>
         </div>
       </div>
@@ -69,9 +70,13 @@ export default defineNuxtComponent({
     InlineComponent: createInlineComponent(),
   },
   props: {
-    profile: {
-      type: Object,
+    title: {
+      type: String,
       required: true,
+    },
+    showSteps: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
@@ -80,11 +85,31 @@ export default defineNuxtComponent({
     }
   },
   computed: {
-    percentage() {
-      return 33
+    profile() {
+      return this.$stores.auth.user.profile
+    },
+    totalPoints() {
+      let points = 0
+      if (!!this.profile?.first_name) points += 5
+      if (!!this.profile?.last_name) points += 5
+      if (!!this.profile?.birthday) points += 10
+      if (!!this.profile?.zip) points += 10
+      if (!!this.profile?.type) points += 5
+      if (!!this.profile?.description) points += 5
+      if (!!this.profile?.avatar) points += 5
+      if (this.isDisponibilitiesCompleted) points += 15
+      if (this.isPreferencesCompleted) points += 20
+      if (this.isSkillsAndCertificationsCompleted) points += 10
+      return points
     },
     isContactInformationsCompleted() {
-      return !!this.profile?.email && !!this.profile?.mobile
+      return (
+        !!this.profile?.email &&
+        !!this.profile?.mobile &&
+        !!this.profile?.type &&
+        !!this.profile?.birthday &&
+        !!this.profile?.zip
+      )
     },
     isDisponibilitiesCompleted() {
       return !!this.profile?.commitment__duration && this.profile?.disponibilities?.length > 0

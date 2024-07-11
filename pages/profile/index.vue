@@ -44,8 +44,21 @@
       <LePetitMot />
     </template>
     <template #right>
-      <BoxCompleteProfile :profile="$stores.auth.user.profile" />
-      <BoxUserProfileBenevole :profile="$stores.auth.user.profile" />
+      <BoxCompleteProfile title="Complétez votre profil">
+        <template #subtitle>
+          <div class="text-[#666666] mt-2">
+            En remplissant votre profil, vous augmentez vos chances de trouver une mission.
+          </div>
+        </template>
+        <template #footer>
+          <div class="mt-8">
+            <nuxt-link to="/profile/edit" no-prefetch>
+              <DsfrButton type="secondary">Complétez mon profil</DsfrButton>
+            </nuxt-link>
+          </div>
+        </template>
+      </BoxCompleteProfile>
+      <BoxUserProfileBenevole />
 
       <HelpCenter />
     </template>

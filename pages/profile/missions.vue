@@ -81,6 +81,21 @@
       </div>
     </template>
     <template #right>
+      <BoxCompleteProfile title="🫣 Psssst ! Votre profil est incomplet" :show-steps="false">
+        <template #subtitle>
+          <div class="text-[#666666] mt-2">
+            En remplissant votre profil, vous augmentez vos chances de trouver une mission.
+          </div>
+        </template>
+        <template #footer>
+          <div class="mt-8">
+            <nuxt-link to="/profile/edit" no-prefetch>
+              <DsfrButton full type="secondary">Complétez mon profil</DsfrButton>
+            </nuxt-link>
+          </div>
+        </template>
+      </BoxCompleteProfile>
+
       <HelpCenter class="lg:sticky lg:top-12" />
     </template>
   </BaseContainer2Cols>
@@ -90,11 +105,13 @@
 import QueryBuilder from '@/mixins/query-builder'
 import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
 import CardParticipation from '@/components/card/CardParticipation.vue'
+import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
 
 export default defineNuxtComponent({
   components: {
     HelpCenter,
     CardParticipation,
+    BoxCompleteProfile,
   },
   mixins: [QueryBuilder],
   setup() {
