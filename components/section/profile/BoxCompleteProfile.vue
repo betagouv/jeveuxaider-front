@@ -86,7 +86,7 @@ export default defineNuxtComponent({
   },
   computed: {
     profile() {
-      return this.$stores.auth.user.profile
+      return this.$stores.auth?.user?.profile
     },
     totalPoints() {
       let points = 0

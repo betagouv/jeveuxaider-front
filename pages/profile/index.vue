@@ -41,6 +41,7 @@
           </BaseStackedListItem>
         </BaseStackedList>
       </BaseBox>
+      <BoxUserWaitingParticipations v-if="hasWaitingParticipations" />
       <LePetitMot />
     </template>
     <template #right>
@@ -58,7 +59,7 @@
           </div>
         </template>
       </BoxCompleteProfile>
-      <BoxUserProfileBenevole />
+      <BoxUserProfileBenevole :profile="$stores.auth?.user?.profile" />
 
       <HelpCenter />
     </template>
@@ -76,6 +77,7 @@ import MixinAction from '@/mixins/action'
 import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
 import LePetitMot from '@/components/section/dashboard/LePetitMot.vue'
 import BoxUserProfileBenevole from '@/components/section/profile/BoxUserProfileBenevole.vue'
+import BoxUserWaitingParticipations from '@/components/section/profile/BoxUserWaitingParticipations.vue'
 import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
 
 export default defineNuxtComponent({
@@ -83,6 +85,7 @@ export default defineNuxtComponent({
     HelpCenter,
     LePetitMot,
     BoxUserProfileBenevole,
+    BoxUserWaitingParticipations,
     BoxCompleteProfile,
   },
   mixins: [MixinAction],
@@ -100,6 +103,11 @@ export default defineNuxtComponent({
   async created() {
     this.actions = await apiFetch('/user/actions/benevole')
     this.loadingActions = false
+  },
+  computed: {
+    hasWaitingParticipations() {
+      return this.$stores.auth.user.statistics?.participations_waiting_count > 0
+    },
   },
   methods: {
     onClick(action) {

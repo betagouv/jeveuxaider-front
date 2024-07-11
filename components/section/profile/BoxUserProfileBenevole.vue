@@ -2,7 +2,7 @@
   <BaseBox>
     <div class="grid grid-cols-1 divide-y-gray-400 divide-y gap-6 lg:gap-8">
       <BaseHeading :level="3" class="text-black"> Votre profil bénévole </BaseHeading>
-      <div class="pt-6 lg:pt-8">
+      <!-- <div class="pt-6 lg:pt-8">
         <div class="flex space-x-4 lg:space-x-6 text-black">
           <div class="w-[40px]">
             <img src="/images/icons/human-cooperation.svg" alt="" class="flex-none" data-not-lazy />
@@ -31,7 +31,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="pt-6 lg:pt-8">
         <div class="flex space-x-4 lg:space-x-6 text-black">
           <div class="w-[40px]">
