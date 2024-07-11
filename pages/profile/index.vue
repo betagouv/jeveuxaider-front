@@ -37,7 +37,11 @@
             class="cursor-pointer"
           >
             <div class="text-gray-900 font-semibold" v-html="action.title" />
-            <div v-if="action.subtitle" class="text-[#666666] text-sm" v-html="action.subtitle" />
+            <div
+              v-if="action.subtitle"
+              class="text-[#666666] text-sm mt-2"
+              v-html="action.subtitle"
+            />
           </BaseStackedListItem>
         </BaseStackedList>
       </BaseBox>

@@ -1,46 +1,22 @@
 <template>
   <BaseBox>
-    <div class="grid grid-cols-1 divide-y-gray-400 divide-y gap-6 lg:gap-8">
-      <BaseHeading :level="3" class="text-black"> Votre profil bénévole </BaseHeading>
-      <!-- <div class="pt-6 lg:pt-8">
+    <BaseHeading :level="3" class="text-black"> Vos préférences </BaseHeading>
+    <div class="grid grid-cols-1 divide-y-gray-400 divide-y gap-6">
+      <div class="pt-6">
         <div class="flex space-x-4 lg:space-x-6 text-black">
           <div class="w-[40px]">
-            <img src="/images/icons/human-cooperation.svg" alt="" class="flex-none" data-not-lazy />
+            <img src="/images/icons/mail-send.svg" alt="" class="flex-none" data-not-lazy />
           </div>
           <div class="flex-1">
-            <div class="text-xl text-black font-bold">
-              <template v-if="hasParticipations">
-                <nuxt-link
-                  no-prefetch
-                  to="/profile/missions"
-                  class="flex justify-between items-center group"
-                >
-                  <span class="group-hover:underline">
-                    {{
-                      $filters.pluralize(
-                        $stores.auth.user.statistics?.participations_count,
-                        'mission',
-                        'missions'
-                      )
-                    }}</span
-                  >
-                  <RiArrowRightSLine class="h-5 group-hover:h-6 transition-all" />
-                </nuxt-link>
-              </template>
-              <template v-else> Aucune mission </template>
+            <div class="text-xl font-bold">
+              J’accepte d’être contacté<br />
+              par des organisations
             </div>
-          </div>
-        </div>
-      </div> -->
-      <div class="pt-6 lg:pt-8">
-        <div class="flex space-x-4 lg:space-x-6 text-black">
-          <div class="w-[40px]">
-            <img src="/images/icons/send-mail.svg" alt="" class="flex-none" data-not-lazy />
-          </div>
-          <div class="flex-1">
-            <div class="text-xl font-bold">Recevoir des propositions</div>
-            <div class="flex items-center space-x-6 mt-4">
-              <div class="flex-1 text-lg">Recevez par e-mail des suggestions de missions</div>
+            <div class="flex items-center space-x-6 mt-2">
+              <div class="flex-1">
+                <div class="text-lg">Elles vous enverront des propositions de missions</div>
+                <div class="text-sm text-[#666666]">(5 par mois maximum !)</div>
+              </div>
               <BaseToggle
                 v-model="form.is_visible"
                 @checked="handleProfileVisible()"
@@ -50,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="pt-6 lg:pt-8">
+      <div class="pt-6">
         <div class="flex space-x-4 lg:space-x-6 text-black">
           <div class="w-[40px]">
             <img src="/images/icons/calendar.svg" alt="" class="flex-none" data-not-lazy />
@@ -61,18 +37,44 @@
               <template v-if="profile.commitment__duration">
                 {{ commitmentLabel }}
               </template>
-              <template v-else> Non renseignée </template>
+              <template v-else> <div class="text-[#666666] text-lg">Non renseignée</div> </template>
             </div>
-            <div class="flex gap-3 flex-wrap my-4">
+            <div class="flex gap-3 flex-wrap mt-4">
               <DsfrTag v-for="(item, i) in profile.disponibilities" :key="i">
                 {{ $filters.label(item, 'disponibilities') }}
               </DsfrTag>
             </div>
-            <BaseLink to="/profile/preferences" icon="RiArrowRightSLine" class="text-sm">
+            <!-- <DsfrLink to="/profile/preferences" icon="RiArrowRightSLine" class="text-sm">
               Modifier
-            </BaseLink>
+            </DsfrLink> -->
           </div>
         </div>
+      </div>
+      <div class="pt-6">
+        <div class="flex space-x-4 lg:space-x-6 text-black">
+          <div class="w-[40px]">
+            <img src="/images/icons/culture.svg" alt="" class="flex-none" data-not-lazy />
+          </div>
+          <div class="flex-1">
+            <div class="text-xl font-bold">Mes activités favorites</div>
+            <div class="flex gap-3 flex-wrap mt-4">
+              <template v-if="profile?.activities?.length > 0">
+                <DsfrTag v-for="(item, i) in profile.activities" :key="i">
+                  {{ item.name }}
+                </DsfrTag>
+              </template>
+              <template v-else> <div class="text-[#666666] text-lg">Non renseignée</div> </template>
+            </div>
+            <!-- <DsfrLink to="/profile/preferences" icon="RiArrowRightSLine" class="text-sm">
+              Modifier
+            </DsfrLink> -->
+          </div>
+        </div>
+      </div>
+      <div class="pt-6">
+        <nuxt-link to="/profile/preferences">
+          <DsfrButton type="secondary">Modifier mes préférences</DsfrButton>
+        </nuxt-link>
       </div>
     </div>
   </BaseBox>

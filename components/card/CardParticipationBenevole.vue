@@ -3,7 +3,7 @@
     <DsfrBadge size="sm" type="warning">
       {{ participation.state }}
     </DsfrBadge>
-    <div class="font-bold my-4">{{ mission.name }}</div>
+    <div class="font-bold my-4 leading-6">{{ mission.name }}</div>
     <div class="flex flex-wrap gap-6">
       <div class="text-xs text-[#666666] leading-tight">
         🗓️ à partir du {{ $dayjs(participation.mission.start_date).format('D MMMM YYYY') }}
