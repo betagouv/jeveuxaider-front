@@ -33,13 +33,13 @@
           </div>
           <div class="flex-1">
             <div class="text-xl font-bold">Ma disponibilité</div>
-            <div class="text-lg mt-4">
+            <div class="text-lg mt-2">
               <template v-if="profile.commitment__duration">
                 {{ commitmentLabel }}
               </template>
               <template v-else> <div class="text-[#666666] text-lg">Non renseignée</div> </template>
             </div>
-            <div class="flex gap-3 flex-wrap mt-4">
+            <div class="flex gap-3 flex-wrap mt-2">
               <DsfrTag v-for="(item, i) in profile.disponibilities" :key="i">
                 {{ $filters.label(item, 'disponibilities') }}
               </DsfrTag>
@@ -57,7 +57,7 @@
           </div>
           <div class="flex-1">
             <div class="text-xl font-bold">Mes activités favorites</div>
-            <div class="flex gap-3 flex-wrap mt-4">
+            <div class="flex gap-3 flex-wrap mt-2">
               <template v-if="profile?.activities?.length > 0">
                 <DsfrTag v-for="(item, i) in profile.activities" :key="i">
                   {{ item.name }}

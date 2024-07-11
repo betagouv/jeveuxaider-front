@@ -9,7 +9,7 @@
       />
     </template>
     <template #header>
-      <BaseSectionHeading title="Mon profil">
+      <BaseSectionHeading :title="$stores.auth.user?.profile?.full_name">
         <template #action>
           <DsfrButton
             class="hidden lg:flex"
@@ -38,6 +38,7 @@
     </template>
     <template #right>
       <BoxCompleteProfile title="Améliorez votre profil pour trouver une mission" />
+      <HelpCenter />
     </template>
   </BaseContainer2Cols>
 </template>
@@ -46,12 +47,14 @@
 import FormUserProfile from '@/components/form/FormUserProfile.vue'
 import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
 import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
 
 export default defineNuxtComponent({
   components: {
     FormUserProfile,
     UserProfileTabs,
     BoxCompleteProfile,
+    HelpCenter,
   },
   async setup() {
     definePageMeta({

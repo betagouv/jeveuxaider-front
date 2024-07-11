@@ -1,17 +1,56 @@
 <template>
-  <div class="container">
-    <Breadcrumb
-      :links="[
-        { text: 'Mon espace', to: '/profile' },
-        { text: 'Mes préférences de notifications' },
-      ]"
-    />
-
-    <div class="flex flex-col pb-12 gap-12">
-      <BaseSectionHeading title="Préférences de notifications" />
-
+  <BaseContainer2Cols
+    class-left="flex flex-col lg:col-span-8 gap-8 lg:gap-12"
+    class-right="lg:col-span-4 space-y-8 lg:space-y-12 lg:pt-12"
+  >
+    <template #breadcrumb>
+      <DsfrBreadcrumb
+        :links="[
+          { text: 'Mon espace', to: '/profile' },
+          { text: 'Mes préférences de notifications' },
+        ]"
+      />
+    </template>
+    <template #header>
+      <BaseSectionHeading
+        title="Ravi de vous retrouver 👋"
+        :secondary-title="`Bonjour ${$stores.auth.user?.profile?.first_name}`"
+      >
+        <template #action>
+          <DsfrButton
+            class="hidden lg:flex"
+            size="lg"
+            variant="primary"
+            :loading="loading"
+            :disabled="!formIsDirty"
+            @click.native="submitForm"
+          >
+            Enregistrer
+          </DsfrButton>
+        </template>
+      </BaseSectionHeading>
+    </template>
+    <template #left>
       <UserProfileTabs selected-tab-key="notifications">
         <div class="bg-white px-6 py-8 lg:px-12 lg:py-14">
+          <div class="pt-8 lg:pt-14">
+            <div class="flex lg:space-x-10 items-center">
+              <div class="hidden lg:block w-[90px]">
+                <img src="/images/icons/send-mail.svg" alt="" data-not-lazy />
+              </div>
+              <div>
+                <div class="block font-bold mb-2 relative text-xl normal-case text-black">
+                  Recevoir des propositions de missions par les organisations
+                </div>
+                <div class="text-[#3A3A3A]">
+                  Recevez par e-mail des suggestions de missions de bénévolat
+                </div>
+              </div>
+              <div>
+                <BaseToggle v-model="form.is_visible" size="xl" />
+              </div>
+            </div>
+          </div>
           <template v-if="['responsable'].includes($stores.auth.contextRole)">
             <div class="grid grid-cols-1 divide-y-gray-400 divide-y gap-16">
               <div>
@@ -136,18 +175,30 @@
           </template>
         </div>
       </UserProfileTabs>
-    </div>
-  </div>
+    </template>
+    <template #right>
+      <BoxCompleteProfile title="Améliorez votre profil pour trouver une mission" />
+      <HelpCenter />
+    </template>
+  </BaseContainer2Cols>
 </template>
 
 <script>
 import Breadcrumb from '@/components/dsfr/Breadcrumb.vue'
 import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
+import BoxUserProfileBenevole from '@/components/section/profile/BoxUserProfileBenevole.vue'
+import BoxUserWaitingParticipations from '@/components/section/profile/BoxUserWaitingParticipations.vue'
+import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
 
 export default defineNuxtComponent({
   components: {
     Breadcrumb,
     UserProfileTabs,
+    HelpCenter,
+    BoxUserProfileBenevole,
+    BoxUserWaitingParticipations,
+    BoxCompleteProfile,
   },
   async setup() {
     definePageMeta({
@@ -155,10 +206,6 @@ export default defineNuxtComponent({
     })
 
     const { $stores } = useNuxtApp()
-
-    if (!['referent', 'responsable'].includes($stores.auth.contextRole)) {
-      return showError({ statusCode: 403 })
-    }
 
     const { data: profile } = await useApiFetch(`/profiles/${$stores.auth.user.profile.id}`)
 
@@ -169,9 +216,18 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
+      formIsDirty: false,
     }
   },
   methods: {
+    async submitForm() {
+      if (this.loading) {
+        return
+      }
+      this.loading = true
+      await this.handleUpdateProfile()
+      this.loading = false
+    },
     async handleUpdateProfile() {
       if (this.loading) {
         return

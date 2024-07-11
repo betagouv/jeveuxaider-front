@@ -1,13 +1,9 @@
 <template>
-  <div class="container">
+  <!-- <div class="container">
     <DsfrBreadcrumb
       :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mes paramètres de compte' }]"
     />
-    <ModalUnregisterUser
-      :is-open="showAlertUnsubscribe"
-      @cancel="showAlertUnsubscribe = false"
-      @close="showAlertUnsubscribe = false"
-    />
+    
 
     <div class="flex flex-col pb-12 gap-12">
       <BaseSectionHeading title="Mes paramètres de compte">
@@ -60,19 +56,94 @@
         </div>
       </UserProfileTabs>
     </div>
-  </div>
+  </div> -->
+  <BaseContainer2Cols
+    class-left="flex flex-col lg:col-span-8 gap-8 lg:gap-12"
+    class-right="lg:col-span-4 space-y-8 lg:space-y-12 lg:pt-12"
+  >
+    <template #breadcrumb>
+      <DsfrBreadcrumb
+        :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mes paramètres de compte' }]"
+      />
+    </template>
+    <template #header>
+      <BaseSectionHeading title="Mes paramètres de compte">
+        <template #action>
+          <DsfrButton
+            class="hidden lg:flex"
+            size="lg"
+            variant="primary"
+            :loading="loading"
+            :disabled="!canSubmitForm"
+            @click.native="handleSubmit"
+          >
+            Enregistrer
+          </DsfrButton>
+        </template>
+      </BaseSectionHeading>
+    </template>
+    <template #left>
+      <ModalUnregisterUser
+        :is-open="showAlertUnsubscribe"
+        @cancel="showAlertUnsubscribe = false"
+        @close="showAlertUnsubscribe = false"
+      />
+      <UserProfileTabs selected-tab-key="settings">
+        <div class="bg-white px-6 py-8 lg:px-12 lg:py-14">
+          <div class="grid grid-cols-1 gap-12 lg:gap-16">
+            <div>
+              <BaseHeading as="h2" :level="2"> Modification de votre mot de passe </BaseHeading>
+              <FormPassword ref="form" class="mt-8" @change="onChange" />
+            </div>
+            <div class="pt-8 lg:pt-14">
+              <div class="sm:border sm:p-8">
+                <BaseHeading as="h2" :level="2" class="mb-8"> Désinscription </BaseHeading>
+                <div
+                  class="flex flex-col lg:flex-row lg:justify-between lg:items-center lg:space-x-8"
+                >
+                  <div class="flex-1 text-gray-600 mb-8 lg:mr-8">
+                    Vous souhaitez désactiver votre compte&nbsp;?<br /><br />
+                    Attention, cette action est irréversible et toutes vos données de la plateforme
+                    JeVeuxAider.gouv.fr seront anonymisées.
+                  </div>
+                  <div>
+                    <DsfrButton
+                      type="secondary"
+                      size="lg"
+                      @click.native="() => (showAlertUnsubscribe = true)"
+                      :disabled="$stores.auth.contextRole === 'admin'"
+                    >
+                      Je souhaite me désinscrire
+                    </DsfrButton>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </UserProfileTabs>
+    </template>
+    <template #right>
+      <BoxCompleteProfile title="Améliorez votre profil pour trouver une mission" />
+      <HelpCenter />
+    </template>
+  </BaseContainer2Cols>
 </template>
 
 <script>
 import FormPassword from '@/components/form/FormPassword.vue'
 import ModalUnregisterUser from '@/components/modal/ModalUnregisterUser.vue'
 import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
+import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
 
 export default defineNuxtComponent({
   components: {
     FormPassword,
     ModalUnregisterUser,
     UserProfileTabs,
+    BoxCompleteProfile,
+    HelpCenter,
   },
   setup() {
     definePageMeta({

@@ -38,6 +38,7 @@
     </template>
     <template #right>
       <BoxCompleteProfile title="Améliorez votre profil pour trouver une mission" />
+      <HelpCenter />
     </template>
   </BaseContainer2Cols>
 </template>
@@ -46,12 +47,14 @@
 import FormUserPreferences from '@/components/form/FormUserPreferences.vue'
 import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
 import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
 
 export default defineNuxtComponent({
   components: {
     FormUserPreferences,
     UserProfileTabs,
     BoxCompleteProfile,
+    HelpCenter,
   },
   async setup() {
     definePageMeta({

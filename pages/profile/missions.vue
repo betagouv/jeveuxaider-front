@@ -96,7 +96,7 @@
         </template>
       </BoxCompleteProfile>
 
-      <HelpCenter class="lg:sticky lg:top-12" />
+      <HelpCenter />
     </template>
   </BaseContainer2Cols>
 </template>
