@@ -47,7 +47,7 @@
               variant="compact"
               upload-variant="compact"
               :upload-max-size="2000000"
-              disable-delete
+              :disable-delete="false"
               @add="
                 addFiles({
                   files: [$event],
