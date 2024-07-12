@@ -47,7 +47,7 @@
               variant="compact"
               upload-variant="compact"
               :upload-max-size="2000000"
-              :disable-delete="false"
+              disable-delete
               @add="
                 addFiles({
                   files: [$event],
@@ -70,7 +70,7 @@
               :preview-width="235"
               variant="compact"
               upload-variant="compact"
-              :disable-delete="false"
+              disable-delete
               @add="
                 addFiles({
                   files: [$event],
