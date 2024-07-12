@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   modelValue: {
-    type: [String, Number],
+    type: [String, Number, Boolean],
     default: null,
   },
   name: {
@@ -24,6 +24,14 @@ const props = defineProps({
     type: Boolean,
     default: null,
   },
+  customClass: {
+    type: String,
+    default: '',
+  },
+  full: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -45,6 +53,8 @@ const isChecked = (option) => option.key === props.modelValue
       :class="[
         'border py-4 pl-4 pr-5 cursor-pointer hover:bg-gray-100',
         { 'border-jva-blue-500': isChecked(option) },
+        { 'w-full': full },
+        customClass,
       ]"
       @click="onClick(option)"
       tabindex="0"
@@ -62,7 +72,7 @@ const isChecked = (option) => option.key === props.modelValue
           tabindex="-1"
         />
         <label class="flex flex-col cursor-pointer" :for="`${name}-${option.key}`">
-          <span class="">{{ option.label }}</span>
+          <span class="">{{ option.label }} </span>
           <span v-if="option.description" class="text-xs text-[#666666]">{{
             option.description
           }}</span>

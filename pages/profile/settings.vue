@@ -9,7 +9,7 @@
       />
     </template>
     <template #header>
-      <BaseSectionHeading title="Mes paramètres de compte" />
+      <BaseHeading :level="1"> Mes paramètres de compte </BaseHeading>
     </template>
     <template #left>
       <ModalUnregisterUser

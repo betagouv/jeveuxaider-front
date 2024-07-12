@@ -12,7 +12,7 @@
           class="rounded-full overflow-hidden"
         />
       </div>
-      <div v-if="showSteps" class="flex flex-col gap-6 pt-6">
+      <div v-if="showSteps && totalPoints < 100" class="flex flex-col gap-6 pt-6">
         <InlineComponent :isCompleted="isContactInformationsCompleted">
           Remplissez vos informations de contact
         </InlineComponent>
