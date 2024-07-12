@@ -4,10 +4,6 @@ const props = defineProps({
     type: [String, Number],
     default: null,
   },
-  id: {
-    type: String,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
@@ -51,7 +47,7 @@ const props = defineProps({
 <template>
   <div class="w-full relative">
     <select
-      :id="id"
+      :id="name"
       :name="name"
       :value="modelValue"
       :placeholder="placeholder"

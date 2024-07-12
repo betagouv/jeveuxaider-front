@@ -13,9 +13,6 @@
           </div>
           <div class="mt-10 space-y-10">
             <div class="flex lg:space-x-10 items-center">
-              <!-- <div class="hidden lg:block w-[90px]">
-              <img src="/images/icons/calendar.svg" alt="" data-not-lazy />
-            </div> -->
               <div>
                 <BaseFormLabel html-for="frequence" required size="xl">
                   Combien de temps pourriez-vous allouer à des actions
@@ -75,14 +72,11 @@
               <BaseFormLabel html-for="type_missions" size="xl">
                 Vous êtes plutôt mission sur place ou à distance&nbsp;?
               </BaseFormLabel>
-              <DsfrFormControl html-for="type_missions" :error="errors.disponibilities">
-                <DsfrSelect
+              <DsfrFormControl html-for="type_missions" :error="errors.type_missions" class="mt-6">
+                <DsfrRadioRichGroup
                   v-model="form.type_missions"
-                  id="type_missions"
                   name="type_missions"
-                  variant="button"
                   :options="$labels.profile_type_missions"
-                  class="mt-6"
                 />
               </DsfrFormControl>
             </div>

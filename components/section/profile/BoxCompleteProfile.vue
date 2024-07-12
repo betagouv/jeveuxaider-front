@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import confetti from 'canvas-confetti'
+
 function createInlineComponent() {
   return {
     props: {
@@ -83,6 +85,17 @@ export default defineNuxtComponent({
     return {
       loading: false,
     }
+  },
+  watch: {
+    totalPoints(newValue, oldValue) {
+      if (oldValue < 100 && newValue === 100) {
+        confetti({
+          particleCount: 500,
+          spread: 360,
+          // origin: { y: 0.6 },
+        })
+      }
+    },
   },
   computed: {
     profile() {
