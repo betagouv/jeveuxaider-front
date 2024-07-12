@@ -70,7 +70,7 @@
               :preview-width="235"
               variant="compact"
               upload-variant="compact"
-              disable-delete
+              :disable-delete="false"
               @add="
                 addFiles({
                   files: [$event],
