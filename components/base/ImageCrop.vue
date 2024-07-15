@@ -85,6 +85,7 @@
           :is-open="showModal"
           title="Recadrer"
           @close="showModal = false"
+          :footerClass="modalFooterClass"
         >
           <Cropper
             ref="cropper"
@@ -146,6 +147,7 @@ export default defineNuxtComponent({
     disableDelete: { type: Boolean, default: false }, // @todo handle relations
     warningTitle: { type: String, default: null },
     warning: { type: String, default: null },
+    modalFooterClass: { type: String, default: null },
   },
   data() {
     return {

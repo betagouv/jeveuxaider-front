@@ -13,6 +13,7 @@
             @add="addFiles({ files: [$event], collection: 'profile__avatar' })"
             @delete="deleteFile($event)"
             @crop="onManipulationsChange($event)"
+            modalFooterClass="!px-4 sm:!px-8 !gap-1 sm:!gap-4 !flex-nowrap"
           >
             <template #trigger="{ onClick }">
               <CustomUploadTriggerProfilePicture @click="onClick" label="Ajouter une photo" />
@@ -41,8 +42,14 @@
               >
                 Supprimer
               </DsfrButton>
-              <DsfrButton type="secondary" @click="setShowModal(false)"> Annuler </DsfrButton>
-              <DsfrButton @click="doCrop"> Valider </DsfrButton>
+              <DsfrButton
+                type="secondary"
+                class="text-sm sm:text-base"
+                @click="setShowModal(false)"
+              >
+                Annuler
+              </DsfrButton>
+              <DsfrButton @click="doCrop" class="text-sm sm:text-base"> Valider </DsfrButton>
             </template>
           </BaseImageCrop>
           <DsfrHeading as="p" size="lg"> {{ profile.full_name }} </DsfrHeading>

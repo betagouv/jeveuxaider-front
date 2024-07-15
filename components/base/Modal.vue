@@ -84,7 +84,10 @@
                     <slot />
                   </div>
                   <!-- MODAL FOOTER -->
-                  <div class="flex flex-wrap justify-end gap-4 p-8" v-if="$slots.footer">
+                  <div
+                    :class="['flex flex-wrap justify-end gap-4 p-8', footerClass]"
+                    v-if="$slots.footer"
+                  >
                     <slot name="footer" />
                   </div>
                 </div>
@@ -142,6 +145,10 @@ export default defineNuxtComponent({
     //   type: Boolean,
     //   default: false,
     // },
+    footerClass: {
+      type: String,
+      default: null,
+    },
   },
   data() {
     return {
