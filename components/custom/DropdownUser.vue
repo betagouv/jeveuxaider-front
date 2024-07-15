@@ -17,7 +17,7 @@
 
         <div class="hidden lg:block overflow-hidden text-left">
           <div class="text-sm font-bold truncate">
-            {{ $stores.auth.user.profile.first_name }}
+            {{ $stores.auth.user?.profile?.first_name }}
           </div>
           <div class="text-gray-500 text-sm truncate leading-tight font-normal">
             {{

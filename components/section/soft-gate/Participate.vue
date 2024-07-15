@@ -65,7 +65,7 @@ export default defineNuxtComponent({
       selectedMission: this.$stores.softGate.selectedMission,
       form: {
         content: !this.$stores.softGate.selectedMission?.is_motivation_required
-          ? `Bonjour,\nJe souhaite participer à cette mission et apporter mon aide. Je me tiens disponible pour échanger et débuter la mission 🙂\n${this.$stores.auth.user.profile.first_name}`
+          ? `Bonjour,\nJe souhaite participer à cette mission et apporter mon aide. Je me tiens disponible pour échanger et débuter la mission 🙂\n${this.$stores.auth.user?.profile?.first_name}`
           : null,
       },
       formSchema: object({

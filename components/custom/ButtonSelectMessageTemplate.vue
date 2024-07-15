@@ -69,8 +69,8 @@ export default defineNuxtComponent({
         '[mission_date_debut]': this.tokenMissionDateDebutResolver,
         '[mission_date_fin]': this.tokenMissionDateFinResolver,
         '[organisation_nom]': this.tokenOrganisationNomResolver,
-        '[expediteur_prenom]': this.$stores.auth.user.profile.first_name,
-        '[expediteur_nom]': this.$stores.auth.user.profile.last_name,
+        '[expediteur_prenom]': this.$stores.auth.user?.profile?.first_name,
+        '[expediteur_nom]': this.$stores.auth.user?.profile?.last_name,
       }
     },
     tokenDestinatairePrenomResolver() {
