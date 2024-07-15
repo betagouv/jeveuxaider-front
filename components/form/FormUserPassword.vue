@@ -13,7 +13,7 @@
       :prevent-click-outside="true"
       @close="showModal = false"
     >
-      <form id="form-email" @submit.prevent="handleSubmit" class="flex flex-col gap-4">
+      <form id="form-email" @submit.prevent="handleSubmit" class="flex flex-col gap-4 lg:pt-2">
         <DsfrFormControl
           label="Mot de passe actuel"
           html-for="current_password"

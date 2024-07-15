@@ -34,15 +34,6 @@
               @blur="validate('last_name')"
             />
           </DsfrFormControl>
-          <DsfrFormControl label="Email" html-for="email" required :error="errors.email">
-            <DsfrInput
-              v-model="form.email"
-              type="email"
-              name="email"
-              placeholder="jean.dupont@gmail.com"
-              @blur="validate('email')"
-            />
-          </DsfrFormControl>
           <DsfrFormControl label="Code postal" html-for="zip" required :error="errors.zip">
             <DsfrInputAutocomplete
               v-model="form.zip"
@@ -358,7 +349,7 @@ export default defineNuxtComponent({
               return age >= 16
             }
           ),
-        email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
+        // email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
         type: string()
           .nullable()
           .test('test-profession-required', 'Une profession est requise', (type) => {

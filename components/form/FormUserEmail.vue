@@ -13,7 +13,7 @@
       :prevent-click-outside="true"
       @close="showModal = false"
     >
-      <form id="form" @submit.prevent="handleSubmit">
+      <form id="form" @submit.prevent="handleSubmit" class="lg:pt-2">
         <DsfrFormControl label="E-mail" html-for="name" :error="errors.email" required>
           <DsfrInput
             v-model="form.email"
