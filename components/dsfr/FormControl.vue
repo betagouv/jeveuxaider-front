@@ -1,6 +1,7 @@
 <template>
   <div class="w-full">
     <label
+      v-if="label"
       :for="htmlFor"
       :class="['block  relative text-[#161616]', $slots.description ? 'mb-1' : 'mb-2']"
     >

@@ -13,10 +13,10 @@
       >
         <div>
           <div :class="['mr-4', isPinned ? 'flex items-center space-x-3' : 'flex-col']">
-            <BaseHeading :level="1" :class="['flex-shrink-0', isPinned && '!text-2xl']">
-              {{ title }}
-              <span v-if="subtitle" class="font-normal text-gray-500"> {{ subtitle }}</span>
-            </BaseHeading>
+            <DsfrHeading as="h1" size="2xl" :class="[isPinned && '!text-2xl']">{{
+              title
+            }}</DsfrHeading>
+            <span v-if="subtitle" class="font-normal text-gray-500"> {{ subtitle }}</span>
           </div>
         </div>
 

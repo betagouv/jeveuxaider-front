@@ -5,7 +5,7 @@
         :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Modification de mon profil' }]"
       />
     </div>
-    <HeaderAction :title="$stores.auth.user?.profile?.full_name">
+    <HeaderAction title="Profil">
       <template #action>
         <DsfrButton
           class="hidden lg:flex"

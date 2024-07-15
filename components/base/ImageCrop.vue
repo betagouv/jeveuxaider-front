@@ -2,6 +2,7 @@
   <div>
     <BaseUpload
       v-if="!files.length"
+      :show-files="false"
       label="Ajouter une photo"
       :default-value="files"
       extensions=".jpg, .png, .webp"
@@ -10,94 +11,102 @@
       :warning-title="warningTitle"
       :warning="warning"
       @add="onUploadAdd"
-    />
+    >
+      <template #trigger="triggerSlotData">
+        <slot name="trigger" v-bind="triggerSlotData" />
+      </template>
+    </BaseUpload>
 
-    <div v-else class="flex flex-col h-full">
-      <!-- Preview -->
-      <div
-        class="preview-wrapper flex-grow"
-        :style="{
-          maxWidth: previewWidth ? `${previewWidth}px` : null,
-          maxHeight: previewHeight
-            ? `${previewHeight}px`
-            : ratio
-            ? `${previewWidth / ratio}px`
-            : null,
-        }"
-      >
-        <img
-          alt="Preview"
-          class="preview shadow-xl object-center w-full h-full"
-          :class="[
-            { 'object-cover': previewFit == 'cover' },
-            { 'object-contain': previewFit == 'contain' },
-            previewClasses,
-          ]"
-          :srcset="previewSrcset"
-          :sizes="previewWidth ? `${previewWidth}px` : null"
-          :width="previewWidth ? previewWidth : null"
-          :height="previewHeight ? previewHeight : ratio ? previewWidth / ratio : null"
+    <slot v-else name="preview" v-bind="{ setShowModal, previewSrcset }">
+      <div class="flex flex-col h-full">
+        <!-- Preview -->
+        <div
+          class="preview-wrapper flex-grow"
           :style="{
-            aspectRatio: ratio ? ratio : null,
-            width: previewWidth ? `${previewWidth}px` : null,
-            height: previewHeight ? `${previewHeight}px` : null,
+            maxWidth: previewWidth ? `${previewWidth}px` : null,
+            maxHeight: previewHeight
+              ? `${previewHeight}px`
+              : ratio
+              ? `${previewWidth / ratio}px`
+              : null,
           }"
-        />
-      </div>
-
-      <!-- Actions -->
-      <div class="actions mt-4 flex items-stretch space-x-4">
-        <slot name="button-crop" :events="{ showModal }">
-          <BaseButton
-            variant="secondary"
-            class="button-crop"
-            :size="variant == 'compact' ? 'xs' : 'sm'"
-            @click.native.prevent="showModal = true"
-          >
-            Recadrer
-          </BaseButton>
-        </slot>
-
-        <slot :events="{ onDelete }" name="button-delete">
-          <BaseButton
-            :disabled="disableDelete"
-            variant="red"
-            icon="RiDeleteBinLine"
-            :size="variant == 'compact' ? 'xs' : 'sm'"
-            class="button-delete"
-            @click.native.prevent="onDelete"
+        >
+          <img
+            alt="Preview"
+            class="preview shadow-xl object-center w-full h-full"
+            :class="[
+              { 'object-cover': previewFit == 'cover' },
+              { 'object-contain': previewFit == 'contain' },
+              previewClasses,
+            ]"
+            :srcset="previewSrcset"
+            :sizes="previewWidth ? `${previewWidth}px` : null"
+            :width="previewWidth ? previewWidth : null"
+            :height="previewHeight ? previewHeight : ratio ? previewWidth / ratio : null"
+            :style="{
+              aspectRatio: ratio ? ratio : null,
+              width: previewWidth ? `${previewWidth}px` : null,
+              height: previewHeight ? `${previewHeight}px` : null,
+            }"
           />
-        </slot>
-      </div>
+        </div>
 
-      <ClientOnly>
-        <Teleport to="#teleport-body-end">
-          <BaseModal
-            :key="`modal_crop_${uuid}`"
-            :is-open="showModal"
-            title="Recadrer"
-            @close="showModal = false"
-          >
-            <Cropper
-              ref="cropper"
-              class="cropper"
-              :src.sync="originalSrc"
-              :stencil-props="{ aspectRatio: ratio }"
-              :resize-image="false"
-              :transitions="false"
-              :min-width="minWidth"
-              :min-height="minHeight ? minHeight : ratio ? minWidth / ratio : null"
-              @ready="onCropperReady"
+        <!-- Actions -->
+        <div class="actions mt-4 flex items-stretch space-x-4">
+          <slot name="button-crop" :events="{ showModal }">
+            <BaseButton
+              variant="secondary"
+              class="button-crop"
+              :size="variant == 'compact' ? 'xs' : 'sm'"
+              @click.native.prevent="showModal = true"
+            >
+              Recadrer
+            </BaseButton>
+          </slot>
+
+          <slot :events="{ onDelete }" name="button-delete">
+            <BaseButton
+              :disabled="disableDelete"
+              variant="red"
+              icon="RiDeleteBinLine"
+              :size="variant == 'compact' ? 'xs' : 'sm'"
+              class="button-delete"
+              @click.native.prevent="onDelete"
             />
+          </slot>
+        </div>
+      </div>
+    </slot>
 
-            <template #footer slot-scope="">
+    <ClientOnly>
+      <Teleport to="#teleport-body-end">
+        <BaseModal
+          :key="`modal_crop_${uuid}`"
+          :is-open="showModal"
+          title="Recadrer"
+          @close="showModal = false"
+        >
+          <Cropper
+            ref="cropper"
+            class="cropper"
+            :src.sync="originalSrc"
+            :stencil-props="{ aspectRatio: ratio }"
+            :resize-image="false"
+            :transitions="false"
+            :min-width="minWidth"
+            :min-height="minHeight ? minHeight : ratio ? minWidth / ratio : null"
+            @ready="onCropperReady"
+          />
+
+          <template #footer>
+            <slot name="modalFooter" v-bind="{ doCrop, setShowModal, onDelete }">
               <DsfrButton type="secondary" @click="showModal = false"> Annuler </DsfrButton>
               <DsfrButton @click="doCrop"> Valider </DsfrButton>
-            </template>
-          </BaseModal>
-        </Teleport>
-      </ClientOnly>
-    </div>
+            </slot>
+          </template>
+        </BaseModal>
+      </Teleport>
+    </ClientOnly>
   </div>
 </template>
 
@@ -210,6 +219,9 @@ export default defineNuxtComponent({
       })
       this.previewSrcset = canvas.toDataURL('image/jpeg')
       this.showModal = false
+    },
+    setShowModal(val) {
+      this.showModal = val
     },
   },
 })

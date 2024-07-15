@@ -2,8 +2,10 @@
   <div class="bg-white px-6 py-8 lg:px-12 lg:py-14">
     <div class="grid grid-cols-1 gap-8 lg:gap-12">
       <div>
-        <DsfrFormControl class="md:col-span-2" label="Photo de profil" html-for="avatar">
-          <!-- :key="form.avatar?.updated_at ?? 'imageCrop'" -->
+        <DsfrFormControl
+          class="flex items-center justify-start gap-6 sm:gap-12 flex-col sm:flex-row"
+          html-for="avatar"
+        >
           <BaseImageCrop
             :default-value="form.avatar"
             :preview-width="100"
@@ -11,7 +13,39 @@
             @add="addFiles({ files: [$event], collection: 'profile__avatar' })"
             @delete="deleteFile($event)"
             @crop="onManipulationsChange($event)"
-          />
+          >
+            <template #trigger="{ onClick }">
+              <CustomUploadTriggerProfilePicture @click="onClick" label="Ajouter une photo" />
+            </template>
+
+            <template #preview="{ setShowModal, previewSrcset }">
+              <CustomUploadTriggerProfilePicture
+                @click="setShowModal(true)"
+                label="Modifier"
+                :previewSrcset="previewSrcset"
+              />
+            </template>
+
+            <template #modalFooter="{ doCrop, setShowModal, onDelete }">
+              <DsfrButton
+                type="tertiary-no-outline"
+                size="sm"
+                icon="RiCloseLine"
+                class="text-red-700"
+                @click="
+                  () => {
+                    onDelete()
+                    setShowModal(false)
+                  }
+                "
+              >
+                Supprimer
+              </DsfrButton>
+              <DsfrButton type="secondary" @click="setShowModal(false)"> Annuler </DsfrButton>
+              <DsfrButton @click="doCrop"> Valider </DsfrButton>
+            </template>
+          </BaseImageCrop>
+          <DsfrHeading as="p" size="lg"> {{ profile.full_name }} </DsfrHeading>
         </DsfrFormControl>
       </div>
       <hr />

@@ -1,57 +1,58 @@
 <template>
   <div>
-    <div
-      v-show="multiple || !files.length"
-      ref="dropZone"
-      class="w-full flex justify-center border-2 border-dashed hover:border-jva-blue-500 focus:border-jva-blue-500 cursor-pointer group transition"
-      :class="[
-        { 'border-jva-blue-500': dragging },
-        { 'px-6 pt-5 pb-6': variant == 'default' },
-        { 'px-3 pt-2 pb-3': variant == 'compact' },
-      ]"
-      @dragover.prevent="dragging = true"
-      @dragleave="dragging = false"
-      @drop.prevent="onDrop"
-      @click="onClick"
-    >
-      <div class="space-y-1 text-center">
-        <RiDownload2Line
-          :class="[
-            'mx-auto text-gray-300 group-hover:text-jva-blue-500 transition fill-current',
-            { 'h-10 w-10': variant == 'default' },
-            { 'h-8 w-8': variant == 'compact' },
-          ]"
-        />
+    <slot name="trigger" :onClick="onClick">
+      <div
+        v-show="multiple || !files.length"
+        class="w-full flex justify-center border-2 border-dashed hover:border-jva-blue-500 focus:border-jva-blue-500 cursor-pointer group transition"
+        :class="[
+          { 'border-jva-blue-500': dragging },
+          { 'px-6 pt-5 pb-6': variant == 'default' },
+          { 'px-3 pt-2 pb-3': variant == 'compact' },
+        ]"
+        @dragover.prevent="dragging = true"
+        @dragleave="dragging = false"
+        @drop.prevent="onDrop"
+        @click="onClick"
+      >
+        <div class="space-y-1 text-center">
+          <RiDownload2Line
+            :class="[
+              'mx-auto text-gray-300 group-hover:text-jva-blue-500 transition fill-current',
+              { 'h-10 w-10': variant == 'default' },
+              { 'h-8 w-8': variant == 'compact' },
+            ]"
+          />
 
-        <div class="text-sm text-gray-600">
-          <label
-            :for="`inputfile--${uuid}`"
-            class="relative cursor-pointer font-medium text-jva-blue-500 label"
-            @click.stop
-          >
-            {{ cLabel }}
+          <div class="text-sm text-gray-600">
+            <label
+              :for="`inputfile--${uuid}`"
+              class="relative cursor-pointer font-medium text-jva-blue-500 label"
+              @click.stop
+            >
+              {{ cLabel }}
+            </label>
+          </div>
 
-            <input
-              :id="`inputfile--${uuid}`"
-              ref="inputFile"
-              type="file"
-              :multiple="multiple"
-              class="sr-only"
-              :accept="extensions"
-              @change="onChange"
-            />
-          </label>
+          <p v-if="extensions != '*' && variant != 'compact'" class="text-xs text-gray-500">
+            Formats acceptés : {{ extensions }}
+          </p>
+
+          <p class="text-xs text-gray-500">Taille maximale : {{ $numeral(maxSize, '0 b') }}</p>
         </div>
-
-        <p v-if="extensions != '*' && variant != 'compact'" class="text-xs text-gray-500">
-          Formats acceptés : {{ extensions }}
-        </p>
-
-        <p class="text-xs text-gray-500">Taille maximale : {{ $numeral(maxSize, '0 b') }}</p>
       </div>
-    </div>
+    </slot>
 
-    <ul v-if="files" role="list" class="divide-y divide-gray-200">
+    <input
+      :id="`inputfile--${uuid}`"
+      ref="inputFile"
+      type="file"
+      :multiple="multiple"
+      class="sr-only"
+      :accept="extensions"
+      @change="onChange"
+    />
+
+    <ul v-if="showFiles && files" role="list" class="divide-y divide-gray-200">
       <li v-for="(file, i) in files" :key="i" class="py-3 flex items-center bg-gray-50">
         <p class="ml-2 text-sm font-medium text-gray-900 truncate mr-auto">
           {{ file.name }}
@@ -134,6 +135,10 @@ export default defineNuxtComponent({
     warningTitle: {
       type: String,
       default: 'Ajouter un fichier',
+    },
+    showFiles: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
