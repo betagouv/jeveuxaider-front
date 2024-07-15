@@ -54,7 +54,7 @@
           icon="RiErrorWarningLine"
           title="Proposer la mission"
           :is-open="showAlert"
-          @confirm="$emit('clickedProposerMission', profile)"
+          @confirm="onConfirmSendEmail"
           @cancel="showAlert = false"
         >
           {{ profile.secret_name }} recevra un e-mail pour l'inviter à participer à votre mission
@@ -66,6 +66,7 @@
 
 <script>
 export default defineNuxtComponent({
+  emits: ['clickedProposerMission'],
   props: {
     missionId: {
       type: Number,
@@ -97,6 +98,12 @@ export default defineNuxtComponent({
           return this.$dayjs(notification.created_at).isAfter(minusOneMonth)
         }).length >= 2
       )
+    },
+  },
+  methods: {
+    onConfirmSendEmail(payload) {
+      this.$emit('clickedProposerMission', this.profile)
+      this.showAlert = false
     },
   },
 })

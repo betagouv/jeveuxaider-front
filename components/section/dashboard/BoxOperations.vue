@@ -55,7 +55,7 @@ export default defineNuxtComponent({
       operations: [
         {
           title: 'Canicule et vagues de chaleur',
-          icon: '/images/operations/vague-de-chaleur.png',
+          icon: '/images/operations/canicule.svg',
           subtitle: 'Du 1er juillet au 31 août',
           tags: ['Prévention canicule', 'Santé'],
           link: 'https://www.jeveuxaider.gouv.fr/engagement/canicule/',

@@ -255,9 +255,7 @@ export default defineNuxtComponent({
         },
       })
         .then(() => {
-          this.$toast.success(
-            `Un e-mail a été envoyé à ${profile.first_name} ${profile.last_name[0]}.`
-          )
+          this.$toast.success(`Un e-mail a été envoyé à ${profile.secret_name}.`)
           this.fetchNotificationsBenevoles()
           this.fetch()
         })
