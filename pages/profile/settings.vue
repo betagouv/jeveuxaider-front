@@ -21,26 +21,23 @@
         <div class="bg-white px-6 py-8 lg:px-12 lg:py-14">
           <div class="grid grid-cols-1 gap-12 lg:gap-16">
             <div>
-              <BaseHeading as="h2" :level="2"> Modification de votre mot de passe </BaseHeading>
-              <FormPassword ref="form" class="mt-8" @change="onChange" />
+              <FormUserEmail />
             </div>
             <div class="pt-8 lg:pt-14">
               <div class="sm:border sm:p-8">
-                <BaseHeading as="h2" :level="2" class="mb-8"> Désinscription </BaseHeading>
-                <div
-                  class="flex flex-col lg:flex-row lg:justify-between lg:items-center lg:space-x-8"
-                >
-                  <div class="flex-1 text-gray-600 mb-8 lg:mr-8">
-                    Vous souhaitez désactiver votre compte&nbsp;?<br /><br />
-                    Attention, cette action est irréversible et toutes vos données de la plateforme
-                    JeVeuxAider.gouv.fr seront anonymisées.
+                <BaseHeading as="h3" :level="2" class="mb-8"> Désinscription </BaseHeading>
+                <div class="flex flex-col">
+                  <div class="flex-1 text-[#666666] mb-8 lg:mr-8">
+                    Vous souhaitez désactiver votre compte ? Attention, cette action est
+                    irréversible et toutes vos données de la plateforme JeVeuxAider.gouv.fr seront
+                    anonymisées.
                   </div>
                   <div>
                     <DsfrButton
-                      type="secondary"
-                      size="lg"
+                      type="tertiary"
                       @click.native="() => (showAlertUnsubscribe = true)"
                       :disabled="$stores.auth.contextRole === 'admin'"
+                      class="text-[#CE0500]"
                     >
                       Je souhaite me désinscrire
                     </DsfrButton>
@@ -60,6 +57,7 @@
 
 <script>
 import FormPassword from '@/components/form/FormPassword.vue'
+import FormUserEmail from '@/components/form/FormUserEmail.vue'
 import ModalUnregisterUser from '@/components/modal/ModalUnregisterUser.vue'
 import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
 import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
@@ -72,6 +70,7 @@ export default defineNuxtComponent({
     UserProfileTabs,
     BoxCompleteProfile,
     HelpCenter,
+    FormUserEmail,
   },
   setup() {
     definePageMeta({
