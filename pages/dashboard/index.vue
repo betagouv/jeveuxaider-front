@@ -92,7 +92,7 @@
         </template>
       </BaseBox>
 
-      <BoxOperations v-if="['admin'].includes($stores.auth.contextRole)" />
+      <BoxOperations />
       <LePetitMot />
 
       <BaseBox

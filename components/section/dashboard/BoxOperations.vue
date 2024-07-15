@@ -1,9 +1,7 @@
 <template>
   <BaseBox variant="shadow">
-    <BaseHeading as="h2" :level="3"> Nos campagnes et temps forts</BaseHeading>
-    <div class="text-[#666666] mt-2">
-      Trouvez des bénévoles plus facilement en créant des missions en lien avec nos thématiques.
-    </div>
+    <BaseHeading as="h2" :level="3"> Les campagnes et temps forts</BaseHeading>
+    <div class="text-[#666666] mt-2">Rejoignez le mouvement pour mobiliser des bénévoles !</div>
 
     <div class="flex flex-col gap-4 mt-6 lg:mt-8">
       <a
@@ -40,7 +38,7 @@
         href="https://www.jeveuxaider.gouv.fr/engagement/campagnes-mobilisation-nationale/"
         target="_blank"
       >
-        <DsfrButton type="secondary">Nos campagnes de mobilisation nationale</DsfrButton>
+        <DsfrButton type="secondary">Voir toutes les campagnes</DsfrButton>
       </a>
     </div>
   </BaseBox>
@@ -57,7 +55,7 @@ export default defineNuxtComponent({
           title: 'Canicule et vagues de chaleur',
           icon: '/images/operations/canicule.svg',
           subtitle: 'Du 1er juillet au 31 août',
-          tags: ['Prévention canicule', 'Santé'],
+          tags: ['Prévention', 'Sensibilisation', 'Services à la personne'],
           link: 'https://www.jeveuxaider.gouv.fr/engagement/canicule/',
           start_date: {
             month: 7,
@@ -84,10 +82,10 @@ export default defineNuxtComponent({
           },
         },
         {
-          title: 'Décembre ensemble',
+          title: 'Décembre Ensemble',
           icon: '/images/operations/operation-decembre-ensemble.png',
           subtitle: 'Du 1er au 31 décembre',
-          tags: ['Solidarité et insertion', 'Lutte contre l’isolement ', 'Distribution', 'Maraude'],
+          tags: ['Lutte contre l’isolement ', 'Distribution', 'Maraude'],
           link: 'https://www.jeveuxaider.gouv.fr/engagement/decembre-ensemble/',
           start_date: {
             month: 12,
@@ -102,7 +100,7 @@ export default defineNuxtComponent({
           title: 'Printemps pour la Planète',
           icon: '/images/operations/logo-printemps-pour-la-planete.svg',
           subtitle: 'Du 1er au 30 avril',
-          tags: ['Protection de la nature', 'Sensibilisation', 'Travaux manuels'],
+          tags: ['Protection de la nature', 'Sensibilisation', 'Ramassage de déchets'],
           link: 'https://www.jeveuxaider.gouv.fr/engagement/printemps-pour-la-planete/',
           start_date: {
             month: 4,
@@ -117,7 +115,7 @@ export default defineNuxtComponent({
           title: 'La Tournée d’Été',
           icon: '/images/operations/logo-la-tournee-de-lete.svg',
           subtitle: 'Du 1er au 30 juin',
-          tags: ['Culture', 'Sport', 'Loisirs'],
+          tags: ['Accès à la culture', 'Activités sportives', 'Animations et loisirs'],
           link: 'https://www.jeveuxaider.gouv.fr/engagement/la-tournee-dete-cap-sur-les-solidarites-estivales/',
           start_date: {
             month: 6,
