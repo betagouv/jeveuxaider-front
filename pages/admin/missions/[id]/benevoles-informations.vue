@@ -239,10 +239,6 @@ export default defineNuxtComponent({
             body: this.form,
           })
             .then(async (mission) => {
-              mission.prerequisites = mission.prerequisites
-                ?.concat(new Array(3 - mission.prerequisites.length).fill(null))
-                .slice(0, 3) ?? [null, null, null]
-
               this.$stores.formMission.updateFields(mission, [
                 'is_snu_mig_compatible',
                 'publics_volontaires',

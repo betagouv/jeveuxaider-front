@@ -21,6 +21,7 @@ export default {
         this.form = _cloneDeep(newVal)
 
         // Initialisation form
+        // @todo: dans initMissionFields ?
         if (this.form.publics_volontaires === null) {
           this.form.publics_volontaires = ['Mineurs']
         }

@@ -196,6 +196,7 @@
                   {{ $filters.pluralize(formPreviousDates.length, 'date passée', 'dates passées') }}
                 </p>
                 <p>Aucune date à venir</p>
+                <BaseFormError v-if="errors.dates">{{ errors.dates }}</BaseFormError>
               </div>
             </template>
             <template v-else>
@@ -304,7 +305,12 @@ export default defineNuxtComponent({
       loading: false,
       formSchema: object({
         date_type: string().required('Le type d’engagement est requis'),
-        commitment__duration: string().nullable().required("La durée d'engagement est requise"),
+        commitment__duration: string()
+          .nullable()
+          .when(['date_type'], {
+            is: (dateType) => !!dateType,
+            then: (schema) => schema.required("La durée d'engagement est requise"),
+          }),
         commitment__time_period: string()
           .nullable()
           .when(['date_type'], {
@@ -324,29 +330,26 @@ export default defineNuxtComponent({
             then: (schema) => schema.required('Le type de dates est requis'),
           }),
         start_date: date()
-          .typeError('La date de début est invalide')
+          .typeError('La date est invalide')
           .nullable()
+          .transform((curr, orig) => (orig === '' ? null : curr))
           .when(['with_dates', 'date_type'], {
             is: (withDates, dateType) => withDates == 'no' || dateType == 'recurring',
-            then: (schema) =>
-              schema
-                .required('La date de début est requise')
-                .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
+            then: (schema) => schema.required('La date de début est invalide'),
           }),
         end_date: date()
           .typeError('La date de fin est invalide')
           .nullable()
+          .transform((curr, orig) => (orig === '' ? null : curr))
           .when('start_date', {
             is: (startDate) => startDate instanceof Date,
             then: (schema) =>
-              schema
-                .transform((v) => (v instanceof Date && !isNaN(v) ? v : null))
-                .min(ref('start_date'), 'La date de fin doit être supérieure à celle du début'),
+              schema.min(ref('start_date'), 'La date de fin doit être supérieure à celle du début'),
           }),
         dates: array()
           .nullable()
-          .when('with_dates', {
-            is: (withDates) => withDates === 'yes',
+          .when(['with_dates', 'date_type'], {
+            is: (withDates, dateType) => withDates === 'yes' && dateType === 'ponctual',
             then: (schema) =>
               schema
                 .min(1, 'Veuillez ajouter au moins une date')
@@ -376,6 +379,7 @@ export default defineNuxtComponent({
     },
     onRecurringClick() {
       this.form.date_type = 'recurring'
+      this.form.with_dates = 'no'
     },
     onRemovedDate(date) {
       this.form.dates = this.form.dates.filter((item) => item.id !== date.id)
@@ -391,15 +395,11 @@ export default defineNuxtComponent({
       await this.formSchema
         .validate(this.form, { abortEarly: false })
         .then(async () => {
-          this.form.with_dates =
-            this.form.date_type == 'ponctual' && this.form.dates?.length > 0 ? 'yes' : 'no'
           await apiFetch(`/missions/${this.form.id}/dates`, {
             method: 'PUT',
             body: this.form,
           })
             .then(async (mission) => {
-              mission.with_dates =
-                mission.date_type == 'ponctual' && mission.dates?.length > 0 ? 'yes' : 'no'
               this.$stores.formMission.updateFields(mission, [
                 'date_type',
                 'commitment__duration',
