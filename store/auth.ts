@@ -74,11 +74,13 @@ export const useAuthStore = defineStore({
   actions: {
     async fetchUser() {
       const cookieAccessToken = useCookie('access-token')
+
       if (!cookieAccessToken.value) {
         return
       }
 
       const { data: user, error } = await useApiFetch<User>(`/user`)
+
       if (error.value) {
         this.user = null
         cookieAccessToken.value = null
