@@ -9,7 +9,7 @@
       />
     </template>
     <template #header>
-      <BaseHeading :level="1"> Mes paramètres de compte </BaseHeading>
+      <DsfrHeading as="h1" size="2xl"> Mes paramètres de compte </DsfrHeading>
     </template>
     <template #left>
       <ModalUnregisterUser
@@ -25,7 +25,7 @@
             <FormUserPassword @submitted="onPasswordChanged" />
             <hr />
             <div class="border p-8">
-              <BaseHeading as="h3" :level="2" class="mb-8"> Désinscription </BaseHeading>
+              <DsfrHeading size="lg" class="mb-6"> Désinscription </DsfrHeading>
               <div class="flex flex-col">
                 <div class="flex-1 text-[#666666] mb-8 lg:mr-8">
                   Vous souhaitez désactiver votre compte ? Attention, cette action est irréversible

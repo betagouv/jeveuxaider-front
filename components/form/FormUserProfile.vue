@@ -50,7 +50,7 @@
       </div>
       <hr />
       <div>
-        <BaseHeading as="h2" :level="2"> Informations personnelles </BaseHeading>
+        <DsfrHeading size="lg"> Informations personnelles </DsfrHeading>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
           <DsfrFormControl label="Prénom" html-for="first_name" required :error="errors.first_name">
             <DsfrInput
@@ -138,7 +138,7 @@
       </div>
       <hr />
       <div class="">
-        <div class="text-3xl font-bold text-black">Compétences</div>
+        <DsfrHeading size="lg"> Compétences </DsfrHeading>
         <div class="text-[#666666] mt-2">
           Si vous voulez mettre en avant certaines compétences auprès des organisations, définissez
           les ici.
@@ -175,7 +175,7 @@
       </div>
       <hr />
       <div class="">
-        <div class="text-3xl font-bold text-black">Certifications</div>
+        <DsfrHeading size="lg"> Certifications </DsfrHeading>
         <div class="text-[#666666] mt-2">
           Si vous avez des certifications particulières, indiquez les ici.
         </div>
@@ -192,7 +192,7 @@
       </div>
       <hr />
       <div class="">
-        <BaseHeading as="h2" :level="2"> Quelques mots sur vous </BaseHeading>
+        <DsfrHeading size="lg"> Quelques mots sur vous </DsfrHeading>
         <div class="text-[#666666] mt-2">
           Une description de vous-même pour vous présenter aux organisations.
         </div>
@@ -209,9 +209,7 @@
       <template v-if="canViewScAndCej">
         <hr />
         <div class="">
-          <BaseHeading as="h2" :level="2">
-            Service Civique & Contrat d'Engagement Jeune
-          </BaseHeading>
+          <DsfrHeading size="lg"> Service Civique & Contrat d'Engagement Jeune </DsfrHeading>
           <div class="mt-12 flex flex-col gap-8">
             <div class="flex flex-col space-y-8">
               <div class="flex lg:space-x-10">

@@ -6,9 +6,7 @@
           <img src="/images/icons/mail-send.svg" alt="" data-not-lazy class="w-full" />
         </div>
         <div class="flex-1">
-          <BaseHeading as="h2" :level="2">
-            J’accepte d’être contacté par des organisations
-          </BaseHeading>
+          <DsfrHeading size="lg"> J’accepte d’être contacté par des organisations </DsfrHeading>
           <div class="text-[#666666] mt-4 mb-8">
             Elles vous enverront des propositions de missions (5 par mois maximum !)
           </div>

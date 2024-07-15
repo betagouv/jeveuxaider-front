@@ -6,7 +6,7 @@
           <img src="/images/icons/calendar.svg" alt="" data-not-lazy class="w-full" />
         </div>
         <div class="flex-1">
-          <BaseHeading as="h2" :level="2"> Ma disponibilité </BaseHeading>
+          <DsfrHeading size="lg"> Ma disponibilité </DsfrHeading>
           <div class="text-[#666666] mt-4">
             Ces informations sont utilisées pour vous suggérer des missions en fonction de votre
             agenda.
@@ -90,10 +90,10 @@
           <img src="/images/icons/culture.svg" alt="" data-not-lazy class="w-full" />
         </div>
         <div class="flex-1">
-          <div class="text-3xl font-bold text-black">
+          <DsfrHeading size="lg">
             Quelles activités de bénévolat<br />
             vous intéressent ?
-          </div>
+          </DsfrHeading>
           <DsfrTagsGroup
             v-model="form.activities"
             name="activites"
