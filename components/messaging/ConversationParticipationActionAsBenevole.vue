@@ -80,7 +80,7 @@
       @confirm="handleConfirmValidateParticipation()"
       @cancel="showValidateParticipationModal = false"
     >
-      <p>{{ $stores.auth.profile.first_name }}, merci pour votre aide.</p>
+      <p>{{ $stores.auth.profile?.first_name }}, merci pour votre aide.</p>
       <p>
         Veuillez confirmer votre participation à la mission
         <strong>{{ participation.mission.name }}</strong

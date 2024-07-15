@@ -32,7 +32,7 @@
                 color="text-white"
               >
                 <span class="relative">
-                  <span>{{ $stores.auth.profile.first_name }}</span>
+                  <span>{{ $stores.auth.profile?.first_name }}</span>
                   <img
                     src="/images/home/sparkle-right.svg"
                     alt=""
@@ -43,12 +43,12 @@
                       'absolute right-[-28px] xxs:right-[-32px] pointer-events-none lg:right-[-60px] lg:w-[80px]',
                       {
                         '-top-1 xxs:top-[4px] lg:top-[-20px]': !['d', 'f', 'l'].includes(
-                          $stores.auth.profile.first_name.slice(-1)
+                          $stores.auth.profile?.first_name?.slice(-1)
                         ),
                       },
                       {
                         '-top-4 xxs:top-[-12px] lg:top-[-36px]': ['d', 'f', 'l'].includes(
-                          $stores.auth.profile.first_name.slice(-1)
+                          $stores.auth.profile?.first_name?.slice(-1)
                         ),
                       },
                     ]"

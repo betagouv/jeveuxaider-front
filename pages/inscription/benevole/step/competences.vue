@@ -13,7 +13,7 @@
       <h1 class="text-4xl lg:text-5xl font-medium leading-12 mb-4">
         Dites-nous en plus<br />
         sur vous
-        <span class="font-bold">{{ $stores.auth.profile.first_name }}</span>
+        <span class="font-bold">{{ $stores.auth.profile?.first_name }}</span>
       </h1>
     </div>
     <div class="max-w-2xl mx-auto">

@@ -11,7 +11,7 @@
       <div class="mb-6 lg:mb-12 text-center text-white">
         <h1 class="text-4xl lg:text-5xl font-medium mb-8 max-w-4xl mx-auto">
           Félicitations
-          <span class="font-bold">{{ $stores.auth.profile.first_name }}</span>
+          <span class="font-bold">{{ $stores.auth.profile?.first_name }}</span>
           !<br />
           Votre collectivité territoriale est en cours de validation
         </h1>

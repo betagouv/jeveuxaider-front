@@ -3,7 +3,7 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        :title="`☝️ Une petite info, ${$stores.auth.profile.first_name}`"
+        :title="`☝️ Une petite info, ${$stores.auth.profile?.first_name}`"
         :prevent-click-outside="true"
         @close="$emit('cancel')"
       >
