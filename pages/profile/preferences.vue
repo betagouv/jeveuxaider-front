@@ -8,18 +8,7 @@
     <HeaderAction title="Préférences">
       <template #action>
         <DsfrButton
-          class="hidden lg:block"
           size="lg"
-          variant="primary"
-          :loading="loading"
-          :disabled="!formIsDirty"
-          @click.native="submitForm"
-        >
-          Enregistrer
-        </DsfrButton>
-        <DsfrButton
-          class="lg:hidden"
-          size="md"
           variant="primary"
           :loading="loading"
           :disabled="!formIsDirty"
@@ -36,7 +25,7 @@
       class-right="lg:col-span-7 flex flex-col gap-6 xl:gap-8 lg:pt-12"
     >
       <template #left>
-        <div class="flex flex-col pb-12 gap-12">
+        <div class="flex flex-col lg:pb-12 gap-8 xl:gap-12">
           <UserProfileTabs selected-tab-key="preferences">
             <FormUserPreferences
               ref="form"

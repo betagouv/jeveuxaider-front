@@ -1,44 +1,67 @@
 <template>
   <BaseBox>
-    <BaseHeading as="h2" :level="3" class="text-black"> {{ title }} </BaseHeading>
-    <slot name="subtitle" />
-    <div class="">
-      <div class="flex items-center gap-6 my-8">
-        <div class="text-[22px] text-[#161616] font-bold">{{ totalPoints }}%</div>
+    <div ref="boxProfileCompletion">
+      <BaseHeading as="h2" :level="3" class="text-black">
+        <div class="relative text-balance">
+          <div
+            :class="[
+              'transition',
+              totalToShow === 100 ? 'opacity-0 pointer-events-none' : 'opacity-100',
+            ]"
+          >
+            {{ title }}
+          </div>
+          <div
+            :class="[
+              'transition absolute inset-0',
+              totalToShow === 100 ? 'opacity-100' : 'opacity-0 pointer-events-none',
+            ]"
+          >
+            {{ titleToShow }}
+          </div>
+        </div>
+      </BaseHeading>
+
+      <slot name="subtitle" />
+
+      <div class="flex items-center gap-6 mt-8">
+        <div class="text-[22px] text-[#161616] font-bold">{{ totalToShow }}%</div>
         <BaseGauge
-          :percentage="totalPoints"
+          :percentage="totalToShow"
           color="gradient"
           size="xl"
           class="rounded-full overflow-hidden"
         />
       </div>
-      <div v-if="showSteps && totalPoints < 100" class="flex flex-col gap-6 pt-6">
-        <CustomTodoListItem :isCompleted="isContactInformationsCompleted">
-          Remplissez vos informations de contact
-        </CustomTodoListItem>
-        <hr class="border-[#DDDDDD]" />
-        <CustomTodoListItem :isCompleted="isDisponibilitiesCompleted">
-          Définissez votre disponibilité
-        </CustomTodoListItem>
-        <hr class="border-[#DDDDDD]" />
-        <CustomTodoListItem :isCompleted="isPreferencesCompleted">
-          Définissez vos préférences de mission
-        </CustomTodoListItem>
-        <hr class="border-[#DDDDDD]" />
-        <CustomTodoListItem :isCompleted="isMotMotivationCompleted">
-          Écrivez un petit mot de motivation
-        </CustomTodoListItem>
-        <hr class="border-[#DDDDDD]" />
-        <CustomTodoListItem :isCompleted="isProfilePictureCompleted">
-          Ajoutez une photo
-        </CustomTodoListItem>
-        <hr class="border-[#DDDDDD]" />
-        <CustomTodoListItem :isCompleted="isSkillsAndCertificationsCompleted">
-          Indiquez vos compétences et certifications
-        </CustomTodoListItem>
-      </div>
-      <slot name="footer" />
     </div>
+
+    <div v-if="showSteps && totalPoints < 100" class="flex flex-col gap-6 pt-8">
+      <CustomTodoListItem :isCompleted="isContactInformationsCompleted">
+        Remplissez vos informations de contact
+      </CustomTodoListItem>
+      <hr class="border-[#DDDDDD]" />
+      <CustomTodoListItem :isCompleted="isDisponibilitiesCompleted">
+        Définissez votre disponibilité
+      </CustomTodoListItem>
+      <hr class="border-[#DDDDDD]" />
+      <CustomTodoListItem :isCompleted="isPreferencesCompleted">
+        Définissez vos préférences de mission
+      </CustomTodoListItem>
+      <hr class="border-[#DDDDDD]" />
+      <CustomTodoListItem :isCompleted="isMotMotivationCompleted">
+        Écrivez un petit mot de motivation
+      </CustomTodoListItem>
+      <hr class="border-[#DDDDDD]" />
+      <CustomTodoListItem :isCompleted="isProfilePictureCompleted">
+        Ajoutez une photo
+      </CustomTodoListItem>
+      <hr class="border-[#DDDDDD]" />
+      <CustomTodoListItem :isCompleted="isSkillsAndCertificationsCompleted">
+        Indiquez vos compétences et certifications
+      </CustomTodoListItem>
+    </div>
+
+    <slot name="footer" />
   </BaseBox>
 </template>
 
@@ -59,16 +82,29 @@ export default defineNuxtComponent({
   data() {
     return {
       loading: false,
+      fakeTotal: null,
     }
   },
+  created() {
+    this.fakeTotal = this.totalPoints
+  },
   watch: {
-    totalPoints(newValue, oldValue) {
+    async totalPoints(newValue, oldValue) {
       if (oldValue < 100 && newValue === 100) {
-        confetti({
-          particleCount: 500,
-          spread: 360,
-          // origin: { y: 0.6 },
-        })
+        this.fakeTotal = oldValue
+        const el = this.$refs.boxProfileCompletion
+
+        if (this.$utils.isElementInViewport(el)) {
+          this.onProfileCompletion()
+        } else {
+          await this.$scrollTo(el, 300, {
+            offset: -150,
+            cancelable: false,
+            onDone: async (element) => {
+              this.onProfileCompletion()
+            },
+          })
+        }
       }
     },
   },
@@ -115,7 +151,27 @@ export default defineNuxtComponent({
     isSkillsAndCertificationsCompleted() {
       return this.profile?.skills?.length > 0 || this.profile?.certifications?.length > 0
     },
+    totalToShow() {
+      return this.totalPoints === 100 && this.totalPoints !== this.fakeTotal
+        ? this.fakeTotal
+        : this.totalPoints
+    },
+    titleToShow() {
+      return this.totalToShow === 100 ? 'Bravo ! Vous avez complété votre profil 🎉' : this.title
+    },
   },
-  methods: {},
+  methods: {
+    async onProfileCompletion() {
+      await new Promise((resolve) => setTimeout(resolve, 250))
+      this.fakeTotal = 100
+      await new Promise((resolve) => setTimeout(resolve, 250))
+
+      confetti({
+        particleCount: 500,
+        spread: 360,
+        // origin: { x: 0.9, y: 0.1 },
+      })
+    },
+  },
 })
 </script>
