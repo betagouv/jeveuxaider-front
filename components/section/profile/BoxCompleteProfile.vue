@@ -1,8 +1,8 @@
 <template>
-  <BaseBox>
+  <BaseBox v-if="showBox">
     <div ref="boxProfileCompletion">
       <BaseHeading as="h2" :level="3" class="text-black">
-        <div class="relative text-balance">
+        <div :class="['relative text-balance', { 'min-h-[66px]': totalToShow === 100 }]">
           <div
             :class="[
               'transition duration-300',
@@ -22,7 +22,9 @@
         </div>
       </BaseHeading>
 
-      <slot name="subtitle" />
+      <template v-if="totalToShow !== 100">
+        <slot name="subtitle" />
+      </template>
 
       <div class="flex items-center gap-6 mt-8">
         <div class="text-[22px] text-[#161616] font-bold">{{ totalToShow }}%</div>
@@ -61,7 +63,9 @@
       </CustomTodoListItem>
     </div>
 
-    <slot name="footer" />
+    <template v-if="totalToShow !== 100">
+      <slot name="footer" />
+    </template>
   </BaseBox>
 </template>
 
@@ -83,10 +87,13 @@ export default defineNuxtComponent({
     return {
       loading: false,
       fakeTotal: null,
+      showBox: true,
     }
   },
   created() {
-    this.fakeTotal = this.totalPoints
+    if (this.totalPoints === 100) {
+      this.showBox = false
+    }
   },
   watch: {
     async totalPoints(newValue, oldValue) {
@@ -105,6 +112,8 @@ export default defineNuxtComponent({
             },
           })
         }
+      } else if (oldValue === 100 && newValue < 100) {
+        this.showBox = true
       }
     },
   },
