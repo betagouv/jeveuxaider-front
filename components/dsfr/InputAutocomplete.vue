@@ -84,6 +84,7 @@
           @click="handleClick(item)"
         >
           <div class="flex flex-col">
+            <!-- @todo: Supprimer si non utilisé -->
             <span>
               <span v-if="showKeyInOptions" class="text-gray-500"> #{{ item[attributeKey] }}</span>
               {{ item[attributeLabel] }}
@@ -92,6 +93,8 @@
               {{ item[attributeRightLabel] }}
             </span>
           </div>
+
+          <!-- @todo: Doit être visible à l'initialisation si j'ai déjà une valeur -->
           <RiCheckboxCircleFill
             v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]"
             class="flex-none h-5 fill-current"
@@ -125,6 +128,14 @@ export default defineNuxtComponent({
     attributeKey: { type: String, default: 'id' },
     attributeLabel: { type: String, default: 'name' },
     attributeRightLabel: { type: String, default: '' },
+
+    // @todo:
+    // Renommer attribute-label par option-attribute
+    // attributeLabel par optionAttribute
+    // attribute-right-label par option-secondary-attribute
+    // attributeRightLabel par optionSecondaryAttribute
+    inputAttribute: { type: String, default: null },
+
     classOptions: { type: String, default: '' },
     classOptionsUl: { type: String, default: '' },
     inputClass: { type: String, default: '' },
@@ -196,7 +207,9 @@ export default defineNuxtComponent({
       this.timeout()
     },
     handleClick(item) {
-      this.searchTerm = this.resetValueOnSelect ? null : item[this.attributeLabel]
+      this.searchTerm = this.resetValueOnSelect
+        ? null
+        : item[this.inputAttribute] ?? item[this.attributeLabel]
       this.$emit('selected', item)
       this.selectedOption = item
       this.showOptions = false

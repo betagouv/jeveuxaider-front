@@ -77,15 +77,17 @@
             />
           </DsfrFormControl>
           <DsfrFormControl label="Code postal" html-for="zip" required :error="errors.zip">
+            <!-- @todo: combobox pour forcer l'user à selectionner une option -->
             <DsfrInputAutocomplete
               v-model="form.zip"
               name="zip"
               :options="zipAutocompleteOptions"
               :min-length-to-search="3"
+              input-attribute="postcode"
               attribute-key="id"
               attribute-label="label"
               attribute-right-label="typeLabel"
-              placeholder="Sélectionnez votre code postal"
+              placeholder="Recherchez votre ville ou code postal"
               search-input-placeholder="Recherche par ville ou code postal"
               :loading="loadingFetchZips"
               @selected="handleSelectedZip"
@@ -533,6 +535,7 @@ export default defineNuxtComponent({
         })
     },
     handleSelectSkillItems(item) {
+      // @todo: ne pas dupliquer les éléments déjà présents
       this.form.skills = [...this.form.skills, item]
     },
     onRemovedSkillItem(item) {
