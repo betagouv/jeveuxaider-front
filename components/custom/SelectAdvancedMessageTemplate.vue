@@ -38,6 +38,8 @@ export default defineNuxtComponent({
       return {
         '[destinataire_prenom]': this.tokenDestinatairePrenomResolver,
         '[destinataire_nom]': this.tokenDestinataireNomResolver,
+        '[destinataire_zip]': this.tokenDestinataireZipResolver,
+        '[destinataire_ville]': this.tokenDestinataireVilleResolver,
         '[mission_nom]': this.tokenMissionNomResolver,
         '[mission_ville]': this.tokenMissionVilleResolver,
         '[mission_date_debut]': this.tokenMissionDateDebutResolver,
@@ -67,6 +69,30 @@ export default defineNuxtComponent({
           return this.recipientUser.last_name
         case 'App\\Models\\Structure':
           return this.recipientUser.last_name
+        default:
+          return ''
+      }
+    },
+    tokenDestinataireZipResolver() {
+      switch (this.conversableType) {
+        case 'App\\Models\\Participation':
+          return this.conversable.profile?.zip
+        case 'App\\Models\\Mission':
+          return this.recipientUser?.zip
+        case 'App\\Models\\Structure':
+          return this.recipientUser?.zip
+        default:
+          return ''
+      }
+    },
+    tokenDestinataireVilleResolver() {
+      switch (this.conversableType) {
+        case 'App\\Models\\Participation':
+          return this.conversable.profile?.ville
+        case 'App\\Models\\Mission':
+          return this.recipientUser?.ville
+        case 'App\\Models\\Structure':
+          return this.recipientUser?.ville
         default:
           return ''
       }

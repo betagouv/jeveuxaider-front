@@ -119,6 +119,8 @@ export default defineNuxtComponent({
           return [
             '[destinataire_prenom]',
             '[destinataire_nom]',
+            '[destinataire_zip]',
+            '[destinataire_ville]',
             '[mission_nom]',
             '[mission_ville]',
             '[mission_date_debut]',
@@ -132,6 +134,8 @@ export default defineNuxtComponent({
           return [
             '[destinataire_prenom]',
             '[destinataire_nom]',
+            '[destinataire_zip]',
+            '[destinataire_ville]',
             '[organisation_nom]',
             '[mission_nom]',
             '[expediteur_prenom]',
