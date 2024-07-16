@@ -1,14 +1,14 @@
 <template>
   <div
     ref="menuActions"
-    :class="[isPinned ? 'bg-white shadow-lg z-50' : '']"
-    class="sticky z-40 top-0 py-4 -mt-4"
+    :class="[isPinned ? 'sm:bg-white sm:shadow-lg sm:z-50' : '']"
+    class="sm:sticky sm:z-40 sm:top-0 py-4 -mt-4"
   >
     <div class="container">
       <div
         :class="[
-          'flex justify-between items-center',
-          isPinned ? 'lg:items-center' : 'lg:items-start',
+          'flex justify-between flex-col sm:flex-row',
+          isPinned ? 'sm:items-center' : 'sm:items-start',
         ]"
       >
         <div>
@@ -20,7 +20,7 @@
           </div>
         </div>
 
-        <div class="flex-col sm:flex-row flex gap-3">
+        <div class="flex-col sm:flex-row flex gap-3 mt-4 sm:mt-0">
           <slot name="action"> </slot>
         </div>
       </div>

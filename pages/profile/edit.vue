@@ -8,6 +8,7 @@
     <HeaderAction title="Profil">
       <template #action>
         <DsfrButton
+          class="hidden sm:flex"
           size="lg"
           variant="primary"
           :loading="loading"
@@ -25,7 +26,7 @@
       class-right="lg:col-span-7 flex flex-col gap-6 xl:gap-8 lg:pt-12"
     >
       <template #left>
-        <div class="flex flex-col pb-12 gap-12">
+        <div class="flex flex-col lg:pb-12 gap-8 xl:gap-12">
           <UserProfileTabs selected-tab-key="profil">
             <FormUserProfile
               ref="form"
