@@ -37,10 +37,13 @@
           <div class="flex-1">
             <div class="text-xl font-bold">Mes activités favorites</div>
             <div class="flex gap-3 flex-wrap mt-2">
-              <template v-if="profile?.activities?.length > 0">
-                <DsfrTag v-for="(item, i) in profile.activities" :key="i">
+              <template v-if="hasActivities">
+                <DsfrTag v-for="(item, i) in first3Activities" :key="i">
                   {{ item.name }}
                 </DsfrTag>
+                <DsfrTag v-if="hasMoreThan3Activities"
+                  >+ {{ this.profile?.activities?.length - 3 }}</DsfrTag
+                >
               </template>
               <template v-else> <div class="text-[#666666] text-lg">Non renseignée</div> </template>
             </div>
@@ -76,6 +79,15 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    hasActivities() {
+      return this.profile?.activities?.length > 0
+    },
+    hasMoreThan3Activities() {
+      return this.profile?.activities?.length > 3
+    },
+    first3Activities() {
+      return this.profile?.activities?.slice(0, 3)
+    },
     hasParticipations() {
       return this.$stores.auth.user.statistics?.participations_count
     },
