@@ -13,29 +13,29 @@
         />
       </div>
       <div v-if="showSteps && totalPoints < 100" class="flex flex-col gap-6 pt-6">
-        <InlineComponent :isCompleted="isContactInformationsCompleted">
+        <CustomTodoListItem :isCompleted="isContactInformationsCompleted">
           Remplissez vos informations de contact
-        </InlineComponent>
+        </CustomTodoListItem>
         <hr class="border-[#DDDDDD]" />
-        <InlineComponent :isCompleted="isDisponibilitiesCompleted">
+        <CustomTodoListItem :isCompleted="isDisponibilitiesCompleted">
           Définissez votre disponibilité
-        </InlineComponent>
+        </CustomTodoListItem>
         <hr class="border-[#DDDDDD]" />
-        <InlineComponent :isCompleted="isPreferencesCompleted">
+        <CustomTodoListItem :isCompleted="isPreferencesCompleted">
           Définissez vos préférences de mission
-        </InlineComponent>
+        </CustomTodoListItem>
         <hr class="border-[#DDDDDD]" />
-        <InlineComponent :isCompleted="isMotMotivationCompleted">
+        <CustomTodoListItem :isCompleted="isMotMotivationCompleted">
           Écrivez un petit mot de motivation
-        </InlineComponent>
+        </CustomTodoListItem>
         <hr class="border-[#DDDDDD]" />
-        <InlineComponent :isCompleted="isProfilePictureCompleted">
+        <CustomTodoListItem :isCompleted="isProfilePictureCompleted">
           Ajoutez une photo
-        </InlineComponent>
+        </CustomTodoListItem>
         <hr class="border-[#DDDDDD]" />
-        <InlineComponent :isCompleted="isSkillsAndCertificationsCompleted">
+        <CustomTodoListItem :isCompleted="isSkillsAndCertificationsCompleted">
           Indiquez vos compétences et certifications
-        </InlineComponent>
+        </CustomTodoListItem>
       </div>
       <slot name="footer" />
     </div>
@@ -45,32 +45,7 @@
 <script>
 import confetti from 'canvas-confetti'
 
-function createInlineComponent() {
-  return {
-    props: {
-      isCompleted: {
-        type: Boolean,
-        required: true,
-      },
-    },
-    template: `
-      <div class="flex gap-6 items-center">
-        <div>
-          <RiCheckboxCircleFill v-if="isCompleted" class="h-8 w-8 text-[#00A95F] fill-current" />
-          <RiCheckboxBlankCircleLine v-else class="h-8 w-8 text-[#161616] fill-current" />
-        </div>
-        <div :class="['flex gap-4 items-center', {'text-[#666666] line-through': isCompleted }, {'text-[#161616]': !isCompleted }]">
-          <slot></slot>
-        </div>
-      </div>
-    `,
-  }
-}
-
 export default defineNuxtComponent({
-  components: {
-    InlineComponent: createInlineComponent(),
-  },
   props: {
     title: {
       type: String,
