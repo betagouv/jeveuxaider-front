@@ -5,7 +5,7 @@
         <div class="relative text-balance">
           <div
             :class="[
-              'transition',
+              'transition duration-300',
               totalToShow === 100 ? 'opacity-0 pointer-events-none' : 'opacity-100',
             ]"
           >
@@ -13,7 +13,7 @@
           </div>
           <div
             :class="[
-              'transition absolute inset-0',
+              'transition duration-300 delay-300 absolute inset-0',
               totalToShow === 100 ? 'opacity-100' : 'opacity-0 pointer-events-none',
             ]"
           >
@@ -162,9 +162,9 @@ export default defineNuxtComponent({
   },
   methods: {
     async onProfileCompletion() {
-      await new Promise((resolve) => setTimeout(resolve, 250))
+      await new Promise((resolve) => setTimeout(resolve, 150))
       this.fakeTotal = 100
-      await new Promise((resolve) => setTimeout(resolve, 250))
+      await new Promise((resolve) => setTimeout(resolve, 600))
 
       confetti({
         particleCount: 500,
