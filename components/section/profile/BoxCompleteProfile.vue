@@ -104,7 +104,7 @@ export default defineNuxtComponent({
       return !!this.profile?.commitment__duration && this.profile?.disponibilities?.length > 0
     },
     isPreferencesCompleted() {
-      return this.profile?.activities?.length > 0
+      return this.profile?.activities?.length > 0 && !!this.profile?.type_missions
     },
     isMotMotivationCompleted() {
       return !!this.profile?.description
