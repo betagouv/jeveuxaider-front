@@ -12,7 +12,7 @@
           <div class="text-base text-balance @sm:text-wrap">
             Elles vous enverront des propositions de missions
           </div>
-          <div class="text-sm text-[#666666] mt-1">(5 par mois maximum !)</div>
+          <div class="text-sm text-[#666666] mt-1">(5 par mois maximum !)</div>
         </div>
         <BaseToggle
           v-model="form.is_visible"

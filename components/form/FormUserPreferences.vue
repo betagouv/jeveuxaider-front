@@ -91,7 +91,7 @@
         </div>
         <div class="flex-1">
           <DsfrHeading size="lg">
-            Quelles activités de bénévolat<br />
+            Quelles activités de bénévolat<br class="hidden sm:block" />
             vous intéressent ?
           </DsfrHeading>
           <DsfrTagsGroup

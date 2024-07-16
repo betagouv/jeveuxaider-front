@@ -8,7 +8,7 @@
         <div class="flex-1">
           <DsfrHeading size="lg"> J’accepte d’être contacté par des organisations </DsfrHeading>
           <div class="text-[#666666] mt-4 mb-8">
-            Elles vous enverront des propositions de missions (5 par mois maximum !)
+            Elles vous enverront des propositions de missions (5 par mois maximum !)
           </div>
           <DsfrRadioRichGroup
             v-model="form.is_visible"

@@ -7,7 +7,7 @@
     <div class="container">
       <div
         :class="[
-          'flex justify-between flex-col lg:flex-row',
+          'flex justify-between items-center',
           isPinned ? 'lg:items-center' : 'lg:items-start',
         ]"
       >
@@ -20,7 +20,7 @@
           </div>
         </div>
 
-        <div class="flex-col sm:flex-row flex gap-3 mt-4 lg:mt-0">
+        <div class="flex-col sm:flex-row flex gap-3">
           <slot name="action"> </slot>
         </div>
       </div>

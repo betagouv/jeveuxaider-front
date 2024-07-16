@@ -8,7 +8,6 @@
     <HeaderAction title="Profil">
       <template #action>
         <DsfrButton
-          class="hidden lg:flex"
           size="lg"
           variant="primary"
           :loading="loading"

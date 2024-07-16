@@ -10,7 +10,7 @@
       />
     </template>
     <template #header>
-      <DsfrHeading as="h1" size="2xl"> Mes paramètres de compte </DsfrHeading>
+      <DsfrHeading as="h1" size="2xl"> Paramètres </DsfrHeading>
     </template>
     <template #left>
       <ModalUnregisterUser

@@ -8,10 +8,9 @@
         ]"
       />
     </div>
-    <HeaderAction title="Préférences de notifications">
+    <HeaderAction title="Notifications">
       <template #action>
         <DsfrButton
-          class="hidden lg:flex"
           size="lg"
           variant="primary"
           :loading="loading"

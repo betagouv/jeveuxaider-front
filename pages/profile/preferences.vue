@@ -5,10 +5,9 @@
         :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mes préférences de missions' }]"
       />
     </div>
-    <HeaderAction title="Préférences de missions">
+    <HeaderAction title="Préférences">
       <template #action>
         <DsfrButton
-          class="hidden lg:flex"
           size="lg"
           variant="primary"
           :loading="loading"
