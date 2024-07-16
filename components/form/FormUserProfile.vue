@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white px-6 py-8 lg:px-12 lg:py-14">
+  <div class="bg-white px-6 py-8 lg:p-10">
     <div class="grid grid-cols-1 gap-8 lg:gap-12">
       <div>
         <DsfrFormControl

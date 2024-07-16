@@ -1,7 +1,7 @@
 <template>
   <BaseContainer2Cols
-    class-left="flex flex-col lg:col-span-8 gap-8 lg:gap-12"
-    class-right="lg:col-span-4 space-y-8 lg:space-y-12"
+    class-left="flex flex-col lg:col-span-8 gap-8 xl:gap-12"
+    class-right="lg:col-span-4 flex flex-col gap-8 xl:gap-12 lg:pt-12"
   >
     <template #breadcrumb>
       <DsfrBreadcrumb :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mes missions' }]" />
