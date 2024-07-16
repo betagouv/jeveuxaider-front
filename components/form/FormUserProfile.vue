@@ -14,6 +14,7 @@
             @delete="deleteFile($event)"
             @crop="onManipulationsChange($event)"
             modalFooterClass="!px-4 sm:!px-8 !gap-1 sm:!gap-4 !flex-nowrap"
+            class="sm:pl-4"
           >
             <template #trigger="{ onClick }">
               <CustomUploadTriggerProfilePicture @click="onClick" label="Ajouter une photo" />
