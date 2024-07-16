@@ -11,18 +11,7 @@
     <HeaderAction title="Notifications">
       <template #action>
         <DsfrButton
-          class="hidden lg:block"
           size="lg"
-          variant="primary"
-          :loading="loading"
-          :disabled="!formIsDirty"
-          @click.native="submitForm"
-        >
-          Enregistrer
-        </DsfrButton>
-        <DsfrButton
-          class="lg:hidden"
-          size="md"
           variant="primary"
           :loading="loading"
           :disabled="!formIsDirty"
