@@ -83,7 +83,7 @@
                   src="@/assets/images/snu-logo-2.png"
                   alt="SNU"
                   title="SNU"
-                  class="h-10"
+                  class="h-10 hidden sm:block"
                   data-not-lazy
                 />
               </template>
