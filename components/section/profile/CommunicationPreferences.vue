@@ -18,6 +18,7 @@
           v-model="form.is_visible"
           @checked="handleProfileVisible()"
           @unchecked="handleProfileInvisible()"
+          :button-labels="{ on: 'Oui', off: 'non' }"
         />
       </div>
     </div>
