@@ -219,10 +219,10 @@
       <template v-if="canViewScAndCej">
         <hr />
         <div class="">
-          <DsfrHeading size="lg"> Service Civique & Contrat d'Engagement Jeune </DsfrHeading>
-          <div class="mt-12 flex flex-col gap-8">
-            <div class="flex flex-col space-y-8">
-              <div class="flex lg:space-x-10">
+          <DsfrHeading size="lg"> Autres plateformes </DsfrHeading>
+          <div class="mt-12 flex flex-col gap-8 lg:gap-12">
+            <div class="flex flex-col gap-4 lg:gap-0">
+              <div class="flex items-center lg:gap-x-10">
                 <img
                   src="/images/logo-service-civique.png"
                   srcset="/images/logo-service-civique.png, /images/logo-service-civique@2x.png 2x"
@@ -234,35 +234,35 @@
                 <div class="w-full lg:w-[520px]">
                   <BaseToggle
                     v-model="form.service_civique"
-                    class="lg:w-full"
                     position="right"
                     label="Êtes-vous volontaire en Service Civique ?"
-                    :description="
-                      form.service_civique
-                        ? 'Oui, je suis volontaire'
-                        : 'Non, je ne suis pas volontaire'
-                    "
+                    label-class="text-balance font-bold"
+                    wrapper-class="flex-grow"
+                    button-wrapper-class="items-end mt-1 sm:mt-0"
+                    button-label-class="text-right"
+                    :button-labels="{ on: 'Oui', off: 'Non' }"
                   />
                 </div>
               </div>
-              <div v-if="form.service_civique" class="max-w-xl lg:pl-[144px]">
+              <div v-if="form.service_civique" class="max-w-xl lg:pl-[141px]">
                 <DsfrFormControl
                   label="Date de début de votre Service Civique"
                   html-for="service_civique_completion_date"
                   :error="errors.service_civique_completion_date"
                   required
                 >
-                  <BaseInputDate
+                  <DsfrInput
                     v-model="form.service_civique_completion_date"
-                    active-picker="MONTH"
                     required
+                    type="date"
                     name="service_civique_completion_date"
+                    @blur="validate('service_civique_completion_date')"
                   />
                 </DsfrFormControl>
               </div>
             </div>
-            <div class="flex flex-col space-y-8">
-              <div class="flex lg:space-x-10">
+            <div class="flex flex-col gap-4 lg:gap-0">
+              <div class="flex items-center lg:gap-x-10">
                 <img
                   src="/images/logo-cej.png"
                   srcset="/images/logo-cej.png, /images/logo-cej@2x.png 2x"
@@ -274,18 +274,17 @@
                 <div class="w-full lg:w-[520px]">
                   <BaseToggle
                     v-model="form.cej"
-                    class="lg:w-full"
                     position="right"
                     label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
-                    :description="
-                      form.cej
-                        ? 'Oui, je suis en Contrat d\'Engagement Jeune'
-                        : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'
-                    "
+                    label-class="text-balance font-bold"
+                    wrapper-class="flex-grow"
+                    button-wrapper-class="items-end mt-1 sm:mt-0"
+                    button-label-class="text-right"
+                    :button-labels="{ on: 'Oui', off: 'Non' }"
                   />
                 </div>
               </div>
-              <div v-if="form.cej" class="max-w-xl lg:pl-[144px]">
+              <div v-if="form.cej" class="max-w-xl lg:pl-[141px]">
                 <DsfrFormControl
                   v-if="form.cej"
                   label="Email de votre conseiller CEJ"
@@ -302,14 +301,16 @@
                       class="p-1 cursor-help group"
                     >
                       <RiErrorWarningLine
-                        class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]"
+                        class="inline h-4 w-4 fill-current text-cool-gray-400 group-hover:text-gray-900 mb-[2px] transition"
                       />
                     </span>
                   </template>
-                  <BaseInput
+                  <DsfrInput
                     v-model="form.cej_email_adviser"
+                    required
+                    type="email"
                     name="cej_email_adviser"
-                    placeholder="Saisissez l'email de votre conseiller CEJ"
+                    placeholder="…@…"
                     @blur="validate('cej_email_adviser')"
                   />
                 </DsfrFormControl>
@@ -461,8 +462,12 @@ export default defineNuxtComponent({
                 ),
           }),
         service_civique_completion_date: date()
+          .typeError('La date indiquée est invalide')
           .nullable()
-          .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
+          .when('service_civique', {
+            is: true,
+            then: (schema) => schema.required('La date de début de service civique est incorrecte'),
+          }),
       }),
       zipAutocompleteOptions: [],
       loadingFetchZips: false,
