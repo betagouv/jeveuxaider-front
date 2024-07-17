@@ -89,7 +89,7 @@
         <div class="hidden lg:block w-[80px]">
           <img src="/images/icons/culture.svg" alt="" data-not-lazy class="w-full" />
         </div>
-        <div class="flex-1">
+        <div class="flex-1 max-w-full">
           <DsfrHeading size="lg">
             Quelles activités de bénévolat<br class="hidden sm:block" />
             vous intéressent ?
