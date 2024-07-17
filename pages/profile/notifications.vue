@@ -11,6 +11,7 @@
     <HeaderAction title="Notifications">
       <template #action>
         <DsfrButton
+          class="hidden sm:flex"
           size="lg"
           variant="primary"
           :loading="loading"

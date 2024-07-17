@@ -51,7 +51,7 @@ const isChecked = (option) => option.key === props.modelValue
       v-for="option in options"
       :key="option.key"
       :class="[
-        'border py-4 pl-4 pr-5 cursor-pointer hover:bg-gray-100',
+        'border py-4 pl-4 pr-5 cursor-pointer hover:bg-gray-100 transition',
         { 'border-jva-blue-500': isChecked(option) },
         { 'w-full': full },
         customClass,

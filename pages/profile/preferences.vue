@@ -8,6 +8,7 @@
     <HeaderAction title="Préférences">
       <template #action>
         <DsfrButton
+          class="hidden sm:flex"
           size="lg"
           variant="primary"
           :loading="loading"
