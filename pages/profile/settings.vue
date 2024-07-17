@@ -25,7 +25,7 @@
             <hr />
             <FormUserPassword @submitted="onPasswordChanged" />
             <hr />
-            <div class="border p-8">
+            <div class="sm:border sm:p-8">
               <DsfrHeading size="lg" class="mb-6"> Désinscription </DsfrHeading>
               <div class="flex flex-col">
                 <div class="flex-1 text-[#666666] mb-8 lg:mr-8">

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="flex justify-between items-end gap-8">
-      <div>
+    <div class="flex justify-between items-end gap-4">
+      <div class="min-w-0">
         <div>E-mail</div>
-        <div class="font-bold">{{ $stores.auth.user.email }}</div>
+        <div class="font-bold truncate">{{ $stores.auth.user.email }}</div>
       </div>
       <div><DsfrLink class="text-jva-blue-500" @click="showModal = true">Modifier</DsfrLink></div>
     </div>
