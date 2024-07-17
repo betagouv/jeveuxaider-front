@@ -4,11 +4,12 @@
       <DsfrBreadcrumb
         :links="[
           { text: 'Mon espace', to: '/profile' },
+          { text: 'Mon compte', to: '/profile/edit' },
           { text: 'Mes préférences de notifications' },
         ]"
       />
     </div>
-    <HeaderAction title="Notifications">
+    <HeaderAction title="Mon compte">
       <template #action="{ isPinned }">
         <DsfrButton
           class="hidden sm:flex"

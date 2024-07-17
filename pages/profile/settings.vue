@@ -6,11 +6,15 @@
   >
     <template #breadcrumb>
       <DsfrBreadcrumb
-        :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mes paramètres de compte' }]"
+        :links="[
+          { text: 'Mon espace', to: '/profile' },
+          { text: 'Mon compte', to: '/profile/edit' },
+          { text: 'Mes paramètres de compte' },
+        ]"
       />
     </template>
     <template #header>
-      <DsfrHeading as="h1" size="2xl"> Paramètres </DsfrHeading>
+      <DsfrHeading as="h1" size="2xl"> Mon compte </DsfrHeading>
     </template>
     <template #left>
       <ModalUnregisterUser

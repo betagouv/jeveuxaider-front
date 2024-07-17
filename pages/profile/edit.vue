@@ -1,11 +1,9 @@
 <template>
   <div class="">
     <div class="container">
-      <DsfrBreadcrumb
-        :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Modification de mon profil' }]"
-      />
+      <DsfrBreadcrumb :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mon compte' }]" />
     </div>
-    <HeaderAction title="Profil">
+    <HeaderAction title="Mon compte">
       <template #action="{ isPinned }">
         <DsfrButton
           class="hidden sm:flex"

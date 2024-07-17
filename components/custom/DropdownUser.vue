@@ -49,7 +49,7 @@
         <BaseDropdownOptionsItem @click.native="handleClick('/profile/edit')">
           <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
             <RiUserLine class="h-[17px] w-auto fill-current" />
-            <span>Mon profil</span>
+            <span>Mon compte</span>
           </div>
         </BaseDropdownOptionsItem>
         <BaseDropdownOptionsItem @click.native="handleClick('logout')">

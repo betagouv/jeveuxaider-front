@@ -2,10 +2,14 @@
   <div class="">
     <div class="container">
       <DsfrBreadcrumb
-        :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mes préférences de missions' }]"
+        :links="[
+          { text: 'Mon espace', to: '/profile' },
+          { text: 'Mon compte', to: '/profile/edit' },
+          { text: 'Mes préférences de missions' },
+        ]"
       />
     </div>
-    <HeaderAction title="Préférences">
+    <HeaderAction title="Mon compte">
       <template #action="{ isPinned }">
         <DsfrButton
           class="hidden sm:flex"
