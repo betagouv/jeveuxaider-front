@@ -737,7 +737,7 @@ const labels: TypeLabels = {
   ],
   profile_certifications: [
     { key: 'permis_voiture', label: 'Permis voiture' },
-    { key: 'brevet_secourisme', label: 'Brevet de secourisme' },
+    { key: 'psc1', label: 'Prévention et Secours Civiques (PSC1)' },
     { key: 'bafa', label: 'BAFA' },
   ],
   profile_type_missions: [
