@@ -535,8 +535,9 @@ export default defineNuxtComponent({
         })
     },
     handleSelectSkillItems(item) {
-      // @todo: ne pas dupliquer les éléments déjà présents
-      this.form.skills = [...this.form.skills, item]
+      if (!this.form.skills.some((skill) => skill.id === item.id)) {
+        this.form.skills = [...this.form.skills, item]
+      }
     },
     onRemovedSkillItem(item) {
       this.form.skills = this.form.skills.filter((skill) => skill.id !== item.id)
