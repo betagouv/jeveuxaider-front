@@ -22,7 +22,7 @@
         type="text"
         :placeholder="placeholder"
         :class="[
-          '!border-none rounded-t w-full h-full',
+          '!border-none rounded-t w-full h-full truncate',
 
           {
             'bg-[#EEEEEE] shadow-[inset_0_-2px_0_0_#3A3A3A] focus:!shadow-[inset_0_-2px_0_0_#3A3A3A]':
@@ -41,6 +41,8 @@
           {
             'pl-12': icon && ['md', 'lg'].includes(size),
           },
+
+          { 'pr-8': !!modelValue },
 
           inputClass,
         ]"
@@ -127,7 +129,6 @@ export default defineNuxtComponent({
     icon: { type: String, default: null },
     options: { type: Array, default: () => [] },
 
-    inputValueAttribute: { type: String, default: null },
     optionKeyAttribute: { type: String, default: 'id' },
     optionLabelAttribute: { type: String, default: 'name' },
     optionLabelSecondaryAttribute: { type: String, default: '' },
@@ -203,9 +204,7 @@ export default defineNuxtComponent({
       this.timeout()
     },
     handleClick(item) {
-      this.searchTerm = this.resetValueOnSelect
-        ? null
-        : item[this.inputValueAttribute] ?? item[this.optionLabelAttribute]
+      this.searchTerm = this.resetValueOnSelect ? null : this.modelValue
       this.$emit('selected', item)
       this.selectedOption = item
       this.showOptions = false

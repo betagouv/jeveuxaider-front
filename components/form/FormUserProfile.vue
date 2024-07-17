@@ -79,11 +79,10 @@
           <DsfrFormControl label="Code postal" html-for="zip" required :error="errors.zip">
             <!-- @todo: combobox pour forcer l'user à selectionner une option -->
             <DsfrInputAutocomplete
-              v-model="form.zip"
+              :model-value="form.zip ? `${form.zip} - ${form.city}` : null"
               name="zip"
               :options="zipAutocompleteOptions"
               :min-length-to-search="3"
-              input-value-attribute="postcode"
               option-key-attribute="id"
               option-label-attribute="label"
               option-label-secondary-attribute="typeLabel"
