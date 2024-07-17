@@ -58,7 +58,7 @@
         <template #footer>
           <div class="mt-8 pt-8 border-t">
             <nuxt-link to="/profile/edit" no-prefetch>
-              <DsfrButton type="secondary">Complétez mon profil</DsfrButton>
+              <DsfrButton type="secondary">Compléter mon profil</DsfrButton>
             </nuxt-link>
           </div>
         </template>
