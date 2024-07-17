@@ -2,7 +2,7 @@
   <div
     ref="menuActions"
     :class="[isPinned ? 'sm:bg-white sm:shadow-lg sm:z-50' : '']"
-    class="sm:sticky sm:z-40 sm:top-0 py-2 -mt-2"
+    class="sm:sticky sm:z-40 sm:top-0 py-2 -mt-2 transition"
   >
     <div class="container">
       <div
