@@ -737,7 +737,8 @@ const labels: TypeLabels = {
   ],
   profile_certifications: [
     { key: 'permis_voiture', label: 'Permis voiture' },
-    { key: 'gestes_premier_secours', label: 'Geste de premiers secours' },
+    { key: 'brevet_secourisme', label: 'Brevet de secourisme' },
+    { key: 'bafa', label: 'BAFA' },
   ],
   profile_type_missions: [
     { key: 'presentiel', label: 'Sur place' },
