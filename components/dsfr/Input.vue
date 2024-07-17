@@ -38,6 +38,7 @@
       :min="min"
       :max="max"
       @input="$emit('update:modelValue', $event.target.value)"
+      @blur="$emit('blur')"
     />
 
     <component
