@@ -81,7 +81,11 @@
       </div>
     </template>
     <template #right>
-      <BoxCompleteProfile title="🫣 Psssst ! Votre profil est incomplet" :show-steps="false">
+      <BoxCompleteProfile
+        title="🫣 Psssst ! Votre profil est incomplet"
+        :show-steps="false"
+        class="lg:mt-20"
+      >
         <template #subtitle>
           <div class="text-[#666666] mt-2">
             En remplissant votre profil, vous augmentez vos chances de trouver une mission.
