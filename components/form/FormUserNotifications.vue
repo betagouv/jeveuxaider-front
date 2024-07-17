@@ -1,37 +1,7 @@
 <template>
   <div class="bg-white px-6 py-8 lg:p-10">
     <div class="grid grid-cols-1 gap-8 lg:gap-12">
-      <div class="flex gap-12">
-        <div class="hidden lg:block w-[80px]">
-          <img src="/images/icons/mail-send.svg" alt="" data-not-lazy class="w-full" />
-        </div>
-        <div class="flex-1">
-          <DsfrHeading size="lg"> J’accepte d’être contacté par des organisations </DsfrHeading>
-          <div class="text-[#666666] mt-4 mb-8">
-            Elles vous enverront des propositions de missions (5 par mois maximum !)
-          </div>
-          <DsfrRadioRichGroup
-            v-model="form.is_visible"
-            name="is_visible"
-            full
-            :options="[
-              {
-                key: true,
-                label: 'Activé',
-                description: 'Oui, je souhaite rendre mon profil visible',
-              },
-              {
-                key: false,
-                label: 'Désactivé',
-                description: 'Non merci, je vais faire mes recherches moi-même',
-              },
-            ]"
-          />
-        </div>
-      </div>
-
       <template v-if="['responsable'].includes($stores.auth.contextRole)">
-        <hr />
         <div class="flex gap-12">
           <div class="hidden lg:block w-[80px]">
             <img src="/images/icons/culture.svg" alt="" data-not-lazy class="w-full" />
@@ -95,10 +65,10 @@
             />
           </div>
         </div>
+        <hr />
       </template>
 
       <template v-if="['referent'].includes($stores.auth.contextRole)">
-        <hr />
         <div class="flex gap-12">
           <div class="hidden lg:block w-[80px]">
             <img src="/images/icons/culture.svg" alt="" data-not-lazy class="w-full" />
@@ -161,7 +131,37 @@
             />
           </div>
         </div>
+        <hr />
       </template>
+
+      <div class="flex gap-12">
+        <div class="hidden lg:block w-[80px]">
+          <img src="/images/icons/mail-send.svg" alt="" data-not-lazy class="w-full" />
+        </div>
+        <div class="flex-1">
+          <DsfrHeading size="lg"> J’accepte d’être contacté par des organisations </DsfrHeading>
+          <div class="text-[#666666] mt-4 mb-8">
+            Elles vous enverront des propositions de missions (5 par mois maximum !)
+          </div>
+          <DsfrRadioRichGroup
+            v-model="form.is_visible"
+            name="is_visible"
+            full
+            :options="[
+              {
+                key: true,
+                label: 'Activé',
+                description: 'Oui, je souhaite rendre mon profil visible',
+              },
+              {
+                key: false,
+                label: 'Désactivé',
+                description: 'Non merci, je vais faire mes recherches moi-même',
+              },
+            ]"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </template>
