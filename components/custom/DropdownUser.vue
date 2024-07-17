@@ -52,27 +52,6 @@
             <span>Mon profil</span>
           </div>
         </BaseDropdownOptionsItem>
-        <BaseDropdownOptionsItem @click.native="handleClick('/profile/preferences')">
-          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
-            <RiHeartLine class="h-[17px] w-auto fill-current" />
-            <span>Mes préférences de missions</span>
-          </div>
-        </BaseDropdownOptionsItem>
-        <BaseDropdownOptionsItem
-          v-if="['referent', 'responsable'].includes($stores.auth.contextRole)"
-          @click.native="handleClick('/profile/notifications')"
-        >
-          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
-            <RiNotification3Line class="h-[17px] w-auto fill-current" />
-            <span>Mes notifications</span>
-          </div>
-        </BaseDropdownOptionsItem>
-        <BaseDropdownOptionsItem @click.native="handleClick('/profile/settings')">
-          <div class="flex items-center justify-center space-x-3 px-4 text-base font-medium">
-            <RiSettings4Line class="h-[17px] w-auto fill-current" />
-            <span>Mes paramètres</span>
-          </div>
-        </BaseDropdownOptionsItem>
         <BaseDropdownOptionsItem @click.native="handleClick('logout')">
           <div
             class="flex items-center justify-center space-x-3 px-4 text-base font-medium text-[#C9191E]"
