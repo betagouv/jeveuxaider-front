@@ -1,5 +1,11 @@
 <template>
-  <DsfrTabs name="NAME" :tabs="tabs" tabpanel-class="!p-0" :selected-tab-key="selectedTabKey">
+  <DsfrTabs
+    name="NAME"
+    :tabs="tabs"
+    tabpanel-class="!p-0 shadow-lg"
+    :selected-tab-key="selectedTabKey"
+    class="lg:pt-0.5"
+  >
     <template #[`tab-${selectedTabKey}`]>
       <slot />
     </template>
