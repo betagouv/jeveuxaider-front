@@ -78,25 +78,26 @@
             { 'bg-[#F5F5FE] text-jva-blue-500': highlightIndex == index },
             {
               'bg-[#F5F5FE] text-jva-blue-500':
-                selectedOption && item[attributeKey] == selectedOption[attributeKey],
+                selectedOption && item[optionKeyAttribute] == selectedOption[optionKeyAttribute],
             },
           ]"
           @click="handleClick(item)"
         >
           <div class="flex flex-col">
-            <!-- @todo: Supprimer si non utilisé -->
             <span>
-              <span v-if="showKeyInOptions" class="text-gray-500"> #{{ item[attributeKey] }}</span>
-              {{ item[attributeLabel] }}
+              <span v-if="showKeyInOptions" class="text-gray-500">
+                #{{ item[optionKeyAttribute] }}</span
+              >
+              {{ item[optionLabelAttribute] }}
             </span>
-            <span v-if="attributeRightLabel" class="text-cool-gray-400 text-xs flex-none">
-              {{ item[attributeRightLabel] }}
+            <span v-if="optionLabelSecondaryAttribute" class="text-cool-gray-400 text-xs flex-none">
+              {{ item[optionLabelSecondaryAttribute] }}
             </span>
           </div>
 
           <!-- @todo: Doit être visible à l'initialisation si j'ai déjà une valeur -->
           <RiCheckboxCircleFill
-            v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]"
+            v-if="selectedOption && item[optionKeyAttribute] == selectedOption[optionKeyAttribute]"
             class="flex-none h-5 fill-current"
           />
         </li>
@@ -119,28 +120,23 @@ export default defineNuxtComponent({
   emits: ['selected', 'cleared', 'fetch-suggestions', 'mounted', 'update:modelValue', 'blur'],
   props: {
     modelValue: { type: String, default: null },
+    name: { type: String, required: true },
     placeholder: { type: String, default: null },
     labelEmpty: { type: String, default: 'Aucun résultat' },
-    name: { type: String, required: true },
 
     icon: { type: String, default: null },
     options: { type: Array, default: () => [] },
-    attributeKey: { type: String, default: 'id' },
-    attributeLabel: { type: String, default: 'name' },
-    attributeRightLabel: { type: String, default: '' },
 
-    // @todo:
-    // Renommer attribute-label par option-attribute
-    // attributeLabel par optionAttribute
-    // attribute-right-label par option-secondary-attribute
-    // attributeRightLabel par optionSecondaryAttribute
-    inputAttribute: { type: String, default: null },
+    inputValueAttribute: { type: String, default: null },
+    optionKeyAttribute: { type: String, default: 'id' },
+    optionLabelAttribute: { type: String, default: 'name' },
+    optionLabelSecondaryAttribute: { type: String, default: '' },
 
     classOptions: { type: String, default: '' },
     classOptionsUl: { type: String, default: '' },
     inputClass: { type: String, default: '' },
     styleInput: { type: String, default: '' },
-    // variant: { type: String, default: null },
+
     clearAfterSelected: { type: Boolean, default: false },
     showKeyInOptions: { type: Boolean, default: false },
     theme: { type: String, default: 'default' },
@@ -209,7 +205,7 @@ export default defineNuxtComponent({
     handleClick(item) {
       this.searchTerm = this.resetValueOnSelect
         ? null
-        : item[this.inputAttribute] ?? item[this.attributeLabel]
+        : item[this.inputValueAttribute] ?? item[this.optionLabelAttribute]
       this.$emit('selected', item)
       this.selectedOption = item
       this.showOptions = false
