@@ -6,10 +6,10 @@
       />
     </div>
     <HeaderAction title="Préférences">
-      <template #action>
+      <template #action="{ isPinned }">
         <DsfrButton
           class="hidden sm:flex"
-          size="lg"
+          :size="isPinned ? 'md' : 'lg'"
           variant="primary"
           :loading="loading"
           :disabled="!formIsDirty"

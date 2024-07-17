@@ -2,7 +2,7 @@
   <div
     ref="menuActions"
     :class="[isPinned ? 'sm:bg-white sm:shadow-lg sm:z-50' : '']"
-    class="sm:sticky sm:z-40 sm:top-0 py-4 -mt-4"
+    class="sm:sticky sm:z-40 sm:top-0 py-2 -mt-2"
   >
     <div class="container">
       <div
@@ -21,7 +21,7 @@
         </div>
 
         <div class="flex-col sm:flex-row flex gap-3 mt-4 sm:mt-0">
-          <slot name="action"> </slot>
+          <slot name="action" :is-pinned="isPinned" />
         </div>
       </div>
     </div>
