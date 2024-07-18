@@ -85,7 +85,7 @@
               option-key-attribute="id"
               option-label-attribute="label"
               option-label-secondary-attribute="typeLabel"
-              placeholder="Recherchez votre ville ou code postal"
+              placeholder="Rechercher une ville ou code postal"
               search-input-placeholder="Recherche par ville ou code postal"
               :loading="loadingFetchZips"
               @selected="handleSelectedZip"

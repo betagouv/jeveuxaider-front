@@ -16,7 +16,7 @@
             <DsfrHeading
               as="h1"
               size="2xl"
-              :class="['transition-[font-size]', isPinned && '!text-2xl']"
+              :class="['sm:transition-[font-size]', isPinned && 'sm:!text-2xl']"
               >{{ title }}</DsfrHeading
             >
             <span v-if="subtitle" class="font-normal text-gray-500"> {{ subtitle }}</span>
