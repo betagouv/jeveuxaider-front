@@ -1,7 +1,8 @@
 <template>
   <BaseContainer2Cols
-    class-left="flex flex-col lg:col-span-8 gap-8 xl:gap-12"
-    class-right="lg:col-span-4 flex flex-col gap-8 xl:gap-12 lg:pt-12"
+    grid-class="grid gap-6 xl:gap-8 grid-cols-1 lg:grid-cols-18"
+    class-left="lg:col-span-11 flex flex-col gap-6 xl:gap-8"
+    class-right="lg:col-span-7 flex flex-col gap-6 xl:gap-8 lg:pt-12"
   >
     <template #breadcrumb>
       <DsfrBreadcrumb :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mes missions' }]" />
@@ -99,6 +100,10 @@
           </div>
         </template>
       </BoxCompleteProfile>
+
+      <BaseBox class="@container">
+        <SectionProfileCommunicationPreferences :profile="$stores.auth.user?.profile" />
+      </BaseBox>
 
       <HelpCenter />
     </template>
