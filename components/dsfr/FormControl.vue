@@ -1,12 +1,14 @@
 <template>
   <div class="w-full">
     <label
+      v-if="label"
       :for="htmlFor"
       :class="['block  relative text-[#161616]', $slots.description ? 'mb-1' : 'mb-2']"
     >
       {{ label }}
       <span v-if="required" class="text-[#E2011C]"> * </span>
       <span v-if="labelSuffix" class="text-jva-blue-400 ml-2">{{ labelSuffix }}</span>
+      <slot name="afterLabel" />
     </label>
 
     <div v-if="$slots.description" class="mb-2">

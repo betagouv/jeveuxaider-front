@@ -1,44 +1,71 @@
 <template>
-  <div v-if="profile" class="container">
-    <DsfrBreadcrumb
-      :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mes préférences de missions' }]"
-    />
-    <div class="flex flex-col pb-12 gap-12">
-      <BaseSectionHeading title="Mes préférences de missions">
-        <template #action>
-          <DsfrButton
-            class="hidden lg:flex"
-            size="lg"
-            variant="primary"
-            :loading="loading"
-            :disabled="!formIsDirty"
-            @click.native="submitForm"
-          >
-            Enregistrer
-          </DsfrButton>
-        </template>
-      </BaseSectionHeading>
-
-      <UserProfileTabs selected-tab-key="preferences">
-        <FormUserPreferences
-          ref="form"
-          :profile="profile"
-          @change="formIsDirty = $event"
-          @submit="fetchProfile"
-        />
-      </UserProfileTabs>
+  <div class="">
+    <div class="container">
+      <DsfrBreadcrumb
+        :links="[
+          { text: 'Mon espace', to: '/profile' },
+          { text: 'Mon compte', to: '/profile/edit' },
+          { text: 'Mes préférences de missions' },
+        ]"
+      />
     </div>
+    <HeaderAction title="Mon compte">
+      <template #action="{ isPinned }">
+        <DsfrButton
+          class="hidden sm:flex"
+          :size="isPinned ? 'md' : 'lg'"
+          variant="primary"
+          :loading="loading"
+          :disabled="!formIsDirty"
+          @click.native="submitForm"
+        >
+          Enregistrer
+        </DsfrButton>
+      </template>
+    </HeaderAction>
+    <BaseContainer2Cols
+      class="mt-8"
+      grid-class="grid gap-6 xl:gap-8 grid-cols-1 lg:grid-cols-18"
+      class-left="lg:col-span-11 flex flex-col gap-6 xl:gap-8"
+      class-right="lg:col-span-7 flex flex-col gap-6 xl:gap-8 lg:pt-12"
+    >
+      <template #left>
+        <div class="flex flex-col lg:pb-12 gap-8 xl:gap-12">
+          <UserProfileTabs selected-tab-key="preferences">
+            <FormUserPreferences
+              ref="form"
+              :profile="profile"
+              @change="formIsDirty = $event"
+              @submit="fetchProfile"
+            />
+          </UserProfileTabs>
+        </div>
+      </template>
+      <template #right>
+        <BoxCompleteProfile title="Complétez votre profil pour trouver une mission" />
+        <BaseBox class="@container">
+          <SectionProfileCommunicationPreferences :profile="profile" />
+        </BaseBox>
+        <HelpCenter />
+      </template>
+    </BaseContainer2Cols>
   </div>
 </template>
 
 <script>
 import FormUserPreferences from '@/components/form/FormUserPreferences.vue'
 import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
+import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
+import HeaderAction from '@/components/section/current-user/HeaderActions.vue'
 
 export default defineNuxtComponent({
   components: {
     FormUserPreferences,
     UserProfileTabs,
+    BoxCompleteProfile,
+    HelpCenter,
+    HeaderAction,
   },
   async setup() {
     definePageMeta({

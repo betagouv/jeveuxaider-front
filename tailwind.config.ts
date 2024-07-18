@@ -32,6 +32,19 @@ export default <Partial<Config>>{
         xl: '2rem',
       },
     },
+    containers: {
+      xs: '20rem' /* 320px */,
+      sm: '24rem' /* 384px */,
+      md: '28rem' /* 448px */,
+      lg: '32rem' /* 512px */,
+      xl: '36rem' /* 576px */,
+      '2xl': '42rem' /* 672px */,
+      '3xl': '48rem' /* 714px */,
+      '4xl': '56rem' /* 908px */,
+      '5xl': '64rem' /* 1024px */,
+      '6xl': '72rem' /* 1152px */,
+      '7xl': '80rem' /* 1280px */,
+    },
     fontSize: {
       xxs: ['0.60rem', { lineHeight: '1rem' }],
       xs: ['0.75rem', { lineHeight: '1.25rem' }],
@@ -126,6 +139,9 @@ export default <Partial<Config>>{
           '"Noto Color Emoji"',
         ],
       },
+      gridTemplateColumns: {
+        18: 'repeat(18, minmax(0, 1fr))',
+      },
     },
   },
   variants: {
@@ -133,5 +149,5 @@ export default <Partial<Config>>{
       borderColor: ['active'],
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [require('@tailwindcss/container-queries'), require('@tailwindcss/forms')],
 }

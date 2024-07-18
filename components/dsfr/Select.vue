@@ -4,10 +4,6 @@ const props = defineProps({
     type: [String, Number],
     default: null,
   },
-  id: {
-    type: String,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
@@ -51,7 +47,7 @@ const props = defineProps({
 <template>
   <div class="w-full relative">
     <select
-      :id="id"
+      :id="name"
       :name="name"
       :value="modelValue"
       :placeholder="placeholder"
@@ -68,6 +64,7 @@ const props = defineProps({
         customClass,
       ]"
       @input="$emit('update:modelValue', $event.target.value)"
+      @blur="$emit('blur', $event.target.value)"
     >
       <option value="" selected :disabled="required">{{ placeholder }}</option>
       <option

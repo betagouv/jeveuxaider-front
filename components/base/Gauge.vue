@@ -51,7 +51,7 @@ export default defineNuxtComponent({
     color: {
       type: String,
       default: 'salmon',
-      validator: (s) => ['salmon', 'green', 'blue'].includes(s),
+      validator: (s) => ['salmon', 'green', 'blue', 'gradient'].includes(s),
     },
     track: {
       type: Number,
@@ -67,6 +67,8 @@ export default defineNuxtComponent({
           return 'bg-jva-green-500'
         case 'blue':
           return 'bg-jva-blue-500'
+        case 'gradient':
+          return 'bg-gradient-to-r from-[#F95D5F] to-[#6A6AF4]'
         default:
           return 'bg-[#FF9A7B]'
       }

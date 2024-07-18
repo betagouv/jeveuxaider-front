@@ -1,72 +1,105 @@
 <template>
-  <div class="bg-white px-6 py-8 lg:px-12 lg:py-14">
-    <div class="grid grid-cols-1 divide-y-gray-400 divide-y gap-12 lg:gap-16">
+  <div class="bg-white px-6 py-8 lg:p-10">
+    <div class="grid grid-cols-1 gap-8 lg:gap-12">
       <div>
-        <BaseHeading as="h2" :level="2"> Mes informations personnelles </BaseHeading>
-        <div class="text-lg text-[#3A3A3A] mt-4">
-          Ces informations sont utilisées lors de vos mises en relation avec d’autres utilisateurs.
-        </div>
+        <DsfrFormControl
+          class="flex items-center justify-start gap-6 sm:gap-12 flex-col sm:flex-row"
+          html-for="avatar"
+        >
+          <BaseImageCrop
+            :default-value="form.avatar"
+            :preview-width="100"
+            :min-width="200"
+            @add="addFiles({ files: [$event], collection: 'profile__avatar' })"
+            @delete="deleteFile($event)"
+            @crop="onManipulationsChange($event)"
+            modalFooterClass="!px-4 sm:!px-8 !gap-1 sm:!gap-4 !flex-nowrap"
+            class="sm:pl-4"
+          >
+            <template #trigger="{ onClick }">
+              <CustomUploadTriggerProfilePicture @click="onClick" label="Ajouter une photo" />
+            </template>
+
+            <template #preview="{ setShowModal, previewSrcset }">
+              <CustomUploadTriggerProfilePicture
+                @click="setShowModal(true)"
+                label="Modifier"
+                :previewSrcset="previewSrcset"
+              />
+            </template>
+
+            <template #modalFooter="{ doCrop, setShowModal, onDelete }">
+              <DsfrButton
+                type="tertiary-no-outline"
+                size="sm"
+                icon="RiCloseLine"
+                class="text-red-700"
+                @click="
+                  () => {
+                    onDelete()
+                    setShowModal(false)
+                  }
+                "
+              >
+                Supprimer
+              </DsfrButton>
+              <DsfrButton
+                type="secondary"
+                class="text-sm sm:text-base"
+                @click="setShowModal(false)"
+              >
+                Annuler
+              </DsfrButton>
+              <DsfrButton @click="doCrop" class="text-sm sm:text-base"> Valider </DsfrButton>
+            </template>
+          </BaseImageCrop>
+          <DsfrHeading as="p" size="lg"> {{ profile.full_name }} </DsfrHeading>
+        </DsfrFormControl>
+      </div>
+      <hr />
+      <div>
+        <DsfrHeading size="lg"> Informations personnelles </DsfrHeading>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
-          <BaseFormControl class="md:col-span-2" label="Photo de profil" html-for="avatar">
-            <!-- :key="form.avatar?.updated_at ?? 'imageCrop'" -->
-            <BaseImageCrop
-              :default-value="form.avatar"
-              :preview-width="100"
-              :min-width="200"
-              @add="addFiles({ files: [$event], collection: 'profile__avatar' })"
-              @delete="deleteFile($event)"
-              @crop="onManipulationsChange($event)"
-            />
-          </BaseFormControl>
-          <BaseFormControl label="Prénom" html-for="first_name" required :error="errors.first_name">
-            <BaseInput
+          <DsfrFormControl label="Prénom" html-for="first_name" required :error="errors.first_name">
+            <DsfrInput
               v-model="form.first_name"
               name="first_name"
               placeholder="Jean"
               @blur="validate('first_name')"
             />
-          </BaseFormControl>
-          <BaseFormControl label="Nom" html-for="last_name" required :error="errors.last_name">
-            <BaseInput
+          </DsfrFormControl>
+          <DsfrFormControl label="Nom" html-for="last_name" required :error="errors.last_name">
+            <DsfrInput
               v-model="form.last_name"
               name="last_name"
               placeholder="Dupont"
               @blur="validate('last_name')"
             />
-          </BaseFormControl>
-          <BaseFormControl label="Email" html-for="email" required :error="errors.email">
-            <BaseInput
-              v-model="form.email"
-              type="email"
-              name="email"
-              placeholder="jean.dupont@gmail.com"
-              @blur="validate('email')"
-            />
-          </BaseFormControl>
-          <BaseFormControl label="Code postal" html-for="zip" required :error="errors.zip">
-            <BaseSelectAutocomplete
-              v-model="form.zip"
+          </DsfrFormControl>
+          <DsfrFormControl label="Code postal" html-for="zip" required :error="errors.zip">
+            <DsfrInputAutocomplete
+              :model-value="form.zip ? `${form.zip} - ${form.city}` : null"
               name="zip"
               :options="zipAutocompleteOptions"
               :min-length-to-search="3"
-              attribute-key="id"
-              attribute-label="label"
-              attribute-right-label="typeLabel"
-              placeholder="Sélectionnez votre code postal"
+              option-key-attribute="id"
+              option-label-attribute="label"
+              option-label-secondary-attribute="typeLabel"
+              placeholder="Rechercher une ville ou code postal"
               search-input-placeholder="Recherche par ville ou code postal"
               :loading="loadingFetchZips"
               @selected="handleSelectedZip"
               @fetch-suggestions="onFetchZipSuggestions($event)"
               @blur="validate('zip')"
             />
-          </BaseFormControl>
-          <BaseFormControl
+          </DsfrFormControl>
+          <DsfrFormControl
             label="Téléphone mobile"
             html-for="mobile"
             required
             :error="errors.mobile"
           >
-            <BaseInput
+            <DsfrInput
               v-model="form.mobile"
               name="mobile"
               type="tel"
@@ -74,9 +107,9 @@
               placeholder="0612345678"
               @blur="validate('mobile')"
             />
-          </BaseFormControl>
-          <BaseFormControl label="Téléphone fixe" html-for="phone" :error="errors.phone">
-            <BaseInput
+          </DsfrFormControl>
+          <DsfrFormControl label="Téléphone fixe" html-for="phone" :error="errors.phone">
+            <DsfrInput
               v-model="form.phone"
               name="phone"
               type="tel"
@@ -84,144 +117,209 @@
               placeholder="0123456789"
               @blur="validate('phone')"
             />
-          </BaseFormControl>
-          <BaseFormControl
+          </DsfrFormControl>
+          <DsfrFormControl
             label="Date de naissance"
             html-for="birthday"
             required
             :error="errors.birthday"
           >
-            <BaseInputDateNative
+            <DsfrInput
               v-model="form.birthday"
               required
+              type="date"
               name="birthday"
               @blur="validate('birthday')"
             />
-          </BaseFormControl>
-          <BaseFormControl label="Profession" html-for="type" required :error="errors.type">
-            <BaseSelectAdvanced
+          </DsfrFormControl>
+          <DsfrFormControl label="Profession" html-for="type" required :error="errors.type">
+            <DsfrSelect
               v-model="form.type"
+              id="type"
               name="type"
               placeholder="Sélectionnez votre profession"
               :options="$labels.profile_type"
+              @update:modelValue="validate('type')"
               @blur="validate('type')"
             />
-          </BaseFormControl>
+          </DsfrFormControl>
         </div>
       </div>
-      <div class="pt-8 lg:pt-14">
-        <BaseHeading as="h2" :level="2"> Mes motivations en quelques mots </BaseHeading>
+      <hr />
+      <div class="">
+        <DsfrHeading size="lg"> Compétences </DsfrHeading>
+        <div class="text-[#666666] mt-2">
+          Si vous voulez mettre en avant certaines compétences auprès des organisations, ajoutez-les
+          ici.
+        </div>
+        <div class="mt-8">
+          <DsfrFormControl html-for="algolia-search">
+            <AlgoliaInputAutocomplete
+              index="termsIndex"
+              variant="dsfr"
+              attribute-right-label="group"
+              :search-parameters="{
+                facetFilters: [['vocabulary_name:Skills']],
+                hitsPerPage: 6,
+              }"
+              @selected="handleSelectSkillItems"
+            />
+          </DsfrFormControl>
+
+          <div v-if="form.skills.length" class="mt-6">
+            <div class="flex flex-wrap gap-4">
+              <DsfrTag
+                v-for="item in form.skills"
+                :key="item.id"
+                :tag="item"
+                size="md"
+                context="deletable"
+                @delete="onRemovedSkillItem(item)"
+              >
+                {{ item.name }}
+              </DsfrTag>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="">
+        <DsfrHeading size="lg"> Certifications </DsfrHeading>
+        <div class="text-[#666666] mt-2">
+          Si vous avez des certifications particulières, indiquez les ici.
+        </div>
+        <div class="mt-8">
+          <DsfrFormControl html-for="certifications">
+            <DsfrTagsGroup
+              v-model="form.certifications"
+              name="certifications"
+              variant="button"
+              :options="$labels.profile_certifications"
+            />
+          </DsfrFormControl>
+        </div>
+      </div>
+      <hr />
+      <div class="">
+        <DsfrHeading size="lg"> Quelques mots sur vous </DsfrHeading>
+        <div class="text-[#666666] mt-2">
+          Pourquoi souhaitez-vous faire du bénévolat, votre mission idéale, etc., tout ce qui peut
+          aider les organisations à mieux vous connaître.
+        </div>
         <div class="mt-6">
-          <BaseFormControl label="" html-for="description">
-            <BaseTextarea
+          <DsfrFormControl label="" html-for="description">
+            <DsfrTextarea
               v-model="form.description"
               name="description"
               placeholder="Vos motivations en quelques mots..."
             />
-          </BaseFormControl>
+          </DsfrFormControl>
         </div>
       </div>
-
-      <div v-if="canViewScAndCej" class="pt-8 lg:pt-14">
-        <BaseHeading as="h2" :level="2"> Service Civique & Contrat d'Engagement Jeune </BaseHeading>
-        <div class="mt-12 flex flex-col gap-8">
-          <div class="flex flex-col space-y-8">
-            <div class="flex lg:space-x-10">
-              <img
-                src="/images/logo-service-civique.png"
-                srcset="/images/logo-service-civique.png, /images/logo-service-civique@2x.png 2x"
-                alt="Service Civique"
-                title="Service Civique"
-                class="hidden lg:block h-auto flex-none w-[100px] object-contain object-left"
-                data-not-lazy
-              />
-              <div class="w-full lg:w-[520px]">
-                <BaseToggle
-                  v-model="form.service_civique"
-                  class="lg:w-full"
-                  position="right"
-                  label="Êtes-vous volontaire en Service Civique ?"
-                  :description="
-                    form.service_civique
-                      ? 'Oui, je suis volontaire'
-                      : 'Non, je ne suis pas volontaire'
-                  "
+      <template v-if="canViewScAndCej">
+        <hr />
+        <div class="">
+          <DsfrHeading size="lg"> Autres plateformes </DsfrHeading>
+          <div class="mt-12 flex flex-col gap-8 lg:gap-12">
+            <div class="flex flex-col gap-4 lg:gap-0">
+              <div class="flex items-center lg:gap-x-10">
+                <img
+                  src="/images/logo-service-civique.png"
+                  srcset="/images/logo-service-civique.png, /images/logo-service-civique@2x.png 2x"
+                  alt="Service Civique"
+                  title="Service Civique"
+                  class="hidden lg:block h-auto flex-none w-[100px] object-contain object-left"
+                  data-not-lazy
                 />
+                <div class="w-full lg:w-[520px]">
+                  <BaseToggle
+                    v-model="form.service_civique"
+                    position="right"
+                    label="Êtes-vous volontaire en Service Civique ?"
+                    label-class="text-balance font-bold"
+                    wrapper-class="flex-grow"
+                    button-wrapper-class="items-end mt-1 sm:mt-0"
+                    button-label-class="text-right"
+                    :button-labels="{ on: 'Oui', off: 'Non' }"
+                  />
+                </div>
               </div>
-            </div>
-            <div v-if="form.service_civique" class="max-w-xl lg:pl-[144px]">
-              <BaseFormControl
-                label="Date de début de votre Service Civique"
-                html-for="service_civique_completion_date"
-                :error="errors.service_civique_completion_date"
-                required
-              >
-                <BaseInputDate
-                  v-model="form.service_civique_completion_date"
-                  active-picker="MONTH"
+              <div v-if="form.service_civique" class="max-w-xl lg:pl-[141px]">
+                <DsfrFormControl
+                  label="Date de début de votre Service Civique"
+                  html-for="service_civique_completion_date"
+                  :error="errors.service_civique_completion_date"
                   required
-                  name="service_civique_completion_date"
-                />
-              </BaseFormControl>
-            </div>
-          </div>
-          <div class="flex flex-col space-y-8">
-            <div class="flex lg:space-x-10">
-              <img
-                src="/images/logo-cej.png"
-                srcset="/images/logo-cej.png, /images/logo-cej@2x.png 2x"
-                alt="Contrat d'Engagement Jeune"
-                title="Contrat d'Engagement Jeune"
-                class="hidden lg:block h-auto flex-none w-[100px] object-contain object-left"
-                data-not-lazy
-              />
-              <div class="w-full lg:w-[520px]">
-                <BaseToggle
-                  v-model="form.cej"
-                  class="lg:w-full"
-                  position="right"
-                  label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
-                  :description="
-                    form.cej
-                      ? 'Oui, je suis en Contrat d\'Engagement Jeune'
-                      : 'Non, je ne suis pas en Contrat d\'Engagement Jeune'
-                  "
-                />
+                >
+                  <DsfrInput
+                    v-model="form.service_civique_completion_date"
+                    required
+                    type="date"
+                    name="service_civique_completion_date"
+                    @blur="validate('service_civique_completion_date')"
+                  />
+                </DsfrFormControl>
               </div>
             </div>
-            <div v-if="form.cej" class="max-w-xl lg:pl-[144px]">
-              <BaseFormControl
-                v-if="form.cej"
-                label="Email de votre conseiller CEJ"
-                html-for="cej_email_adviser"
-                :error="errors.cej_email_adviser"
-                required
-              >
-                <template #afterLabel>
-                  <span
-                    v-tooltip="{
-                      content:
-                        'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
-                    }"
-                    class="p-1 cursor-help group"
-                  >
-                    <RiErrorWarningLine
-                      class="inline h-4 w-4 text-gray-400 group-hover:text-gray-900 mb-[2px]"
-                    />
-                  </span>
-                </template>
-                <BaseInput
-                  v-model="form.cej_email_adviser"
-                  name="cej_email_adviser"
-                  placeholder="Saisissez l'email de votre conseiller CEJ"
-                  @blur="validate('cej_email_adviser')"
+            <div class="flex flex-col gap-4 lg:gap-0">
+              <div class="flex items-center lg:gap-x-10">
+                <img
+                  src="/images/logo-cej.png"
+                  srcset="/images/logo-cej.png, /images/logo-cej@2x.png 2x"
+                  alt="Contrat d'Engagement Jeune"
+                  title="Contrat d'Engagement Jeune"
+                  class="hidden lg:block h-auto flex-none w-[100px] object-contain object-left"
+                  data-not-lazy
                 />
-              </BaseFormControl>
+                <div class="w-full lg:w-[520px]">
+                  <BaseToggle
+                    v-model="form.cej"
+                    position="right"
+                    label="Êtes-vous engagé Contrat d'Engagement Jeune ?"
+                    label-class="text-balance font-bold"
+                    wrapper-class="flex-grow"
+                    button-wrapper-class="items-end mt-1 sm:mt-0"
+                    button-label-class="text-right"
+                    :button-labels="{ on: 'Oui', off: 'Non' }"
+                  />
+                </div>
+              </div>
+              <div v-if="form.cej" class="max-w-xl lg:pl-[141px]">
+                <DsfrFormControl
+                  v-if="form.cej"
+                  label="Email de votre conseiller CEJ"
+                  html-for="cej_email_adviser"
+                  :error="errors.cej_email_adviser"
+                  required
+                >
+                  <template #afterLabel>
+                    <span
+                      v-tooltip="{
+                        content:
+                          'En renseignant l’adresse de votre conseiller, celui-ci sera automatiquement tenu au courant des missions sur lesquelles vous proposez votre aide.',
+                      }"
+                      class="p-1 cursor-help group"
+                    >
+                      <RiErrorWarningLine
+                        class="inline h-4 w-4 fill-current text-cool-gray-400 group-hover:text-gray-900 mb-[2px] transition"
+                      />
+                    </span>
+                  </template>
+                  <DsfrInput
+                    v-model="form.cej_email_adviser"
+                    required
+                    type="email"
+                    name="cej_email_adviser"
+                    placeholder="…@…"
+                    @blur="validate('cej_email_adviser')"
+                  />
+                </DsfrFormControl>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="hidden sm:block pt-8 lg:pt-14">
+      </template>
+      <!-- <div class="hidden sm:block ">
         <div class="text-center">
           <DsfrButton
             size="lg"
@@ -233,7 +331,7 @@
             Enregistrer
           </DsfrButton>
         </div>
-      </div>
+      </div> -->
       <transition name="fade">
         <div
           v-if="formIsDirty"
@@ -294,7 +392,7 @@ export default defineNuxtComponent({
               return age >= 16
             }
           ),
-        email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
+        // email: string().required('Un email est requis').email("Le format de l'email est incorrect"),
         type: string()
           .nullable()
           .test('test-profession-required', 'Une profession est requise', (type) => {
@@ -364,8 +462,12 @@ export default defineNuxtComponent({
                 ),
           }),
         service_civique_completion_date: date()
+          .typeError('La date indiquée est invalide')
           .nullable()
-          .transform((v) => (v instanceof Date && !isNaN(v) ? v : null)),
+          .when('service_civique', {
+            is: true,
+            then: (schema) => schema.required('La date de début de service civique est incorrecte'),
+          }),
       }),
       zipAutocompleteOptions: [],
       loadingFetchZips: false,
@@ -436,6 +538,14 @@ export default defineNuxtComponent({
         .finally(() => {
           this.loading = false
         })
+    },
+    handleSelectSkillItems(item) {
+      if (!this.form.skills.some((skill) => skill.id === item.id)) {
+        this.form.skills = [...this.form.skills, item]
+      }
+    },
+    onRemovedSkillItem(item) {
+      this.form.skills = this.form.skills.filter((skill) => skill.id !== item.id)
     },
   },
 })

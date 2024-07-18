@@ -1,78 +1,62 @@
 <template>
-  <BaseBox padding="sm">
-    <div class="grid grid-cols-1 divide-y-gray-400 divide-y gap-6 lg:gap-8">
-      <BaseHeading :level="3" class="text-black"> Votre profil bénévole </BaseHeading>
-      <div class="pt-6 lg:pt-8">
-        <div class="flex space-x-4 lg:space-x-6 text-black">
-          <div class="w-[40px]">
-            <img src="/images/icons/human-cooperation.svg" alt="" class="flex-none" data-not-lazy />
-          </div>
-          <div class="flex-1">
-            <div class="text-xl text-black font-bold">
-              <template v-if="hasParticipations">
-                <nuxt-link
-                  no-prefetch
-                  to="/profile/missions"
-                  class="flex justify-between items-center group"
-                >
-                  <span class="group-hover:underline">
-                    {{
-                      $filters.pluralize(
-                        $stores.auth.user.statistics?.participations_count,
-                        'mission',
-                        'missions'
-                      )
-                    }}</span
-                  >
-                  <RiArrowRightSLine class="h-5 group-hover:h-6 transition-all" />
-                </nuxt-link>
-              </template>
-              <template v-else> Aucune mission </template>
-            </div>
-          </div>
-        </div>
+  <BaseBox class="@container">
+    <BaseHeading :level="3" class="text-black"> Vos préférences </BaseHeading>
+    <div class="grid grid-cols-1 divide-y-gray-400 divide-y gap-6">
+      <div class="pt-6">
+        <SectionProfileCommunicationPreferences :profile="profile" />
       </div>
-      <div class="pt-6 lg:pt-8">
+      <div class="pt-6">
         <div class="flex space-x-4 lg:space-x-6 text-black">
-          <div class="w-[40px]">
-            <img src="/images/icons/send-mail.svg" alt="" class="flex-none" data-not-lazy />
+          <div class="w-7 @sm:w-10 flex-none">
+            <img src="/images/icons/calendar.svg" alt="" data-not-lazy />
           </div>
           <div class="flex-1">
-            <div class="text-xl font-bold">Recevoir des propositions</div>
-            <div class="flex items-center space-x-6 mt-4">
-              <div class="flex-1 text-lg">Recevez par e-mail des suggestions de missions</div>
-              <BaseToggle
-                v-model="form.is_visible"
-                @checked="handleProfileVisible()"
-                @unchecked="handleProfileInvisible()"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="pt-6 lg:pt-8">
-        <div class="flex space-x-4 lg:space-x-6 text-black">
-          <div class="w-[40px]">
-            <img src="/images/icons/calendar.svg" alt="" class="flex-none" data-not-lazy />
-          </div>
-          <div class="flex-1">
-            <div class="text-xl font-bold">Ma disponibilité</div>
-            <div class="text-lg mt-4">
+            <div class="text-xl leading-snug font-bold text-balance">Ma disponibilité</div>
+            <div class="text-base mt-2">
               <template v-if="profile.commitment__duration">
                 {{ commitmentLabel }}
               </template>
-              <template v-else> Non renseignée </template>
+              <template v-else> <div class="text-[#666666] text-lg">Non renseignée</div> </template>
             </div>
-            <div class="flex gap-3 flex-wrap my-4">
+            <div class="flex gap-2 flex-wrap mt-2">
               <DsfrTag v-for="(item, i) in profile.disponibilities" :key="i">
                 {{ $filters.label(item, 'disponibilities') }}
               </DsfrTag>
             </div>
-            <BaseLink to="/profile/preferences" icon="RiArrowRightSLine" class="text-sm">
+            <!-- <DsfrLink to="/profile/preferences" icon="RiArrowRightSLine" class="text-sm">
               Modifier
-            </BaseLink>
+            </DsfrLink> -->
           </div>
         </div>
+      </div>
+      <div class="pt-6">
+        <div class="flex space-x-4 lg:space-x-6 text-black">
+          <div class="w-7 @sm:w-10 flex-none">
+            <img src="/images/icons/culture.svg" alt="" data-not-lazy />
+          </div>
+          <div class="flex-1">
+            <div class="text-xl leading-snug font-bold text-balance">Mes activités favorites</div>
+            <div class="flex gap-2 flex-wrap mt-2">
+              <template v-if="hasActivities">
+                <DsfrTag v-for="(item, i) in first3Activities" :key="i">
+                  {{ item.name }}
+                </DsfrTag>
+                <DsfrTag v-if="hasMoreThan3Activities"
+                  >+ {{ this.profile?.activities?.length - 3 }}</DsfrTag
+                >
+              </template>
+              <template v-else> <div class="text-[#666666] text-lg">Non renseignée</div> </template>
+            </div>
+            <!-- <DsfrLink to="/profile/preferences" icon="RiArrowRightSLine" class="text-sm">
+              Modifier
+            </DsfrLink> -->
+          </div>
+        </div>
+      </div>
+      <div class="pt-6">
+        <nuxt-link to="/profile/preferences">
+          <DsfrButton type="secondary">Modifier mes préférences</DsfrButton>
+        </nuxt-link>
       </div>
     </div>
   </BaseBox>
@@ -95,6 +79,15 @@ export default defineNuxtComponent({
     }
   },
   computed: {
+    hasActivities() {
+      return this.profile?.activities?.length > 0
+    },
+    hasMoreThan3Activities() {
+      return this.profile?.activities?.length > 3
+    },
+    first3Activities() {
+      return this.profile?.activities?.slice(0, 3)
+    },
     hasParticipations() {
       return this.$stores.auth.user.statistics?.participations_count
     },
@@ -106,36 +99,6 @@ export default defineNuxtComponent({
         )} par ${this.$filters.label(this.profile.commitment__time_period, 'time_period')}`
       }
       return this.$filters.label(this.profile.commitment__duration, 'duration')
-    },
-  },
-  methods: {
-    async handleProfileVisible() {
-      await apiFetch('/user/visible', {
-        method: 'POST',
-      })
-        .then(async () => {
-          await this.$stores.auth.fetchUser()
-          const toast = useToast()
-          toast.success('Votre profil est visible !')
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.loading = false
-        })
-    },
-    async handleProfileInvisible() {
-      await apiFetch('/user/invisible', {
-        method: 'POST',
-      })
-        .then(async () => {
-          await this.$stores.auth.fetchUser()
-          const toast = useToast()
-          toast.success('Votre profil est invisible !')
-        })
-        .catch(() => {})
-        .finally(() => {
-          this.loading = false
-        })
     },
   },
 })

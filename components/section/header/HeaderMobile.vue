@@ -477,19 +477,9 @@ export default defineNuxtComponent({
           isActive: this.isActiveLink('/profile', true),
         },
         {
-          name: 'Mon profil',
+          name: 'Mon compte',
           to: '/profile/edit',
           isActive: this.isActiveLink('profile/edit'),
-        },
-        {
-          name: 'Mes préférences de missions',
-          to: '/profile/preferences',
-          isActive: this.isActiveLink('profile/preferences'),
-        },
-        {
-          name: 'Mes paramètres',
-          to: '/profile/settings',
-          isActive: this.isActiveLink('profile/settings'),
         },
         {
           name: 'Se déconnecter',

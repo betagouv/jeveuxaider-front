@@ -15,6 +15,7 @@
           position="right"
           label="Rendre le modèle collaboratif"
           description="Les co-gestionnaires de mon organisation pourront modifier le modèle"
+          :button-labels="{ on: 'Oui', off: 'Non' }"
         />
         <div v-if="form.id" class="flex-none flex flex-wrap gap-4">
           <DsfrButton @click="handleSubmitAndClose" type="tertiary" icon="RiSaveLine"

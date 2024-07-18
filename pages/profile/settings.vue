@@ -1,78 +1,84 @@
 <template>
-  <div class="container">
-    <DsfrBreadcrumb
-      :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mes paramètres de compte' }]"
-    />
-    <ModalUnregisterUser
-      :is-open="showAlertUnsubscribe"
-      @cancel="showAlertUnsubscribe = false"
-      @close="showAlertUnsubscribe = false"
-    />
-
-    <div class="flex flex-col pb-12 gap-12">
-      <BaseSectionHeading title="Mes paramètres de compte">
-        <template #action>
-          <DsfrButton
-            class="hidden lg:flex"
-            size="lg"
-            variant="primary"
-            :loading="loading"
-            :disabled="!canSubmitForm"
-            @click.native="handleSubmit"
-          >
-            Enregistrer
-          </DsfrButton>
-        </template>
-      </BaseSectionHeading>
-
+  <BaseContainer2Cols
+    grid-class="grid gap-6 xl:gap-8 grid-cols-1 lg:grid-cols-18 -mt-2"
+    class-left="lg:col-span-11 flex flex-col gap-6 xl:gap-8"
+    class-right="lg:col-span-7 flex flex-col gap-6 xl:gap-8 lg:pt-12"
+  >
+    <template #breadcrumb>
+      <DsfrBreadcrumb
+        :links="[
+          { text: 'Mon espace', to: '/profile' },
+          { text: 'Mon compte', to: '/profile/edit' },
+          { text: 'Mes paramètres de compte' },
+        ]"
+      />
+    </template>
+    <template #header>
+      <DsfrHeading as="h1" size="2xl"> Mon compte </DsfrHeading>
+    </template>
+    <template #left>
+      <ModalUnregisterUser
+        :is-open="showAlertUnsubscribe"
+        @cancel="showAlertUnsubscribe = false"
+        @close="showAlertUnsubscribe = false"
+      />
       <UserProfileTabs selected-tab-key="settings">
-        <div class="bg-white px-6 py-8 lg:px-12 lg:py-14">
-          <div class="grid grid-cols-1 gap-12 lg:gap-16">
-            <div>
-              <BaseHeading as="h2" :level="2"> Modification de votre mot de passe </BaseHeading>
-              <FormPassword ref="form" class="mt-8" @change="onChange" />
-            </div>
-            <div class="pt-8 lg:pt-14">
-              <div class="sm:border sm:p-8">
-                <BaseHeading as="h2" :level="2" class="mb-8"> Désinscription </BaseHeading>
-                <div
-                  class="flex flex-col lg:flex-row lg:justify-between lg:items-center lg:space-x-8"
-                >
-                  <div class="flex-1 text-gray-600 mb-8 lg:mr-8">
-                    Vous souhaitez désactiver votre compte&nbsp;?<br /><br />
-                    Attention, cette action est irréversible et toutes vos données de la plateforme
-                    JeVeuxAider.gouv.fr seront anonymisées.
-                  </div>
-                  <div>
-                    <DsfrButton
-                      type="secondary"
-                      size="lg"
-                      @click.native="() => (showAlertUnsubscribe = true)"
-                      :disabled="$stores.auth.contextRole === 'admin'"
-                    >
-                      Je souhaite me désinscrire
-                    </DsfrButton>
-                  </div>
+        <div class="bg-white px-6 py-8 lg:p-10">
+          <div class="grid grid-cols-1 gap-8 lg:gap-10">
+            <FormUserEmail @submitted="onEmailChanged" />
+            <hr />
+            <FormUserPassword @submitted="onPasswordChanged" />
+            <hr />
+            <div class="sm:border sm:p-8">
+              <DsfrHeading size="lg" class="mb-6"> Désinscription </DsfrHeading>
+              <div class="flex flex-col">
+                <div class="flex-1 text-[#666666] mb-8 lg:mr-8">
+                  Vous souhaitez désactiver votre compte ? Attention, cette action est irréversible
+                  et toutes vos données de la plateforme JeVeuxAider.gouv.fr seront anonymisées.
+                </div>
+                <div>
+                  <DsfrButton
+                    type="tertiary"
+                    @click.native="() => (showAlertUnsubscribe = true)"
+                    :disabled="$stores.auth.contextRole === 'admin'"
+                    class="text-[#CE0500]"
+                  >
+                    Je souhaite me désinscrire
+                  </DsfrButton>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </UserProfileTabs>
-    </div>
-  </div>
+    </template>
+    <template #right>
+      <BaseBox class="@container">
+        <SectionProfileCommunicationPreferences :profile="$stores.auth.profile" />
+      </BaseBox>
+      <HelpCenter />
+    </template>
+  </BaseContainer2Cols>
 </template>
 
 <script>
 import FormPassword from '@/components/form/FormPassword.vue'
+import FormUserEmail from '@/components/form/FormUserEmail.vue'
+import FormUserPassword from '@/components/form/FormUserPassword.vue'
 import ModalUnregisterUser from '@/components/modal/ModalUnregisterUser.vue'
 import UserProfileTabs from '@/components/custom/UserProfileTabs.vue'
+import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
+import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
 
 export default defineNuxtComponent({
   components: {
     FormPassword,
     ModalUnregisterUser,
     UserProfileTabs,
+    BoxCompleteProfile,
+    HelpCenter,
+    FormUserEmail,
+    FormUserPassword,
   },
   setup() {
     definePageMeta({
@@ -83,22 +89,30 @@ export default defineNuxtComponent({
     return {
       showAlertUnsubscribe: false,
       loading: false,
-      canSubmitForm: false,
+      // canSubmitForm: false,
     }
   },
   methods: {
-    async handleSubmit() {
-      if (this.loading) {
-        return
-      }
-      this.loading = true
-      await this.$refs.form.handleSubmit()
-      this.loading = false
+    async onEmailChanged() {
+      await this.$stores.auth.fetchUser()
+      this.$toast.success('Votre e-mail a bien été modifié !')
     },
-    onChange($event) {
-      this.formIsDirty = $event.isDirty
-      this.canSubmitForm = $event.isValid
+    async onPasswordChanged() {
+      await this.$stores.auth.fetchUser()
+      this.$toast.success('Votre mot de passe a bien été modifié !')
     },
+    // async handleSubmit() {
+    //   if (this.loading) {
+    //     return
+    //   }
+    //   this.loading = true
+    //   await this.$refs.form.handleSubmit()
+    //   this.loading = false
+    // },
+    // onChange($event) {
+    //   this.formIsDirty = $event.isDirty
+    //   this.canSubmitForm = $event.isValid
+    // },
   },
 })
 </script>

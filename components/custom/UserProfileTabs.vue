@@ -1,5 +1,11 @@
 <template>
-  <DsfrTabs name="NAME" :tabs="tabs" tabpanel-class="!p-0" :selected-tab-key="selectedTabKey">
+  <DsfrTabs
+    name="NAME"
+    :tabs="tabs"
+    tabpanel-class="!p-0 shadow-lg"
+    :selected-tab-key="selectedTabKey"
+    class="lg:pt-0.5"
+  >
     <template #[`tab-${selectedTabKey}`]>
       <slot />
     </template>
@@ -19,27 +25,25 @@ export default defineNuxtComponent({
       return [
         {
           key: 'profil',
-          content: 'Mon profil',
+          content: 'Profil',
           contentMobile: 'Profil',
           to: '/profile/edit',
         },
         {
           key: 'preferences',
-          content: 'Mes préférences de missions',
+          content: 'Préférences',
           contentMobile: 'Préférences',
           to: '/profile/preferences',
         },
-        ['referent', 'responsable'].includes(this.$stores.auth.contextRole)
-          ? {
-              key: 'notifications',
-              content: 'Mes notifications',
-              contentMobile: 'Notifications',
-              to: '/profile/notifications',
-            }
-          : null,
+        {
+          key: 'notifications',
+          content: 'Notifications',
+          contentMobile: 'Notifications',
+          to: '/profile/notifications',
+        },
         {
           key: 'settings',
-          content: 'Mes paramètres de compte',
+          content: 'Paramètres',
           contentMobile: 'Paramètres',
           to: '/profile/settings',
         },

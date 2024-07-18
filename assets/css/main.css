@@ -64,10 +64,13 @@ html {
     .v-popper__inner {
       border-radius: 1px;
       padding: 12px;
-      @apply bg-white text-black shadow-lg;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 18, 0.16));
+      @apply bg-white text-black border-b border-[#DDDDDD];
     }
     .v-popper__arrow-outer {
       border-color: white;
+      top: -1px;
+      filter: drop-shadow(0px 1px 0px #dddddd);
     }
   }
 }

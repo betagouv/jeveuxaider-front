@@ -17,6 +17,8 @@ export type TypeVocabulary =
   | 'domaines'
   | 'disponibilities'
   | 'profile_type'
+  | 'profile_certifications'
+  | 'profile_type_missions'
   | 'mission_types'
   | 'mission_workflow_states'
   | 'profile_fields'
@@ -732,6 +734,16 @@ const labels: TypeLabels = {
     { key: 'retraite', label: 'Retraité' },
     { key: 'chomeur', label: 'Sans activité professionnelle' },
     { key: 'autre', label: 'Autre' },
+  ],
+  profile_certifications: [
+    { key: 'permis_b', label: 'Permis B' },
+    { key: 'psc1', label: 'Brevet de secourisme PSC1' },
+    { key: 'bafa', label: 'BAFA' },
+  ],
+  profile_type_missions: [
+    { key: 'presentiel', label: 'Sur place' },
+    { key: 'distance', label: 'À distance' },
+    { key: 'all', label: 'Les deux' },
   ],
   mission_types: [
     { key: 'Mission en présentiel', label: 'Mission en présentiel' },

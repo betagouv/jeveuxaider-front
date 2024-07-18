@@ -1,5 +1,9 @@
 <template>
-  <BaseContainer2Cols>
+  <BaseContainer2Cols
+    grid-class="grid gap-6 xl:gap-8 grid-cols-1 lg:grid-cols-18"
+    class-left="lg:col-span-11 flex flex-col gap-6 xl:gap-8"
+    class-right="lg:col-span-7 flex flex-col gap-6 xl:gap-8"
+  >
     <template #breadcrumb>
       <DsfrBreadcrumb :links="[{ text: 'Mon espace' }]" />
     </template>
@@ -37,14 +41,33 @@
             class="cursor-pointer"
           >
             <div class="text-gray-900 font-semibold" v-html="action.title" />
-            <div v-if="action.subtitle" class="text-gray-500 text-sm" v-html="action.subtitle" />
+            <div
+              v-if="action.subtitle"
+              class="text-[#666666] text-sm mt-2"
+              v-html="action.subtitle"
+            />
           </BaseStackedListItem>
         </BaseStackedList>
       </BaseBox>
+      <BoxUserWaitingParticipations v-if="hasWaitingParticipations" />
       <LePetitMot />
     </template>
     <template #right>
-      <BoxUserProfileBenevole :profile="$stores.auth.user.profile" />
+      <BoxCompleteProfile title="Complétez votre profil">
+        <template #subtitle>
+          <div class="text-[#666666] mt-2">
+            En remplissant votre profil, vous augmentez vos chances de trouver une mission.
+          </div>
+        </template>
+        <template #footer>
+          <div class="mt-8 pt-8 border-t">
+            <nuxt-link to="/profile/edit" no-prefetch>
+              <DsfrButton type="secondary">Compléter mon profil</DsfrButton>
+            </nuxt-link>
+          </div>
+        </template>
+      </BoxCompleteProfile>
+      <BoxUserProfileBenevole :profile="$stores.auth?.user?.profile" />
 
       <HelpCenter />
     </template>
@@ -62,12 +85,16 @@ import MixinAction from '@/mixins/action'
 import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
 import LePetitMot from '@/components/section/dashboard/LePetitMot.vue'
 import BoxUserProfileBenevole from '@/components/section/profile/BoxUserProfileBenevole.vue'
+import BoxUserWaitingParticipations from '@/components/section/profile/BoxUserWaitingParticipations.vue'
+import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
 
 export default defineNuxtComponent({
   components: {
     HelpCenter,
     LePetitMot,
     BoxUserProfileBenevole,
+    BoxUserWaitingParticipations,
+    BoxCompleteProfile,
   },
   mixins: [MixinAction],
   setup() {
@@ -84,6 +111,11 @@ export default defineNuxtComponent({
   async created() {
     this.actions = await apiFetch('/user/actions/benevole')
     this.loadingActions = false
+  },
+  computed: {
+    hasWaitingParticipations() {
+      return this.$stores.auth.user.statistics?.participations_waiting_count > 0
+    },
   },
   methods: {
     onClick(action) {

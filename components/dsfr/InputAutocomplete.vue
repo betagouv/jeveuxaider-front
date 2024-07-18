@@ -22,7 +22,7 @@
         type="text"
         :placeholder="placeholder"
         :class="[
-          '!border-none rounded-t w-full h-full',
+          '!border-none rounded-t w-full h-full truncate',
 
           {
             'bg-[#EEEEEE] shadow-[inset_0_-2px_0_0_#3A3A3A] focus:!shadow-[inset_0_-2px_0_0_#3A3A3A]':
@@ -41,6 +41,8 @@
           {
             'pl-12': icon && ['md', 'lg'].includes(size),
           },
+
+          { 'pr-8': !!modelValue },
 
           inputClass,
         ]"
@@ -78,22 +80,26 @@
             { 'bg-[#F5F5FE] text-jva-blue-500': highlightIndex == index },
             {
               'bg-[#F5F5FE] text-jva-blue-500':
-                selectedOption && item[attributeKey] == selectedOption[attributeKey],
+                selectedOption && item[optionKeyAttribute] == selectedOption[optionKeyAttribute],
             },
           ]"
           @click="handleClick(item)"
         >
           <div class="flex flex-col">
             <span>
-              <span v-if="showKeyInOptions" class="text-gray-500"> #{{ item[attributeKey] }}</span>
-              {{ item[attributeLabel] }}
+              <span v-if="showKeyInOptions" class="text-gray-500">
+                #{{ item[optionKeyAttribute] }}</span
+              >
+              {{ item[optionLabelAttribute] }}
             </span>
-            <span v-if="attributeRightLabel" class="text-cool-gray-400 text-xs flex-none">
-              {{ item[attributeRightLabel] }}
+            <span v-if="optionLabelSecondaryAttribute" class="text-cool-gray-400 text-xs flex-none">
+              {{ item[optionLabelSecondaryAttribute] }}
             </span>
           </div>
+
+          <!-- @todo: Doit être visible à l'initialisation si j'ai déjà une valeur -->
           <RiCheckboxCircleFill
-            v-if="selectedOption && item[attributeKey] == selectedOption[attributeKey]"
+            v-if="selectedOption && item[optionKeyAttribute] == selectedOption[optionKeyAttribute]"
             class="flex-none h-5 fill-current"
           />
         </li>
@@ -116,20 +122,22 @@ export default defineNuxtComponent({
   emits: ['selected', 'cleared', 'fetch-suggestions', 'mounted', 'update:modelValue', 'blur'],
   props: {
     modelValue: { type: String, default: null },
+    name: { type: String, required: true },
     placeholder: { type: String, default: null },
     labelEmpty: { type: String, default: 'Aucun résultat' },
-    name: { type: String, required: true },
 
     icon: { type: String, default: null },
     options: { type: Array, default: () => [] },
-    attributeKey: { type: String, default: 'id' },
-    attributeLabel: { type: String, default: 'name' },
-    attributeRightLabel: { type: String, default: '' },
+
+    optionKeyAttribute: { type: String, default: 'id' },
+    optionLabelAttribute: { type: String, default: 'name' },
+    optionLabelSecondaryAttribute: { type: String, default: '' },
+
     classOptions: { type: String, default: '' },
     classOptionsUl: { type: String, default: '' },
     inputClass: { type: String, default: '' },
     styleInput: { type: String, default: '' },
-    // variant: { type: String, default: null },
+
     clearAfterSelected: { type: Boolean, default: false },
     showKeyInOptions: { type: Boolean, default: false },
     theme: { type: String, default: 'default' },
@@ -165,6 +173,13 @@ export default defineNuxtComponent({
     modelValue(newVal) {
       this.searchTerm = newVal
     },
+    showOptions(newVal) {
+      if (!newVal) {
+        if (this.modelValue !== this.searchTerm) {
+          this.searchTerm = this.modelValue
+        }
+      }
+    },
   },
   mounted() {
     this.$emit('mounted')
@@ -196,7 +211,7 @@ export default defineNuxtComponent({
       this.timeout()
     },
     handleClick(item) {
-      this.searchTerm = this.resetValueOnSelect ? null : item[this.attributeLabel]
+      this.searchTerm = this.resetValueOnSelect ? null : this.modelValue
       this.$emit('selected', item)
       this.selectedOption = item
       this.showOptions = false

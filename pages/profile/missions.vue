@@ -1,7 +1,8 @@
 <template>
   <BaseContainer2Cols
-    class-left="flex flex-col lg:col-span-8 gap-8 lg:gap-12"
-    class-right="lg:col-span-4 space-y-8 lg:space-y-12"
+    grid-class="grid gap-6 xl:gap-8 grid-cols-1 lg:grid-cols-18"
+    class-left="lg:col-span-11 flex flex-col gap-6 xl:gap-8"
+    class-right="lg:col-span-7 flex flex-col gap-6 xl:gap-8 lg:pt-12"
   >
     <template #breadcrumb>
       <DsfrBreadcrumb :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mes missions' }]" />
@@ -81,7 +82,30 @@
       </div>
     </template>
     <template #right>
-      <HelpCenter class="lg:sticky lg:top-12" />
+      <BoxCompleteProfile
+        title="🫣 Psssst ! Votre profil est incomplet"
+        :show-steps="false"
+        class="lg:mt-20"
+      >
+        <template #subtitle>
+          <div class="text-[#666666] mt-2">
+            En remplissant votre profil, vous augmentez vos chances de trouver une mission.
+          </div>
+        </template>
+        <template #footer>
+          <div class="mt-8">
+            <nuxt-link to="/profile/edit" no-prefetch>
+              <DsfrButton full type="secondary">Complétez mon profil</DsfrButton>
+            </nuxt-link>
+          </div>
+        </template>
+      </BoxCompleteProfile>
+
+      <BaseBox class="@container">
+        <SectionProfileCommunicationPreferences :profile="$stores.auth.user?.profile" />
+      </BaseBox>
+
+      <HelpCenter />
     </template>
   </BaseContainer2Cols>
 </template>
@@ -90,11 +114,13 @@
 import QueryBuilder from '@/mixins/query-builder'
 import HelpCenter from '@/components/section/dashboard/HelpCenter.vue'
 import CardParticipation from '@/components/card/CardParticipation.vue'
+import BoxCompleteProfile from '@/components/section/profile/BoxCompleteProfile.vue'
 
 export default defineNuxtComponent({
   components: {
     HelpCenter,
     CardParticipation,
+    BoxCompleteProfile,
   },
   mixins: [QueryBuilder],
   setup() {
