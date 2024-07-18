@@ -50,16 +50,16 @@
         Définissez vos préférences de mission
       </CustomTodoListItem>
       <hr class="border-[#DDDDDD]" />
+      <CustomTodoListItem :isCompleted="isSkillsAndCertificationsCompleted">
+        Indiquez vos compétences et certifications
+      </CustomTodoListItem>
+      <hr class="border-[#DDDDDD]" />
       <CustomTodoListItem :isCompleted="isMotMotivationCompleted">
         Écrivez un petit mot de motivation
       </CustomTodoListItem>
       <hr class="border-[#DDDDDD]" />
       <CustomTodoListItem :isCompleted="isProfilePictureCompleted">
         Ajoutez une photo
-      </CustomTodoListItem>
-      <hr class="border-[#DDDDDD]" />
-      <CustomTodoListItem :isCompleted="isSkillsAndCertificationsCompleted">
-        Indiquez vos compétences et certifications
       </CustomTodoListItem>
     </div>
 
