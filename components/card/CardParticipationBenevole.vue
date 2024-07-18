@@ -15,8 +15,9 @@
         📍
 
         <template v-if="mission.type === 'Mission à distance'"> Mission à distance </template>
-        <template v-else>
-          {{ uniqueCities.join(', ') }}
+        <template v-else-if="uniqueCities?.length > 0">
+          <span>{{ uniqueCities[0] }}</span>
+          <span v-if="uniqueCities.length > 1">… (+{{ uniqueCities.length - 1 }})</span>
         </template>
       </div>
     </div>
