@@ -149,8 +149,8 @@
       <div class="">
         <DsfrHeading size="lg"> Compétences </DsfrHeading>
         <div class="text-[#666666] mt-2">
-          Si vous voulez mettre en avant certaines compétences auprès des organisations, définissez
-          les ici.
+          Si vous voulez mettre en avant certaines compétences auprès des organisations, ajoutez-les
+          ici.
         </div>
         <div class="mt-8">
           <DsfrFormControl html-for="algolia-search">
@@ -203,7 +203,8 @@
       <div class="">
         <DsfrHeading size="lg"> Quelques mots sur vous </DsfrHeading>
         <div class="text-[#666666] mt-2">
-          Une description de vous-même pour vous présenter aux organisations.
+          Pourquoi souhaitez-vous faire du bénévolat, votre mission idéale, etc., tout ce qui peut
+          aider les organisations à mieux vous connaître.
         </div>
         <div class="mt-6">
           <DsfrFormControl label="" html-for="description">

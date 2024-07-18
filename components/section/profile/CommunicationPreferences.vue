@@ -5,20 +5,23 @@
     </div>
     <div class="flex-1">
       <div class="text-xl leading-snug font-bold text-balance">
-        J’accepte d’être contacté par des organisations
+        J’accepte d’être contacté par les organisations de la plateforme
       </div>
       <div class="flex flex-wrap @sm:flex-nowrap items-start gap-6 mt-2">
         <div class="@sm:flex-1">
           <div class="text-base text-balance @sm:text-wrap">
-            Elles vous enverront des propositions de missions
+            Elles pourront vous envoyer des propositions de missions
           </div>
-          <div class="text-sm text-[#666666] mt-1">(5 par mois maximum !)</div>
+          <div class="text-sm text-[#666666] mt-1">(5 par mois maximum)</div>
         </div>
         <BaseToggle
           v-model="form.is_visible"
           @checked="handleProfileVisible()"
           @unchecked="handleProfileInvisible()"
-          :button-labels="{ on: 'Oui', off: 'non' }"
+          :button-labels="{ on: 'Oui', off: 'Non' }"
+          wrapper-class="@sm:flex-grow"
+          button-wrapper-class="@sm:items-end @sm:mt-[5px]"
+          button-label-class="@sm:text-right"
         />
       </div>
     </div>

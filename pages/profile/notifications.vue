@@ -40,7 +40,7 @@
         </UserProfileTabs>
       </template>
       <template #right>
-        <BoxCompleteProfile title="Améliorez votre profil pour trouver une mission" />
+        <BoxCompleteProfile title="Complétez votre profil pour trouver une mission" />
         <HelpCenter />
       </template>
     </BaseContainer2Cols>

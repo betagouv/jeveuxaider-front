@@ -139,9 +139,12 @@
           <img src="/images/icons/mail-send.svg" alt="" data-not-lazy class="w-full" />
         </div>
         <div class="flex-1">
-          <DsfrHeading size="lg"> J’accepte d’être contacté par des organisations </DsfrHeading>
+          <DsfrHeading size="lg">
+            J’accepte d’être contacté par les organisations de la plateforme
+          </DsfrHeading>
           <div class="text-[#666666] mt-4 mb-8">
-            Elles vous enverront des propositions de missions (5 par mois maximum !)
+            Si vous êtes disponible et si votre profil les intéressent, elles pourront vous envoyer
+            des propositions de missions (5 par mois maximum)
           </div>
           <DsfrRadioRichGroup
             v-model="form.is_visible"
@@ -150,13 +153,13 @@
             :options="[
               {
                 key: true,
-                label: 'Activé',
-                description: 'Oui, je souhaite rendre mon profil visible',
+                label: 'Oui',
+                description: 'J’accepte de recevoir des propositions de missions',
               },
               {
                 key: false,
-                label: 'Désactivé',
-                description: 'Non merci, je vais faire mes recherches moi-même',
+                label: 'Non merci',
+                description: 'Je préfère faire mes recherches moi-même',
               },
             ]"
           />
