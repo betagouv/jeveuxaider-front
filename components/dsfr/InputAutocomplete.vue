@@ -173,6 +173,13 @@ export default defineNuxtComponent({
     modelValue(newVal) {
       this.searchTerm = newVal
     },
+    showOptions(newVal) {
+      if (!newVal) {
+        if (this.modelValue !== this.searchTerm) {
+          this.searchTerm = this.modelValue
+        }
+      }
+    },
   },
   mounted() {
     this.$emit('mounted')
