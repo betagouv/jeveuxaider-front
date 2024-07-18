@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 lg:p-6 border hover:shadow-md cursor-pointer w-full">
+  <div class="p-4 lg:p-6 border hover:shadow-md cursor-pointer w-full transition">
     <DsfrBadge size="sm" type="warning">
       {{ participation.state }}
     </DsfrBadge>

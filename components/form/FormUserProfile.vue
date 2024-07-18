@@ -77,7 +77,6 @@
             />
           </DsfrFormControl>
           <DsfrFormControl label="Code postal" html-for="zip" required :error="errors.zip">
-            <!-- @todo: combobox pour forcer l'user à selectionner une option -->
             <DsfrInputAutocomplete
               :model-value="form.zip ? `${form.zip} - ${form.city}` : null"
               name="zip"
@@ -140,6 +139,7 @@
               name="type"
               placeholder="Sélectionnez votre profession"
               :options="$labels.profile_type"
+              @update:modelValue="validate('type')"
               @blur="validate('type')"
             />
           </DsfrFormControl>

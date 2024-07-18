@@ -20,7 +20,7 @@
           @unchecked="handleProfileInvisible()"
           :button-labels="{ on: 'Oui', off: 'Non' }"
           wrapper-class="@sm:flex-grow"
-          button-wrapper-class="@sm:items-end @sm:mt-[5px]"
+          button-wrapper-class="@sm:items-end @sm:mt-[7px]"
           button-label-class="@sm:text-right"
         />
       </div>

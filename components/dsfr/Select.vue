@@ -64,6 +64,7 @@ const props = defineProps({
         customClass,
       ]"
       @input="$emit('update:modelValue', $event.target.value)"
+      @blur="$emit('blur', $event.target.value)"
     >
       <option value="" selected :disabled="required">{{ placeholder }}</option>
       <option
