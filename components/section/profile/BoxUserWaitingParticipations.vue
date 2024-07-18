@@ -1,7 +1,7 @@
 <template>
   <BaseBox>
     <BaseHeading :level="3" class="text-black">
-      {{ participations.length }} participations en cours
+      {{ $filters.pluralize(participations.length, 'participation') }} en cours
     </BaseHeading>
     <div class="flex flex-col gap-6 mt-8">
       <CardParticipationBenevole
