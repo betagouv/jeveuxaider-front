@@ -1,7 +1,7 @@
 <template>
   <BaseBox>
     <BaseHeading :level="3" class="text-black">
-      {{ $filters.pluralize(participations.length, 'participation') }} en cours
+      {{ $filters.pluralize(total, 'mission') }} en cours
     </BaseHeading>
     <div class="flex flex-col gap-6 mt-8">
       <CardParticipationBenevole
@@ -33,6 +33,7 @@ export default defineNuxtComponent({
     return {
       loading: false,
       participations: [],
+      total: null,
     }
   },
   created() {
@@ -51,10 +52,11 @@ export default defineNuxtComponent({
           'filter[state]': 'En attente de validation,En cours de traitement',
           include:
             'conversation.latestMessage,mission.responsables.avatar,mission.structure,temoignage',
-          pagination: 5,
+          pagination: 3,
         },
       })
       this.participations = response.data
+      this.total = response.total
       this.loading = false
     },
     handleClickParticipation(participation) {
