@@ -5,7 +5,10 @@
     </DsfrBadge>
     <div class="font-bold my-4 leading-6">{{ mission.name }}</div>
     <div class="flex flex-wrap gap-6">
-      <div class="text-xs text-[#666666] leading-tight">
+      <div
+        v-if="!startDateIsPassed || participation.mission.end_date"
+        class="text-xs text-[#666666] leading-tight"
+      >
         🗓️ à partir du {{ $dayjs(participation.mission.start_date).format('D MMMM YYYY') }}
       </div>
       <div class="text-xs text-[#666666] leading-tight">
@@ -13,7 +16,7 @@
 
         <template v-if="mission.type === 'Mission à distance'"> Mission à distance </template>
         <template v-else>
-          {{ uniqueCities.join(',') }}
+          {{ uniqueCities.join(', ') }}
         </template>
       </div>
     </div>
@@ -47,6 +50,9 @@ export default defineNuxtComponent({
   computed: {
     mission() {
       return this.participation.mission
+    },
+    startDateIsPassed() {
+      return this.$dayjs(this.participation.mission.start_date).isBefore(this.$dayjs())
     },
   },
 })

@@ -69,7 +69,7 @@
               v-if="uniqueCities"
               :term-size="160"
               term="Villes"
-              :description="uniqueCities.join(',')"
+              :description="uniqueCities.join(', ')"
             />
           </BaseDescriptionList>
         </div>

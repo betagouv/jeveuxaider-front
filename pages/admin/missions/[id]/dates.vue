@@ -95,7 +95,7 @@
               label=""
               html-for="commitment__time_period"
               :error="errors.commitment__time_period"
-              class="lg:mt-6"
+              class="lg:mt-8"
             >
               <DsfrSelect
                 required
