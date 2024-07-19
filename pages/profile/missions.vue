@@ -2,7 +2,7 @@
   <BaseContainer2Cols
     grid-class="grid gap-6 xl:gap-8 grid-cols-1 lg:grid-cols-18"
     class-left="lg:col-span-11 flex flex-col gap-6 xl:gap-8"
-    class-right="lg:col-span-7 flex flex-col gap-6 xl:gap-8 lg:pt-12"
+    class-right="lg:col-span-7 flex flex-col gap-6 xl:gap-8 lg:pt-32"
   >
     <template #breadcrumb>
       <DsfrBreadcrumb :links="[{ text: 'Mon espace', to: '/profile' }, { text: 'Mes missions' }]" />
@@ -82,11 +82,7 @@
       </div>
     </template>
     <template #right>
-      <BoxCompleteProfile
-        title="🫣 Psssst ! Votre profil est incomplet"
-        :show-steps="false"
-        class="lg:mt-20"
-      >
+      <BoxCompleteProfile title="🫣 Psssst ! Votre profil est incomplet" :show-steps="false">
         <template #subtitle>
           <div class="text-[#666666] mt-2">
             En remplissant votre profil, vous augmentez vos chances de trouver une mission.
