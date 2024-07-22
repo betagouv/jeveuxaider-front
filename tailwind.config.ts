@@ -1,4 +1,6 @@
 import type { Config } from 'tailwindcss'
+import type { PluginAPI } from 'tailwindcss/types/config'
+
 import colors from 'tailwindcss/colors'
 
 export default <Partial<Config>>{
@@ -149,5 +151,11 @@ export default <Partial<Config>>{
       borderColor: ['active'],
     },
   },
-  plugins: [require('@tailwindcss/container-queries'), require('@tailwindcss/forms')],
+  plugins: [
+    require('@tailwindcss/container-queries'),
+    require('@tailwindcss/forms'),
+    function ({ addVariant }: { addVariant: PluginAPI['addVariant'] }) {
+      addVariant('initial', 'html :where(&)')
+    },
+  ],
 }
