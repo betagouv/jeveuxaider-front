@@ -47,17 +47,16 @@ const isChecked = (option) => option.key === props.modelValue
 <template>
   <fieldset class="flex flex-wrap gap-4">
     <legend class="sr-only">Choisir une option</legend>
-    <div
+    <button
       v-for="option in options"
       :key="option.key"
       :class="[
-        'border py-4 pl-4 pr-5 cursor-pointer hover:bg-gray-100 transition',
-        { 'border-jva-blue-500': isChecked(option) },
+        'border py-4 pl-4 pr-5 cursor-pointer hover:bg-[#f2f2f9] transition ease-out',
+        { 'border-jva-blue-500 bg-[#F5F5FE] text-jva-blue-500': isChecked(option) },
         { 'w-full': full },
         customClass,
       ]"
       @click="onClick(option)"
-      tabindex="0"
       @keydown.enter="onClick(option)"
       @keydown.space.prevent="onClick(option)"
     >
@@ -68,7 +67,8 @@ const isChecked = (option) => option.key === props.modelValue
           :id="`${name}-${option.key}`"
           :name="name"
           :checked="isChecked(option)"
-          class="cursor-pointer text-jva-blue-500 border-jva-blue-500"
+          class="cursor-pointer text-jva-blue-500 border-jva-blue-500 transition ease-out"
+          style="box-shadow: none"
           tabindex="-1"
         />
         <label class="flex flex-col cursor-pointer" :for="`${name}-${option.key}`">
@@ -78,7 +78,7 @@ const isChecked = (option) => option.key === props.modelValue
           }}</span>
         </label>
       </div>
-    </div>
+    </button>
   </fieldset>
 </template>
 

@@ -53,7 +53,9 @@
                       @click="$emit('close')"
                     >
                       <span class="font-medium">Fermer</span>
-                      <RiCloseFill class="h-4 w-4 fill-current cursor-pointer" />
+                      <RiCloseFill
+                        class="h-4 w-4 fill-current cursor-pointer mt-0.5 ml-1 flex-none"
+                      />
                     </button>
                   </div>
 
