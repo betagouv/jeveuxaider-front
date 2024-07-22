@@ -94,29 +94,42 @@
             Quelles activités de bénévolat<br class="hidden sm:block" />
             vous intéressent ?
           </DsfrHeading>
-          <DsfrTagsGroup
-            v-model="form.activities"
-            name="activites"
-            variant="button"
-            :options="activitiesOptions"
-            is-model
-            class="mt-12"
+          <template v-if="!form.activities || form.activities.length === 0">
+            <div class="flex gap-2 mt-6">
+              <button
+                v-for="i in 3"
+                :key="i"
+                class="h-8 w-14 flex-none border border-dashed border-[#6A6AF4] rounded-[40px] flex items-center justify-center leading-none hover:scale-110 transition ease-out"
+                @click="isModalActivitiesOpen = true"
+              >
+                <span class="-translate-y-px">+</span>
+              </button>
+            </div>
+          </template>
+          <div v-else class="@container mt-6 flex flex-wrap gap-2">
+            <CustomSelectedValue
+              v-for="activity in [...form.activities].sort((a, b) => a.name.localeCompare(b.name))"
+              :key="activity.id"
+              @delete="onActivityDelete(activity)"
+              class="w-full @md:w-auto"
+            >
+              {{ activity.name }}
+            </CustomSelectedValue>
+          </div>
+
+          <DsfrLink class="text-jva-blue-500 mt-4" @click="isModalActivitiesOpen = true"
+            >Ajouter des activités</DsfrLink
+          >
+
+          <ModalActivities
+            :initial-activities="form.activities"
+            :is-open="isModalActivitiesOpen"
+            @cancel="isModalActivitiesOpen = false"
+            @confirm="onModalActivitiesConfirm"
           />
         </div>
       </div>
-      <!-- <div class="hidden sm:block ">
-        <div class="text-center">
-          <DsfrButton
-            size="lg"
-            variant="primary"
-            :loading="loading"
-            :disabled="!formIsDirty"
-            @click.native="handleSubmit()"
-          >
-            Enregistrer
-          </DsfrButton>
-        </div>
-      </div> -->
+
       <transition name="fade">
         <div
           v-if="formIsDirty"
@@ -145,10 +158,14 @@ import FormErrors from '@/mixins/form/errors'
 import FormUploads from '@/mixins/form/uploads'
 import Emailable from '@/mixins/emailable.client'
 import activitiesOptions from '@/assets/activities.json'
+import ModalActivities from '@/components/modal/ModalActivities'
 
 export default defineNuxtComponent({
   emits: ['change', 'submit'],
   mixins: [FormErrors, FormUploads, Emailable],
+  components: {
+    ModalActivities,
+  },
   props: {
     profile: {
       type: Object,
@@ -159,7 +176,6 @@ export default defineNuxtComponent({
     return {
       loading: false,
       form: _cloneDeep(this.profile),
-      activitiesOptions: activitiesOptions.sort((a, b) => a.name.localeCompare(b.name)),
       formSchema: object({
         commitment__duration: string().nullable().required('Merci de choisir une durée'),
         commitment__time_period: string().nullable().required('Merci de choisir une fréquence'),
@@ -186,7 +202,21 @@ export default defineNuxtComponent({
         'Sport pour tous',
       ],
       formIsDirty: false,
+      isModalActivitiesOpen: false,
     }
+  },
+  computed: {
+    initialForm() {
+      return {
+        ...this.form,
+        activities:
+          this.profile.activities
+            ?.map((act) => {
+              return activitiesOptions.find((opt) => act.id === opt.id)
+            })
+            .sort((a, b) => (a.id > b.id ? 1 : a.id < b.id ? -1 : 0)) ?? [],
+      }
+    },
   },
   watch: {
     profile: {
@@ -198,7 +228,7 @@ export default defineNuxtComponent({
     form: {
       deep: true,
       handler(newForm) {
-        this.formIsDirty = !_isEqual(newForm, this.profile)
+        this.formIsDirty = !_isEqual(newForm, this.initialForm)
       },
     },
     formIsDirty() {
@@ -236,6 +266,16 @@ export default defineNuxtComponent({
     },
     onRemovedSkillItem(item) {
       this.form.skills = this.form.skills.filter((skill) => skill.id !== item.id)
+    },
+    onModalActivitiesConfirm(payload) {
+      this.form.activities = payload
+      this.isModalActivitiesOpen = false
+    },
+    onActivityDelete(payload) {
+      this.form.activities.splice(
+        this.form.activities.findIndex((act) => act.id === payload.id),
+        1
+      )
     },
   },
 })
