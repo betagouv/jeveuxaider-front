@@ -1,6 +1,6 @@
 <template>
   <div
-    class="group flex py-2 space-x-4 lg:py-4 lg:space-x-8"
+    class="group flex py-2 gap-x-4 lg:py-4 lg:gap-x-8 items-center"
     :class="[{ 'cursor-pointer': link || href }]"
     @click="handleClick"
   >
