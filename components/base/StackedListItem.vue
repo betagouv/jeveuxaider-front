@@ -6,7 +6,7 @@
   >
     <div
       v-if="icon"
-      class="mt-1 lg:mt-0 text-xl h-[48px] w-[48px] lg:text-3xl lg:h-[64px] lg:w-[64px] flex items-center justify-center transition group-hover:scale-105"
+      class="text-xl h-[48px] w-[48px] lg:text-3xl lg:h-[64px] lg:w-[64px] flex items-center justify-center transition group-hover:scale-105"
       :class="[
         { 'bg-[#FFE5D2] border border-[#EAD7A1]': iconVariant === 'warning' },
         { 'bg-[#FA9D96] border border-[#E88D96]': iconVariant === 'danger' },
