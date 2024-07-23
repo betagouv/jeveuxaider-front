@@ -19,9 +19,7 @@
         v-scroll-lock="!stickyFooter && isScrollLocked"
       >
         <FocusLoop :is-visible="isOpen" @keydown.native.esc="$emit('close')">
-          <div
-            class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 sm:text-center sm:block sm:p-0"
-          >
+          <div class="flex items-end justify-center min-h-screen sm:text-center sm:block sm:px-4">
             <div
               class="fixed inset-0 bg-opacity-75 transition-opacity"
               aria-hidden="true"
@@ -42,10 +40,11 @@
               <div
                 v-click-outside="handleClickOutside"
                 :class="[
+                  '@container',
                   'inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full',
                   { 'overflow-hidden': overflowHidden },
                   widthClass,
-                  { 'max-h-[calc(100svh_-_4rem)]': stickyFooter },
+                  { 'max-h-[100svh] sm:max-h-[calc(100svh_-_4rem)]': stickyFooter },
                 ]"
               >
                 <div class="max-h-[inherit]">
@@ -53,7 +52,7 @@
                     :class="[
                       'flex flex-col',
                       {
-                        'overflow-y-auto custom-scrollbar-gray initial:max-h-[inherit] initial:pb-24 initial:mr-1':
+                        'overflow-y-auto custom-scrollbar-gray initial:max-h-[inherit] initial:pb-14 initial:sm:pb-20 initial:mr-1':
                           stickyFooter,
                       },
                       { scrollContainerClass: stickyFooter },
@@ -61,10 +60,15 @@
                     v-scroll-lock="stickyFooter && isScrollLocked"
                   >
                     <!-- MODAL HEADER -->
-                    <div :class="['p-4 px-8 flex justify-end', headerClass]">
+                    <div
+                      :class="[
+                        'initial:py-4 initial:px-6 initial:sm:px-8 flex justify-end',
+                        headerClass,
+                      ]"
+                    >
                       <button
                         type="button"
-                        class="flex items-center text-jva-blue-500 text-sm hover:bg-[#F6F6F6] px-3 py-1"
+                        class="flex items-center text-jva-blue-500 text-sm hover:bg-[#F6F6F6] px-3 py-1 -mr-4"
                         @click="$emit('close')"
                       >
                         <span class="font-medium">Fermer</span>
@@ -75,7 +79,7 @@
                     </div>
 
                     <!-- MODAL CONTENT -->
-                    <div :class="['px-8', contentClass]">
+                    <div :class="['initial:py-4 initial:px-6 initial:sm:px-8', contentClass]">
                       <!-- TITLE -->
                       <div class="flex items-center mb-4">
                         <div
@@ -105,10 +109,13 @@
                   <!-- MODAL FOOTER -->
                   <div
                     :class="[
-                      'flex flex-wrap justify-end initial:gap-4 initial:p-8',
+                      'flex flex-wrap justify-end initial:gap-2 initial:sm:gap-4',
                       {
-                        'sticky bottom-0 shadow-[0px_-3px_10px_0px_#00000014] bg-white':
+                        'sticky bottom-0 shadow-[0px_-3px_10px_0px_#00000014] bg-white initial:p-2 initial:sm:p-4':
                           stickyFooter,
+                      },
+                      {
+                        'initial:py-4 initial:px-6 initial:sm:px-8 initial:sm:pb-8': !stickyFooter,
                       },
                       footerClass,
                     ]"

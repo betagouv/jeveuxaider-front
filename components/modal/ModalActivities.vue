@@ -8,30 +8,29 @@
         :sticky-footer="true"
         header-class="-mr-1"
         content-class="-mr-1"
-        footer-class="p-4 gap-2"
         @close="$emit('cancel')"
       >
-        <div class="@container">
+        <div class="">
           <p class="formatted-text text-[#666666] text-pretty max-w-[600px]">
             En ajoutant des activités favorites, nous pourrons vous suggérer des missions qui vous
             correspondent.
           </p>
 
           <p class="uppercase text-sm font-bold text-[#666666] mt-9 mb-5">
-            Activités les plus populaires
+            Activités les plus recherchées
           </p>
           <DsfrCheckboxRichGroup
             v-model="popularActivities"
             :options="popularActivitiesOptions"
             name="activities"
-            class="grid @lg:grid-cols-2 gap-2"
+            class="grid @xl:grid-cols-2 gap-2"
             option-class="text-sm rounded-[4px] py-3 px-4"
-            label-class="w-full"
+            label-class="w-full whitespace-normal"
           >
             <template #default="{ option }">
               <div class="flex items-center justify-between gap-2">
-                <div class="truncate">{{ option.name }}</div>
-                <div class="text-xl leading-none">{{ option.icon }}</div>
+                <div class="line-clamp-2">{{ option.name }}</div>
+                <div class="text-sm @xl:text-xl !leading-none">{{ option.icon }}</div>
               </div>
             </template>
           </DsfrCheckboxRichGroup>
@@ -43,14 +42,14 @@
             v-model="activities"
             :options="otherActivitiesOptions"
             name="activities"
-            class="grid @lg:grid-cols-2 gap-2"
+            class="grid @xl:grid-cols-2 gap-2"
             option-class="text-sm rounded-[4px] py-3 px-4"
-            label-class="w-full"
+            label-class="w-full whitespace-normal"
           >
             <template #default="{ option }">
               <div class="flex items-center justify-between gap-2">
-                <div class="truncate">{{ option.name }}</div>
-                <div class="text-xl leading-none">{{ option.icon }}</div>
+                <div class="line-clamp-2">{{ option.name }}</div>
+                <div class="text-sm @xl:text-xl !leading-none">{{ option.icon }}</div>
               </div>
             </template>
           </DsfrCheckboxRichGroup>
