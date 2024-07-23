@@ -6,8 +6,8 @@
         title="Quelles activités de bénévolat vous intéressent ?"
         :prevent-click-outside="true"
         :sticky-footer="true"
-        header-class="-mr-4"
-        content-class="-mr-4"
+        header-class="-mr-1"
+        content-class="-mr-1"
         footer-class="p-4 gap-2"
         @close="$emit('cancel')"
       >
