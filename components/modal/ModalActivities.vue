@@ -3,11 +3,11 @@
     <Teleport to="#teleport-body-end">
       <BaseModal
         :is-open="isOpen"
-        title="Quelles activités de bénévolat vous intéressent ?"
+        title="Quelles activités de bénévolat vous intéressent ?"
         :prevent-click-outside="true"
         :sticky-footer="true"
-        header-class="-mr-1"
-        content-class="-mr-1"
+        header-class="-mr-2"
+        content-class="-mr-2"
         @close="$emit('cancel')"
       >
         <div class="">

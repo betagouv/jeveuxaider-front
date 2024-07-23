@@ -12,7 +12,10 @@
     >
       <div
         v-if="isOpen"
-        class="fixed z-50 inset-0 overflow-y-auto overscroll-contain"
+        :class="[
+          'fixed z-50 inset-0',
+          { 'overflow-y-auto overflow-x-hidden overscroll-contain': !stickyFooter },
+        ]"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
@@ -52,7 +55,7 @@
                     :class="[
                       'flex flex-col',
                       {
-                        'overflow-y-auto custom-scrollbar-gray initial:max-h-[inherit] initial:pb-14 initial:sm:pb-20 initial:mr-1':
+                        'overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar-gray initial:max-h-[inherit] initial:pb-14 initial:sm:pb-20 initial:mr-1':
                           stickyFooter,
                       },
                       { scrollContainerClass: stickyFooter },
@@ -162,6 +165,7 @@ export default defineNuxtComponent({
       type: Boolean,
       default: false,
     },
+    // @todo: test si toujours utile
     overflowHidden: {
       type: Boolean,
       default: true,
@@ -174,10 +178,6 @@ export default defineNuxtComponent({
       type: String,
       default: 'max-w-3xl',
     },
-    // hideFooter: {
-    //   type: Boolean,
-    //   default: false,
-    // },
     headerClass: {
       type: String,
       default: null,
