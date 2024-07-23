@@ -7,6 +7,7 @@
         size="md"
         context="deletable"
         :is-active="!!$route.query['start_date']"
+        icon-class="pointer-events-none"
         @click.native="removeFilter('dates')"
       >
         {{ $dayjs($route.query['start_date']).format('DD MMM YYYY') }} au
@@ -20,6 +21,7 @@
         size="md"
         context="deletable"
         :is-active="!!$route.query['department']"
+        icon-class="pointer-events-none"
         @click.native="removeFilter('department')"
       >
         {{ $route.query['department'] }} -
@@ -33,6 +35,7 @@
         size="md"
         context="deletable"
         :is-active="!!$route.query['reseau']"
+        icon-class="pointer-events-none"
         @click.native="removeFilter('reseau')"
       >
         {{ $route.query['reseau'] }} - {{ $route.query['reseau_name'] }}
@@ -45,6 +48,7 @@
         size="md"
         context="deletable"
         :is-active="!!$route.query['structure']"
+        icon-class="pointer-events-none"
         @click.native="removeFilter('structure')"
       >
         {{ $route.query['structure'] }} - {{ $route.query['structure_name'] }}

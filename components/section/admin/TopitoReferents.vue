@@ -15,7 +15,10 @@
         :link="`/admin/utilisateurs/${user.profile_id}`"
       >
         <div class="text-gray-900 font-semibold">{{ user.first_name }} {{ user.last_name }}</div>
-        <div class="text-gray-600 text-sm">{{ $numeral(user.count) }} actions</div>
+        <div class="text-gray-600 text-sm">
+          {{ $numeral(user.count) }}
+          {{ $filters.pluralize(user.count, 'action', 'actions', false) }}
+        </div>
       </BaseStackedListItem>
     </BaseStackedList>
   </BaseBox>

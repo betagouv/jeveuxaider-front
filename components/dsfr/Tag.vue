@@ -78,6 +78,7 @@
           'flex-none fill-current',
           { 'w-3 h-3 ml-1 mr-[-0.09375rem]': size === 'sm' },
           { 'w-4 h-4 ml-1 mr-[-0.125rem]': size === 'md' },
+          iconClass,
         ]"
         @click.native.stop="$emit('delete')"
       />
