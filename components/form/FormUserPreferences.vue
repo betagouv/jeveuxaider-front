@@ -99,7 +99,7 @@
               <button
                 v-for="i in 3"
                 :key="i"
-                class="h-8 w-14 flex-none border border-dashed border-[#6A6AF4] rounded-[40px] flex items-center justify-center leading-none hover:scale-110 transition ease-out"
+                class="h-[42px] w-16 flex-none border border-dashed border-[#6A6AF4] rounded-[40px] flex items-center justify-center leading-none hover:scale-110 transition ease-out"
                 @click="isModalActivitiesOpen = true"
               >
                 <span class="-translate-y-px">+</span>
