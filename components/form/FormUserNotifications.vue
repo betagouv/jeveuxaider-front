@@ -29,6 +29,7 @@
                     'Recevez une notification mail unique par jour, qui regroupe l’intégralité des actualités quotidiennes',
                 },
               ]"
+              class="lg:gap-4"
               option-class="w-full"
             />
           </div>
@@ -61,6 +62,7 @@
                   description: 'Non merci, ce n’est pas nécessaire pour moi',
                 },
               ]"
+              class="lg:gap-4"
               option-class="w-full"
             />
           </div>
@@ -95,6 +97,7 @@
                     'Recevez un mail unique par jour, qui regroupe l’intégralité des actualités quotidiennes',
                 },
               ]"
+              class="lg:gap-4"
               option-class="w-full"
             />
           </div>
@@ -127,6 +130,7 @@
                   description: 'Non merci, ce n’est pas nécessaire pour moi',
                 },
               ]"
+              class="lg:gap-4"
               option-class="w-full"
             />
           </div>
@@ -161,6 +165,7 @@
                 description: 'Je préfère faire mes recherches moi-même',
               },
             ]"
+            class="lg:gap-4"
             option-class="w-full"
           />
         </div>

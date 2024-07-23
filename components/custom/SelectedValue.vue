@@ -16,7 +16,7 @@ const emit = defineEmits(['delete'])
       class="-m-1.5 p-1.5 flex-none cursor-pointer hover:scale-125 transition ease-out"
       @click="$emit('delete')"
     >
-      <RiCloseFill class="size-4" />
+      <RiCloseFill class="size-4 fill-current" />
     </button>
   </div>
 </template>

@@ -81,7 +81,6 @@
                   v-model="form.type_missions"
                   name="type_missions"
                   :options="$labels.profile_type_missions"
-                  class="gap-2"
                   option-class="w-full @md:w-auto"
                 />
               </DsfrFormControl>
@@ -101,7 +100,7 @@
             vous intéressent ?
           </DsfrHeading>
           <template v-if="!form.activities || form.activities.length === 0">
-            <div class="flex gap-2 mt-6">
+            <div class="flex gap-2 lg:gap-3 mt-6">
               <button
                 v-for="i in 3"
                 :key="i"
@@ -112,7 +111,7 @@
               </button>
             </div>
           </template>
-          <div v-else class="@container mt-6 flex flex-wrap gap-2">
+          <div v-else class="@container mt-6 flex flex-wrap gap-2 lg:gap-3">
             <CustomSelectedValue
               v-for="activity in [...form.activities].sort((a, b) => a.name.localeCompare(b.name))"
               :key="activity.id"

@@ -41,7 +41,7 @@ const isChecked = (option) => option.key === props.modelValue
 </script>
 
 <template>
-  <fieldset class="initial:flex initial:flex-wrap initial:gap-4">
+  <fieldset class="initial:flex initial:flex-wrap initial:gap-2 initial:lg:gap-3">
     <legend class="sr-only">Choisir une option</legend>
     <button
       v-for="option in options"
