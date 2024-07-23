@@ -58,10 +58,13 @@ function isChecked(option) {
             )
           "
         />
-        <label :class="['flex flex-col truncate', labelClass]" :for="`${name}-${option.key}`">
+        <label
+          :class="['flex flex-col initial:truncate', labelClass]"
+          :for="`${name}-${option.key}`"
+        >
           <slot :option="option">
             <span class="truncate">{{ option.label }}</span>
-            <span v-if="option.description" class="text-xs text-[#666666] truncate">{{
+            <span v-if="option.description" class="text-xs text-[#666666] initial:truncate">{{
               option.description
             }}</span>
           </slot>
