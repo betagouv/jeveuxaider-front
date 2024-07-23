@@ -12,6 +12,7 @@
         { 'bg-[#FA9D96] border border-[#E88D96]': iconVariant === 'danger' },
         { 'bg-[#E1E8EE] border border-[#B6E1EE]': iconVariant === 'info' },
         { 'bg-[#5B5198] border border-[#32257F]': iconVariant === 'snu' },
+        iconWrapperClass,
       ]"
     >
       <template v-if="icon === 'snu'">
@@ -40,6 +41,10 @@ export default defineNuxtComponent({
     },
     iconVariant: {
       type: String,
+      default: null,
+    },
+    iconWrapperClass: {
+      type: [String, Array],
       default: null,
     },
     iconClass: {
