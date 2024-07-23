@@ -5,6 +5,10 @@
         :is-open="isOpen"
         title="Quelles activités de bénévolat vous intéressent ?"
         :prevent-click-outside="true"
+        :sticky-footer="true"
+        header-class="-mr-4"
+        content-class="-mr-4"
+        footer-class="p-4 gap-2"
         @close="$emit('cancel')"
       >
         <div class="@container">
@@ -65,15 +69,15 @@
 import activitiesOptions from '@/assets/activities.json'
 
 const popularActivities = [
-  'Traduction',
-  'Ramassage de déchets',
-  'Soins aux animaux',
-  'Maraude',
-  'Gestion des ressources humaines',
+  'Mentorat & parrainage',
+  "Lutte contre l'isolement",
   'Événementiel',
-  'Informatique',
-  'Logistique',
-  "Aménagement d'espaces naturels",
+  'Animation / Loisirs',
+  'Secourisme et sécurité civile',
+  'Soutien scolaire et formation',
+  'Services à la personne',
+  'Soins aux animaux',
+  'Distribution',
 ]
 
 export default defineNuxtComponent({
