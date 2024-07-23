@@ -24,13 +24,9 @@ const props = defineProps({
     type: Boolean,
     default: null,
   },
-  customClass: {
+  optionClass: {
     type: String,
     default: '',
-  },
-  full: {
-    type: Boolean,
-    default: false,
   },
 })
 
@@ -45,7 +41,7 @@ const isChecked = (option) => option.key === props.modelValue
 </script>
 
 <template>
-  <fieldset class="flex flex-wrap gap-4">
+  <fieldset class="initial:flex initial:flex-wrap initial:gap-4">
     <legend class="sr-only">Choisir une option</legend>
     <button
       v-for="option in options"
@@ -53,8 +49,7 @@ const isChecked = (option) => option.key === props.modelValue
       :class="[
         'text-left border py-4 pl-4 pr-5 cursor-pointer hover:bg-[#f2f2f9] transition ease-out',
         { 'border-jva-blue-500 bg-[#F5F5FE] text-jva-blue-500': isChecked(option) },
-        { 'w-full': full },
-        customClass,
+        optionClass,
       ]"
       @click="onClick(option)"
       @keydown.enter="onClick(option)"

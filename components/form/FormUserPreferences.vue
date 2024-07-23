@@ -72,11 +72,17 @@
               <BaseFormLabel html-for="type_missions" size="xl">
                 Vous êtes plutôt mission sur place ou à distance&nbsp;?
               </BaseFormLabel>
-              <DsfrFormControl html-for="type_missions" :error="errors.type_missions" class="mt-6">
+              <DsfrFormControl
+                html-for="type_missions"
+                :error="errors.type_missions"
+                class="mt-6 @container"
+              >
                 <DsfrRadioRichGroup
                   v-model="form.type_missions"
                   name="type_missions"
                   :options="$labels.profile_type_missions"
+                  class="gap-2"
+                  option-class="w-full @md:w-auto"
                 />
               </DsfrFormControl>
             </div>
