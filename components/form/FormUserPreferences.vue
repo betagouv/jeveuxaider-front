@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white px-6 py-8 lg:p-10">
     <div class="grid grid-cols-1 gap-8 lg:gap-12">
-      <div class="flex gap-12">
+      <div class="flex gap-10">
         <div class="hidden lg:block w-[80px]">
           <img src="/images/icons/calendar.svg" alt="" data-not-lazy class="w-full" />
         </div>
@@ -90,7 +90,7 @@
       </div>
 
       <hr />
-      <div class="flex gap-12">
+      <div class="flex gap-10">
         <div class="hidden lg:block w-[80px]">
           <img src="/images/icons/culture.svg" alt="" data-not-lazy class="w-full" />
         </div>
