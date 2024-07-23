@@ -51,7 +51,7 @@ const isChecked = (option) => option.key === props.modelValue
       v-for="option in options"
       :key="option.key"
       :class="[
-        'border py-4 pl-4 pr-5 cursor-pointer hover:bg-[#f2f2f9] transition ease-out',
+        'text-left border py-4 pl-4 pr-5 cursor-pointer hover:bg-[#f2f2f9] transition ease-out',
         { 'border-jva-blue-500 bg-[#F5F5FE] text-jva-blue-500': isChecked(option) },
         { 'w-full': full },
         customClass,
@@ -73,7 +73,7 @@ const isChecked = (option) => option.key === props.modelValue
         />
         <label class="flex flex-col cursor-pointer" :for="`${name}-${option.key}`">
           <span class="">{{ option.label }} </span>
-          <span v-if="option.description" class="text-xs text-[#666666]">{{
+          <span v-if="option.description" class="text-xs text-[#666666] text-pretty">{{
             option.description
           }}</span>
         </label>
