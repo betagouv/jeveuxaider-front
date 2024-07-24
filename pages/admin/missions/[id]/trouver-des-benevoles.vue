@@ -199,6 +199,15 @@ export default defineNuxtComponent({
       return showError({ statusCode: 403 })
     }
 
+    // Test Maze script
+    useHead({
+      script: [
+        {
+          src: '/scripts/maze.js',
+        },
+      ],
+    })
+
     return {
       mission,
     }

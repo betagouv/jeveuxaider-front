@@ -443,6 +443,15 @@ export default defineNuxtComponent({
       responsables = responsablesResponse.map((user) => user.profile) ?? []
     }
 
+    // Test Maze script
+    useHead({
+      script: [
+        {
+          src: '/scripts/maze.js',
+        },
+      ],
+    })
+
     return {
       responsables,
     }
