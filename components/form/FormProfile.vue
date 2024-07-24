@@ -641,10 +641,14 @@ export default defineNuxtComponent({
   },
   computed: {
     canViewScAndCej() {
-      if (this.form.birthday) {
+      if (this.profile.cej || this.profile.service_civique) {
+        return true
+      }
+      if (this.form?.birthday) {
         const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
         return userAge >= 16 && userAge <= 30
       }
+
       return false
     },
   },

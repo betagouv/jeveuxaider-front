@@ -464,6 +464,7 @@ export default defineNuxtComponent({
         service_civique_completion_date: date()
           .typeError('La date indiquée est invalide')
           .nullable()
+          .transform((curr, orig) => (orig === '' ? null : curr))
           .when('service_civique', {
             is: true,
             then: (schema) => schema.required('La date de début de service civique est incorrecte'),
@@ -475,10 +476,14 @@ export default defineNuxtComponent({
   },
   computed: {
     canViewScAndCej() {
+      if (this.profile.cej || this.profile.service_civique) {
+        return true
+      }
       if (this.form?.birthday) {
         const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
         return userAge >= 16 && userAge <= 30
       }
+
       return false
     },
     formIsDirty() {

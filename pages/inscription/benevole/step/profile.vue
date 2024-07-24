@@ -260,6 +260,9 @@ export default defineNuxtComponent({
   },
   computed: {
     canViewScAndCej() {
+      if (this.form.cej || this.form.service_civique) {
+        return true
+      }
       if (this.form.birthday) {
         const userAge = this.$dayjs().diff(this.$dayjs(this.form.birthday), 'year')
         return userAge >= 16 && userAge <= 30
