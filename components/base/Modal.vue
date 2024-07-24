@@ -47,7 +47,7 @@
                   'inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full',
                   { 'overflow-hidden': overflowHidden },
                   widthClass,
-                  { 'max-h-[100svh] sm:max-h-[calc(100svh_-_4rem)]': stickyFooter },
+                  { 'max-h-[100dvh] sm:max-h-[calc(100dvh_-_4rem)]': stickyFooter },
                 ]"
               >
                 <div class="max-h-[inherit]">
