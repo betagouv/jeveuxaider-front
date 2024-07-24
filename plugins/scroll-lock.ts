@@ -22,7 +22,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     },
 
     // On unmount (removed)
-    unmounted(el) {
+    beforeUnmount(el) {
       enableBodyScroll(el)
     },
   })
