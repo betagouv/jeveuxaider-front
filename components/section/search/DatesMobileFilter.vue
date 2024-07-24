@@ -29,6 +29,18 @@ export default defineNuxtComponent({
   },
   methods: {
     handleChangeStart(value) {
+      if (value === '') {
+        this.$router.push({
+          path: this.$route.path,
+          query: {
+            ...this.$route.query,
+            start: undefined,
+            page: undefined,
+          },
+        })
+        return
+      }
+
       const date = new Date(value)
       if (!isNaN(date) && date.getFullYear() > 1970) {
         this.$router.push({
@@ -42,6 +54,18 @@ export default defineNuxtComponent({
       }
     },
     handleChangeEnd(value) {
+      if (value === '') {
+        this.$router.push({
+          path: this.$route.path,
+          query: {
+            ...this.$route.query,
+            end: undefined,
+            page: undefined,
+          },
+        })
+        return
+      }
+
       const date = new Date(value)
       if (!isNaN(date) && date.getFullYear() > 1970) {
         this.$router.push({
