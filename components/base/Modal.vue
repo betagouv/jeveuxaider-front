@@ -12,16 +12,17 @@
     >
       <div
         v-if="isOpen"
-        class="fixed z-50 inset-0 overflow-y-auto overscroll-contain"
+        :class="[
+          'fixed z-50 inset-0',
+          { 'overflow-y-auto overflow-x-hidden overscroll-contain': !stickyFooter },
+        ]"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
-        v-scroll-lock="isScrollLocked"
+        v-scroll-lock="!stickyFooter && isScrollLocked"
       >
         <FocusLoop :is-visible="isOpen" @keydown.native.esc="$emit('close')">
-          <div
-            class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 sm:text-center sm:block sm:p-0"
-          >
+          <div class="flex items-end justify-center min-h-screen sm:text-center sm:block sm:px-4">
             <div
               class="fixed inset-0 bg-opacity-75 transition-opacity"
               aria-hidden="true"
@@ -41,51 +42,86 @@
             >
               <div
                 v-click-outside="handleClickOutside"
-                :class="[{ 'overflow-hidden': overflowHidden }, widthClass]"
-                class="inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full"
+                :class="[
+                  '@container',
+                  'inline-block align-bottom bg-white text-left shadow-xl transform transition-all sm:my-8 sm:align-middle w-full',
+                  { 'overflow-hidden': overflowHidden },
+                  widthClass,
+                  { 'max-h-[100svh] sm:max-h-[calc(100svh_-_4rem)]': stickyFooter },
+                ]"
               >
-                <div class="">
-                  <!-- MODAL HEADER -->
-                  <div class="p-4 px-8 flex justify-end">
-                    <button
-                      type="button"
-                      class="flex items-center text-jva-blue-500 text-sm hover:bg-[#F6F6F6] px-3 py-1"
-                      @click="$emit('close')"
+                <div class="max-h-[inherit]">
+                  <div
+                    :class="[
+                      'flex flex-col',
+                      {
+                        'overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar-gray initial:max-h-[inherit] initial:pb-14 initial:sm:pb-20 initial:mr-1':
+                          stickyFooter,
+                      },
+                      { scrollContainerClass: stickyFooter },
+                    ]"
+                    v-scroll-lock="stickyFooter && isScrollLocked"
+                  >
+                    <!-- MODAL HEADER -->
+                    <div
+                      :class="[
+                        'initial:py-4 initial:px-6 initial:sm:px-8 flex justify-end',
+                        headerClass,
+                      ]"
                     >
-                      <span class="font-medium">Fermer</span>
-                      <RiCloseFill class="h-4 w-4 fill-current cursor-pointer" />
-                    </button>
+                      <button
+                        type="button"
+                        class="flex items-center text-jva-blue-500 text-sm hover:bg-[#F6F6F6] px-3 py-1 -mr-4"
+                        @click="$emit('close')"
+                      >
+                        <span class="font-medium">Fermer</span>
+                        <RiCloseFill
+                          class="h-4 w-4 fill-current cursor-pointer mt-0.5 ml-1 flex-none"
+                        />
+                      </button>
+                    </div>
+
+                    <!-- MODAL CONTENT -->
+                    <div :class="['initial:py-4 initial:px-6 initial:sm:px-8', contentClass]">
+                      <!-- TITLE -->
+                      <div class="flex items-center mb-4">
+                        <div
+                          v-if="icon"
+                          class="mx-auto flex-shrink-0 flex items-center justify-stretch h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10"
+                        >
+                          <component
+                            :is="icon"
+                            v-if="icon"
+                            :class="['h-8 w-8 fill-current', iconClass]"
+                          />
+                        </div>
+                        <div :class="['min-w-0 w-full']">
+                          <h3
+                            v-if="title"
+                            id="modal-title"
+                            :class="['text-2xl leading-8 font-bold text-gray-900']"
+                          >
+                            {{ title }}
+                          </h3>
+                        </div>
+                      </div>
+                      <slot />
+                    </div>
                   </div>
 
-                  <!-- MODAL CONTENT -->
-                  <div class="px-8">
-                    <!-- TITLE -->
-                    <div class="flex items-center mb-4">
-                      <div
-                        v-if="icon"
-                        class="mx-auto flex-shrink-0 flex items-center justify-stretch h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10"
-                      >
-                        <component
-                          :is="icon"
-                          v-if="icon"
-                          :class="['h-8 w-8 fill-current', iconClass]"
-                        />
-                      </div>
-                      <div :class="['min-w-0 w-full']">
-                        <h3
-                          v-if="title"
-                          id="modal-title"
-                          :class="['text-2xl leading-8 font-bold text-gray-900']"
-                        >
-                          {{ title }}
-                        </h3>
-                      </div>
-                    </div>
-                    <slot />
-                  </div>
                   <!-- MODAL FOOTER -->
                   <div
-                    :class="['flex flex-wrap justify-end gap-4 p-8', footerClass]"
+                    :class="[
+                      'flex flex-wrap justify-end initial:gap-2 initial:sm:gap-4',
+                      {
+                        'sticky bottom-0 shadow-[0px_-3px_10px_0px_#00000014] bg-white initial:p-2 initial:sm:p-4':
+                          stickyFooter,
+                      },
+                      {
+                        'initial:py-4 initial:px-6 initial:sm:px-8 initial:sm:pb-8': !stickyFooter,
+                      },
+                      footerClass,
+                    ]"
                     v-if="$slots.footer"
                   >
                     <slot name="footer" />
@@ -129,6 +165,7 @@ export default defineNuxtComponent({
       type: Boolean,
       default: false,
     },
+    // @todo: test si toujours utile
     overflowHidden: {
       type: Boolean,
       default: true,
@@ -141,13 +178,25 @@ export default defineNuxtComponent({
       type: String,
       default: 'max-w-3xl',
     },
-    // hideFooter: {
-    //   type: Boolean,
-    //   default: false,
-    // },
+    headerClass: {
+      type: String,
+      default: null,
+    },
+    contentClass: {
+      type: String,
+      default: null,
+    },
     footerClass: {
       type: String,
       default: null,
+    },
+    scrollContainerClass: {
+      type: String,
+      default: null,
+    },
+    stickyFooter: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -168,5 +217,9 @@ export default defineNuxtComponent({
 <style lang="postcss" scoped>
 .min-h-screen {
   min-height: 100dvh;
+}
+
+.custom-scrollbar-gray::-webkit-scrollbar-track {
+  @apply mt-3 mb-[72px];
 }
 </style>

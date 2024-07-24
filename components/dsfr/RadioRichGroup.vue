@@ -24,13 +24,9 @@ const props = defineProps({
     type: Boolean,
     default: null,
   },
-  customClass: {
+  optionClass: {
     type: String,
     default: '',
-  },
-  full: {
-    type: Boolean,
-    default: false,
   },
 })
 
@@ -45,19 +41,17 @@ const isChecked = (option) => option.key === props.modelValue
 </script>
 
 <template>
-  <fieldset class="flex flex-wrap gap-4">
+  <fieldset class="initial:flex initial:flex-wrap initial:gap-2 initial:lg:gap-3">
     <legend class="sr-only">Choisir une option</legend>
-    <div
+    <button
       v-for="option in options"
       :key="option.key"
       :class="[
-        'border py-4 pl-4 pr-5 cursor-pointer hover:bg-gray-100 transition',
-        { 'border-jva-blue-500': isChecked(option) },
-        { 'w-full': full },
-        customClass,
+        'text-left border py-4 pl-4 pr-5 cursor-pointer hover:bg-[#f2f2f9] transition ease-out',
+        { 'border-jva-blue-500 bg-[#F5F5FE] text-jva-blue-500': isChecked(option) },
+        optionClass,
       ]"
       @click="onClick(option)"
-      tabindex="0"
       @keydown.enter="onClick(option)"
       @keydown.space.prevent="onClick(option)"
     >
@@ -68,17 +62,18 @@ const isChecked = (option) => option.key === props.modelValue
           :id="`${name}-${option.key}`"
           :name="name"
           :checked="isChecked(option)"
-          class="cursor-pointer text-jva-blue-500 border-jva-blue-500"
+          class="cursor-pointer text-jva-blue-500 border-jva-blue-500 transition ease-out"
+          style="box-shadow: none"
           tabindex="-1"
         />
         <label class="flex flex-col cursor-pointer" :for="`${name}-${option.key}`">
           <span class="">{{ option.label }} </span>
-          <span v-if="option.description" class="text-xs text-[#666666]">{{
+          <span v-if="option.description" class="text-xs text-[#666666] text-pretty">{{
             option.description
           }}</span>
         </label>
       </div>
-    </div>
+    </button>
   </fieldset>
 </template>
 

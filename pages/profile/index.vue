@@ -39,6 +39,7 @@
             :arrow="action.arrow"
             @click="onClick(action)"
             class="cursor-pointer"
+            icon-wrapper-class="self-start mt-0.5"
           >
             <div class="text-gray-900 font-semibold" v-html="action.title" />
             <div

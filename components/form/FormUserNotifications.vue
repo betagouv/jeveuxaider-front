@@ -2,7 +2,7 @@
   <div class="bg-white px-6 py-8 lg:p-10">
     <div class="grid grid-cols-1 gap-8 lg:gap-12">
       <template v-if="['responsable'].includes($stores.auth.contextRole)">
-        <div class="flex gap-12">
+        <div class="flex gap-10">
           <div class="hidden lg:block w-[80px]">
             <img src="/images/icons/culture.svg" alt="" data-not-lazy class="w-full" />
           </div>
@@ -15,7 +15,6 @@
             <DsfrRadioRichGroup
               v-model="form.notification__responsable_frequency"
               name="notification__responsable_frequency"
-              full
               :options="[
                 {
                   key: 'realtime',
@@ -30,12 +29,14 @@
                     'Recevez une notification mail unique par jour, qui regroupe l’intégralité des actualités quotidiennes',
                 },
               ]"
+              class="lg:gap-4"
+              option-class="w-full"
             />
           </div>
         </div>
 
         <hr />
-        <div class="flex gap-12">
+        <div class="flex gap-10">
           <div class="hidden lg:block w-[80px]">
             <img src="/images/icons/culture.svg" alt="" data-not-lazy class="w-full" />
           </div>
@@ -48,7 +49,6 @@
             <DsfrRadioRichGroup
               v-model="form.notification__responsable_bilan"
               name="notification__responsable_bilan"
-              full
               :options="[
                 {
                   key: true,
@@ -62,6 +62,8 @@
                   description: 'Non merci, ce n’est pas nécessaire pour moi',
                 },
               ]"
+              class="lg:gap-4"
+              option-class="w-full"
             />
           </div>
         </div>
@@ -69,7 +71,7 @@
       </template>
 
       <template v-if="['referent'].includes($stores.auth.contextRole)">
-        <div class="flex gap-12">
+        <div class="flex gap-10">
           <div class="hidden lg:block w-[80px]">
             <img src="/images/icons/culture.svg" alt="" data-not-lazy class="w-full" />
           </div>
@@ -81,7 +83,6 @@
             <DsfrRadioRichGroup
               v-model="form.notification__referent_frequency"
               name="notification__referent_frequency"
-              full
               :options="[
                 {
                   key: 'realtime',
@@ -96,12 +97,14 @@
                     'Recevez un mail unique par jour, qui regroupe l’intégralité des actualités quotidiennes',
                 },
               ]"
+              class="lg:gap-4"
+              option-class="w-full"
             />
           </div>
         </div>
 
         <hr />
-        <div class="flex gap-12">
+        <div class="flex gap-10">
           <div class="hidden lg:block w-[80px]">
             <img src="/images/icons/culture.svg" alt="" data-not-lazy class="w-full" />
           </div>
@@ -114,7 +117,6 @@
             <DsfrRadioRichGroup
               v-model="form.notification__referent_bilan"
               name="notification__referent_bilan"
-              full
               :options="[
                 {
                   key: true,
@@ -128,13 +130,15 @@
                   description: 'Non merci, ce n’est pas nécessaire pour moi',
                 },
               ]"
+              class="lg:gap-4"
+              option-class="w-full"
             />
           </div>
         </div>
         <hr />
       </template>
 
-      <div class="flex gap-12">
+      <div class="flex gap-10">
         <div class="hidden lg:block w-[80px]">
           <img src="/images/icons/mail-send.svg" alt="" data-not-lazy class="w-full" />
         </div>
@@ -149,7 +153,6 @@
           <DsfrRadioRichGroup
             v-model="form.is_visible"
             name="is_visible"
-            full
             :options="[
               {
                 key: true,
@@ -162,6 +165,8 @@
                 description: 'Je préfère faire mes recherches moi-même',
               },
             ]"
+            class="lg:gap-4"
+            option-class="w-full"
           />
         </div>
       </div>
