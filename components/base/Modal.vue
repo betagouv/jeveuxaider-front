@@ -22,9 +22,7 @@
         v-scroll-lock="!stickyFooter && isScrollLocked"
       >
         <FocusLoop :is-visible="isOpen" @keydown.native.esc="$emit('close')">
-          <div
-            class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 sm:text-center sm:block sm:p-0"
-          >
+          <div class="flex items-end justify-center min-h-screen sm:text-center sm:block sm:px-4">
             <div
               class="fixed inset-0 bg-opacity-75 transition-opacity"
               aria-hidden="true"

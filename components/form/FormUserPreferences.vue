@@ -107,7 +107,7 @@
                 class="h-[42px] w-16 flex-none border border-dashed border-[#6A6AF4] rounded-[40px] flex items-center justify-center leading-none hover:scale-110 transition ease-out"
                 @click="isModalActivitiesOpen = true"
               >
-                <span class="-translate-y-px">+</span>
+                <span class="-translate-y-px text-jva-blue-500">+</span>
               </button>
             </div>
           </template>
