@@ -177,10 +177,28 @@ export default defineNuxtComponent({
       required: true,
     },
   },
+  setup({ profile }) {
+    function getInitialForm(profileData) {
+      return {
+        ..._cloneDeep(profileData),
+        activities:
+          profileData.activities
+            ?.map((act) => {
+              return activitiesOptions.find((opt) => act.id === opt.id)
+            })
+            .sort((a, b) => (a.id > b.id ? 1 : a.id < b.id ? -1 : 0)) ?? [],
+      }
+    }
+
+    return {
+      initialForm: getInitialForm(profile),
+      getInitialForm,
+    }
+  },
   data() {
     return {
       loading: false,
-      form: _cloneDeep(this.profile),
+      form: _cloneDeep(this.initialForm),
       formSchema: object({
         commitment__duration: string().nullable().required('Merci de choisir une durée'),
         commitment__time_period: string().nullable().required('Merci de choisir une fréquence'),
@@ -210,24 +228,12 @@ export default defineNuxtComponent({
       isModalActivitiesOpen: false,
     }
   },
-  computed: {
-    initialForm() {
-      return {
-        ...this.form,
-        activities:
-          this.profile.activities
-            ?.map((act) => {
-              return activitiesOptions.find((opt) => act.id === opt.id)
-            })
-            .sort((a, b) => (a.id > b.id ? 1 : a.id < b.id ? -1 : 0)) ?? [],
-      }
-    },
-  },
   watch: {
     profile: {
       deep: true,
       handler(newProfile) {
-        this.form = _cloneDeep(newProfile)
+        this.initialForm = this.getInitialForm(newProfile)
+        this.form = _cloneDeep(this.initialForm)
       },
     },
     form: {
