@@ -5,7 +5,7 @@
       :show-files="false"
       label="Ajouter une photo"
       :default-value="files"
-      extensions=".jpg, .png, .webp"
+      extensions=".jpg, .jpeg, .png, .webp"
       :variant="uploadVariant"
       :max-size="uploadMaxSize"
       :warning-title="warningTitle"
