@@ -55,7 +55,7 @@
                     :class="[
                       'flex flex-col',
                       {
-                        'overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar-gray initial:max-h-[inherit] initial:pb-14 initial:sm:pb-20 initial:mr-1':
+                        'overflow-y-auto overflow-x-hidden overscroll-contain custom-scrollbar-gray initial:max-h-[inherit] initial:pb-20 initial:sm:pb-24 initial:mr-1':
                           stickyFooter,
                       },
                       stickyFooter ? scrollContainerClass : null,
@@ -220,6 +220,6 @@ export default defineNuxtComponent({
 }
 
 .custom-scrollbar-gray::-webkit-scrollbar-track {
-  @apply mt-3 mb-[72px];
+  @apply mt-3 mb-[72px] sm:mb-[88px];
 }
 </style>
