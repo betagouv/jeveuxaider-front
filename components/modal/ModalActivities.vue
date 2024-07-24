@@ -5,7 +5,7 @@
         :is-open="isOpen"
         title="Quelles activités de bénévolat vous intéressent ?"
         :prevent-click-outside="true"
-        :sticky-footer="false"
+        :sticky-footer="true"
         header-class="-mr-2"
         content-class="-mr-2"
         @close="$emit('cancel')"
