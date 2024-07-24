@@ -12,16 +12,17 @@
     >
       <div
         v-if="isOpen"
-        class="fixed z-50 inset-0 overflow-y-auto overscroll-contain"
+        :class="[
+          'fixed z-50 inset-0',
+          { 'overflow-y-auto overflow-x-hidden overscroll-contain': !stickyFooter },
+        ]"
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
         v-scroll-lock="!stickyFooter && isScrollLocked"
       >
         <FocusLoop :is-visible="isOpen" @keydown.native.esc="$emit('close')">
-          <div
-            class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 sm:text-center sm:block sm:p-0"
-          >
+          <div class="flex items-end justify-center min-h-screen sm:text-center sm:block sm:px-4">
             <div
               class="fixed inset-0 bg-opacity-75 transition-opacity"
               aria-hidden="true"
