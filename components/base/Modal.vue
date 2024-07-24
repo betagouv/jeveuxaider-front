@@ -7,8 +7,6 @@
       leave-active-class="ease-in duration-200"
       leave-from-class="opacity-100"
       leave-to-class="opacity-0"
-      @enter="isScrollLocked = true"
-      @after-leave="isScrollLocked = false"
     >
       <div
         v-if="isOpen"
@@ -19,7 +17,7 @@
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
-        v-scroll-lock="!stickyFooter && isScrollLocked"
+        v-scroll-lock="!stickyFooter"
       >
         <FocusLoop :is-visible="isOpen" @keydown.native.esc="$emit('close')">
           <div class="flex items-end justify-center min-h-screen sm:text-center sm:block sm:px-4">
@@ -60,7 +58,7 @@
                       },
                       stickyFooter ? scrollContainerClass : null,
                     ]"
-                    v-scroll-lock="stickyFooter && isScrollLocked"
+                    v-scroll-lock="stickyFooter"
                   >
                     <!-- MODAL HEADER -->
                     <div

@@ -1,4 +1,8 @@
-import { enableBodyScroll, disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock-upgrade'
+import {
+  enableBodyScroll,
+  disableBodyScroll,
+  clearAllBodyScrollLocks,
+} from 'body-scroll-lock-upgrade'
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.directive('scroll-lock', {
