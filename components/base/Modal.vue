@@ -19,7 +19,7 @@
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
-        v-scroll-lock="!stickyFooter && isScrollLocked"
+        v-scroll-lock="!stickyFooter ? isScrollLocked : undefined"
       >
         <FocusLoop :is-visible="isOpen" @keydown.native.esc="$emit('close')">
           <div class="flex items-end justify-center min-h-screen sm:text-center sm:block sm:px-4">
@@ -60,7 +60,7 @@
                       },
                       stickyFooter ? scrollContainerClass : null,
                     ]"
-                    v-scroll-lock="stickyFooter && isScrollLocked"
+                    v-scroll-lock="stickyFooter ? isScrollLocked : undefined"
                   >
                     <!-- MODAL HEADER -->
                     <div
